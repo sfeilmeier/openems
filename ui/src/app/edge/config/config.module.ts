@@ -11,6 +11,7 @@ import { PersistenceComponent } from './persistence/persistence.component';
 import { ConfigAllComponent } from './configall/configall.component';
 import { LogComponent } from './log/log.component';
 import { SimulatorComponent } from './simulator/simulator.component';
+import { ProvisioningComponent } from './provisioning/provisioning.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { SimulatorComponent } from './simulator/simulator.component';
     SimulatorComponent,
     ConfigAllComponent,
     SchedulerComponent,
-    PersistenceComponent
+    PersistenceComponent,
+    ProvisioningComponent
   ]
 })
 export class ConfigModule { }

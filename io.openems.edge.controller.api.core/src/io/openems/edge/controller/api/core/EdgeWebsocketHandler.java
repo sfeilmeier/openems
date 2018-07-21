@@ -12,6 +12,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import io.openems.common.exceptions.AccessDeniedException;
@@ -23,6 +24,7 @@ import io.openems.common.websocket.DefaultMessages;
 import io.openems.common.websocket.LogBehaviour;
 import io.openems.common.websocket.Notification;
 import io.openems.common.websocket.WebSocketUtils;
+import io.openems.edge.provisioning.api.Provisioning;
 import io.openems.edge.timedata.api.Timedata;
 
 /**
@@ -134,6 +136,15 @@ public class EdgeWebsocketHandler {
 			Optional<JsonObject> jhistoricDataOpt = JsonUtils.getAsOptionalJsonObject(jMessage, "historicData");
 			if (jhistoricDataOpt.isPresent()) {
 				this.historicData(jMessageId, jhistoricDataOpt.get());
+				return;
+			}
+
+			/*
+			 * Query historic data
+			 */
+			Optional<JsonObject> jProvisioningOpt = JsonUtils.getAsOptionalJsonObject(jMessage, "provisioning");
+			if (jProvisioningOpt.isPresent()) {
+				this.provisioning(jMessageId, jProvisioningOpt.get());
 				return;
 			}
 
@@ -278,6 +289,43 @@ public class EdgeWebsocketHandler {
 			// thingIdOpt.orElse("UNDEFINED") + "/" + channelIdOpt.orElse("UNDEFINED"),
 			// e.getMessage());
 			// }
+		}
+	}
+
+	private void provisioning(JsonObject jMessageId, JsonObject jProvisioning) {
+		Optional<String> modeOpt = JsonUtils.getAsOptionalString(jProvisioning, "mode");
+		switch (modeOpt.orElse("")) {
+		case "list-all":
+			/*
+			 * List all available Provisionings
+			 */
+			JsonArray jElements = new JsonArray();
+			for (Provisioning p : this.parent.getProvisionings()) {
+				JsonObject jElement = new JsonObject();
+				jElement.addProperty("id", p.getClassName());
+				jElement.addProperty("name", p.getName());
+				jElements.add(jElement);
+			}
+			WebSocketUtils.sendOrLogError(this.websocket,
+					DefaultMessages.provisioningListAllReply(jMessageId, jElements));
+			break;
+
+		case "wizard":
+			/*
+			 * Active Provisioning Wizard
+			 */
+			try {
+				String elementId = JsonUtils.getAsString(jProvisioning, "elementId");
+				for (Provisioning p : this.parent.getProvisionings()) {
+					if (p.getClassName().equals(elementId)) {
+						System.out.println("Wizard for " + p.getName());
+						return;
+					}
+				}
+				throw new OpenemsException("Unable to find Provisioning for [" + elementId + "]");
+			} catch (OpenemsException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

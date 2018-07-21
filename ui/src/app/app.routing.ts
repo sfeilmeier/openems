@@ -16,6 +16,7 @@ import { ConfigAllComponent as EdgeConfigConfigAllComponent } from './edge/confi
 import { ControllerComponent as EdgeControllerComponent } from './edge/config/controller/controller.component';
 import { PersistenceComponent as EdgePersistenceComponent } from './edge/config/persistence/persistence.component';
 import { SimulatorComponent as EdgeConfigSimulatorComponent } from './edge/config/simulator/simulator.component';
+import { ProvisioningComponent as EdgeProvisioningComponent } from './edge/config/provisioning/provisioning.component';
 import { DebugModeComponent as ConfigDebugModeComponent } from './config/debugmode/debugmode.component';
 import { DirectControlComponent as EdgeConfigDirectControlComponent } from './edge/config/more/directcontrol/directcontrol.component';
 import { SystemExecuteComponent as EdgeConfigSystemExecuteComponent } from './edge/config/more/systemexecute/systemexecute.component';
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
   { path: 'device/:edgeName/config/controller', component: EdgeControllerComponent },
   { path: 'device/:edgeName/config/persistence', component: EdgePersistenceComponent },
   { path: 'device/:edgeName/config/simulator', component: EdgeConfigSimulatorComponent },
+  { path: 'device/:edgeName/config/provisioning', component: EdgeProvisioningComponent },
 
   { path: 'config/debugmode', component: ConfigDebugModeComponent },
 ];

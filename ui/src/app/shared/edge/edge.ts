@@ -118,6 +118,17 @@ export class Edge {
     delete this.replyStreams[messageId];
   }
 
+  public sendQueryMessage(message: DefaultTypes.IdentifiedMessage): Promise<DefaultMessages.Reply> {
+    let replyStream = this.sendMessageWithReply(message);
+    // wait for reply
+    return new Promise((resolve, reject) => {
+      replyStream.first().subscribe(reply => {
+        this.removeReplyStream(reply);
+        resolve(reply);
+      });
+    })
+  }
+
   /**
    * Subscribe to current data of specified channels
    */
@@ -150,15 +161,21 @@ export class Edge {
   // TODO: kWh: this.getkWhResult(this.getImportantChannels())
   public historicDataQuery(fromDate: Date, toDate: Date, channels: DefaultTypes.ChannelAddresses): Promise<DefaultTypes.HistoricData> {
     let timezone = new Date().getTimezoneOffset() * 60;
-    let replyStream = this.sendMessageWithReply(DefaultMessages.historicDataQuery(this.edgeId, fromDate, toDate, timezone, channels));
-    // wait for reply
     return new Promise((resolve, reject) => {
-      replyStream.first().subscribe(reply => {
+      this.sendQueryMessage(DefaultMessages.historicDataQuery(this.edgeId, fromDate, toDate, timezone, channels)).then(reply => {
         let historicData = (reply as DefaultMessages.HistoricDataReply).historicData;
-        this.removeReplyStream(reply);
         resolve(historicData);
       });
-    })
+    });
+    // let replyStream = this.sendMessageWithReply(DefaultMessages.historicDataQuery(this.edgeId, fromDate, toDate, timezone, channels));
+    // // wait for reply
+    // return new Promise((resolve, reject) => {
+    //   replyStream.first().subscribe(reply => {
+    //     let historicData = (reply as DefaultMessages.HistoricDataReply).historicData;
+    //     this.removeReplyStream(reply);
+    //     resolve(historicData);
+    //   });
+    // })
   }
 
   /**

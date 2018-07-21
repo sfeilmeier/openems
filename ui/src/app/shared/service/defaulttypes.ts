@@ -136,6 +136,24 @@ export module DefaultTypes {
     color?: string /* is added later */
   }
 
+  export interface Provisioning {
+    mode: string,
+  }
+
+  export interface ProvisioningListAllElement {
+    id: string,
+    name: string
+  }
+
+  export interface ProvisioningListAll extends Provisioning {
+    mode: "list-all",
+    elements: ProvisioningListAllElement[]
+  }
+
+  export interface ProvisioningWizard extends Provisioning {
+    mode: "wizard"
+  }
+
   export type LanguageTag = "de" | "en" | "cz" | "nl";
 
   export interface IdentifiedMessage {

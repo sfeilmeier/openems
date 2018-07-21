@@ -1,0 +1,11 @@
+<div *ngIf="edge" fxLayout fxLayoutAlign="center start" fxLayoutWrap="wrap">
+  <div fxFlex="100%">
+    <mat-card *ngFor="let element of listAll" class="single" (click)="selectElement(element)">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>code</mat-icon>
+        <mat-card-title>{{ element.name }}</mat-card-title>
+        <mat-card-subtitle>{{ element.id }}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+</div>

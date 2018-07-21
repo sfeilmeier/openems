@@ -363,4 +363,29 @@ public class DefaultMessages {
 		jMessage.add("messageId", jMessageId);
 		return jMessage;
 	}
+
+	/**
+	 * <pre>
+	 *	{
+	 *		messageId: {},
+	 *		provisioning: {
+	 *			elements: [
+	 *				{
+	 *					id: service_pid,
+	 *					name: string 
+	 *			]
+	 *		}
+	 *	}
+	 * </pre>
+	 * 
+	 * @param token
+	 * @return
+	 */
+	public static JsonObject provisioningListAllReply(JsonObject jMessageId, JsonArray jElements) {
+		JsonObject j = newMessage(jMessageId);
+		JsonObject jProvisioning = new JsonObject();
+		jProvisioning.add("elements", jElements);
+		j.add("provisioning", jProvisioning);
+		return j;
+	}
 }

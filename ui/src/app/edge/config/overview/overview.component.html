@@ -1,4 +1,13 @@
 <div *ngIf="(websocket.currentEdge | async) as edge" fxLayout fxLayoutAlign="center start" fxLayoutWrap="wrap">
+  <div *ngIf="edge.isVersionAtLeast('2018.8')" fxFlex="50%" fxFlex.xs="100%">
+    <mat-card routerLink="/device/{{ edge.name }}/config/provisioning" class="single">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>device_hub</mat-icon>
+        <mat-card-title>Provisioning</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+  </div>
+
   <ng-container *ngIf="(edge.config | async) as config">
     <!--call bridge configuration-->
     <div *ngIf="!edge.isVersionAtLeast('2018.8')" fxFlex="50%" fxFlex.xs="100%">

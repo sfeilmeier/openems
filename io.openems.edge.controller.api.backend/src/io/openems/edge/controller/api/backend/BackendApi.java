@@ -31,6 +31,7 @@ import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.controller.api.Controller;
 import io.openems.edge.controller.api.core.ApiController;
 import io.openems.edge.controller.api.core.ApiWorker;
+import io.openems.edge.provisioning.api.Provisioning;
 import io.openems.edge.timedata.api.Timedata;
 
 @Designate(ocd = Config.class, factory = true)
@@ -53,6 +54,9 @@ public class BackendApi extends AbstractOpenemsComponent
 
 	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.OPTIONAL)
 	protected volatile Timedata timedataService = null;
+
+	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MULTIPLE)
+	protected volatile List<Provisioning> provisionings = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private ConfigurationAdmin configAdmin;
@@ -145,6 +149,11 @@ public class BackendApi extends AbstractOpenemsComponent
 	@Override
 	public ConfigurationAdmin getConfigurationAdmin() {
 		return this.configAdmin;
+	}
+
+	@Override
+	public List<Provisioning> getProvisionings() {
+		return this.provisionings;
 	}
 
 	@Override

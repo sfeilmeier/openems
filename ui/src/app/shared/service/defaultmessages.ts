@@ -124,6 +124,33 @@ export class DefaultMessages {
             }
         }
     };
+
+    public static provisioningListAll(edgeId: number): DefaultTypes.IdentifiedMessage {
+        return {
+            messageId: {
+                ui: UUID.UUID()
+            },
+            edgeId: edgeId,
+            provisioning: {
+                mode: "list-all"
+            }
+        }
+    };
+
+    public static provisioningWizard(edgeId: number, elementId: string, step?: number, view?: any): DefaultTypes.IdentifiedMessage {
+        return {
+            messageId: {
+                ui: UUID.UUID()
+            },
+            edgeId: edgeId,
+            provisioning: {
+                mode: "wizard",
+                elementId: elementId,
+                step: step ? step : 0,
+                view: view ? view : []
+            }
+        }
+    };
 }
 
 export module DefaultMessages {
@@ -151,5 +178,9 @@ export module DefaultMessages {
         system: {
             output: string
         }
+    }
+
+    export interface PrivisioningReply extends Reply {
+        provisioning: DefaultTypes.Provisioning
     }
 }

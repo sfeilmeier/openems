@@ -1,0 +1,111 @@
+Provisioning
+
+UI -> Edge
+
+{
+    provisioning: {
+        mode: list-all
+    }
+}
+
+Edge -> UI
+
+{
+    provisioning: {
+        mode: list-all,
+        elements: [
+            {
+                id: service-pid,
+                name: "KOSTAL PIKO"
+            }
+        ]
+    }
+}
+
+UI -> Edge
+
+{
+    provisioning: {
+        mode: wizard,
+        element-id: service-pid,
+        ...
+    }
+}
+
+Edge -> UI
+
+{
+    provisioning: {
+        mode: wizard,
+        element-id: service-pid,
+        step: 1,
+        view: [
+            {
+                type: "title",
+                text: "Please enter the required information for your KOSTAL PIKO"
+            },
+            {
+                type: "input",
+                id: "ip",
+                text: "IP-Address"
+            }
+            {
+                type: "input",
+                id: "ess_id",
+                text: "ID of energy storage system",
+                default: "ess0"
+            }
+            {
+                type: "input",
+                id: "gridMeter_id",
+                text: "ID of grid meter",
+                default: "meter0"
+            },
+            {
+                type: "input",
+                id: "charger_id",
+                text: "ID of PV charger",
+                default: "charger0"
+            }
+        ]
+    }
+}
+
+UI -> Edge
+
+{
+    provisioning: {
+        mode: wizard,
+        element-id: service-pid,
+        step: 1,
+        input: {
+            ip: "192.168.178.140",
+            ess_id: "ess0",
+            gridMeter_id: "meter0",
+            charger_id: "charger0"
+        }
+    }
+}
+
+Edge -> UI
+
+{
+    provisioning: {
+        mode: wizard,
+        element-id: service-pid,
+        step: 2,
+        view: [
+            {
+                type: "title",
+                text: "KOSTAL PIKO configuration finished successfully"
+            }
+            {
+                type: "card",
+                icon: "battery",
+                title: "Energy Storage System (ess0)",
+                text: "Current State of Charge: 50 %"
+            }
+        ],
+        finished: true
+    }
+}
