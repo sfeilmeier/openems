@@ -152,6 +152,7 @@ export module DefaultTypes {
 
   export interface ProvisioningWizard extends Provisioning {
     mode: "wizard"
+    view?: any[]
   }
 
   export type LanguageTag = "de" | "en" | "cz" | "nl";

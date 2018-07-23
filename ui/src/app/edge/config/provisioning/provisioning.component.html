@@ -1,11 +1,37 @@
 <div *ngIf="edge" fxLayout fxLayoutAlign="center start" fxLayoutWrap="wrap">
-  <div fxFlex="100%">
-    <mat-card *ngFor="let element of listAll" class="single" (click)="selectElement(element)">
-      <mat-card-header>
-        <mat-icon mat-card-avatar>code</mat-icon>
-        <mat-card-title>{{ element.name }}</mat-card-title>
-        <mat-card-subtitle>{{ element.id }}</mat-card-subtitle>
-      </mat-card-header>
-    </mat-card>
-  </div>
+  <ng-container *ngIf="view.length == 0; else show_view">
+    <div fxFlex="100%">
+      <mat-card *ngFor="let element of listAll" class="single" (click)="selectElement(element)">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>code</mat-icon>
+          <mat-card-title>{{ element.name }}</mat-card-title>
+          <mat-card-subtitle>{{ element.id }}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </ng-container>
+  <ng-template #show_view>
+    <div [formGroup]="form">
+      <mat-list>
+        <ng-container *ngFor="let row of view">
+          <ng-container [ngSwitch]="row.type">
+            <mat-list-item *ngSwitchCase="'title'">
+              {{ row.text }}
+            </mat-list-item>
+            <mat-list-item *ngSwitchCase="'input'">
+              <mat-input-container>
+                <input type="text" [formControlName]="row.id" [placeholder]="row.text" matInput>
+              </mat-input-container>
+            </mat-list-item>
+            <mat-list-item *ngSwitchDefault>UNHANDLED CASE: {{ row }}</mat-list-item>
+          </ng-container>
+        </ng-container>
+        <mat-list-item>
+          <button mat-fab type=submit (click)="send()">
+            <mat-icon>save</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </ng-template>
 </div>

@@ -364,6 +364,13 @@ public class DefaultMessages {
 		return jMessage;
 	}
 
+	public static JsonObject provisioning(JsonObject jMessageId, String mode, JsonObject jProvisioning) {
+		JsonObject j = newMessage(jMessageId);
+		jProvisioning.addProperty("mode", mode);
+		j.add("provisioning", jProvisioning);
+		return j;
+	}
+
 	/**
 	 * <pre>
 	 *	{
@@ -382,10 +389,8 @@ public class DefaultMessages {
 	 * @return
 	 */
 	public static JsonObject provisioningListAllReply(JsonObject jMessageId, JsonArray jElements) {
-		JsonObject j = newMessage(jMessageId);
 		JsonObject jProvisioning = new JsonObject();
 		jProvisioning.add("elements", jElements);
-		j.add("provisioning", jProvisioning);
-		return j;
+		return provisioning(jMessageId, "list-all", jProvisioning);
 	}
 }

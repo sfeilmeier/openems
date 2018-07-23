@@ -318,7 +318,9 @@ public class EdgeWebsocketHandler {
 				String elementId = JsonUtils.getAsString(jProvisioning, "elementId");
 				for (Provisioning p : this.parent.getProvisionings()) {
 					if (p.getClassName().equals(elementId)) {
-						System.out.println("Wizard for " + p.getName());
+						p.getNextStep(jMessageId, jProvisioning, (jResult) -> {
+							WebSocketUtils.sendOrLogError(this.websocket, jResult);
+						});
 						return;
 					}
 				}

@@ -18,6 +18,6 @@ public interface Provisioning {
 
 	public String getName();
 
-	public void getNextStep(JsonObject jMessage, Consumer<JsonObject> callback);
+	public void getNextStep(JsonObject jMessageId, JsonObject jMessage, Consumer<JsonObject> callback);
 
 }
