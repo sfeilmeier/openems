@@ -61,45 +61,45 @@ public class EmergencyClusterMode extends AbstractOpenemsComponent implements Co
 	protected ConfigurationAdmin cm;
 	
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private SymmetricMeter gridMeter;
+	protected SymmetricMeter gridMeter;
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private SymmetricMeter pvMeter;
+	protected SymmetricMeter pvMeter;
 	
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private SymmetricPvInverter pvInverter;
+	protected SymmetricPvInverter pvInverter;
 	
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private OpenemsComponent backupEssSwitchOutputComponent = null;
+	protected OpenemsComponent backupEssSwitchOutputComponent = null;
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private OpenemsComponent backupEssSwitchInputComponent = null;
+	protected OpenemsComponent backupEssSwitchInputComponent = null;
 	private WriteChannel<Boolean> backupEssSwitchWrite = null;
 	private Channel<Boolean> backupEssSwitchRead = null;
 	
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private OpenemsComponent primaryEssSwitchOutputComponent = null;
+	protected OpenemsComponent primaryEssSwitchOutputComponent = null;
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private OpenemsComponent primaryEssSwitchInputComponent = null;
+	protected OpenemsComponent primaryEssSwitchInputComponent = null;
 	private WriteChannel<Boolean> primaryEssSwitchWrite = null;
 	private Channel<Boolean> primaryEssSwitchRead = null;
 	
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private OpenemsComponent pvOffGridSwitchOutputComponent = null;
+	protected OpenemsComponent pvOffGridSwitchOutputComponent = null;
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private OpenemsComponent pvOffGridSwitchInputComponent = null;
+	protected OpenemsComponent pvOffGridSwitchInputComponent = null;
 	private WriteChannel<Boolean> pvOffGridSwitchWrite = null;
 	private Channel<Boolean> pvOffGridSwitchRead = null;
 	
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private OpenemsComponent pvOnGridSwitchOutputComponent = null;
+	protected OpenemsComponent pvOnGridSwitchOutputComponent = null;
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private OpenemsComponent pvOnGridSwitchInputComponent = null;
+	protected OpenemsComponent pvOnGridSwitchInputComponent = null;
 	private WriteChannel<Boolean> pvOnGridSwitchWrite = null;
 	private Channel<Boolean> pvOnGridSwitchRead = null;
 
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private ManagedSymmetricEss primaryEss;
+	protected ManagedSymmetricEss primaryEss;
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
-	private ManagedSymmetricEss backupEss;
+	protected ManagedSymmetricEss backupEss;
 	private EssClusterWrapper cluster;
 	
 	
