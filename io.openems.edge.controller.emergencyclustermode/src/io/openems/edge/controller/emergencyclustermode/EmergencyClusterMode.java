@@ -128,68 +128,60 @@ public class EmergencyClusterMode extends AbstractOpenemsComponent implements Co
 			references.add(OpenemsComponent.updateReferenceFilter(cm, config.service_pid(), "backupEss", 
 					config.backup_ess_id()));
 			
-			if (!references.contains(false)) {
-				// all update references passes
-				return;
-			}
 			
 			// wago
 			//Q1
 			ChannelAddress outputChannelAddress = ChannelAddress.fromString(config.Q1_outputChannelAddress());
 			ChannelAddress inputChannelAddress = ChannelAddress.fromString(config.Q1_inputChannelAddress());
-			if(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "backupEssSwitchOutputComponent", 
-					outputChannelAddress.getComponentId())) {
-				return;
-			}
-			if(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "backupEssSwitchInputComponent", 
-					inputChannelAddress.getComponentId())) {
-				return;
-			}
+			
+			references.add(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "backupEssSwitchOutputComponent", 
+					outputChannelAddress.getComponentId()));
+			references.add(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "backupEssSwitchInputComponent", 
+					inputChannelAddress.getComponentId()));
+			
 			this.backupEssSwitchWrite = this.backupEssSwitchOutputComponent.channel(outputChannelAddress.getChannelId());
 			this.backupEssSwitchRead = this.backupEssSwitchInputComponent.channel(inputChannelAddress.getChannelId());
 			
 			//Q2
 			outputChannelAddress = ChannelAddress.fromString(config.Q2_outputChannelAddress());
 			inputChannelAddress = ChannelAddress.fromString(config.Q2_inputChannelAddress());
-			if(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "primaryEssSwitchOutputComponent", 
-					outputChannelAddress.getComponentId())) {
-				return;
-			}
-			if(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "primaryEssSwitchInputComponent", 
-					inputChannelAddress.getComponentId())) {
-				return;
-			}
+			
+			references.add(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "primaryEssSwitchOutputComponent", 
+					outputChannelAddress.getComponentId()));
+			references.add(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "primaryEssSwitchInputComponent", 
+					inputChannelAddress.getComponentId()));
+			
 			this.primaryEssSwitchWrite = this.backupEssSwitchOutputComponent.channel(outputChannelAddress.getChannelId());
 			this.primaryEssSwitchRead = this.backupEssSwitchInputComponent.channel(inputChannelAddress.getChannelId());
 			
 			//Q3
 			outputChannelAddress = ChannelAddress.fromString(config.Q3_outputChannelAddress());
 			inputChannelAddress = ChannelAddress.fromString(config.Q3_inputChannelAddress());
-			if(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "pvOffGridSwitchOutputComponent", 
-					outputChannelAddress.getComponentId())) {
-				return;
-			}
-			if(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "pvOffGridSwitchInputComponent", 
-					inputChannelAddress.getComponentId())) {
-				return;
-			}
+			
+			references.add(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "pvOffGridSwitchOutputComponent", 
+					outputChannelAddress.getComponentId()));
+			references.add(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "pvOffGridSwitchInputComponent", 
+					inputChannelAddress.getComponentId()));
+			
 			this.pvOffGridSwitchWrite = this.backupEssSwitchOutputComponent.channel(outputChannelAddress.getChannelId());
 			this.pvOffGridSwitchRead = this.backupEssSwitchInputComponent.channel(inputChannelAddress.getChannelId());
 			
 			//Q4
 			outputChannelAddress = ChannelAddress.fromString(config.Q4_outputChannelAddress());
 			inputChannelAddress = ChannelAddress.fromString(config.Q4_inputChannelAddress());
-			if(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "pvOnGridSwitchOutputComponent", 
-					outputChannelAddress.getComponentId())) {
-				return;
-			}
-			if(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "pvOnGridSwitchInputComponent", 
-					inputChannelAddress.getComponentId())) {
-				return;
-			}
+			
+			references.add(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "pvOnGridSwitchOutputComponent", 
+					outputChannelAddress.getComponentId()));
+			references.add(OpenemsComponent.updateReferenceFilter(this.cm, config.service_pid(), "pvOnGridSwitchInputComponent", 
+					inputChannelAddress.getComponentId()));
+			
 			this.pvOnGridSwitchWrite = this.backupEssSwitchOutputComponent.channel(outputChannelAddress.getChannelId());
 			this.pvOnGridSwitchRead = this.backupEssSwitchInputComponent.channel(inputChannelAddress.getChannelId());
 			
+			if (!references.contains(false)) {
+				// all update references passes
+				return;
+			}
 		} catch (OpenemsException e) {
 			e.printStackTrace();
 		}
