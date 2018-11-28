@@ -1,5 +1,6 @@
 package io.openems.edge.controller.emergencyclustermode;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ import io.openems.edge.ess.power.api.Relationship;
 class EssClusterWrapper {
 	
 	private final Logger log = LoggerFactory.getLogger(EssClusterWrapper.class);
-	private List<ManagedSymmetricEss> esss;
+	private List<ManagedSymmetricEss> esss = new ArrayList<>();
 	
 	public void add(ManagedSymmetricEss ess){
 		esss.add(ess);
