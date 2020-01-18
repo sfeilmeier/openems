@@ -1,0 +1,22 @@
+Bundle-Name: OpenEMS Edge Predictor Load
+Bundle-Vendor: OpenEMS Association 
+Bundle-License: https://opensource.org/licenses/EPL-2.0
+Bundle-Version:	1.0.0.${tstamp}
+Bundle-Description: \
+	Load Forecast
+
+Export-Package: \
+	
+Private-Package:  \
+	io.openems.edge.predictor.load
+
+-buildpath: \
+	${buildpath},\
+	io.openems.common;version=latest,\
+	io.openems.edge.common;version=latest,\
+	org.ops4j.pax.logging.pax-logging-api
+
+-testpath: ${testpath}
+
+javac.source: 1.8
+javac.target: 1.8
