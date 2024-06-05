@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Subject, Subscription, timer } from 'rxjs';
 import { filter, retry, switchMap, takeUntil } from 'rxjs/operators';
 
-import { Meta } from '@angular/platform-browser';
 import { environment } from '../environments';
 import { GlobalRouteChangeHandler } from './shared/service/globalRouteChangeHandler';
 import { Service, UserPermission, Websocket } from './shared/shared';
@@ -47,6 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
     public websocket: Websocket,
     private globalRouteChangeHandler: GlobalRouteChangeHandler,
     private meta: Meta,
+    private title: Title,
   ) {
     service.setLang(Language.getByKey(localStorage.LANGUAGE) ?? Language.getByBrowserLang(navigator.language));
 
@@ -104,6 +105,8 @@ export class AppComponent implements OnInit, OnDestroy {
         this.checkSmartphoneResolution(false);
       });
     });
+
+    this.title.setTitle(environment.edgeShortName);
   }
 
   /**
