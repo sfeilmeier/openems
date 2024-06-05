@@ -6,6 +6,7 @@ import { GetNetworkConfigRequest } from "../../settings/network/getNetworkConfig
 import { GetNetworkConfigResponse } from "../../settings/network/getNetworkConfigResponse";
 import { SetNetworkConfigRequest } from "../../settings/network/setNetworkConfigRequest";
 import { AbstractIbn } from "../installation-systems/abstract-ibn";
+import { NetworkUtils } from "../../settings/network/shared";
 
 export class IbnUtils {
 
@@ -65,26 +66,26 @@ export class IbnUtils {
 
             // Set the ip in the model of the interface
             // or return if it already exists
-            const address = ip.split('/');
+            const [address, subnet] = ip.split('/');
 
             if ('addresses' in iface.model) {
                 for (const addr of iface.model.addresses) {
-                    if (addr.address == address[0]) {
+                    if (addr.address == address) {
                         return true;
                     }
                 }
 
                 iface.model.addresses.push({
                     label: '',
-                    address: address[0],
-                    subnetmask: this.getSubnetmaskAsString(address[1]),
+                    address: address,
+                    subnetmask: NetworkUtils.getSubnetmaskAsString(Number.parseInt(subnet)),
                 });
 
             } else {
                 iface.model.addresses = new Array({
                     label: '',
-                    address: address[0],
-                    subnetmask: this.getSubnetmaskAsString(address[1]),
+                    address: address,
+                    subnetmask: NetworkUtils.getSubnetmaskAsString(Number.parseInt(subnet)),
                 });
             }
 
@@ -103,21 +104,5 @@ export class IbnUtils {
             console.log(reason);
         });
         return false;
-    }
-
-    /**
-     * Converts the subnetmask to a string address.
-     *
-     * @param cidr the CIDR number
-     * @returns the subnetmask as a string
-     */
-    private static getSubnetmaskAsString(cidr: any): string {
-        const mask = [];
-        for (let i = 0; i < 4; i++) {
-            const n = Math.min(cidr, 8);
-            mask.push(256 - Math.pow(2, 8 - n));
-            cidr -= n;
-        }
-        return mask.join('.');
     }
 }
