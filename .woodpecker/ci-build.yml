@@ -26,10 +26,12 @@ variables:
   - &ui-only
     path:
       include: [".woodpecker/ci-build.yml", "ui/**"]
+      on_empty: false
 
   - &java-only
     path:
       include: [".woodpecker/ci-build.yml", "io.openems*/**", "**/*gradle*"]
+      on_empty: false
 
 when:
   event:
@@ -42,6 +44,7 @@ clone:
       - *message-debian
       - path:
           include: [".woodpecker/ci-build.yml", "ui/**", "io.openems*/**", "**/*gradle*"]
+          on_empty: false
     image: woodpeckerci/plugin-git
 
 steps:
@@ -139,7 +142,7 @@ steps:
     when:
       - *main-build
       - *ui-only
-    image: drillster/drone-rsync:latest
+    image: woodpeckerci/rsync:latest
     settings:
       <<: *rsync-settings
       source: ui/target/
@@ -153,7 +156,7 @@ steps:
     when:
       - *main-build
       - *message-debian
-    image: drillster/drone-rsync:latest
+    image: woodpeckerci/rsync:latest
     settings:
       <<: *rsync-settings
       source: build/target/
