@@ -543,7 +543,7 @@ export class EdgeConfig {
     /**
      * Lists all active Components, grouped by category.
      */
-    public listActiveComponents(ignoreComponentIds: string[]): CategorizedComponents[] {
+    public listActiveComponents(ignoreComponentIds: string[] = []): CategorizedComponents[] {
         const allComponents = [];
         const factories = this.listAvailableFactories();
         for (const entry of factories) {
@@ -667,6 +667,8 @@ export module EdgeConfig {
         public readonly category: "OPENEMS_TYPE" | "ENUM" | "STATE";
         public readonly level: "INFO" | "OK" | "WARNING" | "FAULT";
         public readonly persistencePriority: PersistencePriority;
+        public readonly text: string;
+        public readonly options?: { [key: string]: number };
     }
 
     export class Component {
@@ -677,7 +679,7 @@ export module EdgeConfig {
         constructor(
             public readonly factoryId: string = "",
             public readonly properties: { [key: string]: any } = {},
-            public readonly channels: { [channelId: string]: ComponentChannel } = {},
+            public readonly channels?: { [channelId: string]: ComponentChannel },
         ) { }
     }
 

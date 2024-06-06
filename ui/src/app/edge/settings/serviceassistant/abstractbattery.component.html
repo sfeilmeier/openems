@@ -26,7 +26,8 @@
                                             categorizedReadChannelDescriptions.channels">
                                             <ng-container
                                                 *ngIf="getChannelAddress(component.id, channelDescription.channelName) as address">
-                                                <ng-container *ngIf="config.getChannel(address) as channelConfig">
+                                                <ng-container
+                                                    *ngIf="channelDefinitions[channelDescription.channelName] as channelConfig">
 
                                                     <ion-item *ngIf="channelConfig.accessMode !== 'WO'">
                                                         <ion-label>
@@ -37,10 +38,7 @@
                                                                 <!-- show current value of Channel-->
                                                                 {{ currentData[address.toString()] }}
 
-                                                                <ion-text *ngIf="channelConfig.unit">
-                                                                    {{ channelConfig.unit }}
-                                                                </ion-text>
-                                                                <ion-text *ngIf="!channelConfig.unit">
+                                                                <ion-text *ngIf="channelDescription.unit">
                                                                     {{ channelDescription.unit }}
                                                                 </ion-text>
                                                                 <ion-text
@@ -183,7 +181,7 @@
                                                             }}({{channelDescription.register}})</ion-label>
                                                     </ion-item>
                                                     <ion-card-content
-                                                        *ngIf="config.getChannel(address) as channelConfig">
+                                                        *ngIf="channelDefinitions[channelDescription.channelName] as channelConfig">
                                                         <ion-item>
                                                             <ion-text class="ion-text-wrap">
                                                                 {{ channelDescription.description }}
@@ -273,7 +271,8 @@
                                                             </ng-template>
                                                         </ion-item>
                                                     </ion-card-content>
-                                                    <ion-card-content *ngIf="!config.getChannel(address)">
+                                                    <ion-card-content
+                                                        *ngIf="!channelDefinitions[channelDescription.channelName]">
                                                         <ion-item>
                                                             <ion-label class="ion-text-wrap" color="medium"
                                                                 lines="none">
