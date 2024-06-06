@@ -910,7 +910,8 @@
       "acceptAgb": "I confirm the <a target=\"_blank\" href=\"https://fenecon.de/page/gtc/\">AGB</a>.*",
       "subscribeNewsletter": "I would like to subscribe to the FENECON newsletter to receive all the latest news from FENECON.",
       "company": "Company",
-      "confirmEmail": "confirm E-Mail"
+      "confirmEmail": "confirm E-Mail",
+      "PRIVATE": "Private"
     },
     "button": "Create",
     "errors": {
