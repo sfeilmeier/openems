@@ -52,6 +52,7 @@ public class TimeOfUseTariffRabotChargeImpl extends AbstractOpenemsComponent
 
 	private static final String RABOT_CHARGE_API_URL = "https://api.rabot-charge.de/api/day-ahead-prices-limited";
 	private static final int API_EXECUTE_HOUR = 14;
+	private static final int INTERNAL_ERROR = -1; // parsing, handle exception...
 
 	private final Logger log = LoggerFactory.getLogger(TimeOfUseTariffRabotChargeImpl.class);
 	private final AtomicReference<TimeOfUsePrices> prices = new AtomicReference<>(TimeOfUsePrices.EMPTY_PRICES);
@@ -157,15 +158,19 @@ public class TimeOfUseTariffRabotChargeImpl extends AbstractOpenemsComponent
 	}
 
 	private void handleEndpointResponse(HttpResponse<String> response) throws OpenemsNamedException {
-		// TODO
-		// Add response code to the channel once HttpError and HttpResponse is merged in
-		// develop.
+		this.channel(TimeOfUseTariffRabotCharge.ChannelId.HTTP_STATUS_CODE).setNextValue(response.status().code());
 
 		// Parse the response for the prices
 		this.prices.set(parsePrices(response.data()));
 	}
 
-	private void handleEndpointError(Throwable error) {
+	private void handleEndpointError(HttpError error) {
+		var httpStatusCode = INTERNAL_ERROR;
+		if (error instanceof HttpError.ResponseError re) {
+			httpStatusCode = re.status.code();
+		}
+
+		this.channel(TimeOfUseTariffRabotCharge.ChannelId.HTTP_STATUS_CODE).setNextValue(httpStatusCode);
 		this.log.error(error.getMessage(), error);
 	}
 
@@ -178,7 +183,7 @@ public class TimeOfUseTariffRabotChargeImpl extends AbstractOpenemsComponent
 
 	@Override
 	public TimeOfUsePrices getPrices() {
-		return TimeOfUsePrices.from(ZonedDateTime.now(), this.prices.get());
+		return TimeOfUsePrices.from(ZonedDateTime.now(this.componentManager.getClock()), this.prices.get());
 	}
 
 	/**
