@@ -11,6 +11,8 @@ import { environment } from '../environments';
 import { GlobalRouteChangeHandler } from './shared/service/globalRouteChangeHandler';
 import { Service, UserPermission, Websocket } from './shared/shared';
 import { Language } from './shared/type/language';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { AppService } from './app.service';
 
 export interface CachetComponentStatus {
   data: {
@@ -47,6 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
     public websocket: Websocket,
     private globalRouteChangeHandler: GlobalRouteChangeHandler,
     private meta: Meta,
+    private appService: AppService,
     private title: Title,
   ) {
     service.setLang(Language.getByKey(localStorage.LANGUAGE) ?? Language.getByBrowserLang(navigator.language));
@@ -64,6 +67,9 @@ export class AppComponent implements OnInit, OnDestroy {
         const segments = e.url.split('/');
         this.isHistoryDetailView = segments.slice(0, -1).includes('history');
       }));
+
+    this.appService.listen();
+    SplashScreen.hide();
   }
 
   ngOnInit() {

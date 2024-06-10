@@ -8,6 +8,7 @@ import { environment } from 'src/environments';
 
 import { AuthenticateWithPasswordRequest } from '../shared/jsonrpc/request/authenticateWithPasswordRequest';
 import { Edge, Service, Utils, Websocket } from '../shared/shared';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
   protected formIsDisabled: boolean = false;
 
   protected popoverActive: 'android' | 'iOS' | null = null;
+  protected readonly isApp: boolean = AppService.isApp;
 
   constructor(
     public service: Service,
