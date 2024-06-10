@@ -1,11 +1,12 @@
 // @ts-strict-ignore
 
 import { TranslateService } from "@ngx-translate/core";
-import { BatteryMode, BatteryStateMachine, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, SafetyCountryCode, Utils } from "../../shared";
 import { Meter } from "src/app/edge/installation/shared/meter";
+
+import { BatteryMode, BatteryStateMachine, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, SafetyCountryCode, Utils } from "../../shared";
+import { BackupEnable, DredCmd } from "../../type/general";
 import { TimeUtils } from "../../utils/time/timeutils";
 import { Formatter } from "./formatter";
-import { BackupEnable, DredCmd } from "../../type/general";
 
 export type Converter = (value: number | string | null) => string;
 

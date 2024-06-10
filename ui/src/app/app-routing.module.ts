@@ -53,6 +53,7 @@ import { LoginComponent } from './index/login.component';
 import { OverViewComponent } from './index/overview/overview.component';
 import { DataService } from './shared/genericComponents/shared/dataservice';
 import { UserComponent } from './user/user.component';
+import { DetailsOverviewComponent } from './edge/history/common/production/details/details.overview';
 
 const routes: Routes = [
 
@@ -98,6 +99,7 @@ const routes: Routes = [
           { path: 'consumptionchart', component: ConsumptionChartOverviewComponent },
           { path: 'gridchart', component: GridChartOverviewComponent },
           { path: 'productionchart', component: ProductionChartOverviewComponent },
+          { path: 'productionchart/:componentId', component: DetailsOverviewComponent },
           { path: 'selfconsumptionchart', component: SelfconsumptionChartOverviewComponent },
           { path: 'storagechart', component: StorageChartOverviewComponent },
 
