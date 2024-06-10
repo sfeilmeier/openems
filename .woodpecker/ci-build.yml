@@ -93,7 +93,7 @@ steps:
       - echo "Build for $OEM"
       - cd ui
       - npm ci --prefer-offline --cache $npm_config_cache --force
-      - sed --in-place s#/m/#/${CI_COMMIT_BRANCH}/#g angular.json src/themes/fenecon/root/site.webmanifest
+      - sed --in-place s#/m/#/${CI_COMMIT_BRANCH}/#g angular.json src/themes/$OEM/root/site.webmanifest
       - node_modules/.bin/ng config cli.cache.path "$NG_CLI_CACHE_PATH"
       - node_modules/.bin/ng lint
       - node_modules/.bin/tsc
