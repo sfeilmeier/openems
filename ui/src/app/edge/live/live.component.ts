@@ -1,7 +1,9 @@
 // @ts-strict-ignore
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RefresherCustomEvent } from '@ionic/angular';
 import { Subject } from 'rxjs';
+import { DataService } from 'src/app/shared/genericComponents/shared/dataservice';
 import { Edge, EdgeConfig, Service, Utils, Websocket, Widgets } from 'src/app/shared/shared';
 import { AdvertWidgets } from 'src/app/shared/type/widget';
 
@@ -16,12 +18,14 @@ export class LiveComponent implements OnInit, OnDestroy {
   public widgets: Widgets = null;
   public advertWidgets: AdvertWidgets = null;
   private stopOnDestroy: Subject<void> = new Subject<void>();
+  protected handleRefresh: (ev: RefresherCustomEvent) => void = (ev: RefresherCustomEvent) => this.dataService.refresh(ev);
 
   constructor(
     private route: ActivatedRoute,
     public service: Service,
     protected utils: Utils,
     protected websocket: Websocket,
+    private dataService: DataService,
   ) { }
 
   public ngOnInit() {

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from '../../../shared/shared';
+import { Edge, EdgeConfig, Service, Websocket } from '../../../shared/shared';
 
 interface MyEdgeConfigComponent extends EdgeConfig.Component {
   isClicked?: boolean,
@@ -11,7 +11,7 @@ interface MyEdgeConfigComponent extends EdgeConfig.Component {
   selector: ServiceAssistantComponent.SELECTOR,
   templateUrl: './serviceassistant.component.html',
 })
-export class ServiceAssistantComponent implements OnInit, OnDestroy {
+export class ServiceAssistantComponent implements OnInit {
 
   public readonly spinnerId = "serviceAssistent";
   public readonly servcieAssistantSpinnerId: string = "ServiceAssistentSpinner";
@@ -36,22 +36,9 @@ export class ServiceAssistantComponent implements OnInit, OnDestroy {
       this.service.getConfig().then(config => {
         this.config = config;
         this.batteries = config.getComponentsImplementingNature("io.openems.edge.battery.api.Battery");
-
-        const channelAddresses = [];
-        this.batteries.forEach(battery => {
-          for (const channel in config.components[battery.id].channels) {
-            channelAddresses.push(new ChannelAddress(battery.id, channel));
-          }
-          this.edge.subscribeChannels(this.websocket, ServiceAssistantComponent.SELECTOR, channelAddresses);
-        });
       });
       this.service.stopSpinner(this.servcieAssistantSpinnerId);
     });
   }
 
-  ngOnDestroy() {
-    if (this.edge != null) {
-      this.edge.unsubscribeChannels(this.websocket, ServiceAssistantComponent.SELECTOR);
-    }
-  }
 }

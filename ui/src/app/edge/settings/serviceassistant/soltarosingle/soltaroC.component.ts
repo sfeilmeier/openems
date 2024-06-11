@@ -1,16 +1,18 @@
 // @ts-strict-ignore
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Edge, EdgeConfig, Service, Websocket } from '../../../../shared/shared';
 import { AbstractBattery, CategorizedChannelDescription, ChannelChartDescription, ChannelDescription } from '../abstractbattery.component';
+import { Channel } from 'src/app/shared/jsonrpc/response/getChannelsOfComponentResponse';
 
 @Component({
-    selector: "soltaroVersionC",
+    selector: SoltaroVersionCComponent.SELECTOR,
     templateUrl: './../abstractbattery.component.html',
 })
-export class SoltaroVersionCComponent extends AbstractBattery implements OnInit {
+export class SoltaroVersionCComponent extends AbstractBattery implements OnInit, OnDestroy {
+
+    private static readonly SELECTOR = "soltaroVersionC";
 
     @Input() private componentId: string;
     @Input() public override edge: Edge;
@@ -18,35 +20,36 @@ export class SoltaroVersionCComponent extends AbstractBattery implements OnInit 
 
     public override component: EdgeConfig.Component = null;
 
+    protected override channelDefinitions: { [channelId: string]: Channel } = {};
+
     constructor(
         protected override service: Service,
         protected override translate: TranslateService,
         public override websocket: Websocket,
-        private route: ActivatedRoute,
     ) { super(service, translate, websocket); }
 
     ngOnInit() {
         this.spinnerId = "soltaroC";
         this.service.startSpinner(this.spinnerId);
-        this.service.setCurrentComponent('', this.route).then(edge => {
-
+        this.service.getCurrentEdge().then(async edge => {
             this.edge = edge;
 
-            this.service.getConfig().then(config => {
-                this.config = config;
-                this.component = this.config.getComponent(this.componentId);
+            this.config = await this.service.getConfig();
+            this.component = this.config.getComponent(this.componentId);
 
-                /*
-                Todo: Subscribe in every single battery - Was not working that way
-                let channelAddresses = [];
-                for (var channel in this.component.channels) {
-                    channelAddresses.push(new ChannelAddress(this.component.id, channel));
-                }
-                this.edge.subscribeChannels(this.websocket, SoltaroVersionB.SELECTOR, channelAddresses);
-                */
-            });
+            this.edge.subscribeChannels(this.websocket, `${SoltaroVersionCComponent.SELECTOR}:${this.componentId}`, this.getAllChannelAddresses());
+
+            const channelDefinitions = await this.edge.getChannels(this.websocket, this.componentId);
+            this.channelDefinitions = channelDefinitions.reduce((p, c) => {
+                return { ...p, [c.id]: c };
+            }, {});
+        }).finally(() => {
+            this.service.stopSpinner(this.spinnerId);
         });
-        this.service.stopSpinner(this.spinnerId);
+    }
+
+    ngOnDestroy() {
+        this.edge?.unsubscribeChannels(this.websocket, `${SoltaroVersionCComponent.SELECTOR}:${this.componentId}`);
     }
 
     protected getImportantWriteChannelDescriptions(): CategorizedChannelDescription[] {
@@ -113,7 +116,7 @@ export class SoltaroVersionCComponent extends AbstractBattery implements OnInit 
         return [
             { channelName: "Voltage", register: "0x2100", description: "Gesamtspannung", requiredInput: "", unit: "mV" },
             { channelName: "Cluster1MinCellVoltage", register: "0x2108", description: " Minimale Zellspannung(Entsprechende ID)", requiredInput: "", dependentChannelNames: [{ channelName: "Cluster1MinCellVoltageId", unit: "- id" }], unit: "mV" },
-            { channelName: "MaxCellVoltage", register: "0x2106", description: " Maximale Zellspannung(Entsprechende ID)", requiredInput: "", dependentChannelNames: [{ channelName: "Cluster1MaxCellVoltageId", unit: "- id" }][""], unit: "mV" },
+            { channelName: "MaxCellVoltage", register: "0x2106", description: " Maximale Zellspannung(Entsprechende ID)", requiredInput: "", dependentChannelNames: [{ channelName: "Cluster1MaxCellVoltageId", unit: "- id" }], unit: "mV" },
             { channelName: "Level1CellUnderVoltageProtection", register: "0x2046", description: "Minimale Zellspannung Lvl. 1 Protection(Recover)", requiredInput: "", dependentChannelNames: [{ channelName: "Level1CellUnderVoltageRecover", unit: "mV" }], unit: "mV" },
             { channelName: "Level2CellUnderVoltageProtection", register: "0x2406", description: "Minimale Zellspannung Lvl. 2 Protection(Recover)", requiredInput: "", dependentChannelNames: [{ channelName: "Level2CellUnderVoltageRecover", unit: "mV" }], unit: "mV" },
             { channelName: "Level1CellOverVoltageProtection", register: "0x2040", description: "Maximale Zellspannung Lvl. 1 Protection(Recover)", requiredInput: "", dependentChannelNames: [{ channelName: "Level1CellOverVoltageRecover", unit: "mV" }], unit: "mV" },

@@ -2,11 +2,13 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments';
 
 import { AuthenticateWithPasswordRequest } from '../shared/jsonrpc/request/authenticateWithPasswordRequest';
 import { Edge, Service, Utils, Websocket } from '../shared/shared';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'login',
@@ -19,6 +21,9 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
   private page = 0;
   protected formIsDisabled: boolean = false;
 
+  protected popoverActive: 'android' | 'iOS' | null = null;
+  protected readonly isApp: boolean = AppService.isApp;
+
   constructor(
     public service: Service,
     public websocket: Websocket,
@@ -26,6 +31,8 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private cdref: ChangeDetectorRef,
+    protected popoverctrl: PopoverController,
+    protected modalctrl: ModalController,
   ) { }
 
   ngAfterContentChecked() {
@@ -137,5 +144,9 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
   ngOnDestroy() {
     this.stopOnDestroy.next();
     this.stopOnDestroy.complete();
+  }
+
+  protected async presentQRCode(operatingSystem: 'android' | 'iOS') {
+    this.popoverActive = operatingSystem;
   }
 }

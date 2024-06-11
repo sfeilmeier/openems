@@ -33,6 +33,21 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: '2024.6.1',
+        changes: [
+          Changelog.openems('2024.6.0'),
+          Changelog.UI + "Allgemein Verbesserungen, neuer Login-Screen mit Links zu Apps für Android und iOS, phasengenaue historische Darstellung der Erzeugung",
+          Changelog.app(App.MODBUS_TCP_API) + "Neue Modbus-Register für Speichersysteme: MinCellVoltage, MaxCellVoltage, MinCellTemperature und MaxCellTemperature",
+          "Optimierung der Stabilität und Leistung des Backends",
+          Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Allgemeine Verbesserungen",
+          Changelog.library(Library.GUAVA, Library.GRADLE, Library.INFLUXDB, Library.GSON, Library.APACHE_FELIX_HTTP_JETTY),
+          { roleIsAtLeast: Role.ADMIN, change: "System-Update über Online-Monitoring: Update von Industrial-Release/SNAPSHOT auch durch Kunde/Installateur" },
+          { roleIsAtLeast: Role.ADMIN, change: "Remote-Service: Service beendet sich automatisch 48 Stunden nach Systemstart bzw. manueller Aktivierung" },
+          { roleIsAtLeast: Role.ADMIN, change: "Weidmüller Modbus/TCP Feldbuskoppler: Behebung eines kritischen Fehlers" },
+          { roleIsAtLeast: Role.ADMIN, change: "Debian-Paket/Update: Verbesserungen für \"Disk is full\"-Fehler" },
+        ],
+      },
+      {
         version: '2024.5.1',
         changes: [
           Changelog.openems('2024.5.0'),

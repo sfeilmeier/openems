@@ -206,6 +206,18 @@
                 }
               ]
             },
+            "fenecon-backend-deploy-app": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/theme.ts",
+                  "with": "src/themes/fenecon/environments/theme.ts"
+                },
+                {
+                  "replace": "src/environments/dummy.ts",
+                  "with": "src/themes/fenecon/environments/backend-prod.ts"
+                }
+              ]
+            },
             "fenecon-edge-dev": {
               "fileReplacements": [
                 {
@@ -278,6 +290,18 @@
                 }
               ]
             },
+            "heckert-backend-deploy-app": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/theme.ts",
+                  "with": "src/themes/heckert/environments/theme.ts"
+                },
+                {
+                  "replace": "src/environments/dummy.ts",
+                  "with": "src/themes/heckert/environments/backend-prod.ts"
+                }
+              ]
+            },
             "heckert-edge-dev": {
               "fileReplacements": [
                 {
@@ -327,6 +351,9 @@
             },
             "fenecon-backend-dev": {
               "browserTarget": "app:build:fenecon,fenecon-backend-dev"
+            },
+            "fenecon-backend-deploy-app": {
+              "browserTarget": "app:build:fenecon,fenecon-backend-deploy-app"
             },
             "fenecon-edge-dev": {
               "browserTarget": "app:build:fenecon,fenecon-edge-dev"

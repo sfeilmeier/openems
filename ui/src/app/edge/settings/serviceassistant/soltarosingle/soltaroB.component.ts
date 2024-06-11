@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Edge, EdgeConfig, Service, Websocket } from '../../../../shared/shared';
 import { AbstractBattery, CategorizedChannelDescription, ChannelChartDescription, ChannelDescription } from '../abstractbattery.component';
+import { Channel } from 'src/app/shared/jsonrpc/response/getChannelsOfComponentResponse';
 
 @Component({
     selector: SoltaroVersionBComponent.SELECTOR,
@@ -12,51 +12,45 @@ import { AbstractBattery, CategorizedChannelDescription, ChannelChartDescription
 })
 export class SoltaroVersionBComponent extends AbstractBattery implements OnInit, OnDestroy {
 
+    private static readonly SELECTOR = "soltaroVersionB";
+
     @Input() private componentId: string;
     @Input() public override edge: Edge;
     @Input() public override config: EdgeConfig;
 
-    private static readonly SELECTOR = "soltaroVersionB";
-
     public override component: EdgeConfig.Component = null;
+
+    protected override channelDefinitions: { [channelId: string]: Channel } = {};
 
     constructor(
         protected override service: Service,
         protected override translate: TranslateService,
         public override websocket: Websocket,
-        private route: ActivatedRoute,
     ) { super(service, translate, websocket); }
 
     ngOnInit() {
-        this.spinnerId = "soltaroC";
+        this.spinnerId = "soltaroB";
         this.service.startSpinner(this.spinnerId);
-        this.service.setCurrentComponent('', this.route).then(edge => {
-
+        this.service.getCurrentEdge().then(async edge => {
             this.edge = edge;
 
-            this.service.getConfig().then(config => {
-                this.config = config;
-                this.component = this.config.getComponent(this.componentId);
+            this.config = await this.service.getConfig();
+            this.component = this.config.getComponent(this.componentId);
 
-                /*
-                Todo: Subscribe in every single battery - Was not working that way
-                let channelAddresses = [];
-                for (var channel in this.component.channels) {
-                    channelAddresses.push(new ChannelAddress(this.component.id, channel));
-                }
-                this.edge.subscribeChannels(this.websocket, SoltaroVersionB.SELECTOR, channelAddresses);
-                */
-            });
+            this.edge.subscribeChannels(this.websocket, `${SoltaroVersionBComponent.SELECTOR}:${this.componentId}`, this.getAllChannelAddresses());
+
+            const channelDefinitions = await this.edge.getChannels(this.websocket, this.componentId);
+            this.channelDefinitions = channelDefinitions.reduce((p, c) => {
+                return { ...p, [c.id]: c };
+            }, {});
+        }).finally(() => {
             this.service.stopSpinner(this.spinnerId);
         });
     }
 
     ngOnDestroy() {
-        if (this.edge != null) {
-            this.edge.unsubscribeChannels(this.websocket, SoltaroVersionBComponent.SELECTOR);
-        }
+        this.edge?.unsubscribeChannels(this.websocket, `${SoltaroVersionBComponent.SELECTOR}:${this.componentId}`);
     }
-
 
     protected getImportantWriteChannelDescriptions(): CategorizedChannelDescription[] {
         return [

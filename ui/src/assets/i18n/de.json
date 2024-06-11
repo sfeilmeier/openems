@@ -907,7 +907,8 @@
       "acceptPrivacyPolicy": "Durch das Erstellen eines FENECON Installateur Accounts erkläre ich, die FENECON <a target=\"_blank\" href=\"https://fenecon.de/datenschutzerklaerung/\">Datenschutzerklärung</a> und die Nutzungsbedingungen gelesen zu haben und stimme ihnen zu.*",
       "acceptAgb": "Hiermit bestätige ich die <a target=\"_blank\" href=\"https://fenecon.de/allgemeine-lieferungs-und-zahlungsbedingungen/\">AGB</a>.*",
       "subscribeNewsletter": "Ich möchte den FENECON Newsletter abonnieren um immer alle Neuigkeiten von FENECON zu erhalten.",
-      "confirmEmail": "E-Mail Adresse wiederholen"
+      "confirmEmail": "E-Mail Adresse wiederholen",
+      "PRIVATE": "Privat"
     },
     "button": "Anlegen",
     "errors": {
@@ -958,5 +959,8 @@
     "SET_VALUE": "Eingestellter Wert",
     "MORE_CHANNELS": "Weitere Kanäle hinzufügen",
     "CHANNEL": "Kanal"
+  },
+  "APP": {
+    "FUNCTIONALITY_TEMPORARILY_NOT_AVAILABLE": "Diese Funktion ist vorübergehend in der App nicht verfügbar, verwenden Sie bitte dafür die Web-App."
   }
 }

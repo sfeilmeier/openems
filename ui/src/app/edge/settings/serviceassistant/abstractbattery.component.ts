@@ -2,6 +2,7 @@
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { SetChannelValueRequest } from "src/app/shared/jsonrpc/request/setChannelValueRequest";
 import { TranslateService } from "@ngx-translate/core";
+import { Channel } from "src/app/shared/jsonrpc/response/getChannelsOfComponentResponse";
 
 export abstract class AbstractBattery {
 
@@ -19,6 +20,8 @@ export abstract class AbstractBattery {
 
     // Cell-Chart: Channels and information
     protected importantCellChartChannelDescriptions: ChannelChartDescription[] = [];
+
+    protected channelDefinitions: { [channelId: string]: Channel } = {};
 
     constructor(
         protected service: Service,
@@ -39,6 +42,7 @@ export abstract class AbstractBattery {
         });
 
         this.importantCellChartChannelDescriptions = this.getImportantCellChartChannelDescriptions();
+
         this.service.stopSpinner(this._abstractBatterySpinner);
     }
 
@@ -132,7 +136,6 @@ export abstract class AbstractBattery {
      */
     protected abstract getImportantCellChartChannelDescriptions(): ChannelChartDescription[];
 
-
     getChannelAddress(componentId: string, channel: string): ChannelAddress {
         return new ChannelAddress(componentId, channel);
     }
@@ -160,6 +163,27 @@ export abstract class AbstractBattery {
             });
         }
     }
+
+    protected getAllChannelAddresses(): ChannelAddress[] {
+        const channels: ChannelAddress[] = [];
+        for (const category of [...this.importantReadChannelDescriptions, ...this.importantWriteChannelDescriptions]) {
+            channels.push(...this.getChannelAddressesOf(category.channels));
+        }
+        channels.push(new ChannelAddress(this.component.id, '_PropertyReduceTasks'));
+        return channels;
+    }
+
+    private getChannelAddressesOf(channelDescriptions: ChannelDescription[]): ChannelAddress[] {
+        const channels: ChannelAddress[] = [];
+        for (const channel of channelDescriptions) {
+            if (channel.dependentChannelNames) {
+                channels.push(...this.getChannelAddressesOf(channel.dependentChannelNames));
+            }
+            channels.push(new ChannelAddress(this.component.id, channel.channelName));
+        }
+        return channels;
+    }
+
 }
 
 export type CategorizedChannelDescription = {

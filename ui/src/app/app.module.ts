@@ -30,6 +30,7 @@ import { registerTranslateExtension } from './shared/translate.extension';
 import { Language, MyTranslateLoader } from './shared/type/language';
 import { UserModule } from './user/user.module';
 import { AngularMyDatePickerModule } from '@nodro7/angular-mydatepicker';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { AngularMyDatePickerModule } from '@nodro7/angular-mydatepicker';
     { provide: FORMLY_CONFIG, multi: true, useFactory: registerTranslateExtension, deps: [TranslateService] },
     Pagination,
     CheckForUpdateService,
+    AppService,
   ],
   bootstrap: [AppComponent],
 })
