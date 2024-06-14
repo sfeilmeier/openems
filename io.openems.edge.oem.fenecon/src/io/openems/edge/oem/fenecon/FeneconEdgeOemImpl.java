@@ -128,6 +128,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Api.ModbusTcp.ReadWrite", "https://fenecon.de/produkte/fems/fems-app-modbus-tcp-schreibzugriff/") //
 			.put("App.Api.RestJson.ReadOnly", "https://fenecon.de/produkte/fems/fems-app-rest-json-lesend/") //
 			.put("App.Api.RestJson.ReadWrite", "https://fenecon.de/fenecon-fems/fems-app-rest-json-schreibzugriff/") //
+			.put("App.Timedata.InfluxDb", "")
 			.put("App.Evcs.HardyBarth", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
 			.put("App.Evcs.Keba", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
 			.put("App.Evcs.IesKeywatt", "https://fenecon.de/fenecon-fems/fems-app-dc-ladestation/") //
@@ -150,6 +151,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Meter.Socomec", "https://fenecon.de/produkte/fems/fems-app-socomec-zaehler/") //
 			.put("App.Meter.CarloGavazzi", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
 			.put("App.Meter.Janitza", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
+			.put("App.Meter.Discovergy", "")//
 			.put("App.PvInverter.Fronius", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
 			.put("App.PvInverter.Kaco", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
 			.put("App.PvInverter.Kostal", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
