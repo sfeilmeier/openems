@@ -148,7 +148,7 @@ steps:
       source: ui/target/
       recursive: true
       delete: true
-      target: /opt/gitea/develop/fems-ui/html/${CI_COMMIT_BRANCH}
+      target: /var/opt/develop/fems-ui/html/${CI_COMMIT_BRANCH}
       script: /opt/gitea/develop/fems-ui/refresh-location.sh ${CI_COMMIT_BRANCH}
     depends_on: [build-ui]
 
@@ -160,7 +160,7 @@ steps:
     settings:
       <<: *rsync-settings
       source: build/target/
-      target: /opt/gitea/develop/fems-artifacts/html/${CI_COMMIT_BRANCH}
+      target: /var/opt/develop/fems-artifacts/html/${CI_COMMIT_BRANCH}
     depends_on: [build-debian-package]
 
   rebuild-cache:
