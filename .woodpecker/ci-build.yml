@@ -119,9 +119,9 @@ steps:
       - common_initialize_environment
       - echo "Build Version $VERSION"
       - |
-        common_run_checkstyle --parallel --max-workers=4 && \
-        common_build_edge --parallel --max-workers=2 && \
-        common_build_backend --parallel --max-workers=2;
+        common_run_checkstyle --console=plain --warn --parallel --max-workers=4 && \
+        common_build_edge --console=plain --warn --parallel --max-workers=2 && \
+        common_build_backend --console=plain --warn --parallel --max-workers=2;
     depends_on: [prepare-environment]
 
   build-debian-package:
