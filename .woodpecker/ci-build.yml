@@ -58,7 +58,7 @@ steps:
 
   prepare-environment:
     when: *every-build
-    image: bash:openems
+    image: openems-bash:latest
     commands:
       - export CACHE=$CI_WORKSPACE/cache
       - mkdir -p $CI_WORKSPACE/cache build/target
