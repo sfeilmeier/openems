@@ -11,11 +11,12 @@ variables:
 
   - &rsync-settings
     user: fenecon-docs
-    hosts: 
+    hosts:
       - ${ARTIFACT_SERVER}
     port: 22
     key:
       from_secret: ssh_key_intranet
+    args: "-v"
 
   - &main-build
     branch: [main, develop]
