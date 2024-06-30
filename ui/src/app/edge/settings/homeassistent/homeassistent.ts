@@ -5,9 +5,9 @@ import { AbstractFlatWidget } from 'src/app/shared/genericComponents/flat/abstra
 import { Converter } from 'src/app/shared/genericComponents/shared/converter';
 import { DataService } from 'src/app/shared/genericComponents/shared/dataservice';
 
+import { Filter } from 'src/app/shared/genericComponents/shared/filter';
 import { ChannelAddress, CurrentData, EdgeConfig, Utils } from '../../../shared/shared';
 import { LiveDataService } from '../../live/livedataservice';
-import { Filter } from 'src/app/shared/genericComponents/shared/filter';
 
 @Component({
   selector: HomeServiceAssistentComponent.SELECTOR,
@@ -32,10 +32,12 @@ export class HomeServiceAssistentComponent extends AbstractFlatWidget {
   protected override afterIsInitialized() {
     if (this.config?.components) {
       this.chargerComponents = Object.values(this.config.components)
-        .filter(component =>
-          component.factoryId === 'GoodWe.Charger-PV1' ||
-          component.factoryId === 'GoodWe.Charger-PV2',
-        );
+        .filter(component => [
+          'GoodWe.Charger-PV1',
+          'GoodWe.Charger-PV2',
+          'GoodWe.Charger.Two-String',
+          'GoodWe.Charger.Mppt.Two-String',
+        ].some(factoryId => factoryId === component.factoryId));
     }
   }
 
