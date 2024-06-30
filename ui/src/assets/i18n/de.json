@@ -854,7 +854,10 @@
     "passwordReset": "Passwort zurücksetzen",
     "authenticationFailed": "Authentifizierung fehlgeschlagen",
     "user": "Benutzer",
-    "REQUEST_TIMEOUT": "Zeitüberschreitung der Anforderung. Versuche es später noch einmal."
+    "REQUEST_TIMEOUT": "Zeitüberschreitung der Anforderung. Versuche es später noch einmal.",
+    "ENERGY_JOURNEY_SLOGAN": "Du bist Teil der Energy Journey",
+    "SIGN_IN": "Anmelden",
+    "DEMO_ACCESS": "Demo Zugang"
   },
   "Menu": {
     "accessLevel": "Zugriffslevel",

@@ -857,7 +857,10 @@
     "passwordReset": "Reset Password",
     "authenticationFailed": "Authentication Failed",
     "user": "User",
-    "REQUEST_TIMEOUT": "Request timed out. Try again later."
+    "REQUEST_TIMEOUT": "Your request has timed out. Please try again later.",
+    "ENERGY_JOURNEY_SLOGAN": "You are part of the energy journey",
+    "SIGN_IN": "Sign in",
+    "DEMO_ACCESS": "Demo Access"
   },
   "Menu": {
     "accessLevel": "Access Level",
