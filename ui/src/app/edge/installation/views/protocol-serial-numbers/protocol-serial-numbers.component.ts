@@ -142,9 +142,9 @@ export class ProtocolSerialNumbersComponent implements OnInit {
   /**
    * Restricts the reading of serial numbers to specific towers configured.
    */
-  private readSerialNumbersFromRegisters(): Promise<Object>[] {
+  private readSerialNumbersFromRegisters(): Promise<{}>[] {
 
-    const result: Promise<Object>[] = [];
+    const result: Promise<{}>[] = [];
     for (let i = 0; i < this.numberOfTowers; i++) {
       result.push(this.ibn.getSerialNumbersFromEdge(i, this.edge, this.websocket, this.numberOfModulesPerTower));
     }

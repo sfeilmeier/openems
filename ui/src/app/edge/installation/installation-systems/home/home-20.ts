@@ -12,7 +12,7 @@ type Home20Mppt = {
     ALIAS_MPPT_1?: string,
     HAS_MPPT_2: boolean,
     ALIAS_MPPT_2?: string,
-}
+};
 
 export class Home20FeneconIbn extends AbstractHomeIbn {
 

@@ -164,7 +164,7 @@ export enum Producttype {
   HOME_20_30 = 'Home 20 & 30',
   COMMERCIAL_30 = 'Commercial 30-Serie',
   COMMERCIAL_50 = 'Commercial 50-Serie',
-  COMMERCIAL_40_45 = 'COMMERCIAL 40-45'
+  COMMERCIAL_40_45 = 'COMMERCIAL 40-45',
 }
 
 export namespace Currency {
@@ -201,7 +201,7 @@ export namespace Currency {
 
   export enum Label {
     OERE_PER_KWH = "Öre/kWh",
-    CENT_PER_KWH = "Cent/kWh"
+    CENT_PER_KWH = "Cent/kWh",
   }
 }
 

@@ -4,7 +4,7 @@ export namespace Meter {
 
     export enum GridMeter {
         SOCOMEC,
-        KDK
+        KDK,
     }
 
     export enum GridMeterCategory {

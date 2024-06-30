@@ -10,8 +10,10 @@ import { FORMLY_CONFIG } from '@ngx-formly/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 
+import { AngularMyDatePickerModule } from '@nodro7/angular-mydatepicker';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppService } from './app.service';
 import { CheckForUpdateService } from './appupdateservice';
 import { ChangelogModule } from './changelog/changelog.module';
 import { EdgeModule } from './edge/edge.module';
@@ -29,8 +31,6 @@ import { StatusSingleComponent } from './shared/status/single/status.component';
 import { registerTranslateExtension } from './shared/translate.extension';
 import { Language, MyTranslateLoader } from './shared/type/language';
 import { UserModule } from './user/user.module';
-import { AngularMyDatePickerModule } from '@nodro7/angular-mydatepicker';
-import { AppService } from './app.service';
 
 @NgModule({
   declarations: [

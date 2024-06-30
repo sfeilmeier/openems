@@ -32,7 +32,7 @@ export type Home2030CommonApp = {
   EMERGENCY_RESERVE_ENABLED?: boolean,
   EMERGENCY_RESERVE_SOC?: number,
   SHADOW_MANAGEMENT_DISABLED?: boolean
-}
+};
 
 export abstract class AbstractHomeIbn extends AbstractIbn {
   private static readonly SELECTOR = 'Home';
@@ -287,7 +287,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       let isResolved = false;
       const channelAddresses: { [key: string]: ChannelAddress } = {};
       const subscriptionId = AbstractHomeIbn.SELECTOR + '-tower' + towerNr;
-      const model: Object = {};
+      const model: {} = {};
 
       // Gather channel addresses
       channelAddresses['batteryInverter'] = new ChannelAddress('batteryInverter0', 'SerialNumber');

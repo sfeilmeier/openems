@@ -95,7 +95,7 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         return channelAddresses;
     }
 
-    protected override addSerialNumbersToModel(key: string, model: Object, serialNumber: string): boolean {
+    protected override addSerialNumbersToModel(key: string, model: {}, serialNumber: string): boolean {
         if (super.addSerialNumbersToModel(key, model, serialNumber)) {
             // already serial number is parsed for the key.
             return true;

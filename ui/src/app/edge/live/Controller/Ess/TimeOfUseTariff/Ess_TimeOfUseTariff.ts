@@ -196,6 +196,6 @@ export namespace Controller_Ess_TimeOfUseTariff {
 
     export enum ControlMode {
         CHARGE_CONSUMPTION = 'CHARGE_CONSUMPTION',
-        DELAY_DISCHARGE = 'DELAY_DISCHARGE'
+        DELAY_DISCHARGE = 'DELAY_DISCHARGE',
     }
 }

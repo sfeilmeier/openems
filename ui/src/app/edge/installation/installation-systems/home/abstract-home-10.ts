@@ -16,7 +16,7 @@ type Home10App = {
   EMERGENCY_RESERVE_ENABLED?: boolean,
   EMERGENCY_RESERVE_SOC?: number,
   SHADOW_MANAGEMENT_DISABLED?: boolean
-}
+};
 
 export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
 

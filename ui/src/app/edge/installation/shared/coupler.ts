@@ -2,7 +2,7 @@ import { TranslateService } from "@ngx-translate/core";
 
 export enum Coupler {
     WEIDMUELLER,
-    WAGO
+    WAGO,
 }
 
 export namespace Coupler {

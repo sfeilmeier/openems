@@ -48,7 +48,7 @@ export class GeneralIbn extends AbstractIbn {
     public override fillSerialNumberForms(numberOfTowers: number, numberOfModulesPerTower: number, models: any, forms: SerialNumberFormData[]): SerialNumberFormData[] {
         throw new Error('This is General Ibn, Method not implemented.');
     }
-    public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower?: number): Promise<Object> {
+    public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower?: number): Promise<{}> {
         throw new Error('This is General Ibn, Method not implemented.');
     }
     public override getFeedInLimitFields(): FormlyFieldConfig[] {

@@ -6,7 +6,7 @@ export enum GridMode {
 export enum Mode {
     MANUAL_ON = 'MANUAL_ON',
     MANUAL_OFF = 'MANUAL_OFF',
-    AUTOMATIC = 'AUTOMATIC'
+    AUTOMATIC = 'AUTOMATIC',
 }
 export enum BatteryMode {
     UNDEFINED = -1, //
@@ -29,7 +29,7 @@ export enum GoodWe {
 }
 export enum WorkMode {
     TIME = 'TIME',
-    NONE = 'NONE'
+    NONE = 'NONE',
 }
 export enum BackupEnable {
     AKTIVIERT = 1,

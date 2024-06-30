@@ -23,7 +23,7 @@ export enum ConfigurationState {
     Configuring = "configuring",        // Component is being configured
 
     Configured = "configured",          // Configuration of component was successful
-    Error = "error"                     // Configuration of component was not successful
+    Error = "error",                     // Configuration of component was not successful
 }
 
 export enum FunctionState {
@@ -33,7 +33,7 @@ export enum FunctionState {
 
     Ok = "ok",
     Warning = "warning",
-    Fault = "fault"
+    Fault = "fault",
 }
 
 export type ConfigurationObject = {
@@ -45,7 +45,7 @@ export type ConfigurationObject = {
     configState?: ConfigurationState,
     functionState?: FunctionState,
     baseMode?: BaseMode
-}
+};
 
 const DELAY_CLEAR = 5000;          // Time between the clear and the start of the configurations
 const DELAY_CONFIG = 15000;         // Time between the configuration of every component
