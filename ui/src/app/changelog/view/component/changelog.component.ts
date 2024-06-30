@@ -72,7 +72,7 @@ export class ChangelogComponent {
           Changelog.app(App.TIME_OF_USE) + Changelog.GENERAL_OPTIMIZATION,
           { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.HOME_20_30) + "Vorbereitung zur Änderung der PV-Anzeige von einzelnen Strings auf gesammte MPPT Informationen, da aus technischen Gründen keine zuverlässigen Werte je String berechnet werden können. Umstellung erfordert jeweils manuelle Anpassung der historischen Daten durch FEMS-Team." },
           { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.COMMERCIAL_50) + "Anpassung an State-Machine für KACO Batteriewechselrichter. Ersetzt MAX_START_ATTEMPTS durch MAX_START_TIMEOUT. Neuer Fehlerstatus GRID_DISCONNECTION" },
-          { roleIsAtLeast: Role.ADMIN, change: "Online-Monitoring-Demo: Verbesserung und automatische Anonymisierung. http://portal.fenecon.de/m/demo" },
+          { roleIsAtLeast: Role.ADMIN, change: "Online-Monitoring-Demo: Verbesserung und automatische Anonymisierung. http://portal.fenecon.de/demo" },
         ],
       },
       {

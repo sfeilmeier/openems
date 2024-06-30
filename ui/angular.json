@@ -194,7 +194,6 @@
               ]
             },
             "fenecon-backend-prod": {
-              "baseHref": "/m/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/theme.ts",
