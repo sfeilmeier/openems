@@ -274,4 +274,30 @@ export namespace Converter {
       });
     };
   };
+
+  /**
+   * Converts Industrial-State
+   *
+   * @param translate the current language to be translated to
+   * @returns converted value
+   */
+  export const CONVERT_INDUSTRIAL_STATE = (translate: TranslateService) => {
+    return (value: any): string => {
+      switch (value) {
+        case 10:
+          return translate.instant('General.STATE_MACHINE.GO_RUNNING');
+        case 11:
+          return translate.instant('General.STATE_MACHINE.RUNNING');
+        case 20:
+          return translate.instant('General.STATE_MACHINE.GO_STOPPED');
+        case 21:
+          return translate.instant('General.STATE_MACHINE.STOPPED');
+        case 30:
+          return translate.instant('General.STATE_MACHINE.ERROR');
+        case -1:
+        default:
+          return translate.instant('General.STATE_MACHINE.UNDEFINED');
+      }
+    };
+  };
 }

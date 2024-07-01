@@ -37,6 +37,8 @@ export enum WidgetFactory {
     'Controller.TimeslotPeakshaving',
     'Evcs.Cluster.PeakShaving',
     'Evcs.Cluster.SelfConsumption',
+    'System.Fenecon.Industrial.S',
+    'System.Fenecon.Industrial.L',
 }
 
 export type Icon = {

@@ -35,6 +35,11 @@ export const theme = {
         SETTINGS_NETWORK_CONFIGURATION: "ui/settings.html#_netzwerkkonfiguration",
         EVCS_CLUSTER: "fems-app/includes/FEMS_App_Multi-Ladepunkt-Management.html",
 
+        SYSTEM: {
+            INDUSTRIAL_S: "https://docs.fenecon.de/_/de/industrial/industrial_s/betriebsanleitung/Fenecon_Industrial_S_Betriebsanleitung.html",
+            INDUSTRIAL_L: "#",
+        },
+
         WARRANTY: {
             HOME: {
                 EN: "https://fenecon.de/wp-content/uploads/2022/06/V2021.11_EN_Warranty_conditions_FENECON_Home.pdf",

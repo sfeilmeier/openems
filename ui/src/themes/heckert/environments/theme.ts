@@ -34,6 +34,11 @@ export const theme = {
         SETTINGS_NETWORK_CONFIGURATION: "ui/settings.html#_netzwerkkonfiguration",
         EVCS_CLUSTER: "fems-app/includes/FEMS_App_Multi-Ladepunkt-Management.html",
 
+        SYSTEM: {
+            INDUSTRIAL_S: "#",
+            INDUSTRIAL_L: "#",
+        },
+
         // Currently we are showing same links as what we shown for Fenecon OEM untill we recieve new links.
         WARRANTY: {
             HOME: {

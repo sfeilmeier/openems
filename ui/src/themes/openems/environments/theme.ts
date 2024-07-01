@@ -33,6 +33,11 @@ export const theme = {
         SETTINGS_NETWORK_CONFIGURATION: null,
         EVCS_CLUSTER: "io.openems.edge.evcs.cluster/readme.adoc",
 
+        SYSTEM: {
+            INDUSTRIAL_S: "#",
+            INDUSTRIAL_L: "#",
+        },
+
         WARRANTY: {
             HOME: {
                 EN: "#",
