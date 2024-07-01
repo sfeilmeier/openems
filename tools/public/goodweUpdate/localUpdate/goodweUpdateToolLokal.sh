@@ -14,22 +14,27 @@ GREEN='\033[1;32m'
 echo "Prepare GoodWe Update Tool ..."
 
 function downloadGoodweUpdate() {
-wget http://fenecon.de/debian-test/goodweUpdate/goodwe20_30_test/goodweUpdate.jar -O /tmp/goodweUpdate.jar
-if [ $? -ne 0 ]; then return 8; fi
-wget http://fenecon.de/debian-test/goodweUpdate/goodwe20_30_test/arm.bin -O /tmp/$ARM_FW 
-if [ $? -ne 0 ]; then return 8; fi
-wget http://fenecon.de/debian-test/goodweUpdate/goodwe20_30_test/dsp.bin -O /tmp/$DSP_FW
-if [ $? -ne 0 ]; then return 8; fi
+echo "Dowload has to be done manually"
+cp 
+#wget http://fenecon.de/debian-test/goodweUpdate/goodwe20_30_test/goodweUpdate.jar -O /tmp/goodweUpdate.jar
+#if [ $? -ne 0 ]; then return 8; fi
+#wget http://fenecon.de/debian-test/goodweUpdate/goodwe20_30_test/arm.bin -O /tmp/$ARM_FW 
+#if [ $? -ne 0 ]; then return 8; fi
+#wget http://fenecon.de/debian-test/goodweUpdate/goodwe20_30_test/dsp.bin -O /tmp/$DSP_FW
+#if [ $? -ne 0 ]; then return 8; fi
 }
 
 
 function goodWeUpdate() {
 echo "Starte GoodWe Update"	
-java -jar /tmp/goodweUpdate.jar $PORT $BAUD_RATE /tmp/$ARM_FW /tmp/$DSP_FW
+#java -jar /tmp/goodweUpdate.jar $PORT $BAUD_RATE /tmp/$ARM_FW /tmp/$DSP_FW
+java -jar /home/fems/goodweUpdate.jar $PORT $BAUD_RATE /home/fems/$ARM_FW /home/fems/$DSP_FW
 }
 
+#sudo apt-get install rsync 
+# rsync -r /ordner fems@192.168.100.1:/home/fems
+#rsync Error Code 127 zurückbekommen, so kann man den Parameter --rsync-path verwenden (--rsync-path=/path/to/rsync)
 
-# TODO: Add dynamic properties, stop & start if it should be used by Service
 function handle_goodwe_30_update {
 PORT=/dev/busUSB2
 BAUD_RATE=9600

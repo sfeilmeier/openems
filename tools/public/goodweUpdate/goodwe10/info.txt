@@ -1,0 +1,2 @@
+Java files located:
+https://git.intranet.fenecon.de/sebastian.asen/GoodWeUpdate
