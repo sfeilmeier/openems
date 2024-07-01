@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Setup for (temporary) FEMS PageKite-Service
-# Add: wget http://fenecon.de/fems-download/setup-fems-pagekite-service.sh -O /tmp/setup-fems-pagekite-service.sh --no-check-certificate && bash -x /tmp/setup-fems-pagekite-service.sh 
+# Add: wget http://fenecon.de/fems-tools/setup-fems-pagekite-service.sh -O /tmp/setup-fems-pagekite-service.sh --no-check-certificate && bash -x /tmp/setup-fems-pagekite-service.sh 
 
 set -e
 

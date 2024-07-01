@@ -6,5 +6,7 @@ This folder contains scripts which are publicly available.
 
 to download a script use:
 ```bash
-wget: "wget https://fenecon.de/fems-download/$script"
+wget: "wget https://fenecon.de/fems-tools/$script"
 ```
+
+to update scripts, update git repo under `/opt/fems` on `www.fenecon.de`;

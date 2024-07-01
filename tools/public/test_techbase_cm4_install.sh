@@ -92,7 +92,7 @@ apt update --assume-yes
 echo -e "\e ${BCyan} === OpenEMS Installieren === \e[0m"
 apt-get install fonts-dejavu libasound2 --assume-yes
 apt --fix-broken install --assume-yes
-journalctl -u openems -n 20 --no-pager && wget https://fenecon.de/fems-download/update-fems.sh -O /tmp/update-fems.sh --no-check-certificate && bash /tmp/update-fems.sh
+journalctl -u openems -n 20 --no-pager && wget https://fenecon.de/fems-tools/update-fems.sh -O /tmp/update-fems.sh --no-check-certificate && bash /tmp/update-fems.sh
 
 echo -e "\e ${BCyan} === fems-autoupdate deaktivieren === \e[0m"
 dpkg-divert /usr/bin/fems-autoupdate

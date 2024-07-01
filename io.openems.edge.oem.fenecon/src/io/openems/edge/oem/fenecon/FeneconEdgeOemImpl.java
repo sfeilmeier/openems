@@ -89,7 +89,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 		return new SystemUpdateParams(//
 				"fems", //
 				latestVersionUrl, //
-				"https://fenecon.de/fems-download/update-fems.sh", //
+				"https://fenecon.de/fems-tools/update-fems.sh", //
 				updateScriptParams);
 	}
 
