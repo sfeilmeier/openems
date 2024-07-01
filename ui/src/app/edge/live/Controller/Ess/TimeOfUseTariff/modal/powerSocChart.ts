@@ -20,9 +20,9 @@ import { ChartConstants } from 'src/app/shared/genericComponents/chart/chart.con
 })
 export class SchedulePowerAndSocChartComponent extends AbstractHistoryChart implements OnInit, OnChanges, OnDestroy {
 
-    @Input() public refresh: boolean;
-    @Input() public override edge: Edge;
-    @Input() public component: EdgeConfig.Component;
+    @Input({ required: true }) public refresh!: boolean;
+    @Input({ required: true }) public override edge!: Edge;
+    @Input({ required: true }) public component!: EdgeConfig.Component;
 
     public ngOnChanges() {
         this.updateChart();

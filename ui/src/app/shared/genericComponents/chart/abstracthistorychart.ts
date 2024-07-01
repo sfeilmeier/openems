@@ -37,9 +37,9 @@ export abstract class AbstractHistoryChart implements OnInit {
   @Input() public chartTitle: string = "";
 
   /** TODO: workaround with Observables, to not have to pass the period on Initialisation */
-  @Input() public component: EdgeConfig.Component;
-  @Input() public showPhases: boolean;
-  @Input() public showTotal: boolean;
+  @Input() public component?: EdgeConfig.Component;
+  @Input() public showPhases: boolean = false;
+  @Input() public showTotal: boolean = false;
   @Input() public isOnlyChart: boolean = false;
 
   public edge: Edge | null = null;
@@ -621,10 +621,10 @@ export abstract class AbstractHistoryChart implements OnInit {
           text: dataset.label,
           datasetIndex: index,
           fontColor: getComputedStyle(document.documentElement).getPropertyValue('--ion-color-text'),
-          ...(dataset.backgroundColor != null && {fillStyle: dataset.backgroundColor.toString()}),
+          ...(dataset.backgroundColor != null && { fillStyle: dataset.backgroundColor.toString() }),
           hidden: isHidden != null ? isHidden : !chart.isDatasetVisible(index),
           lineWidth: 2,
-          ...(dataset.borderColor != null && {strokeStyle: dataset.borderColor.toString()}),
+          ...(dataset.borderColor != null && { strokeStyle: dataset.borderColor.toString() }),
           ...(dataset['borderDash'] != null && { lineDash: dataset['borderDash'] }),
         });
       });

@@ -11,7 +11,7 @@ import { ChannelAddress, CurrentData } from 'src/app/shared/shared';
 })
 export class FlatComponent extends AbstractFlatWidget {
 
-    @Input() public period: DefaultTypes.HistoryPeriod;
+    @Input({ required: true }) public period!: DefaultTypes.HistoryPeriod;
 
     protected delayedActiveTimeOverPeriod: number | null = null;
     protected chargedConsumptionActiveTimeOverPeriod: number | null = null;
