@@ -30,7 +30,7 @@ export namespace Coupler {
     export function toImageUrl(coupler: Coupler): string {
         switch (coupler) {
             case Coupler.WEIDMUELLER:
-                return 'assets/img/Netztrennstelle_Weidmüller.PNG';
+                return 'assets/img/Netztrennstelle_Weidmueller.PNG';
             case Coupler.WAGO:
                 return 'assets/img/Netztrennstelle_WAGO.PNG';
         }
