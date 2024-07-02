@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2024.7.1-SNAPSHOT";
+    public static readonly UI_VERSION = "2024.7.1";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -163,6 +163,7 @@ export class Library {
     public static readonly IONIC = new Library('Ionic', 'ionic');
     public static readonly MYDATEPICKER = new Library('MyDatePicker', 'mydatepicker');
     public static readonly NG2_CHARTS = new Library('ng2-charts', 'ng2-charts');
+    public static readonly CHART_JS = new Library('chart.js', 'chart.js');
     public static readonly NGX_COOKIE_SERVICE = new Library('ngx-cookie-service', 'ngx-cookie-service');
     public static readonly NGX_FORMLY = new Library('ngx-formly', 'ngx-formly');
     public static readonly NGX_SPINNER = new Library('ngx-spinner', 'ngx-spinner');
