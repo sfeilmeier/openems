@@ -14,7 +14,7 @@ import { ArrayUtils } from 'src/app/shared/utils/array/array.utils';
 export enum AlertingType {
   OFFLINE,
   FAULT,
-  WARNING
+  WARNING,
 }
 
 type DefaultValues = { [K in AlertingType]: Delay[]; };

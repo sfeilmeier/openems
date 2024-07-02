@@ -1,0 +1,7 @@
+<oe-flat-widget (click)="presentModal()" *ngIf="isInitialized" [icon]="{name: 'square-outline'}"
+    title="FENECON Industrial L">
+
+        <oe-modal-line [name]="'General.state' | translate"
+        [converter]="CONVERT_INDUSTRIAL_STATE" [channelAddress]="'system0/StateMachine'"></oe-modal-line>
+        
+</oe-flat-widget>

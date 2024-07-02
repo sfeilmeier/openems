@@ -24,11 +24,11 @@ export type SerialNumberData = {
 export type SchedulerId = {
   componentId: string,
   behaviour: SchedulerIdBehaviour
-}
+};
 
 export enum SchedulerIdBehaviour {
   MANAGED_BY_APP_MANAGER,
-  ALWAYS_INCLUDE
+  ALWAYS_INCLUDE,
 }
 
 export abstract class AbstractIbn {
@@ -183,7 +183,7 @@ export abstract class AbstractIbn {
    * @param websocket the Websocket connection.
    * @param numberOfModulesPerTower number of modules per tower.
    */
-  public abstract getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower?: number): Promise<Object>;
+  public abstract getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower?: number): Promise<{}>;
 
   /**
    * View Configuration Dynamic Feed-In limitation.

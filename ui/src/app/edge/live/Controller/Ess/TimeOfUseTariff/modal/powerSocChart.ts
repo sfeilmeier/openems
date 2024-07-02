@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import * as Chart from 'chart.js';
 import { AbstractHistoryChart } from 'src/app/edge/history/abstracthistorychart';
-import { AbstractHistoryChart as NewAbstractHistoryChart } from 'src/app/shared/genericComponents/chart/abstracthistorychart';
+import { AbstractHistoryChart as NewAbstractHistoryChart } from 'src/app/shared/components/chart/abstracthistorychart';
 import { ComponentJsonApiRequest } from 'src/app/shared/jsonrpc/request/componentJsonApiRequest';
 import { ChartAxis, HistoryUtils, TimeOfUseTariffUtils, Utils, YAxisTitle } from 'src/app/shared/service/utils';
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from 'src/app/shared/shared';
@@ -12,6 +12,7 @@ import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from 'src/app/sh
 import { GetScheduleRequest } from '../../../../../../shared/jsonrpc/request/getScheduleRequest';
 import { GetScheduleResponse } from '../../../../../../shared/jsonrpc/response/getScheduleResponse';
 import { Controller_Ess_TimeOfUseTariff } from '../Ess_TimeOfUseTariff';
+import { ChartConstants } from 'src/app/shared/components/chart/chart.constants';
 
 @Component({
     selector: 'powerSocChart',
@@ -19,9 +20,9 @@ import { Controller_Ess_TimeOfUseTariff } from '../Ess_TimeOfUseTariff';
 })
 export class SchedulePowerAndSocChartComponent extends AbstractHistoryChart implements OnInit, OnChanges, OnDestroy {
 
-    @Input() public refresh: boolean;
-    @Input() public override edge: Edge;
-    @Input() public component: EdgeConfig.Component;
+    @Input({ required: true }) public refresh!: boolean;
+    @Input({ required: true }) public override edge!: Edge;
+    @Input({ required: true }) public component!: EdgeConfig.Component;
 
     public ngOnChanges() {
         this.updateChart();
@@ -181,8 +182,8 @@ export class SchedulePowerAndSocChartComponent extends AbstractHistoryChart impl
         const leftYAxis: HistoryUtils.yAxes = { position: 'left', unit: YAxisTitle.POWER, yAxisId: ChartAxis.LEFT };
         const locale = this.service.translate.currentLang;
 
-        this.options = NewAbstractHistoryChart.getYAxisOptions(this.options, rightYAxis, this.translate, 'line', locale, true);
-        this.options = NewAbstractHistoryChart.getYAxisOptions(this.options, leftYAxis, this.translate, 'line', locale, true);
+        this.options = NewAbstractHistoryChart.getYAxisOptions(this.options, rightYAxis, this.translate, 'line', locale, ChartConstants.EMPTY_DATASETS, true);
+        this.options = NewAbstractHistoryChart.getYAxisOptions(this.options, leftYAxis, this.translate, 'line', locale, ChartConstants.EMPTY_DATASETS, true);
 
         this.datasets = this.datasets.map((el: Chart.ChartDataset) => {
 

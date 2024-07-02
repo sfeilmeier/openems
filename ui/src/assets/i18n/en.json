@@ -245,6 +245,12 @@
           "CHART_TITLE": "Planned Schedule (BETA test)",
           "CHART_WARNING_NOTE": "The graphic shows the past three hours as well as the future planned operating mode for the period for which the dynamic grid purchase prices are available. Please note that the planned schedule is subject to continuous recalculation and may change throughout the day.",
           "POWER_SOC_CHART_TITLE": "Forecasts (Only for Admins)"
+        },
+        "SYSTEM": {
+          "INDUSTRIAL": {
+            "NOTE": "Starts or stops the entire system, including battery inverter and batteries."
+          },
+          "OVERALL_SYSTEM": "Overall system"
         }
       },
       "RETROFITTING": {
@@ -303,7 +309,10 @@
       "oct": "Oxt",
       "nov": "Nov",
       "dec": "Dec",
-      "activeDuration": "active duration"
+      "activeDuration": "active duration",
+      "CURRENT_AND_VOLTAGE": "Current & Voltage",
+      "CURRENT": "Current",
+      "VOLTAGE": "Voltage"
     },
     "Config": {
       "Index": {
@@ -513,6 +522,7 @@
     "SYSTEM_STATE": "System state",
     "TOTAL": "Total",
     "totalState": "Total state",
+    "VISIBLE_FOR_ADMINS_ONLY": "Visible for Service & Administration only",
     "warning": "Warning",
     "Week": {
       "monday": "Monday",
@@ -550,6 +560,14 @@
     "yes": "Yes",
     "no": "No",
     "value": "value",
+    "STATE_MACHINE": {
+      "GO_STOPPED": "Stopping...",
+      "GO_RUNNING": "Starting...",
+      "RUNNING": "Started",
+      "STOPPED": "Stopped",
+      "UNDEFINED": "Unknown",
+      "ERROR": "Error"
+    },
     "SUM_STATE": "System state",
     "SYSTEM": "system",
     "RESTART": "Restart",
@@ -857,7 +875,10 @@
     "passwordReset": "Reset Password",
     "authenticationFailed": "Authentication Failed",
     "user": "User",
-    "REQUEST_TIMEOUT": "Request timed out. Try again later."
+    "REQUEST_TIMEOUT": "Your request has timed out. Please try again later.",
+    "ENERGY_JOURNEY_SLOGAN": "You are part of the energy journey",
+    "SIGN_IN": "Sign in",
+    "DEMO_ACCESS": "Demo Access"
   },
   "Menu": {
     "accessLevel": "Access Level",

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-export { Edge } from "./edge/edge";
-export { EdgeConfig } from "./edge/edgeconfig";
+export { Edge } from "./components/edge/edge";
+export { EdgeConfig } from "./components/edge/edgeconfig";
 export { Logger } from "./service/logger";
 export { Service } from "./service/service";
 export { Utils } from "./service/utils";
@@ -14,7 +14,7 @@ export { Widget, WidgetFactory, WidgetNature, Widgets } from "./type/widget";
 import { AlertController, AlertOptions } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { addIcons } from 'ionicons';
-import { Edge } from "./edge/edge";
+import { Edge } from "./components/edge/edge";
 import { User } from "./jsonrpc/shared";
 import { DefaultTypes } from "./service/defaulttypes";
 import { Role } from "./type/role";
@@ -107,13 +107,13 @@ export class UserPermission {
   }
 
   /**
-   * Checks if user is allowed to see {@link HomeServiceAssistentComponent}
+   * Checks if user is allowed to see {@link HomeServiceAssistantComponent}
    * Producttype needs to be Producttype.HOME or Producttype.HOME_20_30 and globalRole needs to be admin
    *
    * @param user the current user
    * @returns true, if user is at least admin
    */
-  public static isUserAllowedToSeeHomeAssistent(user: User, edge: Edge): boolean {
+  public static isUserAllowedToSeeHomeAssistant(user: User, edge: Edge): boolean {
     const isProductTypeAllowed = (() => {
       switch (edge.producttype) {
         case Producttype.HOME:
@@ -133,7 +133,7 @@ export class UserPermission {
   * @param user the current user
   * @returns true, if user is at least admin
   */
-  public static isUserAllowedToSeeCommercialServiceAssistent(user: User, edge: Edge) {
+  public static isUserAllowedToSeeCommercialServiceAssistant(user: User, edge: Edge) {
     const isProductTypeAllowed = (() => {
       switch (edge.producttype) {
         case Producttype.COMMERCIAL_30:
@@ -164,7 +164,7 @@ export enum Producttype {
   HOME_20_30 = 'Home 20 & 30',
   COMMERCIAL_30 = 'Commercial 30-Serie',
   COMMERCIAL_50 = 'Commercial 50-Serie',
-  COMMERCIAL_40_45 = 'COMMERCIAL 40-45'
+  COMMERCIAL_40_45 = 'COMMERCIAL 40-45',
 }
 
 export namespace Currency {
@@ -201,7 +201,7 @@ export namespace Currency {
 
   export enum Label {
     OERE_PER_KWH = "Öre/kWh",
-    CENT_PER_KWH = "Cent/kWh"
+    CENT_PER_KWH = "Cent/kWh",
   }
 }
 

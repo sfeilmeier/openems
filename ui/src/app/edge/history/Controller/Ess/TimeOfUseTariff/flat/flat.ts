@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { Component, Input } from '@angular/core';
 
-import { AbstractFlatWidget } from 'src/app/shared/genericComponents/flat/abstract-flat-widget';
+import { AbstractFlatWidget } from 'src/app/shared/components/flat/abstract-flat-widget';
 import { DefaultTypes } from 'src/app/shared/service/defaulttypes';
 import { ChannelAddress, CurrentData } from 'src/app/shared/shared';
 
@@ -11,7 +11,7 @@ import { ChannelAddress, CurrentData } from 'src/app/shared/shared';
 })
 export class FlatComponent extends AbstractFlatWidget {
 
-    @Input() public period: DefaultTypes.HistoryPeriod;
+    @Input({ required: true }) public period!: DefaultTypes.HistoryPeriod;
 
     protected delayedActiveTimeOverPeriod: number | null = null;
     protected chargedConsumptionActiveTimeOverPeriod: number | null = null;

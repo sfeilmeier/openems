@@ -33,6 +33,29 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: '2024.7.1',
+        changes: [
+          Changelog.openems('2024.7.0'),
+          Changelog.UI + "Weiterleitung zum Login bei abgelaufenem Session-Token, Aktualisierung der QR-Codes für Android und iOS, verbesserte Darstellung und Fehlerbehandlung bei History-Charts, Fehlerbehebung bei lokalem Login, phasengenaue historische Darstellung des Verbrauchs",
+          "Anpassungen an der Konfiguration des Netzwerk-Zeitservers (ntp.fenecon.de)",
+          Changelog.product(Product.INDUSTRIAL_S, Product.INDUSTRIAL_L) + "Neues System-Widget zum Start/Stop der Anlage",
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.UI + "Darstellung von Strom und Spannung in History-Charts für Erzeuger und Verbraucher" },
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Fehlerbehebung bei der Bestimmung der Anzahl der Batterietürme" },
+          { roleIsAtLeast: Role.ADMIN, change: "Online-Monitoring: Anpassung der URL auf https://portal.fenecon.de (ohne '/m/')" },
+          { roleIsAtLeast: Role.ADMIN, change: "Home-Assistent: Anzeige der Charger auch für Home 20 & 30" },
+          { roleIsAtLeast: Role.ADMIN, change: "MR Gridcon wird nicht mehr unterstützt durch FEMS" },
+          { roleIsAtLeast: Role.ADMIN, change: "Einstellungen: separierte Darstellung von Widgets, die nur für Service & Administration sichtbar sind" },
+          { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | Power-Assistant: detaillierte Analyse aktueller Leistungsvorgaben und -limitierungen" },
+          { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | Channels: allgemeine Verbesserungen (OpenEMS), Fehlerbehebung beim Setzen von Werten" },
+          { roleIsAtLeast: Role.ADMIN, change: "MQTT-Controller: Verbesserung reconnect bei Verbindungsabbruch (OpenEMS)" },
+          { roleIsAtLeast: Role.ADMIN, change: "Edge2Edge Meter (OpenEMS)" },
+          { roleIsAtLeast: Role.ADMIN, change: "Shelly: mehr Kompatibilitäten (OpenEMS)" },
+          { roleIsAtLeast: Role.ADMIN, change: "SunSpec: Channels haben standardmäßig PersistencePriority VERY_LOW und werden nur optional ans Backend gesendet" },
+          { roleIsAtLeast: Role.ADMIN, change: "App Center: interne Apps für Discovergy-Zähler und lokale InfluxDB" },
+          Changelog.library(Library.APACHE_FELIX_SCR, Library.APACHE_FELIX_HTTP_JETTY, Library.APACHE_FELIX_WEBCONSOLE, Library.NGX_FORMLY, Library.CHART_JS, Library.UUID),
+        ],
+      },
+      {
         version: '2024.6.1',
         changes: [
           Changelog.openems('2024.6.0'),
@@ -72,7 +95,7 @@ export class ChangelogComponent {
           Changelog.app(App.TIME_OF_USE) + Changelog.GENERAL_OPTIMIZATION,
           { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.HOME_20_30) + "Vorbereitung zur Änderung der PV-Anzeige von einzelnen Strings auf gesammte MPPT Informationen, da aus technischen Gründen keine zuverlässigen Werte je String berechnet werden können. Umstellung erfordert jeweils manuelle Anpassung der historischen Daten durch FEMS-Team." },
           { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.COMMERCIAL_50) + "Anpassung an State-Machine für KACO Batteriewechselrichter. Ersetzt MAX_START_ATTEMPTS durch MAX_START_TIMEOUT. Neuer Fehlerstatus GRID_DISCONNECTION" },
-          { roleIsAtLeast: Role.ADMIN, change: "Online-Monitoring-Demo: Verbesserung und automatische Anonymisierung. http://portal.fenecon.de/m/demo" },
+          { roleIsAtLeast: Role.ADMIN, change: "Online-Monitoring-Demo: Verbesserung und automatische Anonymisierung. http://portal.fenecon.de/demo" },
         ],
       },
       {

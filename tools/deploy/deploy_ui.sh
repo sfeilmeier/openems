@@ -18,12 +18,6 @@ for theme in fenecon heckert; do
 	echo "Building UI $theme"
 	echo
 	node_modules/.bin/ng build -c "${theme},${theme}-backend-prod,prod"
-	
-	if [ $theme = "fenecon" ]; then
-		# Set /m/ for images
-		sed --in-place 's#\(<link .* href="\)/\([^"]*\)#\1/m/\2#' target/index.html
-	fi
-
 	echo
 	echo "Create backup in '/opt/ui-${theme}-backup'"
 	rm -Rf /opt/ui-$theme-backup

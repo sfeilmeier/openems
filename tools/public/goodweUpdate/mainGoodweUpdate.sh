@@ -103,6 +103,22 @@ update() {
 	echo "# #################################################"
 }
 
+__cleanup() {
+	if [ -f /tmp/goodwe-update.lock ];
+	then
+		rm /tmp/goodwe-update.lock;
+	fi
+}
+
+if [ -f /tmp/goodwe-update.lock ];
+then
+	echo "Goodwe Update still running!"
+	exit;
+fi
+
+trap __cleanup EXIT;
+touch /tmp/goodwe-update.lock;
+
 update;
 finally;
 

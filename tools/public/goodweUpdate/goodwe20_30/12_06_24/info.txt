@@ -1,0 +1,3 @@
+Version 12.06.24 (Changelog ...)
+ARM: 9 (410-02071-09(403)_M4_App.bin)
+DSP: 8 (410-04062-08-V8045.bin)

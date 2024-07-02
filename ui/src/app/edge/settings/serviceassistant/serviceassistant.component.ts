@@ -13,14 +13,14 @@ interface MyEdgeConfigComponent extends EdgeConfig.Component {
 })
 export class ServiceAssistantComponent implements OnInit {
 
-  public readonly spinnerId = "serviceAssistent";
-  public readonly servcieAssistantSpinnerId: string = "ServiceAssistentSpinner";
+  public readonly spinnerId = "serviceAssistant";
+  public readonly serviceAssistantSpinnerId: string = "ServiceAssistantSpinner";
 
   public batteries: MyEdgeConfigComponent[];
   public edge: Edge;
   public config: EdgeConfig;
 
-  private static readonly SELECTOR = "servcieAssistant";
+  private static readonly SELECTOR = "serviceAssistant";
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +29,7 @@ export class ServiceAssistantComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.service.startSpinner(this.servcieAssistantSpinnerId);
+    this.service.startSpinner(this.serviceAssistantSpinnerId);
     this.service.setCurrentComponent('Service Assistant', this.route).then(edge => {
       this.edge = edge;
 
@@ -37,7 +37,7 @@ export class ServiceAssistantComponent implements OnInit {
         this.config = config;
         this.batteries = config.getComponentsImplementingNature("io.openems.edge.battery.api.Battery");
       });
-      this.service.stopSpinner(this.servcieAssistantSpinnerId);
+      this.service.stopSpinner(this.serviceAssistantSpinnerId);
     });
   }
 

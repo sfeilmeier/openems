@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { Edge } from '../edge/edge';
-import { EdgeConfig } from '../edge/edgeconfig';
+import { Edge } from '../components/edge/edge';
+import { EdgeConfig } from '../components/edge/edgeconfig';
 import { Utils } from '../shared';
 
 export enum WidgetClass {
@@ -11,7 +11,7 @@ export enum WidgetClass {
     'Grid',
     'Common_Production',
     'Consumption',
-    'Controller_ChannelThreshold'
+    'Controller_ChannelThreshold',
 }
 
 export enum WidgetNature {
@@ -37,13 +37,15 @@ export enum WidgetFactory {
     'Controller.TimeslotPeakshaving',
     'Evcs.Cluster.PeakShaving',
     'Evcs.Cluster.SelfConsumption',
+    'System.Fenecon.Industrial.S',
+    'System.Fenecon.Industrial.L',
 }
 
 export type Icon = {
     color: string;
     size: string;
     name: string;
-}
+};
 
 export class Widget {
     public name: WidgetNature | WidgetFactory | string;
@@ -53,7 +55,7 @@ export class Widget {
 export type AdvertWidget = {
     name: string;
     title?: string;
-}
+};
 
 export class AdvertWidgets {
 
@@ -176,5 +178,5 @@ export class Widgets {
 
 export enum ProductType {
     HOME = "home",
-    HOME_20_30 = "Home 20 & 30"
+    HOME_20_30 = "Home 20 & 30",
 }

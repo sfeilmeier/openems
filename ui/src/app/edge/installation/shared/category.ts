@@ -18,7 +18,7 @@ export enum Category {
     PRODUCER,
     EMS_BOX_LABEL_HOME,
     EMS_BOX_LABEL_HECKERT,
-    GRID_METER_CATEGORY
+    GRID_METER_CATEGORY,
 }
 
 export namespace Category {

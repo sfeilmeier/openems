@@ -10,8 +10,8 @@ import { filter, first, take } from 'rxjs/operators';
 import { ChosenFilter } from 'src/app/index/filter/filter.component';
 import { environment } from 'src/environments';
 
-import { Edge } from '../edge/edge';
-import { EdgeConfig } from '../edge/edgeconfig';
+import { Edge } from '../components/edge/edge';
+import { EdgeConfig } from '../components/edge/edgeconfig';
 import { JsonrpcResponseError } from '../jsonrpc/base';
 import { GetEdgeRequest } from '../jsonrpc/request/getEdgeRequest';
 import { GetEdgesRequest } from '../jsonrpc/request/getEdgesRequest';
@@ -130,7 +130,7 @@ export class Service extends AbstractService {
     // this.notify(notification);
   }
 
-  public setCurrentComponent(currentPageTitle: string | { languageKey: string, interpolateParams?: Object }, activatedRoute: ActivatedRoute): Promise<Edge> {
+  public setCurrentComponent(currentPageTitle: string | { languageKey: string, interpolateParams?: {} }, activatedRoute: ActivatedRoute): Promise<Edge> {
     return new Promise((resolve, reject) => {
       // Set the currentPageTitle only once per ActivatedRoute
       if (this.currentActivatedRoute != activatedRoute) {

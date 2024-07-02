@@ -49,7 +49,7 @@ export enum FeedInSetting {
     Leading_0_98 = "LEADING_0_98",
     Leading_0_99 = "LEADING_0_99",
     Leading_1 = "LEADING_1",
-    Undefined = "UNDEFINED"
+    Undefined = "UNDEFINED",
 }
 
 export enum FeedInType {
@@ -61,7 +61,7 @@ export enum FeedInType {
 export enum WebLinks {
     GTC_LINK,
     WARRANTY_LINK_HOME,
-    WARRANTY_LINK_COMMERCIAL
+    WARRANTY_LINK_COMMERCIAL,
 }
 
 export namespace WebLinks {
@@ -99,7 +99,7 @@ export namespace WebLinks {
 // Specific for Configuration-commercial-modbusbridge
 export enum ModbusBridgeType {
     TCP_IP,
-    RS485
+    RS485,
 }
 
 export enum View {
@@ -121,5 +121,5 @@ export enum View {
     ConfigurationMpptSelection,
     ConfigurationSystemVariant,
     ConfigurationSubSystem,
-    ConfigurationEnergyFlowMeter
+    ConfigurationEnergyFlowMeter,
 }

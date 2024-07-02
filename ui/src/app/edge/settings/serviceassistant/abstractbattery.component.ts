@@ -189,7 +189,7 @@ export abstract class AbstractBattery {
 export type CategorizedChannelDescription = {
     category: string,
     channels: ChannelDescription[]
-}
+};
 
 export type ChannelDescription = {
     channelName: string,
@@ -202,11 +202,11 @@ export type ChannelDescription = {
 
     // The EdgeConfig has no unit values, given by the Edge, if it is connected via backend.
     unit?: string,
-}
+};
 
 export type ChannelChartDescription = {
     label: string,
     channelName: string,
     datasets: number[],
     colorRgb: string,
-}
+};

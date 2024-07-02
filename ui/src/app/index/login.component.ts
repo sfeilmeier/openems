@@ -6,9 +6,9 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments';
 
+import { AppService } from '../app.service';
 import { AuthenticateWithPasswordRequest } from '../shared/jsonrpc/request/authenticateWithPasswordRequest';
 import { Edge, Service, Utils, Websocket } from '../shared/shared';
-import { AppService } from '../app.service';
 
 @Component({
   selector: 'login',

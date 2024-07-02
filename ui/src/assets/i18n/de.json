@@ -244,6 +244,12 @@
           "CHART_TITLE": "Aktueller Fahrplan (BETA-Test)",
           "CHART_WARNING_NOTE": "Die Grafik zeigt die vergangenen drei Stunden, sowie die zukünftig geplante Betriebsweise für den Zeitraum, für den die dynamischen Netzbezugspreise zur Verfügung stehen. Bitte beachten Sie, dass der Fahrplan kontinuierlich neu berechnet wird und sich somit im Tagesverlauf ändern kann.",
           "POWER_SOC_CHART_TITLE": "Vorhersagen (Nur für Admins)"
+        },
+        "SYSTEM": {
+          "INDUSTRIAL": {
+            "NOTE": "Startet oder stoppt das Gesamtsystem, inklusive Batteriewechselrichter und Batterien."
+          },
+          "OVERALL_SYSTEM": "Gesamtsystem"
         }
       },
       "RETROFITTING": {
@@ -263,6 +269,7 @@
       "SYSTEMUPDATE": "Systemupdate"
     },
     "History": {
+      "CURRENT_AND_VOLTAGE": "Strom & Spannung",
       "beginDate": "Startdatum wählen",
       "day": "Tag",
       "endDate": "Enddatum wählen",
@@ -302,7 +309,9 @@
       "oct": "Okt",
       "nov": "Nov",
       "dec": "Dez",
-      "activeDuration": "Einschaltdauer"
+      "activeDuration": "Einschaltdauer",
+      "CURRENT": "Strom",
+      "VOLTAGE": "Spannung"
     },
     "Config": {
       "Index": {
@@ -511,6 +520,7 @@
     "SYSTEM_STATE": "Systemstatus",
     "TOTAL": "Gesamt",
     "totalState": "Gesamtstatus",
+    "VISIBLE_FOR_ADMINS_ONLY": "Sichtbar nur für Service & Administration",
     "warning": "Warnung",
     "Week": {
       "monday": "Montag",
@@ -548,6 +558,14 @@
     "yes": "Ja",
     "no": "Nein",
     "value": "Wert",
+    "STATE_MACHINE": {
+      "GO_STOPPED": "Stoppt...",
+      "GO_RUNNING": "Startet...",
+      "RUNNING": "Gestartet",
+      "STOPPED": "Gestoppt",
+      "UNDEFINED": "Unbekannt",
+      "ERROR": "Fehler"
+    },
     "SUM_STATE": "Systemzustand",
     "SYSTEM": "System",
     "RESTART": "Neu starten",
@@ -854,7 +872,10 @@
     "passwordReset": "Passwort zurücksetzen",
     "authenticationFailed": "Authentifizierung fehlgeschlagen",
     "user": "Benutzer",
-    "REQUEST_TIMEOUT": "Zeitüberschreitung der Anforderung. Versuche es später noch einmal."
+    "REQUEST_TIMEOUT": "Zeitüberschreitung der Anforderung. Versuche es später noch einmal.",
+    "ENERGY_JOURNEY_SLOGAN": "Du bist Teil der Energy Journey",
+    "SIGN_IN": "Anmelden",
+    "DEMO_ACCESS": "Demo Zugang"
   },
   "Menu": {
     "accessLevel": "Zugriffslevel",

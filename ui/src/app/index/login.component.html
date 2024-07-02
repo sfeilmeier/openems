@@ -9,8 +9,8 @@
                 <ion-img style="height: 10vh;" src="assets/img/fenecon-logo.png" />
               </ion-row>
               <ion-row class="ion-justify-content-center">
-                <ion-label>
-                  Du bist Teil der Energy Journey
+                <ion-label translate>
+                  Login.ENERGY_JOURNEY_SLOGAN
                 </ion-label>
               </ion-row>
             </ion-grid>
@@ -26,48 +26,71 @@
               </ion-row>
               <ion-row>
                 <ion-col size="12">
-                  <form (ngSubmit)="doLogin({ username: username.value, password: password.value})">
-                    <ion-item>
-                      <ion-label position="floating">E-Mail / <span translate>Login.user</span></ion-label>
-                      <ion-input #username required type="input"
-                        [placeholder]="'E-Mail / ' + ('Login.passwordLabel' | translate)">
-                      </ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label position="floating" translate>Login.passwordLabel</ion-label>
-                      <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate">
-                      </ion-input>
-                    </ion-item>
 
-                    <!-- workaround for submit with enter key https://github.com/ionic-team/ionic-framework/issues/19368 -->
-                    <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
+                  <ng-container *ngIf="environment.backend === 'OpenEMS Backend', else openEMSEdge">
+                    <form (ngSubmit)="doLogin({ username: username.value, password: password.value})">
+                      <ion-item>
+                        <ion-label position="floating">E-Mail / <span translate>Login.user</span></ion-label>
+                        <ion-input #username required type="input"
+                          [placeholder]="'E-Mail / ' + ('Login.passwordLabel' | translate)">
+                        </ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label position="floating" translate>Login.passwordLabel</ion-label>
+                        <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate">
+                        </ion-input>
+                      </ion-item>
+                      <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
 
-                    <ion-button [disabled]="formIsDisabled" type="submit" fill="outline" [disabled]="formIsDisabled"
-                      type="submit" style="width: 100%; --border-radius: 20px" class="ion-padding">
-                      Anmelden
-                    </ion-button>
+                      <ion-button fill="outline" [disabled]="formIsDisabled" type="submit"
+                        style="width: 100%; --border-radius: 20px" class="ion-padding" translate>
+                        Login.SIGN_IN
+                      </ion-button>
+                      <ion-item lines="none" class="ion-margin-top">
+                        <ion-grid>
+                          <ion-row>
+                            <a class="ion-float-left" size="small" [href]="environment.links.FORGET_PASSWORD"
+                              style="text-decoration: none;">
+                              <small translate>Login.passwordReset</small>
+                            </a>
+                          </ion-row>
+                          <ion-row>
+                            <registration style="cursor: pointer;"></registration>
+                          </ion-row>
+                          <ion-row>
+                            <a class="ion-float-left" size="small"
+                              (click)="doDemoLogin({ username: 'demo@fenecon.de', password: 'femsdemo' })"
+                              style="text-decoration: none;">
+                              <small translate>Login.DEMO_ACCESS</small>
+                            </a>
+                          </ion-row>
+                        </ion-grid>
+                      </ion-item>
+                    </form>
+                  </ng-container>
 
-                    <ion-item lines="none" class="ion-margin-top">
-                      <ion-grid>
-                        <ion-row>
-                          <a type="button" class="ion-float-left" size="small"
-                            [href]="environment.links.FORGET_PASSWORD" style="text-decoration: none;">
-                            <small translate>Login.passwordReset</small>
-                          </a>
-                        </ion-row>
-                        <ion-row>
-                          <registration style="cursor: pointer;"></registration>
-                        </ion-row>
-                        <ion-row>
-                          <a type="button" class="ion-float-left" size="small"
-                            (click)="doDemoLogin({ username: 'demo@fenecon.de', password: 'femsdemo' })"
-                            style="text-decoration: none;">
-                            <small>Demo Zugang</small>
-                          </a>
-                        </ion-row>
-                      </ion-grid>
-                    </ion-item>
-                  </form>
+                  <ng-template #openEMSEdge>
+                    <form (ngSubmit)="doLogin({ password: password.value})">
+                      <ion-item>
+                        <ion-text class="ion-text-wrap" color="medium" translate>
+                          Login.preamble
+                        </ion-text>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label position="floating" translate>Login.passwordLabel</ion-label>
+                        <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate"
+                          value="user"></ion-input>
+                      </ion-item>
+
+                      <!-- workaround for submit with enter key https://github.com/ionic-team/ionic-framework/issues/19368 -->
+                      <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
+
+                      <ion-button [disabled]="formIsDisabled" type="submit" fill="outline" [disabled]="formIsDisabled"
+                        type="submit" style="width: 100%; --border-radius: 20px" class="ion-padding" translate>
+                        Login.SIGN_IN
+                      </ion-button>
+                    </form>
+                  </ng-template>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -203,7 +226,7 @@
                       <tr>
                         <th>
                       <tr>
-                        <a type="button" class="ion-float-left" size="small" [href]="environment.links.FORGET_PASSWORD"
+                        <a class="ion-float-left" size="small" [href]="environment.links.FORGET_PASSWORD"
                           style="text-decoration: none;">
                           <small translate>Login.passwordReset</small>
                         </a>
@@ -224,10 +247,8 @@
                 </form>
               </ion-card-content>
             </ion-card>
-
           </ng-container>
         </ion-col>
-
       </ion-row>
     </ion-grid>
   </ion-content>

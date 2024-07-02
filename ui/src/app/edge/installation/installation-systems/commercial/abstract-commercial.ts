@@ -350,7 +350,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             let isResolved = false;
             const channelAddresses: ChannelAddress[] = this.getChannels(towerNr, numberOfModulesPerTower);
             const subscriptionId = AbstractCommercialIbn.SELECTOR + '-tower' + towerNr;
-            const model: Object = {};
+            const model: {} = {};
 
             // Subject to stop the subscription to currentData
             const stopOnRequest: Subject<void> = new Subject<void>();
@@ -414,7 +414,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
      * @param model the model.
      * @param serialNumber the serial number from the channel.
      */
-    protected addSerialNumbersToModel(key: string, model: Object, serialNumber: string): boolean {
+    protected addSerialNumbersToModel(key: string, model: {}, serialNumber: string): boolean {
         if (key.startsWith('bmsBox')) {
             // BMS master.
             model[key] = serialNumber.substring(14);

@@ -1,0 +1,19 @@
+This localUpdate tools where used to update a huge amouont of GoodWe 20 & 30 inverters in Natternberg semi-automatic.
+
+Structure:
+One Laptop
+ - SSH connections via Kitty
+ - Start goodweUpdateToolLokal.sh once (Guide that is not stopping itself)
+
+5 FEMS devices
+ - Preinstalled files:
+   - /home/fems/arm.bin 
+   - /home/fems/dsp.bin
+   - /home/fems/goodweUpdateToolLokal.sh (Could be named different)
+   - /home/fems/goodweUpdate.jar
+ - Passwords as easy as possible for the electical installer, to establish connections in the mornign and mondays
+
+
+
+
+

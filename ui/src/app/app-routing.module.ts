@@ -4,13 +4,15 @@ import { environment } from 'src/environments';
 
 import { ChangelogViewComponent } from './changelog/view/view';
 import { EdgeComponent } from './edge/edge.component';
-import { OverviewComponent as ChannelthresholdChartOverviewComponent } from './edge/history/Controller/ChannelThreshold/overview/overview';
-import { OverviewComponent as TimeOfUseTariffOverviewComponent } from './edge/history/Controller/Ess/TimeOfUseTariff/overview/overview';
 import { OverviewComponent as AutarchyChartOverviewComponent } from './edge/history/common/autarchy/overview/overview';
+import { DetailsOverviewComponent as ConsumptionDetailsOverviewComponent } from './edge/history/common/consumption/details/details.overview';
 import { OverviewComponent as ConsumptionChartOverviewComponent } from './edge/history/common/consumption/overview/overview';
 import { OverviewComponent as GridChartOverviewComponent } from './edge/history/common/grid/overview/overview';
+import { DetailsOverviewComponent } from './edge/history/common/production/details/details.overview';
 import { OverviewComponent as ProductionChartOverviewComponent } from './edge/history/common/production/overview/overview';
 import { OverviewComponent as SelfconsumptionChartOverviewComponent } from './edge/history/common/selfconsumption/overview/overview';
+import { OverviewComponent as ChannelthresholdChartOverviewComponent } from './edge/history/Controller/ChannelThreshold/overview/overview';
+import { OverviewComponent as TimeOfUseTariffOverviewComponent } from './edge/history/Controller/Ess/TimeOfUseTariff/overview/overview';
 import { DelayedSellToGridChartOverviewComponent } from './edge/history/delayedselltogrid/symmetricpeakshavingchartoverview/delayedselltogridchartoverview.component';
 import { FixDigitalOutputChartOverviewComponent } from './edge/history/fixdigitaloutput/fixdigitaloutputchartoverview/fixdigitaloutputchartoverview.component';
 import { GridOptimizedChargeChartOverviewComponent } from './edge/history/gridoptimizedcharge/gridoptimizedchargechartoverview/gridoptimizedchargechartoverview.component';
@@ -37,10 +39,11 @@ import { IndexComponent as EdgeSettingsComponentInstallIndexComponentComponent }
 import { ComponentInstallComponent as EdgeSettingsComponentInstallComponentComponent } from './edge/settings/component/install/install.component';
 import { IndexComponent as EdgeSettingsComponentUpdateIndexComponentComponent } from './edge/settings/component/update/index.component';
 import { ComponentUpdateComponent as EdgeSettingsComponentUpdateComponentComponent } from './edge/settings/component/update/update.component';
-import { HomeServiceAssistentComponent } from './edge/settings/homeassistent/homeassistent';
+import { HomeServiceAssistantComponent } from './edge/settings/homeassistant/homeassistant';
 import { JsonrpcTestComponent } from './edge/settings/jsonrpctest/jsonrpctest';
 import { NetworkOldComponent as EdgeSettingsNetworkOldComponent } from './edge/settings/network.old/network.old.component';
 import { NetworkComponent as EdgeSettingsNetworkComponent } from './edge/settings/network/network.component';
+import { PowerAssistantComponent } from './edge/settings/powerassistant/powerassistant';
 import { AliasUpdateComponent } from './edge/settings/profile/aliasupdate.component';
 import { ProfileComponent as EdgeSettingsProfileComponent } from './edge/settings/profile/profile.component';
 import { ServiceAssistantComponent as EdgeSettingsServiceAssistant } from './edge/settings/serviceassistant/serviceassistant.component';
@@ -51,10 +54,10 @@ import { SystemLogComponent as EdgeSettingsSystemLogComponent } from './edge/set
 import { SystemUpdateOldComponent as EdgeSettingsSystemUpdateOldComponent } from './edge/settings/systemupdate.old/systemupdate.old.component';
 import { LoginComponent } from './index/login.component';
 import { OverViewComponent } from './index/overview/overview.component';
-import { DataService } from './shared/genericComponents/shared/dataservice';
-import { UserComponent } from './user/user.component';
-import { DetailsOverviewComponent } from './edge/history/common/production/details/details.overview';
 import { LoadingScreenComponent } from './index/shared/loading-screen';
+import { DataService } from './shared/components/shared/dataservice';
+import { UserComponent } from './user/user.component';
+import { CurrentAndVoltageOverviewComponent } from './shared/components/edge/meter/currentVoltage/currentVoltage.overview';
 
 const routes: Routes = [
 
@@ -98,9 +101,12 @@ const routes: Routes = [
           { path: ':componentId/timeslotpeakshavingchart', component: TimeslotPeakshavingChartOverviewComponent },
           { path: 'autarchychart', component: AutarchyChartOverviewComponent },
           { path: 'consumptionchart', component: ConsumptionChartOverviewComponent },
+          { path: 'consumptionchart/:componentId', component: ConsumptionDetailsOverviewComponent },
+          { path: 'consumptionchart/:componentId/currentVoltage', component: CurrentAndVoltageOverviewComponent },
           { path: 'gridchart', component: GridChartOverviewComponent },
           { path: 'productionchart', component: ProductionChartOverviewComponent },
           { path: 'productionchart/:componentId', component: DetailsOverviewComponent },
+          { path: 'productionchart/:componentId/currentVoltage', component: CurrentAndVoltageOverviewComponent },
           { path: 'selfconsumptionchart', component: SelfconsumptionChartOverviewComponent },
           { path: 'storagechart', component: StorageChartOverviewComponent },
 
@@ -119,7 +125,7 @@ const routes: Routes = [
       { path: 'settings/network.old', component: EdgeSettingsNetworkOldComponent },
       { path: 'settings/profile', component: EdgeSettingsProfileComponent },
       { path: 'settings/profile/:componentId', component: AliasUpdateComponent },
-      { path: 'settings/servcieAssistant', component: EdgeSettingsServiceAssistant },
+      { path: 'settings/serviceAssistant', component: EdgeSettingsServiceAssistant },
       { path: 'settings/systemexecute', component: EdgeSettingsSystemExecuteComponent },
       { path: 'settings/systemlog', component: EdgeSettingsSystemLogComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.liveLog' } },
       { path: 'settings/system', component: EdgeSettingsSystemComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.SYSTEM' } },
@@ -129,8 +135,9 @@ const routes: Routes = [
       { path: 'settings/app/update/:appId', component: EdgeSettingsAppUpdate },
       { path: 'settings/app/single/:appId', component: EdgeSettingsAppSingle },
       { path: 'settings/alerting', component: EdgeSettingsAlerting },
-      { path: 'settings/homeServiceAssistent', component: HomeServiceAssistentComponent, data: { navbarTitle: 'Home-Assistent' } },
+      { path: 'settings/homeServiceAssistant', component: HomeServiceAssistantComponent, data: { navbarTitle: 'Home-Assistent' } },
       { path: 'settings/jsonrpctest', component: JsonrpcTestComponent },
+      { path: 'settings/powerAssistant', component: PowerAssistantComponent, data: { navbarTitle: 'Power-Assistant' } },
     ],
   },
 

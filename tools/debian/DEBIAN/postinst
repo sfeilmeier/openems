@@ -71,7 +71,7 @@ case "$1" in
 		
 		# Enable and start services
 		start_service openems
-		start_service fems-remote-service
+		start_service openems-remote-service
 		start_service cron
 		start_service nginx
 		

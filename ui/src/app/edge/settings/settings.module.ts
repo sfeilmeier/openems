@@ -9,11 +9,12 @@ import { IndexComponent as ComponentInstallIndexComponent } from './component/in
 import { ComponentInstallComponent } from './component/install/install.component';
 import { IndexComponent as ComponentUpdateIndexComponent } from './component/update/index.component';
 import { ComponentUpdateComponent } from './component/update/update.component';
-import { ChartComponent } from './homeassistent/chart/chart';
-import { HomeServiceAssistentComponent } from './homeassistent/homeassistent';
+import { ChartComponent } from './homeassistant/chart/chart';
+import { HomeServiceAssistantComponent } from './homeassistant/homeassistant';
 import { JsonrpcTestModule } from './jsonrpctest/jsonrpctest.module';
 import { NetworkOldComponent } from './network.old/network.old.component';
 import { NetworkComponent } from './network/network.component';
+import { PowerAssistantModule } from './powerassistant/powerassistant.module';
 import { AliasUpdateComponent } from './profile/aliasupdate.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ServiceAssistantModule } from './serviceassistant/serviceassistant.module';
@@ -31,6 +32,7 @@ import { SystemUpdateOldComponent } from './systemupdate.old/systemupdate.old.co
     SharedModule,
     ServiceAssistantModule,
     ChangelogModule,
+    PowerAssistantModule,
   ],
   declarations: [
     AlertingComponent,
@@ -41,7 +43,7 @@ import { SystemUpdateOldComponent } from './systemupdate.old/systemupdate.old.co
     ComponentInstallIndexComponent,
     ComponentUpdateComponent,
     ComponentUpdateIndexComponent,
-    HomeServiceAssistentComponent,
+    HomeServiceAssistantComponent,
     MaintenanceComponent,
     NetworkComponent,
     NetworkOldComponent,
