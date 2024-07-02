@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { Edge } from '../edge/edge';
-import { EdgeConfig } from '../edge/edgeconfig';
+import { Edge } from '../components/edge/edge';
+import { EdgeConfig } from '../components/edge/edgeconfig';
 import { Utils } from '../shared';
 
 export enum WidgetClass {

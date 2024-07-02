@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { AbstractFlatWidget } from "src/app/shared/genericComponents/flat/abstract-flat-widget";
-import { Converter } from "src/app/shared/genericComponents/shared/converter";
 import { ModalComponent } from "../modal/modal";
+import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
+import { Converter } from "src/app/shared/components/shared/converter";
 
 @Component({
   selector: 'Industrial_L',

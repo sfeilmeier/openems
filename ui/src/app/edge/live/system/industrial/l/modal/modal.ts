@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
-import { AbstractModal } from 'src/app/shared/genericComponents/modal/abstractModal';
+import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
 
 @Component({
   templateUrl: './modal.html',
