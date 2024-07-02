@@ -64,7 +64,7 @@ common_update_version_in_code() {
     sed --in-place "s#\(UI_VERSION = \"\).*\(\";\)#\1$VERSION\2#" $SRC_CHANGELOG_CONSTANTS
 
     echo "## Update $SRC_ANDROID_GRADLE"
-    sed --in-place "s#\(versionCode \).*\$#\1$(printf "%04d%02d%02d" $VERSION_MAJOR $VERSION_MINOR $VERSION_PATCH)#" $SRC_ANDROID_GRADLE
+    sed --in-place "s#\(versionCode \).*\$#\1$(printf "%04d%02d%02d00" $VERSION_MAJOR $VERSION_MINOR $VERSION_PATCH)#" $SRC_ANDROID_GRADLE
     sed --in-place "s#\(versionName \).*\$#\1\"$VERSION\"#" $SRC_ANDROID_GRADLE
 }
 
