@@ -107,13 +107,13 @@ export class UserPermission {
   }
 
   /**
-   * Checks if user is allowed to see {@link HomeServiceAssistentComponent}
+   * Checks if user is allowed to see {@link HomeServiceAssistantComponent}
    * Producttype needs to be Producttype.HOME or Producttype.HOME_20_30 and globalRole needs to be admin
    *
    * @param user the current user
    * @returns true, if user is at least admin
    */
-  public static isUserAllowedToSeeHomeAssistent(user: User, edge: Edge): boolean {
+  public static isUserAllowedToSeeHomeAssistant(user: User, edge: Edge): boolean {
     const isProductTypeAllowed = (() => {
       switch (edge.producttype) {
         case Producttype.HOME:
@@ -133,7 +133,7 @@ export class UserPermission {
   * @param user the current user
   * @returns true, if user is at least admin
   */
-  public static isUserAllowedToSeeCommercialServiceAssistent(user: User, edge: Edge) {
+  public static isUserAllowedToSeeCommercialServiceAssistant(user: User, edge: Edge) {
     const isProductTypeAllowed = (() => {
       switch (edge.producttype) {
         case Producttype.COMMERCIAL_30:

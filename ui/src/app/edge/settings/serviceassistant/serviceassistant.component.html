@@ -1,7 +1,7 @@
 <header></header>
 <ion-content>
 
-    <ngx-spinner [name]="servcieAssistantSpinnerId"></ngx-spinner>
+    <ngx-spinner [name]="serviceAssistantSpinnerId"></ngx-spinner>
     <ion-list>
         <ng-container *ngFor="let item of batteries; index as i" [ngSwitch]="item.factoryId">
             <ion-item style="cursor: pointer" lines="full" color="light" (click)="item.isClicked = !item.isClicked">

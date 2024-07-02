@@ -38,10 +38,11 @@ import { IndexComponent as EdgeSettingsComponentInstallIndexComponentComponent }
 import { ComponentInstallComponent as EdgeSettingsComponentInstallComponentComponent } from './edge/settings/component/install/install.component';
 import { IndexComponent as EdgeSettingsComponentUpdateIndexComponentComponent } from './edge/settings/component/update/index.component';
 import { ComponentUpdateComponent as EdgeSettingsComponentUpdateComponentComponent } from './edge/settings/component/update/update.component';
-import { HomeServiceAssistentComponent } from './edge/settings/homeassistent/homeassistent';
+import { HomeServiceAssistantComponent } from './edge/settings/homeassistant/homeassistant';
 import { JsonrpcTestComponent } from './edge/settings/jsonrpctest/jsonrpctest';
 import { NetworkOldComponent as EdgeSettingsNetworkOldComponent } from './edge/settings/network.old/network.old.component';
 import { NetworkComponent as EdgeSettingsNetworkComponent } from './edge/settings/network/network.component';
+import { PowerAssistantComponent } from './edge/settings/powerassistant/powerassistant';
 import { AliasUpdateComponent } from './edge/settings/profile/aliasupdate.component';
 import { ProfileComponent as EdgeSettingsProfileComponent } from './edge/settings/profile/profile.component';
 import { ServiceAssistantComponent as EdgeSettingsServiceAssistant } from './edge/settings/serviceassistant/serviceassistant.component';
@@ -119,7 +120,7 @@ const routes: Routes = [
       { path: 'settings/network.old', component: EdgeSettingsNetworkOldComponent },
       { path: 'settings/profile', component: EdgeSettingsProfileComponent },
       { path: 'settings/profile/:componentId', component: AliasUpdateComponent },
-      { path: 'settings/servcieAssistant', component: EdgeSettingsServiceAssistant },
+      { path: 'settings/serviceAssistant', component: EdgeSettingsServiceAssistant },
       { path: 'settings/systemexecute', component: EdgeSettingsSystemExecuteComponent },
       { path: 'settings/systemlog', component: EdgeSettingsSystemLogComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.liveLog' } },
       { path: 'settings/system', component: EdgeSettingsSystemComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.SYSTEM' } },
@@ -129,8 +130,9 @@ const routes: Routes = [
       { path: 'settings/app/update/:appId', component: EdgeSettingsAppUpdate },
       { path: 'settings/app/single/:appId', component: EdgeSettingsAppSingle },
       { path: 'settings/alerting', component: EdgeSettingsAlerting },
-      { path: 'settings/homeServiceAssistent', component: HomeServiceAssistentComponent, data: { navbarTitle: 'Home-Assistent' } },
+      { path: 'settings/homeServiceAssistant', component: HomeServiceAssistantComponent, data: { navbarTitle: 'Home-Assistent' } },
       { path: 'settings/jsonrpctest', component: JsonrpcTestComponent },
+      { path: 'settings/powerAssistant', component: PowerAssistantComponent, data: { navbarTitle: 'Power-Assistant' } },
     ],
   },
 

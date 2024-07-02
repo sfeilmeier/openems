@@ -10,16 +10,16 @@ import { ChannelAddress, CurrentData, EdgeConfig, Utils } from '../../../shared/
 import { LiveDataService } from '../../live/livedataservice';
 
 @Component({
-  selector: HomeServiceAssistentComponent.SELECTOR,
-  templateUrl: './homeassistent.html',
+  selector: HomeServiceAssistantComponent.SELECTOR,
+  templateUrl: './homeassistant.html',
   providers: [{
     useClass: LiveDataService,
     provide: DataService,
   }],
 })
-export class HomeServiceAssistentComponent extends AbstractFlatWidget {
+export class HomeServiceAssistantComponent extends AbstractFlatWidget {
 
-  private static readonly SELECTOR = "homeserviceassistent";
+  private static readonly SELECTOR = "homeserviceassistant";
 
   protected cellVoltageDifference: number | null = null;
   protected cellTemperatureDifference: number | null = null;
