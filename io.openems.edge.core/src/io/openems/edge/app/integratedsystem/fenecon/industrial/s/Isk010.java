@@ -10,15 +10,17 @@ import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconI
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.gridMeter;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.io;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusInternal;
+import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusToBattery;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusToBatteryInverter;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusToGridMeter;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.power;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.system;
+import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSProps.batteryModbusType;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSProps.hasGridMeter;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSProps.hasSelfConsumptionOptimization;
-import static java.util.List.of;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -36,6 +38,7 @@ import io.openems.common.function.ThrowingTriFunction;
 import io.openems.common.oem.OpenemsEdgeOem;
 import io.openems.common.session.Language;
 import io.openems.common.session.Role;
+import io.openems.edge.app.enums.ModbusType;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk010.Property;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.core.appmanager.AbstractOpenemsApp;
@@ -59,6 +62,7 @@ public class Isk010 extends AbstractOpenemsAppWithProps<Isk010, Property, Bundle
 
 	public enum Property implements Type<Property, Isk010, BundleParameter> {
 		ALIAS(alias()), //
+		BATTERY_MODBUS_TYPE(batteryModbusType()), //
 		HAS_GRID_METER(hasGridMeter()), //
 		HAS_SELF_CONSUMPTION_OPTIMIZATION(hasSelfConsumptionOptimization(HAS_GRID_METER)), //
 		;
@@ -124,32 +128,45 @@ public class Isk010 extends AbstractOpenemsAppWithProps<Isk010, Property, Bundle
 			final var bundle = AbstractOpenemsApp.getTranslationBundle(l);
 
 			final var essId = "ess0";
-			final var modbusIdInternal = "modbus0";
 			final var modbusIdToGridMeter = "modbus2";
 			final var batteryClusterId = "battery10";
 			final var batteryId1 = "battery11";
 			final var batteryId2 = "battery12";
 			final var gridMeterId = "meter0";
 
+			final var batteryModbusType = this.getEnum(p, ModbusType.class, Property.BATTERY_MODBUS_TYPE);
+
 			final var components = Lists.newArrayList(//
 					// Core-Components
 					power(), cycle(), //
 					// Batteries
-					batteryf2bClusterSerial(bundle, batteryClusterId, "10", of(batteryId1, batteryId2)), //
-					batteryBmw(bundle, batteryId1, "11", modbusIdInternal, 1), //
-					batteryBmw(bundle, batteryId2, "12", modbusIdInternal, 2), //
+					batteryf2bClusterSerial(bundle, batteryClusterId, "10", List.of(batteryId1, batteryId2)), //
 					// Battery-Inverter
 					batteryInverter(bundle, 1), //
 					// ESS
 					essGenericManagedSymmetric(bundle, essId, batteryClusterId, "batteryInverter1"), //
 					// Bridge
-					modbusInternal(bundle, t, modbusIdInternal), //
 					modbusToBatteryInverter(bundle, t, 1), //
 					// IO
 					io(bundle), //
 					// Misc.
-					system(t, "System Industrial S (ISK010)", of(batteryId1, batteryId2)) //
+					system(t, "System Industrial S (ISK010)", List.of(batteryId1, batteryId2)) //
 			);
+
+			switch (batteryModbusType) {
+			case RTU -> {
+				final var modbusIdInternal = "modbus0";
+				components.add(modbusInternal(bundle, t, modbusIdInternal));
+				components.add(batteryBmw(bundle, batteryId1, "11", modbusIdInternal, 1));
+				components.add(batteryBmw(bundle, batteryId2, "12", modbusIdInternal, 2));
+			}
+			case TCP -> {
+				components.add(modbusToBattery(bundle, t, "11", 1));
+				components.add(modbusToBattery(bundle, t, "12", 2));
+				components.add(batteryBmw(bundle, batteryId1, "11", "modbus11", 1));
+				components.add(batteryBmw(bundle, batteryId2, "12", "modbus12", 2));
+			}
+			}
 
 			final var dependencies = new ArrayList<DependencyDeclaration>();
 			if (this.getBoolean(p, Property.HAS_GRID_METER)) {
