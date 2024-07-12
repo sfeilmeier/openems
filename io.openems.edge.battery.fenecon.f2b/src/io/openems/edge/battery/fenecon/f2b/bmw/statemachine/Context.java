@@ -78,7 +78,6 @@ public class Context extends AbstractContext<BatteryFeneconF2bBmw> {
 	 * @return true if {@link ChannelId#F2B_TERMINAL_30C} is closed
 	 */
 	public boolean isTerminal30cClosed() {
-		final var battery = this.getParent();
-		return battery.getF2bTerminal30c().isDefined() && battery.getF2bTerminal30c().get();
+		return this.getParent().getF2bTerminal30c().orElse(false);
 	}
 }

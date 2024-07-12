@@ -79,7 +79,7 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 			yield GoStoppedSubState.OPEN_HV_CONTACTORS;
 		}
 		case OPEN_HV_CONTACTORS -> {
-			if (!context.isTerminal30cClosed()) {
+			if (!battery.getF2bTerminal30c().orElse(true)) {
 				yield GoStoppedSubState.FINISHED;
 			}
 

@@ -105,6 +105,8 @@ public interface BatteryFeneconF2b extends Battery {
 		INTERNAL_VOLTAGE(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.VOLT)//
 				.accessMode(AccessMode.READ_ONLY)), //
+		BATTERY_PROTECTION_TYPE(Doc.of(BatteryProtectionDefinitionType.values())//
+				.accessMode(AccessMode.READ_ONLY))//
 		;
 
 		private final Doc doc;
@@ -379,6 +381,34 @@ public interface BatteryFeneconF2b extends Battery {
 	 */
 	public default void _setInternalVoltage(Integer value) {
 		this.getInternalVoltageChannel().setNextValue(value);
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#BATTERY_PROTECTION_TYPE}.
+	 *
+	 * @return the Channel {@link Channel}
+	 */
+	public default Channel<BatteryProtectionDefinitionType> getBatteryProtectionTypeChannel() {
+		return this.channel(ChannelId.BATTERY_PROTECTION_TYPE);
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#BATTERY_PROTECTION_TYPE}.
+	 *
+	 * @return the Channel {@link Channel}
+	 */
+	public default Value<BatteryProtectionDefinitionType> getBatteryProtectionType() {
+		return this.getBatteryProtectionTypeChannel().value();
+	}
+
+	/**
+	 * Internal method to set the 'nextValue' on
+	 * {@link ChannelId#BATTERY_PROTECTION_TYPE} Channel.
+	 *
+	 * @param value the next value
+	 */
+	public default void _setBatteryProtectionType(BatteryProtectionDefinitionType value) {
+		this.getBatteryProtectionTypeChannel().setNextValue(value);
 	}
 
 	/**

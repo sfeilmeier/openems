@@ -39,6 +39,7 @@ import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.types.OpenemsType;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
+import io.openems.edge.battery.fenecon.f2b.BatteryProtectionDefinitionType;
 import io.openems.edge.battery.fenecon.f2b.bmw.enums.CoolingApproval;
 import io.openems.edge.battery.fenecon.f2b.bmw.enums.HeatingRequest;
 import io.openems.edge.battery.fenecon.f2b.bmw.enums.RequestCharging;
@@ -84,8 +85,9 @@ import io.openems.edge.common.type.TypeUtils;
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE //
 })
 // TODO Extract AbstractBatteryFeneconF2b
-public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent implements BatteryFeneconF2bBmw,
-		BatteryFeneconF2b, ModbusComponent, OpenemsComponent, Battery, ModbusSlave, StartStoppable, EventHandler {
+public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
+		implements BatteryFeneconF2bBmw, BatteryFeneconF2b, ModbusComponent, OpenemsComponent, Battery, ModbusSlave,
+		StartStoppable, EventHandler {
 
 	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
 	private final Logger log = LoggerFactory.getLogger(BatteryFeneconF2bBmwImpl.class);
@@ -145,8 +147,9 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent imp
 
 		// Initialize Battery-Protection
 		this.batteryProtection = BatteryProtection.create(this) //
-				.applyBatteryProtectionDefinition(new BatteryProtectionDefinition(), this.componentManager) //
+				.applyBatteryProtectionDefinition(new BatteryProtectionDefinitionF2b(), this.componentManager) //
 				.build();
+		this.updateBatteryProtection();
 	}
 
 	@Override
@@ -465,6 +468,26 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent imp
 			this._setRunFailed(true);
 			this.logError(this.log, "StateMachine failed: " + e.getMessage());
 		}
+	}
+
+	/**
+	 * If a cooling unit error occurs in a system component, the battery protection
+	 * will be updated. Charging and discharging currents will be restricted between
+	 * 32°C and 38°C by updating the battery protection.
+	 */
+	private void updateBatteryProtection() {
+		this.getBatteryProtectionTypeChannel().onChange((oldValue, newValue) -> {
+			if (newValue.asEnum() == BatteryProtectionDefinitionType.RESTRICTED_PROTECTION) {
+				this.batteryProtection = BatteryProtection.create(this) //
+						.applyBatteryProtectionDefinition(new BatteryProtectionDefinitionRestricted(),
+								this.componentManager) //
+						.build();
+				return;
+			}
+			this.batteryProtection = BatteryProtection.create(this) //
+					.applyBatteryProtectionDefinition(new BatteryProtectionDefinitionF2b(), this.componentManager) //
+					.build();
+		});
 	}
 
 	/**
