@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$EUID" -ne 0 ]; then 
+    echo "run with elevated privileges; sudo or root!"
+    exit 1
+fi
+
 set -e
 
 # Avoid "apt-listchanges: Can't set locale" error
@@ -69,9 +74,11 @@ function apt_remove {
 }
 
 function dpkg_download_install {
-    filename=$(basename $1)
+    local source=$1
+    local filename=$(basename $1)
+
     echo "Download and install $filename"
-    wget $1 -O /tmp/$filename --no-check-certificate
+    wget $source -O /tmp/$filename --no-check-certificate
     dpkg -i /tmp/$filename
     rm -f /tmp/$filename
 }
@@ -81,11 +88,13 @@ function install_debian_apt_key {
     local version_name=$2
     local keystore="/etc/apt/trusted.gpg.d/debian-archive-${version_name}.asc"
 
-    [ ! -f "$keystore" ] && wget "https://deb.fenecon.de/debian-keys/archive-key-${version_number}.asc" -O "$keystore"
+    if [ ! -f "$keystore" ]; then
+        wget "https://deb.fenecon.de/debian-keys/archive-key-${version_number}.asc" -O "$keystore"
+    fi
 }
 
 function vacuum {
-    apt clean || apt-get clean || true
+    apt-get clean || true
     journalctl --rotate --vacuum-files=1 || true
     find /usr/share/{doc,man,locale} -not -name "copyright" -type f -delete || true
 }
@@ -111,6 +120,8 @@ function prevent_multiple_exec {
 #################
 
 prevent_multiple_exec;
+
+apt_remove build-essential;
 
 vacuum;
 
@@ -205,7 +216,7 @@ fi
 apt_install at
 apt_install ncdu
 
-if ! is_installed temurin-21-jre; then
+if ! is_installed temurin-17-jre; then
     case "$VERSION" in
         "8 (jessie)")
             echo "# Manually install p11-kit for Jessie"
@@ -227,19 +238,20 @@ if ! is_installed temurin-21-jre; then
     apt_install fonts-dejavu
     apt_install libasound2
 
-    echo "# Install JRE 21"
+    echo "# Install JRE 17"
     dpkg_download_install http://fenecon.de/fems-download/deb/adoptium-ca-certificates-latest.deb
-    dpkg_download_install http://fenecon.de/fems-download/deb/temurin-21-jre-armhf-latest.deb
-    update-alternatives --set 'java' '/usr/lib/jvm/temurin-21-jre-armhf/bin/java'
+    dpkg_download_install http://fenecon.de/fems-download/deb/temurin-17-jre-armhf-latest.deb
+    update-alternatives --set 'java' '/usr/lib/jvm/temurin-17-jre-armhf/bin/java'
 fi
 
-apt_remove temurin-17-jre
 apt_remove adoptopenjdk-16-hotspot-jre
 apt_remove openjdk-8-jre-headless
 
 if [ ! -s /etc/ssl/certs/adoptium/cacerts ]; then
     dpkg-reconfigure adoptium-ca-certificates
 fi
+
+apt-get install --fix-broken --assume-yes || true
 
 vacuum;
 
@@ -260,8 +272,8 @@ else
         cp /usr/lib/openems/openems.jar /usr/lib/openems/openems.jar-backup-on-update
     fi
     dpkg -i /tmp/${PACKAGE}.deb
+    apt-get install --fix-broken --assume-yes || true
     rm -f /tmp/${PACKAGE}.deb
 fi
 
-vacuum;
 echo "# Finished"
