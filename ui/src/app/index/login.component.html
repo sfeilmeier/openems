@@ -1,6 +1,6 @@
 <ion-content class="background" *ngIf="environment.theme === 'FENECON', else defaultLoginScreen">
-  <ion-grid style="height: 100%;align-content: center;display: grid;">
-    <ion-row class="ion-justify-content-center ion-padding">
+  <ion-grid style="align-content: center; height: 100%;vertical-align: middle;">
+    <ion-row class="ion-justify-content-center ion-align-items-center ion-padding">
       <ion-col size-lg="4" size-sm="10" size-md="8">
         <ion-card>
           <ion-item lines="none" class="ion-text-center">
@@ -17,7 +17,7 @@
           </ion-item>
           <ion-card-content>
             <ion-grid>
-              <ion-row class="ion-justify-content-center ion-no-padding" style="padding-top: 10%;">
+              <ion-row class="ion-justify-content-center ion-no-padding">
                 <ion-item lines="none">
                   <ion-label color="primary" style="font-size: x-large; font-weight: bold;" translate>
                     Login.title
@@ -26,18 +26,17 @@
               </ion-row>
               <ion-row>
                 <ion-col size="12">
-
                   <ng-container *ngIf="environment.backend === 'OpenEMS Backend', else openEMSEdge">
                     <form (ngSubmit)="doLogin({ username: username.value, password: password.value})">
                       <ion-item>
                         <ion-label position="floating">E-Mail / <span translate>Login.user</span></ion-label>
-                        <ion-input #username required type="input"
-                          [placeholder]="'E-Mail / ' + ('Login.passwordLabel' | translate)">
+                        <ion-input appAutofill autocomplete="username" #username required type="input"
+                          [placeholder]="'E-Mail / ' + ('Login.user' | translate)">
                         </ion-input>
                       </ion-item>
                       <ion-item>
                         <ion-label position="floating" translate>Login.passwordLabel</ion-label>
-                        <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate">
+                        <ion-input appAutofill autocomplete="current-password" #password required type="password" [placeholder]="'Login.passwordLabel' | translate">
                         </ion-input>
                       </ion-item>
                       <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
@@ -98,15 +97,15 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="!isApp">
       <ion-grid>
         <ion-row class="ion-justify-content-center ion-no-padding">
-          <ion-col size-lg="6" size-sm="10" size-md="8">
+          <ion-col size-lg="4" size-sm="10" size-md="8">
             <ion-grid>
               <ion-row class="ion-justify-content-center ion-no-padding">
-                <ion-col size="12" size-lg="4" size-md="6" size-sm="12">
+                <ion-col *ngIf="operatingSystem !== 'Android'">
                   <ion-card id="click-trigger">
-                    <ion-item (click)="presentQRCode('iOS')">
+                    <ion-item (click)="showPopoverOrRedirectToStore('ios')">
                       <ion-icon style="margin-right: 5%;" size="large" color="black" name="logo-apple"
                         slot="start"></ion-icon>
                       <ion-label style="white-space: initial;text-align: start;font-size:smaller">
@@ -115,7 +114,7 @@
                       </ion-label>
                     </ion-item>
                   </ion-card>
-                  <ion-popover [isOpen]="popoverActive === 'iOS'" (didDismiss)="popoverActive = null">
+                  <ion-popover [isOpen]="popoverActive === 'ios'" (didDismiss)="popoverActive = null">
                     <ng-template>
                       <ion-content>
                         <ion-item-divider style="white-space: initial; text-align: center" color="primary">
@@ -126,9 +125,9 @@
                     </ng-template>
                   </ion-popover>
                 </ion-col>
-                <ion-col size="12" size-lg="4" size-md="6" size-sm="12">
+                <ion-col *ngIf="operatingSystem !== 'iOS'">
                   <ion-card id="android-trigger">
-                    <ion-item (click)="presentQRCode('android')">
+                    <ion-item (click)="showPopoverOrRedirectToStore('android')">
                       <ion-icon style="margin-right: 5%;" size="large" name="logo-google-playstore" slot="start"
                         color="primary"></ion-icon>
                       <ion-label style="white-space: initial; text-align: start; font-size:smaller">
