@@ -17,8 +17,8 @@
     <ion-card-content>
         <swiper-container autoplay="true" speed="5000" #swiper (swiperslidechange)="setSlideConfig()">
             <ng-container *ngFor="let widget of advertWidgets.list" [ngSwitch]="widget.name">
-                <swiper-slide *ngSwitchCase="'dynamic-electricity-tariff'">
-                    <dynamic-electricity-tariff></dynamic-electricity-tariff>
+                <swiper-slide *ngSwitchCase="'winning-two-awards'">
+                    <winning-two-awards></winning-two-awards>
                 </swiper-slide>
             </ng-container>
         </swiper-container>

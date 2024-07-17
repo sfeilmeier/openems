@@ -61,7 +61,10 @@ export class AdvertWidgets {
 
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
-        let list: AdvertWidget[] = [];
+        let list: AdvertWidget[] = [{
+            name: 'winning-two-awards',
+            title: 'Doppelte Freude bei FENECON',
+        }];
 
         list = Utils.shuffleArray(list);
         return new AdvertWidgets(list);
