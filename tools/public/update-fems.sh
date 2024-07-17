@@ -73,13 +73,19 @@ function apt_remove {
     fi
 }
 
+function dpkg_install {
+    local file=$1
+
+    dpkg -i $file || apt-get install --fix-broken --assume-yes
+}
+
 function dpkg_download_install {
     local source=$1
     local filename=$(basename $1)
 
     echo "Download and install $filename"
     wget $source -O /tmp/$filename --no-check-certificate
-    dpkg -i /tmp/$filename
+    dpkg_install /tmp/$filename
     rm -f /tmp/$filename
 }
 
@@ -271,8 +277,7 @@ else
         echo "# Backup /usr/lib/openems/openems.jar"
         cp /usr/lib/openems/openems.jar /usr/lib/openems/openems.jar-backup-on-update
     fi
-    dpkg -i /tmp/${PACKAGE}.deb
-    apt-get install --fix-broken --assume-yes || true
+    dpkg_install /tmp/${PACKAGE}.deb
     rm -f /tmp/${PACKAGE}.deb
 fi
 
