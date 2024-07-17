@@ -33,6 +33,18 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: '2024.7.2',
+        changes: [
+          Changelog.UI + "Korrektur bei der Berechnung des sonstigen Verbrauchs, Differenzierung der Login-Siete für das jeweilige Betriebssystem (Android, iOS, Windows)",
+          "Verbesserungen an der Funktion zum System-Update über das Online-Monitoring: verbesserte Fehlerbehandlung",
+          Changelog.product(Product.COMMERCIAL_50) + "KACO Batteriewechselrichter: Verbesserung der Fehlerbehandlung",
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Fehlerbehebung bei der Bestimmung der Anzahl der Batterietürme" },
+          { roleIsAtLeast: Role.ADMIN, change: "Aktualisierung der Java Runtime Environment auf Version 21 LTS" },
+          { roleIsAtLeast: Role.ADMIN, change: "Online-Monitoring: neues Werbewidget, Fehlerbehebung 'Globale Rolle' unter Einstellungen" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Controller zur Umsetzung der 'Dimmung' nach §14a EnWG" },
+        ],
+      },
+      {
         version: '2024.7.1',
         changes: [
           Changelog.openems('2024.7.0'),
