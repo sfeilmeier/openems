@@ -1,7 +1,9 @@
 package io.openems.edge.app.integratedsystem.fenecon.industrial.s;
 
 import static io.openems.edge.app.common.props.CommonProps.defaultDef;
+import static io.openems.edge.app.common.props.CommunicationProps.modbusType;
 
+import io.openems.edge.app.enums.ModbusType;
 import io.openems.edge.core.appmanager.AppDef;
 import io.openems.edge.core.appmanager.Nameable;
 import io.openems.edge.core.appmanager.OpenemsApp;
@@ -43,6 +45,17 @@ public final class FeneconIndustrialSProps {
 					field.onlyShowIf(Exp.currentModelValue(hasGridMeter).notNull());
 				}) //
 		);
+	}
+
+	/**
+	 * Creates a {@link AppDef} for a battery {@link ModbusType}.
+	 * 
+	 * @return the {@link AppDef}
+	 */
+	public static final AppDef<OpenemsApp, Nameable, BundleProvider> batteryModbusType() {
+		return AppDef.copyOfGeneric(modbusType(), def -> def //
+				.setTranslatedLabel("App.FENECON.Industrial.S.batteryIntegrationType.alias") //
+				.setDefaultValue(ModbusType.RTU));
 	}
 
 	private FeneconIndustrialSProps() {

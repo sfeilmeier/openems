@@ -1,116 +1,122 @@
 #!/bin/bash
 
-hardware=$( cat /proc/cpuinfo | grep Hardware );
-model=$( cat /proc/cpuinfo | grep Model );
-
 set -e
 
-check_config () {
-	if ! ( grep -q i2c-dev "/etc/modules" ); then
-                echo "i2c-dev" >> "/etc/modules";
-        fi;
+LOCK_FILE="/tmp/kernel-update.lock"
+KERNEL_SRC="/etc/apt/sources.list.d/fems-kernel.list"
 
-        if ! ( grep -q "gpio=17=dl" "/boot/config.txt" ); then
-                echo "gpio=17=dl" >> "/boot/config.txt"
-        fi;
+function check_config {
+    if ! ( grep -q i2c-dev "/etc/modules" ); then
+        echo "i2c-dev" >> "/etc/modules";
+    fi
 
-        sed -i 's|dtparam=i2c_arm=on|#dtparam=i2c_arm=on|g' /boot/config.txt
-}
+    if ! ( grep -q "gpio=17=dl" "/boot/config.txt" ); then
+        echo "gpio=17=dl" >> "/boot/config.txt"
+    fi
 
-check_packages () {
-	sudo apt install fems-techbase-kernel fems-techbase-sys-mods;
+    sed -i 's|dtparam=i2c_arm=on|#dtparam=i2c_arm=on|g' /boot/config.txt
+} #check_config
 
-	sudo apt-mark manual fems-techbase-kernel fems-techbase-sys-mods;
-        sudo apt-mark hold fems-techbase-kernel;
+function check_packages {
+    apt-get install -y --allow-change-held-packages fems-techbase-kernel fems-techbase-sys-mods;
 
-        systemctl enable comctrl;
-        systemctl enable fems-pagekite;
+    apt-mark manual fems-techbase-kernel fems-techbase-sys-mods;
+    apt-mark hold fems-techbase-kernel;
 
-	udevadm control --reload-rules && udevadm trigger;
-        comctrl -b;
-}
+    systemctl enable comctrl;
 
-check () {
-	check_packages;
+    udevadm control --reload-rules && udevadm trigger;
+    comctrl -b;
+} #check_packages
 
-	if [[ $( du -s /boot/ | awk '{print $1}' ) < 1000 ]]; then
-		echo -e "\033[0;31m#############################################\033[0m";
-		echo -e "\033[0;31mBOOT ORDNER IST LEER; NICHT NEU STARTEN!!!!!!\033[0m";
-		echo -e "\033[0;31m#############################################\033[0m";
-		exit 1;
-	fi
+function check {
+    check_packages;
 
-	check_config;
-}
+    if [[ $( du -s /boot/ | awk '{print $1}' ) < 1000 ]]; then
+        echo;
+        echo -e "\033[0;31m#########################################\033[0m";
+        echo -e "\033[0;31m BOOT DIRECTORY IS EMPTY! DON'T RESTART! \033[0m";
+        echo -e "\033[0;31m#########################################\033[0m";
+        exit 1
+    fi
 
-find_hardware () {
-	if [[ $hardware == *"BCM"* ]]; then
-        if ( dpkg -s fems-techbase-kernel >/dev/null 2>&1 ); then
-                echo -e "\033[0;31mFIX BEREITS ANGEWENDET\033[0m";
-                exit 0;
-        fi;
-        if [[ $model == *"Compute Module 4S"* ]]; then
-                echo -e "\033[0;31mFIX CM4S NICHT VERFÜGBAR\033[0m";
-                exit 1;
-        fi;
-        if [[ $model == *"Compute Module 3"* ]]; then
-                if ( ! dpkg -s fems-techbase-cm3 >/dev/null 2>&1 ); then
-                        echo -e "\033[0;31mALTES CM3 SYSTEM; UPDATE RISKANT!\033[0m";
-                        exit 0;
-                fi;
-                return;
-        fi;
-        if [[ $model == *"Compute Module 4"* ]]; then
-                if ( ! dpkg -s fems-techbase-cm4 >/dev/null 2>&1 ); then
-                        echo -e "\033[0;31mALTES CM4 SYSTEM; UPDATE RISKANT!\033[0m";
-                        exit 0;
-                fi;
-                return;
-        fi;
-	fi;
+    check_config;
+} #check
 
-	if [[ $hardware == *"Generic AM33"* ]]; then
-        	echo -e "\033[0;31mFIX FÜR BEAGLEBONE NICHT VERFÜGBAR\033[0m";
-        	exit 0;
-	fi;
+function get_hardware {
+    local hardware=$( cat /proc/cpuinfo | grep Hardware );
+    local model=$( cat /proc/cpuinfo | grep Model );
 
-	echo -e "\033[0;31mUnbekannte Hardware\033[0m";
-	exit 0;
-}
+    case "$hardware" in
+        *"BCM"*)
+        case "$model" in
+            *"Compute Module 4S"*) echo "cm4s";;
+            *"Compute Module 3"*) echo "cm3";;
+            *"Compute Module 4"*) echo "cm4" ;;
+            *) echo "Broadcom";;
+        esac 
+        ;;
+        *"Generic AM33"*) echo "beaglebone";;
+        *"Freescale i.MX7"*) echo "compulab";;
+        *) echo "unknown";;
+    esac;
+} #get_hardware
 
-upgrade () {
-	echo "deb [signed-by=/usr/share/keyrings/fenecon.gpg] http://fenecon.de/debian kernel main" > /etc/apt/sources.list.d/fems-kernel.list
-	sudo apt update;
-	if ( dpkg -s fems-techbase-cm3 >/dev/null 2>&1 ); then
-		sudo apt install fems-techbase-cm3 -y;
-	fi;
-	if ( dpkg -s fems-techbase-cm4 >/dev/null 2>&1 ); then
-		sudo apt install fems-techbase-cm4 -y;
-	fi;
-        check;
-}
+function upgrade {
+    echo "deb [signed-by=/usr/share/keyrings/fenecon.gpg] http://fenecon.de/debian kernel main" > "$KERNEL_SRC";
 
-__cleanup ()
-{
-	[[ -f "/tmp/kernel-update.lock" ]] && rm "/tmp/kernel-update.lock"
-	if [[ $? -ne 0 ]]; then
-		echo -e "\033[0;31m#####################################\033[0m";
-		echo -e "\033[0;31mKERNEL UPDATE NICHT ERFOLGREICH!!!!!!\033[0m";
-		echo -e "\033[0;31m#####################################\033[0m";
-	fi;
-	[[ -f "/etc/apt/sources.list.d/fems-kernel.list" ]] && rm "/etc/apt/sources.list.d/fems-kernel.list"
-}
+    apt-get update;
+
+    if ( dpkg -s fems-techbase-cm3 >/dev/null 2>&1 ); then
+        apt-get install --allow-change-held-packages --only-upgrade -y fems-techbase-cm3;
+    fi
+    if ( dpkg -s fems-techbase-cm4 >/dev/null 2>&1 ); then
+        apt-get install --allow-change-held-packages --only-upgrade -y fems-techbase-cm4;
+    fi
+
+    check
+} #upgrade
+
+function __cleanup {
+    if [[ $? -ne 0 ]]; then
+        echo;
+        echo -e "\033[0;31m#######################\033[0m";
+        echo -e "\033[0;31m KERNEL UPDATE FAILED! \033[0m";
+        echo -e "\033[0;31m#######################\033[0m";
+    fi
+    [[ -f "$LOCK_FILE" ]] && rm "$LOCK_FILE"
+    [[ -f "$KERNEL_SRC" ]] && rm "$KERNEL_SRC"
+} #__cleanup
 
 ########## MAIN #############
-if [ -f /tmp/kernel-update.lock ]; then "echo 'update already running!!!'"; exit 0; fi;
+
+if [ "$EUID" -ne 0 ]; then 
+    echo "RUN AS ROOT!"
+    exit 1
+fi
+
+if [ -f "$LOCK_FILE" ]; then 
+    echo 'KERNEL UPDATE ALREADY RUNNING!'; 
+    exit 1 
+else
+    trap __cleanup EXIT;
+    touch "$LOCK_FILE";
+fi
 
 echo -e "\033[1mSTART KERNEL UPDATE\033[0m";
 
-trap __cleanup EXIT;
-touch /tmp/kernel-update.lock;
+hw=$(get_hardware);
 
-find_hardware;
+if ! [[ "$hw" == "cm"* ]]; then
+    echo -e "\033[0;31mKERNEL UPDATE NOT AVAILABLE FOR HARDWARE \"$hw\"!\033[0m";
+    exit 1;
+fi
 
 upgrade;
 
 check;
+
+echo;
+echo -e "\033[0;32m##########################\033[0m";
+echo -e "\033[0;32m KERNEL UPDATE SUCCESSFUL \033[0m";
+echo -e "\033[0;32m##########################\033[0m";

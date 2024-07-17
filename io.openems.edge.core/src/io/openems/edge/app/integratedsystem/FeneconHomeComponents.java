@@ -175,7 +175,7 @@ public final class FeneconHomeComponents {
 			final String modbusIdInternal //
 	) {
 		return new EdgeConfig.Component(modbusIdInternal,
-				TranslationUtil.getTranslation(bundle, "App.IntegratedSystem.modbus0.alias"), "Bridge.Modbus.Serial", //
+				TranslationUtil.getTranslation(bundle, "App.IntegratedSystem.modbusToBattery.alias"), "Bridge.Modbus.Serial", //
 				JsonUtils.buildJsonObject() //
 						.addProperty("enabled", true) //
 						.addProperty("baudRate", 19200) //

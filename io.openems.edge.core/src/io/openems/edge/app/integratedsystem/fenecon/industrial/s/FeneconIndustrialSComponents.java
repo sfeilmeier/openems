@@ -228,7 +228,7 @@ public final class FeneconIndustrialSComponents {
 				JsonUtils.buildJsonObject() //
 						.addProperty("enabled", true) //
 						.addProperty("gpioPath", "/sys/class") //
-						.addProperty("modberryType", "MODBERRY_X500_M40804_WB") //
+						.addProperty("hardwareType", "MODBERRY_X500_M40804_WB") //
 						.build());
 	}
 
@@ -247,8 +247,8 @@ public final class FeneconIndustrialSComponents {
 			final ConfigurationTarget t, //
 			final String modbusIdInternal //
 	) {
-		return new EdgeConfig.Component(modbusIdInternal, translate(bundle, "App.IntegratedSystem.modbus0N.alias"),
-				"Bridge.Modbus.Serial", //
+		return new EdgeConfig.Component(modbusIdInternal,
+				translate(bundle, "App.IntegratedSystem.modbusToBatteryN.alias"), "Bridge.Modbus.Serial", //
 				JsonUtils.buildJsonObject() //
 						.addProperty("enabled", true) //
 						.addProperty("baudRate", 9600) //
@@ -260,6 +260,36 @@ public final class FeneconIndustrialSComponents {
 						.addProperty("parity", Parity.NONE) //
 						.addProperty("portName", "/dev/ttySC0") //
 						.addProperty("stopbits", "ONE") //
+						.build());
+	}
+
+	/**
+	 * Creates a default modbus tcp bridge component to a battery for a FENECON
+	 * Industrial S.
+	 * 
+	 * @param bundle         the translation bundle
+	 * @param t              the {@link ConfigurationTarget} of the current
+	 *                       configuration
+	 * @param modbusIdSuffix the id suffix of the bridge
+	 * @param number         the number of the bridge; used for the ip address
+	 * @return the {@link Component}
+	 */
+	public static EdgeConfig.Component modbusToBattery(//
+			final ResourceBundle bundle, //
+			final ConfigurationTarget t, //
+			final String modbusIdSuffix, //
+			final int number //
+	) {
+		return new EdgeConfig.Component("modbus" + modbusIdSuffix,
+				translate(bundle, "App.IntegratedSystem.modbusToBattery0.alias", modbusIdSuffix), "Bridge.Modbus.Tcp", //
+				JsonUtils.buildJsonObject() //
+						.addProperty("enabled", true) //
+						.onlyIf(t != ConfigurationTarget.VALIDATE, b -> {
+							b.addProperty("invalidateElementsAfterReadErrors", 3) //
+									.addProperty("logVerbosity", "NONE");
+						}) //
+						.addProperty("port", 502) //
+						.addProperty("ip", "172.23.22.3" + number) //
 						.build());
 	}
 
@@ -391,7 +421,7 @@ public final class FeneconIndustrialSComponents {
 								.addProperty(KdkMeter.Property.TYPE.name(), MeterType.GRID) //
 								.addProperty(KdkMeter.Property.MODBUS_ID.name(), modbusIdInternal) //
 								.addProperty(KdkMeter.Property.METER_ID.name(), gridMeterId) //
-								.addProperty(KdkMeter.Property.MODBUS_UNIT_ID.name(), 6) //
+								.addProperty(KdkMeter.Property.MODBUS_UNIT_ID.name(), 5) //
 								.build())
 						.build());
 	}

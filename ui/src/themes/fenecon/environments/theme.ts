@@ -84,6 +84,10 @@ export const theme = {
                 return 'https://docs.fenecon.de/_/' + languageKey + '/_images/fenecon/apps/' + appId + '.png';
             },
         },
+        APP: {
+            ANDROID: 'https://play.google.com/store/apps/details?id=de.fenecon.fems&gl=DE',
+            IOS: 'https://apps.apple.com/de/app/fenecon/id6476198535',
+        },
     },
     PRODUCT_TYPES: (translate: TranslateService): Filter => (
         {

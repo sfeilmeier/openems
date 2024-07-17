@@ -9,6 +9,7 @@ import { environment } from 'src/environments';
 import { AppService } from '../app.service';
 import { AuthenticateWithPasswordRequest } from '../shared/jsonrpc/request/authenticateWithPasswordRequest';
 import { Edge, Service, Utils, Websocket } from '../shared/shared';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'login',
@@ -21,8 +22,9 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
   private page = 0;
   protected formIsDisabled: boolean = false;
 
-  protected popoverActive: 'android' | 'iOS' | null = null;
-  protected readonly isApp: boolean = AppService.isApp;
+  protected popoverActive: 'android' | 'ios' | null = null;
+  protected readonly operatingSystem = AppService.deviceInfo.os;
+  protected readonly isApp: boolean = Capacitor.getPlatform() !== 'web';
 
   constructor(
     public service: Service,
@@ -146,7 +148,12 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
     this.stopOnDestroy.complete();
   }
 
-  protected async presentQRCode(operatingSystem: 'android' | 'iOS') {
-    this.popoverActive = operatingSystem;
+  protected async showPopoverOrRedirectToStore(operatingSystem: 'android' | 'ios') {
+    const link: string | null = AppService.getAppStoreLink();
+    if (link) {
+      window.open(link, '_blank');
+    } else {
+      this.popoverActive = operatingSystem;
+    }
   }
 }

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$EUID" -ne 0 ]; then 
+    echo "run with elevated privileges; sudo or root!"
+    exit 1
+fi
+
 set -e
 
 # Avoid "apt-listchanges: Can't set locale" error
@@ -48,64 +53,6 @@ else
     fi
 fi
 
-function add_apt_key_wheezy {
-        cat <<EOL |
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-mQINBE+a7rUBEADQiEKtLOgqiq8YY/p7IFODMqGPR+o1vtXaksie8iTOh3Vxab38
-cA3kK1iB5XYElbZ5b/x3vWiufHK2semOpn5MG2GRJUwmKxZbt3HLZiHtAadkby2l
-rnMxeIzfxcTxloxsQ02TMRalq89Xvy6P7lgedcW5ujcMR6JbE6uL1c/jNlkIPNuN
-9paZsNJWXnZ03R+NrAJLjOPUZKZRPYgIwEci2sVNA/autsJL+HuW6X8PfldvMe5h
-SdWelOoXMsZMX04JP8Efq8a09yIgKBfuXjoHJbtK0rTr9tjFKt/VM6MejLdJf4Dl
-r6Zhx2ygmjcvj+FlWFoxDlPHdqfZ6mGsKR4eWDRu3bZtalDNvhZKvecwf0KaAWVU
-M+GxkR+Ol3TsQ0tLbjbwZhWMioipR8Lsp6kZ1tLUjM0aOR3Mw/csyFJYKFiCo3GR
-QSGY0++cDrfhQRwOJ9s2eeGGS1/I95vJZA5zZnx1ksnO0W2fHVBavICR821EBAEZ
-slLzr+IOrbB16YE/aN2iA9nTcQVk69XeEh5gaeiCZ7JhA2nkAg8a/H1r4BVBC/cL
-egzhUvP90kk94MmL1D2gY6UlyK4yTnHgVfjsQw6u2sPDlramyXBZehnKabIndM1P
-368IbW8GTNo0gNwg/oC/vENwYnAuX+S96/O/1XfQoBNr+epTVdS4VQHICQARAQAB
-tEhEZWJpYW4gQXJjaGl2ZSBBdXRvbWF0aWMgU2lnbmluZyBLZXkgKDcuMC93aGVl
-enkpIDxmdHBtYXN0ZXJAZGViaWFuLm9yZz6JAj4EEwEIACgFAk+a7rUCGwMFCQ8J
-nAAGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEItIrWJGklVTdQEQAMLCmMQr
-7SxFULYgprbr5eO6uAs/8nkIBhJBzUnenOUnwsOR3Io9/sHc8Cq/xv1DTsY5G5Qj
-ojywslbeF44TxBZ0j3UwPU437bfNs7yTRkgPVhHK/rZ9ApbnZdCmud+BUkDOChLV
-8fzCZ17Pa5eMr5E4WI0bLM5AA3vVFLBgHFqJUgE7mSn95vA1S881/xOQ4lT1WHfa
-O9K96X6ekn2zpPu/G8aq+oDyVGfo1AKQCPBJ3OCX0WB3GNWbcCb850gy9vtKlWDu
-yAh1a9Cl5OPHlYqz8q+Hqj4ZeRgJiDgCgm8YAlKEooEG/vJzswaY+C3nz6uNfBeq
-60QhPfgaO8qGlriChGAFqzD68ZQ53NApJw/OuwV2p5CgnkyGAVGZ1WuYcXz/wHyU
-awnXq3Bf69RJssbab6SqptJyYuiY8T/2vWRgQxej18KAZ0v1Vr/MC1azp6TWgfSl
-s2fvGvPf9vEbKyBR3YFa5msRKGpRauv4wWmcLfZ+jMLbSAWBfILPK+fGLtRGz4AX
-hRht9rX7c4neQvlBNDDgR3tuaE3s0B1B6gTcvq7EhuuP4pAzkBLhpuzolvw+ZFOV
-5mElfScYi8QbQgT9t2XjUDU1oz1ewviNhynpsxh51t5qxP5ETDGKvEx7RMv4S08p
-5VGG4Y+kjcsQWfAdVAGuLqWOI0sGzUzKYZppuQINBE+a7rUBEACrZN5cBvM9eFlL
-hPgsk/zOnLJz6PD1fS9Cha4oDN+SVsPhkn/TJ8K5sRRtZmYGB91aSnxpVOnLDge9
-/pxD72rbI5HxLf2+weyRSIr6IkF+6W55XZ1banXFbxcHKTJ2W6XuekNXBv4md4n9
-xgL+UdUNo0i2uqFZo6oKXWCdfhSgRJEplp6WrTlhD99jpnOkmx6d+izgDDUG+nEl
-z3GxrRa2Yqh0QyxhD8p1GCotqgKGZ/lvyXuf3RC5cKtxjRSijiM9/5R3gL40ASCI
-9ad28z5kH1rmZzkqLjmabPh4jETPwO7tiCaOxdfSypJ0DZmMhIo5x9UcEMOgHAlg
-R10dzZkTSaNKEzBCzYWbDJLWE9Hqqn8Xt7LAVc2Rv2sXM296p70sdNHh2Zjzv3H+
-h+5YsPAAx2Qn20CqQ7dkJNJuGqShuzEvJM/2FYbkJFjbWCxu+hly3CY60qu6NpRu
-zar+j71MwEbhbjy+7vin9UC/hOfLHG7+94LiyEXM2zbXaXpt+Fm8dYxUEWa0SeRR
-G6c1XAJ1rAfdRIPwCJhApFzTJrphGTGNr2nUmAQit5GOaBp0ziqEBClDQJc7waxy
-huqHXBV7/KRtjknB9ib6fTTp16MmAYJsnfAqsMsVsU2Q6NXxn+TYDoeNzTh5fgrI
-ch/nwZzn+atl71kxORYdrRRkA2706QARAQABiQJ2BCgBCABgBQJTJ4LXWR0DVGhp
-cyBrZXkgaXMgdXNlZCBmb3Igc2lnbmluZyBvbmx5LiBUaGUgZW5jcnlwdGlvbiBz
-dWJrZXkgd2FzIG5ldmVyIGludGVuZGVkIHRvIGJlIHVzZWQuAAoJEItIrWJGklVT
-XIEQAKFgq8BX6sC7qT5hNv5Z7AciXG4iKwYR6JhknBx/zQ4NV90x3agVTcR2BGr6
-yZaBAhxHMFS8e7TUUjuUqhPZ09QVuXEpiWtYPQ4n6wAyFQ7cfgVDWWiUlr/1tuM5
-G5WJllAgTkzS6Lru1meJdPN5utkh6UuXJ4hE+2xc7LXzxvpDq4egn9/gc/YWVjsw
-bYGV8SHMyZmKMCHqXc3TEPoQLCdNfv+3LqzucB5iuwujR7toE15Jopj8DmcQZdCf
-+TktDkgHJtlHmu1AoH8nK2gdWm2ZP1SXGX2r/mOWRg7keqWPdT8wL2P94fWIrnLm
-B5t37zpMNiidzKwuiL3R4Uy+2FtaiO8ZnWdoJm+vVfo460h2eJs5vB479l+TVww0
-bLlnYvE3VpVwU7mo53xQHnJbHkcdftwm5vPilcujz3HS+/roqIxp55y+ae3GThtd
-Cv9J/KwKYB+2hT4priW8EFfPGI5UV0lOAQIA8Wk8ONiV/tkgYqs5Zhfu+GYaoD+j
-K3G54isbUBLrrMHwyV+etc+AOC6f1x3UjGS4rdU+PAXs+k3dCEW2OpVdBNV85UXk
-kLiaGGvFmGcCnumfc+HvN5WE1UWSXfYaNuzcGHhsmu+gK+FYB/2QgSdKFfr01Bt9
-kW98bZv1ahxXnIwsfRtn+0JrWEVEylyoJMexkEtyM5CFXlRu
-=GN3Z
------END PGP PUBLIC KEY BLOCK-----
-EOL
-apt-key add -
-}
 
 function is_installed {
     dpkg-query -W -f='${Status}' $1 2>/dev/null | grep "ok installed" >/dev/null
@@ -126,17 +73,35 @@ function apt_remove {
     fi
 }
 
+function dpkg_install {
+    local file=$1
+
+    dpkg -i $file || apt-get install --fix-broken --assume-yes
+}
+
 function dpkg_download_install {
-    filename=$(basename $1)
+    local source=$1
+    local filename=$(basename $1)
+
     echo "Download and install $filename"
-    wget $1 -O /tmp/$filename --no-check-certificate
-    dpkg -i /tmp/$filename
+    wget $source -O /tmp/$filename --no-check-certificate
+    dpkg_install /tmp/$filename
     rm -f /tmp/$filename
 }
 
+function install_debian_apt_key {
+    local version_number=$1
+    local version_name=$2
+    local keystore="/etc/apt/trusted.gpg.d/debian-archive-${version_name}.asc"
+
+    if [ ! -f "$keystore" ]; then
+        wget "https://deb.fenecon.de/debian-keys/archive-key-${version_number}.asc" -O "$keystore"
+    fi
+}
+
 function vacuum {
-    apt clean || apt-get clean || true
-    journalctl --vacuum-files=1 || true
+    apt-get clean || true
+    journalctl --rotate --vacuum-files=1 || true
     find /usr/share/{doc,man,locale} -not -name "copyright" -type f -delete || true
 }
 
@@ -161,6 +126,8 @@ function prevent_multiple_exec {
 #################
 
 prevent_multiple_exec;
+
+apt_remove build-essential;
 
 vacuum;
 
@@ -205,7 +172,8 @@ else
     # Do not block at libc6 configure
     echo 'libc6 libraries/restart-without-asking boolean true' | sudo debconf-set-selections
 
-    if [ $(df /boot | grep '99%\|100%' | wc -l) -eq 1 ]; then
+    free_bytes=$(df /boot/ --output=avail -B1 | tail -1)
+    if [[ $free_bytes -lt 1024 ]]; then
         echo "#"
         echo "# /boot is full"
         echo "# Running kernel version: $(uname -r)"
@@ -224,22 +192,30 @@ else
         echo "#"
     fi
 
+    install_debian_apt_key 10 buster
+    install_debian_apt_key 11 bullseye
+    install_debian_apt_key 12 bookworm
+
     dpkg --configure -a --force-confnew || true
 
-    apt --fix-broken install --assume-yes ||
-        apt-get install -f --assume-yes || true
+    apt-get install --fix-broken --assume-yes || true
 
     apt_install dirmngr
     apt_install gnupg
 
-    add_apt_key_wheezy
-
-    apt autoremove --assume-yes ||
-        apt-get autoremove --assume-yes || true
+    apt-get autoremove --assume-yes || true
     apt-get --fix-broken install --assume-yes || true
-    apt-get --allow-releaseinfo-change update ||
-        # Jessie does not support allow-releaseinfo-change
+
+    case "$VERSION" in
+        "8 (jessie)") 
         apt-get update || true
+        ;;
+
+        *) 
+        apt-get --allow-releaseinfo-change update || true
+        ;;
+    esac
+
     apt-get dist-upgrade --assume-yes --force-yes
 fi
 
@@ -271,6 +247,7 @@ if ! is_installed temurin-17-jre; then
     echo "# Install JRE 17"
     dpkg_download_install http://fenecon.de/fems-download/deb/adoptium-ca-certificates-latest.deb
     dpkg_download_install http://fenecon.de/fems-download/deb/temurin-17-jre-armhf-latest.deb
+    update-alternatives --set 'java' '/usr/lib/jvm/temurin-17-jre-armhf/bin/java'
 fi
 
 apt_remove adoptopenjdk-16-hotspot-jre
@@ -279,6 +256,8 @@ apt_remove openjdk-8-jre-headless
 if [ ! -s /etc/ssl/certs/adoptium/cacerts ]; then
     dpkg-reconfigure adoptium-ca-certificates
 fi
+
+apt-get install --fix-broken --assume-yes || true
 
 vacuum;
 
@@ -298,9 +277,8 @@ else
         echo "# Backup /usr/lib/openems/openems.jar"
         cp /usr/lib/openems/openems.jar /usr/lib/openems/openems.jar-backup-on-update
     fi
-    dpkg -i /tmp/${PACKAGE}.deb
+    dpkg_install /tmp/${PACKAGE}.deb
     rm -f /tmp/${PACKAGE}.deb
 fi
 
-vacuum;
 echo "# Finished"

@@ -74,6 +74,10 @@ export const theme = {
                 return null;
             },
         },
+        APP: {
+            ANDROID: null,
+            IOS: null,
+        },
     },
     PRODUCT_TYPES: () => null,
 };

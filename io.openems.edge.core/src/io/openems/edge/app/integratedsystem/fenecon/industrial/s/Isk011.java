@@ -11,15 +11,17 @@ import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconI
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.gridMeter;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.io;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusInternal;
+import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusToBattery;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusToBatteryInverter;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusToGridMeter;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.power;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.system;
+import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSProps.batteryModbusType;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSProps.hasGridMeter;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSProps.hasSelfConsumptionOptimization;
-import static java.util.List.of;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -37,6 +39,7 @@ import io.openems.common.function.ThrowingTriFunction;
 import io.openems.common.oem.OpenemsEdgeOem;
 import io.openems.common.session.Language;
 import io.openems.common.session.Role;
+import io.openems.edge.app.enums.ModbusType;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk011.Property;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.core.appmanager.AbstractOpenemsApp;
@@ -60,6 +63,7 @@ public class Isk011 extends AbstractOpenemsAppWithProps<Isk011, Property, Bundle
 
 	public enum Property implements Type<Property, Isk011, BundleParameter> {
 		ALIAS(alias()), //
+		BATTERY_MODBUS_TYPE(batteryModbusType()), //
 		HAS_GRID_METER(hasGridMeter()), //
 		HAS_SELF_CONSUMPTION_OPTIMIZATION(hasSelfConsumptionOptimization(HAS_GRID_METER)), //
 		;
@@ -125,7 +129,6 @@ public class Isk011 extends AbstractOpenemsAppWithProps<Isk011, Property, Bundle
 			final var bundle = AbstractOpenemsApp.getTranslationBundle(l);
 
 			final var essId = "ess0";
-			final var modbusIdInternal = "modbus0";
 			final var modbusIdToGridMeter = "modbus2";
 			final var batteryInverterId = "batteryInverter1";
 			final var batteryParallelId = "battery1";
@@ -139,29 +142,49 @@ public class Isk011 extends AbstractOpenemsAppWithProps<Isk011, Property, Bundle
 
 			final var gridMeterId = "meter0";
 
+			final var batteryModbusType = this.getEnum(p, ModbusType.class, Property.BATTERY_MODBUS_TYPE);
+
 			final var components = Lists.newArrayList(//
 					// Core-Components
 					power(), cycle(), //
 					// Batteries
-					batteryf2bClusterParallel(bundle, batteryParallelId, "1", of(batterySeriallId1, batterySeriallId2)), //
-					batteryf2bClusterSerial(bundle, batterySeriallId1, "10", of(battery11Id, battery12Id)), //
-					batteryBmw(bundle, battery11Id, "11", modbusIdInternal, 1), //
-					batteryBmw(bundle, battery12Id, "12", modbusIdInternal, 2), //
-					batteryf2bClusterSerial(bundle, batterySeriallId2, "20", of(battery21Id, battery22Id)), //
-					batteryBmw(bundle, battery21Id, "21", modbusIdInternal, 3), //
-					batteryBmw(bundle, battery22Id, "22", modbusIdInternal, 4), //
+					batteryf2bClusterParallel(bundle, batteryParallelId, "1",
+							List.of(batterySeriallId1, batterySeriallId2)), //
+					batteryf2bClusterSerial(bundle, batterySeriallId1, "10", List.of(battery11Id, battery12Id)), //
+					batteryf2bClusterSerial(bundle, batterySeriallId2, "20", List.of(battery21Id, battery22Id)), //
 					// Battery-Inverter
 					batteryInverter(bundle, 1), //
 					// ESS
 					essGenericManagedSymmetric(bundle, essId, batteryParallelId, batteryInverterId), //
 					// Bridge
-					modbusInternal(bundle, t, modbusIdInternal), //
 					modbusToBatteryInverter(bundle, t, 1), //
 					// IO
 					io(bundle), //
 					// Misc.
-					system(t, "System Industrial S (ISK011)", of(battery11Id, battery12Id, battery21Id, battery22Id)) //
+					system(t, "System Industrial S (ISK011)",
+							List.of(battery11Id, battery12Id, battery21Id, battery22Id)) //
 			);
+
+			switch (batteryModbusType) {
+			case RTU -> {
+				final var modbusIdInternal = "modbus0";
+				components.add(modbusInternal(bundle, t, modbusIdInternal));
+				components.add(batteryBmw(bundle, battery11Id, "11", modbusIdInternal, 1));
+				components.add(batteryBmw(bundle, battery12Id, "12", modbusIdInternal, 2));
+				components.add(batteryBmw(bundle, battery21Id, "21", modbusIdInternal, 3));
+				components.add(batteryBmw(bundle, battery22Id, "22", modbusIdInternal, 4));
+			}
+			case TCP -> {
+				components.add(modbusToBattery(bundle, t, "11", 1));
+				components.add(modbusToBattery(bundle, t, "12", 2));
+				components.add(modbusToBattery(bundle, t, "21", 3));
+				components.add(modbusToBattery(bundle, t, "22", 4));
+				components.add(batteryBmw(bundle, battery11Id, "11", "modbus11", 1));
+				components.add(batteryBmw(bundle, battery12Id, "12", "modbus12", 2));
+				components.add(batteryBmw(bundle, battery21Id, "21", "modbus21", 3));
+				components.add(batteryBmw(bundle, battery22Id, "22", "modbus22", 4));
+			}
+			}
 
 			final var dependencies = new ArrayList<DependencyDeclaration>();
 			if (this.getBoolean(p, Property.HAS_GRID_METER)) {
