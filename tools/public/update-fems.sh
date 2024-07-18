@@ -99,6 +99,14 @@ function install_debian_apt_key {
     fi
 }
 
+function install_freexian_apt_key {
+    local keystore="/etc/apt/trusted.gpg.d/freexian-archive-extended-lts.gpg"
+
+    if [ ! -f "$keystore" ]; then
+        wget "https://deb.fenecon.de/debian-keys/freexian-archive.gpg" -O "$keystore"
+    fi
+}
+
 function vacuum {
     apt-get clean || true
     journalctl --rotate --vacuum-files=1 || true
@@ -132,9 +140,29 @@ apt_remove build-essential;
 vacuum;
 
 VERSION=""
+VERSION_CODENAME=""
 if [ -e /etc/os-release ]; then
     source /etc/os-release
 fi
+
+# Set fenecon apt source
+case "$VERSION_CODENAME" in
+    "jessie" )
+        install_freexian_apt_key;
+        echo "deb http://deb.fenecon.de/debian-elts/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
+        
+    "stretch")
+        echo "deb http://deb.fenecon.de/debian-archive/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
+
+    "buster" | "bullseye")
+        echo "deb http://deb.fenecon.de/debian/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
+
+    "bookworm" | "trixie" )
+        echo "deb http://deb.fenecon.de/debian/ $VERSION_CODENAME main contrib non-free-firmware" > "/etc/apt/sources.list";;
+esac
+
+# Remove alternate sources
+find /etc/apt/sources.list.d -name "*.list" -delete
 
 if [ -d "/home/imodcloud" ]; then
     echo "# Do not apt update Techbase"
@@ -148,18 +176,6 @@ else
         echo "# Remove deprecated jessie-backports source"
         rm -f /etc/apt/sources.list.d/jessie-backports.list
     fi
-
-    case "$VERSION" in
-        "8 (jessie)")
-            echo "# Remove deprecated jessie sources"
-            echo > /etc/apt/sources.list
-            ;;
-
-        "9 (stretch)")
-            echo "# Update stretch sources"
-            echo 'deb http://archive.debian.org/debian/ stretch main' > /etc/apt/sources.list
-            ;;
-    esac
 
     echo "# Setup dependencies"
     rm -f /etc/apt/trusted.gpg.d/*.lock
