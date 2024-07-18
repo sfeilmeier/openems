@@ -34,6 +34,7 @@ import io.openems.edge.app.heat.HeatingElement;
 import io.openems.edge.app.integratedsystem.FeneconHome;
 import io.openems.edge.app.integratedsystem.FeneconHome20;
 import io.openems.edge.app.integratedsystem.FeneconHome30;
+import io.openems.edge.app.integratedsystem.fenecon.industrial.l.Ilk710;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk010;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk011;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk110;
@@ -117,12 +118,22 @@ public class Apps {
 	}
 
 	/**
+	 * Test method for creating a {@link Ilk710}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final Ilk710 feneconIndustrialLIlk710(AppManagerTestBundle t) {
+		return app(t, Ilk710::new, "App.FENECON.Industrial.L.ILK710");
+	}
+
+	/**
 	 * Test method for creating a {@link Isk110}.
 	 * 
 	 * @param t the {@link AppManagerTestBundle}
 	 * @return the {@link OpenemsApp} instance
 	 */
-	public static final Isk110 feneconIsk110(AppManagerTestBundle t) {
+	public static final Isk110 feneconIndustrialSIsk110(AppManagerTestBundle t) {
 		return app(t, Isk110::new, "App.FENECON.Industrial.S.ISK110");
 	}
 
@@ -132,7 +143,7 @@ public class Apps {
 	 * @param t the {@link AppManagerTestBundle}
 	 * @return the {@link OpenemsApp} instance
 	 */
-	public static final Isk010 feneconIsk010(AppManagerTestBundle t) {
+	public static final Isk010 feneconIndustrialSIsk010(AppManagerTestBundle t) {
 		return app(t, Isk010::new, "App.FENECON.Industrial.S.ISK010");
 	}
 
@@ -142,7 +153,7 @@ public class Apps {
 	 * @param t the {@link AppManagerTestBundle}
 	 * @return the {@link OpenemsApp} instance
 	 */
-	public static final Isk011 feneconIsk011(AppManagerTestBundle t) {
+	public static final Isk011 feneconIndustrialSIsk011(AppManagerTestBundle t) {
 		return app(t, Isk011::new, "App.FENECON.Industrial.S.ISK011");
 	}
 

@@ -148,7 +148,7 @@ public final class FeneconIndustrialSComponents {
 			final String clusterId, //
 			final List<String> essIds //
 	) {
-		return new EdgeConfig.Component(clusterId, translate(bundle, "App.FENECON.Industrial.S.essCluster0.alias"),
+		return new EdgeConfig.Component(clusterId, translate(bundle, "App.IntegratedSystem.essCluster0.alias"),
 				"Ess.Cluster", //
 				JsonUtils.buildJsonObject() //
 						.addProperty("enabled", true) //
