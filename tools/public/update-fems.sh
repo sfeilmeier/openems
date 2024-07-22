@@ -143,6 +143,13 @@ VERSION=""
 VERSION_CODENAME=""
 if [ -e /etc/os-release ]; then
     source /etc/os-release
+
+    if [ -z "$VERSION_CODENAME" ]; then
+        case "$VERSION" in
+            "8 (jessie)" ) VERSION_CODENAME=jessie;;
+            "9 (stretch)" ) VERSION_CODENAME=stretch;;
+        esac
+    fi
 fi
 
 # Set fenecon apt source
