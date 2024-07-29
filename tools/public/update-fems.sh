@@ -92,18 +92,23 @@ function dpkg_download_install {
 function install_debian_apt_key {
     local version_number=$1
     local version_name=$2
+
     local keystore="/etc/apt/trusted.gpg.d/debian-archive-${version_name}.asc"
 
     if [ ! -f "$keystore" ]; then
-        wget "https://deb.fenecon.de/debian-keys/archive-key-${version_number}.asc" -O "$keystore"
+        local keytmp=$(mktemp /tmp/archive-key.XXXXXX)
+        wget "https://deb.fenecon.de/debian-keys/archive-key-${version_number}.asc" -O "${keytmp}"
+        install -m 644 "${keytmp}" "${keystore}"
     fi
 }
 
 function install_freexian_apt_key {
+    local keytmp="/tmp/freexian-archive-extended-lts.gpg"
     local keystore="/etc/apt/trusted.gpg.d/freexian-archive-extended-lts.gpg"
 
     if [ ! -f "$keystore" ]; then
-        wget "https://deb.fenecon.de/debian-keys/freexian-archive.gpg" -O "$keystore"
+        wget "https://deb.fenecon.de/debian-keys/freexian-archive.gpg" -O "${keytmp}"
+        install -m 644 "${keytmp}" "${keystore}"
     fi
 }
 
