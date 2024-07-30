@@ -11,17 +11,17 @@ import { AbstractService } from "../abstractservice";
 import { DefaultTypes } from "../defaulttypes";
 
 export class DummyService extends AbstractService {
-    override showAdvertWidgets(advertWidgets: AdvertWidgets) {
-        throw new Error("Method not implemented.");
-    }
 
-    private readonly edge = new Edge("edge0", "comment", "productype"
+    public readonly edge = new Edge("edge0", "comment", "productype"
         , "1234.56.78", Role.ADMIN, true, new Date(), SumState.OK, new Date());
-
-    private readonly edgeConfig = new EdgeConfig(this.edge, undefined);
 
     public currentEdge: BehaviorSubject<Edge> = new BehaviorSubject(this.edge);
 
+    private readonly edgeConfig = new EdgeConfig(this.edge, undefined);
+
+    override showAdvertWidgets(advertWidgets: AdvertWidgets) {
+        throw new Error("Method not implemented.");
+    }
     setLang(id: Language) {
         throw new Error("Method not implemented.");
     }

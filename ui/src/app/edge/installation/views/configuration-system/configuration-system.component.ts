@@ -75,6 +75,13 @@ export class ConfigurationSystemComponent implements OnInit {
   }
 
   /**
+ * Redirects to the appropriate url for Heckert system manual.
+ */
+  protected openManual(): void {
+    window.open(environment.links.MANUALS.HOME.HOME_10);
+  }
+
+  /**
    * Loads the appropriate Ibn object.
    */
   private setIbn(): void {
@@ -82,10 +89,4 @@ export class ConfigurationSystemComponent implements OnInit {
     this.ibn = System.getSystemObjectFromSystemType(system, this.translate);
   }
 
-  /**
-   * Redirects to the appropriate url for Heckert system manual.
-   */
-  protected openManual(): void {
-    window.open(environment.links.MANUALS.HOME.HOME_10);
-  }
 }

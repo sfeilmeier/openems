@@ -37,6 +37,18 @@ export class Service extends AbstractService {
   public notificationEvent: Subject<DefaultTypes.Notification> = new Subject<DefaultTypes.Notification>();
 
   /**
+ * Currently selected history period
+ */
+  public historyPeriod: BehaviorSubject<DefaultTypes.HistoryPeriod>;
+
+  /**
+   * Currently selected history period string
+   *
+   * initialized as day, is getting changed by pickdate component
+   */
+  public periodString: DefaultTypes.PeriodString = DefaultTypes.PeriodString.DAY;
+
+  /**
    * Represents the resolution of used device
    * Checks if smartphone resolution is used
    */
@@ -51,10 +63,9 @@ export class Service extends AbstractService {
   public currentPageTitle: string;
 
   /**
-   * Holds the current Activated Route
-   */
-  private currentActivatedRoute: ActivatedRoute = null;
-
+   * Holds reference to Websocket. This is set by Websocket in constructor.
+  */
+  public websocket: Websocket = null;
   /**
    * Holds the currently selected Edge.
    */
@@ -70,9 +81,14 @@ export class Service extends AbstractService {
   public currentUser: User | null = null;
 
   /**
-   * Holds reference to Websocket. This is set by Websocket in constructor.
+   * Holds the current Activated Route
    */
-  public websocket: Websocket = null;
+  private currentActivatedRoute: ActivatedRoute = null;
+
+  private queryEnergyQueue: {
+    fromDate: Date, toDate: Date, channels: ChannelAddress[], promises: { resolve, reject }[]
+  }[] = [];
+  private queryEnergyTimeout: any = null;
 
   constructor(
     private router: Router,
@@ -361,11 +377,6 @@ export class Service extends AbstractService {
     });
   }
 
-  private queryEnergyQueue: {
-    fromDate: Date, toDate: Date, channels: ChannelAddress[], promises: { resolve, reject }[]
-  }[] = [];
-  private queryEnergyTimeout: any = null;
-
   public startSpinner(selector: string) {
     this.spinner.show(selector, {
       type: "ball-clip-rotate-multiple",
@@ -424,15 +435,4 @@ export class Service extends AbstractService {
     }
   }
 
-  /**
-   * Currently selected history period
-   */
-  public historyPeriod: BehaviorSubject<DefaultTypes.HistoryPeriod>;
-
-  /**
-   * Currently selected history period string
-   *
-   * initialized as day, is getting changed by pickdate component
-   */
-  public periodString: DefaultTypes.PeriodString = DefaultTypes.PeriodString.DAY;
 }

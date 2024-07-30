@@ -40,7 +40,7 @@ export class Changelog {
 }
 
 export class Product {
-    private static readonly DEPRECATED = "https://fenecon.de/files-fruehere-modelle/";
+    public static readonly DEPRECATED = "https://fenecon.de/files-fruehere-modelle/";
 
     // TODO Umsetzung OEM-Links?
     // ESS

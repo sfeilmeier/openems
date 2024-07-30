@@ -21,13 +21,14 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
 
   private static readonly SELECTOR = "homeserviceassistant";
 
-  protected cellVoltageDifference: number | null = null;
-  protected cellTemperatureDifference: number | null = null;
   public chargerComponents: EdgeConfig.Component[] = [];
   public Filter = Filter;
-
-  protected CONVERT_TO_GRID_METER_CATEGORY = Converter.CONVERT_TO_GRID_METER_CATEGORY(this.translate);
   public convertToGridMeterCategory: Converter;
+
+  protected cellVoltageDifference: number | null = null;
+  protected cellTemperatureDifference: number | null = null;
+  protected date: string = this.service?.historyPeriod?.value?.getText(this.translate, this.service) ?? "";
+  protected CONVERT_TO_GRID_METER_CATEGORY = Converter.CONVERT_TO_GRID_METER_CATEGORY(this.translate);
 
   protected override afterIsInitialized() {
     if (this.config?.components) {
@@ -40,8 +41,6 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
         ].some(factoryId => factoryId === component.factoryId));
     }
   }
-
-  protected date: string = this.service?.historyPeriod?.value?.getText(this.translate, this.service) ?? "";
 
   protected override getChannelAddresses(): ChannelAddress[] {
     return [

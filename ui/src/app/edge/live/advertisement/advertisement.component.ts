@@ -56,6 +56,14 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
     this.changeNextPrevButtons();
   }
 
+  protected swipeNext() {
+    this.swiperRef?.nativeElement.swiper.slideNext();
+  }
+
+  protected swipePrevious() {
+    this.swiperRef?.nativeElement.swiper.slidePrev();
+  }
+
   private changeNextPrevButtons() {
 
     // enables or disables nav buttons generally
@@ -71,11 +79,4 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
     }
   }
 
-  protected swipeNext() {
-    this.swiperRef?.nativeElement.swiper.slideNext();
-  }
-
-  protected swipePrevious() {
-    this.swiperRef?.nativeElement.swiper.slidePrev();
-  }
 }

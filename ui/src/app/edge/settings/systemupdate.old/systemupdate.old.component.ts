@@ -48,8 +48,8 @@ export class SystemUpdateOldComponent implements OnInit, OnDestroy {
   private static readonly MAX_LOG_ENTRIES = 200;
 
   public edge: Edge = null;
-  private ngUnsubscribe = new Subject<void>();
   public isCurrentlyInstalling: boolean = null;
+  public package = new Package("fems", "FEMS");
 
   public logLines: {
     time: string,
@@ -58,8 +58,8 @@ export class SystemUpdateOldComponent implements OnInit, OnDestroy {
     message: string,
     source: string
   }[] = [];
+  private ngUnsubscribe = new Subject<void>();
 
-  public package = new Package("fems", "FEMS");
 
   constructor(
     private route: ActivatedRoute,
@@ -85,6 +85,28 @@ export class SystemUpdateOldComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.stopUpdateVersions();
+  }
+
+  public updatePackage(pkg: Package) {
+    this.isCurrentlyInstalling = true;
+    this.log("INFO", "Starte FEMS Update");
+
+    // Start Download
+    this.edge.sendRequest(this.websocket,
+      new ComponentJsonApiRequest({
+        componentId: "_host",
+        payload: new ExecuteSystemCommandRequest({
+          username: SystemUpdateOldComponent.USERNAME,
+          password: SystemUpdateOldComponent.PASSWORD,
+          timeoutSeconds: 300,
+          runInBackground: false,
+          command: "which at || DEBIAN_FRONTEND=noninteractive apt-get -y install at; "
+            + "echo 'wget http://fenecon.de/debian-test/update-fems.sh -O /tmp/update-fems.sh && chmod +x /tmp/update-fems.sh && /tmp/update-fems.sh' | at now",
+        }),
+
+      })).catch(reason => {
+        this.log("ERROR", reason.error.message);
+      });
   }
 
   private updateVersions() {
@@ -145,28 +167,6 @@ export class SystemUpdateOldComponent implements OnInit, OnDestroy {
         }
 
       }).catch(reason => {
-        this.log("ERROR", reason.error.message);
-      });
-  }
-
-  public updatePackage(pkg: Package) {
-    this.isCurrentlyInstalling = true;
-    this.log("INFO", "Starte FEMS Update");
-
-    // Start Download
-    this.edge.sendRequest(this.websocket,
-      new ComponentJsonApiRequest({
-        componentId: "_host",
-        payload: new ExecuteSystemCommandRequest({
-          username: SystemUpdateOldComponent.USERNAME,
-          password: SystemUpdateOldComponent.PASSWORD,
-          timeoutSeconds: 300,
-          runInBackground: false,
-          command: "which at || DEBIAN_FRONTEND=noninteractive apt-get -y install at; "
-            + "echo 'wget http://fenecon.de/debian-test/update-fems.sh -O /tmp/update-fems.sh && chmod +x /tmp/update-fems.sh && /tmp/update-fems.sh' | at now",
-        }),
-
-      })).catch(reason => {
         this.log("ERROR", reason.error.message);
       });
   }

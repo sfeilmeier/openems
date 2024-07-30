@@ -36,13 +36,11 @@ export type Home2030CommonApp = {
 
 export abstract class AbstractHomeIbn extends AbstractIbn {
   private static readonly SELECTOR = 'Home';
-  public override readonly type: SystemType = SystemType.FENECON_HOME;
   private static readonly MODULE_DATA_TIMEOUT = 12_000; // two minutes
   private static readonly TOWER_DATA_TIMEOUT = 5_000; // five seconds
 
-  constructor(public override views: View[], public override translate: TranslateService) {
-    super(views, translate);
-  }
+  public override readonly type: SystemType = SystemType.FENECON_HOME;
+
 
   // Protocol-pv-component
   public batteryInverter?: {
@@ -101,17 +99,17 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     value?: number;
   };
 
-  public abstract mppt: any;
 
+  public readonly maxFeedInLimit: number = 29999;
   public readonly imageUrl: string = 'assets/img/Home-Typenschild-web.jpg';
   public readonly relayFactoryId: string = 'IO.KMtronic.4Port'; // Default 'Home10' factoryId.
-
   public override readonly showRundSteuerManual: boolean = true;
   public override showViewCount: boolean = false;
   public override readonly defaultNumberOfModules: number = 5;
-  private numberOfModulesPerTower: number;
-  public readonly maxFeedInLimit: number = 29999;
 
+  private numberOfModulesPerTower: number;
+
+  public abstract mppt: any;
   public abstract readonly emsBoxLabel: Category;
   public abstract readonly maxNumberOfPvStrings: number;
   public abstract readonly maxNumberOfMppt: number;
@@ -121,14 +119,9 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public abstract readonly maxNumberOfModulesPerTower: number;
   public abstract readonly minNumberOfModulesPerTower: number;
 
-  /**
- * Generates and returns the Specific properties required for Home APP variant.
- *
- * @param safetyCountry Safety Country configured.
- * @param feedInSetting Feed in Setting configured.
- * @returns The Home APP properties of the specific variant.
- */
-  public abstract getHomeAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): {};
+  constructor(public override views: View[], public override translate: TranslateService) {
+    super(views, translate);
+  }
 
   public override fillSerialNumberForms(
     numberOfTowers: number,
@@ -1123,4 +1116,14 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
     return home20_30CommonApp;
   }
+
+  /**
+* Generates and returns the Specific properties required for Home APP variant.
+*
+* @param safetyCountry Safety Country configured.
+* @param feedInSetting Feed in Setting configured.
+* @returns The Home APP properties of the specific variant.
+*/
+  public abstract getHomeAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): {};
+
 }

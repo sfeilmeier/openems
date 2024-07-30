@@ -18,7 +18,6 @@ export class LiveComponent implements OnInit, OnDestroy {
   public widgets: Widgets = null;
   public advertWidgets: AdvertWidgets = null;
   private stopOnDestroy: Subject<void> = new Subject<void>();
-  protected handleRefresh: (ev: RefresherCustomEvent) => void = (ev: RefresherCustomEvent) => this.dataService.refresh(ev);
 
   constructor(
     private route: ActivatedRoute,
@@ -44,4 +43,6 @@ export class LiveComponent implements OnInit, OnDestroy {
     this.stopOnDestroy.next();
     this.stopOnDestroy.complete();
   }
+
+  protected handleRefresh: (ev: RefresherCustomEvent) => void = (ev: RefresherCustomEvent) => this.dataService.refresh(ev);
 }

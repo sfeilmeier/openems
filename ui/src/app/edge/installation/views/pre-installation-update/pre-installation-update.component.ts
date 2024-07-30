@@ -11,12 +11,12 @@ import { Edge, Service, Websocket } from 'src/app/shared/shared';
 export class PreInstallationUpdateComponent {
   private static readonly SELECTOR = 'pre-installation-update';
 
-  public readonly spinnerId: string = PreInstallationUpdateComponent.SELECTOR;
-
   @Output() public nextViewEvent = new EventEmitter();
   @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
 
   @Input() public edge: Edge;
+  public readonly spinnerId: string = PreInstallationUpdateComponent.SELECTOR;
+
 
   protected isWaiting: boolean;
   protected isUpdated: boolean;

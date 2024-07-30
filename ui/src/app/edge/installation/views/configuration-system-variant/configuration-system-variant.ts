@@ -21,6 +21,21 @@ export class ConfigurationSystemVariantComponent implements OnInit {
     public fields: FormlyFieldConfig[];
     public model;
 
+    /**
+    * Displays the button for home systems, otherwise false.
+    *
+    * @returns {boolean} True if the selected system is a home system, false otherwise.
+       *
+    * @remarks
+     * This getter is used to determine whether the system selected in the form is one of the predefined home systems.
+    * It checks if the selected system value exists and is included in the `homeSystemIds` array.
+    *
+    */
+    protected get showManualButton(): boolean {
+        const selectedSystem: SystemId = this.form.controls.system?.value;
+        return System.isHomeSystemSelected(selectedSystem);
+    }
+
     public ngOnInit() {
         this.form = new FormGroup({});
         this.fields = this.ibn.getSystemVariantFields();
@@ -50,18 +65,4 @@ export class ConfigurationSystemVariantComponent implements OnInit {
         window.open(System.getHomeSystemInstructionsLink(homeSystemVariant));
     }
 
-    /**
-     * Displays the button for home systems, otherwise false.
-     *
-     * @returns {boolean} True if the selected system is a home system, false otherwise.
-     *
-     * @remarks
-     * This getter is used to determine whether the system selected in the form is one of the predefined home systems.
-     * It checks if the selected system value exists and is included in the `homeSystemIds` array.
-     *
-     */
-    protected get showManualButton(): boolean {
-        const selectedSystem: SystemId = this.form.controls.system?.value;
-        return System.isHomeSystemSelected(selectedSystem);
-    }
 }

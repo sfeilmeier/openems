@@ -138,100 +138,11 @@ export abstract class AbstractIbn {
   constructor(public views: View[], public translate: TranslateService) { }
 
   /**
-   * Returns the number of towers and modules per tower.
-   *
-   * @param edge the current edge.
-   * @param websocket the Websocket connection.
-   */
-  public abstract getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket): Promise<{ numberOfTowers: number; numberOfModulesPerTower: number }>;
-
-  /**
-   * Returns the component fields for serial numbers based on system being installed.
-   *
-   * @param towerNr number of towers.
-   * @param numberOfModulesPerTower number of modules per tower.
-   */
-  public abstract getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number): FormlyFieldConfig[];
-
-  /**
-   * Returns the fields to enter number of towers and modules, manually.
-   *
-   * @param numberOfModulesPerTower number of modules per tower.
-   * @param numberOfTowers number of towers.
-   */
-  public abstract getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number): FormlyFieldConfig[];
-
-  /**
-   * Fills the entire fields.
-   *
-   * @param numberOfTowers number of towers.
-   * @param numberOfModulesPerTower number of modules per tower.
-   * @param models form specific data.
-   * @param forms Array of form data to display.
-   */
-  public abstract fillSerialNumberForms(
-    numberOfTowers: number,
-    numberOfModulesPerTower: number,
-    models: any,
-    forms: SerialNumberFormData[]): SerialNumberFormData[];
-
-  /**
-   * Retrieves the Serial numbers of the battery modules and components.
-   *
-   * @param towerNr number of towers.
-   * @param edge the current edge.
-   * @param websocket the Websocket connection.
-   * @param numberOfModulesPerTower number of modules per tower.
-   */
-  public abstract getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower?: number): Promise<{}>;
-
-  /**
-   * View Configuration Dynamic Feed-In limitation.
-   * Returns the fields for the views based on the system.
-   */
-  public abstract getFeedInLimitFields(): FormlyFieldConfig[];
-
-  /**
-   * sets the Feed-In-Limit fields from the model.
-   *
-   * @param model the model containing the user input for the Dynamic-Feed-In-Limit fields.
-   */
+ * sets the Feed-In-Limit fields from the model.
+ *
+ * @param model the model containing the user input for the Dynamic-Feed-In-Limit fields.
+ */
   public setFeedInLimitFields(model: any) { }
-
-  /**
-   * View Configuration-execute.
-   * Returns the required configuration object with components specific to the system.
-   *
-   * @param edge the current edge.
-   * @param config the EdgeConfig.
-   * @param websocket the Websocket connection.
-   * @param service the Service.
-   */
-  public abstract getComponentConfigurator(
-    edge: Edge,
-    config: EdgeConfig,
-    websocket: Websocket,
-    service?: Service
-  ): ComponentConfigurator;
-
-  /**
-   * View Protocol-serial-numbers.
-   * Returns the Protocol information of the system.
-   *
-   * @param edge the current edge.
-   * @param websocket the Websocket connection.
-   */
-  public abstract getProtocol(edge: Edge, websocket: Websocket): Promise<string>;
-
-  /**
-   * Returns the set of controller for updateScheduler in component configurator.
-   */
-  public abstract setRequiredControllers();
-
-  /**
-   * Returns the fields that has system variants specific to the 'System Type' selected in previous step.
-   */
-  public abstract getSystemVariantFields(): FormlyFieldConfig[];
 
   /**
    * Returns the fields that has sub systems specific to the 'System Type' selected in previous step.
@@ -590,4 +501,94 @@ export abstract class AbstractIbn {
   public setIbn(system: any): AbstractIbn {
     return System.getSystemObjectFromSystemId(system, this.translate);
   }
+
+  /**
+ * Returns the number of towers and modules per tower.
+ *
+ * @param edge the current edge.
+ * @param websocket the Websocket connection.
+ */
+  public abstract getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket): Promise<{ numberOfTowers: number; numberOfModulesPerTower: number }>;
+
+  /**
+   * Returns the component fields for serial numbers based on system being installed.
+   *
+   * @param towerNr number of towers.
+   * @param numberOfModulesPerTower number of modules per tower.
+   */
+  public abstract getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number): FormlyFieldConfig[];
+
+  /**
+   * Returns the fields to enter number of towers and modules, manually.
+   *
+   * @param numberOfModulesPerTower number of modules per tower.
+   * @param numberOfTowers number of towers.
+   */
+  public abstract getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number): FormlyFieldConfig[];
+
+  /**
+   * Fills the entire fields.
+   *
+   * @param numberOfTowers number of towers.
+   * @param numberOfModulesPerTower number of modules per tower.
+   * @param models form specific data.
+   * @param forms Array of form data to display.
+   */
+  public abstract fillSerialNumberForms(
+    numberOfTowers: number,
+    numberOfModulesPerTower: number,
+    models: any,
+    forms: SerialNumberFormData[]): SerialNumberFormData[];
+
+  /**
+   * Retrieves the Serial numbers of the battery modules and components.
+   *
+   * @param towerNr number of towers.
+   * @param edge the current edge.
+   * @param websocket the Websocket connection.
+   * @param numberOfModulesPerTower number of modules per tower.
+   */
+  public abstract getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower?: number): Promise<{}>;
+
+  /**
+   * View Configuration Dynamic Feed-In limitation.
+   * Returns the fields for the views based on the system.
+   */
+  public abstract getFeedInLimitFields(): FormlyFieldConfig[];
+
+  /**
+   * View Configuration-execute.
+   * Returns the required configuration object with components specific to the system.
+   *
+   * @param edge the current edge.
+   * @param config the EdgeConfig.
+   * @param websocket the Websocket connection.
+   * @param service the Service.
+   */
+  public abstract getComponentConfigurator(
+    edge: Edge,
+    config: EdgeConfig,
+    websocket: Websocket,
+    service?: Service
+  ): ComponentConfigurator;
+
+  /**
+   * View Protocol-serial-numbers.
+   * Returns the Protocol information of the system.
+   *
+   * @param edge the current edge.
+   * @param websocket the Websocket connection.
+   */
+  public abstract getProtocol(edge: Edge, websocket: Websocket): Promise<string>;
+
+  /**
+   * Returns the set of controller for updateScheduler in component configurator.
+   */
+  public abstract setRequiredControllers();
+
+  /**
+   * Returns the fields that has system variants specific to the 'System Type' selected in previous step.
+   */
+  public abstract getSystemVariantFields(): FormlyFieldConfig[];
+
 }
