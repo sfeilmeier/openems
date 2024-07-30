@@ -83,4 +83,14 @@ public class BatteryProtectionDefinitionRestricted implements BatteryProtectionD
 	public Double getMaxIncreaseAmperePerSecond() {
 		return 1.; // [A] per second
 	}
+
+	@Override
+	public PolyLine getChargeSocToPercent() {
+		return PolyLine.empty();
+	}
+
+	@Override
+	public PolyLine getDischargeSocToPercent() {
+		return PolyLine.empty();
+	}
 }
