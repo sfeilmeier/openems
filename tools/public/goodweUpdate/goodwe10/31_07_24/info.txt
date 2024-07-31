@@ -1,0 +1,3 @@
+Version 31.07.2024 (ET+ new FW to fix battery low current sampling is inaccurate)
+ARM: 28 (410-02041-28-Test(60290).bin)
+DSP: 12 (410-04029-12-Release(V197).bin)

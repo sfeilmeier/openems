@@ -1,3 +1,3 @@
-Version 15.09.2023 (Österreich)
+Version 15.09.2023 (Ã–sterreich)
 ARM: 23
 DSP: 9
