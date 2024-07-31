@@ -21,6 +21,15 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: '2024.7.3',
+        changes: [
+          Changelog.UI,
+          Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Optimierungen bei leerer/voller Batterie, Bereinigen von Statusmeldungen",
+          "Verbesserungen an der System-Update-Funktion",
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.HOME_10, Product.HOME_20_30) + "UI Widget für 'Dimmung' nach §14a EnWG" },
+        ],
+      },
+      {
         version: '2024.7.2',
         changes: [
           Changelog.UI + "Korrektur bei der Berechnung des sonstigen Verbrauchs, Differenzierung der Login-Seite für das jeweilige Betriebssystem (Android, iOS, Windows)",
