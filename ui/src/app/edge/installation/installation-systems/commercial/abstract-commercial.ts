@@ -37,6 +37,15 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         maximumFeedInPower: 0,
     };
 
+    //Configuration Summary
+    public override gtcAndWarrantyLinks: {
+        gtcLink: WebLinks;
+        warrantyLink: WebLinks;
+    } = {
+            gtcLink: WebLinks.GTC_LINK,
+            warrantyLink: WebLinks.WARRANTY_LINK_COMMERCIAL,
+        };
+
     // Protocol line side meter fuse
     public override lineSideMeterFuse?: {
         category: Category;
@@ -50,18 +59,36 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
     public numberOfModulesPerTower: number;
 
+    /**
+    * Returns the Modbus Serial bridge component.
+     *
+    * @param ioComponentId The component id of the component.
+    * @param invalidateElementsAfterReadErrors the maximum read errors allowed.
+    * @param alias the alias string
+    * @returns The modbus serial Configuration Object.
+     */
+    private static getSerialModbusBridgeComponent(ioComponentId: string, invalidateElementsAfterReadErrors: number, alias: string): ConfigurationObject {
+        return {
+            factoryId: 'Bridge.Modbus.Serial',
+            componentId: ioComponentId,
+            alias: alias,
+            properties: [
+                { name: 'enabled', value: true },
+                { name: 'portName', value: '/dev/ttyAMA0' },
+                { name: 'baudRate', value: 9600 },
+                { name: 'databits', value: 8 },
+                { name: 'stopbits', value: 'ONE' },
+                { name: 'parity', value: 'NONE' },
+                { name: 'logVerbosity', value: 'NONE' },
+                { name: 'invalidateElementsAfterReadErrors', value: invalidateElementsAfterReadErrors },
+            ],
+            mode: ConfigurationMode.RemoveAndConfigure,
+        };
+    }
+
     public override setFeedInLimitFields(model: any) {
         this.feedInLimitation.feedInType = model.feedInType;
     }
-
-    //Configuration Summary
-    public override gtcAndWarrantyLinks: {
-        gtcLink: WebLinks;
-        warrantyLink: WebLinks;
-    } = {
-            gtcLink: WebLinks.GTC_LINK,
-            warrantyLink: WebLinks.WARRANTY_LINK_COMMERCIAL,
-        };
 
     public override getLineSideMeterFuseFields() {
         const fields: FormlyFieldConfig[] = [];
@@ -130,6 +157,96 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
                     });
 
         return batteryInverterData;
+    }
+
+    public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower: number) {
+        return new Promise((resolve) => {
+            let isResolved = false;
+            const channelAddresses: ChannelAddress[] = this.getChannels(towerNr, numberOfModulesPerTower);
+            const subscriptionId = AbstractCommercialIbn.SELECTOR + '-tower' + towerNr;
+            const model: {} = {};
+
+            // Subject to stop the subscription to currentData
+            const stopOnRequest: Subject<void> = new Subject<void>();
+
+            // Read data
+            edge.currentData.pipe(
+                takeUntil(stopOnRequest),
+                filter(currentData => currentData != null),
+            ).subscribe((currentData) => {
+                let anyNullorUndefined: boolean = false;
+
+                for (const [key, channelAddress] of Object.entries(channelAddresses)) {
+
+                    const serialNumber: string = currentData.channel[channelAddress.toString()];
+
+                    // If serial number is undefined or null, return
+                    if (!serialNumber) {
+                        anyNullorUndefined = true;
+                        continue;
+                    }
+
+                    if (!this.addSerialNumbersToModel(key, model, serialNumber)) {
+                        // unhandled parsing
+                        // eg: battery module serial numbers are taken directly.
+                        model[key] = serialNumber;
+                    }
+                }
+
+                if (!anyNullorUndefined) {
+                    // Resolve the promise
+                    isResolved = true;
+                    resolve(model);
+                }
+            });
+
+            // Edge-subscribe.
+            // TODO for method in edge to read channels once.
+            edge.subscribeChannels(websocket, subscriptionId, Object.values(channelAddresses));
+
+            setTimeout(() => {
+                // If data isn't available after the timeout, the
+                // promise gets resolved with an empty object
+                if (!isResolved) {
+                    resolve(model);
+                }
+
+                // Unsubscribe to currentData and channels after timeout
+                stopOnRequest.next();
+                stopOnRequest.complete();
+                edge.unsubscribeChannels(websocket, subscriptionId);
+            }, 5000);
+        });
+    }
+
+    public override setNonAbstractFields(ibnString: any) {
+
+        // Configuration commercial modbus bridge
+        if ('modbusBridgeType' in ibnString) {
+            this.modbusBridgeType = ibnString.modbusBridgeType;
+        }
+
+    }
+
+    public override getSubSystemFields(): FormlyFieldConfig[] {
+        const fields: FormlyFieldConfig[] = [];
+        const componentLabel = ([
+            { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
+            { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
+        ]);
+
+        fields.push({
+            key: 'subType',
+            type: 'radio',
+            className: 'line-break',
+            templateOptions: {
+                label: this.translate.instant('INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME'),
+                options: componentLabel,
+                required: true,
+            },
+        });
+
+        return fields;
     }
 
     public override getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket):
@@ -300,33 +417,6 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     }
 
     /**
-     * Returns the Modbus Serial bridge component.
-     *
-     * @param ioComponentId The component id of the component.
-     * @param invalidateElementsAfterReadErrors the maximum read errors allowed.
-     * @param alias the alias string
-     * @returns The modbus serial Configuration Object.
-     */
-    private static getSerialModbusBridgeComponent(ioComponentId: string, invalidateElementsAfterReadErrors: number, alias: string): ConfigurationObject {
-        return {
-            factoryId: 'Bridge.Modbus.Serial',
-            componentId: ioComponentId,
-            alias: alias,
-            properties: [
-                { name: 'enabled', value: true },
-                { name: 'portName', value: '/dev/ttyAMA0' },
-                { name: 'baudRate', value: 9600 },
-                { name: 'databits', value: 8 },
-                { name: 'stopbits', value: 'ONE' },
-                { name: 'parity', value: 'NONE' },
-                { name: 'logVerbosity', value: 'NONE' },
-                { name: 'invalidateElementsAfterReadErrors', value: invalidateElementsAfterReadErrors },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-        };
-    }
-
-    /**
      * Returns the channel addresses for reading serial numbers of the system.
      *
      * @param towerNr number of towers.
@@ -343,66 +433,6 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         }
 
         return channelAddresses;
-    }
-
-    public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower: number) {
-        return new Promise((resolve) => {
-            let isResolved = false;
-            const channelAddresses: ChannelAddress[] = this.getChannels(towerNr, numberOfModulesPerTower);
-            const subscriptionId = AbstractCommercialIbn.SELECTOR + '-tower' + towerNr;
-            const model: {} = {};
-
-            // Subject to stop the subscription to currentData
-            const stopOnRequest: Subject<void> = new Subject<void>();
-
-            // Read data
-            edge.currentData.pipe(
-                takeUntil(stopOnRequest),
-                filter(currentData => currentData != null),
-            ).subscribe((currentData) => {
-                let anyNullorUndefined: boolean = false;
-
-                for (const [key, channelAddress] of Object.entries(channelAddresses)) {
-
-                    const serialNumber: string = currentData.channel[channelAddress.toString()];
-
-                    // If serial number is undefined or null, return
-                    if (!serialNumber) {
-                        anyNullorUndefined = true;
-                        continue;
-                    }
-
-                    if (!this.addSerialNumbersToModel(key, model, serialNumber)) {
-                        // unhandled parsing
-                        // eg: battery module serial numbers are taken directly.
-                        model[key] = serialNumber;
-                    }
-                }
-
-                if (!anyNullorUndefined) {
-                    // Resolve the promise
-                    isResolved = true;
-                    resolve(model);
-                }
-            });
-
-            // Edge-subscribe.
-            // TODO for method in edge to read channels once.
-            edge.subscribeChannels(websocket, subscriptionId, Object.values(channelAddresses));
-
-            setTimeout(() => {
-                // If data isn't available after the timeout, the
-                // promise gets resolved with an empty object
-                if (!isResolved) {
-                    resolve(model);
-                }
-
-                // Unsubscribe to currentData and channels after timeout
-                stopOnRequest.next();
-                stopOnRequest.complete();
-                edge.unsubscribeChannels(websocket, subscriptionId);
-            }, 5000);
-        });
     }
 
     /**
@@ -423,33 +453,4 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         return false;
     }
 
-    public override setNonAbstractFields(ibnString: any) {
-
-        // Configuration commercial modbus bridge
-        if ('modbusBridgeType' in ibnString) {
-            this.modbusBridgeType = ibnString.modbusBridgeType;
-        }
-
-    }
-
-    public override getSubSystemFields(): FormlyFieldConfig[] {
-        const fields: FormlyFieldConfig[] = [];
-        const componentLabel = ([
-            { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
-            { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
-        ]);
-
-        fields.push({
-            key: 'subType',
-            type: 'radio',
-            className: 'line-break',
-            templateOptions: {
-                label: this.translate.instant('INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME'),
-                options: componentLabel,
-                required: true,
-            },
-        });
-
-        return fields;
-    }
 }

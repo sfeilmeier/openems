@@ -16,7 +16,7 @@ import io.openems.edge.core.appmanager.Apps;
 import io.openems.edge.core.appmanager.OpenemsAppInstance;
 import io.openems.edge.core.appmanager.jsonrpc.AddAppInstance;
 
-public class TestFeneconIndustrial {
+public class TestFeneconIndustrialS {
 
 	private AppManagerTestBundle appManagerTestBundle;
 
@@ -24,9 +24,9 @@ public class TestFeneconIndustrial {
 	public void beforeEach() throws Exception {
 		this.appManagerTestBundle = new AppManagerTestBundle(null, null, t -> {
 			return Apps.of(t, //
-					Apps::feneconIsk110, //
-					Apps::feneconIsk010, //
-					Apps::feneconIsk011 //
+					Apps::feneconIndustrialSIsk110, //
+					Apps::feneconIndustrialSIsk010, //
+					Apps::feneconIndustrialSIsk011 //
 			);
 		});
 	}

@@ -14,9 +14,9 @@ export class SoltaroVersionCComponent extends AbstractBattery implements OnInit,
 
     private static readonly SELECTOR = "soltaroVersionC";
 
-    @Input() private componentId: string;
     @Input() public override edge: Edge;
     @Input() public override config: EdgeConfig;
+    @Input() private componentId: string;
 
     public override component: EdgeConfig.Component = null;
 

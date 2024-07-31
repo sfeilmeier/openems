@@ -261,6 +261,18 @@ export namespace Converter {
       Utils.addSafely(evcsChargePowerTotal, consumptionMeterActivePowerTotal));
   };
 
+  export const GRID_STATE_TO_MESSAGE = (translate: TranslateService, currentData: CurrentData): string => {
+    const gridMode = currentData.allComponents['_sum/GridMode'];
+    const restrictionMode = currentData.allComponents['ctrlEssLimiter14a0/RestrictionMode'];
+    if (gridMode === GridMode.OFF_GRID) {
+      return translate.instant("GRID_STATES.OFF_GRID");
+    }
+    if (restrictionMode === 1) {
+      return translate.instant('GRID_STATES.RESTRICTION');
+    }
+    return translate.instant("GRID_STATES.NO_EXTERNAL_LIMITATION");
+  };
+
   export const ON_OFF = (translate: TranslateService) => {
     return (raw): string => {
       return translate.instant(raw == 1 ? 'General.on' : 'General.off');

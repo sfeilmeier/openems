@@ -6,11 +6,11 @@ import { Channel } from "src/app/shared/jsonrpc/response/getChannelsOfComponentR
 
 export abstract class AbstractBattery {
 
+    public spinnerId: string = "";
+    public _abstractBatterySpinner: string = "AbstractBatterySpinner";
     protected edge: Edge;
     protected component: EdgeConfig.Component;
     protected config: EdgeConfig;
-    public spinnerId: string = "";
-    public _abstractBatterySpinner: string = "AbstractBatterySpinner";
 
     // Write Channels
     protected importantWriteChannelDescriptions: CategorizedChannelDescription[] = [];
@@ -44,6 +44,54 @@ export abstract class AbstractBattery {
         this.importantCellChartChannelDescriptions = this.getImportantCellChartChannelDescriptions();
 
         this.service.stopSpinner(this._abstractBatterySpinner);
+    }
+
+    getChannelAddress(componentId: string, channel: string): ChannelAddress {
+        return new ChannelAddress(componentId, channel);
+    }
+
+    setChannelValue(address: ChannelAddress, value: any) {
+        if (this.edge) {
+            this.edge.sendRequest(
+                this.service.websocket,
+                new SetChannelValueRequest({
+                    componentId: address.componentId,
+                    channelId: address.channelId,
+                    value: value,
+                }),
+            ).then(response => {
+
+                // The value should be only set once and not for the configured backend timout time - e.g. for system reset it would restart the battery very often till the timeout.
+                if (value != null) {
+                    this.service.toast("Successfully set " + address.toString() + " to [" + value + "]", "success");
+                    setTimeout(() => {
+                        this.setChannelValue(address, null);
+                    }, 10000);
+                }
+            }).catch(reason => {
+                this.service.toast("Error setting " + address.toString() + " to [" + value + "]", 'danger');
+            });
+        }
+    }
+
+    protected getAllChannelAddresses(): ChannelAddress[] {
+        const channels: ChannelAddress[] = [];
+        for (const category of [...this.importantReadChannelDescriptions, ...this.importantWriteChannelDescriptions]) {
+            channels.push(...this.getChannelAddressesOf(category.channels));
+        }
+        channels.push(new ChannelAddress(this.component.id, '_PropertyReduceTasks'));
+        return channels;
+    }
+
+    private getChannelAddressesOf(channelDescriptions: ChannelDescription[]): ChannelAddress[] {
+        const channels: ChannelAddress[] = [];
+        for (const channel of channelDescriptions) {
+            if (channel.dependentChannelNames) {
+                channels.push(...this.getChannelAddressesOf(channel.dependentChannelNames));
+            }
+            channels.push(new ChannelAddress(this.component.id, channel.channelName));
+        }
+        return channels;
     }
 
     /**
@@ -135,54 +183,6 @@ export abstract class AbstractBattery {
      *  },
      */
     protected abstract getImportantCellChartChannelDescriptions(): ChannelChartDescription[];
-
-    getChannelAddress(componentId: string, channel: string): ChannelAddress {
-        return new ChannelAddress(componentId, channel);
-    }
-
-    setChannelValue(address: ChannelAddress, value: any) {
-        if (this.edge) {
-            this.edge.sendRequest(
-                this.service.websocket,
-                new SetChannelValueRequest({
-                    componentId: address.componentId,
-                    channelId: address.channelId,
-                    value: value,
-                }),
-            ).then(response => {
-
-                // The value should be only set once and not for the configured backend timout time - e.g. for system reset it would restart the battery very often till the timeout.
-                if (value != null) {
-                    this.service.toast("Successfully set " + address.toString() + " to [" + value + "]", "success");
-                    setTimeout(() => {
-                        this.setChannelValue(address, null);
-                    }, 10000);
-                }
-            }).catch(reason => {
-                this.service.toast("Error setting " + address.toString() + " to [" + value + "]", 'danger');
-            });
-        }
-    }
-
-    protected getAllChannelAddresses(): ChannelAddress[] {
-        const channels: ChannelAddress[] = [];
-        for (const category of [...this.importantReadChannelDescriptions, ...this.importantWriteChannelDescriptions]) {
-            channels.push(...this.getChannelAddressesOf(category.channels));
-        }
-        channels.push(new ChannelAddress(this.component.id, '_PropertyReduceTasks'));
-        return channels;
-    }
-
-    private getChannelAddressesOf(channelDescriptions: ChannelDescription[]): ChannelAddress[] {
-        const channels: ChannelAddress[] = [];
-        for (const channel of channelDescriptions) {
-            if (channel.dependentChannelNames) {
-                channels.push(...this.getChannelAddressesOf(channel.dependentChannelNames));
-            }
-            channels.push(new ChannelAddress(this.component.id, channel.channelName));
-        }
-        return channels;
-    }
 
 }
 

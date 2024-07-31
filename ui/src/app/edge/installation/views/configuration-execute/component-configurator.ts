@@ -81,20 +81,6 @@ export class ComponentConfigurator {
         this.installAppCallbacks.push(installAppCallback);
     }
 
-    private refreshConfigurationState(configurationObject: ConfigurationObject) {
-        if (this.exists(configurationObject.componentId)) {
-            configurationObject.configState = ConfigurationState.PreConfigured;
-        } else {
-            configurationObject.configState = ConfigurationState.Missing;
-        }
-    }
-
-    private refreshAllConfigurationStates() {
-        for (const configurationObject of this.configurationObjects) {
-            this.refreshConfigurationState(configurationObject);
-        }
-    }
-
     /**
      * Starts the configuration process including all
      * configuration objects which have been added via @method add()
@@ -195,6 +181,86 @@ export class ComponentConfigurator {
             }
         }
         return true;
+    }
+
+    public startFunctionTest(): Promise<void> {
+
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                for (const configurationObject of this.configurationObjects) {
+
+                    if (configurationObject.mode !== ConfigurationMode.RemoveAndConfigure) {
+                        // Only do function test if in RemoveAndConfigure-Mode
+                        continue;
+                    }
+
+                    configurationObject.functionState = FunctionState.Testing;
+
+                    const channelAddress = new ChannelAddress(configurationObject.componentId, "State");
+                    const channelMapping = { configurationObject: configurationObject, channelAddress: channelAddress };
+
+                    // Add the subscription
+                    this.channelMappings.push(channelMapping);
+
+                    // Get all channel addresses
+                    const channelAddresses: ChannelAddress[] = [];
+
+                    for (const subscription of this.channelMappings) {
+                        channelAddresses.push(subscription.channelAddress);
+                    }
+
+                    // Do edge subscribe for all channels
+                    this.edge.subscribeChannels(this.websocket, "component-configurator", channelAddresses);
+
+                    // Subscribe to the new channel
+                    const subscription: Subscription = this.edge.currentData.pipe(
+                        filter(currentData => currentData !== null),
+                    ).subscribe((currentData) => {
+                        const channelAddress: ChannelAddress = channelMapping.channelAddress;
+                        const channelValue: number = currentData.channel[channelAddress.componentId + "/" + channelAddress.channelId];
+
+                        let functionState;
+
+                        switch (channelValue) {
+                            case 0:
+                            case 1:
+                                functionState = FunctionState.Ok;
+                                break;
+                            case 2:
+                                functionState = FunctionState.Warning;
+                                break;
+                            case 3:
+                                functionState = FunctionState.Fault;
+                                break;
+                            default:
+                                functionState = undefined;
+                                break;
+                        }
+
+                        channelMapping.configurationObject.functionState = functionState;
+                    });
+
+                    // Add subscription to list
+                    this.subscriptions.push(subscription);
+                }
+
+                resolve();
+            }, DELAY_FUNCTION_TEST);
+        });
+    }
+
+    private refreshConfigurationState(configurationObject: ConfigurationObject) {
+        if (this.exists(configurationObject.componentId)) {
+            configurationObject.configState = ConfigurationState.PreConfigured;
+        } else {
+            configurationObject.configState = ConfigurationState.Missing;
+        }
+    }
+
+    private refreshAllConfigurationStates() {
+        for (const configurationObject of this.configurationObjects) {
+            this.refreshConfigurationState(configurationObject);
+        }
     }
 
     /**
@@ -375,72 +441,6 @@ export class ComponentConfigurator {
                 // have to be configured, so this Promise just gets resolved.
                 resolve();
             }
-        });
-    }
-
-    public startFunctionTest(): Promise<void> {
-
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                for (const configurationObject of this.configurationObjects) {
-
-                    if (configurationObject.mode !== ConfigurationMode.RemoveAndConfigure) {
-                        // Only do function test if in RemoveAndConfigure-Mode
-                        continue;
-                    }
-
-                    configurationObject.functionState = FunctionState.Testing;
-
-                    const channelAddress = new ChannelAddress(configurationObject.componentId, "State");
-                    const channelMapping = { configurationObject: configurationObject, channelAddress: channelAddress };
-
-                    // Add the subscription
-                    this.channelMappings.push(channelMapping);
-
-                    // Get all channel addresses
-                    const channelAddresses: ChannelAddress[] = [];
-
-                    for (const subscription of this.channelMappings) {
-                        channelAddresses.push(subscription.channelAddress);
-                    }
-
-                    // Do edge subscribe for all channels
-                    this.edge.subscribeChannels(this.websocket, "component-configurator", channelAddresses);
-
-                    // Subscribe to the new channel
-                    const subscription: Subscription = this.edge.currentData.pipe(
-                        filter(currentData => currentData !== null),
-                    ).subscribe((currentData) => {
-                        const channelAddress: ChannelAddress = channelMapping.channelAddress;
-                        const channelValue: number = currentData.channel[channelAddress.componentId + "/" + channelAddress.channelId];
-
-                        let functionState;
-
-                        switch (channelValue) {
-                            case 0:
-                            case 1:
-                                functionState = FunctionState.Ok;
-                                break;
-                            case 2:
-                                functionState = FunctionState.Warning;
-                                break;
-                            case 3:
-                                functionState = FunctionState.Fault;
-                                break;
-                            default:
-                                functionState = undefined;
-                                break;
-                        }
-
-                        channelMapping.configurationObject.functionState = functionState;
-                    });
-
-                    // Add subscription to list
-                    this.subscriptions.push(subscription);
-                }
-
-                resolve();
-            }, DELAY_FUNCTION_TEST);
         });
     }
 

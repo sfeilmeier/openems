@@ -14,24 +14,21 @@ export class ChangelogComponent {
 
   public environment = environment;
 
-  protected slice: number = 10;
-  protected showAll: boolean = false;
-  constructor(
-    public translate: TranslateService,
-    public service: Service,
-    private route: ActivatedRoute,
-  ) { }
-
   public readonly roleIsAtLeast = Role.isAtLeast;
-  public numberToRole(role: number): string {
-    return Role[role].toLowerCase();
-  }
-
   public readonly changelogs: {
     title?: string,
     version?: string,
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
+      {
+        version: '2024.7.3',
+        changes: [
+          Changelog.UI,
+          Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Optimierungen bei leerer/voller Batterie, Bereinigen von Statusmeldungen",
+          "Verbesserungen an der System-Update-Funktion",
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.HOME_10, Product.HOME_20_30) + "UI Widget für 'Dimmung' nach §14a EnWG" },
+        ],
+      },
       {
         version: '2024.7.2',
         changes: [
@@ -1995,4 +1992,16 @@ export class ChangelogComponent {
       },
     ];
 
+
+  protected slice: number = 10;
+  protected showAll: boolean = false;
+  constructor(
+    public translate: TranslateService,
+    public service: Service,
+    private route: ActivatedRoute,
+  ) { }
+
+  public numberToRole(role: number): string {
+    return Role[role].toLowerCase();
+  }
 }

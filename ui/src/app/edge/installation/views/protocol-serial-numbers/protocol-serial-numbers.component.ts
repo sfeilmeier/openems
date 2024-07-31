@@ -140,23 +140,10 @@ export class ProtocolSerialNumbersComponent implements OnInit {
   }
 
   /**
-   * Restricts the reading of serial numbers to specific towers configured.
-   */
-  private readSerialNumbersFromRegisters(): Promise<{}>[] {
-
-    const result: Promise<{}>[] = [];
-    for (let i = 0; i < this.numberOfTowers; i++) {
-      result.push(this.ibn.getSerialNumbersFromEdge(i, this.edge, this.websocket, this.numberOfModulesPerTower));
-    }
-
-    return result;
-  }
-
-  /**
-   * Updates the tower and module information based on manual update.
-   *
-   * @returns the updated number of towers and modules per tower.
-   */
+ * Updates the tower and module information based on manual update.
+ *
+ * @returns the updated number of towers and modules per tower.
+ */
   public saveSettings() {
     if (this.formSettings.invalid) {
       this.service.toast(this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ENTER_VALID_ADDRESS'), 'warning');
@@ -200,4 +187,18 @@ export class ProtocolSerialNumbersComponent implements OnInit {
 
     return serialNumbers;
   }
+
+  /**
+   * Restricts the reading of serial numbers to specific towers configured.
+   */
+  private readSerialNumbersFromRegisters(): Promise<{}>[] {
+
+    const result: Promise<{}>[] = [];
+    for (let i = 0; i < this.numberOfTowers; i++) {
+      result.push(this.ibn.getSerialNumbersFromEdge(i, this.edge, this.websocket, this.numberOfModulesPerTower));
+    }
+
+    return result;
+  }
+
 }

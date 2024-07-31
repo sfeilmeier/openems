@@ -15,6 +15,44 @@ export class CurrentData {
     this.summary = this.getSummary(channel);
   }
 
+  public static calculateAutarchy(buyFromGrid: number, consumptionActivePower: number): number | null {
+    if (buyFromGrid != null && consumptionActivePower != null) {
+      return Math.max(
+        Utils.orElse(
+          (
+            1 - (
+              Utils.divideSafely(
+                Utils.orElse(buyFromGrid, 0),
+                Math.max(Utils.orElse(consumptionActivePower, 0), 0),
+              )
+            )
+          ) * 100, 0,
+        ), 0);
+    } else {
+      return null;
+    }
+  }
+
+  /**
+  * Calculates the powerRatio depending on the available Channels for each version.
+  * If version older than '2024.2.2' we use "_sum/EssMaxApparentPower", otherwise we use "_sum/EssMaxDischargePower" & "_sum/EssMinDischargePower" in newer versions.
+  *
+  * @param maxApparentPower the maxApparentPower
+  * @param minDischargePower the minDischargePower
+  * @param effectivePower the essActivePower
+  * @param result the result
+  * @returns the powerRatio
+  */
+  public static getEssPowerRatio(maxApparentPower: number | null, minDischargePower: number | null, effectivePower: number | null): number {
+    if (!effectivePower) {
+      return 0;
+    }
+    return Utils.orElse(Utils.divideSafely(effectivePower,
+      effectivePower > 0
+        ? maxApparentPower
+        : Utils.multiplySafely(minDischargePower, -1)), 0);
+  }
+
   private getSummary(c: { [channelAddress: string]: any }): DefaultTypes.Summary {
     const result: DefaultTypes.Summary = {
       system: {
@@ -66,6 +104,7 @@ export class CurrentData {
         sellActivePowerL2: null,
         sellActivePowerL3: null,
         maxSellActivePower: null,
+        restrictionMode: null,
       }, consumption: {
         powerRatio: null,
         activePower: null,
@@ -94,6 +133,7 @@ export class CurrentData {
         result.grid.maxSellActivePower = -5000;
       }
       result.grid.gridMode = c['_sum/GridMode'];
+      result.grid.restrictionMode = c['ctrlEssLimiter14a0/RestrictionMode'];
       if (gridActivePower > 0) {
         result.grid.sellActivePower = 0;
         result.grid.buyActivePower = gridActivePower;
@@ -234,23 +274,6 @@ export class CurrentData {
       result.system.state = c['_sum/State'];
     }
     return result;
-  }
-  public static calculateAutarchy(buyFromGrid: number, consumptionActivePower: number): number | null {
-    if (buyFromGrid != null && consumptionActivePower != null) {
-      return Math.max(
-        Utils.orElse(
-          (
-            1 - (
-              Utils.divideSafely(
-                Utils.orElse(buyFromGrid, 0),
-                Math.max(Utils.orElse(consumptionActivePower, 0), 0),
-              )
-            )
-          ) * 100, 0,
-        ), 0);
-    } else {
-      return null;
-    }
   }
 
 }

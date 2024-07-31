@@ -19,12 +19,12 @@ import { environment } from 'src/environments';
 export class PreInstallationComponent implements OnInit {
   private static readonly SELECTOR = 'pre-installation';
 
-  public edge: Edge;
   @Output() public nextViewEvent = new EventEmitter();
   @Output() public edgeChange = new EventEmitter<Edge>();
-
   @ViewChild('setupKey', { static: false })
   private setupKey: ElementRef;
+  public edge: Edge;
+
 
   public form: FormGroup;
   public fields: FormlyFieldConfig[];

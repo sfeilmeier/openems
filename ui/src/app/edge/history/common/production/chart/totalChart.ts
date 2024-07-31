@@ -12,6 +12,14 @@ import { ChannelAddress } from '../../../../../shared/shared';
 })
 export class TotalChartComponent extends AbstractHistoryChart {
 
+  public override getChartHeight(): number {
+    if (this.showTotal) {
+      return window.innerHeight / 1.3;
+    } else {
+      return window.innerHeight / 2.3;
+    }
+  }
+
   protected override getChartData(): HistoryUtils.ChartData {
     const productionMeterComponents = this.config?.getComponentsImplementingNature("io.openems.edge.meter.api.ElectricityMeter")
       .filter(component => this.config.isProducer(component));
@@ -68,7 +76,7 @@ export class TotalChartComponent extends AbstractHistoryChart {
     const chartObject: HistoryUtils.ChartData = {
       input: channels,
       output: (data: HistoryUtils.ChannelData) => {
-        const datasets: HistoryUtils.DisplayValues[] = [];
+        const datasets: HistoryUtils.DisplayValue[] = [];
         datasets.push({
           name: this.showTotal == false ? this.translate.instant('General.production') : this.translate.instant('General.TOTAL'),
           nameSuffix: (energyQueryResponse: QueryHistoricTimeseriesEnergyResponse) => {
@@ -162,11 +170,4 @@ export class TotalChartComponent extends AbstractHistoryChart {
     return chartObject;
   }
 
-  public override getChartHeight(): number {
-    if (this.showTotal) {
-      return window.innerHeight / 1.3;
-    } else {
-      return window.innerHeight / 2.3;
-    }
-  }
 }

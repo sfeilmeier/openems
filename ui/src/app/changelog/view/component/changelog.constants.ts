@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2024.7.2";
+    public static readonly UI_VERSION = "2024.7.3";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -40,7 +40,7 @@ export class Changelog {
 }
 
 export class Product {
-    private static readonly DEPRECATED = "https://fenecon.de/files-fruehere-modelle/";
+    public static readonly DEPRECATED = "https://fenecon.de/files-fruehere-modelle/";
 
     // TODO Umsetzung OEM-Links?
     // ESS

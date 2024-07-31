@@ -89,116 +89,17 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         return fields;
     }
 
-    protected override getChannels(towerNr: number, numberOfModulesPerTower: number): ChannelAddress[] {
-        const channelAddresses = super.getChannels(towerNr, numberOfModulesPerTower);
-        channelAddresses['batteryInverter'] = new ChannelAddress('batteryInverter0', 'SerialNumber');
-        return channelAddresses;
-    }
-
-    protected override addSerialNumbersToModel(key: string, model: {}, serialNumber: string): boolean {
-        if (super.addSerialNumbersToModel(key, model, serialNumber)) {
-            // already serial number is parsed for the key.
-            return true;
-        } else if (key.startsWith('batteryInverter')) {
-            // Battery inverter serial number.
-            model[key] = serialNumber.substring(5);
-            return true;
-        }
-
-        return false;
-    }
-
     /**
-     * Returns thhe common serial number fields for commercial systems.
-     *
-     * @param stringNr Number of Strings configured.
-     * @param numberOfModulesPerString Number of Modules per String.
-     * @returns the fields.
-     */
-    protected getCommercial30SerialNumbersFields(stringNr: number, numberOfModulesPerString: number): FormlyFieldConfig[] {
-        const fields: FormlyFieldConfig[] = [];
-
-        if (stringNr === 0) {
-
-            fields.push({
-                key: 'batteryInverter',
-                type: 'input',
-                templateOptions: {
-                    label: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER'),
-                    required: true,
-                    prefix: 'PWS00',
-                    placeholder: 'xxxxxxxxxx',
-                },
-                validators: {
-                    validation: ['commercial30BatteryInverterSerialNumber'],
-                },
-                wrappers: ['input-serial-number'],
-            });
-
-            fields.push({
-                key: 'bmsBoxMaster',
-                type: 'input',
-                templateOptions: {
-                    label: 'BMS Box Master',
-                    required: true,
-                    prefix: 'WSDEM3822',
-                    placeholder: 'xxxxxxxxxx',
-                },
-                validators: {
-                    validation: ['commercialBmsBoxSerialNumber'],
-                },
-                wrappers: ['input-serial-number'],
-            });
-        } else {
-            fields.push({
-                key: 'bmsBoxSubMaster' + stringNr,
-                type: 'input',
-                templateOptions: {
-                    label: 'BMS Box Submaster',
-                    required: true,
-                    prefix: 'WSDESM3822',
-                    placeholder: 'xxxxxxxxxx',
-                },
-                validators: {
-                    validation: ['commercialBmsBoxSerialNumber'],
-                },
-                wrappers: ['input-serial-number'],
-            });
-        }
-
-        for (let moduleNr = 0; moduleNr < numberOfModulesPerString; moduleNr++) {
-            fields.push({
-                key: 'module' + moduleNr,
-                type: 'input',
-                templateOptions: {
-                    label: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE') + (moduleNr + 1),
-                    required: true,
-                    // Note: Edit also validator (substring 12) if removing prefix
-                    prefix: 'WSDE...',
-                    placeholder: 'xxxxxxxx',
-                    description: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE_DESCRIPTION'),
-                },
-                validators: {
-                    validation: ['commercialBatteryModuleSerialNumber'],
-                },
-                wrappers: ['input-serial-number'],
-            });
-        }
-        return fields;
-
-    }
-
-    /**
-     * View Configuration-execute.
-     * Returns the common required configuration object for commercial-30 systems with components specific to the system.
-     *
-     * @param edge the current edge.
-     * @param config the EdgeConfig.
-     * @param websocket the Websocket connection.
-     * @param invalidateElementsAfterReadErrors specifies the number of times to check before invalidating.
-     *
-     * @returns ComponentConfigurator
-     */
+  * View Configuration-execute.
+  * Returns the common required configuration object for commercial-30 systems with components specific to the system.
+  *
+  * @param edge the current edge.
+  * @param config the EdgeConfig.
+  * @param websocket the Websocket connection.
+  * @param invalidateElementsAfterReadErrors specifies the number of times to check before invalidating.
+  *
+  * @returns ComponentConfigurator
+  */
     public getCommercial30ComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, invalidateElementsAfterReadErrors: number, service: Service) {
 
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
@@ -325,4 +226,104 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
 
         return componentConfigurator;
     }
+
+    protected override getChannels(towerNr: number, numberOfModulesPerTower: number): ChannelAddress[] {
+        const channelAddresses = super.getChannels(towerNr, numberOfModulesPerTower);
+        channelAddresses['batteryInverter'] = new ChannelAddress('batteryInverter0', 'SerialNumber');
+        return channelAddresses;
+    }
+
+    protected override addSerialNumbersToModel(key: string, model: {}, serialNumber: string): boolean {
+        if (super.addSerialNumbersToModel(key, model, serialNumber)) {
+            // already serial number is parsed for the key.
+            return true;
+        } else if (key.startsWith('batteryInverter')) {
+            // Battery inverter serial number.
+            model[key] = serialNumber.substring(5);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns thhe common serial number fields for commercial systems.
+     *
+     * @param stringNr Number of Strings configured.
+     * @param numberOfModulesPerString Number of Modules per String.
+     * @returns the fields.
+     */
+    protected getCommercial30SerialNumbersFields(stringNr: number, numberOfModulesPerString: number): FormlyFieldConfig[] {
+        const fields: FormlyFieldConfig[] = [];
+
+        if (stringNr === 0) {
+
+            fields.push({
+                key: 'batteryInverter',
+                type: 'input',
+                templateOptions: {
+                    label: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER'),
+                    required: true,
+                    prefix: 'PWS00',
+                    placeholder: 'xxxxxxxxxx',
+                },
+                validators: {
+                    validation: ['commercial30BatteryInverterSerialNumber'],
+                },
+                wrappers: ['input-serial-number'],
+            });
+
+            fields.push({
+                key: 'bmsBoxMaster',
+                type: 'input',
+                templateOptions: {
+                    label: 'BMS Box Master',
+                    required: true,
+                    prefix: 'WSDEM3822',
+                    placeholder: 'xxxxxxxxxx',
+                },
+                validators: {
+                    validation: ['commercialBmsBoxSerialNumber'],
+                },
+                wrappers: ['input-serial-number'],
+            });
+        } else {
+            fields.push({
+                key: 'bmsBoxSubMaster' + stringNr,
+                type: 'input',
+                templateOptions: {
+                    label: 'BMS Box Submaster',
+                    required: true,
+                    prefix: 'WSDESM3822',
+                    placeholder: 'xxxxxxxxxx',
+                },
+                validators: {
+                    validation: ['commercialBmsBoxSerialNumber'],
+                },
+                wrappers: ['input-serial-number'],
+            });
+        }
+
+        for (let moduleNr = 0; moduleNr < numberOfModulesPerString; moduleNr++) {
+            fields.push({
+                key: 'module' + moduleNr,
+                type: 'input',
+                templateOptions: {
+                    label: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE') + (moduleNr + 1),
+                    required: true,
+                    // Note: Edit also validator (substring 12) if removing prefix
+                    prefix: 'WSDE...',
+                    placeholder: 'xxxxxxxx',
+                    description: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE_DESCRIPTION'),
+                },
+                validators: {
+                    validation: ['commercialBatteryModuleSerialNumber'],
+                },
+                wrappers: ['input-serial-number'],
+            });
+        }
+        return fields;
+
+    }
+
 }

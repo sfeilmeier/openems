@@ -66,4 +66,13 @@ public class EnfasBmsBatteryProtection implements BatteryProtectionDefinition {
 		return PolyLine.empty();
 	}
 
+	@Override
+	public PolyLine getChargeSocToPercent() {
+		return PolyLine.empty();
+	}
+
+	@Override
+	public PolyLine getDischargeSocToPercent() {
+		return PolyLine.empty();
+	}
 }

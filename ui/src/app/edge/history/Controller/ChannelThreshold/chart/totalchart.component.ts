@@ -11,11 +11,6 @@ import { ChannelAddress, EdgeConfig } from 'src/app/shared/shared';
 })
 export class TotalChartComponent extends AbstractHistoryChart {
 
-  protected override getChartData(): HistoryUtils.ChartData {
-
-    return TotalChartComponent.getChartData(this.config);
-  }
-
   public static getChartData(config: EdgeConfig): HistoryUtils.ChartData {
 
     const controller: string[] = config?.getComponentIdsImplementingNature("io.openems.impl.controller.channelthreshold.ChannelThresholdController")
@@ -34,7 +29,7 @@ export class TotalChartComponent extends AbstractHistoryChart {
       input: input,
       output: (data: HistoryUtils.ChannelData) => {
 
-        const output: HistoryUtils.DisplayValues[] = [];
+        const output: HistoryUtils.DisplayValue[] = [];
 
         const colors: string[] = ['rgb(0,0,139)', 'rgb(0,191,255)', 'rgb(0,0,56)', 'rgb(77,77,174)'];
 
@@ -68,4 +63,10 @@ export class TotalChartComponent extends AbstractHistoryChart {
       }],
     };
   }
+
+  protected override getChartData(): HistoryUtils.ChartData {
+
+    return TotalChartComponent.getChartData(this.config);
+  }
+
 }

@@ -16,15 +16,12 @@ import * as Chart from 'chart.js';
 })
 export class SoltaroCellChartComponent extends AbstractHistoryChart implements OnInit, OnChanges, OnDestroy {
 
+    private static DEFAULT_PERIOD: DefaultTypes.HistoryPeriod = new DefaultTypes.HistoryPeriod(new Date(), new Date());
+
     @Input() private battery: string;
     @Input() private channels: ChannelChartDescription[];
     @Input() private refresh: boolean;
 
-    private static DEFAULT_PERIOD: DefaultTypes.HistoryPeriod = new DefaultTypes.HistoryPeriod(new Date(), new Date());
-
-    ngOnChanges() {
-        this.updateChart();
-    }
 
     constructor(
         protected override service: Service,
@@ -34,6 +31,10 @@ export class SoltaroCellChartComponent extends AbstractHistoryChart implements O
         super("soltarocell-chart", service, translate);
     }
 
+    ngOnChanges() {
+        this.updateChart();
+    }
+
     ngOnInit() {
         this.startSpinner();
         this.service.setCurrentComponent('', this.route);
@@ -41,6 +42,10 @@ export class SoltaroCellChartComponent extends AbstractHistoryChart implements O
 
     ngOnDestroy() {
         this.unsubscribeChartRefresh();
+    }
+
+    public getChartHeight(): number {
+        return window.innerHeight / 3;
     }
 
     protected updateChart() {
@@ -109,7 +114,4 @@ export class SoltaroCellChartComponent extends AbstractHistoryChart implements O
         this.options = options;
     }
 
-    public getChartHeight(): number {
-        return window.innerHeight / 3;
-    }
 }

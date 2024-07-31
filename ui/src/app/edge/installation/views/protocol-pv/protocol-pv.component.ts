@@ -20,9 +20,9 @@ export class ProtocolPvComponent implements OnInit {
   @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
   @Output() public nextViewEvent = new EventEmitter<AbstractIbn>();
 
+  public forms: Array<dcForm> = [];
   public constructor(private translate: TranslateService) { }
 
-  public forms: Array<dcForm> = [];
 
   public ngOnInit() {
 

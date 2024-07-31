@@ -15,8 +15,6 @@ export class ConfigurationEnergyFlowMeterComponent implements OnInit {
 
     private static readonly SELECTOR = 'configuration-energy-flow-direction-meter';
 
-    constructor(private translate: TranslateService) { }
-
     @Input() public ibn: AbstractHomeIbn;
     @Input() public edge: Edge;
     @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
@@ -25,6 +23,8 @@ export class ConfigurationEnergyFlowMeterComponent implements OnInit {
     public form: FormGroup;
     public fields: FormlyFieldConfig[];
     protected model;
+
+    constructor(private translate: TranslateService) { }
 
     public ngOnInit(): void {
         this.form = new FormGroup({});

@@ -98,6 +98,16 @@ export class ConfigurationSummaryComponent implements OnInit {
   }
 
   /**
+ * Returns the country label selected.
+ *
+ * @param countryValue the country value.
+ * @returns country label.
+ */
+  public getCountryLabel(countryValue: string) {
+    return COUNTRY_OPTIONS(this.translate).find((country) => country.value === countryValue)?.label ?? '';
+  }
+
+  /**
    * Collect all the data for summary.
    */
   public generateTableData() {
@@ -211,13 +221,4 @@ export class ConfigurationSummaryComponent implements OnInit {
     return rows;
   }
 
-  /**
-   * Returns the country label selected.
-   *
-   * @param countryValue the country value.
-   * @returns country label.
-   */
-  public getCountryLabel(countryValue: string) {
-    return COUNTRY_OPTIONS(this.translate).find((country) => country.value === countryValue)?.label ?? '';
-  }
 }

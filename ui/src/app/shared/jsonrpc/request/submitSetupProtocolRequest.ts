@@ -117,6 +117,14 @@ export class SubmitSetupProtocolRequest extends JsonrpcRequest {
 
     private static METHOD: string = "submitSetupProtocol";
 
+    private constructor(
+        public override readonly params: {
+            protocol: any
+        },
+    ) {
+        super(SubmitSetupProtocolRequest.METHOD, params);
+    }
+
     public static translateFrom(protocol: SetupProtocol, translate: TranslateService): SubmitSetupProtocolRequest {
         // protocol.items are type category in the protocol recieved and need to be translated before the request being sent.
         const items: {
@@ -139,11 +147,4 @@ export class SubmitSetupProtocolRequest extends JsonrpcRequest {
         return new SubmitSetupProtocolRequest({ protocol: protocolTranslated });
     }
 
-    private constructor(
-        public override readonly params: {
-            protocol: any
-        },
-    ) {
-        super(SubmitSetupProtocolRequest.METHOD, params);
-    }
 }
