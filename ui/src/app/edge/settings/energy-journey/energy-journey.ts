@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { Edge, Permission, Service } from "src/app/shared/shared";
+import { Edge, Service } from "src/app/shared/shared";
 import { EnergyJourneyWidget } from "./energy-journey.module";
 
 @Component({
@@ -20,7 +20,7 @@ export class EnergyJourneyComponent implements OnInit {
   ngOnInit() {
     this.service.getCurrentEdge().then(edge => {
       this.edge = edge;
-      this.allowedWidgets = Permission.getAllowedEnergyJourneyWidgets(this.edge.firstSetupProtocol, this.translate);
+      this.allowedWidgets = []; // TODO
     });
   }
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Role } from 'src/app/shared/type/role';
 import { environment } from 'src/environments';
-import { Edge, Permission, Service, UserPermission, Utils } from '../../shared/shared';
+import { Edge, Service, UserPermission, Utils } from '../../shared/shared';
 import { JsonrpcTestPermission } from './jsonrpctest/jsonrpctest.permission';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'settings',
@@ -41,7 +41,7 @@ export class SettingsComponent implements OnInit {
       this.canSeeJsonrpcTest = JsonrpcTestPermission.canSee(user, edge);
       this.canSeeHomeAssistant = UserPermission.isUserAllowedToSeeHomeAssistant(user, edge);
       this.canSeeCommercialAssistant = UserPermission.isUserAllowedToSeeCommercialServiceAssistant(user, edge);
-      this.canSeeEnergyJourney = Permission.getAllowedEnergyJourneyWidgets(this.edge.firstSetupProtocol, this.translate).length > 0;
+      this.canSeeEnergyJourney = false; // TODO (Backend only!)
     });
   }
 }
