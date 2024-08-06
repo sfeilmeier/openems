@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Role } from 'src/app/shared/type/role';
 import { environment } from 'src/environments';
 import { Edge, Service, UserPermission, Utils } from '../../shared/shared';
@@ -21,10 +22,12 @@ export class SettingsComponent implements OnInit {
   protected canSeeHomeAssistant: boolean = false;
   protected canSeeCommercialAssistant: boolean = false;
   protected isEdgeBackend: boolean = environment.backend === 'OpenEMS Edge';
+  protected canSeeEnergyJourney: boolean = false;
 
   constructor(
     protected utils: Utils,
     private service: Service,
+    private translate: TranslateService,
   ) {
   }
 
@@ -38,6 +41,7 @@ export class SettingsComponent implements OnInit {
       this.canSeeJsonrpcTest = JsonrpcTestPermission.canSee(user, edge);
       this.canSeeHomeAssistant = UserPermission.isUserAllowedToSeeHomeAssistant(user, edge);
       this.canSeeCommercialAssistant = UserPermission.isUserAllowedToSeeCommercialServiceAssistant(user, edge);
+      this.canSeeEnergyJourney = false; // TODO (Backend only!)
     });
   }
 }

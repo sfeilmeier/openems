@@ -83,7 +83,6 @@ export class EdgePermission {
   public static hasReducedFactories(edge: Edge): boolean {
     return edge.isVersionAtLeast('2024.6.1');
   }
-
 }
 
 export class UserPermission {
@@ -203,6 +202,10 @@ export namespace Currency {
   export enum Label {
     OERE_PER_KWH = "Öre/kWh",
     CENT_PER_KWH = "Cent/kWh",
+  }
+
+  export enum Unit {
+    CENT = "Cent",
   }
 }
 

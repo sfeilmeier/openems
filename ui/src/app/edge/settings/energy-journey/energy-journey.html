@@ -1,0 +1,46 @@
+<header></header>
+<ion-content *ngIf="edge">
+  <ion-grid>
+
+    <ion-row class="ion-justify-content-left ion-padding-top">
+      <ion-col size-lg="6" size-md="8" size-sm="12" class="ion-padding">
+        <ion-item lines="none">
+          <ion-text style="color: lightslategrey;">
+            Sehen Sie den Veränderungen in der Energiewelt gelassen entgegen.
+            <br>
+            Mit uns sind Sie bestens
+            für Ihre 100 % Energiewende vorbereitet.
+            <hr>
+            Analysieren und berechnen Sie mit Hilfe unserer Energy Journey Plattform, wie Sie Ihre Anlage
+            sinnvoll weiterentwickeln können und von welchen Erweiterungen Sie profitieren können.
+          </ion-text>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-padding">
+      <ion-col size-lg="5" offset="{{first ? '1': '0'}}" size-md="8" size-sm="12"
+        *ngFor="let widget of allowedWidgets;let first = first">
+        <ion-card style="border-radius: 1em;opacity: 0.9;">
+          <img src="assets/img/icon/energy-journey-batteryExtension.webp" width="100%" />
+          <ion-card-content>
+            <ion-text style="font-size: larger; font-weight: bold;">
+              {{widget.slogan}}
+            </ion-text>
+            <div class="ion-padding">
+              {{widget.description}}
+              <ion-row class="full_width align_right">
+                <ion-col class="align_right full_width">
+                  <ion-item lines="none" class="ion-float-right" [routerLink]="widget.link">
+                    <ion-button fill="outline">{{widget.buttonText}}</ion-button>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ng-container>
+  </ng-container>
+</ion-content>
