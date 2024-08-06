@@ -25,7 +25,7 @@ export class ChangelogComponent {
         changes: [
           Changelog.UI + "Einführung der Gesamtphasenanzeige für Verbrauch und Erzeugung in der Historie, Anzeige der letzten Online-Zeit wenn Gerät offline ist",
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Optimierungen bei leerer/voller Batterie",
-          { roleIsAtLeast: Role.INSTALLER, change: Changelog.UI + "Anzeige der einzelnen Phasen für Current und Voltage" },
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.UI + "Historie: Anzeige der einzelnen Phasen für Strom und Spannung" },
         ],
       },
       {
