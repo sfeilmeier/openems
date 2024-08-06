@@ -210,6 +210,20 @@
         </ion-card>
       </ion-col>
 
+      <ion-col size="12" size-sm="4" *ngIf="canSeeEnergyJourney">
+        <ion-card>
+          <ion-item lines="full" color="light">
+            <ion-icon slot="start" size="large" color="medium" name="analytics"></ion-icon>
+            <ion-label>Energy Journey</ion-label>
+          </ion-item>
+          <ion-card-content>
+            <ion-button class="ion-float-right" color="light" routerLink="/device/{{ edge.id }}/settings/energyJourney">
+              <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
     </ion-row>
   </ion-grid>
 </ion-content>

@@ -9,6 +9,7 @@ import { IndexComponent as ComponentInstallIndexComponent } from './component/in
 import { ComponentInstallComponent } from './component/install/install.component';
 import { IndexComponent as ComponentUpdateIndexComponent } from './component/update/index.component';
 import { ComponentUpdateComponent } from './component/update/update.component';
+import { EnergyJourneyModule } from './energy-journey/energy-journey.module';
 import { ChartComponent } from './homeassistant/chart/chart';
 import { HomeServiceAssistantComponent } from './homeassistant/homeassistant';
 import { JsonrpcTestModule } from './jsonrpctest/jsonrpctest.module';
@@ -28,6 +29,7 @@ import { SystemUpdateOldComponent } from './systemupdate.old/systemupdate.old.co
 @NgModule({
   imports: [
     AppModule,
+    EnergyJourneyModule,
     JsonrpcTestModule,
     SharedModule,
     ServiceAssistantModule,

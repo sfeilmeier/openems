@@ -243,3 +243,5 @@ export type TKeyValue<T> = {
   key: string,
   value: T
 };
+/**  */
+export type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];

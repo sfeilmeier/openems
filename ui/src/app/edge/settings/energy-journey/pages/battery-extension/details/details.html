@@ -1,0 +1,130 @@
+<ion-card [title]="'Details'" *ngIf="tableData">
+  <ion-card-content>
+    <ion-grid class="desktop-view" *ngIf="!isSmartPhoneResolution, else smartPhoneResolution">
+      <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5)">
+        <ion-col>
+          &nbsp;
+        </ion-col>
+        <ion-col *ngFor="let numberOfModulesDiff of tableData.numberOfModulesDiff">
+          {{numberOfModulesDiff}}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          Einsparung für Strombezug in Euro:*
+        </ion-col>
+        <ion-col *ngFor="let gridSaving of tableData.gridSaving; let i = index">
+          {{gridSaving}}
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="background-color: var(--ion-color-light);">
+        <ion-col>
+          Be- und Entladeleistung des
+          Speichers in kW:**
+          <ion-row>
+            (Gesamt)
+          </ion-row>
+        </ion-col>
+        <ion-col class="ion-no-padding"
+          *ngFor="let maxChargeDischargePowerIncrease of tableData.maxChargeDischargePowerIncrease; let i = index">
+          {{maxChargeDischargePowerIncrease}}
+          <br>
+          {{tableData.totalChargeDischargePower[i]}}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          Steigerung der nutzbaren
+          Gesamtkapazität in kWh:
+          <ion-row>
+            (Gesamt)
+          </ion-row>
+        </ion-col>
+        <ion-col *ngFor="let capacityIncrease of tableData.capacityIncrease; let i = index">
+          {{capacityIncrease}}
+          <br>
+          {{tableData.totalCapacity[i]}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <oe-flat-widget-horizontal-line></oe-flat-widget-horizontal-line>
+
+    <ion-row>
+      * Potenzielle jährliche Einsparung in Euro, die sich durch eine Batterieerweiterung ergeben hätte
+    </ion-row>
+    <ion-row>
+      <ion-text style="font-size: smaller; padding-left: 2%;">
+        Berechnung: Ihr aktueller Strompreis multipliziert mit der Einsparung des Strombezugs in kWh je Modul.
+      </ion-text>
+    </ion-row>
+
+    <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
+
+    <ion-row>
+      ** Die Be- und Entladeleistung (kW) sowie die Notstromfähigkeit Ihres Speichers erhöht sich auf diesen Wert.
+      Der Home 10 Wechselrichter kann bis zu 10 kW AC-seitig verarbeiten. Diese 10 kW Leistung können allerdings
+      erst ab einer Größe von neun Modulen erreicht werden. Bei einer Modulanzahl von weniger als neun Modulen,
+      reduziert sich die Be- und Entladeleistung des Speichers um ca. 1,12 kW pro Modul.
+    </ion-row>
+    <ion-row>
+      <a href="https://fenecon.de/wp-content/uploads/2023/04/2024-01_FENECON_Home-10_Produktblatt_DE_Web-1.pdf"
+        target="_blank">Weitere Details im Produktblatt Home 10</a>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
+
+<ng-template #smartPhoneResolution>
+  <ion-grid class="smartPhone-view">
+    <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5)">
+      <ion-col>
+        Einsparung für Strombezug in Euro:*
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let numberOfModulesDiff of tableData.numberOfModulesDiff; let i = index">
+      <ion-col size="4">
+        {{numberOfModulesDiff}}
+      </ion-col>
+      <ion-col>
+        {{tableData.gridSaving[i]}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5);margin-top: 5%;">
+      <ion-col>
+        Be- und Entladeleistung des
+        Speichers in kW:**
+        <br>
+        (Gesamt)
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let numberOfModulesDiff of tableData.numberOfModulesDiff; let i = index">
+      <ion-col size="4">
+        {{numberOfModulesDiff}}
+      </ion-col>
+      <ion-col>
+        {{tableData.maxChargeDischargePowerIncrease[i]}}
+        {{tableData.totalChargeDischargePower[i]}}
+      </ion-col>
+    </ion-row>
+    <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5); margin-top: 5%;">
+      <ion-col>
+        Steigerung der nutzbaren
+        Gesamtkapazität in kWh:
+        <br>
+        (Gesamt)
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let numberOfModulesDiff of tableData.numberOfModulesDiff; let i = index">
+      <ion-col size="4">
+        {{numberOfModulesDiff}}
+      </ion-col>
+      <ion-col>
+        {{tableData.capacityIncrease[i]}}
+        {{tableData.totalCapacity[i]}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-template>

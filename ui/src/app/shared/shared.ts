@@ -13,7 +13,9 @@ export { Widget, WidgetFactory, WidgetNature, Widgets } from "./type/widget";
 
 import { AlertController, AlertOptions } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
+import { isBefore, subDays, subYears } from "date-fns";
 import { addIcons } from 'ionicons';
+import { EnergyJourneyWidget } from "../edge/settings/energy-journey/energy-journey.module";
 import { Edge } from "./components/edge/edge";
 import { User } from "./jsonrpc/shared";
 import { DefaultTypes } from "./service/defaulttypes";
@@ -29,6 +31,19 @@ addIcons({
   'oe-production': 'assets/img/icon/production.svg',
   'oe-storage': 'assets/img/icon/storage.svg',
 });
+
+export class Permission {
+
+  /**
+   * Gets the allowed energy journey widgets, used in {@link EnergyJourneyComponent}
+   *
+   * @param ibnDate the first setup protocol date - ibn date
+   * @returns the list of allowed widgets
+   */
+  public static getAllowedEnergyJourneyWidgets(ibnDate: Date, translate: TranslateService): EnergyJourneyWidget[] {
+    return EdgePermission.getAllowedEnergyJourneyWidgets(ibnDate, translate);
+  }
+}
 
 export class EdgePermission {
 
@@ -82,6 +97,34 @@ export class EdgePermission {
    */
   public static hasReducedFactories(edge: Edge): boolean {
     return edge.isVersionAtLeast('2024.6.1');
+  }
+
+  /**
+   * Gets the allowed energy journey widgets for this edge
+   * and if ibn date is at least one year old, it gets the correspondent widgets accordingly
+   *
+   * @param ibnDate the first setup protocol date - ibn date
+   * @returns the list of allowed widgets for this edge
+   */
+  public static getAllowedEnergyJourneyWidgets(ibnDate: Date, translate: TranslateService): EnergyJourneyWidget[] {
+    if (!ibnDate) {
+      return [];
+    }
+
+    const isDateAtLeastOneYearAgo = isBefore(ibnDate, subDays(subYears(new Date(), 1), 1));
+    return isDateAtLeastOneYearAgo
+      ? [new EnergyJourneyWidget(
+        "Batterieerweiterung",
+        "Batterieerweiterung, Lohnt es sich?",
+        `Ob sich die Nachrüstung Ihres Strompeichers Home 10 lohnt,
+        hängt von verschiedenen Faktoren ab. Ihr System ist seit mehr
+        als einem Jahr in Betrieb. Analysieren Sie hier, wie sich eine
+        Batterieerweiterung ausgewirkt hätte`,
+        ['batteryExtension', 'electricityPriceChoice'],
+        translate.instant('SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS'),
+        // ""
+      )]
+      : [];
   }
 
 }
@@ -203,6 +246,10 @@ export namespace Currency {
   export enum Label {
     OERE_PER_KWH = "Öre/kWh",
     CENT_PER_KWH = "Cent/kWh",
+  }
+
+  export enum Unit {
+    CENT = "Cent",
   }
 }
 
