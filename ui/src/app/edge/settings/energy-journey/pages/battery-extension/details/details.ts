@@ -108,7 +108,7 @@ export class DetailComponent implements OnInit, OnChanges {
       arr.totalCapacity.push(DetailComponent.FORMAT_TO_TOTAL(el.capacity, "kWh"));
       arr.maxChargeDischargePowerIncrease.push(DetailComponent.FORMAT_TO_INCREASE(el.kWPeak - this.simulatedData?.simulationData[0].kWPeak));
       arr.totalChargeDischargePower.push(DetailComponent.FORMAT_TO_TOTAL(el.kWPeak, "kW"));
-      arr.gridSaving.push(DetailComponent.FORMAT_EUROS(Utils.divideSafely(Utils.subtractSafely(this.simulatedData.simulationData[0].gridBuyCosts, el['gridBuyCosts']), 100)));
+      arr.gridSaving.push(DetailComponent.FORMAT_EUROS(Utils.divideSafely(Utils.subtractSafely(this.simulatedData.simulationData[0].gridBuyCosts, el.gridBuyCosts), 100)));
       arr.numberOfModulesDiff.push("+ " + (el.numberOfModules - this.simulatedData?.simulationData[0].numberOfModules));
       return arr;
     }, {

@@ -6,8 +6,46 @@
             </p>
         </ion-label>
     </ion-item>
+
+    <ng-container *ngIf="timeSinceOffline !== null">
+        <ion-card-content>
+            <ion-grid class="full_width ion-padding" style="padding-bottom: 0;">
+                <div style="background-color: var(--ion-color-light);margin-top: 2%;">
+                    <ion-row class="ion-text-center">
+                        <ion-col>
+                            Das aufgerufene FEMS ist <b>seit {{timeSinceOffline}}
+                            </b> offline.
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            Das können Sie tun:
+                            <ul>
+                                <li>
+                                    <b>Bitte warten Sie zunächst 10 Minuten ab</b> und <b>laden dann das
+                                        Online-Monitoring
+                                        neu</b>.
+                                    Obwohl das FEMS in dieser kurzen Zwischenzeit offline ist,
+                                    werden Ihre Daten <b>lokal gespeichert</b> und <b>gehen nicht verloren</b>.
+                                </li>
+                            </ul>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </ion-grid>
+        </ion-card-content>
+    </ng-container>
+
     <ion-card-content>
         <ion-list class="ion-text-center">
+            <ion-item *ngIf="timeSinceOffline !== null">
+                <ion-label class="ion-text-wrap">
+                    Ihr System ist <b>länger als 10 Minuten offline?</b> Folgende Punkte helfen Ihnen das
+                    Problem zu
+                    lösen:
+                </ion-label>
+            </ion-item>
+
             <ng-container *ngIf="edge?.producttype === 'home', else otherTypes">
                 <ion-item>
                     <ion-label class="ion-text-wrap">
