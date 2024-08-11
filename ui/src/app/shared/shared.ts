@@ -18,6 +18,7 @@ import { Edge } from "./components/edge/edge";
 import { User } from "./jsonrpc/shared";
 import { DefaultTypes } from "./service/defaulttypes";
 import { Role } from "./type/role";
+import { isBefore, subDays, subYears } from "date-fns";
 
 addIcons({
   'oe-consumption': 'assets/img/icon/consumption.svg',
@@ -30,7 +31,48 @@ addIcons({
   'oe-storage': 'assets/img/icon/storage.svg',
 });
 
+export class Permission {
+
+  /**
+   * Gets the allowed energy journey widgets, used in {@link EnergyJourneyComponent}
+   *
+   * @param ibnDate the first setup protocol date - ibn date
+   * @returns the list of allowed widgets
+   */
+  public static getAllowedEnergyJourneyWidgets(ibnDate: Date, translate: TranslateService): EnergyJourneyWidget[] {
+    return EdgePermission.getAllowedEnergyJourneyWidgets(ibnDate, translate);
+  }
+}
+
 export class EdgePermission {
+
+  /**
+  * Gets the allowed energy journey widgets for this edge
+  * and if ibn date is at least one year old, it gets the correspondent widgets accordingly
+  *
+  * @param ibnDate the first setup protocol date - ibn date
+  * @returns the list of allowed widgets for this edge
+  */
+  public static getAllowedEnergyJourneyWidgets(ibnDate: Date, translate: TranslateService): EnergyJourneyWidget[] {
+    if (!ibnDate) {
+      return [];
+    }
+
+    const isDateAtLeastOneYearAgo = isBefore(ibnDate, subDays(subYears(new Date(), 1), 1));
+    return isDateAtLeastOneYearAgo
+      ? [new EnergyJourneyWidget(
+        "Batterieerweiterung",
+        "Batterieerweiterung, Lohnt es sich?",
+        `Ob sich die Nachrüstung Ihres Strompeichers Home 10 lohnt,
+        hängt von verschiedenen Faktoren ab. Ihr System ist seit mehr
+        als einem Jahr in Betrieb. Analysieren Sie hier, wie sich eine
+        Batterieerweiterung ausgewirkt hätte`,
+        ['batteryExtension', 'electricityPriceChoice'],
+        translate.instant('SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS'),
+        // ""
+      )]
+      : [];
+  }
 
   /**
    * Gets the allowed history periods for this edge, used in {@link PickDatePopoverComponent}
@@ -86,6 +128,17 @@ export class EdgePermission {
 }
 
 export class UserPermission {
+
+  /**
+   * Checks if user is allowed to see  {@link EnergyJourneyComponent}
+   *
+   * @param user the current user
+   * @param edge the edge
+   * @returns true, if user is at least {@link Role.OWNER} & edge.producttype is 'Home 10'
+   */
+  public static isUserAllowedToSeeEnergyJourney(user: User, edge: Edge): boolean {
+    return Role.isAtLeast(user.globalRole, Role.OWNER) && edge.producttype === Producttype.HOME;
+  }
 
   /**
    * Checks if user is allowed to see  {@link FooterComponent}
@@ -240,4 +293,15 @@ export async function presentAlert(alertController: AlertController, translate: 
     cssClass: 'alertController',
   });
   (await alert).present();
+}
+
+
+export class EnergyJourneyWidget {
+  constructor(
+    private label: string,
+    private slogan: string,
+    private description: string,
+    private link: string[],
+    private buttonText: string,
+  ) { }
 }

@@ -13,13 +13,3 @@ import { BatteryExtensionModule } from './pages/battery-extension/battery-extens
   ],
 })
 export class EnergyJourneyModule { }
-
-export class EnergyJourneyWidget {
-  constructor(
-    private label: string,
-    private slogan: string,
-    private description: string,
-    private link: string[],
-    private buttonText: string,
-  ) { }
-}

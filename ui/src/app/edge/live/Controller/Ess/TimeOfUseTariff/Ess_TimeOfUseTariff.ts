@@ -28,10 +28,22 @@ import { ScheduleStateAndPriceChartComponent } from "./modal/statePriceChart";
         FlatComponent,
     ],
 })
-export class Controller_Ess_TimeOfUseTariff {
+export class Controller_Ess_TimeOfUseTariff { }
+
+export namespace Controller_Ess_TimeOfUseTariff {
+    export type ScheduleChartData = {
+        datasets: ChartDataset[],
+        colors: any[],
+        labels: Date[]
+    };
+
+    export enum ControlMode {
+        CHARGE_CONSUMPTION = 'CHARGE_CONSUMPTION',
+        DELAY_DISCHARGE = 'DELAY_DISCHARGE',
+    }
 
     // TODO remove once there is no 2024.3.1 version anymore with Time-of-Use-Tariff
-    public static filterScheduleData(edge: Edge, schedule: {
+    export function filterScheduleData(edge: Edge, schedule: {
         timestamp: string;
         price: number;
         state: number;
@@ -75,7 +87,7 @@ export class Controller_Ess_TimeOfUseTariff {
      * @param controlMode The Control mode of the controller.
      * @returns The ScheduleChartData.
      */
-    public static getScheduleChartData(size: number, prices: number[], states: number[], timestamps: string[],
+    export function getScheduleChartData(size: number, prices: number[], states: number[], timestamps: string[],
         gridBuy: number[], socArray: number[], translate: TranslateService,
         controlMode: Controller_Ess_TimeOfUseTariff.ControlMode): Controller_Ess_TimeOfUseTariff.ScheduleChartData {
 
@@ -184,18 +196,5 @@ export class Controller_Ess_TimeOfUseTariff {
         };
 
         return scheduleChartData;
-    }
-}
-
-export namespace Controller_Ess_TimeOfUseTariff {
-    export type ScheduleChartData = {
-        datasets: ChartDataset[],
-        colors: any[],
-        labels: Date[]
-    };
-
-    export enum ControlMode {
-        CHARGE_CONSUMPTION = 'CHARGE_CONSUMPTION',
-        DELAY_DISCHARGE = 'DELAY_DISCHARGE',
     }
 }
