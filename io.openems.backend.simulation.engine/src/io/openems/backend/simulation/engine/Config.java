@@ -4,7 +4,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 @ObjectClassDefinition(//
 		name = "Simulation Engine", //
-		description = "Simulation Engine" //
+		description = "Simulation Engine"//
 )
 @interface Config {
 

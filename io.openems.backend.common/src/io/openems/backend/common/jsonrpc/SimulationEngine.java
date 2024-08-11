@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 import io.openems.backend.common.jsonrpc.request.SimulationRequest;
 import io.openems.backend.common.metadata.User;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
+import io.openems.common.jsonrpc.base.JsonrpcRequest;
 import io.openems.common.jsonrpc.base.JsonrpcResponseSuccess;
 
 public interface SimulationEngine {
@@ -12,8 +13,8 @@ public interface SimulationEngine {
 	/**
 	 * Handles a JSON-RPC Request.
 	 * 
-	 * @param edgeId  the Edge-ID
-	 * @param user    the authenticated {@link User}
+	 * @param edgeId  the edge id
+	 * @param user 	  the user
 	 * @param request the {@link JsonrpcRequest}
 	 * @return the JSON-RPC Success Response Future
 	 * @throws OpenemsNamedException on error
