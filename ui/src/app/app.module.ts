@@ -10,7 +10,6 @@ import { FORMLY_CONFIG } from '@ngx-formly/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AngularMyDatePickerModule } from '@nodro7/angular-mydatepicker';
 import { CookieService } from 'ngx-cookie-service';
-
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

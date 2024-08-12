@@ -46,12 +46,12 @@ export class Permission {
 export class EdgePermission {
 
   /**
-  * Gets the allowed energy journey widgets for this edge
-  * and if ibn date is at least one year old, it gets the correspondent widgets accordingly
-  *
-  * @param ibnDate the first setup protocol date - ibn date
-  * @returns the list of allowed widgets for this edge
-  */
+   * Gets the allowed energy journey widgets for this edge
+   * and if ibn date is at least one year old, it gets the correspondent widgets accordingly
+   *
+   * @param ibnDate the first setup protocol date - ibn date
+   * @returns the list of allowed widgets for this edge
+   */
   public static getAllowedEnergyJourneyWidgets(ibnDate: Date, translate: TranslateService): EnergyJourneyWidget[] {
     if (!ibnDate) {
       return [];

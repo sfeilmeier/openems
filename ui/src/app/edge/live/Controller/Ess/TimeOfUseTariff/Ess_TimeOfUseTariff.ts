@@ -31,6 +31,7 @@ import { ScheduleStateAndPriceChartComponent } from "./modal/statePriceChart";
 export class Controller_Ess_TimeOfUseTariff { }
 
 export namespace Controller_Ess_TimeOfUseTariff {
+
     export type ScheduleChartData = {
         datasets: ChartDataset[],
         colors: any[],

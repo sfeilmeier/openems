@@ -1,7 +1,6 @@
 import { ActivatedRoute } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { SumState } from "src/app/index/shared/sumState";
-
 import { QueryHistoricTimeseriesEnergyResponse } from "../../jsonrpc/response/queryHistoricTimeseriesEnergyResponse";
 import { ChannelAddress, Edge, EdgeConfig } from "../../shared";
 import { Language } from "../../type/language";
@@ -22,6 +21,7 @@ export class DummyService extends AbstractService {
     override showAdvertWidgets(advertWidgets: AdvertWidgets) {
         throw new Error("Method not implemented.");
     }
+
     setLang(id: Language) {
         throw new Error("Method not implemented.");
     }

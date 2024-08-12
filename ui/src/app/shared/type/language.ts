@@ -107,5 +107,4 @@ export class Language {
 
         return lang?.i18nLocaleKey ?? Language.DEFAULT.i18nLocaleKey;
     }
-
 }

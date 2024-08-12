@@ -263,8 +263,8 @@ public class OnRequest implements io.openems.common.websocket.OnRequest {
 	/**
 	 * Handles a {@link SimulationRequest}.
 	 * 
-	 * @param edgeId  the edge id
-	 * @param user 	  the user
+	 * @param edgeId  the Edge-ID
+	 * @param user    the {@link User} - no specific level required
 	 * @param request the {@link SimulationRequest}
 	 * @return the JSON-RPC Success Response Future
 	 * @throws OpenemsNamedException on error

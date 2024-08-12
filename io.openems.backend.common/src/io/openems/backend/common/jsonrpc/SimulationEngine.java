@@ -13,8 +13,8 @@ public interface SimulationEngine {
 	/**
 	 * Handles a JSON-RPC Request.
 	 * 
-	 * @param edgeId  the edge id
-	 * @param user 	  the user
+	 * @param edgeId  the Edge-ID
+	 * @param user    the authenticated {@link User}
 	 * @param request the {@link JsonrpcRequest}
 	 * @return the JSON-RPC Success Response Future
 	 * @throws OpenemsNamedException on error

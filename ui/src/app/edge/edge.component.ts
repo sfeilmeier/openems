@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { filter, take } from "rxjs/operators";
 import { SubscribeEdgesRequest } from "src/app/shared/jsonrpc/request/subscribeEdgesRequest";
 import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared";
-
 import { ProductType } from "../shared/type/widget";
 import { DateUtils } from "../shared/utils/date/dateutils";
 

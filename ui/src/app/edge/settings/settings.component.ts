@@ -19,9 +19,9 @@ export class SettingsComponent implements OnInit {
   public isAtLeastAdmin: boolean = false;
   public canSeeJsonrpcTest: boolean = false;
 
+  protected isEdgeBackend: boolean = environment.backend === 'OpenEMS Edge';
   protected canSeeHomeAssistant: boolean = false;
   protected canSeeCommercialAssistant: boolean = false;
-  protected isEdgeBackend: boolean = environment.backend === 'OpenEMS Edge';
   protected canSeeEnergyJourney: boolean = false;
 
   constructor(

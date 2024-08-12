@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Component, Input } from '@angular/core';
 import { Converter } from 'src/app/shared/components/shared/converter';
 import { Utils } from 'src/app/shared/shared';

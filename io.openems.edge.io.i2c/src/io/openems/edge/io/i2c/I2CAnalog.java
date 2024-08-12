@@ -19,5 +19,4 @@ public interface I2CAnalog extends OpenemsComponent {
 			return this.doc;
 		}
 	}
-
 }

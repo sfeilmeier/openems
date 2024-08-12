@@ -14,5 +14,4 @@ export namespace JsonrpcTestPermission {
         }
         return user.settings['jsonrpcTest'];
     }
-
 }

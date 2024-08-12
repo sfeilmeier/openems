@@ -3,8 +3,6 @@ package io.openems.edge.io.i2c;
 import org.junit.Test;
 
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
-import io.openems.edge.io.i2c.AnalogOutput;
-import io.openems.edge.io.i2c.I2CAnalogImpl;
 import io.openems.edge.common.test.ComponentTest;
 
 public class I2CAnalogImplTest {

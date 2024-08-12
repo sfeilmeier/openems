@@ -3,11 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Subject, Subscription, timer } from 'rxjs';
 import { filter, retry, switchMap, takeUntil } from 'rxjs/operators';
-
-import { SplashScreen } from '@capacitor/splash-screen';
 import { environment } from '../environments';
 import { AppService } from './app.service';
 import { GlobalRouteChangeHandler } from './shared/service/globalRouteChangeHandler';
