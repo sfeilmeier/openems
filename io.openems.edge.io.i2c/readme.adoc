@@ -1,0 +1,23 @@
+= I²C SMBus
+
+This bundle implements the SMBus protocol for the analog outputs of I²C SMBus.
+
+In particular this bundle offers write access for predefined SMBus registers.
+For example does the predefined OutputChannel MODBERRY_CHANNEL_1 write a register of a slave device with the address 0x61.
+The register written is Channel 1 (0x50).
+
+The registers can be given a value between 0 and 4092.
+
+For a full explanation of the SMBus protocol see.
+https://www.kernel.org/doc/Documentation/i2c/smbus-protocol[i2c/smbus]
+
+Implemented Natures:
+
+- AnalogOutput
+- AnalogOutputVoltage
+
+Default Configuration:
+
+- OutputChannel: MODBERRY_CHANNEL_1 (0x50, 0x61)
+
+https://github.com/OpenEMS/openems/tree/develop/io.openems.edge.io.i2c[Source Code icon:github[]]

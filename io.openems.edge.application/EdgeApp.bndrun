@@ -134,6 +134,7 @@
 	bnd.identity;id='io.openems.edge.goodwe',\
 	bnd.identity;id='io.openems.edge.io.filipowski',\
 	bnd.identity;id='io.openems.edge.io.gpio',\
+	bnd.identity;id='io.openems.edge.io.i2c',\
 	bnd.identity;id='io.openems.edge.io.kmtronic',\
 	bnd.identity;id='io.openems.edge.io.offgridswitch',\
 	bnd.identity;id='io.openems.edge.io.revpi',\
@@ -307,6 +308,7 @@
 	io.openems.edge.io.api;version=snapshot,\
 	io.openems.edge.io.filipowski;version=snapshot,\
 	io.openems.edge.io.gpio;version=snapshot,\
+	io.openems.edge.io.i2c;version=snapshot,\
 	io.openems.edge.io.kmtronic;version=snapshot,\
 	io.openems.edge.io.offgridswitch;version=snapshot,\
 	io.openems.edge.io.revpi;version=snapshot,\
@@ -372,6 +374,7 @@
 	io.openems.wrapper.eu.chargetime.ocpp;version=snapshot,\
 	io.openems.wrapper.fastexcel;version=snapshot,\
 	io.openems.wrapper.gson;version=snapshot,\
+	io.openems.wrapper.helins-linux-i2c;version=snapshot,\
 	io.openems.wrapper.influxdb-client-core;version=snapshot,\
 	io.openems.wrapper.influxdb-client-java;version=snapshot,\
 	io.openems.wrapper.influxdb-client-utils;version=snapshot,\
