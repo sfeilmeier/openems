@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Component, Input } from '@angular/core';
 
 @Component({

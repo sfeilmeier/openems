@@ -1,10 +1,9 @@
 // @ts-strict-ignore
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-
+import { Channel } from 'src/app/shared/jsonrpc/response/getChannelsOfComponentResponse';
 import { Edge, EdgeConfig, Service, Websocket } from '../../../../shared/shared';
 import { AbstractBattery, CategorizedChannelDescription, ChannelChartDescription, ChannelDescription } from '../abstractbattery.component';
-import { Channel } from 'src/app/shared/jsonrpc/response/getChannelsOfComponentResponse';
 
 @Component({
     selector: SoltaroVersionBComponent.SELECTOR,

@@ -6,10 +6,10 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments';
 
+import { Capacitor } from '@capacitor/core';
 import { AppService } from '../app.service';
 import { AuthenticateWithPasswordRequest } from '../shared/jsonrpc/request/authenticateWithPasswordRequest';
 import { Edge, Service, Utils, Websocket } from '../shared/shared';
-import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'login',

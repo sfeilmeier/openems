@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { TranslateService } from "@ngx-translate/core";
+import { environment } from "src/environments";
 import { AbstractIbn } from "../installation-systems/abstract-ibn";
 import { Commercial30AnschlussIbn } from "../installation-systems/commercial/commercial-30/commercial30-anschluss";
 import { Commercial30NetztrennIbn } from "../installation-systems/commercial/commercial-30/commercial30-netztrenn";
@@ -9,7 +10,6 @@ import { Home10FeneconIbn } from "../installation-systems/home/home-10";
 import { Home10HeckertIbn } from "../installation-systems/home/home-10-heckert";
 import { Home20FeneconIbn } from "../installation-systems/home/home-20";
 import { Home30FeneconIbn } from "../installation-systems/home/home-30";
-import { environment } from "src/environments";
 
 export enum SystemType {
     FENECON_HOME = 'FENECON Home',

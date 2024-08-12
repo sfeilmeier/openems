@@ -5,8 +5,8 @@ import { Edge, Websocket } from "src/app/shared/shared";
 import { GetNetworkConfigRequest } from "../../settings/network/getNetworkConfigRequest";
 import { GetNetworkConfigResponse } from "../../settings/network/getNetworkConfigResponse";
 import { SetNetworkConfigRequest } from "../../settings/network/setNetworkConfigRequest";
-import { AbstractIbn } from "../installation-systems/abstract-ibn";
 import { NetworkUtils } from "../../settings/network/shared";
+import { AbstractIbn } from "../installation-systems/abstract-ibn";
 
 export class IbnUtils {
 

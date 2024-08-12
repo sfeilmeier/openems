@@ -22,34 +22,34 @@ type TableData = {
     { provide: DataService, useClass: HistoryDataService },
   ],
   styles: [`
-    .desktop-view{
-      ion-row{
-        ion-col:not(:first-child){
+    .desktop-view {
+      :is(ion-row) {
+        ion-col:not(:first-child) {
           align-self: center !important;
           text-align: center !important;
-          :not(:first-child){
-            :nth-child(odd){
+          :not(:first-child) {
+            :nth-child(odd) {
             }
           }
         }
 
-        ion-col:first-child{
-            width: calc(var(width) +5%);
-            text-align: left !important;
-          }
+        ion-col:first-child {
+          width: calc(var(width) +5%);
+          text-align: left !important;
+        }
       }
     }
 
-     .smartPhone-view{
-      ion-row:not(:first-child):nth-child(odd){
+    .smartPhone-view {
+      ion-row:not(:first-child):nth-child(odd) {
         background-color: rgba(var(--ion-color-light-rgb), 1);
       }
 
-      ion-row{
-        ion-col:not(:first-child){
+      :is(ion-row) {
+        ion-col:not(:first-child) {
           text-align: left;
         }
-        ion-col:first-child{
+        ion-col:first-child {
           align-self: center;
         }
       }

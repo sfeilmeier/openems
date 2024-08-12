@@ -10,15 +10,14 @@ export { CurrentData } from "./type/currentdata";
 export { BackupEnable, BatteryMode, BatteryStateMachine, DredCmd, GoodWe, GridMode, SafetyCountryCode } from "./type/general";
 export { SystemLog } from "./type/systemlog";
 export { Widget, WidgetFactory, WidgetNature, Widgets } from "./type/widget";
-
 import { AlertController, AlertOptions } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
+import { isBefore, subDays, subYears } from "date-fns";
 import { addIcons } from 'ionicons';
 import { Edge } from "./components/edge/edge";
 import { User } from "./jsonrpc/shared";
 import { DefaultTypes } from "./service/defaulttypes";
 import { Role } from "./type/role";
-import { isBefore, subDays, subYears } from "date-fns";
 
 addIcons({
   'oe-consumption': 'assets/img/icon/consumption.svg',
@@ -294,7 +293,6 @@ export async function presentAlert(alertController: AlertController, translate: 
   });
   (await alert).present();
 }
-
 
 export class EnergyJourneyWidget {
   constructor(

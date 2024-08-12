@@ -11,6 +11,7 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { AngularMyDatePickerModule } from '@nodro7/angular-mydatepicker';
 import { CookieService } from 'ngx-cookie-service';
 
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
@@ -30,7 +31,6 @@ import { SharedModule } from './shared/shared.module';
 import { registerTranslateExtension } from './shared/translate.extension';
 import { Language, MyTranslateLoader } from './shared/type/language';
 import { UserModule } from './user/user.module';
-import { DeviceDetectorService } from 'ngx-device-detector';
 
 @NgModule({
   declarations: [

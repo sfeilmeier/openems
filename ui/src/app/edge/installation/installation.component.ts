@@ -4,12 +4,11 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SubscribeEdgesRequest } from 'src/app/shared/jsonrpc/request/subscribeEdgesRequest';
 import { Edge, Logger, Service, Websocket } from 'src/app/shared/shared';
-
 import { AbstractIbn } from './installation-systems/abstract-ibn';
 import { GeneralIbn } from './installation-systems/general-ibn';
-import { IbnUtils } from './shared/ibnutils';
-import { SystemId, System } from './shared/system';
 import { View } from './shared/enums';
+import { IbnUtils } from './shared/ibnutils';
+import { System, SystemId } from './shared/system';
 
 @Component({
   selector: InstallationComponent.SELECTOR,

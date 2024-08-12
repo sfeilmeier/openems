@@ -1,15 +1,15 @@
 // @ts-strict-ignore
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { format } from 'date-fns/esm';
 import { saveAs } from 'file-saver-es';
 import { GetSetupProtocolRequest } from 'src/app/shared/jsonrpc/request/getSetupProtocolRequest';
 import { Base64PayloadResponse } from 'src/app/shared/jsonrpc/response/base64PayloadResponse';
 import { Edge, Service, Websocket } from 'src/app/shared/shared';
-import { AbstractIbn } from '../../installation-systems/abstract-ibn';
-import { Router } from '@angular/router';
-import { SystemId } from '../../shared/system';
 import { environment } from 'src/environments';
+import { AbstractIbn } from '../../installation-systems/abstract-ibn';
+import { SystemId } from '../../shared/system';
 
 @Component({
   selector: CompletionComponent.SELECTOR,

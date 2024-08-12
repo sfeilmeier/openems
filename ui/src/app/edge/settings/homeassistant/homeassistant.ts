@@ -1,13 +1,12 @@
 // @ts-strict-ignore
 import { formatNumber } from '@angular/common';
 import { Component } from '@angular/core';
-
-import { ChannelAddress, CurrentData, EdgeConfig, Utils } from '../../../shared/shared';
-import { LiveDataService } from '../../live/livedataservice';
 import { AbstractFlatWidget } from 'src/app/shared/components/flat/abstract-flat-widget';
 import { Converter } from 'src/app/shared/components/shared/converter';
 import { DataService } from 'src/app/shared/components/shared/dataservice';
 import { Filter } from 'src/app/shared/components/shared/filter';
+import { ChannelAddress, CurrentData, EdgeConfig, Utils } from '../../../shared/shared';
+import { LiveDataService } from '../../live/livedataservice';
 
 @Component({
   selector: HomeServiceAssistantComponent.SELECTOR,

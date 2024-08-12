@@ -10,7 +10,7 @@ import { FormlyIonicModule } from '@ngx-formly/ionic';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgChartsModule } from 'ng2-charts';
 import { NgxSpinnerModule } from "ngx-spinner";
-
+import { appRoutingProviders } from '../app-routing.module';
 import { ComponentsModule } from './components/components.module';
 import { MeterModule } from './components/edge/meter/meter.module';
 import { FormlyCheckBoxHyperlinkWrapperComponent } from './components/formly/form-field-checkbox-hyperlink/form-field-checkbox-hyperlink.wrapper';
@@ -36,7 +36,6 @@ import { Logger } from './service/logger';
 import { Service } from './service/service';
 import { Utils } from './service/utils';
 import { Websocket } from './shared';
-import { appRoutingProviders } from '../app-routing.module';
 
 export function IpValidator(control: FormControl): ValidationErrors {
   return /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(control.value) ? null : { 'ip': true };

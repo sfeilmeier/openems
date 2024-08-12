@@ -6,10 +6,10 @@ import { PersistencePriority } from 'src/app/shared/components/edge/edgeconfig';
 import { SetChannelValueRequest } from 'src/app/shared/jsonrpc/request/setChannelValueRequest';
 import { environment } from 'src/environments';
 
-import { ChannelAddress, Edge, EdgeConfig, EdgePermission, Service, Websocket } from '../../../shared/shared';
 import { ComponentJsonApiRequest } from 'src/app/shared/jsonrpc/request/componentJsonApiRequest';
-import { Channel, GetChannelsOfComponentResponse } from 'src/app/shared/jsonrpc/response/getChannelsOfComponentResponse';
 import { GetChannelsOfComponentRequest } from 'src/app/shared/jsonrpc/request/getChannelsOfComponentRequest';
+import { Channel, GetChannelsOfComponentResponse } from 'src/app/shared/jsonrpc/response/getChannelsOfComponentResponse';
+import { ChannelAddress, Edge, EdgeConfig, EdgePermission, Service, Websocket } from '../../../shared/shared';
 
 @Component({
   selector: ChannelsComponent.SELECTOR,
@@ -26,8 +26,8 @@ export class ChannelsComponent {
   protected isAtLeastOneChannelExistingInEdgeConfig: boolean = false;
   protected readonly spinnerId = ChannelsComponent.SELECTOR;
   protected readonly environment = environment;
-  protected edge: Edge = null;
-  protected config: EdgeConfig = null;
+  protected edge: Edge | null = null;
+  protected config: EdgeConfig | null = null;
   protected channelsPerComponent = new Map<string, ComponentChannels>();
   protected selectedComponentChannels = new Map<string, Map<string, { showPersistencePriority: boolean }>>();
   // TODO should be a simple SET but equality checking in SETs is currently not changeable and therefore not very useful for objects

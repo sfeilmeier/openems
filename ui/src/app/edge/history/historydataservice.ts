@@ -13,7 +13,7 @@ import { ChannelAddress, Edge } from "../../shared/shared";
 @Injectable()
 export class HistoryDataService extends DataService {
 
-  public queryChannelsTimeout: any | null = null;
+  public queryChannelsTimeout: ReturnType<typeof setTimeout> | null = null;
   protected override timestamps: string[] = [];
   private channelAddresses: { [sourceId: string]: ChannelAddress } = {};
 

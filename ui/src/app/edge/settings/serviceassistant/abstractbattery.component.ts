@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
-import { SetChannelValueRequest } from "src/app/shared/jsonrpc/request/setChannelValueRequest";
 import { TranslateService } from "@ngx-translate/core";
+import { SetChannelValueRequest } from "src/app/shared/jsonrpc/request/setChannelValueRequest";
 import { Channel } from "src/app/shared/jsonrpc/response/getChannelsOfComponentResponse";
+import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
 export abstract class AbstractBattery {
 

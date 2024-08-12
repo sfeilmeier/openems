@@ -10,13 +10,13 @@ import { ChannelAddress, CurrentData, Edge, EdgeConfig, Service, Utils, Websocke
 import { v4 as uuidv4 } from 'uuid';
 
 import { Role } from "../../type/role";
-import { TextIndentation } from "./modal-line/modal-line";
 import { Converter } from "../shared/converter";
+import { TextIndentation } from "./modal-line/modal-line";
 
 @Directive()
 export abstract class AbstractModal implements OnInit, OnDestroy {
 
-    @Input() public component: EdgeConfig.Component = null;
+    @Input() public component: EdgeConfig.Component | null = null;
 
     /** Enum for User Role */
     public readonly Role = Role;
@@ -28,7 +28,7 @@ export abstract class AbstractModal implements OnInit, OnDestroy {
     public readonly Converter = Converter;
 
     public isInitialized: boolean = false;
-    public edge: Edge = null;
+    public edge: Edge | null = null;
     public config: EdgeConfig = null;
     public stopOnDestroy: Subject<void> = new Subject<void>();
     public formGroup: FormGroup | null = null;

@@ -208,7 +208,7 @@ export namespace OeChartTester {
     export type Data = {
       type: 'data',
       label: string | Converter,
-      value: number[] | null
+      value: (number | null)[]
     };
 
     export type LegendLabel = {

@@ -79,10 +79,9 @@ export class AdvertWidgets {
 }
 
 export class Widgets {
-
     /**
- * Names of Widgets.
- */
+     * Names of Widgets.
+     */
     public readonly names: string[] = [];
 
     private constructor(
@@ -105,7 +104,6 @@ export class Widgets {
     }
 
     public static parseWidgets(edge: Edge, config: EdgeConfig): Widgets {
-
         const classes: string[] = Object.values(WidgetClass) //
             .filter(v => typeof v === 'string')
             .filter(clazz => {

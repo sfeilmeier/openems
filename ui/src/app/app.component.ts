@@ -7,12 +7,12 @@ import { MenuController, ModalController, Platform, ToastController } from '@ion
 import { Subject, Subscription, timer } from 'rxjs';
 import { filter, retry, switchMap, takeUntil } from 'rxjs/operators';
 
+import { SplashScreen } from '@capacitor/splash-screen';
 import { environment } from '../environments';
+import { AppService } from './app.service';
 import { GlobalRouteChangeHandler } from './shared/service/globalRouteChangeHandler';
 import { Service, UserPermission, Websocket } from './shared/shared';
 import { Language } from './shared/type/language';
-import { SplashScreen } from '@capacitor/splash-screen';
-import { AppService } from './app.service';
 
 export interface CachetComponentStatus {
   data: {

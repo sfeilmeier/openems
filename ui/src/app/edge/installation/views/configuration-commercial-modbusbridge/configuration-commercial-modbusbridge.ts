@@ -3,8 +3,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-import { ModbusBridgeType } from "../../shared/enums";
 import { AbstractCommercialIbn } from "../../installation-systems/commercial/abstract-commercial";
+import { ModbusBridgeType } from "../../shared/enums";
 
 @Component({
     selector: ConfigurationCommercialModbuBridgeComponent.SELECTOR,

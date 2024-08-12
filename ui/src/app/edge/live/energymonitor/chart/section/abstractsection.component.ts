@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { DefaultTypes } from '../../../../../shared/service/defaulttypes';
-import { GridMode, Service } from 'src/app/shared/shared';
 import { TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
+import { GridMode, Service } from 'src/app/shared/shared';
+import { DefaultTypes } from '../../../../../shared/service/defaulttypes';
 
 export type Ratio = 'Only Positive [0,1]' | 'Negative and Positive [-1,1]';
 
@@ -120,7 +120,7 @@ export abstract class AbstractSection {
     public fillRef: string = "";
     public valuePath: string = "";
     public outlinePath: string = "";
-    public energyFlow: EnergyFlow = null;
+    public energyFlow: EnergyFlow | null = null;
     public square: SvgSquare;
     public squarePosition: SvgSquarePosition;
     public name: string = "";
@@ -136,7 +136,7 @@ export abstract class AbstractSection {
     protected gridMode: GridMode;
     protected restrictionMode: number;
 
-    private lastCurrentData: DefaultTypes.Summary = null;
+    private lastCurrentData: DefaultTypes.Summary | null = null;
 
     constructor(
         translateName: string,
@@ -278,12 +278,12 @@ export abstract class AbstractSection {
     }
 
     /**
-    * calculate...
-    * ...length of square and image;
-    * ...x and y of text and image;
-    * ...fontsize of text;
-    */
-    private getSquare(innerRadius: any): SvgSquare {
+     * calculate...
+     * ...length of square and image;
+     * ...x and y of text and image;
+     * ...fontsize of text;
+     */
+    private getSquare(innerRadius: number): SvgSquare {
         const width = innerRadius / 2.5;
 
         const textSize = width / 4;

@@ -16,8 +16,8 @@ import { Controller_ChpSocModalComponent } from './Controller/ChpSoc/modal/modal
 import { Controller_Ess_FixActivePower } from './Controller/Ess/FixActivePower/Ess_FixActivePower';
 import { Controller_Ess_GridOptimizedCharge } from './Controller/Ess/GridOptimizedCharge/Ess_GridOptimizedCharge';
 import { Controller_Ess_TimeOfUseTariff } from './Controller/Ess/TimeOfUseTariff/Ess_TimeOfUseTariff';
-import { Controller_Evcs } from './Controller/Evcs/Evcs';
 import { AdministrationComponent } from './Controller/Evcs/administration/administration.component';
+import { Controller_Evcs } from './Controller/Evcs/Evcs';
 import { Controller_Io_ChannelSingleThresholdComponent } from './Controller/Io/ChannelSingleThreshold/Io_ChannelSingleThreshold';
 import { Controller_Io_ChannelSingleThresholdModalComponent } from './Controller/Io/ChannelSingleThreshold/modal/modal.component';
 import { Controller_Io_FixDigitalOutputComponent } from './Controller/Io/FixDigitalOutput/Io_FixDigitalOutput';

@@ -9,10 +9,10 @@ import { ComponentJsonApiRequest } from 'src/app/shared/jsonrpc/request/componen
 import { ChartAxis, HistoryUtils, TimeOfUseTariffUtils, Utils, YAxisTitle } from 'src/app/shared/service/utils';
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from 'src/app/shared/shared';
 
+import { ChartConstants } from 'src/app/shared/components/chart/chart.constants';
 import { GetScheduleRequest } from '../../../../../../shared/jsonrpc/request/getScheduleRequest';
 import { GetScheduleResponse } from '../../../../../../shared/jsonrpc/response/getScheduleResponse';
 import { Controller_Ess_TimeOfUseTariff } from '../Ess_TimeOfUseTariff';
-import { ChartConstants } from 'src/app/shared/components/chart/chart.constants';
 
 @Component({
     selector: 'powerSocChart',

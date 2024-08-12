@@ -24,10 +24,10 @@ import { ChannelAddress } from '../shared';
 import { Language } from '../type/language';
 import { Role } from '../type/role';
 import { AdvertWidgets } from '../type/widget';
+import { DateUtils } from '../utils/date/dateutils';
 import { AbstractService } from './abstractservice';
 import { DefaultTypes } from './defaulttypes';
 import { Websocket } from './websocket';
-import { DateUtils } from '../utils/date/dateutils';
 
 @Injectable()
 export class Service extends AbstractService {
@@ -83,7 +83,7 @@ export class Service extends AbstractService {
   /**
    * Holds the current Activated Route
    */
-  private currentActivatedRoute: ActivatedRoute = null;
+  private currentActivatedRoute: ActivatedRoute | null = null;
 
   private queryEnergyQueue: {
     fromDate: Date, toDate: Date, channels: ChannelAddress[], promises: { resolve, reject }[]
@@ -136,6 +136,8 @@ export class Service extends AbstractService {
     this.notificationEvent.next(notification);
   }
 
+  // https://v16.angular.io/api/core/ErrorHandler#errorhandler
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public override handleError(error: any) {
     console.error(error);
     // TODO: show notification
@@ -434,5 +436,4 @@ export class Service extends AbstractService {
       return true;
     }
   }
-
 }

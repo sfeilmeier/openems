@@ -9,7 +9,7 @@ export class ModalComponent extends AbstractModal {
 
   protected override getFormGroup(): FormGroup {
     return this.formBuilder.group({
-      startStop: new FormControl(this.component.properties.startStop),
+      startStop: new FormControl(this.component?.properties.startStop),
     });
   }
 
