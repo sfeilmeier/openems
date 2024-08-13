@@ -12,8 +12,8 @@ import { DetailsOverviewComponent } from './edge/history/common/production/detai
 import { OverviewComponent as ProductionChartOverviewComponent } from './edge/history/common/production/overview/overview';
 import { OverviewComponent as SelfconsumptionChartOverviewComponent } from './edge/history/common/selfconsumption/overview/overview';
 import { OverviewComponent as ChannelthresholdChartOverviewComponent } from './edge/history/Controller/ChannelThreshold/overview/overview';
-import { OverviewComponent as GridOptimizedChargeChartOverviewComponent } from './edge/history/Controller/Ess/GridoptimizedCharge/overview/overview';
 import { OverviewComponent as TimeOfUseTariffOverviewComponent } from './edge/history/Controller/Ess/TimeOfUseTariff/overview/overview';
+import { OverviewComponent as GridOptimizedChargeChartOverviewComponent } from './edge/history/Controller/Ess/GridoptimizedCharge/overview/overview';
 import { DelayedSellToGridChartOverviewComponent } from './edge/history/delayedselltogrid/symmetricpeakshavingchartoverview/delayedselltogridchartoverview.component';
 import { FixDigitalOutputChartOverviewComponent } from './edge/history/fixdigitaloutput/fixdigitaloutputchartoverview/fixdigitaloutputchartoverview.component';
 import { HeatingelementChartOverviewComponent } from './edge/history/heatingelement/heatingelementchartoverview/heatingelementchartoverview.component';
@@ -60,7 +60,9 @@ import { OverViewComponent } from './index/overview/overview.component';
 import { LoadingScreenComponent } from './index/shared/loading-screen';
 import { CurrentAndVoltageOverviewComponent } from './shared/components/edge/meter/currentVoltage/currentVoltage.overview';
 import { DataService } from './shared/components/shared/dataservice';
+import { Role } from './shared/type/role';
 import { UserComponent } from './user/user.component';
+import { hasEdgeRole } from './shared/guards/functional-guards';
 
 export const routes: Routes = [
 
@@ -121,31 +123,31 @@ export const routes: Routes = [
       },
 
       { path: 'settings', data: { navbarTitleToBeTranslated: 'Menu.edgeSettings' }, component: EdgeSettingsComponent },
-      { path: 'settings/channels', component: EdgeSettingsChannelsComponent },
-      { path: 'settings/component.install', component: EdgeSettingsComponentInstallIndexComponentComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.addComponents' } },
-      { path: 'settings/component.install/:factoryId', component: EdgeSettingsComponentInstallComponentComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.addComponents' } },
-      { path: 'settings/component.update', component: EdgeSettingsComponentUpdateIndexComponentComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.adjustComponents' } },
-      { path: 'settings/component.update/:componentId', component: EdgeSettingsComponentUpdateComponentComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.adjustComponents' } },
-      { path: 'settings/network', component: EdgeSettingsNetworkComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.networkConfiguration' } },
+      { path: 'settings/channels', component: EdgeSettingsChannelsComponent, canActivate: [hasEdgeRole(Role.ADMIN)] },
+      { path: 'settings/component.install', component: EdgeSettingsComponentInstallIndexComponentComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitleToBeTranslated: 'Edge.Config.Index.addComponents' } },
+      { path: 'settings/component.install/:factoryId', component: EdgeSettingsComponentInstallComponentComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitleToBeTranslated: 'Edge.Config.Index.addComponents' } },
+      { path: 'settings/component.update', component: EdgeSettingsComponentUpdateIndexComponentComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitleToBeTranslated: 'Edge.Config.Index.adjustComponents' } },
+      { path: 'settings/component.update/:componentId', component: EdgeSettingsComponentUpdateComponentComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitleToBeTranslated: 'Edge.Config.Index.adjustComponents' } },
+      { path: 'settings/network', component: EdgeSettingsNetworkComponent, canActivate: [hasEdgeRole(Role.INSTALLER)], data: { navbarTitleToBeTranslated: 'Edge.Config.Index.networkConfiguration' } },
       { path: 'settings/network.old', component: EdgeSettingsNetworkOldComponent },
       { path: 'settings/profile', component: EdgeSettingsProfileComponent },
       { path: 'settings/profile/:componentId', component: AliasUpdateComponent },
       { path: 'settings/serviceAssistant', component: EdgeSettingsServiceAssistant },
-      { path: 'settings/systemexecute', component: EdgeSettingsSystemExecuteComponent },
-      { path: 'settings/systemlog', component: EdgeSettingsSystemLogComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.liveLog' } },
-      { path: 'settings/system', component: EdgeSettingsSystemComponent, data: { navbarTitleToBeTranslated: 'Edge.Config.Index.SYSTEM' } },
+      { path: 'settings/systemexecute', component: EdgeSettingsSystemExecuteComponent, canActivate: [hasEdgeRole(Role.ADMIN)] },
+      { path: 'settings/systemlog', component: EdgeSettingsSystemLogComponent, canActivate: [hasEdgeRole(Role.OWNER)], data: { navbarTitleToBeTranslated: 'Edge.Config.Index.liveLog' } },
+      { path: 'settings/system', component: EdgeSettingsSystemComponent, canActivate: [hasEdgeRole(Role.OWNER)], data: { navbarTitleToBeTranslated: 'Edge.Config.Index.SYSTEM' } },
       { path: 'settings/system.old', component: EdgeSettingsSystemUpdateOldComponent },
-      { path: 'settings/app', data: { navbarTitle: environment.edgeShortName + ' Apps' }, component: EdgeSettingsAppIndex },
-      { path: 'settings/app/install/:appId', component: EdgeSettingsAppInstall },
-      { path: 'settings/app/update/:appId', component: EdgeSettingsAppUpdate },
-      { path: 'settings/app/single/:appId', component: EdgeSettingsAppSingle },
-      { path: 'settings/alerting', component: EdgeSettingsAlerting },
+      { path: 'settings/app', canActivate: [hasEdgeRole(Role.OWNER)], data: { navbarTitle: environment.edgeShortName + ' Apps' }, component: EdgeSettingsAppIndex },
+      { path: 'settings/app/install/:appId', component: EdgeSettingsAppInstall, canActivate: [hasEdgeRole(Role.OWNER)] },
+      { path: 'settings/app/update/:appId', component: EdgeSettingsAppUpdate, canActivate: [hasEdgeRole(Role.OWNER)] },
+      { path: 'settings/app/single/:appId', component: EdgeSettingsAppSingle, canActivate: [hasEdgeRole(Role.OWNER)] },
       { path: 'settings/energyJourney', component: EnergyJourneyComponent, data: { navbarTitle: 'Energy Journey' } },
       { path: 'settings/energyJourney/batteryExtension', component: BatteryExtensionComponent, data: { navbarTitle: 'Analyse Batterieerweiterung' } },
       { path: 'settings/energyJourney/batteryExtension/electricityPriceChoice', component: ElectricityPriceSelectionComponent, data: { navbarTitle: 'Analyse Batterieerweiterung' } },
+      { path: 'settings/alerting', component: EdgeSettingsAlerting, canActivate: [hasEdgeRole(Role.OWNER)] },
       { path: 'settings/homeServiceAssistant', component: HomeServiceAssistantComponent, data: { navbarTitle: 'Home-Assistent' } },
       { path: 'settings/jsonrpctest', component: JsonrpcTestComponent },
-      { path: 'settings/powerAssistant', component: PowerAssistantComponent, data: { navbarTitle: 'Power-Assistant' } },
+      { path: 'settings/powerAssistant', component: PowerAssistantComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitle: 'Power-Assistant' } },
     ],
   },
 
