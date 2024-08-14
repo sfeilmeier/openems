@@ -57,11 +57,11 @@ import { SystemLogComponent as EdgeSettingsSystemLogComponent } from './edge/set
 import { SystemUpdateOldComponent as EdgeSettingsSystemUpdateOldComponent } from './edge/settings/systemupdate.old/systemupdate.old.component';
 import { LoginComponent } from './index/login.component';
 import { OverViewComponent } from './index/overview/overview.component';
+import { UserComponent } from './user/user.component';
 import { LoadingScreenComponent } from './index/shared/loading-screen';
 import { CurrentAndVoltageOverviewComponent } from './shared/components/edge/meter/currentVoltage/currentVoltage.overview';
 import { DataService } from './shared/components/shared/dataservice';
 import { Role } from './shared/type/role';
-import { UserComponent } from './user/user.component';
 import { hasEdgeRole } from './shared/guards/functional-guards';
 
 export const routes: Routes = [
@@ -160,7 +160,7 @@ export const appRoutingProviders: any[] = [];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, paramsInheritanceStrategy: 'always' }),
   ],
   exports: [RouterModule],
 })
