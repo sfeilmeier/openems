@@ -30,11 +30,15 @@ public final class PossibleBatteryCapacityExtensionUtil {
 			"GridBuyActiveEnergy");
 	private static final ChannelAddress CHANNEL_SUM_GRID_SELL_ACTIVE_ENERGY = new ChannelAddress("_sum",
 			"GridSellActiveEnergy");
+	private static final ChannelAddress CHANNEL_SUM_ESS_DC_DISCHARGE_ENERGY = new ChannelAddress("_sum",
+			"EssDcDischargeEnergy");
+	private static final ChannelAddress CHANNEL_SUM_ESS_DC_CHARGE_ENERGY = new ChannelAddress("_sum",
+			"EssDcChargeEnergy");
 	private static final ChannelAddress CHANNEL_NUMBER_OF_MODULES_PER_TOWER = new ChannelAddress("battery0",
 			"NumberOfModulesPerTower");
 
-	private static final Set<ChannelAddress> ENERGY_CHANNELS = Set.of(CHANNEL_SUM_GRID_BUY_ACTIVE_ENERGY,
-			CHANNEL_SUM_GRID_SELL_ACTIVE_ENERGY);
+	private static final Set<ChannelAddress> ENERGY_CHANNELS = Set.of(//
+			CHANNEL_SUM_GRID_BUY_ACTIVE_ENERGY, CHANNEL_SUM_GRID_SELL_ACTIVE_ENERGY);
 
 	private PossibleBatteryCapacityExtensionUtil() {
 	}
@@ -58,14 +62,14 @@ public final class PossibleBatteryCapacityExtensionUtil {
 		user.assertEdgeRoleIsAtLeast(PossibleBatteryCapacityExtensionRequest.METHOD, edgeId, Role.OWNER);
 
 		var edge = metadata.getEdge(edgeId).orElseThrow(() -> new OpenemsException("Edge not available"));
-		var result = calculateRecommendationData(timedata, edge, request, edgeWebsocket);
+		var result = calculateSimulationData(timedata, edge, request, edgeWebsocket);
 
 		return CompletableFuture.completedFuture(//
 				new PossibleBatteryCapacityExtensionResponse(request.id, result) //
 		);
 	}
 
-	protected static List<DataPerModule> calculateRecommendationData(TimedataManager timedata, Edge edge,
+	protected static SimulationData calculateSimulationData(TimedataManager timedata, Edge edge,
 			PossibleBatteryCapacityExtensionRequest request, EdgeWebsocket edgeWebsocket) throws OpenemsNamedException {
 
 		final Product product = Product.getProduct(edge.getProducttype());
@@ -89,6 +93,9 @@ public final class PossibleBatteryCapacityExtensionUtil {
 		final var datapoints = timedata.queryHistoricEnergyPerPeriod(edge.getId(), request.getFromDate(),
 				request.getToDate(), ENERGY_CHANNELS, new Resolution(1, ChronoUnit.DAYS));
 
+		final var energyValues = timedata.queryHistoricEnergy(edge.getId(), request.getFromDate(), request.getToDate(),
+				Set.of(CHANNEL_SUM_ESS_DC_CHARGE_ENERGY, CHANNEL_SUM_ESS_DC_DISCHARGE_ENERGY));
+
 		// Add Current number of modules
 		dataPerModules.add(calculateDataPerModule(datapoints, numberOfModulesPerTower, numberOfModulesPerTower,
 				electricityPrice, product));
@@ -105,7 +112,14 @@ public final class PossibleBatteryCapacityExtensionUtil {
 					calculateDataPerModule(datapoints, numberOfModulesPerTower, higherKey, electricityPrice, product));
 		}
 
-		return dataPerModules;
+		var charge = JsonUtils.getAsOptionalInt(energyValues//
+				.get(CHANNEL_SUM_ESS_DC_CHARGE_ENERGY)) //
+				.orElse(0);
+		var discharge = JsonUtils.getAsOptionalInt(energyValues//
+				.get(CHANNEL_SUM_ESS_DC_DISCHARGE_ENERGY)) //
+				.orElse(0);
+
+		return new SimulationData(charge, discharge, dataPerModules);
 	}
 
 	protected static DataPerModule calculateDataPerModule(
@@ -151,6 +165,9 @@ public final class PossibleBatteryCapacityExtensionUtil {
 	}
 
 	public record DataPerModule(int numberOfModules, double gridBuy, double gridBuyCosts, int kWPeak, int capacity) {
+	}
+
+	public record SimulationData(int discharge, int charge, List<DataPerModule> dataPerModule) {
 	}
 
 	public record ProductData(int kWPeak, int capacity) {
