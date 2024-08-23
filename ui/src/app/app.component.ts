@@ -135,7 +135,6 @@ export class AppComponent implements OnInit, OnDestroy {
             this.isSystemOutage = true;
             break;
           case 1:
-          default:
             this.isSystemOutage = false;
             break;
         }

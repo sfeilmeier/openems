@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { Component, Input, OnChanges } from "@angular/core";
-import { ChartAxis, HistoryUtils, Utils, YAxisTitle } from "src/app/shared/service/utils";
+import { ChartAxis, HistoryUtils, Utils, YAxisType } from "src/app/shared/service/utils";
 import { ChannelAddress } from "src/app/shared/shared";
 
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
@@ -59,7 +59,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
         formatNumber: "1.0-0",
       },
       yAxes: [{
-        unit: YAxisTitle.ENERGY,
+        unit: YAxisType.ENERGY,
         position: "left",
         yAxisId: ChartAxis.LEFT,
       }],

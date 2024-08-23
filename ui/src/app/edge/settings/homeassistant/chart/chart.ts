@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
-import { ChartAxis, HistoryUtils, YAxisTitle } from "src/app/shared/service/utils";
+import { ChartAxis, HistoryUtils, YAxisType } from "src/app/shared/service/utils";
 import { ChannelAddress } from "src/app/shared/shared";
 
 @Component({
@@ -88,7 +88,7 @@ export class ChartComponent extends AbstractHistoryChart {
         formatNumber: "1.0-2",
       },
       yAxes: [{
-        unit: YAxisTitle.VOLTAGE,
+        unit: YAxisType.VOLTAGE,
         position: "left",
         yAxisId: ChartAxis.LEFT,
       }],
