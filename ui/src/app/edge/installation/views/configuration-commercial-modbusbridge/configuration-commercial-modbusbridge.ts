@@ -8,11 +8,11 @@ import { ModbusBridgeType } from "../../shared/enums";
 
 @Component({
     selector: ConfigurationCommercialModbuBridgeComponent.SELECTOR,
-    templateUrl: './configuration-commercial-modbusbridge.html',
+    templateUrl: "./configuration-commercial-modbusbridge.html",
 })
 export class ConfigurationCommercialModbuBridgeComponent implements OnInit {
 
-    private static readonly SELECTOR = 'configuration-commercial-modbusbridge';
+    private static readonly SELECTOR = "configuration-commercial-modbusbridge";
 
     @Input() public ibn: AbstractCommercialIbn;
     @Output() public nextViewEvent = new EventEmitter();
@@ -36,7 +36,7 @@ export class ConfigurationCommercialModbuBridgeComponent implements OnInit {
         }
 
         // set the modbus bridge type in ibn
-        this.ibn.modbusBridgeType = this.model['modbus'];
+        this.ibn.modbusBridgeType = this.model["modbus"];
 
         // Sets the ibn object.
         this.nextViewEvent.emit(this.ibn);
@@ -47,13 +47,13 @@ export class ConfigurationCommercialModbuBridgeComponent implements OnInit {
         const modbusBridgeLabel = ([
             {
                 value: ModbusBridgeType.TCP_IP,
-                label: this.translate.instant('INSTALLATION.CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT.TCP_IP_LABEL'),
-                url: 'assets/img/TCP-IP_6_Ports.png',
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT.TCP_IP_LABEL"),
+                url: "assets/img/TCP-IP_6_Ports.png",
             },
             {
                 value: ModbusBridgeType.RS485,
-                label: this.translate.instant('INSTALLATION.CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT.RS485_LABEL'),
-                url: 'assets/img/RTU-4-Ports.png',
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT.RS485_LABEL"),
+                url: "assets/img/RTU-4-Ports.png",
             },
         ]);
 
@@ -65,7 +65,7 @@ export class ConfigurationCommercialModbuBridgeComponent implements OnInit {
                 options: modbusBridgeLabel,
             },
             defaultValue: ModbusBridgeType.TCP_IP,
-            wrappers: ['formly-field-radio-with-image'],
+            wrappers: ["formly-field-radio-with-image"],
         });
         return fields;
     }

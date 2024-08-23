@@ -16,8 +16,8 @@ import { PossibleBatteryExtensionRequest } from "./battery-extension.request";
 import { PossibleBatteryExtensionResponse } from "./battery-extension.response";
 
 @Component({
-  selector: 'battery-extension',
-  templateUrl: './battery-extension.html',
+  selector: "battery-extension",
+  templateUrl: "./battery-extension.html",
   providers: [
     { provide: DataService, useClass: HistoryDataService },
   ],
@@ -26,10 +26,10 @@ export class BatteryExtensionComponent extends AbstractFlatWidget {
 
   protected readonly XAxisType = XAxisType;
   protected readonly CONVERT_TO_PRICE = this.convertToPrice(Currency.Unit.CENT);
-  protected spinnerId: string = 'batteryExtensionSpinner';
+  protected spinnerId: string = "batteryExtensionSpinner";
   protected simulatedData: SimulatedData = { simulationData: [] };
   protected electricityPrice: number | null = null;
-  protected chartTitle: string = 'Einsparung Strombezug in kWh';
+  protected chartTitle: string = "Einsparung Strombezug in kWh";
   protected readonly fromDate: Date = subYears(subDays(new Date(), 1), 1);
   protected readonly toDate: Date = subDays(new Date(), 1);
 
@@ -37,15 +37,15 @@ export class BatteryExtensionComponent extends AbstractFlatWidget {
     const dateRange = DateUtils.toDateRange(this.fromDate, this.toDate, this.translate);
 
     if (!dateRange) {
-      console.warn('Daterange not available, either fromDate or toDate are invalid');
+      console.warn("Daterange not available, either fromDate or toDate are invalid");
       return;
     }
-    this.chartTitle = 'Einsparung Strombezug in kWh (' + DateUtils.toDateRange(this.fromDate, this.toDate, this.translate) + ')';
+    this.chartTitle = "Einsparung Strombezug in kWh (" + DateUtils.toDateRange(this.fromDate, this.toDate, this.translate) + ")";
 
-    const electricityPrice = this.route?.snapshot?.queryParams['electricityPrice'] as number;
+    const electricityPrice = this.route?.snapshot?.queryParams["electricityPrice"] as number;
 
     if (!electricityPrice) {
-      this.router.navigate(['../electricityPriceChoice'], { relativeTo: this.route });
+      this.router.navigate(["../electricityPriceChoice"], { relativeTo: this.route });
       return;
     }
     this.getSimulatedData(electricityPrice);
@@ -58,7 +58,7 @@ export class BatteryExtensionComponent extends AbstractFlatWidget {
     const edge = await this.service.getCurrentEdge();
 
     if (!edge) {
-      this.service.toast('Edge not available', 'danger');
+      this.service.toast("Edge not available", "danger");
       return;
     }
 
@@ -68,7 +68,7 @@ export class BatteryExtensionComponent extends AbstractFlatWidget {
     }));
 
     if (!result) {
-      this.service.toast('Simulation not available', 'danger');
+      this.service.toast("Simulation not available", "danger");
       return;
     }
 
@@ -88,7 +88,7 @@ export class BatteryExtensionComponent extends AbstractFlatWidget {
     return (raw: any): string => {
       return Converter.IF_NUMBER_OR_STRING(raw, value => {
         let _value: number | null = null;
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
           _value = parseInt(value);
         }
 

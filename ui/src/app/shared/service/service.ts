@@ -1,32 +1,32 @@
 // @ts-strict-ignore
-import { registerLocaleData } from '@angular/common';
-import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { filter, first, take } from 'rxjs/operators';
-import { ChosenFilter } from 'src/app/index/filter/filter.component';
-import { environment } from 'src/environments';
-import { Edge } from '../components/edge/edge';
-import { EdgeConfig } from '../components/edge/edgeconfig';
-import { JsonrpcResponseError } from '../jsonrpc/base';
-import { GetEdgeRequest } from '../jsonrpc/request/getEdgeRequest';
-import { GetEdgesRequest } from '../jsonrpc/request/getEdgesRequest';
-import { QueryHistoricTimeseriesEnergyRequest } from '../jsonrpc/request/queryHistoricTimeseriesEnergyRequest';
-import { GetEdgeResponse } from '../jsonrpc/response/getEdgeResponse';
-import { GetEdgesResponse } from '../jsonrpc/response/getEdgesResponse';
-import { QueryHistoricTimeseriesEnergyResponse } from '../jsonrpc/response/queryHistoricTimeseriesEnergyResponse';
-import { User } from '../jsonrpc/shared';
-import { ChannelAddress } from '../shared';
-import { Language } from '../type/language';
-import { Role } from '../type/role';
-import { AdvertWidgets } from '../type/widget';
-import { DateUtils } from '../utils/date/dateutils';
-import { AbstractService } from './abstractservice';
-import { DefaultTypes } from './defaulttypes';
-import { Websocket } from './websocket';
+import { registerLocaleData } from "@angular/common";
+import { Injectable } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ToastController } from "@ionic/angular";
+import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
+import { NgxSpinnerService } from "ngx-spinner";
+import { BehaviorSubject, Subject } from "rxjs";
+import { filter, first, take } from "rxjs/operators";
+import { ChosenFilter } from "src/app/index/filter/filter.component";
+import { environment } from "src/environments";
+import { Edge } from "../components/edge/edge";
+import { EdgeConfig } from "../components/edge/edgeconfig";
+import { JsonrpcResponseError } from "../jsonrpc/base";
+import { GetEdgeRequest } from "../jsonrpc/request/getEdgeRequest";
+import { GetEdgesRequest } from "../jsonrpc/request/getEdgesRequest";
+import { QueryHistoricTimeseriesEnergyRequest } from "../jsonrpc/request/queryHistoricTimeseriesEnergyRequest";
+import { GetEdgeResponse } from "../jsonrpc/response/getEdgeResponse";
+import { GetEdgesResponse } from "../jsonrpc/response/getEdgesResponse";
+import { QueryHistoricTimeseriesEnergyResponse } from "../jsonrpc/response/queryHistoricTimeseriesEnergyResponse";
+import { User } from "../jsonrpc/shared";
+import { ChannelAddress } from "../shared";
+import { Language } from "../type/language";
+import { Role } from "../type/role";
+import { AdvertWidgets } from "../type/widget";
+import { DateUtils } from "../utils/date/dateutils";
+import { AbstractService } from "./abstractservice";
+import { DefaultTypes } from "./defaulttypes";
+import { Websocket } from "./websocket";
 
 @Injectable()
 export class Service extends AbstractService {
@@ -151,9 +151,9 @@ export class Service extends AbstractService {
     return new Promise((resolve, reject) => {
       // Set the currentPageTitle only once per ActivatedRoute
       if (this.currentActivatedRoute != activatedRoute) {
-        if (typeof currentPageTitle === 'string') {
+        if (typeof currentPageTitle === "string") {
           // Use given page title directly
-          if (currentPageTitle == null || currentPageTitle.trim() === '') {
+          if (currentPageTitle == null || currentPageTitle.trim() === "") {
             this.currentPageTitle = environment.uiTitle;
           } else {
             this.currentPageTitle = currentPageTitle;
@@ -200,7 +200,7 @@ export class Service extends AbstractService {
   public onLogout() {
     this.currentEdge.next(null);
     this.metadata.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(["/login"]);
   }
 
   public getChannelAddresses(edge: Edge, channels: ChannelAddress[]): Promise<ChannelAddress[]> {
@@ -304,7 +304,7 @@ export class Service extends AbstractService {
    * @param limit the number of edges to be retrieved
    * @returns a Promise
    */
-  public getEdges(page: number, query?: string, limit?: number, searchParamsObj?: { [id: string]: ChosenFilter['value'] }): Promise<Edge[]> {
+  public getEdges(page: number, query?: string, limit?: number, searchParamsObj?: { [id: string]: ChosenFilter["value"] }): Promise<Edge[]> {
     return new Promise<Edge[]>((resolve, reject) => {
       this.websocket.sendSafeRequest(
         new GetEdgesRequest({
@@ -402,19 +402,19 @@ export class Service extends AbstractService {
     this.spinner.hide(selector);
   }
 
-  public async toast(message: string, level: 'success' | 'warning' | 'danger', duration?: number) {
+  public async toast(message: string, level: "success" | "warning" | "danger", duration?: number) {
     const toast = await this.toaster.create({
       message: message,
       color: level,
       duration: duration ?? 2000,
-      cssClass: 'container',
+      cssClass: "container",
     });
     toast.present();
   }
 
   public showAdvertWidgets(advertWidgets: AdvertWidgets): boolean {
     // Show adverts only for FENECON
-    if (environment.theme != 'FENECON') {
+    if (environment.theme != "FENECON") {
       return false;
     }
 
@@ -431,7 +431,7 @@ export class Service extends AbstractService {
     if (!edge) {
       return false;
     }
-    if (['fems1267', 'fems1495', 'fems1886'].includes(edge.id)) {
+    if (["fems1267", "fems1495", "fems1886"].includes(edge.id)) {
       return true;
     }
   }

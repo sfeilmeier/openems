@@ -24,21 +24,21 @@ export namespace Converter {
   };
 
   export const IF_NUMBER = (value: number | string | null, callback: (number: number) => string) => {
-    if (typeof value === 'number') {
+    if (typeof value === "number") {
       return callback(value);
     }
     return "-"; // null or string
   };
 
   export const IF_STRING = (value: number | string | null, callback: (text: string) => string) => {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       return callback(value);
     }
     return "-"; // null or number
   };
 
   export const IF_NUMBER_OR_STRING = (value: number | string | null, callback: (value: number | string) => string) => {
-    if (typeof value === 'number' || typeof value === 'string') {
+    if (typeof value === "number" || typeof value === "string") {
       return callback(value);
     }
     return "-"; // null or string
@@ -220,13 +220,13 @@ export namespace Converter {
       const limitation = () => {
         switch (value) {
           case 1:
-            return '0';
+            return "0";
           case 2:
-            return '30';
+            return "30";
           case 4:
-            return '60';
+            return "60";
           case 8:
-            return '100';
+            return "100";
           default:
             return null;
         }
@@ -247,7 +247,7 @@ export namespace Converter {
    * @returns always ""
    */
   export const HIDE_VALUE: Converter = (ignore): string => {
-    return '';
+    return "";
   };
 
   /**
@@ -259,29 +259,29 @@ export namespace Converter {
    * @returns the otherPower
    */
   export const CALCULATE_CONSUMPTION_OTHER_POWER = (evcss: EdgeConfig.Component[], consumptionMeters: EdgeConfig.Component[], currentData: CurrentData): number => {
-    const activePowerTotal = currentData.allComponents['_sum/ConsumptionActivePower'] ?? null;
-    const evcsChargePowerTotal = evcss?.map(evcs => currentData.allComponents[evcs.id + '/ChargePower'])?.reduce((prev, curr) => Utils.addSafely(prev, curr), 0) ?? null;
-    const consumptionMeterActivePowerTotal = consumptionMeters?.map(meter => currentData.allComponents[meter.id + '/ActivePower'])?.reduce((prev, curr) => Utils.addSafely(prev, curr), 0) ?? null;
+    const activePowerTotal = currentData.allComponents["_sum/ConsumptionActivePower"] ?? null;
+    const evcsChargePowerTotal = evcss?.map(evcs => currentData.allComponents[evcs.id + "/ChargePower"])?.reduce((prev, curr) => Utils.addSafely(prev, curr), 0) ?? null;
+    const consumptionMeterActivePowerTotal = consumptionMeters?.map(meter => currentData.allComponents[meter.id + "/ActivePower"])?.reduce((prev, curr) => Utils.addSafely(prev, curr), 0) ?? null;
 
     return Utils.subtractSafely(activePowerTotal,
       Utils.addSafely(evcsChargePowerTotal, consumptionMeterActivePowerTotal));
   };
 
   export const GRID_STATE_TO_MESSAGE = (translate: TranslateService, currentData: CurrentData): string => {
-    const gridMode = currentData.allComponents['_sum/GridMode'];
-    const restrictionMode = currentData.allComponents['ctrlEssLimiter14a0/RestrictionMode'];
+    const gridMode = currentData.allComponents["_sum/GridMode"];
+    const restrictionMode = currentData.allComponents["ctrlEssLimiter14a0/RestrictionMode"];
     if (gridMode === GridMode.OFF_GRID) {
       return translate.instant("GRID_STATES.OFF_GRID");
     }
     if (restrictionMode === 1) {
-      return translate.instant('GRID_STATES.RESTRICTION');
+      return translate.instant("GRID_STATES.RESTRICTION");
     }
     return translate.instant("GRID_STATES.NO_EXTERNAL_LIMITATION");
   };
 
   export const ON_OFF = (translate: TranslateService) => {
     return (raw): string => {
-      return translate.instant(raw == 1 ? 'General.on' : 'General.off');
+      return translate.instant(raw == 1 ? "General.on" : "General.off");
     };
   };
 
@@ -303,18 +303,18 @@ export namespace Converter {
     return (value: any): string => {
       switch (value) {
         case 10:
-          return translate.instant('General.STATE_MACHINE.GO_RUNNING');
+          return translate.instant("General.STATE_MACHINE.GO_RUNNING");
         case 11:
-          return translate.instant('General.STATE_MACHINE.RUNNING');
+          return translate.instant("General.STATE_MACHINE.RUNNING");
         case 20:
-          return translate.instant('General.STATE_MACHINE.GO_STOPPED');
+          return translate.instant("General.STATE_MACHINE.GO_STOPPED");
         case 21:
-          return translate.instant('General.STATE_MACHINE.STOPPED');
+          return translate.instant("General.STATE_MACHINE.STOPPED");
         case 30:
-          return translate.instant('General.STATE_MACHINE.ERROR');
+          return translate.instant("General.STATE_MACHINE.ERROR");
         case -1:
         default:
-          return translate.instant('General.STATE_MACHINE.UNDEFINED');
+          return translate.instant("General.STATE_MACHINE.UNDEFINED");
       }
     };
   };

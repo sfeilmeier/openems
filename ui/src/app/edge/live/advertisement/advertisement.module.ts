@@ -1,8 +1,8 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { SharedModule } from "src/app/shared/shared.module";
 
-import { AdvertisementComponent } from './advertisement.component';
-import { AwardWinningComponent } from './awards/awards';
+import { AdvertisementComponent } from "./advertisement.component";
+import { AwardWinningComponent } from "./awards/awards";
 
 @NgModule({
     imports: [

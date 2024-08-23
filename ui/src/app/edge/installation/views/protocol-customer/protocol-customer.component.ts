@@ -1,19 +1,19 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Service } from 'src/app/shared/shared';
-import { COUNTRY_OPTIONS } from 'src/app/shared/type/country';
-import { AbstractIbn } from '../../installation-systems/abstract-ibn';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormGroup, Validators } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { Service } from "src/app/shared/shared";
+import { COUNTRY_OPTIONS } from "src/app/shared/type/country";
+import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 
 @Component({
   selector: ProtocolCustomerComponent.SELECTOR,
-  templateUrl: './protocol-customer.component.html',
+  templateUrl: "./protocol-customer.component.html",
 })
 export class ProtocolCustomerComponent implements OnInit {
 
-  private static readonly SELECTOR = 'protocol-customer';
+  private static readonly SELECTOR = "protocol-customer";
 
   @Input() public ibn: AbstractIbn;
   @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
@@ -42,7 +42,7 @@ export class ProtocolCustomerComponent implements OnInit {
 
   public onNextClicked() {
     if (this.form.invalid) {
-      this.service.toast(this.translate.instant('Edge.Network.mandatoryFields'), 'danger');
+      this.service.toast(this.translate.instant("Edge.Network.mandatoryFields"), "danger");
       return;
     }
     this.ibn.customer = this.model;
@@ -53,74 +53,74 @@ export class ProtocolCustomerComponent implements OnInit {
 
     const fields: FormlyFieldConfig[] = [];
     fields.push({
-      key: 'isCorporateClient',
-      type: 'checkbox',
+      key: "isCorporateClient",
+      type: "checkbox",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_CUSTOMER'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_CUSTOMER"),
       },
     });
 
     fields.push({
-      key: 'companyName',
-      type: 'input',
+      key: "companyName",
+      type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_NAME'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_NAME"),
         required: true,
       },
       hideExpression: model => !model.isCorporateClient,
     });
 
     fields.push({
-      key: 'lastName',
-      type: 'input',
+      key: "lastName",
+      type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.LAST_NAME'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.LAST_NAME"),
         required: true,
       },
     });
 
     fields.push({
-      key: 'firstName',
-      type: 'input',
+      key: "firstName",
+      type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.FIRST_NAME'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.FIRST_NAME"),
         required: true,
       },
     });
 
     fields.push({
-      key: 'street',
-      type: 'input',
+      key: "street",
+      type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS"),
         required: true,
       },
     });
 
     fields.push({
-      key: 'zip',
-      type: 'input',
+      key: "zip",
+      type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP"),
         required: true,
-        pattern: '^[0-9]*$',
+        pattern: "^[0-9]*$",
       },
     });
 
     fields.push({
-      key: 'city',
-      type: 'input',
+      key: "city",
+      type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY"),
         required: true,
       },
     });
 
     fields.push({
-      key: 'country',
-      type: 'select',
+      key: "country",
+      type: "select",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY"),
         required: true,
         options: COUNTRY_OPTIONS(this.translate),
       },
@@ -129,12 +129,12 @@ export class ProtocolCustomerComponent implements OnInit {
     fields.push({
       fieldGroup: [
         {
-          key: 'email',
-          type: 'input',
+          key: "email",
+          type: "input",
           templateOptions: {
-            type: 'email',
-            label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL'),
-            description: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL_DESCRIPTION'),
+            type: "email",
+            label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL"),
+            description: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL_DESCRIPTION"),
             required: true,
           },
           validators: {
@@ -142,28 +142,28 @@ export class ProtocolCustomerComponent implements OnInit {
           },
         },
         {
-          key: 'emailConfirm',
-          type: 'input',
+          key: "emailConfirm",
+          type: "input",
           templateOptions: {
-            type: 'email',
-            label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL'),
-            description: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL_CONFIRMATION'),
+            type: "email",
+            label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL"),
+            description: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL_CONFIRMATION"),
             required: true,
           },
         },
       ],
       validators: {
         validation: [
-          { name: 'emailMatch', options: { errorPath: 'emailConfirm' } },
+          { name: "emailMatch", options: { errorPath: "emailConfirm" } },
         ],
       },
     });
 
     fields.push({
-      key: 'phone',
-      type: 'input',
+      key: "phone",
+      type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.PHONE'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.PHONE"),
         required: true,
       },
     });

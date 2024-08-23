@@ -1,9 +1,9 @@
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from "@ngx-translate/core";
 
-import { Category } from '../../shared/category';
-import { View } from '../../shared/enums';
-import { SystemId, SystemType } from '../../shared/system';
-import { AbstractHome10Ibn } from './abstract-home-10';
+import { Category } from "../../shared/category";
+import { View } from "../../shared/enums";
+import { SystemId, SystemType } from "../../shared/system";
+import { AbstractHome10Ibn } from "./abstract-home-10";
 
 export class Home10HeckertIbn extends AbstractHome10Ibn {
 

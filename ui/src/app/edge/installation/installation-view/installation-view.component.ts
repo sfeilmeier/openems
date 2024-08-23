@@ -1,11 +1,11 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from "@angular/core";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: InstallationViewComponent.SELECTOR,
-  templateUrl: './installation-view.component.html',
+  templateUrl: "./installation-view.component.html",
 })
 export class InstallationViewComponent implements OnChanges {
 
@@ -31,16 +31,16 @@ export class InstallationViewComponent implements OnChanges {
   // So using the ngOnChanges.
   public ngOnChanges() {
     if (this.isWaiting) {
-      this.setLabelAndIcon(this.translate.instant('INSTALLATION.LOAD'), 'hourglass-outline');
+      this.setLabelAndIcon(this.translate.instant("INSTALLATION.LOAD"), "hourglass-outline");
     } else if (this.isLastView) {
-      this.setLabelAndIcon(this.translate.instant('INSTALLATION.COMPLETE'), 'arrow-forward-outline');
+      this.setLabelAndIcon(this.translate.instant("INSTALLATION.COMPLETE"), "arrow-forward-outline");
     } else {
-      this.setLabelAndIcon(this.translate.instant('INSTALLATION.NEXT'), 'arrow-forward-outline');
+      this.setLabelAndIcon(this.translate.instant("INSTALLATION.NEXT"), "arrow-forward-outline");
     }
   }
 
   public keyPressed(event) {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       this.nextClicked.emit();
     }
   }

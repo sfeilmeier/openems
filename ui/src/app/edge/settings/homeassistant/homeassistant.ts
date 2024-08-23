@@ -1,16 +1,16 @@
 // @ts-strict-ignore
-import { formatNumber } from '@angular/common';
-import { Component } from '@angular/core';
-import { AbstractFlatWidget } from 'src/app/shared/components/flat/abstract-flat-widget';
-import { Converter } from 'src/app/shared/components/shared/converter';
-import { DataService } from 'src/app/shared/components/shared/dataservice';
-import { Filter } from 'src/app/shared/components/shared/filter';
-import { ChannelAddress, CurrentData, EdgeConfig, Utils } from '../../../shared/shared';
-import { LiveDataService } from '../../live/livedataservice';
+import { formatNumber } from "@angular/common";
+import { Component } from "@angular/core";
+import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
+import { Converter } from "src/app/shared/components/shared/converter";
+import { DataService } from "src/app/shared/components/shared/dataservice";
+import { Filter } from "src/app/shared/components/shared/filter";
+import { ChannelAddress, CurrentData, EdgeConfig, Utils } from "../../../shared/shared";
+import { LiveDataService } from "../../live/livedataservice";
 
 @Component({
   selector: HomeServiceAssistantComponent.SELECTOR,
-  templateUrl: './homeassistant.html',
+  templateUrl: "./homeassistant.html",
   providers: [{
     useClass: LiveDataService,
     provide: DataService,
@@ -33,44 +33,44 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
     if (this.config?.components) {
       this.chargerComponents = Object.values(this.config.components)
         .filter(component => [
-          'GoodWe.Charger-PV1',
-          'GoodWe.Charger-PV2',
-          'GoodWe.Charger.Two-String',
-          'GoodWe.Charger.Mppt.Two-String',
+          "GoodWe.Charger-PV1",
+          "GoodWe.Charger-PV2",
+          "GoodWe.Charger.Two-String",
+          "GoodWe.Charger.Mppt.Two-String",
         ].some(factoryId => factoryId === component.factoryId));
     }
   }
 
   protected override getChannelAddresses(): ChannelAddress[] {
     return [
-      new ChannelAddress('battery0', 'MaxCellVoltage'),
-      new ChannelAddress('battery0', 'MinCellVoltage'),
-      new ChannelAddress('battery0', 'MinCellTemperature'),
-      new ChannelAddress('battery0', 'MinCellTemperature'),
+      new ChannelAddress("battery0", "MaxCellVoltage"),
+      new ChannelAddress("battery0", "MinCellVoltage"),
+      new ChannelAddress("battery0", "MinCellTemperature"),
+      new ChannelAddress("battery0", "MinCellTemperature"),
     ];
   }
 
   protected override onCurrentData(currentData: CurrentData): void {
-    this.cellVoltageDifference = Utils.subtractSafely(currentData.allComponents['battery0/MaxCellVoltage'], currentData.allComponents['battery0/MinCellVoltage']);
-    this.cellTemperatureDifference = Utils.subtractSafely(currentData.allComponents['battery0/MaxCellTemperature'], currentData.allComponents['battery0/MinCellTemperature']);
+    this.cellVoltageDifference = Utils.subtractSafely(currentData.allComponents["battery0/MaxCellVoltage"], currentData.allComponents["battery0/MinCellVoltage"]);
+    this.cellTemperatureDifference = Utils.subtractSafely(currentData.allComponents["battery0/MaxCellTemperature"], currentData.allComponents["battery0/MinCellTemperature"]);
   }
   protected VOLTAGE_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-    return Converter.IF_NUMBER(raw, value => formatNumber(value, 'de', '1.0-3') + " V");
+    return Converter.IF_NUMBER(raw, value => formatNumber(value, "de", "1.0-3") + " V");
   };
 
   protected VOLTAGE_IN_MILLI_VOLT_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
     return Converter.IF_NUMBER(raw, value =>
-      formatNumber(Utils.divideSafely(value, 1000), 'de', '1.0-3') + " V");
+      formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " V");
   };
 
   protected VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
     return Converter.IF_NUMBER(raw, value =>
-      formatNumber(value, 'de', '1.0-0') + " mV");
+      formatNumber(value, "de", "1.0-0") + " mV");
   };
 
   protected AMPERE_IN_MILLI_AMPERE_TO_AMPERE_WITH_3_DECIMALS: Converter = (raw): string => {
     return Converter.IF_NUMBER(raw, value =>
-      formatNumber(Utils.divideSafely(value, 1000), 'de', '1.0-3') + " A",
+      formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " A",
     );
   };
 }

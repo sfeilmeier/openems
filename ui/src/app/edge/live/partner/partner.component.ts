@@ -1,12 +1,12 @@
 // @ts-strict-ignore
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
-import { Edge, Service, Websocket } from '../../../shared/shared';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { ModalController } from "@ionic/angular";
+import { Edge, Service, Websocket } from "../../../shared/shared";
 
 @Component({
   selector: PartnerComponent.SELECTOR,
-  templateUrl: './partner.component.html',
+  templateUrl: "./partner.component.html",
 })
 export class PartnerComponent implements OnInit, OnDestroy {
 
@@ -22,7 +22,7 @@ export class PartnerComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.service.setCurrentComponent('', this.route).then(edge => {
+    this.service.setCurrentComponent("", this.route).then(edge => {
       this.edge = edge;
     });
   }

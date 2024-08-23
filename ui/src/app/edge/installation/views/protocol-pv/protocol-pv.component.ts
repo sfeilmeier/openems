@@ -1,18 +1,18 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
-import { tap } from 'rxjs/operators';
-import { Utils } from 'src/app/shared/shared';
-import { AbstractIbn } from '../../installation-systems/abstract-ibn';
-import { AbstractHomeIbn } from '../../installation-systems/home/abstract-home';
-import { dcForm } from '../../shared/ibndatatypes';
-import { DIRECTIONS_OPTIONS } from '../../shared/options';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { tap } from "rxjs/operators";
+import { Utils } from "src/app/shared/shared";
+import { AbstractIbn } from "../../installation-systems/abstract-ibn";
+import { AbstractHomeIbn } from "../../installation-systems/home/abstract-home";
+import { dcForm } from "../../shared/ibndatatypes";
+import { DIRECTIONS_OPTIONS } from "../../shared/options";
 
 @Component({
   selector: "protocol-pv",
-  templateUrl: './protocol-pv.component.html',
+  templateUrl: "./protocol-pv.component.html",
 })
 export class ProtocolPvComponent implements OnInit {
 
@@ -74,7 +74,7 @@ export class ProtocolPvComponent implements OnInit {
       if (formNr === 0) {
         this.ibn.batteryInverter = this.forms[formNr].model;
       } else {
-        if (this.ibn.mppt['mppt' + formNr]) {
+        if (this.ibn.mppt["mppt" + formNr]) {
           this.ibn.pv.dc.push(Utils.deepCopy(this.forms[formNr].model));
         } else {
           this.ibn.pv.dc.push({
@@ -92,8 +92,8 @@ export class ProtocolPvComponent implements OnInit {
       key: "shadowManagementDisabled",
       type: "checkbox",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_PV.SHADE_MANAGEMENT_DEACTIVATE'),
-        description: this.translate.instant('INSTALLATION.PROTOCOL_PV.SHADE_MANAGEMENT_DESCRIPTION'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_PV.SHADE_MANAGEMENT_DEACTIVATE"),
+        description: this.translate.instant("INSTALLATION.PROTOCOL_PV.SHADE_MANAGEMENT_DESCRIPTION"),
       },
     });
 
@@ -104,7 +104,7 @@ export class ProtocolPvComponent implements OnInit {
       // In Home 20 & 30, It is always possible to configure two pv strings under one mppt.
       // So dividing the strings with 2 for actual mppt number.
       const mppt = i + 1;
-      const key: string = 'mppt' + mppt;
+      const key: string = "mppt" + mppt;
       if (this.ibn.mppt[key] !== true) {
         continue;
       }
@@ -121,7 +121,7 @@ export class ProtocolPvComponent implements OnInit {
               }
 
               // subscription and unsubscribe is handled by formly
-              return field.form.get('isSelected').valueChanges.pipe(
+              return field.form.get("isSelected").valueChanges.pipe(
                 tap(isSelected => {
                   if (isSelected) {
                     const field = this.forms[i - 1].formGroup.value;
@@ -130,9 +130,9 @@ export class ProtocolPvComponent implements OnInit {
                     const moduleType: string = field.moduleType;
                     const modulesPerString: number = field.modulesPerString;
 
-                    this.forms[i].fields.find(field => field.key == 'value').formControl.setValue(value);
-                    this.forms[i].fields.find(field => field.key == 'moduleType').formControl.setValue(moduleType);
-                    this.forms[i].fields.find(field => field.key == 'modulesPerString').formControl.setValue(modulesPerString);
+                    this.forms[i].fields.find(field => field.key == "value").formControl.setValue(value);
+                    this.forms[i].fields.find(field => field.key == "moduleType").formControl.setValue(moduleType);
+                    this.forms[i].fields.find(field => field.key == "modulesPerString").formControl.setValue(modulesPerString);
                   }
                 }),
               );
@@ -140,16 +140,16 @@ export class ProtocolPvComponent implements OnInit {
           },
           props: {
             label: this.ibn.maxNumberOfMppt === -1
-              ? this.translate.instant('INSTALLATION.PROTOCOL_PV.MARKED_AS', { mppt: mppt, pv: i + 1 })
-              : this.translate.instant('INSTALLATION.PROTOCOL_PV.MARKED_AS_BOTH_STRINGS', { mppt: mppt, pv1: i * 2 + 1, pv2: i * 2 + 2 }),
+              ? this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS", { mppt: mppt, pv: i + 1 })
+              : this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS_BOTH_STRINGS", { mppt: mppt, pv1: i * 2 + 1, pv2: i * 2 + 2 }),
           },
         },
         {
           key: "alias",
           type: "input",
           templateOptions: {
-            label: this.translate.instant('INSTALLATION.PROTOCOL_PV.ALIAS'),
-            description: this.translate.instant('INSTALLATION.PROTOCOL_PV.ALIAS_DESCRIPTION_PV'),
+            label: this.translate.instant("INSTALLATION.PROTOCOL_PV.ALIAS"),
+            description: this.translate.instant("INSTALLATION.PROTOCOL_PV.ALIAS_DESCRIPTION_PV"),
             required: true,
           },
           hideExpression: model => !model.isSelected,
@@ -161,8 +161,8 @@ export class ProtocolPvComponent implements OnInit {
           templateOptions: {
             type: "number",
             label: this.ibn.maxNumberOfMppt === -1
-              ? this.translate.instant('INSTALLATION.PROTOCOL_PV.INSTALLED_POWER')
-              : this.translate.instant('INSTALLATION.PROTOCOL_PV.INSTALLED_POWER_PER_STRING'),
+              ? this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER")
+              : this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER_PER_STRING"),
             required: true,
           },
           validators: {
@@ -174,7 +174,7 @@ export class ProtocolPvComponent implements OnInit {
           key: "orientation",
           type: "select",
           templateOptions: {
-            label: this.translate.instant('INSTALLATION.PROTOCOL_PV.ORIENTATION'),
+            label: this.translate.instant("INSTALLATION.PROTOCOL_PV.ORIENTATION"),
             options: DIRECTIONS_OPTIONS(this.translate),
           },
           hideExpression: model => !model.isSelected,
@@ -183,8 +183,8 @@ export class ProtocolPvComponent implements OnInit {
           key: "moduleType",
           type: "input",
           templateOptions: {
-            label: this.translate.instant('INSTALLATION.PROTOCOL_PV.MODULE_TYPE'),
-            description: this.translate.instant('INSTALLATION.PROTOCOL_PV.MODULE_TYPE_DESCRIPTION'),
+            label: this.translate.instant("INSTALLATION.PROTOCOL_PV.MODULE_TYPE"),
+            description: this.translate.instant("INSTALLATION.PROTOCOL_PV.MODULE_TYPE_DESCRIPTION"),
           },
           hideExpression: model => !model.isSelected,
         },
@@ -194,8 +194,8 @@ export class ProtocolPvComponent implements OnInit {
           templateOptions: {
             type: "number",
             label: this.ibn.maxNumberOfMppt === -1
-              ? this.translate.instant('INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES')
-              : this.translate.instant('INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES_PER_STRING'),
+              ? this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES")
+              : this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES_PER_STRING"),
           },
           parsers: [Number],
           hideExpression: model => !model.isSelected,
@@ -207,7 +207,7 @@ export class ProtocolPvComponent implements OnInit {
           key: "portsConnected",
           type: "checkbox",
           props: {
-            label: this.translate.instant('INSTALLATION.PROTOCOL_PV.BOTH_SELECTED_LABEL', { pv1: i * 2 + 1, pv2: i * 2 + 2 }),
+            label: this.translate.instant("INSTALLATION.PROTOCOL_PV.BOTH_SELECTED_LABEL", { pv1: i * 2 + 1, pv2: i * 2 + 2 }),
           },
           hideExpression: model => !model.isSelected,
         });

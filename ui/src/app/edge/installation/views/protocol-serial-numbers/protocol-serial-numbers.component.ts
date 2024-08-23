@@ -1,18 +1,18 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Edge, Service, Websocket } from 'src/app/shared/shared';
-import { AbstractIbn } from '../../installation-systems/abstract-ibn';
-import { ComponentData, SerialNumberFormData } from '../../shared/ibndatatypes';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { Edge, Service, Websocket } from "src/app/shared/shared";
+import { AbstractIbn } from "../../installation-systems/abstract-ibn";
+import { ComponentData, SerialNumberFormData } from "../../shared/ibndatatypes";
 
 @Component({
   selector: ProtocolSerialNumbersComponent.SELECTOR,
-  templateUrl: './protocol-serial-numbers.component.html',
+  templateUrl: "./protocol-serial-numbers.component.html",
 })
 export class ProtocolSerialNumbersComponent implements OnInit {
-  private static readonly SELECTOR = 'protocol-serial-numbers';
+  private static readonly SELECTOR = "protocol-serial-numbers";
 
   @Input() public ibn: AbstractIbn;
   @Input() public edge: Edge;
@@ -41,7 +41,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
   public ngOnInit() {
 
     // Start spinner
-    this.spinnerId = 'installation-serial-number-spinner';
+    this.spinnerId = "installation-serial-number-spinner";
     this.setIsWaiting(true);
 
     // Read settings
@@ -56,7 +56,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
         this.setIsWaiting(false);
       }).then(() => {
         if (this.numberOfModulesPerTower < this.ibn.defaultNumberOfModules) {
-          this.service.toast(this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.READ_DESCRIPTION'), 'danger');
+          this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.READ_DESCRIPTION"), "danger");
         }
       });
     });
@@ -68,7 +68,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
 
   public onNextClicked() {
     if (this.formSettings.invalid) {
-      this.service.toast(this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.READ_DESCRIPTION'), 'danger');
+      this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.READ_DESCRIPTION"), "danger");
       return;
     }
 
@@ -97,7 +97,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
 
     // Duplicates check.
     if (this.duplicateSerialNumbers.length !== 0) {
-      this.service.toast(this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SAME_SERIAL_NUMBERS', { serialNumbers: this.duplicateSerialNumbers }), 'warning');
+      this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SAME_SERIAL_NUMBERS", { serialNumbers: this.duplicateSerialNumbers }), "warning");
       return;
     }
 
@@ -146,7 +146,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
  */
   public saveSettings() {
     if (this.formSettings.invalid) {
-      this.service.toast(this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ENTER_VALID_ADDRESS'), 'warning');
+      this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ENTER_VALID_ADDRESS"), "warning");
       return;
     }
 
@@ -167,7 +167,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
 
     for (const field of fields) {
       const label = field.props.label;
-      const value = (field.props.prefix ?? '') + field.formControl.value;
+      const value = (field.props.prefix ?? "") + field.formControl.value;
 
       serialNumbers.push({
         label: label,

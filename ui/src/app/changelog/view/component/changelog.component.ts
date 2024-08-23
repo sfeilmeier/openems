@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { environment } from 'src/environments';
-import { Service } from '../../../shared/shared';
-import { Role } from '../../../shared/type/role';
-import { App, Changelog, Library, OpenemsComponent, Product } from './changelog.constants';
+import { Component } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
+import { environment } from "src/environments";
+import { Service } from "../../../shared/shared";
+import { Role } from "../../../shared/type/role";
+import { App, Changelog, Library, OpenemsComponent, Product } from "./changelog.constants";
 
 @Component({
-  selector: 'changelog',
-  templateUrl: './changelog.component.html',
+  selector: "changelog",
+  templateUrl: "./changelog.component.html",
 })
 export class ChangelogComponent {
 
@@ -21,7 +21,7 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
-        version: '2024.8.1',
+        version: "2024.8.1",
         changes: [
           Changelog.UI + "Einführung der Gesamtphasenanzeige für Verbrauch und Erzeugung in der Historie, Anzeige der letzten Online-Zeit wenn Gerät offline ist",
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Optimierungen bei leerer/voller Batterie",
@@ -29,7 +29,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.7.3',
+        version: "2024.7.3",
         changes: [
           Changelog.UI,
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Optimierungen bei leerer/voller Batterie, Bereinigen von Statusmeldungen",
@@ -38,7 +38,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.7.2',
+        version: "2024.7.2",
         changes: [
           Changelog.UI + "Korrektur bei der Berechnung des sonstigen Verbrauchs, Differenzierung der Login-Seite für das jeweilige Betriebssystem (Android, iOS, Windows)",
           "Verbesserungen an der Funktion zum System-Update über das Online-Monitoring: verbesserte Fehlerbehandlung",
@@ -49,9 +49,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.7.1',
+        version: "2024.7.1",
         changes: [
-          Changelog.openems('2024.7.0'),
+          Changelog.openems("2024.7.0"),
           Changelog.UI + "Weiterleitung zum Login bei abgelaufenem Session-Token, Aktualisierung der QR-Codes für Android und iOS, verbesserte Darstellung und Fehlerbehandlung bei History-Charts, Fehlerbehebung bei lokalem Login, phasengenaue historische Darstellung des Verbrauchs",
           "Anpassungen an der Konfiguration des Netzwerk-Zeitservers (ntp.fenecon.de)",
           Changelog.product(Product.INDUSTRIAL_S, Product.INDUSTRIAL_L) + "Neues System-Widget zum Start/Stop der Anlage",
@@ -72,9 +72,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.6.1',
+        version: "2024.6.1",
         changes: [
-          Changelog.openems('2024.6.0'),
+          Changelog.openems("2024.6.0"),
           Changelog.UI + "Allgemein Verbesserungen, neuer Login-Screen mit Links zu Apps für Android und iOS, phasengenaue historische Darstellung der Erzeugung",
           Changelog.app(App.MODBUS_TCP_API) + "Neue Modbus-Register für Speichersysteme: MinCellVoltage, MaxCellVoltage, MinCellTemperature und MaxCellTemperature",
           "Optimierung der Stabilität und Leistung des Backends",
@@ -87,9 +87,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.5.1',
+        version: "2024.5.1",
         changes: [
-          Changelog.openems('2024.5.0'),
+          Changelog.openems("2024.5.0"),
           Changelog.UI,
           Changelog.product(Product.HOME_20_30) + "Verbesserungen am Inbetriebnahmeassistent",
           Changelog.product(Product.HOME_10, Product.HOME_20_30, Product.INDUSTRIAL_S) + "Optimierungen bei leerer/voller Batterie",
@@ -103,9 +103,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.4.1',
+        version: "2024.4.1",
         changes: [
-          Changelog.openems('2024.4.0'),
+          Changelog.openems("2024.4.0"),
           Changelog.UI + "Fehlerbehebung Darstellung im lokalen Monitoring (Zugriff über IP-Adresse im Heimnetzwerk), Verbesserungen an der \"Footer\"-Leiste, Optimierung der historischen Ansicht für mobile Endgeräte",
           Changelog.app(App.PV_INVERTER, App.SMA) + "Fehlerbehebung bei Modellen mit neuerem SunSpec-Protokoll (SMA Sunny Tripower mit SunSpec Model 7xx)",
           Changelog.app(App.TIME_OF_USE) + Changelog.GENERAL_OPTIMIZATION,
@@ -115,9 +115,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.3.1',
+        version: "2024.3.1",
         changes: [
-          Changelog.openems('2024.3.0'),
+          Changelog.openems("2024.3.0"),
           Changelog.UI + "Optimierung der historischen Ansicht für mobile Endgeräte",
           Changelog.UI + "Anzeige der EMS-Nr. im Seitentitel, \"Footer\"-Leiste zur Anzeige der EMS-Nr. und -Version",
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Verbesserungen am Inbetriebnahmeassistent",
@@ -139,7 +139,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.2.3',
+        version: "2024.2.3",
         changes: [
           Changelog.UI,
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Entladeverhalten bei voller Batterie",
@@ -148,7 +148,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.2.2',
+        version: "2024.2.2",
         changes: [
           Changelog.app(App.TIME_OF_USE) + "Offizielle Freigabe für " + Changelog.product(Product.HOME_20_30),
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Verbesserungen am Inbetriebnahmeassistent",
@@ -162,9 +162,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.2.1',
+        version: "2024.2.1",
         changes: [
-          Changelog.openems('2024.2.0'),
+          Changelog.openems("2024.2.0"),
           Changelog.UI,
           Changelog.app(App.TIME_OF_USE) + "Optimierung der KI-Performance, Berücksichtigung aller verfügbaren Day-Ahead-Preise, adaptive Beladeleistung abhängig von der Batteriekapazität, uvm.",
           Changelog.app(App.TIME_OF_USE, App.AWATTAR) + "Preise für Österreich",
@@ -178,9 +178,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2024.1.1',
+        version: "2024.1.1",
         changes: [
-          Changelog.openems('2024.1.0'),
+          Changelog.openems("2024.1.0"),
           Changelog.app(App.TIME_OF_USE) + "(BETA-Test Beladung aus dem Netz): Verbesserungen am Algorithmus (Berücksichtigung Notstromvorhaltung, KI-Performance-Optimierung, kontinuierliche Beladeleistung, uvm.)",
           Changelog.app(App.HOCHLASTZEITFENSTER) + "Verbesserung der Visualisierung",
           "Online-Monitoring Live-Energiemonitor: Darstellung der maximalen Netzbezug/-einspeisung, Erzeugung, Verbrauch",
@@ -188,15 +188,15 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.12.2',
+        version: "2023.12.2",
         changes: [
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Fehlerbehebungen zu Version 2023.12.1",
         ],
       },
       {
-        version: '2023.12.1',
+        version: "2023.12.1",
         changes: [
-          Changelog.openems('2023.12.0'),
+          Changelog.openems("2023.12.0"),
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + Changelog.GENERAL_OPTIMIZATION,
           "Verbesserungen am Inbetriebnahmeassistent (breitere Darstellung, Prüfen der Konfiguration, Home 20 & 30 mit mehreren Batterietürmen)",
           Changelog.app(App.TIME_OF_USE) + "(BETA-Test): Verbesserungen am Algorithmus",
@@ -207,7 +207,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.11.3',
+        version: "2023.11.3",
         changes: [
           Changelog.UI,
           "Energiewerte in der Historischen Detailansicht für Verbraucher",
@@ -224,7 +224,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.11.2',
+        version: "2023.11.2",
         changes: [
           Changelog.app(App.TIME_OF_USE) + "(BETA-Test): Verbesserungen am Algorithmus",
           Changelog.app(App.TIME_OF_USE, App.TIBBER) + "Fehlerbehebungen bei Übernahme des Authentifizierungs-Tokens",
@@ -233,9 +233,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.11.1',
+        version: "2023.11.1",
         changes: [
-          Changelog.openems('2023.11.0'),
+          Changelog.openems("2023.11.0"),
           Changelog.UI + "Fehlerbehebung historische Ansicht, Anzeige eingeplanter Batterieerweiterung",
           Changelog.product(Product.HOME_20_30) + "Performance-Verbesserung beim Lesen der Erzeugungsdaten, Verbesserungen am Inbetriebnahmeassistent",
           Changelog.app(App.PV_INVERTER, App.KACO) + "Fehlerbehebung bei Darstellung der Energiewerte",
@@ -254,7 +254,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.10.3',
+        version: "2023.10.3",
         changes: [
           "Fehlerbehebung: lokales Monitoring",
           "Fehlerbehebung: historische Ansicht im Online-Monitoring",
@@ -264,15 +264,15 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.10.2',
+        version: "2023.10.2",
         changes: [
           "Fehlerbehebung lokales Monitoring: die Abfrage historischer Daten war seit Version 2023.10.1 nur für den aktuellen Tag möglich",
         ],
       },
       {
-        version: '2023.10.1',
+        version: "2023.10.1",
         changes: [
-          Changelog.openems('2023.10.0'),
+          Changelog.openems("2023.10.0"),
           Changelog.UI,
           Changelog.product(Product.HOME_20_30, Product.COMMERCIAL_30, Product.COMMERCIAL_50) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent",
           Changelog.app(App.EVCS_DC, App.ALPITRONIC) + "Verbesserung der Energieberechnung bei Kommunikationsausfall",
@@ -291,9 +291,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.9.1',
+        version: "2023.9.1",
         changes: [
-          Changelog.openems('2023.9.0'),
+          Changelog.openems("2023.9.0"),
           Changelog.UI,
           "Performance-Optimierung in der Historischen Ansicht -> Erzeugung",
           "Umfangreiche Optimierung der Modbus-Kommunikation",
@@ -319,9 +319,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.8.2',
+        version: "2023.8.2",
         changes: [
-          Changelog.openems('2023.8.0'),
+          Changelog.openems("2023.8.0"),
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + Changelog.GENERAL_OPTIMIZATION,
           "App Center: Verbesserte Auswahl von Relaisausgängen",
           Changelog.UI + "Optimierung der historischen Darstellung für mobile Endgeräte",
@@ -336,9 +336,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.8.1',
+        version: "2023.8.1",
         changes: [
-          Changelog.openems('2023.7.0'),
+          Changelog.openems("2023.7.0"),
           Changelog.UI + "Darstellungsfehler auf iOS, Tipp- und Übersetzungsfehler, Entfernen non-funktionale 'Alerting'-Funktion aus lokalem Monitoring",
           "Daten Nachsenden: nach Übertragungsfehlern (z. B. Ausfall der Internetverbindung oder Wartungsarbeiten am Backend) werden fehlende Daten später nachgesendet",
           "Lokales Monitoring: Daten im lokalen Monitoring sind nun bis zu 15 Monate lang verfügbar",
@@ -359,15 +359,15 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.6.2',
+        version: "2023.6.2",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2023.6.1',
+        version: "2023.6.1",
         changes: [
-          Changelog.openems('2023.6.0'),
+          Changelog.openems("2023.6.0"),
           Changelog.UI,
           "App Center: Allgemeine Verbesserungen",
           Changelog.product(Product.HOME_10) + "Anpassung des Regelverhaltens bei Überschusseinspeisung. In Ausnahmefällen wurde im SMART-Mode die Überschussleistung bei voller Batterie falsch berechnet.",
@@ -382,13 +382,13 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.5.3',
+        version: "2023.5.3",
         changes: [
           Changelog.app(App.EVCS_AC, App.KEBA) + "Fehlerbehebung",
         ],
       },
       {
-        version: '2023.5.2',
+        version: "2023.5.2",
         changes: [
           Changelog.UI,
           "App Center: Allgemeine Verbesserungen",
@@ -402,7 +402,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.5.1',
+        version: "2023.5.1",
         changes: [
           Changelog.UI,
           "App Center: Allgemeine Verbesserungen",
@@ -414,13 +414,13 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.4.3',
+        version: "2023.4.3",
         changes: [
           Changelog.product(Product.PRO_HYBRID_10) + "Fehlerbehebung bei automatischer Suche des Wechselrichters im Netzwerk",
         ],
       },
       {
-        version: '2023.4.2',
+        version: "2023.4.2",
         changes: [
           Changelog.app(App.POWER_TO_HEAT, App.BHKW) + "Verbesserungen im App Center",
           Changelog.app(App.MODBUS_TCP_API) + "Verbesserungen im App Center",
@@ -436,29 +436,29 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.4.1',
+        version: "2023.4.1",
         changes: [
-          Changelog.openems('2023.4.0'),
+          Changelog.openems("2023.4.0"),
           Changelog.UI,
         ],
       },
       {
-        version: '2023.3.8',
+        version: "2023.3.8",
         changes: [
           "App Center: Fehlerbehebung bei " + Changelog.app(App.EVCS_AC, App.HARDY_BARTH),
         ],
       },
       {
-        version: '2023.3.7',
+        version: "2023.3.7",
         changes: [
           Changelog.app(App.TIME_OF_USE) + "Fehlerbehebung in der Live-Ansicht",
         ],
       },
       {
-        version: '2023.3.6',
+        version: "2023.3.6",
         changes: [
           "App Center: öffentliches Release",
-          "Link zu " + Changelog.link("FAQ", 'https://fenecon.de/faq/#fems') + " korrigiert",
+          "Link zu " + Changelog.link("FAQ", "https://fenecon.de/faq/#fems") + " korrigiert",
           Changelog.app(App.TIME_OF_USE) + "Verbesserung der Datenanzeige in der Live-Ansicht",
           Changelog.app(App.METER, App.KDK) + "Fehlerbehebung beim Lesen der Energiewerte",
           { roleIsAtLeast: Role.ADMIN, change: "App Center: Anzeige von Modal-Fenstern, Automatische Installation Multiladepunktmanagement, UI-Verbesserungen, erfordere Rolle 'INSTALLER' für FENECON Home, erfordere Rolle 'ADMIN' für MQTT" },
@@ -469,14 +469,14 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.3.5',
+        version: "2023.3.5",
         changes: [
           "Aktualisierung der Java Runtime Environment auf Version 17 LTS",
           { roleIsAtLeast: Role.ADMIN, change: "App Center: Verbesserung bei Übersetzungen" },
         ],
       },
       {
-        version: '2023.3.4',
+        version: "2023.3.4",
         changes: [
           Changelog.UI,
           "Verbesserung am Changelog: Anzeige im Bereich \"Systemupdate\" und verbessertes Layout",
@@ -489,13 +489,13 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.3.3',
+        version: "2023.3.3",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2023.3.2',
+        version: "2023.3.2",
         changes: [
           "Fehlerbehebung in der historischen Ansicht im lokalen Monitoring",
           Changelog.app(App.TIME_OF_USE) + "Fehlerbehebung bei der Datenanzeige in der Live-Ansicht",
@@ -509,21 +509,21 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.3.1',
+        version: "2023.3.1",
         changes: [
-          Changelog.openems('2023.3.0'),
+          Changelog.openems("2023.3.0"),
           "Fehlerbehebung/Verbesserung bei der Datenübertragung zum Backend",
           Changelog.library(Library.FASTEXCEL, Library.APACHE_FELIX_HTTP_JETTY),
         ],
       },
       {
-        version: '2023.2.11',
+        version: "2023.2.11",
         changes: [
           "Fehlerbehebung/Verbesserung bei der Datenübertragung zum Backend",
         ],
       },
       {
-        version: '2023.2.9',
+        version: "2023.2.9",
         changes: [
           Changelog.UI,
           "Reduzierung der Datenübertragung zum Backend",
@@ -535,7 +535,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.2.6',
+        version: "2023.2.6",
         changes: [
           Changelog.UI + "Fehlerbehebung beim Reconnect der Websocket-Verbindung",
           Changelog.library(Library.POSTGRESQL, Library.GRADLE),
@@ -547,27 +547,27 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.2.5',
+        version: "2023.2.5",
         changes: [
           Changelog.UI,
           "Netzwerkkonfiguration: Fehlerbehebung bei Benutzernamen mit Umlauten",
         ],
       },
       {
-        version: '2023.2.4',
+        version: "2023.2.4",
         changes: [
           Changelog.UI,
           { roleIsAtLeast: Role.ADMIN, change: "App Center: Start Demo-Test, Meldung freie Digital-/Relaisausgänge" },
         ],
       },
       {
-        version: '2023.2.3',
+        version: "2023.2.3",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2023.2.2',
+        version: "2023.2.2",
         changes: [
           Changelog.UI,
           Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent",
@@ -578,23 +578,23 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.2.1',
+        version: "2023.2.1",
         changes: [
-          Changelog.openems('2023.2.0'),
+          Changelog.openems("2023.2.0"),
           Changelog.product(Product.COMMERCIAL_30) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent",
           Changelog.app(App.REST_JSON_API) + Changelog.GENERAL_OPTIMIZATION,
           Changelog.library(Library.ANGULAR, Library.NGX_FORMLY, Library.IONIC, Library.D3),
         ],
       },
       {
-        version: '2023.1.3',
+        version: "2023.1.3",
         changes: [
           Changelog.GENERAL_OPTIMIZATION + " an der Übersicht 'Alle Systeme'",
           "Fehlerbehebung am Online-Monitoring: Anzeige der Live-Daten nach Aktualisierung der Seite im Browser",
         ],
       },
       {
-        version: '2023.1.2',
+        version: "2023.1.2",
         changes: [
           Changelog.GENERAL_OPTIMIZATION,
           { roleIsAtLeast: Role.ADMIN, change: "App Center: Aktiviere App-Keys" },
@@ -602,9 +602,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2023.1.1',
+        version: "2023.1.1",
         changes: [
-          Changelog.openems('2023.1.0'),
+          Changelog.openems("2023.1.0"),
           Changelog.product(Product.HOME_10) + "Verbesserungen Inbetriebnahmeassistent für KDK-Zähler (Modbus/RTU Parität)",
           Changelog.product(Product.HOME_10) + "Verbesserung SMART-Mode bei Vorgabe einer maximalen Be-/Entladeleistung",
           Changelog.app(App.TIME_OF_USE) + "Historie-Chart: Skalierung der Preis-Achse",
@@ -613,26 +613,26 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.12.7',
+        version: "2022.12.7",
         changes: [
           "Inbetriebnahmeassistent: Fehlerbehebung",
         ],
       },
       {
-        version: '2022.12.6',
+        version: "2022.12.6",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2022.12.5',
+        version: "2022.12.5",
         changes: [
           Changelog.product(Product.PRO_HYBRID_GW, Product.PRO_HYBRID_AC_GW) + "Fehlerbehebung bei Kompatibilität mit älterer Firmware des GoodWe Wechselrichters",
           { roleIsAtLeast: Role.ADMIN, change: "Besseres Logging von UI-Fehlern im Backend, z. B. für IBN" },
         ],
       },
       {
-        version: '2022.12.4',
+        version: "2022.12.4",
         changes: [
           Changelog.UI,
           "Inbetriebnahmeassistent: Fehlerbehebung",
@@ -640,22 +640,22 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.12.3',
+        version: "2022.12.3",
         changes: [
           Changelog.UI,
           "Inbetriebnahmeassistent: Fehlerbehebung",
         ],
       },
       {
-        version: '2022.12.2',
+        version: "2022.12.2",
         changes: [
           Changelog.app(App.METER, App.KDK) + "Implementierung KDK 420506PRO20-U (2PU CT)",
         ],
       },
       {
-        version: '2022.12.1',
+        version: "2022.12.1",
         changes: [
-          Changelog.openems('2022.12.0'),
+          Changelog.openems("2022.12.0"),
           Changelog.UI + "Verbesserung Login/Session-Management",
           "Verbesserungen Inbetriebnahmeassistent Commercial: englische Übersetzung und Unterstützung KDK-Zähler",
           Changelog.app(App.EVCS_AC, App.KEBA) + "Anzeige Ladeleistung und Status am Display",
@@ -668,27 +668,27 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.11.7',
+        version: "2022.11.7",
         changes: [
           Changelog.UI,
           { roleIsAtLeast: Role.ADMIN, change: "Performance-Optimierungen am Backend" },
         ],
       },
       {
-        version: '2022.11.6',
+        version: "2022.11.6",
         changes: [
           Changelog.UI,
           { roleIsAtLeast: Role.ADMIN, change: "Commercial Gen1-Batterie: Anpassung der Parameter für die Batterie-Protection" },
         ],
       },
       {
-        version: '2022.11.5',
+        version: "2022.11.5",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2022.11.4',
+        version: "2022.11.4",
         changes: [
           Changelog.app(App.MODBUS_TCP_API) + Changelog.GENERAL_OPTIMIZATION,
           { roleIsAtLeast: Role.INSTALLER, change: "Anzeige von Strom und Spannung des Netzzählers" },
@@ -697,14 +697,14 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.11.3',
+        version: "2022.11.3",
         changes: [
           "Fehlerbehebungen der Übersetzung",
           Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistenten",
         ],
       },
       {
-        version: '2022.11.2',
+        version: "2022.11.2",
         changes: [
           Changelog.app(App.POWER_TO_HEAT, App.WAERMEPUMPE) + "Verbesserung der Logik + Übersetzung",
           Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistenten",
@@ -717,9 +717,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.11.1',
+        version: "2022.11.1",
         changes: [
-          Changelog.openems('2022.11.0'),
+          Changelog.openems("2022.11.0"),
           "Fehlerbehebung bei der automatischem Reconnect mit dem Online-Monitoring nach Verbindungsausfall",
           Changelog.library(Library.APACHE_FELIX_HTTP_JETTY, Library.DATE_FNS, Library.MOSHI, Library.ANGULAR, Library.IONIC, Library.NGX_FORMLY),
           { roleIsAtLeast: Role.ADMIN, change: "KACO Blueplanet Hybrid 10: interne Architektur geändert" },
@@ -727,7 +727,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.10.7',
+        version: "2022.10.7",
         changes: [
           Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistenten",
           "Fehlerbehebungen der Übersetzung Deutsch und Englisch",
@@ -738,7 +738,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.10.4',
+        version: "2022.10.4",
         changes: [
           Changelog.app(App.TIME_OF_USE, App.TIBBER) + "Allgemeine Verbesserungen",
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Fehlerbehebung bei der Darstellung der Zielzeit in der richtigen Zeitzone",
@@ -752,16 +752,16 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.10.3',
+        version: "2022.10.3",
         changes: [
           Changelog.UI,
           Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistenten",
         ],
       },
       {
-        version: '2022.10.1',
+        version: "2022.10.1",
         changes: [
-          Changelog.openems('2022.10.0'),
+          Changelog.openems("2022.10.0"),
           Changelog.product(Product.COMMERCIAL_30) + "Optimierung der Lese- und Regelgeschwindigkeit",
           Changelog.UI + "Verbesserung der Einstellungsoberfläche für Benachrichtungen",
           Changelog.app(App.TIME_OF_USE) + "Allgemeine Verbesserungen",
@@ -770,14 +770,14 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.9.4',
+        version: "2022.9.4",
         changes: [
           Changelog.UI + "Fehlerbehebung bei Übersetzungen",
           Changelog.app(App.MODBUS_TCP_API) + "Schreibzugriff: Fehlerbehebung bei Registern für das Minimum und Maximum der verfügbaren Speicherleistung",
         ],
       },
       {
-        version: '2022.9.2',
+        version: "2022.9.2",
         changes: [
           Changelog.UI,
           Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistenten",
@@ -794,9 +794,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.9.1',
+        version: "2022.9.1",
         changes: [
-          Changelog.openems('2022.9.0'),
+          Changelog.openems("2022.9.0"),
           Changelog.UI,
           Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistenten",
           Changelog.app(App.MODBUS_TCP_API) + "Schreibzugriff: Zusätzliche Register für das Minimum und Maximum der verfügbaren Speicherleistung",
@@ -805,7 +805,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.8.5',
+        version: "2022.8.5",
         changes: [
           Changelog.UI,
           Changelog.app(App.HOCHLASTZEITFENSTER) + Changelog.GENERAL_OPTIMIZATION,
@@ -813,7 +813,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.8.4',
+        version: "2022.8.4",
         changes: [
           Changelog.product(Product.COMMERCIAL_50, Product.COMMERCIAL_30) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistenten",
           Changelog.app(App.POWER_TO_HEAT, App.HEIZSTAB) + "Überarbeitung des Widgets im Online-Monitoring",
@@ -824,13 +824,13 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.8.3',
+        version: "2022.8.3",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2022.8.2',
+        version: "2022.8.2",
         changes: [
           Changelog.product(Product.COMMERCIAL_50) + "Inbetriebnahmeassistent ist jetzt auch für Commercial 50 verfügbar",
           Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent",
@@ -842,9 +842,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.8.1',
+        version: "2022.8.1",
         changes: [
-          Changelog.openems('2022.8.0'),
+          Changelog.openems("2022.8.0"),
           "Optimierung der Stabilität und Leistung des Backends",
           Changelog.library(Library.NGX_FORMLY),
           { roleIsAtLeast: Role.ADMIN, change: "Unterstützung für SMA Sunny Island 4.4 und 6" },
@@ -853,13 +853,13 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.7.5',
+        version: "2022.7.5",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2022.7.3',
+        version: "2022.7.3",
         changes: [
           Changelog.UI,
           Changelog.product(Product.HOME_10) + "Automatisches Update durch den Inbetriebnahmeassistent",
@@ -869,7 +869,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.7.2',
+        version: "2022.7.2",
         changes: [
           Changelog.UI,
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent",
@@ -880,9 +880,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.7.1',
+        version: "2022.7.1",
         changes: [
-          Changelog.openems('2022.7.0'),
+          Changelog.openems("2022.7.0"),
           Changelog.app(App.PV_INVERTER, App.FRONIUS) + "Neue FEMS App",
           Changelog.product(Product.COMMERCIAL_30) + "Inbetriebnahmeassistent ist jetzt auch für Commercial 30 verfügbar",
           Changelog.library(Library.INFLUXDB, Library.ANGULAR, Library.IONIC, Library.NGX_FORMLY, Library.D3, Library.NGX_COOKIE_SERVICE,
@@ -892,7 +892,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.6.6',
+        version: "2022.6.6",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent",
           { roleIsAtLeast: Role.ADMIN, change: "Backend-Alerting: Übernahme der FEMS-Nummer und Anpassung UI" },
@@ -902,7 +902,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.6.4',
+        version: "2022.6.4",
         changes: [
           Changelog.product(Product.HOME_10) + "Inbetriebnahmeassistent unterstützt die Einbindung eines Rundsteuerempfängers",
           Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + "Anpassungen für die neueste Batteriegeneration (Gen2)",
@@ -917,22 +917,22 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.6.3',
+        version: "2022.6.3",
         changes: [
           Changelog.app(App.PV_INVERTER, App.SMA) + "Fehlerbehebung bei der Unterstützung für einphasige SMA-Wechselrichter via SunSpec",
           { roleIsAtLeast: Role.ADMIN, change: "Der WebSocket Reconnect zum Backend hat jetzt ein weiteres Timeout. Evtl. löst das Probleme, dass sich manche FEMSe nicht mehr verbunden haben." },
         ],
       },
       {
-        version: '2022.6.2',
+        version: "2022.6.2",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2022.6.1',
+        version: "2022.6.1",
         changes: [
-          Changelog.openems('2022.6.0'),
+          Changelog.openems("2022.6.0"),
           Changelog.app(App.MODBUS_TCP_API) + "Auslesen der FEMS-Nummer über das Register 'Manufacturer EMS Serial Number' (Modbus-Addresse 85)",
           Changelog.app(App.EVCS_AC, App.KEBA) + "Auslesen der über die DIP-Switches gesetzten Leistungslimitierung",
           Changelog.app(App.PV_INVERTER, App.SMA) + "Unterstützung für einphasige SMA-Wechselrichter via SunSpec",
@@ -947,13 +947,13 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.5.6',
+        version: "2022.5.6",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2022.5.5',
+        version: "2022.5.5",
         changes: [
           Changelog.UI + "Verbesserung des lokalen Monitorings für historische Daten",
           Changelog.library(Library.APACHE_FELIX_WEBCONSOLE),
@@ -962,7 +962,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.5.4',
+        version: "2022.5.4",
         changes: [
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Fehlerbehebung wenn keine Produktion verfügbar ist; Verbesserte Darstellung des aktiven Zeitraums in der Historie",
           "Verbesserte Darstellung des aktiven Zeitraums in der Historie",
@@ -972,7 +972,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.5.2',
+        version: "2022.5.2",
         changes: [
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Allgemeine Verbesserungen; Sicherstellung einer minimalen Beladeleistung",
           Changelog.product(Product.PRO_HYBRID_10) + "Kompatibilität mit KACO Firmware Version 8 (nur lesend)",
@@ -986,9 +986,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.5.1',
+        version: "2022.5.1",
         changes: [
-          Changelog.openems('2022.5.0'),
+          Changelog.openems("2022.5.0"),
           Changelog.app(App.POWER_TO_HEAT, App.HEIZSTAB) + "Korrektur der Anzeige des Betriebsstundenzählers in der historischen Darstellung",
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Korrektur der Anzeige des Betriebsstundenzählers in der historischen Darstellung",
           Changelog.library(Library.INFLUXDB),
@@ -1000,9 +1000,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.4.1',
+        version: "2022.4.1",
         changes: [
-          Changelog.openems('2022.4.0'),
+          Changelog.openems("2022.4.0"),
           Changelog.app(App.TIME_OF_USE) + "Allgemeine Verbesserung",
           Changelog.library(Library.INFLUXDB, Library.ANGULAR, Library.IONIC, Library.GRADLE, Library.APACHE_FELIX_CONFIGADMIN, Library.D3),
           "Mehrsprachiger Excel-Export aus dem Online-Monitoring",
@@ -1016,13 +1016,13 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.3.6',
+        version: "2022.3.6",
         changes: [
           Changelog.library(Library.INFLUXDB),
         ],
       },
       {
-        version: '2022.3.3',
+        version: "2022.3.3",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent: Responsive Größe des Eingabefensters, besser lesbare PV-Ausrichtung im IBN-Protokoll",
           Changelog.app(App.POWER_TO_HEAT, App.HEIZSTAB) + "Kontinuierliche Aufsummierung der Betriebsstunden je Level",
@@ -1035,15 +1035,15 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.3.2',
+        version: "2022.3.2",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2022.3.1',
+        version: "2022.3.1",
         changes: [
-          Changelog.openems('2022.3.0'),
+          Changelog.openems("2022.3.0"),
           Changelog.UI + "Anzeigen/Ändern der Kontaktdaten im Benutzer-Menü",
           Changelog.UI + "Beim Login mit Benutzername/E-Mail-Adresse wird die Groß-/Kleinschreibung ignoriert",
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Überarbeitung des Widgets im Online-Monitoring",
@@ -1054,28 +1054,28 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.2.3',
+        version: "2022.2.3",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2022.2.2',
+        version: "2022.2.2",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent: Dynamische Begrenzung der Netzeinspeiseleistung in Österreich",
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Änderungen an der maximalen Netzeinspeiseleistung müssen durch erneutes Ausführen des Inbetriebnahmeassistenten gesetzt werden",
         ],
       },
       {
-        version: '2022.2.1',
+        version: "2022.2.1",
         changes: [
-          Changelog.openems('2022.2.0'),
+          Changelog.openems("2022.2.0"),
           Changelog.app(App.TIME_OF_USE) + "Verbesserung der Einberechnung der Notstromvorhaltung und von DC-/Hybrid-Speichersystemen",
           Changelog.library(Library.FASTEXCEL, Library.SLF4J, Library.D3, Library.NGX_FORMLY, Library.APACHE_FELIX_CONFIGADMIN),
         ],
       },
       {
-        version: '2022.1.3',
+        version: "2022.1.3",
         changes: [
           Changelog.app(App.HOCHLASTZEITFENSTER) + "Kompatibilität des Hochlastzeitfensters mit Blindleistungsregelung",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent: Eingabe der Installateursdaten, externer Optimierer (Schattenmanagement)",
@@ -1086,15 +1086,15 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2022.1.2',
+        version: "2022.1.2",
         changes: [
           Changelog.app(App.TIME_OF_USE) + "Verbesserung der historischen Darstellung über einen längeren Zeitraum",
         ],
       },
       {
-        version: '2022.1.1',
+        version: "2022.1.1",
         changes: [
-          Changelog.openems('2022.1.0'),
+          Changelog.openems("2022.1.0"),
           Changelog.product(Product.HOME_10, Product.PRO_HYBRID_GW, Product.PRO_HYBRID_AC_GW) + "Verbesserung des 'SMART'-Mode",
           Changelog.library(Library.RRD4J, Library.PAX_LOGGING, Library.GRADLE, Library.ANGULAR, Library.NGX_FORMLY, Library.IONIC, Library.DATE_FNS, Library.FASTEXCEL, Library.HIKARI_CP),
           "Ab dem Jahr 2022 steht die zweite Zahl in der Versionsnummer für den Monat des Releases; 2022.1.1 wurde also im Januar 2022 veröffentlicht",
@@ -1103,9 +1103,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.22.1',
+        version: "2021.22.1",
         changes: [
-          Changelog.openems('2021.22.0'),
+          Changelog.openems("2021.22.0"),
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent für FEMS-App SG-Ready Wärmepumpe",
           Changelog.product(Product.PRO_HYBRID_10) + "Fehlerbehebung beim Erfassen der Seriennummer",
           "Implementierung Siemens PAC2200/3200/4200 Zähler",
@@ -1115,7 +1115,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.21.5',
+        version: "2021.21.5",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
           Changelog.library(Library.APACHE_FELIX_HTTP_JETTY, Library.APACHE_FELIX_FRAMEWORK, Library.D3, Library.DATE_FNS),
@@ -1123,13 +1123,13 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.21.4',
+        version: "2021.21.4",
         changes: [
           Changelog.library(Library.PAX_LOGGING) + " (CVE-2021-44228)",
         ],
       },
       {
-        version: '2021.21.3',
+        version: "2021.21.3",
         changes: [
           Changelog.app(App.TIME_OF_USE) + Changelog.GENERAL_OPTIMIZATION,
           Changelog.product(Product.HOME_10) + "Fehlerbehebung 'Q von U' Kurve",
@@ -1137,15 +1137,15 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.21.2',
+        version: "2021.21.2",
         changes: [
           Changelog.product(Product.PRO_HYBRID_10) + "Fehlerbehebung für Java 11",
         ],
       },
       {
-        version: '2021.21.1',
+        version: "2021.21.1",
         changes: [
-          Changelog.openems('2021.21.0'),
+          Changelog.openems("2021.21.0"),
           Changelog.UI + "Entferne Leerzeichen bei Login mit Benutzername und Passwort.",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
           Changelog.library(Library.JNA, Library.IONIC, Library.NGX_FORMLY, Library.DATE_FNS, Library.GRADLE),
@@ -1154,9 +1154,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.20.1',
+        version: "2021.20.1",
         changes: [
-          Changelog.openems('2021.20.0'),
+          Changelog.openems("2021.20.0"),
           Changelog.app(App.TIME_OF_USE, App.CORRENTLY) + "In Abstimmung mit STOMDAO können jetzt 15-Minuten Werte genutzt werden.",
           Changelog.app(App.TIME_OF_USE, App.TIBBER) + "Release",
           Changelog.product(Product.DESS) + "Fehlerbehebung bei DC-PV-Leistung",
@@ -1164,19 +1164,19 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.19.6',
+        version: "2021.19.6",
         changes: [
           Changelog.product(Product.HOME_10) + "Erkennung für FENECON Batteriewechselrichter",
         ],
       },
       {
-        version: '2021.19.5',
+        version: "2021.19.5",
         changes: [
           Changelog.app(App.TIME_OF_USE) + Changelog.GENERAL_OPTIMIZATION,
         ],
       },
       {
-        version: '2021.19.3',
+        version: "2021.19.3",
         changes: [
           Changelog.UI,
           Changelog.product(Product.HOME_10, Product.PRO_HYBRID_10, Product.PRO_HYBRID_GW, Product.PRO_HYBRID_AC_GW) + Changelog.GENERAL_OPTIMIZATION,
@@ -1184,15 +1184,15 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.19.2',
+        version: "2021.19.2",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2021.19.1',
+        version: "2021.19.1",
         changes: [
-          Changelog.openems('2021.19.0'),
+          Changelog.openems("2021.19.0"),
           Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + Changelog.GENERAL_OPTIMIZATION + " (für Varianten 'Cluster B', 'Single C' und 'Cluster C')",
           Changelog.UI + " (Detail-Widgets)",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring (OEM)",
@@ -1202,9 +1202,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.18.1',
+        version: "2021.18.1",
         changes: [
-          Changelog.openems('2021.18.0'),
+          Changelog.openems("2021.18.0"),
           Changelog.app(App.EVCS_AC) + "Verbesserung der Kompatibilität mit nicht aktiv gesteuerten Stromspeichersytemen",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
           Changelog.app(App.TIME_OF_USE) + Changelog.GENERAL_OPTIMIZATION,
@@ -1214,9 +1214,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.17.1',
+        version: "2021.17.1",
         changes: [
-          Changelog.openems('2021.17.0'),
+          Changelog.openems("2021.17.0"),
           Changelog.UI + "Permanentes Speichern der Spracheinstellung",
           Changelog.app(App.PV_INVERTER, App.SMA) + "Fehlerbehebung der Darstellung im Online-Monitoring",
           Changelog.product(Product.COMMERCIAL_30) + Changelog.GENERAL_OPTIMIZATION,
@@ -1228,7 +1228,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.16.5',
+        version: "2021.16.5",
         changes: [
           Changelog.UI,
           Changelog.product(Product.COMMERCIAL_30) + Changelog.GENERAL_OPTIMIZATION,
@@ -1238,7 +1238,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.16.4',
+        version: "2021.16.4",
         changes: [
           Changelog.product(Product.COMMERCIAL_30) + "Umstellung der Software-Architektur",
           {
@@ -1249,7 +1249,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.16.3',
+        version: "2021.16.3",
         changes: [
           Changelog.UI,
           Changelog.app(App.TIME_OF_USE, App.AWATTAR) + Changelog.GENERAL_OPTIMIZATION,
@@ -1260,15 +1260,15 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.16.2',
+        version: "2021.16.2",
         changes: [
           Changelog.app(App.SCHWELLWERTSTEUERUNG) + "Parallele Ansteuerung mehrerer Relaisausgänge",
         ],
       },
       {
-        version: '2021.16.1',
+        version: "2021.16.1",
         changes: [
-          Changelog.openems('2021.16.0'),
+          Changelog.openems("2021.16.0"),
           Changelog.UI,
           Changelog.product(Product.HOME_10) + "Verbesserungen an der Notstromfunktion: Algorithmus zur Vorhaltung einer Notstromreserve; einstellbar via IBN-Assistent oder über das Widget 'Speichersystem' im Online-Monitoring",
           Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + "Verbesserung der Fehlermeldung bei Kommunikationsabbruch (Cluster Version B)",
@@ -1281,7 +1281,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.15.12',
+        version: "2021.15.12",
         changes: [
           Changelog.product(Product.HOME_10, Product.PRO_HYBRID_GW, Product.PRO_HYBRID_AC_GW) + "Verbrauchszähler für notstromversorgte Lasten ('GoodWe.EmergencyPowerMeter'); Bei aktiviertem Notstrom aktiviere auch Schwarzstart-Funktion",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
@@ -1292,32 +1292,32 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.15.11',
+        version: "2021.15.11",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2021.15.10',
+        version: "2021.15.10",
         changes: [
-          Changelog.openems('2021.15.0'),
+          Changelog.openems("2021.15.0"),
           Changelog.product(Product.HOME_10, Product.PRO_HYBRID_GW, Product.PRO_HYBRID_AC_GW) + "Prüfung im 'SMART'-Mode, ob das erforderliche GoodWe Smart-Meter verbunden ist",
         ],
       },
       {
-        version: '2021.15.9',
+        version: "2021.15.9",
         changes: [
           Changelog.app(App.MODBUS_TCP_API) + "Verbessertes Fehlerhandling bei ungültigen Anfragen; neuer Fehlerzustand 'Fault in Process Image'",
         ],
       },
       {
-        version: '2021.15.8',
+        version: "2021.15.8",
         changes: [
           Changelog.product(Product.HOME_10) + "Prüfung im 'SMART'-Mode, ob das erforderliche GoodWe Smart-Meter verbunden ist",
         ],
       },
       {
-        version: '2021.15.7',
+        version: "2021.15.7",
         changes: [
           Changelog.UI,
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
@@ -1329,7 +1329,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.15.6',
+        version: "2021.15.6",
         changes: [
           Changelog.EDGE + "Fehlerbehebung bei Datenkonvertierung sehr großer Zahlen",
           Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + "Verbesserung der Aufzeichnung von Zellspannungen",
@@ -1340,52 +1340,52 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.15.5',
+        version: "2021.15.5",
         changes: [
           Changelog.GENERAL_OPTIMIZATION,
           { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.PRO_HYBRID_GW, Product.PRO_HYBRID_AC_GW) + "Fehlerbehebung für übersteuerte Systeme; setze standardmäßig auf 'INTERNAL'- anstelle von 'SMART'-Mode" },
         ],
       },
       {
-        version: '2021.15.4',
+        version: "2021.15.4",
         changes: [
           { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.PRO_HYBRID_GW, Product.PRO_HYBRID_AC_GW) + "Fehlerbehebung für übersteuerte Systeme" },
           { roleIsAtLeast: Role.ADMIN, change: Changelog.EDGE + "Änderung der Berechtigung zum Setzen von Netzwerkeinstellungen auf 'owner'; notwendig für IBN-Assistent Heckert bei FEMS-Apps" },
         ],
       },
       {
-        version: '2021.15.3',
+        version: "2021.15.3",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring (Konfiguration AC-PV-Zähler)",
         ],
       },
       {
-        version: '2021.15.2',
+        version: "2021.15.2",
         changes: [
           Changelog.GENERAL_OPTIMIZATION,
           { roleIsAtLeast: Role.ADMIN, change: "Version übersprungen" },
         ],
       },
       {
-        version: '2021.15.1',
+        version: "2021.15.1",
         changes: [
           Changelog.GENERAL_OPTIMIZATION,
           { roleIsAtLeast: Role.ADMIN, change: "Version übersprungen" },
         ],
       },
       {
-        version: '2021.14.1',
+        version: "2021.14.1",
         changes: [
-          Changelog.openems('2021.14.0'),
+          Changelog.openems("2021.14.0"),
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
           Changelog.UI + "Neustrukturierung des Anlagenprofils",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION,
           Changelog.library(Library.CHARGETIME_OCPP, Library.GSON, Library.JNA, Library.PAX_LOGGING, Library.APACHE_FELIX_WEBCONSOLE),
-          { roleIsAtLeast: Role.ADMIN, change: "OEM-Version des Online-Monitorings für Heckert: " + Changelog.link("Link", 'https://symphon-e.heckert-solar.com/') },
+          { roleIsAtLeast: Role.ADMIN, change: "OEM-Version des Online-Monitorings für Heckert: " + Changelog.link("Link", "https://symphon-e.heckert-solar.com/") },
         ],
       },
       {
-        version: '2021.13.10',
+        version: "2021.13.10",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
           Changelog.EDGE + "Fehlerbehebung nach Update des OSGi-Frameworks",
@@ -1394,11 +1394,11 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.13.9',
+        version: "2021.13.9",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
           Changelog.library(Library.D3, Library.NGX_COOKIE_SERVICE, Library.MYDATEPICKER),
-          "Similar-Day Predictor. Übernahme aus dem Forschungsprojekt " + Changelog.link("EMSIG", 'https://openems.io/research/emsig/'),
+          "Similar-Day Predictor. Übernahme aus dem Forschungsprojekt " + Changelog.link("EMSIG", "https://openems.io/research/emsig/"),
           Changelog.EDGE + "Fehlerbehebung am lokalen Monitoring",
           Changelog.BACKEND + "Spracheinstellungen für Benutzer",
           { roleIsAtLeast: Role.ADMIN, change: "Fehlerbehebung bei Prüfung auf fehlerhaftes, doppeltes Mapping von Modbus-Register zu Channel" },
@@ -1406,13 +1406,13 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.13.8',
+        version: "2021.13.8",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
         ],
       },
       {
-        version: '2021.13.7',
+        version: "2021.13.7",
         changes: [
           Changelog.GENERAL_OPTIMIZATION,
           { roleIsAtLeast: Role.ADMIN, change: Changelog.EDGE + "Ändere SystemUpdate zu neuem Paket 'fems'; 'openems-core' und 'openems-core-fems' sind obsolet" },
@@ -1420,7 +1420,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.13.6',
+        version: "2021.13.6",
         changes: [
           Changelog.app(App.EVCS_AC) + "Fehlerbehebung bei Limitierung der maximalen Energie eines Ladevorgangs",
           Changelog.UI + Changelog.GENERAL_OPTIMIZATION + "Jahresansicht in der Historie",
@@ -1428,19 +1428,19 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.13.5',
+        version: "2021.13.5",
         changes: [
           Changelog.UI + "Jahresansicht in der Historie",
         ],
       },
       {
-        version: '2021.13.4',
+        version: "2021.13.4",
         changes: [
           Changelog.product(Product.PRO_HYBRID_10) + "Fehlerbehebung bei ungültiger Seriennummer oder Version des Wechselrichters",
         ],
       },
       {
-        version: '2021.13.3',
+        version: "2021.13.3",
         changes: [
           Changelog.EDGE + "Datenkonvertierung von Array-Werten",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
@@ -1450,7 +1450,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.13.2',
+        version: "2021.13.2",
         changes: [
           Changelog.UI + "Übersetzungen",
           Changelog.UI + "Portal zur Registrierung als Benutzer",
@@ -1458,9 +1458,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.13.1',
+        version: "2021.13.1",
         changes: [
-          Changelog.openems('2021.13.0'),
+          Changelog.openems("2021.13.0"),
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
           Changelog.app(App.METER, App.JANITZA) + Changelog.GENERAL_OPTIMIZATION,
           Changelog.GENERAL_OPTIMIZATION + " an Beta-Version für go-e Charger Home",
@@ -1469,7 +1469,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.12.6',
+        version: "2021.12.6",
         changes: [
           Changelog.BACKEND + "Spracheinstellungen für Benutzer",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
@@ -1478,25 +1478,25 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.12.5',
+        version: "2021.12.5",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
         ],
       },
       {
-        version: '2021.12.4',
+        version: "2021.12.4",
         changes: [
           Changelog.library(Library.CHARGETIME_OCPP),
         ],
       },
       {
-        version: '2021.12.3',
+        version: "2021.12.3",
         changes: [
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
         ],
       },
       {
-        version: '2021.12.2',
+        version: "2021.12.2",
         changes: [
           Changelog.UI + "Portal zur Registrierung als Benutzer",
           Changelog.product(Product.HOME_10) + "Release Inbetriebnahmeassistent über das Online-Monitoring",
@@ -1504,7 +1504,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.12.1',
+        version: "2021.12.1",
         changes: [
           Changelog.UI,
           Changelog.BACKEND + "Inbetriebnahmeassistent",
@@ -1514,22 +1514,22 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.11.3',
+        version: "2021.11.3",
         changes: [
           Changelog.UI,
           { roleIsAtLeast: Role.ADMIN, change: "FixActivePower-Controller reagiert schneller auf Änderungen (via @Modified)" },
         ],
       },
       {
-        version: '2021.11.2',
+        version: "2021.11.2",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2021.11.1',
+        version: "2021.11.1",
         changes: [
-          Changelog.openems('2021.11.0'),
+          Changelog.openems("2021.11.0"),
           Changelog.library(Library.MSGPACK, Library.FASTEXCEL, Library.APACHE_FELIX_INVENTORY, Library.APACHE_FELIX_WEBCONSOLE,
             Library.ANGULAR, Library.IONIC, Library.NGX_FORMLY, Library.D3, Library.DATE_FNS, Library.NGX_COOKIE_SERVICE, Library.NGX_SPINNER, Library.RXJS),
           { roleIsAtLeast: Role.ADMIN, change: "Möglichkeit zum Export aller aktuellen Channel-Werte als Excel-Datei. Link im Anlagenprofil unter der jeweiligen Komponente." },
@@ -1538,7 +1538,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.10.9',
+        version: "2021.10.9",
         changes: [
           Changelog.UI + "Anpassungen für neue FENECON Corporate Identity",
           Changelog.EDGE + "Vereinheitlichung von AC, DC und Hybrid-Speichern",
@@ -1547,25 +1547,25 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.10.8',
+        version: "2021.10.8",
         changes: [
           Changelog.product(Product.DESS) + "Erfassung Ladezustand",
         ],
       },
       {
-        version: '2021.10.7',
+        version: "2021.10.7",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2021.10.6',
+        version: "2021.10.6",
         changes: [
           Changelog.BACKEND + "Inbetriebnahmeassistent",
         ],
       },
       {
-        version: '2021.10.5',
+        version: "2021.10.5",
         changes: [
           Changelog.UI,
           Changelog.EDGE + "Datenkonvertierung von String-Werten",
@@ -1573,27 +1573,27 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.10.4',
+        version: "2021.10.4",
         changes: [
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
         ],
       },
       {
-        version: '2021.10.3',
+        version: "2021.10.3",
         changes: [
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
         ],
       },
       {
-        version: '2021.10.2',
+        version: "2021.10.2",
         changes: [
           Changelog.EDGE + "Datenkonvertierung von Boolean-Werten",
         ],
       },
       {
-        version: '2021.10.1',
+        version: "2021.10.1",
         changes: [
-          Changelog.openems('2021.10.0'),
+          Changelog.openems("2021.10.0"),
           Changelog.UI,
           Changelog.EDGE,
           Changelog.library(Library.IONIC, Library.NGX_FORMLY, Library.MYDATEPICKER, Library.D3, Library.DATE_FNS, Library.NGX_SPINNER, Library.RXJS, Library.GRADLE),
@@ -1602,7 +1602,7 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.9.3',
+        version: "2021.9.3",
         changes: [
           Changelog.UI,
           Changelog.product(Product.PRO_HYBRID_GW, Product.PRO_HYBRID_AC_GW) + Changelog.GENERAL_OPTIMIZATION,
@@ -1610,36 +1610,36 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.9.2',
+        version: "2021.9.2",
         changes: [
           Changelog.UI,
           Changelog.EDGE + "Erfassung lokaler Hostname",
         ],
       },
       {
-        version: '2021.9.1',
+        version: "2021.9.1",
         changes: [
-          Changelog.openems('2021.9.0'),
+          Changelog.openems("2021.9.0"),
           Changelog.EDGE + "lokale Netzwerkkonfiguration, verbesserte Zugriffskontrolle",
           Changelog.app(App.METER, App.SOCOMEC) + "Implementierung SOCOMEC Countis E34",
           { roleIsAtLeast: Role.ADMIN, change: "Lokaler Login als 'admin' nur noch mit FEMS-spezifischem Passwort" },
         ],
       },
       {
-        version: '2021.8.9',
+        version: "2021.8.9",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2021.8.8',
+        version: "2021.8.8",
         changes: [
           Changelog.UI,
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION,
         ],
       },
       {
-        version: '2021.8.7',
+        version: "2021.8.7",
         changes: [
           Changelog.UI,
           Changelog.library(Library.PAX_LOGGING),
@@ -1647,79 +1647,79 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.8.6',
+        version: "2021.8.6",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2021.8.5',
+        version: "2021.8.5",
         changes: [
           Changelog.BACKEND + "Login und Session-Handling",
           Changelog.library(Library.GUAVA, Library.RETROFIT, Library.POSTGRESQL, Library.FASTEXCEL),
         ],
       },
       {
-        version: '2021.8.4',
+        version: "2021.8.4",
         changes: [
           "Beta-Version für Anbindung an MQTT-Broker",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION,
         ],
       },
       {
-        version: '2021.8.3',
+        version: "2021.8.3",
         changes: [
           Changelog.BACKEND,
         ],
       },
       {
-        version: '2021.8.2',
+        version: "2021.8.2",
         changes: [
           Changelog.GENERAL_OPTIMIZATION,
         ],
       },
       {
-        version: '2021.8.1',
+        version: "2021.8.1",
         changes: [
-          Changelog.openems('2021.8.0'),
+          Changelog.openems("2021.8.0"),
           Changelog.EDGE,
           Changelog.UI,
           Changelog.library(Library.GRADLE),
         ],
       },
       {
-        version: '2021.7.8',
+        version: "2021.7.8",
         changes: [
           Changelog.EDGE,
         ],
       },
       {
-        version: '2021.7.7',
+        version: "2021.7.7",
         changes: [
           Changelog.UI + "Information zum Gesamtsystemstatus",
         ],
       },
       {
-        version: '2021.7.6',
+        version: "2021.7.6",
         changes: [
           Changelog.BACKEND,
           Changelog.library(Library.NGX_COOKIE_SERVICE),
         ],
       },
       {
-        version: '2021.7.5',
+        version: "2021.7.5",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " an Batteriewechselrichter-Implementierung (adaptive Berechnung maximalen AC-Leistung)",
         ],
       },
       {
-        version: '2021.7.4',
+        version: "2021.7.4",
         changes: [
           Changelog.UI,
         ],
       },
       {
-        version: '2021.7.3',
+        version: "2021.7.3",
         changes: [
           Changelog.UI,
           Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + Changelog.BATTERY_PROTECTION,
@@ -1727,16 +1727,16 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.7.2',
+        version: "2021.7.2",
         changes: [
           Changelog.BACKEND,
           Changelog.product(Product.HOME_10) + Changelog.BATTERY_PROTECTION,
         ],
       },
       {
-        version: '2021.7.1',
+        version: "2021.7.1",
         changes: [
-          Changelog.openems('2021.7.0'),
+          Changelog.openems("2021.7.0"),
           Changelog.UI,
           Changelog.product(Product.PRO_HYBRID_10) + "Verarbeitung von Authentifizierungsfehlern, Seriennummern und adaptive Berechnung der Maximalleistung",
           Changelog.product(Product.HOME_10, Product.COMMERCIAL_30, Product.COMMERCIAL_50) + Changelog.BATTERY_PROTECTION,
@@ -1748,19 +1748,19 @@ export class ChangelogComponent {
         ],
       },
       { //
-        version: '2021.6.2',
+        version: "2021.6.2",
         changes: [
-          "Online-Monitoring: Produktinformation über das " + Changelog.link("Heimatstrom", 'https://regionalwerke.com/pv/reststrom') + "-Angebot der Regionalwerke",
+          "Online-Monitoring: Produktinformation über das " + Changelog.link("Heimatstrom", "https://regionalwerke.com/pv/reststrom") + "-Angebot der Regionalwerke",
         ],
       },
       {
-        version: '2021.6.1',
+        version: "2021.6.1",
         changes: [
-          Changelog.openems('2021.6.0'),
+          Changelog.openems("2021.6.0"),
         ],
       },
       {
-        version: '2021.5.2',
+        version: "2021.5.2",
         changes: [
           Changelog.UI,
           Changelog.library(Library.FASTEXCEL),
@@ -1768,9 +1768,9 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.5.1',
+        version: "2021.5.1",
         changes: [
-          Changelog.openems('2021.5.0'),
+          Changelog.openems("2021.5.0"),
           Changelog.BACKEND,
           Changelog.library(Library.ANGULAR, Library.IONIC),
           Changelog.GENERAL_OPTIMIZATION + " an OneWire-Implementierung",
@@ -1778,25 +1778,25 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.4.16',
+        version: "2021.4.16",
         changes: [
           "Performance-Optimierung am Backend für das Online-Monitoring",
         ],
       },
       {
-        version: '2021.4.15',
+        version: "2021.4.15",
         changes: [
           "Performance-Optimierung am Backend für das Online-Monitoring",
         ],
       },
       {
-        version: '2021.4.14',
+        version: "2021.4.14",
         changes: [
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " an Batteriewechselrichter- und Batterie-Implementierung",
         ],
       },
       {
-        version: '2021.4.13',
+        version: "2021.4.13",
         changes: [
           "Implementierung des FEMS-Relais 4-Kanal",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " an Batteriewechselrichter- und Batterie-Implementierung",
@@ -1804,33 +1804,33 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.4.12',
+        version: "2021.4.12",
         changes: [
           Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + "Fehlerbehebung bei Aufzeichnung der Zelltemperaturen",
           "Optimierung der Anbindung an den Backend-Server ('Controller.Backend.Api')",
         ],
       },
       {
-        version: '2021.4.11',
+        version: "2021.4.11",
         changes: [
           Changelog.product(Product.PRO_HYBRID_10) + "Verbesserung der Fehlermeldung bei Kommunikationsabbruch",
           "Optimierung der Anbindung an den Backend-Server ('Controller.Backend.Api')",
         ],
       },
       {
-        version: '2021.4.10',
+        version: "2021.4.10",
         changes: [
           "Optimierung der Anbindung an den Backend-Server ('Controller.Backend.Api')",
         ],
       },
       {
-        version: '2021.4.9',
+        version: "2021.4.9",
         changes: [
           Changelog.BACKEND,
         ],
       },
       {
-        version: '2021.4.8',
+        version: "2021.4.8",
         changes: [
           Changelog.UI,
           Changelog.BACKEND,
@@ -1839,163 +1839,163 @@ export class ChangelogComponent {
         ],
       },
       {
-        version: '2021.4.7',
+        version: "2021.4.7",
         changes: [
           Changelog.BACKEND,
         ],
       },
       {
-        version: '2021.4.6',
+        version: "2021.4.6",
         changes: [
           Changelog.BACKEND,
         ],
       },
       {
-        version: '2021.4.5',
+        version: "2021.4.5",
         changes: [
           Changelog.BACKEND,
         ],
       },
       {
-        version: '2021.4.4',
+        version: "2021.4.4",
         changes: [
           Changelog.BACKEND,
         ],
       },
       {
-        version: '2021.4.3',
+        version: "2021.4.3",
         changes: [
           Changelog.BACKEND,
         ],
       },
       {
-        version: '2021.4.2',
+        version: "2021.4.2",
         changes: [
           "Optimierungen an der lokalen Zeitreihendatenbank ('RRD4j')",
           "Optimierung der Anbindung an den Backend-Server ('Controller.Backend.Api')",
         ],
       },
       {
-        version: '2021.4.1',
+        version: "2021.4.1",
         changes: [
-          Changelog.openems('2021.4.0'),
+          Changelog.openems("2021.4.0"),
         ],
       },
       {
-        version: '2021.3.4',
+        version: "2021.3.4",
         changes: [
           Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + Changelog.BATTERY_PROTECTION,
         ],
       },
       {
-        version: '2021.3.3',
+        version: "2021.3.3",
         changes: [
           Changelog.GENERAL_OPTIMIZATION,
         ],
       },
       {
-        version: '2021.3.2',
+        version: "2021.3.2",
         changes: [
           Changelog.GENERAL_OPTIMIZATION,
           { roleIsAtLeast: Role.ADMIN, change: "Service-Assistent für Soltaro-Batterien Version C" },
         ],
       },
       {
-        version: '2021.3.1',
+        version: "2021.3.1",
         changes: [
-          Changelog.openems('2021.3.0'),
+          Changelog.openems("2021.3.0"),
           Changelog.product(Product.INDUSTRIAL_M) + Changelog.GENERAL_OPTIMIZATION + " für BMW i3-Batterien",
           Changelog.library(Library.FASTEXCEL, Library.ECLIPSE_OSGI, Library.APACHE_FELIX_METATYPE, Library.ANGULAR, Library.DATE_FNS),
           "Kundeninformation über mögliches Update der BYD Battery Box Premium HVS",
         ],
       },
       {
-        version: '2021.2.1',
+        version: "2021.2.1",
         changes: [
-          Changelog.openems('2021.2.0'),
+          Changelog.openems("2021.2.0"),
           Changelog.library(Library.FASTEXCEL, Library.HIKARI_CP),
           { roleIsAtLeast: Role.ADMIN, change: "Service-Assistent für Soltaro-Batterien" },
         ],
       },
       {
-        version: '2021.1.13',
+        version: "2021.1.13",
         changes: [
           Changelog.product(Product.HOME_10, Product.COMMERCIAL_30, Product.COMMERCIAL_50) + Changelog.BATTERY_PROTECTION,
         ],
       },
       {
-        version: '2021.1.12',
+        version: "2021.1.12",
         changes: [
           Changelog.product(Product.COMMERCIAL_50) + "Stabilitätsverbesserung bei Kommunikationsabbruch",
         ],
       },
       {
-        version: '2021.1.11',
+        version: "2021.1.11",
         changes: [
           Changelog.app(App.PV_INVERTER, App.KACO) + "Korrektor von Rundungsfehlern bei der Vorgabe von Set-Points",
           Changelog.product(Product.COMMERCIAL_50) + "Korrektor von Rundungsfehlern bei der Vorgabe von Set-Points",
         ],
       },
       {
-        version: '2021.1.10',
+        version: "2021.1.10",
         changes: [
           Changelog.GENERAL_OPTIMIZATION,
         ],
       },
       {
-        version: '2021.1.9',
+        version: "2021.1.9",
         changes: [
           Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + Changelog.GENERAL_OPTIMIZATION,
         ],
       },
       {
-        version: '2021.1.8',
+        version: "2021.1.8",
         changes: [
           Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + Changelog.BATTERY_PROTECTION,
         ],
       },
       {
-        version: '2021.1.7',
+        version: "2021.1.7",
         changes: [
           Changelog.BACKEND,
         ],
       },
       {
-        version: '2021.1.6',
+        version: "2021.1.6",
         changes: [
           Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + "Fehlerbehebung bei Aufzeichnung der Zelltemperaturen",
           Changelog.BACKEND,
         ],
       },
       {
-        version: '2021.1.5',
+        version: "2021.1.5",
         changes: [
           Changelog.product(Product.COMMERCIAL_50) + "Korrektur der Anzeige im Monitoring bei manuellem Stop des Batteriewechselrichters",
           Changelog.UI,
         ],
       },
       {
-        version: '2021.1.4',
+        version: "2021.1.4",
         changes: [
           Changelog.app(App.EVCS_AC, App.KEBA) + "Aufzeichnung der Energiedaten zur E-Auto-Beladung",
         ],
       },
       {
-        version: '2021.1.3',
+        version: "2021.1.3",
         changes: [
           "Stabilitätsverbesserung bei Kommunikationsabbruch zu Peripheriegeräten",
         ],
       },
       {
-        version: '2021.1.2',
+        version: "2021.1.2",
         changes: [
           Changelog.BACKEND,
         ],
       },
       {
-        version: '2021.1.1',
+        version: "2021.1.1",
         changes: [
-          Changelog.openems('2021.1.0'),
+          Changelog.openems("2021.1.0"),
         ],
       },
     ];

@@ -1,13 +1,13 @@
 // @ts-strict-ignore
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Channel } from 'src/app/shared/jsonrpc/response/getChannelsOfComponentResponse';
-import { Edge, EdgeConfig, Service, Websocket } from '../../../../shared/shared';
-import { AbstractBattery, CategorizedChannelDescription, ChannelChartDescription, ChannelDescription } from '../abstractbattery.component';
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
+import { Channel } from "src/app/shared/jsonrpc/response/getChannelsOfComponentResponse";
+import { Edge, EdgeConfig, Service, Websocket } from "../../../../shared/shared";
+import { AbstractBattery, CategorizedChannelDescription, ChannelChartDescription, ChannelDescription } from "../abstractbattery.component";
 
 @Component({
     selector: SoltaroVersionBComponent.SELECTOR,
-    templateUrl: './../abstractbattery.component.html',
+    templateUrl: "./../abstractbattery.component.html",
 })
 export class SoltaroVersionBComponent extends AbstractBattery implements OnInit, OnDestroy {
 
@@ -139,14 +139,14 @@ export class SoltaroVersionBComponent extends AbstractBattery implements OnInit,
 
     protected getImportantCellChartChannelDescriptions(): ChannelChartDescription[] {
         return [
-            { label: "Minimale Zellspannung", channelName: "Cluster1MinCellVoltage", datasets: [], colorRgb: '45, 171, 91' },
-            { label: "Maximale Zellspannung", channelName: "Cluster1MaxCellVoltage", datasets: [], colorRgb: '45, 123, 171' },
+            { label: "Minimale Zellspannung", channelName: "Cluster1MinCellVoltage", datasets: [], colorRgb: "45, 171, 91" },
+            { label: "Maximale Zellspannung", channelName: "Cluster1MaxCellVoltage", datasets: [], colorRgb: "45, 123, 171" },
 
-            { label: "Untere Zuschaltspannungen Lvl. 2 (Recover)", channelName: "StopParameterCellUnderVoltageRecover", datasets: [], colorRgb: '217, 149, 4' },
-            { label: "Untere Zuschaltspannungen Lvl. 2 (Protection)", channelName: "StopParameterCellUnderVoltageProtection", datasets: [], colorRgb: '173, 24, 24' },
+            { label: "Untere Zuschaltspannungen Lvl. 2 (Recover)", channelName: "StopParameterCellUnderVoltageRecover", datasets: [], colorRgb: "217, 149, 4" },
+            { label: "Untere Zuschaltspannungen Lvl. 2 (Protection)", channelName: "StopParameterCellUnderVoltageProtection", datasets: [], colorRgb: "173, 24, 24" },
 
-            { label: "Obere Abschaltspannungen Lvl. 2 (Recover)", channelName: "StopParameterCellOverVoltageRecover", datasets: [], colorRgb: '217, 149, 4' },
-            { label: "Obere Abschaltspannungen Lvl. 2 (Protection)", channelName: "StopParameterCellOverVoltageProtection", datasets: [], colorRgb: '173, 24, 24' },
+            { label: "Obere Abschaltspannungen Lvl. 2 (Recover)", channelName: "StopParameterCellOverVoltageRecover", datasets: [], colorRgb: "217, 149, 4" },
+            { label: "Obere Abschaltspannungen Lvl. 2 (Protection)", channelName: "StopParameterCellOverVoltageProtection", datasets: [], colorRgb: "173, 24, 24" },
         ];
     }
 }

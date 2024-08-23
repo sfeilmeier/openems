@@ -3,8 +3,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { Edge, EnergyJourneyWidget, Permission, Service } from "src/app/shared/shared";
 
 @Component({
-  selector: 'energy-journey',
-  templateUrl: './energy-journey.html',
+  selector: "energy-journey",
+  templateUrl: "./energy-journey.html",
 })
 export class EnergyJourneyComponent implements OnInit {
 

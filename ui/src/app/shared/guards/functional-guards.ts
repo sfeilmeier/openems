@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { Location } from '@angular/common';
+import { Location } from "@angular/common";
 import { filter, take } from "rxjs/operators";
 import { Service } from "../shared";
 import { Role } from "../type/role";
@@ -22,7 +22,7 @@ export const hasEdgeRole = (role: Role) => {
                 const roleIsAtLeast = Role.isAtLeast(edge.role, role);
 
                 if (!roleIsAtLeast) {
-                    console.warn(`Routing Failed. Reason: User not allowed to access [component:${route?.component['SELECTOR'] ?? state.url}]`);
+                    console.warn(`Routing Failed. Reason: User not allowed to access [component:${route?.component["SELECTOR"] ?? state.url}]`);
                     location.back();
                 }
                 return roleIsAtLeast;

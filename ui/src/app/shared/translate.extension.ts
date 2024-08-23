@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { FormlyExtension, FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
+import { FormlyExtension, FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
 
 export class TranslateExtension implements FormlyExtension {
     constructor(private translate: TranslateService) { }
@@ -13,7 +13,7 @@ export class TranslateExtension implements FormlyExtension {
         props._translated = true;
         field.expressions = {
             ...(field.expressions || {}),
-            'props.label': this.translate.stream(props.label),
+            "props.label": this.translate.stream(props.label),
         };
     }
 }
@@ -22,99 +22,99 @@ export function registerTranslateExtension(translate: TranslateService) {
     return {
         validationMessages: [
             {
-                name: 'required',
+                name: "required",
                 message() {
-                    return translate.stream('INSTALLATION.FORM.MANDATORY_FIELD');
+                    return translate.stream("INSTALLATION.FORM.MANDATORY_FIELD");
                 },
             },
             {
-                name: 'min',
+                name: "min",
                 message(err, field: FormlyFieldConfig) {
-                    return translate.stream('INSTALLATION.FORM.MIN', { min: field.props.min - 1 });
+                    return translate.stream("INSTALLATION.FORM.MIN", { min: field.props.min - 1 });
                 },
             },
             {
-                name: 'emailMatch',
+                name: "emailMatch",
                 message(err, field: FormlyFieldConfig) {
-                    return translate.stream('INSTALLATION.FORM.EMAIL_MATCH');
+                    return translate.stream("INSTALLATION.FORM.EMAIL_MATCH");
                 },
             },
             {
-                name: 'email',
+                name: "email",
                 message(err, field: FormlyFieldConfig) {
-                    return translate.stream('INSTALLATION.FORM.EMAIL', { email: field.formControl.value });
+                    return translate.stream("INSTALLATION.FORM.EMAIL", { email: field.formControl.value });
                 },
             },
             {
-                name: 'onlyPositiveInteger',
+                name: "onlyPositiveInteger",
                 message(err, field: FormlyFieldConfig) {
-                    return translate.stream('INSTALLATION.FORM.POSITIVE_INTEGER');
+                    return translate.stream("INSTALLATION.FORM.POSITIVE_INTEGER");
                 },
             },
             {
-                name: 'max',
+                name: "max",
                 message(err, field: FormlyFieldConfig) {
-                    return translate.stream('INSTALLATION.FORM.MAX', { max: field.props.max + 1 });
+                    return translate.stream("INSTALLATION.FORM.MAX", { max: field.props.max + 1 });
                 },
             },
             {
-                name: 'batteryAndBmsBoxSerialNumber',
+                name: "batteryAndBmsBoxSerialNumber",
                 message(err, field: FormlyFieldConfig) {
                     return serialNumber(translate, field, 24);
                 },
             },
             {
-                name: 'boxSerialNumber',
+                name: "boxSerialNumber",
                 message(err, field: FormlyFieldConfig) {
                     return serialNumber(translate, field, 12);
                 },
             },
             {
-                name: 'batteryInverterSerialNumber',
+                name: "batteryInverterSerialNumber",
                 message(err, field: FormlyFieldConfig) {
                     return serialNumber(translate, field, 16);
                 },
             },
             {
-                name: 'emsBoxSerialNumber',
+                name: "emsBoxSerialNumber",
                 message(err, field: FormlyFieldConfig) {
                     return serialNumber(translate, field, 10);
                 },
             },
             {
-                name: 'emsBoxNetztrennstelleSerialNumber',
+                name: "emsBoxNetztrennstelleSerialNumber",
                 message(err, field: FormlyFieldConfig) {
                     return serialNumber(translate, field, 4);
                 },
             },
             {
-                name: 'commercialBmsBoxSerialNumber',
+                name: "commercialBmsBoxSerialNumber",
                 message(err, field: FormlyFieldConfig) {
                     return serialNumber(translate, field, 14);
                 },
             },
             {
-                name: 'commercialBatteryModuleSerialNumber',
+                name: "commercialBatteryModuleSerialNumber",
                 message(err, field: FormlyFieldConfig) {
                     return serialNumber(translate, field, 15);
                 },
             },
             {
-                name: 'commercialBatteryInverterSerialNumber',
+                name: "commercialBatteryInverterSerialNumber",
                 message(err, field: FormlyFieldConfig) {
                     return serialNumber(translate, field, 15);
                 },
             },
             {
-                name: 'defaultAsMinimumValue',
+                name: "defaultAsMinimumValue",
                 message(err, field: FormlyFieldConfig) {
-                    return translate.stream('INSTALLATION.FORM.MIN', { min: field.defaultValue - 1 });
+                    return translate.stream("INSTALLATION.FORM.MIN", { min: field.defaultValue - 1 });
                 },
             },
         ],
         extensions: [
             {
-                name: 'translate',
+                name: "translate",
                 extension: new TranslateExtension(translate),
             },
         ],
@@ -130,5 +130,5 @@ export function registerTranslateExtension(translate: TranslateService) {
  * @returns the validation error message.
  */
 export function serialNumber(translate: TranslateService, field: FormlyFieldConfig, length: number) {
-    return translate.stream('INSTALLATION.FORM.BATTERY_SERIAL_NUMBER', { serialNumber: ((field.props.prefix ?? "") + field.formControl.value), length: length });
+    return translate.stream("INSTALLATION.FORM.BATTERY_SERIAL_NUMBER", { serialNumber: ((field.props.prefix ?? "") + field.formControl.value), length: length });
 }

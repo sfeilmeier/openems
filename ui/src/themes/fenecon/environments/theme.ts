@@ -1,6 +1,6 @@
-import { TranslateService } from '@ngx-translate/core';
-import { Filter } from 'src/app/index/filter/filter.component';
-import { Theme } from 'src/environments';
+import { TranslateService } from "@ngx-translate/core";
+import { Filter } from "src/app/index/filter/filter.component";
+import { Theme } from "src/environments";
 
 export const theme = {
     theme: "FENECON" as Theme,
@@ -58,8 +58,8 @@ export const theme = {
 
         // Currently the links are different with different prefixes. so adding whole url for meters.
         METER: {
-            SOCOMEC: 'https://docs.fenecon.de/de/Installationsanleitungen/FEMS_Socomec_Countis_E23_Installationsanleitung.pdf',
-            KDK: 'https://docs.fenecon.de/de/Installationsanleitungen/FEMS_KDK_2PU_CT_Installationsanleitung.pdf',
+            SOCOMEC: "https://docs.fenecon.de/de/Installationsanleitungen/FEMS_Socomec_Countis_E23_Installationsanleitung.pdf",
+            KDK: "https://docs.fenecon.de/de/Installationsanleitungen/FEMS_KDK_2PU_CT_Installationsanleitung.pdf",
         },
 
         MANUALS: {
@@ -76,17 +76,17 @@ export const theme = {
             APP_IMAGE: (language: string, appId: string): string | null => {
                 const languageKey = (() => {
                     switch (language) {
-                        case 'de': return 'de';
-                        case 'en': return 'en';
-                        default: return 'en';
+                        case "de": return "de";
+                        case "en": return "en";
+                        default: return "en";
                     }
                 })();
-                return 'https://docs.fenecon.de/_/' + languageKey + '/_images/fenecon/apps/' + appId + '.png';
+                return "https://docs.fenecon.de/_/" + languageKey + "/_images/fenecon/apps/" + appId + ".png";
             },
         },
         APP: {
-            ANDROID: 'https://play.google.com/store/apps/details?id=de.fenecon.fems&gl=DE',
-            IOS: 'https://apps.apple.com/de/app/fenecon/id6476198535',
+            ANDROID: "https://play.google.com/store/apps/details?id=de.fenecon.fems&gl=DE",
+            IOS: "https://apps.apple.com/de/app/fenecon/id6476198535",
         },
     },
     PRODUCT_TYPES: (translate: TranslateService): Filter => (

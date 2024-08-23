@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 @Component({
-  selector: 'winning-two-awards',
+  selector: "winning-two-awards",
   template: `
     <ion-grid style="font-size: small; text-align: center; width: 100%; cursor: pointer;">
       <ion-row>

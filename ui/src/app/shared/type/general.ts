@@ -4,9 +4,9 @@ export enum GridMode {
     OFF_GRID = 2,
 }
 export enum Mode {
-    MANUAL_ON = 'MANUAL_ON',
-    MANUAL_OFF = 'MANUAL_OFF',
-    AUTOMATIC = 'AUTOMATIC',
+    MANUAL_ON = "MANUAL_ON",
+    MANUAL_OFF = "MANUAL_OFF",
+    AUTOMATIC = "AUTOMATIC",
 }
 export const ChartAnnotationState = {
     ON: 1,
@@ -33,8 +33,8 @@ export enum GoodWe {
     FENECON_FHI_29_9_DAH = 130,
 }
 export enum WorkMode {
-    TIME = 'TIME',
-    NONE = 'NONE',
+    TIME = "TIME",
+    NONE = "NONE",
 }
 export enum BackupEnable {
     AKTIVIERT = 1,

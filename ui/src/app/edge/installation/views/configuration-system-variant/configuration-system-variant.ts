@@ -7,11 +7,11 @@ import { System, SystemId } from "../../shared/system";
 
 @Component({
     selector: ConfigurationSystemVariantComponent.SELECTOR,
-    templateUrl: './configuration-system-variant.html',
+    templateUrl: "./configuration-system-variant.html",
 })
 export class ConfigurationSystemVariantComponent implements OnInit {
 
-    private static readonly SELECTOR = 'configuration-system-variant';
+    private static readonly SELECTOR = "configuration-system-variant";
 
     @Input() public ibn: AbstractIbn;
     @Output() public nextViewEvent = new EventEmitter();

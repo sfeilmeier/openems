@@ -1,17 +1,17 @@
 // @ts-strict-ignore
-import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
-import { SplashScreen } from '@capacitor/splash-screen';
-import { MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
-import { Subject, Subscription, timer } from 'rxjs';
-import { filter, retry, switchMap, takeUntil } from 'rxjs/operators';
-import { environment } from '../environments';
-import { AppService } from './app.service';
-import { GlobalRouteChangeHandler } from './shared/service/globalRouteChangeHandler';
-import { Service, UserPermission, Websocket } from './shared/shared';
-import { Language } from './shared/type/language';
+import { HttpClient } from "@angular/common/http";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Meta, Title } from "@angular/platform-browser";
+import { NavigationEnd, Router } from "@angular/router";
+import { SplashScreen } from "@capacitor/splash-screen";
+import { MenuController, ModalController, Platform, ToastController } from "@ionic/angular";
+import { Subject, Subscription, timer } from "rxjs";
+import { filter, retry, switchMap, takeUntil } from "rxjs/operators";
+import { environment } from "../environments";
+import { AppService } from "./app.service";
+import { GlobalRouteChangeHandler } from "./shared/service/globalRouteChangeHandler";
+import { Service, UserPermission, Websocket } from "./shared/shared";
+import { Language } from "./shared/type/language";
 
 export interface CachetComponentStatus {
   data: {
@@ -20,13 +20,13 @@ export interface CachetComponentStatus {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
+  selector: "app-root",
+  templateUrl: "app.component.html",
 })
 export class AppComponent implements OnInit, OnDestroy {
 
   public environment = environment;
-  public backUrl: string | boolean = '/';
+  public backUrl: string | boolean = "/";
   public enableSideMenu: boolean;
   public isSystemLogEnabled: boolean = false;
 
@@ -63,8 +63,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((e: NavigationEnd) => {
         // Hide footer for history detail views
-        const segments = e.url.split('/');
-        this.isHistoryDetailView = segments.slice(0, -1).includes('history');
+        const segments = e.url.split("/");
+        this.isHistoryDetailView = segments.slice(0, -1).includes("history");
       }));
 
     this.appService.listen();
@@ -88,12 +88,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.service.notificationEvent.pipe(takeUntil(this.ngUnsubscribe)).subscribe(async notification => {
       const toast = await this.toastController.create({
         message: notification.message,
-        position: 'top',
+        position: "top",
         duration: 2000,
         buttons: [
           {
-            text: 'Ok',
-            role: 'cancel',
+            text: "Ok",
+            role: "cancel",
           },
         ],
       });
@@ -102,9 +102,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.platform.ready().then(() => {
       // OEM colors exist only after ionic is initialized, so the notch color has to be set here
-      const notchColor = getComputedStyle(document.documentElement).getPropertyValue('--ion-color-background');
+      const notchColor = getComputedStyle(document.documentElement).getPropertyValue("--ion-color-background");
       this.meta.updateTag(
-        { name: 'theme-color', content: notchColor },
+        { name: "theme-color", content: notchColor },
       );
       this.service.deviceHeight = this.platform.height();
       this.service.deviceWidth = this.platform.width();
@@ -125,7 +125,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private pollSystemStatus(): void {
     timer(1 /* immediately */, 5 * 60 * 1000 /* and then every 5 minutes */)
       .pipe(
-        switchMap(() => this.http.get<CachetComponentStatus>('https://status.fenecon.de/api/v1/components/3')),
+        switchMap(() => this.http.get<CachetComponentStatus>("https://status.fenecon.de/api/v1/components/3")),
         retry())
       .subscribe((data) => {
         switch (data.data.status) {

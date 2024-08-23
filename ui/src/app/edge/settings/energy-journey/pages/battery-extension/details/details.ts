@@ -16,8 +16,8 @@ type TableData = {
 };
 
 @Component({
-  selector: 'battery-extension-detail',
-  templateUrl: './details.html',
+  selector: "battery-extension-detail",
+  templateUrl: "./details.html",
   providers: [
     { provide: DataService, useClass: HistoryDataService },
   ],
@@ -73,7 +73,7 @@ export class DetailComponent implements OnInit, OnChanges {
       return "";
     }
     // TODO apply correct locale
-    return "+ " + formatNumber(_value, 'de', '1.0-2');
+    return "+ " + formatNumber(_value, "de", "1.0-2");
   }
 
   private static FORMAT_TO_TOTAL(value: number, label: string): string {
@@ -83,14 +83,14 @@ export class DetailComponent implements OnInit, OnChanges {
       return "";
     }
     // TODO apply correct locale
-    return "(= " + formatNumber(_value, 'de', '1.0-2') + " " + label + ")";
+    return "(= " + formatNumber(_value, "de", "1.0-2") + " " + label + ")";
   }
 
   private static FORMAT_EUROS(value: number | null) {
     if (!value) {
       return "-";
     }
-    return formatNumber(value, 'de', '1.2-2');
+    return formatNumber(value, "de", "1.2-2");
   }
 
   ngOnInit() {

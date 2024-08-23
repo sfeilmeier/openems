@@ -12,27 +12,27 @@ import { Home20FeneconIbn } from "../installation-systems/home/home-20";
 import { Home30FeneconIbn } from "../installation-systems/home/home-30";
 
 export enum SystemType {
-    FENECON_HOME = 'FENECON Home',
-    HECKERT_HOME = 'Symphon-E',
-    COMMERCIAL = 'FENECON Commercial',
+    FENECON_HOME = "FENECON Home",
+    HECKERT_HOME = "Symphon-E",
+    COMMERCIAL = "FENECON Commercial",
 }
 
 export enum SubSystemType {
-    COMMERCIAL_30 = 'FENECON Commercial 30',
-    COMMERCIAL_50 = 'FENECON Commercial 50',
+    COMMERCIAL_30 = "FENECON Commercial 30",
+    COMMERCIAL_50 = "FENECON Commercial 50",
 }
 
 export enum SystemId {
     GENERAL,
-    FENECON_HOME_10 = 'FENECON Home 10',
-    FENECON_HOME_20 = 'FENECON Home 20',
-    FENECON_HOME_30 = 'FENECON Home 30',
-    HECKERT_HOME_10 = 'Symphon-E',
+    FENECON_HOME_10 = "FENECON Home 10",
+    FENECON_HOME_20 = "FENECON Home 20",
+    FENECON_HOME_30 = "FENECON Home 30",
+    HECKERT_HOME_10 = "Symphon-E",
     COMMERCIAL_30_ANSCHLUSS = `FEMS Anschlussbox
     (Commercial 30 ohne Notstromversorgung)`,
     COMMERCIAL_30_NETZTRENNSTELLE = `Netztrennstelle 
     (Commercial 30 mit Notstromversorgung)`,
-    COMMERCIAL_50_BALANCING = 'FENECON Commercial 50 Balancing',
+    COMMERCIAL_50_BALANCING = "FENECON Commercial 50 Balancing",
 }
 
 export namespace System {

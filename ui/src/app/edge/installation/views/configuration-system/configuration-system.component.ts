@@ -1,19 +1,19 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
-import { environment } from 'src/environments';
-import { AbstractIbn } from '../../installation-systems/abstract-ibn';
-import { ComponentData } from '../../shared/ibndatatypes';
-import { System, SystemType } from '../../shared/system';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { environment } from "src/environments";
+import { AbstractIbn } from "../../installation-systems/abstract-ibn";
+import { ComponentData } from "../../shared/ibndatatypes";
+import { System, SystemType } from "../../shared/system";
 
 @Component({
   selector: ConfigurationSystemComponent.SELECTOR,
-  templateUrl: './configuration-system.component.html',
+  templateUrl: "./configuration-system.component.html",
 })
 export class ConfigurationSystemComponent implements OnInit {
-  private static readonly SELECTOR = 'configuration-system';
+  private static readonly SELECTOR = "configuration-system";
 
   @Input() public ibn: AbstractIbn;
   @Output() public nextViewEvent = new EventEmitter();
@@ -45,11 +45,11 @@ export class ConfigurationSystemComponent implements OnInit {
     let options: ComponentData[] = [];
 
     switch (environment.theme) {
-      case 'Heckert':
+      case "Heckert":
         options = [{ value: SystemType.HECKERT_HOME, label: SystemType.HECKERT_HOME }];
         this.showManual = true;
         break;
-      case 'FENECON':
+      case "FENECON":
       default:
         options = [
           { value: SystemType.FENECON_HOME, label: SystemType.FENECON_HOME },
@@ -58,11 +58,11 @@ export class ConfigurationSystemComponent implements OnInit {
     }
 
     fields.push({
-      key: 'type',
-      type: 'radio',
+      key: "type",
+      type: "radio",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME'),
-        type: 'radio',
+        label: this.translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME"),
+        type: "radio",
         options: options,
         required: true,
       },

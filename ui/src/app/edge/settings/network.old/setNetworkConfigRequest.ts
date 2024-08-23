@@ -1,5 +1,5 @@
 import { JsonrpcRequest } from "../../../shared/jsonrpc/base";
-import { NetworkInterface } from './shared';
+import { NetworkInterface } from "./shared";
 
 /**
  * Represents a JSON-RPC Request for 'setNetworkConfig': Updates the current network configuration.

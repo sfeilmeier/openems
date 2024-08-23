@@ -1,4 +1,4 @@
-import { Theme } from 'src/environments';
+import { Theme } from "src/environments";
 
 export const theme = {
     theme: "Heckert" as Theme,
@@ -58,8 +58,8 @@ export const theme = {
 
         // Currently the links are different with different prefixes. so adding whole url.
         METER: {
-            SOCOMEC: 'https://symphon-e.heckert-solar.com/docs/de/Installationsanleitungen/Symphon-E_Socomec_Countis_E23_Installationsanleitung.pdf',
-            KDK: 'https://docs.fenecon.de/de/Installationsanleitungen/FEMS_KDK_2PU_CT_Installationsanleitung.pdf',
+            SOCOMEC: "https://symphon-e.heckert-solar.com/docs/de/Installationsanleitungen/Symphon-E_Socomec_Countis_E23_Installationsanleitung.pdf",
+            KDK: "https://docs.fenecon.de/de/Installationsanleitungen/FEMS_KDK_2PU_CT_Installationsanleitung.pdf",
         },
 
         MANUALS: {
@@ -76,12 +76,12 @@ export const theme = {
             APP_IMAGE: (language: string, appId: string): string | null => {
                 const languageKey = (() => {
                     switch (language) {
-                        case 'de': return 'de';
-                        case 'en': return 'en';
-                        default: return 'en';
+                        case "de": return "de";
+                        case "en": return "en";
+                        default: return "en";
                     }
                 })();
-                return 'https://docs.fenecon.de/_/' + languageKey + '/_images/fenecon/apps/' + appId + '.png';
+                return "https://docs.fenecon.de/_/" + languageKey + "/_images/fenecon/apps/" + appId + ".png";
             },
         },
         APP: {

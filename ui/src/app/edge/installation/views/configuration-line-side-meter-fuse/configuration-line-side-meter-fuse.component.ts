@@ -1,18 +1,18 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
-import { AbstractIbn } from '../../installation-systems/abstract-ibn';
-import { Category } from '../../shared/category';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { AbstractIbn } from "../../installation-systems/abstract-ibn";
+import { Category } from "../../shared/category";
 
 @Component({
   selector: ConfigurationLineSideMeterFuseComponent.SELECTOR,
-  templateUrl: './configuration-line-side-meter-fuse.component.html',
+  templateUrl: "./configuration-line-side-meter-fuse.component.html",
 })
 export class ConfigurationLineSideMeterFuseComponent implements OnInit {
 
-  private static readonly SELECTOR = 'configuration-line-side-meter-fuse';
+  private static readonly SELECTOR = "configuration-line-side-meter-fuse";
 
   @Input() public ibn: AbstractIbn;
   @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
