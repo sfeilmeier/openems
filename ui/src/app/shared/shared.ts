@@ -99,6 +99,10 @@ export class EdgePermission {
     }, []);
   }
 
+  public static isModbusTcpApiWidgetAllowed(edge: Edge): boolean {
+    return edge?.isVersionAtLeast("2024.7.2");
+  }
+
   /**
    * Determines if the edge has its channels in the edgeconfig
    * or if they should be obtained with a separate request.
@@ -270,6 +274,15 @@ export enum EssStateMachine {
   STOP_BATTERY = 21, //
   STOPPED = 22, //
   ERROR = 30,
+}
+
+export enum ChannelRegister {
+  "SetActivePowerEquals" = 706,
+  "SetReactivePowerEquals" = 708,
+  "SetActivePowerLessOrEquals" = 710,
+  "SetReactivePowerLessOrEquals" = 712,
+  "SetActivePowerGreaterOrEquals" = 714,
+  "SetReactivePowerGreaterOrEquals" = 716,
 }
 
 /**

@@ -135,3 +135,9 @@ export enum SafetyCountryCode {
     AUSTRALIA_ESSENTIAL = 0x48, //
     AUSTRALIA_PWCORE_CITI_PW = 0x49,//
 }
+
+export enum OverrideStatus {
+    ACTIVE = 0,
+    INACTIVE = 1,
+    ERROR = 2,
+}

@@ -3,6 +3,10 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { environment } from "src/environments";
 import { ChangelogViewComponent } from "./changelog/view/view";
 import { EdgeComponent } from "./edge/edge.component";
+import { OverviewComponent as ChannelthresholdChartOverviewComponent } from "./edge/history/Controller/ChannelThreshold/overview/overview";
+import { OverviewComponent as GridOptimizedChargeChartOverviewComponent } from "./edge/history/Controller/Ess/GridoptimizedCharge/overview/overview";
+import { OverviewComponent as TimeOfUseTariffOverviewComponent } from "./edge/history/Controller/Ess/TimeOfUseTariff/overview/overview";
+import { OverviewComponent as ModbusTcpApiOverviewComponent } from "./edge/history/Controller/ModbusTcpApi/overview/overview";
 import { OverviewComponent as AutarchyChartOverviewComponent } from "./edge/history/common/autarchy/overview/overview";
 import { DetailsOverviewComponent as ConsumptionDetailsOverviewComponent } from "./edge/history/common/consumption/details/details.overview";
 import { OverviewComponent as ConsumptionChartOverviewComponent } from "./edge/history/common/consumption/overview/overview";
@@ -11,9 +15,6 @@ import { OverviewComponent as GridChartOverviewComponent } from "./edge/history/
 import { DetailsOverviewComponent } from "./edge/history/common/production/details/details.overview";
 import { OverviewComponent as ProductionChartOverviewComponent } from "./edge/history/common/production/overview/overview";
 import { OverviewComponent as SelfconsumptionChartOverviewComponent } from "./edge/history/common/selfconsumption/overview/overview";
-import { OverviewComponent as ChannelthresholdChartOverviewComponent } from "./edge/history/Controller/ChannelThreshold/overview/overview";
-import { OverviewComponent as TimeOfUseTariffOverviewComponent } from "./edge/history/Controller/Ess/TimeOfUseTariff/overview/overview";
-import { OverviewComponent as GridOptimizedChargeChartOverviewComponent } from "./edge/history/Controller/Ess/GridoptimizedCharge/overview/overview";
 import { DelayedSellToGridChartOverviewComponent } from "./edge/history/delayedselltogrid/symmetricpeakshavingchartoverview/delayedselltogridchartoverview.component";
 import { FixDigitalOutputChartOverviewComponent } from "./edge/history/fixdigitaloutput/fixdigitaloutputchartoverview/fixdigitaloutputchartoverview.component";
 import { HeatingelementChartOverviewComponent } from "./edge/history/heatingelement/heatingelementchartoverview/heatingelementchartoverview.component";
@@ -57,12 +58,12 @@ import { SystemLogComponent as EdgeSettingsSystemLogComponent } from "./edge/set
 import { SystemUpdateOldComponent as EdgeSettingsSystemUpdateOldComponent } from "./edge/settings/systemupdate.old/systemupdate.old.component";
 import { LoginComponent } from "./index/login.component";
 import { OverViewComponent } from "./index/overview/overview.component";
-import { UserComponent } from "./user/user.component";
 import { LoadingScreenComponent } from "./index/shared/loading-screen";
 import { CurrentAndVoltageOverviewComponent } from "./shared/components/edge/meter/currentVoltage/currentVoltage.overview";
 import { DataService } from "./shared/components/shared/dataservice";
-import { Role } from "./shared/type/role";
 import { hasEdgeRole } from "./shared/guards/functional-guards";
+import { Role } from "./shared/type/role";
+import { UserComponent } from "./user/user.component";
 
 export const routes: Routes = [
 
@@ -111,6 +112,7 @@ export const routes: Routes = [
           { path: "gridchart", component: GridChartOverviewComponent },
           { path: "gridchart/:componentId", component: GridDetailsOverviewComponent },
           { path: "gridchart/:componentId/currentVoltage", component: CurrentAndVoltageOverviewComponent },
+          { path: ":componentId/modbusTcpApi", component: ModbusTcpApiOverviewComponent },
           { path: "productionchart", component: ProductionChartOverviewComponent },
           { path: "productionchart/:componentId", component: DetailsOverviewComponent },
           { path: "productionchart/:componentId/currentVoltage", component: CurrentAndVoltageOverviewComponent },
