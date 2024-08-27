@@ -3,18 +3,16 @@ import { ChangelogModule } from "src/app/changelog/changelog.module";
 import { SharedModule } from "./../../shared/shared.module";
 import { AlertingComponent } from "./alerting/alerting.component";
 import { AppModule } from "./app/app.module";
+import { AssistantModule } from "./assistant/assistant.module";
 import { ChannelsComponent } from "./channels/channels.component";
 import { IndexComponent as ComponentInstallIndexComponent } from "./component/install/index.component";
 import { ComponentInstallComponent } from "./component/install/install.component";
 import { IndexComponent as ComponentUpdateIndexComponent } from "./component/update/index.component";
 import { ComponentUpdateComponent } from "./component/update/update.component";
 import { EnergyJourneyModule } from "./energy-journey/energy-journey.module";
-import { ChartComponent } from "./homeassistant/chart/chart";
-import { HomeServiceAssistantComponent } from "./homeassistant/homeassistant";
 import { JsonrpcTestModule } from "./jsonrpctest/jsonrpctest.module";
 import { NetworkOldComponent } from "./network.old/network.old.component";
 import { NetworkComponent } from "./network/network.component";
-import { PowerAssistantModule } from "./powerassistant/powerassistant.module";
 import { AliasUpdateComponent } from "./profile/aliasupdate.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { ServiceAssistantModule } from "./serviceassistant/serviceassistant.module";
@@ -33,18 +31,16 @@ import { SystemUpdateOldComponent } from "./systemupdate.old/systemupdate.old.co
     SharedModule,
     ServiceAssistantModule,
     ChangelogModule,
-    PowerAssistantModule,
+    AssistantModule,
   ],
   declarations: [
     AlertingComponent,
     AliasUpdateComponent,
     ChannelsComponent,
-    ChartComponent,
     ComponentInstallComponent,
     ComponentInstallIndexComponent,
     ComponentUpdateComponent,
     ComponentUpdateIndexComponent,
-    HomeServiceAssistantComponent,
     MaintenanceComponent,
     NetworkComponent,
     NetworkOldComponent,

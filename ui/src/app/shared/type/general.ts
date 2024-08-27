@@ -136,6 +136,27 @@ export enum SafetyCountryCode {
     AUSTRALIA_PWCORE_CITI_PW = 0x49,//
 }
 
+export enum EnabledDisabledState {
+    DISABLED = 0,
+    ENABLED = 1,
+}
+
+export enum BatteryInverterState {
+    UNDEFINED = -1,
+    OFF = 1,
+    SLEEPING = 2,
+    STARTING = 3,
+    MPPT = 4,
+    THROTTLED = 5,
+    SHUTTING_DOWN = 6,
+    FAULT = 7,
+    STANDBY = 8,
+    PRECHARGE = 9,
+    GRID_PRE_CONNECTED = 10,
+    GRID_CONNECTED = 11,
+    NO_ERROR_PENDING = 12,
+}
+
 export enum OverrideStatus {
     ACTIVE = 0,
     INACTIVE = 1,

@@ -3,8 +3,8 @@ import { formatNumber } from "@angular/common";
 import { Component } from "@angular/core";
 import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
 import { DataService } from "src/app/shared/components/shared/dataservice";
-import { ChannelAddress, CurrentData, EdgeConfig, Utils } from "../../../shared/shared";
-import { LiveDataService } from "../../live/livedataservice";
+import { ChannelAddress, CurrentData, EdgeConfig, Utils } from "../../../../shared/shared";
+import { LiveDataService } from "../../../live/livedataservice";
 
 type Channel = {
   title: string,

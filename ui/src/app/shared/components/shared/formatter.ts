@@ -27,6 +27,11 @@ export namespace Formatter {
     return formatNumber(value, "de", "1.0-0") + " %";
   };
 
+  export const FORMAT_BAR = (value: number) => {
+    // TODO apply correct locale
+    return formatNumber(value, "de", "1.1-1") + " mbar";
+  };
+
   export const FORMAT_CURRENCY_PER_KWH = (value: number | string, currency: string = Currency.Unit.CENT) => {
     // TODO apply correct locale
     return formatNumber(parseInt(value.toString()), "de", "1.0-2") + " " + Currency.getCurrencyLabelByCurrency(currency);

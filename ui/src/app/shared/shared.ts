@@ -7,7 +7,7 @@ export { Utils } from "./service/utils";
 export { Websocket } from "./service/websocket";
 export { ChannelAddress } from "./type/channeladdress";
 export { CurrentData } from "./type/currentdata";
-export { BackupEnable, BatteryMode, BatteryStateMachine, DredCmd, GoodWe, GridMode, SafetyCountryCode } from "./type/general";
+export { BackupEnable, BatteryMode, BatteryStateMachine, BatteryInverterState, DredCmd, GoodWe, GridMode, SafetyCountryCode } from "./type/general";
 export { SystemLog } from "./type/systemlog";
 export { Widget, WidgetFactory, WidgetNature, Widgets } from "./type/widget";
 import { AlertController, AlertOptions } from "@ionic/angular";
@@ -203,6 +203,18 @@ export class UserPermission {
     return Role.isAtLeast(user.globalRole, Role.ADMIN) && isProductTypeAllowed;
   }
 
+  public static isUserAllowedToSeeIndustrialAssistant(user: User, edge: Edge): boolean {
+    const isProductTypeAllowed = (() => {
+      switch (edge.producttype) {
+        case Producttype.INDUSTRIAL_L:
+          return true;
+        default:
+          return false;
+      }
+    })();
+    return Role.isAtLeast(user.globalRole, Role.ADMIN) && isProductTypeAllowed;
+  }
+
   /**
   * Checks if user is allowed to see {@link SystemRestartComponent}
   *
@@ -221,6 +233,7 @@ export enum Producttype {
   COMMERCIAL_30 = "Commercial 30-Serie",
   COMMERCIAL_50 = "Commercial 50-Serie",
   COMMERCIAL_40_45 = "COMMERCIAL 40-45",
+  INDUSTRIAL_L = "Industrial L",
 }
 
 export namespace Currency {

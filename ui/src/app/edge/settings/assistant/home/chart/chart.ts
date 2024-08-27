@@ -5,7 +5,7 @@ import { ChannelAddress } from "src/app/shared/shared";
 
 @Component({
   selector: "cellVoltageChart",
-  templateUrl: "../../../../shared/components/chart/abstracthistorychart.html",
+  templateUrl: "../../../../../shared/components/chart/abstracthistorychart.html",
 })
 export class ChartComponent extends AbstractHistoryChart {
 

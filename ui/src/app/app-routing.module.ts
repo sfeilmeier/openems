@@ -43,11 +43,12 @@ import { ComponentUpdateComponent as EdgeSettingsComponentUpdateComponentCompone
 import { EnergyJourneyComponent } from "./edge/settings/energy-journey/energy-journey";
 import { BatteryExtensionComponent } from "./edge/settings/energy-journey/pages/battery-extension/battery-extension";
 import { ElectricityPriceSelectionComponent } from "./edge/settings/energy-journey/pages/electricity-price-choice/electricity-price-selection";
-import { HomeServiceAssistantComponent } from "./edge/settings/homeassistant/homeassistant";
+import { IndustrialServiceAssistantComponent } from "./edge/settings/assistant/industrial/industrial";
+import { HomeServiceAssistantComponent } from "./edge/settings/assistant/home/home";
 import { JsonrpcTestComponent } from "./edge/settings/jsonrpctest/jsonrpctest";
 import { NetworkOldComponent as EdgeSettingsNetworkOldComponent } from "./edge/settings/network.old/network.old.component";
 import { NetworkComponent as EdgeSettingsNetworkComponent } from "./edge/settings/network/network.component";
-import { PowerAssistantComponent } from "./edge/settings/powerassistant/powerassistant";
+import { PowerAssistantComponent } from "./edge/settings/assistant/powerassistant/powerassistant";
 import { AliasUpdateComponent } from "./edge/settings/profile/aliasupdate.component";
 import { ProfileComponent as EdgeSettingsProfileComponent } from "./edge/settings/profile/profile.component";
 import { ServiceAssistantComponent as EdgeSettingsServiceAssistant } from "./edge/settings/serviceassistant/serviceassistant.component";
@@ -124,6 +125,7 @@ export const routes: Routes = [
         ],
       },
 
+      { path: "settings/industrialLAssistant", component: IndustrialServiceAssistantComponent, data: { navbarTitle: "Industrial L-Assistent" } },
       { path: "settings", data: { navbarTitleToBeTranslated: "Menu.edgeSettings" }, component: EdgeSettingsComponent },
       { path: "settings/channels", component: EdgeSettingsChannelsComponent, canActivate: [hasEdgeRole(Role.ADMIN)] },
       { path: "settings/component.install", component: EdgeSettingsComponentInstallIndexComponentComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitleToBeTranslated: "Edge.Config.Index.addComponents" } },
@@ -150,6 +152,7 @@ export const routes: Routes = [
       { path: "settings/homeServiceAssistant", component: HomeServiceAssistantComponent, data: { navbarTitle: "Home-Assistent" } },
       { path: "settings/jsonrpctest", component: JsonrpcTestComponent },
       { path: "settings/powerAssistant", component: PowerAssistantComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitle: "Power-Assistant" } },
+      { path: "settings/app", data: { navbarTitle: environment.edgeShortName + "Apps" }, component: EdgeSettingsAppIndex },
     ],
   },
 

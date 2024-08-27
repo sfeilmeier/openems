@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { TranslateService } from "@ngx-translate/core";
 import { Meter } from "src/app/edge/installation/shared/meter";
-import { BatteryMode, BatteryStateMachine, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, SafetyCountryCode, Utils } from "../../shared";
-import { BackupEnable, DredCmd } from "../../type/general";
+import { BatteryMode, BatteryStateMachine, BatteryInverterState, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, SafetyCountryCode, Utils } from "../../shared";
+import { BackupEnable, DredCmd, EnabledDisabledState } from "../../type/general";
 import { TimeUtils } from "../../utils/time/timeutils";
 import { Formatter } from "./formatter";
 
@@ -162,6 +162,12 @@ export namespace Converter {
     });
   };
 
+  export const CONVERT_TO_BATTERY_INVERTER_STATE: Converter = (raw) => {
+    return IF_NUMBER(raw, value => {
+      return BatteryInverterState[value].toLowerCase();
+    });
+  };
+
   export const CONVERT_TO_BATTERY_MODE: Converter = (raw) => {
     return IF_NUMBER(raw, value => {
       return BatteryMode[value].toLowerCase();
@@ -317,5 +323,20 @@ export namespace Converter {
           return translate.instant("General.STATE_MACHINE.UNDEFINED");
       }
     };
+  };
+
+  export const CONVERT_TO_BAR: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      Formatter.FORMAT_BAR(value));
+  };
+
+  export const CONVERT_TO_ENABLED_DISABLED_STATE: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      EnabledDisabledState[value]);
+  };
+
+  export const CONVERT_TO_HEATING_STATE: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      EnabledDisabledState[value]);
   };
 }
