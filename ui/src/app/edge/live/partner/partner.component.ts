@@ -22,7 +22,7 @@ export class PartnerComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.service.setCurrentComponent("", this.route).then(edge => {
+    this.service.getCurrentEdge().then(edge => {
       this.edge = edge;
     });
   }

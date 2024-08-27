@@ -35,7 +35,7 @@ export class NetworkOldComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.service.setCurrentComponent("Netzwerk Konfiguration" /* TODO translate */, this.route).then(edge => {
+    this.service.getCurrentEdge().then(edge => {
       this.edge = edge;
 
       edge.sendRequest(this.websocket,

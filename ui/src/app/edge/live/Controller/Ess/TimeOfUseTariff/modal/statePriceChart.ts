@@ -47,7 +47,6 @@ export class ScheduleStateAndPriceChartComponent extends AbstractHistoryChart im
 
     public ngOnInit() {
         this.service.startSpinner(this.spinnerId);
-        this.service.setCurrentComponent("", this.route);
     }
 
     public ngOnDestroy() {

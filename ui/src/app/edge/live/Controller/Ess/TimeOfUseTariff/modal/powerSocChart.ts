@@ -39,7 +39,6 @@ export class SchedulePowerAndSocChartComponent extends AbstractHistoryChart impl
 
     public ngOnInit() {
         this.service.startSpinner(this.spinnerId);
-        this.service.setCurrentComponent("", this.route);
     }
 
     public ngOnDestroy() {

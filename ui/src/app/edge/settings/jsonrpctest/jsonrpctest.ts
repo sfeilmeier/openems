@@ -27,7 +27,7 @@ export class JsonrpcTestComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.service.setCurrentComponent("Jsonrpc Test", this.route).then(edge => {
+    this.service.getCurrentEdge().then(edge => {
 
       const currentUserSettings = this.service.currentUser.settings;
       if (!currentUserSettings["jsonrpcTest"]) {

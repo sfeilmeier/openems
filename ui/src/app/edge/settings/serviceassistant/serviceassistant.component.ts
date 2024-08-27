@@ -30,7 +30,7 @@ export class ServiceAssistantComponent implements OnInit {
 
   ngOnInit() {
     this.service.startSpinner(this.serviceAssistantSpinnerId);
-    this.service.setCurrentComponent("Service Assistant", this.route).then(edge => {
+    this.service.getCurrentEdge().then(edge => {
       this.edge = edge;
 
       this.service.getConfig().then(config => {

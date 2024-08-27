@@ -63,8 +63,6 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
         clearInterval(interval);
       }
     }, 1000);
-
-    this.service.setCurrentComponent("", this.route);
   }
 
   async ionViewWillEnter() {
@@ -84,7 +82,7 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
           resolve(
             this.doDemoLogin({ username: "demo@fenecon.de", password: "femsdemo" }));
         }
-      }, 2000)).then(() => { this.service.setCurrentComponent("", this.route); });
+      }, 2000));
     } else {
       localStorage.removeItem("DEMO_LANGUAGE");
     }
