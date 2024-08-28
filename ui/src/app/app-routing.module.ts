@@ -13,10 +13,10 @@ import { OverviewComponent as ConsumptionChartOverviewComponent } from "./edge/h
 import { DetailsOverviewComponent as GridDetailsOverviewComponent } from "./edge/history/common/grid/details/details.overview";
 import { OverviewComponent as GridChartOverviewComponent } from "./edge/history/common/grid/overview/overview";
 import { DetailsOverviewComponent } from "./edge/history/common/production/details/details.overview";
+import { DetailsOverviewComponent as DigitalOutputDetailsOverviewComponent } from "./edge/history/Controller/Io/DigitalOutput/details/details.overview";
 import { OverviewComponent as ProductionChartOverviewComponent } from "./edge/history/common/production/overview/overview";
 import { OverviewComponent as SelfconsumptionChartOverviewComponent } from "./edge/history/common/selfconsumption/overview/overview";
 import { DelayedSellToGridChartOverviewComponent } from "./edge/history/delayedselltogrid/symmetricpeakshavingchartoverview/delayedselltogridchartoverview.component";
-import { FixDigitalOutputChartOverviewComponent } from "./edge/history/fixdigitaloutput/fixdigitaloutputchartoverview/fixdigitaloutputchartoverview.component";
 import { HeatingelementChartOverviewComponent } from "./edge/history/heatingelement/heatingelementchartoverview/heatingelementchartoverview.component";
 import { HeatPumpChartOverviewComponent } from "./edge/history/heatpump/heatpumpchartoverview/heatpumpchartoverview.component";
 import { HistoryComponent as EdgeHistoryComponent } from "./edge/history/history.component";
@@ -25,7 +25,6 @@ import { HistoryParentComponent } from "./edge/history/historyparent.component";
 import { AsymmetricPeakshavingChartOverviewComponent } from "./edge/history/peakshaving/asymmetric/asymmetricpeakshavingchartoverview/asymmetricpeakshavingchartoverview.component";
 import { SymmetricPeakshavingChartOverviewComponent } from "./edge/history/peakshaving/symmetric/symmetricpeakshavingchartoverview/symmetricpeakshavingchartoverview.component";
 import { TimeslotPeakshavingChartOverviewComponent } from "./edge/history/peakshaving/timeslot/timeslotpeakshavingchartoverview/timeslotpeakshavingchartoverview.component";
-import { SinglethresholdChartOverviewComponent } from "./edge/history/singlethreshold/singlethresholdchartoverview/singlethresholdchartoverview.component";
 import { StorageChartOverviewComponent } from "./edge/history/storage/storagechartoverview/storagechartoverview.component";
 import { InstallationComponent } from "./edge/installation/installation.component";
 import { LiveComponent as EdgeLiveComponent } from "./edge/live/live.component";
@@ -59,12 +58,14 @@ import { SystemLogComponent as EdgeSettingsSystemLogComponent } from "./edge/set
 import { SystemUpdateOldComponent as EdgeSettingsSystemUpdateOldComponent } from "./edge/settings/systemupdate.old/systemupdate.old.component";
 import { LoginComponent } from "./index/login.component";
 import { OverViewComponent } from "./index/overview/overview.component";
+import { UserComponent } from "./user/user.component";
 import { LoadingScreenComponent } from "./index/shared/loading-screen";
 import { CurrentAndVoltageOverviewComponent } from "./shared/components/edge/meter/currentVoltage/currentVoltage.overview";
 import { DataService } from "./shared/components/shared/dataservice";
 import { hasEdgeRole } from "./shared/guards/functional-guards";
 import { Role } from "./shared/type/role";
-import { UserComponent } from "./user/user.component";
+import { OverviewComponent as DigitalOutputChartOverviewComponent } from "./edge/history/Controller/Io/DigitalOutput/overview/overview";
+
 
 export const routes: Routes = [
 
@@ -98,12 +99,10 @@ export const routes: Routes = [
           // History Chart Pages
           { path: ":componentId/asymmetricpeakshavingchart", component: AsymmetricPeakshavingChartOverviewComponent },
           { path: ":componentId/delayedselltogridchart", component: DelayedSellToGridChartOverviewComponent },
-          { path: ":componentId/fixdigitaloutputchart", component: FixDigitalOutputChartOverviewComponent },
           { path: ":componentId/gridOptimizedChargeChart", component: GridOptimizedChargeChartOverviewComponent },
           { path: ":componentId/heatingelementchart", component: HeatingelementChartOverviewComponent },
           { path: ":componentId/heatpumpchart", component: HeatPumpChartOverviewComponent },
           { path: ":componentId/scheduleChart", component: TimeOfUseTariffOverviewComponent },
-          { path: ":componentId/singlethresholdchart", component: SinglethresholdChartOverviewComponent },
           { path: ":componentId/symmetricpeakshavingchart", component: SymmetricPeakshavingChartOverviewComponent },
           { path: ":componentId/timeslotpeakshavingchart", component: TimeslotPeakshavingChartOverviewComponent },
           { path: "autarchychart", component: AutarchyChartOverviewComponent },
@@ -122,6 +121,8 @@ export const routes: Routes = [
 
           // Controllers
           { path: "channelthresholdchart", component: ChannelthresholdChartOverviewComponent },
+          { path: "digitaloutputchart", component: DigitalOutputChartOverviewComponent },
+          { path: "digitaloutputchart/:componentId", component: DigitalOutputDetailsOverviewComponent },
         ],
       },
 

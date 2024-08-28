@@ -251,7 +251,8 @@
             "NOTE": "Startet oder stoppt das Gesamtsystem, inklusive Batteriewechselrichter und Batterien."
           },
           "OVERALL_SYSTEM": "Gesamtsystem"
-        }
+        },
+        "FIX_DIGITAL_OUTPUT": "Digitale Ausgangscontroller"
       },
       "RETROFITTING": {
         "UPDATE_TO_NEW_VERSION": "Um die Kapazitätserweiterung nutzen zu können, ist ein Update auf die neueste Version erforderlich.",

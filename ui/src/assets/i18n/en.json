@@ -252,7 +252,8 @@
             "NOTE": "Starts or stops the entire system, including battery inverter and batteries."
           },
           "OVERALL_SYSTEM": "Overall system"
-        }
+        },
+        "FIX_DIGITAL_OUTPUT": "Digital Outputcontroller"
       },
       "RETROFITTING": {
         "OPTIMAL": "Capacity expansion",

@@ -12,6 +12,7 @@ export enum WidgetClass {
     "Common_Production",
     "Consumption",
     "Controller_ChannelThreshold",
+    "Controller_Io_Digital_Outputs",
 }
 
 export enum WidgetNature {
@@ -131,6 +132,8 @@ export class Widgets {
                         return config.hasProducer();
                     case "Controller_ChannelThreshold":
                         return config.getComponentIdsByFactory("Controller.ChannelThreshold")?.length > 0;
+                    case "Controller_Io_Digital_Outputs":
+                        return config.getComponentIdsByFactories("Controller.Io.FixDigitalOutput", "Controller.IO.ChannelSingleThreshold")?.length > 0;
                     case "Controller.Api.ModbusTcp.ReadWrite":
                         return EdgePermission.isModbusTcpApiWidgetAllowed(edge);
                     default:
