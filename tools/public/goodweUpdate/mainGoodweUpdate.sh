@@ -11,116 +11,93 @@
 # echo "wget http://fenecon.de/debian-test/goodweUpdate/mainGoodweUpdate.sh -O /tmp/mainGoodweUpdate.sh && bash -x /tmp/mainGoodweUpdate.sh goodwe10 09_03_24 /dev/busUSB2 9600 > /tmp/goodweLog 2>& 1" | at now
 #
 #
-#
-#
 # Example (GoodWe20 or 30, 14_04_24):
 # wget http://fenecon.de/debian-test/goodweUpdate/mainGoodweUpdate.sh -O /tmp/mainGoodweUpdate.sh && bash -x /tmp/mainGoodweUpdate.sh goodwe20_30 14_04_24 /dev/busUSB2 9600
 #
 # echo "wget http://fenecon.de/debian-test/goodweUpdate/mainGoodweUpdate.sh -O /tmp/mainGoodweUpdate.sh && bash -x /tmp/mainGoodweUpdate.sh goodwe20_30 14_04_24 /dev/busUSB2 9600 > /tmp/goodweLog 2>& 1" | at now
-
-
+#
 # Log for Monitoring: tail /tmp/goodweLog
 
-#set -e exit on error
+set -e
 
 TYPE=$1
 VERSION=$2
 PORT=$3
 BAUD_RATE=$4
 
+TMP_FOLDER="/tmp/goodweupdate"
+LOCK_FILE="$TMP_FOLDER/lock"
 
-function downloadGoodweUpdate() {
-
-	echo "Download GoodWe Update"	
-	wget http://fenecon.de/debian-test/goodweUpdate/$TYPE/goodweUpdate.jar -O /tmp/goodweUpdate.jar
-	if [ $? -ne 0 ]; then return 8; fi
-	
-	echo "Giving executive rights"	
-	chmod +x /tmp/goodweUpdate.jar
-	if [ $? -ne 0 ]; then return 8; fi
+function downloadGoodWeUpdate {
+	echo "Download GoodWe Update"
+	wget http://fenecon.de/debian-test/goodweUpdate/$TYPE/goodweUpdate.jar -O "$TMP_FOLDER/update.jar"
 	
 	echo "Download GoodWe ARM Firmware"	
-	wget http://fenecon.de/debian-test/goodweUpdate/$TYPE/$VERSION/arm.bin -O /tmp/arm.bin
-	if [ $? -ne 0 ]; then return 8; fi
+	wget http://fenecon.de/debian-test/goodweUpdate/$TYPE/$VERSION/arm.bin -O "$TMP_FOLDER/arm.bin"
 	
 	echo "Download GoodWe DSP Firmware"	
-	wget http://fenecon.de/debian-test/goodweUpdate/$TYPE/$VERSION/dsp.bin -O /tmp/dsp.bin
-	if [ $? -ne 0 ]; then return 8; fi
+	wget http://fenecon.de/debian-test/goodweUpdate/$TYPE/$VERSION/dsp.bin -O "$TMP_FOLDER/dsp.bin"
 }
 
-function goodWeUpdate() {
-	echo "Starte GoodWe Update"	
-	java -jar /tmp/goodweUpdate.jar $PORT $BAUD_RATE /tmp/arm.bin /tmp/dsp.bin
-}
-
-function restartOpenEMS() {
-	echo "Restart Openems"
-	systemctl restart openems --no-block;
-}
-
-function finally() {
-	restartOpenEMS;
-	exit
-	echo "Should not be visable"
-}
-
-update() {
-	
-	echo "Start GoodWe Update"
-	downloadGoodweUpdate;
-	if [ $? -ne 0 ];
-	then
-		echo "GoodWe Update fehlgeschlagen! Bitte erneut versuchen! \nBitte pruefe ob das FEMS Zugang zum Internet hat"
-		exit
-		echo "Should not be visable 2"
-	fi
-	
-	echo "Stop Openems"
-	systemctl stop openems --no-block;
-	
-	goodWeUpdate;
-	if [ $? -ne 0 ];
-	then
-		echo "GoodWe Update fehlgeschlagen! Bitte erneut versuchen! \nWenn fehler erneut auftritt, bitte pruefe ob der PORT dem Standard /dev/busUSB2 entspricht (Bei unklarheit, um Hilfe fragen) \nStelle zusaetzlich sicher, dass eine Verbindung zum Wechselrichter gegeben ist."
-		finally;
-		echo "Should not be visable 3"
-		return;
-	fi
-
-	restartOpenEMS;
-	if [ $? -ne 0 ];
-	then
-		echo "OpenEMS-Restart fehlgeschlagen"
-		finally;
-		echo "Should not be visable 4"
-		return;
-	fi
-
-	echo ""
-	echo ""
-	echo "# #################################################"
-	echo "# ################# FINISHED ######################"
-	echo "# #################################################"
+function runGoodWeUpdate {
+	echo "Start GoodWe Update"	
+	java -jar "$TMP_FOLDER/update.jar" $PORT $BAUD_RATE "$TMP_FOLDER/arm.bin" "$TMP_FOLDER/dsp.bin"
 }
 
 __cleanup() {
-	if [ -f /tmp/goodwe-update.lock ];
-	then
-		rm /tmp/goodwe-update.lock;
+	if [[ $? -ne 0 ]]; then
+        echo;
+        echo -e "\033[0;31m# ################################################# #\033[0m";
+        echo -e "\033[0;31m# ############# GoodWe UPDATE FAILED! ############# #\033[0m";
+        echo -e "\033[0;31m# ################################################# #\033[0m";
+		echo;
+		echo -e "\033[0;31mGoodWe Update fehlgeschlagen! Bitte erneut versuchen!\033[0m";
+		echo;
+		echo "Bitte pruefen, dass:"
+		echo " - das FEMS Zugang zum Internet hat"
+		echo " - der PORT dem Standard /dev/busUSB2 entspricht (Bei unklarheit, um Hilfe fragen)"
+		echo " - eine Verbindung zum Wechselrichter gegeben ist"
+
+		systemctl start openems --no-block || true;
+    else
+        echo;
+        echo "# ################################################# #";
+        echo "# ################### FINISHED #################### #";
+        echo "# ################################################# #";
+
+		echo "Restart Openems"
+		systemctl restart openems --no-block || true;
+    fi
+
+	if [ -f "$LOCK_FILE" ]; then 
+		rm "$LOCK_FILE"; 
 	fi
 }
 
-if [ -f /tmp/goodwe-update.lock ];
+#### MAIN ####
+
+if [ -f "$LOCK_FILE" ];
 then
 	echo "Goodwe Update still running!"
 	exit;
 fi
 
+if [ -z "$TYPE" ] || [ -z "$VERSION" ] || [ -z "$PORT" ] || [ -z "$BAUD_RATE" ]; then
+	echo "Nicht genügend parameter."
+	echo -e "Verwendung: mainGoodweUpdate.sh TYPE     VERSION  PORT         BAUDRATE"
+	echo -e "Bsp.:       mainGoodweUpdate.sh goodwe10 09_03_24 /dev/busUSB2 9600"
+	exit 1
+fi
+
+mkdir -p "$TMP_FOLDER"
+
 trap __cleanup EXIT;
-touch /tmp/goodwe-update.lock;
+touch "$LOCK_FILE";
 
-update;
-finally;
+echo "Start GoodWe Update"
+downloadGoodWeUpdate;
 
+echo "Stop Openems"
+systemctl stop openems --no-block;
 
-
+runGoodWeUpdate;
