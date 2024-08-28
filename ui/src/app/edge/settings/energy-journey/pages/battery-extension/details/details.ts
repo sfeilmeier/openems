@@ -4,7 +4,7 @@ import { DataService } from "src/app/shared/components/shared/dataservice";
 
 import { formatNumber } from "@angular/common";
 import { Service, Utils } from "src/app/shared/shared";
-import { SimulatedData } from "../battery-extension.module";
+import { SimulationResult } from "../battery-extension.module";
 
 type TableData = {
   gridSaving: string[],
@@ -58,7 +58,11 @@ type TableData = {
 })
 export class DetailComponent implements OnInit, OnChanges {
 
-  @Input({ required: true }) public simulatedData: SimulatedData = { simulationData: [] };
+  @Input({ required: true }) public simulatedData: SimulationResult = {
+    simulationData: [],
+    charge: 0,
+    discharge: 0,
+  };
   protected tableData: TableData | null = null;
   protected isSmartPhoneResolution: boolean = false;
 

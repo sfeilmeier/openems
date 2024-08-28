@@ -2,7 +2,6 @@ import { Theme } from "src/environments";
 
 export const theme = {
     theme: "Heckert" as Theme,
-
     uiTitle: "Heckert Solar Symphon-E Online Monitoring",
     edgeShortName: "EMS",
     edgeLongName: "Heckert Solar Symphon-E Energiemanagementsystem",

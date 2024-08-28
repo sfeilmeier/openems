@@ -3,16 +3,8 @@
   <ng-container>
     <ion-row class="full_width ion-justify-content-center ion-padding-top">
       <ion-col sizeLg="6" sizeMd="10" sizeSm="12">
-        <oe-flat-widget title="Ihre Angaben" [icon]="{name: 'analytics', color:'primary'}">
-          <oe-flat-widget-line name="Strompreis: " [value]="electricityPrice"
-            [converter]="CONVERT_TO_PRICE"></oe-flat-widget-line>
-          <ion-item slot="end" lines="none">
-            <ion-button slot="end" fill="outline" target="_blank" [routerLink]="['./electricityPriceChoice']"
-              [queryParams]="{electricityPrice: electricityPrice}">
-              <ion-label>Bearbeiten</ion-label>
-            </ion-button>
-          </ion-item>
-        </oe-flat-widget>
+        <oe-energy-journey-constants [simulatedData]="simulatedData" [electricityPrice]="electricityPrice"
+          [description]="constantsDescription"></oe-energy-journey-constants>
       </ion-col>
     </ion-row>
     <ion-row class="full_width ion-justify-content-center ion-padding-top">

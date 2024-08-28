@@ -5,7 +5,7 @@ import { ChannelAddress } from "src/app/shared/shared";
 
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
 import { PropType } from "src/app/shared/service/defaulttypes";
-import { SimulatedData } from "../battery-extension.module";
+import { SimulationResult } from "../battery-extension.module";
 import { PossibleBatteryExtensionResponse } from "../battery-extension.response";
 
 @Component({
@@ -14,7 +14,11 @@ import { PossibleBatteryExtensionResponse } from "../battery-extension.response"
 })
 export class GridBuyChartComponent extends AbstractHistoryChart implements OnChanges {
 
-  @Input({ required: true }) public simulatedData: SimulatedData = { simulationData: [] };
+  @Input({ required: true }) public simulatedData: SimulationResult = {
+    simulationData: [],
+    charge: 0,
+    discharge: 0,
+  };
   @Input({ required: true }) public fromDate: Date;
   @Input({ required: true }) public toDate: Date;
 
@@ -45,7 +49,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
                 .map((el) => Utils.subtractSafely(displayData[0], Utils.divideSafely(el, 1)))
                 .filter((_el, i) => i !== 0);
             },
-            color: "rgb(54,174,209)",
+            color: getComputedStyle(document.documentElement).getPropertyValue("--ion-color-primary-rgb"),
             custom: {
               pluginType: "datalabels",
               datalabels: {
@@ -66,7 +70,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
     };
   }
 
-  private static getLabels(simulationData: PropType<SimulatedData, "simulationData">): string[] {
+  private static getLabels(simulationData: PropType<SimulationResult, "simulationData">): string[] {
     return simulationData.reduce((arr: string[], el, index) => {
       if (index === 0) {
         return arr;

@@ -4,7 +4,6 @@ import { Theme } from "src/environments";
 
 export const theme = {
     theme: "FENECON" as Theme,
-
     uiTitle: "FENECON Online-Monitoring",
     edgeShortName: "FEMS",
     edgeLongName: "FENECON Energiemanagementsystem",

@@ -5,17 +5,18 @@ import { ElectricityPriceSelectionComponent } from "../electricity-price-choice/
 import { BatteryExtensionComponent } from "./battery-extension";
 import { GridBuyChartComponent } from "./chart/gridBuy.chart";
 import { DetailComponent } from "./details/details";
+import { EnergyJourneySharedModule } from "../../shared/shared.module";
 
 @NgModule({
   imports: [
     SharedModule,
+    EnergyJourneySharedModule,
   ],
   declarations: [
     BatteryExtensionComponent,
     DetailComponent,
     ElectricityPriceSelectionComponent,
-    GridBuyChartComponent,
-  ],
+    GridBuyChartComponent],
   exports: [
     BatteryExtensionComponent,
     DetailComponent,
@@ -25,7 +26,7 @@ import { DetailComponent } from "./details/details";
 })
 export class BatteryExtensionModule { }
 
-export type SimulatedData = {
+export type SimulationResult = {
   simulationData: {
     numberOfModules: number,
     gridBuy: number,
@@ -33,4 +34,6 @@ export type SimulatedData = {
     kWPeak: number,
     capacity: number,
   }[],
+  charge: number,
+  discharge: number,
 };

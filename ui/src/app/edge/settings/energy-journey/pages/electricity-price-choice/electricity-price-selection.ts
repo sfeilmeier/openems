@@ -18,12 +18,17 @@ export class ElectricityPriceSelectionComponent extends AbstractFlatWidget imple
 
   protected readonly ChartOptionsType = XAxisType;
   protected override getFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      electricityPrice: new FormControl(this.route.snapshot.queryParams["electricityPrice"] ?? null, {
+    const electricityPrice = this.route.snapshot.queryParams["electricityPrice"] ?? null;
+    const formGroup: FormGroup = this.formBuilder.group({
+      electricityPrice: new FormControl(electricityPrice, {
         validators: [Validators.required, Validators.minLength(1), Validators.min(1)],
-
       }),
     });
+    if (electricityPrice) {
+      formGroup.controls["electricityPrice"].markAsDirty();
+    }
+
+    return formGroup;
   }
 
   protected onNextClicked() {

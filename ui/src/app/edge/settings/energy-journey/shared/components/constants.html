@@ -1,0 +1,34 @@
+<ion-card>
+    <ngx-spinner [name]="spinnerId"></ngx-spinner>
+    <ng-container *ngIf="simulatedData?.simulationData?.length > 0">
+
+        <ion-item color="light" lines="full">
+            <ion-icon name="analytics" slot="start" size="large" color="primary"></ion-icon>
+            <ion-label slot="start">Ihre Angaben</ion-label>
+        </ion-item>
+        <ion-card-content>
+            <ion-grid>
+                <ion-row *ngIf="description">
+                    <ion-text>
+                        {{description}}
+                    </ion-text>
+                </ion-row>
+                <ion-row class="ion-no-padding full_width ion-text">
+                    <ion-col sizeXs="12" sizeSm="12" sizeLg="8" sizeMd="8">
+                        <ul>
+                            <li *ngFor="let data of displayData">
+                                <oe-energy-journey-constant-line [category]="data.name" [value]="data.value"
+                                    [converter]="data.converter" [editable]="data.editable">
+                                </oe-energy-journey-constant-line>
+                            </li>
+                        </ul>
+                    </ion-col>
+                    <ion-col sizeXs="12" sizeSm="12" sizeLg="4" sizeMd="4" class="ion-align-self-end ion-text-end">
+                        <ion-button fill="outline" [routerLink]="['./electricityPriceChoice']"
+                            [queryParams]="{electricityPrice: electricityPrice}" size="small">bearbeiten</ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ng-container>
+</ion-card>
