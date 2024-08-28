@@ -289,6 +289,11 @@ apt-get install --fix-broken --assume-yes || true
 
 vacuum;
 
+if [ ! -f "/etc/openems.d/hardware.conf" ]; then
+    wget https://fenecon.de/fems-tools/detect-hw.sh -O /tmp/detect-hw.sh
+    bash /tmp/detect-hw.sh
+fi
+
 export CURRENT_VERSION="$(dpkg-query --showformat='${Version}' --show $PACKAGE)"
 export LATEST_VERSION="$(wget -qO- http://fenecon.de/debian-test/${PACKAGE}-latest.version --no-check-certificate)"
 if [ "$CURRENT_VERSION" = "$LATEST_VERSION" -a "$FORCE_UPDATE" = false ]; then
