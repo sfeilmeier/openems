@@ -14,7 +14,6 @@ import io.openems.edge.app.enums.MeterType;
 import io.openems.edge.app.enums.Parity;
 import io.openems.edge.app.meter.KdkMeter;
 import io.openems.edge.core.appmanager.ConfigurationTarget;
-import io.openems.edge.core.appmanager.TranslationUtil;
 import io.openems.edge.core.appmanager.dependency.DependencyDeclaration;
 import io.openems.edge.ess.power.api.SolverStrategy;
 
@@ -335,8 +334,8 @@ public final class FeneconIndustrialSComponents {
 			final String modbusId //
 	) {
 		return new EdgeConfig.Component(modbusId, //
-				TranslationUtil.getTranslation(bundle, "App.FENECON.Industrial.S.modbusToGridMeter.alias"),
-				"Bridge.Modbus.Serial", JsonUtils.buildJsonObject() //
+				translate(bundle, "App.IntegratedSystem.modbusToGridMeter.alias"), "Bridge.Modbus.Serial",
+				JsonUtils.buildJsonObject() //
 						.addProperty("enabled", true) //
 						.addProperty("baudRate", 9600) //
 						.addProperty("databits", 8) //
@@ -416,7 +415,7 @@ public final class FeneconIndustrialSComponents {
 				DependencyDeclaration.DependencyDeletePolicy.NOT_ALLOWED, //
 				DependencyDeclaration.AppDependencyConfig.create() //
 						.setAppId("App.Meter.Kdk") //
-						.setAlias(TranslationUtil.getTranslation(bundle, "App.Meter.gridMeter")) //
+						.setAlias(translate(bundle, "App.Meter.gridMeter")) //
 						.setProperties(JsonUtils.buildJsonObject() //
 								.addProperty(KdkMeter.Property.TYPE.name(), MeterType.GRID) //
 								.addProperty(KdkMeter.Property.MODBUS_ID.name(), modbusIdInternal) //

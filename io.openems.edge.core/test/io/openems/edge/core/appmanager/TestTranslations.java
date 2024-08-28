@@ -35,6 +35,7 @@ public class TestTranslations {
 			this.apps.add(new TestTranslation(Apps.feneconHome(t), true, TestFeneconHome.fullSettings()));
 			this.apps.add(new TestTranslation(Apps.feneconHome20(t), true, TestFeneconHome20.fullSettings()));
 			this.apps.add(new TestTranslation(Apps.feneconHome30(t), true, TestFeneconHome30.fullSettings()));
+			this.apps.add(new TestTranslation(Apps.feneconCommercial92(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.feneconIndustrialLIlk710(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.feneconIndustrialSIsk010(t), true, TestFeneconIndustrialS.fullSettings()));
 			this.apps.add(new TestTranslation(Apps.feneconIndustrialSIsk110(t), true, TestFeneconIndustrialS.fullSettings()));

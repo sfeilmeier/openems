@@ -34,6 +34,7 @@ import io.openems.edge.app.heat.HeatingElement;
 import io.openems.edge.app.integratedsystem.FeneconHome;
 import io.openems.edge.app.integratedsystem.FeneconHome20;
 import io.openems.edge.app.integratedsystem.FeneconHome30;
+import io.openems.edge.app.integratedsystem.fenecon.commercial.FeneconCommercial92;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.l.Ilk710;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk010;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk011;
@@ -115,6 +116,16 @@ public class Apps {
 	 */
 	public static final FeneconHome30 feneconHome30(AppManagerTestBundle t) {
 		return app(t, FeneconHome30::new, "App.FENECON.Home.30");
+	}
+
+	/**
+	 * Test method for creating a {@link FeneconCommercial92}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconCommercial92 feneconCommercial92(AppManagerTestBundle t) {
+		return app(t, FeneconCommercial92::new, "App.FENECON.Commercial.92");
 	}
 
 	/**
