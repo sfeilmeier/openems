@@ -1,8 +1,8 @@
 package io.openems.edge.io.i2c;
 
 public enum AnalogOutput {
-	MODBERRY_CHANNEL_1(0x50, 0x61), //
-	MODBERRY_CHANNEL_2(0x52, 0x61), //
+	MODBERRY_CHANNEL_1(0x50, 0x60), //
+	MODBERRY_CHANNEL_2(0x52, 0x60), //
 	;
 
 	public final int registerAddress;
