@@ -152,6 +152,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			// TODO URL veraltet
 			.put("App.Meter.Socomec", "https://fenecon.de/produkte/fems/fems-app-socomec-zaehler/") //
 			.put("App.Meter.CarloGavazzi", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
+			.put("App.Meter.PqPlus", "") //
 			.put("App.Meter.Janitza", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
 			.put("App.Meter.Discovergy", "")//
 			.put("App.PvInverter.Fronius", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
