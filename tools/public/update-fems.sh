@@ -180,6 +180,13 @@ install_debian_apt_key 12 bookworm
 vacuum;
 apt_remove build-essential;
 
+# Fix brocken installation
+if [[ "$(dpkg-query -W -f='${Status}\n' fems)" == *"half-installed"* ]]; then
+    FEMS_VERSION="$(dpkg-query -W -f='${Version}\n' fems)"
+    wget "https://fenecon.de/fems-archive/fems-${FEMS_VERSION}.deb" -O /tmp/fems.deb
+    dpkg_install /tmp/fems.deb
+fi
+
 if [ -d "/home/imodcloud" ]; then
     echo "# Do not apt update Techbase"
 else
