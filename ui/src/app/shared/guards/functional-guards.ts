@@ -1,7 +1,7 @@
 // @ts-strict-ignore
+import { Location } from "@angular/common";
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
-import { Location } from "@angular/common";
 import { filter, take } from "rxjs/operators";
 import { Service } from "../shared";
 import { Role } from "../type/role";

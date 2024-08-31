@@ -7,7 +7,7 @@ export { Utils } from "./service/utils";
 export { Websocket } from "./service/websocket";
 export { ChannelAddress } from "./type/channeladdress";
 export { CurrentData } from "./type/currentdata";
-export { BackupEnable, BatteryMode, BatteryStateMachine, BatteryInverterState, DredCmd, GoodWe, GridMode, SafetyCountryCode } from "./type/general";
+export { BackupEnable, BatteryInverterState, BatteryMode, BatteryStateMachine, DredCmd, GoodWe, GridMode, SafetyCountryCode } from "./type/general";
 export { SystemLog } from "./type/systemlog";
 export { Widget, WidgetFactory, WidgetNature, Widgets } from "./type/widget";
 import { AlertController, AlertOptions } from "@ionic/angular";

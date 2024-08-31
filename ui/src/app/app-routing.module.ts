@@ -3,19 +3,20 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { environment } from "src/environments";
 import { ChangelogViewComponent } from "./changelog/view/view";
 import { EdgeComponent } from "./edge/edge.component";
-import { OverviewComponent as ChannelthresholdChartOverviewComponent } from "./edge/history/Controller/ChannelThreshold/overview/overview";
-import { OverviewComponent as GridOptimizedChargeChartOverviewComponent } from "./edge/history/Controller/Ess/GridoptimizedCharge/overview/overview";
-import { OverviewComponent as TimeOfUseTariffOverviewComponent } from "./edge/history/Controller/Ess/TimeOfUseTariff/overview/overview";
-import { OverviewComponent as ModbusTcpApiOverviewComponent } from "./edge/history/Controller/ModbusTcpApi/overview/overview";
 import { OverviewComponent as AutarchyChartOverviewComponent } from "./edge/history/common/autarchy/overview/overview";
 import { DetailsOverviewComponent as ConsumptionDetailsOverviewComponent } from "./edge/history/common/consumption/details/details.overview";
 import { OverviewComponent as ConsumptionChartOverviewComponent } from "./edge/history/common/consumption/overview/overview";
 import { DetailsOverviewComponent as GridDetailsOverviewComponent } from "./edge/history/common/grid/details/details.overview";
 import { OverviewComponent as GridChartOverviewComponent } from "./edge/history/common/grid/overview/overview";
 import { DetailsOverviewComponent } from "./edge/history/common/production/details/details.overview";
-import { DetailsOverviewComponent as DigitalOutputDetailsOverviewComponent } from "./edge/history/Controller/Io/DigitalOutput/details/details.overview";
 import { OverviewComponent as ProductionChartOverviewComponent } from "./edge/history/common/production/overview/overview";
 import { OverviewComponent as SelfconsumptionChartOverviewComponent } from "./edge/history/common/selfconsumption/overview/overview";
+import { OverviewComponent as ChannelthresholdChartOverviewComponent } from "./edge/history/Controller/ChannelThreshold/overview/overview";
+import { OverviewComponent as GridOptimizedChargeChartOverviewComponent } from "./edge/history/Controller/Ess/GridoptimizedCharge/overview/overview";
+import { OverviewComponent as TimeOfUseTariffOverviewComponent } from "./edge/history/Controller/Ess/TimeOfUseTariff/overview/overview";
+import { DetailsOverviewComponent as DigitalOutputDetailsOverviewComponent } from "./edge/history/Controller/Io/DigitalOutput/details/details.overview";
+import { OverviewComponent as DigitalOutputChartOverviewComponent } from "./edge/history/Controller/Io/DigitalOutput/overview/overview";
+import { OverviewComponent as ModbusTcpApiOverviewComponent } from "./edge/history/Controller/ModbusTcpApi/overview/overview";
 import { DelayedSellToGridChartOverviewComponent } from "./edge/history/delayedselltogrid/symmetricpeakshavingchartoverview/delayedselltogridchartoverview.component";
 import { HeatingelementChartOverviewComponent } from "./edge/history/heatingelement/heatingelementchartoverview/heatingelementchartoverview.component";
 import { HeatPumpChartOverviewComponent } from "./edge/history/heatpump/heatpumpchartoverview/heatpumpchartoverview.component";
@@ -34,6 +35,9 @@ import { IndexComponent as EdgeSettingsAppIndex } from "./edge/settings/app/inde
 import { InstallAppComponent as EdgeSettingsAppInstall } from "./edge/settings/app/install.component";
 import { SingleAppComponent as EdgeSettingsAppSingle } from "./edge/settings/app/single.component";
 import { UpdateAppComponent as EdgeSettingsAppUpdate } from "./edge/settings/app/update.component";
+import { HomeServiceAssistantComponent } from "./edge/settings/assistant/home/home";
+import { IndustrialServiceAssistantComponent } from "./edge/settings/assistant/industrial/industrial";
+import { PowerAssistantComponent } from "./edge/settings/assistant/powerassistant/powerassistant";
 import { ChannelsComponent as EdgeSettingsChannelsComponent } from "./edge/settings/channels/channels.component";
 import { IndexComponent as EdgeSettingsComponentInstallIndexComponentComponent } from "./edge/settings/component/install/index.component";
 import { ComponentInstallComponent as EdgeSettingsComponentInstallComponentComponent } from "./edge/settings/component/install/install.component";
@@ -42,12 +46,9 @@ import { ComponentUpdateComponent as EdgeSettingsComponentUpdateComponentCompone
 import { EnergyJourneyComponent } from "./edge/settings/energy-journey/energy-journey";
 import { BatteryExtensionComponent } from "./edge/settings/energy-journey/pages/battery-extension/battery-extension";
 import { ElectricityPriceSelectionComponent } from "./edge/settings/energy-journey/pages/electricity-price-choice/electricity-price-selection";
-import { IndustrialServiceAssistantComponent } from "./edge/settings/assistant/industrial/industrial";
-import { HomeServiceAssistantComponent } from "./edge/settings/assistant/home/home";
 import { JsonrpcTestComponent } from "./edge/settings/jsonrpctest/jsonrpctest";
 import { NetworkOldComponent as EdgeSettingsNetworkOldComponent } from "./edge/settings/network.old/network.old.component";
 import { NetworkComponent as EdgeSettingsNetworkComponent } from "./edge/settings/network/network.component";
-import { PowerAssistantComponent } from "./edge/settings/assistant/powerassistant/powerassistant";
 import { AliasUpdateComponent } from "./edge/settings/profile/aliasupdate.component";
 import { ProfileComponent as EdgeSettingsProfileComponent } from "./edge/settings/profile/profile.component";
 import { ServiceAssistantComponent as EdgeSettingsServiceAssistant } from "./edge/settings/serviceassistant/serviceassistant.component";
@@ -58,14 +59,12 @@ import { SystemLogComponent as EdgeSettingsSystemLogComponent } from "./edge/set
 import { SystemUpdateOldComponent as EdgeSettingsSystemUpdateOldComponent } from "./edge/settings/systemupdate.old/systemupdate.old.component";
 import { LoginComponent } from "./index/login.component";
 import { OverViewComponent } from "./index/overview/overview.component";
-import { UserComponent } from "./user/user.component";
 import { LoadingScreenComponent } from "./index/shared/loading-screen";
 import { CurrentAndVoltageOverviewComponent } from "./shared/components/edge/meter/currentVoltage/currentVoltage.overview";
 import { DataService } from "./shared/components/shared/dataservice";
 import { hasEdgeRole } from "./shared/guards/functional-guards";
 import { Role } from "./shared/type/role";
-import { OverviewComponent as DigitalOutputChartOverviewComponent } from "./edge/history/Controller/Io/DigitalOutput/overview/overview";
-
+import { UserComponent } from "./user/user.component";
 
 export const routes: Routes = [
 
@@ -102,6 +101,7 @@ export const routes: Routes = [
           { path: ":componentId/gridOptimizedChargeChart", component: GridOptimizedChargeChartOverviewComponent },
           { path: ":componentId/heatingelementchart", component: HeatingelementChartOverviewComponent },
           { path: ":componentId/heatpumpchart", component: HeatPumpChartOverviewComponent },
+          { path: ":componentId/modbusTcpApi", component: ModbusTcpApiOverviewComponent },
           { path: ":componentId/scheduleChart", component: TimeOfUseTariffOverviewComponent },
           { path: ":componentId/symmetricpeakshavingchart", component: SymmetricPeakshavingChartOverviewComponent },
           { path: ":componentId/timeslotpeakshavingchart", component: TimeslotPeakshavingChartOverviewComponent },
@@ -112,7 +112,6 @@ export const routes: Routes = [
           { path: "gridchart", component: GridChartOverviewComponent },
           { path: "gridchart/:componentId", component: GridDetailsOverviewComponent },
           { path: "gridchart/:componentId/currentVoltage", component: CurrentAndVoltageOverviewComponent },
-          { path: ":componentId/modbusTcpApi", component: ModbusTcpApiOverviewComponent },
           { path: "productionchart", component: ProductionChartOverviewComponent },
           { path: "productionchart/:componentId", component: DetailsOverviewComponent },
           { path: "productionchart/:componentId/currentVoltage", component: CurrentAndVoltageOverviewComponent },

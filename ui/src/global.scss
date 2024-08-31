@@ -27,13 +27,13 @@
 @import "variables";
 
 /* Live- and HistoryComponent*/
-ion-refresher-content{
-    ion-spinner{
+ion-refresher-content {
+    ion-spinner {
         left: 0 !important;
     }
 }
 
-ion-content.background{
+ion-content.background {
     --background: url('assets/img/fenecon-energy-journey.png') 40% 80% / cover no-repeat fixed;
 
     ion-card {
