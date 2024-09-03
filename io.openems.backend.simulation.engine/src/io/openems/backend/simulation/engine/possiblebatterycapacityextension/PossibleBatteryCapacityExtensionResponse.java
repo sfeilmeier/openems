@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import com.google.gson.JsonObject;
 
-import io.openems.backend.simulation.engine.possiblebatterycapacityextension.PossibleBatteryCapacityExtensionUtil.SimulationData;
 import io.openems.backend.simulation.engine.possiblebatterycapacityextension.PossibleBatteryCapacityExtensionUtil.DataPerModule;
 import io.openems.common.jsonrpc.base.JsonrpcResponseSuccess;
 import io.openems.common.utils.JsonUtils;
@@ -32,9 +31,9 @@ import io.openems.common.utils.JsonUtils;
  */
 public class PossibleBatteryCapacityExtensionResponse extends JsonrpcResponseSuccess {
 
-	private final SimulationData result;
+	private final List<DataPerModule> result;
 
-	public PossibleBatteryCapacityExtensionResponse(UUID id, SimulationData result) {
+	public PossibleBatteryCapacityExtensionResponse(UUID id, List<DataPerModule> result) {
 		super(id);
 		this.result = result;
 	}
@@ -42,10 +41,8 @@ public class PossibleBatteryCapacityExtensionResponse extends JsonrpcResponseSuc
 	@Override
 	public JsonObject getResult() {
 		return JsonUtils.buildJsonObject() //
-				.addProperty("charge", this.result.charge()) //
-				.addProperty("discharge", this.result.discharge()) //
 				.add("simulationData",
-						this.result.dataPerModule().stream()
+						this.result.stream()
 								.map(dataPerModule -> JsonUtils.buildJsonObject()
 										.addProperty("numberOfModules", dataPerModule.numberOfModules())
 										.addProperty("gridBuy", dataPerModule.gridBuy())
