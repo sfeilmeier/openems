@@ -24,7 +24,8 @@ import { AwardWinningComponent } from "./awards/awards";
 export class AdvertisementModule {
 
     constructor(private translate: TranslateService) {
-        const { lang, translations, shouldMerge } = Language.setAdditionalTranslationFile(tr);
-        translate.setTranslation(lang, translations, shouldMerge);
+        Language.setAdditionalTranslationFile(tr, translate).then(({ lang, translations, shouldMerge }) => {
+            translate.setTranslation(lang, translations, shouldMerge);
+        });
     }
 }
