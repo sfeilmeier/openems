@@ -19,6 +19,14 @@ import { Converter } from "src/app/shared/components/shared/converter";
                 </ion-col>
             </ion-row>
     `,
+    styles: [
+        `
+        :host{
+            ion-label{
+                font-family:  var(--ion-font-family) !important;
+            }
+        }`,
+    ],
 })
 export class EnergyJourneyConstantLineComponent {
 

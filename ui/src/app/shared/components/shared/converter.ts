@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { TranslateService } from "@ngx-translate/core";
 import { Meter } from "src/app/edge/installation/shared/meter";
-import { BatteryMode, BatteryStateMachine, BatteryInverterState, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, SafetyCountryCode, Utils } from "../../shared";
+import { BatteryInverterState, BatteryMode, BatteryStateMachine, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, SafetyCountryCode, Utils } from "../../shared";
 import { BackupEnable, DredCmd, EnabledDisabledState } from "../../type/general";
 import { TimeUtils } from "../../utils/time/timeutils";
 import { Formatter } from "./formatter";
@@ -93,6 +93,20 @@ export namespace Converter {
   export const POWER_IN_WATT: Converter = (raw) => {
     return IF_NUMBER(raw, value =>
       Formatter.FORMAT_WATT(value));
+  };
+
+  /**
+   * Formats a Power value as Watt [W].
+   *
+   * Value 1000 -> "1.000 W".
+   * Value null -> "-".
+   *
+   * @param value the power value
+   * @returns formatted value; '-' for null
+   */
+  export const POWER_IN_KILO_WATT: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      Formatter.FORMAT_KILO_WATT(Utils.divideSafely(value, 1000)));
   };
 
   /**

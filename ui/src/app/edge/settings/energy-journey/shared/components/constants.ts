@@ -73,8 +73,7 @@ export class EnergyJourneyConstantsComponent implements OnChanges {
     private getDisplayData(constants: SimulationResult, electricityPrice: number): typeof this.displayData {
         return [
             { name: "Batteriemodule", value: constants?.simulationData[0]?.numberOfModules ?? null, converter: Converter.TO_STRING },
-            { name: "Entladung", value: constants?.discharge ?? null, converter: Converter.WATT_HOURS_IN_KILO_WATT_HOURS },
-            { name: "Beladung", value: constants?.charge ?? null, converter: Converter.WATT_HOURS_IN_KILO_WATT_HOURS },
+            { name: "Be- und Entladeleistung", value: constants?.simulationData[0]?.kWPeak ?? null, converter: Converter.POWER_IN_KILO_WATT },
             { name: "Netzbezug", value: constants?.simulationData[0]?.gridBuy ?? null, converter: Converter.TO_KILO_WATT_HOURS },
             { name: "Strompreis", value: electricityPrice, converter: this.CONVERT_TO_PRICE, editable: true },
         ];

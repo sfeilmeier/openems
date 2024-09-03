@@ -7,6 +7,11 @@ export namespace Formatter {
     return formatNumber(value, "de", "1.0-0") + " W";
   };
 
+  export const FORMAT_KILO_WATT = (value: number) => {
+    // TODO apply correct locale
+    return formatNumber(value, "de", "1.0-2") + " kW";
+  };
+
   export const FORMAT_KILO_WATT_HOURS = (value: number) => {
     // TODO apply correct locale
     return formatNumber(value, "de", "1.0-0") + " kWh";
