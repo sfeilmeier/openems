@@ -68,7 +68,6 @@ export class EdgePermission {
         Batterieerweiterung ausgewirkt hätte`,
         ["batteryExtension", "electricityPriceChoice"],
         translate.instant("SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS"),
-        // ""
       )]
       : [];
   }
