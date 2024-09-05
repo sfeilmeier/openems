@@ -4,8 +4,8 @@ import { SharedModule } from "src/app/shared/shared.module";
 import { TranslateService } from "@ngx-translate/core";
 import tr from "src/app/edge/live/advertisement/shared/translation.json";
 import { Language } from "src/app/shared/type/language";
+import { EnergyJourneyAdvertComponent } from "./1/1";
 import { AdvertisementComponent } from "./advertisement.component";
-import { AwardWinningComponent } from "./awards/awards";
 
 @NgModule({
     imports: [
@@ -13,11 +13,11 @@ import { AwardWinningComponent } from "./awards/awards";
     ],
     declarations: [
         AdvertisementComponent,
-        AwardWinningComponent,
+        EnergyJourneyAdvertComponent,
     ],
     exports: [
         AdvertisementComponent,
-        AwardWinningComponent,
+        EnergyJourneyAdvertComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

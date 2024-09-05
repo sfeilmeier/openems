@@ -70,11 +70,15 @@ export class AdvertWidgets {
 
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
-        let list: AdvertWidget[] = [{
-            name: "winning-two-awards",
-            title: "Doppelte Freude bei FENECON",
-        }];
+        let list: AdvertWidget[] = [];
 
+        if (
+            EdgePermission.isEnergyJourneyAllowed(edge.firstSetupProtocol) && edge.producttype === ProductType.HOME) {
+            list.push({
+                name: "energy-journey",
+                title: "Batterieerweiterung",
+            });
+        }
         list = Utils.shuffleArray(list);
         return new AdvertWidgets(list);
     }

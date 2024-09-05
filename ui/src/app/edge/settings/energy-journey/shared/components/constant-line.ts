@@ -6,9 +6,9 @@ import { Converter } from "src/app/shared/components/shared/converter";
     template: `
             <ion-row *ngIf="category !== null && value !== null">
                 <ion-col size="6">
-                    <ion-label>
-                        {{category}}
-                    </ion-label>
+                <ion-label>
+                            {{category}}
+                </ion-label>
                 </ion-col>
                 <ion-col size="6">
                     <div disabled="true" type="text"

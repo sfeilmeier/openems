@@ -15,6 +15,7 @@ import { DataService } from "src/app/shared/components/shared/dataservice";
 export class ElectricityPriceSelectionComponent extends AbstractFlatWidget implements OnInit {
 
   protected readonly DEFAULT_ELECTRICITY_PRICE: number = 33;
+  protected backUrl: string | null = null;
 
   protected readonly ChartOptionsType = XAxisType;
   protected override getFormGroup(): FormGroup {
@@ -28,6 +29,7 @@ export class ElectricityPriceSelectionComponent extends AbstractFlatWidget imple
       formGroup.controls["electricityPrice"].markAsDirty();
     }
 
+    this.backUrl = `/device/${this.edge?.id}/settings/energyJourney`;
     return formGroup;
   }
 

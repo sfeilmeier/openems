@@ -13,9 +13,9 @@
                         {{description}}
                     </ion-text>
                 </ion-row>
-                <ion-row class="ion-no-padding full_width ion-text">
+                <ion-row class="ion-no-padding  ion-text">
                     <ion-col sizeXs="12" sizeSm="12" sizeLg="8" sizeMd="8">
-                        <ul>
+                        <ul style="list-style-type: none;">
                             <li *ngFor="let data of displayData">
                                 <oe-energy-journey-constant-line [category]="data.name" [value]="data.value"
                                     [converter]="data.converter" [editable]="data.editable">

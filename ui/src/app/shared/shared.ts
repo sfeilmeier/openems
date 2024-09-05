@@ -46,6 +46,17 @@ export class Permission {
 export class EdgePermission {
 
   /**
+   * Checks if the {@link EnergyJourneyComponent energy journey} is allowed to be seen
+   *
+   * @param ibnDate the ibn date - first setup protocol date
+   * @returns true, if ibnDate is at least one year ago
+   */
+  public static isEnergyJourneyAllowed(ibnDate: Date): boolean {
+    const isDateAtLeastOneYearAgo = isBefore(ibnDate, subDays(subYears(new Date(), 1), 1));
+    return isDateAtLeastOneYearAgo;
+  }
+
+  /**
    * Gets the allowed energy journey widgets for this edge
    * and if ibn date is at least one year old, it gets the correspondent widgets accordingly
    *
@@ -53,23 +64,21 @@ export class EdgePermission {
    * @returns the list of allowed widgets for this edge
    */
   public static getAllowedEnergyJourneyWidgets(ibnDate: Date, translate: TranslateService): EnergyJourneyWidget[] {
-    if (!ibnDate) {
+    const isDateAtLeastOneYearAgo = EdgePermission.isEnergyJourneyAllowed(ibnDate);
+    if (!isDateAtLeastOneYearAgo) {
       return [];
     }
 
-    const isDateAtLeastOneYearAgo = isBefore(ibnDate, subDays(subYears(new Date(), 1), 1));
-    return isDateAtLeastOneYearAgo
-      ? [new EnergyJourneyWidget(
-        "Batterieerweiterung",
-        "Batterieerweiterung, Lohnt es sich?",
-        `Ob sich die Nachrüstung Ihres Strompeichers Home 10 lohnt,
+    return [new EnergyJourneyWidget(
+      "Batterieerweiterung",
+      "Batterieerweiterung, Lohnt es sich?",
+      `Ob sich die Nachrüstung Ihres Strompeichers Home 10 lohnt,
         hängt von verschiedenen Faktoren ab. Ihr System ist seit mehr
         als einem Jahr in Betrieb. Analysieren Sie hier, wie sich eine
         Batterieerweiterung ausgewirkt hätte`,
-        ["batteryExtension", "electricityPriceChoice"],
-        translate.instant("SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS"),
-      )]
-      : [];
+      ["batteryExtension", "electricityPriceChoice"],
+      translate.instant("SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS"),
+    )];
   }
 
   /**
