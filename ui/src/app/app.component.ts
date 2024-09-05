@@ -9,6 +9,7 @@ import { Subject, Subscription, timer } from "rxjs";
 import { filter, retry, switchMap, takeUntil } from "rxjs/operators";
 import { environment } from "../environments";
 import { AppService } from "./app.service";
+import { AppStateTracker } from "./shared/ngrx-store/states";
 import { GlobalRouteChangeHandler } from "./shared/service/globalRouteChangeHandler";
 import { Service, UserPermission, Websocket } from "./shared/shared";
 import { Language } from "./shared/type/language";
@@ -51,6 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private meta: Meta,
     private appService: AppService,
     private title: Title,
+    private stateService: AppStateTracker,
   ) {
     service.setLang(Language.getByKey(localStorage.LANGUAGE) ?? Language.getByBrowserLang(navigator.language));
 

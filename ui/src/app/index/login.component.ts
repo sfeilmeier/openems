@@ -9,6 +9,7 @@ import { environment } from "src/environments";
 import { Capacitor } from "@capacitor/core";
 import { AppService } from "../app.service";
 import { AuthenticateWithPasswordRequest } from "../shared/jsonrpc/request/authenticateWithPasswordRequest";
+import { States } from "../shared/ngrx-store/states";
 import { Edge, Service, Utils, Websocket } from "../shared/shared";
 
 @Component({
@@ -96,6 +97,7 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
    */
   public doLogin(param: { username?: string, password: string }) {
 
+    this.websocket.state.set(States.AUTHENTICATION_WITH_CREDENTIALS);
     param = LoginComponent.trimCredentials(param.password, param.username);
 
     // Prevent that user submits via keyevent 'enter' multiple times
