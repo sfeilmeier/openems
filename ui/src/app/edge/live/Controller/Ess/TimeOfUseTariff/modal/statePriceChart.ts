@@ -63,7 +63,7 @@ export class ScheduleStateAndPriceChartComponent extends AbstractHistoryChart im
             new ComponentJsonApiRequest({ componentId: this.component.id, payload: new GetScheduleRequest() }),
         ).then(response => {
             const result = (response as GetScheduleResponse).result;
-            const schedule = Controller_Ess_TimeOfUseTariff.filterScheduleData(this.edge, result.schedule);
+            const schedule = result.schedule;
 
             // Extracting prices, states, timestamps from the schedule array
             const { priceArray, stateArray, timestampArray, gridBuyArray, socArray } = {

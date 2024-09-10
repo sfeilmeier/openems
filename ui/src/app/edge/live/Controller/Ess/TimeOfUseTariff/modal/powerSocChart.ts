@@ -11,7 +11,6 @@ import { ChartAxis, HistoryUtils, TimeOfUseTariffUtils, Utils, YAxisType } from 
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { GetScheduleRequest } from "../../../../../../shared/jsonrpc/request/getScheduleRequest";
 import { GetScheduleResponse } from "../../../../../../shared/jsonrpc/response/getScheduleResponse";
-import { Controller_Ess_TimeOfUseTariff } from "../Ess_TimeOfUseTariff";
 
 @Component({
     selector: "powerSocChart",
@@ -82,7 +81,7 @@ export class SchedulePowerAndSocChartComponent extends AbstractHistoryChart impl
             new ComponentJsonApiRequest({ componentId: this.component.id, payload: new GetScheduleRequest() }),
         ).then(response => {
             const result = (response as GetScheduleResponse).result;
-            const schedule = Controller_Ess_TimeOfUseTariff.filterScheduleData(this.edge, result.schedule);
+            const schedule = result.schedule;
             const datasets = [];
 
             // Extracting prices and states from the schedule array
