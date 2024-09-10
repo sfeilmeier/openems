@@ -21,6 +21,27 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2024.9.1",
+        changes: [
+          Changelog.openems("2024.9.0"),
+          Changelog.UI + "Allgemeine Verbesserungen, Fehlerbehebung und Performance-Optimierungen",
+          Changelog.app(App.MODBUS_TCP_API) + "Visualisierung der Schreibzugriffe in Live und Historie",
+          "Optimierungen an der lokalen Zeitreihendatenbank ('RRD4j')",
+          Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Korrektur einer fehlerhaften Statusmeldung bei ausgeschalteter netzdienlicher Beladung",
+          "Verbesserungen an der System-Update-Funktion",
+          { roleIsAtLeast: Role.ADMIN, change: "AppCenter-App für PQ-Plus Zähler UMD96 und UMD97" },
+          { roleIsAtLeast: Role.ADMIN, change: "AppCenter-App für Phoenix Contact Zähler EEM-MB370-24DC" },
+          { roleIsAtLeast: Role.ADMIN, change: "AppCenter-App für ESS Limiter §14a (wird automatisch durch Home-App installiert, wenn nötig)" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.UI + "Einstellungen | Energy Journey: Freischaltung der Analyse für Batterieerweiterung für Kunden von Home 10 mit IBN vor mehr als einem Jahr" },
+          { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | Channels: Verbesserung beim Wechsel auf anderes FEMS" },
+          { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | Industrial L-Assistent: Serviceassistent für Industrial L" },
+          { roleIsAtLeast: Role.ADMIN, change: "Grundsätzliche Unterstützung für I2C Bus" },
+          { roleIsAtLeast: Role.ADMIN, change: "Status-Channel-Beschreibungen können jetzt übersetzt werden. Start: Meldungen aus dem AppCenter" },
+          { roleIsAtLeast: Role.ADMIN, change: "Neue Komponente: Simulated Predictor" },
+          Changelog.library(Library.ANGULAR, Library.IONIC, Library.APACHE_FELIX_HTTP_JETTY, Library.FASTEXCEL, Library.GUAVA, Library.INFLUXDB),
+        ],
+      },
+      {
         version: "2024.8.1",
         changes: [
           Changelog.UI + "Einführung der Gesamtphasenanzeige für Verbrauch und Erzeugung in der Historie, Anzeige der letzten Online-Zeit wenn Gerät offline ist",
@@ -68,7 +89,7 @@ export class ChangelogComponent {
           { roleIsAtLeast: Role.ADMIN, change: "Shelly: mehr Kompatibilitäten (OpenEMS)" },
           { roleIsAtLeast: Role.ADMIN, change: "SunSpec: Channels haben standardmäßig PersistencePriority VERY_LOW und werden nur optional ans Backend gesendet" },
           { roleIsAtLeast: Role.ADMIN, change: "App Center: interne Apps für Discovergy-Zähler und lokale InfluxDB" },
-          Changelog.library(Library.APACHE_FELIX_SCR, Library.APACHE_FELIX_HTTP_JETTY, Library.APACHE_FELIX_WEBCONSOLE, Library.NGX_FORMLY, Library.CHART_JS, Library.UUID),
+          Changelog.library(Library.APACHE_FELIX_SCR, Library.APACHE_FELIX_HTTP_JETTY, Library.NGX_FORMLY, Library.CHART_JS, Library.UUID),
         ],
       },
       {
@@ -287,7 +308,7 @@ export class ChangelogComponent {
           { roleIsAtLeast: Role.ADMIN, change: "Release Candidates/SNAPSHOT-Branches: Update auf neuesten RC bzw. SNAPSHOT über System-Update-Funktion im UI" },
           { roleIsAtLeast: Role.ADMIN, change: "Phoenix Contact Zähler (EEM-MA370-24DC/EEM-MB370-24DC): Implementierung 'invert' Funktion" },
           { roleIsAtLeast: Role.ADMIN, change: "Neuer Zugang für FEMS Remote-Service: siehe Anleitung in FEMS Teams/Allgemein" },
-          Changelog.library(Library.GRADLE, Library.OKIO, Library.APACHE_FELIX_HTTP_JETTY, Library.BNDTOOLS, Library.APACHE_FELIX_WEBCONSOLE, Library.GUAVA),
+          Changelog.library(Library.GRADLE, Library.OKIO, Library.APACHE_FELIX_HTTP_JETTY, Library.BNDTOOLS, Library.GUAVA),
         ],
       },
       {
@@ -315,7 +336,7 @@ export class ChangelogComponent {
           { roleIsAtLeast: Role.ADMIN, change: "Bugfix KACO50/92: Leistungs-Setpoints" },
           { roleIsAtLeast: Role.ADMIN, change: "Industrial S/L: enfasbms, F2B" },
           { roleIsAtLeast: Role.ADMIN, change: "Neue OpenEMS Apps für Webasto Next und Webasto Unite Ladesäulen. Info im OpenEMS Community-Forum folgt" },
-          Changelog.library(Library.OKIO, Library.RRD4J, Library.APACHE_FELIX_HTTP_JETTY, Library.GRADLE, Library.FASTEXCEL, Library.APACHE_FELIX_WEBCONSOLE),
+          Changelog.library(Library.OKIO, Library.RRD4J, Library.APACHE_FELIX_HTTP_JETTY, Library.GRADLE, Library.FASTEXCEL),
         ],
       },
       {
@@ -956,7 +977,6 @@ export class ChangelogComponent {
         version: "2022.5.5",
         changes: [
           Changelog.UI + "Verbesserung des lokalen Monitorings für historische Daten",
-          Changelog.library(Library.APACHE_FELIX_WEBCONSOLE),
           { roleIsAtLeast: Role.ADMIN, change: "URL für 'Passwort zurücksetzen' geändert" },
           { roleIsAtLeast: Role.ADMIN, change: "Backend-Änderungen für Alerting und IBN-Assistent" },
         ],
@@ -982,7 +1002,6 @@ export class ChangelogComponent {
           { roleIsAtLeast: Role.ADMIN, change: "Prüfung auf Apikey (/etc/fems und Controller.Api.Backend) -> neuer Channel ctrlBackend0/WrongApikeyConfiguration" },
           { roleIsAtLeast: Role.ADMIN, change: "Fehlerbehebung an Schnittstelle FEMS Backend zu InfluxDB" },
           { roleIsAtLeast: Role.ADMIN, change: "FEMS-Authentifizierung am Backend: entferne Leerzeichen von Apikey" },
-          Changelog.library(Library.APACHE_FELIX_WEBCONSOLE),
         ],
       },
       {
@@ -1109,7 +1128,7 @@ export class ChangelogComponent {
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent für FEMS-App SG-Ready Wärmepumpe",
           Changelog.product(Product.PRO_HYBRID_10) + "Fehlerbehebung beim Erfassen der Seriennummer",
           "Implementierung Siemens PAC2200/3200/4200 Zähler",
-          Changelog.library(Library.APACHE_FELIX_WEBCONSOLE, Library.PAX_LOGGING),
+          Changelog.library(Library.PAX_LOGGING),
           "Aktualisierung auf Log4j Version 2 mit aktualiserten Sicherheitspatches. Vorher wurde Log4j in Version 1 genutzt, die für die kritische Schwachstelle an Log4j (CVE-2021-44228) ebenfalls nicht anfällig war.",
           { roleIsAtLeast: Role.ADMIN, change: Changelog.EDGE + " PV-Wechselrichter und DC-Laderegler können für Modbus/TCP-Slave-Api freigegeben werden" },
         ],
@@ -1336,7 +1355,6 @@ export class ChangelogComponent {
           Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
           Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Verwende werkseitige Standard-IP 192.168.25.30",
           Changelog.product(Product.HOME_10, Product.PRO_HYBRID_GW, Product.PRO_HYBRID_AC_GW) + Changelog.GENERAL_OPTIMIZATION,
-          Changelog.library(Library.APACHE_FELIX_WEBCONSOLE),
         ],
       },
       {
@@ -1380,7 +1398,7 @@ export class ChangelogComponent {
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent über das Online-Monitoring",
           Changelog.UI + "Neustrukturierung des Anlagenprofils",
           Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION,
-          Changelog.library(Library.CHARGETIME_OCPP, Library.GSON, Library.JNA, Library.PAX_LOGGING, Library.APACHE_FELIX_WEBCONSOLE),
+          Changelog.library(Library.CHARGETIME_OCPP, Library.GSON, Library.JNA, Library.PAX_LOGGING),
           { roleIsAtLeast: Role.ADMIN, change: "OEM-Version des Online-Monitorings für Heckert: " + Changelog.link("Link", "https://symphon-e.heckert-solar.com/") },
         ],
       },
@@ -1530,7 +1548,7 @@ export class ChangelogComponent {
         version: "2021.11.1",
         changes: [
           Changelog.openems("2021.11.0"),
-          Changelog.library(Library.MSGPACK, Library.FASTEXCEL, Library.APACHE_FELIX_INVENTORY, Library.APACHE_FELIX_WEBCONSOLE,
+          Changelog.library(Library.MSGPACK, Library.FASTEXCEL, Library.APACHE_FELIX_INVENTORY,
             Library.ANGULAR, Library.IONIC, Library.NGX_FORMLY, Library.D3, Library.DATE_FNS, Library.NGX_COOKIE_SERVICE, Library.NGX_SPINNER, Library.RXJS),
           { roleIsAtLeast: Role.ADMIN, change: "Möglichkeit zum Export aller aktuellen Channel-Werte als Excel-Datei. Link im Anlagenprofil unter der jeweiligen Komponente." },
           { roleIsAtLeast: Role.ADMIN, change: "Entfernen von Refu.ESS und Streetscooter.ESS aus dem Release" },
