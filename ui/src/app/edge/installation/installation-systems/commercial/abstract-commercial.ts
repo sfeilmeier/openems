@@ -230,10 +230,15 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
     public override getSubSystemFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
-        const componentLabel = ([
-            { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
-            { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
-        ]);
+        const emsType = this.getEmsType();
+
+        const componentLabel = [];
+        if (emsType === null) {
+            componentLabel.push(
+                { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
+                { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
+            );
+        }
 
         fields.push({
             key: "subType",

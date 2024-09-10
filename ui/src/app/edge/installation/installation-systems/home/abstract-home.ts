@@ -694,11 +694,29 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
   public override getSystemVariantFields(): FormlyFieldConfig[] {
 
-    const label = [
-      { value: SystemId.FENECON_HOME_10, label: SystemId.FENECON_HOME_10 },
-      { value: SystemId.FENECON_HOME_20, label: SystemId.FENECON_HOME_20 },
-      { value: SystemId.FENECON_HOME_30, label: SystemId.FENECON_HOME_30 },
-    ];
+    const label = [];
+    const emsType = this.getEmsType();
+
+    switch (emsType) {
+      case "feh013":
+        label.push(
+          { value: SystemId.FENECON_HOME_20, label: SystemId.FENECON_HOME_20 },
+          { value: SystemId.FENECON_HOME_30, label: SystemId.FENECON_HOME_30 },
+        );
+        break;
+      case "fho011":
+        label.push(
+          { value: SystemId.FENECON_HOME_10, label: SystemId.FENECON_HOME_10 },
+        );
+        break;
+      case null:
+        label.push(
+          { value: SystemId.FENECON_HOME_10, label: SystemId.FENECON_HOME_10 },
+          { value: SystemId.FENECON_HOME_20, label: SystemId.FENECON_HOME_20 },
+          { value: SystemId.FENECON_HOME_30, label: SystemId.FENECON_HOME_30 },
+        );
+        break;
+    }
 
     const fields: FormlyFieldConfig[] = [{
       key: "system",

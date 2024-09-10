@@ -503,6 +503,21 @@ export abstract class AbstractIbn {
   }
 
   /**
+   * Returns the ems type saved in Odoo.
+   *
+   * @returns the EMS type or null if it is empty.
+   */
+  public getEmsType(): "feh013" | "fho011" | null {
+
+    // Retrieve emsType and handle the "null" string case safely
+    const rawEmsType: string = sessionStorage.getItem("emsType");
+
+    // Check if the raw value is the string "null" and convert it to the correct type
+    return (rawEmsType === "null" ? null : rawEmsType) as "feh013" | "fho011" | null;
+
+  }
+
+  /**
  * Returns the number of towers and modules per tower.
  *
  * @param edge the current edge.
