@@ -1,10 +1,11 @@
-<header></header>
+<header [customBackUrl]="backUrl"></header>
 <ion-content>
   <ng-container *ngIf="formGroup">
     <ion-grid>
       <ion-row class="full_width ion-justify-content-center ion-padding-top">
         <ion-col sizeLg="6" sizeMd="10" sizeSm="12">
-          <oe-flat-widget [formGroup]="formGroup" title="Energy Journey: Batterieerweiterung" [icon]="{name: 'analytics'}">
+          <oe-flat-widget [formGroup]="formGroup" title="Energy Journey: Batterieerweiterung"
+            [icon]="{name: 'analytics'}" style="cursor: none;">
             <oe-flat-widget-line leftColumnWidth="100" name="Ihr System ist seit mehr als einem Jahr in Betrieb. Analysieren Sie hier, wie
             sich eine Batterieerweiterung ausgewirkt hätte.">
             </oe-flat-widget-line>
@@ -22,9 +23,7 @@
                   value="{{formGroup.controls['electricityPrice'].value}}" style="text-align: end;">
                 </ion-input>
               </ion-item>
-              <ion-item
-                [disabled]="formGroup.controls['electricityPrice'].pristine && formGroup.controls['electricityPrice'].value !== ''"
-                class="ion-float-right" lines="none">
+              <ion-item [disabled]="!formGroup.controls['electricityPrice'].dirty" class="ion-float-right" lines="none">
                 <ion-button fill="outline" (click)="onNextClicked()">Analyse starten</ion-button>
               </ion-item>
             </form>

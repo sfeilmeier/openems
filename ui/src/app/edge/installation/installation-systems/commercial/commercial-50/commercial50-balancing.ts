@@ -1,8 +1,8 @@
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from "@ngx-translate/core";
 
-import { View } from '../../../shared/enums';
-import { SystemId } from '../../../shared/system';
-import { AbstractCommercial50Ibn } from './abstract-commercial-50';
+import { View } from "../../../shared/enums";
+import { SystemId } from "../../../shared/system";
+import { AbstractCommercial50Ibn } from "./abstract-commercial-50";
 
 export class Commercial50Balancing extends AbstractCommercial50Ibn {
 

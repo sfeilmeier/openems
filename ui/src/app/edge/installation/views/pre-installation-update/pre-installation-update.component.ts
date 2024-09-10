@@ -1,15 +1,15 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { SystemUpdateState } from 'src/app/edge/settings/system/getSystemUpdateStateResponse';
-import { Edge, Service, Websocket } from 'src/app/shared/shared';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
+import { SystemUpdateState } from "src/app/edge/settings/system/getSystemUpdateStateResponse";
+import { Edge, Service, Websocket } from "src/app/shared/shared";
 
 @Component({
   selector: PreInstallationUpdateComponent.SELECTOR,
-  templateUrl: './pre-installation-update.component.html',
+  templateUrl: "./pre-installation-update.component.html",
 })
 export class PreInstallationUpdateComponent {
-  private static readonly SELECTOR = 'pre-installation-update';
+  private static readonly SELECTOR = "pre-installation-update";
 
   @Output() public nextViewEvent = new EventEmitter();
   @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
@@ -25,7 +25,7 @@ export class PreInstallationUpdateComponent {
 
   public onNextClicked() {
     if (!this.isUpdated) {
-      this.service.toast(this.translate.instant('INSTALLATION.SYSTEM_UPDATE.UPDATE_WARNING'), "danger");
+      this.service.toast(this.translate.instant("INSTALLATION.SYSTEM_UPDATE.UPDATE_WARNING"), "danger");
       return;
     }
     this.nextViewEvent.emit();

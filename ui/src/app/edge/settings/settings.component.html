@@ -87,6 +87,20 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
+
+      <ion-col size="12" size-sm="4" *ngIf="isAtLeastOwner && canSeeEnergyJourney && !isEdgeBackend">
+        <ion-card>
+          <ion-item lines="full" color="light">
+            <ion-icon slot="start" size="large" color="primary" name="analytics"></ion-icon>
+            <ion-label>Energy Journey</ion-label>
+          </ion-item>
+          <ion-card-content>
+            <ion-button class="ion-float-right" routerLink="/device/{{ edge.id }}/settings/energyJourney">
+              <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
     </ion-row>
 
     <ion-row justify-content-left *ngIf="isAtLeastAdmin">
@@ -103,7 +117,8 @@
             <ion-label translate>Edge.Config.Index.adjustComponents</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light" routerLink="/device/{{ edge.id }}/settings/component.update">
+            <ion-button class="ion-float-right" color="light"
+              routerLink="/device/{{ edge.id }}/settings/component.update">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
             </ion-button>
           </ion-card-content>
@@ -117,7 +132,8 @@
             <ion-label translate>Edge.Config.Index.addComponents</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light" routerLink="/device/{{ edge.id }}/settings/component.install">
+            <ion-button class="ion-float-right" color="light"
+              routerLink="/device/{{ edge.id }}/settings/component.install">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
             </ion-button>
           </ion-card-content>
@@ -147,7 +163,8 @@
           </ion-item>
           <ion-card-content>
             <ion-note>Für Home 10 optimiert</ion-note>
-            <ion-button class="ion-float-right" color="light" routerLink="/device/{{ edge.id }}/settings/homeServiceAssistant">
+            <ion-button class="ion-float-right" color="light"
+              routerLink="/device/{{ edge.id }}/settings/homeServiceAssistant">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
             </ion-button>
           </ion-card-content>
@@ -161,7 +178,8 @@
             <ion-label>Commercial Service Assistant</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light" routerLink="/device/{{ edge.id }}/settings/serviceAssistant">
+            <ion-button class="ion-float-right" color="light"
+              routerLink="/device/{{ edge.id }}/settings/serviceAssistant">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
             </ion-button>
           </ion-card-content>
@@ -175,7 +193,8 @@
             <ion-label>Power Assistant</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light" routerLink="/device/{{ edge.id }}/settings/powerAssistant">
+            <ion-button class="ion-float-right" color="light"
+              routerLink="/device/{{ edge.id }}/settings/powerAssistant">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
             </ion-button>
           </ion-card-content>
@@ -209,15 +228,30 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-
-      <ion-col size="12" size-sm="4" *ngIf="canSeeEnergyJourney">
+      <ion-col size="12" size-sm="4" *ngIf="canSeeHomeAssistent">
         <ion-card>
           <ion-item lines="full" color="light">
-            <ion-icon slot="start" size="large" color="medium" name="analytics"></ion-icon>
-            <ion-label>Energy Journey</ion-label>
+            <ion-icon slot="start" size="large" color="primary" name="construct-outline"></ion-icon>
+            <ion-label>Home Service Assistent</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light" routerLink="/device/{{ edge.id }}/settings/energyJourney">
+            <ion-note>Für Home 10 optimiert</ion-note>
+            <ion-button class="ion-float-right" routerLink="/device/{{ edge.id }}/settings/homeServiceAssistent">
+              <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" size-sm="4" *ngIf="canSeeIndustrialLAssistant">
+        <ion-card>
+          <ion-item lines="full" color="light">
+            <ion-icon slot="start" size="large" color="medium" name="construct-outline"></ion-icon>
+            <ion-label>Industrial L Service Assistent</ion-label>
+          </ion-item>
+          <ion-card-content>
+            <ion-button class="ion-float-right" color="light"
+              routerLink="/device/{{ edge.id }}/settings/industrialLAssistant">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
             </ion-button>
           </ion-card-content>

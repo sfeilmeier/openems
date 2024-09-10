@@ -22,10 +22,10 @@ const baseConfig: CapacitorConfig = {
       useDialog: true,
     },
     CapacitorCookies: {
-      enabled: true
-    }
-  }
-}
+      enabled: true,
+    },
+  },
+};
 
 switch (process.env.NODE_ENV as Theme) {
   case 'FENECON':
@@ -35,9 +35,9 @@ switch (process.env.NODE_ENV as Theme) {
       appName: 'FENECON',
       server: {
         ...baseConfig.server,
-        hostname: 'portal.fenecon.de'
-      }
-    }
+        hostname: 'portal.fenecon.de',
+      },
+    };
     break;
   case 'Heckert':
     config = {
@@ -46,13 +46,12 @@ switch (process.env.NODE_ENV as Theme) {
       appName: 'Heckert',
       server: {
         ...baseConfig.server,
-        hostname: 'symphon-e.heckert-solar.com'
-      }
-    }
+        hostname: 'symphon-e.heckert-solar.com',
+      },
+    };
     break;
   default:
-    throw new Error(`Capacitor config for theme ${process.env.NODE_ENV} not implemented.`)
-}
-console.warn(config);
+    throw new Error(`Capacitor config for theme ${process.env.NODE_ENV} not implemented.`);
 
+}
 export default config;

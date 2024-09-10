@@ -1,18 +1,18 @@
 // @ts-strict-ignore
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
-import { SetupProtocol } from 'src/app/shared/jsonrpc/request/submitSetupProtocolRequest';
-import { Edge, EdgeConfig, Service, Websocket } from 'src/app/shared/shared';
-import { Country } from 'src/app/shared/type/country';
-import { environment } from 'src/environments';
-import { Category } from '../shared/category';
-import { FeedInSetting, FeedInType, View, WebLinks } from '../shared/enums';
-import { ComponentData, SerialNumberFormData } from '../shared/ibndatatypes';
-import { Meter } from '../shared/meter';
-import { FEED_IN_POWER_FACTOR_OPTIONS } from '../shared/options';
-import { System, SystemId, SystemType } from '../shared/system';
-import { ComponentConfigurator } from '../views/configuration-execute/component-configurator';
+import { FormGroup } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { SetupProtocol } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
+import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
+import { Country } from "src/app/shared/type/country";
+import { environment } from "src/environments";
+import { Category } from "../shared/category";
+import { FeedInSetting, FeedInType, View, WebLinks } from "../shared/enums";
+import { ComponentData, SerialNumberFormData } from "../shared/ibndatatypes";
+import { Meter } from "../shared/meter";
+import { FEED_IN_POWER_FACTOR_OPTIONS } from "../shared/options";
+import { System, SystemId, SystemType } from "../shared/system";
+import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
 
 export type SerialNumberData = {
   formGroup: FormGroup;
@@ -133,7 +133,7 @@ export abstract class AbstractIbn {
   public readonly defaultNumberOfModules: number;
 
   // Label used for device check in configuration summary. It is different for Industrial systems.
-  public readonly isDevicesActiveCheckedLabel: string = this.translate.instant('INSTALLATION.CONFIGURATION_SUMMARY.DEVICE_ACTIVE_CHECKED');
+  public readonly isDevicesActiveCheckedLabel: string = this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.DEVICE_ACTIVE_CHECKED");
 
   constructor(public views: View[], public translate: TranslateService) { }
 
@@ -231,24 +231,24 @@ export abstract class AbstractIbn {
       type: "select",
       className: "white-space-initial",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE'),
-        placeholder: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
+        placeholder: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER"),
         options: [
-          { label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION'), value: FeedInType.DYNAMIC_LIMITATION },
-          { label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION'), value: FeedInType.EXTERNAL_LIMITATION },
-          { label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION'), value: FeedInType.NO_LIMITATION },
+          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
+          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
+          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
         ],
         required: true,
       },
     });
 
     fields.push({
-      key: 'maximumFeedInPower',
-      type: 'input',
+      key: "maximumFeedInPower",
+      type: "input",
       templateOptions: {
-        type: 'number',
-        label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE'),
-        description: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_VALUE_DESCRIPTION'),
+        type: "number",
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
+        description: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_VALUE_DESCRIPTION"),
         required: true,
         max: 29999, // max feed in power limit value.
       },
@@ -267,25 +267,25 @@ export abstract class AbstractIbn {
    */
   public addAdditionalFeedInLimitsFields(fields: FormlyFieldConfig[]) {
     fields.push({
-      key: 'feedInSetting',
-      type: 'radio',
+      key: "feedInSetting",
+      type: "radio",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE'),
-        description: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FEED_IN_SETTING_DESCRIPTION'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
+        description: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FEED_IN_SETTING_DESCRIPTION"),
         options: [
-          { label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.QU_ENABLED_CURVE'), value: FeedInSetting.QuEnableCurve },
-          { label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PU_ENABLED_CURVE'), value: FeedInSetting.PuEnableCurve },
-          { label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FIXED_POWER_FACTOR'), value: FeedInSetting.FixedPowerFactor },
+          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.QU_ENABLED_CURVE"), value: FeedInSetting.QuEnableCurve },
+          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PU_ENABLED_CURVE"), value: FeedInSetting.PuEnableCurve },
+          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FIXED_POWER_FACTOR"), value: FeedInSetting.FixedPowerFactor },
         ],
         required: true,
       },
     });
 
     fields.push({
-      key: 'fixedPowerFactor',
-      type: 'select',
+      key: "fixedPowerFactor",
+      type: "select",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CONSTANT_VALUE'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CONSTANT_VALUE"),
         options: FEED_IN_POWER_FACTOR_OPTIONS(),
         required: true,
       },
@@ -296,7 +296,7 @@ export abstract class AbstractIbn {
       key: "isManualProperlyFollowedAndRead",
       type: "checkbox",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_CHECK'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_CHECK"),
         required: true,
       },
       hideExpression: model => model.feedInType != FeedInType.EXTERNAL_LIMITATION,
@@ -314,8 +314,8 @@ export abstract class AbstractIbn {
       key: "fixedValue",
       type: "select",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE'),
-        description: this.translate.instant('INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.FIXED_VALUE_DESCRIPTION'),
+        label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
+        description: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.FIXED_VALUE_DESCRIPTION"),
         options: [
           { label: "25 A", value: 25 },
           { label: "32 A", value: 32 },
@@ -326,7 +326,7 @@ export abstract class AbstractIbn {
           { label: "80 A", value: 80 },
           { label: "100 A", value: 100 },
           { label: "120 A", value: 120 },
-          { label: this.translate.instant('INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.OTHER'), value: -1 },
+          { label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.OTHER"), value: -1 },
         ],
         required: true,
       },
@@ -338,7 +338,7 @@ export abstract class AbstractIbn {
       type: "input",
       templateOptions: {
         type: "number",
-        label: this.translate.instant('INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.OTHER_VALUE'),
+        label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.OTHER_VALUE"),
         min: 0,
         required: true,
       },
@@ -423,14 +423,14 @@ export abstract class AbstractIbn {
 
       protocol.items.push({
         category: this.lineSideMeterFuse.category,
-        name: this.translate.instant('INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE'),
-        value: lineSideMeterFuseValue ? lineSideMeterFuseValue.toString() : '',
+        name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
+        value: lineSideMeterFuseValue ? lineSideMeterFuseValue.toString() : "",
       });
     }
 
     protocol.items.push({
       category: Category.EMS_DETAILS,
-      name: this.translate.instant('INSTALLATION.CONFIGURATION_SUMMARY.EDGE_NUMBER', { edgeShortName: environment.edgeShortName }),
+      name: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.EDGE_NUMBER", { edgeShortName: environment.edgeShortName }),
       value: edge.id,
     });
 
@@ -470,15 +470,15 @@ export abstract class AbstractIbn {
     // Tower/String is valid for both Home and Industrial. String alone is valid for Commercial.
     for (let componentCount = 0; componentCount < serialNumbers.modules.length; componentCount++) {
       const module = serialNumbers.modules[componentCount];
-      if (module.value !== null && module.value !== '') {
-        const name: string = this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER', { label: module.label });
+      if (module.value !== null && module.value !== "") {
+        const name: string = this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label });
         const serialNumber: string = module.value;
 
         // Determine the tower/string number based on the componentCount
         for (let tower = 1; tower <= numTowers; tower++) {
           if (componentCount < numComponentsPerTower[tower]) {
             const category: string = tower === 1
-              ? this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS')
+              ? this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS")
               : this.translate.instant(categoryElement, { number: tower });
 
             // Push the data to protocol.lots
@@ -500,6 +500,21 @@ export abstract class AbstractIbn {
      */
   public setIbn(system: any): AbstractIbn {
     return System.getSystemObjectFromSystemId(system, this.translate);
+  }
+
+  /**
+   * Returns the ems type saved in Odoo.
+   *
+   * @returns the EMS type or null if it is empty.
+   */
+  public getEmsType(): "feh013" | "fho011" | null {
+
+    // Retrieve emsType and handle the "null" string case safely
+    const rawEmsType: string = sessionStorage.getItem("emsType");
+
+    // Check if the raw value is the string "null" and convert it to the correct type
+    return (rawEmsType === "null" ? null : rawEmsType) as "feh013" | "fho011" | null;
+
   }
 
   /**

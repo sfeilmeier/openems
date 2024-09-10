@@ -8,11 +8,11 @@ import { SubSystemType, System } from "../../shared/system";
 
 @Component({
     selector: ConfigurationSubSystemComponent.SELECTOR,
-    templateUrl: './configuration-sub-system.html',
+    templateUrl: "./configuration-sub-system.html",
 })
 export class ConfigurationSubSystemComponent implements OnInit {
 
-    private static readonly SELECTOR = 'configuration-sub-system';
+    private static readonly SELECTOR = "configuration-sub-system";
 
     @Input() public ibn: AbstractIbn;
     @Output() public nextViewEvent = new EventEmitter();

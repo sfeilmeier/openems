@@ -1,19 +1,19 @@
 // @ts-strict-ignore
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Edge, EdgeConfig, Service, Websocket } from 'src/app/shared/shared';
-import { environment } from 'src/environments';
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
+import { environment } from "src/environments";
 
-import { FeedInType, View } from '../../../shared/enums';
-import { SystemId } from '../../../shared/system';
-import { ComponentConfigurator, ConfigurationMode } from '../../../views/configuration-execute/component-configurator';
-import { SchedulerIdBehaviour } from '../../abstract-ibn';
-import { AbstractCommercial30Ibn } from './abstract-commercial-30';
+import { FeedInType, View } from "../../../shared/enums";
+import { SystemId } from "../../../shared/system";
+import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
+import { SchedulerIdBehaviour } from "../../abstract-ibn";
+import { AbstractCommercial30Ibn } from "./abstract-commercial-30";
 
 export class Commercial30AnschlussIbn extends AbstractCommercial30Ibn {
 
     public override readonly id: SystemId = SystemId.COMMERCIAL_30_ANSCHLUSS;
-    public override readonly emergencyPower = 'DISABLE';
+    public override readonly emergencyPower = "DISABLE";
 
     constructor(translate: TranslateService) {
         super([
@@ -55,14 +55,14 @@ export class Commercial30AnschlussIbn extends AbstractCommercial30Ibn {
 
         // ess0
         componentConfigurator.add({
-            factoryId: 'Ess.Generic.ManagedSymmetric',
-            componentId: 'ess0',
-            alias: this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.STORAGE_SYSTEM'),
+            factoryId: "Ess.Generic.ManagedSymmetric",
+            componentId: "ess0",
+            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.STORAGE_SYSTEM"),
             properties: [
-                { name: 'enabled', value: true },
-                { name: 'startStop', value: 'START' },
-                { name: 'batteryInverter.id', value: 'batteryInverter0' },
-                { name: 'battery.id', value: 'battery0' },
+                { name: "enabled", value: true },
+                { name: "startStop", value: "START" },
+                { name: "batteryInverter.id", value: "batteryInverter0" },
+                { name: "battery.id", value: "battery0" },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         }, 7);
@@ -78,17 +78,17 @@ export class Commercial30AnschlussIbn extends AbstractCommercial30Ibn {
 
             // Adds the ems box field only for Initial String.
             const emsbox: FormlyFieldConfig = {
-                key: 'emsbox',
-                type: 'input',
+                key: "emsbox",
+                type: "input",
                 templateOptions: {
-                    label: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EMS_BOX_CONNECTION_BOX_COMMERCIAL30', { edgeShortName: environment.edgeShortName }),
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EMS_BOX_CONNECTION_BOX_COMMERCIAL30", { edgeShortName: environment.edgeShortName }),
                     required: true,
-                    placeholder: 'xxxxxxxxxxxx',
+                    placeholder: "xxxxxxxxxxxx",
                 },
                 validators: {
-                    validation: ['emsBoxSerialNumber'],
+                    validation: ["emsBoxSerialNumber"],
                 },
-                wrappers: ['input-serial-number'],
+                wrappers: ["input-serial-number"],
             };
 
             // ems box field is added at a specific position in array, because it is always displayed at specific position in UI.

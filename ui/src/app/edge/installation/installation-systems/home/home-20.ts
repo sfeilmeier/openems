@@ -18,14 +18,14 @@ export class Home20FeneconIbn extends AbstractHomeIbn {
 
     public override readonly id: SystemId = SystemId.FENECON_HOME_20;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
-    public override readonly homeAppAlias: string = 'FENECON Home 20';
-    public override readonly homeAppId: string = 'App.FENECON.Home.20';
+    public override readonly homeAppAlias: string = "FENECON Home 20";
+    public override readonly homeAppId: string = "App.FENECON.Home.20";
     public override readonly maxNumberOfModulesPerTower: number = 15;
     public override readonly maxNumberOfPvStrings: number = 4;
     public override readonly maxNumberOfMppt: number = 2;
     public override readonly maxNumberOfTowers: number = 5;
     public override readonly minNumberOfModulesPerTower: number = 5;
-    public override readonly relayFactoryId: string = 'IO.KMtronic';
+    public override readonly relayFactoryId: string = "IO.KMtronic";
 
     public override mppt: {
         connectionCheck: boolean,
@@ -76,6 +76,6 @@ export class Home20FeneconIbn extends AbstractHomeIbn {
     }
 
     public getImageUrl(mppt: number): string {
-        return 'assets/img/home-mppt/' + 'Home_20_MPPT' + mppt + '.png';
+        return "assets/img/home-mppt/" + "Home_20_MPPT" + mppt + ".png";
     }
 }

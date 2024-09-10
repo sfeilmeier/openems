@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Edge, EdgeConfig, Service, Websocket } from '../../../shared/shared';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { Edge, EdgeConfig, Service, Websocket } from "../../../shared/shared";
 
 interface MyEdgeConfigComponent extends EdgeConfig.Component {
   isClicked?: boolean,
@@ -9,7 +9,7 @@ interface MyEdgeConfigComponent extends EdgeConfig.Component {
 
 @Component({
   selector: ServiceAssistantComponent.SELECTOR,
-  templateUrl: './serviceassistant.component.html',
+  templateUrl: "./serviceassistant.component.html",
 })
 export class ServiceAssistantComponent implements OnInit {
 
@@ -30,7 +30,7 @@ export class ServiceAssistantComponent implements OnInit {
 
   ngOnInit() {
     this.service.startSpinner(this.serviceAssistantSpinnerId);
-    this.service.setCurrentComponent('Service Assistant', this.route).then(edge => {
+    this.service.getCurrentEdge().then(edge => {
       this.edge = edge;
 
       this.service.getConfig().then(config => {

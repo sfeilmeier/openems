@@ -1,13 +1,13 @@
 // @ts-strict-ignore
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { compareVersions } from 'compare-versions';
-import { Subject, timer } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { ComponentJsonApiRequest } from 'src/app/shared/jsonrpc/request/componentJsonApiRequest';
-import { ExecuteSystemCommandRequest } from 'src/app/shared/jsonrpc/request/executeCommandRequest';
-import { ExecuteSystemCommandResponse } from 'src/app/shared/jsonrpc/response/executeSystemCommandResponse';
-import { Edge, Service, Utils, Websocket } from '../../../shared/shared';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { compareVersions } from "compare-versions";
+import { Subject, timer } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
+import { ExecuteSystemCommandRequest } from "src/app/shared/jsonrpc/request/executeCommandRequest";
+import { ExecuteSystemCommandResponse } from "src/app/shared/jsonrpc/response/executeSystemCommandResponse";
+import { Edge, Service, Utils, Websocket } from "../../../shared/shared";
 
 class Package {
 
@@ -38,7 +38,7 @@ class Package {
 
 @Component({
   selector: SystemUpdateOldComponent.SELECTOR,
-  templateUrl: './systemupdate.old.component.html',
+  templateUrl: "./systemupdate.old.component.html",
 })
 export class SystemUpdateOldComponent implements OnInit, OnDestroy {
 
@@ -69,7 +69,7 @@ export class SystemUpdateOldComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.service.setCurrentComponent("", this.route).then(edge => {
+    this.service.getCurrentEdge().then(edge => {
       this.edge = edge;
 
       // Update version information now and every minute
@@ -198,19 +198,19 @@ export class SystemUpdateOldComponent implements OnInit, OnDestroy {
 
   private getColor(level): string {
     switch (level) {
-      case 'INFO':
-        return 'green';
-      case 'WARN':
-        return 'orange';
-      case 'DEBUG':
-        return 'gray';
-      case 'ERROR':
-        return 'red';
+      case "INFO":
+        return "green";
+      case "WARN":
+        return "orange";
+      case "DEBUG":
+        return "gray";
+      case "ERROR":
+        return "red";
     }
-    return 'black';
+    return "black";
   }
 
-  private log(level: 'INFO' | 'ERROR' | 'OTHER', message: string) {
+  private log(level: "INFO" | "ERROR" | "OTHER", message: string) {
     this.logLines.unshift({
       time: new Date().toLocaleString(),
       color: this.getColor(level),

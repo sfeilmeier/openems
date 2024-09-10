@@ -4,9 +4,9 @@ export enum GridMode {
     OFF_GRID = 2,
 }
 export enum Mode {
-    MANUAL_ON = 'MANUAL_ON',
-    MANUAL_OFF = 'MANUAL_OFF',
-    AUTOMATIC = 'AUTOMATIC',
+    MANUAL_ON = "MANUAL_ON",
+    MANUAL_OFF = "MANUAL_OFF",
+    AUTOMATIC = "AUTOMATIC",
 }
 export const ChartAnnotationState = {
     ON: 1,
@@ -33,8 +33,8 @@ export enum GoodWe {
     FENECON_FHI_29_9_DAH = 130,
 }
 export enum WorkMode {
-    TIME = 'TIME',
-    NONE = 'NONE',
+    TIME = "TIME",
+    NONE = "NONE",
 }
 export enum BackupEnable {
     AKTIVIERT = 1,
@@ -134,4 +134,31 @@ export enum SafetyCountryCode {
     AUSTRALIA_AUSGRID = 0x47, //
     AUSTRALIA_ESSENTIAL = 0x48, //
     AUSTRALIA_PWCORE_CITI_PW = 0x49,//
+}
+
+export enum EnabledDisabledState {
+    DISABLED = 0,
+    ENABLED = 1,
+}
+
+export enum BatteryInverterState {
+    UNDEFINED = -1,
+    OFF = 1,
+    SLEEPING = 2,
+    STARTING = 3,
+    MPPT = 4,
+    THROTTLED = 5,
+    SHUTTING_DOWN = 6,
+    FAULT = 7,
+    STANDBY = 8,
+    PRECHARGE = 9,
+    GRID_PRE_CONNECTED = 10,
+    GRID_CONNECTED = 11,
+    NO_ERROR_PENDING = 12,
+}
+
+export enum OverrideStatus {
+    ACTIVE = 0,
+    INACTIVE = 1,
+    ERROR = 2,
 }

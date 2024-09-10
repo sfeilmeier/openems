@@ -140,10 +140,6 @@ function prevent_multiple_exec {
 
 prevent_multiple_exec;
 
-apt_remove build-essential;
-
-vacuum;
-
 VERSION=""
 VERSION_CODENAME=""
 if [ -e /etc/os-release ]; then
@@ -176,17 +172,27 @@ esac
 # Remove alternate sources
 find /etc/apt/sources.list.d -name "*.list" -delete
 
+# Install apt keys
+install_debian_apt_key 10 buster
+install_debian_apt_key 11 bullseye
+install_debian_apt_key 12 bookworm
+
+vacuum;
+apt_remove build-essential;
+
+# Fix brocken installation
+if [[ "$(dpkg-query -W -f='${Status}\n' fems)" == *"half-installed"* ]]; then
+    FEMS_VERSION="$(dpkg-query -W -f='${Version}\n' fems)"
+    wget "https://fenecon.de/fems-archive/fems-${FEMS_VERSION}.deb" -O /tmp/fems.deb
+    dpkg_install /tmp/fems.deb
+fi
+
 if [ -d "/home/imodcloud" ]; then
     echo "# Do not apt update Techbase"
 else
     if [ -e /etc/apt/apt.conf.d/01-fems-setup ]; then
         echo "# Remove deprecated fiona proxy"
         rm -f /etc/apt/apt.conf.d/01-fems-setup
-    fi
-
-    if [ -e /etc/apt/sources.list.d/jessie-backports.list ]; then
-        echo "# Remove deprecated jessie-backports source"
-        rm -f /etc/apt/sources.list.d/jessie-backports.list
     fi
 
     echo "# Setup dependencies"
@@ -220,10 +226,6 @@ else
         echo "#"
     fi
 
-    install_debian_apt_key 10 buster
-    install_debian_apt_key 11 bullseye
-    install_debian_apt_key 12 bookworm
-
     dpkg --configure -a --force-confnew || true
 
     apt-get install --fix-broken --assume-yes || true
@@ -234,8 +236,8 @@ else
     apt-get autoremove --assume-yes || true
     apt-get --fix-broken install --assume-yes || true
 
-    case "$VERSION" in
-        "8 (jessie)") 
+    case "$VERSION_CODENAME" in
+        "jessie") 
         apt-get update || true
         ;;
 
@@ -251,15 +253,15 @@ apt_install at
 apt_install ncdu
 
 if ! is_installed temurin-17-jre; then
-    case "$VERSION" in
-        "8 (jessie)")
+    case "$VERSION_CODENAME" in
+        "jessie")
             echo "# Manually install p11-kit for Jessie"
             wget http://fenecon.de/fems-download/deb/{p11-kit_0.20.7-1_armhf,p11-kit-modules_0.20.7-1_armhf}.deb --no-check-certificate
             dpkg -i {p11-kit_0.20.7-1_armhf,p11-kit-modules_0.20.7-1_armhf}.deb
             rm -f {p11-kit_0.20.7-1_armhf,p11-kit-modules_0.20.7-1_armhf}.deb
             ;;
 
-        "9 (stretch)")
+        "stretch")
             echo "# Install p11-kit for stretch; downgrade libp11-kit0"
             apt-get install libp11-kit0=0.23.3-2 p11-kit --assume-yes --force-yes
             ;;
@@ -288,6 +290,11 @@ fi
 apt-get install --fix-broken --assume-yes || true
 
 vacuum;
+
+if [ ! -f "/etc/openems.d/hardware.conf" ]; then
+    wget https://fenecon.de/fems-tools/detect-hw.sh -O /tmp/detect-hw.sh
+    bash /tmp/detect-hw.sh
+fi
 
 export CURRENT_VERSION="$(dpkg-query --showformat='${Version}' --show $PACKAGE)"
 export LATEST_VERSION="$(wget -qO- http://fenecon.de/debian-test/${PACKAGE}-latest.version --no-check-certificate)"

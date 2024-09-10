@@ -1,14 +1,14 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
-import { COUNTRY_OPTIONS } from 'src/app/shared/type/country';
-import { AbstractIbn } from '../../installation-systems/abstract-ibn';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormGroup, Validators } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { COUNTRY_OPTIONS } from "src/app/shared/type/country";
+import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 
 @Component({
   selector: ProtocolSystemComponent.SELECTOR,
-  templateUrl: './protocol-system.component.html',
+  templateUrl: "./protocol-system.component.html",
 })
 export class ProtocolSystemComponent implements OnInit {
 
@@ -57,7 +57,7 @@ export class ProtocolSystemComponent implements OnInit {
       key: "isEqualToCustomerData",
       type: "checkbox",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_SYSTEM.LOCATION_SAME_AS_ADDRESS'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM.LOCATION_SAME_AS_ADDRESS"),
       },
     });
 
@@ -65,7 +65,7 @@ export class ProtocolSystemComponent implements OnInit {
       key: "isCorporateClient",
       type: "checkbox",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_CUSTOMER'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_CUSTOMER"),
       },
       hideExpression: model => model.isEqualToCustomerData,
     });
@@ -74,7 +74,7 @@ export class ProtocolSystemComponent implements OnInit {
       key: "companyName",
       type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_NAME'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_NAME"),
         required: true,
       },
       hideExpression: model => model.isEqualToCustomerData || !model.isCorporateClient,
@@ -84,7 +84,7 @@ export class ProtocolSystemComponent implements OnInit {
       key: "lastName",
       type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_SYSTEM.LAST_NAME'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM.LAST_NAME"),
         required: true,
       },
       hideExpression: model => model.isEqualToCustomerData,
@@ -94,7 +94,7 @@ export class ProtocolSystemComponent implements OnInit {
       key: "firstName",
       type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_SYSTEM.FIRSTNAME'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM.FIRSTNAME"),
         required: true,
       },
       hideExpression: model => model.isEqualToCustomerData,
@@ -104,7 +104,7 @@ export class ProtocolSystemComponent implements OnInit {
       key: "street",
       type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS"),
         required: true,
       },
       hideExpression: model => model.isEqualToCustomerData,
@@ -114,7 +114,7 @@ export class ProtocolSystemComponent implements OnInit {
       key: "zip",
       type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP"),
         required: true,
       },
       validators: {
@@ -127,7 +127,7 @@ export class ProtocolSystemComponent implements OnInit {
       key: "city",
       type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY"),
         required: true,
       },
       hideExpression: model => model.isEqualToCustomerData,
@@ -137,7 +137,7 @@ export class ProtocolSystemComponent implements OnInit {
       key: "country",
       type: "select",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY"),
         required: true,
         options: COUNTRY_OPTIONS(this.translate),
       },
@@ -151,7 +151,7 @@ export class ProtocolSystemComponent implements OnInit {
           type: "input",
           templateOptions: {
             type: "email",
-            label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL'),
+            label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL"),
             required: true,
           },
           validators: {
@@ -163,8 +163,8 @@ export class ProtocolSystemComponent implements OnInit {
           type: "input",
           templateOptions: {
             type: "email",
-            label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL'),
-            description: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL_CONFIRMATION'),
+            label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL"),
+            description: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL_CONFIRMATION"),
             required: true,
           },
         },
@@ -181,7 +181,7 @@ export class ProtocolSystemComponent implements OnInit {
       key: "phone",
       type: "input",
       templateOptions: {
-        label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.PHONE'),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.PHONE"),
         required: true,
       },
       hideExpression: model => model.isEqualToCustomerData,

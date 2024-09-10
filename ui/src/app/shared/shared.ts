@@ -7,30 +7,79 @@ export { Utils } from "./service/utils";
 export { Websocket } from "./service/websocket";
 export { ChannelAddress } from "./type/channeladdress";
 export { CurrentData } from "./type/currentdata";
-export { BackupEnable, BatteryMode, BatteryStateMachine, DredCmd, GoodWe, GridMode, SafetyCountryCode } from "./type/general";
+export { BackupEnable, BatteryInverterState, BatteryMode, BatteryStateMachine, DredCmd, GoodWe, GridMode, SafetyCountryCode } from "./type/general";
 export { SystemLog } from "./type/systemlog";
 export { Widget, WidgetFactory, WidgetNature, Widgets } from "./type/widget";
-
 import { AlertController, AlertOptions } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
-import { addIcons } from 'ionicons';
+import { isBefore, subDays, subYears } from "date-fns";
+import { addIcons } from "ionicons";
 import { Edge } from "./components/edge/edge";
 import { User } from "./jsonrpc/shared";
 import { DefaultTypes } from "./service/defaulttypes";
 import { Role } from "./type/role";
 
 addIcons({
-  'oe-consumption': 'assets/img/icon/consumption.svg',
-  'oe-evcs': 'assets/img/icon/evcs.svg',
-  'oe-grid': 'assets/img/icon/grid.svg',
-  'oe-grid-storage': 'assets/img/icon/gridStorage.svg',
-  'oe-grid-restriction': 'assets/img/icon/gridRestriction.svg',
-  'oe-offgrid': 'assets/img/icon/offgrid.svg',
-  'oe-production': 'assets/img/icon/production.svg',
-  'oe-storage': 'assets/img/icon/storage.svg',
+  "oe-consumption": "assets/img/icon/consumption.svg",
+  "oe-evcs": "assets/img/icon/evcs.svg",
+  "oe-grid": "assets/img/icon/grid.svg",
+  "oe-grid-storage": "assets/img/icon/gridStorage.svg",
+  "oe-grid-restriction": "assets/img/icon/gridRestriction.svg",
+  "oe-offgrid": "assets/img/icon/offgrid.svg",
+  "oe-production": "assets/img/icon/production.svg",
+  "oe-storage": "assets/img/icon/storage.svg",
 });
 
+export class Permission {
+
+  /**
+   * Gets the allowed energy journey widgets, used in {@link EnergyJourneyComponent}
+   *
+   * @param ibnDate the first setup protocol date - ibn date
+   * @returns the list of allowed widgets
+   */
+  public static getAllowedEnergyJourneyWidgets(ibnDate: Date, translate: TranslateService): EnergyJourneyWidget[] {
+    return EdgePermission.getAllowedEnergyJourneyWidgets(ibnDate, translate);
+  }
+}
+
 export class EdgePermission {
+
+  /**
+   * Checks if the {@link EnergyJourneyComponent energy journey} is allowed to be seen
+   *
+   * @param ibnDate the ibn date - first setup protocol date
+   * @returns true, if ibnDate is at least one year ago
+   */
+  public static isEnergyJourneyAllowed(ibnDate: Date): boolean {
+    const isDateAtLeastOneYearAgo = isBefore(ibnDate, subDays(subYears(new Date(), 1), 1));
+    return isDateAtLeastOneYearAgo;
+  }
+
+  /**
+   * Gets the allowed energy journey widgets for this edge
+   * and if ibn date is at least one year old, it gets the correspondent widgets accordingly
+   *
+   * @param ibnDate the first setup protocol date - ibn date
+   * @returns the list of allowed widgets for this edge
+   */
+  public static getAllowedEnergyJourneyWidgets(ibnDate: Date, translate: TranslateService): EnergyJourneyWidget[] {
+    const isDateAtLeastOneYearAgo = EdgePermission.isEnergyJourneyAllowed(ibnDate);
+    if (!isDateAtLeastOneYearAgo) {
+      return [];
+    }
+
+    return [new EnergyJourneyWidget(
+      "Batterieerweiterung",
+      "Batterieerweiterung, Lohnt es sich?",
+      `Ob sich die Nachrüstung Ihres Strompeichers Home 10 lohnt,
+        hängt von verschiedenen Faktoren ab. Ihr System ist seit mehr
+        als einem Jahr in Betrieb. Analysieren Sie hier, wie sich eine
+        Batterieerweiterung ausgewirkt hätte`,
+      ["batteryExtension", "electricityPriceChoice"],
+      translate.instant("SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS"),
+    )];
+  }
 
   /**
    * Gets the allowed history periods for this edge, used in {@link PickDatePopoverComponent}
@@ -58,6 +107,10 @@ export class EdgePermission {
     }, []);
   }
 
+  public static isModbusTcpApiWidgetAllowed(edge: Edge): boolean {
+    return edge?.isVersionAtLeast("2024.9.1");
+  }
+
   /**
    * Determines if the edge has its channels in the edgeconfig
    * or if they should be obtained with a separate request.
@@ -68,7 +121,7 @@ export class EdgePermission {
    * @returns true if the channels are included in the edgeconfig
    */
   public static hasChannelsInEdgeConfig(edge: Edge): boolean {
-    return !edge.isVersionAtLeast('2024.6.1');
+    return !edge.isVersionAtLeast("2024.6.1");
   }
 
   /**
@@ -81,11 +134,22 @@ export class EdgePermission {
    * @returns true if only the factories of the used components are in the edgeconfig
    */
   public static hasReducedFactories(edge: Edge): boolean {
-    return edge.isVersionAtLeast('2024.6.1');
+    return edge.isVersionAtLeast("2024.6.1");
   }
 }
 
 export class UserPermission {
+
+  /**
+   * Checks if user is allowed to see  {@link EnergyJourneyComponent}
+   *
+   * @param user the current user
+   * @param edge the edge
+   * @returns true, if user is at least {@link Role.OWNER} & edge.producttype is 'Home 10'
+   */
+  public static isUserAllowedToSeeEnergyJourney(user: User, edge: Edge): boolean {
+    return Role.isAtLeast(user.globalRole, Role.OWNER) && edge.producttype === Producttype.HOME;
+  }
 
   /**
    * Checks if user is allowed to see  {@link FooterComponent}
@@ -147,6 +211,18 @@ export class UserPermission {
     return Role.isAtLeast(user.globalRole, Role.ADMIN) && isProductTypeAllowed;
   }
 
+  public static isUserAllowedToSeeIndustrialAssistant(user: User, edge: Edge): boolean {
+    const isProductTypeAllowed = (() => {
+      switch (edge.producttype) {
+        case Producttype.INDUSTRIAL_L:
+          return true;
+        default:
+          return false;
+      }
+    })();
+    return Role.isAtLeast(user.globalRole, Role.ADMIN) && isProductTypeAllowed;
+  }
+
   /**
   * Checks if user is allowed to see {@link SystemRestartComponent}
   *
@@ -154,17 +230,18 @@ export class UserPermission {
   * @returns true, if user is at least {@link Role.ADMIN} and edge version is at least 2024.2.2
   */
   public static isAllowedToSeeSystemRestart(user: User, edge: Edge) {
-    const isAllowed = edge?.isVersionAtLeast('2024.2.2');
+    const isAllowed = edge?.isVersionAtLeast("2024.2.2");
     return Role.isAtLeast(user?.globalRole, Role.OWNER) && isAllowed;
   }
 }
 
 export enum Producttype {
-  HOME = 'home',
-  HOME_20_30 = 'Home 20 & 30',
-  COMMERCIAL_30 = 'Commercial 30-Serie',
-  COMMERCIAL_50 = 'Commercial 50-Serie',
-  COMMERCIAL_40_45 = 'COMMERCIAL 40-45',
+  HOME = "home",
+  HOME_20_30 = "Home 20 & 30",
+  COMMERCIAL_30 = "Commercial 30-Serie",
+  COMMERCIAL_50 = "Commercial 50-Serie",
+  COMMERCIAL_40_45 = "COMMERCIAL 40-45",
+  INDUSTRIAL_L = "Industrial L",
 }
 
 export namespace Currency {
@@ -177,7 +254,7 @@ export namespace Currency {
    */
   export function getCurrencyLabelByEdgeId(edgeId: string): Label {
     switch (edgeId) {
-      case 'fems17289':
+      case "fems17289":
         return Label.OERE_PER_KWH;
       default:
         return Label.CENT_PER_KWH;
@@ -192,7 +269,7 @@ export namespace Currency {
    */
   export function getCurrencyLabelByCurrency(currency: string): Label {
     switch (currency) {
-      case 'SEK':
+      case "SEK":
         return Label.OERE_PER_KWH;
       default:
         return Label.CENT_PER_KWH;
@@ -220,6 +297,15 @@ export enum EssStateMachine {
   ERROR = 30,
 }
 
+export enum ChannelRegister {
+  "SetActivePowerEquals" = 706,
+  "SetReactivePowerEquals" = 708,
+  "SetActivePowerLessOrEquals" = 710,
+  "SetReactivePowerLessOrEquals" = 712,
+  "SetActivePowerGreaterOrEquals" = 714,
+  "SetReactivePowerGreaterOrEquals" = 716,
+}
+
 /**
 * Presents a simple
 */
@@ -232,12 +318,22 @@ export async function presentAlert(alertController: AlertController, translate: 
   const alert = alertController.create({
     ...alertOptions,
     buttons: [{
-      text: translate.instant('General.cancel'),
-      role: 'cancel',
+      text: translate.instant("General.cancel"),
+      role: "cancel",
     },
     ...(alertOptions?.buttons ?? []),
     ],
-    cssClass: 'alertController',
+    cssClass: "alertController",
   });
   (await alert).present();
+}
+
+export class EnergyJourneyWidget {
+  constructor(
+    private label: string,
+    private slogan: string,
+    private description: string,
+    private link: string[],
+    private buttonText: string,
+  ) { }
 }

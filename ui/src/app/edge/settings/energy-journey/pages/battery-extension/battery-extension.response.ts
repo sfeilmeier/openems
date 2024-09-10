@@ -1,5 +1,5 @@
 import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
-import { SimulatedData } from "./battery-extension.module";
+import { SimulationResult } from "./battery-extension.module";
 
 /**
  * Wraps a JSON-RPC Response for a GetEdgeRequest.
@@ -18,7 +18,7 @@ export class PossibleBatteryExtensionResponse extends JsonrpcResponseSuccess {
 
     public constructor(
         public override readonly id: string,
-        public override readonly result: SimulatedData,
+        public override readonly result: SimulationResult,
     ) {
         super(id, result);
     }

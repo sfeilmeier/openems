@@ -1,7 +1,6 @@
-// @ts-strict-ignore
-import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { Component, Input } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
 
 /**  This wrapper is used to display a loading animation for a line until the async call is finished, the @input show is true, respectively.
 
@@ -11,7 +10,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 * @input model the model
 */
 @Component({
-  selector: 'formly-skeleton-wrapper',
+  selector: "formly-skeleton-wrapper",
   template: `
 <div>
   <ion-list *ngIf="!show">

@@ -9,11 +9,12 @@ $font-family: var(--ion-font-family);
 
 :root {
   /** primary **/
-  --ion-color-primary: rgb(25, 63, 97);
-  --ion-color-primary-rgb: 54, 174, 209;
+  --ion-color-primary: #193f61;
+  --ion-color-primary-rgb: 25, 63, 97;
   --ion-color-primary-contrast: #fff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #287e96;
+  --ion-color-primary-shade: #2f77b6;
+  --ion-color-primary-shade-rgb: rgb(47, 119, 182);
   --ion-color-primary-tint: rgb(25, 63, 97, 0.3);
 
   /** secondary **/
@@ -105,9 +106,13 @@ $font-family: var(--ion-font-family);
   }
 
   --ion-color-production: #36aed1;
-  --ion-color-production-rgb: 54, 174, 209;
+  --ion-color-production-rgb: 54,
+  174,
+  209;
   --ion-color-production-contrast: #fff;
-  --ion-color-production-contrast-rgb: 255, 255, 255;
+  --ion-color-production-contrast-rgb: 255,
+  255,
+  255;
   --ion-color-production-shade: #226e84;
   --ion-color-production-tint: #41d4ff;
 

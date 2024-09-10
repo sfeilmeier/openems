@@ -1,38 +1,38 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener } from "@angular/core";
 
 @Directive({
-    selector: '[oeKeyMask]',
+    selector: "[oeKeyMask]",
 })
 export class KeyMaskDirective {
-    @HostListener('input', ['$event'])
+    @HostListener("input", ["$event"])
     onInput(event: KeyboardEvent) {
         const input = event.target as HTMLInputElement;
 
-        let trimmed = input.value.replace(/\s+/g, '');
+        let trimmed = input.value.replace(/\s+/g, "");
 
         if (trimmed.length > 19) {
             trimmed = trimmed.substr(0, 19);
         }
 
         const hasDashAsLastChar = trimmed.substr(trimmed.length - 1, 1) == "-";
-        trimmed = trimmed.replace(/-/g, '');
+        trimmed = trimmed.replace(/-/g, "");
 
         const numbers = [];
 
         numbers.push(trimmed.substr(0, 4));
-        if (trimmed.substr(4, 4) !== '') {
+        if (trimmed.substr(4, 4) !== "") {
             numbers.push(trimmed.substr(4, 4));
         }
-        if (trimmed.substr(8, 4) != '') {
+        if (trimmed.substr(8, 4) != "") {
             numbers.push(trimmed.substr(8, 4));
         }
-        if (trimmed.substr(12, 4) != '') {
+        if (trimmed.substr(12, 4) != "") {
             numbers.push(trimmed.substr(12, 4));
         }
 
-        let result = numbers.join('-').toUpperCase();
+        let result = numbers.join("-").toUpperCase();
         if (hasDashAsLastChar) {
-            result += '-';
+            result += "-";
         }
         input.value = result;
     }

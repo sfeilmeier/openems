@@ -1,22 +1,21 @@
 // @ts-strict-ignore
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { SubscribeEdgesRequest } from 'src/app/shared/jsonrpc/request/subscribeEdgesRequest';
-import { Edge, Logger, Service, Websocket } from 'src/app/shared/shared';
-
-import { AbstractIbn } from './installation-systems/abstract-ibn';
-import { GeneralIbn } from './installation-systems/general-ibn';
-import { IbnUtils } from './shared/ibnutils';
-import { SystemId, System } from './shared/system';
-import { View } from './shared/enums';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
+import { SubscribeEdgesRequest } from "src/app/shared/jsonrpc/request/subscribeEdgesRequest";
+import { Edge, Logger, Service, Websocket } from "src/app/shared/shared";
+import { AbstractIbn } from "./installation-systems/abstract-ibn";
+import { GeneralIbn } from "./installation-systems/general-ibn";
+import { View } from "./shared/enums";
+import { IbnUtils } from "./shared/ibnutils";
+import { System, SystemId } from "./shared/system";
 
 @Component({
   selector: InstallationComponent.SELECTOR,
-  templateUrl: './installation.component.html',
+  templateUrl: "./installation.component.html",
 })
 export class InstallationComponent implements OnInit {
-  private static readonly SELECTOR = 'installation';
+  private static readonly SELECTOR = "installation";
 
   public ibn: AbstractIbn | null = null;
   public progressValue: number;
@@ -35,8 +34,8 @@ export class InstallationComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    this.service.currentPageTitle = 'Installation';
-    this.spinnerId = 'installation-websocket-spinner';
+    this.service.currentPageTitle = "Installation";
+    this.spinnerId = "installation-websocket-spinner";
     this.service.startSpinner(this.spinnerId);
     let ibn: AbstractIbn = null;
     let viewIndex: number;
@@ -54,7 +53,7 @@ export class InstallationComponent implements OnInit {
     if (sessionStorage?.edge) {
       // Ibn is added in second view.
       if (sessionStorage.ibn) {
-        const ibnString = JSON.parse(sessionStorage.getItem('ibn'));
+        const ibnString = JSON.parse(sessionStorage.getItem("ibn"));
         const systemId: SystemId = ibnString.id;
 
         // Load the specific Ibn implementation. and copy to the indivual fileds.
@@ -89,7 +88,7 @@ export class InstallationComponent implements OnInit {
 
       // The prototype can't be saved as JSON,
       // so it has to get instantiated here again)
-      const edgeId = JSON.parse(sessionStorage.getItem('edge')).id;
+      const edgeId = JSON.parse(sessionStorage.getItem("edge")).id;
       this.service.updateCurrentEdge(edgeId).then((edge) => {
         this.edge = edge;
         this.displayViewAtIndex(viewIndex);
@@ -139,22 +138,22 @@ export class InstallationComponent implements OnInit {
       // Till the initial system and components are selected show only current page number.
       // The view count changes based on the components selected.
       this.progressText = this.ibn.showViewCount
-        ? this.translate.instant('INSTALLATION.STEP_FROM_TO', { from: (index + 1), to: viewCount })
-        : this.translate.instant('INSTALLATION.STEP_TO', { number: (index + 1) });
+        ? this.translate.instant("INSTALLATION.STEP_FROM_TO", { from: (index + 1), to: viewCount })
+        : this.translate.instant("INSTALLATION.STEP_TO", { number: (index + 1) });
 
       if (sessionStorage) {
-        sessionStorage.setItem('viewIndex', index.toString());
+        sessionStorage.setItem("viewIndex", index.toString());
       }
 
       // When clicking next on the last view
     } else if (index === viewCount) {
       // Navigate to online monitoring of the edge
-      this.router.navigate(['device', this.edge.id]);
+      this.router.navigate(["device", this.edge.id]);
 
       // Clear session storage
       sessionStorage.clear();
     } else {
-      console.warn('The given view index is out of bounds.');
+      console.warn("The given view index is out of bounds.");
     }
   }
 
@@ -194,7 +193,7 @@ export class InstallationComponent implements OnInit {
     if (!this.edge) {
       return;
     }
-    if (!this.edge.isVersionAtLeast('2021.19.1')) {
+    if (!this.edge.isVersionAtLeast("2021.19.1")) {
       const indexOfUpdate = this.ibn.views.indexOf(View.PreInstallationUpdate);
       if (indexOfUpdate != -1) {
         this.ibn.views.splice(indexOfUpdate, 1);

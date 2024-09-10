@@ -1,5 +1,5 @@
 export namespace ArrayUtils {
-  export function equalsCheck(a: any[], b: any[]) {
+  export function equalsCheck<T>(a: T[], b: T[]) {
     return a.length === b.length &&
       a.every((v, i) => v === b[i]);
   }
@@ -21,7 +21,7 @@ export namespace ArrayUtils {
       } else if (!bVal) {
         return -1;
       }
-      return aVal.localeCompare(bVal, undefined, { sensitivity: 'accent' });
+      return aVal.localeCompare(bVal, undefined, { sensitivity: "accent" });
     });
   }
 }

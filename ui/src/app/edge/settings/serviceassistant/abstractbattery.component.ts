@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
-import { SetChannelValueRequest } from "src/app/shared/jsonrpc/request/setChannelValueRequest";
 import { TranslateService } from "@ngx-translate/core";
+import { SetChannelValueRequest } from "src/app/shared/jsonrpc/request/setChannelValueRequest";
 import { Channel } from "src/app/shared/jsonrpc/response/getChannelsOfComponentResponse";
+import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
 export abstract class AbstractBattery {
 
@@ -69,7 +69,7 @@ export abstract class AbstractBattery {
                     }, 10000);
                 }
             }).catch(reason => {
-                this.service.toast("Error setting " + address.toString() + " to [" + value + "]", 'danger');
+                this.service.toast("Error setting " + address.toString() + " to [" + value + "]", "danger");
             });
         }
     }
@@ -79,7 +79,7 @@ export abstract class AbstractBattery {
         for (const category of [...this.importantReadChannelDescriptions, ...this.importantWriteChannelDescriptions]) {
             channels.push(...this.getChannelAddressesOf(category.channels));
         }
-        channels.push(new ChannelAddress(this.component.id, '_PropertyReduceTasks'));
+        channels.push(new ChannelAddress(this.component.id, "_PropertyReduceTasks"));
         return channels;
     }
 

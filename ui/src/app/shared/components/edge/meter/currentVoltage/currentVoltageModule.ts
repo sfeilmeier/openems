@@ -8,10 +8,9 @@ import { FooterNavigationModule } from "src/app/shared/components/footer/subnavi
 import { ChartModule } from "../../../chart/chart.module";
 import { HistoryDataErrorModule } from "../../../history-data-error/history-data-error.module";
 import { PickdateModule } from "../../../pickdate/pickdate.module";
-
+import { CurrentVoltageAsymmetricChartComponent } from "./chart/asymmetricMeter";
 import { CurrentVoltageSymmetricChartComponent } from "./chart/symmetricMeter";
 import { CurrentAndVoltageOverviewComponent } from "./currentVoltage.overview";
-import { CurrentVoltageAsymmetricChartComponent } from "./chart/asymmetricMeter";
 
 @NgModule({
   imports: [
@@ -23,7 +22,7 @@ import { CurrentVoltageAsymmetricChartComponent } from "./chart/asymmetricMeter"
     NgChartsModule,
     HistoryDataErrorModule,
     NgxSpinnerModule.forRoot({
-      type: 'ball-clip-rotate-multiple',
+      type: "ball-clip-rotate-multiple",
     }),
     ChartModule,
     PickdateModule,

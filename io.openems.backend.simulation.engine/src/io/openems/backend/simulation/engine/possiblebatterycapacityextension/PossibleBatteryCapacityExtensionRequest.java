@@ -1,18 +1,12 @@
 package io.openems.backend.simulation.engine.possiblebatterycapacityextension;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.google.gson.JsonObject;
 
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
-import io.openems.common.jsonrpc.base.GenericJsonrpcRequest;
 import io.openems.common.jsonrpc.base.JsonrpcRequest;
-import io.openems.common.types.ChannelAddress;
 import io.openems.common.utils.JsonUtils;
 
 /**
@@ -24,6 +18,9 @@ import io.openems.common.utils.JsonUtils;
  *   "id": "UUID",
  *   "method": "possibleBatteryCapacityExtension",
  *   "params": {
+ *   	"fromDate": ZonedDateTime
+ *     	"toDate": ZonedDateTime,
+ *     	"electricityPrice": Double,
  *   }
  * }
  * </pre>
@@ -33,40 +30,38 @@ public class PossibleBatteryCapacityExtensionRequest extends JsonrpcRequest {
 	public static final String METHOD = "possibleBatteryCapacityExtension";
 
 	/**
-	 * Parses a {@link JsonrpcRequest} to a
-	 * {@link PossibleBatteryCapacityExtensionRequest}.
+	 * Creates a {@link JsonrpcRequest}.
 	 * 
-	 * @param r the {@link JsonrpcRequest} to parse
-	 * @return the parsed result
+	 * @param r the request
+	 * @return a {@link PossibleBatteryCapacityExtensionRequest}
 	 * @throws OpenemsNamedException on error
 	 */
 	public static PossibleBatteryCapacityExtensionRequest from(JsonrpcRequest r) throws OpenemsNamedException {
 		var p = r.getParams();
-		JsonrpcRequest payload = GenericJsonrpcRequest.from(JsonUtils.getAsJsonObject(p, "payload"));
-		return new PossibleBatteryCapacityExtensionRequest(payload);
+		var fromDate = JsonUtils.getAsZonedDateWithZeroTime(p, "fromDate", ZoneId.systemDefault());
+		var toDate = JsonUtils.getAsZonedDateWithZeroTime(p, "toDate", ZoneId.systemDefault());
+		var electricityPrice = JsonUtils.getAsDouble(p, "electricityPrice");
+		return new PossibleBatteryCapacityExtensionRequest(fromDate, toDate, electricityPrice);
 	}
 
-	/**
-	 * All Power Channels, i.e. Channels that are exported per channel and
-	 * timestamp.
-	 */
-	public static final Set<ChannelAddress> POWERCHANNELS = Stream.of(//
-			new ChannelAddress("_sum", "GridActivePower")).collect(Collectors.toCollection(HashSet::new));
+	private final ZonedDateTime fromDate;
+	private final ZonedDateTime toDate;
+	private final double electricityPrice;
 
-	public PossibleBatteryCapacityExtensionRequest() {
+	public PossibleBatteryCapacityExtensionRequest(ZonedDateTime fromDate, ZonedDateTime toDate,
+			double electricityPrice) {
 		super(PossibleBatteryCapacityExtensionRequest.METHOD);
-	}
-
-	public PossibleBatteryCapacityExtensionRequest(JsonrpcRequest request) {
-		super(request, PossibleBatteryCapacityExtensionRequest.METHOD);
+		this.toDate = toDate;
+		this.fromDate = fromDate;
+		this.electricityPrice = electricityPrice;
 	}
 
 	public ZonedDateTime getFromDate() {
-		return ZonedDateTime.now().minusYears(1).withDayOfYear(1).truncatedTo(ChronoUnit.DAYS);
+		return this.fromDate;
 	}
 
 	public ZonedDateTime getToDate() {
-		return ZonedDateTime.now().withDayOfYear(1).truncatedTo(ChronoUnit.DAYS);
+		return this.toDate;
 	}
 
 	@Override
@@ -74,12 +69,7 @@ public class PossibleBatteryCapacityExtensionRequest extends JsonrpcRequest {
 		return new JsonObject();
 	}
 
-	/**
-	 * Gets the {@link ChannelAddress}es.
-	 *
-	 * @return Set of {@link ChannelAddress}
-	 */
-	public Set<ChannelAddress> getPowerChannels() {
-		return POWERCHANNELS;
+	public double getElectricityPrice() {
+		return this.electricityPrice;
 	}
 }

@@ -8,8 +8,8 @@ export namespace Meter {
     }
 
     export enum GridMeterCategory {
-        SMART_METER = 'SMART_METER',
-        COMMERCIAL_METER = 'COMMERCIAL_METER',
+        SMART_METER = "SMART_METER",
+        COMMERCIAL_METER = "COMMERCIAL_METER",
     }
 
     /**
@@ -21,9 +21,9 @@ export namespace Meter {
     export function toFactoryId(meter: GridMeter): string {
         switch (meter) {
             case GridMeter.SOCOMEC:
-                return 'Meter.Socomec.Threephase';
+                return "Meter.Socomec.Threephase";
             case GridMeter.KDK:
-                return 'Meter.KDK.2PUCT';
+                return "Meter.KDK.2PUCT";
         }
     }
 
@@ -36,9 +36,9 @@ export namespace Meter {
     export function toGridMeterCategoryLabelString(meterCategory: GridMeterCategory, translate: TranslateService): string {
         switch (meterCategory) {
             case GridMeterCategory.SMART_METER:
-                return translate.instant('INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.WITH_CT');
+                return translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.WITH_CT");
             case GridMeterCategory.COMMERCIAL_METER:
-                return translate.instant('INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.WITHOUT_CT');
+                return translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.WITHOUT_CT");
         }
     }
 }

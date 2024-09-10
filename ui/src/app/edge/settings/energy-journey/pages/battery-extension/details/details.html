@@ -1,7 +1,7 @@
 <ion-card [title]="'Details'" *ngIf="tableData">
   <ion-card-content>
     <ion-grid class="desktop-view" *ngIf="!isSmartPhoneResolution, else smartPhoneResolution">
-      <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5)">
+      <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5); color: var(--ion-color-text)">
         <ion-col>
           &nbsp;
         </ion-col>
@@ -72,6 +72,17 @@
     <ion-row>
       <a href="https://fenecon.de/wp-content/uploads/2023/04/2024-01_FENECON_Home-10_Produktblatt_DE_Web-1.pdf"
         target="_blank">Weitere Details im Produktblatt Home 10</a>
+    </ion-row>
+
+    <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
+    <ion-row>
+      <b>Haftungsausschluss</b>
+      <hr>
+      Die Berechnungen der Analyse basieren auf Ihren Angaben zum Strompreis, den Netzbezügen und den
+      Netzeinspeise-Daten Ihres Speichers im vergangenen Jahr. Diese zugrunde liegenden Parameter können sich jederzeit
+      ändern. Die Berechnungen sind daher nur Beispiele, die zur Orientierung über die mögliche Rentabilität einer
+      Batterieerweiterung dienen und keine Garantie für tatsächlich erzielbare finanzielle Einsparungen bieten. Eine
+      Zusicherung seitens FENECON ist damit nicht verbunden.
     </ion-row>
   </ion-card-content>
 </ion-card>

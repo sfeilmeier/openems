@@ -1,23 +1,23 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { format } from 'date-fns/esm';
-import { saveAs } from 'file-saver-es';
-import { GetSetupProtocolRequest } from 'src/app/shared/jsonrpc/request/getSetupProtocolRequest';
-import { Base64PayloadResponse } from 'src/app/shared/jsonrpc/response/base64PayloadResponse';
-import { Edge, Service, Websocket } from 'src/app/shared/shared';
-import { AbstractIbn } from '../../installation-systems/abstract-ibn';
-import { Router } from '@angular/router';
-import { SystemId } from '../../shared/system';
-import { environment } from 'src/environments';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Router } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
+import { format } from "date-fns/esm";
+import { saveAs } from "file-saver-es";
+import { GetSetupProtocolRequest } from "src/app/shared/jsonrpc/request/getSetupProtocolRequest";
+import { Base64PayloadResponse } from "src/app/shared/jsonrpc/response/base64PayloadResponse";
+import { Edge, Service, Websocket } from "src/app/shared/shared";
+import { environment } from "src/environments";
+import { AbstractIbn } from "../../installation-systems/abstract-ibn";
+import { SystemId } from "../../shared/system";
 
 @Component({
   selector: CompletionComponent.SELECTOR,
-  templateUrl: './completion.component.html',
+  templateUrl: "./completion.component.html",
 })
 export class CompletionComponent implements OnInit {
 
-  private static readonly SELECTOR = 'completion';
+  private static readonly SELECTOR = "completion";
 
   @Input() public ibn: AbstractIbn;
   @Input() public edge: Edge;
@@ -25,7 +25,7 @@ export class CompletionComponent implements OnInit {
   @Output() public nextViewEvent: EventEmitter<any> = new EventEmitter();
   public system: SystemId | null = null;
   public isWaiting = false;
-  protected readonly showHeckertNote: boolean = environment.theme === 'Heckert';
+  protected readonly showHeckertNote: boolean = environment.theme === "Heckert";
 
   constructor(
     private service: Service,
@@ -39,10 +39,10 @@ export class CompletionComponent implements OnInit {
     this.isWaiting = true;
 
     this.ibn.getProtocol(this.edge, this.websocket).then((protocolId) => {
-      this.service.toast(this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SENT_SUCCESSFULLY'), 'success');
+      this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SENT_SUCCESSFULLY"), "success");
       this.ibn.setupProtocolId = protocolId;
     }).catch((reason) => {
-      this.service.toast(this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ERROR_SENDING'), 'danger');
+      this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ERROR_SENDING"), "danger");
       console.warn(reason);
     }).finally(() => {
       this.isWaiting = false;
@@ -62,7 +62,7 @@ export class CompletionComponent implements OnInit {
 
     this.websocket.sendRequest(request).then((response: Base64PayloadResponse) => {
 
-      const binary = atob(response.result.payload.replace(/\s/g, ''));
+      const binary = atob(response.result.payload.replace(/\s/g, ""));
       const length = binary.length;
 
       const buffer = new ArrayBuffer(length);
@@ -73,19 +73,19 @@ export class CompletionComponent implements OnInit {
       }
 
       const data: Blob = new Blob([view], {
-        type: 'application/pdf',
+        type: "application/pdf",
       });
 
-      const fileName = `IBN-${this.edge.id}-${format(new Date(), 'dd.MM.yyyy')}.pdf`;
+      const fileName = `IBN-${this.edge.id}-${format(new Date(), "dd.MM.yyyy")}.pdf`;
 
       saveAs(data, fileName);
     }).catch((error) => {
-      this.service.toast(this.translate.instant('INSTALLATION.COMPLETION.DOWNLOAD_ERROR'), 'danger');
+      this.service.toast(this.translate.instant("INSTALLATION.COMPLETION.DOWNLOAD_ERROR"), "danger");
       console.error(error);
     });
   }
 
   protected navigate() {
-    this.router.navigate(['device/' + (this.edge.id) + '/settings/app']);
+    this.router.navigate(["device/" + (this.edge.id) + "/settings/app"]);
   }
 }

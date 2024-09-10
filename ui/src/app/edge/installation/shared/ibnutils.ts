@@ -5,8 +5,8 @@ import { Edge, Websocket } from "src/app/shared/shared";
 import { GetNetworkConfigRequest } from "../../settings/network/getNetworkConfigRequest";
 import { GetNetworkConfigResponse } from "../../settings/network/getNetworkConfigResponse";
 import { SetNetworkConfigRequest } from "../../settings/network/setNetworkConfigRequest";
-import { AbstractIbn } from "../installation-systems/abstract-ibn";
 import { NetworkUtils } from "../../settings/network/shared";
+import { AbstractIbn } from "../installation-systems/abstract-ibn";
 
 export class IbnUtils {
 
@@ -17,9 +17,9 @@ export class IbnUtils {
      * @param ibn The IBN
      */
     public static addIbnToSessionStorage(ibn: AbstractIbn) {
-        sessionStorage.setItem('ibn', JSON.stringify(ibn, (key, value) => {
+        sessionStorage.setItem("ibn", JSON.stringify(ibn, (key, value) => {
             // Do not stringify the translate service
-            if (key === 'translate') {
+            if (key === "translate") {
                 return undefined;
             }
             return value;
@@ -41,7 +41,7 @@ export class IbnUtils {
 
         edge.sendRequest(
             websocket,
-            new ComponentJsonApiRequest({ componentId: '_host', payload: new GetNetworkConfigRequest() }),
+            new ComponentJsonApiRequest({ componentId: "_host", payload: new GetNetworkConfigRequest() }),
         ).then((response) => {
             const result = (response as GetNetworkConfigResponse).result;
 
@@ -54,7 +54,7 @@ export class IbnUtils {
 
             // No interface with given name found
             if (!iface) {
-                console.log('Network interface with name \'\'' + interfaceName + '\'\' was not found.');
+                console.log("Network interface with name ''" + interfaceName + "'' was not found.");
                 return false;
             }
 
@@ -66,9 +66,9 @@ export class IbnUtils {
 
             // Set the ip in the model of the interface
             // or return if it already exists
-            const [address, subnet] = ip.split('/');
+            const [address, subnet] = ip.split("/");
 
-            if ('addresses' in iface.model) {
+            if ("addresses" in iface.model) {
                 for (const addr of iface.model.addresses) {
                     if (addr.address == address) {
                         return true;
@@ -76,14 +76,14 @@ export class IbnUtils {
                 }
 
                 iface.model.addresses.push({
-                    label: '',
+                    label: "",
                     address: address,
                     subnetmask: NetworkUtils.getSubnetmaskAsString(Number.parseInt(subnet)),
                 });
 
             } else {
                 iface.model.addresses = new Array({
-                    label: '',
+                    label: "",
                     address: address,
                     subnetmask: NetworkUtils.getSubnetmaskAsString(Number.parseInt(subnet)),
                 });
@@ -96,7 +96,7 @@ export class IbnUtils {
 
             edge.sendRequest(
                 websocket,
-                new ComponentJsonApiRequest({ componentId: '_host', payload: new SetNetworkConfigRequest(params) }),
+                new ComponentJsonApiRequest({ componentId: "_host", payload: new SetNetworkConfigRequest(params) }),
             ).then(() => true).catch((reason) => {
                 console.log(reason);
             });

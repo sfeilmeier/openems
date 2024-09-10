@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Role } from 'src/app/shared/type/role';
-import { environment } from 'src/environments';
-import { Edge, Service, UserPermission, Utils } from '../../shared/shared';
-import { JsonrpcTestPermission } from './jsonrpctest/jsonrpctest.permission';
+import { Component, OnInit } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
+import { Role } from "src/app/shared/type/role";
+import { environment } from "src/environments";
+import { Edge, EdgePermission, Service, UserPermission, Utils } from "../../shared/shared";
+import { JsonrpcTestPermission } from "./jsonrpctest/jsonrpctest.permission";
 
 @Component({
-  selector: 'settings',
-  templateUrl: './settings.component.html',
+  selector: "settings",
+  templateUrl: "./settings.component.html",
 })
 export class SettingsComponent implements OnInit {
 
@@ -19,9 +19,10 @@ export class SettingsComponent implements OnInit {
   public isAtLeastAdmin: boolean = false;
   public canSeeJsonrpcTest: boolean = false;
 
+  protected canSeeIndustrialLAssistant: boolean = false;
+  protected isEdgeBackend: boolean = environment.backend === "OpenEMS Edge";
   protected canSeeHomeAssistant: boolean = false;
   protected canSeeCommercialAssistant: boolean = false;
-  protected isEdgeBackend: boolean = environment.backend === 'OpenEMS Edge';
   protected canSeeEnergyJourney: boolean = false;
 
   constructor(
@@ -39,9 +40,10 @@ export class SettingsComponent implements OnInit {
       this.isAtLeastInstaller = edge.roleIsAtLeast(Role.INSTALLER);
       this.isAtLeastAdmin = edge.roleIsAtLeast(Role.ADMIN);
       this.canSeeJsonrpcTest = JsonrpcTestPermission.canSee(user, edge);
+      this.canSeeIndustrialLAssistant = UserPermission.isUserAllowedToSeeIndustrialAssistant(user, edge);
       this.canSeeHomeAssistant = UserPermission.isUserAllowedToSeeHomeAssistant(user, edge);
       this.canSeeCommercialAssistant = UserPermission.isUserAllowedToSeeCommercialServiceAssistant(user, edge);
-      this.canSeeEnergyJourney = false; // TODO (Backend only!)
+      this.canSeeEnergyJourney = EdgePermission.getAllowedEnergyJourneyWidgets(this.edge.firstSetupProtocol, this.translate).length > 0;
     });
   }
 }

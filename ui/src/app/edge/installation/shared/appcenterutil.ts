@@ -204,12 +204,12 @@ export class AppCenterUtil {
      * @returns true if the appManager can be used else false
      */
     public static isAppManagerAvailable(edge: Edge): boolean {
-        return edge.isVersionAtLeast('2021.19.1');
+        return edge.isVersionAtLeast("2021.19.1");
     }
 
     // TODO this key will probably removed with a separate request for installing integrated systems
     public static keyForIntegratedSystems(): string {
-        return '0000-0000-0000-0001';
+        return "0000-0000-0000-0001";
     }
 
 }

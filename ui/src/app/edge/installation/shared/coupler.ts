@@ -15,9 +15,9 @@ export namespace Coupler {
     export function toFactoryId(coupler: Coupler): string {
         switch (coupler) {
             case Coupler.WEIDMUELLER:
-                return 'IO.Weidmueller.UR20';
+                return "IO.Weidmueller.UR20";
             case Coupler.WAGO:
-                return 'IO.WAGO';
+                return "IO.WAGO";
         }
     }
 
@@ -30,9 +30,9 @@ export namespace Coupler {
     export function toImageUrl(coupler: Coupler): string {
         switch (coupler) {
             case Coupler.WEIDMUELLER:
-                return 'assets/img/Netztrennstelle_Weidmueller.PNG';
+                return "assets/img/Netztrennstelle_Weidmueller.PNG";
             case Coupler.WAGO:
-                return 'assets/img/Netztrennstelle_WAGO.PNG';
+                return "assets/img/Netztrennstelle_WAGO.PNG";
         }
     }
 
@@ -46,9 +46,9 @@ export namespace Coupler {
     export function toLabelString(coupler: Coupler, translate: TranslateService): string {
         switch (coupler) {
             case Coupler.WEIDMUELLER:
-                return translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.LABEL.WEIDMUELLER_BRIDGE');
+                return translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.LABEL.WEIDMUELLER_BRIDGE");
             case Coupler.WAGO:
-                return translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.LABEL.WAGO_BRIDGE');
+                return translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.LABEL.WAGO_BRIDGE");
         }
     }
 
@@ -62,9 +62,9 @@ export namespace Coupler {
     export function toAliasString(coupler: Coupler, translate: TranslateService): string {
         switch (coupler) {
             case Coupler.WEIDMUELLER:
-                return translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.WEIDMUELLER_BRIDGE');
+                return translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.WEIDMUELLER_BRIDGE");
             case Coupler.WAGO:
-                return translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.WAGO_BRIDGE');
+                return translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.WAGO_BRIDGE");
         }
     }
 }

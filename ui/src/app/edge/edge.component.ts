@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { filter, take } from "rxjs/operators";
 import { SubscribeEdgesRequest } from "src/app/shared/jsonrpc/request/subscribeEdgesRequest";
 import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared";
-
 import { ProductType } from "../shared/type/widget";
 import { DateUtils } from "../shared/utils/date/dateutils";
 
@@ -14,8 +13,6 @@ import { DateUtils } from "../shared/utils/date/dateutils";
     template: `
     <ion-content></ion-content>
          <ion-router-outlet id="content"></ion-router-outlet>
-         <oe-notification *ngIf="latestIncident" color="warning" [text]="latestIncident.message"
-    [id]="latestIncident.id"></oe-notification>
     `,
 })
 export class EdgeComponent implements OnInit, OnDestroy {
@@ -34,7 +31,7 @@ export class EdgeComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             // Set CurrentEdge in Metadata
-            const edgeId = params['edgeId'];
+            const edgeId = params["edgeId"];
             this.service.updateCurrentEdge(edgeId).then((edge) => {
                 this.edge = edge;
 
@@ -43,12 +40,12 @@ export class EdgeComponent implements OnInit, OnDestroy {
                     .then(() => {
 
                         // Subscribe on these channels for the state in HeaderComponent
-                        edge.subscribeChannels(this.websocket, '', [
-                            new ChannelAddress('_sum', 'State'),
+                        edge.subscribeChannels(this.websocket, "", [
+                            new ChannelAddress("_sum", "State"),
                         ]);
                     });
             }).catch(() => {
-                this.router.navigate(['index']);
+                this.router.navigate(["index"]);
             });
         });
     }
@@ -64,7 +61,7 @@ export class EdgeComponent implements OnInit, OnDestroy {
                     return;
                 }
 
-                const hasGoodWeTwoStringMpptFactory = config.getComponentsByFactory('GoodWe.Charger.Mppt.Two-String').length > 0 && DateUtils.isDateBefore(this.edge.firstSetupProtocol, DateUtils.stringToDate("2024-04-18"));
+                const hasGoodWeTwoStringMpptFactory = config.getComponentsByFactory("GoodWe.Charger.Mppt.Two-String").length > 0 && DateUtils.isDateBefore(this.edge.firstSetupProtocol, DateUtils.stringToDate("2024-04-18"));
                 if (hasGoodWeTwoStringMpptFactory) {
                     this.latestIncident = {
                         message: `
@@ -76,7 +73,7 @@ export class EdgeComponent implements OnInit, OnDestroy {
                         Die Summe aller Erzeugungswerte sollte daher auch gleich sein, falls dies nicht der Fall ist, kontaktieren Sie uns gerne unter service@fenecon.de.</br></br>
                         Freundliche Grüße,</br>
                         Ihr FENECON-Team
-                `, id: 'mppt-change-over',
+                `, id: "mppt-change-over",
                     };
                 }
             });

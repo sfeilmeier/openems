@@ -1,19 +1,19 @@
 // @ts-strict-ignore
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from 'src/app/shared/shared';
+import { FormGroup } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
-import { FeedInType } from '../../../shared/enums';
-import { SerialNumberFormData } from '../../../shared/ibndatatypes';
-import { Meter } from '../../../shared/meter';
-import { SystemId } from '../../../shared/system';
-import { ComponentConfigurator, ConfigurationMode } from '../../../views/configuration-execute/component-configurator';
-import { AbstractCommercialIbn } from '../abstract-commercial';
+import { FeedInType } from "../../../shared/enums";
+import { SerialNumberFormData } from "../../../shared/ibndatatypes";
+import { Meter } from "../../../shared/meter";
+import { SystemId } from "../../../shared/system";
+import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
+import { AbstractCommercialIbn } from "../abstract-commercial";
 
 export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
 
     public override readonly defaultNumberOfModules = 9;
-    public abstract readonly emergencyPower: 'ENABLE' | 'DISABLE';
+    public abstract readonly emergencyPower: "ENABLE" | "DISABLE";
 
     public override fillSerialNumberForms(
         numberOfTowers: number,
@@ -27,8 +27,8 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
                 model: models[i],
                 formTower: new FormGroup({}),
                 header: numberOfTowers === 1
-                    ? this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS')
-                    : this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING', { number: (i + 1) }),
+                    ? this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS")
+                    : this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING", { number: (i + 1) }),
             };
         }
         return forms;
@@ -38,14 +38,14 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         const fields: FormlyFieldConfig[] = [];
 
         fields.push({
-            key: 'numberOfTowers',
-            type: 'input',
+            key: "numberOfTowers",
+            type: "input",
             templateOptions: {
-                type: 'number',
-                label: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NUMBER_OF_STRINGS'),
+                type: "number",
+                label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NUMBER_OF_STRINGS"),
                 min: 1,
                 max: 2,
-                description: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MINIMUM_AND_MAXIMUM_STRINGS', { min: 1, max: 2 }),
+                description: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MINIMUM_AND_MAXIMUM_STRINGS", { min: 1, max: 2 }),
                 required: true,
             },
             parsers: [Number],
@@ -53,14 +53,14 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         });
 
         fields.push({
-            key: 'numberOfModulesPerTower',
-            type: 'input',
+            key: "numberOfModulesPerTower",
+            type: "input",
             templateOptions: {
-                type: 'number',
-                label: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NUMBER_OF_MODULES_PER_STRINGS'),
+                type: "number",
+                label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NUMBER_OF_MODULES_PER_STRINGS"),
                 min: 9,
                 max: 17,
-                description: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS', { min: 9, max: 17 }),
+                description: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS", { min: 9, max: 17 }),
                 required: true,
             },
             parsers: [Number],
@@ -77,9 +77,9 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         ]);
 
         fields.push({
-            key: 'system',
-            type: 'radio',
-            className: 'line-break',
+            key: "system",
+            type: "radio",
+            className: "line-break",
             templateOptions: {
                 options: componentLabel,
                 required: true,
@@ -105,38 +105,38 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
 
         // adds Modbus 0, io0 (also modbus3 for Modbusbridge type TCP )
-        super.addModbusBridgeAndIoComponents(this.modbusBridgeType, invalidateElementsAfterReadErrors, this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_BATTERY'), componentConfigurator,
+        super.addModbusBridgeAndIoComponents(this.modbusBridgeType, invalidateElementsAfterReadErrors, this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_BATTERY"), componentConfigurator,
             edge, websocket, service);
 
         // modbus1
         componentConfigurator.add({
-            factoryId: 'Bridge.Modbus.Tcp',
-            componentId: 'modbus1',
-            alias: this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_BATTERY_INVERTER'),
+            factoryId: "Bridge.Modbus.Tcp",
+            componentId: "modbus1",
+            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_BATTERY_INVERTER"),
             properties: [
-                { name: 'enabled', value: true },
-                { name: 'ip', value: '192.168.1.11' },
-                { name: 'port', value: '502' },
-                { name: 'logVerbosity', value: 'NONE' },
-                { name: 'invalidateElementsAfterReadErrors', value: invalidateElementsAfterReadErrors },
+                { name: "enabled", value: true },
+                { name: "ip", value: "192.168.1.11" },
+                { name: "port", value: "502" },
+                { name: "logVerbosity", value: "NONE" },
+                { name: "invalidateElementsAfterReadErrors", value: invalidateElementsAfterReadErrors },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         });
 
         //modbus2
         componentConfigurator.add({
-            factoryId: 'Bridge.Modbus.Serial',
-            componentId: 'modbus2',
-            alias: this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_METER'),
+            factoryId: "Bridge.Modbus.Serial",
+            componentId: "modbus2",
+            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_METER"),
             properties: [
-                { name: 'enabled', value: true },
-                { name: 'portName', value: '/dev/ttySC0' },
-                { name: 'baudRate', value: 9600 },
-                { name: 'databits', value: 8 },
-                { name: 'stopbits', value: 'ONE' },
-                { name: 'parity', value: 'NONE' },
-                { name: 'logVerbosity', value: 'NONE' },
-                { name: 'invalidateElementsAfterReadErrors', value: invalidateElementsAfterReadErrors },
+                { name: "enabled", value: true },
+                { name: "portName", value: "/dev/ttySC0" },
+                { name: "baudRate", value: 9600 },
+                { name: "databits", value: 8 },
+                { name: "stopbits", value: "ONE" },
+                { name: "parity", value: "NONE" },
+                { name: "logVerbosity", value: "NONE" },
+                { name: "invalidateElementsAfterReadErrors", value: invalidateElementsAfterReadErrors },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         });
@@ -144,43 +144,43 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         // meter0
         componentConfigurator.add({
             factoryId: Meter.toFactoryId(this.lineSideMeterFuse.meterType),
-            componentId: 'meter0',
-            alias: this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.GRID_METER'),
+            componentId: "meter0",
+            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.GRID_METER"),
             properties: [
-                { name: 'enabled', value: true },
-                { name: 'modbus.id', value: 'modbus2' },
-                { name: 'type', value: 'GRID' },
-                { name: 'modbusUnitId', value: 5 },
+                { name: "enabled", value: true },
+                { name: "modbus.id", value: "modbus2" },
+                { name: "type", value: "GRID" },
+                { name: "modbusUnitId", value: 5 },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         });
 
         // battery0
         componentConfigurator.add({
-            factoryId: 'Battery.Fenecon.Commercial',
-            componentId: 'battery0',
-            alias: this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.BATTERY'),
+            factoryId: "Battery.Fenecon.Commercial",
+            componentId: "battery0",
+            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.BATTERY"),
             properties: [
-                { name: 'enabled', value: true },
-                { name: 'startStop', value: 'AUTO' },
-                { name: 'modbus.id', value: 'modbus0' },
-                { name: 'batteryStartStopRelay', value: 'io0/Relay8' },
-                { name: 'modbusUnitId', value: 1 },
+                { name: "enabled", value: true },
+                { name: "startStop", value: "AUTO" },
+                { name: "modbus.id", value: "modbus0" },
+                { name: "batteryStartStopRelay", value: "io0/Relay8" },
+                { name: "modbusUnitId", value: 1 },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         });
 
         // batteryInverter0
         componentConfigurator.add({
-            factoryId: 'Battery-Inverter.Sinexcel',
-            componentId: 'batteryInverter0',
-            alias: this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.BATTERY_INVERTER'),
+            factoryId: "Battery-Inverter.Sinexcel",
+            componentId: "batteryInverter0",
+            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.BATTERY_INVERTER"),
             properties: [
-                { name: 'enabled', value: true },
-                { name: 'modbus.id', value: 'modbus1' },
-                { name: 'countryCode', value: 'GERMANY' },
-                { name: 'startStop', value: 'AUTO' },
-                { name: 'emergencyPower', value: this.emergencyPower },
+                { name: "enabled", value: true },
+                { name: "modbus.id", value: "modbus1" },
+                { name: "countryCode", value: "GERMANY" },
+                { name: "startStop", value: "AUTO" },
+                { name: "emergencyPower", value: this.emergencyPower },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         });
@@ -188,23 +188,23 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         if (this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION) {
             // ctrlGridOptimizedCharge0
             componentConfigurator.add({
-                factoryId: 'Controller.Ess.GridOptimizedCharge',
-                componentId: 'ctrlGridOptimizedCharge0',
-                alias: this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.GRID_OPTIMIZED_CHARGE'),
+                factoryId: "Controller.Ess.GridOptimizedCharge",
+                componentId: "ctrlGridOptimizedCharge0",
+                alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.GRID_OPTIMIZED_CHARGE"),
                 properties: [
-                    { name: 'enabled', value: true },
-                    { name: 'ess.id', value: 'ess0' },
-                    { name: 'meter.id', value: 'meter0' },
-                    { name: 'sellToGridLimitEnabled', value: true },
+                    { name: "enabled", value: true },
+                    { name: "ess.id", value: "ess0" },
+                    { name: "meter.id", value: "meter0" },
+                    { name: "sellToGridLimitEnabled", value: true },
                     {
-                        name: 'maximumSellToGridPower',
+                        name: "maximumSellToGridPower",
                         value: this.feedInLimitation.maximumFeedInPower,
                     },
-                    { name: 'delayChargeRiskLevel', value: 'MEDIUM' },
-                    { name: 'mode', value: 'AUTOMATIC' },
-                    { name: 'manualTargetTime', value: '17:00' },
-                    { name: 'debugMode', value: false },
-                    { name: 'sellToGridLimitRampPercentage', value: 2 },
+                    { name: "delayChargeRiskLevel", value: "MEDIUM" },
+                    { name: "mode", value: "AUTOMATIC" },
+                    { name: "manualTargetTime", value: "17:00" },
+                    { name: "debugMode", value: false },
+                    { name: "sellToGridLimitRampPercentage", value: 2 },
                 ],
                 mode: ConfigurationMode.RemoveAndConfigure,
             });
@@ -212,14 +212,14 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
 
         // ctrlBalancing0
         componentConfigurator.add({ // Clearify with Productmanagement if a different App like peak shaving could be selected in IBN
-            factoryId: 'Controller.Symmetric.Balancing',
-            componentId: 'ctrlBalancing0',
-            alias: this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.SELF_CONSUMPTION'),
+            factoryId: "Controller.Symmetric.Balancing",
+            componentId: "ctrlBalancing0",
+            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.SELF_CONSUMPTION"),
             properties: [
-                { name: 'enabled', value: true },
-                { name: 'ess.id', value: 'ess0' },
-                { name: 'meter.id', value: 'meter0' },
-                { name: 'targetGridSetpoint', value: 0 },
+                { name: "enabled", value: true },
+                { name: "ess.id", value: "ess0" },
+                { name: "meter.id", value: "meter0" },
+                { name: "targetGridSetpoint", value: 0 },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         });
@@ -229,7 +229,7 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
 
     protected override getChannels(towerNr: number, numberOfModulesPerTower: number): ChannelAddress[] {
         const channelAddresses = super.getChannels(towerNr, numberOfModulesPerTower);
-        channelAddresses['batteryInverter'] = new ChannelAddress('batteryInverter0', 'SerialNumber');
+        channelAddresses["batteryInverter"] = new ChannelAddress("batteryInverter0", "SerialNumber");
         return channelAddresses;
     }
 
@@ -237,7 +237,7 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         if (super.addSerialNumbersToModel(key, model, serialNumber)) {
             // already serial number is parsed for the key.
             return true;
-        } else if (key.startsWith('batteryInverter')) {
+        } else if (key.startsWith("batteryInverter")) {
             // Battery inverter serial number.
             model[key] = serialNumber.substring(5);
             return true;
@@ -259,67 +259,67 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         if (stringNr === 0) {
 
             fields.push({
-                key: 'batteryInverter',
-                type: 'input',
+                key: "batteryInverter",
+                type: "input",
                 templateOptions: {
-                    label: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER'),
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER"),
                     required: true,
-                    prefix: 'PWS00',
-                    placeholder: 'xxxxxxxxxx',
+                    prefix: "PWS00",
+                    placeholder: "xxxxxxxxxx",
                 },
                 validators: {
-                    validation: ['commercial30BatteryInverterSerialNumber'],
+                    validation: ["commercial30BatteryInverterSerialNumber"],
                 },
-                wrappers: ['input-serial-number'],
+                wrappers: ["input-serial-number"],
             });
 
             fields.push({
-                key: 'bmsBoxMaster',
-                type: 'input',
+                key: "bmsBoxMaster",
+                type: "input",
                 templateOptions: {
-                    label: 'BMS Box Master',
+                    label: "BMS Box Master",
                     required: true,
-                    prefix: 'WSDEM3822',
-                    placeholder: 'xxxxxxxxxx',
+                    prefix: "WSDEM3822",
+                    placeholder: "xxxxxxxxxx",
                 },
                 validators: {
-                    validation: ['commercialBmsBoxSerialNumber'],
+                    validation: ["commercialBmsBoxSerialNumber"],
                 },
-                wrappers: ['input-serial-number'],
+                wrappers: ["input-serial-number"],
             });
         } else {
             fields.push({
-                key: 'bmsBoxSubMaster' + stringNr,
-                type: 'input',
+                key: "bmsBoxSubMaster" + stringNr,
+                type: "input",
                 templateOptions: {
-                    label: 'BMS Box Submaster',
+                    label: "BMS Box Submaster",
                     required: true,
-                    prefix: 'WSDESM3822',
-                    placeholder: 'xxxxxxxxxx',
+                    prefix: "WSDESM3822",
+                    placeholder: "xxxxxxxxxx",
                 },
                 validators: {
-                    validation: ['commercialBmsBoxSerialNumber'],
+                    validation: ["commercialBmsBoxSerialNumber"],
                 },
-                wrappers: ['input-serial-number'],
+                wrappers: ["input-serial-number"],
             });
         }
 
         for (let moduleNr = 0; moduleNr < numberOfModulesPerString; moduleNr++) {
             fields.push({
-                key: 'module' + moduleNr,
-                type: 'input',
+                key: "module" + moduleNr,
+                type: "input",
                 templateOptions: {
-                    label: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE') + (moduleNr + 1),
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") + (moduleNr + 1),
                     required: true,
                     // Note: Edit also validator (substring 12) if removing prefix
-                    prefix: 'WSDE...',
-                    placeholder: 'xxxxxxxx',
-                    description: this.translate.instant('INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE_DESCRIPTION'),
+                    prefix: "WSDE...",
+                    placeholder: "xxxxxxxx",
+                    description: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE_DESCRIPTION"),
                 },
                 validators: {
-                    validation: ['commercialBatteryModuleSerialNumber'],
+                    validation: ["commercialBatteryModuleSerialNumber"],
                 },
-                wrappers: ['input-serial-number'],
+                wrappers: ["input-serial-number"],
             });
         }
         return fields;

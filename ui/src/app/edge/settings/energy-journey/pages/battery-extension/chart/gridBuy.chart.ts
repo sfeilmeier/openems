@@ -1,30 +1,34 @@
 // @ts-strict-ignore
 import { Component, Input, OnChanges } from "@angular/core";
-import { ChartAxis, HistoryUtils, Utils, YAxisTitle } from "src/app/shared/service/utils";
+import { ChartAxis, HistoryUtils, Utils, YAxisType } from "src/app/shared/service/utils";
 import { ChannelAddress } from "src/app/shared/shared";
 
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
 import { PropType } from "src/app/shared/service/defaulttypes";
-import { SimulatedData } from "../battery-extension.module";
+import { SimulationResult } from "../battery-extension.module";
 import { PossibleBatteryExtensionResponse } from "../battery-extension.response";
 
 @Component({
-  selector: 'gridBuyChart',
-  templateUrl: '../../../../../../shared/components/chart/abstracthistorychart.html',
+  selector: "gridBuyChart",
+  templateUrl: "../../../../../../shared/components/chart/abstracthistorychart.html",
 })
 export class GridBuyChartComponent extends AbstractHistoryChart implements OnChanges {
 
-  @Input({ required: true }) public simulatedData: SimulatedData = { simulationData: [] };
+  @Input({ required: true }) public simulatedData: SimulationResult = {
+    simulationData: [],
+    charge: 0,
+    discharge: 0,
+  };
   @Input({ required: true }) public fromDate: Date;
   @Input({ required: true }) public toDate: Date;
 
-  public static getChartData(simulatedData: PossibleBatteryExtensionResponse['result']['simulationData']): HistoryUtils.ChartData {
+  public static getChartData(simulatedData: PossibleBatteryExtensionResponse["result"]["simulationData"]): HistoryUtils.ChartData {
     return {
       input: [
         {
-          name: 'GridBuyActiveEnergy',
-          powerChannel: new ChannelAddress('_sum', 'GridActivePower'),
-          energyChannel: new ChannelAddress('_sum', 'GridBuyActiveEnergy'),
+          name: "GridBuyActiveEnergy",
+          powerChannel: new ChannelAddress("_sum", "GridActivePower"),
+          energyChannel: new ChannelAddress("_sum", "GridBuyActiveEnergy"),
         },
       ],
       output: () => {
@@ -45,28 +49,28 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
                 .map((el) => Utils.subtractSafely(displayData[0], Utils.divideSafely(el, 1)))
                 .filter((_el, i) => i !== 0);
             },
-            color: 'rgb(54,174,209)',
+            color: getComputedStyle(document.documentElement).getPropertyValue("--ion-color-primary-rgb"),
             custom: {
-              pluginType: 'datalabels',
+              pluginType: "datalabels",
               datalabels: {
-                displayUnit: 'kWh',
+                displayUnit: "kWh",
               },
             },
           },
         ];
       },
       tooltip: {
-        formatNumber: '1.0-0',
+        formatNumber: "1.0-0",
       },
       yAxes: [{
-        unit: YAxisTitle.ENERGY,
-        position: 'left',
+        unit: YAxisType.ENERGY,
+        position: "left",
         yAxisId: ChartAxis.LEFT,
       }],
     };
   }
 
-  private static getLabels(simulationData: PropType<SimulatedData, 'simulationData'>): string[] {
+  private static getLabels(simulationData: PropType<SimulationResult, "simulationData">): string[] {
     return simulationData.reduce((arr: string[], el, index) => {
       if (index === 0) {
         return arr;
@@ -100,7 +104,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
 
     this.queryHistoricTimeseriesEnergyPerPeriod(this.fromDate, this.toDate)
       .then((energyPeriodResponse) => {
-        this.chartType = 'bar';
+        this.chartType = "bar";
         this.chartObject = this.getChartData();
         const displayValues = AbstractHistoryChart.fillChart(this.chartType, this.chartObject, energyPeriodResponse);
         this.datasets = displayValues.datasets;

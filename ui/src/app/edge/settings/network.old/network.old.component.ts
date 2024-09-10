@@ -1,14 +1,14 @@
 // @ts-strict-ignore
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { ComponentJsonApiRequest } from 'src/app/shared/jsonrpc/request/componentJsonApiRequest';
-import { Edge, Service, Websocket } from '../../../shared/shared';
-import { GetNetworkConfigRequest } from '../network/getNetworkConfigRequest';
-import { GetNetworkConfigResponse } from './getNetworkConfigResponse';
-import { SetNetworkConfigRequest } from './setNetworkConfigRequest';
-import { NetworkInterface } from './shared';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
+import { Edge, Service, Websocket } from "../../../shared/shared";
+import { GetNetworkConfigRequest } from "../network/getNetworkConfigRequest";
+import { GetNetworkConfigResponse } from "./getNetworkConfigResponse";
+import { SetNetworkConfigRequest } from "./setNetworkConfigRequest";
+import { NetworkInterface } from "./shared";
 
 export interface InterfaceForm {
   name: string,
@@ -19,7 +19,7 @@ export interface InterfaceForm {
 
 @Component({
   selector: NetworkOldComponent.SELECTOR,
-  templateUrl: './network.old.component.html',
+  templateUrl: "./network.old.component.html",
 })
 export class NetworkOldComponent implements OnInit {
 
@@ -35,7 +35,7 @@ export class NetworkOldComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.service.setCurrentComponent("Netzwerk Konfiguration" /* TODO translate */, this.route).then(edge => {
+    this.service.getCurrentEdge().then(edge => {
       this.edge = edge;
 
       edge.sendRequest(this.websocket,
@@ -46,7 +46,7 @@ export class NetworkOldComponent implements OnInit {
             this.interfaces.push(this.generateInterface(name, iface));
           }
         }).catch(reason => {
-          this.service.toast("Error reading current network configuration:" + reason.error.message, 'danger');
+          this.service.toast("Error reading current network configuration:" + reason.error.message, "danger");
         });
     });
   }
@@ -67,9 +67,9 @@ export class NetworkOldComponent implements OnInit {
       new ComponentJsonApiRequest({
         componentId: "_host", payload: new SetNetworkConfigRequest(request),
       })).then(response => {
-        this.service.toast("Successfully updated network configuration for [" + iface.name + "].", 'success');
+        this.service.toast("Successfully updated network configuration for [" + iface.name + "].", "success");
       }).catch(reason => {
-        this.service.toast("Error updating [" + iface.name + "]:" + reason.error.message, 'danger');
+        this.service.toast("Error updating [" + iface.name + "]:" + reason.error.message, "danger");
       });
   }
 
@@ -81,45 +81,45 @@ export class NetworkOldComponent implements OnInit {
       options: {},
       fields: [
         {
-          key: 'dhcp',
-          type: 'checkbox',
+          key: "dhcp",
+          type: "checkbox",
           templateOptions: {
-            label: 'DHCP',
+            label: "DHCP",
           },
         },
         {
-          hideExpression: 'model.dhcp',
-          key: 'gateway',
-          type: 'input',
+          hideExpression: "model.dhcp",
+          key: "gateway",
+          type: "input",
           templateOptions: {
-            label: 'Gateway',
-            placeholder: 'z.B. "192.168.0.1"',
+            label: "Gateway",
+            placeholder: "z.B. \"192.168.0.1\"",
           },
         },
         {
-          hideExpression: 'model.dhcp',
-          key: 'dns',
-          type: 'input',
+          hideExpression: "model.dhcp",
+          key: "dns",
+          type: "input",
           templateOptions: {
-            label: 'DNS',
-            input: 'z.B. "192.168.0.1"',
+            label: "DNS",
+            input: "z.B. \"192.168.0.1\"",
           },
         },
         {
-          key: 'linkLocalAddressing',
-          type: 'checkbox',
+          key: "linkLocalAddressing",
+          type: "checkbox",
           templateOptions: {
-            label: 'Link-Local Address (z. B. "169.254.XXX.XXX")',
+            label: "Link-Local Address (z. B. \"169.254.XXX.XXX\")",
           },
         },
         {
-          key: 'addresses',
-          type: 'repeat',
+          key: "addresses",
+          type: "repeat",
           templateOptions: {
-            label: 'Statische IP-Adresse hinzufügen',
+            label: "Statische IP-Adresse hinzufügen",
           },
           fieldArray: {
-            type: 'input',
+            type: "input",
           },
         },
       ],

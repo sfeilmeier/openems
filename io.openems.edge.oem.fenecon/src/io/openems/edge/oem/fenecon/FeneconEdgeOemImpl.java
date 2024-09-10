@@ -113,6 +113,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.FENECON.Home", "https://fenecon.de/fenecon-home-10/") //
 			.put("App.FENECON.Home.20", "https://fenecon.de/fenecon-home-20-30/") //
 			.put("App.FENECON.Home.30", "https://fenecon.de/fenecon-home-20-30/") //
+			.put("App.FENECON.Commercial.92", "https://fenecon.de/fenecon-commercial/") //
 			.put("App.FENECON.Industrial.L.ILK710", "https://fenecon.de/fenecon-industrial-l/") //
 			.put("App.FENECON.Industrial.S.ISK010", "https://fenecon.de/fenecon-industrial-s/") //
 			.put("App.FENECON.Industrial.S.ISK110", "https://fenecon.de/fenecon-industrial-s/") //
@@ -151,8 +152,10 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			// TODO URL veraltet
 			.put("App.Meter.Socomec", "https://fenecon.de/produkte/fems/fems-app-socomec-zaehler/") //
 			.put("App.Meter.CarloGavazzi", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
+			.put("App.Meter.PqPlus", "") //
 			.put("App.Meter.Janitza", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
 			.put("App.Meter.Discovergy", "")//
+			.put("App.Meter.PhoenixContact", "")//
 			.put("App.PvInverter.Fronius", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
 			.put("App.PvInverter.Kaco", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
 			.put("App.PvInverter.Kostal", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
@@ -161,10 +164,18 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.PeakShaving.PeakShaving", "https://fenecon.de/fenecon-fems/fems-app-lastspitzenkappung/") //
 			.put("App.PeakShaving.PhaseAccuratePeakShaving",
 					"https://fenecon.de/fenecon-fems/fems-app-phasengenaue-lastspitzenkappung/") //
+			.put("App.OpenemsHardware.BeagleBoneBlack", "") //
+			.put("App.OpenemsHardware.Compulab", "") //
+			.put("App.OpenemsHardware.CM3", "") //
+			.put("App.OpenemsHardware.CM4", "") //
+			.put("App.OpenemsHardware.CM4Max", "") //
+			.put("App.OpenemsHardware.CM4S", "") //
+			.put("App.OpenemsHardware.CM4S.Gen2", "") //
 			.put("App.Ess.FixActivePower", "") //
 			.put("App.Ess.FixStateOfCharge", "") //
 			.put("App.Ess.PowerPlantController", "") //
 			.put("App.Ess.PrepareBatteryExtension", "") //
+			.put("App.Ess.Limiter14a", "") //
 			.build();
 
 	@Override

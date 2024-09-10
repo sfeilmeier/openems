@@ -1,19 +1,19 @@
 // @ts-strict-ignore
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Edge } from "src/app/shared/shared";
+import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-import { Meter } from "../../shared/meter";
-import { FormGroup } from "@angular/forms";
+import { Edge } from "src/app/shared/shared";
 import { AbstractHomeIbn } from "../../installation-systems/home/abstract-home";
+import { Meter } from "../../shared/meter";
 
 @Component({
     selector: ConfigurationEnergyFlowMeterComponent.SELECTOR,
-    templateUrl: './configuration-energy-flow-direction-meter.component.html',
+    templateUrl: "./configuration-energy-flow-direction-meter.component.html",
 })
 export class ConfigurationEnergyFlowMeterComponent implements OnInit {
 
-    private static readonly SELECTOR = 'configuration-energy-flow-direction-meter';
+    private static readonly SELECTOR = "configuration-energy-flow-direction-meter";
 
     @Input() public ibn: AbstractHomeIbn;
     @Input() public edge: Edge;
@@ -58,10 +58,10 @@ export class ConfigurationEnergyFlowMeterComponent implements OnInit {
             }];
 
         fields.push({
-            key: 'meter',
-            type: 'select',
+            key: "meter",
+            type: "select",
             templateOptions: {
-                label: this.translate.instant('INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL'),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
                 options: options,
                 required: true,
             },
@@ -69,11 +69,11 @@ export class ConfigurationEnergyFlowMeterComponent implements OnInit {
         });
 
         fields.push({
-            key: 'value',
-            type: 'input',
+            key: "value",
+            type: "input",
             templateOptions: {
-                label: this.translate.instant('INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.CONVERTER_RATIO'),
-                type: 'number',
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.CONVERTER_RATIO"),
+                type: "number",
                 min: 200,
                 max: 5000,
                 required: true,

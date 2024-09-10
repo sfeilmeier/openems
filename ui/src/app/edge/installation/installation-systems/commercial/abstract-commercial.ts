@@ -1,22 +1,22 @@
 // @ts-strict-ignore
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
-import { JsonrpcResponseSuccess } from 'src/app/shared/jsonrpc/base';
-import { SetupProtocol, SubmitSetupProtocolRequest } from 'src/app/shared/jsonrpc/request/submitSetupProtocolRequest';
-import { ChannelAddress, Edge, Service, Websocket } from 'src/app/shared/shared';
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { Subject } from "rxjs";
+import { filter, takeUntil } from "rxjs/operators";
+import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
+import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
+import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared";
 
-import { Category } from '../../shared/category';
-import { FeedInType, ModbusBridgeType, WebLinks } from '../../shared/enums';
-import { ComponentData } from '../../shared/ibndatatypes';
-import { IbnUtils } from '../../shared/ibnutils';
-import { Meter } from '../../shared/meter';
-import { SubSystemType, SystemType } from '../../shared/system';
-import { ComponentConfigurator, ConfigurationMode, ConfigurationObject } from '../../views/configuration-execute/component-configurator';
-import { AbstractIbn } from '../abstract-ibn';
+import { Category } from "../../shared/category";
+import { FeedInType, ModbusBridgeType, WebLinks } from "../../shared/enums";
+import { ComponentData } from "../../shared/ibndatatypes";
+import { IbnUtils } from "../../shared/ibnutils";
+import { Meter } from "../../shared/meter";
+import { SubSystemType, SystemType } from "../../shared/system";
+import { ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../views/configuration-execute/component-configurator";
+import { AbstractIbn } from "../abstract-ibn";
 
 export abstract class AbstractCommercialIbn extends AbstractIbn {
-    private static readonly SELECTOR = 'Commercial';
+    private static readonly SELECTOR = "Commercial";
 
     public override readonly type: SystemType = SystemType.COMMERCIAL;
     public override readonly showRundSteuerManual: boolean = false;
@@ -69,18 +69,18 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
      */
     private static getSerialModbusBridgeComponent(ioComponentId: string, invalidateElementsAfterReadErrors: number, alias: string): ConfigurationObject {
         return {
-            factoryId: 'Bridge.Modbus.Serial',
+            factoryId: "Bridge.Modbus.Serial",
             componentId: ioComponentId,
             alias: alias,
             properties: [
-                { name: 'enabled', value: true },
-                { name: 'portName', value: '/dev/ttyAMA0' },
-                { name: 'baudRate', value: 9600 },
-                { name: 'databits', value: 8 },
-                { name: 'stopbits', value: 'ONE' },
-                { name: 'parity', value: 'NONE' },
-                { name: 'logVerbosity', value: 'NONE' },
-                { name: 'invalidateElementsAfterReadErrors', value: invalidateElementsAfterReadErrors },
+                { name: "enabled", value: true },
+                { name: "portName", value: "/dev/ttyAMA0" },
+                { name: "baudRate", value: 9600 },
+                { name: "databits", value: 8 },
+                { name: "stopbits", value: "ONE" },
+                { name: "parity", value: "NONE" },
+                { name: "logVerbosity", value: "NONE" },
+                { name: "invalidateElementsAfterReadErrors", value: invalidateElementsAfterReadErrors },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         };
@@ -97,9 +97,9 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             key: "otherValue",
             type: "input",
             templateOptions: {
-                label: this.translate.instant('INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE'),
-                type: 'number',
-                description: this.translate.instant('INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.FIXED_VALUE_DESCRIPTION'),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
+                type: "number",
+                description: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.FIXED_VALUE_DESCRIPTION"),
                 min: 0,
                 required: true,
             },
@@ -113,7 +113,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             key: "meterType",
             type: "select",
             templateOptions: {
-                label: this.translate.instant('INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER_LABEL'),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER_LABEL"),
                 required: true,
                 options: [
                     { label: "SOCOMEC", value: Meter.GridMeter.SOCOMEC },
@@ -140,20 +140,20 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION
             ? batteryInverterData.push(
                 {
-                    label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE'),
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
                     value: this.feedInLimitation.maximumFeedInPower,
                 },
             )
             : this.feedInLimitation.feedInType === FeedInType.EXTERNAL_LIMITATION
                 ? batteryInverterData.push(
                     {
-                        label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECIEVER'),
-                        value: this.translate.instant('General.yes'),
+                        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECIEVER"),
+                        value: this.translate.instant("General.yes"),
                     })
                 : batteryInverterData.push(
                     {
-                        label: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION'),
-                        value: this.translate.instant('General.yes'),
+                        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+                        value: this.translate.instant("General.yes"),
                     });
 
         return batteryInverterData;
@@ -163,7 +163,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         return new Promise((resolve) => {
             let isResolved = false;
             const channelAddresses: ChannelAddress[] = this.getChannels(towerNr, numberOfModulesPerTower);
-            const subscriptionId = AbstractCommercialIbn.SELECTOR + '-tower' + towerNr;
+            const subscriptionId = AbstractCommercialIbn.SELECTOR + "-tower" + towerNr;
             const model: {} = {};
 
             // Subject to stop the subscription to currentData
@@ -222,7 +222,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     public override setNonAbstractFields(ibnString: any) {
 
         // Configuration commercial modbus bridge
-        if ('modbusBridgeType' in ibnString) {
+        if ("modbusBridgeType" in ibnString) {
             this.modbusBridgeType = ibnString.modbusBridgeType;
         }
 
@@ -230,17 +230,22 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
     public override getSubSystemFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
-        const componentLabel = ([
-            { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
-            { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
-        ]);
+        const emsType = this.getEmsType();
+
+        const componentLabel = [];
+        if (emsType === null) {
+            componentLabel.push(
+                { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
+                { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
+            );
+        }
 
         fields.push({
-            key: 'subType',
-            type: 'radio',
-            className: 'line-break',
+            key: "subType",
+            type: "radio",
+            className: "line-break",
             templateOptions: {
-                label: this.translate.instant('INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME'),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME"),
                 options: componentLabel,
                 required: true,
             },
@@ -258,9 +263,9 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             let isResolved = false;
 
             // Edge-subscribe
-            edge.subscribeChannels(websocket, 'commercial', [
-                new ChannelAddress('battery0', 'NumberOfTowers'),
-                new ChannelAddress('battery0', 'NumberOfModulesPerTower'),
+            edge.subscribeChannels(websocket, "commercial", [
+                new ChannelAddress("battery0", "NumberOfTowers"),
+                new ChannelAddress("battery0", "NumberOfModulesPerTower"),
             ]);
 
             // Subject to stop the subscription to currentData
@@ -272,8 +277,8 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
                     takeUntil(stopOnRequest),
                     filter(currentData => currentData != null))
                 .subscribe((currentData) => {
-                    const numberOfTowers = currentData.channel['battery0/NumberOfTowers'];
-                    const numberOfModulesPerTower = currentData.channel['battery0/NumberOfModulesPerTower'];
+                    const numberOfTowers = currentData.channel["battery0/NumberOfTowers"];
+                    const numberOfModulesPerTower = currentData.channel["battery0/NumberOfModulesPerTower"];
 
                     // If values are available, resolve the promise with them
                     if (numberOfTowers && numberOfModulesPerTower) {
@@ -309,23 +314,23 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         protocol.items.push(
             {
                 category: Category.FEED_IN_MANAGEMENT,
-                name: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECIEVER'),
+                name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECIEVER"),
                 value: feedInLimitation.feedInType == FeedInType.EXTERNAL_LIMITATION
-                    ? this.translate.instant('General.yes')
-                    : this.translate.instant('General.no'),
+                    ? this.translate.instant("General.yes")
+                    : this.translate.instant("General.no"),
             },
             {
                 category: Category.FEED_IN_MANAGEMENT,
-                name: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION'),
+                name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"),
                 value: feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
-                    ? this.translate.instant('General.yes')
-                    : this.translate.instant('General.no'),
+                    ? this.translate.instant("General.yes")
+                    : this.translate.instant("General.no"),
             });
 
         if (feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION) {
             protocol.items.push({
                 category: Category.FEED_IN_MANAGEMENT,
-                name: this.translate.instant('INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE'),
+                name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
                 value: feedInLimitation.maximumFeedInPower
                     ? feedInLimitation.maximumFeedInPower.toString()
                     : (0).toString(),
@@ -334,13 +339,13 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
         // Subsequent Strings will have only 1 static component. BMS submaster.
         const subsequentStaticTowerComponents = 1;
-        const categoryElement: string = 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING';
+        const categoryElement: string = "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING";
 
         super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, subsequentStaticTowerComponents, categoryElement);
 
         return new Promise((resolve, reject) => {
             websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
-                resolve(response.result['setupProtocolId']);
+                resolve(response.result["setupProtocolId"]);
             }).catch((reason) => {
                 reject(reason);
             });
@@ -367,33 +372,33 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             case ModbusBridgeType.TCP_IP:
                 // modbus0
                 componentConfigurator.add({
-                    factoryId: 'Bridge.Modbus.Tcp',
-                    componentId: 'modbus0',
+                    factoryId: "Bridge.Modbus.Tcp",
+                    componentId: "modbus0",
                     alias: alias,
                     properties: [
-                        { name: 'enabled', value: true },
-                        { name: 'ip', value: '192.168.0.7' },
-                        { name: 'port', value: '20108' },
-                        { name: 'logVerbosity', value: 'NONE' },
-                        { name: 'invalidateElementsAfterReadErrors', value: invalidateElementsAfterReadErrors },
+                        { name: "enabled", value: true },
+                        { name: "ip", value: "192.168.0.7" },
+                        { name: "port", value: "20108" },
+                        { name: "logVerbosity", value: "NONE" },
+                        { name: "invalidateElementsAfterReadErrors", value: invalidateElementsAfterReadErrors },
                     ],
                     mode: ConfigurationMode.RemoveAndConfigure,
                 });
 
                 // Add ip address to network configuration
-                if (!IbnUtils.addIpAddress('eth1', '192.168.0.9/24', edge, websocket)) {
-                    service.toast('Eine für die Batterie notwendige IP-Adresse konnte nicht zur Netzwerkkonfiguration hinzugefügt werden.'
-                        , 'danger');
+                if (!IbnUtils.addIpAddress("eth1", "192.168.0.9/24", edge, websocket)) {
+                    service.toast("Eine für die Batterie notwendige IP-Adresse konnte nicht zur Netzwerkkonfiguration hinzugefügt werden."
+                        , "danger");
                 }
 
-                ioComponentId = 'modbus3'; // To communicate with io.
+                ioComponentId = "modbus3"; // To communicate with io.
 
                 // modbus3
-                componentConfigurator.add(AbstractCommercialIbn.getSerialModbusBridgeComponent(ioComponentId, invalidateElementsAfterReadErrors, this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_RELAY')));
+                componentConfigurator.add(AbstractCommercialIbn.getSerialModbusBridgeComponent(ioComponentId, invalidateElementsAfterReadErrors, this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_RELAY")));
                 break;
 
             case ModbusBridgeType.RS485:
-                ioComponentId = 'modbus0'; // To communicate with battery and io.
+                ioComponentId = "modbus0"; // To communicate with battery and io.
 
                 // modbus0
                 componentConfigurator.add(AbstractCommercialIbn.getSerialModbusBridgeComponent(ioComponentId, invalidateElementsAfterReadErrors, alias));
@@ -402,13 +407,13 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
         // io0
         componentConfigurator.add({
-            factoryId: 'IO.KMtronic',
-            componentId: 'io0',
-            alias: this.translate.instant('INSTALLATION.CONFIGURATION_EXECUTE.RELAY_BOARD'),
+            factoryId: "IO.KMtronic",
+            componentId: "io0",
+            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.RELAY_BOARD"),
             properties: [
-                { name: 'enabled', value: true },
-                { name: 'modbus.id', value: ioComponentId },
-                { name: 'modbusUnitId', value: 6 },
+                { name: "enabled", value: true },
+                { name: "modbus.id", value: ioComponentId },
+                { name: "modbusUnitId", value: 6 },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         }, 3);
@@ -426,10 +431,10 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     protected getChannels(towerNr: number, numberOfModulesPerTower: number): ChannelAddress[] {
 
         const channelAddresses: ChannelAddress[] = [];
-        channelAddresses['bmsBoxMaster'] = new ChannelAddress('battery0', 'MasterSerialNumber');
+        channelAddresses["bmsBoxMaster"] = new ChannelAddress("battery0", "MasterSerialNumber");
 
         for (let moduleNr = 0; moduleNr < numberOfModulesPerTower; moduleNr++) {
-            channelAddresses['module' + moduleNr] = new ChannelAddress('battery0', 'Tower' + towerNr + 'Module' + moduleNr + 'SerialNumber');
+            channelAddresses["module" + moduleNr] = new ChannelAddress("battery0", "Tower" + towerNr + "Module" + moduleNr + "SerialNumber");
         }
 
         return channelAddresses;
@@ -445,7 +450,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
      * @param serialNumber the serial number from the channel.
      */
     protected addSerialNumbersToModel(key: string, model: {}, serialNumber: string): boolean {
-        if (key.startsWith('bmsBox')) {
+        if (key.startsWith("bmsBox")) {
             // BMS master.
             model[key] = serialNumber.substring(14);
             return true;

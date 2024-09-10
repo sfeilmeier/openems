@@ -1,11 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { Edge, Service } from "src/app/shared/shared";
-import { EnergyJourneyWidget } from "./energy-journey.module";
+import { Edge, EdgePermission, EnergyJourneyWidget, Service } from "src/app/shared/shared";
 
 @Component({
-  selector: 'energy-journey',
-  templateUrl: './energy-journey.html',
+  selector: "energy-journey",
+  templateUrl: "./energy-journey.html",
 })
 export class EnergyJourneyComponent implements OnInit {
 
@@ -20,7 +19,7 @@ export class EnergyJourneyComponent implements OnInit {
   ngOnInit() {
     this.service.getCurrentEdge().then(edge => {
       this.edge = edge;
-      this.allowedWidgets = []; // TODO
+      this.allowedWidgets = EdgePermission.getAllowedEnergyJourneyWidgets(this.edge.firstSetupProtocol, this.translate); // TODO
     });
   }
 }

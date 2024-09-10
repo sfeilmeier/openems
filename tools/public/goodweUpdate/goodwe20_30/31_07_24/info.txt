@@ -1,3 +1,0 @@
-Version 31.07.24 (Arm10 - DSP 9 - ETT new FW to fix the power accuracy problem)
-ARM: 10 (410-02071-10(415)_M4_Test.bin)
-DSP: 9 (410-04062-09-V9026.bin)

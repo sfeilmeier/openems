@@ -3,7 +3,7 @@
         <ion-avatar slot="start">
             <img [src]="imageUrl">
         </ion-avatar>
-        <ion-label class="white-space-initial" style="text-align: center">{{title}}
+        <ion-label class="white-space-initial" style="text-align: start">{{title}}
         </ion-label>
         <ion-buttons slot="end" *ngIf="enableBtn">
             <ion-button size="small" fill="clear" (click)="swipePrevious()" *ngIf="!disablePrevBtn">
@@ -14,11 +14,11 @@
             </ion-button>
         </ion-buttons>
     </ion-item>
-    <ion-card-content>
+    <ion-card-content class="ion-no-padding">
         <swiper-container autoplay="true" speed="5000" #swiper (swiperslidechange)="setSlideConfig()">
             <ng-container *ngFor="let widget of advertWidgets.list" [ngSwitch]="widget.name">
-                <swiper-slide *ngSwitchCase="'winning-two-awards'">
-                    <winning-two-awards></winning-two-awards>
+                <swiper-slide *ngSwitchCase="'energy-journey'">
+                    <energy-journey-advert></energy-journey-advert>
                 </swiper-slide>
             </ng-container>
         </swiper-container>

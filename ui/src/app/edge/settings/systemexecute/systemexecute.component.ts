@@ -1,28 +1,28 @@
 // @ts-strict-ignore
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
-import { ComponentJsonApiRequest } from 'src/app/shared/jsonrpc/request/componentJsonApiRequest';
-import { ExecuteSystemCommandRequest } from 'src/app/shared/jsonrpc/request/executeCommandRequest';
-import { ExecuteSystemCommandResponse } from 'src/app/shared/jsonrpc/response/executeSystemCommandResponse';
-import { Service, Utils, Websocket } from '../../../shared/shared';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { FormlyFieldConfig, FormlyFormOptions } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
+import { ExecuteSystemCommandRequest } from "src/app/shared/jsonrpc/request/executeCommandRequest";
+import { ExecuteSystemCommandResponse } from "src/app/shared/jsonrpc/response/executeSystemCommandResponse";
+import { Service, Utils, Websocket } from "../../../shared/shared";
 
 type CommandFunction = (...args: (string | boolean | number)[]) => string;
 
 const COMMANDS: { [key: string]: CommandFunction; } = {
-  'ping': (ip: string) => `ping -c4 ${ip}`,
-  'branch': (branch: string, force: boolean) => `echo "wget https://fenecon.de/fems-tools/update-fems.sh -O /tmp/update-fems.sh --no-check-certificate && bash -x /tmp/update-fems.sh ${force ? '-f' : ''} ${branch ? '-b' : ' '} ${branch ? branch : ''} > /tmp/log 2>& 1" | at now`,
-  'query-status': () => "ps ax | grep /tmp/update-fems.sh; tail /tmp/log",
-  'openems-restart': () => "which at || DEBIAN_FRONTEND=noninteractive apt-get -y install at; echo 'systemctl restart openems' | at now",
-  'pagekite-log': () => "journalctl -lu fems-remote-service --since=\"2 minutes ago\"",
-  'pagekite-restart': () => "systemctl restart fems-remote-service",
+  "ping": (ip: string) => `ping -c4 ${ip}`,
+  "branch": (branch: string, force: boolean) => `echo "wget https://fenecon.de/fems-tools/update-fems.sh -O /tmp/update-fems.sh --no-check-certificate && bash -x /tmp/update-fems.sh ${force ? "-f" : ""} ${branch ? "-b" : " "} ${branch ? branch : ""} > /tmp/log 2>& 1" | at now`,
+  "query-status": () => "ps ax | grep /tmp/update-fems.sh; tail /tmp/log",
+  "openems-restart": () => "which at || DEBIAN_FRONTEND=noninteractive apt-get -y install at; echo 'systemctl restart openems' | at now",
+  "pagekite-log": () => "journalctl -lu fems-remote-service --since=\"2 minutes ago\"",
+  "pagekite-restart": () => "systemctl restart fems-remote-service",
 };
 
 @Component({
   selector: SystemExecuteComponent.SELECTOR,
-  templateUrl: './systemexecute.component.html',
+  templateUrl: "./systemexecute.component.html",
 })
 export class SystemExecuteComponent implements OnInit {
 
@@ -38,17 +38,17 @@ export class SystemExecuteComponent implements OnInit {
   public model: any = {};
   public options: FormlyFormOptions = {};
   public fields: FormlyFieldConfig[] = [{
-    key: 'predefined',
-    type: 'radio',
-    templateOptions: { options: [{ value: 'ping', label: 'Ping device in network' }] },
+    key: "predefined",
+    type: "radio",
+    templateOptions: { options: [{ value: "ping", label: "Ping device in network" }] },
   }, {
-    key: 'ping',
-    hideExpression: (model: any, formState: any) => this.model['predefined'] !== 'ping',
+    key: "ping",
+    hideExpression: (model: any, formState: any) => this.model["predefined"] !== "ping",
     fieldGroup: [{
-      key: 'ip',
-      type: 'input',
+      key: "ip",
+      type: "input",
       templateOptions: {
-        label: 'IP-Address', placeholder: "192.168.0.1", required: true, pattern: /(\d{1,3}\.){3}\d{1,3}/,
+        label: "IP-Address", placeholder: "192.168.0.1", required: true, pattern: /(\d{1,3}\.){3}\d{1,3}/,
       },
       validation: {
         messages: {
@@ -57,33 +57,33 @@ export class SystemExecuteComponent implements OnInit {
       },
     }],
   }, {
-    key: 'predefined',
-    type: 'radio',
+    key: "predefined",
+    type: "radio",
     templateOptions: {
       options: [
-        { value: 'branch', label: 'Update system from branch' },
+        { value: "branch", label: "Update system from branch" },
       ],
     },
   }, {
-    key: 'branch',
+    key: "branch",
     fieldGroup: [{
-      key: 'name',
-      type: 'select',
-      hideExpression: (model: any, formState: any) => this.model['predefined'] !== 'branch',
+      key: "name",
+      type: "select",
+      hideExpression: (model: any, formState: any) => this.model["predefined"] !== "branch",
       templateOptions: {
-        label: 'Branch Predefined', placeholder: "main", required: true,
+        label: "Branch Predefined", placeholder: "main", required: true,
         options: [
-          { label: 'main', value: 'main' },
-          { label: 'develop', value: 'develop' },
-          { label: 'Other branch...', value: 'other' },
+          { label: "main", value: "main" },
+          { label: "develop", value: "develop" },
+          { label: "Other branch...", value: "other" },
         ],
       },
     }, {
-      key: 'free',
-      type: 'input',
-      hideExpression: (model: any, formState: any) => this.model['predefined'] !== 'branch' || this.model?.branch?.name !== 'other',
+      key: "free",
+      type: "input",
+      hideExpression: (model: any, formState: any) => this.model["predefined"] !== "branch" || this.model?.branch?.name !== "other",
       templateOptions: {
-        label: 'Branch', placeholder: "main", required: false,
+        label: "Branch", placeholder: "main", required: false,
       },
       validation: {
         messages: {
@@ -91,29 +91,29 @@ export class SystemExecuteComponent implements OnInit {
         },
       },
     }, {
-      key: 'force',
-      type: 'toggle',
-      hideExpression: (model: any, formState: any) => this.model['predefined'] !== 'branch',
+      key: "force",
+      type: "toggle",
+      hideExpression: (model: any, formState: any) => this.model["predefined"] !== "branch",
       templateOptions: {
-        label: 'Force update?', placeholder: "main", required: false, default: false,
+        label: "Force update?", placeholder: "main", required: false, default: false,
       },
     }],
   }, {
-    key: 'predefined',
-    type: 'radio',
+    key: "predefined",
+    type: "radio",
     templateOptions: {
       options: [
-        { value: 'query-status', label: 'Status Systemupdate abfragen' },
+        { value: "query-status", label: "Status Systemupdate abfragen" },
       ],
     },
   }, {
-    key: 'predefined',
-    type: 'radio',
+    key: "predefined",
+    type: "radio",
     templateOptions: {
       options: [
-        { value: 'openems-restart', label: 'Restart OpenEMS Edge service' },
-        { value: 'pagekite-log', label: 'Show Pagekite log' },
-        { value: 'pagekite-restart', label: 'Restart Pagekite' },
+        { value: "openems-restart", label: "Restart OpenEMS Edge service" },
+        { value: "pagekite-log", label: "Show Pagekite log" },
+        { value: "pagekite-restart", label: "Restart Pagekite" },
       ],
     },
   }];
@@ -129,7 +129,6 @@ export class SystemExecuteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.setCurrentComponent({ languageKey: 'Edge.Config.Index.systemExecute' }, this.route);
     this.form = this.formBuilder.group({
       username: new FormControl("root"),
       password: new FormControl(""),
@@ -152,7 +151,7 @@ export class SystemExecuteComponent implements OnInit {
           break;
         case "branch":
           command = cmd(
-            m.branch.name === 'other' ? m.branch.free : m.branch.name,
+            m.branch.name === "other" ? m.branch.free : m.branch.name,
             m.branch.force as boolean);
           break;
         case "openems-restart":
@@ -163,15 +162,15 @@ export class SystemExecuteComponent implements OnInit {
           command = cmd();
       }
     }
-    this.form.controls['command'].setValue(command);
+    this.form.controls["command"].setValue(command);
   }
 
   public submit() {
-    const username = this.form.controls['username'];
-    const password = this.form.controls['password'];
-    const timeoutSeconds = this.form.controls['timeoutSeconds'];
-    const runInBackground = this.form.controls['runInBackground'];
-    const command = this.form.controls['command'];
+    const username = this.form.controls["username"];
+    const password = this.form.controls["password"];
+    const timeoutSeconds = this.form.controls["timeoutSeconds"];
+    const runInBackground = this.form.controls["runInBackground"];
+    const command = this.form.controls["command"];
 
     this.service.getCurrentEdge().then(edge => {
       this.loading = true;

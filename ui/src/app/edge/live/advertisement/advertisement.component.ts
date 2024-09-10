@@ -1,23 +1,23 @@
 // @ts-strict-ignore
-import { AfterContentChecked, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { AdvertWidgets } from 'src/app/shared/type/widget';
-import { environment } from 'src/environments';
-import { register } from 'swiper/element/bundle';
-import { Service } from '../../../shared/shared';
+import { AfterContentChecked, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ModalController } from "@ionic/angular";
+import { AdvertWidgets } from "src/app/shared/type/widget";
+import { environment } from "src/environments";
+import { register } from "swiper/element/bundle";
+import { Service } from "../../../shared/shared";
 
 register();
 
 @Component({
-  selector: 'advertisement',
-  templateUrl: './advertisement.component.html',
+  selector: "advertisement",
+  templateUrl: "./advertisement.component.html",
 })
 
 export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDestroy {
 
   @Input() public advertWidgets: AdvertWidgets;
 
-  @ViewChild('swiper') public swiperRef: ElementRef | undefined;
+  @ViewChild("swiper") public swiperRef: ElementRef | undefined;
 
   public title: string;
   public imageUrl: string = "assets/img/fems-app.png";
@@ -51,7 +51,7 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
 
     // Slide to random first view
     const index = this.swiperRef?.nativeElement.swiper.activeIndex ?? 0;
-    this.title = this.advertWidgets.list[index].title ?? environment.edgeShortName + ' - App';
+    this.title = this.advertWidgets.list[index].title ?? environment.edgeShortName + " - App";
 
     this.changeNextPrevButtons();
   }

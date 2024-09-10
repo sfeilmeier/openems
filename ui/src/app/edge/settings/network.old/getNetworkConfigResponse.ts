@@ -1,5 +1,5 @@
 import { JsonrpcResponseSuccess } from "../../../shared/jsonrpc/base";
-import { NetworkInterface } from './shared';
+import { NetworkInterface } from "./shared";
 
 /**
  * JSON-RPC Response to "getNetworkConfig" Request.

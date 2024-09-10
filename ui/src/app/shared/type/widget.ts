@@ -1,44 +1,46 @@
 // @ts-strict-ignore
-import { Edge } from '../components/edge/edge';
-import { EdgeConfig } from '../components/edge/edgeconfig';
-import { Utils } from '../shared';
+import { Edge } from "../components/edge/edge";
+import { EdgeConfig } from "../components/edge/edgeconfig";
+import { EdgePermission, Utils } from "../shared";
 
 export enum WidgetClass {
-    'Energymonitor',
-    'Common_Autarchy',
-    'Common_Selfconsumption',
-    'Storage',
-    'Grid',
-    'Common_Production',
-    'Consumption',
-    'Controller_ChannelThreshold',
+    "Energymonitor",
+    "Common_Autarchy",
+    "Common_Selfconsumption",
+    "Storage",
+    "Grid",
+    "Common_Production",
+    "Consumption",
+    "Controller_ChannelThreshold",
+    "Controller_Io_Digital_Outputs",
 }
 
 export enum WidgetNature {
-    'io.openems.edge.evcs.api.Evcs',
-    'io.openems.impl.controller.channelthreshold.ChannelThresholdController', // TODO deprecated
-    'io.openems.edge.io.api.DigitalInput',
+    "io.openems.edge.evcs.api.Evcs",
+    "io.openems.impl.controller.channelthreshold.ChannelThresholdController", // TODO deprecated
+    "io.openems.edge.io.api.DigitalInput",
 }
 
 export enum WidgetFactory {
-    'Controller.Asymmetric.PeakShaving',
-    'Controller.ChannelThreshold',
-    'Controller.CHP.SoC',
-    'Controller.Ess.DelayedSellToGrid',
-    'Controller.Ess.FixActivePower',
-    'Controller.Ess.GridOptimizedCharge',
-    'Controller.Ess.Time-Of-Use-Tariff.Discharge',
-    'Controller.Ess.Time-Of-Use-Tariff',
-    'Controller.IO.ChannelSingleThreshold',
-    'Controller.Io.FixDigitalOutput',
-    'Controller.IO.HeatingElement',
-    'Controller.Io.HeatPump.SgReady',
-    'Controller.Symmetric.PeakShaving',
-    'Controller.TimeslotPeakshaving',
-    'Evcs.Cluster.PeakShaving',
-    'Evcs.Cluster.SelfConsumption',
-    'System.Fenecon.Industrial.S',
-    'System.Fenecon.Industrial.L',
+    "Controller.Api.ModbusTcp.ReadWrite",
+    "Controller.Asymmetric.PeakShaving",
+    "Controller.ChannelThreshold",
+    "Controller.CHP.SoC",
+    "Controller.Ess.DelayedSellToGrid",
+    "Controller.Ess.FixActivePower",
+    "Controller.Ess.GridOptimizedCharge",
+    "Controller.Ess.Time-Of-Use-Tariff.Discharge",
+    "Controller.Ess.Time-Of-Use-Tariff",
+    "Controller.IO.ChannelSingleThreshold",
+    "Controller.Io.FixDigitalOutput",
+    "Controller.IO.HeatingElement",
+    "Controller.Io.HeatPump.SgReady",
+    "Controller.Symmetric.PeakShaving",
+    "Controller.TimeslotPeakshaving",
+    "Evcs.Cluster.PeakShaving",
+    "Evcs.Cluster.SelfConsumption",
+    "System.Fenecon.Industrial.S",
+    "System.Fenecon.Industrial.L",
 }
 
 export type Icon = {
@@ -68,21 +70,24 @@ export class AdvertWidgets {
 
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
-        let list: AdvertWidget[] = [{
-            name: 'winning-two-awards',
-            title: 'Doppelte Freude bei FENECON',
-        }];
+        let list: AdvertWidget[] = [];
 
+        if (
+            EdgePermission.isEnergyJourneyAllowed(edge.firstSetupProtocol) && edge.producttype === ProductType.HOME) {
+            list.push({
+                name: "energy-journey",
+                title: "Batterieerweiterung",
+            });
+        }
         list = Utils.shuffleArray(list);
         return new AdvertWidgets(list);
     }
 }
 
 export class Widgets {
-
     /**
- * Names of Widgets.
- */
+     * Names of Widgets.
+     */
     public readonly names: string[] = [];
 
     private constructor(
@@ -105,41 +110,45 @@ export class Widgets {
     }
 
     public static parseWidgets(edge: Edge, config: EdgeConfig): Widgets {
-
         const classes: string[] = Object.values(WidgetClass) //
-            .filter(v => typeof v === 'string')
+            .filter(v => typeof v === "string")
             .filter(clazz => {
-                if (!edge.isVersionAtLeast('2018.8')) {
+                if (!edge.isVersionAtLeast("2018.8")) {
 
                     // no filter for deprecated versions
                     return true;
                 }
                 switch (clazz) {
-                    case 'Common_Autarchy':
-                    case 'Grid':
+                    case "Common_Autarchy":
+                    case "Grid":
                         return config.hasMeter();
-                    case 'Energymonitor':
-                    case 'Consumption':
+                    case "Energymonitor":
+                    case "Consumption":
                         if (config.hasMeter() == true || config.hasProducer() == true || config.hasStorage() == true) {
                             return true;
                         } else {
                             return false;
                         }
-                    case 'Storage':
+                    case "Storage":
                         return config.hasStorage();
-                    case 'Common_Production':
-                    case 'Common_Selfconsumption':
+                    case "Common_Production":
+                    case "Common_Selfconsumption":
                         return config.hasProducer();
-                    case 'Controller_ChannelThreshold':
-                        return config.getComponentIdsByFactory('Controller.ChannelThreshold')?.length > 0;
+                    case "Controller_ChannelThreshold":
+                        return config.getComponentIdsByFactory("Controller.ChannelThreshold")?.length > 0;
+                    case "Controller_Io_Digital_Outputs":
+                        return config.getComponentIdsByFactories("Controller.Io.FixDigitalOutput", "Controller.IO.ChannelSingleThreshold")?.length > 0;
+                    case "Controller.Api.ModbusTcp.ReadWrite":
+                        return EdgePermission.isModbusTcpApiWidgetAllowed(edge);
+                    default:
+                        return false;
                 }
-                return false;
             }).map(clazz => clazz.toString());
         const list: Widget[] = [];
 
-        for (const nature of Object.values(WidgetNature).filter(v => typeof v === 'string')) {
+        for (const nature of Object.values(WidgetNature).filter(v => typeof v === "string")) {
             for (const componentId of config.getComponentIdsImplementingNature(nature.toString())) {
-                if (nature === 'io.openems.edge.io.api.DigitalInput' && list.some(e => e.name === 'io.openems.edge.io.api.DigitalInput')) {
+                if (nature === "io.openems.edge.io.api.DigitalInput" && list.some(e => e.name === "io.openems.edge.io.api.DigitalInput")) {
                     continue;
                 }
                 if (config.getComponent(componentId).isEnabled) {
@@ -147,7 +156,7 @@ export class Widgets {
                 }
             }
         }
-        for (const factory of Object.values(WidgetFactory).filter(v => typeof v === 'string')) {
+        for (const factory of Object.values(WidgetFactory).filter(v => typeof v === "string")) {
             for (const componentId of config.getComponentIdsByFactory(factory.toString())) {
                 if (config.getComponent(componentId).isEnabled) {
                     list.push({ name: factory, componentId: componentId });
@@ -157,14 +166,14 @@ export class Widgets {
 
         // explicitely sort ChannelThresholdControllers by their outputChannelAddress
         list.sort((w1, w2) => {
-            if (w1.name === 'Controller.IO.ChannelSingleThreshold' && w2.name === 'Controller.IO.ChannelSingleThreshold') {
-                let outputChannelAddress1: string | string[] = config.getComponentProperties(w1.componentId)['outputChannelAddress'];
-                if (typeof outputChannelAddress1 !== 'string') {
+            if (w1.name === "Controller.IO.ChannelSingleThreshold" && w2.name === "Controller.IO.ChannelSingleThreshold") {
+                let outputChannelAddress1: string | string[] = config.getComponentProperties(w1.componentId)["outputChannelAddress"];
+                if (typeof outputChannelAddress1 !== "string") {
                     // Takes only the first output for simplicity reasons
                     outputChannelAddress1 = outputChannelAddress1[0];
                 }
-                let outputChannelAddress2: string | string[] = config.getComponentProperties(w2.componentId)['outputChannelAddress'];
-                if (typeof outputChannelAddress2 !== 'string') {
+                let outputChannelAddress2: string | string[] = config.getComponentProperties(w2.componentId)["outputChannelAddress"];
+                if (typeof outputChannelAddress2 !== "string") {
                     // Takes only the first output for simplicity reasons
                     outputChannelAddress2 = outputChannelAddress2[0];
                 }

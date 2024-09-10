@@ -1,0 +1,5 @@
+2023-06-10T22:00:00Z;900;500;GridBuy not fully covered by gridSell
+2023-06-11T22:00:00Z;900;0;GridBuy but no gridSell
+2023-06-12T22:00:00Z;0;1500;No GridBuy
+2023-06-13T22:00:00Z;4400;4400;Fully used capacity with 2 extra batteryModules
+2023-06-14T22:00:00Z;11000;12000;Fully used capacity of 5 extra batteryModules

@@ -1,17 +1,17 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { AbstractIbn } from '../../installation-systems/abstract-ibn';
-import { FeedInType } from '../../shared/enums';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { AbstractIbn } from "../../installation-systems/abstract-ibn";
+import { FeedInType } from "../../shared/enums";
 
 @Component({
   selector: ProtocolFeedInLimitationComponent.SELECTOR,
-  templateUrl: './protocol-feed-in-limitation.component.html',
+  templateUrl: "./protocol-feed-in-limitation.component.html",
 })
 export class ProtocolFeedInLimitationComponent implements OnInit {
 
-  private static readonly SELECTOR = 'protocol-feed-in-limitation';
+  private static readonly SELECTOR = "protocol-feed-in-limitation";
 
   @Input() public ibn: AbstractIbn;
   @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
@@ -37,7 +37,7 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
   }
 
   public onNextClicked() {
-    if (this.form.invalid || this.form.controls['isManualProperlyFollowedAndRead']?.value == false) {
+    if (this.form.invalid || this.form.controls["isManualProperlyFollowedAndRead"]?.value == false) {
       return;
     }
 

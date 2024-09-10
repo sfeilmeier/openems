@@ -50,7 +50,7 @@ export type SetupProtocol = {
         serialNumber: string
     }[],
     items?: {
-        category: Category,
+        category: any, // TODO is Category or string
         name: string,
         value: string
     }[],

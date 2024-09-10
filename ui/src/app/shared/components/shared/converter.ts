@@ -1,10 +1,8 @@
 // @ts-strict-ignore
-
 import { TranslateService } from "@ngx-translate/core";
 import { Meter } from "src/app/edge/installation/shared/meter";
-
-import { BatteryMode, BatteryStateMachine, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, SafetyCountryCode, Utils } from "../../shared";
-import { BackupEnable, DredCmd } from "../../type/general";
+import { BatteryInverterState, BatteryMode, BatteryStateMachine, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, SafetyCountryCode, Utils } from "../../shared";
+import { BackupEnable, DredCmd, EnabledDisabledState } from "../../type/general";
 import { TimeUtils } from "../../utils/time/timeutils";
 import { Formatter } from "./formatter";
 
@@ -26,21 +24,21 @@ export namespace Converter {
   };
 
   export const IF_NUMBER = (value: number | string | null, callback: (number: number) => string) => {
-    if (typeof value === 'number') {
+    if (typeof value === "number") {
       return callback(value);
     }
     return "-"; // null or string
   };
 
   export const IF_STRING = (value: number | string | null, callback: (text: string) => string) => {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       return callback(value);
     }
     return "-"; // null or number
   };
 
   export const IF_NUMBER_OR_STRING = (value: number | string | null, callback: (value: number | string) => string) => {
-    if (typeof value === 'number' || typeof value === 'string') {
+    if (typeof value === "number" || typeof value === "string") {
       return callback(value);
     }
     return "-"; // null or string
@@ -95,6 +93,48 @@ export namespace Converter {
   export const POWER_IN_WATT: Converter = (raw) => {
     return IF_NUMBER(raw, value =>
       Formatter.FORMAT_WATT(value));
+  };
+
+  /**
+   * Formats a Power value as Watt [W].
+   *
+   * Value 1000 -> "1.000 W".
+   * Value null -> "-".
+   *
+   * @param value the power value
+   * @returns formatted value; '-' for null
+   */
+  export const POWER_IN_KILO_WATT: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      Formatter.FORMAT_KILO_WATT(Utils.divideSafely(value, 1000)));
+  };
+
+  /**
+   * Formats a Energy value as Kilo watt hours [kWh].
+   *
+   * Value 1000 -> "1,00 kWh".
+   * Value null -> "-".
+   *
+   * @param value the power value
+   * @returns formatted value; '-' for null
+   */
+  export const WATT_HOURS_IN_KILO_WATT_HOURS: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      Formatter.FORMAT_KILO_WATT_HOURS(value / 1000));
+  };
+
+  /**
+   * Formats a Energy value as Kilo watt hours [kWh].
+   *
+   * Value 1000 -> "1000 kWh".
+   * Value null -> "-".
+   *
+   * @param value the power value
+   * @returns formatted value; '-' for null
+   */
+  export const TO_KILO_WATT_HOURS: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      Formatter.FORMAT_KILO_WATT_HOURS(value));
   };
 
   export const STATE_IN_PERCENT: Converter = (raw) => {
@@ -164,6 +204,12 @@ export namespace Converter {
     });
   };
 
+  export const CONVERT_TO_BATTERY_INVERTER_STATE: Converter = (raw) => {
+    return IF_NUMBER(raw, value => {
+      return BatteryInverterState[value].toLowerCase();
+    });
+  };
+
   export const CONVERT_TO_BATTERY_MODE: Converter = (raw) => {
     return IF_NUMBER(raw, value => {
       return BatteryMode[value].toLowerCase();
@@ -222,13 +268,13 @@ export namespace Converter {
       const limitation = () => {
         switch (value) {
           case 1:
-            return '0';
+            return "0";
           case 2:
-            return '30';
+            return "30";
           case 4:
-            return '60';
+            return "60";
           case 8:
-            return '100';
+            return "100";
           default:
             return null;
         }
@@ -249,7 +295,7 @@ export namespace Converter {
    * @returns always ""
    */
   export const HIDE_VALUE: Converter = (ignore): string => {
-    return '';
+    return "";
   };
 
   /**
@@ -261,29 +307,29 @@ export namespace Converter {
    * @returns the otherPower
    */
   export const CALCULATE_CONSUMPTION_OTHER_POWER = (evcss: EdgeConfig.Component[], consumptionMeters: EdgeConfig.Component[], currentData: CurrentData): number => {
-    const activePowerTotal = currentData.allComponents['_sum/ConsumptionActivePower'] ?? null;
-    const evcsChargePowerTotal = evcss?.map(evcs => currentData.allComponents[evcs.id + '/ChargePower'])?.reduce((prev, curr) => Utils.addSafely(prev, curr), 0) ?? null;
-    const consumptionMeterActivePowerTotal = consumptionMeters?.map(meter => currentData.allComponents[meter.id + '/ActivePower'])?.reduce((prev, curr) => Utils.addSafely(prev, curr), 0) ?? null;
+    const activePowerTotal = currentData.allComponents["_sum/ConsumptionActivePower"] ?? null;
+    const evcsChargePowerTotal = evcss?.map(evcs => currentData.allComponents[evcs.id + "/ChargePower"])?.reduce((prev, curr) => Utils.addSafely(prev, curr), 0) ?? null;
+    const consumptionMeterActivePowerTotal = consumptionMeters?.map(meter => currentData.allComponents[meter.id + "/ActivePower"])?.reduce((prev, curr) => Utils.addSafely(prev, curr), 0) ?? null;
 
     return Utils.subtractSafely(activePowerTotal,
       Utils.addSafely(evcsChargePowerTotal, consumptionMeterActivePowerTotal));
   };
 
   export const GRID_STATE_TO_MESSAGE = (translate: TranslateService, currentData: CurrentData): string => {
-    const gridMode = currentData.allComponents['_sum/GridMode'];
-    const restrictionMode = currentData.allComponents['ctrlEssLimiter14a0/RestrictionMode'];
+    const gridMode = currentData.allComponents["_sum/GridMode"];
+    const restrictionMode = currentData.allComponents["ctrlEssLimiter14a0/RestrictionMode"];
     if (gridMode === GridMode.OFF_GRID) {
       return translate.instant("GRID_STATES.OFF_GRID");
     }
     if (restrictionMode === 1) {
-      return translate.instant('GRID_STATES.RESTRICTION');
+      return translate.instant("GRID_STATES.RESTRICTION");
     }
     return translate.instant("GRID_STATES.NO_EXTERNAL_LIMITATION");
   };
 
   export const ON_OFF = (translate: TranslateService) => {
     return (raw): string => {
-      return translate.instant(raw == 1 ? 'General.on' : 'General.off');
+      return translate.instant(raw == 1 ? "General.on" : "General.off");
     };
   };
 
@@ -305,19 +351,34 @@ export namespace Converter {
     return (value: any): string => {
       switch (value) {
         case 10:
-          return translate.instant('General.STATE_MACHINE.GO_RUNNING');
+          return translate.instant("General.STATE_MACHINE.GO_RUNNING");
         case 11:
-          return translate.instant('General.STATE_MACHINE.RUNNING');
+          return translate.instant("General.STATE_MACHINE.RUNNING");
         case 20:
-          return translate.instant('General.STATE_MACHINE.GO_STOPPED');
+          return translate.instant("General.STATE_MACHINE.GO_STOPPED");
         case 21:
-          return translate.instant('General.STATE_MACHINE.STOPPED');
+          return translate.instant("General.STATE_MACHINE.STOPPED");
         case 30:
-          return translate.instant('General.STATE_MACHINE.ERROR');
+          return translate.instant("General.STATE_MACHINE.ERROR");
         case -1:
         default:
-          return translate.instant('General.STATE_MACHINE.UNDEFINED');
+          return translate.instant("General.STATE_MACHINE.UNDEFINED");
       }
     };
+  };
+
+  export const CONVERT_TO_BAR: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      Formatter.FORMAT_BAR(value));
+  };
+
+  export const CONVERT_TO_ENABLED_DISABLED_STATE: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      EnabledDisabledState[value]);
+  };
+
+  export const CONVERT_TO_HEATING_STATE: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      EnabledDisabledState[value]);
   };
 }

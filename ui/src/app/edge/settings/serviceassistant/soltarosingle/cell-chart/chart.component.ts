@@ -1,18 +1,17 @@
 // @ts-strict-ignore
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { AbstractHistoryChart } from 'src/app/edge/history/abstracthistorychart';
-import { DEFAULT_TIME_CHART_OPTIONS } from 'src/app/edge/history/shared';
-import { DefaultTypes } from 'src/app/shared/service/defaulttypes';
-import { ChannelAddress, Service, Utils } from 'src/app/shared/shared';
-
-import { ChannelChartDescription } from '../../abstractbattery.component';
-import * as Chart from 'chart.js';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
+import * as Chart from "chart.js";
+import { AbstractHistoryChart } from "src/app/edge/history/abstracthistorychart";
+import { DEFAULT_TIME_CHART_OPTIONS } from "src/app/edge/history/shared";
+import { DefaultTypes } from "src/app/shared/service/defaulttypes";
+import { ChannelAddress, Service, Utils } from "src/app/shared/shared";
+import { ChannelChartDescription } from "../../abstractbattery.component";
 
 @Component({
-    selector: 'soltarocellchart',
-    templateUrl: '../../../../history/abstracthistorychart.html',
+    selector: "soltarocellchart",
+    templateUrl: "../../../../history/abstracthistorychart.html",
 })
 export class SoltaroCellChartComponent extends AbstractHistoryChart implements OnInit, OnChanges, OnDestroy {
 
@@ -37,7 +36,6 @@ export class SoltaroCellChartComponent extends AbstractHistoryChart implements O
 
     ngOnInit() {
         this.startSpinner();
-        this.service.setCurrentComponent('', this.route);
     }
 
     ngOnDestroy() {
@@ -67,9 +65,9 @@ export class SoltaroCellChartComponent extends AbstractHistoryChart implements O
             const datasets = [];
 
             this.channels.forEach(channel => {
-                if (this.battery + '/' + channel.channelName in result.data) {
+                if (this.battery + "/" + channel.channelName in result.data) {
 
-                    channel.datasets = result.data[this.battery + '/' + channel.channelName].map(value => {
+                    channel.datasets = result.data[this.battery + "/" + channel.channelName].map(value => {
                         if (value == null) {
                             return null;
                         } else {
@@ -82,8 +80,8 @@ export class SoltaroCellChartComponent extends AbstractHistoryChart implements O
                         hidden: false,
                     });
                     this.colors.push({
-                        backgroundColor: 'rgba(' + channel.colorRgb + ',0.05)',
-                        borderColor: 'rgba(' + channel.colorRgb + ',1)',
+                        backgroundColor: "rgba(" + channel.colorRgb + ",0.05)",
+                        borderColor: "rgba(" + channel.colorRgb + ",1)",
                     });
                 }
             });

@@ -37,7 +37,7 @@ public class SimulationEngineImpl extends AbstractOpenemsBackendComponent implem
 	private final Logger log = LoggerFactory.getLogger(SimulationEngineImpl.class);
 
 	@Reference(cardinality = ReferenceCardinality.MANDATORY, policy = ReferencePolicy.DYNAMIC)
-	private volatile TimedataManager timedatamanager;
+	private volatile TimedataManager timedata;
 
 	@Reference(cardinality = ReferenceCardinality.MANDATORY, policy = ReferencePolicy.DYNAMIC)
 	private volatile EdgeWebsocket edgeWebsocket;
@@ -65,8 +65,8 @@ public class SimulationEngineImpl extends AbstractOpenemsBackendComponent implem
 
 		return switch (request.getPayload().getMethod()) {
 		case PossibleBatteryCapacityExtensionRequest.METHOD ->
-			PossibleBatteryCapacityExtensionUtil.handleRequest(this.timedatamanager, user, edgeId, this.metadata,
-					this.edgeWebsocket, PossibleBatteryCapacityExtensionRequest.from(request));
+			PossibleBatteryCapacityExtensionUtil.handleRequest(this.timedata, edgeId, this.edgeWebsocket, this.metadata,
+					user, PossibleBatteryCapacityExtensionRequest.from(request.getPayload()));
 		default -> {
 			this.logWarn(this.log, "Unhandled Request: " + request);
 			throw OpenemsError.JSONRPC_UNHANDLED_METHOD.exception(request.getMethod());

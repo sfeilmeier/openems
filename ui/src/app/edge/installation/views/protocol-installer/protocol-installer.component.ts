@@ -1,13 +1,13 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { TranslateService } from '@ngx-translate/core';
-import { GetUserInformationRequest } from 'src/app/shared/jsonrpc/request/getUserInformationRequest';
-import { GetUserInformationResponse } from 'src/app/shared/jsonrpc/response/getUserInformationResponse';
-import { Service } from 'src/app/shared/shared';
-import { COUNTRY_OPTIONS } from 'src/app/shared/type/country';
-import { AbstractIbn } from '../../installation-systems/abstract-ibn';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormGroup, Validators } from "@angular/forms";
+import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { GetUserInformationRequest } from "src/app/shared/jsonrpc/request/getUserInformationRequest";
+import { GetUserInformationResponse } from "src/app/shared/jsonrpc/response/getUserInformationResponse";
+import { Service } from "src/app/shared/shared";
+import { COUNTRY_OPTIONS } from "src/app/shared/type/country";
+import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 
 type UserInformation = {
   companyName: string;
@@ -23,10 +23,10 @@ type UserInformation = {
 
 @Component({
   selector: ProtocolInstallerComponent.SELECTOR,
-  templateUrl: './protocol-installer.component.html',
+  templateUrl: "./protocol-installer.component.html",
 })
 export class ProtocolInstallerComponent implements OnInit {
-  private static readonly SELECTOR = 'protocol-installer';
+  private static readonly SELECTOR = "protocol-installer";
 
   @Input() public ibn: AbstractIbn;
   @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
@@ -43,7 +43,7 @@ export class ProtocolInstallerComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    this.spinnerId = ProtocolInstallerComponent.SELECTOR + '-spinner';
+    this.spinnerId = ProtocolInstallerComponent.SELECTOR + "-spinner";
     this.service.startSpinner(this.spinnerId);
     this.getUserInformation().then((userInformation) => {
       this.service.stopSpinner(this.spinnerId);
@@ -72,67 +72,67 @@ export class ProtocolInstallerComponent implements OnInit {
       {
         fieldGroup: [
           {
-            key: 'lastName',
-            type: 'input',
+            key: "lastName",
+            type: "input",
             templateOptions: {
-              label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.LAST_NAME'),
+              label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.LAST_NAME"),
               required: true,
             },
           },
           {
-            key: 'firstName',
-            type: 'input',
+            key: "firstName",
+            type: "input",
             templateOptions: {
-              label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.FIRST_NAME'),
+              label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.FIRST_NAME"),
               required: true,
             },
           },
           {
-            key: 'companyName',
-            type: 'input',
+            key: "companyName",
+            type: "input",
             templateOptions: {
-              label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_NAME'),
+              label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_NAME"),
               disabled: true,
             },
           },
           {
-            key: 'street',
-            type: 'input',
+            key: "street",
+            type: "input",
             templateOptions: {
-              label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS'),
+              label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS"),
               disabled: true,
             },
           },
           {
-            key: 'zip',
-            type: 'input',
+            key: "zip",
+            type: "input",
             templateOptions: {
-              label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP'),
+              label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP"),
               disabled: true,
             },
           },
           {
-            key: 'city',
-            type: 'input',
+            key: "city",
+            type: "input",
             templateOptions: {
-              label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY'),
+              label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY"),
               disabled: true,
             },
           },
           {
-            key: 'country',
-            type: 'select',
+            key: "country",
+            type: "select",
             templateOptions: {
-              label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY'),
+              label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY"),
               options: COUNTRY_OPTIONS(this.translate),
               disabled: true,
             },
           },
           {
-            key: 'email',
-            type: 'input',
+            key: "email",
+            type: "input",
             templateOptions: {
-              label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL'),
+              label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL"),
               disabled: true,
             },
             validators: {
@@ -140,10 +140,10 @@ export class ProtocolInstallerComponent implements OnInit {
             },
           },
           {
-            key: 'phone',
-            type: 'input',
+            key: "phone",
+            type: "input",
             templateOptions: {
-              label: this.translate.instant('INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.PHONE'),
+              label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.PHONE"),
               disabled: true,
             },
           },
@@ -173,15 +173,15 @@ export class ProtocolInstallerComponent implements OnInit {
         })
         .catch(() => {
           resolve({
-            companyName: '',
-            lastName: '',
-            firstName: '',
-            street: '',
-            zip: '',
-            city: '',
-            country: '',
-            email: '',
-            phone: '',
+            companyName: "",
+            lastName: "",
+            firstName: "",
+            street: "",
+            zip: "",
+            city: "",
+            country: "",
+            email: "",
+            phone: "",
           });
         });
     });
