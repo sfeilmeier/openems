@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2024.9.1-SNAPSHOT";
+    public static readonly UI_VERSION = "2024.9.1";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -70,6 +70,7 @@ export class App {
     public static readonly NETZDIENLICHE_BELADUNG = new App("FEMS App Netzdienliche Beladung", "https://fenecon.de/fenecon-fems/fems-app-netzdienliche-beladung/");
     public static readonly REST_JSON_API = new App("FEMS App Rest/JSON lesend", "https://fenecon.de/fenecon-fems/fems-app-rest-json-lesend/");
     public static readonly MODBUS_TCP_API = new App("FEMS App Modbus/TCP lesend", "https://fenecon.de/fenecon-fems/fems-app-modbus-tcp-lesend/");
+    public static readonly MODBUS_TCP_SCHREIBZUGRIFF = new App("FEMS App Modbus/TCP Schreibzugriff", "https://fenecon.de/fenecon-fems/fems-app-modbus-tcp-schreibzugriff/");
     public static readonly PEAKSHAVING = new App("FEMS App Lastspitzenkappung", "https://fenecon.de/fenecon-fems/fems-app-lastspitzenkappung/");
     public static readonly HOCHLASTZEITFENSTER = new App("FEMS App Hochlastzeitfenster", "https://fenecon.de/fenecon-fems/fems-app-hochlastzeitfenster/");
     public static readonly PEAKSHAVING_PHASE = new App("FEMS App Phasengenaue Lastspitzenkappung", "https://fenecon.de/fenecon-fems/fems-app-phasengenaue-lastspitzenkappung/");
@@ -130,7 +131,6 @@ export class Library {
     public static readonly APACHE_FELIX_INVENTORY = new Library("Apache Felix Inventory", "org.apache.felix.inventory");
     public static readonly APACHE_FELIX_METATYPE = new Library("Apache Felix MetaType", "org.apache.felix.metatype");
     public static readonly APACHE_FELIX_SCR = new Library("Apache Felix SCR", "org.apache.felix.scr");
-    public static readonly APACHE_FELIX_WEBCONSOLE = new Library("Apache Felix Webconsole", "org.apache.felix.webconsole");
     public static readonly APACHE_FELIX_CONFIGADMIN = new Library("Apache Felix Configuration Admin", "org.apache.felix.configadmin");
     public static readonly BNDTOOLS = new Library("bndtools", "biz.aQute.bnd"); // https://github.com/bndtools/bnd
     public static readonly CHARGETIME_OCPP = new Library("Open Charge Alliance Java OCPP", "eu.chargetime.ocpp"); // https://github.com/ChargeTimeEU/Java-OCA-OCPP
