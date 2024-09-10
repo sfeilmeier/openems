@@ -164,10 +164,18 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.PeakShaving.PeakShaving", "https://fenecon.de/fenecon-fems/fems-app-lastspitzenkappung/") //
 			.put("App.PeakShaving.PhaseAccuratePeakShaving",
 					"https://fenecon.de/fenecon-fems/fems-app-phasengenaue-lastspitzenkappung/") //
+			.put("App.OpenemsHardware.BeagleBoneBlack", "") //
+			.put("App.OpenemsHardware.Compulab", "") //
+			.put("App.OpenemsHardware.CM3", "") //
+			.put("App.OpenemsHardware.CM4", "") //
+			.put("App.OpenemsHardware.CM4Max", "") //
+			.put("App.OpenemsHardware.CM4S", "") //
+			.put("App.OpenemsHardware.CM4S.Gen2", "") //
 			.put("App.Ess.FixActivePower", "") //
 			.put("App.Ess.FixStateOfCharge", "") //
 			.put("App.Ess.PowerPlantController", "") //
 			.put("App.Ess.PrepareBatteryExtension", "") //
+			.put("App.Ess.Limiter14a", "") //
 			.build();
 
 	@Override
