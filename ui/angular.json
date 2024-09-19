@@ -241,6 +241,30 @@
                 }
               ]
             },
+            "fenecon-edge-docker": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/theme.ts",
+                  "with": "src/themes/fenecon/environments/theme.ts"
+                },
+                {
+                  "replace": "src/environments/dummy.ts",
+                  "with": "src/themes/openems/environments/edge-docker.ts"
+                }
+              ]
+            },
+            "fenecon-backend-docker": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/theme.ts",
+                  "with": "src/themes/fenecon/environments/theme.ts"
+                },
+                {
+                  "replace": "src/environments/dummy.ts",
+                  "with": "src/themes/openems/environments/backend-docker.ts"
+                }
+              ]
+            },
             "heckert": {
               "assets": [
                 "src/assets",
