@@ -87,6 +87,12 @@ export const theme = {
             ANDROID: "https://play.google.com/store/apps/details?id=de.fenecon.fems&gl=DE",
             IOS: "https://apps.apple.com/de/app/fenecon/id6476198535",
         },
+        ENERGY_JOURNEY: {
+            HOME_10: {
+                DE: "https://fenecon.de/wp-content/uploads/2023/04/2024-01_FENECON_Home-10_Produktblatt_DE_Web-1.pdf",
+                EN: "https://fenecon.de/wp-content/uploads/2023/04/2024-01_FENECON_Home-10_Produktblatt_EN_Web.pdf",
+            },
+        },
     },
     PRODUCT_TYPES: (translate: TranslateService): Filter => (
         {

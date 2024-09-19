@@ -4,7 +4,7 @@
 
         <ion-item color="light" lines="full">
             <ion-icon name="analytics" slot="start" size="large" color="primary"></ion-icon>
-            <ion-label slot="start">Ihre Angaben</ion-label>
+            <ion-label slot="start" translate>SETTINGS.ENERGY_JOURNEY.CONSTANTS.TITLE</ion-label>
         </ion-item>
         <ion-card-content>
             <ion-grid>
@@ -25,7 +25,8 @@
                     </ion-col>
                     <ion-col sizeXs="12" sizeSm="12" sizeLg="4" sizeMd="4" class="ion-align-self-end ion-text-end">
                         <ion-button fill="outline" [routerLink]="['./electricityPriceChoice']"
-                            [queryParams]="{electricityPrice: electricityPrice}" size="small">bearbeiten</ion-button>
+                            [queryParams]="{electricityPrice: electricityPrice}" size="small"
+                            translate>SETTINGS.ENERGY_JOURNEY.CONSTANTS.EDIT</ion-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>

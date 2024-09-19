@@ -92,7 +92,13 @@ export interface Environment {
         APP: {
             ANDROID: string | null,
             IOS: string | null,
-        }
+        },
+        readonly ENERGY_JOURNEY: {
+            readonly HOME_10: {
+                readonly DE: string,
+                readonly EN: string,
+            }
+        },
     },
     readonly PRODUCT_TYPES: (translate: TranslateService) => Filter | null
 }

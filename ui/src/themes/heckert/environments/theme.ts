@@ -87,6 +87,12 @@ export const theme = {
             ANDROID: null,
             IOS: null,
         },
+        ENERGY_JOURNEY: {
+            HOME_10: {
+                DE: "#",
+                EN: "#",
+            },
+        },
     },
     PRODUCT_TYPES: () => null,
 };

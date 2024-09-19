@@ -70,12 +70,9 @@ export class EdgePermission {
     }
 
     return [new EnergyJourneyWidget(
-      "Batterieerweiterung",
-      "Batterieerweiterung, Lohnt es sich?",
-      `Ob sich die Nachrüstung Ihres Strompeichers Home 10 lohnt,
-        hängt von verschiedenen Faktoren ab. Ihr System ist seit mehr
-        als einem Jahr in Betrieb. Analysieren Sie hier, wie sich eine
-        Batterieerweiterung ausgewirkt hätte`,
+      translate.instant("SETTINGS.ENERGY_JOURNEY.WIDGET_TITLE"),
+      translate.instant("SETTINGS.ENERGY_JOURNEY.SLOGAN"),
+      translate.instant("SETTINGS.ENERGY_JOURNEY.DESCRIPTION"),
       ["batteryExtension", "electricityPriceChoice"],
       translate.instant("SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS"),
     )];

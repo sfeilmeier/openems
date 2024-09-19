@@ -51,13 +51,13 @@ export class BatteryExtensionComponent extends AbstractFlatWidget {
 
   protected override afterIsInitialized(): void {
     const dateRange = DateUtils.toDateRange(this.fromDate, this.toDate, this.translate);
-    this.constantsDescription = `Ihr aktuelles ${environment.theme} ${BatteryExtensionComponent.getHome10Label()} System umfasste im vergangenen Jahr:`;
+    this.constantsDescription = this.translate.instant("SETTINGS.ENERGY_JOURNEY.CONSTANTS_DESCRIPTION", { theme: environment.theme, label: BatteryExtensionComponent.getHome10Label() });
 
     if (!dateRange) {
       console.warn("Daterange not available, either fromDate or toDate are invalid");
       return;
     }
-    this.chartTitle = "Einsparung Strombezug in kWh (" + DateUtils.toDateRange(this.fromDate, this.toDate, this.translate) + ")";
+    this.chartTitle = this.translate.instant("SETTINGS.ENERGY_JOURNEY.GRID_CONSUMPTION_TITLE", { date: DateUtils.toDateRange(this.fromDate, this.toDate, this.translate) });
 
     this.electricityPrice = this.route?.snapshot?.queryParams["electricityPrice"] as number;
 

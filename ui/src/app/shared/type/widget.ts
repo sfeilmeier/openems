@@ -56,7 +56,7 @@ export class Widget {
 
 export type AdvertWidget = {
     name: string;
-    title?: string;
+    title?: { rawTitle: string } | { languageKey: string }
 };
 
 export class AdvertWidgets {
@@ -72,11 +72,11 @@ export class AdvertWidgets {
 
         let list: AdvertWidget[] = [];
 
-        if (
-            EdgePermission.isEnergyJourneyAllowed(edge.firstSetupProtocol) && edge.producttype === ProductType.HOME) {
+        if (EdgePermission.isEnergyJourneyAllowed(edge.firstSetupProtocol)
+            && edge.producttype === ProductType.HOME) {
             list.push({
                 name: "energy-journey",
-                title: "Batterieerweiterung",
+                title: { languageKey: "SETTINGS.ENERGY_JOURNEY.WIDGET_TITLE" },
             });
         }
         list = Utils.shuffleArray(list);
