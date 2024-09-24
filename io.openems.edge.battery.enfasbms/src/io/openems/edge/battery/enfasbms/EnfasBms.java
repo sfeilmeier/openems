@@ -36,11 +36,23 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 
-		MAX_ALLOWED_START_TIME_FAULT(Doc.of(Level.FAULT) //
+		/**
+		 * Maximum allowed start time fault.
+		 * 
+		 * <p>
+		 * This fault forces the EssGeneric into the GO_STOPPED state.
+		 */
+		MAX_ALLOWED_START_TIME_FAULT(Doc.of(Level.WARNING) //
 				.text("The maximum start time is passed!") //
 				.persistencePriority(PersistencePriority.HIGH)), //
 
-		MAX_ALLOWED_STOP_TIME_FAULT(Doc.of(Level.FAULT) //
+		/**
+		 * Maximum allowed stop time fault.
+		 * 
+		 * <p>
+		 * This fault forces the EssGeneric into the GO_STOPPED state.
+		 */
+		MAX_ALLOWED_STOP_TIME_FAULT(Doc.of(Level.WARNING) //
 				.text("The maximum stop time is passed!") //
 				.persistencePriority(PersistencePriority.HIGH)), //
 
@@ -399,7 +411,7 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 
 		STATE_MACHINE(Doc.of(State.values()) //
 				.text("Current State of State-Machine")),
-		RUN_FAILED(Doc.of(Level.FAULT) //
+		RUN_FAILED(Doc.of(Level.WARNING) //
 				.text("Running the Logic failed"));
 
 		private final Doc doc;
