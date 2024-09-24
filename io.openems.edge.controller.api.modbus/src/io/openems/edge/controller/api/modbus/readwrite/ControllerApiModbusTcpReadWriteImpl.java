@@ -27,15 +27,22 @@ import com.ghgande.j2mod.modbus.ModbusException;
 
 import io.openems.common.channel.AccessMode;
 import io.openems.common.channel.PersistencePriority;
+import io.openems.common.channel.Unit;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.types.OpenemsType;
 import io.openems.edge.common.channel.ChannelId.ChannelIdImpl;
 import io.openems.edge.common.channel.Doc;
+import io.openems.edge.common.channel.IntegerReadChannel;
 import io.openems.edge.common.channel.WriteChannel;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.jsonapi.ComponentJsonApi;
 import io.openems.edge.common.meta.Meta;
+import io.openems.edge.common.modbusslave.ModbusRecordFloat32;
+import io.openems.edge.common.modbusslave.ModbusSlave;
+import io.openems.edge.common.modbusslave.ModbusSlaveNatureTable;
+import io.openems.edge.common.modbusslave.ModbusSlaveTable;
+import io.openems.edge.common.modbusslave.ModbusType;
 import io.openems.edge.controller.api.Controller;
 import io.openems.edge.controller.api.common.Status;
 import io.openems.edge.controller.api.common.WriteObject;
@@ -52,20 +59,23 @@ import io.openems.edge.timedata.api.utils.CalculateActiveTime;
 		configurationPolicy = ConfigurationPolicy.REQUIRE //
 )
 public class ControllerApiModbusTcpReadWriteImpl extends AbstractModbusTcpApi
-		implements ControllerApiModbusTcpReadWrite, ModbusTcpApi, Controller, OpenemsComponent, ComponentJsonApi, TimedataProvider {
+		implements ControllerApiModbusTcpReadWrite, ModbusTcpApi, Controller, OpenemsComponent, ComponentJsonApi,
+		TimedataProvider, ModbusSlave {
 
 	private final Logger log = LoggerFactory.getLogger(ControllerApiModbusTcpReadWriteImpl.class);
-	
+
 	private final CalculateActiveTime calculateCumulatedActiveTime = new CalculateActiveTime(this,
 			ControllerApiModbusTcpReadWrite.ChannelId.CUMULATED_ACTIVE_TIME);
-	
+
 	private final CalculateActiveTime calculateCumulatedInactiveTime = new CalculateActiveTime(this,
 			ControllerApiModbusTcpReadWrite.ChannelId.CUMULATED_INACTIVE_TIME);
-	
+
 	private List<String> writeChannels;
-	
+
+	private List<OpenemsComponent> components = new ArrayList<>();
+
 	private boolean isActive = false;
-	
+
 	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.OPTIONAL)
 	private volatile Timedata timedata = null;
 
@@ -83,10 +93,12 @@ public class ControllerApiModbusTcpReadWriteImpl extends AbstractModbusTcpApi
 	)
 	protected void addComponent(OpenemsComponent component) {
 		super.addComponent(component);
+		this.components.add(component);
 	}
 
 	protected void removeComponent(OpenemsComponent component) {
 		super.removeComponent(component);
+		this.components.remove(component);
 	}
 
 	public ControllerApiModbusTcpReadWriteImpl() {
@@ -126,12 +138,12 @@ public class ControllerApiModbusTcpReadWriteImpl extends AbstractModbusTcpApi
 	protected void deactivate() {
 		super.deactivate();
 	}
-	
+
 	@Override
 	public void run() throws OpenemsNamedException {
 		this.isActive = false;
 		super.run();
-		
+
 		this.calculateCumulatedActiveTime.update(this.isActive);
 		this.calculateCumulatedInactiveTime.update(!this.isActive);
 	}
@@ -166,7 +178,7 @@ public class ControllerApiModbusTcpReadWriteImpl extends AbstractModbusTcpApi
 			this.logError(this.log, "ERROR: " + e.getMessage());
 		}
 	}
-	
+
 	@Override
 	protected Consumer<Entry<WriteChannel<?>, WriteObject>> handleWrites() {
 		return entry -> {
@@ -205,10 +217,10 @@ public class ControllerApiModbusTcpReadWriteImpl extends AbstractModbusTcpApi
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
-	
+
 	/**
-	 * Checks, if timedata channels are already set.
-	 * If not, they will be created and added to current channels.
+	 * Checks, if timedata channels are already set. If not, they will be created
+	 * and added to current channels.
 	 */
 	protected void handleTimeDataChannels() {
 		var activeTimeChannel = new ChannelIdImpl("CUMULATED_ACTIVE_TIME", //
@@ -218,10 +230,37 @@ public class ControllerApiModbusTcpReadWriteImpl extends AbstractModbusTcpApi
 
 		List<ChannelIdImpl> timeChannels = Arrays.asList(activeTimeChannel, inactiveTimeChannel);
 		timeChannels.forEach(channel -> {
-		    if (channels().stream().noneMatch(ch -> ch.channelId().id().equals(channel.id()))) {
-		        addChannel(channel);
-		    }
+			if (channels().stream().noneMatch(ch -> ch.channelId().id().equals(channel.id()))) {
+				addChannel(channel);
+			}
 		});
+	}
+
+	@Override
+	public ModbusSlaveTable getModbusSlaveTable(AccessMode accessMode) {
+		final OpenemsComponent ess = this.components.stream() //
+				.filter(c -> c.id().startsWith("ess")) //
+				.findFirst().orElse(null);
+
+		return new ModbusSlaveTable(//
+				OpenemsComponent.getModbusSlaveNatureTable(AccessMode.READ_ONLY),
+				ModbusSlaveNatureTable.of(ControllerApiModbusTcpReadWriteImpl.class, AccessMode.READ_ONLY, 300)
+						.cycleValue(0, this.id() + "/" + ess + "ActivePowerLimit", Unit.WATT, "", ModbusType.FLOAT32,
+								t -> this.channels().stream() //
+										.filter(channel -> (ess.id().toUpperCase() + "_SET_ACTIVE_POWER_EQUALS") //
+												.equals(channel.channelId().name())) //
+										.map(channel -> ((IntegerReadChannel) channel).value().get()) //
+										.findFirst().orElse(null))
+						.cycleValue(2, this.id() + "/" + ess + "ReactivePowerLimit", Unit.VOLT_AMPERE_REACTIVE, "",
+								ModbusType.FLOAT32, t -> { //
+									var value = this.channels().stream() //
+											.filter(channel -> (ess.id().toUpperCase() + "_SET_REACTIVE_POWER_EQUALS") //
+													.equals(channel.channelId().name())) //
+											.map(channel -> ((IntegerReadChannel) channel).value().get()) //
+											.findFirst().orElse(null); //
+									return value != null ? value : ModbusRecordFloat32.UNDEFINED_VALUE;
+								})
+						.build());
 	}
 
 }
