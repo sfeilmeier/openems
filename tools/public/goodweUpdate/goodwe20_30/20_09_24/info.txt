@@ -1,0 +1,3 @@
+Version 20.09.24 (ARM 11 - DSP 9 - No info)
+ARM: 11 (410-02071-11(422)_M4_APP.BIN)
+DSP: 9 (410-04062-09-V9048.bin)
