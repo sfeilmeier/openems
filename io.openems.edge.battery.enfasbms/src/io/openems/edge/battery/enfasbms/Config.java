@@ -3,6 +3,7 @@ package io.openems.edge.battery.enfasbms;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
+import io.openems.edge.battery.enfasbms.enums.FirmwareVersion;
 import io.openems.edge.common.startstop.StartStopConfig;
 
 @ObjectClassDefinition(//
@@ -18,6 +19,12 @@ public @interface Config {
 
 	@AttributeDefinition(name = "Is enabled?", description = "Is this Component enabled?")
 	boolean enabled() default true;
+
+	@AttributeDefinition(name = "Bms firmware version?", description = "Which bms firmware version?")
+	FirmwareVersion version() default FirmwareVersion.ENFAS_VERSION_1_0_17;
+
+	@AttributeDefinition(name = "Battery protection type?", description = "Which type Battery protection?")
+	BatteryProtectionType batteryProtectionType() default BatteryProtectionType.DEFAULT;
 
 	@AttributeDefinition(name = "Start/stop behaviour?", description = "Should this Component be forced to start or stop?")
 	StartStopConfig startStop() default StartStopConfig.AUTO;

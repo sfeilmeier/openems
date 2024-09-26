@@ -2,6 +2,7 @@ package io.openems.edge.battery.enfasbms;
 
 import io.openems.common.test.AbstractComponentConfig;
 import io.openems.common.utils.ConfigUtils;
+import io.openems.edge.battery.enfasbms.enums.FirmwareVersion;
 import io.openems.edge.common.startstop.StartStopConfig;
 
 @SuppressWarnings("all")
@@ -12,6 +13,8 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		private String modbusId = null;
 		private int modbusUnitId;
 		private StartStopConfig startStop = StartStopConfig.AUTO;
+		private FirmwareVersion version = FirmwareVersion.WUERTH_VERSION_1_0_20;
+		private BatteryProtectionType batteryProtectionType = BatteryProtectionType.DEFAULT;
 
 		private Builder() {
 		}
@@ -33,6 +36,16 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 
 		public Builder setStartStop(StartStopConfig startStop) {
 			this.startStop = startStop;
+			return this;
+		}
+
+		public Builder setVersion(FirmwareVersion version) {
+			this.version = version;
+			return this;
+		}
+
+		public Builder setBatteryProtectionType(BatteryProtectionType batteryProtectionType) {
+			this.batteryProtectionType = batteryProtectionType;
 			return this;
 		}
 
@@ -77,4 +90,13 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		return StartStopConfig.START;
 	}
 
+	@Override
+	public FirmwareVersion version() {
+		return this.builder.version;
+	}
+
+	@Override
+	public BatteryProtectionType batteryProtectionType() {
+		return this.builder.batteryProtectionType;
+	}
 }

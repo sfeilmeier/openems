@@ -5,7 +5,7 @@ import io.openems.edge.battery.protection.force.ForceCharge;
 import io.openems.edge.battery.protection.force.ForceDischarge;
 import io.openems.edge.common.linecharacteristic.PolyLine;
 
-public class EnfasBmsBatteryProtection implements BatteryProtectionDefinition {
+public abstract class EnfasBatteryProtectionDefinition implements BatteryProtectionDefinition {
 
 	@Override
 	public int getInitialBmsMaxEverChargeCurrent() {
@@ -19,36 +19,28 @@ public class EnfasBmsBatteryProtection implements BatteryProtectionDefinition {
 
 	@Override
 	public PolyLine getChargeVoltageToPercent() {
-		return PolyLine.create() //
-				.addPoint(4040, 0) //
-				.addPoint(4030, 0.1) //
-				.addPoint(4020, 1) //
-				.build();
+		return PolyLine.empty();
 	}
 
 	@Override
 	public PolyLine getDischargeVoltageToPercent() {
-		return PolyLine.create() //
-				.addPoint(3000, 0) //
-				.addPoint(3025, 0.1) //
-				.addPoint(3050, 1) //
-				.build();
+		return PolyLine.empty();
 	}
 
 	@Override
 	public ForceDischarge.Params getForceDischargeParams() {
 		return new ForceDischarge.Params(//
-				4200, //
-				4170, //
-				4150);
+				4300, //
+				4250, //
+				4200);
 	}
 
 	@Override
 	public ForceCharge.Params getForceChargeParams() {
 		return new ForceCharge.Params(//
-				2900, //
-				2950, //
-				2975);
+				3034, //
+				3050, //
+				3066);
 	}
 
 	@Override

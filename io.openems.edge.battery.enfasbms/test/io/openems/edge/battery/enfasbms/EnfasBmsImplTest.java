@@ -1,8 +1,14 @@
 package io.openems.edge.battery.enfasbms;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+
 import org.junit.Test;
 
+import io.openems.common.test.TimeLeapClock;
 import io.openems.common.types.ChannelAddress;
+import io.openems.edge.battery.enfasbms.enums.FirmwareVersion;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
@@ -45,8 +51,11 @@ public class EnfasBmsImplTest {
 	private static final ChannelAddress MAX_CELL_VOLTAGE = new ChannelAddress(BATTERY_ID, "MaxCellVoltage");
 	private static final ChannelAddress MIN_CELL_VOLTAGE = new ChannelAddress(BATTERY_ID, "MinCellVoltage");
 
+	private static final ChannelAddress RESET_BATTERY_COMMAND = new ChannelAddress(BATTERY_ID, "ResetBatteryCommand");
+	private static final ChannelAddress STRING_MODULE_COUNT = new ChannelAddress(BATTERY_ID, "StringModuleCount");
+
 	@Test
-	public void test() throws Exception {
+	public void batteryValuesTest() throws Exception {
 		new ComponentTest(new EnfasBmsImpl()) //
 				.addReference("setModbus", new DummyModbusBridge(MODBUS_ID)) //
 				.addReference("componentManager", new DummyComponentManager())
@@ -55,6 +64,8 @@ public class EnfasBmsImplTest {
 						.setId(BATTERY_ID) //
 						.setModbusId(MODBUS_ID) //
 						.setStartStop(StartStopConfig.START) //
+						.setVersion(FirmwareVersion.WUERTH_VERSION_1_0_20)//
+						.setBatteryProtectionType(BatteryProtectionType.DEFAULT)//
 						.build())
 				.next(new TestCase("1") //
 						.input(MODULE_0_MAX_CELL_VOLTAGE, 90) //
@@ -65,6 +76,13 @@ public class EnfasBmsImplTest {
 						.input(MODULE_5_MAX_CELL_VOLTAGE, 90) //
 						.output(MAX_CELL_VOLTAGE, 100) //
 						.output(MIN_CELL_VOLTAGE, null))
+				.activate(MyConfig.create() //
+						.setId(BATTERY_ID) //
+						.setModbusId(MODBUS_ID) //
+						.setStartStop(StartStopConfig.START) //
+						.setVersion(FirmwareVersion.WUERTH_VERSION_1_0_20)//
+						.setBatteryProtectionType(BatteryProtectionType.DEFAULT)//
+						.build())//
 				.next(new TestCase() //
 						.input(MODULE_5_MAX_CELL_VOLTAGE, 120) //
 						.output(MAX_CELL_VOLTAGE, 120) //
@@ -81,6 +99,65 @@ public class EnfasBmsImplTest {
 						.output(MIN_CELL_VOLTAGE, 50))
 
 		;
+	}
+
+	@Test
+	public void resetBatteryTest() throws Exception {
+		final var clock = new TimeLeapClock(Instant.parse("2020-02-03T08:30:00.00Z"), ZoneOffset.UTC);
+		new ComponentTest(new EnfasBmsImpl()) //
+				.addReference("setModbus", new DummyModbusBridge(MODBUS_ID)) //
+				.addReference("componentManager", new DummyComponentManager(clock)) //
+				.addReference("cm", new DummyConfigurationAdmin()) //
+				.activate(MyConfig.create() //
+						.setId(BATTERY_ID) //
+						.setModbusId(MODBUS_ID) //
+						.setStartStop(StartStopConfig.START) //
+						.setVersion(FirmwareVersion.WUERTH_VERSION_1_0_20)//
+						.setBatteryProtectionType(BatteryProtectionType.DEFAULT)//
+						.build())
+
+				.next(new TestCase() //
+						.input(RESET_BATTERY_COMMAND, true)) //
+				.next(new TestCase() //
+						.timeleap(clock, 2600, ChronoUnit.MILLIS)) //
+				.next(new TestCase() //
+						.timeleap(clock, 5100, ChronoUnit.MILLIS)) //
+				.next(new TestCase()) //
+				.next(new TestCase()) //
+				.next(new TestCase() //
+						.timeleap(clock, 5200, ChronoUnit.MILLIS)) //
+				.next(new TestCase() //
+						.input(RESET_BATTERY_COMMAND, true)) //
+				.next(new TestCase() //
+						.input(RESET_BATTERY_COMMAND, false)) //
+				.next(new TestCase() //
+						.input(RESET_BATTERY_COMMAND, true)) //
+				.next(new TestCase() //
+						.input(RESET_BATTERY_COMMAND, false)) //
+				.next(new TestCase() //
+						.input(RESET_BATTERY_COMMAND, false)) //
+
+		;
+	}
+
+	@Test
+	public void modbusProtocolTest() throws Exception {
+		final var clock = new TimeLeapClock(Instant.parse("2020-02-03T08:30:00.00Z"), ZoneOffset.UTC);
+		final var numberOfModules = 9;
+		new ComponentTest(new EnfasBmsImpl()) //
+				.addReference("setModbus", new DummyModbusBridge(MODBUS_ID)) //
+				.addReference("componentManager", new DummyComponentManager(clock)) //
+				.addReference("cm", new DummyConfigurationAdmin()) //
+				.activate(MyConfig.create() //
+						.setId(BATTERY_ID) //
+						.setModbusId(MODBUS_ID) //
+						.setStartStop(StartStopConfig.START) //
+						.setVersion(FirmwareVersion.WUERTH_VERSION_1_0_20)//
+						.setBatteryProtectionType(BatteryProtectionType.DEFAULT)//
+						.build())
+				.next(new TestCase("1") //
+						.input(STRING_MODULE_COUNT, numberOfModules));
+
 	}
 
 }
