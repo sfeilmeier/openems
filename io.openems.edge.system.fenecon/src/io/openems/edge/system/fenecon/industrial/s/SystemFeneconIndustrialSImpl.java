@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
@@ -31,8 +33,10 @@ import io.openems.common.jsonrpc.base.GenericJsonrpcResponseSuccess;
 import io.openems.common.session.Role;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
+import io.openems.edge.battery.fenecon.f2b.BatteryProtectionDefinitionType;
 import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.channel.WriteChannel;
+import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.component.AbstractOpenemsComponent;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
@@ -42,7 +46,8 @@ import io.openems.edge.common.jsonapi.EdgeGuards;
 import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
-import io.openems.edge.ess.api.ManagedSymmetricEss;
+import io.openems.edge.ess.api.MetaEss;
+import io.openems.edge.ess.api.SymmetricEss;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitContext;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitStateMachine;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitStateMachine.CoolingUnitState;
@@ -69,6 +74,8 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 			CoolingUnitState.UNDEFINED);
 	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
 	private final List<BatteryFeneconF2b> batteries = new ArrayList<>();
+	private final ChannelManager channelManager = new ChannelManager();
+	private final List<SymmetricEss> esss = new ArrayList<>();
 
 	private ParsedConfig parsedConfig;
 
@@ -81,7 +88,7 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 	@Reference(policy = ReferencePolicy.DYNAMIC, //
 			policyOption = ReferencePolicyOption.GREEDY, //
 			cardinality = ReferenceCardinality.MANDATORY) //
-	private volatile ManagedSymmetricEss ess;
+	private volatile MetaEss ess;
 
 	@Reference(//
 			policy = ReferencePolicy.DYNAMIC, //
@@ -154,18 +161,34 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 
 	private boolean applyConfig(ComponentContext context, Config config) throws OpenemsNamedException {
 		this.removeAcknowledgeCallback();
+		this.removeCoolingUnitErrorCallback();
 		this.parsedConfig = ParsedConfig.from(config);
 		this.addAcknowledgeCallBack();
+		this.addCoolingUnitErrorCallBack();
 
-		return OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "ess", config.ess_id())//
-				&& OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "Battery", config.battery_ids());
+		for (var essId : this.ess.getEssIds()) {
+			SymmetricEss component = this.componentManager.getComponent(essId);
+			this.esss.add(component);
+		}
+		this.channelManager.activate(this.esss, this::_setStartStop);
+
+		if (Stream.of(//
+				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "ess", config.ess_id()), //
+				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "Battery", config.battery_ids()), //
+				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "esss", this.ess.getEssIds()))
+				.anyMatch(t -> t)) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	@Deactivate
 	protected void deactivate() {
-		super.deactivate();
 		this.removeAcknowledgeCallback();
+		this.removeCoolingUnitErrorCallback();
+		this.channelManager.deactivate();
+		super.deactivate();
 	}
 
 	@Override
@@ -360,14 +383,50 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 		if (this.parsedConfig == null) {
 			return;
 		}
-
 		try {
+			// remove acknowledge callback
 			WriteChannel<Boolean> outputChannel = this.componentManager
 					.getChannel(this.parsedConfig.acknowledgeEmergencyStopChannel());
 			outputChannel.getOnSetNextWrites().remove(this.acknowledgeCallback);
-
 		} catch (Exception e) {
 			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
 		}
 	}
+
+	private void removeCoolingUnitErrorCallback() {
+		if (this.parsedConfig == null) {
+			return;
+		}
+		try {
+			// remove cooling unit error callback
+			Channel<?> channel = this.componentManager.getChannel(this.parsedConfig.coolingUnitErrorChannel());
+			channel.removeOnSetNextValueCallback(this.coolingUnitErrorCallback);
+		} catch (Exception e) {
+			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
+		}
+	}
+
+	private void addCoolingUnitErrorCallBack() {
+		if (this.parsedConfig == null) {
+			return;
+		}
+		try {
+			Channel<Boolean> channel = this.componentManager.getChannel(this.parsedConfig.coolingUnitErrorChannel());
+			channel.onSetNextValue(this.coolingUnitErrorCallback);
+		} catch (OpenemsNamedException e) {
+			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
+		}
+	}
+
+	private final Consumer<Value<Boolean>> coolingUnitErrorCallback = value -> {
+		if (value.orElse(false)) {
+			this.batteries.forEach(battery -> {
+				battery._setBatteryProtectionType(BatteryProtectionDefinitionType.RESTRICTED_PROTECTION);
+			});
+		} else {
+			this.batteries.forEach(battery -> {
+				battery._setBatteryProtectionType(BatteryProtectionDefinitionType.DEFAULT_PROTECTION);
+			});
+		}
+	};
 }
