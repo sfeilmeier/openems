@@ -116,6 +116,10 @@ export const theme = {
                     value: "Commercial 50-Serie",
                 },
                 {
+                    name: "Commercial 92",
+                    value: "commercial-92",
+                },
+                {
                     name: "Industrial S",
                     value: "Industrial S",
                 },
