@@ -42,8 +42,8 @@ import { LiveComponent } from "./live.component";
 import { Evcs_Api_ClusterComponent } from "./Multiple/Evcs_Api_Cluster/Evcs_Api_Cluster";
 import { EvcsChartComponent } from "./Multiple/Evcs_Api_Cluster/modal/evcs-chart/evcs.chart";
 import { Evcs_Api_ClusterModalComponent } from "./Multiple/Evcs_Api_Cluster/modal/evcsCluster-modal.page";
-import { OfflineComponent } from "./offline/offline.component";
 import { SystemModule } from "./system/system.module";
+import { EdgeOfflineModule } from "src/app/shared/components/edge/offline/offline.module";
 
 @NgModule({
   imports: [
@@ -62,6 +62,7 @@ import { SystemModule } from "./system/system.module";
     Controller_Io_HeatingElement,
     Controller_Api_ModbusTcp,
     EnergymonitorModule,
+    EdgeOfflineModule,
     SharedModule,
     Controller_Evcs,
     Controller_Ess_TimeOfUseTariff,
@@ -95,7 +96,6 @@ import { SystemModule } from "./system/system.module";
     Io_Api_DigitalInput_ModalComponent,
     Io_Api_DigitalInputComponent,
     LiveComponent,
-    OfflineComponent,
     StorageComponent,
     StorageModalComponent,
   ],

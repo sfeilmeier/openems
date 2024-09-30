@@ -70,7 +70,8 @@
               },
               "styles": [
                 "src/themes/openems/scss/variables.scss",
-                "src/global.scss"
+                "src/global.scss",
+                "src/global-ion-custom.scss"
               ]
             },
             "openems-backend-dev": {
@@ -178,7 +179,8 @@
               },
               "styles": [
                 "src/themes/fenecon/scss/variables.scss",
-                "src/global.scss"
+                "src/global.scss",
+                "src/global-ion-custom.scss"
               ]
             },
             "fenecon-backend-dev": {
@@ -286,7 +288,8 @@
               },
               "styles": [
                 "src/themes/heckert/scss/variables.scss",
-                "src/global.scss"
+                "src/global.scss",
+                "src/global-ion-custom.scss"
               ]
             },
             "heckert-backend-dev": {

@@ -1,0 +1,16 @@
+<ion-item *ngFor="let step of steps; let i = index; let last = last" [lines]="last ? 'none': 'full'">
+    <ion-label class="ion-text-wrap">
+        <h3><b>{{(i + 1) + ". " + step.header}}:</b></h3>
+        <p>
+            <ion-text [innerHTML]="step.description">
+            </ion-text>
+            <ion-item *ngFor="let child of step.children; let lastChild" [lines]="lastChild ? 'none': 'full'">
+                <ion-label class="ion-text-wrap">
+                    <h3><b>{{child.header}}</b></h3>
+                    <p [innerHTML]="child.description">
+                    </p>
+                </ion-label>
+            </ion-item>
+        </p>
+    </ion-label>
+</ion-item>
