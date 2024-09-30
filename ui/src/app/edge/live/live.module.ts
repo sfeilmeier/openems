@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { EdgeOfflineModule } from "src/app/shared/components/edge/offline/offline.module";
 import { SharedModule } from "./../../shared/shared.module";
 import { AdvertisementModule } from "./advertisement/advertisement.module";
 import { Common_Autarchy } from "./common/autarchy/Common_Autarchy";
@@ -43,30 +44,26 @@ import { Evcs_Api_ClusterComponent } from "./Multiple/Evcs_Api_Cluster/Evcs_Api_
 import { EvcsChartComponent } from "./Multiple/Evcs_Api_Cluster/modal/evcs-chart/evcs.chart";
 import { Evcs_Api_ClusterModalComponent } from "./Multiple/Evcs_Api_Cluster/modal/evcsCluster-modal.page";
 import { SystemModule } from "./system/system.module";
-import { EdgeOfflineModule } from "src/app/shared/components/edge/offline/offline.module";
 
 @NgModule({
   imports: [
     AdvertisementModule,
     BrowserAnimationsModule,
     BrowserModule,
-    // Common
     Common_Autarchy,
-    Common_Production,
-    Common_Selfconsumption,
     Common_Consumption,
     Common_Grid,
-    // Controller
+    Common_Production,
+    Common_Selfconsumption,
+    Controller_Api_ModbusTcp,
     Controller_Ess_FixActivePower,
     Controller_Ess_GridOptimizedCharge,
-    Controller_Io_HeatingElement,
-    Controller_Api_ModbusTcp,
-    EnergymonitorModule,
-    EdgeOfflineModule,
-    SharedModule,
-    Controller_Evcs,
     Controller_Ess_TimeOfUseTariff,
-    // System
+    Controller_Evcs,
+    Controller_Io_HeatingElement,
+    EdgeOfflineModule,
+    EnergymonitorModule,
+    SharedModule,
     SystemModule,
   ],
   declarations: [
