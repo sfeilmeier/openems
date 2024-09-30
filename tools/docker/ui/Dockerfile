@@ -14,7 +14,7 @@ COPY tools/docker/ui/index.patch /src/
 WORKDIR /src
 
 RUN patch src/index.html < index.patch && \
-    npm install && \
+    npm ci && \
     node_modules/.bin/ng build -c "$VERSION";
 
 ### Build ui base
@@ -35,6 +35,6 @@ RUN find /etc/s6-overlay/s6-rc.d -type f -name 'run' -exec chmod +x {} \;
 VOLUME /etc/nginx
 VOLUME /var/log/nginx
 
-ENV UI_WEBSOCKET ws://localhost:8080
+ENV UI_WEBSOCKET=ws://localhost:8080
 
 EXPOSE 80 443

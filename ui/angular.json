@@ -249,7 +249,7 @@
                 },
                 {
                   "replace": "src/environments/dummy.ts",
-                  "with": "src/themes/openems/environments/edge-docker.ts"
+                  "with": "src/themes/fenecon/environments/edge-docker.ts"
                 }
               ]
             },
@@ -261,7 +261,7 @@
                 },
                 {
                   "replace": "src/environments/dummy.ts",
-                  "with": "src/themes/openems/environments/backend-docker.ts"
+                  "with": "src/themes/fenecon/environments/backend-docker.ts"
                 }
               ]
             },
