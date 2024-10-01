@@ -20,6 +20,12 @@ import io.openems.edge.common.component.OpenemsComponent;
 public interface ModbusComponent extends OpenemsComponent {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
+
+		/*
+		 * If ModbusCommunicationFault would be a FaultState, check it explicitly in
+		 * Generic Ess ErrorHandler, as the battery could still have a communication
+		 * fault while starting the battery
+		 */
 		MODBUS_COMMUNICATION_FAILED(Doc.of(Level.WARNING) //
 				.debounce(10, Debounce.SAME_VALUES_IN_A_ROW_TO_CHANGE) //
 				.text("Modbus Communication failed")) //
