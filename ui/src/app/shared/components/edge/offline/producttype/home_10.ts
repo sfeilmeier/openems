@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { Role } from "src/app/shared/type/role";
+import { environment } from "src/environments";
 import { OfflineConstants, OfflineStep } from "./default";
 
 @Component({
@@ -9,7 +10,7 @@ import { OfflineConstants, OfflineStep } from "./default";
 export class Home10OfflineComponent {
 
     private static readonly STEP_EMS_RESTART: OfflineStep = {
-        header: "FEMS neu starten und LAN-Stecker prüfen", description: `
+        header: `${environment.edgeShortName} neu starten und LAN-Stecker prüfen`, description: `
                 An der obersten Box des Speicherturms, befindet sich ein Kaltgerätestecker
                 (schwarz-blau). Stecken Sie diesen aus und warten Sie 15 Sekunden ab.
                 Stecken Sie den Kaltgerätstecker wieder ein und warten Sie nun
@@ -17,16 +18,16 @@ export class Home10OfflineComponent {
                     5 - 10 Minuten
                 </b>
                 (das System startet neu). Stellen Sie außerdem sicher, dass
-                der LAN-Stecker akkurat in der FEMS-Anschlussbox steckt. Aktualisieren Sie
+                der LAN-Stecker akkurat in der ${environment.edgeShortName}-Anschlussbox steckt. Aktualisieren Sie
                 nun das Browser-Fenster des Online-Monitorings: War diese Maßnahme
                 erfolgreich, sollte die Fehlermeldung nun aufgehoben sein und die gewohnte
-                Ansicht des FENECON Online-Monitorings wie gewohnt zu sehen sein.`,
+                Ansicht des Online-Monitorings wie gewohnt zu sehen sein.`,
     };
 
     private static readonly STEP_TEST_WIFI_CONNECTION: OfflineStep = {
         header: "Internetverbindung prüfen",
         description: `Anschließend können Sie die Router-Funktion testen, 
-            indem Sie an der Anschlussbox der FEMS Box den LAN-Stecker ausstecken und mit einem Laptop oder PC anschließen. 
+            indem Sie an der Anschlussbox der ${environment.edgeShortName} Box den LAN-Stecker ausstecken und mit einem Laptop oder PC anschließen. 
             Bitte beachten: An diesem Gerät die WLAN-Verbindung trennen.`,
         children: [{
             header: "-> weiterhin keine Internetverbindung",

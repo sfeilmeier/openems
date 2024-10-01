@@ -1,22 +1,24 @@
 import { Component, Input } from "@angular/core";
 import { Role } from "src/app/shared/type/role";
+import { environment } from "src/environments";
 import { OfflineConstants, OfflineStep } from "./default";
+
 
 @Component({
     selector: "oe-offline-home-20-30",
     templateUrl: "./offline-template.html",
 })
-export class Home20_30OfflineComponent {
+export class Home2030OfflineComponent {
 
     private static readonly STEP_EMS_RESTART: OfflineStep = {
-        header: "FEMS neu starten und LAN-Stecker prüfen",
-        description: "Starten Sie das FEMS neu indem Sie an der obersten Box des Speicherturms, an der Vorderseite den Taster für 10 Sekunden gedrückt halten. Warten Sie nun 5 - 10 Minuten ab (das System startet neu). Stellen Sie außerdem sicher, dass der LAN-Stecker akkurat in der FEMS-Anschlussbox steckt. Aktualisieren Sie nun das Browser-Fenster des Online-Monitorings: War diese Maßnahme erfolgreich, sollte die Fehlermeldung nun aufgehoben sein und die gewohnte Ansicht des FENECON Online-Monitorings wie gewohnt zu sehen sein.",
+        header: `${environment.edgeShortName} neu starten und LAN-Stecker prüfen`,
+        description: `Starten Sie das ${environment.edgeShortName} neu indem Sie an der obersten Box des Speicherturms, an der Vorderseite den Taster für 10 Sekunden gedrückt halten. Warten Sie nun 5 - 10 Minuten ab (das System startet neu). Stellen Sie außerdem sicher, dass der LAN-Stecker akkurat in der FEMS-Anschlussbox steckt. Aktualisieren Sie nun das Browser-Fenster des Online-Monitorings: War diese Maßnahme erfolgreich, sollte die Fehlermeldung nun aufgehoben sein und die gewohnte Ansicht des FENECON Online-Monitorings wie gewohnt zu sehen sein.`,
     };
 
     private static readonly STEP_TEST_WIFI_CONNECTION: OfflineStep = {
         header: "Internetverbindung prüfen",
         description: `Anschließend können Sie die Router-Funktion testen, 
-        indem Sie an der Anschlussbox der FEMS Box den LAN-Stecker ausstecken und mit einem Laptop oder PC anschließen. 
+        indem Sie an der Anschlussbox der ${environment.edgeShortName} Box den LAN-Stecker ausstecken und mit einem Laptop oder PC anschließen. 
         Bitte beachten: An diesem Gerät die WLAN-Verbindung trennen`,
         children: [{
             header: "-> weiterhin keine Internetverbindung",
@@ -32,8 +34,8 @@ export class Home20_30OfflineComponent {
     };
 
     protected steps: OfflineStep[] = [
-        Home20_30OfflineComponent.STEP_EMS_RESTART,
-        Home20_30OfflineComponent.STEP_TEST_WIFI_CONNECTION,
+        Home2030OfflineComponent.STEP_EMS_RESTART,
+        Home2030OfflineComponent.STEP_TEST_WIFI_CONNECTION,
         OfflineConstants.STEP_FIREWALL,
     ];
 

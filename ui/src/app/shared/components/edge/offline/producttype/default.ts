@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { Role } from "src/app/shared/type/role";
+import { environment } from "src/environments";
 
 export interface OfflineStep {
     header: string,
@@ -12,7 +13,7 @@ export namespace OfflineConstants {
     export const STEP_TEST_WIFI_CONNECTION: OfflineStep = {
         header: "Routerverbindung mit Laptop überprüfen",
         description: `
-        <p>a) Stecken Sie das LAN-Kabel von der Home-FEMS Box („LAN“ Schnittstelle) ab und schließen Sie
+        <p>a) Stecken Sie das LAN-Kabel von der Home-${environment.edgeShortName} Box („LAN“ Schnittstelle) ab und schließen Sie
         dieses an einem Laptop/PC an (Achtung: WLAN Adapter ausschalten).
         Wenn der Laptop/PC erfolgreich eine Internetverbindung aufbauen konnte, gehen Sie weiter zu
         Schritt 3, ansonsten weiter zu b.</p>
@@ -28,11 +29,11 @@ export namespace OfflineConstants {
     };
 
     export const STEP_EMS_RESTART: OfflineStep = {
-        header: " FEMS neu starten",
+        header: `${environment.edgeShortName} neu starten`,
         description: `Im Anschlussbereich des FENECON Home Stromspeichersystems befindet sich ein blauer
         Steckverbinder.
-        Dieser versorgt das FEMS (FENECON Energiemanagementsystem) mit einer Hilfsversorgung.
-        Ziehen Sie den Stecker heraus und stecken ihn nach 10 Sekunden wieder ein, um das FEMS neu zu starten.
+        Dieser versorgt das ${environment.edgeShortName} (${environment.edgeLongName}) mit einer Hilfsversorgung.
+        Ziehen Sie den Stecker heraus und stecken ihn nach 10 Sekunden wieder ein, um das ${environment.edgeShortName} neu zu starten.
         Warten Sie anschließend einige Minuten und aktualisieren Sie das Browser-Fenster.
         Die Fehlermeldung sollte anschließend verschwunden sein und das Online-Monitoring wieder
         sichtbar.
@@ -41,10 +42,10 @@ export namespace OfflineConstants {
 
     export const STEP_FIREWALL: OfflineStep = {
         header: "Portfreigabe/Firewall prüfen", description: `
-        Einstellungen der Firewall können die Internet-Verbindung zu der FEMS
+        Einstellungen der Firewall können die Internet-Verbindung zum ${environment.edgeShortName}
         begrenzen. Besonders bei Erstinbetriebnahmen ist dies häufig der Fall. Bitte
         überprüfen Sie mithilfe der <a href="https://docs.fenecon.de/de/fems/ui/introduction.html#_offlinelokal" target="_blank">Anleitung</a> die Ports und Dienste, die auf dem
-        FEMS aktiv sind.
+        ${environment.edgeShortName} aktiv sind.
         `,
     };
 
@@ -52,7 +53,7 @@ export namespace OfflineConstants {
         header: "FENECON Service", description: `
         Sofern Sie alle vorhergehenden Punkte bereits überprüft haben, und das
         Online-Monitoring weiterhin keine Daten anzeigt, können Sie sich an unseren
-        Service wenden:<br>Per Mail: service&#64;fenecon.de oder telefonisch unter:
+        Service wenden:<br>Per Mail: <a href="mailto:service&#64;fenecon.de">service&#64;fenecon.de</a> oder telefonisch unter:
         +49 903 6280-0 (Mo. - Do. 8 - 12 | 13 - 17 Uhr | Fr. 8 - 12 | 13 - 15 Uhr)
         `,
     };

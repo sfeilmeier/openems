@@ -4,7 +4,7 @@ import { IonicModule } from "@ionic/angular";
 import { OfflineComponent } from "./offline.component";
 import { DefaultOfflineComponent } from "./producttype/default";
 import { Home10OfflineComponent } from "./producttype/home_10";
-import { Home20_30OfflineComponent } from "./producttype/home_20_30";
+import { Home2030OfflineComponent } from "./producttype/home_20_30";
 
 @NgModule({
     imports: [
@@ -14,13 +14,13 @@ import { Home20_30OfflineComponent } from "./producttype/home_20_30";
     declarations: [
         DefaultOfflineComponent,
         Home10OfflineComponent,
-        Home20_30OfflineComponent,
+        Home2030OfflineComponent,
         OfflineComponent,
     ],
     exports: [
         DefaultOfflineComponent,
         Home10OfflineComponent,
-        Home20_30OfflineComponent,
+        Home2030OfflineComponent,
         OfflineComponent,
     ],
 })
