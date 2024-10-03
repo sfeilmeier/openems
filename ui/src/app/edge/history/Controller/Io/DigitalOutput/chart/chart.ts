@@ -7,7 +7,7 @@ import { ChartAxis, HistoryUtils, Utils, YAxisType } from "src/app/shared/servic
 import { ChannelAddress, EdgeConfig } from "src/app/shared/shared";
 
 @Component({
-  selector: "totalChart",
+  selector: "controller-io-digitaloutput-chart",
   templateUrl: "../../../../../../shared/components/chart/abstracthistorychart.html",
 })
 export class TotalChartComponent extends AbstractHistoryChart {

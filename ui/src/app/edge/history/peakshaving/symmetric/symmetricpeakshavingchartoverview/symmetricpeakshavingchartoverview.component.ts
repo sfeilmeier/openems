@@ -8,7 +8,7 @@ import { Edge, EdgeConfig, Service } from "../../../../../shared/shared";
 })
 export class SymmetricPeakshavingChartOverviewComponent implements OnInit {
 
-    private static readonly SELECTOR = "symmetricpeakshaving-chart-overview";
+    private static readonly SELECTOR = "symmetricpeakshaving-overview-chart";
 
     public edge: Edge | null = null;
     public component: EdgeConfig.Component | null = null;

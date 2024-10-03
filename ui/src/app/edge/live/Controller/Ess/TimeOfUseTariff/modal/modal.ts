@@ -6,6 +6,7 @@ import { ChannelAddress, Currency, CurrentData } from "src/app/shared/shared";
 import { Controller_Ess_TimeOfUseTariff } from "../Ess_TimeOfUseTariff";
 
 @Component({
+    selector: "controller-ess-timeofusetariff-modal",
     templateUrl: "./modal.html",
 })
 export class ModalComponent extends AbstractModal {

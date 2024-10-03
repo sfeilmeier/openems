@@ -7,6 +7,7 @@ import { NavigationOption } from "src/app/shared/components/footer/subnavigation
 import { EdgeConfig, Service } from "src/app/shared/shared";
 
 @Component({
+    selector: "common-grid-overview",
     templateUrl: "./overview.html",
 })
 export class OverviewComponent extends AbstractHistoryChartOverview {

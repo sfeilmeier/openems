@@ -3,6 +3,7 @@ import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
 import { ChannelAddress, EdgeConfig, Utils } from "src/app/shared/shared";
 
 @Component({
+    selector: "common-production-modal",
     templateUrl: "./modal.html",
 })
 export class ModalComponent extends AbstractModal {

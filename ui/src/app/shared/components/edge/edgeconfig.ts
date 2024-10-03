@@ -552,6 +552,7 @@ export class EdgeConfig {
         } else {
             switch (component.factoryId) {
                 case "GoodWe.EmergencyPowerMeter":
+                case "Controller.Heating.Room": // fems888
                     return true;
             }
         }

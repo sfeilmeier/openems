@@ -7,7 +7,7 @@ import { NavigationOption } from "src/app/shared/components/footer/subnavigation
 import { ChannelAddress, EdgeConfig, Service } from "src/app/shared/shared";
 
 @Component({
-    selector: "overview",
+    selector: "controller-io-digitaloutput-overview",
     templateUrl: "./overview.html",
 })
 export class OverviewComponent extends AbstractHistoryChartOverview {

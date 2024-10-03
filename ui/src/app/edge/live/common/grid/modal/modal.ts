@@ -10,6 +10,7 @@ import { Role } from "src/app/shared/type/role";
 import { GridSectionComponent } from "../../../energymonitor/chart/section/grid.component";
 
 @Component({
+  selector: "common-grid-modal",
   templateUrl: "../../../../../shared/components/formly/formly-field-modal/template.html",
 })
 export class ModalComponent extends AbstractFormlyComponent {

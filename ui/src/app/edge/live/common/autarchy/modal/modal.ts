@@ -5,6 +5,7 @@ import { EdgeConfig } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 
 @Component({
+  selector: "common-autarchy-modal",
   templateUrl: "../../../../../shared/components/formly/formly-field-modal/template.html",
 })
 export class ModalComponent extends AbstractFormlyComponent {
