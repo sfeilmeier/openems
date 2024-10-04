@@ -7,7 +7,6 @@ import { AbstractHistoryChartOverview } from "../../../../../shared/components/c
 import { ChannelAddress, EdgeConfig, Service } from "../../../../../shared/shared";
 
 @Component({
-  selector: "common-production-overview",
   templateUrl: "./overview.html",
 })
 export class OverviewComponent extends AbstractHistoryChartOverview {

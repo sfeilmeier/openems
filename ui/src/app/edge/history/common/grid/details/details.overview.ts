@@ -8,7 +8,6 @@ import { Service } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 
 @Component({
-  selector: "common-grid-details",
   templateUrl: "./details.overview.html",
 })
 export class DetailsOverviewComponent extends AbstractHistoryChartOverview {

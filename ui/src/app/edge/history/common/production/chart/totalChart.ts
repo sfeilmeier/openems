@@ -7,7 +7,7 @@ import { ChartAxis, HistoryUtils, Utils, YAxisType } from "../../../../../shared
 import { ChannelAddress } from "../../../../../shared/shared";
 
 @Component({
-  selector: "common-production-total-chart",
+  selector: "productionTotalChart",
   templateUrl: "../../../../../shared/components/chart/abstracthistorychart.html",
 })
 export class TotalChartComponent extends AbstractHistoryChart {

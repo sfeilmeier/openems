@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
 
 @Component({
-  selector: "system-industrial-s-modal",
   templateUrl: "./modal.html",
 })
 export class ModalComponent extends AbstractModal {

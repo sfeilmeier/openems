@@ -9,7 +9,6 @@ import { Phase } from "src/app/shared/components/shared/phase";
 import { ChannelAddress, CurrentData, EdgeConfig } from "../../../../../shared/shared";
 
 @Component({
-  selector: "common-consumption-modal",
   templateUrl: "../../../../../shared/components/formly/formly-field-modal/template.html",
 })
 export class ModalComponent extends AbstractFormlyComponent {

@@ -5,7 +5,6 @@ import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
 import { ChannelAddress, CurrentData, Utils } from "src/app/shared/shared";
 
 @Component({
-  selector: "controller-ess-fixactivepower-modal",
   templateUrl: "./modal.html",
 })
 export class ModalComponent extends AbstractModal {

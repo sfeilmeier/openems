@@ -8,7 +8,7 @@ import { Edge, EdgeConfig, Service } from "../../../../shared/shared";
 })
 export class DelayedSellToGridChartOverviewComponent implements OnInit {
 
-    private static readonly SELECTOR = "delayedselltogrid-symmetricpeakshaving-overview-chart";
+    private static readonly SELECTOR = "symmetricpeakshaving-chart-overview";
     public edge: Edge | null = null;
     public component: EdgeConfig.Component | null = null;
 

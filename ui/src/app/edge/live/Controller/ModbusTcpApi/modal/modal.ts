@@ -7,7 +7,6 @@ import { ChannelAddress, ChannelRegister, CurrentData } from "src/app/shared/sha
 import { OverrideStatus } from "src/app/shared/type/general";
 
 @Component({
-  selector: "controller-modbustcpapi-modal",
   templateUrl: "./modal.html",
 })
 export class ModalComponent extends AbstractModal {

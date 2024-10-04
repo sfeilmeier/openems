@@ -6,7 +6,6 @@ import { ChannelAddress, CurrentData, Utils } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 
 @Component({
-    selector: "controller-ess-gridoptimizedcharge-modal",
     templateUrl: "./modal.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

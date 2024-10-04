@@ -7,7 +7,7 @@ import { ChannelAddress, CurrentData } from "src/app/shared/shared";
 import { Mode, WorkMode } from "src/app/shared/type/general";
 
 @Component({
-    selector: "controller-io-heatingelement-modal",
+    selector: "heatingelement-modal",
     templateUrl: "./modal.html",
 })
 export class ModalComponent extends AbstractModal implements OnInit {

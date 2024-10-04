@@ -8,7 +8,7 @@ import { ChartAxis, HistoryUtils, YAxisType } from "src/app/shared/service/utils
 import { ChannelAddress, EdgeConfig } from "src/app/shared/shared";
 
 @Component({
-  selector: "common-consumption-details-chart",
+  selector: "sumChart",
   templateUrl: "../../../../../../shared/components/chart/abstracthistorychart.html",
 })
 export class SumChartDetailsComponent extends AbstractHistoryChart {
