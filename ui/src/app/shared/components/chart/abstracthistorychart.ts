@@ -5,7 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import * as Chart from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
-import { calculateResolution, ChronoUnit, DEFAULT_NUMBER_CHART_OPTIONS, DEFAULT_TIME_CHART_OPTIONS, isLabelVisible, Resolution, setLabelVisible } from "src/app/edge/history/shared";
+import { ChronoUnit, DEFAULT_NUMBER_CHART_OPTIONS, DEFAULT_TIME_CHART_OPTIONS, Resolution, calculateResolution, isLabelVisible, setLabelVisible } from "src/app/edge/history/shared";
 import { QueryHistoricTimeseriesEnergyPerPeriodResponse } from "src/app/shared/jsonrpc/response/queryHistoricTimeseriesEnergyPerPeriodResponse";
 import { DefaultTypes } from "src/app/shared/service/defaulttypes";
 import { v4 as uuidv4 } from "uuid";
@@ -459,6 +459,8 @@ export abstract class AbstractHistoryChart implements OnInit, OnDestroy {
 
       return null;
     };
+
+    options.plugins.tooltip.enabled = chartObject.tooltip.enabled ?? true;
 
     // Remove duplicates from legend, if legendItem with two or more occurrences in legend, use one legendItem to trigger them both
     options.plugins.legend.onClick = function (event: Chart.ChartEvent, legendItem: Chart.LegendItem, legend) {

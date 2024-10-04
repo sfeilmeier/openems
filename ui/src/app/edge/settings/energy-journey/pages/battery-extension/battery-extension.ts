@@ -19,6 +19,14 @@ import { PossibleBatteryExtensionResponse } from "./battery-extension.response";
   providers: [
     { provide: DataService, useClass: HistoryDataService },
   ],
+  styles: [`
+    :host{
+      oe-flat-widget > ion-card > ion-item > ion-label{
+        white-space: initial !important;
+        text-align: center;
+      }
+    }
+  `],
 })
 export class BatteryExtensionComponent extends AbstractFlatWidget {
 

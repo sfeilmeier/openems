@@ -62,6 +62,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
       },
       tooltip: {
         formatNumber: "1.0-0",
+        enabled: false,
       },
       yAxes: [{
         unit: YAxisType.ENERGY,
