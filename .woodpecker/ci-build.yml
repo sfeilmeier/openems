@@ -19,7 +19,7 @@ variables:
     args: "-v"
 
   - &main-build
-    branch: [main, develop]
+    branch: [main, develop, project/*]
 
   - &message-debian
     evaluate: 'CI_COMMIT_MESSAGE contains "[DEBIAN]"'
