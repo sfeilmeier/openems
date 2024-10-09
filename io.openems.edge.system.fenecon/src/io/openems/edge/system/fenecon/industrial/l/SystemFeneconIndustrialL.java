@@ -110,7 +110,10 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 				.text("Fuse Tripped: At least one 24V fuse is off")), //
 		PSU_TRIGGERED(Doc.of(Level.FAULT)//
 				.text("PSU Triggered: Power supply unit DC fault")), //
-		;
+		SMOKE_DETECTION(Doc.of(Level.FAULT)//
+				.text("Smoke Detected!")),
+		SMOKE_DETECTION_FAILURE(Doc.of(Level.WARNING)//
+				.text("Failure in the Smoke detection system!"));
 
 		private final Doc doc;
 

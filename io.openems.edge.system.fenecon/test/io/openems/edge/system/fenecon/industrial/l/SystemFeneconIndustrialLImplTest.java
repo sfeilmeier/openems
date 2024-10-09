@@ -8,6 +8,7 @@ import org.junit.Test;
 import io.openems.common.test.TimeLeapClock;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
+import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
@@ -30,6 +31,12 @@ public class SystemFeneconIndustrialLImplTest {
 	private static final ChannelAddress SPD_STATE = new ChannelAddress(IO_ID, "InputOutput4");
 	private static final ChannelAddress FUSE_STATE = new ChannelAddress(IO_ID, "InputOutput5");
 	private static final ChannelAddress PSU_TRIGGERED = new ChannelAddress(IO_ID, "InputOutput6");
+
+	private static final ChannelAddress SMOKE_DETECTION = new ChannelAddress(COMPONENT_ID, "SmokeDetection");
+	private static final ChannelAddress SMOKE_DETECTION_FAILURE = new ChannelAddress(COMPONENT_ID,
+			"SmokeDetectionFailure");
+
+	private static final ChannelAddress START_STOP = new ChannelAddress(COMPONENT_ID, "StartStop");
 
 	@Test
 	public void test() throws Exception {
@@ -55,8 +62,16 @@ public class SystemFeneconIndustrialLImplTest {
 						.setSpdTripped(SPD_STATE.toString())//
 						.setFuseTripped(FUSE_STATE.toString())//
 						.setPsuTriggered(PSU_TRIGGERED.toString())//
+						.setSmokeDetection(SMOKE_DETECTION.toString())
+						.setSmokeDetectionFailure(SMOKE_DETECTION_FAILURE.toString())//
 						.build())
-				.next(new TestCase());
+				.next(new TestCase()//
+						.input(SMOKE_DETECTION, false)//
+						.input(START_STOP, StartStop.STOP)//
+						.output(SMOKE_DETECTION, false))
+				.next(new TestCase()//
+						.input(SMOKE_DETECTION_FAILURE, true)//
+						.input(START_STOP, StartStop.STOP)//
+						.output(SMOKE_DETECTION_FAILURE, true));
 	}
-
 }

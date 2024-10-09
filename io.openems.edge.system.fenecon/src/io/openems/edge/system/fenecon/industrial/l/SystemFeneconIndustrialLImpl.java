@@ -163,9 +163,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 		if (Stream.of(//
 				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "ess", config.ess_id()), //
-				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "Battery", config.battery_ids()), //
-				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "CoolingUnitModbus",
-						config.coolingUnitModbus_id()))
+				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "Battery", config.battery_ids()))
 				.anyMatch(t -> t)) {
 			return true;
 		}
@@ -195,6 +193,10 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 					SystemFeneconIndustrialL.ChannelId.FUSE_TRIPPED);
 			this.handleInputChannel(this.parsedConfig.psuTriggeredChannel(),
 					SystemFeneconIndustrialL.ChannelId.PSU_TRIGGERED);
+			this.handleInputChannel(this.parsedConfig.smokeDetectionChannel(), //
+					SystemFeneconIndustrialL.ChannelId.SMOKE_DETECTION, true);
+			this.handleInputChannel(this.parsedConfig.smokeDetectionFailureChannel(),
+					SystemFeneconIndustrialL.ChannelId.SMOKE_DETECTION_FAILURE);
 			this.handleAcknowledge();
 		}
 		}
@@ -206,7 +208,9 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 			ChannelAddress spdStateChannel, //
 			ChannelAddress fuseStateChannel, //
 			ChannelAddress psuTriggeredChannel, //
-			ChannelAddress acknowledgeEmergencyStopChannel//
+			ChannelAddress acknowledgeEmergencyStopChannel, //
+			ChannelAddress smokeDetectionChannel, //
+			ChannelAddress smokeDetectionFailureChannel//
 	) {
 
 		/**
@@ -225,8 +229,17 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 					fromString(config.fuseTripped()), //
 					fromString(config.psuTriggered()), //
 					// Output Channels
-					fromString(config.acknowledgeEmergencyStop()) //
-			);
+					fromString(config.acknowledgeEmergencyStop()), //
+					/**
+					 * Smoke detection io detection channel, false smoke detected otherwise true
+					 */
+					fromString(config.smokeDetection()), //
+
+					/**
+					 * Smoke detection failure io active channel, true not active or failure
+					 * otherwise false active
+					 */
+					fromString(config.smokeDetectionFailure()));
 		}
 	}
 
@@ -255,18 +268,22 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	 * @param channelAddress the channel value to be read from.
 	 * @param channelId      the {@link SystemFeneconIndustrialL.ChannelId} to set
 	 *                       the current value.
+	 * @param invert         flag to invert the channel or not
 	 */
-	private void handleInputChannel(ChannelAddress channelAddress, SystemFeneconIndustrialL.ChannelId channelId) {
+	private void handleInputChannel(ChannelAddress channelAddress, SystemFeneconIndustrialL.ChannelId channelId,
+			boolean invert) {
 		try {
 			Channel<Boolean> channel = this.componentManager.getChannel(channelAddress);
 			var value = channel.value();
-			// TODO Could cause the channel value to be not set if IO disappears
-			value.ifPresent(t -> {
-				this.channel(channelId).setNextValue(t);
-			});
+
+			value.ifPresent(t -> this.channel(channelId).setNextValue(invert ? !t : t));
 		} catch (OpenemsNamedException e) {
 			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
 		}
+	}
+
+	private void handleInputChannel(ChannelAddress channelAddress, SystemFeneconIndustrialL.ChannelId channelId) {
+		this.handleInputChannel(channelAddress, channelId, false);
 	}
 
 	@Override
