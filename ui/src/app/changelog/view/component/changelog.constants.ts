@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2024.10.1-SNAPSHOT";
+    public static readonly UI_VERSION = "2024.10.1";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -48,6 +48,7 @@ export class Product {
     public static readonly HOME_20_30 = new Product("FENECON Home 20 & 30", "https://fenecon.de/fenecon-home-20-30/");
     public static readonly COMMERCIAL_30 = new Product("FENECON Commercial 30", "https://fenecon.de/fenecon-commercial-30/");
     public static readonly COMMERCIAL_50 = new Product("FENECON Commercial 50", "https://fenecon.de/fenecon-commercial-50/");
+    public static readonly COMMERCIAL_92 = new Product("FENECON Commercial 92", "https://fenecon.de/fenecon-commercial-92/");
 
     // Deprecated ESS
     public static readonly DESS = new Product("FENECON DESS", this.DEPRECATED);
