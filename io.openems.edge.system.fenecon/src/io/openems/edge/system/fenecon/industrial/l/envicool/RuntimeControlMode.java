@@ -5,9 +5,9 @@ import io.openems.common.types.OptionsEnum;
 public enum RuntimeControlMode implements OptionsEnum {
 
 	UNDEFINED(-1, "Undefined"), //
-	WATER_INLET(0, "Water inlet"), //
+	WATER_INLET(0, "Water inlet select"), //
 	WATER_OUTLET_SELECT(1, "Water outlet select"), //
-	MONITOR_TEMP(3, "Monitor temp when controlling the air con using the monitored temp"), //
+	MONITOR_TEMP(3, "Monitor temp when controlling the CoolingUnit using the monitored temp"), //
 	;
 
 	private final int value;

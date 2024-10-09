@@ -2,7 +2,6 @@ package io.openems.edge.battery.enfasbms;
 
 import io.openems.common.channel.AccessMode;
 import io.openems.common.channel.Level;
-import io.openems.common.channel.PersistencePriority;
 import io.openems.common.channel.Unit;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.types.OpenemsType;
@@ -12,7 +11,7 @@ import io.openems.edge.battery.enfasbms.enums.CommandStateRequest;
 import io.openems.edge.battery.enfasbms.enums.ContactorState;
 import io.openems.edge.battery.enfasbms.enums.GlobalState;
 import io.openems.edge.battery.enfasbms.statemachine.StateMachine.State;
-import io.openems.edge.common.channel.BooleanWriteChannel;
+import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.channel.Doc;
 import io.openems.edge.common.channel.DoubleReadChannel;
 import io.openems.edge.common.channel.EnumReadChannel;
@@ -35,14 +34,22 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 	public StartStop getStartStopTarget();
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-
-		MAX_ALLOWED_START_TIME_FAULT(Doc.of(Level.FAULT) //
-				.text("The maximum start time is passed!") //
-				.persistencePriority(PersistencePriority.HIGH)), //
-
-		MAX_ALLOWED_STOP_TIME_FAULT(Doc.of(Level.FAULT) //
-				.text("The maximum stop time is passed!") //
-				.persistencePriority(PersistencePriority.HIGH)), //
+		/**
+		 * Stop battery timeout passed.
+		 * 
+		 * <p>
+		 * This fault forces the EssGeneric into the GO_STOPPED state.
+		 */
+		TIMEOUT_STOP_BATTERY(Doc.of(Level.FAULT) //
+				.text("Stop battery timeout passed!")), //
+		/**
+		 * Start battery timeout passed.
+		 * 
+		 * <p>
+		 * This fault forces the EssGeneric into the GO_STOPPED state.
+		 */
+		TIMEOUT_START_BATTERY(Doc.of(Level.FAULT) //
+				.text("Start battery timeout passed!")), //
 
 		MODULE_0_AVG_CELL_VOLTAGE(Doc.of(OpenemsType.INTEGER) //
 				.unit(Unit.MILLIVOLT) //
@@ -264,7 +271,7 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 				.unit(Unit.KILOWATT_HOURS) //
 				.text("State Energy on Module 8")),
 
-		SYSTEM_GLOBALSTATE(Doc.of(GlobalState.values())),
+		BATTERY_STATE(Doc.of(GlobalState.values())),
 
 		SYSTEM_EMERGENCY_SHUTDHOWN(Doc.of(OpenemsType.INTEGER)),
 
@@ -339,33 +346,58 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 		PACK_HIGH_VOLTAGE_MINUS(Doc.of(OpenemsType.DOUBLE) //
 				.unit(Unit.VOLT) //
 				.text("Minus side voltage after contactor is closed")),
-		STRING_EVENT_CELL_OT_CUTOFF(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_OT_MAX(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_OT_WARN(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_OV_CUTOFF(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_OV_MAX(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_OV_WARN(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_UT_CUTOFF(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_UT_MAX(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_UT_WARN(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_UV_CUTOFF(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_UV_MAX(Doc.of(Level.INFO)), //
-		STRING_EVENT_CELL_UV_WARN(Doc.of(Level.INFO)), //
-		STRING_EVENT_COMMUNICATION_ERR(Doc.of(Level.INFO)), //
-		STRING_EVENT_CONT_NEGATIVE_ERR(Doc.of(Level.INFO)), //
-		STRING_EVENT_CONT_POSITIVE_ERR(Doc.of(Level.INFO)), //
-		STRING_EVENT_CURRENT_OC_CHARGE(Doc.of(Level.INFO)), //
-		STRING_EVENT_CURRENT_OC_DISCHARGE(Doc.of(Level.INFO)), //
-		STRING_EVENT_CURRENT_MEASURE_ERROR(Doc.of(Level.INFO)), //
-		STRING_EVENT_INSULATION_ERROR(Doc.of(Level.INFO)), //
-		STRING_EVENT_INTERNAL_ERROR(Doc.of(Level.INFO)), //
-		STRING_EVENT_SOC_ERROR(Doc.of(Level.INFO)), //
-		STRING_EVENT_SOH_ERROR(Doc.of(Level.INFO)), //
-		STRING_EVENT_STRING_CONNECTED(Doc.of(Level.INFO)), //
-		STRING_EVENT_TEMP_DIFFERENCE_ERROR(Doc.of(Level.INFO)), //
-		STRING_MODULE_COUNT(Doc.of(OpenemsType.INTEGER)), //
-		STRING_EVENT_BALANCING_ERROR(Doc.of(Level.INFO)), //
-		STRING_EVENT_SOC_HIGH_ERROR(Doc.of(Level.INFO)),
+		STRING_EVENT_CELL_OT_CUTOFF(Doc.of(Level.FAULT)), //
+		STRING_EVENT_CELL_OT_MAX(Doc.of(Level.WARNING)), //
+		STRING_EVENT_CELL_OT_WARN(Doc.of(OpenemsType.BOOLEAN)), //
+		STRING_EVENT_CELL_OV_CUTOFF(Doc.of(Level.FAULT)), //
+		STRING_EVENT_CELL_OV_MAX(Doc.of(Level.WARNING)), //
+		STRING_EVENT_CELL_OV_WARN(Doc.of(OpenemsType.BOOLEAN)), //
+		STRING_EVENT_CELL_UT_CUTOFF(Doc.of(Level.FAULT)), //
+		STRING_EVENT_CELL_UT_MAX(Doc.of(Level.WARNING)), //
+		STRING_EVENT_CELL_UT_WARN(Doc.of(OpenemsType.BOOLEAN)), //
+		STRING_EVENT_CELL_UV_CUTOFF(Doc.of(Level.FAULT)), //
+		STRING_EVENT_CELL_UV_MAX(Doc.of(Level.WARNING)), //
+		STRING_EVENT_CELL_UV_WARN(Doc.of(OpenemsType.BOOLEAN)), //
+
+		STRING_EVENT_COMMUNICATION_ERROR(Doc.of(Level.FAULT)//
+				.text("String event communication error")), //
+		STRING_EVENT_CONT_NEGATIVE_ERR(Doc.of(Level.FAULT)//
+				.text("String event negative error")),
+		STRING_EVENT_CONT_POSITIVE_ERR(Doc.of(Level.FAULT)//
+				.text("String event positive error")),
+
+		STRING_EVENT_CURRENT_OC_CHARGE(Doc.of(OpenemsType.BOOLEAN)), //
+		STRING_EVENT_CURRENT_OC_DISCHARGE(Doc.of(OpenemsType.BOOLEAN)), //
+
+		STRING_EVENT_CURRENT_MEASURE_ERROR(Doc.of(Level.FAULT)//
+				.text("String event current measure error")),
+		STRING_EVENT_INSULATION_ERROR(Doc.of(OpenemsType.BOOLEAN)//
+				.text("String event insulation error")),
+		STRING_EVENT_INTERNAL_ERROR(Doc.of(OpenemsType.BOOLEAN)//
+				.text("String event internal error")),
+		STRING_EVENT_SOC_LOW(Doc.of(OpenemsType.BOOLEAN)//
+				.text("String event soc error")),
+		STRING_EVENT_SOH_ERROR(Doc.of(OpenemsType.BOOLEAN)//
+				.text("String event soh error")),
+
+		STRING_EVENT_STRING_CONNECTED(Doc.of(Level.WARNING)), //
+
+		STRING_EVENT_TEMP_DIFFERENCE_ERROR(Doc.of(OpenemsType.BOOLEAN)//
+				.text("String event temperature difference error")),
+
+		/**
+		 * This channel value will be read once in the compact system and it will be
+		 * always 8. This value never changes.
+		 */
+		STRING_MODULE_COUNT(new IntegerDoc() //
+				.accessMode(AccessMode.READ_ONLY) //
+				.<EnfasBmsImpl>onChannelChange(EnfasBmsImpl::initializeModulesChannels)),
+
+		STRING_MODULE_COUNT_ERROR(Doc.of(OpenemsType.BOOLEAN)//
+				.text("String module count error. Must be 9, other than 9 its an error")),
+
+		STRING_EVENT_BALANCING_ERROR(Doc.of(Level.WARNING)), //
+		STRING_EVENT_SOC_HIGH_ERROR(Doc.of(OpenemsType.BOOLEAN)),
 
 		CSC_INIT_BROKEN_AT(Doc.of(OpenemsType.INTEGER)),
 
@@ -380,27 +412,62 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 				.text("SW Version Path Value (V0.0.x)")),
 
 		// write registers
-		COMMAND_STATE_REQUEST(new IntegerDoc() //
-				.accessMode(AccessMode.WRITE_ONLY)),
+		DEBUG_COMMAND_STATE_REQUEST(new IntegerDoc()), //
+		COMMAND_STATE_REQUEST(Doc.of(CommandStateRequest.values()) //
+				.accessMode(AccessMode.WRITE_ONLY)
+				.onChannelSetNextWriteMirrorToDebugChannel(ChannelId.DEBUG_COMMAND_STATE_REQUEST)),
+
+		DEBUG_COMMAND_ACTIVATE_BALANCING(new IntegerDoc()), //
 		COMMAND_ACTIVATE_BALANCING(new IntegerDoc() //
-				.accessMode(AccessMode.WRITE_ONLY)),
+				.accessMode(AccessMode.WRITE_ONLY)
+				.onChannelSetNextWriteMirrorToDebugChannel(ChannelId.DEBUG_COMMAND_ACTIVATE_BALANCING)),
+
+		DEBUG_COMMAND_BALANCING_THRESHOLD(new IntegerDoc()), //
 		COMMAND_BALANCING_THRESHOLD(new IntegerDoc() //
-				.accessMode(AccessMode.WRITE_ONLY)),
+				.accessMode(AccessMode.WRITE_ONLY)//
+				.onChannelSetNextWriteMirrorToDebugChannel(ChannelId.DEBUG_COMMAND_ACTIVATE_BALANCING)),
+
+		DEBUG_COMMAND_CUSTOM_CURRENT_CHARGE_LIMIT(new IntegerDoc()),
 		COMMAND_CUSTOM_CURRENT_CHARGE_LIMIT(new IntegerDoc() //
-				.accessMode(AccessMode.WRITE_ONLY)),
+				.accessMode(AccessMode.WRITE_ONLY)//
+				.onChannelSetNextWriteMirrorToDebugChannel(ChannelId.DEBUG_COMMAND_CUSTOM_CURRENT_CHARGE_LIMIT)),
+
+		DEBUG_COMMAND_CUSTOM_CURRENT_DISCHARGE_LIMIT(new IntegerDoc()),
 		COMMAND_CUSTOM_CURRENT_DISCHARGE_LIMIT(new IntegerDoc() //
-				.accessMode(AccessMode.WRITE_ONLY)),
+				.accessMode(AccessMode.WRITE_ONLY)//
+				.onChannelSetNextWriteMirrorToDebugChannel(ChannelId.DEBUG_COMMAND_CUSTOM_CURRENT_DISCHARGE_LIMIT)),
+
+		DEBUG_COMMAND_RESET_1(new IntegerDoc()), //
 		COMMAND_RESET_1(new IntegerDoc() //
-				.accessMode(AccessMode.WRITE_ONLY)),
+				.accessMode(AccessMode.WRITE_ONLY) //
+				.onChannelSetNextWriteMirrorToDebugChannel(ChannelId.DEBUG_COMMAND_RESET_1)),
+
+		DEBUG_COMMAND_RESET_2(new IntegerDoc()), //
 		COMMAND_RESET_2(new IntegerDoc() //
-				.accessMode(AccessMode.WRITE_ONLY)),
+				.accessMode(AccessMode.WRITE_ONLY) //
+				.onChannelSetNextWriteMirrorToDebugChannel(ChannelId.DEBUG_COMMAND_RESET_2)),
+
+		DEBUG_COMMAND_ALIVE_COUNTER(new IntegerDoc()), //
 		COMMAND_ALIVE_COUNTER(new IntegerDoc() //
-				.accessMode(AccessMode.WRITE_ONLY)),
+				.accessMode(AccessMode.WRITE_ONLY) //
+				.onChannelSetNextWriteMirrorToDebugChannel(ChannelId.DEBUG_COMMAND_ALIVE_COUNTER)),
 
 		STATE_MACHINE(Doc.of(State.values()) //
 				.text("Current State of State-Machine")),
-		RUN_FAILED(Doc.of(Level.FAULT) //
-				.text("Running the Logic failed"));
+
+		RUN_FAILED(Doc.of(Level.WARNING) //
+				.text("Running the Logic failed")),
+
+		RESET_BATTERY_COMMAND(Doc.of(OpenemsType.BOOLEAN) //
+				.accessMode(AccessMode.WRITE_ONLY) //
+				.text("Reset the battery")),
+		BATTERY_SOC(new IntegerDoc() //
+				.accessMode(AccessMode.READ_ONLY) //
+				.unit(Unit.PERCENT)//
+				.onChannelChange(EnfasBmsImpl::updateSoc)), //
+		USER_SOC_RAW_VALUE(Doc.of(OpenemsType.INTEGER) //
+				.accessMode(AccessMode.READ_ONLY)) //
+		; //
 
 		private final Doc doc;
 
@@ -415,59 +482,68 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 	}
 
 	/**
-	 * Gets the Channel for {@link ChannelId#MAX_START_TIME}.
+	 * Gets the Channel for {@link ChannelId#RESET_BATTERY_COMMAND}.
 	 * 
 	 * @return the Channel
 	 */
-	public default StateChannel getMaxStartTimeChannel() {
-		return this.channel(ChannelId.MAX_ALLOWED_START_TIME_FAULT);
+	public default WriteChannel<Boolean> getResetBatteryCommandChannel() {
+		return this.channel(ChannelId.RESET_BATTERY_COMMAND);
 	}
 
 	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#MAX_START_TIME}.
-	 * 
-	 * @return the Channel {@link Value}
-	 */
-	public default Value<Boolean> getMaxStartTime() {
-		return this.getMaxStartTimeChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on {@link ChannelId#MAX_START_TIME}
-	 * Channel.
-	 * 
-	 * @param value the next value
-	 */
-	public default void _setMaxStartTime(Boolean value) {
-		this.getMaxStartTimeChannel().setNextValue(value);
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#MAX_STOP_TIME}.
+	 * Gets the Channel for {@link ChannelId#TIMEOUT_START_BATTERY}.
 	 * 
 	 * @return the Channel
 	 */
-	public default StateChannel getMaxStopTimeChannel() {
-		return this.channel(ChannelId.MAX_ALLOWED_STOP_TIME_FAULT);
+	public default StateChannel getTimeoutStartBatteryChannel() {
+		return this.channel(ChannelId.TIMEOUT_START_BATTERY);
 	}
 
 	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#MAX_STOP_TIME}.
+	 * Gets the {@link StateChannel} for {@link ChannelId#TIMEOUT_START_BATTERY}.
 	 * 
 	 * @return the Channel {@link Value}
 	 */
-	public default Value<Boolean> getMaxStopTime() {
-		return this.getMaxStopTimeChannel().value();
+	public default Value<Boolean> getTimeoutStartBattery() {
+		return this.getTimeoutStartBatteryChannel().value();
 	}
 
 	/**
-	 * Internal method to set the 'nextValue' on {@link ChannelId#MAX_STOP_TIME}
-	 * Channel.
+	 * Internal method to set the 'nextValue' on
+	 * {@link ChannelId#TIMEOUT_START_BATTERY} Channel.
 	 * 
 	 * @param value the next value
 	 */
-	public default void _setMaxStopTime(Boolean value) {
-		this.getMaxStopTimeChannel().setNextValue(value);
+	public default void _setTimeoutStartBattery(Boolean value) {
+		this.getTimeoutStartBatteryChannel().setNextValue(value);
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#TIMEOUT_STOP_BATTERY}.
+	 * 
+	 * @return the Channel
+	 */
+	public default StateChannel getTimeoutStopBatteryChannel() {
+		return this.channel(ChannelId.TIMEOUT_STOP_BATTERY);
+	}
+
+	/**
+	 * Gets the {@link StateChannel} for {@link ChannelId#TIMEOUT_STOP_BATTERY}.
+	 * 
+	 * @return the Channel {@link Value}
+	 */
+	public default Value<Boolean> getTimeoutStopBattery() {
+		return this.getTimeoutStopBatteryChannel().value();
+	}
+
+	/**
+	 * Internal method to set the 'nextValue' on
+	 * {@link ChannelId#TIMEOUT_STOP_BATTERY} Channel.
+	 * 
+	 * @param value the next value
+	 */
+	public default void _setTimeoutStopBattery(Boolean value) {
+		this.getTimeoutStopBatteryChannel().setNextValue(value);
 	}
 
 	/**
@@ -489,21 +565,21 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 	}
 
 	/**
-	 * Gets the Channel for {@link ChannelId#SYSTEM_GLOBALSTATE}.
+	 * Gets the Channel for {@link ChannelId#BATTERY_STATE}.
 	 * 
 	 * @return the Channel
 	 */
-	public default EnumReadChannel getSystemGlobalStateChannelChannel() {
-		return this.channel(ChannelId.SYSTEM_GLOBALSTATE);
+	public default EnumReadChannel getBatteryStateChannel() {
+		return this.channel(ChannelId.BATTERY_STATE);
 	}
 
 	/**
-	 * Gets the ContactorState, see {@link ChannelId#SYSTEM_GLOBALSTATE}.
+	 * Gets the ContactorState, see {@link ChannelId#BATTERY_STATE}.
 	 * 
 	 * @return the Channel {@link value}.
 	 */
-	public default GlobalState getSystemGlobalState() {
-		return this.getSystemGlobalStateChannelChannel().value().asEnum();
+	public default GlobalState getBatteryState() {
+		return this.getBatteryStateChannel().value().asEnum();
 	}
 
 	/**
@@ -549,7 +625,7 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 	 *
 	 * @return the Channel
 	 */
-	public default BooleanWriteChannel getCommandActivateBalancingChannel() {
+	public default IntegerWriteChannel getCommandActivateBalancingChannel() {
 		return this.channel(ChannelId.COMMAND_ACTIVATE_BALANCING);
 	}
 
@@ -559,7 +635,7 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 	 *
 	 * @return the Channel {@link Value}
 	 */
-	public default boolean getCommandActivateBalancing() {
+	public default int getCommandActivateBalancing() {
 		return this.getCommandActivateBalancingChannel().value().asOptional().get();
 	}
 
@@ -569,7 +645,7 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 	 *
 	 * @param value the next value
 	 */
-	public default void _setCommandActivateBalancing(boolean value) {
+	public default void _setCommandActivateBalancing(int value) {
 		this.getCommandActivateBalancingChannel().setNextValue(value);
 	}
 
@@ -580,7 +656,7 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 	 * @param value the next value
 	 * @throws OpenemsNamedException on error
 	 */
-	public default void setCommandActivateBalancing(boolean value) throws OpenemsNamedException {
+	public default void setCommandActivateBalancing(int value) throws OpenemsNamedException {
 		this.getCommandActivateBalancingChannel().setNextWriteValue(value);
 	}
 
@@ -854,4 +930,60 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
 	public default Value<Double> getPackHighVoltagePlus() {
 		return this.getPackHighVoltagePlusChannel().value();
 	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#STRING_EVENT_COMMUNICATION_ERROR}.
+	 *
+	 * @return the Channel
+	 */
+	public default Channel<Boolean> getStringEventCommunicationErrorChannel() {
+		return this.channel(ChannelId.STRING_EVENT_COMMUNICATION_ERROR);
+	}
+
+	/**
+	 * Gets the StringEventCommunicationError, see
+	 * {@link ChannelId#STRING_EVENT_COMMUNICATION_ERROR}.
+	 *
+	 * @return the Channel {@link Value}
+	 */
+	public default Value<Boolean> getStringEventCommunicationError() {
+		return this.getStringEventCommunicationErrorChannel().value();
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#STRING_MODULE_COUNT}.
+	 *
+	 * @return the Channel
+	 */
+	public default Channel<Integer> getStringModuleCountChannel() {
+		return this.channel(ChannelId.STRING_MODULE_COUNT);
+	}
+
+	/**
+	 * Gets the channel value see {@link ChannelId#STRING_MODULE_COUNT}.
+	 *
+	 * @return the Channel {@link Value}
+	 */
+	public default Value<Integer> getStringModuleCount() {
+		return this.getStringModuleCountChannel().value();
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#BATTERY_SOC}.
+	 *
+	 * @return the Channel
+	 */
+	public default Channel<Integer> getBatterySocChannel() {
+		return this.channel(ChannelId.BATTERY_SOC);
+	}
+
+	/**
+	 * Gets the channel value see {@link ChannelId#BATTERY_SOC}.
+	 *
+	 * @return the Channel {@link Value}
+	 */
+	public default Value<Integer> getBatterySoc() {
+		return this.getBatterySocChannel().value();
+	}
+
 }

@@ -21,6 +21,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     public override readonly type: SystemType = SystemType.COMMERCIAL;
     public override readonly showRundSteuerManual: boolean = false;
     public override showViewCount: boolean = false;
+    public readonly minNumberOfTowers: number = 1;
     public modbusBridgeType: ModbusBridgeType;
 
     // configuration-emergency-reserve
@@ -131,7 +132,13 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         const totalPvPower = 0;
         this.feedInLimitation.maximumFeedInPower = totalPvPower;
 
-        return super.getCommonFeedInLimitsFields(totalPvPower);
+        const options: ComponentData[] = [
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
+        ];
+
+        return super.getCommonFeedInLimitsFields(totalPvPower, options);
     }
 
     public override addCustomBatteryInverterData() {
@@ -232,11 +239,18 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         const fields: FormlyFieldConfig[] = [];
         const emsType = this.getEmsType();
 
-        const componentLabel = [];
+        const componentLabel: {
+            value: SubSystemType,
+            label: SubSystemType,
+        }[] = [];
         if (emsType === null) {
             componentLabel.push(
                 { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
                 { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
+            );
+        } else if (emsType === "feh013") {
+            componentLabel.push(
+                { value: SubSystemType.COMMERCIAL_92, label: SubSystemType.COMMERCIAL_92 },
             );
         }
 
@@ -296,7 +310,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
                 // If data isn't available after the timeout, the
                 // promise gets resolved with default values
                 if (!isResolved) {
-                    resolve({ numberOfTowers: 1, numberOfModulesPerTower: this.defaultNumberOfModules });
+                    resolve({ numberOfTowers: this.minNumberOfTowers, numberOfModulesPerTower: this.defaultNumberOfModules });
                 }
 
                 // Unsubscribe to currentData and channels after timeout
@@ -310,38 +324,14 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
         const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
 
-        const feedInLimitation = this.feedInLimitation;
-        protocol.items.push(
-            {
-                category: Category.FEED_IN_MANAGEMENT,
-                name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECIEVER"),
-                value: feedInLimitation.feedInType == FeedInType.EXTERNAL_LIMITATION
-                    ? this.translate.instant("General.yes")
-                    : this.translate.instant("General.no"),
-            },
-            {
-                category: Category.FEED_IN_MANAGEMENT,
-                name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"),
-                value: feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
-                    ? this.translate.instant("General.yes")
-                    : this.translate.instant("General.no"),
-            });
-
-        if (feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION) {
-            protocol.items.push({
-                category: Category.FEED_IN_MANAGEMENT,
-                name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
-                value: feedInLimitation.maximumFeedInPower
-                    ? feedInLimitation.maximumFeedInPower.toString()
-                    : (0).toString(),
-            });
-        }
+        // Welcherischter, BMS and EMS box.
+        const initialStaticTowerComponents: number = 3;
 
         // Subsequent Strings will have only 1 static component. BMS submaster.
         const subsequentStaticTowerComponents = 1;
         const categoryElement: string = "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING";
 
-        super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, subsequentStaticTowerComponents, categoryElement);
+        super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, initialStaticTowerComponents, subsequentStaticTowerComponents, categoryElement);
 
         return new Promise((resolve, reject) => {
             websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
@@ -387,7 +377,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
                 // Add ip address to network configuration
                 if (!IbnUtils.addIpAddress("eth1", "192.168.0.9/24", edge, websocket)) {
-                    service.toast("Eine für die Batterie notwendige IP-Adresse konnte nicht zur Netzwerkkonfiguration hinzugefügt werden."
+                    service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.IP_ADDRESS_ERROR", { system: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.BATTERY") })
                         , "danger");
                 }
 
@@ -457,5 +447,4 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         }
         return false;
     }
-
 }

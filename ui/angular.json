@@ -70,7 +70,8 @@
               },
               "styles": [
                 "src/themes/openems/scss/variables.scss",
-                "src/global.scss"
+                "src/global.scss",
+                "src/global-ion-custom.scss"
               ]
             },
             "openems-backend-dev": {
@@ -178,7 +179,8 @@
               },
               "styles": [
                 "src/themes/fenecon/scss/variables.scss",
-                "src/global.scss"
+                "src/global.scss",
+                "src/global-ion-custom.scss"
               ]
             },
             "fenecon-backend-dev": {
@@ -241,6 +243,30 @@
                 }
               ]
             },
+            "fenecon-edge-docker": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/theme.ts",
+                  "with": "src/themes/fenecon/environments/theme.ts"
+                },
+                {
+                  "replace": "src/environments/dummy.ts",
+                  "with": "src/themes/fenecon/environments/edge-docker.ts"
+                }
+              ]
+            },
+            "fenecon-backend-docker": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/theme.ts",
+                  "with": "src/themes/fenecon/environments/theme.ts"
+                },
+                {
+                  "replace": "src/environments/dummy.ts",
+                  "with": "src/themes/fenecon/environments/backend-docker.ts"
+                }
+              ]
+            },
             "heckert": {
               "assets": [
                 "src/assets",
@@ -262,7 +288,8 @@
               },
               "styles": [
                 "src/themes/heckert/scss/variables.scss",
-                "src/global.scss"
+                "src/global.scss",
+                "src/global-ion-custom.scss"
               ]
             },
             "heckert-backend-dev": {
@@ -330,50 +357,50 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "app:build:openems,openems-edge-dev"
+            "buildTarget": "app:build:openems,openems-edge-dev"
           },
           "configurations": {
             "openems-backend-dev": {
-              "browserTarget": "app:build:openems,openems-backend-dev"
+              "buildTarget": "app:build:openems,openems-backend-dev"
             },
             "openems-edge-dev": {
-              "browserTarget": "app:build:openems,openems-edge-dev"
+              "buildTarget": "app:build:openems,openems-edge-dev"
             },
             "openems-backend-prod": {
-              "browserTarget": "app:build:openems,openems-backend-prod,prod"
+              "buildTarget": "app:build:openems,openems-backend-prod,prod"
             },
             "openems-edge-prod": {
-              "browserTarget": "app:build:openems,openems-edge-prod,prod"
+              "buildTarget": "app:build:openems,openems-edge-prod,prod"
             },
             "openems-gitpod": {
-              "browserTarget": "app:build:openems,openems-gitpod"
+              "buildTarget": "app:build:openems,openems-gitpod"
             },
             "fenecon-backend-dev": {
-              "browserTarget": "app:build:fenecon,fenecon-backend-dev"
+              "buildTarget": "app:build:fenecon,fenecon-backend-dev"
             },
             "fenecon-backend-deploy-app": {
-              "browserTarget": "app:build:fenecon,fenecon-backend-deploy-app"
+              "buildTarget": "app:build:fenecon,fenecon-backend-deploy-app"
             },
             "fenecon-edge-dev": {
-              "browserTarget": "app:build:fenecon,fenecon-edge-dev"
+              "buildTarget": "app:build:fenecon,fenecon-edge-dev"
             },
             "fenecon-backend-prod": {
-              "browserTarget": "app:build:fenecon,fenecon-backend-prod,prod"
+              "buildTarget": "app:build:fenecon,fenecon-backend-prod,prod"
             },
             "fenecon-edge-prod": {
-              "browserTarget": "app:build:fenecon,fenecon-edge-prod,prod"
+              "buildTarget": "app:build:fenecon,fenecon-edge-prod,prod"
             },
             "heckert-backend-dev": {
-              "browserTarget": "app:build:heckert,heckert-backend-dev"
+              "buildTarget": "app:build:heckert,heckert-backend-dev"
             },
             "heckert-edge-dev": {
-              "browserTarget": "app:build:heckert,heckert-edge-dev"
+              "buildTarget": "app:build:heckert,heckert-edge-dev"
             },
             "heckert-backend-prod": {
-              "browserTarget": "app:build:heckert,heckert-backend-prod,prod"
+              "buildTarget": "app:build:heckert,heckert-backend-prod,prod"
             },
             "heckert-edge-prod": {
-              "browserTarget": "app:build:heckert,heckert-edge-prod,prod"
+              "buildTarget": "app:build:heckert,heckert-edge-prod,prod"
             }
           }
         },

@@ -20,6 +20,7 @@ import { ConfigurationSystemVariantComponent } from "./views/configuration-syste
 import { ConfigurationSystemComponent } from "./views/configuration-system/configuration-system.component";
 import { PreInstallationUpdateComponent } from "./views/pre-installation-update/pre-installation-update.component";
 import { PreInstallationComponent } from "./views/pre-installation/pre-installation.component";
+import { ProtocolChecklistComponent } from "./views/protocol-checklist/protocol-checklist.component";
 import { ProtocolCustomerComponent } from "./views/protocol-customer/protocol-customer.component";
 import { ProtocolFeedInLimitationComponent } from "./views/protocol-feed-in-limitation/protocol-feed-in-limitation.component";
 import { ProtocolInstallerComponent } from "./views/protocol-installer/protocol-installer.component";
@@ -142,6 +143,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     ConfigurationSystemVariantComponent,
     ConfigurationSubSystemComponent,
     ConfigurationEnergyFlowMeterComponent,
+    ProtocolChecklistComponent,
   ],
 })
 export class InstallationModule { }

@@ -201,7 +201,9 @@
             "name": "Force charging",
             "shortName": "Manually"
           },
-          "Uncontrollable": "This charging station can not be controlled."
+          "Uncontrollable": "This charging station can not be controlled.",
+          "HYSTERESIS": "Minimum switching time of the charging station active",
+          "HYSTERESIS_INFO": "For preventing charging interruptions due to frequent starting/pausing of the charing process, the charging mode currently selected will continue for the next few minutes."
         },
         "Heatingelement": {
           "activeForced": "Active (Minimum runtime)",
@@ -240,7 +242,7 @@
           "PRICE": "Current price",
           "STATE": {
             "DELAY_DISCHARGE": "Delayed discharge",
-            "BALANCING": "Self-Consumption optmization",
+            "BALANCING": "Self-Consumption optimization",
             "CHARGE_GRID": "Charge from grid allowed"
           },
           "CHART_TITLE": "Planned Schedule (BETA test)",
@@ -314,7 +316,8 @@
       "activeDuration": "active duration",
       "CURRENT_AND_VOLTAGE": "Current & Voltage",
       "CURRENT": "Current",
-      "VOLTAGE": "Voltage"
+      "VOLTAGE": "Voltage",
+      "PHASE_ACCURATE": "Phasengenau"
     },
     "Config": {
       "Index": {
@@ -644,7 +647,7 @@
       "PRE_CONFIGURED": "Preconfigured / Warning",
       "PROGNOSIS": "Prognosis",
       "RELAY_BOARD": "Relay board",
-      "SELF_CONSUMPTION": "Self-Consumption optmization",
+      "SELF_CONSUMPTION": "Self-Consumption optimization",
       "START": "Start configuration",
       "STORAGE_SYSTEM": "Energy storage system",
       "SUCCESSFULLY_CONFIGURED": "Successfully configured / checked",
@@ -665,7 +668,11 @@
       "COMMUNICATION_WITH_RELAY": "Communication with Relay",
       "IP_ADDRESS_WARNING": "An IP address required for the coupler could not be added to the Network configuration.",
       "START_FUNCTION_TEST": "Initiated function tests for the installed components",
-      "FINISH_FUNCTION_TEST": "Finished function tests for the installed components"
+      "FINISH_FUNCTION_TEST": "Finished function tests for the installed components",
+      "IP_ADDRESS_ERROR": "An IP address required for the {{ system}} could not be added to the network configuration.",
+      "PREPARE_BATTERY_EXTENSION": "Battery retrofitting",
+      "COMMERCIAL_BATTERY_NOTE": "If you now click on “NEXT ->”, you have around 15 minutes to complete the rest of the commissioning process. After that, the BMS goes into a “time-out” set for safety reasons. Normally, this time is sufficient to complete the last steps of the commissioning in peace.\nIf there is still not enough time, you can start the commissioning again from the beginning.",
+      "NOTE": "Please note:"
     },
     "CONFIGURATION_LINE_SIDE_METER_FUSE": {
       "FIXED_VALUE_DESCRIPTION": "What is the current value on the circuit breaker?",
@@ -674,7 +681,8 @@
       "TITLE_COMMERCIAL": "Circuit breaker at the grid connection point / Counter circuit breaker",
       "TITLE_HOME": "Circuit breaker at the grid connection point",
       "VALUE": "Value [A]",
-      "METER_LABEL": "Grid connection point meter type"
+      "METER_LABEL": "Grid connection point meter type",
+      "METER": "Meter"
     },
     "CONFIGURATION_SUMMARY": {
       "BATTERY_LOCATION": "BESS Location",
@@ -848,7 +856,7 @@
     "VALUE_WITH_LABEL": "Value {{ label }}{{ number }} {{ symbol }}",
     "ALIAS_WITH_LABEL": "Alias {{label}}{{number}}",
     "CONFIGURATION_FEATURES_STORAGE_SYSTEM": {
-      "BALANCING": "Self-Consumption optmization"
+      "BALANCING": "Self-Consumption optimization"
     },
     "CLICK_RECOMMENDATION": "Please click on the \"Add\" button below if you want to commission a {{ edgeShortName }}.",
     "CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT": {
@@ -867,7 +875,45 @@
       },
       "CONVERTER_RATIO": "Converter ratio (200–5000A)"
     },
-    "CONFIGURATION_MPPT_SELECTION_NOTE": "Additional generators can then be configured via the App Center."
+    "CONFIGURATION_MPPT_SELECTION_NOTE": "Additional generators can then be configured via the App Center.",
+    "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO - Connect inverter",
+    "PROTOCOL_CHECKLIST": {
+      "CONNECT_INVERTER": "A) Connect the computer to the inverter using a network cable (upper LAN socket)",
+      "CHANGE_NETWORK_SETTINGS": "B) Change network settings on computer (IP address)",
+      "IP_ADDRESS": "C) Enter IP address in browser",
+      "ENTER_PASSWORD": "D) Enter password",
+      "START_CONFIGURATION": "E) Start KACO configuration with the Installation Wizard",
+      "MULTI_STEP": "{{listPosition}}) Perform steps 1 to {{totalSteps}}",
+      "STEP": "Step {{currStep}}/{{totalStep}} - {{description}}",
+      "STEP_1": "Select language",
+      "STEP_2": "Specify country / network type",
+      "STEP_3": "Power limitation",
+      "STEP_4": "IP setting",
+      "STEP_5": "Localization",
+      "STEP_6": "Modbus",
+      "STEP_7": "Other (optional parameters)",
+      "STEP_8": "Finalize",
+      "MIN_VOLTAGE": "G) Addition: Set minimum voltage limit to 600 V",
+      "MIN_VOLTAGE_DESCRIPTION": "Only works with installer password (own password for FENECON or preconfigured)\n\nMinimum voltage limit: 600.0 V",
+      "POWER_CONTROL": "H) Set power control (Cos-Phi, etc.)",
+      "POWER_CONTROL_DESCRIPTION": "-> which settings are necessary here can be found in the network operator's data\n-> Changes can only be made with the installer password",
+      "NETWORK_SETTINGS": "IP-Address: 169.254.1.12 \nSubnet mask: 255.255.255.0",
+      "NETWORK_SETTINGS_NOTE": "In order to access the inverter via its fixed IP address, the device connected to the inverter must be manually assigned a static IP that is within the same network range",
+      "PASSWORD_DESCRIPTION": "Service Password:\n\nUser: service\nPassword: Ye_r0d4w0P!",
+      "IP_ADDRESS_DESCRIPTION": "IP-Address: 169.254.1.1",
+      "STEP_3_DESCRIPTION": "-> Accept default settings as they are.",
+      "STEP_5_DESCRIPTION": "Please synchronize the time here with the “Sync” button",
+      "STEP_8_DESCRIPTION": "Enter the name of the installer",
+      "STEP_6_DESCRIPTION": "The Modbus setting should be set to 502",
+      "STEP_4_DESCRIPTION": "IP Address: 172.16.0.100\nSubnet mask: 255.255.255.0\nDefault gateway: 172.16.0.1",
+      "NETWORK_SETTINGS_INFO": "Please note that the steps and illustrations for setting a static IP address may vary depending on the device used. For other devices, such as Apple devices, the procedures may differ.",
+      "TIMEOUT_NOTE": "The following process can take up to {{timeoutInMinutes}} minutes."
+    },
+    "CONFIGURATION_SUB_SYSTEM": {
+      "NOTE": {
+        "COMMERCIAL_92": "Before you continue, make sure that you use the following device(s) to ensure that the next steps - especially for configuring the KACO inverter - run smoothly:\n\na laptop with “LAN-WLAN parallel” function\nor\ntwo mobile devices, each with a WLAN and a LAN function"
+      }
+    }
   },
   "LOADING_SCREEN": {
     "LOADING": "Loading",
@@ -980,11 +1026,6 @@
       "WARNING": "The software will restart after the system update. No data is recorded or components controlled during this time. Please ensure that the entire system is in a safe state.",
       "UPDATE_EXECUTE": "Execute system update",
       "SUB_HEADER": "Would you like to execute a system update?"
-    },
-    "ENERGY_JOURNEY": {
-      "TO_THE_ANALYSIS": "To the analysis",
-      "CURRENT_NUMBER_OF_MODULES": "Current",
-      "SIMULATION_NOT_STARTED": "Simulation not started"
     }
   },
   "CHANNELS": {

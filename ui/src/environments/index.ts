@@ -74,6 +74,7 @@ export interface Environment {
             readonly COMMERCIAL: {
                 readonly COMMERCIAL_30: string,
                 readonly COMMERCIAL_50: string,
+                readonly COMMERCIAL: string,
             },
         },
         APP_CENTER: {
@@ -92,7 +93,13 @@ export interface Environment {
         APP: {
             ANDROID: string | null,
             IOS: string | null,
-        }
+        },
+        readonly ENERGY_JOURNEY: {
+            readonly HOME_10: {
+                readonly DE: string,
+                readonly EN: string,
+            }
+        },
     },
     readonly PRODUCT_TYPES: (translate: TranslateService) => Filter | null
 }

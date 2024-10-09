@@ -21,6 +21,30 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2024.10.1",
+        changes: [
+          Changelog.UI + "Allgemeine Verbesserungen, Fehlerbehebung im Bereich Historie",
+          Changelog.product(Product.COMMERCIAL_92) + "Produktkompatibilität und Inbetriebnahmeassistent",
+          Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Warnung bei fehlender App zur Erfassung der PV-Erzeugung",
+          Changelog.app(App.EVCS_AC, App.KEBA) + "Keine Fehlermeldung mehr, wenn für §14a EnWG-Kompatibilität an der Ladesäule Dip-Switch 2.6 gesetzt wurde",
+          Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Warnung bei fehlenden Zählerwerten",
+          Changelog.app(App.EVCS_AC, App.KEBA, App.HARDY_BARTH) + "Visualisierung der Umschaltzeit im Automatikmodus",
+          Changelog.app(App.MODBUS_TCP_API) + "Verbesserung der Visualisierung von Schreibzugriffen in Live und Historie",
+          "Verbindungsprobleme zum Online-Monitoring: produktspezifische Anleitungen zur Fehleranalyse",
+          { roleIsAtLeast: Role.INSTALLER, change: "Online-Monitoring Historie: Verbesserung der Darstellung von Strom und Spannung" },
+          { roleIsAtLeast: Role.INSTALLER, change: "KACO 50 und 92 Batteriewechselrichter: umfangreiche Verbesserungen an der State-Machine und am Fehlerhandling" },
+          { roleIsAtLeast: Role.ADMIN, change: "(!) Alle Modbus-Geräte: Herabstufung von \"Modbus Communication failed\" zu WARNING. Notwendig für neue State-Machine und Fehlerhandling" },
+          { roleIsAtLeast: Role.ADMIN, change: "(!) Alle Batterien und Batteriewechselrichter: Herabstufung fast aller FAULTs zu WARNINGs. Notwendig für neue State-Machine und Fehlerhandling" },
+          { roleIsAtLeast: Role.ADMIN, change: "Modbus-Bridge: Fehlerbehebung. In einem seltenen Fall konnte es passieren, dass die Modbus-Kommunikation nicht startet" },
+          { roleIsAtLeast: Role.ADMIN, change: "Online-Monitoring: Verbesserungen im Energy-Journey-Modul" },
+          { roleIsAtLeast: Role.ADMIN, change: "Online-Monitoring Übersichtsfilter: Auswahl von Produkt-Typ \"Commercial 92\"" },
+          { roleIsAtLeast: Role.ADMIN, change: "Online-Monitoring: DEBUG-Mode kann nur noch durch ADMIN aktiviert werden" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.TIME_OF_USE) + "Preis \"0 Cent/kWh\" wird jetzt richtig dargestellt; war vorher \"- Cent/kWh\"" },
+          { roleIsAtLeast: Role.ADMIN, change: "Industrial S/L: Weitere Standardisierung" },
+          { roleIsAtLeast: Role.ADMIN, change: "Neuer Channel \"_meta/SystemTimeUtc\": seconds since 1st January 1970 00:00:00 UTC" },
+        ],
+      },
+      {
         version: "2024.9.1",
         changes: [
           Changelog.openems("2024.9.0"),

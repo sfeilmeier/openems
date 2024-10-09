@@ -4,14 +4,15 @@
     <ion-grid>
       <ion-row class="full_width ion-justify-content-center ion-padding-top">
         <ion-col sizeLg="6" sizeMd="10" sizeSm="12">
-          <oe-flat-widget [formGroup]="formGroup" title="Energy Journey: Batterieerweiterung"
+          <oe-flat-widget [formGroup]="formGroup"
+            [title]="'SETTINGS.ENERGY_JOURNEY.ELECTRICITY_PRICE_SELECTION_TITLE' | translate"
             [icon]="{name: 'analytics'}" style="cursor: none;">
-            <oe-flat-widget-line leftColumnWidth="100" name="Ihr System ist seit mehr als einem Jahr in Betrieb. Analysieren Sie hier, wie
-            sich eine Batterieerweiterung ausgewirkt hätte.">
+            <oe-flat-widget-line leftColumnWidth="100"
+              [name]="'SETTINGS.ENERGY_JOURNEY.ELECTRICITY_PRICE_TEXT' | translate">
             </oe-flat-widget-line>
             <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
-            <oe-flat-widget-line style="font-weight: bolder;" leftColumnWidth="100" name="Bitte geben Sie Ihren aktuellen Strompreis an. Falls Sie bereits einen
-            dynamischen Stromtarif nutzen, geben Sie bitte einen Mittelwert an.">
+            <oe-flat-widget-line style="font-weight: bolder;" leftColumnWidth="100"
+              [name]="'SETTINGS.ENERGY_JOURNEY.ELECTRICITY_PRICE_VALUE_TEXT' | translate">
             </oe-flat-widget-line>
 
             <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
@@ -24,7 +25,8 @@
                 </ion-input>
               </ion-item>
               <ion-item [disabled]="!formGroup.controls['electricityPrice'].dirty" class="ion-float-right" lines="none">
-                <ion-button fill="outline" (click)="onNextClicked()">Analyse starten</ion-button>
+                <ion-button fill="outline" (click)="onNextClicked()">
+                  {{ "SETTINGS.ENERGY_JOURNEY.START_ANALYSIS" | translate }}</ion-button>
               </ion-item>
             </form>
           </oe-flat-widget>

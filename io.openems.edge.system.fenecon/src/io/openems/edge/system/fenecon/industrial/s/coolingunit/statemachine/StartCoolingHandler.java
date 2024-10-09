@@ -14,12 +14,12 @@ public class StartCoolingHandler extends StateHandler<CoolingUnitState, CoolingU
 
 	@Override
 	protected void onEntry(CoolingUnitContext context) throws OpenemsNamedException {
-		context.outputCoolingUnitEnableChannel.setNextWriteValue(true);
 		this.lastStateChange = Instant.now(context.clock);
 	}
 
 	@Override
 	public CoolingUnitState runAndGetNextState(CoolingUnitContext context) throws OpenemsNamedException {
+		context.outputCoolingUnitEnableChannel.setNextWriteValue(true);
 		if (Instant.now(context.clock).minus(Duration.ofMinutes(MIN_RUN_TIME)).isAfter(this.lastStateChange)) {
 			return CoolingUnitState.WAIT_FOR_STOP_REQUEST;
 		}

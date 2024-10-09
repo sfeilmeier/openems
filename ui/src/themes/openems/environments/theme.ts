@@ -67,6 +67,7 @@ export const theme = {
             COMMERCIAL: {
                 COMMERCIAL_30: "#",
                 COMMERCIAL_50: "#",
+                COMMERCIAL: "#",
             },
         },
         APP_CENTER: {
@@ -77,6 +78,12 @@ export const theme = {
         APP: {
             ANDROID: null,
             IOS: null,
+        },
+        ENERGY_JOURNEY: {
+            HOME_10: {
+                DE: "#",
+                EN: "#",
+            },
         },
     },
     PRODUCT_TYPES: () => null,

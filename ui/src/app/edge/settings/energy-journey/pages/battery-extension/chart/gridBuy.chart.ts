@@ -3,6 +3,7 @@ import { Component, Input, OnChanges } from "@angular/core";
 import { ChartAxis, HistoryUtils, Utils, YAxisType } from "src/app/shared/service/utils";
 import { ChannelAddress } from "src/app/shared/shared";
 
+import { TranslateService } from "@ngx-translate/core";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
 import { PropType } from "src/app/shared/service/defaulttypes";
 import { SimulationResult } from "../battery-extension.module";
@@ -22,7 +23,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
   @Input({ required: true }) public fromDate: Date;
   @Input({ required: true }) public toDate: Date;
 
-  public static getChartData(simulatedData: PossibleBatteryExtensionResponse["result"]["simulationData"]): HistoryUtils.ChartData {
+  public static getChartData(simulatedData: PossibleBatteryExtensionResponse["result"]["simulationData"], translate: TranslateService): HistoryUtils.ChartData {
     return {
       input: [
         {
@@ -43,7 +44,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
         ];
         return [
           <HistoryUtils.DisplayValue<HistoryUtils.DataLabelsCustomOptions>>{
-            name: "Batteriemodul-Erweiterung",
+            name: translate.instant("SETTINGS.ENERGY_JOURNEY.BATTERY_MODULE_EXTENSION"),
             converter: () => {
               return displayData
                 .map((el) => Utils.subtractSafely(displayData[0], Utils.divideSafely(el, 1)))
@@ -61,6 +62,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
       },
       tooltip: {
         formatNumber: "1.0-0",
+        enabled: false,
       },
       yAxes: [{
         unit: YAxisType.ENERGY,
@@ -70,7 +72,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
     };
   }
 
-  private static getLabels(simulationData: PropType<SimulationResult, "simulationData">): string[] {
+  private static getLabels(simulationData: PropType<SimulationResult, "simulationData">, translate: TranslateService): string[] {
     return simulationData.reduce((arr: string[], el, index) => {
       if (index === 0) {
         return arr;
@@ -80,7 +82,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
         return arr;
       }
 
-      arr.push("+ " + diff + (diff === 1 ? " Modul" : " Module"));
+      arr.push("+ " + diff + " " + (diff === 1 ? translate.instant("SETTINGS.ENERGY_JOURNEY.MODULE") : translate.instant("SETTINGS.ENERGY_JOURNEY.MODULES")));
       return arr;
     }, []);
   }
@@ -90,11 +92,11 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
   }
 
   public override getChartData() {
-    return GridBuyChartComponent.getChartData(this.simulatedData?.simulationData);
+    return GridBuyChartComponent.getChartData(this.simulatedData?.simulationData, this.translate);
   }
 
   protected override beforeSetChartLabel(): void {
-    this.labels = GridBuyChartComponent.getLabels(this.simulatedData.simulationData);
+    this.labels = GridBuyChartComponent.getLabels(this.simulatedData.simulationData, this.translate);
   }
 
 

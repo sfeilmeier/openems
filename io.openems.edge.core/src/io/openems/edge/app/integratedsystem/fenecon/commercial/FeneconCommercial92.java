@@ -1,10 +1,12 @@
 package io.openems.edge.app.integratedsystem.fenecon.commercial;
 
 import static io.openems.edge.app.common.props.CommonProps.alias;
+import static io.openems.edge.app.common.props.CommonProps.defaultDef;
 import static io.openems.edge.app.integratedsystem.IntegratedSystemProps.feedInType;
 import static io.openems.edge.app.integratedsystem.IntegratedSystemProps.maxFeedInPower;
 import static io.openems.edge.app.integratedsystem.IntegratedSystemProps.safetyCountry;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -42,6 +44,7 @@ import io.openems.edge.core.appmanager.Type;
 import io.openems.edge.core.appmanager.Type.Parameter;
 import io.openems.edge.core.appmanager.Type.Parameter.BundleParameter;
 import io.openems.edge.core.appmanager.dependency.Tasks;
+import io.openems.edge.core.appmanager.formly.JsonFormlyUtil;
 
 @Component(name = "App.FENECON.Commercial.92")
 public class FeneconCommercial92 extends
@@ -55,6 +58,14 @@ public class FeneconCommercial92 extends
 
 		FEED_IN_TYPE(feedInType(FeedInType.EXTERNAL_LIMITATION)), //
 		MAX_FEED_IN_POWER(maxFeedInPower(FEED_IN_TYPE)), //
+
+		BATTERY_TARGET(AppDef.copyOfGeneric(defaultDef(), def -> def //
+				.setLabel("Battery Start/Stop Target") //
+				.setDefaultValue("AUTO") //
+				.setField(JsonFormlyUtil::buildSelect, (app, property, l, parameter, field) -> {
+					field.setOptions(List.of("START", "AUTO"));
+				}) //
+				.appendIsAllowedToSee(AppDef.ofLeastRole(Role.ADMIN)))), //
 		;
 
 		private final AppDef<? super FeneconCommercial92, ? super Property, ? super BundleParameter> def;
@@ -131,8 +142,10 @@ public class FeneconCommercial92 extends
 					? this.getInt(p, Property.MAX_FEED_IN_POWER)
 					: 0;
 
+			final var batteryTarget = this.getString(p, Property.BATTERY_TARGET);
+
 			final var components = Lists.newArrayList(//
-					FeneconHomeComponents.battery(bundle, batteryId, modbusToBatteryId), //
+					FeneconHomeComponents.battery(bundle, batteryId, modbusToBatteryId, batteryTarget), //
 					FeneconCommercialComponents.batteryInverter(bundle, batteryInverterId, modbusToBatteryInverterId), //
 					FeneconHomeComponents.ess(bundle, essId, batteryId, batteryInverterId), //
 					FeneconHomeComponents.io(bundle, modbusToBatteryId), //

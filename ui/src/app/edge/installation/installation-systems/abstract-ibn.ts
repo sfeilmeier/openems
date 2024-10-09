@@ -32,6 +32,8 @@ export enum SchedulerIdBehaviour {
 }
 
 export abstract class AbstractIbn {
+
+  public WAIT_FOR_BATTERY_SERIAL_NUMBERS = 120000;
   // Battery type
   public readonly type: SystemType;
 
@@ -135,6 +137,12 @@ export abstract class AbstractIbn {
   // Label used for device check in configuration summary. It is different for Industrial systems.
   public readonly isDevicesActiveCheckedLabel: string = this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.DEVICE_ACTIVE_CHECKED");
 
+  // Limit value changes for home and commercial.
+  public readonly maxFeedInLimit: number = 29999;
+
+  // Seperate notes to warn installers to perform timely inverter (KACO) checks. applies for comemrcial-92.
+  public readonly showNote: boolean = false;
+
   constructor(public views: View[], public translate: TranslateService) { }
 
   /**
@@ -221,9 +229,10 @@ export abstract class AbstractIbn {
    * Returns the common fields for all systems in Feed in limitation view.
    *
    * @param totalPvPower The total pv power configured.
+   * @param options The options that should be dispalyed.
    * @returns common fields for feed in limits fields.
    */
-  public getCommonFeedInLimitsFields(totalPvPower: number): FormlyFieldConfig[] {
+  public getCommonFeedInLimitsFields(totalPvPower: number, options: ComponentData[]): FormlyFieldConfig[] {
     const fields: FormlyFieldConfig[] = [];
 
     fields.push({
@@ -233,11 +242,7 @@ export abstract class AbstractIbn {
       templateOptions: {
         label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
         placeholder: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER"),
-        options: [
-          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
-          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
-          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
-        ],
+        options: options,
         required: true,
       },
     });
@@ -250,7 +255,7 @@ export abstract class AbstractIbn {
         label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
         description: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_VALUE_DESCRIPTION"),
         required: true,
-        max: 29999, // max feed in power limit value.
+        max: this.maxFeedInLimit, // max feed in power limit value.
       },
       parsers: [Number],
       defaultValue: totalPvPower,
@@ -418,7 +423,49 @@ export abstract class AbstractIbn {
 
     protocol.items = [];
 
+    const feedInLimitation = this.feedInLimitation;
+    protocol.items.push(
+      {
+        category: Category.FEED_IN_MANAGEMENT,
+        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECIEVER"),
+        value: feedInLimitation.feedInType == FeedInType.EXTERNAL_LIMITATION
+          ? this.translate.instant("General.yes")
+          : this.translate.instant("General.no"),
+      },
+      {
+        category: Category.FEED_IN_MANAGEMENT,
+        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"),
+        value: feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
+          ? this.translate.instant("General.yes")
+          : this.translate.instant("General.no"),
+      },
+      {
+        category: Category.FEED_IN_MANAGEMENT,
+        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+
+        value: feedInLimitation.feedInType == FeedInType.NO_LIMITATION
+          ? this.translate.instant("General.yes")
+          : this.translate.instant("General.no"),
+      });
+
+    if (feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION) {
+      protocol.items.push({
+        category: Category.FEED_IN_MANAGEMENT,
+        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
+        value: feedInLimitation.maximumFeedInPower
+          ? feedInLimitation.maximumFeedInPower.toString()
+          : (0).toString(),
+      });
+    }
+
     if (lineSideMeterFuse) {
+
+      protocol.items.push({
+        category: this.lineSideMeterFuse.category,
+        name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER"),
+        value: this.lineSideMeterFuse.meterType,
+      });
+
       const lineSideMeterFuseValue = lineSideMeterFuse.otherValue ?? lineSideMeterFuse.fixedValue;
 
       protocol.items.push({
@@ -443,16 +490,14 @@ export abstract class AbstractIbn {
    * @param protocol The SetupProtocol with already exisiting elements.
    * @param numberOfModulesPerTower The configured number of moduler per tower for the system.
    * @param subsequentStaticComponents The default number of fixed components per subsequent Towers/Strings.
+   * @param initialStaticTowerComponents The default number of fixed components per initial Towers/Strings.
    * @param categoryElement the label string for category.
    */
-  public addProtocolSerialNumbers(protocol: SetupProtocol, numberOfModulesPerTower: number, subsequentStaticComponents: number, categoryElement: string) {
+  public addProtocolSerialNumbers(protocol: SetupProtocol, numberOfModulesPerTower: number, initialStaticTowerComponents: number, subsequentStaticComponents: number, categoryElement: string) {
     const serialNumbers = this.serialNumbers;
 
     // Speichersystemkomponenten
     protocol.lots = [];
-
-    // Initial tower has 3 static components other than modules such as Welcherischter, BMS and EMS box.
-    const initialStaticTowerComponents = 3;
 
     // Number of towers/strings
     const numTowers = 4;
@@ -477,9 +522,7 @@ export abstract class AbstractIbn {
         // Determine the tower/string number based on the componentCount
         for (let tower = 1; tower <= numTowers; tower++) {
           if (componentCount < numComponentsPerTower[tower]) {
-            const category: string = tower === 1
-              ? this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS")
-              : this.translate.instant(categoryElement, { number: tower });
+            const category: string = this.translate.instant(categoryElement, { number: tower });
 
             // Push the data to protocol.lots
             protocol.lots.push({

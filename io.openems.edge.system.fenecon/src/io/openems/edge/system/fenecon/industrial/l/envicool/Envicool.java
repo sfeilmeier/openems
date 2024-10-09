@@ -53,32 +53,32 @@ public class Envicool {
 				IntegerWriteChannel setCoolingPointChannel, IntegerWriteChannel setHeatingPointChannel,
 				IntegerWriteChannel setMonitorAndIssueMinTempChannel,
 				IntegerWriteChannel setMonitorAndIssueMaxTempChannel) {
-			int coolingSetPoint = config.acCoolingSetPoint();
+			int coolingSetPoint = config.coolingUnitCoolingSetPoint();
 			if (coolingSetPoint > MAXIMUM_TEMP || coolingSetPoint < MINIMUM_TEMP) {
-				LOG.warn("The Cooling setpoint Temperature [" //
-						+ config.acCoolingSetPoint() //
+				LOG.warn("The cooling setpoint temperature [" //
+						+ config.coolingUnitCoolingSetPoint() //
 						+ "] should be between [" + MINIMUM_TEMP + " °C] and [" + MAXIMUM_TEMP + " °C]");
 				coolingSetPoint = TypeUtils.fitWithin(MINIMUM_TEMP, MAXIMUM_TEMP, coolingSetPoint);
 			}
 
-			int heatingSetPoint = config.acHeatingSetPoint();
+			int heatingSetPoint = config.coolingUnitHeatingSetPoint();
 			if (heatingSetPoint > MAXIMUM_TEMP || heatingSetPoint < MINIMUM_TEMP) {
-				LOG.warn("The Heating setpoint Temperature [" //
-						+ config.acCoolingSetPoint() //
+				LOG.warn("The heating setpoint temperature [" //
+						+ config.coolingUnitCoolingSetPoint() //
 						+ "] should be between [" + MINIMUM_TEMP + " °C] and [" + MAXIMUM_TEMP + " °C]");
 				heatingSetPoint = TypeUtils.fitWithin(MINIMUM_TEMP, MAXIMUM_TEMP, heatingSetPoint);
 			}
 
 			if (coolingSetPoint <= heatingSetPoint) {
-				LOG.warn("The Cooling setpoint Temperature [" //
+				LOG.warn("The cooling setpoint temperature [" //
 						+ coolingSetPoint //
-						+ "] should be greater then, the Heating setpoint Temperature [" //
+						+ "] should be greater then, the heating setpoint temperature [" //
 						+ heatingSetPoint);
 				coolingSetPoint = MAXIMUM_TEMP;
 				heatingSetPoint = MINIMUM_TEMP;
 			}
 
-			return new Context(config.acMode(), coolingSetPoint, heatingSetPoint, batteries, //
+			return new Context(config.coolingUnitMode(), coolingSetPoint, heatingSetPoint, batteries, //
 					setBmsModeControlChannel, setRunTimeControlModeChannel, //
 					setCoolingPointChannel, setHeatingPointChannel, //
 					setMonitorAndIssueMinTempChannel, setMonitorAndIssueMaxTempChannel);
@@ -99,7 +99,7 @@ public class Envicool {
 	/**
 	 * Called on AFTER_PROCESS_IMAGE event.
 	 */
-	public void onAfterProcessImage() {
+	public void onBeforeProcessImage() {
 		try {
 			switch (this.context.mode) {
 			case DISABLED -> this.handleDisabled();
@@ -112,7 +112,7 @@ public class Envicool {
 	}
 
 	/**
-	 * Handles AC ENABLED mode.
+	 * Handles CoolingUnit ENABLED mode.
 	 * 
 	 * @throws OpenemsNamedException on error
 	 */
@@ -133,7 +133,7 @@ public class Envicool {
 	}
 
 	/**
-	 * Handles AC DISABLED mode.
+	 * Handles CoolingUnit DISABLED mode.
 	 * 
 	 * @throws OpenemsNamedException on error
 	 */
@@ -145,7 +145,6 @@ public class Envicool {
 		if (Objects.equals(channel.value().get(), value)) {
 			return;
 		}
-		LOG.info("Setting Channel [" + channel.address() + "] to [" + value + "]");
 		channel.setNextWriteValue(value);
 	}
 
@@ -153,7 +152,7 @@ public class Envicool {
 		if (Objects.equals(channel.value().get(), value.getValue())) {
 			return;
 		}
-		LOG.info("Setting Channel [" + channel.address() + "] to [" + value + "]");
+		// LOG.info("Setting Channel [" + channel.address() + "] to [" + value + "]");
 		channel.setNextWriteValue(value);
 	}
 

@@ -11,7 +11,7 @@ import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
 import io.openems.edge.common.test.DummyConfigurationAdmin;
-import io.openems.edge.ess.test.DummyManagedSymmetricEss;
+import io.openems.edge.ess.test.DummyMetaEss;
 import io.openems.edge.io.test.DummyInputOutput;
 import io.openems.edge.system.fenecon.industrial.s.enums.CoolingUnitMode;
 
@@ -38,7 +38,7 @@ public class SystemFeneconIndustrialSImplTest {
 		new ComponentTest(new SystemFeneconIndustrialSImpl()) //
 				.addReference("componentManager", new DummyComponentManager(clock)) //
 				.addReference("cm", new DummyConfigurationAdmin())//
-				.addReference("ess", new DummyManagedSymmetricEss(ESS_ID)) //
+				.addReference("ess", new DummyMetaEss(ESS_ID)) //
 				.addComponent(dummyIo) //
 				.activate(MyConfig.create() //
 						.setId(COMPONENT_ID) //

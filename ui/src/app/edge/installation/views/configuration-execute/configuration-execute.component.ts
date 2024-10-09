@@ -21,10 +21,12 @@ export class ConfigurationExecuteComponent implements OnInit {
   @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
   @Output() public nextViewEvent: EventEmitter<any> = new EventEmitter();
 
-  public isWaiting = false;
-  public componentConfigurator: ComponentConfigurator;
-  public configurationObjectsToBeConfigured: ConfigurationObject[];
-  public isAnyConfigurationObjectPreConfigured: boolean;
+  protected isWaiting = false;
+  protected configurationObjectsToBeConfigured: ConfigurationObject[];
+  protected showConfigurationExecuteBatteryNote: boolean = false;
+  protected goNextPage: boolean = true;
+  private componentConfigurator: ComponentConfigurator;
+  private isAnyConfigurationObjectPreConfigured: boolean;
 
   constructor(
     private service: Service,
@@ -33,6 +35,8 @@ export class ConfigurationExecuteComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
+    this.showConfigurationExecuteBatteryNote = this.ibn.showNote;
+    this.goNextPage = !this.showConfigurationExecuteBatteryNote;
     const stopOnRequest: Subject<void> = new Subject<void>();
 
     this.edge.getConfig(this.websocket).pipe(
@@ -65,6 +69,11 @@ export class ConfigurationExecuteComponent implements OnInit {
   }
 
   public onNextClicked() {
+    if (!this.goNextPage) {
+      this.goNextPage = true;
+      return;
+    }
+
     this.nextViewEvent.emit();
   }
 
@@ -91,7 +100,7 @@ export class ConfigurationExecuteComponent implements OnInit {
       }
     }).finally(() => {
       this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.START_FUNCTION_TEST"), "warning", 5000);
-      this.componentConfigurator.startFunctionTest().then(() => {
+      this.componentConfigurator.startFunctionTest(this.ibn, this.ibn.WAIT_FOR_BATTERY_SERIAL_NUMBERS).then(() => {
         this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.FINISH_FUNCTION_TEST"), "success");
         this.isWaiting = false;
       });

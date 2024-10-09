@@ -2,7 +2,7 @@
 import { Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
 import { ChannelAddress, Edge, EdgeConfig, Websocket } from "src/app/shared/shared";
-import { SchedulerId, SchedulerIdBehaviour } from "../../installation-systems/abstract-ibn";
+import { AbstractIbn, SchedulerId, SchedulerIdBehaviour } from "../../installation-systems/abstract-ibn";
 import { AppCenterUtil } from "../../shared/appcenterutil";
 
 export enum BaseMode {
@@ -48,11 +48,11 @@ export type ConfigurationObject = {
 };
 
 const DELAY_CLEAR = 5000;          // Time between the clear and the start of the configurations
-const DELAY_CONFIG = 15000;         // Time between the configuration of every component
-const DELAY_FUNCTION_TEST = 120000;  // Time between the configuration and the function test of every component
+const DELAY_CONFIG = 15000;
 
 export class ComponentConfigurator {
 
+    public static DELAY_FUNCTION_TEST: number = 120000;      // Time between the configuration of every component
     private configurationObjects: ConfigurationObject[] = [];
     private channelMappings: { configurationObject: ConfigurationObject, channelAddress: ChannelAddress }[] = [];
     private subscriptions: Subscription[] = [];
@@ -183,7 +183,7 @@ export class ComponentConfigurator {
         return true;
     }
 
-    public startFunctionTest(): Promise<void> {
+    public startFunctionTest(ibn: AbstractIbn, delay: number = ComponentConfigurator.DELAY_FUNCTION_TEST): Promise<void> {
 
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -245,7 +245,7 @@ export class ComponentConfigurator {
                 }
 
                 resolve();
-            }, DELAY_FUNCTION_TEST);
+            }, delay);
         });
     }
 
