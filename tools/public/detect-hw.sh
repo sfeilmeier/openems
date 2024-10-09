@@ -35,6 +35,19 @@ function read_hardware {
   esac  
 } #read_hardware
 
+function detect_internal_serial_adapter {
+  if [ -e "/dev/ttyUSB0" ]; then
+    local model=$(udevadm info --query=property --name /dev/ttyUSB0 | grep "ID_USB_MODEL=")
+    if [[ "${model^^}" =~ "BASIC_UART" ]]; then
+      echo "true";
+    else
+      echo "false";
+    fi
+  else
+    echo "false";
+  fi
+}
+
 function detect_hardware {
   local hardware=$( cat /proc/cpuinfo | grep Hardware );
   local model=$( cat /proc/cpuinfo | grep Model );
@@ -45,7 +58,8 @@ function detect_hardware {
       *"Compute Module 3"*) echo "App.OpenemsHardware.CM3";;
 
       *"Compute Module 4S"*) 
-        if [ -e "/dev/ttyUSB0" ]; then
+        local serial_adapter="$( detect_internal_serial_adapter )"
+        if [ "$serial_adapter" == "true" ]; then
           echo "App.OpenemsHardware.CM4S.Gen2"
         else
           echo "App.OpenemsHardware.CM4S"
