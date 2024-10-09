@@ -5,6 +5,7 @@ import { AbstractIbn } from "../installation-systems/abstract-ibn";
 import { Commercial30AnschlussIbn } from "../installation-systems/commercial/commercial-30/commercial30-anschluss";
 import { Commercial30NetztrennIbn } from "../installation-systems/commercial/commercial-30/commercial30-netztrenn";
 import { Commercial50Balancing } from "../installation-systems/commercial/commercial-50/commercial50-balancing";
+import { Commercial92Ibn } from "../installation-systems/commercial/commercial-92/commercial92";
 import { GeneralIbn } from "../installation-systems/general-ibn";
 import { Home10FeneconIbn } from "../installation-systems/home/home-10";
 import { Home10HeckertIbn } from "../installation-systems/home/home-10-heckert";
@@ -20,6 +21,7 @@ export enum SystemType {
 export enum SubSystemType {
     COMMERCIAL_30 = "FENECON Commercial 30",
     COMMERCIAL_50 = "FENECON Commercial 50",
+    COMMERCIAL_92 = "FENECON Commercial",
 }
 
 export enum SystemId {
@@ -33,6 +35,7 @@ export enum SystemId {
     COMMERCIAL_30_NETZTRENNSTELLE = `Netztrennstelle 
     (Commercial 30 mit Notstromversorgung)`,
     COMMERCIAL_50_BALANCING = "FENECON Commercial 50 Balancing",
+    COMMERCIAL_92 = "FENECON Commercial 92",
 }
 
 export namespace System {
@@ -52,7 +55,7 @@ export namespace System {
             case SystemType.HECKERT_HOME:
                 return new Home10HeckertIbn(translate);
             case SystemType.COMMERCIAL:
-                return new Commercial30AnschlussIbn(translate);
+                return new Commercial92Ibn(translate);
         }
     }
 
@@ -71,6 +74,8 @@ export namespace System {
                 return new Commercial30AnschlussIbn(translate);
             case SubSystemType.COMMERCIAL_50:
                 return new Commercial50Balancing(translate);
+            case SubSystemType.COMMERCIAL_92:
+                return new Commercial92Ibn(translate);
         }
     }
 
@@ -96,6 +101,8 @@ export namespace System {
                 return new Commercial30NetztrennIbn(translate);
             case SystemId.COMMERCIAL_50_BALANCING:
                 return new Commercial50Balancing(translate);
+            case SystemId.COMMERCIAL_92:
+                return new Commercial92Ibn(translate);
             case SystemId.FENECON_HOME_20:
                 return new Home20FeneconIbn(translate);
             case SystemId.FENECON_HOME_30:
@@ -115,6 +122,17 @@ export namespace System {
                 return environment.links.MANUALS.COMMERCIAL.COMMERCIAL_30;
             case SubSystemType.COMMERCIAL_50:
                 return environment.links.MANUALS.COMMERCIAL.COMMERCIAL_50;
+            case SubSystemType.COMMERCIAL_92:
+                return environment.links.MANUALS.COMMERCIAL.COMMERCIAL;
+        }
+    }
+
+    export function showNoteForSubsystemSelection(subSystemType: SubSystemType): boolean {
+        switch (subSystemType) {
+            case SubSystemType.COMMERCIAL_92:
+                return true;
+            default:
+                return false;
         }
     }
 

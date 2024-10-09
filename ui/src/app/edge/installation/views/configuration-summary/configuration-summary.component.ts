@@ -118,13 +118,6 @@ export class ConfigurationSummaryComponent implements OnInit {
       { label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.EDGE_NUMBER", { edgeShortName: environment.edgeShortName }), value: edgeData },
     ];
 
-    const lineSideMeterFuseTitle: string = Category.toTranslatedString(this.ibn.lineSideMeterFuse.category, this.translate);
-    if (this.ibn.lineSideMeterFuse.otherValue) {
-      generalData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.otherValue });
-    } else {
-      generalData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.fixedValue });
-    }
-
     tableData.push({
       header: Category.GENERAL,
       rows: generalData,
@@ -174,12 +167,26 @@ export class ConfigurationSummaryComponent implements OnInit {
     }
 
     const meterData = this.ibn.addCustomMeterData();
-    if (meterData.length > 0) {
-      tableData.push({
-        header: Category.GRID_METER_CATEGORY,
-        rows: meterData,
+
+    if ("meterType" in this.ibn.lineSideMeterFuse) {
+      // Line side meter fuse
+      meterData.push({
+        label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
+        value: this.ibn.lineSideMeterFuse.meterType,
       });
     }
+
+    const lineSideMeterFuseTitle: string = Category.toTranslatedString(this.ibn.lineSideMeterFuse.category, this.translate);
+    if (this.ibn.lineSideMeterFuse.otherValue) {
+      meterData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.otherValue });
+    } else {
+      meterData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.fixedValue });
+    }
+
+    tableData.push({
+      header: Category.GRID_METER_CATEGORY,
+      rows: meterData,
+    });
 
     // Deepcopy to local tableData to the this.tabledata by repalcing category with translated string.
     this.tableData = tableData.map((element) => {

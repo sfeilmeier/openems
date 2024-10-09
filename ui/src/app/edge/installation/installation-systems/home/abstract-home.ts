@@ -100,7 +100,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   };
 
 
-  public readonly maxFeedInLimit: number = 29999;
   public readonly imageUrl: string = "assets/img/Home-Typenschild-web.jpg";
   public readonly relayFactoryId: string = "IO.KMtronic.4Port"; // Default 'Home10' factoryId.
   public override readonly showRundSteuerManual: boolean = true;
@@ -403,7 +402,12 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     this.feedInLimitation.maximumFeedInPower = totalPvPower;
     this.feedInLimitation.isManualProperlyFollowedAndRead = this.feedInLimitation.isManualProperlyFollowedAndRead ? this.feedInLimitation.isManualProperlyFollowedAndRead : null;
 
-    const fields: FormlyFieldConfig[] = super.getCommonFeedInLimitsFields(totalPvPower);
+    const options: ComponentData[] = [
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
+    ];
+    const fields: FormlyFieldConfig[] = super.getCommonFeedInLimitsFields(totalPvPower, options);
 
     super.addAdditionalFeedInLimitsFields(fields);
 
@@ -623,41 +627,8 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       }
     }
 
-    protocol.items.push({
-      category: Category.FEED_IN_MANAGEMENT,
-      name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_ACTIVATED"),
-      value: feedInLimitation.feedInType == FeedInType.EXTERNAL_LIMITATION
-        ? this.translate.instant("General.yes")
-        : this.translate.instant("General.no"),
-    });
-
-    protocol.items.push({
-      category: Category.FEED_IN_MANAGEMENT,
-      name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_ACTIVATED"),
-
-      value: feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
-        ? this.translate.instant("General.yes")
-        : this.translate.instant("General.no"),
-    });
-
-    protocol.items.push({
-      category: Category.FEED_IN_MANAGEMENT,
-      name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
-
-      value: feedInLimitation.feedInType == FeedInType.NO_LIMITATION
-        ? this.translate.instant("General.yes")
-        : this.translate.instant("General.no"),
-    });
-
     if (feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION) {
       protocol.items.push(
-        {
-          category: Category.FEED_IN_MANAGEMENT,
-          name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
-          value: feedInLimitation.maximumFeedInPower
-            ? feedInLimitation.maximumFeedInPower.toString()
-            : (0).toString(),
-        },
         {
           category: Category.FEED_IN_MANAGEMENT,
           name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
@@ -674,11 +645,14 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       }
     }
 
+    // Welcherischter, BMS and EMS box.
+    const initialStaticTowerComponents: number = 3;
+
     // Subsequent towers will have only 2 static components. Paralell box and BMS box.
     const subsequentStaticTowerComponents: number = 2;
     const categoryElement: string = "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER";
 
-    super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, subsequentStaticTowerComponents, categoryElement);
+    super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, initialStaticTowerComponents, subsequentStaticTowerComponents, categoryElement);
 
     return new Promise((resolve, reject) => {
       websocket

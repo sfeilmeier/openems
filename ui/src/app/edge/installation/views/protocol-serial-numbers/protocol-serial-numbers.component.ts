@@ -5,6 +5,7 @@ import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
+import { Commercial92Ibn } from "../../installation-systems/commercial/commercial-92/commercial92";
 import { ComponentData, SerialNumberFormData } from "../../shared/ibndatatypes";
 
 @Component({
@@ -30,6 +31,8 @@ export class ProtocolSerialNumbersComponent implements OnInit {
 
   public spinnerId: string;
   public isWaiting = false;
+
+  protected isCommercial92: boolean | null = null;
   private duplicateSerialNumbers: string[] = [];
 
   constructor(
@@ -42,6 +45,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
 
     // Start spinner
     this.spinnerId = "installation-serial-number-spinner";
+    this.isCommercial92 = this.ibn instanceof Commercial92Ibn;
     this.setIsWaiting(true);
 
     // Read settings

@@ -1,0 +1,29 @@
+<installation-view iconName="clipboard-outline" header="{{ 'INSTALLATION.PROTOCOL_CHECKLIST_PAGE_TITLE' | translate }}"
+    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isNextDisabled]="isNextDisabled"
+    [isWaiting]="isWaiting">
+
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+
+    <ion-row class="ion-padding" style="display: flex; align-items: center;line-height: 1.4; margin-top: 2%;">
+        <ion-col>
+            <ion-icon color="primary" name="information-outline" size="large">
+            </ion-icon>
+        </ion-col>
+        <ion-col size="11">
+            <div>
+                {{ 'INSTALLATION.PROTOCOL_CHECKLIST.TIMEOUT_NOTE' | translate:{timeoutInMinutes:
+                timeoutInMinutes} }}
+            </div>
+        </ion-col>
+    </ion-row>
+
+    <ion-item lines="none">
+        <ion-button (click)="startConfiguration()" [disabled]="!areAllFieldsChecked() || isStartConfigurationDisabled"
+            slot="end">
+            <ion-label>{{this.isWaiting ? ('INSTALLATION.CONFIGURATION_EXECUTE.WAITING' | translate) :
+                ( 'INSTALLATION.CONFIGURATION_EXECUTE.START' | translate) }}</ion-label>
+            <ion-icon name="play-outline" slot="start"></ion-icon>
+        </ion-button>
+    </ion-item>
+
+</installation-view>

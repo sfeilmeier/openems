@@ -122,4 +122,5 @@ export enum View {
     ConfigurationSystemVariant,
     ConfigurationSubSystem,
     ConfigurationEnergyFlowMeter,
+    ProtocolChecklist,
 }

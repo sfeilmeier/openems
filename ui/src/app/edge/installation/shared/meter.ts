@@ -3,8 +3,8 @@ import { TranslateService } from "@ngx-translate/core";
 export namespace Meter {
 
     export enum GridMeter {
-        SOCOMEC,
-        KDK,
+        SOCOMEC = "SOCOMEC",
+        KDK = "KDK",
     }
 
     export enum GridMeterCategory {

@@ -236,11 +236,14 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
             });
         }
 
+        // Welcherischter, BMS and EMS box.
+        const initialStaticTowerComponents: number = 3;
+
         // Subsequent Strings will have only 1 static component. BMS submaster.
         const subsequentStaticTowerComponents = 1;
         const categoryElement: string = "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING";
 
-        super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, subsequentStaticTowerComponents, categoryElement);
+        super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, initialStaticTowerComponents, subsequentStaticTowerComponents, categoryElement);
 
         return new Promise((resolve, reject) => {
             websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {

@@ -74,6 +74,7 @@ export interface Environment {
             readonly COMMERCIAL: {
                 readonly COMMERCIAL_30: string,
                 readonly COMMERCIAL_50: string,
+                readonly COMMERCIAL: string,
             },
         },
         APP_CENTER: {

@@ -42,7 +42,7 @@
             </ion-card>
         </ng-container>
 
-        <ion-card>
+        <ion-card *ngIf="!isCommercial92">
             <ion-card-content>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NEXT_BUTTON_DESCRIPTION' | translate }}
             </ion-card-content>
         </ion-card>

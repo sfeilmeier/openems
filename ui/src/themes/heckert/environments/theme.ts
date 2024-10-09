@@ -69,6 +69,7 @@ export const theme = {
             COMMERCIAL: {
                 COMMERCIAL_30: "#",
                 COMMERCIAL_50: "#",
+                COMMERCIAL: "#",
             },
         },
         APP_CENTER: {

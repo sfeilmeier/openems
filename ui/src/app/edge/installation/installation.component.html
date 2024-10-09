@@ -84,6 +84,10 @@
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView()">
                 </configuration-execute>
 
+                <protocol-checklist *ngSwitchCase="view.ProtocolChecklist" [edge]="edge" [ibn]="ibn"
+                    (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
+                </protocol-checklist>
+
                 <protocol-serial-numbers *ngSwitchCase="view.ProtocolSerialNumbers" [edge]="edge" [ibn]="ibn"
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </protocol-serial-numbers>
