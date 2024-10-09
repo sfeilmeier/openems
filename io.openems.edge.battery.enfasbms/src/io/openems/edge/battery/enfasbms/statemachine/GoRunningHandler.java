@@ -33,7 +33,7 @@ public class GoRunningHandler extends StateHandler<State, Context> {
 			return State.GO_STOPPED;
 		}
 		battery.setCommandStateRequest(CommandStateRequest.COMMAND_CLOSE_CONTACTORS);
-		if (battery.isStarted()) {
+		if (context.isStarted()) {
 			return State.RUNNING;
 		}
 		return State.GO_RUNNING;
