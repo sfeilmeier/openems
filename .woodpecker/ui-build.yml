@@ -61,7 +61,7 @@ steps:
 
   build-android-app:
     when: *main-build
-    image: openems-android:20.32
+    image: openems-android:20.34
     environment:
       - THEME=${THEME}
     commands:
