@@ -57,7 +57,7 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 		SET_WATER_INLET_PRESSURE(Doc.of(OpenemsType.DOUBLE) //
 				.accessMode(AccessMode.READ_WRITE) //
 				.unit(Unit.MILLIBAR)),
-		COMPRESSOR_1_SYSTEM_FAILURE(Doc.of(Level.FAULT) //
+		COMPRESSOR_1_SYSTEM_WARNING(Doc.of(Level.WARNING) //
 				.accessMode(AccessMode.READ_ONLY)), //
 		COMPRESSOR_1_GENERAL_ALARM(Doc.of(Level.WARNING) //
 				.accessMode(AccessMode.READ_ONLY)), //
@@ -73,7 +73,7 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 				.accessMode(AccessMode.READ_ONLY)), //
 		POWER_FAILURE_WARNING(Doc.of(Level.WARNING) //
 				.accessMode(AccessMode.READ_ONLY)), //
-		COMPRESSOR_2_SYSTEM_FAILURE(Doc.of(Level.FAULT) //
+		COMPRESSOR_2_SYSTEM_WARNING(Doc.of(Level.WARNING) //
 				.accessMode(AccessMode.READ_ONLY)), //
 		COMPRESSOR_2_GENERAL_ALARM(Doc.of(Level.WARNING) //
 				.accessMode(AccessMode.READ_ONLY)), //

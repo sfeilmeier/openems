@@ -335,7 +335,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 								new UnsignedWordElement(378), //
 								SCALE_FACTOR_MINUS_1)), //
 				new FC4ReadInputRegistersTask(0, Priority.LOW, //
-						m(SystemFeneconIndustrialL.ChannelId.COMPRESSOR_1_SYSTEM_FAILURE, new UnsignedWordElement(0)), //
+						m(SystemFeneconIndustrialL.ChannelId.COMPRESSOR_1_SYSTEM_WARNING, new UnsignedWordElement(0)), //
 						new DummyRegisterElement(1, 67), //
 						m(SystemFeneconIndustrialL.ChannelId.WATER_OUTLET_TEMP, new UnsignedWordElement(68), //
 								SCALE_FACTOR_MINUS_1), //
@@ -348,7 +348,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 						m(SystemFeneconIndustrialL.ChannelId.WATER_INLET_PRESSURE, new UnsignedWordElement(173),
 								MULTIPLY(100.0))),
 				new FC4ReadInputRegistersTask(390, Priority.LOW, //
-						m(SystemFeneconIndustrialL.ChannelId.COMPRESSOR_2_SYSTEM_FAILURE,
+						m(SystemFeneconIndustrialL.ChannelId.COMPRESSOR_2_SYSTEM_WARNING,
 								new UnsignedWordElement(390))), //
 				new FC5WriteCoilTask(4, //
 						m(SystemFeneconIndustrialL.ChannelId.SET_MONITOR_SWITCH, new CoilElement(4))), //
