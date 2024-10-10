@@ -153,6 +153,8 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 									.addProperty("spdTripped", "io0/DigitalInput2") //
 									.addProperty("fuseTripped", "io0/DigitalInput4") //
 									.addProperty("psuTriggered", "io0/DigitalInput1") //
+									.addProperty("smokeDetection", "io0/DigitalInputOutput1")
+									.addProperty("smokeDetectionFailure", "io0/DigitalInputOutput2")
 									.onlyIf(t == ConfigurationTarget.ADD, b -> {
 										b.addProperty("startStop", "STOP");
 									}) //
@@ -206,7 +208,7 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 								.addProperty("modbus.id", batteryModbusId) //
 								.addProperty("modbusUnitId", 1) //
 								.addProperty("startStop", "AUTO") //
-								.addProperty("type", batteryProtectionType) //
+								.addProperty("batteryProtectionType", batteryProtectionType) //
 								.addProperty("version", batteryFirmwareVersion) //
 								.build()));
 
