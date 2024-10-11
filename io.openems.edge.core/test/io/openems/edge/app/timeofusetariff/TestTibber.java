@@ -31,6 +31,8 @@ import io.openems.edge.core.appmanager.jsonrpc.AddAppInstance;
 import io.openems.edge.core.appmanager.validator.CheckAppsNotInstalled;
 import io.openems.edge.core.appmanager.validator.CheckCommercial92;
 import io.openems.edge.core.appmanager.validator.CheckHome;
+import io.openems.edge.core.appmanager.validator.CheckIndustrialL;
+import io.openems.edge.core.appmanager.validator.CheckIndustrialS;
 
 public class TestTibber {
 
@@ -92,12 +94,18 @@ public class TestTibber {
 	}
 
 	@Test(expected = OpenemsNamedException.class)
-	public void testOnlyCompatibleWithHomeOrCommercial() throws Exception {
+	public void testCompatibility() throws Exception {
 		this.appManagerTestBundle.addCheckable(CheckHome.COMPONENT_NAME,
 				t -> new CheckHome(t, new CheckAppsNotInstalled(this.appManagerTestBundle.sut,
 						AppManagerTestBundle.getComponentContext(CheckAppsNotInstalled.COMPONENT_NAME))));
 		this.appManagerTestBundle.addCheckable(CheckCommercial92.COMPONENT_NAME,
 				t -> new CheckCommercial92(t, new CheckAppsNotInstalled(this.appManagerTestBundle.sut,
+						AppManagerTestBundle.getComponentContext(CheckAppsNotInstalled.COMPONENT_NAME))));
+		this.appManagerTestBundle.addCheckable(CheckIndustrialL.COMPONENT_NAME,
+				t -> new CheckIndustrialL(t, new CheckAppsNotInstalled(this.appManagerTestBundle.sut,
+						AppManagerTestBundle.getComponentContext(CheckAppsNotInstalled.COMPONENT_NAME))));
+		this.appManagerTestBundle.addCheckable(CheckIndustrialS.COMPONENT_NAME,
+				t -> new CheckIndustrialS(t, new CheckAppsNotInstalled(this.appManagerTestBundle.sut,
 						AppManagerTestBundle.getComponentContext(CheckAppsNotInstalled.COMPONENT_NAME))));
 
 		final var properties = JsonUtils.buildJsonObject() //
