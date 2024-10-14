@@ -16,10 +16,10 @@ import { ConfigurationLineSideMeterFuseComponent } from "./views/configuration-l
 import { ConfigurationMpptSelectionComponent } from "./views/configuration-mppt-selection/configuration-mppt-selection.component";
 import { ConfigurationSubSystemComponent } from "./views/configuration-sub-system/configuration-sub-system";
 import { ConfigurationSummaryComponent } from "./views/configuration-summary/configuration-summary.component";
-import { ConfigurationSystemVariantComponent } from "./views/configuration-system-variant/configuration-system-variant";
 import { ConfigurationSystemComponent } from "./views/configuration-system/configuration-system.component";
-import { PreInstallationUpdateComponent } from "./views/pre-installation-update/pre-installation-update.component";
+import { ConfigurationSystemVariantComponent } from "./views/configuration-system-variant/configuration-system-variant";
 import { PreInstallationComponent } from "./views/pre-installation/pre-installation.component";
+import { PreInstallationUpdateComponent } from "./views/pre-installation-update/pre-installation-update.component";
 import { ProtocolChecklistComponent } from "./views/protocol-checklist/protocol-checklist.component";
 import { ProtocolCustomerComponent } from "./views/protocol-customer/protocol-customer.component";
 import { ProtocolFeedInLimitationComponent } from "./views/protocol-feed-in-limitation/protocol-feed-in-limitation.component";

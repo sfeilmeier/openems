@@ -47,8 +47,8 @@ import { EnergyJourneyComponent } from "./edge/settings/energy-journey/energy-jo
 import { BatteryExtensionComponent } from "./edge/settings/energy-journey/pages/battery-extension/battery-extension";
 import { ElectricityPriceSelectionComponent } from "./edge/settings/energy-journey/pages/electricity-price-choice/electricity-price-selection";
 import { JsonrpcTestComponent } from "./edge/settings/jsonrpctest/jsonrpctest";
-import { NetworkOldComponent as EdgeSettingsNetworkOldComponent } from "./edge/settings/network.old/network.old.component";
 import { NetworkComponent as EdgeSettingsNetworkComponent } from "./edge/settings/network/network.component";
+import { NetworkOldComponent as EdgeSettingsNetworkOldComponent } from "./edge/settings/network.old/network.old.component";
 import { AliasUpdateComponent } from "./edge/settings/profile/aliasupdate.component";
 import { ProfileComponent as EdgeSettingsProfileComponent } from "./edge/settings/profile/profile.component";
 import { ServiceAssistantComponent as EdgeSettingsServiceAssistant } from "./edge/settings/serviceassistant/serviceassistant.component";

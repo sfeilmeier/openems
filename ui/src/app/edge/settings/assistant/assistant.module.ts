@@ -1,10 +1,9 @@
 import { NgModule } from "@angular/core";
 import { SharedModule } from "src/app/shared/shared.module";
-
+import { ChartComponent } from "./home/chart/chart";
+import { HomeServiceAssistantComponent } from "./home/home";
 import { ChartComponent as IndustrialChartComponent } from "./industrial/chart/chart";
 import { IndustrialServiceAssistantComponent } from "./industrial/industrial";
-import { HomeServiceAssistantComponent } from "./home/home";
-import { ChartComponent } from "./home/chart/chart";
 import { PowerAssistantComponent } from "./powerassistant/powerassistant";
 
 @NgModule({

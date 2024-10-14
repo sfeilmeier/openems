@@ -1,8 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
-import { SharedModule } from "src/app/shared/shared.module";
-
 import { TranslateService } from "@ngx-translate/core";
 import tr from "src/app/edge/live/advertisement/shared/translation.json";
+import { SharedModule } from "src/app/shared/shared.module";
 import { Language } from "src/app/shared/type/language";
 import { EnergyJourneyAdvertComponent } from "./1/1";
 import { AdvertisementComponent } from "./advertisement.component";

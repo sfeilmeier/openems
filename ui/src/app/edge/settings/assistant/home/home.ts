@@ -1,12 +1,12 @@
 // @ts-strict-ignore
 import { formatNumber } from "@angular/common";
 import { Component } from "@angular/core";
+import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Filter } from "src/app/shared/components/shared/filter";
 import { ChannelAddress, CurrentData, EdgeConfig, Utils } from "src/app/shared/shared";
-import { LiveDataService } from "src/app/edge/live/livedataservice";
 
 @Component({
   selector: HomeServiceAssistantComponent.SELECTOR,
