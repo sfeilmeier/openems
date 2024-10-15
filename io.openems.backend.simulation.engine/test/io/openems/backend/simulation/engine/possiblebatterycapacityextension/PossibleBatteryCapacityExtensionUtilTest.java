@@ -26,13 +26,14 @@ public class PossibleBatteryCapacityExtensionUtilTest {
 		final double electricityPrice = 30.1;
 		var data = getData();
 		var product = new Product.Home();
-		assertEquals(PossibleBatteryCapacityExtensionUtil.calculateDataPerModule(data, 5, 6, electricityPrice, product),
-				new DataPerModule(6, 12.3, 370.0, 6720, 13200));
-		assertEquals(PossibleBatteryCapacityExtensionUtil.calculateDataPerModule(data, 5, 7, electricityPrice, product),
-				new DataPerModule(7, 7.9, 237.0, 7840, 15400));
-		assertEquals(
-				PossibleBatteryCapacityExtensionUtil.calculateDataPerModule(data, 5, 10, electricityPrice, product),
-				new DataPerModule(10, 1.3, 39.0, 10000, 22000));
+		var numberOfTowers = 1;
+		
+		assertEquals(PossibleBatteryCapacityExtensionUtil.calculateDataPerModule(data, 5, 6, electricityPrice, product,
+				numberOfTowers), new DataPerModule(6, 12.3, 370.0, 6720, 13200));
+		assertEquals(PossibleBatteryCapacityExtensionUtil.calculateDataPerModule(data, 5, 7, electricityPrice, product,
+				2), new DataPerModule(7, 7.9, 237.0, 7840, 15400));
+		assertEquals(PossibleBatteryCapacityExtensionUtil.calculateDataPerModule(data, 5, 10, electricityPrice, product,
+				3), new DataPerModule(10, 1.3, 39.0, 10000, 22000));
 	}
 
 	private static SortedMap<ZonedDateTime, SortedMap<ChannelAddress, JsonElement>> getData() throws IOException {

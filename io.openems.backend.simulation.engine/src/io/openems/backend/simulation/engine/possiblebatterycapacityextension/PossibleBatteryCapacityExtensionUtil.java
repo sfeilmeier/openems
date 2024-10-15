@@ -25,16 +25,17 @@ import io.openems.common.utils.JsonUtils;
 
 public final class PossibleBatteryCapacityExtensionUtil {
 
-	private static final int MAX_MODULES_TO_SIMULATE = 5;
+	private static final int MAX_SIMULATION_STEPS = 5;
 	private static final ChannelAddress CHANNEL_SUM_GRID_BUY_ACTIVE_ENERGY = new ChannelAddress("_sum",
 			"GridBuyActiveEnergy");
 	private static final ChannelAddress CHANNEL_SUM_GRID_SELL_ACTIVE_ENERGY = new ChannelAddress("_sum",
 			"GridSellActiveEnergy");
 	private static final ChannelAddress CHANNEL_NUMBER_OF_MODULES_PER_TOWER = new ChannelAddress("battery0",
 			"NumberOfModulesPerTower");
+	private static final ChannelAddress CHANNEL_NUMBER_OF_TOWERS = new ChannelAddress("battery0", "NumberOfTowers");
 
-	private static final Set<ChannelAddress> ENERGY_CHANNELS = Set.of(CHANNEL_SUM_GRID_BUY_ACTIVE_ENERGY,
-			CHANNEL_SUM_GRID_SELL_ACTIVE_ENERGY);
+	private static final Set<ChannelAddress> ENERGY_CHANNELS = Set.of(//
+			CHANNEL_SUM_GRID_BUY_ACTIVE_ENERGY, CHANNEL_SUM_GRID_SELL_ACTIVE_ENERGY);
 
 	private PossibleBatteryCapacityExtensionUtil() {
 	}
@@ -58,14 +59,14 @@ public final class PossibleBatteryCapacityExtensionUtil {
 		user.assertEdgeRoleIsAtLeast(PossibleBatteryCapacityExtensionRequest.METHOD, edgeId, Role.OWNER);
 
 		var edge = metadata.getEdge(edgeId).orElseThrow(() -> new OpenemsException("Edge not available"));
-		var result = calculateRecommendationData(timedata, edge, request, edgeWebsocket);
+		var result = calculateSimulationData(timedata, edge, request, edgeWebsocket);
 
 		return CompletableFuture.completedFuture(//
 				new PossibleBatteryCapacityExtensionResponse(request.id, result) //
 		);
 	}
 
-	protected static List<DataPerModule> calculateRecommendationData(TimedataManager timedata, Edge edge,
+	protected static List<DataPerModule> calculateSimulationData(TimedataManager timedata, Edge edge,
 			PossibleBatteryCapacityExtensionRequest request, EdgeWebsocket edgeWebsocket) throws OpenemsNamedException {
 
 		final Product product = Product.getProduct(edge.getProducttype());
@@ -74,35 +75,70 @@ public final class PossibleBatteryCapacityExtensionUtil {
 			throw new OpenemsException("possible battery extension simulation not available");
 		}
 
-		var productDetails = product.getProductDetails();
-		var numberOfModulesPerTower = JsonUtils
-				.getAsOptionalInt(
-						edgeWebsocket.getChannelValues(edge.getId(), Set.of(CHANNEL_NUMBER_OF_MODULES_PER_TOWER))
-								.get(CHANNEL_NUMBER_OF_MODULES_PER_TOWER)) //
-				.filter(t -> t >= productDetails.firstKey()) //
-				.filter(t -> t < productDetails.lastKey()) //
+		var productTowerDetails = product.getProductTowerDetails();
+		var channels = edgeWebsocket.getChannelValues(edge.getId(),
+				Set.of(CHANNEL_NUMBER_OF_MODULES_PER_TOWER, CHANNEL_NUMBER_OF_TOWERS));
+
+		var numberOfTowers = JsonUtils.getAsOptionalInt(channels.get(CHANNEL_NUMBER_OF_TOWERS))
 				.orElseThrow(() -> new OpenemsException("possible battery extension simulation not available"));
 
-		var dataPerModules = new ArrayList<DataPerModule>();
+		var numberOfModulesPerTower = JsonUtils.getAsOptionalInt(channels.get(CHANNEL_NUMBER_OF_MODULES_PER_TOWER)) //
+				.filter(t -> t >= product.getProductDetails().firstKey()) //
+				.filter(t -> t < product.getProductDetails().lastKey()) //
+				.orElseThrow(() -> new OpenemsException("possible battery extension simulation not available"));
+
+		var totalNumberOfModules = numberOfModulesPerTower * numberOfTowers;
 		var electricityPrice = request.getElectricityPrice();
 
 		final var datapoints = timedata.queryHistoricEnergyPerPeriod(edge.getId(), request.getFromDate(),
 				request.getToDate(), ENERGY_CHANNELS, new Resolution(1, ChronoUnit.DAYS));
 
+		var dataPerModules = new ArrayList<DataPerModule>();
 		// Add Current number of modules
-		dataPerModules.add(calculateDataPerModule(datapoints, numberOfModulesPerTower, numberOfModulesPerTower,
-				electricityPrice, product));
+		dataPerModules.add(calculateDataPerModule(datapoints, totalNumberOfModules, totalNumberOfModules,
+				electricityPrice, product, numberOfTowers));
 
-		int key = numberOfModulesPerTower;
-		for (int i = 0; i < MAX_MODULES_TO_SIMULATE; i++) {
-			var higherKey = productDetails.higherKey(key);
+		int key = totalNumberOfModules;
+		Integer currentNumberOfTowers = numberOfTowers;
+		Integer currentNumberOfModules = totalNumberOfModules;
 
-			if (higherKey == null || higherKey == key) {
+		for (int i = 0; i < MAX_SIMULATION_STEPS; i++) {
+
+			if (product.getMaxNumberOfModulesPerTower(currentNumberOfTowers) == totalNumberOfModules) {
+				if (productTowerDetails.higherKey(currentNumberOfTowers) == null) {
+					// Skip if max number of towers reached
+					break;
+				}
+				currentNumberOfTowers = productTowerDetails.higherKey(currentNumberOfTowers);
+				currentNumberOfModules = productTowerDetails.get(currentNumberOfTowers).lastKey();
+
+			} else {
+
+				if (productTowerDetails.higherKey(currentNumberOfTowers) == null
+						&& productTowerDetails.lastEntry().getValue().lastKey() == totalNumberOfModules) {
+					// Skip if max number of towers reached
+					break;
+				}
+				// if max modules of tower reached
+				if (productTowerDetails.get(currentNumberOfTowers).higherKey(currentNumberOfModules) == null) {
+					currentNumberOfTowers = currentNumberOfTowers + 1;
+				}
+
+				// If higher number of towers
+				if (productTowerDetails.containsKey(currentNumberOfTowers)) {
+					currentNumberOfModules = productTowerDetails.get(currentNumberOfTowers)
+							.higherKey(currentNumberOfModules);
+				}
+			}
+
+			// Skip if max number of modules reached
+			if (currentNumberOfModules == null || currentNumberOfModules == key) {
 				break;
 			}
-			key = higherKey;
-			dataPerModules.add(
-					calculateDataPerModule(datapoints, numberOfModulesPerTower, higherKey, electricityPrice, product));
+
+			key = currentNumberOfModules;
+			dataPerModules.add(calculateDataPerModule(datapoints, totalNumberOfModules, currentNumberOfModules,
+					electricityPrice, product, currentNumberOfTowers));
 		}
 
 		return dataPerModules;
@@ -110,10 +146,11 @@ public final class PossibleBatteryCapacityExtensionUtil {
 
 	protected static DataPerModule calculateDataPerModule(
 			SortedMap<ZonedDateTime, SortedMap<ChannelAddress, JsonElement>> datapoints, int currentNumberOfModules,
-			int maxNumberOfModules, double electricityPrice, Product product) throws OpenemsNamedException {
+			int maxNumberOfModules, double electricityPrice, Product product, int numberOfTowers)
+			throws OpenemsNamedException {
 
 		var newGridBuy = PossibleBatteryCapacityExtensionUtil.calculateNewGridActivePower(datapoints,
-				currentNumberOfModules, maxNumberOfModules, product) / 1000;
+				currentNumberOfModules, maxNumberOfModules, product, numberOfTowers) / 1000;
 
 		var gridBuyCosts = Math.floor(newGridBuy * electricityPrice);
 		var productDetails = product.getProductDetails().get(maxNumberOfModules);
@@ -123,10 +160,13 @@ public final class PossibleBatteryCapacityExtensionUtil {
 
 	protected static double calculateNewGridActivePower(
 			SortedMap<ZonedDateTime, SortedMap<ChannelAddress, JsonElement>> gridActivePowerMap,
-			int currentNumberOfModules, int maxNumberOfModules, Product product) throws OpenemsNamedException {
+			int currentNumberOfModules, int maxNumberOfModules, Product product, int numberOfTowers)
+			throws OpenemsNamedException {
 
-		int maxCapacityDifference = product.getProductDetails().get(maxNumberOfModules).capacity()
-				- product.getProductDetails().get(currentNumberOfModules).capacity();
+		var productDetails = product.getProductDetails();
+
+		int maxCapacityDifference = productDetails.get(maxNumberOfModules).capacity()
+				- productDetails.get(currentNumberOfModules).capacity();
 
 		return gridActivePowerMap.entrySet().stream().mapToDouble(entry -> {
 			double additionalBatteryCapacity = 0.0;
@@ -151,6 +191,9 @@ public final class PossibleBatteryCapacityExtensionUtil {
 	}
 
 	public record DataPerModule(int numberOfModules, double gridBuy, double gridBuyCosts, int kWPeak, int capacity) {
+	}
+
+	public record SimulationData(int discharge, int charge, List<DataPerModule> dataPerModule) {
 	}
 
 	public record ProductData(int kWPeak, int capacity) {
