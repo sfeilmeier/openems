@@ -3,7 +3,7 @@ import { Component } from "@angular/core";
 @Component({
   selector: "energy-journey-advert",
   template: `
-   <ion-grid style="font-size: small; text-align: center; width: 100%">
+   <ion-grid style="font-size: small; text-align: center; width: 100%; align-content: center">
       <ion-row >
         <ion-text class="ion-text-center" style="width: 100%">
         {{ "SETTINGS.ENERGY_JOURNEY.BATTERY_EXTENSION_TEXT" | translate }}

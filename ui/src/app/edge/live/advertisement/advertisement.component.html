@@ -3,16 +3,9 @@
         <ion-avatar slot="start">
             <img [src]="imageUrl">
         </ion-avatar>
-        <ng-container *ngIf="displayRawTitle; else translation">
-            <ion-label class="white-space-initial" style="text-align: start">
-                {{title.rawTitle}}
-            </ion-label>
-        </ng-container>
-        <ng-template #translation>
-            <ion-label class="white-space-initial" style="text-align: start" translate>
-                {{title.languageKey}}
-            </ion-label>
-        </ng-template>
+        <ion-label class="white-space-initial" style="text-align: center" *ngIf="title">
+            {{title.rawTitle ?? (title.languageKey | translate)}}
+        </ion-label>
         <ion-buttons slot="end" *ngIf="enableBtn">
             <ion-button size="small" fill="clear" (click)="swipePrevious()" *ngIf="!disablePrevBtn">
                 <ion-icon name="arrow-back-outline" color="primary"></ion-icon>
@@ -25,8 +18,8 @@
     <ion-card-content class="ion-no-padding">
         <swiper-container autoplay="true" speed="5000" #swiper (swiperslidechange)="setSlideConfig()">
             <ng-container *ngFor="let widget of advertWidgets.list" [ngSwitch]="widget.name">
-                <swiper-slide *ngSwitchCase="'energy-journey'">
-                    <energy-journey-advert></energy-journey-advert>
+                <swiper-slide *ngSwitchCase="'time-of-use-tariff'">
+                    <time-of-use-tariff-advert></time-of-use-tariff-advert>
                 </swiper-slide>
             </ng-container>
         </swiper-container>
