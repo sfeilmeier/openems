@@ -163,9 +163,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 		if (Stream.of(//
 				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "ess", config.ess_id()), //
-				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "Battery", config.battery_ids()), //
-				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "CoolingUnitModbus",
-						config.coolingUnitModbus_id()))
+				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "Battery", config.battery_ids()))
 				.anyMatch(t -> t)) {
 			return true;
 		}
@@ -195,6 +193,14 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 					SystemFeneconIndustrialL.ChannelId.FUSE_TRIPPED);
 			this.handleInputChannel(this.parsedConfig.psuTriggeredChannel(),
 					SystemFeneconIndustrialL.ChannelId.PSU_TRIGGERED);
+			if (this.parsedConfig.smokeDetectionChannel != null) {
+				this.handleInputChannel(this.parsedConfig.smokeDetectionChannel(), //
+						SystemFeneconIndustrialL.ChannelId.SMOKE_DETECTION, true);
+			}
+			if (this.parsedConfig.smokeDetectionFailureChannel != null) {
+				this.handleInputChannel(this.parsedConfig.smokeDetectionFailureChannel(),
+						SystemFeneconIndustrialL.ChannelId.SMOKE_DETECTION_FAILURE);
+			}
 			this.handleAcknowledge();
 		}
 		}
@@ -206,7 +212,9 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 			ChannelAddress spdStateChannel, //
 			ChannelAddress fuseStateChannel, //
 			ChannelAddress psuTriggeredChannel, //
-			ChannelAddress acknowledgeEmergencyStopChannel//
+			ChannelAddress acknowledgeEmergencyStopChannel, //
+			ChannelAddress smokeDetectionChannel, //
+			ChannelAddress smokeDetectionFailureChannel//
 	) {
 
 		/**
@@ -225,7 +233,15 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 					fromString(config.fuseTripped()), //
 					fromString(config.psuTriggered()), //
 					// Output Channels
-					fromString(config.acknowledgeEmergencyStop()) //
+					fromString(config.acknowledgeEmergencyStop()), //
+					/**
+					 * Get the Smoke detection channel only if it is installed
+					 */
+					config.isSmokeDetectionInstalled() ? fromString(config.smokeDetection()) : null,
+					/**
+					 * Get the Smoke detection failure channel only if it is installed
+					 */
+					config.isSmokeDetectionInstalled() ? fromString(config.smokeDetectionFailure()) : null//
 			);
 		}
 	}
@@ -255,18 +271,22 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	 * @param channelAddress the channel value to be read from.
 	 * @param channelId      the {@link SystemFeneconIndustrialL.ChannelId} to set
 	 *                       the current value.
+	 * @param invert         flag to invert the channel or not
 	 */
-	private void handleInputChannel(ChannelAddress channelAddress, SystemFeneconIndustrialL.ChannelId channelId) {
+	private void handleInputChannel(ChannelAddress channelAddress, SystemFeneconIndustrialL.ChannelId channelId,
+			boolean invert) {
 		try {
 			Channel<Boolean> channel = this.componentManager.getChannel(channelAddress);
 			var value = channel.value();
-			// TODO Could cause the channel value to be not set if IO disappears
-			value.ifPresent(t -> {
-				this.channel(channelId).setNextValue(t);
-			});
+
+			value.ifPresent(t -> this.channel(channelId).setNextValue(invert ? !t : t));
 		} catch (OpenemsNamedException e) {
 			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
 		}
+	}
+
+	private void handleInputChannel(ChannelAddress channelAddress, SystemFeneconIndustrialL.ChannelId channelId) {
+		this.handleInputChannel(channelAddress, channelId, false);
 	}
 
 	@Override
@@ -335,7 +355,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 								new UnsignedWordElement(378), //
 								SCALE_FACTOR_MINUS_1)), //
 				new FC4ReadInputRegistersTask(0, Priority.LOW, //
-						m(SystemFeneconIndustrialL.ChannelId.COMPRESSOR_1_SYSTEM_FAILURE, new UnsignedWordElement(0)), //
+						m(SystemFeneconIndustrialL.ChannelId.COMPRESSOR_1_SYSTEM_WARNING, new UnsignedWordElement(0)), //
 						new DummyRegisterElement(1, 67), //
 						m(SystemFeneconIndustrialL.ChannelId.WATER_OUTLET_TEMP, new UnsignedWordElement(68), //
 								SCALE_FACTOR_MINUS_1), //
@@ -348,7 +368,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 						m(SystemFeneconIndustrialL.ChannelId.WATER_INLET_PRESSURE, new UnsignedWordElement(173),
 								MULTIPLY(100.0))),
 				new FC4ReadInputRegistersTask(390, Priority.LOW, //
-						m(SystemFeneconIndustrialL.ChannelId.COMPRESSOR_2_SYSTEM_FAILURE,
+						m(SystemFeneconIndustrialL.ChannelId.COMPRESSOR_2_SYSTEM_WARNING,
 								new UnsignedWordElement(390))), //
 				new FC5WriteCoilTask(4, //
 						m(SystemFeneconIndustrialL.ChannelId.SET_MONITOR_SWITCH, new CoilElement(4))), //

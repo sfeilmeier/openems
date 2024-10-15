@@ -16,9 +16,9 @@ import { OverviewComponent as GridOptimizedChargeChartOverviewComponent } from "
 import { OverviewComponent as TimeOfUseTariffOverviewComponent } from "./edge/history/Controller/Ess/TimeOfUseTariff/overview/overview";
 import { DetailsOverviewComponent as DigitalOutputDetailsOverviewComponent } from "./edge/history/Controller/Io/DigitalOutput/details/details.overview";
 import { OverviewComponent as DigitalOutputChartOverviewComponent } from "./edge/history/Controller/Io/DigitalOutput/overview/overview";
+import { OverviewComponent as HeatingelementChartOverviewComponent } from "./edge/history/Controller/Io/heatingelement/overview/overview";
 import { OverviewComponent as ModbusTcpApiOverviewComponent } from "./edge/history/Controller/ModbusTcpApi/overview/overview";
 import { DelayedSellToGridChartOverviewComponent } from "./edge/history/delayedselltogrid/symmetricpeakshavingchartoverview/delayedselltogridchartoverview.component";
-import { HeatingelementChartOverviewComponent } from "./edge/history/heatingelement/heatingelementchartoverview/heatingelementchartoverview.component";
 import { HeatPumpChartOverviewComponent } from "./edge/history/heatpump/heatpumpchartoverview/heatpumpchartoverview.component";
 import { HistoryComponent as EdgeHistoryComponent } from "./edge/history/history.component";
 import { HistoryDataService } from "./edge/history/historydataservice";
@@ -47,8 +47,8 @@ import { EnergyJourneyComponent } from "./edge/settings/energy-journey/energy-jo
 import { BatteryExtensionComponent } from "./edge/settings/energy-journey/pages/battery-extension/battery-extension";
 import { ElectricityPriceSelectionComponent } from "./edge/settings/energy-journey/pages/electricity-price-choice/electricity-price-selection";
 import { JsonrpcTestComponent } from "./edge/settings/jsonrpctest/jsonrpctest";
-import { NetworkOldComponent as EdgeSettingsNetworkOldComponent } from "./edge/settings/network.old/network.old.component";
 import { NetworkComponent as EdgeSettingsNetworkComponent } from "./edge/settings/network/network.component";
+import { NetworkOldComponent as EdgeSettingsNetworkOldComponent } from "./edge/settings/network.old/network.old.component";
 import { AliasUpdateComponent } from "./edge/settings/profile/aliasupdate.component";
 import { ProfileComponent as EdgeSettingsProfileComponent } from "./edge/settings/profile/profile.component";
 import { ServiceAssistantComponent as EdgeSettingsServiceAssistant } from "./edge/settings/serviceassistant/serviceassistant.component";

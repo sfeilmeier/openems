@@ -1,4 +1,3 @@
-<header></header>
 <ion-content>
   <ion-grid>
     <ion-row justify-content-center>
@@ -109,8 +108,12 @@
             [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'ARM-Softwareversion'"
             [channelAddress]="'batteryInverter0/ArmFmVersion'"></oe-flat-widget-line>
+          <oe-flat-widget-line [name]="'ARM-Betaversion'"
+            [channelAddress]="'batteryInverter0/ArmBetaVersion'"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'DSP-Softwareversion'"
             [channelAddress]="'batteryInverter0/DspFmVersionMaster'"></oe-flat-widget-line>
+          <oe-flat-widget-line [name]="'DSP-Betaversion'"
+            [channelAddress]="'batteryInverter0/DspBetaVersion'"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'GoodWe Type'" [channelAddress]="'batteryInverter0/GoodweType'"
             [converter]="Converter.CONVERT_TO_GOODWE_TYPE"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Batteriemodus (BatteryMode)'" [channelAddress]="'batteryInverter0/BatteryMode'"

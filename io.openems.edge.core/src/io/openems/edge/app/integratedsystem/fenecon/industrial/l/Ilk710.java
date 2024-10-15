@@ -34,6 +34,7 @@ import io.openems.edge.core.appmanager.AbstractOpenemsAppWithProps;
 import io.openems.edge.core.appmanager.AppConfiguration;
 import io.openems.edge.core.appmanager.AppDef;
 import io.openems.edge.core.appmanager.AppDescriptor;
+import io.openems.edge.core.appmanager.AppManagerUtil;
 import io.openems.edge.core.appmanager.ComponentUtil;
 import io.openems.edge.core.appmanager.ConfigurationTarget;
 import io.openems.edge.core.appmanager.OpenemsApp;
@@ -55,12 +56,19 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 				.setField(JsonFormlyUtil::buildSelectFromNameable, (app, property, l, parameter, field) -> {
 					field.setOptions(OptionsFactory.of(BatteryProtectionType.class), l);
 				}))), //
+
 		BATTERY_FIRMWARE_VERSION(AppDef.copyOfGeneric(defaultDef(), def -> def //
 				.setTranslatedLabelWithAppPrefix(".batteryFirmwareVersion.label") //
 				.setDefaultValue(BatteryFirmwareVersion.ENFAS_VERSION_1_0_17) //
 				.setField(JsonFormlyUtil::buildSelectFromNameable, (app, property, l, parameter, field) -> {
 					field.setOptions(OptionsFactory.of(BatteryFirmwareVersion.class), l);
 				}))), //
+		IS_SMOKE_DETECTION_INSTALLED(AppDef.copyOfGeneric(defaultDef(), def -> def //
+				.setTranslatedLabelWithAppPrefix(".isSmokeDetectionInstalled.label") //
+				.setDefaultValue(false) //
+				.setField(JsonFormlyUtil::buildCheckbox) //
+				.appendIsAllowedToSee(
+						(app, property, lang, param, user) -> isOpenemsHardwareCM4Max(app.appManagerUtil))))//
 		;
 
 		private final AppDef<? super Ilk710, ? super Property, ? super BundleParameter> def;
@@ -88,14 +96,18 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 
 	private static final int NUMBER_OF_BATTERIES = 8;
 
+	private final AppManagerUtil appManagerUtil;
+
 	@Activate
 	public Ilk710(//
 			@Reference final ComponentManager componentManager, //
 			final ComponentContext componentContext, //
 			@Reference final ConfigurationAdmin cm, //
-			@Reference final ComponentUtil componentUtil //
+			@Reference final ComponentUtil componentUtil, //
+			@Reference final AppManagerUtil appManagerUtil //
 	) {
 		super(componentManager, componentContext, cm, componentUtil);
+		this.appManagerUtil = appManagerUtil;
 	}
 
 	@Override
@@ -129,10 +141,13 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 			final var modbusIdToCoolingUnit = "modbus0";
 			final var ioId = "io0";
 
+			final var isNewHardware = isOpenemsHardwareCM4Max(this.appManagerUtil);
+
 			final var batteryProtectionType = this.getEnum(p, BatteryProtectionType.class,
 					Property.BATTERY_PROTECTION_TYPE);
 			final var batteryFirmwareVersion = this.getEnum(p, BatteryFirmwareVersion.class,
 					Property.BATTERY_FIRMWARE_VERSION);
+			final var isSmokeDetectionInstalled = this.getBoolean(p, Property.IS_SMOKE_DETECTION_INSTALLED);
 
 			final var components = Lists.newArrayList(//
 					new EdgeConfig.Component("_power", "", "Ess.Power", //
@@ -153,6 +168,9 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 									.addProperty("spdTripped", "io0/DigitalInput2") //
 									.addProperty("fuseTripped", "io0/DigitalInput4") //
 									.addProperty("psuTriggered", "io0/DigitalInput1") //
+									.addProperty("isSmokeDetectionInstalled", isSmokeDetectionInstalled) //
+									.addProperty("smokeDetection", "io0/DigitalInputOutput1") //
+									.addProperty("smokeDetectionFailure", "io0/DigitalInputOutput2") //
 									.onlyIf(t == ConfigurationTarget.ADD, b -> {
 										b.addProperty("startStop", "STOP");
 									}) //
@@ -187,8 +205,10 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 							JsonUtils.buildJsonObject() //
 									.addProperty("enabled", true) //
 									.addProperty("gpioPath", "/sys/class") //
-									.addProperty("hardwareType", "MODBERRY_X500_M40804_WB") //
+									.addProperty("hardwareType",
+											isNewHardware ? "MODBERRY_X500_M40804_MAX" : "MODBERRY_X500_M40804_WB") //
 									.build()) //
+
 			);
 
 			for (int i = 0; i < NUMBER_OF_BATTERIES; i++) {
@@ -206,7 +226,7 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 								.addProperty("modbus.id", batteryModbusId) //
 								.addProperty("modbusUnitId", 1) //
 								.addProperty("startStop", "AUTO") //
-								.addProperty("type", batteryProtectionType) //
+								.addProperty("batteryProtectionType", batteryProtectionType) //
 								.addProperty("version", batteryFirmwareVersion) //
 								.build()));
 
@@ -250,7 +270,6 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 										.addProperty("invalidateElementsAfterReadErrors", 3)) //
 								.build()));
 			}
-
 			return AppConfiguration.create() //
 					.addTask(Tasks.component(components)) //
 					.build();
@@ -260,6 +279,11 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 	@Override
 	protected Property[] propertyValues() {
 		return Property.values();
+	}
+
+	private static boolean isOpenemsHardwareCM4Max(AppManagerUtil app) {
+		final var deviceHardware = app.getInstantiatedAppsByCategories(OpenemsAppCategory.OPENEMS_DEVICE_HARDWARE);
+		return !deviceHardware.isEmpty() && deviceHardware.get(0).appId.equals("App.OpenemsHardware.CM4Max");
 	}
 
 }

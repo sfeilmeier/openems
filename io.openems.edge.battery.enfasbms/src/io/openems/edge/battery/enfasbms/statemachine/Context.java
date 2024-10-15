@@ -56,6 +56,6 @@ public class Context extends AbstractContext<EnfasBmsImpl> {
 		case BMS_ERROR_STATE, BMS_SAFE_STATE -> true;
 		default -> false;
 		};
-		return state || this.hasFaults();
+		return state || this.getParent().hasFaults();
 	}
 }

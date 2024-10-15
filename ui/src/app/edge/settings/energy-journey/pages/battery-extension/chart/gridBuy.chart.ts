@@ -1,11 +1,10 @@
 // @ts-strict-ignore
 import { Component, Input, OnChanges } from "@angular/core";
-import { ChartAxis, HistoryUtils, Utils, YAxisType } from "src/app/shared/service/utils";
-import { ChannelAddress } from "src/app/shared/shared";
-
 import { TranslateService } from "@ngx-translate/core";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
 import { PropType } from "src/app/shared/service/defaulttypes";
+import { ChartAxis, HistoryUtils, Utils, YAxisType } from "src/app/shared/service/utils";
+import { ChannelAddress } from "src/app/shared/shared";
 import { SimulationResult } from "../battery-extension.module";
 import { PossibleBatteryExtensionResponse } from "../battery-extension.response";
 

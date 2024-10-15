@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { TranslateService } from "@ngx-translate/core";
 
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";

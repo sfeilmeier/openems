@@ -11,8 +11,8 @@ import { IndexComponent as ComponentUpdateIndexComponent } from "./component/upd
 import { ComponentUpdateComponent } from "./component/update/update.component";
 import { EnergyJourneyModule } from "./energy-journey/energy-journey.module";
 import { JsonrpcTestModule } from "./jsonrpctest/jsonrpctest.module";
-import { NetworkOldComponent } from "./network.old/network.old.component";
 import { NetworkComponent } from "./network/network.component";
+import { NetworkOldComponent } from "./network.old/network.old.component";
 import { AliasUpdateComponent } from "./profile/aliasupdate.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { ServiceAssistantModule } from "./serviceassistant/serviceassistant.module";

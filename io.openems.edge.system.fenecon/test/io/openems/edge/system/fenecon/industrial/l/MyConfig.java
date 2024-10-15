@@ -23,6 +23,9 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		private String spdTripped;
 		private String fuseTripped;
 		private String psuTriggered;
+		private boolean isSmokeDetectionInstalled;
+		private String smokeDetection;
+		private String smokeDetectionFailure;
 
 		private Builder() {
 		}
@@ -94,6 +97,21 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 
 		public Builder setPsuTriggered(String psuTriggered) {
 			this.psuTriggered = psuTriggered;
+			return this;
+		}
+
+		public Builder setIsSmokeDetectionInstalled(boolean isSmokeDetectionInstalled) {
+			this.isSmokeDetectionInstalled = isSmokeDetectionInstalled;
+			return this;
+		}
+
+		public Builder setSmokeDetection(String smokeDetection) {
+			this.smokeDetection = smokeDetection;
+			return this;
+		}
+
+		public Builder setSmokeDetectionFailure(String smokeDetectionFailure) {
+			this.smokeDetectionFailure = smokeDetectionFailure;
 			return this;
 		}
 
@@ -176,6 +194,21 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	@Override
 	public String psuTriggered() {
 		return this.builder.psuTriggered;
+	}
+
+	@Override
+	public boolean isSmokeDetectionInstalled() {
+		return this.builder.isSmokeDetectionInstalled;
+	}
+
+	@Override
+	public String smokeDetection() {
+		return this.builder.smokeDetection;
+	}
+
+	@Override
+	public String smokeDetectionFailure() {
+		return this.builder.smokeDetectionFailure;
 	}
 
 	@Override

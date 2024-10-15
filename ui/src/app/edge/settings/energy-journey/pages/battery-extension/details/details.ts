@@ -1,8 +1,7 @@
+import { formatNumber } from "@angular/common";
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
 import { HistoryDataService } from "src/app/edge/history/historydataservice";
 import { DataService } from "src/app/shared/components/shared/dataservice";
-
-import { formatNumber } from "@angular/common";
 import { Service, Utils } from "src/app/shared/shared";
 import { environment } from "src/environments";
 import { SimulationResult } from "../battery-extension.module";

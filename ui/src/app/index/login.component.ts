@@ -1,22 +1,23 @@
 // @ts-strict-ignore
-import { AfterContentChecked, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
+import { AfterContentChecked, ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Capacitor } from "@capacitor/core";
 import { ModalController, PopoverController } from "@ionic/angular";
 import { Subject } from "rxjs";
 import { environment } from "src/environments";
 
-import { Capacitor } from "@capacitor/core";
 import { AppService } from "../app.service";
 import { AuthenticateWithPasswordRequest } from "../shared/jsonrpc/request/authenticateWithPasswordRequest";
 import { States } from "../shared/ngrx-store/states";
+import { RouteService } from "../shared/service/previousRouteService";
 import { Edge, Service, Utils, Websocket } from "../shared/shared";
 
 @Component({
   selector: "login",
   templateUrl: "./login.component.html",
 })
-export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
+export class LoginComponent implements AfterContentChecked, OnDestroy {
   public environment = environment;
   public form: FormGroup;
   protected formIsDisabled: boolean = false;
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
     private cdref: ChangeDetectorRef,
     protected popoverctrl: PopoverController,
     protected modalctrl: ModalController,
+    private routeService: RouteService,
   ) { }
 
   /**
@@ -53,17 +55,6 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
 
   ngAfterContentChecked() {
     this.cdref.detectChanges();
-  }
-
-  ngOnInit() {
-
-    // TODO add websocket status observable
-    const interval = setInterval(() => {
-      if (this.websocket.status === "online") {
-        this.router.navigate(["/overview"]);
-        clearInterval(interval);
-      }
-    }, 1000);
   }
 
   async ionViewWillEnter() {
@@ -110,7 +101,6 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
       .finally(() => {
 
         // Unclean
-        this.ngOnInit();
         this.formIsDisabled = false;
       });
   }
@@ -129,14 +119,8 @@ export class LoginComponent implements OnInit, AfterContentChecked, OnDestroy {
     return new Promise<Edge[]>((resolve, reject) => {
 
       this.service.getEdges(this.page)
-        .then((edges) => {
-          setTimeout(() => {
-            this.router.navigate(["/device", edges[0].id]);
-          }, 100);
-          resolve(edges);
-        }).catch((err) => {
-          reject(err);
-        });
+        .then((edges) => resolve(edges))
+        .catch((err) => reject(err));
     }).finally(() => {
       this.service.stopSpinner("loginspinner");
     },

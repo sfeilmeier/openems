@@ -2,8 +2,15 @@
 
 set -e
 
+KERNEL_SOURCE="https://fenecon.de/debian-test/fems_techbase_kernel-latest.deb"
+KERNEL_FILE="/tmp/kernel.deb"
+
+SYSMODS_SOURCE="https://fenecon.de/debian-test/fems_techbase_sys_mods-latest.deb"
+SYSMODS_FILE="/tmp/sys-mods.deb"
+
+OLD_KERNEL_FILE="/tmp/old-kernel.deb"
+
 LOCK_FILE="/tmp/kernel-update.lock"
-KERNEL_SRC="/etc/apt/sources.list.d/fems-kernel.list"
 
 function check_config {
     if ! ( grep -q i2c-dev "/etc/modules" ); then
@@ -17,21 +24,7 @@ function check_config {
     sed -i 's|dtparam=i2c_arm=on|#dtparam=i2c_arm=on|g' /boot/config.txt
 } #check_config
 
-function check_packages {
-    apt-get install -y --allow-change-held-packages fems-techbase-kernel fems-techbase-sys-mods;
-
-    apt-mark manual fems-techbase-kernel fems-techbase-sys-mods;
-    apt-mark hold fems-techbase-kernel;
-
-    systemctl enable comctrl;
-
-    udevadm control --reload-rules && udevadm trigger;
-    comctrl -b;
-} #check_packages
-
 function check {
-    check_packages;
-
     if [[ $( du -s /boot/ | awk '{print $1}' ) < 1000 ]]; then
         echo;
         echo -e "\033[0;31m#########################################\033[0m";
@@ -63,18 +56,25 @@ function get_hardware {
 } #get_hardware
 
 function upgrade {
-    echo "deb [signed-by=/usr/share/keyrings/fenecon.gpg] http://fenecon.de/debian kernel main" > "$KERNEL_SRC";
-
     apt-get update;
 
-    if ( dpkg -s fems-techbase-cm3 >/dev/null 2>&1 ); then
-        apt-get install --allow-change-held-packages --only-upgrade -y fems-techbase-cm3;
-    fi
-    if ( dpkg -s fems-techbase-cm4 >/dev/null 2>&1 ); then
-        apt-get install --allow-change-held-packages --only-upgrade -y fems-techbase-cm4;
-    fi
+    if ( dpkg -s fems-techbase-cm3 >/dev/null 2>&1 ) || ( dpkg -s fems-techbase-cm4 >/dev/null 2>&1 ); then
+        wget --no-check-certificate "$KERNEL_SOURCE" -O "$KERNEL_FILE"
+        wget --no-check-certificate "$SYSMODS_SOURCE" -O "$SYSMODS_FILE"
+       
+        dpkg -i --auto-deconfigure $KERNEL_FILE $SYSMODS_FILE || apt-get install -f -y --allow-remove-essential
 
-    check
+        apt-mark manual fems-techbase-kernel fems-techbase-sys-mods || true;
+        apt-mark hold fems-techbase-kernel || true;
+
+        systemctl enable comctrl;
+
+        udevadm control --reload-rules && udevadm trigger;
+        comctrl -b;
+    else
+        echo "no old Kernel installed"
+        exit 1
+    fi
 } #upgrade
 
 function __cleanup {
@@ -85,7 +85,9 @@ function __cleanup {
         echo -e "\033[0;31m#######################\033[0m";
     fi
     [[ -f "$LOCK_FILE" ]] && rm "$LOCK_FILE"
-    [[ -f "$KERNEL_SRC" ]] && rm "$KERNEL_SRC"
+    [[ -f "$KERNEL_FILE" ]] && rm "$KERNEL_FILE"
+    [[ -f "$SYSMODS_FILE" ]] && rm "$SYSMODS_FILE"
+    [[ -f "$OLD_KERNEL_FILE" ]] && rm "$OLD_KERNEL_FILE"
 } #__cleanup
 
 ########## MAIN #############

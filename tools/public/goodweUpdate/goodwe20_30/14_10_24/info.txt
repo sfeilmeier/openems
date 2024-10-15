@@ -1,0 +1,4 @@
+Version 14.10.2024 (Siehe ETT-DSP Changelog.pdf) ! Version was given as a pre-release Version (Final Tests are not done by Goodwe), but everything is better than the latest Release Version
+ 
+ARM: 11-424 410-02071-11(424)_M4_APP.bin
+DSP: 09-9054 410-04062-09-V9054.bin

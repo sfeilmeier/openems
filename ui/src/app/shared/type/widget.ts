@@ -2,6 +2,7 @@
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { EdgePermission, Utils } from "../shared";
+import { Role } from "./role";
 
 export enum WidgetClass {
     "Energymonitor",
@@ -70,15 +71,13 @@ export class AdvertWidgets {
 
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
-        let list: AdvertWidget[] = [];
+        const title = edge.roleIsAtLeast(Role.INSTALLER) ? "Jetzt zum neuen, exklusiven Webinar anmelden" : "Beta-Test erfolgreich abgeschlossen";
 
-        if (EdgePermission.isEnergyJourneyAllowed(edge.firstSetupProtocol)
-            && edge.producttype === ProductType.HOME) {
-            list.push({
-                name: "energy-journey",
-                title: { languageKey: "SETTINGS.ENERGY_JOURNEY.WIDGET_TITLE" },
-            });
-        }
+        let list: AdvertWidget[] = [{
+            name: "time-of-use-tariff",
+            title: { rawTitle: title },
+        }];
+
         list = Utils.shuffleArray(list);
         return new AdvertWidgets(list);
     }

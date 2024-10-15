@@ -1,11 +1,10 @@
 import { NgModule } from "@angular/core";
 import { SharedModule } from "src/app/shared/shared.module";
-
+import { EnergyJourneySharedModule } from "../../shared/shared.module";
 import { ElectricityPriceSelectionComponent } from "../electricity-price-choice/electricity-price-selection";
 import { BatteryExtensionComponent } from "./battery-extension";
 import { GridBuyChartComponent } from "./chart/gridBuy.chart";
 import { DetailComponent } from "./details/details";
-import { EnergyJourneySharedModule } from "../../shared/shared.module";
 
 @NgModule({
   imports: [

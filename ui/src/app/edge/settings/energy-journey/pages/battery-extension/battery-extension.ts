@@ -1,11 +1,10 @@
 import { Component } from "@angular/core";
-import { HistoryDataService } from "src/app/edge/history/historydataservice";
-import { DataService } from "src/app/shared/components/shared/dataservice";
-
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { subDays, subYears } from "date-fns";
+import { HistoryDataService } from "src/app/edge/history/historydataservice";
 import { XAxisType } from "src/app/shared/components/chart/chart.constants";
 import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
+import { DataService } from "src/app/shared/components/shared/dataservice";
 import { DateUtils } from "src/app/shared/utils/date/dateutils";
 import { environment } from "src/environments";
 import { SimulationRequest } from "../../simulationRequest";

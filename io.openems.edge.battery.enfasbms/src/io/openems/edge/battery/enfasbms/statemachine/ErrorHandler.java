@@ -9,7 +9,7 @@ public class ErrorHandler extends StateHandler<State, Context> {
 	@Override
 	public State runAndGetNextState(Context context) throws OpenemsNamedException {
 		final var battery = context.getParent();
-		if (!battery.hasFaults() && battery.isStopped()) {
+		if (!battery.hasFaults() && context.isStopped()) {
 			return State.STOPPED;
 		}
 
