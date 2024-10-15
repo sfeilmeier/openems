@@ -188,66 +188,69 @@ if [[ "$(dpkg-query -W -f='${Status}\n' fems)" == *"half-installed"* ]]; then
 fi
 
 if [ -d "/home/imodcloud" ]; then
-    echo "# Do not apt update Techbase"
-else
-    if [ -e /etc/apt/apt.conf.d/01-fems-setup ]; then
-        echo "# Remove deprecated fiona proxy"
-        rm -f /etc/apt/apt.conf.d/01-fems-setup
-    fi
+    echo "# Hold kernel and bootloader on Techbase"
 
-    echo "# Setup dependencies"
-    rm -f /etc/apt/trusted.gpg.d/*.lock
-
-    if [ ! -e /usr/lib/apt/methods/https ]; then
-        echo "# Fix apt method driver for https"
-        ln -s http /usr/lib/apt/methods/https
-    fi
-
-    # Do not block at libc6 configure
-    echo 'libc6 libraries/restart-without-asking boolean true' | sudo debconf-set-selections
-
-    free_bytes=$(df /boot/ --output=avail -B1 | tail -1)
-    if [[ $free_bytes -lt 1024 ]]; then
-        echo "#"
-        echo "# /boot is full"
-        echo "# Running kernel version: $(uname -r)"
-        KERNEL_MAJOR=$(uname -r | cut -d'-' -f1)
-        KERNEL_RUNNING=$(uname -r | cut -d'-' -f2)
-        KERNEL_OLD=$(readlink -f /boot/vmlinuz.old | cut -d'-' -f3)
-        KERNEL_NEXT=$(readlink -f /boot/vmlinuz | cut -d'-' -f3)
-        for i in $(seq 1 $((KERNEL_NEXT-1))); do
-            if [ $i -ne $KERNEL_RUNNING -a $i -ne $KERNEL_OLD ]; then
-                echo "# Delete kernel version $KERNEL_MAJOR-$i"
-                rm -fv /boot/initrd.img-$KERNEL_MAJOR-$i-*
-                rm -fv /boot/vmlinuz-$KERNEL_MAJOR-$i-*
-                rm -fv /boot/System.map-$KERNEL_MAJOR-$i-*
-            fi
-        done
-        echo "#"
-    fi
-
-    dpkg --configure -a --force-confnew || true
-
-    apt-get install --fix-broken --assume-yes || true
-
-    apt_install dirmngr
-    apt_install gnupg
-
-    apt-get autoremove --assume-yes || true
-    apt-get --fix-broken install --assume-yes || true
-
-    case "$VERSION_CODENAME" in
-        "jessie") 
-        apt-get update || true
-        ;;
-
-        *) 
-        apt-get --allow-releaseinfo-change update || true
-        ;;
-    esac
-
-    apt-get dist-upgrade --assume-yes --force-yes
+    apt-mark hold raspberrypi-kernel
+    apt-mark hold raspberrypi-bootloader
 fi
+
+if [ -e /etc/apt/apt.conf.d/01-fems-setup ]; then
+    echo "# Remove deprecated fiona proxy"
+    rm -f /etc/apt/apt.conf.d/01-fems-setup
+fi
+
+echo "# Setup dependencies"
+rm -f /etc/apt/trusted.gpg.d/*.lock
+
+if [ ! -e /usr/lib/apt/methods/https ]; then
+    echo "# Fix apt method driver for https"
+    ln -s http /usr/lib/apt/methods/https
+fi
+
+# Do not block at libc6 configure
+echo 'libc6 libraries/restart-without-asking boolean true' | sudo debconf-set-selections
+
+free_bytes=$(df /boot/ --output=avail -B1 | tail -1)
+if [[ $free_bytes -lt 1024 ]]; then
+    echo "#"
+    echo "# /boot is full"
+    echo "# Running kernel version: $(uname -r)"
+    KERNEL_MAJOR=$(uname -r | cut -d'-' -f1)
+    KERNEL_RUNNING=$(uname -r | cut -d'-' -f2)
+    KERNEL_OLD=$(readlink -f /boot/vmlinuz.old | cut -d'-' -f3)
+    KERNEL_NEXT=$(readlink -f /boot/vmlinuz | cut -d'-' -f3)
+    for i in $(seq 1 $((KERNEL_NEXT-1))); do
+        if [ $i -ne $KERNEL_RUNNING -a $i -ne $KERNEL_OLD ]; then
+            echo "# Delete kernel version $KERNEL_MAJOR-$i"
+            rm -fv /boot/initrd.img-$KERNEL_MAJOR-$i-*
+            rm -fv /boot/vmlinuz-$KERNEL_MAJOR-$i-*
+            rm -fv /boot/System.map-$KERNEL_MAJOR-$i-*
+        fi
+    done
+    echo "#"
+fi
+
+dpkg --configure -a --force-confnew || true
+
+apt-get install --fix-broken --assume-yes || true
+
+apt_install dirmngr
+apt_install gnupg
+
+apt-get autoremove --assume-yes || true
+apt-get --fix-broken install --assume-yes || true
+
+case "$VERSION_CODENAME" in
+    "jessie") 
+    apt-get update || true
+    ;;
+
+    *) 
+    apt-get --allow-releaseinfo-change update || true
+    ;;
+esac
+
+apt-get dist-upgrade --assume-yes --force-yes
 
 apt_install at
 apt_install ncdu
