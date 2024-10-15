@@ -21,6 +21,22 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2024.10.2",
+        changes: [
+          Changelog.openems("2024.10.0"),
+          Changelog.UI,
+          Changelog.app(App.TIME_OF_USE) + "Ende des Beta-Tests. Öffentliche Freigabe der Funktion \"Beladung aus dem Netz\"",
+          Changelog.app(App.EVCS_AC, App.KEBA, App.HARDY_BARTH) + "Phasengenaue Darstellung des Live-Verbrauchs, in der App konfigurierbare Phasenrotation, umfangreiche interne Verbesserungen",
+          Changelog.app(App.POWER_TO_HEAT, App.HEIZSTAB) + "Optimierung der historischen Ansicht",
+          Changelog.product(Product.INDUSTRIAL_L) + "Produktkompatibilität, Verbesserungen an der State-Machine, am Fehlerhandling und Einbindung der Brandmeldeanlage",
+          "Erweiterung des Excel-Exports aus der historischen Ansicht",
+          { roleIsAtLeast: Role.ADMIN, change: "Home: Verbesserung des GoodWe-Update-Tools, DSP und ARM Beta-Version im Home-Assistant" },
+          { roleIsAtLeast: Role.ADMIN, change: "_sum: Ablage der maximal jemals gemessenen Werte in Odoo" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.UI + "Energy Journey: Batterieerweiterung bei mehreren Türmen" },
+          Changelog.library(Library.GRADLE),
+        ],
+      },
+      {
         version: "2024.10.1",
         changes: [
           Changelog.UI + "Allgemeine Verbesserungen, Fehlerbehebung im Bereich Historie",
