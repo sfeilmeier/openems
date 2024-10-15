@@ -193,10 +193,14 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 					SystemFeneconIndustrialL.ChannelId.FUSE_TRIPPED);
 			this.handleInputChannel(this.parsedConfig.psuTriggeredChannel(),
 					SystemFeneconIndustrialL.ChannelId.PSU_TRIGGERED);
-			this.handleInputChannel(this.parsedConfig.smokeDetectionChannel(), //
-					SystemFeneconIndustrialL.ChannelId.SMOKE_DETECTION, true);
-			this.handleInputChannel(this.parsedConfig.smokeDetectionFailureChannel(),
-					SystemFeneconIndustrialL.ChannelId.SMOKE_DETECTION_FAILURE);
+			if (this.parsedConfig.smokeDetectionChannel != null) {
+				this.handleInputChannel(this.parsedConfig.smokeDetectionChannel(), //
+						SystemFeneconIndustrialL.ChannelId.SMOKE_DETECTION, true);
+			}
+			if (this.parsedConfig.smokeDetectionFailureChannel != null) {
+				this.handleInputChannel(this.parsedConfig.smokeDetectionFailureChannel(),
+						SystemFeneconIndustrialL.ChannelId.SMOKE_DETECTION_FAILURE);
+			}
 			this.handleAcknowledge();
 		}
 		}
@@ -231,15 +235,14 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 					// Output Channels
 					fromString(config.acknowledgeEmergencyStop()), //
 					/**
-					 * Smoke detection io detection channel, false smoke detected otherwise true
+					 * Get the Smoke detection channel only if it is installed
 					 */
-					fromString(config.smokeDetection()), //
-
+					config.isSmokeDetectionInstalled() ? fromString(config.smokeDetection()) : null,
 					/**
-					 * Smoke detection failure io active channel, true not active or failure
-					 * otherwise false active
+					 * Get the Smoke detection failure channel only if it is installed
 					 */
-					fromString(config.smokeDetectionFailure()));
+					config.isSmokeDetectionInstalled() ? fromString(config.smokeDetectionFailure()) : null//
+			);
 		}
 	}
 

@@ -23,7 +23,8 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		private String spdTripped;
 		private String fuseTripped;
 		private String psuTriggered;
-		private String smokeetection;
+		private boolean isSmokeDetectionInstalled;
+		private String smokeDetection;
 		private String smokeDetectionFailure;
 
 		private Builder() {
@@ -99,8 +100,13 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 			return this;
 		}
 
+		public Builder setIsSmokeDetectionInstalled(boolean isSmokeDetectionInstalled) {
+			this.isSmokeDetectionInstalled = isSmokeDetectionInstalled;
+			return this;
+		}
+
 		public Builder setSmokeDetection(String smokeDetection) {
-			this.smokeetection = smokeDetection;
+			this.smokeDetection = smokeDetection;
 			return this;
 		}
 
@@ -191,8 +197,13 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	}
 
 	@Override
+	public boolean isSmokeDetectionInstalled() {
+		return this.builder.isSmokeDetectionInstalled;
+	}
+
+	@Override
 	public String smokeDetection() {
-		return this.builder.smokeetection;
+		return this.builder.smokeDetection;
 	}
 
 	@Override

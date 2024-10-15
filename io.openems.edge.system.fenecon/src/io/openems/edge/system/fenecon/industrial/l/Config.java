@@ -58,6 +58,9 @@ public @interface Config {
 
 	@AttributeDefinition(name = "Acknowledge Channel", description = "IO for acknowledge.")
 	String acknowledgeEmergencyStop();
+	
+	@AttributeDefinition(name = "Smoke detection installed", description = "is smoke detection installed?")
+	boolean isSmokeDetectionInstalled() default false;
 
 	@AttributeDefinition(name = "Smoke detection", description = "IO for smoke detection.")
 	String smokeDetection();
