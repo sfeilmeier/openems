@@ -113,7 +113,7 @@ APIKEY=$(grep 'apikey=' $ETC_FEMS | cut -d'=' -f2)
 function setup_generic {
 	if [ -d $BASE_PATH ]; then
 		echo "# Deleting $BASE_PATH"
-		find $BASE_PATH ! -wholename "$BASE_PATH" ! -name 'config.json' -exec rm -rf {} +
+		find $BASE_PATH ! -wholename "$BASE_PATH" ! -name 'config.json' ! -name 'hardware.conf' -exec rm -rf {} +
 	fi
 	echo "# Creating $BASE_PATH"
 	mkdir -p $BASE_PATH
