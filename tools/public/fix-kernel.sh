@@ -2,8 +2,13 @@
 
 set -e
 
+KERNEL_SOURCE="https://fenecon.de/fems-download/fems_techbase_kernel-latest.deb"
+KERNEL_FILE="/tmp/kernel.deb"
+
+SYSMODS_SOURCE="https://fenecon.de/fems-download/fems_techbase_sys_mods-latest.deb"
+SYSMODS_FILE="/tmp/sys-mods.deb"
+
 LOCK_FILE="/tmp/kernel-update.lock"
-KERNEL_SRC="/etc/apt/sources.list.d/fems-kernel.list"
 
 function __cleanup {
     if [[ $? -ne 0 ]]; then
@@ -13,7 +18,8 @@ function __cleanup {
         echo -e "\033[0;31m####################\033[0m";
     fi
     [[ -f "$LOCK_FILE" ]] && rm "$LOCK_FILE"
-    [[ -f "$KERNEL_SRC" ]] && rm "$KERNEL_SRC"
+    [[ -f "$KERNEL_FILE" ]] && rm "$KERNEL_FILE"
+    [[ -f "$SYSMODS_FILE" ]] && rm "$SYSMODS_FILE"
 } #__cleanup
 
 function get_hardware {
@@ -62,7 +68,7 @@ otg_mode=1
 [cm4s]
 otg_mode=1
 dtoverlay=pi3-miniuart-bt
-dtoverlay=rtc_cm3_tb_v11,mcp7941x
+dtoverlay=rtc_cm4s_tb_v11_mcp7941x
 
 [all]
 
@@ -89,6 +95,36 @@ EOF
     install -m 644 /tmp/config.txt /boot/config.txt
 } #fix_config_txt
 
+function is_newer {
+    local package=$1
+    local file=$2
+
+    installed_version=$(dpkg-query -W -f='${Version}' "$package" 2>/dev/null || echo "0")
+    new_version=$(dpkg-deb --show --showformat='${Version}' "$file")
+
+    if dpkg --compare-versions "$new_version" gt "$installed_version"; then
+        echo "true"
+    else
+        echo "false"
+    fi
+} #is_newer
+
+function install_package {
+    local source="$1"
+    local file="$2"
+    local package="$3"
+
+    wget "$source" -O "$file"
+
+    if [ "$(is_newer $package $file)" == "true" ]; then
+        apt-get install -y $file;
+    else
+        echo "newest version of '$package' already installed"
+    fi
+
+    rm "$file"
+} #install_package
+
 ########### MAIN ##########
 
 if [ "$EUID" -ne 0 ]; then 
@@ -114,10 +150,10 @@ if ( ! dpkg -s fems-techbase-kernel >/dev/null 2>&1 ); then
     exit 1
 fi
 
-echo "deb [signed-by=/usr/share/keyrings/fenecon.gpg] http://fenecon.de/debian kernel main" > "$KERNEL_SRC"
-
 apt-get update;
-apt-get install -y fems-techbase-kernel fems-techbase-sys-mods;
+
+install_package "$KERNEL_SOURCE" "$KERNEL_FILE" "fems-techbase-kernel"
+install_package "$SYSMODS_SOURCE" "$SYSMODS_FILE" "fems-techbase-sys-mods"
 
 udevadm control --reload-rules && udevadm trigger;
 comctrl -b;
