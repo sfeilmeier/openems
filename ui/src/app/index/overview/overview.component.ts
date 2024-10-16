@@ -8,6 +8,7 @@ import { Subject } from "rxjs";
 import { filter, take } from "rxjs/operators";
 import { Pagination } from "src/app/shared/service/pagination";
 import { Edge, Service, Utils, Websocket } from "src/app/shared/shared";
+import { Role } from "src/app/shared/type/role";
 import { environment } from "src/environments";
 
 import { ChosenFilter } from "../filter/filter.component";
@@ -132,6 +133,16 @@ export class OverViewComponent implements OnInit, OnDestroy {
 
     private init() {
         this.loadNextPage().then((edges) => {
+            this.service.metadata
+                .pipe(
+                    filter(metadata => !!metadata),
+                    take(1),
+                )
+                .subscribe(metadata => {
+                    const edgeIds = Object.keys(metadata.edges);
+                    this.noEdges = edgeIds.length === 0;
+                    this.loggedInUserCanInstall = Role.isAtLeast(metadata.user.globalRole, "installer");
+                });
             this.filteredEdges = edges;
         });
     }
