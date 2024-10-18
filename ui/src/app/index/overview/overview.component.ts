@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { InfiniteScrollCustomEvent } from "@ionic/angular";
+import { InfiniteScrollCustomEvent, ViewWillEnter } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, take } from "rxjs/operators";
@@ -17,7 +17,7 @@ import { ChosenFilter } from "../filter/filter.component";
     selector: "overview",
     templateUrl: "./overview.component.html",
 })
-export class OverViewComponent implements OnInit, OnDestroy {
+export class OverViewComponent implements ViewWillEnter, OnDestroy {
     public environment = environment;
     /** True, if there is no access to any Edge. */
     public noEdges: boolean = false;
@@ -50,7 +50,7 @@ export class OverViewComponent implements OnInit, OnDestroy {
         public pagination: Pagination,
     ) { }
 
-    ngOnInit() {
+    ionViewWillEnter() {
         this.page = 0;
         this.filteredEdges = [];
         this.limitReached = false;
@@ -142,8 +142,19 @@ export class OverViewComponent implements OnInit, OnDestroy {
                     const edgeIds = Object.keys(metadata.edges);
                     this.noEdges = edgeIds.length === 0;
                     this.loggedInUserCanInstall = Role.isAtLeast(metadata.user.globalRole, "installer");
+
+                    // Forward directly to device page, if
+                    // - Direct local access to Edge
+                    // - No installer (i.e. guest or owner) and access to only one Edge
+                    if (environment.backend == "OpenEMS Edge" || (!this.loggedInUserCanInstall && edgeIds.length == 1)) {
+                        const edge = metadata.edges[edgeIds[0]];
+                        setTimeout(() => {
+                            this.router.navigate(["/device", edge.id]);
+                        }, 100);
+                        return;
+                    }
+                    this.filteredEdges = edges;
                 });
-            this.filteredEdges = edges;
         });
     }
 
