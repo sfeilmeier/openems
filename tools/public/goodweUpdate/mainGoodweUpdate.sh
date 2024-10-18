@@ -24,6 +24,7 @@ TYPE=$1
 VERSION=$2
 PORT=$3
 BAUD_RATE=$4
+DETAILED_LOG=${5:-false}
 
 TMP_FOLDER="/tmp/goodweupdate"
 LOCK_FILE="$TMP_FOLDER/lock"
@@ -41,7 +42,7 @@ function downloadGoodWeUpdate {
 
 function runGoodWeUpdate {
 	echo "Start GoodWe Update"	
-	java -jar "$TMP_FOLDER/update.jar" $PORT $BAUD_RATE "$TMP_FOLDER/arm.bin" "$TMP_FOLDER/dsp.bin"
+	java -jar "$TMP_FOLDER/update.jar" $PORT $BAUD_RATE "$TMP_FOLDER/arm.bin" "$TMP_FOLDER/dsp.bin" $DETAILED_LOG
 }
 
 __cleanup() {
