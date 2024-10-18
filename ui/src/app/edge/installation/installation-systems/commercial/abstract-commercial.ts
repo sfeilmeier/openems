@@ -34,7 +34,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
     // protocol-dynamic-feed-in-limitation
     public override feedInLimitation? = {
-        feedInType: FeedInType.EXTERNAL_LIMITATION,
+        feedInType: FeedInType.NO_LIMITATION,
         maximumFeedInPower: 0,
     };
 
