@@ -1,9 +1,6 @@
 package io.openems.edge.io.i2c;
 
 import io.openems.common.test.AbstractComponentConfig;
-import io.openems.common.utils.ConfigUtils;
-import io.openems.edge.io.i2c.AnalogOutput;
-import io.openems.edge.io.i2c.Config;
 
 
 @SuppressWarnings("all")
