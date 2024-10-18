@@ -1,16 +1,17 @@
 #!/bin/bash
 #
-# Script to automatically updates a ATL Battery.
-
-# wget http://fenecon.de/debian-test/atlUpdate/atlUpdate.sh -O /tmp/atlUpdate.sh && bash /tmp/atlUpdate.sh /dev/busUSB1 19200 v0.4
-
+# Script to automatically update a ATL Battery.
+#
+# wget http://fenecon.de/fems-tools/atlUpdate/atlUpdate.sh -O /tmp/atlUpdate.sh && bash /tmp/atlUpdate.sh /dev/busUSB1 19200 24_10_18
+#
 # Force Update
-# wget http://fenecon.de/debian-test/atlUpdate/atlUpdate.sh -O /tmp/atlUpdate.sh && bash /tmp/atlUpdate.sh /dev/busUSB1 19200 v0.4 true 
-
-
+# wget http://fenecon.de/fems-tools/atlUpdate/atlUpdate.sh -O /tmp/atlUpdate.sh && bash /tmp/atlUpdate.sh /dev/busUSB1 19200 24_10_18 true 
+#
+#
 # Only for testing: java -jar atlUpdate.jar /dev/busUSB2 19200 0.4
-# java -jar JARNAME.jar PORTNAME BAUDRATE PATH_of_the_UPDATE_FILE boolean_force_update(true or false)>
-# java -jar UpdateV2.5.5.jar ttyUSB0 19200 c:\home\udpatefile.bin false
+# java -jar JARNAME.jar     PORTNAME    BAUDRATE    UPDATE_FILE             (FORCE_UPDATE)
+# java -jar AtlUpdate.jar   ttyUSB0     19200       c:\home\udpatefile.bin  false
+#
 
 set -e
 
