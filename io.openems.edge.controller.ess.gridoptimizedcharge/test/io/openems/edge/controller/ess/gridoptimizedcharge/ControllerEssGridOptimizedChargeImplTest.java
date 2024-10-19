@@ -1444,43 +1444,6 @@ public class ControllerEssGridOptimizedChargeImplTest {
 		});
 	}
 
-	private DelayChargeResultState testOneDay(String testDescription, Integer[] productionPrediction,
-			Integer[] consumptionPrediction, int soc, Optional<Integer> targetMinuteOpt, int capacity,
-			int maxApparentPower, int allowedChargePower, DelayChargeRiskLevel riskLevel, Integer[] productionActual,
-			Integer[] consumptionActual, float resultBuffer) {
-		DelayChargeResultState resultState;
-		DelayChargeResult newLogic = ControllerEssGridOptimizedChargeImplTest.testOneDay(testDescription,
-				productionPrediction, consumptionPrediction, soc, targetMinuteOpt, capacity, maxApparentPower,
-				allowedChargePower, riskLevel, productionActual, consumptionActual, false);
-
-		DelayChargeResult oldLogic = ControllerEssGridOptimizedChargeImplTest.testOneDay(testDescription,
-				productionPrediction, consumptionPrediction, soc, targetMinuteOpt, capacity, maxApparentPower,
-				allowedChargePower, riskLevel, productionActual, consumptionActual, true);
-
-		if (newLogic.getFinalSoc() + resultBuffer < oldLogic.getFinalSoc()) {
-			resultState = DelayChargeResultState.WARNING;
-		} else if (newLogic.getFinalSoc() - resultBuffer > oldLogic.getFinalSoc()) {
-			resultState = DelayChargeResultState.PERFECT;
-		} else {
-			resultState = DelayChargeResultState.OK;
-		}
-
-		float unefficientEnergy = Math
-				.round(newLogic.getChargedEnergyWithLowPower() / newLogic.getChargedEnergy() * 1000) / 10.0f;
-		float unefficientEnergyOld = Math
-				.round(oldLogic.getChargedEnergyWithLowPower() / oldLogic.getChargedEnergy() * 1000) / 10.0f;
-		System.out.println(resultState.text + "\t" + testDescription + "     \t(New: "
-				+ Math.round(newLogic.getFinalSoc() * 100) / 100.0 + " | Old: "
-				+ Math.round(oldLogic.getFinalSoc() * 100) / 100.0 + ") \t   Energy: (New: "
-				+ newLogic.getChargedEnergy() + "[" + newLogic.getChargedEnergyWithLowPower() + " -> "
-				+ unefficientEnergy + "%] | Old: " + oldLogic.getChargedEnergy() + "["
-				+ oldLogic.getChargedEnergyWithLowPower() + " -> " + unefficientEnergyOld + "%])");
-
-		// fail("New logic results in a lower SoC (New: " + newLogic.getFinalSoc() + " |
-		// Old: "+ oldLogic.getFinalSoc() + ") - " + testDescription);
-		return resultState;
-	}
-
 	@SuppressWarnings("deprecation")
 	private static DelayChargeResult testOneDay(String testDescription, Integer[] productionPrediction,
 			Integer[] consumptionPrediction, int soc, Optional<Integer> targetMinuteOpt, int capacity,
@@ -1619,6 +1582,43 @@ public class ControllerEssGridOptimizedChargeImplTest {
 			e.printStackTrace();
 		}
 		return new DelayChargeResult(socFloat, totoalActivePower * 0.25f, totoalActivePowerLessEfficiency * 0.25f);
+	}
+
+	private DelayChargeResultState testOneDay(String testDescription, Integer[] productionPrediction,
+			Integer[] consumptionPrediction, int soc, Optional<Integer> targetMinuteOpt, int capacity,
+			int maxApparentPower, int allowedChargePower, DelayChargeRiskLevel riskLevel, Integer[] productionActual,
+			Integer[] consumptionActual, float resultBuffer) {
+		DelayChargeResultState resultState;
+		DelayChargeResult newLogic = ControllerEssGridOptimizedChargeImplTest.testOneDay(testDescription,
+				productionPrediction, consumptionPrediction, soc, targetMinuteOpt, capacity, maxApparentPower,
+				allowedChargePower, riskLevel, productionActual, consumptionActual, false);
+
+		DelayChargeResult oldLogic = ControllerEssGridOptimizedChargeImplTest.testOneDay(testDescription,
+				productionPrediction, consumptionPrediction, soc, targetMinuteOpt, capacity, maxApparentPower,
+				allowedChargePower, riskLevel, productionActual, consumptionActual, true);
+
+		if (newLogic.getFinalSoc() + resultBuffer < oldLogic.getFinalSoc()) {
+			resultState = DelayChargeResultState.WARNING;
+		} else if (newLogic.getFinalSoc() - resultBuffer > oldLogic.getFinalSoc()) {
+			resultState = DelayChargeResultState.PERFECT;
+		} else {
+			resultState = DelayChargeResultState.OK;
+		}
+
+		float unefficientEnergy = Math
+				.round(newLogic.getChargedEnergyWithLowPower() / newLogic.getChargedEnergy() * 1000) / 10.0f;
+		float unefficientEnergyOld = Math
+				.round(oldLogic.getChargedEnergyWithLowPower() / oldLogic.getChargedEnergy() * 1000) / 10.0f;
+		System.out.println(resultState.text + "\t" + testDescription + "     \t(New: "
+				+ Math.round(newLogic.getFinalSoc() * 100) / 100.0 + " | Old: "
+				+ Math.round(oldLogic.getFinalSoc() * 100) / 100.0 + ") \t   Energy: (New: "
+				+ newLogic.getChargedEnergy() + "[" + newLogic.getChargedEnergyWithLowPower() + " -> "
+				+ unefficientEnergy + "%] | Old: " + oldLogic.getChargedEnergy() + "["
+				+ oldLogic.getChargedEnergyWithLowPower() + " -> " + unefficientEnergyOld + "%])");
+
+		// fail("New logic results in a lower SoC (New: " + newLogic.getFinalSoc() + " |
+		// Old: "+ oldLogic.getFinalSoc() + ") - " + testDescription);
+		return resultState;
 	}
 
 	private static class DelayChargeResult {
