@@ -10,7 +10,6 @@ import { Pagination } from "src/app/shared/service/pagination";
 import { Edge, Service, Utils, Websocket } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { environment } from "src/environments";
-
 import { ChosenFilter } from "../filter/filter.component";
 
 @Component({
