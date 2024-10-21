@@ -16,9 +16,6 @@ import io.openems.edge.common.test.DummyCycle;
 
 public class BatteryFeneconF2bBmwImplTest {
 
-	private static final String BATTERY_ID = "battery0";
-	private static final String MODBUS_ID = "modbus0";
-
 	@Test
 	public void test() throws Exception {
 		final var clock = new TimeLeapClock(Instant.parse("2020-01-01T01:00:00.00Z"), ZoneOffset.UTC);
@@ -26,10 +23,10 @@ public class BatteryFeneconF2bBmwImplTest {
 				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("cycle", new DummyCycle(1000)) //
 				.addReference("componentManager", new DummyComponentManager(clock)) //
-				.addReference("setModbus", new DummyModbusBridge(MODBUS_ID)) //
+				.addReference("setModbus", new DummyModbusBridge("modbus0")) //
 				.activate(MyConfig.create() //
-						.setId(BATTERY_ID) //
-						.setModbusId(MODBUS_ID) //
+						.setId("battery0") //
+						.setModbusId("modbus0") //
 						.setModbusUnitId(0) //
 						.setStartStop(StartStopConfig.START) //
 						.build())

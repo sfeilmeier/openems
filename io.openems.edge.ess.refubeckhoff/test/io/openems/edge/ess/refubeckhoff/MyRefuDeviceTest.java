@@ -1,8 +1,10 @@
 package io.openems.edge.ess.refubeckhoff;
 
+import static io.openems.edge.ess.refubeckhoff.RefuBeckhoffEss.ChannelId.SET_WORK_STATE;
+import static io.openems.edge.ess.refubeckhoff.RefuBeckhoffEss.ChannelId.SYSTEM_STATE;
+
 import org.junit.Test;
 
-import io.openems.common.types.ChannelAddress;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
@@ -15,36 +17,30 @@ import io.openems.edge.ess.test.DummyPower;
 
 public class MyRefuDeviceTest {
 
-	private static final String ESS_ID = "ess0";
-	private static final String MODBUS_ID = "modbus0";
-
-	private static final ChannelAddress SYSTEMSTATE = new ChannelAddress(ESS_ID, "SystemState");
-	private static final ChannelAddress SETWORKSTATE = new ChannelAddress(ESS_ID, "SetWorkState");
-
 	@Test
 	public void test() throws Exception {
 		new ComponentTest(new RefuBeckhoffEssImpl()) //
 				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("power", new DummyPower()) //
-				.addReference("setModbus", new DummyModbusBridge(MODBUS_ID)) //
+				.addReference("setModbus", new DummyModbusBridge("modbus0")) //
 				.activate(MyConfig.create() //
-						.setId(ESS_ID) //
-						.setModbusId(MODBUS_ID) //
+						.setId("ess0") //
+						.setModbusId("modbus0") //
 						.setEssState(EssState.AUTO) //
 						.setSetOperationMode(SetOperationMode.PQ_SET_POINT) //
 						.setAcknowledgeError(10) //
 						.setEssState(EssState.AUTO).build())
 				.next(new TestCase("1") //
-						.input(SYSTEMSTATE, SystemState.INIT)) //
+						.input(SYSTEM_STATE, SystemState.INIT)) //
 				.next(new TestCase("2") //
-						.output(SETWORKSTATE, StopStart.START)) //
+						.output(SET_WORK_STATE, StopStart.START)) //
 				.next(new TestCase("3") //
-						.input(SYSTEMSTATE, SystemState.OFF)) //
+						.input(SYSTEM_STATE, SystemState.OFF)) //
 				.next(new TestCase("4")) //
 				.next(new TestCase("5") //
-						.output(SYSTEMSTATE, SystemState.OFF)) //
+						.output(SYSTEM_STATE, SystemState.OFF)) //
 				.next(new TestCase("6") //
-						.input(SYSTEMSTATE, SystemState.ERROR)) //
+						.input(SYSTEM_STATE, SystemState.ERROR)) //
 				.next(new TestCase("1 times")) //
 				.next(new TestCase("2 times")) //
 				.next(new TestCase("3 times")) //
@@ -56,10 +52,10 @@ public class MyRefuDeviceTest {
 				.next(new TestCase("9 times")) //
 				.next(new TestCase("10 times")) //
 				.next(new TestCase("7") //
-						.output(SYSTEMSTATE, SystemState.ERROR)) //
+						.output(SYSTEM_STATE, SystemState.ERROR)) //
 				.next(new TestCase("8")) //
 				.next(new TestCase("9") //
-						.output(SYSTEMSTATE, SystemState.ERROR)) //
+						.output(SYSTEM_STATE, SystemState.ERROR)) //
 				.next(new TestCase("10")) //
 		; //
 	}

@@ -1,5 +1,7 @@
 package io.openems.common.types;
 
+import java.util.Currency;
+
 /**
  * The {@link ChannelId#CURRENCY} mandates the selection of the 'currency'
  * configuration property of this specific type. Subsequently, this selected
@@ -10,15 +12,15 @@ public enum CurrencyConfig {
 	/**
 	 * Euro.
 	 */
-	EUR("€", "Cent", 100),
+	EUR("€", "Cent", 100f),
 	/**
 	 * Swedish Krona.
 	 */
-	SEK("kr", "Öre", 100),
+	SEK("kr", "Öre", 100f),
 	/**
 	 * Swiss Francs.
 	 */
-	CHF("Fr", "Rappen", 100);
+	CHF("Fr", "Rappen", 100f);
 
 	private final String symbol;
 

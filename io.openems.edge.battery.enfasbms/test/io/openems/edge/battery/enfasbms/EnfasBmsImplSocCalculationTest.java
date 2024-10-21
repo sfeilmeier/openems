@@ -1,11 +1,14 @@
 package io.openems.edge.battery.enfasbms;
 
+import static io.openems.edge.battery.api.Battery.ChannelId.SOC;
+import static io.openems.edge.battery.enfasbms.BatteryProtectionType.DEFAULT;
+import static io.openems.edge.battery.enfasbms.EnfasBms.ChannelId.BATTERY_SOC;
+import static io.openems.edge.battery.enfasbms.enums.FirmwareVersion.WUERTH_VERSION_1_0_20;
+import static io.openems.edge.common.startstop.StartStopConfig.START;
+
 import org.junit.Test;
 
-import io.openems.common.types.ChannelAddress;
-import io.openems.edge.battery.enfasbms.enums.FirmwareVersion;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
-import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
@@ -13,25 +16,20 @@ import io.openems.edge.common.test.DummyConfigurationAdmin;
 
 public class EnfasBmsImplSocCalculationTest {
 
-	private static final String MODBUS_ID = "modbus0";
-	private static final String BATTERY_ID = "battery0";
-	private static final ChannelAddress BATTERY_SOC = new ChannelAddress(BATTERY_ID, "BatterySoc");
-	private static final ChannelAddress SOC = new ChannelAddress(BATTERY_ID, "Soc");
-
 	public static final int MAX_16BIT_UNSIGNED_INT = 65535;
 
 	@Test
 	public void batteryValuesTest() throws Exception {
 		new ComponentTest(new EnfasBmsImpl()) //
-				.addReference("setModbus", new DummyModbusBridge(MODBUS_ID)) //
+				.addReference("setModbus", new DummyModbusBridge("modbus0")) //
 				.addReference("componentManager", new DummyComponentManager())
 				.addReference("cm", new DummyConfigurationAdmin()) //
 				.activate(MyConfig.create() //
-						.setId(BATTERY_ID) //
-						.setModbusId(MODBUS_ID) //
-						.setStartStop(StartStopConfig.START) //
-						.setVersion(FirmwareVersion.WUERTH_VERSION_1_0_20)//
-						.setBatteryProtectionType(BatteryProtectionType.DEFAULT)//
+						.setId("battery0") //
+						.setModbusId("modbus0") //
+						.setStartStop(START) //
+						.setVersion(WUERTH_VERSION_1_0_20)//
+						.setBatteryProtectionType(DEFAULT)//
 						.build())
 				.next(new TestCase("1") //
 						.input(BATTERY_SOC, 90) //

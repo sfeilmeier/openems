@@ -21,6 +21,14 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2024.10.3",
+        changes: [
+          Changelog.UI + "Optimierung der historischen Ansicht, Anlagenprofil Kategorie 'E-Auto-Ladestation', Inbetriebnahmeassistent",
+          Changelog.app(App.TIME_OF_USE) + "Fehlerbehebung bei der Ermittlung des Verbrauchs einer Ladesäule",
+          { roleIsAtLeast: Role.ADMIN, change: "Home: Anpassung der Battery-Protection für 64 Ah" },
+        ],
+      },
+      {
         version: "2024.10.2",
         changes: [
           Changelog.openems("2024.10.0"),

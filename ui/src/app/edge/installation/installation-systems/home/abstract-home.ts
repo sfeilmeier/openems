@@ -63,7 +63,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     fixedPowerFactor?: FeedInSetting;
     isManualProperlyFollowedAndRead?: boolean;
   } = {
-      feedInType: FeedInType.DYNAMIC_LIMITATION,
+      feedInType: FeedInType.NO_LIMITATION,
       maximumFeedInPower: 0,
       feedInSetting: FeedInSetting.QuEnableCurve,
       fixedPowerFactor: FeedInSetting.Undefined,
