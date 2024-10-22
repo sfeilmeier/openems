@@ -2,7 +2,6 @@ package io.openems.edge.io.i2c;
 
 import io.openems.common.test.AbstractComponentConfig;
 
-
 @SuppressWarnings("all")
 public class MyConfig extends AbstractComponentConfig implements Config {
 
