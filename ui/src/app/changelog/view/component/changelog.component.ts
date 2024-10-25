@@ -21,6 +21,16 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2024.10.4",
+        changes: [
+          Changelog.UI,
+          Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Optimierungen",
+          Changelog.app(App.TIME_OF_USE) + "ENTSO-E: Fehlerbehebung beim Abrufen der Preise von der XML-Schnittstelle",
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.TIME_OF_USE) + "Alpha-Test für V2_ENERGY_SCHEDULABLE" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Fehlerbehebung Geräteerkennung" },
+        ],
+      },
+      {
         version: "2024.10.3",
         changes: [
           Changelog.UI + "Optimierung der historischen Ansicht, Anlagenprofil Kategorie 'E-Auto-Ladestation', Inbetriebnahmeassistent",
