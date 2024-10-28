@@ -71,8 +71,7 @@ export class AdvertWidgets {
 
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
-        const title = edge.roleIsAtLeast(Role.INSTALLER) ? "Jetzt zum neuen, exklusiven Webinar anmelden" : "Beta-Test erfolgreich abgeschlossen";
-
+        const title = edge.roleIsAtLeast(Role.INSTALLER) ? "Dynamische Stromtarife: Webinar verpasst?" : "Dynamische Stromtarife - was Sie 2025 wissen müssen";
         let list: AdvertWidget[] = [{
             name: "time-of-use-tariff",
             title: { rawTitle: title },
