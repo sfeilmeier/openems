@@ -193,8 +193,4 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 		return "29ea7484-f60c-421a-b312-9db19dfd930a";
 	}
 
-	@Override
-	public String getExchangeRateAccesskey() {
-		return "fa28268048deba2e437f4c6e42b676a8";
-	}
 }
