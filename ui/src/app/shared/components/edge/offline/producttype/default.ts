@@ -54,7 +54,7 @@ export namespace OfflineConstants {
         Sofern Sie alle vorhergehenden Punkte bereits überprüft haben, und das
         Online-Monitoring weiterhin keine Daten anzeigt, können Sie sich an unseren
         Service wenden:<br>Per Mail: <a href="mailto:service&#64;fenecon.de">service&#64;fenecon.de</a> oder telefonisch unter:
-        +49 903 6280-0 (Mo. - Do. 8 - 12 | 13 - 17 Uhr | Fr. 8 - 12 | 13 - 15 Uhr)
+        +49 9903 6280-0 (Mo. - Do. 8 - 12 | 13 - 17 Uhr | Fr. 8 - 12 | 13 - 15 Uhr)
         `,
     };
 
