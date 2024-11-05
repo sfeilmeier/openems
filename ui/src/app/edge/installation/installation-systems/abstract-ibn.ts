@@ -8,7 +8,7 @@ import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { Category } from "../shared/category";
 import { FeedInSetting, FeedInType, View, WebLinks } from "../shared/enums";
-import { ComponentData, SerialNumberFormData } from "../shared/ibndatatypes";
+import { ComponentData, SerialNumberFormData, TableData } from "../shared/ibndatatypes";
 import { Meter } from "../shared/meter";
 import { FEED_IN_POWER_FACTOR_OPTIONS } from "../shared/options";
 import { System, SystemId, SystemType } from "../shared/system";
@@ -165,34 +165,22 @@ export abstract class AbstractIbn {
    *
    */
   public addCustomBatteryData(): ComponentData[] {
-    return [];
-  }
+    const batteryData: ComponentData[] = [];
+    if (this.emergencyReserve) {
+      batteryData.push({
+        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ACTIVATED"),
+        value: this.emergencyReserve.isEnabled ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+      });
 
-  /**
-   * View Dynamic limitation
-   * Adds and returns the specific Battery-Inverter information based on Ibn to view in summary.
-   *
-   */
-  public addCustomBatteryInverterData(): ComponentData[] {
-    return [];
-  }
-
-  /**
-   * View Protocol pv Data
-   * Adds and returns the PV information based on Ibn to view in summary.
-   *
-   */
-  public addCustomPvData(): ComponentData[] {
-    return [];
-  }
-
-  /**
-   * View Configuration Energy Flow Direction Meter
-   * Adds and returns the Meter information based on Ibn to view in summary.
-   *
-   */
-  public addCustomMeterData(): ComponentData[] {
-    return [];
+      if (this.emergencyReserve.isEnabled) {
+        batteryData.push({
+          label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_VALUE"),
+          value: this.emergencyReserve.value,
+        });
+      }
+    }
+    batteryData.push({ label: this.translate.instant("Index.TYPE"), value: this.type });
+    return batteryData;
   }
 
   /**
@@ -539,13 +527,6 @@ export abstract class AbstractIbn {
   }
 
   /**
-     * Loads the appropriate Ibn object.
-     */
-  public setIbn(system: any): AbstractIbn {
-    return System.getSystemObjectFromSystemId(system, this.translate);
-  }
-
-  /**
    * Returns the ems type saved in Odoo.
    *
    * @returns the EMS type or null if it is empty.
@@ -559,6 +540,44 @@ export abstract class AbstractIbn {
     return (rawEmsType === "null" ? null : rawEmsType) as "feh013" | "fho011" | null;
 
   }
+
+  /**
+   * Loads the appropriate Ibn object.
+   *
+   */
+  public setIbn(system: any): AbstractIbn {
+    return System.getSystemObjectFromSystemId(system, this.translate);
+  }
+
+  /**
+   * Updates the `views` array by removing or adding specific views.
+   *
+   * If the `edge` version is not at least '2021.19.1', it removes the `View.PreInstallationUpdate` from the `views` array.
+   *
+   * @param edge the current edge.
+   */
+  public removeUpdateView(edge: Edge): void {
+    // TODO remove when every edge starts with at least the required version
+    // only show update view if the update requests are implemented
+    if (!edge) {
+      return;
+    }
+
+    // Removes the update view if the version is not at least '2021.19.1'.
+    if (!edge.isVersionAtLeast("2021.19.1")) {
+      const indexOfUpdate = this.views.indexOf(View.PreInstallationUpdate);
+      if (indexOfUpdate != -1) {
+        this.views.splice(indexOfUpdate, 1);
+      }
+    }
+  }
+
+  /**
+   * Adds all fields which are System specific to be displayed in Configuration-Summary View.
+   *
+   * @param tableData The table data whose fields are displayed in Configuration-Summary.
+   */
+  public abstract addSystemSpecificFields(tableData: TableData[]): void;
 
   /**
  * Returns the number of towers and modules per tower.

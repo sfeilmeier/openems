@@ -8,7 +8,6 @@ import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Category } from "../../../shared/category";
 import { Coupler } from "../../../shared/coupler";
 import { FeedInType, ModbusBridgeType, View } from "../../../shared/enums";
-import { ComponentData } from "../../../shared/ibndatatypes";
 import { IbnUtils } from "../../../shared/ibnutils";
 import { SystemId } from "../../../shared/system";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
@@ -54,22 +53,6 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
             View.ProtocolSerialNumbers,
             View.Completion,
         ], translate);
-    }
-
-    public override addCustomBatteryData() {
-        const batteryData: ComponentData[] = [];
-        batteryData.push({
-            label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ACTIVATED"),
-            value: this.emergencyReserve.isEnabled ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
-        });
-
-        if (this.emergencyReserve.isEnabled) {
-            batteryData.push({
-                label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_VALUE"),
-                value: this.emergencyReserve.value,
-            });
-        }
-        return batteryData;
     }
 
     public setRequiredControllers() {

@@ -129,7 +129,7 @@ export class InstallationComponent implements OnInit {
    */
   public displayViewAtIndex(index: number) {
     this.logger.debug("View: " + Object.keys(View)[Object.values(View).indexOf(this.ibn.views[index])] + " Edge: " + this.edge?.id);
-    this.removeUpdateView();
+    this.ibn.removeUpdateView(this.edge);
     const viewCount = this.ibn.views.length;
     if (index >= 0 && index < viewCount) {
       this.displayedView = this.ibn.views[index];
@@ -183,22 +183,4 @@ export class InstallationComponent implements OnInit {
   private setIbn(ibn: AbstractIbn | null) {
     this.ibn = ibn;
   }
-
-  /**
-   * Removes the update view if the version is not at least '2021.19.1'.
-   */
-  private removeUpdateView() {
-    // TODO remove when every edge starts with at least the required version
-    // only show update view if the update requests are implemented
-    if (!this.edge) {
-      return;
-    }
-    if (!this.edge.isVersionAtLeast("2021.19.1")) {
-      const indexOfUpdate = this.ibn.views.indexOf(View.PreInstallationUpdate);
-      if (indexOfUpdate != -1) {
-        this.ibn.views.splice(indexOfUpdate, 1);
-      }
-    }
-  }
-
 }

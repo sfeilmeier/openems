@@ -45,6 +45,10 @@
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </protocol-system>
 
+                <configuration-ess-limiter-14a *ngSwitchCase="view.ConfigurationEssLimiter14aComponent" [ibn]="ibn"
+                    (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
+                </configuration-ess-limiter-14a>
+
                 <configuration-emergency-reserve *ngSwitchCase="view.ConfigurationEmergencyReserve" [ibn]="ibn"
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </configuration-emergency-reserve>

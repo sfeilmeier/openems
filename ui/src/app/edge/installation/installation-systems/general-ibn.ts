@@ -3,7 +3,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
 import { View } from "../shared/enums";
-import { SerialNumberFormData } from "../shared/ibndatatypes";
+import { SerialNumberFormData, TableData } from "../shared/ibndatatypes";
 import { SystemId } from "../shared/system";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
 import { AbstractIbn } from "./abstract-ibn";
@@ -61,6 +61,9 @@ export class GeneralIbn extends AbstractIbn {
         throw new Error("This is General Ibn, Method not implemented.");
     }
     public override setRequiredControllers() {
+        throw new Error("This is General Ibn, Method not implemented.");
+    }
+    public override addSystemSpecificFields(tableData: TableData[]): void {
         throw new Error("This is General Ibn, Method not implemented.");
     }
 }

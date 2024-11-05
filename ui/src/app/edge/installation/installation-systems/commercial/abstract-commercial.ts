@@ -141,7 +141,14 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         return super.getCommonFeedInLimitsFields(totalPvPower, options);
     }
 
-    public override addCustomBatteryInverterData() {
+    public override addSystemSpecificFields(tableData): void {
+        const batteryData: ComponentData[] = this.addCustomBatteryData();
+
+        tableData.push({
+            header: Category.BATTERY,
+            rows: batteryData,
+        });
+
         const batteryInverterData: ComponentData[] = [];
 
         this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION
@@ -163,7 +170,13 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
                         value: this.translate.instant("General.yes"),
                     });
 
-        return batteryInverterData;
+        const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
+        batteryInverterData.push({ label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.COUNTRY_SETTING"), value: IbnUtils.getCountryLabel(safetyCountry, this.translate) });
+
+        tableData.push({
+            header: Category.INVERTER,
+            rows: batteryInverterData,
+        });
     }
 
     public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower: number) {

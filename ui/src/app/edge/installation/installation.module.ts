@@ -11,6 +11,7 @@ import { CompletionComponent } from "./views/completion/completion.component";
 import { ConfigurationCommercialModbuBridgeComponent } from "./views/configuration-commercial-modbusbridge/configuration-commercial-modbusbridge";
 import { ConfigurationEmergencyReserveComponent } from "./views/configuration-emergency-reserve/configuration-emergency-reserve.component";
 import { ConfigurationEnergyFlowMeterComponent } from "./views/configuration-energy-flow-direction-meter/configuration-energy-flow-direction-meter.component";
+import { ConfigurationEssLimiter14aComponent } from "./views/configuration-ess-limiter-14a/configuration-ess-limiter-14a";
 import { ConfigurationExecuteComponent } from "./views/configuration-execute/configuration-execute.component";
 import { ConfigurationLineSideMeterFuseComponent } from "./views/configuration-line-side-meter-fuse/configuration-line-side-meter-fuse.component";
 import { ConfigurationMpptSelectionComponent } from "./views/configuration-mppt-selection/configuration-mppt-selection.component";
@@ -143,6 +144,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     ConfigurationSystemVariantComponent,
     ConfigurationSubSystemComponent,
     ConfigurationEnergyFlowMeterComponent,
+    ConfigurationEssLimiter14aComponent,
     ProtocolChecklistComponent,
   ],
 })

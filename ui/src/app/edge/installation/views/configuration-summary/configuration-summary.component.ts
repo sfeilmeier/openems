@@ -10,6 +10,7 @@ import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { Category } from "../../shared/category";
 import { WebLinks } from "../../shared/enums";
 import { ComponentData, TableData } from "../../shared/ibndatatypes";
+import { IbnUtils } from "../../shared/ibnutils";
 
 @Component({
   selector: ConfigurationSummaryComponent.SELECTOR,
@@ -118,6 +119,13 @@ export class ConfigurationSummaryComponent implements OnInit {
       { label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.EDGE_NUMBER", { edgeShortName: environment.edgeShortName }), value: edgeData },
     ];
 
+    const lineSideMeterFuseTitle: string = Category.toTranslatedString(this.ibn.lineSideMeterFuse.category, this.translate);
+    if (this.ibn.lineSideMeterFuse.otherValue) {
+      generalData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.otherValue });
+    } else {
+      generalData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.fixedValue });
+    }
+
     tableData.push({
       header: Category.GENERAL,
       rows: generalData,
@@ -125,68 +133,22 @@ export class ConfigurationSummaryComponent implements OnInit {
 
     tableData.push({
       header: Category.INSTALLER,
-      rows: this.fillData(this.ibn.installer, Category.INSTALLER),
+      rows: IbnUtils.fillData(this.ibn.installer, Category.INSTALLER, this.translate),
     });
 
     tableData.push({
       header: Category.CUSTOMER,
-      rows: this.fillData(this.ibn.customer, Category.CUSTOMER),
+      rows: IbnUtils.fillData(this.ibn.customer, Category.CUSTOMER, this.translate),
     });
 
     if (!this.ibn.location.isEqualToCustomerData) {
       tableData.push({
         header: Category.BATTERY_LOCATION,
-        rows: this.fillData(this.ibn.location, Category.BATTERY_LOCATION),
+        rows: IbnUtils.fillData(this.ibn.location, Category.BATTERY_LOCATION, this.translate),
       });
     }
 
-    const batteryData: ComponentData[] = this.ibn.addCustomBatteryData();
-    batteryData.push({ label: this.translate.instant("Index.TYPE"), value: this.ibn.type });
-
-    tableData.push({
-      header: Category.BATTERY,
-      rows: batteryData,
-    });
-
-    const batteryInverterData: ComponentData[] = this.ibn.addCustomBatteryInverterData();
-    const safetyCountry = this.ibn.location.isEqualToCustomerData ? this.ibn.customer.country : this.ibn.location.country;
-    batteryInverterData.push({ label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.COUNTRY_SETTING"), value: this.getCountryLabel(safetyCountry) });
-
-    tableData.push({
-      header: Category.INVERTER,
-      rows: batteryInverterData,
-    });
-
-    // DC
-    const pvData = this.ibn.addCustomPvData();
-    if (pvData.length > 0) {
-      tableData.push({
-        header: Category.PRODUCER,
-        rows: pvData,
-      });
-    }
-
-    const meterData = this.ibn.addCustomMeterData();
-
-    if ("meterType" in this.ibn.lineSideMeterFuse) {
-      // Line side meter fuse
-      meterData.push({
-        label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
-        value: this.ibn.lineSideMeterFuse.meterType,
-      });
-    }
-
-    const lineSideMeterFuseTitle: string = Category.toTranslatedString(this.ibn.lineSideMeterFuse.category, this.translate);
-    if (this.ibn.lineSideMeterFuse.otherValue) {
-      meterData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.otherValue });
-    } else {
-      meterData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.fixedValue });
-    }
-
-    tableData.push({
-      header: Category.GRID_METER_CATEGORY,
-      rows: meterData,
-    });
+    this.ibn.addSystemSpecificFields(tableData);
 
     // Deepcopy to local tableData to the this.tabledata by repalcing category with translated string.
     this.tableData = tableData.map((element) => {
