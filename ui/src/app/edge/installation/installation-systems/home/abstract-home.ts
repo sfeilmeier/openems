@@ -8,10 +8,12 @@ import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
 import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
+import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../shared/appcenterutil";
 import { Category } from "../../shared/category";
 import { FeedInSetting, FeedInType, View, WebLinks } from "../../shared/enums";
 import { ComponentData, DcPv, SerialNumberFormData } from "../../shared/ibndatatypes";
+import { IbnUtils } from "../../shared/ibnutils";
 import { Meter } from "../../shared/meter";
 import { SystemId, SystemType } from "../../shared/system";
 import { BaseMode, ComponentConfigurator, ConfigurationMode } from "../../views/configuration-execute/component-configurator";
@@ -31,7 +33,8 @@ export type Home2030CommonApp = {
   HAS_EMERGENCY_RESERVE: boolean,
   EMERGENCY_RESERVE_ENABLED?: boolean,
   EMERGENCY_RESERVE_SOC?: number,
-  SHADOW_MANAGEMENT_DISABLED?: boolean
+  SHADOW_MANAGEMENT_DISABLED?: boolean,
+  HAS_ESS_LIMITER_14A: boolean,
 };
 
 export abstract class AbstractHomeIbn extends AbstractIbn {
@@ -106,9 +109,11 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public override showViewCount: boolean = false;
   public override readonly defaultNumberOfModules: number = 5;
 
+  public activateLimitController14a: boolean = true;
+  public readonly indexOf14aLimiterControllerView: number = 7;
   private numberOfModulesPerTower: number;
-
   public abstract mppt: any;
+
   public abstract readonly emsBoxLabel: Category;
   public abstract readonly maxNumberOfPvStrings: number;
   public abstract readonly maxNumberOfMppt: number;
@@ -430,6 +435,16 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         behaviour: SchedulerIdBehaviour.MANAGED_BY_APP_MANAGER,
       });
     }
+
+    if (this.activateLimitController14a) {
+      this.requiredControllerIds.push(
+        {
+          componentId: "ctrlEssLimiter14a0",
+          behaviour: SchedulerIdBehaviour.MANAGED_BY_APP_MANAGER,
+        },
+      );
+    }
+
     this.requiredControllerIds.push(
       {
         componentId: "ctrlGridOptimizedCharge0",
@@ -446,23 +461,14 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     );
   }
 
-  public override addCustomBatteryData() {
-    const batteryData: ComponentData[] = [];
-    batteryData.push({
-      label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ACTIVATED"),
-      value: this.emergencyReserve.isEnabled ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+  public override addSystemSpecificFields(tableData): void {
+    const batteryData: ComponentData[] = this.addCustomBatteryData();
+
+    tableData.push({
+      header: Category.BATTERY,
+      rows: batteryData,
     });
 
-    if (this.emergencyReserve.isEnabled) {
-      batteryData.push({
-        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_VALUE"),
-        value: this.emergencyReserve.value,
-      });
-    }
-    return batteryData;
-  }
-
-  public override addCustomBatteryInverterData() {
     const batteryInverterData: ComponentData[] = [];
 
     this.feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
@@ -493,10 +499,15 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         value: this.feedInLimitation.fixedPowerFactor,
       });
     }
-    return batteryInverterData;
-  }
 
-  public override addCustomPvData() {
+    const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
+    batteryInverterData.push({ label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.COUNTRY_SETTING"), value: IbnUtils.getCountryLabel(safetyCountry, this.translate) });
+
+    tableData.push({
+      header: Category.INVERTER,
+      rows: batteryInverterData,
+    });
+
     const pvData: ComponentData[] = [];
 
     let pvNr: number = 1;
@@ -540,7 +551,42 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       }
       pvNr++;
     }
-    return pvData;
+
+    // DC
+    if (pvData.length > 0) {
+      tableData.push({
+        header: Category.PRODUCER,
+        rows: pvData,
+      });
+    }
+
+    const gridData: ComponentData[] = [];
+    const energyFlowMeter = this.energyFlowMeter;
+
+    if (energyFlowMeter) {
+      gridData.push({
+        label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
+        value: Meter.toGridMeterCategoryLabelString(energyFlowMeter.meter, this.translate),
+      });
+      if (energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER) {
+        gridData.push({
+          label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.CONVERTER_RATIO"),
+          value: energyFlowMeter.value.toString(),
+        });
+      }
+    }
+
+    gridData.push({
+      label: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
+      value: this.activateLimitController14a ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+    });
+
+    if (gridData.length > 0) {
+      tableData.push({
+        header: Category.GRID,
+        rows: gridData,
+      });
+    }
   }
 
   public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
@@ -552,18 +598,24 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
     if (energyFlowMeter) {
       protocol.items.push({
-        category: Category.GRID_METER_CATEGORY,
+        category: Category.GRID,
         name: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
         value: Meter.toGridMeterCategoryLabelString(energyFlowMeter.meter, this.translate),
       });
       if (energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER) {
         protocol.items.push({
-          category: Category.GRID_METER_CATEGORY,
+          category: Category.GRID,
           name: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.CONVERTER_RATIO"),
           value: energyFlowMeter.value.toString(),
         });
       }
     }
+
+    protocol.items.push({
+      category: Category.GRID,
+      name: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
+      value: this.activateLimitController14a ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+    });
 
     protocol.items.push({
       category: Category.EMERGENCY_RESERVE,
@@ -1002,6 +1054,21 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       baseMode: baseMode,
     });
 
+    if (this.activateLimitController14a) {
+      componentConfigurator.add({
+        factoryId: "Controller.Ess.Limiter14a",
+        componentId: "ctrlEssLimiter14a0",
+        alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.ESS_LIMITER_ALIAS"),
+        properties: [
+          { name: "enabled", value: true },
+          { name: "ess.id", value: "ess0" },
+          { name: "inputChannel", value: "io1/DigitalOutput1" },
+        ],
+        mode: this.emergencyReserve.isEnabled ? ConfigurationMode.RemoveAndConfigure : ConfigurationMode.RemoveOnly,
+        baseMode: baseMode,
+      });
+    }
+
     return componentConfigurator;
   }
 
@@ -1021,6 +1088,9 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     if ("energyFlowMeter" in ibnString) {
       this.energyFlowMeter = ibnString.energyFlowMeter;
     }
+
+    // limitController14a
+    this.activateLimitController14a = ibnString.activateLimitController14a;
   }
 
   /**
@@ -1064,26 +1134,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     }
   }
 
-  public override addCustomMeterData(): ComponentData[] {
-    const meterData: ComponentData[] = [];
-    const energyFlowMeter = this.energyFlowMeter;
-
-    if (energyFlowMeter) {
-      meterData.push({
-        label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
-        value: Meter.toGridMeterCategoryLabelString(energyFlowMeter.meter, this.translate),
-      });
-      if (energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER) {
-        meterData.push({
-          label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.CONVERTER_RATIO"),
-          value: energyFlowMeter.value.toString(),
-        });
-      }
-    }
-
-    return meterData;
-  }
-
   /**
    * Retrieves the common properties for Home20 and Home30 configurations.
    *
@@ -1104,9 +1154,40 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       ...(this.emergencyReserve.isEnabled && { EMERGENCY_RESERVE_ENABLED: this.emergencyReserve.isReserveSocEnabled }),
       ...(this.emergencyReserve.isReserveSocEnabled && { EMERGENCY_RESERVE_SOC: this.emergencyReserve.value }),
       ...(this.batteryInverter?.shadowManagementDisabled && { SHADOW_MANAGEMENT_DISABLED: true }),
+      HAS_ESS_LIMITER_14A: this.activateLimitController14a,
     };
 
     return home20_30CommonApp;
+  }
+
+  /**
+   * For `SystemType.FENECON_HOME` and `SystemType.HECKERT_HOME`, it checks the location:
+   * - If the location is not Germany, it removes the `View.ConfigurationEssLimiter14aComponent` from the `views` array.
+   * - If the location is Germany and the `View.ConfigurationEssLimiter14aComponent` is not already in the `views` array, it adds it at a specific index.
+   */
+  public override removeUpdateView(edge: Edge) {
+    super.removeUpdateView(edge);
+
+    const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
+    const indexOfView: number = this.views.indexOf(View.ConfigurationEssLimiter14aComponent);
+
+    if (location && location !== Country.GERMANY) {
+      const indexOfUpdate: number = indexOfView;
+      if (indexOfUpdate != -1) {
+        // Remove ConfigurationEssLimiter14aComponent.
+        this.views.splice(indexOfUpdate, 1);
+        this.activateLimitController14a = false;
+      }
+      return;
+    }
+
+    if (indexOfView === -1) {
+      // Add ConfigurationEssLimiter14aComponent.
+      // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
+      this.views.splice(this.indexOf14aLimiterControllerView, 0, View.ConfigurationEssLimiter14aComponent);
+      this.activateLimitController14a = true;
+    }
+
   }
 
   /**

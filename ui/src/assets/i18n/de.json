@@ -668,6 +668,7 @@
       "IP_ADDRESS_WARNING": "Eine für den Koppler erforderliche IP-Adresse konnte der Netzwerkkonfiguration nicht hinzugefügt werden.",
       "START_FUNCTION_TEST": "Funktionstests für die installierten Komponenten gestartet",
       "FINISH_FUNCTION_TEST": "Funktionstests für die verbauten Komponenten abgeschlossen",
+      "ESS_LIMITER_ALIAS": "ESS Limiter für §14a",
       "IP_ADDRESS_ERROR": "Eine für die {{ system }} notwendige IP-Adresse konnte nicht zur Netzwerkkonfiguration hinzugefügt werden.",
       "PREPARE_BATTERY_EXTENSION": "Batterienachrüstung",
       "COMMERCIAL_BATTERY_NOTE": "\nWenn Sie nun auf “WEITER ->” klicken, stehen Ihnen ca. 15  Minuten zur vollständigen Durchführung der restlichen Inbetriebnahme (IBN) zur Verfügung. Danach geht die BMS in einen zur Sicherheit eingestellten “Time-Out”. Normalerweise ist diese Zeit ausreichend, um die letzten Schritte der IBN in Ruhe abzuschließen. \nSollte die Zeit trotzdem nicht genügen, können Sie die IBN erneut von vorne starten.",
@@ -708,7 +709,7 @@
       "BOTH_SELECTED_LABEL": "Beide Anschlüsse (\"PV{{ pv1 }}\" und \"PV{{ pv2 }}\") belegt",
       "DEVICE_CONNECTION_CHECKED": "Das Stromspeichersystem ist an das Stromnetz angeschlossen",
       "ENERGY_FLOW_METER": {
-        "LABEL": "Installierter Netzzähler"
+        "LABEL": "Netz"
       }
     },
     "CONFIGURATION_SYSTEM": {
@@ -875,6 +876,12 @@
       "CONVERTER_RATIO": "Primärstrom (200–5000A)"
     },
     "CONFIGURATION_MPPT_SELECTION_NOTE": "Weitere Erzeuger können im Anschluss über das App Center konfiguriert werden.",
+    "CONFIGURATION_ESS_LIMITER": {
+      "TITLE": "Dimmung nach §14a EnWG",
+      "IS_ACTIVATE": "Möglichkeit der Dimmung nach §14a EnWG aktivieren",
+      "INFO_NOTE": "Um eine Überlastung des Netzes zu vermeiden, erhält der Netzbetreiber bei allen, seit dem 01.01.2024 installierten Verbrauchseinrichtungen, zukünftig die Möglichkeit, diese auf eine Netzbezugsleistung des Stromspeichers von 4,2 kW zu dimmen.",
+      "IS_ACTIVATE_LABEL": "Die Verdrahtung ist entsprechend der Montageanleitung anzubringen."
+    },
     "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO - Wechselrichter einbinden",
     "PROTOCOL_CHECKLIST": {
       "CONNECT_INVERTER": "A) Computer per Netzwerkkabel mit Wechelrichter verbinden (obere LAN Buchse)",

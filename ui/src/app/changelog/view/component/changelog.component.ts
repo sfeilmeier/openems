@@ -21,13 +21,19 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
-        version: "2024.10.4",
+        version: "2024.11.1",
         changes: [
           Changelog.UI,
-          Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Optimierungen",
-          Changelog.app(App.TIME_OF_USE) + "ENTSO-E: Fehlerbehebung beim Abrufen der Preise von der XML-Schnittstelle",
+          Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Allgemeine Optimierungen",
+          Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Fehlerbehebung beim Abrufen der Preise von der XML-Schnittstelle; Währungsumrechnung durch API der Europäischen Zentralbank",
+          Changelog.app(App.TIME_OF_USE, App.RABOT_CHARGE) + "Fehlerbehebung bei der OAuth Authentifizierung",
+          Changelog.app(App.TIME_OF_USE, App.SWISSPOWER) + "Kompatibilität mit dynamischen Stromtarifen der Swisspower-Alianz (Schweiz)",
+          { roleIsAtLeast: Role.INSTALLER, change: "Inbetriebnahmeassistent: Konfiguration der Dimmung nach §14a EnWG" },
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Korrektur des Vorzeichens bei phasengenauen Stromwerten" },
           { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.TIME_OF_USE) + "Alpha-Test für V2_ENERGY_SCHEDULABLE" },
-          { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Fehlerbehebung Geräteerkennung" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Fehlerbehebung Geräteerkennung, erste Kompatibilität mit Gen2" },
+          { roleIsAtLeast: Role.ADMIN, change: "Backend Performance-Optimierung: Jitter beim Senden aggregierter Daten" },
+          { roleIsAtLeast: Role.ADMIN, change: "Host: neuer Channel _host/OsVersion zur Identifikation der Linux-Version" },
         ],
       },
       {

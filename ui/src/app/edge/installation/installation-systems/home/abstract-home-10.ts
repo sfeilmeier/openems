@@ -15,7 +15,8 @@ type Home10App = {
   HAS_EMERGENCY_RESERVE: boolean,
   EMERGENCY_RESERVE_ENABLED?: boolean,
   EMERGENCY_RESERVE_SOC?: number,
-  SHADOW_MANAGEMENT_DISABLED?: boolean
+  SHADOW_MANAGEMENT_DISABLED?: boolean,
+  HAS_ESS_LIMITER_14A: boolean,
 };
 
 export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
@@ -55,6 +56,7 @@ export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
       ...(this.emergencyReserve.isEnabled && { EMERGENCY_RESERVE_ENABLED: this.emergencyReserve.isReserveSocEnabled }),
       ...(this.emergencyReserve.isReserveSocEnabled && { EMERGENCY_RESERVE_SOC: this.emergencyReserve.value }),
       ...(this.batteryInverter?.shadowManagementDisabled && { SHADOW_MANAGEMENT_DISABLED: true }),
+      HAS_ESS_LIMITER_14A: this.activateLimitController14a,
     };
 
     return home10AppProperties;

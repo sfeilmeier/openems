@@ -670,6 +670,7 @@
       "IP_ADDRESS_WARNING": "An IP address required for the coupler could not be added to the Network configuration.",
       "START_FUNCTION_TEST": "Initiated function tests for the installed components",
       "FINISH_FUNCTION_TEST": "Finished function tests for the installed components",
+      "ESS_LIMITER_ALIAS": "ESS Limiter for §14a",
       "IP_ADDRESS_ERROR": "An IP address required for the {{ system}} could not be added to the network configuration.",
       "PREPARE_BATTERY_EXTENSION": "Battery retrofitting",
       "COMMERCIAL_BATTERY_NOTE": "If you now click on “NEXT ->”, you have around 15 minutes to complete the rest of the commissioning process. After that, the BMS goes into a “time-out” set for safety reasons. Normally, this time is sufficient to complete the last steps of the commissioning in peace.\nIf there is still not enough time, you can start the commissioning again from the beginning.",
@@ -710,7 +711,7 @@
       "BOTH_SELECTED_LABEL": "Both pv-ports (\"PV{{ pv1 }}\" and \"PV{{ pv2 }}\") connected",
       "DEVICE_CONNECTION_CHECKED": "The energy storage system is connected to the power grid",
       "ENERGY_FLOW_METER": {
-        "LABEL": "Installed Grid-Meter"
+        "LABEL": "Grid"
       }
     },
     "CONFIGURATION_SYSTEM": {
@@ -877,6 +878,12 @@
       "CONVERTER_RATIO": "Converter ratio (200–5000A)"
     },
     "CONFIGURATION_MPPT_SELECTION_NOTE": "Additional generators can then be configured via the App Center.",
+    "CONFIGURATION_ESS_LIMITER": {
+      "TITLE": "Limiting according to §14a EnWG",
+      "IS_ACTIVATE": "Activate limiting option according to §14a EnWG",
+      "INFO_NOTE": "In order to avoid overloading the network, the network operator will in future have the option of dimming all consumption devices installed since January 1, 2024 to an output of 4.2 kW.",
+      "IS_ACTIVATE_LABEL": "The wiring must be installed in accordance with the installation instructions."
+    },
     "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO - Connect inverter",
     "PROTOCOL_CHECKLIST": {
       "CONNECT_INVERTER": "A) Connect the computer to the inverter using a network cable (upper LAN socket)",

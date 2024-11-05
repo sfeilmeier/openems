@@ -113,6 +113,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.FENECON.Home", "https://fenecon.de/fenecon-home-10/") //
 			.put("App.FENECON.Home.20", "https://fenecon.de/fenecon-home-20-30/") //
 			.put("App.FENECON.Home.30", "https://fenecon.de/fenecon-home-20-30/") //
+			.put("App.FENECON.Home.6KW", "") //
+			.put("App.FENECON.Home.10KW", "") //
+			.put("App.FENECON.Home.15KW", "") //
 			.put("App.FENECON.Commercial.92", "https://fenecon.de/fenecon-commercial/") //
 			.put("App.FENECON.Industrial.L.ILK710", "https://fenecon.de/fenecon-industrial-l/") //
 			.put("App.FENECON.Industrial.S.ISK010", "https://fenecon.de/fenecon-industrial-s/") //
@@ -123,6 +126,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.TimeOfUseTariff.GroupeE", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Hassfurt", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Stromdao", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
+			.put("App.TimeOfUseTariff.Swisspower", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Tibber", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.RabotCharge", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			// TODO folgende URLs sind veraltet
@@ -194,7 +198,8 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 	}
 
 	@Override
-	public String getExchangeRateAccesskey() {
-		return "fa28268048deba2e437f4c6e42b676a8";
+	public OAuthClientRegistration getRabotChargeCredentials() {
+		return new OAuthClientRegistration("fenecon-api-client", "STQvjQh86fn7tWiaL5QRUYzvRn5QN7fv");
 	}
+
 }

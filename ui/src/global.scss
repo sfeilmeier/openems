@@ -35,7 +35,7 @@ ion-refresher-content {
 }
 
 ion-content.background {
-    --background: url('assets/img/fenecon-energy-journey.png') 40% 80% / cover no-repeat fixed;
+    --background: url('assets/img/fenecon-energy-journey.jpg') 40% 80% / cover no-repeat fixed;
 
     ion-card {
         border-radius: 1em;
@@ -45,7 +45,7 @@ ion-content.background {
 
 @media (min-width: 768px) {
     ion-content.background {
-        --background: url('assets/img/fenecon-energy-journey.png') center center / cover no-repeat fixed;
+        --background: url('assets/img/fenecon-energy-journey.jpg') center center / cover no-repeat fixed;
     }
 }
 
@@ -68,6 +68,10 @@ ion-content.background {
         display: none;
     }
 
+}
+
+.paragraph-space {
+    margin-top: 2rem;
 }
 
 .disabled {
@@ -430,4 +434,18 @@ ion-modal.full-width {
 
 .card-with-primary-border {
     border: 2px solid $primary-color;
+}
+
+ion-avatar.iconify {
+    margin-inline-end: 32px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    --border-radius: 0;
+    max-height: 24px;
+    max-width: 24px;
+}
+
+ion-avatar.iconify.icon-large {
+    max-height: 32px;
+    max-width: 32px;
 }

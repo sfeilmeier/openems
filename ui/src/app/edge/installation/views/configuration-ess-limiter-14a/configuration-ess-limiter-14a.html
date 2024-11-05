@@ -1,0 +1,20 @@
+<installation-view iconName="settings-outline" header="{{ 'INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE' | translate }}"
+    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()">
+
+    <ion-item lines="none">
+        <ion-label class="ion-text-wrap" style="font-weight: bold;" translate>
+            INSTALLATION.CONFIGURATION_ESS_LIMITER.INFO_NOTE
+        </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+        <ion-label translate>
+            INSTALLATION.CONFIGURATION_ESS_LIMITER.IS_ACTIVATE_LABEL
+        </ion-label>
+    </ion-item>
+
+    <div class="paragraph-space">
+        <formly-form [form]="form" [fields]="fields" [model]="model" lines="none"></formly-form>
+    </div>
+
+</installation-view>

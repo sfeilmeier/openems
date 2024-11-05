@@ -33,6 +33,9 @@ import io.openems.edge.app.heat.CombinedHeatAndPower;
 import io.openems.edge.app.heat.HeatPump;
 import io.openems.edge.app.heat.HeatingElement;
 import io.openems.edge.app.integratedsystem.FeneconHome;
+import io.openems.edge.app.integratedsystem.FeneconHome6KW;
+import io.openems.edge.app.integratedsystem.FeneconHome10KW;
+import io.openems.edge.app.integratedsystem.FeneconHome15KW;
 import io.openems.edge.app.integratedsystem.FeneconHome20;
 import io.openems.edge.app.integratedsystem.FeneconHome30;
 import io.openems.edge.app.integratedsystem.fenecon.commercial.FeneconCommercial92;
@@ -71,6 +74,7 @@ import io.openems.edge.app.timeofusetariff.GroupeE;
 import io.openems.edge.app.timeofusetariff.RabotCharge;
 import io.openems.edge.app.timeofusetariff.StadtwerkHassfurt;
 import io.openems.edge.app.timeofusetariff.StromdaoCorrently;
+import io.openems.edge.app.timeofusetariff.Swisspower;
 import io.openems.edge.app.timeofusetariff.Tibber;
 import io.openems.edge.common.component.ComponentManager;
 
@@ -105,6 +109,36 @@ public final class Apps {
 	 */
 	public static final FeneconHome feneconHome(AppManagerTestBundle t) {
 		return app(t, FeneconHome::new, "App.FENECON.Home");
+	}
+
+	/**
+	 * Test method for creating a {@link FeneconHome6KW}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconHome6KW feneconHome6kw(AppManagerTestBundle t) {
+		return app(t, FeneconHome6KW::new, "App.FENECON.Home.6KW");
+	}
+
+	/**
+	 * Test method for creating a {@link FeneconHome10KW}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconHome10KW feneconHome10kw(AppManagerTestBundle t) {
+		return app(t, FeneconHome10KW::new, "App.FENECON.Home.10KW");
+	}
+
+	/**
+	 * Test method for creating a {@link FeneconHome15KW}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconHome15KW feneconHome15kw(AppManagerTestBundle t) {
+		return app(t, FeneconHome15KW::new, "App.FENECON.Home.15KW");
 	}
 
 	/**
@@ -217,6 +251,16 @@ public final class Apps {
 	 */
 	public static final StadtwerkHassfurt stadtwerkHassfurt(AppManagerTestBundle t) {
 		return app(t, StadtwerkHassfurt::new, "App.TimeOfUseTariff.Hassfurt");
+	}
+
+	/**
+	 * Test method for creating a {@link Swisspower}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final Swisspower swisspower(AppManagerTestBundle t) {
+		return app(t, Swisspower::new, "App.TimeOfUseTariff.Swisspower");
 	}
 
 	/**

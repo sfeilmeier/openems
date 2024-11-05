@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2024.10.4";
+    public static readonly UI_VERSION = "2024.11.1";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -109,6 +109,9 @@ export class App {
     public static readonly AWATTAR = "Awattar HOURLY";
     public static readonly TIBBER = "Tibber";
     public static readonly CORRENTLY = "STROMDAO Corrently";
+    public static readonly RABOT_CHARGE = "rabot.charge";
+    public static readonly ENTSO_E = "ENTSO-E";
+    public static readonly SWISSPOWER = "Swisspower";
 
     // private to disallow creating other instances of this type
     private constructor(public readonly name: string, public readonly url: string) {

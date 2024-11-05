@@ -29,7 +29,7 @@ export class JsonrpcTestComponent implements OnInit {
   public ngOnInit(): void {
     this.service.getCurrentEdge().then(edge => {
 
-      const currentUserSettings = this.service.currentUser.settings;
+      const currentUserSettings = this.service.currentUser().settings;
       if (!currentUserSettings["jsonrpcTest"]) {
         currentUserSettings["jsonrpcTest"] = true;
         this.websocket.sendRequest(
