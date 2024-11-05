@@ -197,4 +197,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 		return "29ea7484-f60c-421a-b312-9db19dfd930a";
 	}
 
+	@Override
+	public OAuthClientRegistration getRabotChargeCredentials() {
+		return new OAuthClientRegistration("fenecon-api-client", "STQvjQh86fn7tWiaL5QRUYzvRn5QN7fv");
+	}
+
 }
