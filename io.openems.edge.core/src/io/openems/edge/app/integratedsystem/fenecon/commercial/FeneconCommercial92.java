@@ -33,6 +33,7 @@ import io.openems.edge.core.appmanager.AbstractOpenemsAppWithProps;
 import io.openems.edge.core.appmanager.AppConfiguration;
 import io.openems.edge.core.appmanager.AppDef;
 import io.openems.edge.core.appmanager.AppDescriptor;
+import io.openems.edge.core.appmanager.AppManagerUtil;
 import io.openems.edge.core.appmanager.ComponentUtil;
 import io.openems.edge.core.appmanager.ConfigurationTarget;
 import io.openems.edge.core.appmanager.InterfaceConfiguration;
@@ -91,14 +92,18 @@ public class FeneconCommercial92 extends
 
 	}
 
+	private final AppManagerUtil appManagerUtil;
+
 	@Activate
 	public FeneconCommercial92(//
 			@Reference final ComponentManager componentManager, //
 			final ComponentContext componentContext, //
 			@Reference final ConfigurationAdmin cm, //
-			@Reference final ComponentUtil componentUtil //
+			@Reference final ComponentUtil componentUtil, //
+			@Reference final AppManagerUtil appManagerUtil //
 	) {
 		super(componentManager, componentContext, cm, componentUtil);
+		this.appManagerUtil = appManagerUtil;
 	}
 
 	@Override
@@ -144,6 +149,9 @@ public class FeneconCommercial92 extends
 
 			final var batteryTarget = this.getString(p, Property.BATTERY_TARGET);
 
+			final var deviceHardware = this.appManagerUtil
+					.getFirstInstantiatedAppByCategories(OpenemsAppCategory.OPENEMS_DEVICE_HARDWARE);
+
 			final var components = Lists.newArrayList(//
 					FeneconHomeComponents.battery(bundle, batteryId, modbusToBatteryId, batteryTarget), //
 					FeneconCommercialComponents.batteryInverter(bundle, batteryInverterId, modbusToBatteryInverterId), //
@@ -153,7 +161,7 @@ public class FeneconCommercial92 extends
 					FeneconHomeComponents.predictor(bundle, t), //
 					FeneconCommercialComponents.modbusToBatteryInverter(bundle, t, modbusToBatteryInverterId), //
 					FeneconCommercialComponents.modbusToGridMeter(bundle, t, modbusToGridMeterId), //
-					FeneconHomeComponents.modbusForExternalMeters(bundle, t, modbusToExternalDevicesId) //
+					FeneconHomeComponents.modbusForExternalMeters(bundle, t, modbusToExternalDevicesId, deviceHardware) //
 			);
 
 			final var dependencies = Lists.newArrayList(//
