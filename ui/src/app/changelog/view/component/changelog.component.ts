@@ -1,5 +1,7 @@
+import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { IonicModule } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { environment } from "src/environments";
 import { Service } from "../../../shared/shared";
@@ -9,6 +11,8 @@ import { App, Changelog, Library, OpenemsComponent, Product } from "./changelog.
 @Component({
   selector: "changelog",
   templateUrl: "./changelog.component.html",
+  standalone: true,
+  imports: [IonicModule, CommonModule],
 })
 export class ChangelogComponent {
 
