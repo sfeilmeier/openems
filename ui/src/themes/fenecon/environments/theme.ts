@@ -65,6 +65,7 @@ export const theme = {
             HOME: {
                 HOME_10: "https://docs.fenecon.de/_/de/home/home_10/montage_und_service_anleitung/Montage_und_Serviceanleitung_Home.html",
                 HOME_20_30: "https://docs.fenecon.de/_/de/home/home_20-30/montage_und_service_anleitung/Montage_und_Serviceanleitung_Home_20-30.html",
+                HOME_GEN_2: "https://fenecon.de/files-fenecon-home-6-10-15/",
             },
             COMMERCIAL: {
                 COMMERCIAL_30: "https://docs.fenecon.de/_/de/commercial/commercial_30/montage_und_serviceanleitung/Montage_und_Serviceanleitung_Commercial_30.html",

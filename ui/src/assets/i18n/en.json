@@ -871,9 +871,14 @@
     "CONFIGURATION_ENERGY_FLOW_METER": {
       "TITLE": "Selection of energy flow direction meter",
       "METER": {
-        "WITH_CT": "Home 3-phase sensor with current transformer 120A (standard scope of delivery)",
+        "WITH_CT": "Home 3-phase sensor with current transformer 120A ({{type}})",
         "WITHOUT_CT": "Home 3-phase sensor without current transformer (optional)",
-        "LABEL": "Meter"
+        "LABEL": "Meter",
+        "INTEGRATED": "Integrated Home 3 phase sensor with current transformer ({{type}})",
+        "TYPE": {
+          "STANDARD": "standard scope of delivery",
+          "OPTIONAL": "Optional"
+        }
       },
       "CONVERTER_RATIO": "Converter ratio (200–5000A)"
     },

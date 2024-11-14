@@ -70,6 +70,7 @@ export interface Environment {
             readonly HOME: {
                 readonly HOME_10: string,
                 readonly HOME_20_30: string,
+                readonly HOME_GEN_2: string,
             },
             readonly COMMERCIAL: {
                 readonly COMMERCIAL_30: string,

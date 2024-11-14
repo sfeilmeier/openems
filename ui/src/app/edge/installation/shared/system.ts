@@ -8,9 +8,12 @@ import { Commercial50Balancing } from "../installation-systems/commercial/commer
 import { Commercial92Ibn } from "../installation-systems/commercial/commercial-92/commercial92";
 import { GeneralIbn } from "../installation-systems/general-ibn";
 import { Home10FeneconIbn } from "../installation-systems/home/home-10";
+import { Home10Gen2FeneconIbn } from "../installation-systems/home/home-10-gen2";
 import { Home10HeckertIbn } from "../installation-systems/home/home-10-heckert";
+import { Home15Gen2FeneconIbn } from "../installation-systems/home/home-15-gen2";
 import { Home20FeneconIbn } from "../installation-systems/home/home-20";
 import { Home30FeneconIbn } from "../installation-systems/home/home-30";
+import { Home6Gen2FeneconIbn } from "../installation-systems/home/home-6-gen2";
 
 export enum SystemType {
     FENECON_HOME = "FENECON Home",
@@ -27,6 +30,9 @@ export enum SubSystemType {
 export enum SystemId {
     GENERAL,
     FENECON_HOME_10 = "FENECON Home 10",
+    FENECON_HOME_10_GEN_2 = "FENECON Home 10 (Gen 2)",
+    FENECON_HOME_6 = "FENECON Home 6",
+    FENECON_HOME_15 = "FENECON Home 15",
     FENECON_HOME_20 = "FENECON Home 20",
     FENECON_HOME_30 = "FENECON Home 30",
     HECKERT_HOME_10 = "Symphon-E",
@@ -37,6 +43,14 @@ export enum SystemId {
     COMMERCIAL_50_BALANCING = "FENECON Commercial 50 Balancing",
     COMMERCIAL_92 = "FENECON Commercial 92",
 }
+
+export type HomeSystemId =
+    SystemId.FENECON_HOME_10 |
+    SystemId.FENECON_HOME_20 |
+    SystemId.FENECON_HOME_30 |
+    SystemId.FENECON_HOME_10_GEN_2 |
+    SystemId.FENECON_HOME_6 |
+    SystemId.FENECON_HOME_15;
 
 export namespace System {
 
@@ -107,6 +121,12 @@ export namespace System {
                 return new Home20FeneconIbn(translate);
             case SystemId.FENECON_HOME_30:
                 return new Home30FeneconIbn(translate);
+            case SystemId.FENECON_HOME_10_GEN_2:
+                return new Home10Gen2FeneconIbn(translate);
+            case SystemId.FENECON_HOME_15:
+                return new Home15Gen2FeneconIbn(translate);
+            case SystemId.FENECON_HOME_6:
+                return new Home6Gen2FeneconIbn(translate);
         }
     }
 
@@ -137,18 +157,20 @@ export namespace System {
     }
 
     /**
-     * Returns the URL for the System type.
+     * Returns the URL for the Home System type.
      *
      * @param systemType Type of the System.
      * @returns the url.
      */
-    export function getHomeSystemInstructionsLink(homeSystemId: SystemId.FENECON_HOME_10 | SystemId.FENECON_HOME_20 | SystemId.FENECON_HOME_30): string {
+    export function getHomeSystemInstructionsLink(homeSystemId: HomeSystemId): string {
         switch (homeSystemId) {
             case SystemId.FENECON_HOME_10:
                 return environment.links.MANUALS.HOME.HOME_10;
             case SystemId.FENECON_HOME_20:
             case SystemId.FENECON_HOME_30:
                 return environment.links.MANUALS.HOME.HOME_20_30;
+            default:
+                return environment.links.MANUALS.HOME.HOME_GEN_2;
         }
     }
 
@@ -163,6 +185,9 @@ export namespace System {
             SystemId.FENECON_HOME_10,
             SystemId.FENECON_HOME_20,
             SystemId.FENECON_HOME_30,
+            SystemId.FENECON_HOME_10_GEN_2,
+            SystemId.FENECON_HOME_6,
+            SystemId.FENECON_HOME_15,
         ];
 
         return selectedSystem && homeSystemIds.includes(selectedSystem);

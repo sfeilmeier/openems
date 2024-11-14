@@ -3,9 +3,10 @@ import { TranslateService } from "@ngx-translate/core";
 import { Category } from "../../shared/category";
 import { FeedInSetting, View } from "../../shared/enums";
 import { DcPv } from "../../shared/ibndatatypes";
+import { Meter } from "../../shared/meter";
 import { SystemId } from "../../shared/system";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
-import { AbstractHomeIbn, Home2030CommonApp } from "./abstract-home";
+import { AbstractHomeIbn, HomeAdditionalApp, HomeCommonApp } from "./abstract-home";
 
 type Home20Mppt = {
     HAS_MPPT_1: boolean,
@@ -26,6 +27,7 @@ export class Home20FeneconIbn extends AbstractHomeIbn {
     public override readonly maxNumberOfTowers: number = 5;
     public override readonly minNumberOfModulesPerTower: number = 5;
     public override readonly relayFactoryId: string = "IO.KMtronic";
+    public override readonly defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.SMART_METER;
 
     public override mppt: {
         connectionCheck: boolean,
@@ -60,13 +62,14 @@ export class Home20FeneconIbn extends AbstractHomeIbn {
         ], translate);
     }
 
-    public override getHomeAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): Home2030CommonApp & Home20Mppt {
+    public override getHomeAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): HomeCommonApp & HomeAdditionalApp & Home20Mppt {
 
         const dc1: DcPv = this.pv.dc[0];
         const dc2: DcPv = this.pv.dc[1];
 
-        const home20AppProperties: Home2030CommonApp & Home20Mppt = {
-            ...this.getCommonPropertiesForHome2030(safetyCountry, feedInSetting),
+        const home20AppProperties: HomeCommonApp & HomeAdditionalApp & Home20Mppt = {
+            ...this.commonHomeProperties(safetyCountry, feedInSetting),
+            ...this.additonalHomeProperties(),
             HAS_MPPT_1: dc1.isSelected,
             ...(dc1.isSelected && { ALIAS_MPPT_1: dc1.alias }),
             HAS_MPPT_2: dc2.isSelected,
@@ -77,6 +80,14 @@ export class Home20FeneconIbn extends AbstractHomeIbn {
     }
 
     public getImageUrl(mppt: number): string {
-        return "assets/img/home-mppt/" + "Home_20_MPPT" + mppt + ".png";
+        return `${AbstractHomeIbn.BASE_IMAGE_PATH}Home_20_MPPT${mppt}.png`;
+    }
+
+    public override getMpptLabel(mppt: number, pv: number) {
+        // Each MPPT label associates with two PV strings, calculated as adjacent pairs.
+        // For example, MPPT 1 uses PV1 and PV2, MPPT 2 uses PV3 and PV4, and so on.
+        const firstPvString = pv * 2 - 1;
+        const secondPvString = pv * 2;
+        return this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS_BOTH_STRINGS", { mppt: mppt, pv1: firstPvString, pv2: secondPvString });
     }
 }

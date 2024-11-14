@@ -20,15 +20,15 @@ import { BaseMode, ComponentConfigurator, ConfigurationMode } from "../../views/
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
 import { AbstractIbn, SchedulerIdBehaviour } from "../abstract-ibn";
 
-/**
- * Represents common properties shared between Home 20 and Home 30 configurations.
- */
-export type Home2030CommonApp = {
-  SAFETY_COUNTRY: SafetyCountry,
+export type HomeAdditionalApp = {
   FEED_IN_TYPE: FeedInType,
-  FEED_IN_SETTING: string,
   GRID_METER_CATEGORY: Meter.GridMeterCategory,
   CT_RATIO_FIRST: number,
+};
+
+export type HomeCommonApp = {
+  SAFETY_COUNTRY: SafetyCountry,
+  FEED_IN_SETTING: string,
   MAX_FEED_IN_POWER?: number,
   HAS_EMERGENCY_RESERVE: boolean,
   EMERGENCY_RESERVE_ENABLED?: boolean,
@@ -38,6 +38,7 @@ export type Home2030CommonApp = {
 };
 
 export abstract class AbstractHomeIbn extends AbstractIbn {
+  public static readonly BASE_IMAGE_PATH = "assets/img/home-mppt/";
   private static readonly SELECTOR = "Home";
   private static readonly MODULE_DATA_TIMEOUT = 12_000; // two minutes
   private static readonly TOWER_DATA_TIMEOUT = 5_000; // five seconds
@@ -122,6 +123,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public abstract readonly maxNumberOfTowers: number;
   public abstract readonly maxNumberOfModulesPerTower: number;
   public abstract readonly minNumberOfModulesPerTower: number;
+  public abstract readonly defaultEnergyFlowMeter: Meter.GridMeterCategory;
 
   constructor(public override views: View[], public override translate: TranslateService) {
     super(views, translate);
@@ -400,7 +402,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       totalPvPower += (dc.isSelected ? Number.parseInt(dc.value.toString()) : 0);
     }
 
-    // maximum limit for feed in power is 30000.
+    // maximum limit for feed in power is 25000.
     totalPvPower = Math.min(totalPvPower, this.maxFeedInLimit);
 
     // Update the feedInlimitation field
@@ -542,7 +544,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
             value: dc.modulesPerString,
           });
         }
-        if (this.maxNumberOfMppt !== -1) {
+        if (this.maxNumberOfMppt > 0) {
           pvData.push({
             label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.BOTH_SELECTED_LABEL", { pv1: pvNr * 2 - 1, pv2: pvNr * 2 }),
             value: dc.portsConnected ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
@@ -596,11 +598,17 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     const emergencyReserve = this.emergencyReserve;
     const energyFlowMeter = this.energyFlowMeter;
 
+    // Standard and optional changes based on the home system type.
+    // So checking with default meter type. default is always standard.
+    const type = energyFlowMeter.meter === this.defaultEnergyFlowMeter
+      ? this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.STANDARD")
+      : this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.OPTIONAL");
+
     if (energyFlowMeter) {
       protocol.items.push({
         category: Category.GRID,
         name: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
-        value: Meter.toGridMeterCategoryLabelString(energyFlowMeter.meter, this.translate),
+        value: Meter.toGridMeterCategoryLabelString(energyFlowMeter.meter, this.translate, type),
       });
       if (energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER) {
         protocol.items.push({
@@ -626,9 +634,17 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     if (emergencyReserve.isEnabled) {
       protocol.items.push({
         category: Category.EMERGENCY_RESERVE,
-        name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE", { symbol: "[%]" }),
-        value: emergencyReserve.value ? emergencyReserve.value.toString() : "",
+        name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_LABEL", { symbol: "?" }),
+        value: emergencyReserve.isEnabled ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
       });
+
+      if (emergencyReserve.isReserveSocEnabled) {
+        protocol.items.push({
+          category: Category.EMERGENCY_RESERVE,
+          name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE", { symbol: "[%]" }),
+          value: emergencyReserve.value ? emergencyReserve.value.toString() : "",
+        });
+      }
     }
 
     for (let index = 0; index < this.pv.dc.length; index++) {
@@ -669,7 +685,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
           value: dc.modulesPerString ? dc.modulesPerString.toString() : "",
         });
 
-        if (this.maxNumberOfMppt !== -1) {
+        if (this.maxNumberOfMppt > 0) {
           protocol.items.push({
             category: Category.DC_PV_INSTALLATION,
             name: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.BOTH_SELECTED_LABEL", { pv1: dcNr * 2 - 1, pv2: dcNr * 2 }),
@@ -726,18 +742,22 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     switch (emsType) {
       case "feh013":
         label.push(
+          { value: SystemId.FENECON_HOME_6, label: SystemId.FENECON_HOME_6 },
+          { value: SystemId.FENECON_HOME_10_GEN_2, label: SystemId.FENECON_HOME_10_GEN_2 },
+          { value: SystemId.FENECON_HOME_15, label: SystemId.FENECON_HOME_15 },
           { value: SystemId.FENECON_HOME_20, label: SystemId.FENECON_HOME_20 },
           { value: SystemId.FENECON_HOME_30, label: SystemId.FENECON_HOME_30 },
         );
         break;
       case "fho011":
-        label.push(
-          { value: SystemId.FENECON_HOME_10, label: SystemId.FENECON_HOME_10 },
-        );
+        label.push({ value: SystemId.FENECON_HOME_10, label: SystemId.FENECON_HOME_10 });
         break;
       case null:
         label.push(
+          { value: SystemId.FENECON_HOME_6, label: SystemId.FENECON_HOME_6 },
           { value: SystemId.FENECON_HOME_10, label: SystemId.FENECON_HOME_10 },
+          { value: SystemId.FENECON_HOME_10_GEN_2, label: SystemId.FENECON_HOME_10_GEN_2 },
+          { value: SystemId.FENECON_HOME_15, label: SystemId.FENECON_HOME_15 },
           { value: SystemId.FENECON_HOME_20, label: SystemId.FENECON_HOME_20 },
           { value: SystemId.FENECON_HOME_30, label: SystemId.FENECON_HOME_30 },
         );
@@ -1102,7 +1122,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public addHomeDcConfiguration(componentConfigurator: ComponentConfigurator, baseMode: BaseMode) {
 
     // Chargers
-    for (let i = 0; i < (this.maxNumberOfMppt === -1 ? this.maxNumberOfPvStrings : this.maxNumberOfMppt); i++) {
+    for (let i = 0; i < (this.maxNumberOfMppt > 0 ? this.maxNumberOfMppt : this.maxNumberOfPvStrings); i++) {
       const dc = this.pv.dc[i];
       let factoryId: string;
       let alias: string;
@@ -1135,21 +1155,28 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   }
 
   /**
-   * Retrieves the common properties for Home20 and Home30 configurations.
-   *
-   * @param safetyCountry - The safety country configuration.
-   * @param feedInSetting - The feed-in setting configuration.
-   * @returns An object containing the common properties for Home 20/30 application.
+   * Returns the options to be displayed in energy flow meter view.
    */
-  public getCommonPropertiesForHome2030(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): Home2030CommonApp {
+  public getEnergyFlowMeterFields() {
+    const type: string = this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.STANDARD");
 
-    const home20_30CommonApp: Home2030CommonApp = {
+    return [
+      {
+        value: Meter.GridMeterCategory.SMART_METER, //
+        label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.SMART_METER, this.translate, type),
+      },
+      {
+        value: Meter.GridMeterCategory.COMMERCIAL_METER, //
+        label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.COMMERCIAL_METER, this.translate),
+      },
+    ];
+  }
+
+  public commonHomeProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): HomeCommonApp {
+    const commonHomeAppProperties: HomeCommonApp = {
       SAFETY_COUNTRY: safetyCountry,
-      FEED_IN_TYPE: this.feedInLimitation.feedInType,
       ...(this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
       FEED_IN_SETTING: feedInSetting,
-      GRID_METER_CATEGORY: this.energyFlowMeter.meter,
-      ...(this.energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER && { CT_RATIO_FIRST: this.energyFlowMeter.value }),
       HAS_EMERGENCY_RESERVE: this.emergencyReserve.isEnabled,
       ...(this.emergencyReserve.isEnabled && { EMERGENCY_RESERVE_ENABLED: this.emergencyReserve.isReserveSocEnabled }),
       ...(this.emergencyReserve.isReserveSocEnabled && { EMERGENCY_RESERVE_SOC: this.emergencyReserve.value }),
@@ -1157,7 +1184,42 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       HAS_ESS_LIMITER_14A: this.activateLimitController14a,
     };
 
-    return home20_30CommonApp;
+    return commonHomeAppProperties;
+  }
+
+  public additonalHomeProperties(): HomeAdditionalApp {
+    const additionalHomeAppProperties: HomeAdditionalApp = {
+      FEED_IN_TYPE: this.feedInLimitation.feedInType,
+      GRID_METER_CATEGORY: this.energyFlowMeter.meter,
+      ...(this.energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER && { CT_RATIO_FIRST: this.energyFlowMeter.value }),
+    };
+
+    return additionalHomeAppProperties;
+  }
+
+  /**
+   * @returns the fields that are only applicable for Gen2 systems.
+   */
+  public getGen2EnergyFlowMeterFields() {
+
+    const standardType: string = this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.STANDARD");
+    const optionalType: string = this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.OPTIONAL");
+
+    const options: {
+      value: Meter.GridMeterCategory;
+      label: string;
+    }[] = [
+        {
+          value: Meter.GridMeterCategory.SMART_METER, //
+          label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.SMART_METER, this.translate, optionalType),
+        },
+        {
+          value: Meter.GridMeterCategory.INTEGRATED_METER, //
+          label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.INTEGRATED_METER, this.translate, standardType),
+        },
+      ];
+
+    return options;
   }
 
   /**
@@ -1191,12 +1253,20 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   }
 
   /**
-* Generates and returns the Specific properties required for Home APP variant.
-*
-* @param safetyCountry Safety Country configured.
-* @param feedInSetting Feed in Setting configured.
-* @returns The Home APP properties of the specific variant.
-*/
+   * Generates and returns the Specific properties required for Home APP variant.
+   *
+   * @param safetyCountry Safety Country configured.
+   * @param feedInSetting Feed in Setting configured.
+   * @returns The Home APP properties of the specific variant.
+   */
   public abstract getHomeAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): {};
+
+  /**
+   * Returns the appropriate label to be displayed during the "ConfigurationMpptSelection" and "ProtocolPV"
+   *
+   * @param mppt the mppt number
+   * @param pv the pv number
+   */
+  public abstract getMpptLabel(mppt: number, pv: number);
 
 }
