@@ -1,0 +1,300 @@
+#!/bin/bash
+
+if [ "$EUID" -ne 0 ]; then
+  echo "run with elevated privileges; sudo or root!"
+  exit 1
+fi
+
+set -ex
+
+export UPDATE_LOCK_FILE="/tmp/distro-update.lock"
+export UPDATE_INFO_FILE="/tmp/distro-update.info"
+
+function check_system {
+  if [ -z "$VERSION_NEXT" ]; then
+    echo "nothing to upgrade!"
+    exit 0
+  fi;
+  
+  if [ -d "/home/imodcloud" ]; then
+    echo "# Do not update kernel on Techbase"
+    apt-mark hold raspberrypi-kernel raspberrypi-bootloader
+  fi
+  
+  # free some space
+  apt-get remove build-essential --assume-yes || true
+  apt-get clean || true
+  journalctl --rotate --vacuum-files=1 || true
+  find /usr/share/{doc,man,locale} -not -name "copyright" -type f -delete || true
+  
+  # check if atleast 100M are free
+  free_bytes=$(df / --output=avail -B1 | tail -1)
+  if [[ $free_bytes -lt 104857600  ]]; then
+    echo "not enough free storage"
+    exit 1
+  fi;
+} #check_system
+
+function next_version {
+  local VERSION_CODENAME=""
+  if [ -e /etc/os-release ]; then
+    source /etc/os-release
+    if [ -z "$VERSION_CODENAME" ]; then
+      VERSION_CODENAME=$(echo "$VERSION" | grep -oP '\(\K[^\)]+')
+    fi
+  fi
+  
+  # Check for distro update
+  [ -f /tmp/sources.list ] && rm /tmp/sources.list
+  local VERSION_NEXT=""
+  
+  case "$VERSION_CODENAME" in
+    "jessie") VERSION_NEXT="stretch";;
+    "stretch") VERSION_NEXT="buster";;
+    "buster") VERSION_NEXT="bullseye";;
+    "bullseye") VERSION_NEXT="bookworm";;
+  esac
+  
+  echo "$VERSION_NEXT"
+} #next_version
+
+function apt_get {
+  APT_LISTCHANGES_FRONTEND=none DEBIAN_FRONTEND=noninteractive \
+  apt-get "$@" \
+  -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold'
+} #apt_get
+
+function apt_update {
+  apt-get update || apt-get update --allow-releaseinfo-change
+} #apt_update
+
+function ensure_updated {
+  apt_update;
+  apt_get upgrade -y;
+  apt_get autoremove -y;
+  apt_get clean;
+} #ensure_updated
+
+function dist_upgrade {
+  apt-mark manual fems;
+  apt-mark hold fems;
+  
+  apt_update;
+  apt_get upgrade -y --without-new-pkgs;
+  
+  apt_get dist-upgrade -y;
+  
+  apt_get autoremove -y;
+  apt_get clean;
+  
+  apt-mark unhold fems;
+} #upgrade
+
+function is_installed {
+  dpkg-query -W -f='${Status}' "$1" 2>/dev/null | grep "ok installed" >/dev/null
+  return $?
+} #is_installed
+
+function start_service {
+  local service=$1
+  
+  # Check if service is enabled
+  if ! ( /bin/systemctl --quiet is-enabled $service > /dev/null ); then
+    # Enable
+    echo "Enabling $service"
+    /bin/systemctl enable $service.service
+  fi
+  
+  echo "Start $service"
+  /bin/systemctl start --no-block $service.service
+} #start_service
+
+function service_installed {
+  systemctl list-unit-files | grep "${1}.service" >/dev/null
+  return $?
+} #service_installed
+
+function update_sources {
+  install /tmp/sources.list /etc/apt/sources.list
+  
+  if [ -f /tmp/raspi.list ]; then
+    mkdir -p /etc/apt/sources.list.d
+    install /tmp/raspi.list /etc/apt/sources.list.d/raspi.list
+  fi
+  
+  # Comment other sources
+  for file in $(find /etc/apt/sources.list.d/ -mindepth 1 -maxdepth 1 -not -name "raspi.list"); do
+    sed -i -e 's/^\([^#].*\)/# \1/g' $file
+  done
+}
+
+function __cleanup {
+  if [ -f "$UPDATE_LOCK_FILE" ]; then
+    rm -f "$UPDATE_LOCK_FILE"
+  fi
+}
+
+function prevent_multiple_exec {
+  if [ -f "$UPDATE_LOCK_FILE" ]; then
+    echo "Update is still running!"
+    exit 1
+  fi
+  
+  trap __cleanup EXIT;
+  touch $UPDATE_LOCK_FILE;
+}
+
+####### UPDATE ##########
+
+function update_to_stretch {
+  echo "deb http://deb.fenecon.de/debian-archive/ stretch main contrib non-free" > "/tmp/sources.list"
+  
+  if [[ "$HARDWARE" == *"BCM"* ]]; then
+    echo "deb http://deb.fenecon.de/raspbian-legacy/ stretch main contrib non-free rpi" > "/tmp/raspi.list"
+  fi
+  
+  echo "update all packages"
+  ensure_updated;
+  
+  echo "update sources.list"
+  update_sources;
+
+  echo "stretch" > $UPDATE_INFO_FILE
+  
+  echo "upgrade distro"
+  dist_upgrade;
+  
+  echo "install essential packages"
+  apt_get install -y \
+  bash curl wget aptitude xz-utils systemd vim unzip \
+  at git iptables java-common lsof ncdu nginx-light ntpdate \
+  python-pymodbus python-socksipychain screen ufw vim wget
+  
+  start_service systemd-resolved
+  start_service systemd-networkd
+  
+  # Make sure systemd resolved is properly activated
+  ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
+}
+
+function update_to_buster {
+  echo "deb http://deb.fenecon.de/debian/ buster main contrib non-free" > "/tmp/sources.list"
+  
+  if [[ "$HARDWARE" == *"BCM"* ]]; then
+    echo "deb http://deb.fenecon.de/raspbian/ buster main contrib non-free rpi" > "/tmp/raspi.list"
+  fi
+  
+  echo "update all packages"
+  ensure_updated;
+  
+  echo "update sources.list"
+  update_sources;
+
+  echo "buster" > $UPDATE_INFO_FILE
+  
+  echo "upgrade distro"
+  dist_upgrade;
+  
+  echo "install essential packages"
+  apt_get install -y \
+  bash curl wget aptitude xz-utils systemd vim unzip python3 \
+  at git iptables java-common lsof ncdu nginx-light ntpdate \
+  python-pymodbus python-socksipychain screen ufw vim wget
+  
+  start_service systemd-resolved
+  start_service systemd-networkd
+  
+  # Make sure systemd resolved is properly activated
+  ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
+}
+
+function update_to_bullseye {
+  echo "deb http://deb.fenecon.de/debian/ bullseye main contrib non-free" > "/tmp/sources.list"
+  
+  if [[ "$HARDWARE" == *"BCM"* ]]; then
+    echo "deb http://deb.fenecon.de/raspbian/ bullseye main contrib non-free rpi" > "/tmp/raspi.list"
+  fi
+  
+  echo "update all packages"
+  ensure_updated;
+  
+  echo "update sources.list"
+  update_sources;
+
+  echo "bullseye" > $UPDATE_INFO_FILE
+  
+  echo "upgrade distro"
+  dist_upgrade;
+  
+  echo "install essential packages"
+  apt_get install -y \
+  bash curl wget aptitude xz-utils systemd vim unzip python-is-python3 python3 \
+  at git iptables java-common lsof ncdu nginx-light ntpdate \
+  python3-pymodbus python3-socksipychain screen ufw vim wget
+  
+  start_service systemd-resolved
+  start_service systemd-networkd
+  
+  # Make sure systemd resolved is properly activated
+  ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
+}
+
+function update_to_bookworm {
+  echo "deb http://deb.fenecon.de/debian/ bookworm main contrib non-free-firmware" > "/tmp/sources.list"
+  
+  if [[ "$HARDWARE" == *"BCM"* ]]; then
+    echo "deb http://deb.fenecon.de/raspbian/ bookworm main contrib non-free rpi" > "/tmp/raspi.list"
+  fi
+  
+  echo "update all packages"
+  ensure_updated;
+  
+  echo "update sources.list"
+  update_sources;
+
+  echo "bookworm" > $UPDATE_INFO_FILE
+  
+  echo "upgrade distro"
+  dist_upgrade;
+  
+  echo "install essential packages"
+  apt_get install -y \
+  bash curl wget aptitude xz-utils systemd vim unzip python-is-python3 python3 \
+  at git iptables java-common lsof ncdu nginx-light ntpdate \
+  python3-pymodbus python3-socksipychain screen ufw vim wget \
+  systemd-resolved
+  
+  start_service systemd-resolved
+  start_service systemd-networkd
+  
+  # Make sure systemd resolved is properly activated
+  ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
+}
+
+####### MAIN ############
+
+prevent_multiple_exec;
+
+if [ -f "$UPDATE_INFO_FILE" ]; then
+  echo "Last atempt failed mid Upgrade!" 
+  echo "A new run without manual adjustment will fail!"
+  exit 1
+fi;
+
+HARDWARE="$( cat /proc/cpuinfo | grep Hardware )"
+VERSION_NEXT="$( next_version )"
+
+check_system;
+
+echo "distro update to $VERSION_NEXT"
+
+case "$VERSION_NEXT" in
+  "stretch") update_to_stretch;;
+  "buster") update_to_buster;;
+  "bullseye") update_to_bullseye;;
+  "bookworm") update_to_bookworm;;
+esac
+
+rm $UPDATE_INFO_FILE
+
+reboot;
