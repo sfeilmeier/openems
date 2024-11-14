@@ -1,0 +1,3 @@
+Version 13.11.24 (Release-Version of the previous (DEMO) Version 14_10_24)
+ARM: 11 (410-02071-11(424)_M4_APP.bin)
+DSP: 9 (410-04062-09-V9054.bin)
