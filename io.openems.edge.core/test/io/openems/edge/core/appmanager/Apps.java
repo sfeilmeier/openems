@@ -77,6 +77,7 @@ import io.openems.edge.app.timeofusetariff.StromdaoCorrently;
 import io.openems.edge.app.timeofusetariff.Swisspower;
 import io.openems.edge.app.timeofusetariff.Tibber;
 import io.openems.edge.common.component.ComponentManager;
+import io.openems.edge.common.host.Host;
 
 public final class Apps {
 
@@ -814,6 +815,12 @@ public final class Apps {
 				t.componentUtil, t.appManagerUtil);
 	}
 
+	private static final <T> T app(AppManagerTestBundle t, DefaultAppConstructorWithHost<T> constructor,
+			String appId) {
+		return constructor.create(t.componentManger, AppManagerTestBundle.getComponentContext(appId), t.cm,
+				t.componentUtil, t.host);
+	}
+	
 	private static interface DefaultAppConstructor<A> {
 
 		public A create(ComponentManager componentManager, ComponentContext componentContext, ConfigurationAdmin cm,
@@ -828,4 +835,11 @@ public final class Apps {
 
 	}
 
+	private static interface DefaultAppConstructorWithHost<A> {
+
+		public A create(ComponentManager componentManager, ComponentContext componentContext, ConfigurationAdmin cm,
+				ComponentUtil componentUtil, Host host);
+
+	}
+	
 }
