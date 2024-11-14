@@ -1130,13 +1130,13 @@ if [ "$(ls /etc/systemd/network | grep -c enx.network)" -eq "1" ]; then
 	if [ "$(grep -c 'Address=192.168.1.9/29' /etc/systemd/network/enx.network)" -eq "1" ]; then 
 	
 		echo "# Ändere die IP-Adresse von 192.168.1.9/29 zu 192.168.1.9/26"
-		sed -i -e "s/$192.168.1.9\/29\b/$192.168.1.9\/26/g" /etc/systemd/network/enx.network
+		sed -i -e "s/192.168.1.9\/29\b/192.168.1.9\/26/g" /etc/systemd/network/enx.network
 		systemctl restart systemd-networkd
 		systemctl enable systemd-networkd
 	else
 		if [ "$(grep -c 'Address=192.168.1.10/29' /etc/systemd/network/enx.network)" -eq "1" ]; then 
 			echo "# Ändere die IP-Adresse von 192.168.1.10/29 zu 192.168.1.9/26"
-			sed -i -e "s/$192.168.1.10\/29\b/$192.168.1.9\/26/g" /etc/systemd/network/enx.network
+			sed -i -e "s/192.168.1.10\/29\b/192.168.1.9\/26/g" /etc/systemd/network/enx.network
 			systemctl restart systemd-networkd
 			systemctl enable systemd-networkd
 		else
@@ -1157,13 +1157,13 @@ else
 		if [ "$(grep -c 'Address=192.168.1.9/29' /etc/systemd/network/eth1.network)" -eq "1" ]; then 
 	
 			echo "# Ändere die IP-Adresse von 192.168.1.9/29 zu 192.168.1.9/26"
-			sed -i -e "s/$192.168.1.9\/29\b/$192.168.1.9\/26/g" /etc/systemd/network/eth1.network
+			sed -i -e "s/192.168.1.9\/29\b/192.168.1.9\/26/g" /etc/systemd/network/eth1.network
 			systemctl restart systemd-networkd
 			systemctl enable systemd-networkd
 		else
 			if [ "$(grep -c 'Address=192.168.1.10/29' /etc/systemd/network/eth1.network)" -eq "1" ]; then 
 				echo "# Ändere die IP-Adresse von 192.168.1.10/29 zu 192.168.1.9/26"
-				sed -i -e "s/$192.168.1.10\/29\b/$192.168.1.9\/26/g" /etc/systemd/network/eth1.network
+				sed -i -e "s/192.168.1.10\/29\b/192.168.1.9\/26/g" /etc/systemd/network/eth1.network
 				systemctl restart systemd-networkd
 				systemctl enable systemd-networkd
 			else

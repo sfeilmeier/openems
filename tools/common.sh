@@ -66,7 +66,7 @@ common_update_version_in_code() {
 # Build OpenEMS Backend
 common_build_backend() {
     echo "# Build OpenEMS Backend"
-    ./gradlew $@ --build-cache build buildBackend resolve.BackendApp
+    ./gradlew "$@" --build-cache build buildBackend resolve.BackendApp
     git diff --exit-code io.openems.backend.application/BackendApp.bndrun
 }
 
@@ -80,14 +80,14 @@ common_build_edge_and_ui_in_parallel() {
 # Build OpenEMS Edge
 common_build_edge() {
     echo "# Build OpenEMS Edge"
-    ./gradlew $@ --build-cache build buildEdge resolve.EdgeApp resolve.BackendApp
+    ./gradlew "$@" --build-cache build buildEdge resolve.EdgeApp resolve.BackendApp
     git diff --exit-code io.openems.edge.application/EdgeApp.bndrun io.openems.backend.application/BackendApp.bndrun
 }
 
 # Run OpenEMS Checkstyle
 common_run_checkstyle() {
     echo "# Run Checkstyle"
-    ./gradlew $@ checkstyleAll
+    ./gradlew "$@" checkstyleAll
 }
 
 # Build OpenEMS UI

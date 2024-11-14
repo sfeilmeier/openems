@@ -1,3 +1,5 @@
+#!/bin/bash
+
 path="/etc/systemd/network/eth0.network"
 
 echo "Writing $path"
