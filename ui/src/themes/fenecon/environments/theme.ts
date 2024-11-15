@@ -102,12 +102,32 @@ export const theme = {
             category: "producttype",
             options: [
                 {
+                    name: "Home 6",
+                    value: "home-6",
+                },
+                {
                     name: "Home 10",
                     value: "home",
                 },
                 {
+                    name: "Home 10 (Gen2)",
+                    value: "home-10",
+                },
+                {
                     name: "Home 20 & 30",
                     value: "Home 20 & 30",
+                },
+                {
+                    name: "Home 15",
+                    value: "home-15",
+                },
+                {
+                    name: "Home 20",
+                    value: "home-20",
+                },
+                {
+                    name: "Home 30",
+                    value: "home-30",
                 },
                 {
                     name: "Commercial 30",

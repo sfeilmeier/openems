@@ -179,6 +179,11 @@ export class UserPermission {
       switch (edge.producttype) {
         case Producttype.HOME:
         case Producttype.HOME_20_30:
+        case Producttype.HOME_6:
+        case Producttype.HOME_10:
+        case Producttype.HOME_15:
+        case Producttype.HOME_20:
+        case Producttype.HOME_30:
           return true;
         default:
           return false;
@@ -234,6 +239,11 @@ export class UserPermission {
 
 export enum Producttype {
   HOME = "home",
+  HOME_6 = "home-6",
+  HOME_10 = "home-10",
+  HOME_15 = "home-15",
+  HOME_20 = "home-20",
+  HOME_30 = "home-30",
   HOME_20_30 = "Home 20 & 30",
   COMMERCIAL_30 = "Commercial 30-Serie",
   COMMERCIAL_50 = "Commercial 50-Serie",
