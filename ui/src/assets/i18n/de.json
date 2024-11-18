@@ -610,7 +610,9 @@
       "SUB_TITLE": "Sie haben den {{ value }} erfolgreich in Betrieb genommen.",
       "TITLE": "Abschließen",
       "NOTE": "Hier geht's weiter zum App Center, um weitere Komponenten zu konfigurieren und Apps zu installieren.",
-      "HECKERT_NOTE": "Eine kostenlose App steht nun im App-Center für Sie bereit zur Installation."
+      "HECKERT_NOTE": "Eine kostenlose App steht nun im App-Center für Sie bereit zur Installation.",
+      "INVALID_PAYLOAD": "Ungültige Antwort vom Server",
+      "DOWNLOAD_SUCCESS": "Protokoll erfolgreich heruntergeladen"
     },
     "COMPLETE": "Zum Online-Monitoring",
     "CONFIGURATION_EMERGENCY_RESERVE": {

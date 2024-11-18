@@ -613,7 +613,9 @@
       "SUB_TITLE": "You have successfully commisioned the {{ value }}.",
       "TITLE": "Set-up complete",
       "NOTE": "Click here to go to the App Center to configure additional components and install apps.",
-      "HECKERT_NOTE": "A free app is now available for you to install in the app center."
+      "HECKERT_NOTE": "A free app is now available for you to install in the app center.",
+      "INVALID_PAYLOAD": "Invalid response from server",
+      "DOWNLOAD_SUCCESS": "Protocol downloaded successfully"
     },
     "CONFIGURATION_EMERGENCY_RESERVE": {
       "EMERGENCY_RESERVE_NOTE": "If this function is activated, the battery charge level cannot fall below the set value.",

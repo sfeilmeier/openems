@@ -34,6 +34,14 @@ export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
       mppt2: true,
     };
 
+  // configuration Energu Flow Meter
+  public override energyFlowMeter: {
+    meter: Meter.GridMeterCategory;
+    value?: number;
+  } = {
+      meter: this.defaultEnergyFlowMeter,
+    };
+
   public override getHomeAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): {} {
 
     const dc1 = this.pv.dc[0];

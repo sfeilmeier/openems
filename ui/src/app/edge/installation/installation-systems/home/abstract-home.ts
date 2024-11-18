@@ -103,7 +103,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     value?: number;
   };
 
-
   public readonly imageUrl: string = "assets/img/Home-Typenschild-web.jpg";
   public readonly relayFactoryId: string = "IO.KMtronic.4Port"; // Default 'Home10' factoryId.
   public override readonly showRundSteuerManual: boolean = true;
@@ -565,17 +564,22 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     const gridData: ComponentData[] = [];
     const energyFlowMeter = this.energyFlowMeter;
 
-    if (energyFlowMeter) {
+    // Standard and optional changes based on the home system type.
+    // So checking with default meter type. default is always standard.
+    const type = energyFlowMeter.meter === this.defaultEnergyFlowMeter
+      ? this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.STANDARD")
+      : this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.OPTIONAL");
+
+    gridData.push({
+      label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
+      value: Meter.toGridMeterCategoryLabelString(energyFlowMeter.meter, this.translate, type),
+    });
+
+    if (energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER) {
       gridData.push({
-        label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
-        value: Meter.toGridMeterCategoryLabelString(energyFlowMeter.meter, this.translate),
+        label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.CONVERTER_RATIO"),
+        value: energyFlowMeter.value.toString(),
       });
-      if (energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER) {
-        gridData.push({
-          label: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.CONVERTER_RATIO"),
-          value: energyFlowMeter.value.toString(),
-        });
-      }
     }
 
     gridData.push({
@@ -604,19 +608,18 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       ? this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.STANDARD")
       : this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.OPTIONAL");
 
-    if (energyFlowMeter) {
+    protocol.items.push({
+      category: Category.GRID,
+      name: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
+      value: Meter.toGridMeterCategoryLabelString(energyFlowMeter.meter, this.translate, type),
+    });
+
+    if (energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER) {
       protocol.items.push({
         category: Category.GRID,
-        name: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.LABEL"),
-        value: Meter.toGridMeterCategoryLabelString(energyFlowMeter.meter, this.translate, type),
+        name: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.CONVERTER_RATIO"),
+        value: energyFlowMeter.value.toString(),
       });
-      if (energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER) {
-        protocol.items.push({
-          category: Category.GRID,
-          name: this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.CONVERTER_RATIO"),
-          value: energyFlowMeter.value.toString(),
-        });
-      }
     }
 
     protocol.items.push({
@@ -632,11 +635,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     });
 
     if (emergencyReserve.isEnabled) {
-      protocol.items.push({
-        category: Category.EMERGENCY_RESERVE,
-        name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_LABEL", { symbol: "?" }),
-        value: emergencyReserve.isEnabled ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
-      });
 
       if (emergencyReserve.isReserveSocEnabled) {
         protocol.items.push({
