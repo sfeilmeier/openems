@@ -135,18 +135,47 @@
 
       <ion-col size-lg="6" size-md="12" size-sm="12">
         <oe-flat-widget [title]="'Zellspannungen'">
+
           <oe-flat-widget-line [name]="'Minimale Zellspannung'" [channelAddress]="'battery0/MinCellVoltage'"
             [converter]="VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Maximale Zellspannung'" [channelAddress]="'battery0/MaxCellVoltage'"
             [converter]="VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Maximale Zellspannungsdifferenz'" [value]="cellVoltageDifference"
             [converter]="VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS"></oe-flat-widget-line>
+
+          <ion-row>
+            <ion-col size="6">
+              <ion-item lines="none" *ngIf="selectedTower">
+                <ion-label position="floating" color="primary" style="white-space: normal !important">Tower</ion-label>
+                <ion-select (ionDismiss)="updateTowerNr($event)" [(ngModel)]="selectedTower" label-placement="floating"
+                  interface="popover" label="Fixed label" fill="solid"
+                  [interfaceOptions]="{ cssClass: 'custom-ion-popover' }" type="radio" style="white-space: initial;">
+                  <ng-container *ngFor="let option of towerOptions">
+                    <ion-select-option [value]="option">{{option.key}}
+                    </ion-select-option>
+                  </ng-container>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item lines="none" *ngIf="selectedModule">
+                <ion-label position="floating" color="primary" style="white-space: normal !important">Module</ion-label>
+                <ion-select (ionDismiss)="updateModuleNr($event)" [(ngModel)]="selectedModule"
+                  label-placement="floating" interface="popover" label="Fixed label" fill="solid"
+                  [interfaceOptions]="{ cssClass: 'custom-ion-popover' }" type="radio" style="white-space: initial;">
+                  <ion-select-option *ngFor="let option of moduleOptions" [value]="option">{{option.key}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
           <ion-card>
             <ion-card-content>
               <div style="display: flex; justify-content: center;">
                 <pickdate [historyPeriods]="['day', 'week']"></pickdate>
               </div>
-              <cellVoltageChart></cellVoltageChart>
+              <cellVoltageChart [towerId]="selectedTower" [moduleId]="selectedModule"></cellVoltageChart>
             </ion-card-content>
           </ion-card>
         </oe-flat-widget>
