@@ -25,8 +25,20 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2024.11.2",
+        changes: [
+          Changelog.UI + "Verbesserungen am Inbetriebnahmeassistent, historische Darstellungen",
+          Changelog.product(Product.HOME_6_10_15) + "Produktkompatibilität",
+          Changelog.app(App.TIME_OF_USE) + "Dynamische Reduzierung der Beladeleistung bei aktiver Dimmung nach §14a EnWG",
+          Changelog.library(Library.GRADLE),
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.product(Product.HOME_10, Product.HOME_20_30, Product.HOME_6_10_15) + "Konfigurationseinstellung: NA-Schutz aktiviert?" },
+          { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | Home Service Assistent: Detailanalyse Module und Tower" },
+          { roleIsAtLeast: Role.ADMIN, change: "Apps mit IP-Adresse: verbiete Konfiguration der FEMS-IP-Adresse" }],
+      },
+      {
         version: "2024.11.1",
         changes: [
+          Changelog.openems("2024.11.0"),
           Changelog.UI,
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Allgemeine Optimierungen",
           Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Fehlerbehebung beim Abrufen der Preise von der XML-Schnittstelle; Währungsumrechnung durch API der Europäischen Zentralbank",
