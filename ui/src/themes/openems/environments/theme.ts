@@ -63,6 +63,7 @@ export const theme = {
             HOME: {
                 HOME_10: "#",
                 HOME_20_30: "#",
+                HOME_GEN_2: "#",
             },
             COMMERCIAL: {
                 COMMERCIAL_30: "#",

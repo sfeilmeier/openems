@@ -56,6 +56,18 @@ public final class IntegratedSystemProps {
 	}
 
 	/**
+	 * Creates a {@link AppDef} for a NA-protection (ger. Netz- und Anlagenschutz).
+	 * 
+	 * @return the created {@link AppDef}
+	 */
+	public static final AppDef<OpenemsApp, Nameable, BundleProvider> naProtectionEnabled() {
+		return AppDef.copyOfGeneric(defaultDef(), def -> def //
+				.setTranslatedLabel("App.IntegratedSystem.naProtectionEnabled.label") //
+				.setDefaultValue(false) //
+				.setField(JsonFormlyUtil::buildCheckboxFromNameable));
+	}
+
+	/**
 	 * Creates a {@link AppDef} for the max feed in power.
 	 * 
 	 * @param nameableToBeChecked  the {@link Nameable} to check if the field should
@@ -320,16 +332,10 @@ public final class IntegratedSystemProps {
 				.setTranslatedLabel("App.IntegratedSystem.hasEssLimiter14a.label") //
 				.setDefaultValue(false) //
 				.setField(JsonFormlyUtil::buildCheckboxFromNameable, (app, property, l, parameter, field) -> {
-					final var hardwareTypes = app.getAppManagerUtil()
-							.getInstantiatedAppsByCategories(OpenemsAppCategory.OPENEMS_DEVICE_HARDWARE);
+					final var hardwareType = app.getAppManagerUtil()
+							.getFirstInstantiatedAppByCategories(OpenemsAppCategory.OPENEMS_DEVICE_HARDWARE);
 
-					final var isSupported = hardwareTypes.stream()//
-							.anyMatch(t -> switch (t.appId) {
-							case "App.OpenemsHardware.CM3", "App.OpenemsHardware.CM4S" -> true;
-							default -> false;
-							});
-
-					if (!isSupported) {
+					if (!FeneconHomeComponents.isLimiter14aCompatible(hardwareType)) {
 						field.disabled(true);
 					}
 				}));

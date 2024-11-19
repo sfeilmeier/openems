@@ -25,7 +25,7 @@ function check_config {
 } #check_config
 
 function check {
-    if [[ $( du -s /boot/ | awk '{print $1}' ) < 1000 ]]; then
+    if [[ $( du -s /boot/ | awk '{print $1}' ) -lt 1000 ]]; then
         echo;
         echo -e "\033[0;31m#########################################\033[0m";
         echo -e "\033[0;31m BOOT DIRECTORY IS EMPTY! DON'T RESTART! \033[0m";

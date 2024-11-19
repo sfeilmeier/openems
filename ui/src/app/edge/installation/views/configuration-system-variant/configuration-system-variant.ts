@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
-import { System, SystemId } from "../../shared/system";
+import { HomeSystemId, System, SystemId } from "../../shared/system";
 
 @Component({
     selector: ConfigurationSystemVariantComponent.SELECTOR,
@@ -59,9 +59,10 @@ export class ConfigurationSystemVariantComponent implements OnInit {
 
     /**
      * Redirects to the appropriate url for system manual.
+     * Apples only to Home systems.
      */
     protected openManual(): void {
-        const homeSystemVariant = this.form.controls.system?.value as SystemId.FENECON_HOME_10 | SystemId.FENECON_HOME_20 | SystemId.FENECON_HOME_30;
+        const homeSystemVariant = this.form.controls.system?.value as HomeSystemId;
         window.open(System.getHomeSystemInstructionsLink(homeSystemVariant));
     }
 

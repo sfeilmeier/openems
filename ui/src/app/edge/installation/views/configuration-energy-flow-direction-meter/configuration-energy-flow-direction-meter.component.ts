@@ -47,15 +47,10 @@ export class ConfigurationEnergyFlowMeterComponent implements OnInit {
 
     private initializeFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
-        const options = [
-            {
-                value: Meter.GridMeterCategory.SMART_METER, //
-                label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.SMART_METER, this.translate),
-            },
-            {
-                value: Meter.GridMeterCategory.COMMERCIAL_METER, //
-                label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.COMMERCIAL_METER, this.translate),
-            }];
+        const options: {
+            value: Meter.GridMeterCategory;
+            label: string;
+        }[] = this.ibn.getEnergyFlowMeterFields();
 
         fields.push({
             key: "meter",
@@ -65,7 +60,7 @@ export class ConfigurationEnergyFlowMeterComponent implements OnInit {
                 options: options,
                 required: true,
             },
-            defaultValue: Meter.GridMeterCategory.SMART_METER,
+            defaultValue: this.ibn.defaultEnergyFlowMeter,
         });
 
         fields.push({
@@ -79,7 +74,7 @@ export class ConfigurationEnergyFlowMeterComponent implements OnInit {
                 required: true,
             },
             expressions: {
-                hide: (fields) => fields.model.meter === Meter.GridMeterCategory.SMART_METER,
+                hide: (fields) => fields.model.meter !== Meter.GridMeterCategory.COMMERCIAL_METER,
             },
             validators: {
                 validation: ["onlyPositiveInteger"],

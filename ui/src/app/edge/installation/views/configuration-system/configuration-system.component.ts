@@ -69,9 +69,6 @@ export class ConfigurationSystemComponent implements OnInit {
         // Home stays valid for all systems, but variants will change (configuration system variant).
         switch (this.emsType) {
           case "feh013": // New type
-            options.push({ value: SystemType.FENECON_HOME, label: SystemType.FENECON_HOME },
-              { value: SystemType.COMMERCIAL, label: SystemType.COMMERCIAL });
-            break;
           case null: // No type is set in Odoo
             options.push(
               { value: SystemType.FENECON_HOME, label: SystemType.FENECON_HOME },

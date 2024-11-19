@@ -10,6 +10,7 @@ export namespace Meter {
     export enum GridMeterCategory {
         SMART_METER = "SMART_METER",
         COMMERCIAL_METER = "COMMERCIAL_METER",
+        INTEGRATED_METER = "INTEGRATED_METER",
     }
 
     /**
@@ -31,14 +32,20 @@ export namespace Meter {
      * Returns the label of the meter selected as string.
      *
      * @param meterCategory The {@link GridMeterCategory}.
+     * @param type Standard or Optional.
      * @returns the meter label as string.
      */
-    export function toGridMeterCategoryLabelString(meterCategory: GridMeterCategory, translate: TranslateService): string {
+    export function toGridMeterCategoryLabelString(meterCategory: GridMeterCategory, translate: TranslateService, type?: string): string {
+        const standardType: string = translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.STANDARD");
+        const optionalType: string = translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.OPTIONAL");
+
         switch (meterCategory) {
             case GridMeterCategory.SMART_METER:
-                return translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.WITH_CT");
+                return translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.WITH_CT", { type: type ?? standardType });
             case GridMeterCategory.COMMERCIAL_METER:
                 return translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.WITHOUT_CT");
+            case GridMeterCategory.INTEGRATED_METER:
+                return translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.INTEGRATED", { type: type ?? optionalType });
         }
     }
 }

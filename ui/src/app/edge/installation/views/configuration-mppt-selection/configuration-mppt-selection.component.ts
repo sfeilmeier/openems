@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
+import { Home10Gen2FeneconIbn } from "../../installation-systems/home/home-10-gen2";
+import { Home15Gen2FeneconIbn } from "../../installation-systems/home/home-15-gen2";
 import { Home20FeneconIbn } from "../../installation-systems/home/home-20";
 import { Home30FeneconIbn } from "../../installation-systems/home/home-30";
 
@@ -13,7 +15,7 @@ import { Home30FeneconIbn } from "../../installation-systems/home/home-30";
 export class ConfigurationMpptSelectionComponent implements OnInit {
   private static readonly SELECTOR = "configuration-mppt-selection";
 
-  @Input() public ibn: Home20FeneconIbn | Home30FeneconIbn;
+  @Input() public ibn: Home20FeneconIbn | Home30FeneconIbn | Home10Gen2FeneconIbn | Home15Gen2FeneconIbn;
   @Output() public nextViewEvent = new EventEmitter();
   @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
 
@@ -41,21 +43,20 @@ export class ConfigurationMpptSelectionComponent implements OnInit {
 
   public getFields(): FormlyFieldConfig[] {
     const fields: FormlyFieldConfig[] = [];
+    const maxStrings: number = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
 
-    for (let strings = 1; strings <= (this.ibn.maxNumberOfMppt !== -1 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings); strings++) {
+    for (let strings = 1; strings <= maxStrings; strings++) {
 
       const mppt = strings;
       const key: string = "mppt" + mppt;
-      const label: string = this.ibn.maxNumberOfMppt === -1 // Every second label has a different label.
-        ? this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS", { mppt: mppt, pv: strings })
-        : this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS_BOTH_STRINGS", { mppt: mppt, pv1: strings * 2 - 1, pv2: strings * 2 });
+      const label: string = this.ibn.getMpptLabel(mppt, strings);
       const defaultValue: boolean = this.model[key];
 
       fields.push({
         key: key,
         props: {
           label: label,
-          url: this.ibn.maxNumberOfMppt === -1 ? "assets/img/home-mppt/" + mppt + "." + strings + ".png" : this.ibn.getImageUrl(mppt),
+          url: this.ibn.maxNumberOfMppt > 0 ? this.ibn.getImageUrl(mppt) : this.ibn.getImageUrl(strings),
         },
         defaultValue: defaultValue,
         wrappers: ["formly-field-checkbox-with-image"],

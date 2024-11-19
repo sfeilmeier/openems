@@ -59,4 +59,8 @@ export namespace ArrayUtils {
   export function containsStrings(strings: (number | string | null)[], arr: (number | string | null)[]): boolean {
     return arr.filter(el => strings.includes(el)).length > 0;
   }
+
+  export function getArrayOfLength(length: number): number[] {
+    return Array.from({ length }, (_, index) => index);
+  }
 }

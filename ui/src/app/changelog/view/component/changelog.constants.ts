@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2024.11.1";
+    public static readonly UI_VERSION = "2024.11.2";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -46,6 +46,7 @@ export class Product {
     // ESS
     public static readonly HOME_10 = new Product("FENECON Home 10", "https://fenecon.de/fenecon-home-10/");
     public static readonly HOME_20_30 = new Product("FENECON Home 20 & 30", "https://fenecon.de/fenecon-home-20-30/");
+    public static readonly HOME_6_10_15 = new Product("FENECON Home 6, 10 & 15", "https://fenecon.de/fenecon-home-6-10-15/");
     public static readonly COMMERCIAL_30 = new Product("FENECON Commercial 30", "https://fenecon.de/fenecon-commercial-30/");
     public static readonly COMMERCIAL_50 = new Product("FENECON Commercial 50", "https://fenecon.de/fenecon-commercial-50/");
     public static readonly COMMERCIAL_92 = new Product("FENECON Commercial 92", "https://fenecon.de/fenecon-commercial-92/");

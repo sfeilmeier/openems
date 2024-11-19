@@ -65,6 +65,7 @@ export const theme = {
             HOME: {
                 HOME_10: "https://docs.fenecon.de/_/de/home/home_10/montage_und_service_anleitung/Montage_und_Serviceanleitung_Home.html",
                 HOME_20_30: "https://docs.fenecon.de/_/de/home/home_20-30/montage_und_service_anleitung/Montage_und_Serviceanleitung_Home_20-30.html",
+                HOME_GEN_2: "https://docs.fenecon.de/de/home/home_6-10-15/betrieb_und_serviceanleitung/Betriebsanleitung_Home_6-10-15.html",
             },
             COMMERCIAL: {
                 COMMERCIAL_30: "https://docs.fenecon.de/_/de/commercial/commercial_30/montage_und_serviceanleitung/Montage_und_Serviceanleitung_Commercial_30.html",
@@ -101,12 +102,32 @@ export const theme = {
             category: "producttype",
             options: [
                 {
+                    name: "Home 6",
+                    value: "home-6",
+                },
+                {
                     name: "Home 10",
                     value: "home",
                 },
                 {
+                    name: "Home 10 (Gen2)",
+                    value: "home-10",
+                },
+                {
                     name: "Home 20 & 30",
                     value: "Home 20 & 30",
+                },
+                {
+                    name: "Home 15",
+                    value: "home-15",
+                },
+                {
+                    name: "Home 20",
+                    value: "home-20",
+                },
+                {
+                    name: "Home 30",
+                    value: "home-30",
                 },
                 {
                     name: "Commercial 30",

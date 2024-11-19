@@ -2,11 +2,13 @@ package io.openems.edge.app.integratedsystem;
 
 import static io.openems.edge.app.common.props.CommonProps.alias;
 import static io.openems.edge.app.integratedsystem.FeneconHomeComponents.batteryInverter;
+import static io.openems.edge.app.integratedsystem.FeneconHomeComponents.essLimiter14aToHardware;
 import static io.openems.edge.app.integratedsystem.FeneconHomeComponents.gridOptimizedCharge;
 import static io.openems.edge.app.integratedsystem.FeneconHomeComponents.modbusForExternalMeters;
 import static io.openems.edge.app.integratedsystem.FeneconHomeComponents.predictor;
 import static io.openems.edge.app.integratedsystem.FeneconHomeComponents.prepareBatteryExtension;
 import static io.openems.edge.app.integratedsystem.FeneconHomeComponents.selfConsumptionOptimization;
+import static io.openems.edge.app.integratedsystem.IntegratedSystemProps.hasEssLimiter14a;
 import static io.openems.edge.app.integratedsystem.IntegratedSystemProps.maxFeedInPower;
 import static io.openems.edge.app.integratedsystem.IntegratedSystemProps.safetyCountry;
 
@@ -30,13 +32,15 @@ import io.openems.common.session.Language;
 import io.openems.common.session.Role;
 import io.openems.edge.app.enums.FeedInType;
 import io.openems.edge.app.enums.SafetyCountry;
-import io.openems.edge.app.integratedsystem.FeneconHome6KW.Property;
+import io.openems.edge.app.integratedsystem.FeneconHome10Gen2.Property;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.core.appmanager.AbstractOpenemsApp;
 import io.openems.edge.core.appmanager.AbstractOpenemsAppWithProps;
 import io.openems.edge.core.appmanager.AppConfiguration;
 import io.openems.edge.core.appmanager.AppDef;
 import io.openems.edge.core.appmanager.AppDescriptor;
+import io.openems.edge.core.appmanager.AppManagerUtil;
+import io.openems.edge.core.appmanager.AppManagerUtilSupplier;
 import io.openems.edge.core.appmanager.ComponentUtil;
 import io.openems.edge.core.appmanager.ConfigurationTarget;
 import io.openems.edge.core.appmanager.OpenemsApp;
@@ -48,11 +52,11 @@ import io.openems.edge.core.appmanager.Type.Parameter.BundleParameter;
 import io.openems.edge.core.appmanager.dependency.Tasks;
 import io.openems.edge.core.appmanager.dependency.aggregatetask.SchedulerByCentralOrderConfiguration.SchedulerComponent;
 
-@Component(name = "App.FENECON.Home.6KW")
-public class FeneconHome6KW extends AbstractOpenemsAppWithProps<FeneconHome6KW, Property, BundleParameter>
-		implements OpenemsApp {
+@Component(name = "App.FENECON.Home10.Gen2")
+public class FeneconHome10Gen2 extends AbstractOpenemsAppWithProps<FeneconHome10Gen2, Property, BundleParameter>
+		implements OpenemsApp, AppManagerUtilSupplier {
 
-	public static enum Property implements Type<Property, FeneconHome6KW, BundleParameter> {
+	public static enum Property implements Type<Property, FeneconHome10Gen2, BundleParameter> {
 		ALIAS(alias()), //
 		// Battery Inverter
 		SAFETY_COUNTRY(AppDef.copyOfGeneric(safetyCountry(), def -> def //
@@ -62,8 +66,12 @@ public class FeneconHome6KW extends AbstractOpenemsAppWithProps<FeneconHome6KW, 
 		MAX_FEED_IN_POWER(maxFeedInPower(FEED_IN_TYPE)), //
 		FEED_IN_SETTING(IntegratedSystemProps.feedInSetting()), //
 
+		NA_PROTECTION_ENABLED(IntegratedSystemProps.naProtectionEnabled()), //
+
 		GRID_METER_CATEGORY(IntegratedSystemProps.gridMeterType()), //
 		CT_RATIO_FIRST(IntegratedSystemProps.ctRatioFirst(GRID_METER_CATEGORY)), //
+
+		HAS_ESS_LIMITER_14A(hasEssLimiter14a()), //
 
 		// DC PV Charger 1
 		HAS_DC_PV1(IntegratedSystemProps.hasDcPv(1)), //
@@ -72,6 +80,10 @@ public class FeneconHome6KW extends AbstractOpenemsAppWithProps<FeneconHome6KW, 
 		// DC PV Charger 2
 		HAS_DC_PV2(IntegratedSystemProps.hasDcPv(2)), //
 		DC_PV2_ALIAS(IntegratedSystemProps.dcPvAlias(2, HAS_DC_PV2)), //
+
+		// DC PV Charger 3
+		HAS_DC_PV3(IntegratedSystemProps.hasDcPv(3)), //
+		DC_PV3_ALIAS(IntegratedSystemProps.dcPvAlias(3, HAS_DC_PV3)), //
 
 		// Emergency Reserve SoC
 		HAS_EMERGENCY_RESERVE(IntegratedSystemProps.hasEmergencyReserve()), //
@@ -82,34 +94,42 @@ public class FeneconHome6KW extends AbstractOpenemsAppWithProps<FeneconHome6KW, 
 		SHADOW_MANAGEMENT_DISABLED(IntegratedSystemProps.shadowManagementDisabled()), //
 		;
 
-		private final AppDef<? super FeneconHome6KW, ? super Property, ? super BundleParameter> def;
+		private final AppDef<? super FeneconHome10Gen2, ? super Property, ? super BundleParameter> def;
 
-		private Property(AppDef<? super FeneconHome6KW, ? super Property, ? super BundleParameter> def) {
+		private Property(AppDef<? super FeneconHome10Gen2, ? super Property, ? super BundleParameter> def) {
 			this.def = def;
 		}
 
 		@Override
-		public Type<Property, FeneconHome6KW, BundleParameter> self() {
+		public Type<Property, FeneconHome10Gen2, BundleParameter> self() {
 			return this;
 		}
 
 		@Override
-		public AppDef<? super FeneconHome6KW, ? super Property, ? super BundleParameter> def() {
+		public AppDef<? super FeneconHome10Gen2, ? super Property, ? super BundleParameter> def() {
 			return this.def;
 		}
 
 		@Override
-		public Function<GetParameterValues<FeneconHome6KW>, BundleParameter> getParamter() {
+		public Function<GetParameterValues<FeneconHome10Gen2>, BundleParameter> getParamter() {
 			return t -> new BundleParameter(//
 					AbstractOpenemsApp.getTranslationBundle(t.language) //
 			);
 		}
 	}
 
+	private final AppManagerUtil appManagerUtil;
+
 	@Activate
-	public FeneconHome6KW(@Reference ComponentManager componentManager, ComponentContext context,
-			@Reference ConfigurationAdmin cm, @Reference ComponentUtil componentUtil) {
+	public FeneconHome10Gen2(//
+			@Reference ComponentManager componentManager, //
+			ComponentContext context, //
+			@Reference ConfigurationAdmin cm, //
+			@Reference ComponentUtil componentUtil, //
+			@Reference AppManagerUtil appManagerUtil //
+	) {
 		super(componentManager, context, cm, componentUtil);
+		this.appManagerUtil = appManagerUtil;
 	}
 
 	@Override
@@ -136,6 +156,8 @@ public class FeneconHome6KW extends AbstractOpenemsAppWithProps<FeneconHome6KW, 
 					? this.getInt(p, Property.MAX_FEED_IN_POWER)
 					: 0;
 
+			final var shadowManagmentDisabled = this.getBoolean(p, Property.SHADOW_MANAGEMENT_DISABLED);
+
 			final var gridMeterCategory = this.getEnum(p, GoodWeGridMeterCategory.class, Property.GRID_METER_CATEGORY);
 
 			final Integer ctRatioFirst;
@@ -144,32 +166,35 @@ public class FeneconHome6KW extends AbstractOpenemsAppWithProps<FeneconHome6KW, 
 			} else {
 				ctRatioFirst = null;
 			}
-
-			final var shadowManagmentDisabled = this.getBoolean(p, Property.SHADOW_MANAGEMENT_DISABLED);
+			final var hasEssLimiter14a = this.getBoolean(p, Property.HAS_ESS_LIMITER_14A);
 
 			final var safetyCountry = this.getEnum(p, SafetyCountry.class, Property.SAFETY_COUNTRY);
 			final var feedInSetting = this.getString(p, Property.FEED_IN_SETTING);
+			final var naProtection = this.getBoolean(p, Property.NA_PROTECTION_ENABLED);
+
+			final var deviceHardware = this.appManagerUtil
+					.getFirstInstantiatedAppByCategories(OpenemsAppCategory.OPENEMS_DEVICE_HARDWARE);
 
 			var bundle = AbstractOpenemsApp.getTranslationBundle(l);
 			var components = Lists.newArrayList(//
 					// modbus
 					FeneconHomeComponents.modbusInternal(bundle, t, modbusIdInternal),
 					FeneconHomeComponents.modbusExternal(bundle, t, modbusIdExternal),
-					modbusForExternalMeters(bundle, t, modbusIdExternalMeters), //
+					modbusForExternalMeters(bundle, t, modbusIdExternalMeters, deviceHardware), //
 					// ess
 					FeneconHomeComponents.ess(bundle, essId, "battery0", "batteryInverter0"),
 					FeneconHomeComponents.ctrlEssSurplusFeedToGrid(bundle, essId), predictor(bundle, t), //
 					// battery
 					FeneconHomeComponents.battery(bundle, "battery0", modbusIdInternal),
 					batteryInverter(bundle, "batteryInverter0", hasEmergencyReserve, feedInType, maxFeedInPower,
-							modbusIdExternal, shadowManagmentDisabled, safetyCountry, feedInSetting), //
+							modbusIdExternal, shadowManagmentDisabled, safetyCountry, feedInSetting, naProtection), //
 					// meter
 					FeneconHomeComponents.gridMeter(bundle, "meter0", modbusIdExternal, gridMeterCategory,
 							ctRatioFirst),
 					// other
 					FeneconHomeComponents.power(), FeneconHomeComponents.io(bundle, modbusIdInternal));
 
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < 3; i++) {
 				final var oneBase = i + 1;
 				if (this.getBoolean(p, Property.valueOf("HAS_DC_PV" + oneBase))) {
 					components.add(FeneconHomeComponents.chargerPv("charger" + i, oneBase,
@@ -186,12 +211,15 @@ public class FeneconHome6KW extends AbstractOpenemsAppWithProps<FeneconHome6KW, 
 				components.add(FeneconHomeComponents.ctrlEmergencyCapacityReserve(bundle, t, essId,
 						emergencyReserveEnabled, emergencyReserveSoc));
 			}
-
-			var dependencies = Lists.newArrayList(//
+			final var dependencies = Lists.newArrayList(//
 					gridOptimizedCharge(t, feedInType, maxFeedInPower), //
 					selfConsumptionOptimization(t, essId, "meter0"), //
 					prepareBatteryExtension() //
 			);
+
+			if (hasEssLimiter14a) {
+				dependencies.add(essLimiter14aToHardware(this.appManagerUtil, deviceHardware));
+			}
 
 			final var schedulerComponents = new ArrayList<SchedulerComponent>();
 			if (hasEmergencyReserve) {
@@ -228,13 +256,18 @@ public class FeneconHome6KW extends AbstractOpenemsAppWithProps<FeneconHome6KW, 
 	}
 
 	@Override
-	protected FeneconHome6KW getApp() {
+	protected FeneconHome10Gen2 getApp() {
 		return this;
 	}
 
 	@Override
 	protected Property[] propertyValues() {
 		return Property.values();
+	}
+
+	@Override
+	public AppManagerUtil getAppManagerUtil() {
+		return this.appManagerUtil;
 	}
 
 }

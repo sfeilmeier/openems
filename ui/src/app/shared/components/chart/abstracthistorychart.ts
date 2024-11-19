@@ -583,7 +583,6 @@ export abstract class AbstractHistoryChart implements OnInit, OnDestroy {
           max: 3,
           beginAtZero: true,
           ticks: {
-            ...baseConfig.ticks,
             stepSize: 1,
           },
         };
@@ -600,6 +599,7 @@ export abstract class AbstractHistoryChart implements OnInit, OnDestroy {
           ...baseConfig,
           beginAtZero: false,
           ticks: {
+            ...baseConfig.ticks,
             source: "auto",
           },
         };
@@ -662,7 +662,8 @@ export abstract class AbstractHistoryChart implements OnInit, OnDestroy {
         return pipe.transform(value);
       }
       case YAxisType.CURRENCY: {
-        const currency = config.components["_meta"].properties.currency;
+        const meta: EdgeConfig.Component = config?.getComponent("_meta");
+        const currency: string = config?.getPropertyFromComponent<string>(meta, "currency");
         tooltipsLabel = Currency.getCurrencyLabelByCurrency(currency);
         break;
       }

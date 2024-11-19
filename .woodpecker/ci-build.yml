@@ -44,7 +44,7 @@ clone:
       - *main-build
       - *message-debian
       - path:
-          include: [".woodpecker/ci-build.yml", "ui/**", "io.openems*/**", "**/*gradle*"]
+          include: [".woodpecker/ci-build.yml", "ui/**", "io.openems*/**", "**/*gradle*", "tools/**"]
           on_empty: false
     image: woodpeckerci/plugin-git
 
@@ -55,6 +55,12 @@ steps:
     settings:
       restore: true
       <<: *sftp-settings
+
+  check-scripts:
+    when: *every-build
+    image: openems-bash:latest
+    commands:
+      - shellcheck -S error $( find tools/ -name "*.sh" -print )
 
   prepare-environment:
     when: *every-build

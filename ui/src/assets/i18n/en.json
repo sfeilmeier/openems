@@ -613,7 +613,9 @@
       "SUB_TITLE": "You have successfully commisioned the {{ value }}.",
       "TITLE": "Set-up complete",
       "NOTE": "Click here to go to the App Center to configure additional components and install apps.",
-      "HECKERT_NOTE": "A free app is now available for you to install in the app center."
+      "HECKERT_NOTE": "A free app is now available for you to install in the app center.",
+      "INVALID_PAYLOAD": "Invalid response from server",
+      "DOWNLOAD_SUCCESS": "Protocol downloaded successfully"
     },
     "CONFIGURATION_EMERGENCY_RESERVE": {
       "EMERGENCY_RESERVE_NOTE": "If this function is activated, the battery charge level cannot fall below the set value.",
@@ -871,9 +873,14 @@
     "CONFIGURATION_ENERGY_FLOW_METER": {
       "TITLE": "Selection of energy flow direction meter",
       "METER": {
-        "WITH_CT": "Home 3-phase sensor with current transformer 120A (standard scope of delivery)",
+        "WITH_CT": "Home 3-phase sensor with current transformer 120A ({{type}})",
         "WITHOUT_CT": "Home 3-phase sensor without current transformer (optional)",
-        "LABEL": "Meter"
+        "LABEL": "Meter",
+        "INTEGRATED": "Integrated Home 3 phase sensor with current transformer ({{type}})",
+        "TYPE": {
+          "STANDARD": "standard scope of delivery",
+          "OPTIONAL": "Optional"
+        }
       },
       "CONVERTER_RATIO": "Converter ratio (200–5000A)"
     },

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ModalController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { filter, takeUntil } from "rxjs/operators";
 import { v4 as uuidv4 } from "uuid";
 import { ChannelAddress, CurrentData, Edge, EdgeConfig, Utils } from "src/app/shared/shared";
 
@@ -81,6 +81,20 @@ export abstract class AbstractFlatWidget implements OnInit, OnDestroy {
         // Unsubscribe from CurrentData subject
         this.stopOnDestroy.next();
         this.stopOnDestroy.complete();
+    }
+
+    /**
+     * Gets the first valid --non null-- value for this channel
+     *
+     * @param channelAddress the channel address
+     * @returns a non null value
+     */
+    protected async getFirstValidValueForChannel(channelAddress: ChannelAddress): Promise<any> {
+        return new Promise<any>((res) => {
+            this.dataService.currentValue.pipe(filter(el => el.allComponents[channelAddress.toString()] != null)).subscribe((val) => {
+                res(val.allComponents[channelAddress.toString()]);
+            });
+        });
     }
 
     /**

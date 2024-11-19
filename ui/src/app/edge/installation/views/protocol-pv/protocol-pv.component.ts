@@ -29,8 +29,9 @@ export class ProtocolPvComponent implements OnInit {
     // Initialize PV-Object
     this.ibn.pv ??= {};
     this.ibn.pv.dc ??= [];
+    const maxStrings: number = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
 
-    for (let formNr = 0; formNr <= (this.ibn.maxNumberOfMppt !== -1 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings); formNr++) {
+    for (let formNr = 0; formNr <= maxStrings; formNr++) {
       const form: dcForm = {
         formGroup: new FormGroup({}),
         fields: [],
@@ -47,7 +48,7 @@ export class ProtocolPvComponent implements OnInit {
       } else {
         // forms[1], forms[2]... = dc[0], dc[1]...
         form.model = this.ibn.pv.dc[formNr - 1] ?? {
-          isSelected: this.ibn.maxNumberOfMppt !== -1,
+          isSelected: this.ibn.maxNumberOfMppt > 0,
         };
       }
     }
@@ -69,8 +70,9 @@ export class ProtocolPvComponent implements OnInit {
 
     // Resetting to avoiding duplicate entries in the array.
     this.ibn.pv.dc = [];
+    const maxStrings: number = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
 
-    for (let formNr = 0; formNr <= (this.ibn.maxNumberOfMppt !== -1 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings); formNr++) {
+    for (let formNr = 0; formNr <= maxStrings; formNr++) {
       if (formNr === 0) {
         this.ibn.batteryInverter = this.forms[formNr].model;
       } else {
@@ -96,11 +98,10 @@ export class ProtocolPvComponent implements OnInit {
         description: this.translate.instant("INSTALLATION.PROTOCOL_PV.SHADE_MANAGEMENT_DESCRIPTION"),
       },
     });
+    const maxStrings: number = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
 
     //  For DC-PVs
-    for (let i = 0; i < (this.ibn.maxNumberOfMppt !== -1 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings); i++) {
-
-      // If the maxNumberOfPvStrings is '2', then it is Home 10.
+    for (let i = 0; i < maxStrings; i++) {
       // In Home 20 & 30, It is always possible to configure two pv strings under one mppt.
       // So dividing the strings with 2 for actual mppt number.
       const mppt = i + 1;
@@ -139,9 +140,7 @@ export class ProtocolPvComponent implements OnInit {
             },
           },
           props: {
-            label: this.ibn.maxNumberOfMppt === -1
-              ? this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS", { mppt: mppt, pv: i + 1 })
-              : this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS_BOTH_STRINGS", { mppt: mppt, pv1: i * 2 + 1, pv2: i * 2 + 2 }),
+            label: this.ibn.getMpptLabel(mppt, i + 1),
           },
         },
         {
@@ -160,9 +159,9 @@ export class ProtocolPvComponent implements OnInit {
           defaultValue: 1000, // Acts as minimum value through "defaultAsMinimumValue" validator
           templateOptions: {
             type: "number",
-            label: this.ibn.maxNumberOfMppt === -1
-              ? this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER")
-              : this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER_PER_STRING"),
+            label: this.ibn.maxNumberOfMppt > 0
+              ? this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER_PER_STRING")
+              : this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER"),
             required: true,
           },
           validators: {
@@ -193,16 +192,16 @@ export class ProtocolPvComponent implements OnInit {
           type: "input",
           templateOptions: {
             type: "number",
-            label: this.ibn.maxNumberOfMppt === -1
-              ? this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES")
-              : this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES_PER_STRING"),
+            label: this.ibn.maxNumberOfMppt > 0
+              ? this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES_PER_STRING")
+              : this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES"),
           },
           parsers: [Number],
           hideExpression: model => !model.isSelected,
         });
 
       // Visible only for Home 20 and 30.
-      if (this.ibn.maxNumberOfMppt !== -1) {
+      if (this.ibn.maxNumberOfMppt > 0) {
         this.forms[i + 1]?.fields.push({
           key: "portsConnected",
           type: "checkbox",

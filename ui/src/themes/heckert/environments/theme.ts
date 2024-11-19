@@ -65,6 +65,7 @@ export const theme = {
             HOME: {
                 HOME_10: "https://www.heckertsolar.com/wp-content/uploads/2022/06/Montage_und-Serviceanleitung-Symphon-E-1.pdf",
                 HOME_20_30: "#",
+                HOME_GEN_2: "#",
             },
             COMMERCIAL: {
                 COMMERCIAL_30: "#",

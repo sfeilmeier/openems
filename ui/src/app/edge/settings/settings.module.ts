@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { ChangelogModule } from "src/app/changelog/changelog.module";
+import { ChangelogComponent } from "src/app/changelog/view/component/changelog.component";
 import { SharedModule } from "./../../shared/shared.module";
 import { AlertingComponent } from "./alerting/alerting.component";
 import { AppModule } from "./app/app.module";
@@ -30,8 +30,8 @@ import { SystemUpdateOldComponent } from "./systemupdate.old/systemupdate.old.co
     JsonrpcTestModule,
     SharedModule,
     ServiceAssistantModule,
-    ChangelogModule,
     AssistantModule,
+    ChangelogComponent,
   ],
   declarations: [
     AlertingComponent,
