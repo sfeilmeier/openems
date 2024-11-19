@@ -255,6 +255,13 @@ apt-get dist-upgrade --assume-yes --force-yes
 apt_install at
 apt_install ncdu
 
+if is_installed fems-techbase-sys-mods; then
+    if dpkg --compare-versions $(dpkg-query -W -f='${Version}' fems-techbase-sys-mods) lt 1.1.1;
+    then
+        dpkg_download_install https://fenecon.de/fems-download/fems_techbase_sys_mods-latest.deb
+    fi
+fi
+
 if ! is_installed temurin-17-jre; then
     case "$VERSION_CODENAME" in
         "jessie")
