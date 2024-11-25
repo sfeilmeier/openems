@@ -139,11 +139,11 @@ export namespace System {
     export function getSubSystemTypeLink(subSystemType: SubSystemType): string {
         switch (subSystemType) {
             case SubSystemType.COMMERCIAL_30:
-                return environment.links.MANUALS.COMMERCIAL.COMMERCIAL_30;
+                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_30;
             case SubSystemType.COMMERCIAL_50:
-                return environment.links.MANUALS.COMMERCIAL.COMMERCIAL_50;
+                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_50;
             case SubSystemType.COMMERCIAL_92:
-                return environment.links.MANUALS.COMMERCIAL.COMMERCIAL;
+                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL;
         }
     }
 
@@ -165,12 +165,12 @@ export namespace System {
     export function getHomeSystemInstructionsLink(homeSystemId: HomeSystemId): string {
         switch (homeSystemId) {
             case SystemId.FENECON_HOME_10:
-                return environment.links.MANUALS.HOME.HOME_10;
+                return environment.links.MANUALS.SYSTEM.HOME.HOME_10;
             case SystemId.FENECON_HOME_20:
             case SystemId.FENECON_HOME_30:
-                return environment.links.MANUALS.HOME.HOME_20_30;
+                return environment.links.MANUALS.SYSTEM.HOME.HOME_20_30;
             default:
-                return environment.links.MANUALS.HOME.HOME_GEN_2;
+                return environment.links.MANUALS.SYSTEM.HOME.HOME_GEN_2;
         }
     }
 
@@ -191,5 +191,22 @@ export namespace System {
         ];
 
         return selectedSystem && homeSystemIds.includes(selectedSystem);
+    }
+
+    /**
+     * Rundsteuer manual is returned based on the system.
+     *
+     * @param system Id of the System.
+     * @returns the rundsteuer manual.
+     */
+    export function getRundsteuerManual(system: SystemId): string {
+        switch (system) {
+            case SystemId.FENECON_HOME_6:
+            case SystemId.FENECON_HOME_10_GEN_2:
+            case SystemId.FENECON_HOME_15:
+                return environment.links.MANUALS.RUNDSTEUER.HOME_GEN_2;
+            default:
+                return environment.links.MANUALS.RUNDSTEUER.HOME;
+        }
     }
 }

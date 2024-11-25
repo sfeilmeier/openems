@@ -62,15 +62,22 @@ export const theme = {
         },
 
         MANUALS: {
-            HOME: {
-                HOME_10: "https://www.heckertsolar.com/wp-content/uploads/2022/06/Montage_und-Serviceanleitung-Symphon-E-1.pdf",
-                HOME_20_30: "#",
-                HOME_GEN_2: "#",
+            SYSTEM: {
+                HOME: {
+                    HOME_10: "https://www.heckertsolar.com/wp-content/uploads/2022/06/Montage_und-Serviceanleitung-Symphon-E-1.pdf",
+                    HOME_20_30: "#",
+                    HOME_GEN_2: "#",
+                },
+                COMMERCIAL: {
+                    COMMERCIAL_30: "#",
+                    COMMERCIAL_50: "#",
+                    COMMERCIAL: "#",
+                },
             },
-            COMMERCIAL: {
-                COMMERCIAL_30: "#",
-                COMMERCIAL_50: "#",
-                COMMERCIAL: "#",
+
+            RUNDSTEUER: {
+                HOME: "https://fenecon.de/wp-content/uploads/2022/06/20220523_Anleitung-Rundsteuerempfaenger.pdf",
+                HOME_GEN_2: "#",
             },
         },
         APP_CENTER: {

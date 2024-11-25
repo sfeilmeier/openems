@@ -4,6 +4,7 @@ import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { FeedInType } from "../../shared/enums";
+import { System } from "../../shared/system";
 
 @Component({
   selector: ProtocolFeedInLimitationComponent.SELECTOR,
@@ -49,6 +50,6 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
   }
 
   protected openManual() {
-    window.open("https://fenecon.de/wp-content/uploads/2022/06/20220523_Anleitung-Rundsteuerempfaenger.pdf");
+    window.open(System.getRundsteuerManual(this.ibn.id));
   }
 }

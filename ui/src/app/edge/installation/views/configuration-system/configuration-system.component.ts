@@ -102,7 +102,7 @@ export class ConfigurationSystemComponent implements OnInit {
  * Redirects to the appropriate url for Heckert system manual.
  */
   protected openManual(): void {
-    window.open(environment.links.MANUALS.HOME.HOME_10);
+    window.open(environment.links.MANUALS.SYSTEM.HOME.HOME_10);
   }
 
   /**
