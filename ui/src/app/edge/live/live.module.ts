@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { EdgeOfflineModule } from "src/app/shared/components/edge/offline/offline.module";
+import { PullToRefreshComponent } from "src/app/shared/components/pull-to-refresh/pull-to-refresh";
 import { SharedModule } from "./../../shared/shared.module";
 import { AdvertisementModule } from "./advertisement/advertisement.module";
 import { Common_Autarchy } from "./common/autarchy/Common_Autarchy";
@@ -65,6 +66,7 @@ import { SystemModule } from "./system/system.module";
     EnergymonitorModule,
     SharedModule,
     SystemModule,
+    PullToRefreshComponent,
   ],
   declarations: [
     AdministrationComponent,
