@@ -180,9 +180,6 @@ export class ProtocolChecklistComponent implements OnInit {
                     },
                 ],
             },
-            expressionProperties: {
-                "templateOptions.disabled": () => !this.arePreviousFieldsChecked(1),
-            },
         });
 
         fields.push({
@@ -192,9 +189,6 @@ export class ProtocolChecklistComponent implements OnInit {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.IP_ADDRESS"),
                 url: "assets/img/commercial-checklist/ip_address.png",
                 description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.IP_ADDRESS_DESCRIPTION"),
-            },
-            expressionProperties: {
-                "templateOptions.disabled": () => !this.arePreviousFieldsChecked(2),
             },
             wrappers: ["formly-field-checkbox-with-image"],
         });
@@ -207,9 +201,6 @@ export class ProtocolChecklistComponent implements OnInit {
                 url: "assets/img/commercial-checklist/enter_password.png",
                 description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.PASSWORD_DESCRIPTION"),
             },
-            expressionProperties: {
-                "templateOptions.disabled": () => !this.arePreviousFieldsChecked(3),
-            },
             wrappers: ["formly-field-checkbox-with-image"],
         });
 
@@ -219,9 +210,6 @@ export class ProtocolChecklistComponent implements OnInit {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.START_CONFIGURATION"),
                 url: "assets/img/commercial-checklist/start_configuration.png",
-            },
-            expressionProperties: {
-                "templateOptions.disabled": () => !this.arePreviousFieldsChecked(4),
             },
             wrappers: ["formly-field-checkbox-with-image"],
         });
@@ -271,9 +259,6 @@ export class ProtocolChecklistComponent implements OnInit {
                     },
                 ],
             },
-            expressionProperties: {
-                "templateOptions.disabled": () => !this.arePreviousFieldsChecked(5),
-            },
         });
 
         fields.push({
@@ -283,9 +268,6 @@ export class ProtocolChecklistComponent implements OnInit {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.MIN_VOLTAGE"),
                 url: "assets/img/commercial-checklist/min_voltage.png",
                 description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.MIN_VOLTAGE_DESCRIPTION"),
-            },
-            expressionProperties: {
-                "templateOptions.disabled": () => !this.arePreviousFieldsChecked(6),
             },
             wrappers: ["formly-field-checkbox-with-image"],
         });
@@ -298,13 +280,9 @@ export class ProtocolChecklistComponent implements OnInit {
                 url: "assets/img/commercial-checklist/power_control.png",
                 description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.POWER_CONTROL_DESCRIPTION"),
             },
-            expressionProperties: {
-                "templateOptions.disabled": () => !this.arePreviousFieldsChecked(7),
-            },
             wrappers: ["formly-field-checkbox-with-image"],
         });
 
         return fields;
     }
-
 }
