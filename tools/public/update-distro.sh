@@ -7,8 +7,10 @@ fi
 
 set -ex
 
-export UPDATE_LOCK_FILE="/tmp/distro-update.lock"
-export UPDATE_INFO_FILE="/tmp/distro-update.info"
+UPDATE_LOCK_FILE="/tmp/distro-update.lock"
+UPDATE_INFO_FILE="/tmp/distro-update.info"
+UPDATE_LOG_FILE="/var/log/distro-update.log"
+
 
 function check_system {
   if [ -z "$VERSION_NEXT" ]; then
@@ -288,12 +290,28 @@ check_system;
 
 echo "distro update to $VERSION_NEXT"
 
+{
+
+start_time=$(date +%s)
+
 case "$VERSION_NEXT" in
   "stretch") update_to_stretch;;
   "buster") update_to_buster;;
   "bullseye") update_to_bullseye;;
   "bookworm") update_to_bookworm;;
 esac
+
+end_time=$(date +%s)
+elapsed_time=$((end_time - start_time))
+
+minutes=$((elapsed_time / 60))
+seconds=$((elapsed_time % 60))
+
+echo "Execution time: ${minutes} minutes and ${seconds} seconds"
+
+} 2>&1 | tee "$UPDATE_LOG_FILE"
+
+end_time=$(date +%s)
 
 rm $UPDATE_INFO_FILE
 
