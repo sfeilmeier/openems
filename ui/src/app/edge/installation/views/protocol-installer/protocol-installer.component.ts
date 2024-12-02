@@ -117,6 +117,7 @@ export class ProtocolInstallerComponent implements OnInit {
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY"),
               disabled: true,
+              pattern: AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX,
             },
           },
           {
