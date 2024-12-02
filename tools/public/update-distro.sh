@@ -130,6 +130,16 @@ function update_sources {
   done
 }
 
+function install_freexian_apt_key {
+    local keytmp="/tmp/freexian-archive-extended-lts.gpg"
+    local keystore="/etc/apt/trusted.gpg.d/freexian-archive-extended-lts.gpg"
+
+    if [ ! -f "$keystore" ]; then
+        wget "https://deb.fenecon.de/debian-keys/freexian-archive.gpg" -O "${keytmp}"
+        install -m 644 "${keytmp}" "${keystore}"
+    fi
+}
+
 function __cleanup {
   if [ -f "$UPDATE_LOCK_FILE" ]; then
     rm -f "$UPDATE_LOCK_FILE"
@@ -149,7 +159,8 @@ function prevent_multiple_exec {
 ####### UPDATE ##########
 
 function update_to_stretch {
-  echo "deb http://deb.fenecon.de/debian-archive/ stretch main contrib non-free" > "/tmp/sources.list"
+  install_freexian_apt_key;
+  echo "deb http://deb.fenecon.de/debian-elts/ stretch main contrib non-free" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
     echo "deb http://deb.fenecon.de/raspbian-legacy/ stretch main contrib non-free rpi" > "/tmp/raspi.list"
