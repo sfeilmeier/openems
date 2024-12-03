@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26.3 22.8">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-linejoin: round;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+      }
+
+      .cls-2 {
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <g id="Ebene_1">
+    <g id="Ebene_1-2">
+      <g>
+        <line stroke="currentColor" class="cls-2" x1="19.9" y1="11.6" x2="24.8" y2="14.4"/>
+        <line stroke="currentColor" class="cls-2" x1="21" y1=".5" x2="18.2" y2="5.3"/>
+        <line stroke="currentColor" class="cls-2" x1="20.4" y1="8.1" x2="25.8" y2="6.6"/>
+      </g>
+    </g>
+  </g>
+  <g id="Ebene_2">
+    <path class="cls-1" stroke="currentColor" d="M.5,10.9l1.3,4.4,2.8-.97,2.1,7.97,4.3-.9-2.6-7c3.04-.07,10.09,2.12,10.09,2.12L14.52,1.83s-1.51,3.57-11.23,8.17c-.66.31-2.79.9-2.79.9Z"/>
+    <path class="cls-1" stroke="currentColor" d="M4.6,14.33c.76-.2,3.33-.06,4.59.09"/>
+  </g>
+</svg>

@@ -20,7 +20,6 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
   @ViewChild("swiper") public swiperRef: ElementRef | undefined;
 
   public title: AdvertWidget["title"];
-  public imageUrl: string = "assets/img/fems-app.png";
 
   // New properties to check which title to display
   public displayRawTitle: boolean = false;
