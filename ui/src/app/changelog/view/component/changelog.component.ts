@@ -25,6 +25,21 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2024.12.1",
+        changes: [
+          Changelog.openems("2024.12.0"),
+          Changelog.UI,
+          Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Konfigurierbare Auflösung (Viertelstunden-/Stundenpreise); Fehlerbehebung beim Abrufen der Preise",
+          "App Center: Warnhinweis beim Deinstallieren einer App",
+          Changelog.app(App.METER, App.CARLO_GAVAZZI) + "Korrektur der Skalierung des Strom-Wertes in Ampere",
+          { roleIsAtLeast: Role.INSTALLER, change: "Inbetriebnahmeassistent: Fehlerbehebungen; Validierung der eingegebenen PLZ" },
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.app(App.MODBUS_TCP_SCHREIBZUGRIFF) + "Fehlerbehebung nach Änderung der Konfiguration im laufenden Betrieb" },
+          { roleIsAtLeast: Role.ADMIN, change: "Online-Monitoring: Anzeige System-Status auch bei unkonfiguriertem EMS, Darstellung Netz-Strom ohne Vorzeichen (Be-/Entladung)" },
+          { roleIsAtLeast: Role.ADMIN, change: "Siemens SICAM T 7KG966 Zähler: Rückportierung aus Industrial M Projekt. Nicht vollständig implementiert!" },
+          { roleIsAtLeast: Role.ADMIN, change: "Industrial M: Rückportierung der System- und BMW-Komponente" },
+        ],
+      },
+      {
         version: "2024.11.2",
         changes: [
           Changelog.UI + "Verbesserungen am Inbetriebnahmeassistent, historische Darstellungen",
