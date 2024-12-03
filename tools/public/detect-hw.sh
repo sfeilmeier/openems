@@ -36,8 +36,8 @@ function read_hardware {
 } #read_hardware
 
 function detect_internal_serial_adapter {
-  if [ -e "/dev/ttyUSB0" ]; then
-    local model=$(udevadm info --query=property --name /dev/ttyUSB0 | grep "ID_USB_MODEL=")
+  if [ -e "/dev/busUSB3" ]; then
+    local model=$(udevadm info --query=property --name /dev/busUSB3 | grep "ID_USB_MODEL=")
     if [[ "${model^^}" =~ "BASIC_UART" ]]; then
       echo "true";
     else
@@ -89,14 +89,14 @@ function detect_hardware {
 ########  MAIN  #########
 #########################
 
-OVERWRITE=false
+OVERWRITE=true
 APP_ID=""
 
-while getopts "o" arg; do
+while getopts "s" arg; do
   case ${arg} in
-    o)
-      echo "# Enable Overwrite"
-      OVERWRITE=true
+    s)
+      echo "# Skip if already set."
+      OVERWRITE=false
       ;;
     ?)
       echo "Invalid option: -${OPTARG}."
@@ -104,11 +104,6 @@ while getopts "o" arg; do
       ;;
   esac
 done
-
-if [ -f "$HW_CONF" ] && [ "$OVERWRITE" == "false" ]; then
-  echo "Hardware config is already set"
-  exit 0
-fi
 
 if [ -f "$HW_REVISION" ]; then
   APP_ID="$(read_hardware)"
@@ -123,4 +118,13 @@ if [ -z "$APP_ID" ] || [ "$APP_ID" == "unknown" ]; then
   exit 1
 fi
 
-echo "appId=$APP_ID" | tee "$HW_CONF"
+echo "Detected $APP_ID"
+echo
+
+if [ -f "$HW_CONF" ] && [ "$OVERWRITE" == "false" ]; then
+  echo "Hardware config is already set. Not updating."
+  exit 0
+fi
+
+echo "appId=$APP_ID" > "$HW_CONF"
+echo "Hardware config updated."

@@ -60,15 +60,22 @@ export const theme = {
         },
 
         MANUALS: {
-            HOME: {
-                HOME_10: "#",
-                HOME_20_30: "#",
-                HOME_GEN_2: "#",
+            SYSTEM: {
+                HOME: {
+                    HOME_10: "#",
+                    HOME_20_30: "#",
+                    HOME_GEN_2: "#",
+                },
+                COMMERCIAL: {
+                    COMMERCIAL_30: "#",
+                    COMMERCIAL_50: "#",
+                    COMMERCIAL: "#",
+                },
             },
-            COMMERCIAL: {
-                COMMERCIAL_30: "#",
-                COMMERCIAL_50: "#",
-                COMMERCIAL: "#",
+
+            RUNDSTEUER: {
+                HOME: "#",
+                HOME_GEN_2: "#",
             },
         },
         APP_CENTER: {

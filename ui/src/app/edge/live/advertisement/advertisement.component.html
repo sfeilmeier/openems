@@ -1,8 +1,6 @@
 <ion-card>
     <ion-item lines="full" color="light" class="ion-text-center">
-        <ion-avatar slot="start">
-            <img [src]="imageUrl">
-        </ion-avatar>
+        <ion-icon name="oe-megafon" size="normal"></ion-icon>
         <ion-label class="white-space-initial" style="text-align: center" *ngIf="title">
             {{title.rawTitle ?? (title.languageKey | translate)}}
         </ion-label>

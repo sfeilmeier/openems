@@ -67,17 +67,25 @@ export interface Environment {
         },
 
         readonly MANUALS: {
-            readonly HOME: {
-                readonly HOME_10: string,
-                readonly HOME_20_30: string,
+            readonly SYSTEM: {
+                readonly HOME: {
+                    readonly HOME_10: string,
+                    readonly HOME_20_30: string,
+                    readonly HOME_GEN_2: string,
+                },
+                readonly COMMERCIAL: {
+                    readonly COMMERCIAL_30: string,
+                    readonly COMMERCIAL_50: string,
+                    readonly COMMERCIAL: string,
+                },
+            },
+
+            readonly RUNDSTEUER: {
+                readonly HOME: string,
                 readonly HOME_GEN_2: string,
             },
-            readonly COMMERCIAL: {
-                readonly COMMERCIAL_30: string,
-                readonly COMMERCIAL_50: string,
-                readonly COMMERCIAL: string,
-            },
         },
+
         APP_CENTER: {
             /**
              * Gets the image url of an OpenemsApp.

@@ -103,7 +103,7 @@ export class ProtocolCustomerComponent implements OnInit {
       templateOptions: {
         label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP"),
         required: true,
-        pattern: "^[0-9]*$",
+        pattern: AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX,
       },
     });
 

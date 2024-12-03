@@ -21,13 +21,6 @@ export class FormlyFieldMultiStepComponent extends FieldType implements OnInit {
             this.formControl.setValue(Array(this.steps.length).fill(false));
         }
 
-        // Listen to status changes to reset steps if disabled
-        this.formControl.statusChanges.subscribe(status => {
-            if (status === "DISABLED") {
-                this.resetSteps();
-            }
-        });
-
         // Determine the current step based on the array of steps
         const lastFalseIndex = stepArray.lastIndexOf(false);
         const lastTrueIndex = stepArray.lastIndexOf(true);
@@ -61,10 +54,5 @@ export class FormlyFieldMultiStepComponent extends FieldType implements OnInit {
         const updatedValue = this.formControl.value;
         updatedValue[index] = event.detail.checked;
         this.formControl.setValue(updatedValue);
-    }
-
-    private resetSteps() {
-        this.formControl.setValue(Array(this.steps.length).fill(false));
-        this.currentStep = 0;
     }
 }

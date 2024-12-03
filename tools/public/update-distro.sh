@@ -7,8 +7,10 @@ fi
 
 set -ex
 
-export UPDATE_LOCK_FILE="/tmp/distro-update.lock"
-export UPDATE_INFO_FILE="/tmp/distro-update.info"
+UPDATE_LOCK_FILE="/tmp/distro-update.lock"
+UPDATE_INFO_FILE="/tmp/distro-update.info"
+UPDATE_LOG_FILE="/var/log/distro-update.log"
+
 
 function check_system {
   if [ -z "$VERSION_NEXT" ]; then
@@ -128,6 +130,16 @@ function update_sources {
   done
 }
 
+function install_freexian_apt_key {
+    local keytmp="/tmp/freexian-archive-extended-lts.gpg"
+    local keystore="/etc/apt/trusted.gpg.d/freexian-archive-extended-lts.gpg"
+
+    if [ ! -f "$keystore" ]; then
+        wget "https://deb.fenecon.de/debian-keys/freexian-archive.gpg" -O "${keytmp}"
+        install -m 644 "${keytmp}" "${keystore}"
+    fi
+}
+
 function __cleanup {
   if [ -f "$UPDATE_LOCK_FILE" ]; then
     rm -f "$UPDATE_LOCK_FILE"
@@ -147,7 +159,8 @@ function prevent_multiple_exec {
 ####### UPDATE ##########
 
 function update_to_stretch {
-  echo "deb http://deb.fenecon.de/debian-archive/ stretch main contrib non-free" > "/tmp/sources.list"
+  install_freexian_apt_key;
+  echo "deb http://deb.fenecon.de/debian-elts/ stretch main contrib non-free" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
     echo "deb http://deb.fenecon.de/raspbian-legacy/ stretch main contrib non-free rpi" > "/tmp/raspi.list"
@@ -288,12 +301,28 @@ check_system;
 
 echo "distro update to $VERSION_NEXT"
 
+{
+
+start_time=$(date +%s)
+
 case "$VERSION_NEXT" in
   "stretch") update_to_stretch;;
   "buster") update_to_buster;;
   "bullseye") update_to_bullseye;;
   "bookworm") update_to_bookworm;;
 esac
+
+end_time=$(date +%s)
+elapsed_time=$((end_time - start_time))
+
+minutes=$((elapsed_time / 60))
+seconds=$((elapsed_time % 60))
+
+echo "Execution time: ${minutes} minutes and ${seconds} seconds"
+
+} 2>&1 | tee "$UPDATE_LOG_FILE"
+
+end_time=$(date +%s)
 
 rm $UPDATE_INFO_FILE
 

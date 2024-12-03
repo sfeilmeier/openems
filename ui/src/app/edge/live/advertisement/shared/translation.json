@@ -1,5 +1,11 @@
 {
     "de": {
+        "ADVERT": {
+            "TIME_OF_USE": {
+                "TITLE": "Für wen lohnen sich dynamische Stromtarife?",
+                "TEXT": "Ob sich ein dynamischer Stromtarif für dich lohnt und wie groß dein monetäres Einsparpotenzial durch die Nutzung eines dynamischen Stromtarifs wäre, kannst du mit unserem <a href='https://fenecon.de/wp-content/uploads/2023/04/Ersparnisrechner_fenecon_dyn_tarif.xlsx' target='_blank'>Excel Quick-Check</a> selbst testen und berechnen. Neben den fünf Fragen haben wir zudem einen Ersparnisrechner vorbereitet, den du in derselben Datei findest."
+            }
+        },
         "SETTINGS": {
             "ENERGY_JOURNEY": {
                 "TO_THE_ANALYSIS": "Zur Analyse",
@@ -44,6 +50,12 @@
         }
     },
     "en": {
+        "ADVERT": {
+            "TIME_OF_USE": {
+                "TITLE": "For whom are dynamic electricity tariffs worthwhile?",
+                "TEXT": "You can use our <a href='https://fenecon.de/wp-content/uploads/2023/04/Ersparnisrechner_fenecon_dyn_tarif.xlsx' target='_blank'>Excel Quick-Check</a> to test and calculate whether a dynamic electricity tariff is worthwhile for you and how much money you could save by using such a tariff. In addition to the five questions, we have also prepared a savings calculator, which you can find in the same file."
+            }
+        },
         "SETTINGS": {
             "ENERGY_JOURNEY": {
                 "TO_THE_ANALYSIS": "To the analysis",

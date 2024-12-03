@@ -25,6 +25,7 @@ addIcons({
   "oe-grid": "assets/img/icon/grid.svg",
   "oe-grid-storage": "assets/img/icon/gridStorage.svg",
   "oe-grid-restriction": "assets/img/icon/gridRestriction.svg",
+  "oe-megafon": "assets/img/icon/megafon.svg",
   "oe-offgrid": "assets/img/icon/offgrid.svg",
   "oe-production": "assets/img/icon/production.svg",
   "oe-storage": "assets/img/icon/storage.svg",

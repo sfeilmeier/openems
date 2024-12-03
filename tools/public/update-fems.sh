@@ -155,12 +155,9 @@ fi
 
 # Set fenecon apt source
 case "$VERSION_CODENAME" in
-    "jessie" )
+    "jessie" | "stretch" )
         install_freexian_apt_key;
         echo "deb http://deb.fenecon.de/debian-elts/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
-        
-    "stretch")
-        echo "deb http://deb.fenecon.de/debian-archive/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
 
     "buster" | "bullseye")
         echo "deb http://deb.fenecon.de/debian/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
@@ -263,24 +260,7 @@ if is_installed fems-techbase-sys-mods; then
 fi
 
 if ! is_installed temurin-17-jre; then
-    case "$VERSION_CODENAME" in
-        "jessie")
-            echo "# Manually install p11-kit for Jessie"
-            wget http://fenecon.de/fems-download/deb/{p11-kit_0.20.7-1_armhf,p11-kit-modules_0.20.7-1_armhf}.deb --no-check-certificate
-            dpkg -i {p11-kit_0.20.7-1_armhf,p11-kit-modules_0.20.7-1_armhf}.deb
-            rm -f {p11-kit_0.20.7-1_armhf,p11-kit-modules_0.20.7-1_armhf}.deb
-            ;;
-
-        "stretch")
-            echo "# Install p11-kit for stretch; downgrade libp11-kit0"
-            apt-get install libp11-kit0=0.23.3-2 p11-kit --assume-yes --force-yes
-            ;;
-
-        *)
-            apt_install p11-kit
-            ;;
-    esac
-
+    apt_install p11-kit
     apt_install fonts-dejavu
     apt_install libasound2
 

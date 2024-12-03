@@ -2,7 +2,6 @@
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { EdgePermission, Utils } from "../shared";
-import { Role } from "./role";
 
 export enum WidgetClass {
     "Energymonitor",
@@ -76,10 +75,9 @@ export class AdvertWidgets {
 
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
-        const title = edge.roleIsAtLeast(Role.INSTALLER) ? "Dynamische Stromtarife: Webinar verpasst?" : "Dynamische Stromtarife - was Sie 2025 wissen müssen";
         let list: AdvertWidget[] = [{
             name: "time-of-use-tariff",
-            title: { rawTitle: title },
+            title: { languageKey: "ADVERT.TIME_OF_USE.TITLE" },
         }];
 
         list = Utils.shuffleArray(list);

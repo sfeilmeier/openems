@@ -33,7 +33,9 @@ export enum SchedulerIdBehaviour {
 
 export abstract class AbstractIbn {
 
-  public WAIT_FOR_BATTERY_SERIAL_NUMBERS = 120000;
+  // Applies for all country partner's ZIP code.
+  public static readonly COUNTRY_PARTNER_ZIP_CODE_REGEX: string = "^((\\d{5}(-\\d{4})?)|([1-9]\\d{3}\\s?[A-Z]{2})|(\\d{3}\\s?\\d{2})|(\\d{4}))$";
+
   // Battery type
   public readonly type: SystemType;
 
@@ -139,6 +141,9 @@ export abstract class AbstractIbn {
 
   // Limit value changes for home and commercial.
   public readonly maxFeedInLimit: number = 29999;
+
+  // Delay for function tests
+  public WAIT_FOR_BATTERY_SERIAL_NUMBERS: number = 120000;
 
   // Seperate notes to warn installers to perform timely inverter (KACO) checks. applies for comemrcial-92.
   public readonly showNote: boolean = false;

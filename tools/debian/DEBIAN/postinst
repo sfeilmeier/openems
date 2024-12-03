@@ -52,7 +52,7 @@ function stop_service {
 }
 
 case "$1" in
-	configure)
+	configure|upgrade)
 		# Enable systemd hardware watchdog
 		if grep -q '^#RuntimeWatchdogSec=' /etc/systemd/system.conf; then
 			echo "Enable systemd hardware watchdog"

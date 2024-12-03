@@ -1080,7 +1080,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         properties: [
           { name: "enabled", value: true },
           { name: "ess.id", value: "ess0" },
-          { name: "inputChannel", value: "io1/DigitalOutput1" },
+          { name: "inputChannelAddress", value: "io1/DigitalOutput1" },
         ],
         mode: this.emergencyReserve.isEnabled ? ConfigurationMode.RemoveAndConfigure : ConfigurationMode.RemoveOnly,
         baseMode: baseMode,
