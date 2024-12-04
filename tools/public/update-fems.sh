@@ -259,17 +259,18 @@ if is_installed fems-techbase-sys-mods; then
     fi
 fi
 
-if ! is_installed temurin-17-jre; then
+if ! is_installed temurin-21-jre; then
     apt_install p11-kit
     apt_install fonts-dejavu
     apt_install libasound2
 
-    echo "# Install JRE 17"
+    echo "# Install JRE 21"
     dpkg_download_install http://fenecon.de/fems-download/deb/adoptium-ca-certificates-latest.deb
-    dpkg_download_install http://fenecon.de/fems-download/deb/temurin-17-jre-armhf-latest.deb
-    update-alternatives --set 'java' '/usr/lib/jvm/temurin-17-jre-armhf/bin/java'
+    dpkg_download_install http://fenecon.de/fems-download/deb/temurin-21-jre-armhf-latest.deb
+    update-alternatives --set 'java' '/usr/lib/jvm/temurin-21-jre-armhf/bin/java'
 fi
 
+apt_remove temurin-17-jre
 apt_remove adoptopenjdk-16-hotspot-jre
 apt_remove openjdk-8-jre-headless
 
