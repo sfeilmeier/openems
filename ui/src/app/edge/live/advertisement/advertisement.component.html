@@ -1,19 +1,19 @@
 <ion-card>
-    <ion-item lines="full" color="light" class="ion-text-center">
+    <ion-item lines="full" color="light" style="--background: var(--ion-background-color-card-header)" class="ion-text-center">
         <ion-icon name="oe-megafon" size="normal"></ion-icon>
         <ion-label class="white-space-initial" style="text-align: center" *ngIf="title">
             {{title.rawTitle ?? (title.languageKey | translate)}}
         </ion-label>
         <ion-buttons slot="end" *ngIf="enableBtn">
             <ion-button size="small" fill="clear" (click)="swipePrevious()" *ngIf="!disablePrevBtn">
-                <ion-icon name="arrow-back-outline" color="primary"></ion-icon>
+                <ion-icon name="arrow-back-outline"></ion-icon>
             </ion-button>
             <ion-button size="small" fill="clear" (click)="swipeNext()" *ngIf="!disableNextBtn">
-                <ion-icon name="arrow-forward-outline" color="primary"></ion-icon>
+                <ion-icon name="arrow-forward-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-item>
-    <ion-card-content class="ion-no-padding">
+    <ion-card-content style="color: var(--ion-card-content);" class="ion-no-padding">
         <swiper-container autoplay="true" speed="5000" #swiper (swiperslidechange)="setSlideConfig()">
             <ng-container *ngFor="let widget of advertWidgets.list" [ngSwitch]="widget.name">
                 <swiper-slide *ngSwitchCase="'time-of-use-tariff'">
