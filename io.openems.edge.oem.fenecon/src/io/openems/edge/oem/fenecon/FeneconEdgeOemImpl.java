@@ -135,13 +135,14 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Api.RestJson.ReadOnly", "https://fenecon.de/produkte/fems/fems-app-rest-json-lesend/") //
 			.put("App.Api.RestJson.ReadWrite", "https://fenecon.de/fenecon-fems/fems-app-rest-json-schreibzugriff/") //
 			.put("App.Timedata.InfluxDb", "")
-			.put("App.Evcs.HardyBarth", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
-			.put("App.Evcs.Keba", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
-			.put("App.Evcs.IesKeywatt", "https://fenecon.de/fenecon-fems/fems-app-dc-ladestation/") //
 			.put("App.Evcs.Alpitronic", "https://fenecon.de/fenecon-fems/fems-app-dc-ladestation/") //
+			.put("App.Evcs.Cluster", "https://fenecon.de/produkte/fems/fems-app-multiladepunkt-management/") //
+			.put("App.Evcs.HardyBarth", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
+			.put("App.Evcs.IesKeywatt", "https://fenecon.de/fenecon-fems/fems-app-dc-ladestation/") //
+			.put("App.Evcs.Keba", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
+			.put("App.Evcs.Mennekes.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
 			.put("App.Evcs.Webasto.Next", "") //
 			.put("App.Evcs.Webasto.Unite", "") //
-			.put("App.Evcs.Cluster", "https://fenecon.de/produkte/fems/fems-app-multiladepunkt-management/") //
 			.put("App.Hardware.KMtronic8Channel", "https://fenecon.de/produkte/fems/fems-relais/") //
 			.put("App.Heat.HeatPump", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
 			.put("App.Heat.CHP", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
