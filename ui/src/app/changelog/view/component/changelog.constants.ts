@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2024.12.2-SNAPSHOT";
+    public static readonly UI_VERSION = "2024.12.2";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -82,6 +82,7 @@ export class App {
     public static readonly EVCS_AC = new App("FEMS App AC-Ladestation", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/");
     public static readonly KEBA = "KEBA";
     public static readonly HARDY_BARTH = "Hardy Barth eCharge";
+    public static readonly MENNEKES = "Mennekes";
 
     public static readonly EVCS_DC = new App("FEMS App DC-Ladestation", "https://fenecon.de/fenecon-fems/fems-app-dc-ladestation/");
     public static readonly IES_KEYWATT = "IES Keywatt";
