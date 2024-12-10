@@ -25,6 +25,17 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2024.12.2",
+        changes: [
+          Changelog.UI + "kleine Farbanpassungen in Vorbereitung auf einen Dunkelmodus (Dark Mode)",
+          Changelog.app(App.TIME_OF_USE) + "Verbesserung des Verhaltens bei Beladung aus dem Netz, Fehlerbehebung in der Diagramm-Darstellung",
+          { roleIsAtLeast: Role.INSTALLER, change: "Inbetriebnahmeassistent: Auswahloption für Installation in Griechenland" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC, App.MENNEKES) + "Implementierung der Mennekes Amtron Professional (nur lesend, nur installierbar durch ADMIN)"},
+          { roleIsAtLeast: Role.ADMIN, change: "Erzeugungs-/Verbrauchsprognose: Fehlerbehebung wenn lokale Daten fehlen (nur ADMIN)"},
+          { roleIsAtLeast: Role.ADMIN, change: "Benutzer | Allgemeine Einstellungen | Theme: Light (=heller Modus), Dark (=dunkler Modus) oder System (=Betriebssystemeinstellung)"},
+        ],
+      },
+      {
         version: "2024.12.1",
         changes: [
           Changelog.openems("2024.12.0"),
