@@ -255,7 +255,10 @@
           },
           "OVERALL_SYSTEM": "Overall system"
         },
-        "FIX_DIGITAL_OUTPUT": "Digital Outputcontroller"
+        "FIX_DIGITAL_OUTPUT": "Digital Outputcontroller",
+        "SCHEDULE": {
+          "CHART_TITLE_ADMIN": "Planned Schedule (Only for Admins)"
+        }
       },
       "RETROFITTING": {
         "OPTIMAL": "Capacity expansion",

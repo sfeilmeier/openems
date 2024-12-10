@@ -254,7 +254,10 @@
           },
           "OVERALL_SYSTEM": "Gesamtsystem"
         },
-        "FIX_DIGITAL_OUTPUT": "Digitale Ausgangscontroller"
+        "FIX_DIGITAL_OUTPUT": "Digitale Ausgangscontroller",
+        "SCHEDULE": {
+          "CHART_TITLE_ADMIN": "Aktueller Fahrplan (Nur für Admins)"
+        }
       },
       "RETROFITTING": {
         "UPDATE_TO_NEW_VERSION": "Um die Kapazitätserweiterung nutzen zu können, ist ein Update auf die neueste Version erforderlich.",
