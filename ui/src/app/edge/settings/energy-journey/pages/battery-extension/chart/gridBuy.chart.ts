@@ -4,7 +4,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
 import { PropType } from "src/app/shared/service/defaulttypes";
 import { ChartAxis, HistoryUtils, Utils, YAxisType } from "src/app/shared/service/utils";
-import { ChannelAddress } from "src/app/shared/shared";
+import { ChannelAddress, ChartConstants } from "src/app/shared/shared";
 import { SimulationResult } from "../battery-extension.module";
 import { PossibleBatteryExtensionResponse } from "../battery-extension.response";
 
@@ -49,7 +49,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
                 .map((el) => Utils.subtractSafely(displayData[0], Utils.divideSafely(el, 1)))
                 .filter((_el, i) => i !== 0);
             },
-            color: getComputedStyle(document.documentElement).getPropertyValue("--ion-color-primary-rgb"),
+            color: ChartConstants.Colors.BLUE,
             custom: {
               pluginType: "datalabels",
               datalabels: {

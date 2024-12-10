@@ -122,6 +122,7 @@
 	bnd.identity;id='io.openems.edge.evcs.goe.chargerhome',\
 	bnd.identity;id='io.openems.edge.evcs.hardybarth',\
 	bnd.identity;id='io.openems.edge.evcs.keba.kecontact',\
+	bnd.identity;id='io.openems.edge.evcs.mennekes',\
 	bnd.identity;id='io.openems.edge.evcs.ocpp.abl',\
 	bnd.identity;id='io.openems.edge.evcs.ocpp.common',\
 	bnd.identity;id='io.openems.edge.evcs.ocpp.ies.keywatt.singleccs',\
@@ -166,6 +167,7 @@
 	bnd.identity;id='io.openems.edge.meter.ziehl',\
 	bnd.identity;id='io.openems.edge.oem.fenecon',\
 	bnd.identity;id='io.openems.edge.onewire.thermometer',\
+	bnd.identity;id='io.openems.edge.predictor.lstm',\
 	bnd.identity;id='io.openems.edge.predictor.persistencemodel',\
 	bnd.identity;id='io.openems.edge.predictor.similardaymodel',\
 	bnd.identity;id='io.openems.edge.pvinverter.cluster',\
@@ -191,7 +193,7 @@
 	bnd.identity;id='io.openems.edge.timeofusetariff.rabotcharge',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.swisspower',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.tibber',\
-
+	
 -runbundles: \
 	Java-WebSocket;version='[1.5.4,1.5.5)',\
 	bcpkix;version='[1.79.0,1.79.1)',\
@@ -297,6 +299,7 @@
 	io.openems.edge.evcs.goe.chargerhome;version=snapshot,\
 	io.openems.edge.evcs.hardybarth;version=snapshot,\
 	io.openems.edge.evcs.keba.kecontact;version=snapshot,\
+	io.openems.edge.evcs.mennekes;version=snapshot,\
 	io.openems.edge.evcs.ocpp.abl;version=snapshot,\
 	io.openems.edge.evcs.ocpp.common;version=snapshot,\
 	io.openems.edge.evcs.ocpp.ies.keywatt.singleccs;version=snapshot,\
@@ -344,6 +347,7 @@
 	io.openems.edge.oem.fenecon;version=snapshot,\
 	io.openems.edge.onewire.thermometer;version=snapshot,\
 	io.openems.edge.predictor.api;version=snapshot,\
+	io.openems.edge.predictor.lstm;version=snapshot,\
 	io.openems.edge.predictor.persistencemodel;version=snapshot,\
 	io.openems.edge.predictor.similardaymodel;version=snapshot,\
 	io.openems.edge.pvinverter.api;version=snapshot,\
@@ -414,7 +418,7 @@
 	org.apache.felix.webconsole;version='[5.0.8,5.0.9)',\
 	org.apache.felix.webconsole.plugins.ds;version='[2.3.0,2.3.1)',\
 	org.eclipse.paho.mqttv5.client;version='[1.2.5,1.2.6)',\
-	org.jetbrains.kotlin.osgi-bundle;version='[2.0.21,2.0.22)',\
+	org.jetbrains.kotlin.osgi-bundle;version='[2.1.0,2.1.1)',\
 	org.jsr-305;version='[3.0.2,3.0.3)',\
 	org.ops4j.pax.logging.pax-logging-api;version='[2.2.1,2.2.2)',\
 	org.ops4j.pax.logging.pax-logging-log4j2;version='[2.2.1,2.2.2)',\

@@ -7,6 +7,7 @@ export enum SafetyCountry {
     SWEDEN = "SWEDEN",
     CZECH_REPUBLIK = "CZECH",
     NETHERLANDS = "HOLLAND",
+    GREECE_MAINLAND = "GREECE_MAINLAND",
 }
 
 export namespace SafetyCountry {
@@ -24,6 +25,8 @@ export namespace SafetyCountry {
                 return SafetyCountry.NETHERLANDS;
             case Country.SWEDEN:
                 return SafetyCountry.SWEDEN;
+            case Country.GREECE:
+                return SafetyCountry.GREECE_MAINLAND;
         }
     }
 }

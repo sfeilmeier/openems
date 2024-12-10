@@ -7,13 +7,13 @@ import { Converter } from "src/app/shared/components/shared/converter";
             <ion-row *ngIf="category !== null && value !== null">
                 <ion-col size="6">
                 <ion-label>
-                            {{category}}
+                    {{category}}
                 </ion-label>
                 </ion-col>
                 <ion-col size="6">
                     <div disabled="true" type="text"
-                        [style.background-color]="editable ? 'rgba(var(--ion-color-primary-rgb), 0.5)':'lightgrey'"
-                        style="padding-left: 5%; color: black; text-align: center;">
+                    [class]="editable ? 'editable' : 'constant'"
+                        style="padding-left: 5%; text-align: center;">
                         {{value | converter: converter}}
                     </div>
                 </ion-col>
@@ -25,8 +25,10 @@ import { Converter } from "src/app/shared/components/shared/converter";
             ion-label{
                 font-family:  var(--ion-font-family) !important;
             }
-        }`,
+        }
+        `,
     ],
+    styleUrl: "./constant-line.scss",
 })
 export class EnergyJourneyConstantLineComponent {
 

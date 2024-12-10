@@ -87,7 +87,7 @@ export class ChartComponent extends AbstractHistoryChart {
                 {
                     name: this.translate.instant("General.gridBuy"),
                     converter: () => data["GridBuy"],
-                    color: "rgb(0,0,0)",
+                    color: ChartConstants.Colors.BLUE_GREY,
                     yAxisId: ChartAxis.RIGHT_2,
                     custom: {
                         type: "line",
@@ -106,6 +106,9 @@ export class ChartComponent extends AbstractHistoryChart {
                 position: "left",
                 yAxisId: ChartAxis.LEFT,
                 customTitle: Currency.getChartCurrencyUnitLabel(currency),
+                scale: {
+                    dynamicScale: true,
+                },
             },
             {
                 unit: YAxisType.PERCENTAGE,
