@@ -157,7 +157,7 @@ export class ScheduleChartComponent extends AbstractHistoryChart implements OnIn
 
         this.options.scales[ChartAxis.LEFT] = {
             ...this.options.scales[ChartAxis.LEFT],
-            ...ChartConstants.DEFAULT_Y_SCALE_OPTIONS(leftYAxis, this.translate, "line", this.datasets.filter(el => el["yAxisID"] === ChartAxis.LEFT), true),
+            ...ChartConstants.DEFAULT_Y_SCALE_OPTIONS(leftYAxis, this.translate, "bar", this.datasets.filter(el => el["yAxisID"] === ChartAxis.LEFT), true),
         };
     }
 }
