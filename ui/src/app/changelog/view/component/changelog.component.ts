@@ -25,6 +25,17 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2024.12.3",
+        changes: [
+          "Live | Speichersystem: neue Einstellung um Notstromreserve aktiv aus dem Netz zu beladen",
+          Changelog.app(App.TIME_OF_USE) + "Darstellung in der historischen Ansicht verbessert: bessere Sichtbarkeit der niedrigsten Tagespreise",
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.app(App.EVCS_AC, App.MENNEKES) + "Einbindung der Mennekes Amtron Professional (nur lesend))"},
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.UI + "Verbesserungen am Dark Mode"},
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC) + "Angleichung der Statusmeldungen an Standard: Entfernen des Status 'Auto ist voll'" },
+          Changelog.library(Library.JAVA_JRE, Library.BNDTOOLS, Library.PAX_LOGGING),
+        ],
+      },
+      {
         version: "2024.12.2",
         changes: [
           Changelog.UI + "kleine Farbanpassungen in Vorbereitung auf einen Dunkelmodus (Dark Mode)",

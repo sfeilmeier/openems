@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2024.12.2";
+    public static readonly UI_VERSION = "2024.12.3";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -131,6 +131,7 @@ export class OpenemsComponent {
 
 export class Library {
     // Java
+    public static readonly JAVA_JRE = new Library("Java 21 Runtime Environment", "jre21");
     public static readonly APACHE_FELIX_FILEINSTALL = new Library("Apache Felix File Install", "org.apache.felix..fileinstall");
     public static readonly APACHE_FELIX_FRAMEWORK = new Library("Apache Felix Framework", "org.apache.felix.framework");
     public static readonly APACHE_FELIX_HTTP_JETTY = new Library("Apache Felix HTTP Jetty", "org.apache.felix.http.jetty");

@@ -102,6 +102,12 @@ function install_debian_apt_key {
     fi
 }
 
+function apt_upgrade  {
+    APT_LISTCHANGES_FRONTEND=none DEBIAN_FRONTEND=noninteractive \
+    apt-get upgrade -y \
+    -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold'
+}
+
 function install_freexian_apt_key {
     local keytmp="/tmp/freexian-archive-extended-lts.gpg"
     local keystore="/etc/apt/trusted.gpg.d/freexian-archive-extended-lts.gpg"
@@ -247,7 +253,7 @@ case "$VERSION_CODENAME" in
     ;;
 esac
 
-apt-get dist-upgrade --assume-yes --force-yes
+apt_upgrade
 
 apt_install at
 apt_install ncdu
