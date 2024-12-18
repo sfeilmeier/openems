@@ -11,6 +11,7 @@ import { DataService } from "src/app/shared/components/shared/dataservice";
   providers: [
     { provide: DataService, useClass: HistoryDataService },
   ],
+  standalone: false,
 })
 export class ElectricityPriceSelectionComponent extends AbstractFlatWidget implements OnInit {
 

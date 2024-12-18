@@ -11,6 +11,7 @@ register();
 @Component({
   selector: "advertisement",
   templateUrl: "./advertisement.component.html",
+  standalone: false,
 })
 
 export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDestroy {

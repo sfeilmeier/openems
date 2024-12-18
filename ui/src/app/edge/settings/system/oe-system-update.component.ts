@@ -12,6 +12,7 @@ import { SystemUpdateState } from "./getSystemUpdateStateResponse";
 @Component({
   selector: OeSystemUpdateComponent.SELECTOR,
   templateUrl: "./oe-system-update.component.html",
+  standalone: false,
   providers: [{
     useClass: LiveDataService,
     provide: DataService,

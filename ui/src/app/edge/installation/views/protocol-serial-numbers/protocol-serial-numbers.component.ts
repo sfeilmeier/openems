@@ -11,6 +11,7 @@ import { ComponentData, SerialNumberFormData } from "../../shared/ibndatatypes";
 @Component({
   selector: ProtocolSerialNumbersComponent.SELECTOR,
   templateUrl: "./protocol-serial-numbers.component.html",
+  standalone: false,
 })
 export class ProtocolSerialNumbersComponent implements OnInit {
   private static readonly SELECTOR = "protocol-serial-numbers";

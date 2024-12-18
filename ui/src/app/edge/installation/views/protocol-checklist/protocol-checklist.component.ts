@@ -12,6 +12,7 @@ import { ComponentConfigurator, ConfigurationState, FunctionState } from "../con
 @Component({
     selector: ProtocolChecklistComponent.SELECTOR,
     templateUrl: "./protocol-checklist.component.html",
+    standalone: false,
 })
 export class ProtocolChecklistComponent implements OnInit {
 

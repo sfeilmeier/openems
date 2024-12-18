@@ -30,15 +30,13 @@
                   <ng-container *ngIf="environment.backend === 'OpenEMS Backend', else openEMSEdge">
                     <form (ngSubmit)="doLogin({ username: username.value, password: password.value})">
                       <ion-item>
-                        <ion-label position="floating">E-Mail / <span translate>Login.user</span></ion-label>
                         <ion-input appAutofill autocomplete="username" #username required type="input"
-                          [placeholder]="'E-Mail / ' + ('Login.user' | translate)">
+                          [placeholder]="'E-Mail / ' + ('Login.user' | translate)" [label]="'E-Mail / '  + ('Login.user' | translate)" label-placement="floating">
                         </ion-input>
                       </ion-item>
                       <ion-item>
-                        <ion-label position="floating" translate>Login.passwordLabel</ion-label>
                         <ion-input appAutofill autocomplete="current-password" #password required type="password"
-                          [placeholder]="'Login.passwordLabel' | translate">
+                          [placeholder]="'Login.passwordLabel' | translate" [label]="'Login.passwordLabel' | translate" label-placement="floating">
                         </ion-input>
                       </ion-item>
                       <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
@@ -189,8 +187,7 @@
                       </ion-text>
                     </ion-item>
                     <ion-item>
-                      <ion-label position="floating" translate>Login.passwordLabel</ion-label>
-                      <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate"
+                      <ion-input #password required type="password" [label]="'Login.passwordLabel' | translate" label-placement="floating"[placeholder]="'Login.passwordLabel' | translate"
                         value="user"></ion-input>
                     </ion-item>
 
@@ -208,14 +205,12 @@
               <ion-card-content *ngIf="environment.backend === 'OpenEMS Backend'">
                 <form (ngSubmit)="doLogin({ username: username.value, password: password.value})">
                   <ion-item>
-                    <ion-label position="floating">E-Mail / <span translate>Login.user</span></ion-label>
                     <ion-input #username required type="input"
-                      [placeholder]="'E-Mail / ' + ('Login.passwordLabel' | translate)">
+                      [placeholder]="'E-Mail / ' + ('Login.user' | translate)"  [label]="'E-Mail / '  + ('Login.user' | translate)" label-placement="floating">
                     </ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-label position="floating" translate>Login.passwordLabel</ion-label>
-                    <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate">
+                    <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate" label-placement="floating" [label]="'Login.passwordLabel' | translate">
                     </ion-input>
                   </ion-item>
 

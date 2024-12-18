@@ -10,6 +10,7 @@ interface MyEdgeConfigComponent extends EdgeConfig.Component {
 @Component({
   selector: ServiceAssistantComponent.SELECTOR,
   templateUrl: "./serviceassistant.component.html",
+  standalone: false,
 })
 export class ServiceAssistantComponent implements OnInit {
 

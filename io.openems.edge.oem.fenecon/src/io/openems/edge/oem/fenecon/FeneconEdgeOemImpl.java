@@ -2,11 +2,9 @@ package io.openems.edge.oem.fenecon;
 
 import static io.openems.common.OpenemsConstants.VERSION_DEV_BRANCH;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
-import java.util.Scanner;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -95,16 +93,10 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 
 	protected static String readManufacturerEmsSerialNumber() {
 		String mesn = "";
-		try (Scanner s = new Scanner(Runtime.getRuntime().exec("hostname").getInputStream())) {
-			mesn = s.hasNext() ? s.next() : "";
-		} catch (IOException ioe) {
-			LOG.warn("Unable get hostname via OS-Command: " + ioe.getMessage());
-
-			try {
-				mesn = InetAddress.getLocalHost().getHostName();
-			} catch (UnknownHostException uhe) {
-				LOG.error("Unable get hostname via DNS-Lookup: " + uhe.getMessage());
-			}
+		try {
+			mesn = InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException uhe) {
+			LOG.error("Unable get hostname via DNS-Lookup: " + uhe.getMessage());
 		}
 		return StringUtils.toShortString(mesn, 32);
 	}

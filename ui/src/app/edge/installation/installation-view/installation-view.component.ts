@@ -6,6 +6,7 @@ import { TranslateService } from "@ngx-translate/core";
 @Component({
   selector: InstallationViewComponent.SELECTOR,
   templateUrl: "./installation-view.component.html",
+  standalone: false,
 })
 export class InstallationViewComponent implements OnChanges {
 

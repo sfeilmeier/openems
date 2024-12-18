@@ -14,6 +14,7 @@ import { DateUtils } from "../shared/utils/date/dateutils";
     <ion-content></ion-content>
          <ion-router-outlet id="content"></ion-router-outlet>
     `,
+    standalone: false,
 })
 export class EdgeComponent implements OnInit, OnDestroy {
 

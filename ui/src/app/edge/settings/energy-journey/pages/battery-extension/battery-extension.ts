@@ -26,6 +26,7 @@ import { PossibleBatteryExtensionResponse } from "./battery-extension.response";
       }
     }
   `],
+  standalone: false,
 })
 export class BatteryExtensionComponent extends AbstractFlatWidget {
 

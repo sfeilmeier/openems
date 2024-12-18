@@ -17,6 +17,7 @@ import { GetScheduleResponse } from "../jsonrpc/getScheduleResponse";
 @Component({
     selector: "scheduleChart",
     templateUrl: "../../../../history/abstracthistorychart.html",
+    standalone: false,
 })
 export class ScheduleChartComponent extends AbstractHistoryChart implements OnInit, OnChanges, OnDestroy {
 

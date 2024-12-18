@@ -9,6 +9,7 @@ export type HomeCellVoltageOptions = KeyValue<string, string | null> | null;
 @Component({
   selector: "cellVoltageChart",
   templateUrl: "../../../../../shared/components/chart/abstracthistorychart.html",
+  standalone: false,
 })
 export class ChartComponent extends AbstractHistoryChart implements OnInit, OnChanges {
 

@@ -11,6 +11,7 @@ export interface OfflineStep {
 @Component({
     selector: "oe-manual-home-20-30",
     templateUrl: "./offline-template.html",
+    standalone: false,
 })
 export class Home2030ManualComponent extends ManualComponent {
 

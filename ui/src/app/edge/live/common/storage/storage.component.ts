@@ -10,6 +10,7 @@ import { StorageModalComponent } from "./modal/modal.component";
 @Component({
     selector: "storage",
     templateUrl: "./storage.component.html",
+    standalone: false,
 })
 export class StorageComponent extends AbstractFlatWidget {
 

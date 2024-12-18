@@ -15,6 +15,7 @@ import { ChannelAddress, CurrentData, EdgeConfig, Utils } from "src/app/shared/s
     useClass: LiveDataService,
     provide: DataService,
   }],
+  standalone: false,
 })
 export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
 

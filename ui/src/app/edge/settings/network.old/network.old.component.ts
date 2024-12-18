@@ -20,6 +20,7 @@ export interface InterfaceForm {
 @Component({
   selector: NetworkOldComponent.SELECTOR,
   templateUrl: "./network.old.component.html",
+  standalone: false,
 })
 export class NetworkOldComponent implements OnInit {
 

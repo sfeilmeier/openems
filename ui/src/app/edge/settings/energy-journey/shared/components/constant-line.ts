@@ -29,6 +29,7 @@ import { Converter } from "src/app/shared/components/shared/converter";
         `,
     ],
     styleUrl: "./constant-line.scss",
+    standalone: false,
 })
 export class EnergyJourneyConstantLineComponent {
 

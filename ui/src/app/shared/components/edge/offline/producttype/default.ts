@@ -12,6 +12,7 @@ export interface OfflineStep {
 @Component({
     selector: "oe-manual-default",
     templateUrl: "./offline-template.html",
+    standalone: false,
 })
 export class ManualComponent {
 

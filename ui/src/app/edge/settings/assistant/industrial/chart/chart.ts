@@ -6,6 +6,7 @@ import { ChannelAddress, EdgeConfig, Utils } from "src/app/shared/shared";
 @Component({
   selector: "industrial_chart",
   templateUrl: "../../../../../shared/components/chart/abstracthistorychart.html",
+  standalone: false,
 })
 export class ChartComponent extends AbstractHistoryChart implements OnChanges {
   @Input({ required: true }) public selectedBattery!: EdgeConfig.Component;

@@ -24,6 +24,7 @@ type UserInformation = {
 @Component({
   selector: ProtocolInstallerComponent.SELECTOR,
   templateUrl: "./protocol-installer.component.html",
+  standalone: false,
 })
 export class ProtocolInstallerComponent implements OnInit {
   private static readonly SELECTOR = "protocol-installer";

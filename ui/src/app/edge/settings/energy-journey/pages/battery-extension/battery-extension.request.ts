@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import format from "date-fns/format";
+import { format } from "date-fns";
 import { JsonrpcRequest } from "src/app/shared/jsonrpc/base";
 
 /**

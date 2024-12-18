@@ -11,6 +11,7 @@ import { ComponentConfigurator, ConfigurationObject, ConfigurationState, Functio
 @Component({
   selector: ConfigurationExecuteComponent.SELECTOR,
   templateUrl: "./configuration-execute.component.html",
+  standalone: false,
 })
 export class ConfigurationExecuteComponent implements OnInit {
 

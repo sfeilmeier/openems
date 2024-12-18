@@ -15,6 +15,7 @@ import { IbnUtils } from "../../shared/ibnutils";
 @Component({
   selector: ConfigurationSummaryComponent.SELECTOR,
   templateUrl: "./configuration-summary.component.html",
+  standalone: false,
 })
 export class ConfigurationSummaryComponent implements OnInit {
 

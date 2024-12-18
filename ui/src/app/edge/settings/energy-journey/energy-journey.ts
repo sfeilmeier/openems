@@ -5,6 +5,7 @@ import { Edge, EdgePermission, EnergyJourneyWidget, Service } from "src/app/shar
 @Component({
   selector: "energy-journey",
   templateUrl: "./energy-journey.html",
+  standalone: false,
 })
 export class EnergyJourneyComponent implements OnInit {
 
