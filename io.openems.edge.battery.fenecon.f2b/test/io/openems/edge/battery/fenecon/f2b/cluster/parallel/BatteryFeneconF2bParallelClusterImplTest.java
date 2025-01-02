@@ -1,6 +1,6 @@
 package io.openems.edge.battery.fenecon.f2b.cluster.parallel;
 
-import static io.openems.edge.common.test.TestUtils.createDummyClock;
+import static io.openems.common.test.TestUtils.createDummyClock;
 
 import org.junit.Test;
 

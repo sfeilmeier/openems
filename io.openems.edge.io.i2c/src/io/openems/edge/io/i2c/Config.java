@@ -16,10 +16,10 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 	@AttributeDefinition(name = "Is enabled?", description = "Is this Component enabled?")
 	boolean enabled() default true;
-	
+
 	@AttributeDefinition(name = "Output Channel", description = "What Outputchannel is controlled?")
 	AnalogOutput outputChannel() default AnalogOutput.MODBERRY_CHANNEL_1;
-	
+
 	String webconsole_configurationFactory_nameHint() default "IO I2C [{id}]";
 
 }

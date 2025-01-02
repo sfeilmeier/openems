@@ -7,7 +7,7 @@ public enum AnalogOutput {
 
 	public final int registerAddress;
 	public final int slaveAddress;
-	
+
 	private AnalogOutput(int registerAddress, int slaveAddress) {
 		this.registerAddress = registerAddress;
 		this.slaveAddress = slaveAddress;

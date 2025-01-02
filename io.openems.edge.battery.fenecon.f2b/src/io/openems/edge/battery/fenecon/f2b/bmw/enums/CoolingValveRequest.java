@@ -4,10 +4,10 @@ import io.openems.common.types.OptionsEnum;
 
 public enum CoolingValveRequest implements OptionsEnum {
 	UNDEFINED(-1, "Undefined"), //
-	NO_REQUEST(0, "No Request"),//
-	OPEN(1, "Request to open cooling valve"),//
-	OPEN_ALSO_ADDITONAL_COOLING(2, "Request to open cooling valve and additonal cooling"),//
-	;//
+	NO_REQUEST(0, "No Request"), //
+	OPEN(1, "Request to open cooling valve"), //
+	OPEN_ALSO_ADDITONAL_COOLING(2, "Request to open cooling valve and additonal cooling"), //
+	;
 
 	private final int value;
 	private final String name;

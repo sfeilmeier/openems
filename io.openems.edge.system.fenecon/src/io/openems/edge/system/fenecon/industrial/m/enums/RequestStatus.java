@@ -30,6 +30,4 @@ public enum RequestStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
-
 }
-
