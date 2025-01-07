@@ -1,0 +1,6 @@
+Version 10.11.23
+ARM: ? (410-02089-01(389)_M4_APP.bin)
+DSP: ? (410-04068-02-Test(V2022).bin)
+
+New ETG2 DSP FW for solving SOC switch issue.
+(Already updated for SN: 9010KEUB246L0005)
