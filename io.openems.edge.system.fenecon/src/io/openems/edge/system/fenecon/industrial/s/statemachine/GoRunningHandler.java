@@ -10,19 +10,19 @@ public class GoRunningHandler extends StateHandler<State, Context> {
 
 	@Override
 	public State runAndGetNextState(Context context) throws OpenemsNamedException {
-		final var industrialS = context.getParent();
+		final var system = context.getParent();
 		final var ess = context.ess;
-		if (ess.hasFaults() || industrialS.hasFaults()) {
+		if (ess.hasFaults() || system.hasFaults()) {
 			return State.ERROR;
 		}
 
-		if (industrialS.getStartStopTarget() == StartStop.STOP) {
+		if (system.getStartStopTarget() == StartStop.STOP) {
 			return State.GO_STOPPED;
 		}
 
-		if (!industrialS.isInEmergencyStopState() && ess instanceof StartStoppable e) {
+		if (!system.isInEmergencyStopState() && ess instanceof StartStoppable e) {
 			e.start();
-			if (e.isStarted()) {
+			if (context.isStarted()) {
 				return State.RUNNING;
 			}
 		}

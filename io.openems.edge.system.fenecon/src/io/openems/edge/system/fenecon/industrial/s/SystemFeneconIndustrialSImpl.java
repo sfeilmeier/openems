@@ -1,6 +1,8 @@
 package io.openems.edge.system.fenecon.industrial.s;
 
 import static io.openems.common.types.ChannelAddress.fromString;
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.groupingBy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,8 +76,6 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 			CoolingUnitState.UNDEFINED);
 	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
 	private final List<BatteryFeneconF2b> batteries = new ArrayList<>();
-	private final ChannelManager channelManager = new ChannelManager();
-	private final List<SymmetricEss> esss = new ArrayList<>();
 
 	private ParsedConfig parsedConfig;
 
@@ -85,10 +85,8 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 	@Reference
 	private ConfigurationAdmin cm;
 
-	@Reference(policy = ReferencePolicy.DYNAMIC, //
-			policyOption = ReferencePolicyOption.GREEDY, //
-			cardinality = ReferenceCardinality.MANDATORY) //
-	private volatile MetaEss ess;
+	@Reference
+	private SymmetricEss ess;
 
 	@Reference(//
 			policy = ReferencePolicy.DYNAMIC, //
@@ -166,20 +164,32 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 		this.addAcknowledgeCallBack();
 		this.addCoolingUnitErrorCallBack();
 
-		for (var essId : this.ess.getEssIds()) {
-			SymmetricEss component = this.componentManager.getComponent(essId);
-			this.esss.add(component);
-		}
-		this.channelManager.activate(this.esss, this::_setStartStop);
-
 		if (Stream.of(//
 				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "ess", config.ess_id()), //
-				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "Battery", config.battery_ids()), //
-				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "esss", this.ess.getEssIds()))
+				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "Battery", config.battery_ids()))
 				.anyMatch(t -> t)) {
 			return true;
 		}
 		return false;
+	}
+
+	private List<SymmetricEss> getEsssList() {
+		var esss = new ArrayList<SymmetricEss>();
+		// ESS is here the EssCluster
+		if (this.ess instanceof MetaEss metaEss) {
+			for (var essId : metaEss.getEssIds()) {
+				try {
+					SymmetricEss component = this.componentManager.getComponent(essId);
+					esss.add(component);
+				} catch (OpenemsNamedException e) {
+					this.logError(this.log, "Could not find the ESS Component with ID: " + essId + e.getMessage());
+				}
+			}
+		} else {
+			// ESS is here the GenericManagedSymmetricEss
+			esss.add(this.ess);
+		}
+		return esss;
 	}
 
 	@Override
@@ -187,7 +197,6 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 	protected void deactivate() {
 		this.removeAcknowledgeCallback();
 		this.removeCoolingUnitErrorCallback();
-		this.channelManager.deactivate();
 		super.deactivate();
 	}
 
@@ -213,6 +222,33 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 	}
 
 	/**
+	 * Calculate effective StartStop status of {@link SymmetricEss}.
+	 *
+	 * @param esss the list of {@link SymmetricEss}
+	 * @return {@link StartStop} the start-stop
+	 */
+	private static StartStop calculateStartStop(List<SymmetricEss> esss) {
+		final var startStoppableEss = esss.stream() //
+				.filter(StartStoppable.class::isInstance) //
+				.map(StartStoppable.class::cast) //
+				.toList();
+
+		final var essMap = startStoppableEss.stream() //
+				.collect(groupingBy(StartStoppable::getStartStop));
+
+		if (essMap.isEmpty()) {
+			return StartStop.UNDEFINED;
+		}
+		if (!essMap.getOrDefault(StartStop.START, emptyList()).isEmpty()) {
+			return StartStop.START;
+		}
+		if (!essMap.getOrDefault(StartStop.STOP, emptyList()).isEmpty()) {
+			return StartStop.STOP;
+		}
+		return StartStop.UNDEFINED;
+	}
+
+	/**
 	 * Handles the State-Machine.
 	 */
 	private void handleStateMachine() {
@@ -224,7 +260,7 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 
 		try {
 			// Prepare Context
-			var context = new Context(this, this.ess);
+			var context = new Context(this, this.ess, calculateStartStop(this.getEsssList()));
 			var coolingUnitContext = new CoolingUnitContext(this, //
 					this.componentManager.getClock(), //
 					this.batteries, //
