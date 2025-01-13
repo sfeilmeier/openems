@@ -124,6 +124,8 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			// TODO folgende URLs sind veraltet
 			.put("App.Api.ModbusTcp.ReadOnly", "https://fenecon.de/produkte/fems/fems-app-modbus-tcp-lesend/") //
 			.put("App.Api.ModbusTcp.ReadWrite", "https://fenecon.de/produkte/fems/fems-app-modbus-tcp-schreibzugriff/") //
+			.put("App.Api.ModbusRtu.ReadOnly", "") //
+			.put("App.Api.ModbusRtu.ReadWrite", "") //
 			.put("App.Api.RestJson.ReadOnly", "https://fenecon.de/produkte/fems/fems-app-rest-json-lesend/") //
 			.put("App.Api.RestJson.ReadWrite", "https://fenecon.de/fenecon-fems/fems-app-rest-json-schreibzugriff/") //
 			.put("App.Timedata.InfluxDb", "")
