@@ -17,5 +17,6 @@ import { Component } from "@angular/core";
 
   </ion-grid>
   `,
+  standalone: false,
 })
 export class TimeOfUseTariffAdvertComponent { }

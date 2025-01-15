@@ -9,6 +9,7 @@ import { System } from "../../shared/system";
 @Component({
   selector: ProtocolFeedInLimitationComponent.SELECTOR,
   templateUrl: "./protocol-feed-in-limitation.component.html",
+  standalone: false,
 })
 export class ProtocolFeedInLimitationComponent implements OnInit {
 

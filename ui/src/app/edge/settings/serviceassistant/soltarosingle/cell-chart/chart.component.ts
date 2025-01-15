@@ -12,6 +12,7 @@ import { ChannelChartDescription } from "../../abstractbattery.component";
 @Component({
     selector: "soltarocellchart",
     templateUrl: "../../../../history/abstracthistorychart.html",
+    standalone: false,
 })
 export class SoltaroCellChartComponent extends AbstractHistoryChart implements OnInit, OnChanges, OnDestroy {
 

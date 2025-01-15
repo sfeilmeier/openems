@@ -5,6 +5,7 @@ import { Edge, EdgePermission, EnergyJourneyWidget, Service } from "src/app/shar
 @Component({
   selector: "energy-journey",
   templateUrl: "./energy-journey.html",
+  standalone: false,
 })
 export class EnergyJourneyComponent implements OnInit {
 
@@ -19,7 +20,7 @@ export class EnergyJourneyComponent implements OnInit {
   ngOnInit() {
     this.service.getCurrentEdge().then(edge => {
       this.edge = edge;
-      this.allowedWidgets = EdgePermission.getAllowedEnergyJourneyWidgets(this.edge.firstSetupProtocol, this.translate); // TODO
+      this.allowedWidgets = EdgePermission.getAllowedEnergyJourneyWidgets(this.edge, this.translate); // TODO
     });
   }
 }

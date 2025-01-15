@@ -2,6 +2,7 @@ import { Directive, HostListener } from "@angular/core";
 
 @Directive({
     selector: "[oeKeyMask]",
+    standalone: false,
 })
 export class KeyMaskDirective {
     @HostListener("input", ["$event"])

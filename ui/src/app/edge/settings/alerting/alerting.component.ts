@@ -25,6 +25,7 @@ type DetailedAlertingSetting = AlertingSetting & { isOfflineActive: boolean, isF
 @Component({
   selector: AlertingComponent.SELECTOR,
   templateUrl: "./alerting.component.html",
+  standalone: false,
 })
 export class AlertingComponent implements OnInit {
   protected static readonly SELECTOR = "alerting";

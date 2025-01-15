@@ -18,6 +18,7 @@ import { HomeCellVoltageOptions } from "./chart/chart";
     useClass: LiveDataService,
     provide: DataService,
   }],
+  standalone: false,
 })
 export class HomeServiceAssistantComponent extends AbstractFlatWidget {
 

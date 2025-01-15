@@ -15,6 +15,7 @@ import { environment } from "src/environments";
 @Component({
   selector: PreInstallationComponent.SELECTOR,
   templateUrl: "./pre-installation.component.html",
+  standalone: false,
 })
 export class PreInstallationComponent implements OnInit {
   private static readonly SELECTOR = "pre-installation";

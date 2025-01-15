@@ -9,6 +9,7 @@ import { SubSystemType, System } from "../../shared/system";
 @Component({
     selector: ConfigurationSubSystemComponent.SELECTOR,
     templateUrl: "./configuration-sub-system.html",
+    standalone: false,
 })
 export class ConfigurationSubSystemComponent implements OnInit {
 

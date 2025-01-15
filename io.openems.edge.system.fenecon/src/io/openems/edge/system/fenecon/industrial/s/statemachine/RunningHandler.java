@@ -9,18 +9,18 @@ public class RunningHandler extends StateHandler<State, Context> {
 
 	@Override
 	public State runAndGetNextState(Context context) {
-		final var industrialS = context.getParent();
+		final var system = context.getParent();
 		final var ess = context.ess;
 
 		if (ess.hasFaults()//
-				|| industrialS.hasFaults() //
+				|| system.hasFaults() //
 				|| (ess instanceof StartStoppable e && !e.isStarted())//
 		) {
 			return State.ERROR;
 		}
 
 		// If StartStopTarget is Start and Emergency Stop not triggered, start the ESS
-		if (industrialS.getStartStopTarget() == StartStop.STOP) {
+		if (system.getStartStopTarget() == StartStop.STOP) {
 			return State.GO_STOPPED;
 		}
 

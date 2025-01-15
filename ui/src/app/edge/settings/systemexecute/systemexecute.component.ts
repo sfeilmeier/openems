@@ -13,7 +13,7 @@ type CommandFunction = (...args: (string | boolean | number)[]) => string;
 
 const COMMANDS: { [key: string]: CommandFunction; } = {
   "ping": (ip: string) => `ping -c4 ${ip}`,
-  "branch": (branch: string, force: boolean) => `echo "wget https://fenecon.de/fems-tools/update-fems.sh -O /tmp/update-fems.sh --no-check-certificate && bash -x /tmp/update-fems.sh ${force ? "-f" : ""} ${branch ? "-b" : " "} ${branch ? branch : ""} > /tmp/log 2>& 1" | at now`,
+  "branch": (branch: string, force: boolean) => `echo "wget https://fenecon.de/fems-tools/update-fems.sh -O /tmp/update-fems.sh && bash -x /tmp/update-fems.sh ${force ? "-f" : ""} ${branch ? "-b" : " "} ${branch ? branch : ""} > /tmp/log 2>& 1" | at now`,
   "query-status": () => "ps ax | grep /tmp/update-fems.sh; tail /tmp/log",
   "openems-restart": () => "which at || DEBIAN_FRONTEND=noninteractive apt-get -y install at; echo 'systemctl restart openems' | at now",
   "pagekite-log": () => "journalctl -lu fems-remote-service --since=\"2 minutes ago\"",
@@ -23,6 +23,7 @@ const COMMANDS: { [key: string]: CommandFunction; } = {
 @Component({
   selector: SystemExecuteComponent.SELECTOR,
   templateUrl: "./systemexecute.component.html",
+  standalone: false,
 })
 export class SystemExecuteComponent implements OnInit {
 

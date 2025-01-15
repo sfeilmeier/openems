@@ -8,6 +8,7 @@ import { AbstractBattery, CategorizedChannelDescription, ChannelChartDescription
 @Component({
     selector: SoltaroVersionCComponent.SELECTOR,
     templateUrl: "./../abstractbattery.component.html",
+    standalone: false,
 })
 export class SoltaroVersionCComponent extends AbstractBattery implements OnInit, OnDestroy {
 

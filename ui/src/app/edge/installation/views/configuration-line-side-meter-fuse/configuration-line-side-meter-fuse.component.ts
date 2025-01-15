@@ -9,6 +9,7 @@ import { Category } from "../../shared/category";
 @Component({
   selector: ConfigurationLineSideMeterFuseComponent.SELECTOR,
   templateUrl: "./configuration-line-side-meter-fuse.component.html",
+  standalone: false,
 })
 export class ConfigurationLineSideMeterFuseComponent implements OnInit {
 

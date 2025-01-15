@@ -53,18 +53,18 @@ public class I2CAnalogImpl extends AbstractOpenemsComponent
 			for (int i = 0; i < valueArray.length; i++) {
 				byteArray[i] = (byte) valueArray[i];
 			}
-			
+
 			try (I2CBus bus = new I2CBus(0);) {
 				bus.selectSlave(config.outputChannel().slaveAddress);
 				Block block = new Block();
-		        for (int i = 0; i < byteArray.length; i++) {
-		            block.set(i, byteArray[i]);
-		        }
-		        bus.smbus.writeBlock(config.outputChannel().registerAddress, block);
-		        bus.close();
+				for (int i = 0; i < byteArray.length; i++) {
+					block.set(i, byteArray[i]);
+				}
+				bus.smbus.writeBlock(config.outputChannel().registerAddress, block);
+				bus.close();
 			} catch (IOException e) {
 				e.printStackTrace();
-			} 
+			}
 		};
 	}
 
@@ -73,7 +73,6 @@ public class I2CAnalogImpl extends AbstractOpenemsComponent
 		super.deactivate();
 	}
 
-	
 	@Override
 	public Range range() {
 		return new Range(OFFSET, PRECISION, MAXIMUM_VOLTAGE);

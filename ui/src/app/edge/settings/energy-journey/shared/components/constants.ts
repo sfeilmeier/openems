@@ -16,6 +16,7 @@ import { SimulationResult } from "../../pages/battery-extension/battery-extensio
         }
     }
         `],
+    standalone: false,
 })
 export class EnergyJourneyConstantsComponent implements OnChanges {
 

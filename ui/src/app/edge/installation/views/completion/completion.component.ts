@@ -2,7 +2,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
-import { format } from "date-fns/esm";
+import { format } from "date-fns";
 import { saveAs } from "file-saver-es";
 import { GetSetupProtocolRequest } from "src/app/shared/jsonrpc/request/getSetupProtocolRequest";
 import { Base64PayloadResponse } from "src/app/shared/jsonrpc/response/base64PayloadResponse";
@@ -14,6 +14,7 @@ import { SystemId } from "../../shared/system";
 @Component({
   selector: CompletionComponent.SELECTOR,
   templateUrl: "./completion.component.html",
+  standalone: false,
 })
 export class CompletionComponent implements OnInit {
 

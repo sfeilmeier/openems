@@ -85,9 +85,8 @@ import io.openems.edge.common.type.TypeUtils;
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE //
 })
 // TODO Extract AbstractBatteryFeneconF2b
-public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
-		implements BatteryFeneconF2bBmw, BatteryFeneconF2b, ModbusComponent, OpenemsComponent, Battery, ModbusSlave,
-		StartStoppable, EventHandler {
+public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent implements BatteryFeneconF2bBmw,
+		BatteryFeneconF2b, ModbusComponent, OpenemsComponent, Battery, ModbusSlave, StartStoppable, EventHandler {
 
 	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
 	private final Logger log = LoggerFactory.getLogger(BatteryFeneconF2bBmwImpl.class);

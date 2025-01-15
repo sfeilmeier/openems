@@ -10,6 +10,7 @@ import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 @Component({
   selector: ProtocolCustomerComponent.SELECTOR,
   templateUrl: "./protocol-customer.component.html",
+  standalone: false,
 })
 export class ProtocolCustomerComponent implements OnInit {
 

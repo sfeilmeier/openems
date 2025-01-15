@@ -2,6 +2,7 @@ package io.openems.edge.oem.fenecon;
 
 import static io.openems.edge.oem.fenecon.FeneconEdgeOemImpl.getSystemUpdateParams;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -27,5 +28,10 @@ public class FeneconEdgeOemImplTest {
 	@Test
 	public void testGetAppWebsiteUrl() throws OpenemsException {
 		DummyOpenemsEdgeOem.assertAllWebsiteUrlsSet(new FeneconEdgeOemImpl());
+	}
+
+	@Test
+	public void testReadManufacturerEmsSerialNumber() {
+		assertFalse(FeneconEdgeOemImpl.readManufacturerEmsSerialNumber().isBlank());
 	}
 }

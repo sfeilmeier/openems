@@ -10,6 +10,7 @@ import { Meter } from "../../shared/meter";
 @Component({
     selector: ConfigurationEnergyFlowMeterComponent.SELECTOR,
     templateUrl: "./configuration-energy-flow-direction-meter.component.html",
+    standalone: false,
 })
 export class ConfigurationEnergyFlowMeterComponent implements OnInit {
 

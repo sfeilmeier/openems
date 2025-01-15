@@ -1,7 +1,7 @@
 package io.openems.edge.system.fenecon.industrial.l;
 
+import static io.openems.common.test.TestUtils.createDummyClock;
 import static io.openems.edge.common.startstop.StartStoppable.ChannelId.START_STOP;
-import static io.openems.edge.common.test.TestUtils.createDummyClock;
 import static io.openems.edge.io.test.DummyInputOutput.ChannelId.INPUT_OUTPUT7;
 import static io.openems.edge.io.test.DummyInputOutput.ChannelId.INPUT_OUTPUT8;
 

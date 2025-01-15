@@ -55,6 +55,7 @@ type TableData = {
       }
     }
     `],
+  standalone: false,
 })
 export class DetailComponent implements OnInit, OnChanges {
 

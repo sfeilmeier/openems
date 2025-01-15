@@ -13,6 +13,7 @@ import { DIRECTIONS_OPTIONS } from "../../shared/options";
 @Component({
   selector: "protocol-pv",
   templateUrl: "./protocol-pv.component.html",
+  standalone: false,
 })
 export class ProtocolPvComponent implements OnInit {
 

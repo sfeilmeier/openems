@@ -6,6 +6,7 @@ import { ModalComponent } from "../modal/modal";
 @Component({
   selector: "Industrial_L",
   templateUrl: "./flat.html",
+  standalone: false,
 })
 export class FlatComponent extends AbstractFlatWidget {
   protected readonly CONVERT_INDUSTRIAL_STATE = Converter.CONVERT_INDUSTRIAL_STATE(this.translate);

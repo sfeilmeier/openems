@@ -13,6 +13,7 @@ import { System, SystemId } from "./shared/system";
 @Component({
   selector: InstallationComponent.SELECTOR,
   templateUrl: "./installation.component.html",
+  standalone: false,
 })
 export class InstallationComponent implements OnInit {
   private static readonly SELECTOR = "installation";

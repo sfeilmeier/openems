@@ -59,8 +59,8 @@ function upgrade {
     apt-get update;
 
     if ( dpkg -s fems-techbase-cm3 >/dev/null 2>&1 ) || ( dpkg -s fems-techbase-cm4 >/dev/null 2>&1 ); then
-        wget --no-check-certificate "$KERNEL_SOURCE" -O "$KERNEL_FILE"
-        wget --no-check-certificate "$SYSMODS_SOURCE" -O "$SYSMODS_FILE"
+        wget "$KERNEL_SOURCE" -O "$KERNEL_FILE"
+        wget "$SYSMODS_SOURCE" -O "$SYSMODS_FILE"
        
         dpkg -i --auto-deconfigure $KERNEL_FILE $SYSMODS_FILE || apt-get install -f -y --allow-remove-essential
 

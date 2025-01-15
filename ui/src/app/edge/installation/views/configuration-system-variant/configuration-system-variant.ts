@@ -8,6 +8,7 @@ import { HomeSystemId, System, SystemId } from "../../shared/system";
 @Component({
     selector: ConfigurationSystemVariantComponent.SELECTOR,
     templateUrl: "./configuration-system-variant.html",
+    standalone: false,
 })
 export class ConfigurationSystemVariantComponent implements OnInit {
 

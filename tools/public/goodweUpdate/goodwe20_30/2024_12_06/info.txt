@@ -1,0 +1,6 @@
+Version 10.11.23 
+ARM: 12 (410-02071-12(432)_M4_APP(test)）
+DSP: 10? (410-04062-10-V10048)
+
+"New ARM and DSP for solving 100W grid buy in the morning and evening issue."
+Früh am Morgen und Abends gab es bisher etwas Netzbezug wenn gerade keine Leistung Erzeugt wird, aber dennoch schon Spannung anliegt.

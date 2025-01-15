@@ -8,6 +8,7 @@ import { AbstractHomeIbn } from "../../installation-systems/home/abstract-home";
 @Component({
     selector: ConfigurationEssLimiter14aComponent.SELECTOR,
     templateUrl: "./configuration-ess-limiter-14a.html",
+    standalone: false,
 })
 export class ConfigurationEssLimiter14aComponent implements OnInit {
 

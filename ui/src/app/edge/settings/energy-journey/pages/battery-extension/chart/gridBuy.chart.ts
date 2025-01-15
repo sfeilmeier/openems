@@ -11,6 +11,7 @@ import { PossibleBatteryExtensionResponse } from "../battery-extension.response"
 @Component({
   selector: "gridBuyChart",
   templateUrl: "../../../../../../shared/components/chart/abstracthistorychart.html",
+  standalone: false,
 })
 export class GridBuyChartComponent extends AbstractHistoryChart implements OnChanges {
 

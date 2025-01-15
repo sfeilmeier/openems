@@ -4,9 +4,9 @@ import io.openems.common.types.OptionsEnum;
 
 public enum InsulationMeasurementStatus implements OptionsEnum {
 	UNDEFINED(-1, "Undefined"), //
-	NOT_RUNNING(1, "Insulation measurement is not running"),//
-	RUNNING(2, "Insulation measurement is running"),//
-	;//
+	NOT_RUNNING(1, "Insulation measurement is not running"), //
+	RUNNING(2, "Insulation measurement is running"), //
+	;
 
 	private final int value;
 	private final String name;

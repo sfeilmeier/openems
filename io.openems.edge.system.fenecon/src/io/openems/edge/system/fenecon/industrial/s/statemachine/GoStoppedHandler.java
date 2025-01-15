@@ -9,15 +9,15 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 
 	@Override
 	public State runAndGetNextState(Context context) throws OpenemsNamedException {
-		final var industrialS = context.getParent();
+		final var system = context.getParent();
 		final var ess = context.ess;
-		if (ess.hasFaults() || industrialS.hasFaults()) {
+		if (ess.hasFaults() || system.hasFaults()) {
 			return State.ERROR;
 		}
 
 		if (ess instanceof StartStoppable e) {
 			e.stop();
-			if (e.isStopped()) {
+			if (context.isStopped()) {
 				return State.STOPPED;
 			}
 		}

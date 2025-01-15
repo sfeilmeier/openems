@@ -39,6 +39,7 @@ class Package {
 @Component({
   selector: SystemUpdateOldComponent.SELECTOR,
   templateUrl: "./systemupdate.old.component.html",
+  standalone: false,
 })
 export class SystemUpdateOldComponent implements OnInit, OnDestroy {
 

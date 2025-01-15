@@ -84,7 +84,7 @@ function dpkg_download_install {
     local filename=$(basename $1)
 
     echo "Download and install $filename"
-    wget $source -O /tmp/$filename --no-check-certificate
+    wget $source -O /tmp/$filename
     dpkg_install /tmp/$filename
     rm -f /tmp/$filename
 }
@@ -294,13 +294,13 @@ if [ ! -f "/etc/openems.d/hardware.conf" ]; then
 fi
 
 export CURRENT_VERSION="$(dpkg-query --showformat='${Version}' --show $PACKAGE)"
-export LATEST_VERSION="$(wget -qO- http://fenecon.de/debian-test/${PACKAGE}-latest.version --no-check-certificate)"
+export LATEST_VERSION="$(wget -qO- http://fenecon.de/debian-test/${PACKAGE}-latest.version)"
 if [ "$CURRENT_VERSION" = "$LATEST_VERSION" -a "$FORCE_UPDATE" = false ]; then
     echo "# $PACKAGE: latest version [$LATEST_VERSION] is already installed"
 else
     echo "# $PACKAGE: Updating from version [$CURRENT_VERSION] to [$LATEST_VERSION]"
     rm -Rf /tmp/org.osgi.framework.storage
-    wget $DEB_PATH -O /tmp/${PACKAGE}.deb --no-check-certificate
+    wget $DEB_PATH -O /tmp/${PACKAGE}.deb
 
     apt_remove openems-core
     apt_remove openems-core-fems

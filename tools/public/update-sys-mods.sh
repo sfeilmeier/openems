@@ -18,7 +18,7 @@ upgrade () {
   check_config;
 
   apt-get clean || true;
-  wget http://fenecon.de/fems-download/fems_techbase_sys_mods-latest.deb -O /tmp/fems-techbase-sys-mods.deb --no-check-certificate;
+  wget http://fenecon.de/fems-download/fems_techbase_sys_mods-latest.deb -O /tmp/fems-techbase-sys-mods.deb;
 
   apt-get reinstall -y /tmp/fems-techbase-sys-mods.deb;
   apt-mark manual fems-techbase-sys-mods;

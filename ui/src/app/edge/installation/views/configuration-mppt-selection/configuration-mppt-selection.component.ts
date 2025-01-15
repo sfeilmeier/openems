@@ -11,6 +11,7 @@ import { Home30FeneconIbn } from "../../installation-systems/home/home-30";
 @Component({
   selector: ConfigurationMpptSelectionComponent.SELECTOR,
   templateUrl: "./configuration-mppt-selection.component.html",
+  standalone: false,
 })
 export class ConfigurationMpptSelectionComponent implements OnInit {
   private static readonly SELECTOR = "configuration-mppt-selection";

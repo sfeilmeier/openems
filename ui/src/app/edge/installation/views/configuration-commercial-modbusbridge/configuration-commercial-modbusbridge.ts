@@ -9,6 +9,7 @@ import { ModbusBridgeType } from "../../shared/enums";
 @Component({
     selector: ConfigurationCommercialModbuBridgeComponent.SELECTOR,
     templateUrl: "./configuration-commercial-modbusbridge.html",
+    standalone: false,
 })
 export class ConfigurationCommercialModbuBridgeComponent implements OnInit {
 

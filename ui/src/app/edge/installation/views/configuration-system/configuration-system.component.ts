@@ -14,6 +14,7 @@ import { System, SystemType } from "../../shared/system";
 @Component({
   selector: ConfigurationSystemComponent.SELECTOR,
   templateUrl: "./configuration-system.component.html",
+  standalone: false,
 })
 export class ConfigurationSystemComponent implements OnInit {
   private static readonly SELECTOR = "configuration-system";

@@ -8,6 +8,7 @@ import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 @Component({
   selector: ConfigurationEmergencyReserveComponent.SELECTOR,
   templateUrl: "./configuration-emergency-reserve.component.html",
+  standalone: false,
 })
 export class ConfigurationEmergencyReserveComponent implements OnInit {
 

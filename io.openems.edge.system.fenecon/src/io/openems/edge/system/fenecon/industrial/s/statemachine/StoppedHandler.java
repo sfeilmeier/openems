@@ -8,14 +8,14 @@ public class StoppedHandler extends StateHandler<State, Context> {
 
 	@Override
 	public State runAndGetNextState(Context context) {
-		final var industrialS = context.getParent();
+		final var system = context.getParent();
 		final var ess = context.ess;
 
-		if (ess.hasFaults() || industrialS.hasFaults()) {
+		if (ess.hasFaults() || system.hasFaults()) {
 			return State.ERROR;
 		}
 
-		if (industrialS.getStartStopTarget() == StartStop.START) {
+		if (system.getStartStopTarget() == StartStop.START) {
 			return State.GO_RUNNING;
 		}
 
