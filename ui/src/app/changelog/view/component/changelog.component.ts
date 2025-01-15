@@ -25,6 +25,18 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.1.1",
+        changes: [
+          Changelog.UI + "Login-Formular",
+          Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Fehlerbehebung bei Ladeabbrüchen",
+          Changelog.app(App.MODBUS_TCP_API) + "Bessere Beschreibung der Datenpunkte im Excel-Export",
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC, App.KEBA) + "KEBA: Setze Session-Energy-Wert im abgesteckten Status (nur ADMIN)" },
+          { roleIsAtLeast: Role.ADMIN, change: "App für Modbus/RTU-Api Read-Write und ReadOnly (installierbar durch Admin)" },
+          { roleIsAtLeast: Role.ADMIN, change: "Weidmüller I/O System: Unterstützung für Digital-Eingangsmodul UR20-16DI-P" },
+          Changelog.library(Library.ANGULAR, Library.NG2_CHARTS, Library.NGX_COOKIE_SERVICE, Library.NGX_SPINNER, Library.JENETICS, Library.JNA, Library.GRADLE, Library.OKIO),
+        ],
+      },
+      {
         version: "2024.12.3",
         changes: [
           "Live | Speichersystem: neue Einstellung um Notstromreserve aktiv aus dem Netz zu beladen",
