@@ -77,7 +77,7 @@ export class AdvertWidgets {
 
         let list: AdvertWidget[] = [];
         if (
-            EdgePermission.isEnergyJourneyAllowed(edge.firstSetupProtocol) && edge.producttype === ProductType.HOME) {
+            EdgePermission.isEnergyJourneyAllowed(edge)) {
             list.push({
                 name: "time-of-use-tariff",
                 title: { languageKey: "ADVERT.1.TITLE" },

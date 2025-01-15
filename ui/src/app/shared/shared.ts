@@ -40,8 +40,8 @@ export class Permission {
    * @param ibnDate the first setup protocol date - ibn date
    * @returns the list of allowed widgets
    */
-  public static getAllowedEnergyJourneyWidgets(ibnDate: Date, translate: TranslateService): EnergyJourneyWidget[] {
-    return EdgePermission.getAllowedEnergyJourneyWidgets(ibnDate, translate);
+  public static getAllowedEnergyJourneyWidgets(edge: Edge, translate: TranslateService): EnergyJourneyWidget[] {
+    return EdgePermission.getAllowedEnergyJourneyWidgets(edge, translate);
   }
 }
 
@@ -51,11 +51,11 @@ export class EdgePermission {
    * Checks if the {@link EnergyJourneyComponent energy journey} is allowed to be seen
    *
    * @param ibnDate the ibn date - first setup protocol date
-   * @returns true, if ibnDate is at least one year ago
+   * @returns true, if ibnDate is at least one year ago and edge producttype is 'Home 10'
    */
-  public static isEnergyJourneyAllowed(ibnDate: Date): boolean {
-    const isDateAtLeastOneYearAgo = isBefore(ibnDate, subDays(subYears(new Date(), 1), 1));
-    return isDateAtLeastOneYearAgo;
+  public static isEnergyJourneyAllowed(edge: Edge): boolean {
+    const isDateAtLeastOneYearAgo = isBefore(edge.firstSetupProtocol, subDays(subYears(new Date(), 1), 1));
+    return isDateAtLeastOneYearAgo && edge.producttype === Producttype.HOME;
   }
 
   /**
@@ -65,8 +65,8 @@ export class EdgePermission {
    * @param ibnDate the first setup protocol date - ibn date
    * @returns the list of allowed widgets for this edge
    */
-  public static getAllowedEnergyJourneyWidgets(ibnDate: Date, translate: TranslateService): EnergyJourneyWidget[] {
-    const isDateAtLeastOneYearAgo = EdgePermission.isEnergyJourneyAllowed(ibnDate);
+  public static getAllowedEnergyJourneyWidgets(edge: Edge, translate: TranslateService): EnergyJourneyWidget[] {
+    const isDateAtLeastOneYearAgo = EdgePermission.isEnergyJourneyAllowed(edge);
     if (!isDateAtLeastOneYearAgo) {
       return [];
     }
@@ -144,10 +144,10 @@ export class UserPermission {
    *
    * @param user the current user
    * @param edge the edge
-   * @returns true, if user is at least {@link Role.OWNER} & edge.producttype is 'Home 10'
+   * @returns true, if user is at least {@link Role.OWNER}
    */
-  public static isUserAllowedToSeeEnergyJourney(user: User, edge: Edge): boolean {
-    return Role.isAtLeast(user.globalRole, Role.OWNER) && edge.producttype === Producttype.HOME;
+  public static isUserAllowedToSeeEnergyJourney(user: User): boolean {
+    return Role.isAtLeast(user.globalRole, Role.OWNER);
   }
 
   /**

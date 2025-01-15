@@ -20,7 +20,7 @@ export class EnergyJourneyComponent implements OnInit {
   ngOnInit() {
     this.service.getCurrentEdge().then(edge => {
       this.edge = edge;
-      this.allowedWidgets = EdgePermission.getAllowedEnergyJourneyWidgets(this.edge.firstSetupProtocol, this.translate); // TODO
+      this.allowedWidgets = EdgePermission.getAllowedEnergyJourneyWidgets(this.edge, this.translate); // TODO
     });
   }
 }

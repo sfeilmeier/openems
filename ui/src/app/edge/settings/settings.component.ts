@@ -44,7 +44,8 @@ export class SettingsComponent implements OnInit {
       this.canSeeIndustrialLAssistant = UserPermission.isUserAllowedToSeeIndustrialAssistant(user, edge);
       this.canSeeHomeAssistant = UserPermission.isUserAllowedToSeeHomeAssistant(user, edge);
       this.canSeeCommercialAssistant = UserPermission.isUserAllowedToSeeCommercialServiceAssistant(user, edge);
-      this.canSeeEnergyJourney = EdgePermission.getAllowedEnergyJourneyWidgets(this.edge.firstSetupProtocol, this.translate).length > 0;
+      this.canSeeEnergyJourney = EdgePermission.isEnergyJourneyAllowed(edge)
+        && UserPermission.isUserAllowedToSeeEnergyJourney(user);
     });
   }
 }
