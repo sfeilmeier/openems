@@ -63,7 +63,7 @@ steps:
     when: *main-build
     image: openems-android:20.34
     environment:
-      - THEME=${THEME}
+      THEME: ${THEME}
     commands:
       - source $CI_WORKSPACE/.openems-env
       - source tools/common.sh
