@@ -555,7 +555,7 @@ export class EdgeConfig {
         }
         switch (component.factoryId) {
             case "GoodWe.EmergencyPowerMeter":
-            case "Controller.Heating.Room": // fems888
+            case "Controller.IO.Heating.Room":
                 return true;
         }
         const natures = this.getNatureIdsByFactoryId(component.factoryId);
