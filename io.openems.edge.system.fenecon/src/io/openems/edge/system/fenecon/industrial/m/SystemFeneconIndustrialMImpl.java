@@ -1,5 +1,8 @@
 package io.openems.edge.system.fenecon.industrial.m;
 
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.groupingBy;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,8 +61,6 @@ public class SystemFeneconIndustrialMImpl extends AbstractOpenemsComponent
 	private final StateMachine stateMachine = new StateMachine(State.UNDEFINED);
 
 	private final List<Battery> batteries = new ArrayList<>();
-	private final List<SymmetricEss> esss = new ArrayList<>();
-	private final ChannelManager channelManager = new ChannelManager();
 
 	private Config config = null;
 	private BooleanWriteChannel coolingUnitEnableChannel;
@@ -71,10 +72,8 @@ public class SystemFeneconIndustrialMImpl extends AbstractOpenemsComponent
 	@Reference
 	private ComponentManager componentManager;
 
-	@Reference(policy = ReferencePolicy.DYNAMIC, //
-			policyOption = ReferencePolicyOption.GREEDY, //
-			cardinality = ReferenceCardinality.MANDATORY) //
-	private volatile MetaEss ess;
+	@Reference
+	private SymmetricEss ess;
 
 	@Reference(//
 			policy = ReferencePolicy.DYNAMIC, //
@@ -99,7 +98,6 @@ public class SystemFeneconIndustrialMImpl extends AbstractOpenemsComponent
 
 	@Activate
 	private void activate(ComponentContext context, Config config) throws OpenemsNamedException {
-		this.config = config;
 		super.activate(context, config.id(), config.alias(), config.enabled());
 		if (!this.applyConfig(context, config)) {
 			return;
@@ -108,7 +106,6 @@ public class SystemFeneconIndustrialMImpl extends AbstractOpenemsComponent
 
 	@Modified
 	private void modified(ComponentContext context, Config config) throws OpenemsNamedException {
-		this.channelManager.deactivate();
 		super.modified(context, config.id(), config.alias(), config.enabled());
 		if (!this.applyConfig(context, config)) {
 			return;
@@ -118,26 +115,17 @@ public class SystemFeneconIndustrialMImpl extends AbstractOpenemsComponent
 	private boolean applyConfig(ComponentContext context, Config config) throws OpenemsNamedException {
 		this.coolingUnitEnableChannel = this.componentManager
 				.getChannel(ChannelAddress.fromString(config.coolingUnitEnable()));
-		for (var essId : this.ess.getEssIds()) {
-			SymmetricEss component = this.componentManager.getComponent(essId);
-			this.esss.add(component);
-		}
 
-		this.channelManager.activate(this.esss, this::_setStartStop);
-
-		if (Stream.of(//
+		return Stream.of(//
 				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "ess", config.ess_id()), //
 				OpenemsComponent.updateReferenceFilter(this.cm, this.servicePid(), "Battery", config.battery_ids()))
-				.anyMatch(t -> t)) {
-			return true;
-		}
-		return false;
+				.anyMatch(t -> t);
+
 	}
 
 	@Override
 	@Deactivate
 	protected void deactivate() {
-		this.channelManager.deactivate();
 		super.deactivate();
 	}
 
@@ -159,6 +147,49 @@ public class SystemFeneconIndustrialMImpl extends AbstractOpenemsComponent
 		}
 	}
 
+	private List<SymmetricEss> getEsssList() {
+		var esss = new ArrayList<SymmetricEss>();
+		// ESS is here the EssCluster
+		if (this.ess instanceof MetaEss metaEss) {
+			for (var essId : metaEss.getEssIds()) {
+				try {
+					SymmetricEss component = this.componentManager.getComponent(essId);
+					esss.add(component);
+				} catch (OpenemsNamedException e) {
+					this.logError(this.log, "Could not find the ESS Component with ID: " + essId + e.getMessage());
+				}
+			}
+		} else {
+			// ESS is here the GenericManagedSymmetricEss
+			esss.add(this.ess);
+		}
+		return esss;
+	}
+
+	/**
+	 * Calculate effective StartStop status of {@link SymmetricEss}.
+	 *
+	 * @param esss the list of {@link SymmetricEss}
+	 * @return {@link StartStop} the start-stop
+	 */
+	private static StartStop calculateStartStop(List<SymmetricEss> esss) {
+		final var essMap = esss.stream() //
+				.filter(StartStoppable.class::isInstance) //
+				.map(StartStoppable.class::cast) //
+				.collect(groupingBy(StartStoppable::getStartStop));
+
+		if (essMap.isEmpty()) {
+			return StartStop.UNDEFINED;
+		}
+		if (!essMap.getOrDefault(StartStop.START, emptyList()).isEmpty()) {
+			return StartStop.START;
+		}
+		if (!essMap.getOrDefault(StartStop.STOP, emptyList()).isEmpty()) {
+			return StartStop.STOP;
+		}
+		return StartStop.UNDEFINED;
+	}
+
 	/**
 	 * Handles the State-Machine.
 	 */
@@ -171,7 +202,7 @@ public class SystemFeneconIndustrialMImpl extends AbstractOpenemsComponent
 
 		try {
 			// Prepare Context
-			var context = new Context(this, this.ess);
+			var context = new Context(this, this.ess, calculateStartStop(this.getEsssList()));
 
 			this.stateMachine.run(context);
 			this._setRunFailed(false);
