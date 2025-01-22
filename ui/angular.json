@@ -189,6 +189,54 @@
                 "src/global-ion-custom.scss"
               ]
             },
+            "feneconbeta": { "assets": [
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "src/themes/fenecon/root",
+                "output": ""
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/themes/fenecon/scss"
+              ]
+            },
+            "styles": [
+              "src/themes/fenecon/scss/variables.scss",
+              "src/global.scss",
+              "src/global-ion-custom.scss"
+            ]
+          },
+            "feneconbeta-backend-deploy-app": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/theme.ts",
+                  "with": "src/themes/fenecon/environments/theme.ts"
+                },
+                {
+                  "replace": "src/environments/dummy.ts",
+                  "with": "src/themes/fenecon/environments/backend-prod.ts"
+                }
+              ]
+            },
+            "feneconbeta-backend-prod": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/theme.ts",
+                  "with": "src/themes/fenecon/environments/theme.ts"
+                },
+                {
+                  "replace": "src/environments/dummy.ts",
+                  "with": "src/themes/fenecon/environments/backend-prod.ts"
+                }
+              ]
+            },
             "fenecon-backend-dev": {
               "fileReplacements": [
                 {
@@ -383,6 +431,12 @@
             },
             "fenecon-backend-dev": {
               "buildTarget": "app:build:fenecon,fenecon-backend-dev"
+            },
+            "feneconbeta-backend-prod": {
+              "buildTarget": "app:build:fenecon,fenecon-backend-prod"
+            },
+            "feneconbeta-backend-deploy-app": {
+              "buildTarget": "app:build:fenecon,fenecon-backend-deploy-app"
             },
             "fenecon-backend-deploy-app": {
               "buildTarget": "app:build:fenecon,fenecon-backend-deploy-app"

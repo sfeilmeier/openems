@@ -3,7 +3,7 @@ import { Filter } from "src/app/index/filter/filter.component";
 import { DefaultTypes } from "src/app/shared/service/defaulttypes";
 export { environment } from "./dummy";
 
-export type Theme = "OpenEMS" | "FENECON" | "Heckert";
+export type Theme = "OpenEMS" | "FENECON" | "FENECONBeta" | "Heckert";
 
 export interface Environment {
     readonly theme: Theme;
