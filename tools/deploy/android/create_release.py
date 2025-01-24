@@ -65,4 +65,4 @@ def create_release_without_bundle(service_account_file, package_name):
 if __name__ == "__main__":
     service_account_file = get_woodpecker_secret()
     version = get_version()
-    create_full_release(service_account_file, version, "io.fenecon.ui", "fenecon")
+    create_full_release(service_account_file, version, "io.fenecon.ui", "feneconbeta")
