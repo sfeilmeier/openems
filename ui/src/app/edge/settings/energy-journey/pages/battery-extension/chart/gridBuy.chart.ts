@@ -100,7 +100,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
   }
 
 
-  protected override loadChart(): void {
+  protected override async loadChart() {
     this.labels = [];
     this.errorResponse = null;
 
