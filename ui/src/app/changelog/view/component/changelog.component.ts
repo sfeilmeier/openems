@@ -25,8 +25,24 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.1.2",
+        changes: [
+          Changelog.UI + "Verbesserungen an FEMS App Heizstab und FEMS App Modbus/TCP Api, Darstellungen in Historie, Multiladepunktmanagement",
+          "Notstromreserve: verbessertes Verhalten bei Beladung aus dem Netz",
+          Changelog.app(App.PV_INVERTER, App.FRONIUS) + "lese exakte Stromwerte (allgemeine Verbesserung bei SunSpec Gleitkommazahlen)",
+          Changelog.app(App.EVCS_AC, App.MENNEKES) + "Einbindung der Mennekes Amtron Professional (nur lesend))",
+          { roleIsAtLeast: Role.INSTALLER, change: "FENECON Home: Korrektur eines Anzeigefehlers in der Historie bei niedrigen Leistungen" },
+          { roleIsAtLeast: Role.INSTALLER, change: "FENECON Home: Fehlerbehebung bei den Einstellungen zur Blindleistung" },
+          { roleIsAtLeast: Role.ADMIN, change: "App Center: App zum Einstellen von globalen Systemeinstellungen. Derzeit: Speicher-Beladung aus dem Netz erlaubt? Lokale Währung" },
+          { roleIsAtLeast: Role.ADMIN, change: "App Center: Fehlerbehebung bei Listeneinstellungen" },
+          { roleIsAtLeast: Role.ADMIN, change: "Netzwerkkonfiguration: Vorarbeiten zur Verbesserung der Auslese- und Konfigurationsmöglichkeiten" },
+          { roleIsAtLeast: Role.ADMIN, change: "Industrial M: Verbesserung an der Systemkomponente" },
+        ],
+      },
+      {
         version: "2025.1.1",
         changes: [
+          Changelog.openems("2025.1.0"),
           Changelog.UI + "Login-Formular",
           Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Fehlerbehebung bei Ladeabbrüchen",
           Changelog.app(App.MODBUS_TCP_API) + "Bessere Beschreibung der Datenpunkte im Excel-Export",
