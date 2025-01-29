@@ -1,7 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FENECON Beta App</string>
-    <string name="title_activity_main">FENECON Beta App</string>
-    <string name="package_name">io.fenecon.ui</string>
-    <string name="custom_url_scheme">io.fenecon.ui</string>
+	<string name="app_name">
+		FENECON Beta App
+	</string>
+	<string name="title_activity_main">
+		FENECON Beta App
+	</string>
+	<string name="package_name">
+		io.fenecon.ui
+	</string>
+	<string name="custom_url_scheme">
+		io.fenecon.ui
+	</string>
 </resources>

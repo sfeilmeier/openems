@@ -1,0 +1,8 @@
+ion-content {
+    --background: url('../background.svg') 40% 80% / contain repeat fixed;
+
+    ion-card {
+        border-radius: 1em;
+        opacity: 0.9;
+    }
+}
