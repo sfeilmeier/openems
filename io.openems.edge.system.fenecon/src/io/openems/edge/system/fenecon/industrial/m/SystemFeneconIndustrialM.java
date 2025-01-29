@@ -8,6 +8,7 @@ import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.channel.Doc;
 import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.component.OpenemsComponent;
+import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.system.fenecon.industrial.m.enums.RequestStatus;
 import io.openems.edge.system.fenecon.industrial.m.statemachine.StateMachine.State;
 
@@ -40,6 +41,13 @@ public interface SystemFeneconIndustrialM extends OpenemsComponent, EventHandler
 		}
 	}
 
+	/**
+	 * Gets the target Start/Stop mode from config or StartStop-Channel.
+	 *
+	 * @return {@link StartStop}
+	 */
+	public StartStop getStartStopTarget();
+	
 	/**
 	 * Gets the Channel for {@link ChannelId#STATE_MACHINE}.
 	 *

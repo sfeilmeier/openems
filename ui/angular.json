@@ -189,6 +189,33 @@
                 "src/global-ion-custom.scss"
               ]
             },
+            "feneconbeta": {
+              "assets": [
+                "src/assets",
+                {
+                  "glob": "**/*",
+                  "input": "src/themes/fenecon/root",
+                  "output": ""
+                },
+                {
+                  "glob": "**/*.svg",
+                  "input": "node_modules/ionicons/dist/ionicons/svg",
+                  "output": "./svg"
+                }
+              ],
+              "stylePreprocessorOptions": {
+                "includePaths": [
+                  "src/themes/fenecon/scss",
+                  "src/themes/fenecon/beta/scss"
+                ]
+              },
+              "styles": [
+                "src/themes/fenecon/scss/variables.scss",
+                "src/themes/fenecon/beta/scss/beta-app.scss",
+                "src/global.scss",
+                "src/global-ion-custom.scss"
+              ]
+            },
             "fenecon-backend-dev": {
               "fileReplacements": [
                 {
@@ -202,18 +229,6 @@
               ]
             },
             "fenecon-backend-prod": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/theme.ts",
-                  "with": "src/themes/fenecon/environments/theme.ts"
-                },
-                {
-                  "replace": "src/environments/dummy.ts",
-                  "with": "src/themes/fenecon/environments/backend-prod.ts"
-                }
-              ]
-            },
-            "fenecon-backend-deploy-app": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/theme.ts",
@@ -322,18 +337,6 @@
                 }
               ]
             },
-            "heckert-backend-deploy-app": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/theme.ts",
-                  "with": "src/themes/heckert/environments/theme.ts"
-                },
-                {
-                  "replace": "src/environments/dummy.ts",
-                  "with": "src/themes/heckert/environments/backend-prod.ts"
-                }
-              ]
-            },
             "heckert-edge-dev": {
               "fileReplacements": [
                 {
@@ -384,8 +387,11 @@
             "fenecon-backend-dev": {
               "buildTarget": "app:build:fenecon,fenecon-backend-dev"
             },
-            "fenecon-backend-deploy-app": {
-              "buildTarget": "app:build:fenecon,fenecon-backend-deploy-app"
+            "feneconbeta-backend-prod": {
+              "buildTarget": "app:build:feneconbeta,fenecon-backend-prod"
+            },
+            "feneconbeta-backend-dev": {
+              "buildTarget": "app:build:feneconbeta,fenecon-backend-dev"
             },
             "fenecon-edge-dev": {
               "buildTarget": "app:build:fenecon,fenecon-edge-dev"

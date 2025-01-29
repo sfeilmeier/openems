@@ -39,6 +39,17 @@ switch (process.env.NODE_ENV as Theme) {
       },
     };
     break;
+  case 'FENECONBeta':
+    config = {
+      ...baseConfig,
+      appId: 'io.fenecon.ui',
+      appName: 'FENECON BETA App',
+      server: {
+        ...baseConfig.server,
+        hostname: 'portal.fenecon.de',
+      },
+    };
+    break;
   case 'Heckert':
     config = {
       ...baseConfig,

@@ -41,14 +41,11 @@ public class UserServiceUtils {
 	}
 
 	private static String getRolePrefix(Role role) {
-		switch (role) {
-		case ADMIN:
-			return "A";
-		case GUEST:
-		case INSTALLER:
-		case OWNER:
-			return "";
-		}
-		return "";
+		return switch (role) {
+		case ADMIN //
+			-> "A";
+		case GUEST, INSTALLER, OWNER //
+			-> "";
+		};
 	}
 }
