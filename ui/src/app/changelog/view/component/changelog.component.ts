@@ -25,6 +25,14 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.2.1",
+        changes: [
+          Changelog.app(App.TIME_OF_USE) + "Kritischen Fehler behoben. Dieser führte dazu, dass verzögerte Entladung und aktive Beladung aus dem Netz seit 2025.1.2 nicht funktionierten",
+          { roleIsAtLeast: Role.INSTALLER, change: "App Center: Verbesserungen bei der Installation der Schwellwertsteuerung" },
+          Changelog.library(Library.APACHE_FELIX_HTTP_JETTY),
+        ],
+      },
+      {
         version: "2025.1.2",
         changes: [
           Changelog.UI + "Verbesserungen an FEMS App Heizstab und FEMS App Modbus/TCP Api, Darstellungen in Historie, Multiladepunktmanagement",
