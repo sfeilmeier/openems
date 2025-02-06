@@ -834,7 +834,8 @@
       "TITLE": "Feed-In management",
       "EXTERNAL_CONTROLLER_RECIEVER": "Ripple control reciever",
       "PLACE_HOLDER": "Select option",
-      "NO_LIMITATION": "No limitation"
+      "NO_LIMITATION": "No limitation",
+      "NA_PROTECTION": "Activate remote shutdown (central NS protection)"
     },
     "PROTOCOL_INSTALLER_AND_CUSTOMER": {
       "CITY": "City",

@@ -7,10 +7,9 @@ import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { Category } from "../shared/category";
-import { FeedInSetting, FeedInType, View, WebLinks } from "../shared/enums";
+import { FeedInType, View, WebLinks } from "../shared/enums";
 import { ComponentData, SerialNumberFormData, TableData } from "../shared/ibndatatypes";
 import { Meter } from "../shared/meter";
-import { FEED_IN_POWER_FACTOR_OPTIONS } from "../shared/options";
 import { System, SystemId, SystemType } from "../shared/system";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
 
@@ -256,49 +255,6 @@ export abstract class AbstractIbn {
     });
 
     return fields;
-  }
-
-  /**
-   * Returns the additional fields for feed in limitation view.
-   *
-   * @param fields The common fields already existing.
-   */
-  public addAdditionalFeedInLimitsFields(fields: FormlyFieldConfig[]) {
-    fields.push({
-      key: "feedInSetting",
-      type: "radio",
-      templateOptions: {
-        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
-        description: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FEED_IN_SETTING_DESCRIPTION"),
-        options: [
-          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.QU_ENABLED_CURVE"), value: FeedInSetting.QuEnableCurve },
-          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PU_ENABLED_CURVE"), value: FeedInSetting.PuEnableCurve },
-          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FIXED_POWER_FACTOR"), value: FeedInSetting.FixedPowerFactor },
-        ],
-        required: true,
-      },
-    });
-
-    fields.push({
-      key: "fixedPowerFactor",
-      type: "select",
-      templateOptions: {
-        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CONSTANT_VALUE"),
-        options: FEED_IN_POWER_FACTOR_OPTIONS(),
-        required: true,
-      },
-      hideExpression: model => model.feedInSetting !== FeedInSetting.FixedPowerFactor,
-    });
-
-    fields.push({
-      key: "isManualProperlyFollowedAndRead",
-      type: "checkbox",
-      templateOptions: {
-        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_CHECK"),
-        required: true,
-      },
-      hideExpression: model => model.feedInType != FeedInType.EXTERNAL_LIMITATION,
-    });
   }
 
   /**
