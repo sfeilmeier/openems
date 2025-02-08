@@ -240,6 +240,18 @@
                 }
               ]
             },
+            "feneconbeta-backend-prod": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/theme.ts",
+                  "with": "src/themes/fenecon/environments/theme.ts"
+                },
+                {
+                  "replace": "src/environments/dummy.ts",
+                  "with": "src/themes/fenecon/environments/backend-prod.ts"
+                }
+              ]
+            },
             "fenecon-edge-dev": {
               "fileReplacements": [
                 {
