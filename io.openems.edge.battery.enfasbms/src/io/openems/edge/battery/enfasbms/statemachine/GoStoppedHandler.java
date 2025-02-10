@@ -1,20 +1,18 @@
 package io.openems.edge.battery.enfasbms.statemachine;
 
-import java.time.Duration;
-import java.time.Instant;
-
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
+import io.openems.common.timedata.Timeout;
 import io.openems.edge.battery.enfasbms.enums.CommandStateRequest;
 import io.openems.edge.battery.enfasbms.statemachine.StateMachine.State;
 import io.openems.edge.common.statemachine.StateHandler;
 
 public class GoStoppedHandler extends StateHandler<State, Context> {
 
-	private Instant timeAtEntry = Instant.MIN;
+	private final Timeout timeout = Timeout.ofSeconds(Context.TIMEOUT);
 
 	@Override
-	protected void onEntry(Context context) throws OpenemsNamedException {
-		this.timeAtEntry = Instant.now(context.clock);
+	protected void onEntry(Context context) {
+		this.timeout.start(context.clock);
 	}
 
 	@Override
@@ -23,8 +21,8 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 		if (battery.hasFaults()) {
 			return State.ERROR;
 		}
-		var isTimeout = Duration.between(this.timeAtEntry, Instant.now(context.clock)).getSeconds() > Context.TIMEOUT;
-		if (isTimeout) {
+		// Is max allowed start time passed ?
+		if (this.timeout.elapsed(context.clock)) {
 			battery._setTimeoutStopBattery(true);
 			return State.ERROR;
 		}
@@ -38,4 +36,5 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 		}
 		return State.GO_STOPPED;
 	}
+
 }

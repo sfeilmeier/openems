@@ -10,6 +10,7 @@ import static io.openems.edge.common.type.TypeUtils.multiply;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -81,6 +82,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 
 	private final Logger log = LoggerFactory.getLogger(EnfasBmsImpl.class);
 
+	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
 	private final AtomicBoolean allowBatteryReset = new AtomicBoolean(true);
 	private final StateMachine stateMachine = new StateMachine(State.UNDEFINED);
 
@@ -90,7 +92,6 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 	private static final int MIN_ALLOWED_SOC = 0;
 	private static final int MAX_ALLOWED_SOC = 100;
 	private BatteryProtection batteryProtection = null;
-	private StartStop startStopTarget = StartStop.UNDEFINED;
 	public static final int MAX_16BIT_UNSIGNED_INT = 65535;
 
 	@Reference
@@ -171,13 +172,16 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 
 	@Override
 	public void setStartStop(StartStop value) {
-		this.startStopTarget = value;
+		if (this.startStopTarget.getAndSet(value) != value) {
+			// Set only if value changed
+			this.stateMachine.forceNextState(State.UNDEFINED);
+		}
 	}
 
 	@Override
 	public StartStop getStartStopTarget() {
 		return switch (this.config.startStop()) {
-		case AUTO -> this.startStopTarget;
+		case AUTO -> this.startStopTarget.get();
 		case START -> StartStop.START;
 		case STOP -> StartStop.STOP;
 		};
