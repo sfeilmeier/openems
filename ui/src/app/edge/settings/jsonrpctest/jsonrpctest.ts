@@ -4,6 +4,7 @@ import { FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { JsonrpcRequest } from "src/app/shared/jsonrpc/base";
 import { UpdateUserSettingsRequest } from "src/app/shared/jsonrpc/request/updateUserSettingsRequest";
+import { UserService } from "src/app/shared/service/user.service";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { environment } from "src/environments";
 
@@ -23,6 +24,7 @@ export class JsonrpcTestComponent implements OnInit {
     private route: ActivatedRoute,
     private service: Service,
     private websocket: Websocket,
+    private userService: UserService,
   ) {
 
   }
@@ -30,7 +32,7 @@ export class JsonrpcTestComponent implements OnInit {
   public ngOnInit(): void {
     this.service.getCurrentEdge().then(edge => {
 
-      const currentUserSettings = this.service.currentUser().settings;
+      const currentUserSettings = this.userService.currentUser().settings;
       if (!currentUserSettings["jsonrpcTest"]) {
         currentUserSettings["jsonrpcTest"] = true;
         this.websocket.sendRequest(
