@@ -5,7 +5,7 @@ import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
-import { IbnUtils } from "../../shared/ibnutils";
+import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentConfigurator, ConfigurationObject, ConfigurationState, FunctionState } from "./component-configurator";
 
 @Component({

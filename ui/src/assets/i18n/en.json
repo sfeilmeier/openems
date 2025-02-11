@@ -1011,6 +1011,11 @@
         "COMMERCIAL_92": "Before you continue, make sure that you use the following device(s) to ensure that the next steps - especially for configuring the KACO inverter - run smoothly:\n\na laptop with “LAN-WLAN parallel” function\nor\ntwo mobile devices, each with a WLAN and a LAN function"
       }
     },
+    "PROTOCOL_AVU_BOX": {
+      "TITLE": "Does the installation package include an AVU box (automatic consumer switch)?",
+      "SERIAL_NUMBER": "Serial number",
+      "LABEL": "AVU"
+    },
     "CONFIGURATION_GRID_SETTING": {
       "TITLE": "Grid setting"
     }

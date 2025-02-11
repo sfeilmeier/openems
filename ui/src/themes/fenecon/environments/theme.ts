@@ -81,6 +81,8 @@ export const theme = {
                 HOME: "https://fenecon.de/wp-content/uploads/2022/06/20220523_Anleitung-Rundsteuerempfaenger.pdf",
                 HOME_GEN_2: "https://docs.fenecon.de/de/home/home_6-10-15/betrieb_und_serviceanleitung/Betriebsanleitung_Home_6-10-15.html#_rundsteuerempf%C3%A4nger",
             },
+
+            AVU: "https://docs.fenecon.de/de/avu/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_AVU.html",
         },
         APP_CENTER: {
             APP_IMAGE: (language: string, appId: string): string | null => {

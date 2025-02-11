@@ -8,8 +8,8 @@ import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared"
 
 import { Category } from "../../shared/category";
 import { FeedInType, ModbusBridgeType, WebLinks } from "../../shared/enums";
+import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData } from "../../shared/ibndatatypes";
-import { IbnUtils } from "../../shared/ibnutils";
 import { Meter } from "../../shared/meter";
 import { SubSystemType, SystemType } from "../../shared/system";
 import { ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../views/configuration-execute/component-configurator";

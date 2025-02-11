@@ -7,7 +7,7 @@ import { Edge, Logger, Service, Websocket } from "src/app/shared/shared";
 import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { GeneralIbn } from "./installation-systems/general-ibn";
 import { View } from "./shared/enums";
-import { IbnUtils } from "./shared/ibnutils";
+import { IbnUtils } from "./shared/ibn.utils";
 import { System, SystemId } from "./shared/system";
 
 @Component({

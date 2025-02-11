@@ -41,6 +41,10 @@
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </protocol-customer>
 
+                <protocol-avu-box *ngSwitchCase="view.ProtocolAvuBox" [ibn]="ibn"
+                    (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
+                </protocol-avu-box>
+
                 <protocol-system *ngSwitchCase="view.ProtocolSystem" [ibn]="ibn"
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </protocol-system>

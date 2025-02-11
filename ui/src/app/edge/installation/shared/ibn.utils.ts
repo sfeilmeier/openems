@@ -151,4 +151,25 @@ export class IbnUtils {
 
         return rows;
     }
+
+    /**
+     * Removes the specified prefix from the beginning of the given serial number.
+     * If the prefix is not present at the start, the original serial number is returned unchanged.
+     *
+     * @param serialNumber The serial number from which the prefix should be removed.
+     * @param prefix The prefix to be removed.
+     * @returns The serial number without the prefix if it starts with it, otherwise the original serial number.
+     *
+     * @example
+     * ```typescript
+     * const result1 = ProtocolAvuBoxComponent.removePrefix("FHA12345", "FHA");
+     * Output: "12345"
+     *
+     * const result2 = ProtocolAvuBoxComponent.removePrefix("XYZ789", "FHA");
+     * Output: "XYZ789"
+     * ```
+     */
+    public static removePrefix(serialNumber: string, prefix: string): string {
+        return serialNumber.startsWith(prefix) ? serialNumber.slice(prefix.length) : serialNumber;
+    }
 }

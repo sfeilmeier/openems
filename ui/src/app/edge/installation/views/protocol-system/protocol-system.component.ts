@@ -117,9 +117,7 @@ export class ProtocolSystemComponent implements OnInit {
       templateOptions: {
         label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP"),
         required: true,
-      },
-      validators: {
-        validation: ["onlyPositiveInteger"],
+        pattern: AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX,
       },
       hideExpression: model => model.isEqualToCustomerData,
     });

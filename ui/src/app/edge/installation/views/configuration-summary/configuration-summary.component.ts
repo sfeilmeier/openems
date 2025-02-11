@@ -9,8 +9,8 @@ import { COUNTRY_OPTIONS } from "../../../../shared/type/country";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { Category } from "../../shared/category";
 import { WebLinks } from "../../shared/enums";
+import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, TableData } from "../../shared/ibndatatypes";
-import { IbnUtils } from "../../shared/ibnutils";
 
 @Component({
   selector: ConfigurationSummaryComponent.SELECTOR,

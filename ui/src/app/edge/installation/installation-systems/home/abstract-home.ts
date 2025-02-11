@@ -12,8 +12,8 @@ import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../shared/appcenterutil";
 import { Category } from "../../shared/category";
 import { FeedInSetting, FeedInType, View, WebLinks } from "../../shared/enums";
+import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, DcPv, SerialNumberFormData } from "../../shared/ibndatatypes";
-import { IbnUtils } from "../../shared/ibnutils";
 import { Meter } from "../../shared/meter";
 import { FEED_IN_POWER_FACTOR_OPTIONS } from "../../shared/options";
 import { SystemId, SystemType } from "../../shared/system";
@@ -105,6 +105,12 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public energyFlowMeter: {
     meter: Meter.GridMeterCategory;
     value?: number;
+  };
+
+  // protocol avu box
+  public avu: {
+    isIncluded: boolean;
+    serialNumber?: string;
   };
 
   public readonly imageUrl: string = "assets/img/Home-Typenschild-web.jpg";
@@ -769,6 +775,14 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
     }
 
+    if (this.avu.isIncluded) {
+      protocol.items.push({
+        category: Category.AVU,
+        name: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
+        value: this.avu.serialNumber,
+      });
+    }
+
     // Welcherischter, BMS and EMS box.
     const initialStaticTowerComponents: number = 3;
 
@@ -1164,6 +1178,9 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     if ("energyFlowMeter" in ibnString) {
       this.energyFlowMeter = ibnString.energyFlowMeter;
     }
+
+    // protocol avu box
+    this.avu = ibnString.avu;
 
     // limitController14a
     this.activateLimitController14a = ibnString.activateLimitController14a;

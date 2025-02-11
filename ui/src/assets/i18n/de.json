@@ -1009,6 +1009,11 @@
         "COMMERCIAL_92": "Bevor Sie weiter fortfahren, stellen Sie sicher, dass Sie für die reibungslose Durchführung der kommenden Schritte - insbesondere zur Konfiguration des KACO-Wechselrichters - folgende/-s Endgerät verwenden:\n\neinen Laptop mit “LAN-WLAN-parallel” Funktion \noder\nzwei mobile Endgeräte, mit jeweils einer WLAN und einer LAN-Funktion"
       }
     },
+    "PROTOCOL_AVU_BOX": {
+      "TITLE": "Beinhaltet der Installationsumfang eine AVU-Box (Automatische Verbraucher-Umschaltung)?",
+      "SERIAL_NUMBER": "Seriennummer",
+      "LABEL": "AVU"
+    },
     "CONFIGURATION_GRID_SETTING": {
       "TITLE": "Netzform"
     }
