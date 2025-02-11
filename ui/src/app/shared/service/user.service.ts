@@ -3,6 +3,7 @@ import { Directive, effect, signal, WritableSignal } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { Theme, Theme as UserTheme } from "src/app/edge/history/shared";
 import { ThemePopoverComponent } from "src/app/user/theme-selection-popup/theme-selection-popover";
+import { environment } from "src/environments";
 import { JsonrpcResponseSuccess } from "../jsonrpc/base";
 import { UpdateUserSettingsRequest } from "../jsonrpc/request/updateUserSettingsRequest";
 import { User } from "../jsonrpc/shared";
@@ -53,6 +54,11 @@ export class UserService {
      * @returns
      */
     private showThemeSelection(): void {
+
+        if (environment.theme !== "FENECON") {
+            return;
+        }
+
         const user = this.currentUser();
         const isThemeSet = user?.settings ? "theme" in user.settings : false;
 
