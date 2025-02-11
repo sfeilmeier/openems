@@ -19,20 +19,38 @@ import static io.openems.edge.battery.enfasbms.EnfasBms.ChannelId.STRING_MODULE_
 import static io.openems.edge.battery.enfasbms.enums.FirmwareVersion.WUERTH_VERSION_1_0_20;
 import static io.openems.edge.common.startstop.StartStopConfig.START;
 import static java.time.temporal.ChronoUnit.MILLIS;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.function.Supplier;
 
 import org.junit.Test;
 
 import io.openems.common.test.TimeLeapClock;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
+import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
 import io.openems.edge.common.test.DummyConfigurationAdmin;
 
 public class EnfasBmsImplTest {
+
+	@Test
+	public void outdatedSoftwareTest() {
+		Supplier<Value<Integer>> zero = () -> new Value<Integer>(null, 0);
+		Supplier<Value<Integer>> one = () -> new Value<Integer>(null, 1);
+		Supplier<Value<Integer>> seventeen = () -> new Value<Integer>(null, 17);
+		Supplier<Value<Integer>> twentythree = () -> new Value<Integer>(null, 23);
+		Supplier<Value<Integer>> nul = () -> new Value<Integer>(null, null);
+		assertTrue(EnfasBmsImpl.isSoftwareOutdated(one, zero, seventeen));
+		Supplier<Value<Integer>> two = () -> new Value<Integer>(null, 2);
+		assertFalse(EnfasBmsImpl.isSoftwareOutdated(nul, zero, twentythree));
+		assertFalse(EnfasBmsImpl.isSoftwareOutdated(one, zero, twentythree));
+		assertFalse(EnfasBmsImpl.isSoftwareOutdated(two, zero, seventeen));
+	}
 
 	@Test
 	public void batteryValuesTest() throws Exception {
