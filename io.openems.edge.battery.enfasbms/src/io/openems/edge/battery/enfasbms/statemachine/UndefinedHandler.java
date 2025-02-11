@@ -14,15 +14,16 @@ public class UndefinedHandler extends StateHandler<State, Context> {
 				|| systemGlobalState == GlobalState.BMS_INITIALIZATION) {
 			return State.UNDEFINED;
 		}
-		if (battery.hasFaults()) {
-			return State.ERROR;
+		return switch (battery.getStartStopTarget()) {
+		case UNDEFINED -> State.UNDEFINED;
+		case START -> {
+			if (battery.hasFaults()) {
+				yield State.ERROR;
+			}
+			yield State.GO_RUNNING;
 		}
-		if (battery.isStarted()) {
-			return State.RUNNING;
-		}
-		if (battery.isStopped()) {
-			return State.STOPPED;
-		}
-		return State.GO_STOPPED;
+		case STOP -> State.GO_STOPPED;
+		};
 	}
+	
 }

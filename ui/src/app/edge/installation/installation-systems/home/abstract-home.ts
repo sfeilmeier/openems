@@ -12,9 +12,10 @@ import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../shared/appcenterutil";
 import { Category } from "../../shared/category";
 import { FeedInSetting, FeedInType, View, WebLinks } from "../../shared/enums";
+import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, DcPv, SerialNumberFormData } from "../../shared/ibndatatypes";
-import { IbnUtils } from "../../shared/ibnutils";
 import { Meter } from "../../shared/meter";
+import { FEED_IN_POWER_FACTOR_OPTIONS } from "../../shared/options";
 import { SystemId, SystemType } from "../../shared/system";
 import { BaseMode, ComponentConfigurator, ConfigurationMode } from "../../views/configuration-execute/component-configurator";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
@@ -35,6 +36,7 @@ export type HomeCommonApp = {
   EMERGENCY_RESERVE_SOC?: number,
   SHADOW_MANAGEMENT_DISABLED?: boolean,
   HAS_ESS_LIMITER_14A: boolean,
+  NA_PROTECTION_ENABLED: boolean,
 };
 
 export abstract class AbstractHomeIbn extends AbstractIbn {
@@ -63,12 +65,14 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public override feedInLimitation?: {
     feedInType: FeedInType,
     maximumFeedInPower?: number;
+    naProtection: boolean;
     feedInSetting?: FeedInSetting;
     fixedPowerFactor?: FeedInSetting;
     isManualProperlyFollowedAndRead?: boolean;
   } = {
       feedInType: FeedInType.NO_LIMITATION,
       maximumFeedInPower: 0,
+      naProtection: false,
       feedInSetting: FeedInSetting.QuEnableCurve,
       fixedPowerFactor: FeedInSetting.Undefined,
       isManualProperlyFollowedAndRead: false,
@@ -101,6 +105,12 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public energyFlowMeter: {
     meter: Meter.GridMeterCategory;
     value?: number;
+  };
+
+  // protocol avu box
+  public avu: {
+    isIncluded: boolean;
+    serialNumber?: string;
   };
 
   public readonly imageUrl: string = "assets/img/Home-Typenschild-web.jpg";
@@ -415,7 +425,49 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     ];
     const fields: FormlyFieldConfig[] = super.getCommonFeedInLimitsFields(totalPvPower, options);
 
-    super.addAdditionalFeedInLimitsFields(fields);
+    fields.push({
+      key: "naProtection",
+      type: "checkbox",
+      templateOptions: {
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NA_PROTECTION"),
+      },
+    });
+
+    fields.push({
+      key: "feedInSetting",
+      type: "radio",
+      templateOptions: {
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
+        description: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FEED_IN_SETTING_DESCRIPTION"),
+        options: [
+          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.QU_ENABLED_CURVE"), value: FeedInSetting.QuEnableCurve },
+          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PU_ENABLED_CURVE"), value: FeedInSetting.PuEnableCurve },
+          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FIXED_POWER_FACTOR"), value: FeedInSetting.FixedPowerFactor },
+        ],
+        required: true,
+      },
+    });
+
+    fields.push({
+      key: "fixedPowerFactor",
+      type: "select",
+      templateOptions: {
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CONSTANT_VALUE"),
+        options: FEED_IN_POWER_FACTOR_OPTIONS(),
+        required: true,
+      },
+      hideExpression: model => model.feedInSetting !== FeedInSetting.FixedPowerFactor,
+    });
+
+    fields.push({
+      key: "isManualProperlyFollowedAndRead",
+      type: "checkbox",
+      templateOptions: {
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_CHECK"),
+        required: true,
+      },
+      hideExpression: model => model.feedInType != FeedInType.EXTERNAL_LIMITATION,
+    });
 
     return fields;
   }
@@ -500,6 +552,11 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         value: this.feedInLimitation.fixedPowerFactor,
       });
     }
+
+    batteryInverterData.push({
+      label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NA_PROTECTION"),
+      value: this.feedInLimitation.naProtection,
+    });
 
     const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
     batteryInverterData.push({ label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.COUNTRY_SETTING"), value: IbnUtils.getCountryLabel(safetyCountry, this.translate) });
@@ -709,6 +766,21 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
           value: feedInLimitation.fixedPowerFactor,
         });
       }
+
+      protocol.items.push({
+        category: Category.FEED_IN_MANAGEMENT,
+        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NA_PROTECTION"),
+        value: feedInLimitation.naProtection ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+      });
+
+    }
+
+    if (this.avu.isIncluded) {
+      protocol.items.push({
+        category: Category.AVU,
+        name: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
+        value: this.avu.serialNumber,
+      });
     }
 
     // Welcherischter, BMS and EMS box.
@@ -1107,6 +1179,9 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       this.energyFlowMeter = ibnString.energyFlowMeter;
     }
 
+    // protocol avu box
+    this.avu = ibnString.avu;
+
     // limitController14a
     this.activateLimitController14a = ibnString.activateLimitController14a;
   }
@@ -1180,6 +1255,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       ...(this.emergencyReserve.isReserveSocEnabled && { EMERGENCY_RESERVE_SOC: this.emergencyReserve.value }),
       ...(this.batteryInverter?.shadowManagementDisabled && { SHADOW_MANAGEMENT_DISABLED: true }),
       HAS_ESS_LIMITER_14A: this.activateLimitController14a,
+      NA_PROTECTION_ENABLED: this.feedInLimitation.naProtection,
     };
 
     return commonHomeAppProperties;

@@ -12,9 +12,7 @@ public class StoppedHandler extends StateHandler<State, Context> {
 		if (battery.hasFaults()) {
 			return State.ERROR;
 		}
-		if (battery.getStartStopTarget() == StartStop.START) {
-			return State.GO_RUNNING;
-		}
+
 		battery._setStartStop(StartStop.STOP);
 		return State.STOPPED;
 	}

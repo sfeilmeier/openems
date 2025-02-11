@@ -22,6 +22,8 @@ export enum WidgetNature {
 }
 
 export enum WidgetFactory {
+    "Evse.Controller.Single",
+    "Evse.Controller.Cluster",
     "Controller.Api.ModbusTcp.ReadWrite",
     "Controller.Asymmetric.PeakShaving",
     "Controller.ChannelThreshold",
@@ -76,14 +78,10 @@ export class AdvertWidgets {
 
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
-        let list: AdvertWidget[] = [];
-        if (
-            EdgePermission.isEnergyJourneyAllowed(edge)) {
-            list.push({
-                name: "time-of-use-tariff",
-                title: { languageKey: "ADVERT.1.TITLE" },
-            });
-        }
+        let list: AdvertWidget[] = [{
+            name: "eeg-2025",
+            title: { languageKey: "ADVERT.1.TITLE" },
+        }];
 
         list = Utils.shuffleArray(list);
         return new AdvertWidgets(list);

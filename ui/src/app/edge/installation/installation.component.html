@@ -41,6 +41,10 @@
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </protocol-customer>
 
+                <protocol-avu-box *ngSwitchCase="view.ProtocolAvuBox" [ibn]="ibn"
+                    (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
+                </protocol-avu-box>
+
                 <protocol-system *ngSwitchCase="view.ProtocolSystem" [ibn]="ibn"
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </protocol-system>
@@ -76,6 +80,10 @@
                 <protocol-feed-in-limitation *ngSwitchCase="view.ProtocolFeedInLimitation" [ibn]="ibn"
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </protocol-feed-in-limitation>
+
+                <configuration-grid-setting *ngSwitchCase="view.ConfigurationGridSetting" [ibn]="ibn"
+                    (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
+                </configuration-grid-setting>
 
                 <!-- Configuration and Protocol -->
 

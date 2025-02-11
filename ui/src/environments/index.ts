@@ -85,6 +85,8 @@ export interface Environment {
                 readonly HOME: string,
                 readonly HOME_GEN_2: string,
             },
+
+            readonly AVU: string,
         },
 
         APP_CENTER: {

@@ -8,7 +8,7 @@ import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Category } from "../../../shared/category";
 import { Coupler } from "../../../shared/coupler";
 import { FeedInType, ModbusBridgeType, View } from "../../../shared/enums";
-import { IbnUtils } from "../../../shared/ibnutils";
+import { IbnUtils } from "../../../shared/ibn.utils";
 import { SystemId } from "../../../shared/system";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
 import { SchedulerIdBehaviour } from "../../abstract-ibn";

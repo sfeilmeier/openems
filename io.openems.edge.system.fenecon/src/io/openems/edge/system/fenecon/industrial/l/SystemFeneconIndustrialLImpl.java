@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.function.ThrowingConsumer;
+import io.openems.common.jsonrpc.serialization.EmptyObject;
 import io.openems.common.session.Role;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.battery.api.Battery;
@@ -451,7 +452,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 			endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.INSTALLER));
 		}, call -> {
 			this.acknowledgeEmergencyStop();
-			return new EmergencyStopAcknowledge.Response();
+			return EmptyObject.INSTANCE;
 		});
 	}
 

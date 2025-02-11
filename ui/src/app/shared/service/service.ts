@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { registerLocaleData } from "@angular/common";
-import { Injectable, WritableSignal, signal } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastController } from "@ionic/angular";
 import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
@@ -79,8 +79,6 @@ export class Service extends AbstractService {
     user: User, edges: { [edgeId: string]: Edge }
   }> = new BehaviorSubject(null);
 
-  public currentUser: WritableSignal<User | null> = signal(null);
-
   /**
    * Holds the current Activated Route
    */
@@ -93,7 +91,7 @@ export class Service extends AbstractService {
 
   constructor(
     private router: Router,
-    private spinner: NgxSpinnerService,
+    public spinner: NgxSpinnerService,
     private toaster: ToastController,
     public translate: TranslateService,
   ) {
@@ -202,7 +200,6 @@ export class Service extends AbstractService {
   public onLogout() {
     this.currentEdge.next(null);
     this.metadata.next(null);
-    this.currentUser.set(null);
     this.websocket.state.set(States.NOT_AUTHENTICATED);
     this.router.navigate(["/login"]);
   }

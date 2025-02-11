@@ -78,6 +78,8 @@ export const theme = {
                 HOME: "#",
                 HOME_GEN_2: "#",
             },
+
+            AVU: "#",
         },
         APP_CENTER: {
             APP_IMAGE: (language: string, appId: string): string | null => {

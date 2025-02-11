@@ -17,9 +17,11 @@ import { FormlyCheckBoxHyperlinkWrapperComponent } from "./components/formly/for
 import { FormlyWrapperDefaultValueWithCasesComponent } from "./components/formly/form-field-default-cases.wrapper";
 import { FormlyFieldMultiStepComponent } from "./components/formly/form-field-multi-step/form-field-multi-step";
 import { FormlyWrapperFormFieldComponent } from "./components/formly/form-field.wrapper";
+import { CheckboxButtonTypeComponent } from "./components/formly/formly-checkbox-with-button/formly-checkbox-with-button";
 import { FormlyFieldCheckboxWithImageComponent } from "./components/formly/formly-field-checkbox-image/formly-field-checkbox-with-image";
 import { FormlyFieldModalComponent } from "./components/formly/formly-field-modal/formlyfieldmodal";
 import { FormlyFieldRadioWithImageComponent } from "./components/formly/formly-field-radio-with-image/formly-field-radio-with-image";
+import { FormlyRadioTypeComponent } from "./components/formly/formly-radio/formly-radio";
 import { FormlySelectComponent } from "./components/formly/formly-select/formly-select";
 import { FormlySelectFieldModalComponent } from "./components/formly/formly-select-field-modal.component";
 import { FormlySelectFieldExtendedWrapperComponent } from "./components/formly/formly-select-field.extended";
@@ -82,6 +84,8 @@ export function SubnetmaskValidatorMessage(err, field: FormlyFieldConfig) {
         { name: "repeat", component: RepeatTypeComponent },
         { name: "multi-step", component: FormlyFieldMultiStepComponent },
         { name: "select", component: FormlySelectComponent },
+        { name: "checkbox-button", component: CheckboxButtonTypeComponent },
+        { name: "radio", component: FormlyRadioTypeComponent },
       ],
       validators: [
         { name: "ip", validation: IpValidator },
@@ -125,6 +129,8 @@ export function SubnetmaskValidatorMessage(err, field: FormlyFieldConfig) {
     PercentageBarComponent,
     RepeatTypeComponent,
     FormlySelectComponent,
+    CheckboxButtonTypeComponent,
+    FormlyRadioTypeComponent,
   ],
   exports: [
     AppHeaderComponent,

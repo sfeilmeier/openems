@@ -12,9 +12,7 @@ public class RunningHandler extends StateHandler<State, Context> {
 		if (battery.hasFaults()) {
 			return State.ERROR;
 		}
-		if (battery.getStartStopTarget() == StartStop.STOP) {
-			return State.GO_STOPPED;
-		}
+
 		battery._setStartStop(StartStop.START);
 		return State.RUNNING;
 	}

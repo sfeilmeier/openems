@@ -36,6 +36,7 @@ export class Home6Gen2FeneconIbn extends AbstractHomeIbn {
             View.PreInstallationUpdate,
             View.ConfigurationSystem,
             View.ConfigurationSystemVariant,
+            View.ProtocolAvuBox,
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,

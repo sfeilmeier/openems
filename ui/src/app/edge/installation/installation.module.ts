@@ -13,6 +13,7 @@ import { ConfigurationEmergencyReserveComponent } from "./views/configuration-em
 import { ConfigurationEnergyFlowMeterComponent } from "./views/configuration-energy-flow-direction-meter/configuration-energy-flow-direction-meter.component";
 import { ConfigurationEssLimiter14aComponent } from "./views/configuration-ess-limiter-14a/configuration-ess-limiter-14a";
 import { ConfigurationExecuteComponent } from "./views/configuration-execute/configuration-execute.component";
+import { ConfigurationGridSettingComponent } from "./views/configuration-grid-setting/configuration-grid-setting";
 import { ConfigurationLineSideMeterFuseComponent } from "./views/configuration-line-side-meter-fuse/configuration-line-side-meter-fuse.component";
 import { ConfigurationMpptSelectionComponent } from "./views/configuration-mppt-selection/configuration-mppt-selection.component";
 import { ConfigurationSubSystemComponent } from "./views/configuration-sub-system/configuration-sub-system";
@@ -21,6 +22,7 @@ import { ConfigurationSystemComponent } from "./views/configuration-system/confi
 import { ConfigurationSystemVariantComponent } from "./views/configuration-system-variant/configuration-system-variant";
 import { PreInstallationComponent } from "./views/pre-installation/pre-installation.component";
 import { PreInstallationUpdateComponent } from "./views/pre-installation-update/pre-installation-update.component";
+import { ProtocolAvuBoxComponent } from "./views/protocol-avu-box/protocol-avu-box";
 import { ProtocolChecklistComponent } from "./views/protocol-checklist/protocol-checklist.component";
 import { ProtocolCustomerComponent } from "./views/protocol-customer/protocol-customer.component";
 import { ProtocolFeedInLimitationComponent } from "./views/protocol-feed-in-limitation/protocol-feed-in-limitation.component";
@@ -146,6 +148,8 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     ConfigurationEnergyFlowMeterComponent,
     ConfigurationEssLimiter14aComponent,
     ProtocolChecklistComponent,
+    ProtocolAvuBoxComponent,
+    ConfigurationGridSettingComponent,
   ],
 })
 export class InstallationModule { }

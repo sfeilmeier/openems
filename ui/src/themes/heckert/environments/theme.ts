@@ -81,6 +81,8 @@ export const theme = {
                 HOME: "https://fenecon.de/wp-content/uploads/2022/06/20220523_Anleitung-Rundsteuerempfaenger.pdf",
                 HOME_GEN_2: "#",
             },
+
+            AVU: "#",
         },
         APP_CENTER: {
             APP_IMAGE: (language: string, appId: string): string | null => {

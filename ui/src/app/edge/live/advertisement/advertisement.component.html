@@ -1,5 +1,6 @@
 <ion-card>
-    <ion-item lines="full" color="light" style="--background: var(--ion-background-color-card-header)" class="ion-text-center">
+    <ion-item lines="full" color="light" style="--background: var(--ion-background-color-card-header)"
+        class="ion-text-center">
         <ion-icon name="oe-megafon" size="normal"></ion-icon>
         <ion-label class="white-space-initial" style="text-align: center" *ngIf="title">
             {{title.rawTitle ?? (title.languageKey | translate)}}
@@ -16,8 +17,8 @@
     <ion-card-content style="color: var(--ion-card-content);" class="ion-no-padding">
         <swiper-container autoplay="true" speed="5000" #swiper (swiperslidechange)="setSlideConfig()">
             <ng-container *ngFor="let widget of advertWidgets.list" [ngSwitch]="widget.name">
-                <swiper-slide *ngSwitchCase="'time-of-use-tariff'">
-                    <time-of-use-tariff-advert></time-of-use-tariff-advert>
+                <swiper-slide *ngSwitchCase="'eeg-2025'">
+                    <advert-1></advert-1>
                 </swiper-slide>
             </ng-container>
         </swiper-container>

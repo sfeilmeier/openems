@@ -10,7 +10,9 @@ import static io.openems.edge.common.type.TypeUtils.multiply;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -35,6 +37,7 @@ import io.openems.common.channel.AccessMode;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.types.OpenemsType;
+import io.openems.common.types.SemanticVersion;
 import io.openems.common.utils.FunctionUtils;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.enfasbms.statemachine.Context;
@@ -79,8 +82,11 @@ import io.openems.edge.common.taskmanager.Priority;
 public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 		implements EnfasBms, ModbusComponent, OpenemsComponent, Battery, EventHandler, ModbusSlave, StartStoppable {
 
+	private static final SemanticVersion OUTDATED_VERSION = new SemanticVersion(1, 0, 23);
+
 	private final Logger log = LoggerFactory.getLogger(EnfasBmsImpl.class);
 
+	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
 	private final AtomicBoolean allowBatteryReset = new AtomicBoolean(true);
 	private final StateMachine stateMachine = new StateMachine(State.UNDEFINED);
 
@@ -90,8 +96,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 	private static final int MIN_ALLOWED_SOC = 0;
 	private static final int MAX_ALLOWED_SOC = 100;
 	private BatteryProtection batteryProtection = null;
-	private StartStop startStopTarget = StartStop.UNDEFINED;
-	public static final int MAX_16BIT_UNSIGNED_INT = 65535;
+	private static final int MAX_16BIT_UNSIGNED_INT = 65535;
 
 	@Reference
 	private ConfigurationAdmin cm;
@@ -171,13 +176,16 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 
 	@Override
 	public void setStartStop(StartStop value) {
-		this.startStopTarget = value;
+		if (this.startStopTarget.getAndSet(value) != value) {
+			// Set only if value changed
+			this.stateMachine.forceNextState(State.UNDEFINED);
+		}
 	}
 
 	@Override
 	public StartStop getStartStopTarget() {
 		return switch (this.config.startStop()) {
-		case AUTO -> this.startStopTarget;
+		case AUTO -> this.startStopTarget.get();
 		case START -> StartStop.START;
 		case STOP -> StartStop.STOP;
 		};
@@ -384,7 +392,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 								new UnsignedWordElement(109)), //
 						m(EnfasBms.ChannelId.SOFTWARE_VERSION_MINOR, //
 								new UnsignedWordElement(110)), //
-						m(EnfasBms.ChannelId.SOFTWARE_VERSION_PATH, //
+						m(EnfasBms.ChannelId.SOFTWARE_VERSION_PATCH, //
 								new UnsignedWordElement(111)), //
 						m(EnfasBms.ChannelId.CSC_INIT_BROKEN_AT, //
 								new UnsignedWordElement(112)), //
@@ -638,7 +646,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 								new UnsignedWordElement(baseReadingRegisterAddress + 108)), //
 						m(EnfasBms.ChannelId.SOFTWARE_VERSION_MINOR, //
 								new UnsignedWordElement(baseReadingRegisterAddress + 109)), //
-						m(EnfasBms.ChannelId.SOFTWARE_VERSION_PATH, //
+						m(EnfasBms.ChannelId.SOFTWARE_VERSION_PATCH, //
 								new UnsignedWordElement(baseReadingRegisterAddress + 110)), //
 						m(EnfasBms.ChannelId.CSC_INIT_BROKEN_AT, //
 								new UnsignedWordElement(baseReadingRegisterAddress + 111)),
@@ -944,5 +952,39 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 			result = 100;
 		}
 		this._setSoc(result);
+	}
+
+	/**
+	 * Helper Method that handles a Softwareversion check. Sets
+	 * {@link EnfasBms.ChannelId.SOFTWARE_VERSION_OUTDATED}
+	 * 
+	 */
+	public void updateSoftwareVersionOutdated() {
+		this._setSoftwareVersionOutdated(isSoftwareOutdated(//
+				this::getSoftwareVersionMajor, //
+				this::getSoftwareVersionMinor, //
+				this::getSoftwareVersionPatch));
+	}
+
+	/**
+	 * Checks if the Software Version provided by Suppliers is Outdated.
+	 * 
+	 * @param valMajor {@link Supplier} for major Software Version
+	 * @param valMinor {@link Supplier} for minor Software Version
+	 * @param valPatch {@link Supplier} for patch Software Version
+	 * @return is software outdated
+	 */
+	public static boolean isSoftwareOutdated(Supplier<Value<Integer>> valMajor, Supplier<Value<Integer>> valMinor,
+			Supplier<Value<Integer>> valPatch) {
+		final var result = new AtomicBoolean(false);
+		valMajor.get().ifPresent(major -> {
+			valMinor.get().ifPresent(minor -> {
+				valPatch.get().ifPresent(patch -> {
+					var version = new SemanticVersion(major, minor, patch);
+					result.set(!version.isAtLeast(OUTDATED_VERSION));
+				});
+			});
+		});
+		return result.get();
 	}
 }

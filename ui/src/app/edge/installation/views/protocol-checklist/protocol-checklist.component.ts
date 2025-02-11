@@ -6,7 +6,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
-import { BatteryTarget, Commercial92Ibn } from "../../installation-systems/commercial/commercial-92/commercial92";
+import { BatteryTarget, Commercial92Ibn, GridSetting } from "../../installation-systems/commercial/commercial-92/commercial92";
 import { ComponentConfigurator, ConfigurationState, FunctionState } from "../configuration-execute/component-configurator";
 
 @Component({
@@ -162,6 +162,7 @@ export class ProtocolChecklistComponent implements OnInit {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.CHANGE_NETWORK_SETTINGS"),
                 description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.NETWORK_SETTINGS_NOTE"),
+                hideButtons: true,
                 attributes: {
                     infoLine: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.NETWORK_SETTINGS_INFO"),
                 },
@@ -215,6 +216,17 @@ export class ProtocolChecklistComponent implements OnInit {
             wrappers: ["formly-field-checkbox-with-image"],
         });
 
+        // Default VDE-AR-N 4105
+        let gridSetting: GridSetting = GridSetting.VDE_AR_N_4105;
+        let voltageLimit: string = "600.0";
+        let url: string[] = ["assets/img/commercial-checklist/step2.1.png", "assets/img/commercial-checklist/step2.2.png"];
+
+        if (this.ibn.gridSetting && this.ibn.gridSetting === GridSetting.VDE_AR_N_4110) { // Undefined for other countries
+            gridSetting = GridSetting.VDE_AR_N_4110;
+            voltageLimit = "650.0";
+            url = ["assets/img/commercial-checklist/step2_4110.png"];
+        }
+
         fields.push({
             key: "multiStepField",
             type: "multi-step",
@@ -227,7 +239,8 @@ export class ProtocolChecklistComponent implements OnInit {
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 2, totalStep: 8, description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_2") }),
-                        url: ["assets/img/commercial-checklist/step2.1.png", "assets/img/commercial-checklist/step2.2.png"],
+                        url: url,
+                        description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_2_DESCRIPTION", { gridSetting: gridSetting, voltageLimit: voltageLimit }),
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 3, totalStep: 8, description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_3") }),
@@ -268,7 +281,7 @@ export class ProtocolChecklistComponent implements OnInit {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.MIN_VOLTAGE"),
                 url: "assets/img/commercial-checklist/min_voltage.png",
-                description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.MIN_VOLTAGE_DESCRIPTION"),
+                description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.MIN_VOLTAGE_DESCRIPTION", { voltageLimit: voltageLimit, gridSetting: gridSetting }),
             },
             wrappers: ["formly-field-checkbox-with-image"],
         });

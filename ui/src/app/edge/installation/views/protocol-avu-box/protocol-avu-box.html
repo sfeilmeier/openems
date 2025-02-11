@@ -1,0 +1,21 @@
+<installation-view iconName="clipboard-outline" header="{{ 'INSTALLATION.PROTOCOL_AVU_BOX.TITLE' | translate }}"
+    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isNextDisabled]="isNextDisabled">
+
+    <ion-grid>
+        <ion-row>
+            <!-- Left Column: Form -->
+            <ion-col size="12" size-md="6" style="padding-left: 10%; padding-top: 7%;">
+                <form [formGroup]="form">
+                    <formly-form [form]="form" [model]="model" [fields]="fields"></formly-form>
+                </form>
+            </ion-col>
+            <!-- Right Column: Image -->
+            <ion-col size="12" size-md="6" class="image-column">
+                <ion-item lines="none" class="ion-no-padding">
+                    <ion-img src="assets/img/ibn/home-avu-box.jpg" alt="AVU Box" class="responsive-image"></ion-img>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</installation-view>

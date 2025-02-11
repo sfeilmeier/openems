@@ -19,6 +19,7 @@ export enum Category {
     EMS_BOX_LABEL_HOME,
     EMS_BOX_LABEL_HECKERT,
     GRID,
+    AVU,
 }
 
 export namespace Category {
@@ -58,6 +59,8 @@ export namespace Category {
                 return translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EMS_BOX_HECKERT");
             case Category.GRID:
                 return translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.ENERGY_FLOW_METER.LABEL");
+            case Category.AVU:
+                return translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.LABEL");
         }
     }
 }
