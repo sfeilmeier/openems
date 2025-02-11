@@ -48,6 +48,16 @@ export class Permission {
 export class EdgePermission {
 
   /**
+  * Checks if user is allowed to see {@link ProfileComponent} setup protocol download
+  *
+  * @param edge the edge
+  * @returns true, if user is at least {@link Role.OWNER}
+  */
+  public static isUserAllowedToSetupProtocolDownload(edge: Edge): boolean {
+    return Role.isAtLeast(edge.role, Role.OWNER);
+  }
+
+  /**
    * Checks if the {@link EnergyJourneyComponent energy journey} is allowed to be seen
    *
    * @param ibnDate the ibn date - first setup protocol date

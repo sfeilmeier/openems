@@ -75,7 +75,7 @@ export namespace ArrayUtils {
   }
 
   /**
-   * Checks if array contains at least one of the passed strings
+   * Checks if array contains all of the passed strings
    *
    * @param strings the strings
    * @param arr the array
