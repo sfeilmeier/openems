@@ -25,6 +25,18 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.2.2",
+        changes: [
+          Changelog.UI + "Freischaltung Dunkelmodus (Dark Mode), Verbesserung in der historischen Jahresansicht",
+          { roleIsAtLeast: Role.INSTALLER, change: "FENECON Home und Commercial 92: Verbesserungen am IBN-Assistent" },
+          { roleIsAtLeast: Role.ADMIN, change: "FENECON Home: Korrektur eines Anzeigefehlers in der Historie bei niedrigen Leistungen (Totband erweitert)" },
+          { roleIsAtLeast: Role.ADMIN, change: "Controller für Clever-PV / enerixControl Push-API (BETA-Test; installierbar durch Admin)" },
+          { roleIsAtLeast: Role.ADMIN, change: "Industrial L: Warnung bei veralteter BMS Firmware" },
+          { roleIsAtLeast: Role.ADMIN, change: "E-Mobility: Test für KEBA P40 mit neuer Softwarearchitektur" },
+          { roleIsAtLeast: Role.ADMIN, change: "Dynamischer Stromtarif rabot.charge: Update der Zugangsdaten" },
+        ],
+      },
+      {
         version: "2025.2.1",
         changes: [
           Changelog.app(App.TIME_OF_USE) + "Kritischen Fehler behoben. Dieser führte dazu, dass verzögerte Entladung und aktive Beladung aus dem Netz seit 2025.1.2 nicht funktionierten",
