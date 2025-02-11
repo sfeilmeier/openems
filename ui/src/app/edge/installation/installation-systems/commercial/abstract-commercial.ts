@@ -149,29 +149,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             rows: batteryData,
         });
 
-        const batteryInverterData: ComponentData[] = [];
-
-        this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION
-            ? batteryInverterData.push(
-                {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
-                    value: this.feedInLimitation.maximumFeedInPower,
-                },
-            )
-            : this.feedInLimitation.feedInType === FeedInType.EXTERNAL_LIMITATION
-                ? batteryInverterData.push(
-                    {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECIEVER"),
-                        value: this.translate.instant("General.yes"),
-                    })
-                : batteryInverterData.push(
-                    {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
-                        value: this.translate.instant("General.yes"),
-                    });
-
-        const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
-        batteryInverterData.push({ label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.COUNTRY_SETTING"), value: IbnUtils.getCountryLabel(safetyCountry, this.translate) });
+        const batteryInverterData: ComponentData[] = this.addCustombatteryInverterData();
 
         tableData.push({
             header: Category.INVERTER,
@@ -459,5 +437,33 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             return true;
         }
         return false;
+    }
+
+    protected addCustombatteryInverterData(): ComponentData[] {
+        const batteryInverterData: ComponentData[] = [];
+
+        this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION
+            ? batteryInverterData.push(
+                {
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
+                    value: this.feedInLimitation.maximumFeedInPower,
+                },
+            )
+            : this.feedInLimitation.feedInType === FeedInType.EXTERNAL_LIMITATION
+                ? batteryInverterData.push(
+                    {
+                        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECIEVER"),
+                        value: this.translate.instant("General.yes"),
+                    })
+                : batteryInverterData.push(
+                    {
+                        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+                        value: this.translate.instant("General.yes"),
+                    });
+
+        const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
+        batteryInverterData.push({ label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.COUNTRY_SETTING"), value: IbnUtils.getCountryLabel(safetyCountry, this.translate) });
+
+        return batteryInverterData;
     }
 }

@@ -8,6 +8,7 @@ import { filter, takeUntil } from "rxjs/operators";
 import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
 import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
+import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
 import { FeedInType, View } from "../../../shared/enums";
@@ -32,6 +33,11 @@ export enum BatteryTarget {
     AUTO = "AUTO",
 }
 
+export enum GridSetting {
+    VDE_AR_N_4105 = "VDE-AR-N 4105",
+    VDE_AR_N_4110 = "VDE-AR-N 4110",
+}
+
 export class Commercial92Ibn extends AbstractCommercialIbn {
 
     public override WAIT_FOR_BATTERY_SERIAL_NUMBERS = 8 * 60 * 1000;
@@ -43,6 +49,7 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
     public override readonly maxFeedInLimit: number = 6000000;
     public override readonly showNote: boolean = true;
     public batteryStartStopTarget: BatteryTarget = BatteryTarget.START;
+    public gridSetting: GridSetting;
 
     // protocol-dynamic-feed-in-limitation
     public override feedInLimitation? = {
@@ -83,6 +90,7 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
             View.ProtocolSystem,
             View.ConfigurationLineSideMeterFuse,
             View.ProtocolFeedInLimitation,
+            View.ConfigurationGridSetting,
             View.ConfigurationSummary,
             View.ConfigurationExecute,
             View.ProtocolSerialNumbers,
@@ -585,6 +593,16 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
     public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
         const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
 
+        const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
+
+        if (safetyCountry === Country.GERMANY) {
+            protocol.items.push({
+                category: Category.GRID,
+                name: this.translate.instant("INSTALLATION.CONFIGURATION_GRID_SETTING.TITLE"),
+                value: this.gridSetting,
+            });
+        }
+
         // Welcherister, BMS, Parallel box, EMS box
         const initialStaticTowerComponents: number = 4;
 
@@ -610,6 +628,51 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
         if ("checklist" in ibnString) {
             this.checklist = ibnString.checklist;
         }
+
+        if (ibnString.gridSetting) {
+            this.gridSetting = ibnString.gridSetting;
+        }
+
+    }
+
+    /**
+ * For `SystemType.FENECON_HOME` and `SystemType.HECKERT_HOME`, it checks the location:
+ * - If the location is not Germany, it removes the `View.ConfigurationEssLimiter14aComponent` from the `views` array.
+ * - If the location is Germany and the `View.ConfigurationEssLimiter14aComponent` is not already in the `views` array, it adds it at a specific index.
+ */
+    public override removeUpdateView(edge: Edge) {
+        super.removeUpdateView(edge);
+
+        const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
+        const existingIndexOfView: number = this.views.indexOf(View.ConfigurationGridSetting);
+        const indexOfViewToBeAdded: number = 9;
+
+        if (location && location !== Country.GERMANY) {
+            if (existingIndexOfView != -1) {
+                // Remove ConfigurationGridSettingComponent.
+                this.views.splice(existingIndexOfView, 1);
+                this.gridSetting = GridSetting.VDE_AR_N_4105; // reset to Default
+            }
+            return;
+        }
+
+        if (existingIndexOfView === -1) {
+            // Add ConfigurationGridSettingComponent.
+            // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
+            this.views.splice(indexOfViewToBeAdded, 0, View.ConfigurationGridSetting);
+        }
+
+    }
+
+    protected override addCustombatteryInverterData(): ComponentData[] {
+        const batteryInverterData: ComponentData[] = super.addCustombatteryInverterData();
+        const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
+
+        if (safetyCountry === Country.GERMANY) {
+            batteryInverterData.push({ label: this.translate.instant("INSTALLATION.CONFIGURATION_GRID_SETTING.TITLE"), value: this.gridSetting });
+        }
+
+        return batteryInverterData;
 
     }
 

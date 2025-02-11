@@ -13,6 +13,7 @@ import { ConfigurationEmergencyReserveComponent } from "./views/configuration-em
 import { ConfigurationEnergyFlowMeterComponent } from "./views/configuration-energy-flow-direction-meter/configuration-energy-flow-direction-meter.component";
 import { ConfigurationEssLimiter14aComponent } from "./views/configuration-ess-limiter-14a/configuration-ess-limiter-14a";
 import { ConfigurationExecuteComponent } from "./views/configuration-execute/configuration-execute.component";
+import { ConfigurationGridSettingComponent } from "./views/configuration-grid-setting/configuration-grid-setting";
 import { ConfigurationLineSideMeterFuseComponent } from "./views/configuration-line-side-meter-fuse/configuration-line-side-meter-fuse.component";
 import { ConfigurationMpptSelectionComponent } from "./views/configuration-mppt-selection/configuration-mppt-selection.component";
 import { ConfigurationSubSystemComponent } from "./views/configuration-sub-system/configuration-sub-system";
@@ -146,6 +147,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     ConfigurationEnergyFlowMeterComponent,
     ConfigurationEssLimiter14aComponent,
     ProtocolChecklistComponent,
+    ConfigurationGridSettingComponent,
   ],
 })
 export class InstallationModule { }

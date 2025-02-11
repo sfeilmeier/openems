@@ -77,6 +77,10 @@
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </protocol-feed-in-limitation>
 
+                <configuration-grid-setting *ngSwitchCase="view.ConfigurationGridSetting" [ibn]="ibn"
+                    (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
+                </configuration-grid-setting>
+
                 <!-- Configuration and Protocol -->
 
                 <configuration-summary *ngSwitchCase="view.ConfigurationSummary" [edge]="edge" [ibn]="ibn"

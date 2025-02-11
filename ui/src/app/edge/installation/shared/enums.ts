@@ -124,4 +124,5 @@ export enum View {
     ConfigurationEnergyFlowMeter,
     ConfigurationEssLimiter14aComponent,
     ProtocolChecklist,
+    ConfigurationGridSetting,
 }

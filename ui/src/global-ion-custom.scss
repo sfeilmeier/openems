@@ -43,7 +43,7 @@
 
 .ion-white-space-pre-wrap {
 
-    &::part(label){
+    &::part(label) {
         white-space: pre-wrap;
     }
 }
