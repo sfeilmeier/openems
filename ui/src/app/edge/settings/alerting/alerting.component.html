@@ -20,7 +20,7 @@
           <ion-item lines="full" color="light">
             <ion-icon slot="start" name="settings-outline" color="primary"></ion-icon>
             <ion-label>
-              <span>{{user.userLogin}}</span>
+              <span>{{user.name}}</span>
             </ion-label>
             <oe-help-button key="SETTINGS_ALERTING"></oe-help-button>
           </ion-item>
@@ -84,8 +84,8 @@
                         </ion-checkbox>
                       </ion-col>
                       <ion-col size="3">
-                        <ion-select class="custom-options" interface="popover" formControlName="offlineEdgeDelay"
-                          style="max-width: 100% !important; margin: 0; padding: 0;"
+                        <ion-select mode="md" class="custom-options" interface="popover"
+                          formControlName="offlineEdgeDelay" style="max-width: 100% !important; margin: 0; padding: 0;"
                           *ngIf="otherUserForm.controls[user.userLogin].value['isOfflineActive']">
                           <ion-select-option *ngFor="let option of defaultValues[AlertingType.OFFLINE]"
                             [value]="option.value">
