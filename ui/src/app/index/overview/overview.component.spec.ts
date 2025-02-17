@@ -78,6 +78,9 @@ describe("OverviewComponent", () => {
                 globalRole: globalRole, hasMultipleEdges: true, id: "", language: Language.DE.key, name: "test.user", settings: {}, getThemeFromSettings() {
                     return Theme.LIGHT;
                 },
+                isAtLeast(role) {
+                    return true;
+                },
             },
         });
 
