@@ -1,4 +1,4 @@
-// @ts-strict-ignore
+
 import { Directive, effect, signal, WritableSignal } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { Theme, Theme as UserTheme } from "src/app/edge/history/shared";
@@ -13,7 +13,7 @@ import { Service } from "./service";
 @Directive()
 export class UserService {
 
-    private static readonly DEFAULT_THEME: UserTheme = UserTheme.LIGHT;
+    public static readonly DEFAULT_THEME: UserTheme = UserTheme.LIGHT;
     public currentUser: WritableSignal<User | null> = signal(null);
 
     constructor(
@@ -24,7 +24,11 @@ export class UserService {
         // Prohibits switching colors on init
         this.updateTheme(localStorage.getItem("THEME") as UserTheme);
         effect(() => {
-            this.showThemeSelection();
+            const user = this.currentUser();
+
+            if (user != null) {
+                this.showThemeSelection(user);
+            }
         });
     }
 
@@ -34,18 +38,14 @@ export class UserService {
      * @param theme the new theme
      */
     public async selectTheme(theme: UserTheme): Promise<void> {
-        await this.service.websocket.sendSafeRequest(new UpdateUserSettingsRequest({
-            settings: { theme: theme },
-        })).then(() => {
-            const currentUser = this.currentUser();
 
-            if (!currentUser || !theme) {
-                return;
-            }
+        const currentUser: User | null = this.currentUser();
+        if (currentUser == null || !theme) {
+            return;
+        }
 
-            currentUser.settings["theme"] = theme;
-            this.finalizeThemeSelection(theme);
-        });
+        currentUser.settings = { ...currentUser.settings, theme: theme };
+        this.finalizeThemeSelection(theme);
     }
 
     /**
@@ -53,21 +53,34 @@ export class UserService {
      *
      * @returns
      */
-    private showThemeSelection(): void {
+    private showThemeSelection(user: User): void {
 
         if (environment.theme !== "FENECON") {
             return;
         }
 
-        const user = this.currentUser();
-        const isThemeSet = user?.settings ? "theme" in user.settings : false;
+        const theme: UserTheme | null = this.getTheme(user);
 
-        if (!user || isThemeSet) {
-            this.updateTheme(user?.settings["theme"]);
+        if (theme != null) {
+            this.updateTheme(theme);
             return;
         }
 
-        this.showModal(user.settings["theme"] as UserTheme);
+        this.showModal();
+    }
+
+    /**
+     * Gets the theme
+     *
+     * @param user the current user
+     * @returns the userTheme if existing, else null
+     */
+    private getTheme(user: User | null): UserTheme | null {
+        if (environment.backend === "OpenEMS Edge") {
+            return localStorage.getItem("THEME") as UserTheme ?? null;
+        }
+
+        return user?.getThemeFromSettings() ?? null;
     }
 
     /**
@@ -75,7 +88,7 @@ export class UserService {
      *
      * @param userTheme the new user theme
      */
-    private updateTheme(userTheme: UserTheme): void {
+    private updateTheme(userTheme: UserTheme | null): void {
         const validTheme = this.getValidBrowserTheme(userTheme);
         let attr: Exclude<`${UserTheme}`, UserTheme.SYSTEM> = validTheme;
 
@@ -90,13 +103,10 @@ export class UserService {
     *
     * @param currentTheme current theme
     */
-    private async showModal(currentTheme: UserTheme): Promise<void> {
+    private async showModal(): Promise<void> {
 
         const modal = await this.modalCtrl.create({
             component: ThemePopoverComponent,
-            componentProps: {
-                userTheme: currentTheme, // Pass user theme (light, dark, or system)
-            },
         });
 
         await modal.present();
@@ -114,6 +124,10 @@ export class UserService {
     * @returns
     */
     private updateUserSettings(settings: object): Promise<JsonrpcResponseSuccess> {
+        const request = new UpdateUserSettingsRequest({ settings: settings });
+        if (environment.backend === "OpenEMS Edge") {
+            return Promise.resolve(new JsonrpcResponseSuccess(request.id, {}));
+        }
         return this.service.websocket.sendSafeRequest(new UpdateUserSettingsRequest({ settings: settings }));
     }
 
@@ -123,7 +137,11 @@ export class UserService {
     * @param theme the new theme
     */
     private updateCurrentUser(theme: Theme): void {
-        this.currentUser.update((user) => {
+        this.currentUser.update((user: User | null) => {
+            if (user == null) {
+                return user;
+            }
+
             user.settings = {
                 ...user.settings,
                 theme: theme,
@@ -147,7 +165,7 @@ export class UserService {
             });
     }
 
-    private getValidBrowserTheme(userTheme: UserTheme): UserTheme {
+    private getValidBrowserTheme(userTheme: UserTheme | null): UserTheme {
         return userTheme ?? UserService.DEFAULT_THEME;
     }
 }
