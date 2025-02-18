@@ -79,7 +79,7 @@ export class AdvertWidgets {
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
         let list: AdvertWidget[] = [{
-            name: "eeg-2025",
+            name: "advert-1",
             title: { languageKey: "ADVERT.1.TITLE" },
         }];
 

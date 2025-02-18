@@ -2,9 +2,8 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "EEG 2025: Webinar am 28.02 um 11:00 Uhr",
-        "TEXT": "Wir erklären: Was ändert sich im EEG in Bezug auf Stromspeicher und Energiemanagement? Wie können Sie von diesen Änderungen profitieren? Welche Lösungen bietet FENECON dazu?",
-        "BUTTON_LABEL": "Hier anmelden"
+        "TITLE": "Webinare zum EEG 2025: Updates von FENECON",
+        "TEXT": "Die gute Nachricht zuerst: <b>Private Betreiber bestehender Stromspeicher-Anlagen</b> können ihre Anlage wie gewohnt weiter betreiben, ohne dass sich etwas ändert. Umfassender sind die Regelungen für neue Anlagen: im Webinar am <a href='https://attendee.gotowebinar.com/register/6030642503344351839?source=FEMS-Widget' target='_blank'>28.02. um 15 Uhr</a> erläutern wir die Details zum EEG und geben Tipps zum optimalen Speicherbetrieb im Jahresverlauf. <b>Installateuren und Großhändlern</b> zeigen wir am <a href='https://attendee.gotowebinar.com/register/3587213205947970905?source=fems' target='_blank'>28.02. um 11 Uhr </a> im Webinar, welche neuen Chancen sich durch die Gesetzesänderung für Neuanlagen ergeben und wie man mit unseren innovativen Lösungen davon profitieren kann."
       }
     },
     "SETTINGS": {
@@ -53,9 +52,8 @@
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "EEG 2025: Webinar on 28 of February at 11:00 a.m.",
-        "TEXT": "We explain: What is changing in the EEG with regard to electricity storage and energy management? How can you benefit from these changes? What solutions does FENECON offer?",
-        "BUTTON_LABEL": "Register here (event in German)!"
+        "TITLE": "Webinars on the German EEG 2025: Updates from FENECON",
+        "TEXT": "The good news first: <b>private operators of existing electricity storage systems</b> in Germany can continue to operate their systems as usual, without any changes. The regulations for new systems are more comprehensive: In the webinar on <a href='https://attendee.gotowebinar.com/register/6030642503344351839?source=FEMS-Widget' target='_blank'>28 Feb. at 3 p.m.</a>, we will explain the details of the German EEG law and provide tips on optimal storage operation over the course of the year. In the webinar on <a href='https://attendee.gotowebinar.com/register/3587213205947970905?source=fems' target='_blank'>28 Feb. at 11 a.m.</a>, we will show <b>German installers and wholesalers</b> the new opportunities for new systems resulting from the change in the law and how they can benefit from it with our innovative solutions."
       }
     },
     "SETTINGS": {
