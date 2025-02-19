@@ -25,6 +25,12 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        title: "Online-Monitoring (19.02.2025)",
+        changes: [
+          Changelog.UI,
+        ],
+      },
+      {
         version: "2025.2.2",
         changes: [
           Changelog.UI + "Freischaltung Dunkelmodus (Dark Mode), Verbesserung in der historischen Jahresansicht",
@@ -77,8 +83,8 @@ export class ChangelogComponent {
         changes: [
           "Live | Speichersystem: neue Einstellung um Notstromreserve aktiv aus dem Netz zu beladen",
           Changelog.app(App.TIME_OF_USE) + "Darstellung in der historischen Ansicht verbessert: bessere Sichtbarkeit der niedrigsten Tagespreise",
-          { roleIsAtLeast: Role.INSTALLER, change: Changelog.app(App.EVCS_AC, App.MENNEKES) + "Einbindung der Mennekes Amtron Professional (nur lesend))"},
-          { roleIsAtLeast: Role.ADMIN, change: Changelog.UI + "Verbesserungen am Dark Mode"},
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.app(App.EVCS_AC, App.MENNEKES) + "Einbindung der Mennekes Amtron Professional (nur lesend))" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.UI + "Verbesserungen am Dark Mode" },
           { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC) + "Angleichung der Statusmeldungen an Standard: Entfernen des Status 'Auto ist voll'" },
           Changelog.library(Library.JAVA_JRE, Library.BNDTOOLS, Library.PAX_LOGGING),
         ],
@@ -89,9 +95,9 @@ export class ChangelogComponent {
           Changelog.UI + "kleine Farbanpassungen in Vorbereitung auf einen Dunkelmodus (Dark Mode)",
           Changelog.app(App.TIME_OF_USE) + "Verbesserung des Verhaltens bei Beladung aus dem Netz, Fehlerbehebung in der Diagramm-Darstellung",
           { roleIsAtLeast: Role.INSTALLER, change: "Inbetriebnahmeassistent: Auswahloption für Installation in Griechenland" },
-          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC, App.MENNEKES) + "Implementierung der Mennekes Amtron Professional (nur lesend, nur installierbar durch ADMIN)"},
-          { roleIsAtLeast: Role.ADMIN, change: "Erzeugungs-/Verbrauchsprognose: Fehlerbehebung wenn lokale Daten fehlen (nur ADMIN)"},
-          { roleIsAtLeast: Role.ADMIN, change: "Benutzer | Allgemeine Einstellungen | Theme: Light (=heller Modus), Dark (=dunkler Modus) oder System (=Betriebssystemeinstellung)"},
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC, App.MENNEKES) + "Implementierung der Mennekes Amtron Professional (nur lesend, nur installierbar durch ADMIN)" },
+          { roleIsAtLeast: Role.ADMIN, change: "Erzeugungs-/Verbrauchsprognose: Fehlerbehebung wenn lokale Daten fehlen (nur ADMIN)" },
+          { roleIsAtLeast: Role.ADMIN, change: "Benutzer | Allgemeine Einstellungen | Theme: Light (=heller Modus), Dark (=dunkler Modus) oder System (=Betriebssystemeinstellung)" },
         ],
       },
       {
