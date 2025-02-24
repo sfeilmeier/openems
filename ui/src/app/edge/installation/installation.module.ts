@@ -2,11 +2,11 @@
 import { NgModule } from "@angular/core";
 import { FormControl, ValidationErrors } from "@angular/forms";
 import { FormlyFieldConfig, FormlyModule } from "@ngx-formly/core";
+import { SetupKeyComponent } from "src/app/edge/installation/shared/reusable-input-field";
 import { SharedModule } from "src/app/shared/shared.module";
 import { SettingsModule } from "../settings/settings.module";
 import { InstallationViewComponent } from "./installation-view/installation-view.component";
 import { InstallationComponent } from "./installation.component";
-import { KeyMaskDirective } from "./keymask";
 import { CompletionComponent } from "./views/completion/completion.component";
 import { ConfigurationCommercialModbuBridgeComponent } from "./views/configuration-commercial-modbusbridge/configuration-commercial-modbusbridge";
 import { ConfigurationEmergencyReserveComponent } from "./views/configuration-emergency-reserve/configuration-emergency-reserve.component";
@@ -122,13 +122,13 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     }),
     SharedModule,
     SettingsModule,
+    SetupKeyComponent,
   ],
   declarations: [
     CompletionComponent,
     ConfigurationEmergencyReserveComponent,
     ConfigurationExecuteComponent,
     ConfigurationLineSideMeterFuseComponent,
-    KeyMaskDirective,
     ProtocolCustomerComponent,
     ProtocolFeedInLimitationComponent,
     ProtocolInstallerComponent,

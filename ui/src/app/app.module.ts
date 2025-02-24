@@ -17,6 +17,7 @@ import { AppComponent } from "./app.component";
 import { CheckForUpdateService } from "./appupdateservice";
 import { EdgeModule } from "./edge/edge.module";
 import { InstallationModule } from "./edge/installation/installation.module";
+import { SetupKeyComponent } from "./edge/installation/shared/reusable-input-field";
 import { SettingsModule as EdgeSettingsModule } from "./edge/settings/settings.module";
 import { SystemLogComponent } from "./edge/settings/systemlog/systemlog.component";
 import { IndexModule } from "./index/index.module";
@@ -39,6 +40,7 @@ import { UserModule } from "./user/user.module";
     ChartOptionsPopoverComponent,
     StatusSingleComponent,
     SystemLogComponent,
+
   ],
   imports: [
     AngularMyDatePickerModule,
@@ -55,6 +57,7 @@ import { UserModule } from "./user/user.module";
     TranslateModule.forRoot({ loader: { provide: TranslateLoader, useClass: MyTranslateLoader } }),
     UserModule,
     RegistrationModule,
+    SetupKeyComponent,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
