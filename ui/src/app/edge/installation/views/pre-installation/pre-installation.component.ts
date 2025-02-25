@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -22,8 +22,6 @@ export class PreInstallationComponent implements OnInit {
 
   @Output() public nextViewEvent = new EventEmitter();
   @Output() public edgeChange = new EventEmitter<Edge>();
-  @ViewChild("setupKey", { static: false })
-  private setupKey: ElementRef;
   public edge: Edge;
 
 
@@ -32,6 +30,7 @@ export class PreInstallationComponent implements OnInit {
   public model;
   public isWaiting = false;
   public image: string;
+  protected setupKey: string | null = null;
   protected validKey: boolean = true;
 
   constructor(
@@ -51,11 +50,10 @@ export class PreInstallationComponent implements OnInit {
   }
 
   public onNextClicked() {
-    const setupPassword = this.setupKey.nativeElement.value.trim();
     this.isWaiting = true;
 
     this.websocket
-      .sendRequest(new AddEdgeToUserRequest({ setupPassword }))
+      .sendRequest(new AddEdgeToUserRequest({ setupPassword: this.setupKey }))
       .then((response: AddEdgeToUserResponse) => {
         const edge = response.result.edge;
         const emsBoxSerialNumber: string = response.result.serialNumber;

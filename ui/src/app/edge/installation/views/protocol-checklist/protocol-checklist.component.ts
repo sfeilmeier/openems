@@ -162,7 +162,6 @@ export class ProtocolChecklistComponent implements OnInit {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.CHANGE_NETWORK_SETTINGS"),
                 description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.NETWORK_SETTINGS_NOTE"),
-                hideButtons: true,
                 attributes: {
                     infoLine: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.NETWORK_SETTINGS_INFO"),
                 },

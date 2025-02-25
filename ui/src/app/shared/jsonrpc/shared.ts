@@ -1,4 +1,7 @@
 import { Theme } from "src/app/edge/history/shared";
+import { environment } from "src/environments";
+
+import { Role } from "../type/role";
 import { ArrayUtils } from "../utils/array/array.utils";
 import { AuthenticateResponse } from "./response/authenticateResponse";
 
@@ -52,10 +55,19 @@ export class User {
      * @returns the theme if existing, else null
      */
     public getThemeFromSettings(): Theme | null {
+
+        if (environment.backend === "OpenEMS Edge") {
+            return localStorage.getItem("THEME") as Theme ?? null;
+        }
+
         if ("theme" in this.settings) {
             return this.settings["theme"] as Theme;
         }
 
         return null;
+    }
+
+    public isAtLeast(role: Role) {
+        return Role.isAtLeast(this.globalRole, role);
     }
 };

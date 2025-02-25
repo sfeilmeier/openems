@@ -1,15 +1,8 @@
 <installation-view iconName="key-outline" header="{{ 'INSTALLATION.PRE_INSTALLATION.TITLE' | translate }}"
     (nextClicked)="onNextClicked()" [isWaiting]="isWaiting || websocket.status !== 'online'" isFirstView="true">
 
-    <table class="full_width ion-text-center">
-        <tr>
-            <td>
-                <!-- [(ngModel)]="setupKey" - Two way binding is not working with keymask directive. The last letter in upper case, is not set to the setup key property-->
-                <input oeKeyMask type="text" #setupKey style="width: 13em;" placeholder="XXXX-XXXX-XXXX-XXXX"
-                    autocapitalize="characters">
-            </td>
-        </tr>
-    </table>
+    <oe-setup-key-input [placeholder]="'XXXX-XXXX-XXXX-XXXX'" (submitEvent)="setupKey = $event">
+    </oe-setup-key-input>
 
     <ion-row class="ion-justify-content-center">
         <ion-item lines="none" class="ion-padding-top">

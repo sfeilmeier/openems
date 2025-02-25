@@ -9,11 +9,11 @@ import { Component } from "@angular/core";
       </ion-text>
     </ion-row>
 
-    <ion-row class="ion-padding-top ion-justify-content-center">
+    <!--<ion-row class="ion-padding-top ion-justify-content-center">
       <ion-button href="https://register.gotowebinar.com/register/3587213205947970905" target="_blank" size="small" fill="outline" style="font-size: small;" translate>
           ADVERT.1.BUTTON_LABEL
       </ion-button>
-    </ion-row>
+    </ion-row>-->
 
   </ion-grid>
   `,

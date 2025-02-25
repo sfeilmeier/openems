@@ -650,6 +650,20 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         rows: gridData,
       });
     }
+
+    if (this.avu?.isIncluded) {
+      const avuData: ComponentData[] = [];
+
+      avuData.push({
+        label: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
+        value: this.avu.serialNumber,
+      });
+
+      tableData.push({
+        header: Category.AVU,
+        rows: avuData,
+      });
+    }
   }
 
   public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
@@ -775,7 +789,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
     }
 
-    if (this.avu.isIncluded) {
+    if (this.avu?.isIncluded) {
       protocol.items.push({
         category: Category.AVU,
         name: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
