@@ -25,6 +25,16 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.2.3",
+        changes: [
+          Changelog.UI,
+          Changelog.app(App.EVCS_AC, App.KEBA) + "Fehlerbehebung: Ladelimit erreicht, wenn kein Ladelimit eingestellt ist",
+          "Lokales Monitoring: Einstellung für Hell-/Dunkelmodus dauerhaft speichern",
+          "Batterieerweiterung: Fehlerbehebung bei Einstellung des geplanten Startzeitpunktes",
+          { roleIsAtLeast: Role.INSTALLER, change: "Online-Monitoring Übersicht alle Systeme: Filter für Produkt-Typ und Systemzustand" },
+        ],
+      },
+      {
         title: "Online-Monitoring (19.02.2025)",
         changes: [
           Changelog.UI,
