@@ -1,4 +1,4 @@
-package io.openems.edge.controller.evcs.jsonrpc;
+package io.openems.edge.controller.evse.single.jsonrpc;
 
 import com.google.gson.JsonObject;
 

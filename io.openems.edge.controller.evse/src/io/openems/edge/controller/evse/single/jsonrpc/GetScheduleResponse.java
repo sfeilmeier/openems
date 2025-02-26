@@ -1,4 +1,4 @@
-package io.openems.edge.controller.evcs.jsonrpc;
+package io.openems.edge.controller.evse.single.jsonrpc;
 
 import static io.openems.common.utils.JsonUtils.buildJsonObject;
 import static io.openems.common.utils.JsonUtils.toJsonArray;
@@ -19,10 +19,11 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import io.openems.common.jsonrpc.base.JsonrpcResponseSuccess;
-import io.openems.edge.controller.evcs.SmartMode;
-import io.openems.edge.controller.evcs.Utils.EshContext.EshSmartContext;
-import io.openems.edge.energy.api.EnergyScheduleHandler;
-import io.openems.edge.energy.api.EnergyScheduleHandler.WithDifferentStates.Period;
+import io.openems.edge.controller.evse.single.EnergyScheduler.OptimizationContext;
+import io.openems.edge.energy.api.handler.DifferentModes.Period;
+import io.openems.edge.energy.api.handler.EnergyScheduleHandler;
+import io.openems.edge.energy.api.handler.EshWithDifferentModes;
+import io.openems.edge.evse.api.chargepoint.Mode;
 
 /**
  * Represents a JSON-RPC Response for 'getSchedule'.
@@ -35,7 +36,7 @@ import io.openems.edge.energy.api.EnergyScheduleHandler.WithDifferentStates.Peri
  *     'schedule': [{
  *      'timestamp':...,
  *      'price':...,
- *      'state':...
+ *      'mode':...
  *     }]
  *   }
  * }
@@ -67,12 +68,11 @@ public class GetScheduleResponse extends JsonrpcResponseSuccess {
 	 */
 	public static GetScheduleResponse from(UUID requestId, EnergyScheduleHandler energyScheduleHandler) {
 		LOG.info("OPTIMIZER JSONRPC start");
-		if (energyScheduleHandler == null
-				|| energyScheduleHandler instanceof EnergyScheduleHandler.WithOnlyOneState<?>) {
+		if (energyScheduleHandler == null || energyScheduleHandler instanceof EnergyScheduleHandler.WithOnlyOneMode) {
 			return null;
 		}
 		@SuppressWarnings("unchecked")
-		var esh = (EnergyScheduleHandler.WithDifferentStates<SmartMode, EshSmartContext>) energyScheduleHandler;
+		var esh = (EshWithDifferentModes<Mode.Actual, OptimizationContext, Void>) energyScheduleHandler;
 		final var schedule = esh.getSchedule();
 		final JsonArray result;
 		if (schedule.isEmpty()) {
@@ -99,7 +99,7 @@ public class GetScheduleResponse extends JsonrpcResponseSuccess {
 	 * @return {@link Stream} of {@link JsonObject}s
 	 */
 	protected static Stream<JsonObject> fromSchedule(
-			ImmutableSortedMap<ZonedDateTime, Period<SmartMode, EshSmartContext>> schedule) {
+			ImmutableSortedMap<ZonedDateTime, Period<Mode.Actual, OptimizationContext>> schedule) {
 		return schedule.entrySet().stream() //
 				.map(e -> {
 					var p = e.getValue();
@@ -107,7 +107,7 @@ public class GetScheduleResponse extends JsonrpcResponseSuccess {
 					return buildJsonObject() //
 							.addProperty("timestamp", e.getKey()) //
 							.addProperty("price", p.price()) //
-							.addProperty("state", p.state().getValue()) //
+							.addProperty("mode", p.mode().getValue()) //
 							.build();
 				});
 	}
@@ -116,10 +116,10 @@ public class GetScheduleResponse extends JsonrpcResponseSuccess {
 	 * Creates an empty default Schedule in case no Schedule is available.
 	 * 
 	 * @param clock       the {@link Clock}
-	 * @param defaultMode the default {@link SmartMode}
+	 * @param defaultMode the default {@link Mode.Actual}
 	 * @return {@link Stream} of {@link JsonObject}s
 	 */
-	protected static Stream<JsonObject> empty(Clock clock, SmartMode defaultMode) {
+	protected static Stream<JsonObject> empty(Clock clock, Mode.Actual defaultMode) {
 		final var now = ZonedDateTime.now(clock);
 		final var numberOfPeriods = 96;
 
@@ -132,5 +132,4 @@ public class GetScheduleResponse extends JsonrpcResponseSuccess {
 							.build();
 				});
 	}
-
 }
