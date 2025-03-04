@@ -6,7 +6,7 @@ import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat
 import { Converter } from "src/app/shared/components/shared/converter";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Filter } from "src/app/shared/components/shared/filter";
-import { ChannelAddress, CurrentData, EdgeConfig, Utils } from "src/app/shared/shared";
+import { ChannelAddress, CurrentData, Edge, EdgeConfig, Utils } from "src/app/shared/shared";
 
 @Component({
   selector: IndustrialServiceAssistantComponent.SELECTOR,
@@ -34,6 +34,7 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
   protected systemFeneconIndustrialL: { [id: string]: any } = {};
   protected CONVERT_TO_GRID_METER_CATEGORY = Converter.CONVERT_TO_GRID_METER_CATEGORY(this.translate);
   protected date: string = this.service?.historyPeriod?.value?.getText(this.translate, this.service) ?? "";
+  protected currentEdge: Edge = this.service?.currentEdge.getValue();
 
   private static getHeatingState(currentData: CurrentData): any {
     if (currentData.allComponents["system0/HeaterRunningState"] == 1) {
@@ -45,14 +46,16 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     }
     return Converter.HIDE_VALUE(null);
   }
+  private static getBatteryFirmwareString(currentData: CurrentData, batteryId: string, currentEdge: Edge): any {
+    const patchKey = currentEdge.isVersionAtLeast("2025.2.3")
+      ? "/SoftwareVersionPatch"
+      : "/SoftwareVersionPath";
 
-  private static getBatteryFirmwareString(currentData: CurrentData, batteryId: string): any {
     return [
       currentData.allComponents[batteryId + "/SoftwareVersionMajor"],
       currentData.allComponents[batteryId + "/SoftwareVersionMinor"],
-      currentData.allComponents[batteryId + "/SoftwareVersionPath"],
-    ]
-      .join(".");
+      currentData.allComponents[batteryId + patchKey],
+    ].join(".");
   }
 
   protected override afterIsInitialized() {
@@ -72,10 +75,14 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
   protected override getChannelAddresses(): ChannelAddress[] {
     const channels: ChannelAddress[] = [];
     for (const battery of this.batteries) {
+      const patchChannel = this.currentEdge.isVersionAtLeast("2025.2.3")
+        ? new ChannelAddress(battery.id, "SoftwareVersionPatch")
+        : new ChannelAddress(battery.id, "SoftwareVersionPath");
+
       channels.push(
         new ChannelAddress(battery.id, "SoftwareVersionMajor"),
         new ChannelAddress(battery.id, "SoftwareVersionMinor"),
-        new ChannelAddress(battery.id, "SoftwareVersionPath"),
+        patchChannel,
         new ChannelAddress(battery.id, "MaxCellVoltage"),
         new ChannelAddress(battery.id, "MinCellVoltage"),
         new ChannelAddress(battery.id, "PackShuntTemperature"),
@@ -93,7 +100,7 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
   protected override onCurrentData(currentData: CurrentData): void {
     for (const battery of this.batteries) {
       this.tower[battery.id] = {
-        "Firmware": IndustrialServiceAssistantComponent.getBatteryFirmwareString(currentData, battery.id),
+        "Firmware": IndustrialServiceAssistantComponent.getBatteryFirmwareString(currentData, battery.id, this.currentEdge),
       };
 
       const batteryId = battery.id;
