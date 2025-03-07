@@ -8,7 +8,6 @@ import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
 import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
-import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../shared/appcenterutil";
 import { Category } from "../../shared/category";
 import { FeedInSetting, FeedInType, View, WebLinks } from "../../shared/enums";
@@ -119,8 +118,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public override showViewCount: boolean = false;
   public override readonly defaultNumberOfModules: number = 5;
 
-  public activateLimitController14a: boolean = true;
-  public readonly indexOf14aLimiterControllerView: number = 7;
   private numberOfModulesPerTower: number;
   public abstract mppt: any;
 
@@ -489,7 +486,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       });
     }
 
-    if (this.activateLimitController14a) {
+    if (this.isController14aActivated) {
       this.requiredControllerIds.push(
         {
           componentId: "ctrlEssLimiter14a0",
@@ -641,7 +638,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
     gridData.push({
       label: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
-      value: this.activateLimitController14a ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+      value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
     });
 
     if (gridData.length > 0) {
@@ -696,7 +693,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     protocol.items.push({
       category: Category.GRID,
       name: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
-      value: this.activateLimitController14a ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+      value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
     });
 
     protocol.items.push({
@@ -1158,7 +1155,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       baseMode: baseMode,
     });
 
-    if (this.activateLimitController14a) {
+    if (this.isController14aActivated) {
       componentConfigurator.add({
         factoryId: "Controller.Ess.Limiter14a",
         componentId: "ctrlEssLimiter14a0",
@@ -1197,7 +1194,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     this.avu = ibnString.avu;
 
     // limitController14a
-    this.activateLimitController14a = ibnString.activateLimitController14a;
+    this.isController14aActivated = ibnString.isController14aActivated;
   }
 
   /**
@@ -1268,7 +1265,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       ...(this.emergencyReserve.isEnabled && { EMERGENCY_RESERVE_ENABLED: this.emergencyReserve.isReserveSocEnabled }),
       ...(this.emergencyReserve.isReserveSocEnabled && { EMERGENCY_RESERVE_SOC: this.emergencyReserve.value }),
       ...(this.batteryInverter?.shadowManagementDisabled && { SHADOW_MANAGEMENT_DISABLED: true }),
-      HAS_ESS_LIMITER_14A: this.activateLimitController14a,
+      HAS_ESS_LIMITER_14A: this.isController14aActivated,
       NA_PROTECTION_ENABLED: this.feedInLimitation.naProtection,
     };
 
@@ -1310,34 +1307,9 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     return options;
   }
 
-  /**
-   * For `SystemType.FENECON_HOME` and `SystemType.HECKERT_HOME`, it checks the location:
-   * - If the location is not Germany, it removes the `View.ConfigurationEssLimiter14aComponent` from the `views` array.
-   * - If the location is Germany and the `View.ConfigurationEssLimiter14aComponent` is not already in the `views` array, it adds it at a specific index.
-   */
-  public override removeUpdateView(edge: Edge) {
-    super.removeUpdateView(edge);
-
-    const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
-    const indexOfView: number = this.views.indexOf(View.ConfigurationEssLimiter14aComponent);
-
-    if (location && location !== Country.GERMANY) {
-      const indexOfUpdate: number = indexOfView;
-      if (indexOfUpdate != -1) {
-        // Remove ConfigurationEssLimiter14aComponent.
-        this.views.splice(indexOfUpdate, 1);
-        this.activateLimitController14a = false;
-      }
-      return;
-    }
-
-    if (indexOfView === -1) {
-      // Add ConfigurationEssLimiter14aComponent.
-      // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
-      this.views.splice(this.indexOf14aLimiterControllerView, 0, View.ConfigurationEssLimiter14aComponent);
-      this.activateLimitController14a = true;
-    }
-
+  public override removeOrAddView(edge: Edge): void {
+    super.removeOrAddView(edge);
+    this.removeOrAddEssLimiter14aView();
   }
 
   /**
@@ -1356,5 +1328,4 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
    * @param pv the pv number
    */
   public abstract getMpptLabel(mppt: number, pv: number);
-
 }

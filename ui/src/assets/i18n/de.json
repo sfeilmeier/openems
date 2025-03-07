@@ -972,7 +972,7 @@
     },
     "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO - Wechselrichter einbinden",
     "PROTOCOL_CHECKLIST": {
-      "CONNECT_INVERTER": "A) Computer per Netzwerkkabel mit Wechelrichter verbinden (obere LAN Buchse)",
+      "CONNECT_INVERTER": "A) Computer per Netzwerkkabel mit Wechselrichter verbinden (obere LAN Buchse)",
       "CHANGE_NETWORK_SETTINGS": "B) Netzwerkeinstellungen am Computer ändern (IP-Adresse)",
       "IP_ADDRESS": "C) IP-Adresse im Browser eingeben",
       "ENTER_PASSWORD": "D) Passwort eingeben",

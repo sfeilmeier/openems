@@ -147,6 +147,12 @@ export abstract class AbstractIbn {
   // Seperate notes to warn installers to perform timely inverter (KACO) checks. applies for comemrcial-92.
   public readonly showNote: boolean = false;
 
+  // deafault values for 14a view.
+  public isController14aActivated: boolean = true;
+
+  // Index of the 14a controller view.
+  public readonly indexOf14aLimiterControllerView: number = 7;
+
   constructor(public views: View[], public translate: TranslateService) { }
 
   /**
@@ -513,23 +519,58 @@ export abstract class AbstractIbn {
   /**
    * Updates the `views` array by removing or adding specific views.
    *
-   * If the `edge` version is not at least '2021.19.1', it removes the `View.PreInstallationUpdate` from the `views` array.
+   * Manages the presense of the `PreInstallationUpdate` based on the Edge version for all systems.
+   * Manages the presence of the `ConfigurationEssLimiter14aComponent` view based on country location, for both Home and Commercial systems.
+   * Manages the presence of the `ConfigurationGridSettingComponent` view based on country location, for Commercial systems.
    *
    * @param edge the current edge.
    */
-  public removeUpdateView(edge: Edge): void {
+  public removeOrAddView(edge: Edge): void {
     // TODO remove when every edge starts with at least the required version
     // only show update view if the update requests are implemented
     if (!edge) {
       return;
     }
 
-    // Removes the update view if the version is not at least '2021.19.1'.
+    // Removes the view if the version is not at least '2021.19.1'.
     if (!edge.isVersionAtLeast("2021.19.1")) {
       const indexOfUpdate = this.views.indexOf(View.PreInstallationUpdate);
       if (indexOfUpdate != -1) {
         this.views.splice(indexOfUpdate, 1);
       }
+    }
+  }
+
+  /**
+   * Manages the presence of the ConfigurationEssLimiter14aComponent view based on country location.
+   *
+   * @remarks
+   * Performs two main operations:
+   * 1. Removes the ConfigurationEssLimiter14aComponent view and deactivates the controller flag when the location is not Germany
+   * 2. Re-adds the ConfigurationEssLimiter14aComponent view (if missing) and activates the controller flag when the location is Germany,
+   * handling accidental country selection rollbacks
+   *
+   */
+  public removeOrAddEssLimiter14aView(): void {
+
+    const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
+    const indexOfView: number = this.views.indexOf(View.ConfigurationEssLimiter14aComponent);
+
+    if (location && location !== Country.GERMANY) {
+      const indexOfUpdate: number = indexOfView;
+      if (indexOfUpdate != -1) {
+        // Remove ConfigurationEssLimiter14aComponent.
+        this.views.splice(indexOfUpdate, 1);
+        this.isController14aActivated = false;
+      }
+      return;
+    }
+
+    if (indexOfView === -1) {
+      // Add ConfigurationEssLimiter14aComponent.
+      // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
+      this.views.splice(this.indexOf14aLimiterControllerView, 0, View.ConfigurationEssLimiter14aComponent);
+      this.isController14aActivated = true;
     }
   }
 
@@ -628,5 +669,4 @@ export abstract class AbstractIbn {
    * Returns the fields that has system variants specific to the 'System Type' selected in previous step.
    */
   public abstract getSystemVariantFields(): FormlyFieldConfig[];
-
 }

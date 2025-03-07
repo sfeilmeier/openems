@@ -73,7 +73,7 @@ export const theme = {
                 COMMERCIAL: {
                     COMMERCIAL_30: "https://docs.fenecon.de/_/de/commercial/commercial_30/montage_und_serviceanleitung/Montage_und_Serviceanleitung_Commercial_30.html",
                     COMMERCIAL_50: "https://docs.fenecon.de/_/de/commercial/commercial_50/montage_und_serviceanleitung/Montage_und_Serviceanleitung_Commercial_50.html",
-                    COMMERCIAL: "https://docs.fenecon.de/de/commercial/commercial_92/Betriebsanleitung_Commercial_92.html",
+                    COMMERCIAL: "https://docs.fenecon.de/de/commercial/commercial_92/betrieb_und_serviceanleitung/Betriebsanleitung_Commercial_92.html",
                 },
             },
 

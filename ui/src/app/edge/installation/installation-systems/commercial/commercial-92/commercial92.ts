@@ -26,6 +26,7 @@ export type Commercial92App = {
     FEED_IN_TYPE: FeedInType,
     MAX_FEED_IN_POWER?: number,
     BATTERY_TARGET: BatteryTarget,
+    HAS_ESS_LIMITER_14A: boolean,
 };
 
 export enum BatteryTarget {
@@ -49,7 +50,7 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
     public override readonly maxFeedInLimit: number = 6000000;
     public override readonly showNote: boolean = true;
     public batteryStartStopTarget: BatteryTarget = BatteryTarget.START;
-    public gridSetting: GridSetting;
+    public gridSetting: GridSetting | null = null;
 
     // protocol-dynamic-feed-in-limitation
     public override feedInLimitation? = {
@@ -88,6 +89,7 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ConfigurationEssLimiter14aComponent,
             View.ConfigurationLineSideMeterFuse,
             View.ProtocolFeedInLimitation,
             View.ConfigurationGridSetting,
@@ -312,6 +314,7 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
                 FEED_IN_TYPE: this.feedInLimitation.feedInType,
                 ...(this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
                 BATTERY_TARGET: this.batteryStartStopTarget,
+                HAS_ESS_LIMITER_14A: this.isController14aActivated,
             };
 
             componentConfigurator.addInstallAppCallback(() => {
@@ -530,6 +533,21 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
             baseMode: baseMode,
         });
 
+        if (this.isController14aActivated) {
+            componentConfigurator.add({
+                factoryId: "Controller.Ess.Limiter14a",
+                componentId: "ctrlEssLimiter14a0",
+                alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.ESS_LIMITER_ALIAS"),
+                properties: [
+                    { name: "enabled", value: true },
+                    { name: "ess.id", value: "ess0" },
+                    { name: "inputChannelAddress", value: "io1/DigitalOutput1" },
+                ],
+                mode: this.emergencyReserve.isEnabled ? ConfigurationMode.RemoveAndConfigure : ConfigurationMode.RemoveOnly,
+                baseMode: baseMode,
+            });
+        }
+
         return componentConfigurator;
     }
 
@@ -541,6 +559,18 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
                 componentId: "ctrlPrepareBatteryExtension0",
                 behaviour: SchedulerIdBehaviour.MANAGED_BY_APP_MANAGER,
             },
+        );
+
+        if (this.isController14aActivated) {
+            this.requiredControllerIds.push(
+                {
+                    componentId: "ctrlEssLimiter14a0",
+                    behaviour: SchedulerIdBehaviour.MANAGED_BY_APP_MANAGER,
+                },
+            );
+        }
+
+        this.requiredControllerIds.push(
             {
                 componentId: "ctrlGridOptimizedCharge0",
                 behaviour: SchedulerIdBehaviour.MANAGED_BY_APP_MANAGER,
@@ -606,6 +636,12 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
         // Welcherister, BMS, Parallel box, EMS box
         const initialStaticTowerComponents: number = 4;
 
+        protocol.items.push({
+            category: Category.GRID,
+            name: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
+            value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+        });
+
         // Subsequent towers will have only 2 static components. Paralell box and BMS box.
         const subsequentStaticTowerComponents: number = 2;
         const categoryElement: string = "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER";
@@ -635,33 +671,28 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
 
     }
 
-    /**
- * For `SystemType.FENECON_HOME` and `SystemType.HECKERT_HOME`, it checks the location:
- * - If the location is not Germany, it removes the `View.ConfigurationEssLimiter14aComponent` from the `views` array.
- * - If the location is Germany and the `View.ConfigurationEssLimiter14aComponent` is not already in the `views` array, it adds it at a specific index.
- */
-    public override removeUpdateView(edge: Edge) {
-        super.removeUpdateView(edge);
+    public override addSystemSpecificFields(tableData): void {
+        super.addSystemSpecificFields(tableData);
 
-        const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
-        const existingIndexOfView: number = this.views.indexOf(View.ConfigurationGridSetting);
-        const indexOfViewToBeAdded: number = 9;
+        const gridData: ComponentData[] = [];
 
-        if (location && location !== Country.GERMANY) {
-            if (existingIndexOfView != -1) {
-                // Remove ConfigurationGridSettingComponent.
-                this.views.splice(existingIndexOfView, 1);
-                this.gridSetting = GridSetting.VDE_AR_N_4105; // reset to Default
-            }
-            return;
+        gridData.push({
+            label: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
+            value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+        });
+
+        if (gridData.length > 0) {
+            tableData.push({
+                header: Category.GRID,
+                rows: gridData,
+            });
         }
+    }
 
-        if (existingIndexOfView === -1) {
-            // Add ConfigurationGridSettingComponent.
-            // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
-            this.views.splice(indexOfViewToBeAdded, 0, View.ConfigurationGridSetting);
-        }
-
+    public override removeOrAddView(edge: Edge): void {
+        super.removeOrAddView(edge);
+        this.removeOrAddEssLimiter14aView();
+        this.removeOrAddGridSettingView();
     }
 
     protected override addCustombatteryInverterData(): ComponentData[] {
@@ -713,5 +744,38 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
         }
 
         return allSerialNumbersResolved;
+    }
+
+    /**
+     * Manages the presence of the ConfigurationGridSettingComponent view based on country location.
+     *
+     * @remarks
+     * Performs two main operations:
+     * 1. Removes the ConfigurationGridSettingComponent view and resets the gridSetting to the default "VDE_AR_N_4105" when the location is not Germany
+     * 2. Re-adds the ConfigurationGridSettingComponent view (if missing) when the location is Germany,
+     * handling accidental country selection rollbacks
+     *
+     */
+    private removeOrAddGridSettingView() {
+
+        const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
+        const existingIndexOfView: number = this.views.indexOf(View.ConfigurationGridSetting);
+        const indexOfViewToBeAdded: number = 9;
+
+        if (location && location !== Country.GERMANY) {
+            if (existingIndexOfView != -1) {
+                // Remove ConfigurationGridSettingComponent.
+                this.views.splice(existingIndexOfView, 1);
+                this.gridSetting = null;
+            }
+            return;
+        }
+
+        if (existingIndexOfView === -1) {
+            // Add ConfigurationGridSettingComponent.
+            // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
+            this.views.splice(indexOfViewToBeAdded, 0, View.ConfigurationGridSetting);
+        }
+
     }
 }
