@@ -13,6 +13,7 @@ import { FormlySafeInputWrapperComponent } from "./formly/safe-input/formly-safe
 import { IndexComponent } from "./index.component";
 import { InstallAppComponent } from "./install.component";
 import { KeyModalComponent } from "./keypopup/modal.component";
+import { OAuthIndexComponent } from "./oauth/oauth.component";
 import { SingleAppComponent } from "./single.component";
 import { UpdateAppComponent } from "./update.component";
 
@@ -66,12 +67,14 @@ export function registerTranslateExtension(translate: TranslateService) {
     FormlyInputWithUnitComponent,
     FormlyOptionGroupPickerComponent,
     FormlyReorderArrayComponent,
+    OAuthIndexComponent,
   ],
   exports: [
     IndexComponent,
     InstallAppComponent,
     SingleAppComponent,
     UpdateAppComponent,
+    OAuthIndexComponent,
   ],
   providers: [
     // Use factory for formly. This allows us to use translations in validationMessages.
