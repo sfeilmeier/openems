@@ -84,10 +84,10 @@ export abstract class AbstractFlatWidget implements OnInit, OnDestroy {
     }
 
     /**
-     * Gets the first valid --non null-- value for this channel
+     * Gets the first valid --non null/undefined-- value for this channel
      *
      * @param channelAddress the channel address
-     * @returns a non null value
+     * @returns a non null/undefined value
      */
     protected async getFirstValidValueForChannel(channelAddress: ChannelAddress): Promise<any> {
         return new Promise<any>((res) => {
