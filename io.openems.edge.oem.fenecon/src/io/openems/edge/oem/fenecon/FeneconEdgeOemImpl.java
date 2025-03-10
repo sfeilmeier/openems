@@ -117,6 +117,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.TimeOfUseTariff.ENTSO-E", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.GroupeE", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Hassfurt", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
+			.put("App.TimeOfUseTariff.OctopusGo", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Stromdao", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Swisspower", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Tibber", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
