@@ -17,7 +17,7 @@ type Home20Mppt = {
 
 export class Home20FeneconIbn extends AbstractHomeIbn {
 
-    public override readonly id: SystemId = SystemId.FENECON_HOME_20;
+    public override readonly systemId: SystemId = SystemId.FENECON_HOME_20;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
     public override readonly homeAppAlias: string = "FENECON Home 20";
     public override readonly homeAppId: string = "App.FENECON.Home.20";

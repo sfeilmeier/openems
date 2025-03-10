@@ -36,10 +36,10 @@ export abstract class AbstractIbn {
   public static readonly COUNTRY_PARTNER_ZIP_CODE_REGEX: string = "^((\\d{5}(-\\d{4})?)|([1-9]\\d{3}\\s?[A-Z]{2})|(\\d{3}\\s?\\d{2})|(\\d{4}))$";
 
   // Battery type
-  public readonly type: SystemType;
+  public readonly systemType: SystemType;
 
   // Id
-  public readonly id: SystemId;
+  public readonly systemId: SystemId;
 
   // protocol-installer
   public installer?: {
@@ -189,7 +189,7 @@ export abstract class AbstractIbn {
         });
       }
     }
-    batteryData.push({ label: this.translate.instant("Index.TYPE"), value: this.type });
+    batteryData.push({ label: this.translate.instant("Index.TYPE"), value: this.systemType });
     return batteryData;
   }
 
@@ -649,7 +649,7 @@ export abstract class AbstractIbn {
     config: EdgeConfig,
     websocket: Websocket,
     service?: Service
-  ): ComponentConfigurator;
+  ): Promise<ComponentConfigurator>;
 
   /**
    * View Protocol-serial-numbers.

@@ -5,6 +5,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
+import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
@@ -16,7 +17,9 @@ import { ComponentData, DcPv, SerialNumberFormData } from "../../shared/ibndatat
 import { Meter } from "../../shared/meter";
 import { FEED_IN_POWER_FACTOR_OPTIONS } from "../../shared/options";
 import { SystemId, SystemType } from "../../shared/system";
-import { BaseMode, ComponentConfigurator, ConfigurationMode } from "../../views/configuration-execute/component-configurator";
+import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../views/configuration-execute/component-configurator";
+import { GetEstimatedConfigRequest } from "../../views/configuration-execute/jsonrpc/getEstimatedConfig";
+import { GetEstimatedConfigResponse } from "../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
 import { AbstractIbn, SchedulerIdBehaviour } from "../abstract-ibn";
 
@@ -44,7 +47,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   private static readonly MODULE_DATA_TIMEOUT = 12_000; // two minutes
   private static readonly TOWER_DATA_TIMEOUT = 5_000; // five seconds
 
-  public override readonly type: SystemType = SystemType.FENECON_HOME;
+  public override readonly systemType: SystemType = SystemType.FENECON_HOME;
 
 
   // Protocol-pv-component
@@ -81,6 +84,8 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public pv?: {
     dc?: DcPv[];
   };
+
+  public estimatedConfig: GetEstimatedConfigResponse = null;
 
   // Protocol line side meter fuse
   public override lineSideMeterFuse?: {
@@ -859,7 +864,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     return fields;
   }
 
-  public override getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service) {
+  public override async getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service) {
     const componentConfigurator: ComponentConfigurator =
       new ComponentConfigurator(edge, config, websocket);
 
@@ -877,298 +882,55 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
     // TODO remove
     // system not updated => newest appManager not available
-    const isAppManagerAvailable: boolean = AppCenterUtil.isAppManagerAvailable(edge);
-    const baseMode = isAppManagerAvailable ? BaseMode.AppManager : BaseMode.UI;
+    const homeAppProperties = this.getHomeAppProperties(safetyCountry, feedInSetting);
+    const baseMode = AppCenterUtil.isAppManagerAvailable(edge) ? BaseMode.AppManager : BaseMode.UI;
 
-    if (isAppManagerAvailable) {
-      const homeAppProperties = this.getHomeAppProperties(safetyCountry, feedInSetting);
-
-      componentConfigurator.addInstallAppCallback(() => {
-        return AppCenterUtil.createOrUpdateApp(edge, websocket, this.homeAppId, this.homeAppAlias, homeAppProperties, AppCenterUtil.keyForIntegratedSystems());
-      });
-    }
-
-    // TODO remove components later when progress is shown by appManager
-    // modbus1
-    componentConfigurator.add({
-      factoryId: "Bridge.Modbus.Serial",
-      componentId: "modbus1",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_BATTERY_INVERTER"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "portName", value: "/dev/busUSB2" },
-        { name: "baudRate", value: 9600 },
-        { name: "databits", value: 8 },
-        { name: "stopbits", value: "ONE" },
-        { name: "parity", value: "NONE" },
-        { name: "logVerbosity", value: "NONE" },
-        { name: "invalidateElementsAfterReadErrors", value: 1 },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
-    });
-
-    // modbus0
-    componentConfigurator.add({
-      factoryId: "Bridge.Modbus.Serial",
-      componentId: "modbus0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_BATTERY"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "portName", value: "/dev/busUSB1" },
-        { name: "baudRate", value: 19200 },
-        { name: "databits", value: 8 },
-        { name: "stopbits", value: "ONE" },
-        { name: "parity", value: "NONE" },
-        { name: "logVerbosity", value: "NONE" },
-        { name: "invalidateElementsAfterReadErrors", value: 1 },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
-    });
-
-    // meter0
-    const goodweMeter = {
-      factoryId: "GoodWe.Grid-Meter",
-      componentId: "meter0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.GRID_METER"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "modbus.id", value: "modbus1" },
-        { name: "modbusUnitId", value: 247 },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
-    };
-
-    if (this.energyFlowMeter) {
-      goodweMeter.properties.push({ name: "goodWeMeterCategory", value: this.energyFlowMeter.meter });
-      if (this.energyFlowMeter.meter === Meter.GridMeterCategory.COMMERCIAL_METER) {
-        goodweMeter.properties.push({ name: "externalMeterRatioValueA", value: this.energyFlowMeter.value });
-      }
-    }
-
-    componentConfigurator.add(goodweMeter);
-
-    // io0
-    componentConfigurator.add({
-      factoryId: this.relayFactoryId,
-      componentId: "io0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.RELAY_BOARD"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "modbus.id", value: "modbus0" },
-        { name: "modbusUnitId", value: 2 },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
-    });
-
-    // battery0
-    componentConfigurator.add({
-      factoryId: "Battery.Fenecon.Home",
-      componentId: "battery0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.BATTERY"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "startStop", value: "AUTO" },
-        { name: "modbus.id", value: "modbus0" },
-        { name: "modbusUnitId", value: 1 },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
-    });
-
-    // batteryInverter0
-    const goodweconfig = {
-      factoryId: "GoodWe.BatteryInverter",
-      componentId: "batteryInverter0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.BATTERY_INVERTER"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "modbus.id", value: "modbus1" },
-        { name: "modbusUnitId", value: 247 },
-        { name: "safetyCountry", value: safetyCountry },
-        {
-          name: "backupEnable",
-          value: this.emergencyReserve.isEnabled ? "ENABLE" : "DISABLE",
-        },
-        { name: "setfeedInPowerSettings", value: feedInSetting },
-        {
-          name: "mpptForShadowEnable",
-          value: this.batteryInverter?.shadowManagementDisabled
-            ? "DISABLE"
-            : "ENABLE",
-        },
-        {
-          name: "rcrEnable",
-          value: feedInLimitation.feedInType === FeedInType.EXTERNAL_LIMITATION ? "ENABLE" : "DISABLE",
-        },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
-    };
-
-    feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION
-      ? goodweconfig.properties.push({
-        name: "feedPowerPara",
-        value: feedInLimitation.maximumFeedInPower,
-      },
-        { name: "feedPowerEnable", value: "ENABLE" },
-      )
-      : goodweconfig.properties.push(
-        { name: "feedPowerEnable", value: "DISABLE" },
+    componentConfigurator.addInstallAppCallback(() => {
+      return AppCenterUtil.createOrUpdateApp(
+        edge,
+        websocket,
+        this.homeAppId,
+        this.homeAppAlias,
+        homeAppProperties,
+        AppCenterUtil.keyForIntegratedSystems(),
       );
-
-    componentConfigurator.add(goodweconfig);
-
-    this.addHomeDcConfiguration(componentConfigurator, baseMode);
-
-    // ess0
-    componentConfigurator.add({
-      factoryId: "Ess.Generic.ManagedSymmetric",
-      componentId: "ess0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.STORAGE_SYSTEM"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "startStop", value: "START" },
-        { name: "batteryInverter.id", value: "batteryInverter0" },
-        { name: "battery.id", value: "battery0" },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
     });
 
-    // predictor0
-    componentConfigurator.add({
-      factoryId: "Predictor.PersistenceModel",
-      componentId: "predictor0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.PROGNOSIS"),
-      properties: [
-        { name: "enabled", value: true },
-        {
-          name: "channelAddresses",
-          value: ["_sum/ProductionActivePower", "_sum/ConsumptionActivePower"],
-        },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
-    });
-
-    // ctrlGridOptimizedCharge0
-    const gridOptimizedCharge = {
-      factoryId: "Controller.Ess.GridOptimizedCharge",
-      componentId: "ctrlGridOptimizedCharge0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.GRID_OPTIMIZED_CHARGE"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "ess.id", value: "ess0" },
-        { name: "meter.id", value: "meter0" },
-        { name: "delayChargeRiskLevel", value: "MEDIUM" },
-        { name: "manualTargetTime", value: "17:00" },
-        { name: "debugMode", value: false },
-        { name: "sellToGridLimitRampPercentage", value: 2 },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
-    };
-
-    feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
-      ? gridOptimizedCharge.properties.push(
-        { name: "maximumSellToGridPower", value: feedInLimitation.maximumFeedInPower },
-        { name: "sellToGridLimitEnabled", value: true },
-        { name: "mode", value: "AUTOMATIC" },
-      )
-      :
-      gridOptimizedCharge.properties.push(
-        { name: "sellToGridLimitEnabled", value: false },
-        { name: "mode", value: "OFF" },
+    if (!this.estimatedConfig) {
+      // Send request and process components
+      this.estimatedConfig = await edge.sendRequest(
+        websocket,
+        new ComponentJsonApiRequest({
+          componentId: "_appManager",
+          payload: new GetEstimatedConfigRequest({
+            appId: this.homeAppId,
+            alias: this.homeAppAlias,
+            properties: homeAppProperties,
+          }),
+        }),
       );
-
-    componentConfigurator.add(gridOptimizedCharge);
-
-    // ctrlEssSurplusFeedToGrid0
-    componentConfigurator.add({
-      factoryId: "Controller.Ess.Hybrid.Surplus-Feed-To-Grid",
-      componentId: "ctrlEssSurplusFeedToGrid0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.SURPLUS_ENERGY_FEEDIN"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "ess.id", value: "ess0" },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
-    });
-
-    // ctrlBalancing0
-    componentConfigurator.add({
-      factoryId: "Controller.Symmetric.Balancing",
-      componentId: "ctrlBalancing0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.SELF_CONSUMPTION"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "ess.id", value: "ess0" },
-        { name: "meter.id", value: "meter0" },
-        { name: "targetGridSetpoint", value: 0 },
-      ],
-      mode: ConfigurationMode.RemoveAndConfigure,
-      baseMode: baseMode,
-    });
-
-    componentConfigurator.add({
-      factoryId: "GoodWe.EmergencyPowerMeter",
-      componentId: "meter2",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.EMERGENCY_POWER_CONSUMER"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "modbus.id", value: "modbus1" },
-        { name: "modbusUnitId", value: 247 },
-      ],
-      mode: this.emergencyReserve.isEnabled ? ConfigurationMode.RemoveAndConfigure : ConfigurationMode.RemoveOnly,
-      baseMode: baseMode,
-    });
-    componentConfigurator.add({
-      factoryId: "Controller.Ess.EmergencyCapacityReserve",
-      componentId: "ctrlEmergencyCapacityReserve0",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.EMERGENCY_CAPACITY_RESERVE"),
-      properties: [
-        { name: "enabled", value: true },
-        { name: "ess.id", value: "ess0" },
-        { name: "isReserveSocEnabled", value: this.emergencyReserve.isReserveSocEnabled },
-        {
-          name: "reserveSoc",
-          value: this.emergencyReserve.value ?? 5, /* minimum allowed value */
-        },
-      ],
-      mode: this.emergencyReserve.isEnabled ? ConfigurationMode.RemoveAndConfigure : ConfigurationMode.RemoveOnly,
-      baseMode: baseMode,
-    });
-
-    componentConfigurator.add({
-      factoryId: "Ess.Power",
-      componentId: "_power",
-      alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.POWER"),
-      properties: [
-        { name: "enablePid", value: false },
-      ],
-      mode: ConfigurationMode.UpdateOnly,
-      baseMode: baseMode,
-    });
-
-    if (this.isController14aActivated) {
-      componentConfigurator.add({
-        factoryId: "Controller.Ess.Limiter14a",
-        componentId: "ctrlEssLimiter14a0",
-        alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.ESS_LIMITER_ALIAS"),
-        properties: [
-          { name: "enabled", value: true },
-          { name: "ess.id", value: "ess0" },
-          { name: "inputChannelAddress", value: "io1/DigitalOutput1" },
-        ],
-        mode: this.emergencyReserve.isEnabled ? ConfigurationMode.RemoveAndConfigure : ConfigurationMode.RemoveOnly,
-        baseMode: baseMode,
-      });
     }
+
+    // Add components to the configurator
+    this.estimatedConfig.result.configurations
+      .filter((config) => config.type === "Component")
+      .forEach((config) => {
+        const components = config.configuration?.components || [];
+        components.forEach((component) => {
+          const configurationObject: ConfigurationObject = {
+            factoryId: component.factoryId,
+            componentId: component.id,
+            alias: component.id.startsWith("_") ? component.id : component.alias,
+            properties: component.properties
+              ? Object.entries(component.properties).map(([name, value]) => ({ name, value }))
+              : undefined,
+            mode: ConfigurationMode.RemoveAndConfigure,
+            baseMode: baseMode,
+          };
+
+          componentConfigurator.add(configurationObject);
+        });
+      });
 
     return componentConfigurator;
   }
@@ -1195,6 +957,8 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
     // limitController14a
     this.isController14aActivated = ibnString.isController14aActivated;
+
+    this.estimatedConfig = ibnString.estimatedConfig;
   }
 
   /**

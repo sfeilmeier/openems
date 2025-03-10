@@ -55,7 +55,7 @@ export class InstallationComponent implements OnInit {
       // Ibn is added in second view.
       if (sessionStorage.ibn) {
         const ibnString = JSON.parse(sessionStorage.getItem("ibn"));
-        const systemId: SystemId = ibnString.id;
+        const systemId: SystemId = ibnString.systemId;
 
         // Load the specific Ibn implementation. and copy to the indivual fileds.
         // Copying the plain Json string does not recognize particular Ibn functions.

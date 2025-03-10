@@ -28,12 +28,12 @@ export class ProtocolChecklistComponent implements OnInit {
     protected form: FormGroup;
     protected fields: FormlyFieldConfig[];
     protected model;
-    protected componentConfigurator: ComponentConfigurator;
     protected isWaiting = false;
     protected isNextDisabled: boolean;
     protected allFieldsChecked: boolean = false;
     protected isStartConfigurationDisabled: boolean = false;
     protected readonly timeoutInMinutes: number = ComponentConfigurator.DELAY_FUNCTION_TEST / 60 / 1000;
+    private componentConfigurator: Promise<ComponentConfigurator>;
 
     constructor(
         private translate: TranslateService,
@@ -52,7 +52,7 @@ export class ProtocolChecklistComponent implements OnInit {
     /**
      * Starts the configuration based on the components selected.
     */
-    public startConfiguration() {
+    public async startConfiguration() {
         this.ibn.batteryStartStopTarget = BatteryTarget.AUTO;
         this.isStartConfigurationDisabled = true;
 
@@ -60,32 +60,34 @@ export class ProtocolChecklistComponent implements OnInit {
         this.edge.getConfig(this.websocket).pipe(
             takeUntil(stopOnRequest),
             filter(config => config !== null),
-        ).subscribe((config) => {
+        ).subscribe(async (config) => {
             stopOnRequest.next();
             stopOnRequest.complete();
 
-            // Add objects to component configurator
+            // Fetch component configurator
             this.componentConfigurator = this.ibn.getComponentConfigurator(this.edge, config, this.websocket, this.service);
+
+            const resolvedConfigurator = await this.componentConfigurator; // Wait for resolution
             this.isWaiting = true;
 
             // Starts the configuration
-            this.componentConfigurator.start().then(() => {
+            resolvedConfigurator.start().then(() => {
                 this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.SUCCESSFULLY_CONFIGURED"), "success");
             }).catch((reason) => {
                 console.log(reason);
 
-                if (!this.componentConfigurator.allHaveConfigurationState(ConfigurationState.Configured)) {
+                if (!resolvedConfigurator.allHaveConfigurationState(ConfigurationState.Configured)) {
                     this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.PARTIAL_CONFIGURATION"), "danger");
                     return;
                 }
 
-                if (!this.componentConfigurator.allHaveFunctionState(FunctionState.Ok)) {
+                if (!resolvedConfigurator.allHaveFunctionState(FunctionState.Ok)) {
                     this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.FUNCTION_TEST_ERROR"), "warning");
                     return;
                 }
             }).finally(() => {
                 this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.START_FUNCTION_TEST"), "warning", 5000);
-                this.componentConfigurator.startFunctionTest(this.ibn).then(() => {
+                resolvedConfigurator.startFunctionTest(this.ibn).then(() => {
                     this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.FINISH_FUNCTION_TEST"), "success");
                     this.isWaiting = false;
                     this.isNextDisabled = false;

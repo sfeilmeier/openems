@@ -18,7 +18,7 @@ import { AbstractIbn } from "../abstract-ibn";
 export abstract class AbstractCommercialIbn extends AbstractIbn {
     private static readonly SELECTOR = "Commercial";
 
-    public override readonly type: SystemType = SystemType.COMMERCIAL;
+    public override readonly systemType: SystemType = SystemType.COMMERCIAL;
     public override readonly showRundSteuerManual: boolean = false;
     public override showViewCount: boolean = false;
     public readonly minNumberOfTowers: number = 1;

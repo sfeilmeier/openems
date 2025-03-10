@@ -756,7 +756,8 @@
       "IP_ADDRESS_ERROR": "An IP address required for the {{ system}} could not be added to the network configuration.",
       "PREPARE_BATTERY_EXTENSION": "Battery retrofitting",
       "COMMERCIAL_BATTERY_NOTE": "If you now click on “NEXT ->”, you have around 15 minutes to complete the rest of the commissioning process. After that, the BMS goes into a “time-out” set for safety reasons. Normally, this time is sufficient to complete the last steps of the commissioning in peace.\nIf there is still not enough time, you can start the commissioning again from the beginning.",
-      "NOTE": "Please note:"
+      "NOTE": "Please note:",
+      "UNDEFINED_COMPONENT_CONFIGURATOR": "Component configurator is undefined"
     },
     "CONFIGURATION_LINE_SIDE_METER_FUSE": {
       "FIXED_VALUE_DESCRIPTION": "What is the current value on the circuit breaker?",

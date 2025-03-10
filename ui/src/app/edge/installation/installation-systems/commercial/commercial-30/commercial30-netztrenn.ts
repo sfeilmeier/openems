@@ -16,7 +16,7 @@ import { AbstractCommercial30Ibn } from "./abstract-commercial-30";
 
 export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
 
-    public override readonly id: SystemId = SystemId.COMMERCIAL_30_NETZTRENNSTELLE;
+    public override readonly systemId: SystemId = SystemId.COMMERCIAL_30_NETZTRENNSTELLE;
     public override readonly emergencyPower = "ENABLE";
 
     // configuration-emergency-reserve
@@ -75,7 +75,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         });
     }
 
-    public getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service: Service): ComponentConfigurator {
+    public override getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service: Service): Promise<ComponentConfigurator> {
         const invalidateElementsAfterReadErrors: number = 3;
         const componentConfigurator: ComponentConfigurator = super.getCommercial30ComponentConfigurator(edge, config, websocket, invalidateElementsAfterReadErrors, service);
 
@@ -198,7 +198,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
                 : ConfigurationMode.RemoveOnly,
         }, 12);
 
-        return componentConfigurator;
+        return Promise.resolve(componentConfigurator);
     }
 
     public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {

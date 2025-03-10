@@ -17,7 +17,7 @@ export class Home15Gen2FeneconIbn extends AbstractHomeIbn {
     public override readonly maxNumberOfTowers: number = 4;
     public override readonly minNumberOfModulesPerTower: number = 3;
 
-    public override readonly id: SystemId = SystemId.FENECON_HOME_15;
+    public override readonly systemId: SystemId = SystemId.FENECON_HOME_15;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
     public override readonly homeAppId: string = "App.FENECON.Home15";
     public override readonly homeAppAlias: string = "FENECON Home";

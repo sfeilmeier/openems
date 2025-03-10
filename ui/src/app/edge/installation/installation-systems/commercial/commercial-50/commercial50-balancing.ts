@@ -6,7 +6,7 @@ import { AbstractCommercial50Ibn } from "./abstract-commercial-50";
 
 export class Commercial50Balancing extends AbstractCommercial50Ibn {
 
-    public override readonly id: SystemId = SystemId.COMMERCIAL_50_BALANCING;
+    public override readonly systemId: SystemId = SystemId.COMMERCIAL_50_BALANCING;
 
     constructor(translate: TranslateService) {
         super([
