@@ -96,10 +96,31 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
 
   protected updateTowerNr(event: Event) {
     this.selectedTower = (event as SelectCustomEvent).target.value;
+    this.addSerialNumbersToModules();
   }
 
   protected updateModuleNr(event: Event) {
     this.selectedModule = (event as SelectCustomEvent).target.value;
+  }
+
+  private async addSerialNumbersToModules() {
+
+    const moduleOptions = [];
+    this.moduleOptions.forEach(({ key, value: moduleNr }) => {
+      if (!moduleNr) {
+        return;
+      }
+
+      const channel = new ChannelAddress("battery0", `Tower${this.selectedTower.value}Module${moduleNr}SerialNumber`);
+      this.subscribeAndGetFirstValidValueForChannel(channel).then((channelValue) => {
+        moduleOptions.push({
+          key: key + " - " + channelValue,
+          value: moduleNr,
+        });
+      });
+    });
+
+    this.moduleOptions = moduleOptions;
   }
 
   private async setTowerModuleOptions() {
@@ -119,10 +140,12 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
 
     const numberOfModules = await this.getFirstValidValueForChannel(new ChannelAddress(battery.id, "NumberOfModulesPerTower"));
     this.moduleOptions.push(
-      ...(numberOfModules ? ArrayUtils.getArrayOfLength(numberOfModules).map(el => ({
-        key: "Module" + el,
-        value: el.toString(),
-      }))
+      ...(numberOfModules ? ArrayUtils.getArrayOfLength(numberOfModules).map(el => {
+        return {
+          key: "Module" + el,
+          value: el.toString(),
+        };
+      })
         : []));
 
     this.selectedModule = this.moduleOptions[0];
