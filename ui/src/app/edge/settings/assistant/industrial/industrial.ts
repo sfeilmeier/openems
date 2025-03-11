@@ -34,7 +34,7 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
   protected systemFeneconIndustrialL: { [id: string]: any } = {};
   protected CONVERT_TO_GRID_METER_CATEGORY = Converter.CONVERT_TO_GRID_METER_CATEGORY(this.translate);
   protected date: string = this.service?.historyPeriod?.value?.getText(this.translate, this.service) ?? "";
-  protected currentEdge: Edge = this.service?.currentEdge.getValue();
+  protected currentEdge: Edge | null = null;
 
   private static getHeatingState(currentData: CurrentData): any {
     if (currentData.allComponents["system0/HeaterRunningState"] == 1) {
@@ -58,7 +58,8 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     ].join(".");
   }
 
-  protected override afterIsInitialized() {
+  protected override async afterIsInitialized() {
+    this.currentEdge = await this.service.getCurrentEdge();
     if (this.config?.components) {
       this.chargerComponents = Object.values(this.config.components)
         .filter(component =>

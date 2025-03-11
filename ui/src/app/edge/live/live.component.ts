@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, effect, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { RefresherCustomEvent } from "@ionic/angular";
 import { Subject } from "rxjs";
@@ -12,7 +12,7 @@ import { DateTimeUtils } from "src/app/shared/utils/datetime/datetime-utils";
   templateUrl: "./live.component.html",
   standalone: false,
 })
-export class LiveComponent implements OnInit, OnDestroy {
+export class LiveComponent implements OnDestroy {
 
   protected edge: Edge | null = null;
   protected config: EdgeConfig | null = null;
@@ -30,19 +30,21 @@ export class LiveComponent implements OnInit, OnDestroy {
     protected utils: Utils,
     protected websocket: Websocket,
     private dataService: DataService,
-  ) { }
+  ) {
 
-  public ngOnInit() {
-    this.service.currentEdge.subscribe((edge) => {
+    effect(() => {
+      const edge = this.service.currentEdge();
+
       this.edge = edge;
       this.isModbusTcpWidgetAllowed = EdgePermission.isModbusTcpApiWidgetAllowed(edge);
+
+      this.service.getConfig().then(config => {
+        this.config = config;
+        this.widgets = config.widgets;
+        this.advertWidgets = config.advertWidgets;
+      });
+      this.checkIfRefreshNeeded();
     });
-    this.service.getConfig().then(config => {
-      this.config = config;
-      this.widgets = config.widgets;
-      this.advertWidgets = config.advertWidgets;
-    });
-    this.checkIfRefreshNeeded();
   }
 
   public ngOnDestroy() {
