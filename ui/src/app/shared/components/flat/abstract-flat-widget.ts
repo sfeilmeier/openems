@@ -7,8 +7,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, take, takeUntil } from "rxjs/operators";
 import { v4 as uuidv4 } from "uuid";
-import { ChannelAddress, CurrentData, Edge, EdgeConfig, Utils } from "src/app/shared/shared";
 
+import { ChannelAddress, CurrentData, Edge, EdgeConfig, Utils } from "src/app/shared/shared";
 import { Service } from "../../service/service";
 import { Websocket } from "../../service/websocket";
 import { Converter } from "../shared/converter";
