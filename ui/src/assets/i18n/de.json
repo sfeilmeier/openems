@@ -754,7 +754,8 @@
       "IP_ADDRESS_ERROR": "Eine für die {{ system }} notwendige IP-Adresse konnte nicht zur Netzwerkkonfiguration hinzugefügt werden.",
       "PREPARE_BATTERY_EXTENSION": "Batterienachrüstung",
       "COMMERCIAL_BATTERY_NOTE": "\nWenn Sie nun auf “WEITER ->” klicken, stehen Ihnen ca. 15  Minuten zur vollständigen Durchführung der restlichen Inbetriebnahme (IBN) zur Verfügung. Danach geht die BMS in einen zur Sicherheit eingestellten “Time-Out”. Normalerweise ist diese Zeit ausreichend, um die letzten Schritte der IBN in Ruhe abzuschließen. \nSollte die Zeit trotzdem nicht genügen, können Sie die IBN erneut von vorne starten.",
-      "NOTE": "Bitte beachten Sie:"
+      "NOTE": "Bitte beachten Sie:",
+      "UNDEFINED_COMPONENT_CONFIGURATOR": "Komponentenkonfigurator ist nicht definiert"
     },
     "CONFIGURATION_LINE_SIDE_METER_FUSE": {
       "FIXED_VALUE_DESCRIPTION": "Mit welcher Stromstärke ist der Zähler abgesichert?",
@@ -972,7 +973,7 @@
     },
     "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO - Wechselrichter einbinden",
     "PROTOCOL_CHECKLIST": {
-      "CONNECT_INVERTER": "A) Computer per Netzwerkkabel mit Wechelrichter verbinden (obere LAN Buchse)",
+      "CONNECT_INVERTER": "A) Computer per Netzwerkkabel mit Wechselrichter verbinden (obere LAN Buchse)",
       "CHANGE_NETWORK_SETTINGS": "B) Netzwerkeinstellungen am Computer ändern (IP-Adresse)",
       "IP_ADDRESS": "C) IP-Adresse im Browser eingeben",
       "ENTER_PASSWORD": "D) Passwort eingeben",

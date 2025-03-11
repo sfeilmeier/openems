@@ -1,37 +1,29 @@
 package io.openems.edge.energy.optimizer.app;
 
 import static io.jenetics.engine.Limits.byExecutionTime;
-import static io.openems.common.jscalendar.JSCalendar.RecurrenceFrequency.WEEKLY;
+import static io.openems.edge.energy.EnergySchedulerTestUtils.eshEmergencyCapacityReserve;
+import static io.openems.edge.energy.EnergySchedulerTestUtils.eshEvseSingleManual;
+import static io.openems.edge.energy.EnergySchedulerTestUtils.eshFixActivePower;
+import static io.openems.edge.energy.EnergySchedulerTestUtils.eshGridOptimizedChargeManual;
+import static io.openems.edge.energy.EnergySchedulerTestUtils.eshLimitTotalDischarge;
+import static io.openems.edge.energy.EnergySchedulerTestUtils.eshTimeOfUseTariff;
 import static io.openems.edge.energy.optimizer.SimulationResult.EMPTY_SIMULATION_RESULT;
-import static io.openems.edge.energy.optimizer.app.AppUtils.parseGlobalSimulationsContextFromLogString;
-import static java.time.DayOfWeek.FRIDAY;
-import static java.time.DayOfWeek.MONDAY;
-import static java.time.DayOfWeek.THURSDAY;
-import static java.time.DayOfWeek.TUESDAY;
-import static java.time.DayOfWeek.WEDNESDAY;
+import static io.openems.edge.energy.optimizer.app.AppUtils.parseGlobalOptimizationContextFromLogString;
+import static io.openems.edge.ess.power.api.Relationship.GREATER_OR_EQUALS;
+import static io.openems.edge.evse.api.SingleThreePhase.THREE_PHASE;
 import static java.time.Duration.ofSeconds;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import com.google.common.collect.ImmutableList;
 
-import io.openems.common.jscalendar.JSCalendar;
-import io.openems.edge.controller.ess.emergencycapacityreserve.ControllerEssEmergencyCapacityReserveImpl;
-import io.openems.edge.controller.ess.fixactivepower.ControllerEssFixActivePowerImpl;
-import io.openems.edge.controller.ess.gridoptimizedcharge.ControllerEssGridOptimizedChargeImpl;
-import io.openems.edge.controller.ess.gridoptimizedcharge.Mode;
-import io.openems.edge.controller.ess.limittotaldischarge.ControllerEssLimitTotalDischargeImpl;
 import io.openems.edge.controller.ess.timeofusetariff.ControlMode;
-import io.openems.edge.controller.ess.timeofusetariff.TimeOfUseTariffControllerImpl;
-import io.openems.edge.controller.evcs.Utils.EshContext.EshSmartContext;
-import io.openems.edge.energy.api.EnergyScheduleHandler;
-import io.openems.edge.energy.api.EnergyUtils;
+import io.openems.edge.energy.api.handler.EnergyScheduleHandler;
 import io.openems.edge.energy.optimizer.Simulator;
 import io.openems.edge.energy.optimizer.Utils;
-import io.openems.edge.ess.api.ManagedSymmetricEss;
-import io.openems.edge.ess.power.api.Relationship;
-import io.openems.edge.ess.test.DummyManagedSymmetricEss;
+import io.openems.edge.evse.api.Limit;
+import io.openems.edge.evse.api.chargepoint.EvseChargePoint.ChargeParams;
+import io.openems.edge.evse.api.chargepoint.Mode;
 
 /**
  * This little application allows running the Optimizer from an existing log.
@@ -49,46 +41,18 @@ import io.openems.edge.ess.test.DummyManagedSymmetricEss;
  */
 public class RunOptimizerFromLogApp {
 
-	private static final long EXECUTION_LIMIT_SECONDS = 30;
-
-	private static final ManagedSymmetricEss ESS = new DummyManagedSymmetricEss("ess0");
+	private static final long EXECUTION_LIMIT_SECONDS = 5;
 
 	private static final ImmutableList<EnergyScheduleHandler> ESHS = ImmutableList.of(//
-			ControllerEssEmergencyCapacityReserveImpl.buildEnergyScheduleHandler(//
-					() -> /* reserveSoc */ 0), //
-			ControllerEssLimitTotalDischargeImpl.buildEnergyScheduleHandler(//
-					() -> /* minSoc */ 0), //
-			ControllerEssFixActivePowerImpl.buildEnergyScheduleHandler(//
-					() -> new ControllerEssFixActivePowerImpl.EshContext(
-							io.openems.edge.controller.ess.fixactivepower.Mode.MANUAL_ON, //
-							EnergyUtils.toEnergy(-1000), Relationship.GREATER_OR_EQUALS)), //
-			io.openems.edge.controller.evcs.Utils.buildEshSmart(//
-					() -> new EshSmartContext("evcs1", 30000, ImmutableList.of(//
-							JSCalendar.Task.<EshSmartContext.Payload>create() //
-									.setStart(LocalDateTime.of(2024, 28, 12, 7, 0, 0)) //
-									.addRecurrenceRule(b -> b //
-											.setFrequency(WEEKLY) //
-											.addByDay(TUESDAY, WEDNESDAY, THURSDAY, FRIDAY)) //
-									.setPayload(new EshSmartContext.Payload(10000)) //
-									.build(), //
-							JSCalendar.Task.<EshSmartContext.Payload>create() //
-									.setStart(LocalDateTime.of(2024, 28, 12, 7, 0, 0)) //
-									.addRecurrenceRule(b -> b //
-											.setFrequency(WEEKLY) //
-											.addByDay(MONDAY)) //
-									.setPayload(new EshSmartContext.Payload(40000)) //
-									.build()))), //
-			ControllerEssGridOptimizedChargeImpl.buildEnergyScheduleHandler(//
-					() -> Mode.MANUAL, //
-					() -> LocalTime.of(10, 00)), //
-			// TODO EssLimiter
-			TimeOfUseTariffControllerImpl.buildEnergyScheduleHandler(//
-					() -> ESS, //
-					() -> ControlMode.CHARGE_CONSUMPTION, //
-					() -> /* maxChargePowerFromGrid */ 20_000) //
-	);
+			eshEmergencyCapacityReserve("ctrlEmergencyCapacityReserve0", 0), //
+			eshLimitTotalDischarge("ctrlLimitTotalDischarge0", 0), //
+			eshFixActivePower("ctrlFixActivePower0", -1000, GREATER_OR_EQUALS), //
+			eshGridOptimizedChargeManual("ctrlGridOptimizedCharge0", LocalTime.of(10, 00)), //
+			eshEvseSingleManual("ctrlEvseSingle0", Mode.Actual.SURPLUS,
+					new ChargeParams(new Limit(THREE_PHASE, 6000, 16000), ImmutableList.of()), 10_000), //
+			eshTimeOfUseTariff("ctrlEssTimeOfUseTariff0", ControlMode.CHARGE_CONSUMPTION));
 
-	/** Insert the full log lines including GlobalSimulationsContext header. */
+	/** Insert the full log lines including GlobalOptimizationContext header. */
 	private static final String LOG = """
 			""";
 
@@ -99,7 +63,7 @@ public class RunOptimizerFromLogApp {
 	 * @throws Exception on error
 	 */
 	public static void main(String[] args) throws Exception {
-		var simulator = new Simulator(parseGlobalSimulationsContextFromLogString(LOG, ESHS));
+		var simulator = new Simulator(parseGlobalOptimizationContextFromLogString(LOG, ESHS));
 
 		var simulationResult = simulator.getBestSchedule(EMPTY_SIMULATION_RESULT, //
 				false /* isCurrentPeriodFixed */, null, //

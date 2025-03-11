@@ -19,7 +19,7 @@ import { FormlyFieldMultiStepComponent } from "./components/formly/form-field-mu
 import { FormlyWrapperFormFieldComponent } from "./components/formly/form-field.wrapper";
 import { CheckboxButtonTypeComponent } from "./components/formly/formly-checkbox-with-button/formly-checkbox-with-button";
 import { FormlyFieldCheckboxWithImageComponent } from "./components/formly/formly-field-checkbox-image/formly-field-checkbox-with-image";
-import { FormlyFieldModalComponent } from "./components/formly/formly-field-modal/formlyfieldmodal";
+import { FormlyFieldModalComponent } from "./components/formly/formly-field-modal/formly-field-modal";
 import { FormlyFieldRadioWithImageComponent } from "./components/formly/formly-field-radio-with-image/formly-field-radio-with-image";
 import { FormlyRadioTypeComponent } from "./components/formly/formly-radio/formly-radio";
 import { FormlySelectComponent } from "./components/formly/formly-select/formly-select";

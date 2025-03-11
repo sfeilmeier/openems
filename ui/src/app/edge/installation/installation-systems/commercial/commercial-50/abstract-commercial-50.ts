@@ -161,7 +161,7 @@ export abstract class AbstractCommercial50Ibn extends AbstractCommercialIbn {
         return fields;
     }
 
-    public override getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service): ComponentConfigurator {
+    public override getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service): Promise<ComponentConfigurator> {
 
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
         const invalidateElementsAfterReadErrors: number = 3; // static value for commercial-50 systems.
@@ -299,7 +299,7 @@ export abstract class AbstractCommercial50Ibn extends AbstractCommercialIbn {
             mode: ConfigurationMode.RemoveAndConfigure,
         });
 
-        return componentConfigurator;
+        return Promise.resolve(componentConfigurator);
     }
 
     public setRequiredControllers() {

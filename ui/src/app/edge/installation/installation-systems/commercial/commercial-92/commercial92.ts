@@ -6,17 +6,19 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
+import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
 import { FeedInType, View } from "../../../shared/enums";
-import { IbnUtils } from "../../../shared/ibn.utils";
 import { ComponentData, SerialNumberFormData } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
-import { BaseMode, ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
+import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
+import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
+import { GetEstimatedConfigResponse } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
 import { SchedulerIdBehaviour } from "../../abstract-ibn";
 import { AbstractCommercialIbn } from "../abstract-commercial";
@@ -26,6 +28,7 @@ export type Commercial92App = {
     FEED_IN_TYPE: FeedInType,
     MAX_FEED_IN_POWER?: number,
     BATTERY_TARGET: BatteryTarget,
+    HAS_ESS_LIMITER_14A: boolean,
 };
 
 export enum BatteryTarget {
@@ -42,14 +45,14 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
 
     public override WAIT_FOR_BATTERY_SERIAL_NUMBERS = 8 * 60 * 1000;
 
-    public override readonly id: SystemId = SystemId.COMMERCIAL_92;
+    public override readonly systemId: SystemId = SystemId.COMMERCIAL_92;
     public override showViewCount: boolean = true;
     public override readonly defaultNumberOfModules = 15;
     public override readonly minNumberOfTowers: number = 2;
     public override readonly maxFeedInLimit: number = 6000000;
     public override readonly showNote: boolean = true;
     public batteryStartStopTarget: BatteryTarget = BatteryTarget.START;
-    public gridSetting: GridSetting;
+    public gridSetting: GridSetting | null = null;
 
     // protocol-dynamic-feed-in-limitation
     public override feedInLimitation? = {
@@ -88,6 +91,7 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ConfigurationEssLimiter14aComponent,
             View.ConfigurationLineSideMeterFuse,
             View.ProtocolFeedInLimitation,
             View.ConfigurationGridSetting,
@@ -293,7 +297,7 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
         return super.getCommonFeedInLimitsFields(totalPvPower, options);
     }
 
-    public override getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service): ComponentConfigurator {
+    public override async getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service): Promise<ComponentConfigurator> {
 
         const componentConfigurator: ComponentConfigurator =
             new ComponentConfigurator(edge, config, websocket);
@@ -304,231 +308,52 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
             : SafetyCountry.getSafetyCountry(this.location.country);
 
         // system not updated => newest appManager not available
-        const isAppManagerAvailable: boolean = AppCenterUtil.isAppManagerAvailable(edge);
-        const baseMode: BaseMode = isAppManagerAvailable ? BaseMode.AppManager : BaseMode.UI;
-        if (isAppManagerAvailable) {
-            const appProperties: Commercial92App = {
-                SAFETY_COUNTRY: safetyCountry,
-                FEED_IN_TYPE: this.feedInLimitation.feedInType,
-                ...(this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
-                BATTERY_TARGET: this.batteryStartStopTarget,
-            };
-
-            componentConfigurator.addInstallAppCallback(() => {
-                return AppCenterUtil.createOrUpdateApp(edge, websocket, this.appId, "commercial-92", appProperties, AppCenterUtil.keyForIntegratedSystems());
-            });
-        }
-
-        // modbus0
-        componentConfigurator.add({
-            factoryId: "Bridge.Modbus.Serial",
-            componentId: "modbus0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_BATTERY"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "portName", value: "/dev/busUSB1" },
-                { name: "baudRate", value: 19200 },
-                { name: "databits", value: 8 },
-                { name: "stopbits", value: "ONE" },
-                { name: "parity", value: "NONE" },
-                { name: "logVerbosity", value: "NONE" },
-                { name: "invalidateElementsAfterReadErrors", value: 1 },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
-        });
-
-        // Add ip address to network configuration
-        if (!IbnUtils.addIpAddress("eth1", "172.16.0.99/24", edge, websocket)) {
-            service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.IP_ADDRESS_ERROR", { system: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.BATTERY_INVERTER") })
-                , "danger");
-        }
-
-        // modbus1
-        componentConfigurator.add({
-            factoryId: "Bridge.Modbus.Tcp",
-            componentId: "modbus1",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_BATTERY_INVERTER"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "ip", value: "172.16.0.100" },
-                { name: "port", value: "502" },
-                { name: "logVerbosity", value: "NONE" },
-                { name: "invalidateElementsAfterReadErrors", value: 1 },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
-        });
-
-        // batteryInverter0
-        componentConfigurator.add({
-            factoryId: "Battery-Inverter.Kaco.BlueplanetGridsave",
-            componentId: "batteryInverter0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.BATTERY_INVERTER"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "modbus.id", value: "modbus1" },
-                { name: "startStop", value: "AUTO" },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
-        });
-
-        //modbus2
-        componentConfigurator.add({
-            factoryId: "Bridge.Modbus.Serial",
-            componentId: "modbus2",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_METER"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "portName", value: "/dev/busUSB2" },
-                { name: "baudRate", value: 9600 },
-                { name: "databits", value: 8 },
-                { name: "stopbits", value: "ONE" },
-                { name: "parity", value: "NONE" },
-                { name: "logVerbosity", value: "NONE" },
-                { name: "invalidateElementsAfterReadErrors", value: 1 },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
-        });
-
-        // meter0
-        componentConfigurator.add({
-            factoryId: Meter.toFactoryId(this.lineSideMeterFuse.meterType),
-            componentId: "meter0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.GRID_METER"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "modbus.id", value: "modbus2" },
-                { name: "type", value: "GRID" },
-                { name: "modbusUnitId", value: 5 },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
-        });
-
-        // io0
-        componentConfigurator.add({
-            factoryId: "IO.KMtronic",
-            componentId: "io0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.RELAY_BOARD"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "modbus.id", value: "modbus0" },
-                { name: "modbusUnitId", value: 2 },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
-        });
-
-        // battery0
-        componentConfigurator.add({
-            factoryId: "Battery.Fenecon.Home",
-            componentId: "battery0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.BATTERY"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "startStop", value: this.batteryStartStopTarget },
-                { name: "modbus.id", value: "modbus0" },
-                { name: "modbusUnitId", value: 1 },
-                { name: "batteryStartUpRelay", value: "io0/Relay4" },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
-        });
-
-        // ess0
-        componentConfigurator.add({
-            factoryId: "Ess.Generic.ManagedSymmetric",
-            componentId: "ess0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.STORAGE_SYSTEM"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "startStop", value: "START" },
-                { name: "batteryInverter.id", value: "batteryInverter0" },
-                { name: "battery.id", value: "battery0" },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
-        });
-
-        // predictor0
-        componentConfigurator.add({
-            factoryId: "Predictor.PersistenceModel",
-            componentId: "predictor0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.PROGNOSIS"),
-            properties: [
-                { name: "enabled", value: true },
-                {
-                    name: "channelAddresses",
-                    value: ["_sum/ProductionActivePower", "_sum/ConsumptionActivePower"],
-                },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
-        });
-
-        // ctrlPrepareBatteryExtension
-        componentConfigurator.add({
-            factoryId: "Controller.Ess.PrepareBatteryExtension",
-            componentId: "ctrlPrepareBatteryExtension0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.PREPARE_BATTERY_EXTENSION"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "ess.id", value: "ess0" },
-                { name: "targetSoc", value: 30 },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
-        });
-
-        // ctrlGridOptimizedCharge0
-        const gridOptimizedCharge = {
-            factoryId: "Controller.Ess.GridOptimizedCharge",
-            componentId: "ctrlGridOptimizedCharge0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.GRID_OPTIMIZED_CHARGE"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "ess.id", value: "ess0" },
-                { name: "meter.id", value: "meter0" },
-                { name: "delayChargeRiskLevel", value: "MEDIUM" },
-                { name: "manualTargetTime", value: "17:00" },
-                { name: "debugMode", value: false },
-                { name: "sellToGridLimitRampPercentage", value: 2 },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
+        const baseMode = AppCenterUtil.isAppManagerAvailable(edge) ? BaseMode.AppManager : BaseMode.UI;
+        const appProperties: Commercial92App = {
+            SAFETY_COUNTRY: safetyCountry,
+            FEED_IN_TYPE: this.feedInLimitation.feedInType,
+            ...(this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
+            BATTERY_TARGET: this.batteryStartStopTarget,
+            HAS_ESS_LIMITER_14A: this.isController14aActivated,
         };
 
-        this.feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
-            ? gridOptimizedCharge.properties.push(
-                { name: "maximumSellToGridPower", value: this.feedInLimitation.maximumFeedInPower },
-                { name: "sellToGridLimitEnabled", value: true },
-                { name: "mode", value: "AUTOMATIC" },
-            )
-            :
-            gridOptimizedCharge.properties.push(
-                { name: "sellToGridLimitEnabled", value: false },
-                { name: "mode", value: "OFF" },
-            );
-
-        componentConfigurator.add(gridOptimizedCharge);
-
-        // ctrlBalancing0
-        componentConfigurator.add({
-            factoryId: "Controller.Symmetric.Balancing",
-            componentId: "ctrlBalancing0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_FEATURES_STORAGE_SYSTEM.BALANCING"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "ess.id", value: "ess0" },
-                { name: "meter.id", value: "meter0" },
-                { name: "targetGridSetpoint", value: 0 },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-            baseMode: baseMode,
+        componentConfigurator.addInstallAppCallback(() => {
+            return AppCenterUtil.createOrUpdateApp(edge, websocket, this.appId, "commercial-92", appProperties, AppCenterUtil.keyForIntegratedSystems());
         });
+
+        // Send request and process components
+        const estimatedConfig: GetEstimatedConfigResponse = await edge.sendRequest(
+            websocket,
+            new ComponentJsonApiRequest({
+                componentId: "_appManager",
+                payload: new GetEstimatedConfigRequest({
+                    appId: this.appId,
+                    alias: "commercial-92",
+                    properties: appProperties,
+                }),
+            }),
+        );
+
+        // Add components to the configurator
+        estimatedConfig.result.configurations
+            .filter((config) => config.type === "Component")
+            .forEach((config) => {
+                const components = config.configuration?.components || [];
+                components.forEach((component) => {
+                    const configurationObject: ConfigurationObject = {
+                        factoryId: component.factoryId,
+                        componentId: component.id,
+                        alias: component.alias,
+                        properties: component.properties
+                            ? Object.entries(component.properties).map(([name, value]) => ({ name, value }))
+                            : undefined,
+                        mode: ConfigurationMode.RemoveAndConfigure,
+                        baseMode: baseMode,
+                    };
+
+                    componentConfigurator.add(configurationObject);
+                });
+            });
 
         return componentConfigurator;
     }
@@ -541,6 +366,18 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
                 componentId: "ctrlPrepareBatteryExtension0",
                 behaviour: SchedulerIdBehaviour.MANAGED_BY_APP_MANAGER,
             },
+        );
+
+        if (this.isController14aActivated) {
+            this.requiredControllerIds.push(
+                {
+                    componentId: "ctrlEssLimiter14a0",
+                    behaviour: SchedulerIdBehaviour.MANAGED_BY_APP_MANAGER,
+                },
+            );
+        }
+
+        this.requiredControllerIds.push(
             {
                 componentId: "ctrlGridOptimizedCharge0",
                 behaviour: SchedulerIdBehaviour.MANAGED_BY_APP_MANAGER,
@@ -606,6 +443,12 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
         // Welcherister, BMS, Parallel box, EMS box
         const initialStaticTowerComponents: number = 4;
 
+        protocol.items.push({
+            category: Category.GRID,
+            name: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
+            value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+        });
+
         // Subsequent towers will have only 2 static components. Paralell box and BMS box.
         const subsequentStaticTowerComponents: number = 2;
         const categoryElement: string = "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER";
@@ -635,33 +478,28 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
 
     }
 
-    /**
- * For `SystemType.FENECON_HOME` and `SystemType.HECKERT_HOME`, it checks the location:
- * - If the location is not Germany, it removes the `View.ConfigurationEssLimiter14aComponent` from the `views` array.
- * - If the location is Germany and the `View.ConfigurationEssLimiter14aComponent` is not already in the `views` array, it adds it at a specific index.
- */
-    public override removeUpdateView(edge: Edge) {
-        super.removeUpdateView(edge);
+    public override addSystemSpecificFields(tableData): void {
+        super.addSystemSpecificFields(tableData);
 
-        const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
-        const existingIndexOfView: number = this.views.indexOf(View.ConfigurationGridSetting);
-        const indexOfViewToBeAdded: number = 9;
+        const gridData: ComponentData[] = [];
 
-        if (location && location !== Country.GERMANY) {
-            if (existingIndexOfView != -1) {
-                // Remove ConfigurationGridSettingComponent.
-                this.views.splice(existingIndexOfView, 1);
-                this.gridSetting = GridSetting.VDE_AR_N_4105; // reset to Default
-            }
-            return;
+        gridData.push({
+            label: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
+            value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+        });
+
+        if (gridData.length > 0) {
+            tableData.push({
+                header: Category.GRID,
+                rows: gridData,
+            });
         }
+    }
 
-        if (existingIndexOfView === -1) {
-            // Add ConfigurationGridSettingComponent.
-            // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
-            this.views.splice(indexOfViewToBeAdded, 0, View.ConfigurationGridSetting);
-        }
-
+    public override removeOrAddView(edge: Edge): void {
+        super.removeOrAddView(edge);
+        this.removeOrAddEssLimiter14aView();
+        this.removeOrAddGridSettingView();
     }
 
     protected override addCustombatteryInverterData(): ComponentData[] {
@@ -713,5 +551,38 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
         }
 
         return allSerialNumbersResolved;
+    }
+
+    /**
+     * Manages the presence of the ConfigurationGridSettingComponent view based on country location.
+     *
+     * @remarks
+     * Performs two main operations:
+     * 1. Removes the ConfigurationGridSettingComponent view and resets the gridSetting to the default "VDE_AR_N_4105" when the location is not Germany
+     * 2. Re-adds the ConfigurationGridSettingComponent view (if missing) when the location is Germany,
+     * handling accidental country selection rollbacks
+     *
+     */
+    private removeOrAddGridSettingView() {
+
+        const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
+        const existingIndexOfView: number = this.views.indexOf(View.ConfigurationGridSetting);
+        const indexOfViewToBeAdded: number = 9;
+
+        if (location && location !== Country.GERMANY) {
+            if (existingIndexOfView != -1) {
+                // Remove ConfigurationGridSettingComponent.
+                this.views.splice(existingIndexOfView, 1);
+                this.gridSetting = null;
+            }
+            return;
+        }
+
+        if (existingIndexOfView === -1) {
+            // Add ConfigurationGridSettingComponent.
+            // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
+            this.views.splice(indexOfViewToBeAdded, 0, View.ConfigurationGridSetting);
+        }
+
     }
 }

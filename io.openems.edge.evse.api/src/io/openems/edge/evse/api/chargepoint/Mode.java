@@ -3,21 +3,22 @@ package io.openems.edge.evse.api.chargepoint;
 import io.openems.common.types.OptionsEnum;
 
 public enum Mode {
-	SMART, ZERO, MINIMUM, FORCE;
+	SMART(null), //
+	ZERO(Actual.ZERO), //
+	MINIMUM(Actual.MINIMUM), //
+	SURPLUS(Actual.SURPLUS), //
+	FORCE(Actual.FORCE);
 
-	public enum Priority {
-		CAR, STORAGE;
+	public final Mode.Actual actual;
+
+	private Mode(Mode.Actual actual) {
+		this.actual = actual;
 	}
-
-	// public static sealed interface Profile {
-	// public static record PhaseSwitch(Phase currentPhase, Map<Phase, ChargeParams>
-	// chargeParams) implements Profile {
-	// }
-	// }
 
 	public enum Actual implements OptionsEnum {
 		ZERO(0, "Zero"), //
 		MINIMUM(1, "Minimum charge"), // Avoid interrupting of old EVs
+		SURPLUS(2, "Surplus charge"), //
 		FORCE(3, "Force charge") //
 		;
 

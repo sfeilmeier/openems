@@ -7,7 +7,7 @@ import { AbstractHome10Ibn } from "./abstract-home-10";
 
 export class Home10FeneconIbn extends AbstractHome10Ibn {
 
-    public override readonly id: SystemId = SystemId.FENECON_HOME_10;
+    public override readonly systemId: SystemId = SystemId.FENECON_HOME_10;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
 
     constructor(public override translate: TranslateService) {

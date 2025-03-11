@@ -10,7 +10,7 @@ import { AbstractIbn } from "./abstract-ibn";
 
 export class GeneralIbn extends AbstractIbn {
 
-    public override readonly id = SystemId.GENERAL;
+    public override readonly systemId = SystemId.GENERAL;
 
     public override showViewCount = false;
 
@@ -54,7 +54,7 @@ export class GeneralIbn extends AbstractIbn {
     public override getFeedInLimitFields(): FormlyFieldConfig[] {
         throw new Error("This is General Ibn, Method not implemented.");
     }
-    public override getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service): ComponentConfigurator {
+    public override getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service): Promise<ComponentConfigurator> {
         throw new Error("This is General Ibn, Method not implemented.");
     }
     public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {

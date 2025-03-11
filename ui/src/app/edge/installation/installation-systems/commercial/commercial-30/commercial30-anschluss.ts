@@ -12,7 +12,7 @@ import { AbstractCommercial30Ibn } from "./abstract-commercial-30";
 
 export class Commercial30AnschlussIbn extends AbstractCommercial30Ibn {
 
-    public override readonly id: SystemId = SystemId.COMMERCIAL_30_ANSCHLUSS;
+    public override readonly systemId: SystemId = SystemId.COMMERCIAL_30_ANSCHLUSS;
     public override readonly emergencyPower = "DISABLE";
 
     constructor(translate: TranslateService) {
@@ -67,7 +67,7 @@ export class Commercial30AnschlussIbn extends AbstractCommercial30Ibn {
             mode: ConfigurationMode.RemoveAndConfigure,
         }, 7);
 
-        return componentConfigurator;
+        return Promise.resolve(componentConfigurator);
     }
 
     public override getSerialNumberFields(stringNr: number, numberOfModulesPerString: number) {

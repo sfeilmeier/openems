@@ -25,6 +25,19 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.3.1",
+        changes: [
+          Changelog.UI,
+          Changelog.product(Product.COMMERCIAL_92) + "Verbesserungen am Inbetriebnahmeassistent",
+          Changelog.app(App.TIME_OF_USE) + "ENTSO-E Börsenstromindex: Verbesserte Fehlertoleranz bei unvollständigen Preissignalen",
+          Changelog.app(App.TIME_OF_USE) + "rabot.charge: Korrektur der Bruttopreis-Berechnung",
+          Changelog.app(App.TIME_OF_USE) + "Neuer unterstützter Stromtarif: FEMS App Octopus Go",
+          Changelog.app(App.TIME_OF_USE) + "Einstellung für maximalen Netzbezug durch Speicherbeladung im App Center",
+          Changelog.app(App.POWER_TO_HEAT, App.WAERMEPUMPE) + "Korrektur der Tooltip-Beschreibung in der Historie",
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.product(Product.HOME_10, Product.HOME_20_30, Product.HOME_6_10_15) + "Verbesserung bei Bestimmung der Anzahl der Batterietürme; Fehlerbehebung bei GoodWe 'SoC-Protect', verbessert Verhalten bei leerer/voller Batterie; Vermeidung von Tiefenentladung: zuverlässigere, frühzeitige Abschaltung der Batterie bei niedriger Zellspannung" },
+        ],
+      },
+      {
         version: "2025.2.3",
         changes: [
           Changelog.UI,

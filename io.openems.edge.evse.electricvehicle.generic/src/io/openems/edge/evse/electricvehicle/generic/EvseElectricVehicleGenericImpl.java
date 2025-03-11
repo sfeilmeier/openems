@@ -1,22 +1,21 @@
 package io.openems.edge.evse.electricvehicle.generic;
 
 import static io.openems.edge.evse.api.EvseConstants.MIN_CURRENT;
+import static io.openems.edge.evse.api.SingleThreePhase.SINGLE_PHASE;
+import static io.openems.edge.evse.api.SingleThreePhase.THREE_PHASE;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.event.propertytypes.EventTopics;
 import org.osgi.service.metatype.annotations.Designate;
 
 import com.google.common.collect.ImmutableList;
 
 import io.openems.edge.common.component.AbstractOpenemsComponent;
 import io.openems.edge.common.component.OpenemsComponent;
-import io.openems.edge.common.event.EdgeEventConstants;
 import io.openems.edge.evse.api.Limit;
-import io.openems.edge.evse.api.Phase;
 import io.openems.edge.evse.api.electricvehicle.EvseElectricVehicle;
 import io.openems.edge.evse.api.electricvehicle.Profile;
 
@@ -26,9 +25,6 @@ import io.openems.edge.evse.api.electricvehicle.Profile;
 		immediate = true, //
 		configurationPolicy = ConfigurationPolicy.REQUIRE //
 )
-@EventTopics({ //
-		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
-})
 public class EvseElectricVehicleGenericImpl extends AbstractOpenemsComponent
 		implements EvseElectricVehicleGeneric, EvseElectricVehicle, OpenemsComponent {
 
@@ -47,11 +43,10 @@ public class EvseElectricVehicleGenericImpl extends AbstractOpenemsComponent
 		super.activate(context, config.id(), config.alias(), config.enabled());
 		var limits = ImmutableList.<Limit>builder();
 		if (config.maxCurrentSinglePhase() > MIN_CURRENT) {
-			// TODO requires different Phase implementation for SINGLE/THREE.-
-			limits.add(new Limit(Phase.L1, MIN_CURRENT, config.maxCurrentSinglePhase()));
+			limits.add(new Limit(SINGLE_PHASE, MIN_CURRENT, config.maxCurrentSinglePhase()));
 		}
 		if (config.maxCurrentThreePhase() > MIN_CURRENT) {
-			limits.add(new Limit(Phase.ALL, MIN_CURRENT, config.maxCurrentThreePhase()));
+			limits.add(new Limit(THREE_PHASE, MIN_CURRENT, config.maxCurrentThreePhase()));
 		}
 
 		var profiles = ImmutableList.<Profile>builder();

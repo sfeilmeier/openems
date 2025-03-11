@@ -1,5 +1,6 @@
-import { NgModule } from "@angular/core";
-import { NoPreloading, RouterModule, Routes } from "@angular/router";
+import { inject, NgModule } from "@angular/core";
+import { NoPreloading, RedirectFunction, RouterModule, Routes } from "@angular/router";
+import { CookieService } from "ngx-cookie-service";
 import { environment } from "src/environments";
 import { EdgeComponent } from "./edge/edge.component";
 import { OverviewComponent as AutarchyChartOverviewComponent } from "./edge/history/common/autarchy/overview/overview";
@@ -31,6 +32,7 @@ import { LiveDataService } from "./edge/live/livedataservice";
 import { AlertingComponent as EdgeSettingsAlerting } from "./edge/settings/alerting/alerting.component";
 import { IndexComponent as EdgeSettingsAppIndex } from "./edge/settings/app/index.component";
 import { InstallAppComponent as EdgeSettingsAppInstall } from "./edge/settings/app/install.component";
+import { OAuthIndexComponent } from "./edge/settings/app/oauth/oauth.component";
 import { SingleAppComponent as EdgeSettingsAppSingle } from "./edge/settings/app/single.component";
 import { UpdateAppComponent as EdgeSettingsAppUpdate } from "./edge/settings/app/update.component";
 import { HomeServiceAssistantComponent } from "./edge/settings/assistant/home/home";
@@ -67,7 +69,7 @@ import { UserComponent } from "./user/user.component";
 export const routes: Routes = [
 
   // TODO should be removed in the future
-  { path: "", redirectTo: "index", pathMatch: "full" },
+  { path: "", redirectTo: oauthRedirectFunction("index"), pathMatch: "full" },
   { path: "index", component: LoadingScreenComponent },
   { path: "login", component: LoginComponent, data: { navbarTitle: environment.uiTitle } },
 
@@ -143,6 +145,7 @@ export const routes: Routes = [
       { path: "settings/app/install/:appId", component: EdgeSettingsAppInstall, canActivate: [hasEdgeRole(Role.OWNER)] },
       { path: "settings/app/update/:appId", component: EdgeSettingsAppUpdate, canActivate: [hasEdgeRole(Role.OWNER)] },
       { path: "settings/app/single/:appId", component: EdgeSettingsAppSingle, canActivate: [hasEdgeRole(Role.OWNER)] },
+      { path: "settings/app/oauth", data: { navbarTitle: "OAuth" }, component: OAuthIndexComponent, canActivate: [hasEdgeRole(Role.ADMIN)] },
       { path: "settings/energyJourney", component: EnergyJourneyComponent, data: { navbarTitle: "Energy Journey" } },
       { path: "settings/energyJourney/batteryExtension", component: BatteryExtensionComponent, data: { navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE" } },
       { path: "settings/energyJourney/batteryExtension/electricityPriceChoice", component: ElectricityPriceSelectionComponent, data: { navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE" } },
@@ -168,3 +171,32 @@ export const appRoutingProviders: any[] = [];
   exports: [RouterModule],
 })
 export class AppRoutingModule { }
+
+/**
+ * Creates a RedirectFunction, which checks for a state parameter
+ * in the query parameters and also the active oauth state if both
+ * are present navigates to the active oauth state.
+ *
+ * @param defaultRoute the default route to navigate to if no oauth state is present
+ * @returns the created RedirectFunction
+ */
+function oauthRedirectFunction(defaultRoute: string): RedirectFunction {
+  return redirectData => {
+    const state = redirectData.queryParams["state"] as string | undefined;
+    if (!state) {
+      return defaultRoute;
+    }
+
+    const cookieService = inject(CookieService);
+    const oauthRedirectStateRaw = cookieService.get("oauthredirectstate");
+    if (!oauthRedirectStateRaw) {
+      return defaultRoute;
+    }
+
+    const queryParamsString = Object.entries(redirectData.queryParams)
+      .map(([key, value]) => key + "=" + value).join("&");
+
+    const oauthRedirectState = JSON.parse(oauthRedirectStateRaw) as { href: string };
+    return oauthRedirectState.href + "?" + queryParamsString;
+  };
+}

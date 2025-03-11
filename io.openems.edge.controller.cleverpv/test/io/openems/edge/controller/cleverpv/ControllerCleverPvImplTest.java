@@ -2,6 +2,7 @@ package io.openems.edge.controller.cleverpv;
 
 import static io.openems.common.utils.JsonUtils.getAsInt;
 import static io.openems.common.utils.JsonUtils.getSubElement;
+import static io.openems.edge.controller.cleverpv.LogVerbosity.NONE;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -30,6 +31,7 @@ public class ControllerCleverPvImplTest {
 				.activate(MyConfig.create() //
 						.setId("ctrlCleverPv0") //
 						.setUrl("") //
+						.setLogVerbosity(NONE) //
 						.build())
 				.next(new TestCase()) //
 				.deactivate();
@@ -38,7 +40,7 @@ public class ControllerCleverPvImplTest {
 			sum //
 					.withGridActivePower(1000) //
 					.withEssSoc(25) //
-					.withEssActivePower(-300) //
+					.withEssDischargePower(-300) //
 					.withProductionActivePower(500);
 			var d = sut.collectData();
 			assertEquals(1000, getAsInt(d, "watt"));
@@ -48,19 +50,19 @@ public class ControllerCleverPvImplTest {
 			assertEquals(300, getAsInt(d, "chargingPower"));
 		}
 		{
-			sum.withEssActivePower(567);
+			sum.withEssDischargePower(567);
 			var d = sut.collectData();
 			assertEquals(PowerStorageState.DISCHARGING.value, getAsInt(d, "powerStorageState"));
 			assertEquals(567, getAsInt(d, "chargingPower"));
 		}
 		{
-			sum.withEssActivePower(0);
+			sum.withEssDischargePower(0);
 			var d = sut.collectData();
 			assertEquals(PowerStorageState.IDLE.value, getAsInt(d, "powerStorageState"));
 			assertEquals(0, getAsInt(d, "chargingPower"));
 		}
 		{
-			sum.withEssActivePower(null);
+			sum.withEssDischargePower(null);
 			var d = sut.collectData();
 			assertEquals(PowerStorageState.DISABLED.value, getAsInt(d, "powerStorageState"));
 			assertEquals(JsonNull.INSTANCE, getSubElement(d, "chargingPower"));

@@ -16,7 +16,7 @@ export class Home6Gen2FeneconIbn extends AbstractHomeIbn {
     public override readonly maxNumberOfTowers: number = 3;
     public override readonly minNumberOfModulesPerTower: number = 3;
 
-    public override readonly id: SystemId = SystemId.FENECON_HOME_6;
+    public override readonly systemId: SystemId = SystemId.FENECON_HOME_6;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
     public override readonly homeAppId: string = "App.FENECON.Home6";
     public override readonly homeAppAlias: string = "FENECON Home";
@@ -40,6 +40,7 @@ export class Home6Gen2FeneconIbn extends AbstractHomeIbn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ConfigurationEssLimiter14aComponent,
             View.ConfigurationEmergencyReserve,
             View.ConfigurationEnergyFlowMeter,
             View.ConfigurationLineSideMeterFuse,

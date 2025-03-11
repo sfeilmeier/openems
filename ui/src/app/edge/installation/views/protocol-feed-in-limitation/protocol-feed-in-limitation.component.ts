@@ -51,6 +51,6 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
   }
 
   protected openManual() {
-    window.open(System.getRundsteuerManual(this.ibn.id));
+    window.open(System.getRundsteuerManual(this.ibn.systemId));
   }
 }

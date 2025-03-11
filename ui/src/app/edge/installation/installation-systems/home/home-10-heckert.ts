@@ -7,8 +7,8 @@ import { AbstractHome10Ibn } from "./abstract-home-10";
 
 export class Home10HeckertIbn extends AbstractHome10Ibn {
 
-    public override readonly type: SystemType = SystemType.HECKERT_HOME;
-    public override readonly id: SystemId = SystemId.HECKERT_HOME_10;
+    public override readonly systemType: SystemType = SystemType.HECKERT_HOME;
+    public override readonly systemId: SystemId = SystemId.HECKERT_HOME_10;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HECKERT;
     public override readonly indexOf14aLimiterControllerView: number = 6;
 

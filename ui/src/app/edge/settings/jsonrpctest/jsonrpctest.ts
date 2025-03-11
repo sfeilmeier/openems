@@ -18,7 +18,7 @@ export class JsonrpcTestComponent implements OnInit {
   private static readonly SELECTOR = "jsonrpcTest";
 
   protected endpoints: Endpoint[] = [];
-  private edge: Edge | undefined;
+  protected edge: Edge | undefined;
 
   constructor(
     private route: ActivatedRoute,

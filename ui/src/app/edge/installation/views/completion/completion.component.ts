@@ -38,7 +38,7 @@ export class CompletionComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.system = this.ibn.id;
+    this.system = this.ibn.systemId;
     this.isWaiting = true;
 
     this.ibn.getProtocol(this.edge, this.websocket).then((protocolId) => {

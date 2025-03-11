@@ -2,8 +2,9 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "Webinare zum EEG 2025: Updates von FENECON",
-        "TEXT": "Die gute Nachricht zuerst: <b>Private Betreiber bestehender Stromspeicher-Anlagen</b> können ihre Anlage wie gewohnt weiter betreiben, ohne dass sich etwas ändert. Umfassender sind die Regelungen für neue Anlagen: im Webinar am <a href='https://attendee.gotowebinar.com/register/6030642503344351839?source=FEMS-Widget' target='_blank'>28.02. um 15 Uhr</a> erläutern wir die Details zum EEG und geben Tipps zum optimalen Speicherbetrieb im Jahresverlauf. <b>Installateuren und Großhändlern</b> zeigen wir am <a href='https://attendee.gotowebinar.com/register/3587213205947970905?source=fems' target='_blank'>28.02. um 11 Uhr </a> im Webinar, welche neuen Chancen sich durch die Gesetzesänderung für Neuanlagen ergeben und wie man mit unseren innovativen Lösungen davon profitieren kann."
+        "TITLE": "Updates zum EEG 2025 im FENECON-Webinar",
+        "TEXT": "Vielen Dank für die positive Resonanz auf unser Webinar am 28.02.2025. Wir haben die Online-Veranstaltung aufgenommen, damit sich alle Interessierten die Inhalte nachträglich ansehen können. Die Referenten waren Franz-Josef Feilmeier, Stefan Feilmeier und Alexander Stöger, Moderatorin war Sarah Mühlbauer.",
+        "BUTTON_LABEL": "Zur Video-Aufzeichnung."
       }
     },
     "SETTINGS": {
@@ -52,8 +53,9 @@
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "Webinars on the German EEG 2025: Updates from FENECON",
-        "TEXT": "The good news first: <b>private operators of existing electricity storage systems</b> in Germany can continue to operate their systems as usual, without any changes. The regulations for new systems are more comprehensive: In the webinar on <a href='https://attendee.gotowebinar.com/register/6030642503344351839?source=FEMS-Widget' target='_blank'>28 Feb. at 3 p.m.</a>, we will explain the details of the German EEG law and provide tips on optimal storage operation over the course of the year. In the webinar on <a href='https://attendee.gotowebinar.com/register/3587213205947970905?source=fems' target='_blank'>28 Feb. at 11 a.m.</a>, we will show <b>German installers and wholesalers</b> the new opportunities for new systems resulting from the change in the law and how they can benefit from it with our innovative solutions."
+        "TITLE": "Updates on the EEG 2025 in the FENECON webinar",
+        "TEXT": "Thank you for the positive response to our webinar on 28.02.2025. We have recorded the online event (held in German) so that all interested persons can view the content afterwards. The speakers were Franz-Josef Feilmeier, Stefan Feilmeier and Alexander Stöger, the moderator was Sarah Mühlbauer.",
+        "BUTTON_LABEL": "To the video recording."
       }
     },
     "SETTINGS": {

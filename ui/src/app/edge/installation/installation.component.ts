@@ -55,7 +55,7 @@ export class InstallationComponent implements OnInit {
       // Ibn is added in second view.
       if (sessionStorage.ibn) {
         const ibnString = JSON.parse(sessionStorage.getItem("ibn"));
-        const systemId: SystemId = ibnString.id;
+        const systemId: SystemId = ibnString.systemId;
 
         // Load the specific Ibn implementation. and copy to the indivual fileds.
         // Copying the plain Json string does not recognize particular Ibn functions.
@@ -130,7 +130,7 @@ export class InstallationComponent implements OnInit {
    */
   public displayViewAtIndex(index: number) {
     this.logger.debug("View: " + Object.keys(View)[Object.values(View).indexOf(this.ibn.views[index])] + " Edge: " + this.edge?.id);
-    this.ibn.removeUpdateView(this.edge);
+    this.ibn.removeOrAddView(this.edge);
     const viewCount = this.ibn.views.length;
     if (index >= 0 && index < viewCount) {
       this.displayedView = this.ibn.views[index];

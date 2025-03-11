@@ -1,9 +1,14 @@
+@use "variables" as *;
+
 ion-content {
-    // TODO background repeat fix from single beta text
-    // --background: url('../background.svg') 40% 80% / contain repeat fixed;
+    --background: var(--ion-background-color) url('../background.svg') 40% 80% / contain repeat fixed !important;
 
     ion-card {
         border-radius: 1em;
-        opacity: 0.9;
+        opacity: 0.8;
+    }
+
+    #chart-area.semi-transparent-background {
+        background: rgba(var(--ion-background-color-rgb), 0.6);
     }
 }

@@ -1,16 +1,15 @@
 package io.openems.edge.energy.optimizer.app;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.google.common.collect.ImmutableMap.toImmutableMap;
-import static io.openems.edge.energy.api.EnergyUtils.filterEshsWithDifferentStates;
+import static io.openems.edge.energy.api.EnergyUtils.filterEshsWithDifferentModes;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
+import java.time.Duration;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,12 +17,10 @@ import java.util.regex.Pattern;
 import com.google.common.collect.ImmutableList;
 
 import io.openems.common.test.TimeLeapClock;
-import io.openems.edge.energy.api.EnergyScheduleHandler;
 import io.openems.edge.energy.api.RiskLevel;
-import io.openems.edge.energy.api.simulation.GlobalSimulationsContext;
-import io.openems.edge.energy.api.simulation.GlobalSimulationsContext.Period;
+import io.openems.edge.energy.api.handler.EnergyScheduleHandler;
+import io.openems.edge.energy.api.simulation.GlobalOptimizationContext;
 import io.openems.edge.energy.optimizer.SimulationResult;
-import io.openems.edge.evcs.api.Status;
 
 public class AppUtils {
 
@@ -31,62 +28,62 @@ public class AppUtils {
 	}
 
 	/**
-	 * Creates {@link GlobalSimulationsContext} from the log output of
+	 * Creates {@link GlobalOptimizationContext} from the log output of
 	 * {@link SimulationResult#toLogString()}.
 	 * 
 	 * @param log  the log output of {@link SimulationResult#toLogString()}
 	 * @param eshs the {@link EnergyScheduleHandler}s
-	 * @return a {@link GlobalSimulationsContext}
+	 * @return a {@link GlobalOptimizationContext}
 	 */
-	public static GlobalSimulationsContext parseGlobalSimulationsContextFromLogString(String log,
+	public static GlobalOptimizationContext parseGlobalOptimizationContextFromLogString(String log,
 			ImmutableList<EnergyScheduleHandler> eshs) throws IllegalArgumentException {
 		var headerMatcher = log.lines() //
-				.filter(l -> l.contains("OPTIMIZER ") && l.contains("GlobalSimulationsContext")) //
+				.filter(l -> l.contains("OPTIMIZER ") && l.contains("GlobalOptimizationContext")) //
 				.map(l -> applyPattern(HEADER_PATTERN, l)) //
 				.findFirst().get();
 		final var startDateTime = ZonedDateTime.parse(headerMatcher.group("startTime"));
 		final var clock = new TimeLeapClock(startDateTime.toInstant(), ZoneId.of("UTC"));
 
 		var gridMatcher = applyPattern(GRID_PATTERN, headerMatcher.group("grid"));
-		final var grid = new GlobalSimulationsContext.Grid(//
+		final var grid = new GlobalOptimizationContext.Grid(//
 				parseInt(gridMatcher.group("maxBuy")), //
 				parseInt(gridMatcher.group("maxSell")));
 
 		var essMatcher = applyPattern(ESS_PATTERN, headerMatcher.group("ess"));
-		final var ess = new GlobalSimulationsContext.Ess(//
+		final var ess = new GlobalOptimizationContext.Ess(//
 				parseInt(essMatcher.group("currentEnergy")), //
 				parseInt(essMatcher.group("totalEnergy")), //
 				parseInt(essMatcher.group("maxChargeEnergy")), //
 				parseInt(essMatcher.group("maxDischargeEnergy")));
 
-		final var evcss = Arrays.stream(headerMatcher.group("evcss").split("], ")) //
-				.map(evcs -> applyPattern(EVCS_PATTERN, evcs)) //
-				.collect(toImmutableMap(//
-						m -> m.group("componentId"), //
-						m -> new GlobalSimulationsContext.Evcs(//
-								Status.valueOf(m.group("status")), //
-								parseInt(m.group("energySession"))))); //
+		applyPattern(ESHS_PATTERN, headerMatcher.group("eshs")).results() //
+				.forEach(eshMatcher -> {
+					// TODO use for ControllerOptimizationContext
+					System.out.println(eshMatcher.group("id") + ": " + eshMatcher.group("coc"));
+				});
 
 		var nextTime = new AtomicReference<>(startDateTime);
 		var periods = log.lines() //
-				.filter(l -> l.contains("OPTIMIZER ") && !l.contains("GlobalSimulationsContext") && !l.contains("Time")) //
+				.filter(l -> l.contains("OPTIMIZER ") && !l.contains("GlobalOptimizationContext")
+						&& !l.contains("Time")) //
 				.map(l -> applyPattern(PERIOD_PATTERN, l)) //
 				.map(m -> {
 					var time = nextTime.get();
 					if (!nextTime.get().toLocalTime().equals(LocalTime.parse(m.group("time"), HOURS_MINUTES))) {
 						throw new IllegalArgumentException("Times do not match: " + time);
 					}
+					var index = (int) Duration.between(startDateTime, time).toMinutes() / 15;
 					nextTime.set(time.plusMinutes(15));
-					return (Period) new Period.Quarter(time, //
+					return (GlobalOptimizationContext.Period) new GlobalOptimizationContext.Period.Quarter(index, time, //
 							parseInt(m.group("production")), //
 							parseInt(m.group("consumption")), //
 							parseDouble(m.group("price")));
 				}) //
 				.collect(toImmutableList());
 
-		return new GlobalSimulationsContext(clock, RiskLevel.MEDIUM, startDateTime, //
-				eshs, filterEshsWithDifferentStates(eshs).collect(toImmutableList()), //
-				grid, ess, evcss, periods);
+		return new GlobalOptimizationContext(clock, RiskLevel.MEDIUM, startDateTime, //
+				eshs, filterEshsWithDifferentModes(eshs).collect(toImmutableList()), //
+				grid, ess, periods);
 	}
 
 	private static Matcher applyPattern(Pattern pattern, String line) {
@@ -103,8 +100,8 @@ public class AppUtils {
 			+ "startTime=(?<startTime>\\S*), " //
 			+ "Grid\\[(?<grid>.*)\\], " //
 			+ "Ess\\[(?<ess>.*)\\], " //
-			+ "evcss=\\{(?<evcss>.*)\\}, " //
-			+ "eshs=\\[");
+			+ "eshs=\\[(?<eshs>.*)\\]" //
+			+ "}");
 
 	private static final Pattern GRID_PATTERN = Pattern.compile("" //
 			+ "maxBuy=(?<maxBuy>\\d+), " //
@@ -116,15 +113,11 @@ public class AppUtils {
 			+ "maxChargeEnergy=(?<maxChargeEnergy>\\d+), " //
 			+ "maxDischargeEnergy=(?<maxDischargeEnergy>\\d+)");
 
-	private static final Pattern EVCS_PATTERN = Pattern.compile("" //
-			+ "(?<componentId>\\S+)=Evcs\\[" //
-			+ "status=(?<status>\\S+), " //
-			+ "energySession=(?<energySession>\\d+)");
-
 	private static final Pattern PERIOD_PATTERN = Pattern.compile("" //
 			+ "(?<time>\\d{2}:\\d{2})" //
 			+ "\\s+(?<price>-?\\d+\\.\\d+)" //
 			+ "\\s+(?<production>-?\\d+)" //
 			+ "\\s+(?<consumption>-?\\d+)");
 
+	private static final Pattern ESHS_PATTERN = Pattern.compile("ESH\\.(?<id>\\S+?)\\{(?<coc>.*?)\\}");
 }

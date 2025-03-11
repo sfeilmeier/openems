@@ -36,10 +36,10 @@
                         </ion-input>
                       </ion-item>
                       <ion-item class="ion-align-items-end ion-full-width">
-                        <ion-label position="floating" translate>Login.passwordLabel</ion-label>
                         <ion-input appAutofill autocomplete="current-password"
-                          type="{{ showPassword ? 'text' : 'password' }}" #password required
-                          [placeholder]="'Login.passwordLabel' | translate"></ion-input>
+                          [label]="'Login.passwordLabel' | translate" type="{{ showPassword ? 'text' : 'password' }}"
+                          #password required [placeholder]="'Login.passwordLabel' | translate"
+                          label-placement="floating"></ion-input>
                         <ion-icon style="fill: var(--ion-color-primary);"
                           name="{{ showPassword ? 'eye-outline' : 'eye-off-outline' }}" slot="end"
                           (click)="showPassword = !showPassword"></ion-icon>

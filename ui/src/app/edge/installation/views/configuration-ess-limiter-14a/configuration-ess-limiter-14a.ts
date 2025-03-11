@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-import { AbstractHomeIbn } from "../../installation-systems/home/abstract-home";
+import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 
 @Component({
     selector: ConfigurationEssLimiter14aComponent.SELECTOR,
@@ -14,7 +14,7 @@ export class ConfigurationEssLimiter14aComponent implements OnInit {
 
     private static readonly SELECTOR = "configuration-ess-limiter-14a";
 
-    @Input() public ibn: AbstractHomeIbn;
+    @Input() public ibn: AbstractIbn;
     @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
     @Output() public nextViewEvent = new EventEmitter<any>();
 
@@ -28,7 +28,7 @@ export class ConfigurationEssLimiter14aComponent implements OnInit {
         this.form = new FormGroup({});
         this.fields = this.getFields();
         this.model = {
-            activateLimitController14a: this.ibn.activateLimitController14a,
+            isController14aActivated: this.ibn.isController14aActivated,
         };
     }
 
@@ -41,7 +41,7 @@ export class ConfigurationEssLimiter14aComponent implements OnInit {
             return;
         }
 
-        this.ibn.activateLimitController14a = this.model.activateLimitController14a;
+        this.ibn.isController14aActivated = this.model.isController14aActivated;
         this.nextViewEvent.emit(this.ibn);
     }
 
@@ -49,12 +49,12 @@ export class ConfigurationEssLimiter14aComponent implements OnInit {
         const fields: FormlyFieldConfig[] = [];
 
         fields.push({
-            key: "activateLimitController14a",
+            key: "isController14aActivated",
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.IS_ACTIVATE"),
             },
-            defaultValue: this.ibn.activateLimitController14a,
+            defaultValue: this.ibn.isController14aActivated,
         });
 
         return fields;
