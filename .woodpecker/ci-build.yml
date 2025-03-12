@@ -1,11 +1,11 @@
 variables:
-  - &sftp-settings
-    server: ${CACHE_SERVER}
-    username: user
-    password: pass
-    ignore_branch: true
-    port: 2222
-    path: /cache
+  - &cache-settings
+    region: eu-west-1
+    bucket: cache-fems
+    endpoint: 10.10.111.20:9000
+    access-key: fems
+    secret-key: woodpecker
+    path-style: true
     mount:
       - cache
 
@@ -51,10 +51,10 @@ clone:
 steps:
   restore-cache:
     when: *every-build
-    image: appleboy/drone-sftp-cache
+    image: meltwater/drone-cache
     settings:
       restore: true
-      <<: *sftp-settings
+      <<: *cache-settings
 
   check-scripts:
     when: *every-build
@@ -170,10 +170,9 @@ steps:
     depends_on: [build-debian-package]
 
   rebuild-cache:
-    when:
-      - *main-build
-    image: appleboy/drone-sftp-cache:latest
+    when: *every-build
+    image: meltwater/drone-cache
     settings:
       rebuild: true
-      <<: *sftp-settings
-    depends_on: [build-ui, build-java, build-debian-package]
+      <<: *cache-settings
+    depends_on: [build-ui, build-java]
