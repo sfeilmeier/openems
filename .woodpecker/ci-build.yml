@@ -170,9 +170,11 @@ steps:
     depends_on: [build-debian-package]
 
   rebuild-cache:
-    when: *every-build
+    when: 
+      - *main-build
+      - *message-debian
     image: meltwater/drone-cache
     settings:
       rebuild: true
       <<: *cache-settings
-    depends_on: [build-ui, build-java]
+    depends_on: [build-debian-package]
