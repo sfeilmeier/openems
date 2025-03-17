@@ -2,10 +2,8 @@ package io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine;
 
 import static io.openems.edge.common.channel.ChannelUtils.getValues;
 
-import java.time.Duration;
-import java.time.Instant;
-
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
+import io.openems.common.timedata.Timeout;
 import io.openems.edge.battery.fenecon.f2b.bmw.BatteryFeneconF2bBmwImpl.BatteryValues;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.Constants;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.StateMachine.State;
@@ -15,13 +13,12 @@ import io.openems.edge.common.statemachine.StateHandler;
 
 public class GoRunningHandler extends StateHandler<State, Context> {
 
-	private Instant timeAtEntry = Instant.MIN;
+	private final Timeout timeout = Timeout.ofSeconds(Constants.MAX_ALLOWED_START_TIME);
 
 	@Override
 	protected void onEntry(Context context) throws OpenemsNamedException {
-		this.timeAtEntry = Instant.now(context.clock);
+		this.timeout.start(context.clock);
 		final var cluster = context.getParent();
-		cluster._setMaxStartAttemptsFailed(false);
 		if (cluster.isParallelCluster()) {
 			((BatteryFeneconF2bClusterParallel) cluster)._setVoltageDifferenceHigh(false);
 		}
@@ -46,9 +43,8 @@ public class GoRunningHandler extends StateHandler<State, Context> {
 		}
 
 		// Is max allowed start time passed ?
-		var now = Instant.now(context.clock);
-		if (Duration.between(this.timeAtEntry, now).getSeconds() > Constants.MAX_ALLOWED_START_TIME) {
-			cluster._setTimeoutStartBatteries(true);
+		if (this.timeout.elapsed(context.clock)) {
+			cluster._setTimeoutStartBattery(true);
 		}
 
 		try {

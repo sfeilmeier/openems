@@ -16,8 +16,8 @@ public class ErrorHandler extends StateHandler<State, Context> {
 	@Override
 	protected void onExit(Context context) throws OpenemsNamedException {
 		final var cluster = context.getParent();
-		cluster._setTimeoutStartBatteries(false);
-		cluster._setTimeoutStopBatteries(false);
+		cluster._setTimeoutStartBattery(false);
+		cluster._setTimeoutStopBattery(false);
 	}
 
 	@Override

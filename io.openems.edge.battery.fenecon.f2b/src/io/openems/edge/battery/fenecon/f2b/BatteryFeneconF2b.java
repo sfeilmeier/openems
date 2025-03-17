@@ -6,6 +6,7 @@ import io.openems.common.channel.Unit;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.types.OpenemsType;
 import io.openems.edge.battery.api.Battery;
+import io.openems.edge.battery.api.BatteryTimeoutFailure;
 import io.openems.edge.battery.fenecon.f2b.common.enums.F2bCanCommunication;
 import io.openems.edge.battery.fenecon.f2b.common.enums.F2bState;
 import io.openems.edge.battery.fenecon.f2b.common.enums.F2bTerminal15Sw;
@@ -18,7 +19,7 @@ import io.openems.edge.common.channel.StateChannel;
 import io.openems.edge.common.channel.WriteChannel;
 import io.openems.edge.common.channel.value.Value;
 
-public interface BatteryFeneconF2b extends Battery {
+public interface BatteryFeneconF2b extends Battery, BatteryTimeoutFailure {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 

@@ -60,6 +60,7 @@ public class GoRunningHandler extends StateHandler<State, Context> {
 			this.goRunningState = new GoRunningState(nextSubState, now);
 		} else if (this.goRunningState.lastChange.isBefore(now.minusSeconds(TIMEOUT))) {
 			// Handle GoRunningHandler State-timeout
+			battery._setTimeoutStartBattery(true);
 			throw new OpenemsException("Timeout [" + TIMEOUT + "s] in GoRunning-" + this.goRunningState.subState);
 		}
 
