@@ -22,10 +22,11 @@ public class GoRunningHandler extends StateHandler<State, Context> {
 
 		if (!system.isInEmergencyStopState() && ess instanceof StartStoppable e) {
 			e.start();
-			if (context.isStarted()) {
+			if (system.isStarted()) {
 				return State.RUNNING;
 			}
 		}
+
 		return State.GO_RUNNING;
 	}
 }
