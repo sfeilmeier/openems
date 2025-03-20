@@ -5,7 +5,7 @@ export const theme = {
 
     uiTitle: "Heckert Solar Symphon-E Online Monitoring",
     edgeShortName: "EMS",
-    edgeLongName: "Heckert Solar Symphon-E Energiemanagementsystem",
+    edgeLongName: "Heckert Solar Symphon-E",
     defaultLanguage: "de",
 
     // TODO

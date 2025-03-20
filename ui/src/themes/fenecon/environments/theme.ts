@@ -7,7 +7,7 @@ export const theme = {
 
     uiTitle: "FENECON Online-Monitoring",
     edgeShortName: "FEMS",
-    edgeLongName: "FENECON Energiemanagementsystem",
+    edgeLongName: "FENECON",
     defaultLanguage: "de",
 
     docsUrlPrefix: "https://docs.fenecon.de/{language}/_/latest/fems/",
