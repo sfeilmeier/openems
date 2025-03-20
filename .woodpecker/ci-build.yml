@@ -44,7 +44,14 @@ clone:
       - *main-build
       - *message-debian
       - path:
-          include: [".woodpecker/ci-build.yml", "ui/**", "io.openems*/**", "**/*gradle*", "tools/**"]
+          include:
+            [
+              ".woodpecker/ci-build.yml",
+              "ui/**",
+              "io.openems*/**",
+              "**/*gradle*",
+              "tools/**",
+            ]
           on_empty: false
     image: woodpeckerci/plugin-git
 
@@ -82,7 +89,7 @@ steps:
         export NG_CLI_CACHE_PATH=$CACHE/angular-cli
         export NODE_MODULES_CACHE=$CACHE/node_modules
         export CHROME_BIN=/usr/bin/google-chrome-stable
-        " > $CI_WORKSPACE/.woodpecker-env        
+        " > $CI_WORKSPACE/.woodpecker-env
       - common_update_version_in_code
     depends_on: [restore-cache]
 
@@ -170,7 +177,7 @@ steps:
     depends_on: [build-debian-package]
 
   rebuild-cache:
-    when: 
+    when:
       - *main-build
       - *message-debian
     image: meltwater/drone-cache

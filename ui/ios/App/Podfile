@@ -1,13 +1,13 @@
 require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
-
-platform :ios, '13.0'
+ 
+platform :ios, '16.0'
 use_frameworks!
-
+ 
 # workaround to avoid Xcode caching of Pods that requires
 # Product -> Clean Build Folder after new Cordova plugins installed
 # Requires CocoaPods 1.6 or newer
 install! 'cocoapods', :disable_input_output_paths => true
-
+ 
 def capacitor_pods
   pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
@@ -19,7 +19,7 @@ def capacitor_pods
   pod 'CapacitorIosAutofillSavePassword', :path => '../../node_modules/capacitor-ios-autofill-save-password'
   pod 'CapacitorSecureStoragePlugin', :path => '../../node_modules/capacitor-secure-storage-plugin'
 end
-
+ 
 target 'FENECON' do
   capacitor_pods
   # Add your Pods here
@@ -28,7 +28,13 @@ target 'Heckert' do
   capacitor_pods
   # Add your Pods here
 end
-
+target 'FENECON-Beta' do
+  capacitor_pods
+  # Add your Pods here
+end
+ 
 post_install do |installer|
   assertDeploymentTarget(installer)
 end
+ 
+ 

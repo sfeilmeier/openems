@@ -22,6 +22,17 @@
 		504EC30F1FED79650016851F /* fenecon-assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* fenecon-assets.xcassets */; };
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
+		65D5B7C2D8E88B1209FCFBC0 /* Pods_FENECON_Beta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBB709EDB98BE96CAD474EB /* Pods_FENECON_Beta.framework */; };
+		AB24D2A6637D4C0B5737EA84 /* Pods_Heckert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5739D9C23718E5D190C71E9 /* Pods_Heckert.framework */; };
+		BCA4C7742D80921000B97D27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
+		BCA4C7782D80921000B97D27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
+		BCA4C7792D80921000B97D27 /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
+		BCA4C77A2D80921000B97D27 /* heckert-assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 427BB7C72BBD5C6C00C74AAB /* heckert-assets.xcassets */; };
+		BCA4C77B2D80921000B97D27 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
+		BCA4C77C2D80921000B97D27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
+		BCA4C77D2D80921000B97D27 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
+		BCA4C7852D80924400B97D27 /* fenecon-beta-assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCA4C7842D80924400B97D27 /* fenecon-beta-assets.xcassets */; };
+		BCA4C7862D80924400B97D27 /* fenecon-beta-assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCA4C7842D80924400B97D27 /* fenecon-beta-assets.xcassets */; };
 		BE968009C567DF4A14B1AF6A /* Pods_FENECON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE47A1BA70ABECF428639602 /* Pods_FENECON.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +40,8 @@
 		04B1BFC8C18A6E5BA3B714EC /* Pods-FENECON.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FENECON.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FENECON/Pods-FENECON.debug.xcconfig"; sourceTree = "<group>"; };
 		1ED9EE0469A6568E5FC8EFDC /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
+		33CA67FC1B9703AD1FDE2700 /* Pods-FENECON-Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FENECON-Beta.release.xcconfig"; path = "Pods/Target Support Files/Pods-FENECON-Beta/Pods-FENECON-Beta.release.xcconfig"; sourceTree = "<group>"; };
+		3DBB709EDB98BE96CAD474EB /* Pods_FENECON_Beta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FENECON_Beta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4235BE532BBD5ACB0086D469 /* Heckert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heckert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4235BE542BBD5ACC0086D469 /* Heckert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Heckert-Info.plist"; path = "/Users/lukasrieger/Documents/Github/fems/ui/ios/App/Heckert-Info.plist"; sourceTree = "<absolute>"; };
 		4277B7002B3EC2B7003A8255 /* AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppRelease.entitlements; sourceTree = "<group>"; };
@@ -37,7 +50,8 @@
 		42A6C2F52BBD44A200AF282F /* HeckertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeckertTests.swift; sourceTree = "<group>"; };
 		42A6C2FF2BBD44A300AF282F /* HeckertUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeckertUITests.swift; sourceTree = "<group>"; };
 		42A6C3012BBD44A300AF282F /* HeckertUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeckertUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		47D589CBEA132930C9DBE548 /* Pods-Heckert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heckert.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Heckert/Pods-Heckert.debug.xcconfig"; sourceTree = "<group>"; };
+		498A98F460A1A7D5A20B224E /* Pods-FENECON-Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FENECON-Beta.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FENECON-Beta/Pods-FENECON-Beta.debug.xcconfig"; sourceTree = "<group>"; };
+		4E1F2100A0E6220B49D30791 /* Pods-Heckert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heckert.release.xcconfig"; path = "Pods/Target Support Files/Pods-Heckert/Pods-Heckert.release.xcconfig"; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* FENECON.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FENECON.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504EC3071FED79650016851F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,7 +60,13 @@
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		504EC3131FED79650016851F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = "<group>"; };
-		93FC6E51C95D24DCCE975A73 /* Pods-Heckert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heckert.release.xcconfig"; path = "Pods/Target Support Files/Pods-Heckert/Pods-Heckert.release.xcconfig"; sourceTree = "<group>"; };
+		571B74A573D82A5BD528708E /* Pods-FENECON Beta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FENECON Beta.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FENECON Beta/Pods-FENECON Beta.debug.xcconfig"; sourceTree = "<group>"; };
+		582054EF7224742E79DE1259 /* Pods-Heckert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Heckert.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Heckert/Pods-Heckert.debug.xcconfig"; sourceTree = "<group>"; };
+		9F63213719324AF4B1389B3A /* Pods-FENECON Beta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FENECON Beta.release.xcconfig"; path = "Pods/Target Support Files/Pods-FENECON Beta/Pods-FENECON Beta.release.xcconfig"; sourceTree = "<group>"; };
+		BCA4C7702D8091CF00B97D27 /* FENECON copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FENECON copy2-Info.plist"; path = "/Users/fems/Documents/fems/ui/ios/App/FENECON copy2-Info.plist"; sourceTree = "<absolute>"; };
+		BCA4C7822D80921000B97D27 /* FENECON-Beta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FENECON-Beta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCA4C7832D80921200B97D27 /* Heckert copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Heckert copy-Info.plist"; path = "/Users/fems/Documents/fems/ui/ios/App/Heckert copy-Info.plist"; sourceTree = "<absolute>"; };
+		BCA4C7842D80924400B97D27 /* fenecon-beta-assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "fenecon-beta-assets.xcassets"; sourceTree = "<group>"; };
 		C1CCF7D71FB3F8C11B1E9043 /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 		C5739D9C23718E5D190C71E9 /* Pods_Heckert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Heckert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE47A1BA70ABECF428639602 /* Pods_FENECON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FENECON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34D8F3B6B4739FEF94AC3044 /* Pods_Heckert.framework in Frameworks */,
+				AB24D2A6637D4C0B5737EA84 /* Pods_Heckert.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +91,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BCA4C7752D80921000B97D27 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65D5B7C2D8E88B1209FCFBC0 /* Pods_FENECON_Beta.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -78,6 +107,7 @@
 			children = (
 				CE47A1BA70ABECF428639602 /* Pods_FENECON.framework */,
 				C5739D9C23718E5D190C71E9 /* Pods_Heckert.framework */,
+				3DBB709EDB98BE96CAD474EB /* Pods_FENECON_Beta.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -109,6 +139,8 @@
 				7F8756D8B27F46E3366F6CEA /* Pods */,
 				27E2DDA53C4D2A4D1A88CE4A /* Frameworks */,
 				4235BE542BBD5ACC0086D469 /* Heckert-Info.plist */,
+				BCA4C7702D8091CF00B97D27 /* FENECON copy2-Info.plist */,
+				BCA4C7832D80921200B97D27 /* Heckert copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,6 +149,7 @@
 			children = (
 				504EC3041FED79650016851F /* FENECON.app */,
 				4235BE532BBD5ACB0086D469 /* Heckert.app */,
+				BCA4C7822D80921000B97D27 /* FENECON-Beta.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,6 +157,7 @@
 		504EC3061FED79650016851F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				BCA4C7842D80924400B97D27 /* fenecon-beta-assets.xcassets */,
 				4277B7012B3EC6B2003A8255 /* App.entitlements */,
 				4277B7002B3EC2B7003A8255 /* AppRelease.entitlements */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
@@ -146,8 +180,12 @@
 				1ED9EE0469A6568E5FC8EFDC /* Pods-App.release.xcconfig */,
 				04B1BFC8C18A6E5BA3B714EC /* Pods-FENECON.debug.xcconfig */,
 				E8D8FA01BE3809F035B9BC87 /* Pods-FENECON.release.xcconfig */,
-				47D589CBEA132930C9DBE548 /* Pods-Heckert.debug.xcconfig */,
-				93FC6E51C95D24DCCE975A73 /* Pods-Heckert.release.xcconfig */,
+				582054EF7224742E79DE1259 /* Pods-Heckert.debug.xcconfig */,
+				4E1F2100A0E6220B49D30791 /* Pods-Heckert.release.xcconfig */,
+				571B74A573D82A5BD528708E /* Pods-FENECON Beta.debug.xcconfig */,
+				9F63213719324AF4B1389B3A /* Pods-FENECON Beta.release.xcconfig */,
+				498A98F460A1A7D5A20B224E /* Pods-FENECON-Beta.debug.xcconfig */,
+				33CA67FC1B9703AD1FDE2700 /* Pods-FENECON-Beta.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -163,7 +201,7 @@
 				4235BE442BBD5ACB0086D469 /* Sources */,
 				4235BE462BBD5ACB0086D469 /* Frameworks */,
 				4235BE482BBD5ACB0086D469 /* Resources */,
-				4235BE4F2BBD5ACB0086D469 /* [CP] Embed Pods Frameworks */,
+				84B995488FCC4995032D5AF5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -182,7 +220,8 @@
 				504EC3001FED79650016851F /* Sources */,
 				504EC3011FED79650016851F /* Frameworks */,
 				504EC3021FED79650016851F /* Resources */,
-				9592DBEFFC6D2A0C8D5DEB22 /* [CP] Embed Pods Frameworks */,
+				670759E7B4F01EBB270B5F72 /* [CP] Embed Pods Frameworks */,
+				BC0C69AB2D831CA50003EF4A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -193,6 +232,25 @@
 			productReference = 504EC3041FED79650016851F /* FENECON.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BCA4C7712D80921000B97D27 /* FENECON-Beta */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BCA4C77F2D80921000B97D27 /* Build configuration list for PBXNativeTarget "FENECON-Beta" */;
+			buildPhases = (
+				52E6D5F8E31DE48772013471 /* [CP] Check Pods Manifest.lock */,
+				BCA4C7732D80921000B97D27 /* Sources */,
+				BCA4C7752D80921000B97D27 /* Frameworks */,
+				BCA4C7772D80921000B97D27 /* Resources */,
+				F42B8BCDDE7F0E23F85E1C68 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "FENECON-Beta";
+			productName = App;
+			productReference = BCA4C7822D80921000B97D27 /* FENECON-Beta.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -201,12 +259,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					504EC3031FED79650016851F = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1100;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -225,6 +282,7 @@
 			targets = (
 				504EC3031FED79650016851F /* FENECON */,
 				4235BE422BBD5ACB0086D469 /* Heckert */,
+				BCA4C7712D80921000B97D27 /* FENECON-Beta */,
 			);
 		};
 /* End PBXProject section */
@@ -236,6 +294,7 @@
 			files = (
 				4235BE492BBD5ACB0086D469 /* LaunchScreen.storyboard in Resources */,
 				4235BE4A2BBD5ACB0086D469 /* public in Resources */,
+				BCA4C7852D80924400B97D27 /* fenecon-beta-assets.xcassets in Resources */,
 				427BB7C82BBD5C6C00C74AAB /* heckert-assets.xcassets in Resources */,
 				4235BE4C2BBD5ACB0086D469 /* capacitor.config.json in Resources */,
 				4235BE4D2BBD5ACB0086D469 /* Main.storyboard in Resources */,
@@ -253,6 +312,20 @@
 				50379B232058CBB4000EE86E /* capacitor.config.json in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCA4C7772D80921000B97D27 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCA4C7782D80921000B97D27 /* LaunchScreen.storyboard in Resources */,
+				BCA4C7792D80921000B97D27 /* public in Resources */,
+				BCA4C7862D80924400B97D27 /* fenecon-beta-assets.xcassets in Resources */,
+				BCA4C77A2D80921000B97D27 /* heckert-assets.xcassets in Resources */,
+				BCA4C77B2D80921000B97D27 /* capacitor.config.json in Resources */,
+				BCA4C77C2D80921000B97D27 /* Main.storyboard in Resources */,
+				BCA4C77D2D80921000B97D27 /* config.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,19 +350,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4235BE4F2BBD5ACB0086D469 /* [CP] Embed Pods Frameworks */ = {
+		52E6D5F8E31DE48772013471 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
+			inputFileListPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FENECON-Beta-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Heckert/Pods-Heckert-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6634F4EFEBD30273BCE97C65 /* [CP] Check Pods Manifest.lock */ = {
@@ -310,7 +390,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9592DBEFFC6D2A0C8D5DEB22 /* [CP] Embed Pods Frameworks */ = {
+		670759E7B4F01EBB270B5F72 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -323,6 +403,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FENECON/Pods-FENECON-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		84B995488FCC4995032D5AF5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Heckert/Pods-Heckert-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BC0C69AB2D831CA50003EF4A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nmarketing_version=\"1.2.3\"  # Replace with your new version\nplutil -replace CFBundleShortVersionString -string \"$marketing_version\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n";
+		};
+		F42B8BCDDE7F0E23F85E1C68 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FENECON-Beta/Pods-FENECON-Beta-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -341,6 +468,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCA4C7732D80921000B97D27 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCA4C7742D80921000B97D27 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,12 +503,12 @@
 /* Begin XCBuildConfiguration section */
 		4235BE512BBD5ACB0086D469 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47D589CBEA132930C9DBE548 /* Pods-Heckert.debug.xcconfig */;
+			baseConfigurationReference = 582054EF7224742E79DE1259 /* Pods-Heckert.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_ASSET_PATHS = "App/heckert-assets.xcassets";
 				DEVELOPMENT_TEAM = MTTFSTTRR6;
 				INFOPLIST_FILE = "Heckert-Info.plist";
@@ -382,7 +517,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 20250101;
+				MARKETING_VERSION = 20250302;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.heckertsolar.ems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -394,12 +529,12 @@
 		};
 		4235BE522BBD5ACB0086D469 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 93FC6E51C95D24DCCE975A73 /* Pods-Heckert.release.xcconfig */;
+			baseConfigurationReference = 4E1F2100A0E6220B49D30791 /* Pods-Heckert.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/AppRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_ASSET_PATHS = "App/heckert-assets.xcassets";
 				DEVELOPMENT_TEAM = MTTFSTTRR6;
 				INFOPLIST_FILE = "Heckert-Info.plist";
@@ -408,7 +543,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 20250101;
+				MARKETING_VERSION = 20250304;
 				PRODUCT_BUNDLE_IDENTIFIER = com.heckertsolar.ems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -469,7 +604,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -524,7 +659,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -539,8 +674,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = MTTFSTTRR6;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -548,12 +684,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 20250101;
+				MARKETING_VERSION = 20250302;
 				NEW_SETTING = "";
 				NEW_SETTING1 = "";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = de.fenecon.fems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -566,8 +703,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/AppRelease.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_TEAM = MTTFSTTRR6;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -575,10 +713,64 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 20250101;
+				MARKETING_VERSION = 20250108;
 				NEW_SETTING = "";
 				NEW_SETTING1 = "";
 				PRODUCT_BUNDLE_IDENTIFIER = de.fenecon.fems;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BCA4C7802D80921000B97D27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 498A98F460A1A7D5A20B224E /* Pods-FENECON-Beta.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 65;
+				DEVELOPMENT_ASSET_PATHS = "App/fenecon-beta-assets.xcassets";
+				DEVELOPMENT_TEAM = MTTFSTTRR6;
+				INFOPLIST_FILE = App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 20250302;
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
+				PRODUCT_BUNDLE_IDENTIFIER = io.fenecon.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BCA4C7812D80921000B97D27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33CA67FC1B9703AD1FDE2700 /* Pods-FENECON-Beta.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/AppRelease.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 65;
+				DEVELOPMENT_ASSET_PATHS = "App/fenecon-beta-assets.xcassets";
+				DEVELOPMENT_TEAM = MTTFSTTRR6;
+				INFOPLIST_FILE = App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 20250308;
+				PRODUCT_BUNDLE_IDENTIFIER = io.fenecon.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_VERSION = 5.0;
@@ -612,6 +804,15 @@
 			buildConfigurations = (
 				504EC3171FED79650016851F /* Debug */,
 				504EC3181FED79650016851F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BCA4C77F2D80921000B97D27 /* Build configuration list for PBXNativeTarget "FENECON-Beta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCA4C7802D80921000B97D27 /* Debug */,
+				BCA4C7812D80921000B97D27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
