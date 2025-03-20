@@ -1,5 +1,5 @@
 <!-- TODO: encapsulate data for different partners -->
-<ng-container *ngIf="service.currentEdge | async as edge">
+<ng-container *ngIf="service.currentEdge() as edge">
     <ng-container *ngIf="edge.currentData | async as currentData">
         <ion-card>
             <ion-item lines="full" color="light">
