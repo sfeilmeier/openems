@@ -146,26 +146,30 @@
           <ion-row>
             <ion-col size="6">
               <ion-item lines="none" *ngIf="selectedTower">
-                <ion-label position="floating" color="primary" style="white-space: normal !important">Tower</ion-label>
-                <ion-select (ionDismiss)="updateTowerNr($event)" [(ngModel)]="selectedTower" label-placement="floating"
-                  interface="popover" label="Fixed label" fill="solid"
-                  [interfaceOptions]="{ cssClass: 'custom-ion-popover' }" type="radio" style="white-space: initial;">
-                  <ng-container *ngFor="let option of towerOptions">
-                    <ion-select-option [value]="option">{{option.key}}
-                    </ion-select-option>
-                  </ng-container>
-                </ion-select>
+                <ion-col style="flex: auto;">
+                  <ion-select (ionDismiss)="updateTowerNr($event)" [(ngModel)]="selectedTower"
+                    class="custom-ion-popover" label-placement="floating" interface="popover" label="Tower"
+                    [interfaceOptions]="{ cssClass: 'custom-ion-popover' }" type="radio" fill="outline"
+                    style="white-space: initial; --color: var(--ion-color-primary)" mode="md">
+                    <ng-container *ngFor="let option of towerOptions">
+                      <ion-select-option [value]="option">{{option.key}}
+                      </ion-select-option>
+                    </ng-container>
+                  </ion-select>
+                </ion-col>
               </ion-item>
             </ion-col>
             <ion-col size="6">
               <ion-item lines="none" *ngIf="selectedModule">
-                <ion-label position="floating" color="primary" style="white-space: normal !important">Module</ion-label>
-                <ion-select (ionDismiss)="updateModuleNr($event)" [(ngModel)]="selectedModule"
-                  label-placement="floating" interface="popover" label="Fixed label" fill="solid"
-                  [interfaceOptions]="{ cssClass: 'custom-ion-popover' }" type="radio" style="white-space: initial;">
-                  <ion-select-option *ngFor="let option of moduleOptions" [value]="option">{{option.key}}
-                  </ion-select-option>
-                </ion-select>
+                <ion-col style="flex: auto;">
+                  <ion-select (ionDismiss)="updateModuleNr($event)" [(ngModel)]="selectedModule"
+                    class="custom-ion-popover" label-placement="floating" interface="popover" label="Module"
+                    [interfaceOptions]="{ cssClass: 'custom-ion-popover' }" type="radio" fill="outline"
+                    style="white-space: initial; --color: var(--ion-color-primary)" mode="md">
+                    <ion-select-option *ngFor="let option of moduleOptions" [value]="option">{{option.key}}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-col>
               </ion-item>
             </ion-col>
           </ion-row>

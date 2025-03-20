@@ -28,6 +28,8 @@ $font-family: var(--ion-font-family);
   --ion-background-color-card-header: #f4f4f4;
   --ion-color-text-percentage-bar: white;
 
+  /** Custom Colors **/
+  --ion-color-shadow-rgba: rgba(0, 0, 0, 0.3);
   --ion-color-active-percentagebar: var(--ion-color-primary); // #36aed1 in case the percentage-style class is applied.
   --ion-background-percentagebar-color: #f4f4f4; // #f4f4f4 in case the percentage-style class is applied.
 
