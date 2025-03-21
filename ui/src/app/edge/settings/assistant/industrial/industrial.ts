@@ -46,19 +46,36 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     }
     return Converter.HIDE_VALUE(null);
   }
-  private static getBatteryFirmwareString(currentData: CurrentData, batteryId: string, currentEdge: Edge): any {
-    const patchKey = currentEdge.isVersionAtLeast("2025.2.3")
-      ? "/SoftwareVersionPatch"
-      : "/SoftwareVersionPath";
 
+  private static getBatteryFirmwareString(currentData: CurrentData, batteryId: string, patchKey: string): any {
     return [
       currentData.allComponents[batteryId + "/SoftwareVersionMajor"],
       currentData.allComponents[batteryId + "/SoftwareVersionMinor"],
-      currentData.allComponents[batteryId + patchKey],
+      currentData.allComponents[batteryId + "/" + patchKey],
     ].join(".");
   }
 
-  protected override async afterIsInitialized() {
+
+  protected override getChannelAddresses(): ChannelAddress[] {
+    const channels: ChannelAddress[] = [
+      new ChannelAddress("system0", "HeaterRunningState"),
+      new ChannelAddress("system0", "Compressor1RunningState"),
+      new ChannelAddress("system0", "Compressor2RunningState"),
+    ];
+
+    this.batteries = this.config.getComponentsByFactory("Battery.EnfasBms");
+    for (const battery of this.batteries) {
+      channels.push(
+        new ChannelAddress(battery.id, "MaxCellVoltage"),
+        new ChannelAddress(battery.id, "MinCellVoltage"),
+        new ChannelAddress(battery.id, "PackShuntTemperature"),
+      );
+    }
+
+    return channels;
+  }
+
+  protected override async afterIsInitialized(): Promise<void> {
     this.currentEdge = await this.service.getCurrentEdge();
     if (this.config?.components) {
       this.chargerComponents = Object.values(this.config.components)
@@ -68,42 +85,32 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
         );
     }
 
-    this.batteries = this.config.getComponentsByFactory("Battery.EnfasBms");
     this.batteryInverters = this.config.getComponentsImplementingNature("io.openems.edge.batteryinverter.api.ManagedSymmetricBatteryInverter");
     this.selectedBattery = this.batteries[0];
-  }
 
-  protected override getChannelAddresses(): ChannelAddress[] {
-    const channels: ChannelAddress[] = [];
+    const patchKey = this.currentEdge.isVersionAtLeast("2025.2.2")
+      ? "SoftwareVersionPatch"
+      : "SoftwareVersionPath";
+
     for (const battery of this.batteries) {
-      const patchChannel = this.currentEdge.isVersionAtLeast("2025.2.3")
-        ? new ChannelAddress(battery.id, "SoftwareVersionPatch")
-        : new ChannelAddress(battery.id, "SoftwareVersionPath");
-
-      channels.push(
+      const channelAddresses: ChannelAddress[] = [
         new ChannelAddress(battery.id, "SoftwareVersionMajor"),
         new ChannelAddress(battery.id, "SoftwareVersionMinor"),
-        patchChannel,
-        new ChannelAddress(battery.id, "MaxCellVoltage"),
-        new ChannelAddress(battery.id, "MinCellVoltage"),
-        new ChannelAddress(battery.id, "PackShuntTemperature"),
-      );
+        new ChannelAddress(battery.id, patchKey),
+      ];
+
+      const data = await (this.dataService as LiveDataService).subscribeAndGetFirstValidValueForChannels(channelAddresses, this.componentId);
+
+      this.tower[battery.id] = {
+        "Firmware": IndustrialServiceAssistantComponent.getBatteryFirmwareString(data, battery.id, patchKey),
+      };
     }
 
-    channels.push(
-      new ChannelAddress("system0", "HeaterRunningState"),
-      new ChannelAddress("system0", "Compressor1RunningState"),
-      new ChannelAddress("system0", "Compressor2RunningState"),
-    );
-    return channels;
   }
+
 
   protected override onCurrentData(currentData: CurrentData): void {
     for (const battery of this.batteries) {
-      this.tower[battery.id] = {
-        "Firmware": IndustrialServiceAssistantComponent.getBatteryFirmwareString(currentData, battery.id, this.currentEdge),
-      };
-
       const batteryId = battery.id;
       this.cellVoltageDifferences[batteryId] = Utils.subtractSafely(
         currentData.allComponents[batteryId + "/MaxCellVoltage"],
@@ -112,7 +119,7 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     }
     this.systemFeneconIndustrialL["HeatingState"] = IndustrialServiceAssistantComponent.getHeatingState(currentData);
 
-    const selectedbatteryId = this.selectedBattery.id;
+    const selectedbatteryId = this.selectedBattery?.id;
     this.cellVoltageDifference = Utils.subtractSafely(
       currentData.allComponents[selectedbatteryId + "/MaxCellVoltage"],
       currentData.allComponents[selectedbatteryId + "/MinCellVoltage"],
