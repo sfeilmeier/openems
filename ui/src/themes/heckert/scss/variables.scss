@@ -26,14 +26,15 @@ $font-family: var(--ion-font-family);
   // Overwrites
   --ion-item-background: var(--ion-background-color);
   --ion-background-color-card-header: #f4f4f4;
-  --ion-color-text-percentage-bar: white;
+  --ion-color-text-percentage-bar: var(--ion-color-white);
 
   /** Custom Colors **/
   --ion-color-shadow-rgba: rgba(0, 0, 0, 0.3);
   --ion-color-active-percentagebar: var(--ion-color-primary); // #36aed1 in case the percentage-style class is applied.
   --ion-background-percentagebar-color: #f4f4f4; // #f4f4f4 in case the percentage-style class is applied.
 
-  --ion-color-pickdate-toolbar: var(--ion-color-primary)
+  --ion-color-pickdate-toolbar: var(--ion-color-primary);
+  --ion-color-toggle-checked-border: var(--ion-color-primary);
 }
 
 

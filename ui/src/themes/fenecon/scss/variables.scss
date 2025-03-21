@@ -29,6 +29,7 @@ $font-family: var(--ion-font-family);
     --ion-color-active-percentagebar: #36aed1;
     --ion-background-percentagebar-color: #f4f4f4;
     --ion-color-text-percentage-bar: #000000;
+    --ion-color-toggle-checked-border: #0d7999;
 }
 
 :root[data-theme="dark"] {
@@ -54,4 +55,5 @@ $font-family: var(--ion-font-family);
     --ion-background-color: #2b2f42;
     --ion-background-color-rgb: 43, 47, 66;
     --ion-color-toolbar-primary: #353a50;
+    --ion-color-toggle-checked-border: #0d7999;
 }
