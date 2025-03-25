@@ -1,11 +1,11 @@
 {
   "About": {
+    "DESCRIPTION": "Our FENECON Energy Management System (FEMS) is based on OpenEMS, the Open Source Energy Management System. It is a modular platform for energy management applications. It was initiated by FENECON and is now used by a large number of companies, universities and institutes for research and development, as well as for their own energy management systems. The development is coordinated by the OpenEMS Association e.V.",
+    "CONTACT": "If you have any questions or suggestions regarding energy management and our products, please contact our team at <a href=\"mailto:service@fenecon.de\">service&#64;fenecon.de</a>. The <a target=\"_blank\" href=\"https://community.openems.io/\">OpenEMS Community Forum</a> is available for questions about OpenEMS.",
     "BUILD": "This build",
-    "CONTACT": "If you have any questions or suggestions about energy management and our products, please contact our team at <a class='ion-link' href='mailto:service@fenecon.de'>service@fenecon.de</a>. The <a class='ion-link' href='https://community.openems.io/' target='_blank'>OpenEMS Community-Forum</a> is available for questions about OpenEMS.",
-    "currentDevelopments": "Current developments",
-    "DESCRIPTION": "Our Energy Management System is basis of OpenEMS, a open source software. OpenEMS - the Open Source Energy Management System - is a modular platform for energy management applications. It was initiated by FENECON and is now used by a large number of companies, universities and institutes for their research and development as well as their own energy management systems. The development is coordinated by the OpenEMS Association e.V.",
-    "developed": "This user interface is developed as open-source software.",
     "ENERGY_MANAGEMENT": "Energy management system",
+    "currentDevelopments": "Current developments",
+    "developed": "This user interface is developed as open-source software.",
     "faq": "Frequently asked questions (FAQ)",
     "language": "Select language:",
     "openEMS": "More about OpenEMS",
@@ -15,7 +15,7 @@
     "Index": {
       "EmergencyReserve": {
         "INFO_FOR_EMERGENCY_RESERVE_SLIDER": "By activating the emergency power reserve, the value can be freely selected between 5% and 100%.",
-        "EMERGENCY_RESERVE": "Emergencyreserve"
+        "EMERGENCY_RESERVE": "Emergency reserve"
       },
       "Energymonitor": {
         "activePower": "Active power",
@@ -31,8 +31,8 @@
         "ERROR_TOO_LONG": "The display of the data is partly not possible due to reconstruction work on our servers. Your data for this period is not lost. Alternatively, it is still possible to view the historical data via <a href='https://docs.fenecon.de/de/_/latest/fems/ui/introduction.html#_offlinelokal' target='_blank'>local monitoring</a>. We ask for your understanding."
       },
       "Widgets": {
-        "autarchyInfo": "Autarky indicates the percentage of current power that can be covered by generation and storage discharge.",
-        "phasesInfo": "For technical reasons, the sum of the individual phases can be slightly different from the total sum.",
+        "autarchyInfo": "Autarchy indicates the percentage of current power that can be covered by generation and storage discharge.",
+        "phasesInfo": "For technical reasons, the sum of the individual phases can slightly deviate from the total sum.",
         "selfconsumptionInfo": "Self-consumption indicates the percentage of the currently generated output that can be used by direct consumption and storage charging.",
         "twoWayInfoGrid": "Negative values correspond to grid feed-in, Positive values correspond to mains supply",
         "InfoStorageForCharge": "Negative values correspond to storage charging",
@@ -100,20 +100,20 @@
           "medium": "Medium",
           "minimumCharge": "Minimal charge",
           "RiskDescription": {
-            "Low": {
-              "functionDescription": "Comparatively early charging of the storage system",
-              "storageDescription": "Higher chance that the storage system will be fully charged",
-              "pvCurtail": "Lower probability that curtailment of the PV system will be avoided"
+            "LOW": {
+              "functionDescription": "Comparatively early charging of the battery",
+              "storageDescription": "Higher probability that the battery is fully charged",
+              "pvCurtail": "Lower probability that curtailment of the PV installation is avoided"
             },
-            "Medium": {
-              "functionDescription": "Comparatively even charging of the store system",
-              "storageDescription": "High probability that the storage system will be fully charged",
-              "pvCurtail": "High probability that the curtailment of the PV system will be avoided"
+            "MEDIUM": {
+              "functionDescription": "Comparatively uniform charging of the battery",
+              "storageDescription": "High probability that the battery is fully charged",
+              "pvCurtail": "High probability that curtailment of the PV installation is avoided"
             },
-            "High": {
-              "functionDescription": "Comparatively later charging of the storage system",
-              "storageDescription": "Less probability that the storage system will be fully charged",
-              "pvCurtail": "Higher probability that the curtailment of the PV system will be avoided"
+            "HIGH": {
+              "functionDescription": "Comparatively late charging of the battery",
+              "storageDescription": "Lower probability that the battery is fully charged",
+              "pvCurtail": "Higher probability that curtailment of the PV installation is avoided"
             }
           },
           "riskPropensity": "Risk propensity",
@@ -129,7 +129,7 @@
             "passedEndTime": "End time of limited charging exceeded",
             "storageAlreadyFull": "Storage already full"
           },
-          "storageCapacity": "Storagecapacity (only visible for admin)",
+          "storageCapacity": "Storage capacity (only visible for admin)",
           "MAXIMUM_GRIDSELL_WITH_CHARGE": "Maximum grid feed-in through charging"
         },
         "CHP": {
@@ -219,9 +219,10 @@
           "minimumRunTime": "Minimum runtime",
           "priority": "Priority",
           "time": "Time",
-          "timeCountdown": "time until start"
+          "timeCountdown": "Time until start"
         },
         "HeatPump": {
+          "HEAT_PUMP": "Heat pump",
           "aboveSoc": "and from the state of charge of",
           "belowSoc": "and below state of charge of",
           "gridBuy": "From grid purchase of",
@@ -239,13 +240,13 @@
         },
         "TIME_OF_USE_TARIFF": {
           "CONTROL_MODE_DESCRIPTION": {
-            "CHARGE_CONSUMPTION": "By actively charging the battery from grid in periods of low electricity prices, buying energy in periods with high price can be avoided.<br/><br/>ATTENTION: Actively charging the battery from grid beyond the technically necessary maintenance charging, requires an appropriate registration of the storage system. If in doubt, please verify with your installer. By pressing the blue \"Save\" button you confirm that this verification has been done.<br/><br/>Be aware: precondition for German \"Gesetz für den Ausbau erneuerbarer Energien (EEG)\" grant is, that only energy from renewable sources and/or pit gas is stored in the battery. By activating this function, the battery is charged with energy from grid. This energy is, depending on the individual power-supply contract, probably made from fossil sources and/or nuclear power plants. Because of this we can not guarantee, that the battery is only charged with energy from renewable sources and/or pit gas."
+            "CHARGE_CONSUMPTION": "Participation in BETA-Test: This feature is under active development and will be continuously improved.<br/><br/>By actively charging the battery from grid in periods of low electricity prices, buying energy in periods with high price can be avoided.<br/><br/>ATTENTION: Actively charging the battery from grid beyond the technically necessary maintenance charging, requires an appropriate registration of the storage system. If in doubt, please verify with your installer. By pressing the blue \"Save\" button you confirm that this verification has been done.<br/><br/>Be aware: Precondition for the German Renewable Energy Sources Act (EEG 2023) grant is that only energy from renewable sources and/or pit gas is stored in the battery. By activating this function the battery is charged with energy from the grid. This energy is, depending on the individual power-supply contract, probably generated from fossil and/or nuclear power sources. Thus we cannot guarantee that the battery is exclusively charged with energy gained from renewable sources and/or pit gas."
           },
           "CHARGE_FROM_GRID_ACTIVATE": "Activate charge from the grid",
           "PRICE": "Current price",
           "STATE": {
             "DELAY_DISCHARGE": "Delayed discharge",
-            "BALANCING": "Self-Consumption optimization",
+            "BALANCING": "Self-consumption optimization",
             "CHARGE_GRID": "Charge from grid allowed"
           },
           "CHART_TITLE": "Planned Schedule",
@@ -325,7 +326,7 @@
       "jul": "Jul",
       "aug": "Aug",
       "sep": "Sep",
-      "oct": "Oxt",
+      "oct": "Oct",
       "nov": "Nov",
       "dec": "Dec",
       "activeDuration": "Active duration",
@@ -350,10 +351,16 @@
         "scheduler": "Applicationplanner",
         "simulator": "Simulator",
         "systemExecute": "Execute system command",
-        "systemProfile": "System Profile",
+        "systemProfile": "System profile",
         "alerting": "Alerting",
-        "networkConfiguration": "Network Configuration",
-        "SYSTEM": "System"
+        "networkConfiguration": "Network configuration",
+        "SYSTEM": "System",
+        "GENERAL_DATA": "General data",
+        "COMMENT": "Comment",
+        "PRODUCT_TYPE": "Product type",
+        "ROLE": "Role",
+        "CONFIGURATION": "Configuration",
+        "EXPORT_CHANNELS": "Export channels"
       },
       "PROFILE": {
         "ERROR_DOWNLOADING_MODBUS_PROTOCOL": "Error while downloading the Modbus Protocol"
@@ -490,12 +497,13 @@
     "SYSTEM_THEME": "System",
     "SAVE": "Save",
     "active": "Active",
-    "actualPower": "e-car Charge power",
+    "actualPower": "EV charging power",
     "ALL": "All",
+    "CURRENT_STATUS": "Current status",
     "apply": "Apply",
     "autarchy": "Autarchy",
-    "automatic": "Automatically",
-    "cancel": "cancel",
+    "automatic": "Automatic",
+    "cancel": "Cancel",
     "capacity": "Capacity",
     "changeAccepted": "Change accepted",
     "changeFailed": "Change failed",
@@ -509,9 +517,11 @@
     "currentValue": "current value",
     "dateFormat": "yyyy-MM-dd",
     "digitalInputs": "Digital Inputs",
+    "HEAT_PUMP": "Heat pump",
     "numberOfComponents": "Number of Components",
     "directConsumption": "Direct consumption",
     "fault": "Fault",
+    "FOR": "for",
     "FAILED": "failed",
     "WILL_BE_EXECUTED": "will be executed",
     "grid": "Grid",
@@ -547,7 +557,7 @@
     "reportValue": "Report corrupted data",
     "reset": "Reset",
     "search": "Search",
-    "selfConsumption": "Self Consumption",
+    "selfConsumption": "Self-consumption",
     "soc": "State of charge",
     "state": "State",
     "STATUS": "Status",
@@ -687,7 +697,7 @@
     },
     "HOME_20_30": {
       "STEP_EMS_RESTART": {
-        "DESCRIPTION": "Restart the {{edgeShortName}} by pressing and holding the button on the top box of the storage tower at the front for 10 seconds. Now wait <b>5 - 10 minutes</b> (the system restarts). Also make sure that the LAN plug is correctly inserted in the {{edgeShortName}} connection box. Now refresh the browser window of the Online Monitoring: if this action was successful, the error message should now be cancelled and the usual view of the {{edgeLongName}} Online Monitoring should be visible."
+        "DESCRIPTION": "Restart the {{edgeShortName}} by pressing and holding the button on the top box of the storage tower at the front for 10 seconds. Now wait <b>5 - 10 minutes</b> (the system restarts). Also make sure that the LAN plug is correctly inserted in the {{edgeShortName}} connection box. Now refresh the browser window of the Online Monitoring: if this action was successful, the error message should now be cancelled and the usual view of the {{edgeLongName}} Energy management system Online Monitoring should be visible."
       }
     },
     "STEP_EMS_RESTART": {
@@ -734,17 +744,18 @@
       "FUNCTION_TEST_ERROR": "Functional test completed with errors.",
       "FUNCTION_TEST": "Functional test",
       "GRID_METER": "Grid meter",
-      "GRID_OPTIMIZED_CHARGE": "Grid friendly charging",
+      "GRID_OPTIMIZED_CHARGE": "Grid-optimized charge",
+      "TIME_OF_USE_TARIFF": "Time-of-use tariff",
       "LEGEND": "Legend",
-      "NOT_YET_CONFIGURED": "Not yet configured / checked",
+      "NOT_YET_CONFIGURED": "Not yet configured/checked",
       "PARTIAL_CONFIGURATION": "Not all components could be configured correctly.",
-      "PRE_CONFIGURED": "Preconfigured / Warning",
+      "PRE_CONFIGURED": "Preconfigured/Warning",
       "PROGNOSIS": "Prognosis",
       "RELAY_BOARD": "Relay board",
-      "SELF_CONSUMPTION": "Self-Consumption optimization",
+      "SELF_CONSUMPTION": "Self-consumption optimization",
       "START": "Start configuration",
       "STORAGE_SYSTEM": "Energy storage system",
-      "SUCCESSFULLY_CONFIGURED": "Successfully configured / checked",
+      "SUCCESSFULLY_CONFIGURED": "Successfully configured/checked",
       "SURPLUS_ENERGY_FEEDIN": "Surplus energy feed-in",
       "TITLE": "Configuration",
       "WAITING": "Configuration running...",
@@ -1065,9 +1076,13 @@
     "name": "Name",
     "overview": "All Systems",
     "settings": "Settings",
+    "FENECON_ENERGY_MANAGEMENT_SYSTEM": "FENECON Energy Management System",
+    "HECKERT_ENERGY_MANAGEMENT_SYSTEM": "Heckert Solar Symphon-E Energy Management System",
+    "OPENEMS_ENERGY_MANAGEMENT_SYSTEM": "Open Energy Management System",
+    "DEFAULT_EDGE_LONG_NAME": "FENECON Energiemanagementsystem",
     "user": "User",
     "changelog": "Changelog",
-    "otherUser": "Other Users"
+    "otherUser": "Other users"
   },
   "Notifications": {
     "authenticationFailed": "No Connection: Authentication failed.",
@@ -1125,8 +1140,30 @@
     "admin": "Administrator"
   },
   "SETTINGS": {
+    "CATEGORY": {
+      "TITLE": {
+        "METER": "Meter",
+        "SIMULATORS": "Simulators",
+        "STORAGE_SYSTEMS": "Storage systems",
+        "STORAGE_SYSTEM_CONTROL": "Storage systems control",
+        "EXTERNAL_INTERFACES": "External interfaces",
+        "EV_CHARGING_STATION": "EV charging station",
+        "EV_CHARGING_STATION_CONTROL": "EV charging station control",
+        "IOs": "I/Os",
+        "IO-CONTROL": "I/O control",
+        "TEMPERATURE_SENSORS": "Temperature sensors",
+        "CLOUD_INTERFACES": "Cloud interfaces",
+        "DEVICE_INTERFACES": "Device interfaces",
+        "DEDICATED_CONTROLLERS": "Dedicated controllers",
+        "STANDARD_COMPONENTS": "Standard components",
+        "OTHERS": "More"
+      }
+    },
     "SYSTEM_UPDATE": {
       "INSTALLED_VERSION": "Installed version:",
+      "CREATE_COMPONENT": "Create component",
+      "UPDATE_COMPONENT": "Update component",
+      "DELETE_COMPONENT": "Delete component",
       "LATEST_VERISON": "The system is up to date with the latest software",
       "NEW_VERSION_INSTALLING": "Install latest version",
       "NEW_VERSION": "Latest version:",
@@ -1146,6 +1183,17 @@
       "WARNING": "The software will restart after the system update. No data is recorded or components controlled during this time. Please ensure that the entire system is in a safe state.",
       "UPDATE_EXECUTE": "Execute system update",
       "SUB_HEADER": "Would you like to execute a system update?"
+    },
+    "POWER_ASSISTANT": {
+      "INFO": "The 'Power Assistant' shows the respective controllers for all storage systems (ess0, ess1,...) and some relevant data points for each. The order corresponds to the order in the scheduler.",
+      "Speichersystem": "Storage System"
+    },
+    "ENERGY_JOURNEY": {
+      "INTRO_1": "Take a fresh look at the changes in the energy world.",
+      "INTRO_2": "With us, you are ideally prepared for your 100 % energy transition.",
+      "TO_THE_ANALYSIS": "View analysis",
+      "CURRENT_NUMBER_OF_MODULES": "Current",
+      "SIMULATION_NOT_STARTED": "Simulation not started"
     }
   },
   "CHANNELS": {
