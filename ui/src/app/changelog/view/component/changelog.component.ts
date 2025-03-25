@@ -25,6 +25,20 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.3.2",
+        changes: [
+          Changelog.UI,
+          Changelog.app(App.TIME_OF_USE) + "FEMS App Octopus Go: Korrektur der Preisberechnung",
+          Changelog.app(App.TIME_OF_USE) + "Verbesserung der Regelgeschwindigkeit bei aktiver Beladung aus dem Netz mit limitierter Leistung am Netzanschlusspunkt",
+          Changelog.app(App.MODBUS_TCP_API) + "Fehler 'Invalid Modbus Call' wird nach 60 Sekunden automatisch bereinigt",
+          "Multiladepunktmanagement: Verbesserung der Angabe der maximalen Gesamtleistung im App Center",
+          { roleIsAtLeast: Role.ADMIN, change: "FEMS App enerixControl" },
+          { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | Industrial L Service Assistent: Verbesserungen" },
+          { roleIsAtLeast: Role.ADMIN, change: "Vorbereitungen für IPv4Forwarding und IPMasquerade für Master-/Slave-Systeme" },
+          { roleIsAtLeast: Role.ADMIN, change: "Vorbereitungen für Neustart eines Speichersystems nach 'battery timeout passed'" },
+        ],
+      },
+      {
         version: "2025.3.1",
         changes: [
           Changelog.UI,
