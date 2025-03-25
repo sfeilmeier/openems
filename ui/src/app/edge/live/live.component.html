@@ -196,8 +196,8 @@
   </ion-grid>
 
   <ng-container *ngIf="showNewFooter">
-    <ion-modal #modal trigger="open-modal" [isOpen]="showNewFooter" [initialBreakpoint]="0.1" [breakpoints]="[0.1, 0.9]"
-      [backdropDismiss]="true" [backdropBreakpoint]="0.1" *ngIf="showNewFooter">
+    <ion-modal #modal trigger="open-modal" [isOpen]="showNewFooter" [initialBreakpoint]="0.04"
+      [breakpoints]="[0.04,0.1, 0.9]" [backdropDismiss]="true" [backdropBreakpoint]="0.04" *ngIf="showNewFooter">
       <ng-template>
         <ion-content class="ion-padding">
           <ion-breadcrumbs>

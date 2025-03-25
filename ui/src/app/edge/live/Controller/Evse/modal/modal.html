@@ -8,8 +8,8 @@
     { name: 'Schnell', value: 'FORCE', icon: {color:'primary', name: 'radio-button-on-outline'}}]">
     </oe-modal-buttons>
 
-    <ion-modal #modal2 trigger="open-modal" [isOpen]="true" [initialBreakpoint]="0.1" [breakpoints]="[0.1, 0.9]"
-        [backdropDismiss]="false" [backdropBreakpoint]="0.1" *ngIf="showNewFooter">
+    <ion-modal #modal2 trigger="open-modal" [isOpen]="true" [initialBreakpoint]="0.04" [breakpoints]="[0.04, 0.1, 0.9]"
+        [backdropDismiss]="true" [backdropBreakpoint]="0.1" *ngIf="showNewFooter">
         <ng-template>
             <ion-content class="ion-padding">
                 <ion-breadcrumbs>
