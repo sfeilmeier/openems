@@ -1,11 +1,11 @@
 variables:
-  - &sftp-settings
-    server: ${CACHE_SERVER}
-    username: user
-    password: pass
-    ignore_branch: true
-    port: 2222
-    path: /cache
+  - &cache-settings
+    region: eu-west-1
+    bucket: cache-fems
+    endpoint: 10.10.111.20:9000
+    access-key: fems
+    secret-key: woodpecker
+    path-style: true
     mount:
       - cache
 
@@ -44,17 +44,24 @@ clone:
       - *main-build
       - *message-debian
       - path:
-          include: [".woodpecker/ci-build.yml", "ui/**", "io.openems*/**", "**/*gradle*", "tools/**"]
+          include:
+            [
+              ".woodpecker/ci-build.yml",
+              "ui/**",
+              "io.openems*/**",
+              "**/*gradle*",
+              "tools/**",
+            ]
           on_empty: false
     image: woodpeckerci/plugin-git
 
 steps:
   restore-cache:
     when: *every-build
-    image: appleboy/drone-sftp-cache
+    image: meltwater/drone-cache
     settings:
       restore: true
-      <<: *sftp-settings
+      <<: *cache-settings
 
   check-scripts:
     when: *every-build
@@ -82,7 +89,7 @@ steps:
         export NG_CLI_CACHE_PATH=$CACHE/angular-cli
         export NODE_MODULES_CACHE=$CACHE/node_modules
         export CHROME_BIN=/usr/bin/google-chrome-stable
-        " > $CI_WORKSPACE/.woodpecker-env        
+        " > $CI_WORKSPACE/.woodpecker-env
       - common_update_version_in_code
     depends_on: [restore-cache]
 
@@ -172,8 +179,9 @@ steps:
   rebuild-cache:
     when:
       - *main-build
-    image: appleboy/drone-sftp-cache:latest
+      - *message-debian
+    image: meltwater/drone-cache
     settings:
       rebuild: true
-      <<: *sftp-settings
-    depends_on: [build-ui, build-java, build-debian-package]
+      <<: *cache-settings
+    depends_on: [build-debian-package]

@@ -5,13 +5,14 @@ export const theme = {
 
     uiTitle: "Heckert Solar Symphon-E Online Monitoring",
     edgeShortName: "EMS",
-    edgeLongName: "Heckert Solar Symphon-E Energiemanagementsystem",
+    edgeLongName: "Heckert Solar Symphon-E",
     defaultLanguage: "de",
 
     // TODO
     docsUrlPrefix: "https://docs.fenecon.de/{language}/_/latest/fems/",
     links: {
         COMMON_STORAGE: "ui/standardwidgets.html#_speicher",
+        COMMON_STORAGE_MODAL_BATTERY_REFERENCING: "https://symphon-e.heckert-solar.com/docs/{language}/index.html",
         FORGET_PASSWORD: "https://erp.fenecon.de/web/reset_password?",
         EVCS_HARDY_BARTH: "fems-app/includes/fems-app/includes/FEMS_App_Ladestation_eCharge_Hardy_Barth.html",
         EVCS_KEBA_KECONTACT: "fems-app/includes/FEMS_App_Ladestation_KEBA.html",

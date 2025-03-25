@@ -251,7 +251,7 @@
                                                             <ng-container
                                                                 *ngIf="channelConfig.type === 'BOOLEAN'; else no_boolean">
                                                                 <!-- show Toggle for boolean value  -->
-                                                                <ion-toggle #valueToggle></ion-toggle>
+                                                                <ion-toggle mode="md" #valueToggle></ion-toggle>
                                                                 <ion-button
                                                                     (click)="setChannelValue(address, valueToggle.checked)"
                                                                     slot="end" color="light">

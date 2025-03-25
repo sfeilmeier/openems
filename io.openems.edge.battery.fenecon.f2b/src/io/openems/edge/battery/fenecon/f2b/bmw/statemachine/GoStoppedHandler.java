@@ -54,6 +54,7 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 			this.goStoppedState = new GoStoppedState(nextSubState, now);
 		} else if (this.goStoppedState.lastChange.isBefore(now.minusSeconds(TIMEOUT))) {
 			// Handle GoStoppedHandler State-timeout
+			battery._setTimeoutStopBattery(true);
 			throw new OpenemsException("Timeout [" + TIMEOUT + "s] in GoStoppped-" + this.goStoppedState.subState);
 		}
 

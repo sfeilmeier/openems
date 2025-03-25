@@ -19,8 +19,8 @@
                 [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line-item>
               <oe-flat-widget-line-item [name]="'minTemp'" [channelAddress]="battery.id + '/MinCellTemperature'"
                 [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line-item>
-              <oe-flat-widget-line-item [name]="'FW'"
-                [value]="tower[battery.id]['Firmware']"></oe-flat-widget-line-item>
+              <oe-flat-widget-line-item *ngIf="tower[battery.id]?.['Firmware']" [name]="'FW'"
+                [value]="tower[battery.id]?.['Firmware']"></oe-flat-widget-line-item>
               <oe-flat-widget-line-item [channelAddress]="battery.id + '/StateMachine'"
                 [converter]="Converter.CONVERT_TO_BATTERY_STATE"></oe-flat-widget-line-item>
             </oe-flat-widget-line>

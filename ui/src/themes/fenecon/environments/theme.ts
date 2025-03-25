@@ -7,12 +7,13 @@ export const theme = {
 
     uiTitle: "FENECON Online-Monitoring",
     edgeShortName: "FEMS",
-    edgeLongName: "FENECON Energiemanagementsystem",
+    edgeLongName: "FENECON",
     defaultLanguage: "de",
 
     docsUrlPrefix: "https://docs.fenecon.de/{language}/_/latest/fems/",
     links: {
         COMMON_STORAGE: "ui/standardwidgets.html#_speicher",
+        COMMON_STORAGE_MODAL_BATTERY_REFERENCING: "https://docs.fenecon.de/{language}/index.html",
         FORGET_PASSWORD: "https://erp.fenecon.de/web/reset_password?",
         EVCS_HARDY_BARTH: "fems-app/includes/fems-app/includes/FEMS_App_Ladestation_eCharge_Hardy_Barth.html",
         EVCS_KEBA_KECONTACT: "fems-app/includes/FEMS_App_Ladestation_KEBA.html",

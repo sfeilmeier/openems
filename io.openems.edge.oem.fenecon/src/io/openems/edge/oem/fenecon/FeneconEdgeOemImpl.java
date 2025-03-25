@@ -122,6 +122,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.TimeOfUseTariff.Swisspower", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Tibber", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.RabotCharge", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
+			// TODO add website when available
+			.put("App.Cloud.EnerixControl", "") //
+			.put("App.Cloud.Clever-PV", "") //
 			// TODO folgende URLs sind veraltet
 			.put("App.Api.ModbusTcp.ReadOnly", "https://fenecon.de/produkte/fems/fems-app-modbus-tcp-lesend/") //
 			.put("App.Api.ModbusTcp.ReadWrite", "https://fenecon.de/produkte/fems/fems-app-modbus-tcp-schreibzugriff/") //

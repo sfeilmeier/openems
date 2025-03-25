@@ -27,7 +27,7 @@ const baseConfig: CapacitorConfig = {
   },
 };
 
-switch (process.env.NODE_ENV as Theme) {
+switch (process.env.NODE_ENV as (Theme | "FENECONBetaIos")) {
   case 'FENECON':
     config = {
       ...baseConfig,
@@ -43,6 +43,19 @@ switch (process.env.NODE_ENV as Theme) {
     config = {
       ...baseConfig,
       appId: 'io.fenecon.ui',
+      appName: 'FENECON BETA App',
+      server: {
+        ...baseConfig.server,
+        hostname: 'portal.fenecon.de',
+      },
+    };
+    break;
+
+  // Failed to create android and ios app with same package id
+  case 'FENECONBetaIos':
+    config = {
+      ...baseConfig,
+      appId: 'io.fenecon.ios',
       appName: 'FENECON BETA App',
       server: {
         ...baseConfig.server,

@@ -81,11 +81,12 @@
             <ion-item lines="none">
               <ion-button style="padding-top: 0.3em" slot="start" (click)="enableAndDisableEditMode()"
                 [disabled]="!isEditModeDisabled && !this.form?.formGroup?.dirty">
-                <ion-label>{{isEditModeDisabled ?'bearbeiten':'zurücksetzen'}}</ion-label>
+                <ion-label>{{isEditModeDisabled ? ('General.EDIT' | translate) :('General.RESET' |
+                  translate)}}</ion-label>
                 <ion-icon name="pencil-outline" slot="end"></ion-icon>
               </ion-button>
               <ion-button [disabled]="!form?.formGroup?.dirty" slot="end" (click)="applyChanges()">
-                <ion-label translate>General.save</ion-label>
+                <ion-label translate>General.SAVE</ion-label>
                 <ion-icon name="save-outline" slot="end"></ion-icon>
               </ion-button>
             </ion-item>
@@ -113,23 +114,19 @@
           <ion-item lines="full" color="light">
             <ion-icon slot="start" size="large" color="primary" name="code-slash-outline"></ion-icon>
             <ion-label class="ion-text-wrap">
-              {{ environment.edgeShortName }} - {{ environment.edgeLongName }}
+              {{ environment.edgeShortName }} - {{ environment.edgeLongName }} {{"About.ENERGY_MANAGEMENT" | translate}}
             </ion-label>
           </ion-item>
 
           <ion-card-content class="ion-text-wrap">
-            <p class="ion-padding">Dieses Energiemanagementsystem wird auf Basis von OpenEMS als Open-Source-Software
-              entwickelt. OpenEMS - das Open Source Energy Management System - ist eine modulare Plattform für
-              Energiemanagement-Anwendungen. Es wurde von FENECON initiiert und wird mittlerweile von einer breiten Zahl
-              an Unternehmen, Universitäten und Instituten für deren Forschung und Entwicklung als auch eigene
-              Energiemanagementsysteme eingesetzt. Die Entwicklung wird in der OpenEMS Association e.V. koordiniert.</p>
+            <p class="ion-padding" [innerHTML]="'About.DESCRIPTION' | translate"></p>
             <ul>
               <li>
                 <a class="ion-link" target="_blank" href="https://openems.io" translate>About.openEMS</a>
               </li>
             </ul>
             <div *ngIf="(service.metadata | async)?.user?.globalRole as role">
-              <p class="ion-padding" translate>About.build</p>
+              <p class="ion-padding" translate>About.BUILD</p>
               <ul>
                 <li>
                   <a class="ion-link" routerLinkActive="active" routerLink="/changelog">{{ uiVersion | version:role
@@ -137,13 +134,7 @@
                 </li>
               </ul>
             </div>
-            <p class="ion-padding">Für Rückfragen und Anregungen zum Energiemanagement und unseren Produkten, wenden Sie
-              sich bitte an unser Team unter <a class="ion-link"
-                href="mailto:service@fenecon.de">service&#64;fenecon.de</a>.
-              Für Fragen zu
-              OpenEMS steht Ihnen das <a class="ion-link" target="_blank" href="https://community.openems.io/">OpenEMS
-                Community-Forum</a> zur Verfügung.
-            </p>
+            <p class="ion-padding" [innerHTML]="'About.CONTACT' | translate"></p>
           </ion-card-content>
         </ion-card>
         <ion-card>

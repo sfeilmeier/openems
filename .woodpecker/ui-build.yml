@@ -21,9 +21,6 @@ variables:
   - &main-build
     - branch: [main, main-ui]
     - evaluate: 'CI_COMMIT_MESSAGE contains "[APP]"'
-    - path:
-        include: [".woodpecker/ui-build.yml"]
-        on_empty: false
 
 when:
   event:

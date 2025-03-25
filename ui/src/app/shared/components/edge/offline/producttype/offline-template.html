@@ -2,7 +2,7 @@
     <ion-label class="ion-text-wrap">
         <h3><b>{{(i + 1) + ". " + step.header}}:</b></h3>
         <p>
-            <ion-text [innerHTML]="step.description">
+            <ion-text style="color: var(--ion-color-text)" [innerHTML]="step.description">
             </ion-text>
             <ion-item *ngFor="let child of step.children; let lastChild" [lines]="lastChild ? 'none': 'full'">
                 <ion-label class="ion-text-wrap">

@@ -38,6 +38,7 @@ import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.types.OpenemsType;
 import io.openems.edge.battery.api.Battery;
+import io.openems.edge.battery.api.BatteryTimeoutFailure;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.BatteryProtectionDefinitionType;
 import io.openems.edge.battery.fenecon.f2b.bmw.enums.CoolingApproval;
@@ -85,8 +86,9 @@ import io.openems.edge.common.type.TypeUtils;
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE //
 })
 // TODO Extract AbstractBatteryFeneconF2b
-public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent implements BatteryFeneconF2bBmw,
-		BatteryFeneconF2b, ModbusComponent, OpenemsComponent, Battery, ModbusSlave, StartStoppable, EventHandler {
+public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
+		implements BatteryFeneconF2bBmw, BatteryFeneconF2b, ModbusComponent, OpenemsComponent, Battery, ModbusSlave,
+		StartStoppable, EventHandler, BatteryTimeoutFailure {
 
 	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
 	private final Logger log = LoggerFactory.getLogger(BatteryFeneconF2bBmwImpl.class);
@@ -123,6 +125,7 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent imp
 				ModbusComponent.ChannelId.values(), //
 				Battery.ChannelId.values(), //
 				StartStoppable.ChannelId.values(), //
+				BatteryTimeoutFailure.ChannelId.values(), //
 				BatteryProtection.ChannelId.values(), //
 				BatteryFeneconF2b.ChannelId.values(), //
 				BatteryFeneconF2bBmw.ChannelId.values() //
@@ -623,4 +626,11 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent imp
 	public BmwOnSetNextValueHandler getDeviceSpecificOnSetNextValueHandler() {
 		return BmwOnSetNextValueHandler.INSTANCE;
 	}
+
+	@Override
+	public void clearBatteryTimeoutFailure() {
+		this._setTimeoutStartBattery(false);
+		this._setTimeoutStopBattery(false);
+	}
+
 }

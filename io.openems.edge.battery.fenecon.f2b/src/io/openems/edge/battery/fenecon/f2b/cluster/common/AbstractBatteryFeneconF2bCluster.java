@@ -218,4 +218,20 @@ public abstract class AbstractBatteryFeneconF2bCluster extends AbstractOpenemsCo
 	public boolean isParallelCluster() {
 		return this.getBatteryFeneconF2bCluster() instanceof BatteryFeneconF2bClusterParallel;
 	}
+
+	@Override
+	public void clearBatteryTimeoutFailure() {
+		this._setTimeoutStartBattery(false);
+		this._setTimeoutStopBattery(false);
+		this._setAtLeastOneBatteryInError(false);
+		this._setOneBatteryHasError(false);
+		this._setOneBatteryStopped(false);
+		this._setOneBatteryNotStopped(false);
+		this._setOneBatteryNotRunning(false);
+		this._setTimeoutWaitForBatteriesStatus(false);
+		this._setAllBatteriesAreInFault(false);
+		this.batteries.forEach(b -> {
+			b.clearBatteryTimeoutFailure();
+		});
+	}
 }

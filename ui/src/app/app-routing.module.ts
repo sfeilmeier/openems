@@ -27,6 +27,7 @@ import { SymmetricPeakshavingChartOverviewComponent } from "./edge/history/peaks
 import { TimeslotPeakshavingChartOverviewComponent } from "./edge/history/peakshaving/timeslot/timeslotpeakshavingchartoverview/timeslotpeakshavingchartoverview.component";
 import { StorageChartOverviewComponent } from "./edge/history/storage/storagechartoverview/storagechartoverview.component";
 import { InstallationComponent } from "./edge/installation/installation.component";
+import { ModalComponent } from "./edge/live/Controller/Evse/modal/modal";
 import { LiveComponent as EdgeLiveComponent } from "./edge/live/live.component";
 import { LiveDataService } from "./edge/live/livedataservice";
 import { AlertingComponent as EdgeSettingsAlerting } from "./edge/settings/alerting/alerting.component";
@@ -87,7 +88,15 @@ export const routes: Routes = [
         path: "live", data: { navbarTitle: environment.uiTitle }, providers: [{
           useClass: LiveDataService,
           provide: DataService,
-        }], component: EdgeLiveComponent,
+        }], component: HistoryParentComponent,
+
+        children: [
+          {
+            path: "", component: EdgeLiveComponent,
+          },
+          {
+            path: "evse/:componentId", component: ModalComponent,
+          }],
       },
       {
         path: "history", providers: [{

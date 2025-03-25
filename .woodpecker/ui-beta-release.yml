@@ -65,6 +65,21 @@ steps:
       - common_build_android_app
     depends_on: [prepare-environment]
 
+  build-ios-app:
+    when: *main-build
+    image: appleboy/drone-ssh:latest
+    settings:
+      host: ${MAC_SERVER}
+      username: fems
+      key:
+        from_secret: ssh_key_mac
+      timeout: 10s
+      script:
+        - echo $THEME
+        - env CONFIGURATION="Release"
+        - /Users/fems/process_ios_app.sh ${THEME} ${CONFIGURATION} ${CI_COMMIT_BRANCH}
+    depends_on: [prepare-environment]
+
   refresh-dev-android:
     when: *main-build
     image: woodpeckerci/rsync:latest
@@ -74,7 +89,7 @@ steps:
       target: /var/opt/develop/fems-artifacts/html/${CI_COMMIT_BRANCH}
     depends_on: [build-android-app]
 
-  create-release:
+  create-android-release:
     when: *main-build
     image: openems-build:21.20
     environment:

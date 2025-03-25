@@ -20,14 +20,6 @@ import io.openems.edge.common.startstop.StartStoppable;
 public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, OpenemsComponent, StartStoppable {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-		MAX_START_ATTEMPTS_FAILED(Doc.of(Level.FAULT) //
-				.text("The maximum number of start attempts failed")), //
-		MAX_STOP_ATTEMPTS_FAILED(Doc.of(Level.FAULT) //
-				.text("The maximum number of stop attempts failed")), //
-		TIMEOUT_START_BATTERIES(Doc.of(Level.FAULT) //
-				.text("The maximum start time is passed")), //
-		TIMEOUT_STOP_BATTERIES(Doc.of(Level.FAULT) //
-				.text("The maximum stop time is passed")), //
 		TIMEOUT_WAIT_FOR_BATTERIES_STATUS(Doc.of(Level.FAULT) //
 				.text("Waiting for batteries status!")), //
 		ONE_BATTERY_NOT_RUNNING(Doc.of(Level.WARNING) //
@@ -54,119 +46,6 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 		public Doc doc() {
 			return this.doc;
 		}
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#MAX_START_ATTEMPTS_FAILED}.
-	 *
-	 * @return the Channel
-	 */
-	public default StateChannel getMaxStartAttemptsFailedChannel() {
-		return this.channel(ChannelId.MAX_START_ATTEMPTS_FAILED);
-	}
-
-	/**
-	 * Gets the {@link StateChannel} for
-	 * {@link ChannelId#MAX_START_ATTEMPTS_FAILED}.
-	 *
-	 * @return the Channel {@link Value}
-	 */
-	public default Value<Boolean> getMaxStartAttemptsFailed() {
-		return this.getMaxStartAttemptsFailedChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#MAX_START_ATTEMPTS_FAILED} Channel.
-	 *
-	 * @param value the next value
-	 */
-	public default void _setMaxStartAttemptsFailed(Boolean value) {
-		this.getMaxStartAttemptsFailedChannel().setNextValue(value);
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#MAX_STOP_ATTEMPTS_FAILED}.
-	 *
-	 * @return the Channel
-	 */
-	public default StateChannel getMaxStopAttemptsFailedChannel() {
-		return this.channel(ChannelId.MAX_STOP_ATTEMPTS_FAILED);
-	}
-
-	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#MAX_STOP_ATTEMPTS_FAILED}.
-	 *
-	 * @return the Channel {@link Value}
-	 */
-	public default Value<Boolean> getMaxStopAttemptsFailed() {
-		return this.getMaxStopAttemptsFailedChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#MAX_STOP_ATTEMPTS_FAILED} Channel.
-	 *
-	 * @param value the next value
-	 */
-	public default void _setMaxStopAttemptsFailed(Boolean value) {
-		this.getMaxStopAttemptsFailedChannel().setNextValue(value);
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#TIMEOUT_START_BATTERIES}.
-	 * 
-	 * @return the Channel
-	 */
-	public default StateChannel getTimeoutStartBatteriesChannel() {
-		return this.channel(ChannelId.TIMEOUT_START_BATTERIES);
-	}
-
-	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#TIMEOUT_START_BATTERIES}.
-	 * 
-	 * @return the Channel {@link Value}
-	 */
-	public default Value<Boolean> getTimeoutStartBatteries() {
-		return this.getTimeoutStartBatteriesChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#TIMEOUT_START_BATTERIES} Channel.
-	 * 
-	 * @param value the next value
-	 */
-	public default void _setTimeoutStartBatteries(Boolean value) {
-		this.getTimeoutStartBatteriesChannel().setNextValue(value);
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#TIMEOUT_STOP_BATTERIES}.
-	 * 
-	 * @return the Channel
-	 */
-	public default StateChannel getTimeoutStopBatteriesChannel() {
-		return this.channel(ChannelId.TIMEOUT_STOP_BATTERIES);
-	}
-
-	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#TIMEOUT_STOP_BATTERIES}.
-	 * 
-	 * @return the Channel {@link Value}
-	 */
-	public default Value<Boolean> getTimeoutStopBatteries() {
-		return this.getTimeoutStopBatteriesChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#TIMEOUT_STOP_BATTERIES} Channel.
-	 * 
-	 * @param value the next value
-	 */
-	public default void _setTimeoutStopBatteries(Boolean value) {
-		this.getTimeoutStopBatteriesChannel().setNextValue(value);
 	}
 
 	/**
