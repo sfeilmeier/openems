@@ -45,6 +45,7 @@ public class SerialChannelManager extends ChannelManager {
 		this.calculate(INTEGER_MIN, batteries, Battery.ChannelId.CHARGE_MAX_CURRENT);
 		this.calculate(INTEGER_MIN, batteries, Battery.ChannelId.DISCHARGE_MAX_CURRENT);
 		this.calculate(INTEGER_SUM, batteries, Battery.ChannelId.INNER_RESISTANCE);
+		this.calculate(INTEGER_SUM, batteries, Battery.ChannelId.CAPACITY);
 		this.updateBmwClusterVoltage(batteries);
 	}
 
