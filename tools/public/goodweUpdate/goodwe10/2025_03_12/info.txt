@@ -1,0 +1,5 @@
+Version 10.03.2025
+ARM: 30 (410-02041-30-Test（60322.bin)
+DSP: 12 (410-04029-12-Release(V197).bin)
+
+"This FW is mainly for solve the ET+ doesn’t discharge issue."
