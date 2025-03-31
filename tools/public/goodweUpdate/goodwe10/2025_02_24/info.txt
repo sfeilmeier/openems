@@ -1,0 +1,6 @@
+Version 24.02.2025 
+ARM: 30 (410-02041-30-Test（60321）.bin)
+DSP: 12 (410-04029-12-Release(V197).bin) not changed
+
+New FW with Register to disable internal Goodwe Battery/SoC Protetion (47500 to 1)
+Logic changed: Only the value from the write register is used as the BMS voltage.
