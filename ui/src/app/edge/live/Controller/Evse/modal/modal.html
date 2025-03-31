@@ -1,5 +1,4 @@
-<oe-modal [title]="this.component.alias" [component]="component" [formGroup]="formGroup" *ngIf="isInitialized"
-    [isModal]="false">
+<oe-modal [title]="this.component.alias" [component]="component" [formGroup]="formGroup" *ngIf="isInitialized">
 
     <oe-modal-buttons [formGroup]="formGroup" controlName="mode" [component]="component" [buttons]="[
     { name: 'Aus', value: 'ZERO', icon: {color:'primary', name: 'close-circle-outline'}},
@@ -8,8 +7,19 @@
     { name: 'Schnell', value: 'FORCE', icon: {color:'primary', name: 'radio-button-on-outline'}}]">
     </oe-modal-buttons>
 
-    <ion-modal #modal2 trigger="open-modal" [isOpen]="true" [initialBreakpoint]="0.04" [breakpoints]="[0.04, 0.1, 0.9]"
-        [backdropDismiss]="true" [backdropBreakpoint]="0.1" *ngIf="showNewFooter">
+    <ng-container *ngIf="edge.roleIsAtLeast('admin')">
+        <oe-modal-info-line [info]="'Edge.Index.Widgets.SCHEDULE.CHART_TITLE_ADMIN'| translate"></oe-modal-info-line>
+
+        <scheduleChart class="ion-padding" [refresh]="refreshChart" [component]="component" [edge]="edge">
+        </scheduleChart>
+        <oe-modal-horizontal-line></oe-modal-horizontal-line>
+        <powerChart class="ion-padding" [refresh]="refreshChart" [component]="component" [edge]="edge">
+        </powerChart>
+
+    </ng-container>
+
+    <ion-modal #modal2 isOpen="true" [initialBreakpoint]="0.1" [breakpoints]="[0.04, 0.1, 0.9]" [backdropDismiss]="true"
+        [backdropBreakpoint]="0.1" *ngIf="showNewFooter">
         <ng-template>
             <ion-content class="ion-padding">
                 <ion-breadcrumbs>

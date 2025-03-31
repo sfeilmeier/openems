@@ -118,10 +118,6 @@
                 <Controller_Io_HeatingElement [componentId]="widget.componentId"></Controller_Io_HeatingElement>
               </ion-col>
 
-              <ion-col *ngSwitchCase="'Controller.IO.Heating.Room'" size="12" size-lg="6" class="ion-no-padding">
-                <oe-controller-io-heating-room [componentId]="widget.componentId"></oe-controller-io-heating-room>
-              </ion-col>
-
               <ion-col *ngSwitchCase="'Controller.Io.HeatPump.SgReady'" size="12" size-lg="6" class="ion-no-padding">
                 <Controller_Io_Heatpump [componentId]="widget.componentId"></Controller_Io_Heatpump>
               </ion-col>
@@ -196,8 +192,8 @@
   </ion-grid>
 
   <ng-container *ngIf="showNewFooter">
-    <ion-modal #modal trigger="open-modal" [isOpen]="showNewFooter" [initialBreakpoint]="0.04"
-      [breakpoints]="[0.04,0.1, 0.9]" [backdropDismiss]="true" [backdropBreakpoint]="0.04" *ngIf="showNewFooter">
+    <ion-modal #modal [isOpen]="showNewFooter" [initialBreakpoint]="0.1" [breakpoints]="[0.04,0.1, 0.9]"
+      [backdropDismiss]="true" [backdropBreakpoint]="0.1" *ngIf="showNewFooter">
       <ng-template>
         <ion-content class="ion-padding">
           <ion-breadcrumbs>
@@ -209,7 +205,13 @@
           <ng-container *ngFor="let widget of widgets.list" [ngSwitch]="widget.name">
             <ion-chip (click)="routeTo('evse/' + widget.componentId)" *ngSwitchCase="'Evse.Controller.Single'">
               <ion-icon name="oe-evcs" color="success"></ion-icon>
-              <ion-label>{{widget.componentId}}</ion-label>
+              <ion-label>{{widget.alias}}</ion-label>
+            </ion-chip>
+
+            <ion-chip (click)="routeTo('io-heating-room/' + widget.componentId)"
+              *ngSwitchCase="'Controller.IO.Heating.Room'">
+              <ion-icon name="flame" color="success"></ion-icon>
+              <ion-label>{{widget.alias}}</ion-label>
             </ion-chip>
           </ng-container>
 

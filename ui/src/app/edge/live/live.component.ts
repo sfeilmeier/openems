@@ -45,11 +45,11 @@ export class LiveComponent implements OnDestroy {
         const topLevelSegment = url.split("/").pop();
 
         const some = await this.service.getConfig();
-        const evse = some.widgets.list.filter(item => item.name == "Evse.Controller.Single");
+        const chips = some.widgets.list.filter(item => item.name == "Evse.Controller.Single" || item.name == "Controller.IO.Heating.Room");
         if (topLevelSegment != "live") {
           this.hideModal();
         } else {
-          this.showNewFooter = evse?.length > 0;
+          this.showNewFooter = chips?.length > 0;
         }
       }
     });
@@ -77,7 +77,7 @@ export class LiveComponent implements OnDestroy {
 
   public ionViewWillEnter() {
     if (this.widgets?.list) {
-      this.showNewFooter = this.widgets?.list.filter(item => item.name == "Evse.Controller.Single")?.length > 0;
+      this.showNewFooter = this.widgets?.list.filter(item => item.name == "Evse.Controller.Single" || item.name == "Controller.IO.Heating.Room")?.length > 0;
     }
   }
 
