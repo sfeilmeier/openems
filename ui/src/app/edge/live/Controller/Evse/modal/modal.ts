@@ -6,7 +6,7 @@ import { ModalController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { filter, take } from "rxjs";
 import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
-import { NavigationService } from "src/app/shared/components/navigation/navigation.component";
+import { NavigationService } from "src/app/shared/components/navigation/navigation.service";
 import { EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions-utils";
 

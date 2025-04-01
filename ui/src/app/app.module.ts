@@ -23,7 +23,8 @@ import { SystemLogComponent } from "./edge/settings/systemlog/systemlog.componen
 import { IndexModule } from "./index/index.module";
 import { PlatFormService } from "./platform.service";
 import { RegistrationModule } from "./registration/registration.module";
-import { NavigationService } from "./shared/components/navigation/navigation.component";
+import { NavigationComponent } from "./shared/components/navigation/navigation.component";
+import { NavigationService } from "./shared/components/navigation/navigation.service";
 import { StatusSingleComponent } from "./shared/components/status/single/status.component";
 import { ChartOptionsPopoverComponent } from "./shared/legacy/chartoptions/popover/popover.component";
 import { AppStateTracker } from "./shared/ngrx-store/states";
@@ -41,6 +42,7 @@ import { UserModule } from "./user/user.module";
     ChartOptionsPopoverComponent,
     StatusSingleComponent,
     SystemLogComponent,
+    NavigationComponent,
   ],
   imports: [
     AngularMyDatePickerModule,
@@ -76,7 +78,7 @@ import { UserModule } from "./user/user.module";
     {
       provide: APP_INITIALIZER,
       useFactory: initializeService,
-      deps: [UserService], // Dependencies for the factory function
+      deps: [UserService, NavigationService], // Dependencies for the factory function
       multi: true, // Allows multiple initializers
     },
     provideCharts(withDefaultRegisterables()),

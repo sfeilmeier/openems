@@ -1,13 +1,11 @@
 import { Component, effect, ElementRef, OnDestroy, ViewChild } from "@angular/core";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { RefresherCustomEvent } from "@ionic/angular";
 import { Subject } from "rxjs";
-import { NavigationService, NavigationUtils } from "src/app/shared/components/navigation/navigation.component";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Edge, EdgeConfig, EdgePermission, Service, Utils, Websocket, Widgets } from "src/app/shared/shared";
 import { AdvertWidgets } from "src/app/shared/type/widget";
 import { DateTimeUtils } from "src/app/shared/utils/datetime/datetime-utils";
-import { StringUtils } from "src/app/shared/utils/string/string.utils";
 
 @Component({
   selector: "live",
@@ -36,23 +34,8 @@ export class LiveComponent implements OnDestroy {
     protected websocket: Websocket,
     private dataService: DataService,
     private router: Router,
-    private navigationService: NavigationService,
   ) {
 
-    router.events.subscribe(async event => {
-      if (event instanceof NavigationEnd) {
-        const url = event.urlAfterRedirects;
-        const topLevelSegment = url.split("/").pop();
-
-        const some = await this.service.getConfig();
-        const chips = some.widgets.list.filter(item => item.name == "Evse.Controller.Single" || item.name == "Controller.IO.Heating.Room");
-        if (topLevelSegment != "live") {
-          this.hideModal();
-        } else {
-          this.showNewFooter = chips?.length > 0;
-        }
-      }
-    });
     effect(() => {
       const edge = this.service.currentEdge();
       this.edge = edge;
@@ -67,30 +50,15 @@ export class LiveComponent implements OnDestroy {
     });
   }
 
-  async hideModal() {
-    this.showNewFooter = false;
-    if (this.modal) {
-      await this.modal.nativeElement.dismiss(); // Properly dismiss the modal
-      this.modal.nativeElement.remove(); // Remove from DOM safely
-    }
-  }
-
   public ionViewWillEnter() {
     if (this.widgets?.list) {
       this.showNewFooter = this.widgets?.list.filter(item => item.name == "Evse.Controller.Single" || item.name == "Controller.IO.Heating.Room")?.length > 0;
     }
   }
 
-  public ionViewDidLeave() {
-    this.hideModal();
-  }
-
-
   ionViewWillLeave() {
-    this.hideModal();
     this.ngOnDestroy();
   }
-
 
   public ngOnDestroy() {
     clearInterval(this.interval);
@@ -115,19 +83,5 @@ export class LiveComponent implements OnDestroy {
       }
       this.showRefreshDragDown = DateTimeUtils.isDifferenceInSecondsGreaterThan(20, new Date(), lastUpdate);
     }, 5000);
-  }
-
-  /**
-   * Remove this function after navigation is done
-   *
-   * @param link the link
-   */
-  protected routeTo(link: string) {
-    this.showNewFooter = false;
-    const currentNav = NavigationUtils.getNavigationTreeFromRouterLink(this.navigationService.wholeNavi(), link);
-    const segments = StringUtils.splitBy(this.navigationService.currentUrl(), "/") ?? [];
-    const segments2 = link.split("/");
-    this.navigationService.currentNode.set(currentNav);
-    this.router.navigate([...segments, ...segments2]);
   }
 }
