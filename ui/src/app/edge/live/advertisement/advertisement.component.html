@@ -16,11 +16,7 @@
     </ion-item>
     <ion-card-content style="color: var(--ion-card-content);" class="ion-no-padding">
         <swiper-container autoplay="true" speed="5000" #swiper (swiperslidechange)="setSlideConfig()">
-            <ng-container *ngFor="let widget of advertWidgets.list" [ngSwitch]="widget.name">
-                <swiper-slide *ngSwitchCase="'advert-1'">
-                    <advert-1></advert-1>
-                </swiper-slide>
-            </ng-container>
+
         </swiper-container>
     </ion-card-content>
 </ion-card>

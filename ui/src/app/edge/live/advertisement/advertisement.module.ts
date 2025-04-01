@@ -3,7 +3,6 @@ import { TranslateService } from "@ngx-translate/core";
 import tr from "src/app/edge/live/advertisement/shared/translation.json";
 import { SharedModule } from "src/app/shared/shared.module";
 import { Language } from "src/app/shared/type/language";
-import { TimeOfUseTariffAdvertComponent } from "./1/1";
 import { AdvertisementComponent } from "./advertisement.component";
 
 @NgModule({
@@ -12,11 +11,9 @@ import { AdvertisementComponent } from "./advertisement.component";
     ],
     declarations: [
         AdvertisementComponent,
-        TimeOfUseTariffAdvertComponent,
     ],
     exports: [
         AdvertisementComponent,
-        TimeOfUseTariffAdvertComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

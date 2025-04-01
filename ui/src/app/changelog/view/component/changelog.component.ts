@@ -25,6 +25,17 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.4.1",
+        changes: [
+          Changelog.openems("2025.4.0"),
+          Changelog.UI + "Ein-/Ausblenden Monats- und Jahresansicht, Übersetzungsfehler korrigiert",
+          Changelog.app(App.REST_JSON_API) + "Fehlerbehebung bei der Verarbeitung regulärer Ausdrücke",
+          Changelog.app(App.MODBUS_TCP_API) + "Darstellung der Historie ist wieder verfügbar",
+          "Erweiterung des Excel-Exports aus der historischen Ansicht",
+          "Zähler-Apps: bei allen Zähler-Apps kann im App Center 'Invertierung' aktiviert werden, um Zählerwerte zu invertieren",
+        ],
+      },
+      {
         version: "2025.3.2",
         changes: [
           Changelog.UI,

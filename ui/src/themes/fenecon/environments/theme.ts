@@ -154,6 +154,14 @@ export const theme = {
                     value: "commercial-92",
                 },
                 {
+                    name: "Commercial 92 Cluster",
+                    value: "commercial-92-cluster",
+                },
+                {
+                    name: "Commercial 92 Cluster Slave",
+                    value: "commercial-92-cluster-slave",
+                },
+                {
                     name: "Industrial S",
                     value: "Industrial S",
                 },

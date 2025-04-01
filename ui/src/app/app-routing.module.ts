@@ -27,7 +27,8 @@ import { SymmetricPeakshavingChartOverviewComponent } from "./edge/history/peaks
 import { TimeslotPeakshavingChartOverviewComponent } from "./edge/history/peakshaving/timeslot/timeslotpeakshavingchartoverview/timeslotpeakshavingchartoverview.component";
 import { StorageChartOverviewComponent } from "./edge/history/storage/storagechartoverview/storagechartoverview.component";
 import { InstallationComponent } from "./edge/installation/installation.component";
-import { ModalComponent } from "./edge/live/Controller/Evse/modal/modal";
+import { ModalComponent as EvseSingleComponent } from "./edge/live/Controller/Evse/modal/modal";
+import { ModalComponent as IoHeatingRoomComponent } from "./edge/live/Controller/Io/HeatingRoom/modal/modal";
 import { LiveComponent as EdgeLiveComponent } from "./edge/live/live.component";
 import { LiveDataService } from "./edge/live/livedataservice";
 import { AlertingComponent as EdgeSettingsAlerting } from "./edge/settings/alerting/alerting.component";
@@ -91,12 +92,10 @@ export const routes: Routes = [
         }], component: HistoryParentComponent,
 
         children: [
-          {
-            path: "", component: EdgeLiveComponent,
-          },
-          {
-            path: "evse/:componentId", component: ModalComponent,
-          }],
+          { path: "", component: EdgeLiveComponent },
+          { path: "evse/:componentId", component: EvseSingleComponent },
+          { path: "io-heating-room/:componentId", component: IoHeatingRoomComponent },
+        ],
       },
       {
         path: "history", providers: [{

@@ -104,6 +104,7 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_3FFF = SET_NULL_FOR_DEFAULT(0x3FFF);
 	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_FFFF = SET_NULL_FOR_DEFAULT(0xFFFF);
 	private static final int INNER_RESISTANCE = 100; // [mOhm]
+	private static final int CAPACITY = 41_000; // [Wh], Usable-capacity
 
 	private boolean hvContactorUnlocked = true;
 	private boolean heatingTarget = false;
@@ -130,6 +131,7 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 				BatteryFeneconF2b.ChannelId.values(), //
 				BatteryFeneconF2bBmw.ChannelId.values() //
 		);
+		this._setCapacity(CAPACITY);
 	}
 
 	@Override
