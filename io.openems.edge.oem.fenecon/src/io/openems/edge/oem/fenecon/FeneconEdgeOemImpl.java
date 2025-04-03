@@ -109,6 +109,8 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.FENECON.Home10.Gen2", "https://fenecon.de/fenecon-home-6-10-15/") //
 			.put("App.FENECON.Home15", "https://fenecon.de/fenecon-home-6-10-15/") //
 			.put("App.FENECON.Commercial.92", "https://fenecon.de/fenecon-commercial-92/") //
+			.put("App.FENECON.Commercial.92.ClusterMaster", "") //
+			.put("App.FENECON.Commercial.92.ClusterSlave", "") //
 			.put("App.FENECON.Industrial.L.ILK710", "https://fenecon.de/fenecon-industrial-l/") //
 			.put("App.FENECON.Industrial.S.ISK010", "https://fenecon.de/fenecon-industrial-s/") //
 			.put("App.FENECON.Industrial.S.ISK110", "https://fenecon.de/fenecon-industrial-s/") //
@@ -142,6 +144,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Evcs.Mennekes.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
 			.put("App.Evcs.Webasto.Next", "") //
 			.put("App.Evcs.Webasto.Unite", "") //
+			.put("App.Hardware.IoGpio", "") //
 			.put("App.Hardware.KMtronic8Channel", "https://fenecon.de/produkte/fems/fems-relais/") //
 			.put("App.Heat.HeatPump", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
 			.put("App.Heat.CHP", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //

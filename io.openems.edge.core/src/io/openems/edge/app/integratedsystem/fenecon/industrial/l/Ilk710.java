@@ -240,7 +240,7 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 								.build()));
 
 				components.add(new EdgeConfig.Component(essId, //
-						translate(bundle, "App.FENECON.Industrial.L.essN.alias", oneBased), //
+						translate(bundle, "App.IntegratedSystem.essN.alias", oneBased), //
 						"Ess.Generic.ManagedSymmetric", JsonUtils.buildJsonObject() //
 								.addProperty("enabled", true) //
 								.addProperty("battery.id", batteryId) //

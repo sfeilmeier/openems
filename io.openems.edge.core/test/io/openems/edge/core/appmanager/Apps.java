@@ -56,6 +56,8 @@ import io.openems.edge.app.integratedsystem.TestFeneconHome10Gen2;
 import io.openems.edge.app.integratedsystem.TestFeneconHome20;
 import io.openems.edge.app.integratedsystem.TestFeneconHome30;
 import io.openems.edge.app.integratedsystem.fenecon.commercial.FeneconCommercial92;
+import io.openems.edge.app.integratedsystem.fenecon.commercial.FeneconCommercial92ClusterMaster;
+import io.openems.edge.app.integratedsystem.fenecon.commercial.FeneconCommercial92ClusterSlave;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.l.Ilk710;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk010;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk011;
@@ -190,6 +192,26 @@ public final class Apps {
 	 */
 	public static final FeneconCommercial92 feneconCommercial92(AppManagerTestBundle t) {
 		return app(t, FeneconCommercial92::new, "App.FENECON.Commercial.92");
+	}
+
+	/**
+	 * Test method for creating a {@link FeneconCommercial92ClusterMaster}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconCommercial92ClusterMaster feneconCommercial92ClusterMaster(AppManagerTestBundle t) {
+		return app(t, FeneconCommercial92ClusterMaster::new, "App.FENECON.Commercial.92.ClusterMaster");
+	}
+
+	/**
+	 * Test method for creating a {@link FeneconCommercial92ClusterSlave}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconCommercial92ClusterSlave feneconCommercial92ClusterSlave(AppManagerTestBundle t) {
+		return app(t, FeneconCommercial92ClusterSlave::new, "App.FENECON.Commercial.92.ClusterSlave");
 	}
 
 	/**
@@ -457,7 +479,7 @@ public final class Apps {
 	public static final AppEnerixControl enerixControl(AppManagerTestBundle t) {
 		return app(t, AppEnerixControl::new, "App.Cloud.EnerixControl");
 	}
-	
+
 	/**
 	 * Test method for creating a {@link AppCleverPv}.
 	 * 

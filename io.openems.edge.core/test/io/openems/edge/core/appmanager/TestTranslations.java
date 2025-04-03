@@ -22,6 +22,7 @@ import io.openems.edge.app.integratedsystem.TestFeneconHome20;
 import io.openems.edge.app.integratedsystem.TestFeneconHome30;
 import io.openems.edge.app.integratedsystem.TestFeneconHome6;
 import io.openems.edge.app.integratedsystem.TestFeneconIndustrialS;
+import io.openems.edge.core.appmanager.jsonrpc.AddAppInstance;
 
 public class TestTranslations {
 
@@ -29,12 +30,13 @@ public class TestTranslations {
 
 	}
 
+	private AppManagerTestBundle testBundle;
 	private List<TestTranslation> apps;
 
 	@Before
 	public void beforeEach() throws Exception {
 		this.apps = new ArrayList<>();
-		new AppManagerTestBundle(null, null, t -> {
+		this.testBundle = new AppManagerTestBundle(null, null, t -> {
 			this.apps.add(new TestTranslation(Apps.feneconHome10(t), true, TestFeneconHome10.fullSettings()));
 			this.apps.add(new TestTranslation(Apps.feneconHome20(t), true, TestFeneconHome20.fullSettings()));
 			this.apps.add(new TestTranslation(Apps.feneconHome30(t), true, TestFeneconHome30.fullSettings()));
@@ -42,6 +44,8 @@ public class TestTranslations {
 			this.apps.add(new TestTranslation(Apps.feneconHome10Gen2(t), true, TestFeneconHome10Gen2.fullSettings()));
 			this.apps.add(new TestTranslation(Apps.feneconHome15(t), true, TestFeneconHome15.fullSettings()));
 			this.apps.add(new TestTranslation(Apps.feneconCommercial92(t), true, new JsonObject()));
+			this.apps.add(new TestTranslation(Apps.feneconCommercial92ClusterMaster(t), true, new JsonObject()));
+			this.apps.add(new TestTranslation(Apps.feneconCommercial92ClusterSlave(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.feneconIndustrialLIlk710(t), true, new JsonObject()));
 			this.apps.add(
 					new TestTranslation(Apps.feneconIndustrialSIsk010(t), true, TestFeneconIndustrialS.fullSettings()));
@@ -108,6 +112,8 @@ public class TestTranslations {
 			this.apps.add(new TestTranslation(Apps.webastoNext(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.webastoUnite(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.evcsCluster(t), true, new JsonObject()));
+			this.apps.add(new TestTranslation(Apps.kmtronic8Channel(t), true, new JsonObject()));
+			this.apps.add(new TestTranslation(Apps.ioGpio(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.heatPump(t), true, JsonUtils.buildJsonObject() //
 					.addProperty("OUTPUT_CHANNEL_1", "io0/Relay1") //
 					.addProperty("OUTPUT_CHANNEL_2", "io0/Relay2") //
@@ -191,7 +197,7 @@ public class TestTranslations {
 					.addProperty("INPUT_CHANNEL_ADDRESS", "io0/Relay1") //
 					.build()));
 			return this.apps.stream().map(TestTranslation::app).toList();
-		});
+		}, null, new AppManagerTestBundle.PseudoComponentManagerFactory());
 	}
 
 	@Test
@@ -219,6 +225,9 @@ public class TestTranslations {
 
 	private void testTranslations(Language l) throws Exception {
 		final var debugTranslator = TranslationUtil.enableDebugMode();
+
+		this.testBundle.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
+				new AddAppInstance.Request("App.OpenemsHardware.CM4S.Gen2", "key", "", new JsonObject()));
 
 		for (var entry : this.apps) {
 			final var app = entry.app();
