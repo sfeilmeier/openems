@@ -25,6 +25,24 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.4.2",
+        changes: [
+          Changelog.UI + "Verbesserung der Farben in Hell-/Dunkelmodus; Kompatibilitätsverbesserungen mit iOS und Android; Bugfix bei historischer Darstellung des Direktverbrauchs, Bei Anlegen eines Benutzeraccounts: Verweis auf <a href='https://erp.fenecon.de/fenpost' target='_blank'>Newsletter-Anmeldeformular mit Double-Opt-In</a>;",
+          Changelog.product(Product.COMMERCIAL_92) + "Verbesserungen am Inbetriebnahmeassistent für Master-Slave-Betrieb",
+          Changelog.app(App.MODBUS_TCP_API) + "Fehlerbehebung bei der Initialisierung der Register-Tabelle",
+          Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Verbesserte Kompatibilität mit RFID-Authentifizierung",
+          Changelog.app(App.EVCS_AC, App.KEBA) + "Lesende Unterstützung für KEBA P40 via Modbus/TCP",
+          Changelog.app(App.EVCS_AC, App.MENNEKES) + "Korrekte Darstellung historischer Energiewerte",
+          Changelog.app(App.TIME_OF_USE) + "Neuer unterstützter Stromtarif: FEMS App Octopus Heat",
+          { roleIsAtLeast: Role.ADMIN, change: "Neue Komponente '_serialNumber' speichert Seriennummern von FENECON Home Batterien und Wechselrichter" },
+          { roleIsAtLeast: Role.ADMIN, change: "Verbesserungen für Master-Slave-Betrieb: Einstellung für Firewall-Forwarding, Edge2Edge via Websocket" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC, App.KEBA) + "Schreibende Unterstützung für KEBA P40 via Modbus/TCP aktivierbar für Admins (BETA-Test)" },
+          { roleIsAtLeast: Role.ADMIN, change: "Interne App 'Meta' ist nur noch für Admin sichtbar" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Fehlerbehebung für große Commercial- oder Industrial-Systeme" },
+          Changelog.library(Library.PAX_LOGGING),
+        ],
+      },
+      {
         version: "2025.4.1",
         changes: [
           Changelog.openems("2025.4.0"),
