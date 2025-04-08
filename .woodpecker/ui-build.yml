@@ -19,7 +19,7 @@ variables:
     args: "-v"
 
   - &main-build
-    - branch: [main, main-ui]
+    - branch: [main, main-ui, develop]
     - evaluate: 'CI_COMMIT_MESSAGE contains "[APP]"'
 
 when:

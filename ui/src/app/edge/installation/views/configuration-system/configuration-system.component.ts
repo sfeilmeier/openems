@@ -8,7 +8,7 @@ import { GetEmsTypeResponse } from "src/app/shared/jsonrpc/response/getEmsTypeRe
 import { Edge, Websocket } from "src/app/shared/shared";
 import { environment } from "src/environments";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
-import { ComponentData } from "../../shared/ibndatatypes";
+import { ComponentData, EmsType } from "../../shared/ibndatatypes";
 import { System, SystemType } from "../../shared/system";
 
 @Component({
@@ -28,11 +28,18 @@ export class ConfigurationSystemComponent implements OnInit {
   protected form: FormGroup;
   protected fields: FormlyFieldConfig[];
   protected model;
-  protected showManual = false;
 
-  private emsType: "feh013" | "fho011" | null;
+  private emsType: EmsType = null;
 
   constructor(private translate: TranslateService, private websocket: Websocket) { }
+
+  protected get showNote(): boolean {
+    return this.form.controls.type?.value && (this.emsType === "fec013" || this.emsType === "feh013");
+  }
+
+  protected get showManual(): boolean {
+    return this.form.controls.type?.value && (environment.theme === "Heckert" || this.showNote);
+  }
 
   public ngOnInit() {
     this.form = new FormGroup({});
@@ -63,7 +70,6 @@ export class ConfigurationSystemComponent implements OnInit {
     switch (environment.theme) {
       case "Heckert":
         options.push({ value: SystemType.HECKERT_HOME, label: SystemType.HECKERT_HOME });
-        this.showManual = true;
         break;
       case "FENECON":
       default:
@@ -78,6 +84,13 @@ export class ConfigurationSystemComponent implements OnInit {
             break;
           case "fho011": // old type
             options.push({ value: SystemType.FENECON_HOME, label: SystemType.FENECON_HOME });
+            break;
+          case "fec011":
+          case "fec013":
+            options.push(
+              { value: SystemType.COMMERCIAL, label: SystemType.COMMERCIAL },
+            );
+            break;
         }
         break;
     }
@@ -100,10 +113,11 @@ export class ConfigurationSystemComponent implements OnInit {
   }
 
   /**
- * Redirects to the appropriate url for Heckert system manual.
- */
+   * Redirects to the appropriate url for Heckert system manual.
+   */
   protected openManual(): void {
-    window.open(environment.links.MANUALS.SYSTEM.HOME.HOME_10);
+    const system: SystemType = this.form.controls.type.value;
+    window.open(System.getManualLinkFromSystemType(system));
   }
 
   /**
@@ -111,7 +125,7 @@ export class ConfigurationSystemComponent implements OnInit {
    */
   private setIbn(): void {
     const system: SystemType = this.form.controls.type.value;
-    this.ibn = System.getSystemObjectFromSystemType(system, this.translate);
+    this.ibn = System.getSystemObjectFromSystemType(system, this.translate, this.emsType);
   }
 
 }

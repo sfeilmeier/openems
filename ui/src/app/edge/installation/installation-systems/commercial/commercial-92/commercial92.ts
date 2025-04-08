@@ -1,93 +1,22 @@
 // @ts-strict-ignore
-
-import { FormGroup } from "@angular/forms";
-import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-import { Subject } from "rxjs";
-import { filter, takeUntil } from "rxjs/operators";
-import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
-import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
-import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
-import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
+import { Edge } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
-import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
-import { FeedInType, View } from "../../../shared/enums";
-import { ComponentData, SerialNumberFormData } from "../../../shared/ibndatatypes";
-import { Meter } from "../../../shared/meter";
-import { SystemId } from "../../../shared/system";
-import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
-import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
-import { GetEstimatedConfigResponse } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
-import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
+import { View } from "../../../shared/enums";
+import { ComponentData } from "../../../shared/ibndatatypes";
 import { SchedulerIdBehaviour } from "../../abstract-ibn";
-import { AbstractCommercialIbn } from "../abstract-commercial";
+import { AbstractCommercial92Ibn } from "./abstract-commercial92";
 
-export type Commercial92App = {
-    SAFETY_COUNTRY: SafetyCountry,
-    FEED_IN_TYPE: FeedInType,
-    MAX_FEED_IN_POWER?: number,
-    BATTERY_TARGET: BatteryTarget,
-    HAS_ESS_LIMITER_14A: boolean,
-};
+export class Commercial92Ibn extends AbstractCommercial92Ibn {
 
-export enum BatteryTarget {
-    START = "START",
-    AUTO = "AUTO",
-}
-
-export enum GridSetting {
-    VDE_AR_N_4105 = "VDE-AR-N 4105",
-    VDE_AR_N_4110 = "VDE-AR-N 4110",
-}
-
-export class Commercial92Ibn extends AbstractCommercialIbn {
-
-    public override WAIT_FOR_BATTERY_SERIAL_NUMBERS = 8 * 60 * 1000;
-
-    public override readonly systemId: SystemId = SystemId.COMMERCIAL_92;
-    public override showViewCount: boolean = true;
-    public override readonly defaultNumberOfModules = 15;
-    public override readonly minNumberOfTowers: number = 2;
-    public override readonly maxFeedInLimit: number = 6000000;
-    public override readonly showNote: boolean = true;
-    public batteryStartStopTarget: BatteryTarget = BatteryTarget.START;
-    public gridSetting: GridSetting | null = null;
-
-    // protocol-dynamic-feed-in-limitation
-    public override feedInLimitation? = {
-        feedInType: FeedInType.NO_LIMITATION,
-        maximumFeedInPower: 0,
-    };
-
-    public checklist: {
-        changeNetworkSettings: boolean,
-        connectInverter: boolean,
-        enterPassword: boolean,
-        ipAddress: [boolean, boolean, boolean],
-        minVoltage: boolean,
-        multiStepField: [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean],
-        powerControl: boolean,
-        startConfiguration: boolean,
-    } = {
-            changeNetworkSettings: false,
-            connectInverter: false,
-            enterPassword: false,
-            ipAddress: [false, false, false],
-            minVoltage: false,
-            multiStepField: [false, false, false, false, false, false, false, false],
-            powerControl: false,
-            startConfiguration: false,
-        };
-
-    private appId: string = "App.FENECON.Commercial.92";
+    public override isClusterConfiguration: boolean = false;
 
     constructor(translate: TranslateService) {
         super([
             View.PreInstallation,
             View.PreInstallationUpdate,
             View.ConfigurationSystem,
-            View.ConfigurationSubSystem,
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
@@ -103,262 +32,31 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
         ], translate);
     }
 
-    public override getLineSideMeterFuseFields() {
-        const fields: FormlyFieldConfig[] = [];
-
-        fields.push({
-            key: "otherValue",
-            type: "input",
-            templateOptions: {
-                label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
-                type: "number",
-                description: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.FIXED_VALUE_DESCRIPTION"),
-                min: 0,
-                required: true,
-            },
-            parsers: [Number],
-            validators: {
-                validation: ["onlyPositiveInteger"],
-            },
-        });
-
-        fields.push({
-            key: "meterType",
-            type: "select",
-            templateOptions: {
-                label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER_LABEL"),
-                required: true,
-                options: [
-                    { label: "KDK", value: Meter.GridMeter.KDK },
-                ],
-            },
-            defaultValue: Meter.GridMeter.KDK,
-        });
-        return fields;
+    public override removeOrAddView(edge: Edge): void {
+        super.removeOrAddView(edge);
+        this.removeOrAddEssLimiter14aView();
+        this.removeOrAddGridSettingView();
     }
 
-    public override fillSerialNumberForms(
-        numberOfTowers: number,
-        numberOfModulesPerTower: number,
-        models: any,
-        forms: SerialNumberFormData[]) {
-        this.numberOfModulesPerTower = numberOfModulesPerTower;
-        for (let i = 0; i < numberOfTowers; i++) {
-            forms[i] = {
-                fieldSettings: this.getSerialNumberFields(i, numberOfModulesPerTower),
-                model: models[i],
-                formTower: new FormGroup({}),
-                header: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: i + 1 }),
-            };
-        }
-        return forms;
-    }
+    public override addSystemSpecificFields(tableData): void {
+        super.addSystemSpecificFields(tableData);
 
-    public override getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number) {
-        const fields: FormlyFieldConfig[] = [];
+        const gridData: ComponentData[] = [];
 
-        fields.push({
-            key: "numberOfTowers",
-            type: "input",
-            templateOptions: {
-                type: "number",
-                label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NUMBER_OF_TOWERS"),
-                min: 2,
-                max: 5,
-                required: true,
-            },
-            parsers: [Number],
-            defaultValue: numberOfTowers,
+        gridData.push({
+            label: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
+            value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
         });
 
-        fields.push({
-            key: "numberOfModulesPerTower",
-            type: "input",
-            templateOptions: {
-                type: "number",
-                label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NUMBER_OF_MODULES_PER_TOWER"),
-                min: 15,
-                max: 15,
-                required: true,
-            },
-            parsers: [Number],
-            defaultValue: numberOfModulesPerTower,
-        });
-
-        return fields;
-    }
-
-    public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number) {
-        const fields: FormlyFieldConfig[] = [];
-        const emsBoxSerialNumber: string | null = sessionStorage.getItem("emsBoxSerialNumber");
-
-        switch (towerNr) {
-            case 0:
-                fields.push({
-                    key: "batteryInverter",
-                    type: "input",
-                    templateOptions: {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER"),
-                        required: true,
-                        placeholder: "xxxxxxxxxxxxxxxx",
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                fields.push({
-                    key: "parallelBox",
-                    type: "input",
-                    templateOptions: {
-                        label: "Parallel Box",
-                        required: true,
-                        prefix: "FCP",
-                        placeholder: "xxxxxxxxx",
-                    },
-                    validators: {
-                        validation: ["boxSerialNumber"],
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                fields.push({
-                    key: "emsBox",
-                    type: "input",
-                    templateOptions: {
-                        label: Category.toTranslatedString(Category.EMS_BOX_LABEL_HOME, this.translate),
-                        required: true,
-                        placeholder: "FEFxxxxxxx",
-                    },
-                    defaultValue: emsBoxSerialNumber,
-                    validators: {
-                        validation: ["emsBoxSerialNumber"],
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                break;
-            default:
-                fields.push({
-                    key: "extensionBox",
-                    type: "input",
-                    templateOptions: {
-                        label: "Extension Box",
-                        required: true,
-                        prefix: "FEE",
-                        placeholder: "xxxxxxxxx",
-                    },
-                    validators: {
-                        validation: ["boxSerialNumber"],
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                break;
-        }
-
-        fields.push({
-            key: "bmsBox",
-            type: "input",
-            templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BMS_BOX"),
-                required: true,
-                placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
-            },
-            validators: {
-                validation: ["batteryAndBmsBoxSerialNumber"],
-            },
-            wrappers: ["input-serial-number"],
-        });
-
-        for (let moduleNr = 0; moduleNr < numberOfModulesPerTower; moduleNr++) {
-            fields.push({
-                key: "module" + moduleNr,
-                type: "input",
-                templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") + (moduleNr + 1),
-                    required: true,
-                    placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
-                },
-                validators: {
-                    validation: ["batteryAndBmsBoxSerialNumber"],
-                },
-                wrappers: ["input-serial-number"],
+        if (gridData.length > 0) {
+            tableData.push({
+                header: Category.GRID,
+                rows: gridData,
             });
         }
-
-        return fields;
     }
 
-    public override getFeedInLimitFields(): FormlyFieldConfig[] {
-        // Update the feedInlimitation field
-        const totalPvPower = 0;
-        this.feedInLimitation.maximumFeedInPower = totalPvPower;
-
-        const options: ComponentData[] = [
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
-        ];
-
-        return super.getCommonFeedInLimitsFields(totalPvPower, options);
-    }
-
-    public override async getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service): Promise<ComponentConfigurator> {
-
-        const componentConfigurator: ComponentConfigurator =
-            new ComponentConfigurator(edge, config, websocket);
-
-        // Determine safety country
-        const safetyCountry: SafetyCountry = this.location.isEqualToCustomerData
-            ? SafetyCountry.getSafetyCountry(this.customer.country)
-            : SafetyCountry.getSafetyCountry(this.location.country);
-
-        // system not updated => newest appManager not available
-        const baseMode = AppCenterUtil.isAppManagerAvailable(edge) ? BaseMode.AppManager : BaseMode.UI;
-        const appProperties: Commercial92App = {
-            SAFETY_COUNTRY: safetyCountry,
-            FEED_IN_TYPE: this.feedInLimitation.feedInType,
-            ...(this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
-            BATTERY_TARGET: this.batteryStartStopTarget,
-            HAS_ESS_LIMITER_14A: this.isController14aActivated,
-        };
-
-        componentConfigurator.addInstallAppCallback(() => {
-            return AppCenterUtil.createOrUpdateApp(edge, websocket, this.appId, "commercial-92", appProperties, AppCenterUtil.keyForIntegratedSystems());
-        });
-
-        // Send request and process components
-        const estimatedConfig: GetEstimatedConfigResponse = await edge.sendRequest(
-            websocket,
-            new ComponentJsonApiRequest({
-                componentId: "_appManager",
-                payload: new GetEstimatedConfigRequest({
-                    appId: this.appId,
-                    alias: "commercial-92",
-                    properties: appProperties,
-                }),
-            }),
-        );
-
-        // Add components to the configurator
-        estimatedConfig.result.configurations
-            .filter((config) => config.type === "Component")
-            .forEach((config) => {
-                const components = config.configuration?.components || [];
-                components.forEach((component) => {
-                    const configurationObject: ConfigurationObject = {
-                        factoryId: component.factoryId,
-                        componentId: component.id,
-                        alias: component.alias,
-                        properties: component.properties
-                            ? Object.entries(component.properties).map(([name, value]) => ({ name, value }))
-                            : undefined,
-                        mode: ConfigurationMode.RemoveAndConfigure,
-                        baseMode: baseMode,
-                    };
-
-                    componentConfigurator.add(configurationObject);
-                });
-            });
-
-        return componentConfigurator;
-    }
-
-    public setRequiredControllers() {
+    public override setRequiredControllers() {
         this.requiredControllerIds = [];
 
         this.requiredControllerIds.push(
@@ -388,118 +86,8 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
             });
     }
 
-    public override getSystemVariantFields(): FormlyFieldConfig[] {
-        return [];
-    }
-
-    public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower: number) {
-        return new Promise((resolve) => {
-            const subscriptionId = `Commercial-tower${towerNr}`;
-            const serialNumbers: { [key: string]: string } = {};
-            const channelAddresses = this.getChannelAddresses(towerNr, numberOfModulesPerTower);
-
-            // Edge-subscribe
-            edge.subscribeChannels(websocket, subscriptionId, Object.values(channelAddresses));
-
-            // Subject to stop the subscription to currentData
-            const stopOnRequest: Subject<void> = new Subject<void>();
-
-            // Read data
-            edge.currentData.pipe(
-                takeUntil(stopOnRequest),
-                filter(currentData => currentData != null),
-            ).subscribe((currentData) => {
-                if (this.processCurrentData(currentData, channelAddresses, serialNumbers)) {
-
-                    // If all serial numbers are resolved
-                    stopOnRequest.next();
-                    stopOnRequest.complete();
-                    edge.unsubscribeFromChannels(websocket, Object.values(channelAddresses));
-                    resolve(serialNumbers);
-                }
-            });
-            setTimeout(() => {
-                stopOnRequest.next();
-                stopOnRequest.complete();
-                edge.unsubscribeFromChannels(websocket, Object.values(channelAddresses));
-                resolve(serialNumbers); // Resolve with available data
-            }, 5_000);
-        });
-    }
-
-    public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
-        const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
-
-        const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
-
-        if (safetyCountry === Country.GERMANY) {
-            protocol.items.push({
-                category: Category.GRID,
-                name: this.translate.instant("INSTALLATION.CONFIGURATION_GRID_SETTING.TITLE"),
-                value: this.gridSetting,
-            });
-        }
-
-        // Welcherister, BMS, Parallel box, EMS box
-        const initialStaticTowerComponents: number = 4;
-
-        protocol.items.push({
-            category: Category.GRID,
-            name: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
-            value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
-        });
-
-        // Subsequent towers will have only 2 static components. Paralell box and BMS box.
-        const subsequentStaticTowerComponents: number = 2;
-        const categoryElement: string = "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER";
-
-        super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, initialStaticTowerComponents, subsequentStaticTowerComponents, categoryElement);
-
-        return new Promise((resolve, reject) => {
-            websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
-                resolve(response.result["setupProtocolId"]);
-            }).catch((reason) => {
-                reject(reason);
-            });
-        });
-    }
-
-    public override setNonAbstractFields(ibnString: any) {
-
-        super.setNonAbstractFields(ibnString);
-
-        if ("checklist" in ibnString) {
-            this.checklist = ibnString.checklist;
-        }
-
-        if (ibnString.gridSetting) {
-            this.gridSetting = ibnString.gridSetting;
-        }
-
-    }
-
-    public override addSystemSpecificFields(tableData): void {
-        super.addSystemSpecificFields(tableData);
-
-        const gridData: ComponentData[] = [];
-
-        gridData.push({
-            label: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
-            value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
-        });
-
-        if (gridData.length > 0) {
-            tableData.push({
-                header: Category.GRID,
-                rows: gridData,
-            });
-        }
-    }
-
-    public override removeOrAddView(edge: Edge): void {
-        super.removeOrAddView(edge);
-        this.removeOrAddEssLimiter14aView();
-        this.removeOrAddGridSettingView();
+    public override getEdge(index: number): Edge {
+        return JSON.parse(sessionStorage.getItem("edge")) as Edge;
     }
 
     protected override addCustombatteryInverterData(): ComponentData[] {
@@ -511,78 +99,6 @@ export class Commercial92Ibn extends AbstractCommercialIbn {
         }
 
         return batteryInverterData;
-
     }
 
-    /**
-     * Helper function to gather channel addresses
-     */
-    private getChannelAddresses(towerNr: number, numberOfModulesPerTower: number): { [key: string]: ChannelAddress } {
-        const channelAddresses: { [key: string]: ChannelAddress } = {
-            batteryInverter: new ChannelAddress("batteryInverter0", "S1Sn"),
-            bmsBox: new ChannelAddress("battery0", `Tower${towerNr}BmsSerialNumber`),
-        };
-        for (let moduleNr = 0; moduleNr < numberOfModulesPerTower; moduleNr++) {
-            channelAddresses[`module${moduleNr}`] = new ChannelAddress("battery0", `Tower${towerNr}Module${moduleNr}SerialNumber`);
-        }
-        return channelAddresses;
-    }
-
-    /**
-     *
-     * Processes current data.
-     */
-    private processCurrentData(
-        currentData: any,
-        channelAddresses: { [key: string]: ChannelAddress },
-        serialNumbers: { [key: string]: string },
-    ): boolean {
-        let allSerialNumbersResolved = true;
-
-        for (const key in channelAddresses) {
-            const { componentId, channelId } = channelAddresses[key];
-            const serialNumber = currentData.channel?.[`${componentId}/${channelId}`];
-
-            if (!serialNumber) {
-                allSerialNumbersResolved = false;
-                continue;  // Skip if serial number is not available
-            }
-            serialNumbers[key] = serialNumber;
-        }
-
-        return allSerialNumbersResolved;
-    }
-
-    /**
-     * Manages the presence of the ConfigurationGridSettingComponent view based on country location.
-     *
-     * @remarks
-     * Performs two main operations:
-     * 1. Removes the ConfigurationGridSettingComponent view and resets the gridSetting to the default "VDE_AR_N_4105" when the location is not Germany
-     * 2. Re-adds the ConfigurationGridSettingComponent view (if missing) when the location is Germany,
-     * handling accidental country selection rollbacks
-     *
-     */
-    private removeOrAddGridSettingView() {
-
-        const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
-        const existingIndexOfView: number = this.views.indexOf(View.ConfigurationGridSetting);
-        const indexOfViewToBeAdded: number = 9;
-
-        if (location && location !== Country.GERMANY) {
-            if (existingIndexOfView != -1) {
-                // Remove ConfigurationGridSettingComponent.
-                this.views.splice(existingIndexOfView, 1);
-                this.gridSetting = null;
-            }
-            return;
-        }
-
-        if (existingIndexOfView === -1) {
-            // Add ConfigurationGridSettingComponent.
-            // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
-            this.views.splice(indexOfViewToBeAdded, 0, View.ConfigurationGridSetting);
-        }
-
-    }
 }

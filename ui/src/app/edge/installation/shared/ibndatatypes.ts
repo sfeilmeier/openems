@@ -34,3 +34,5 @@ export type dcForm = {
     fields: FormlyFieldConfig[];
     model: any;
 };
+
+export type EmsType = "feh013" | "fho011" | "fec011" | "fec013" | null;

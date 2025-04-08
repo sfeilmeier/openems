@@ -39,6 +39,7 @@ import io.openems.edge.app.evcs.KebaEvcs;
 import io.openems.edge.app.evcs.WebastoNextEvcs;
 import io.openems.edge.app.evcs.WebastoUniteEvcs;
 import io.openems.edge.app.evcs.readonly.HeidelbergEvcsReadOnly;
+import io.openems.edge.app.evcs.readonly.KebaEvcsReadOnly;
 import io.openems.edge.app.evcs.readonly.MennekesEvcsReadOnly;
 import io.openems.edge.app.hardware.IoGpio;
 import io.openems.edge.app.hardware.KMtronic8Channel;
@@ -56,6 +57,8 @@ import io.openems.edge.app.integratedsystem.TestFeneconHome10Gen2;
 import io.openems.edge.app.integratedsystem.TestFeneconHome20;
 import io.openems.edge.app.integratedsystem.TestFeneconHome30;
 import io.openems.edge.app.integratedsystem.fenecon.commercial.FeneconCommercial92;
+import io.openems.edge.app.integratedsystem.fenecon.commercial.FeneconCommercial92ClusterMaster;
+import io.openems.edge.app.integratedsystem.fenecon.commercial.FeneconCommercial92ClusterSlave;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.l.Ilk710;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk010;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk011;
@@ -95,6 +98,7 @@ import io.openems.edge.app.timeofusetariff.StromdaoCorrently;
 import io.openems.edge.app.timeofusetariff.Swisspower;
 import io.openems.edge.app.timeofusetariff.Tibber;
 import io.openems.edge.app.timeofusetariff.manual.OctopusGo;
+import io.openems.edge.app.timeofusetariff.manual.OctopusHeat;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.host.Host;
 import io.openems.edge.common.meta.Meta;
@@ -193,6 +197,26 @@ public final class Apps {
 	}
 
 	/**
+	 * Test method for creating a {@link FeneconCommercial92ClusterMaster}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconCommercial92ClusterMaster feneconCommercial92ClusterMaster(AppManagerTestBundle t) {
+		return app(t, FeneconCommercial92ClusterMaster::new, "App.FENECON.Commercial.92.ClusterMaster");
+	}
+
+	/**
+	 * Test method for creating a {@link FeneconCommercial92ClusterSlave}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconCommercial92ClusterSlave feneconCommercial92ClusterSlave(AppManagerTestBundle t) {
+		return app(t, FeneconCommercial92ClusterSlave::new, "App.FENECON.Commercial.92.ClusterSlave");
+	}
+
+	/**
 	 * Test method for creating a {@link Ilk710}.
 	 * 
 	 * @param t the {@link AppManagerTestBundle}
@@ -272,6 +296,16 @@ public final class Apps {
 	 */
 	public static final OctopusGo octopusGo(AppManagerTestBundle t) {
 		return app(t, OctopusGo::new, "App.TimeOfUseTariff.OctopusGo");
+	}
+
+	/**
+	 * Test method for creating a {@link OctopusHeat}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final OctopusHeat octopusHeat(AppManagerTestBundle t) {
+		return app(t, OctopusHeat::new, "App.TimeOfUseTariff.OctopusHeat");
 	}
 
 	/**
@@ -457,7 +491,7 @@ public final class Apps {
 	public static final AppEnerixControl enerixControl(AppManagerTestBundle t) {
 		return app(t, AppEnerixControl::new, "App.Cloud.EnerixControl");
 	}
-	
+
 	/**
 	 * Test method for creating a {@link AppCleverPv}.
 	 * 
@@ -568,6 +602,16 @@ public final class Apps {
 	 */
 	public static final KebaEvcs kebaEvcs(AppManagerTestBundle t) {
 		return app(t, KebaEvcs::new, "App.Evcs.Keba");
+	}
+
+	/**
+	 * Test method for creating a {@link KebaEvcsReadOnly}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final KebaEvcsReadOnly kebaEvcsReadonly(AppManagerTestBundle t) {
+		return app(t, KebaEvcsReadOnly::new, "App.Evcs.Keba.ReadOnly");
 	}
 
 	/**
@@ -992,6 +1036,11 @@ public final class Apps {
 				t.componentUtil, t.host, t.meta);
 	}
 
+	private static final <T> T app(AppManagerTestBundle t, DefaultAppConstructorWithHost<T> constructor, String appId) {
+		return constructor.create(t.componentManger, AppManagerTestBundle.getComponentContext(appId), t.cm,
+				t.componentUtil, t.host);
+	}
+
 	private static final <T> T app(AppManagerTestBundle t, DefaultAppConstructorWithMeta<T> constructor, String appId) {
 		return constructor.create(t.componentManger, AppManagerTestBundle.getComponentContext(appId), t.cm,
 				t.componentUtil, t.meta);
@@ -1015,6 +1064,13 @@ public final class Apps {
 
 		public A create(ComponentManager componentManager, ComponentContext componentContext, ConfigurationAdmin cm,
 				ComponentUtil componentUtil, Meta meta);
+
+	}
+
+	private static interface DefaultAppConstructorWithHost<A> {
+
+		public A create(ComponentManager componentManager, ComponentContext componentContext, ConfigurationAdmin cm,
+				ComponentUtil componentUtil, Host host);
 
 	}
 

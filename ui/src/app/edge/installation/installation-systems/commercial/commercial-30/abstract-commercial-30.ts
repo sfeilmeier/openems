@@ -1,10 +1,8 @@
 // @ts-strict-ignore
-import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
 import { FeedInType } from "../../../shared/enums";
-import { SerialNumberFormData } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
@@ -14,25 +12,6 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
 
     public override readonly defaultNumberOfModules = 9;
     public abstract readonly emergencyPower: "ENABLE" | "DISABLE";
-
-    public override fillSerialNumberForms(
-        numberOfTowers: number,
-        numberOfModulesPerTower: number,
-        models: any,
-        forms: SerialNumberFormData[]) {
-        this.numberOfModulesPerTower = numberOfModulesPerTower;
-        for (let i = 0; i < numberOfTowers; i++) {
-            forms[i] = {
-                fieldSettings: this.getSerialNumberFields(i, numberOfModulesPerTower),
-                model: models[i],
-                formTower: new FormGroup({}),
-                header: numberOfTowers === 1
-                    ? this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS")
-                    : this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING", { number: (i + 1) }),
-            };
-        }
-        return forms;
-    }
 
     public override getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number) {
         const fields: FormlyFieldConfig[] = [];

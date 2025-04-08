@@ -2,9 +2,9 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "Updates zum EEG 2025 im FENECON-Webinar",
-        "TEXT": "Vielen Dank für die positive Resonanz auf unser Webinar am 28.02.2025. Wir haben die Online-Veranstaltung aufgenommen, damit sich alle Interessierten die Inhalte nachträglich ansehen können. Die Referenten waren Franz-Josef Feilmeier, Stefan Feilmeier und Alexander Stöger, Moderatorin war Sarah Mühlbauer.",
-        "BUTTON_LABEL": "Zur Video-Aufzeichnung."
+        "TITLE": "Warum Ihr Stromspeicher zwei Jahre länger hält!",
+        "TEXT": "Die Vorzüge einer prognosebasierten Beladestrategie sind beträchtlich. Unter anderem, dass Batteriespeicher durch ein prognosebasiertes Energiemanagement mindestens zwei Jahre länger halten. Das Tolle: Bei FENECON ist die dafür notwendige FEMS App Netzdienliche Beladung bereits seit 2021 im Standardumfang enthalten.",
+        "TEXT_2": "Wir unterstützten die neue Initiative „Dein Speicher kann mehr!“ der HTW Berlin, die die genannten Vorzüge öffentlich bewirbt. <a href=\"{{link}}\" target='_blank'>Hier</a> mehr erfahren."
       }
     },
     "SETTINGS": {
@@ -53,9 +53,9 @@
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "Updates on the EEG 2025 in the FENECON webinar",
-        "TEXT": "Thank you for the positive response to our webinar on 28.02.2025. We have recorded the online event (held in German) so that all interested persons can view the content afterwards. The speakers were Franz-Josef Feilmeier, Stefan Feilmeier and Alexander Stöger, the moderator was Sarah Mühlbauer.",
-        "BUTTON_LABEL": "To the video recording."
+        "TITLE": "Why your energy storage system lasts two years longer",
+        "TEXT": "There are significant advantages to a forecast-based charging strategy. One of them is that battery energy storage systems last two years longer at minimum when using forecast-based energy management. And the greatest thing about it: FENECON has been including the FEMS App Grid-Optimized Charging required for forecast-based charging since 2021 as a standard its scope of delivery.",
+        "TEXT_2": "We are supporting the new initiative “Your battery energy storage system can do more!” by the HTW Berlin, which has been promoting the advantages publicly. <a href=\"{{link}}\" target='_blank'>Learn more</a> (available in German)."
       }
     },
     "SETTINGS": {

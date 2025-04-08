@@ -203,7 +203,7 @@ public final class FeneconIndustrialSComponents {
 		if (alias == null) {
 			c = translate(bundle, "App.FENECON.Industrial.S.ess0.alias");
 		} else {
-			c = translate(bundle, "App.FENECON.Industrial.S.essN.alias", alias);
+			c = translate(bundle, "App.IntegratedSystem.essN.alias", alias);
 		}
 		return new EdgeConfig.Component(essId, c, "Ess.Generic.ManagedSymmetric", //
 				JsonUtils.buildJsonObject() //

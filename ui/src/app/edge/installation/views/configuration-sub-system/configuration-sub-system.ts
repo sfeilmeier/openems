@@ -52,9 +52,4 @@ export class ConfigurationSubSystemComponent implements OnInit {
         const subSystem: SubSystemType = this.form.controls.subType.value;
         window.open(System.getSubSystemTypeLink(subSystem));
     }
-
-    protected showNote(): boolean {
-        const subSystem: SubSystemType = this.form.controls.subType.value;
-        return System.showNoteForSubsystemSelection(subSystem);
-    }
 }

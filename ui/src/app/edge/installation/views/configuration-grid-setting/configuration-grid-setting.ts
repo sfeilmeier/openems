@@ -2,7 +2,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
-import { Commercial92Ibn, GridSetting } from "../../installation-systems/commercial/commercial-92/commercial92";
+import { GridSetting } from "../../installation-systems/commercial/commercial-92/abstract-commercial92";
+import { Commercial92Ibn } from "../../installation-systems/commercial/commercial-92/commercial92";
 
 @Component({
     selector: ConfigurationGridSettingComponent.SELECTOR,

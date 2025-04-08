@@ -85,6 +85,10 @@
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </configuration-grid-setting>
 
+                <protocol-commercial-slave-count *ngSwitchCase="view.ProtocolCommercialClusterSlaveCount" [ibn]="ibn"
+                    (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
+                </protocol-commercial-slave-count>
+
                 <!-- Configuration and Protocol -->
 
                 <configuration-summary *ngSwitchCase="view.ConfigurationSummary" [edge]="edge" [ibn]="ibn"
@@ -94,6 +98,11 @@
                 <configuration-execute *ngSwitchCase="view.ConfigurationExecute" [edge]="edge" [ibn]="ibn"
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView()">
                 </configuration-execute>
+
+                <protocol-commercial-slave-installation *ngSwitchCase="view.ProtocolCommercialClusterSlaveInstallation"
+                    [ibn]="ibn" [edge]="edge" (previousViewEvent)="displayPreviousView()"
+                    (nextViewEvent)="displayNextView($event)">
+                </protocol-commercial-slave-installation>
 
                 <protocol-checklist *ngSwitchCase="view.ProtocolChecklist" [edge]="edge" [ibn]="ibn"
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">

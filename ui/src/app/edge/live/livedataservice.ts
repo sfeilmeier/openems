@@ -66,11 +66,11 @@ export class LiveDataService extends DataService implements OnDestroy {
     }
 
     /**
-    * Gets the first valid --non null/undefined-- value for passed channels and unsubscribes afterwards
-    *
-    * @param channelAddresses the channel addresses
-    * @returns the currentData for thes channelAddresses
-    */
+     * Gets the first valid --non null/undefined-- value for passed channels and unsubscribes afterwards
+     *
+     * @param channelAddresses the channel addresses
+     * @returns the currentData for thes channelAddresses
+     */
     public async subscribeAndGetFirstValidValueForChannels(channelAddresses: ChannelAddress[], componentId: string): Promise<CurrentData> {
         this.getValues(channelAddresses, this.edge, componentId);
         return new Promise<any>((res) => {
@@ -90,11 +90,11 @@ export class LiveDataService extends DataService implements OnDestroy {
     }
 
     /**
-       * Gets the first valid --non null/undefined-- value for this channel
-       *
-       * @param channelAddress the channel address
-       * @returns a non null/undefined value
-       */
+     * Gets the first valid --non null/undefined-- value for this channel
+     *
+     * @param channelAddress the channel address
+     * @returns a non null/undefined value
+     */
     public async getFirstValidValueForChannel<T = any>(channelAddress: ChannelAddress): Promise<T> {
         return new Promise<any>((res) => {
             this.currentValue.pipe(filter(el => el.allComponents[channelAddress.toString()] != null), take(1)).subscribe((val) => {

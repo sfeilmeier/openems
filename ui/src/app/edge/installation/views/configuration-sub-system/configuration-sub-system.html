@@ -3,23 +3,13 @@
 
     <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
 
-    <ng-container *ngIf="form.controls.subType.value">
+    <ng-container *ngIf="form.controls.subType?.value">
         <ion-item lines="none">
             <ion-button (click)="openManual()">
                 <ion-label>{{ 'INSTALLATION.CONFIGURATION_SYSTEM.OPEN_INSTRUCTIONS' | translate}}</ion-label>
                 <ion-icon name="open-outline" slot="start"></ion-icon>
             </ion-button>
         </ion-item>
-
-        <!-- Displays the note only for the Comemrcial 92 system configuration -->
-        <ion-card *ngIf="showNote()" class="card-with-primary-border">
-            <ion-card-header>
-                <ion-card-title translate>INSTALLATION.CONFIGURATION_EXECUTE.NOTE</ion-card-title>
-            </ion-card-header>
-            <ion-card-content style="white-space: pre-wrap;">
-                <span [innerHtml]="'INSTALLATION.CONFIGURATION_SUB_SYSTEM.NOTE.COMMERCIAL_92' | translate"></span>
-            </ion-card-content>
-        </ion-card>
     </ng-container>
 
 </installation-view>
