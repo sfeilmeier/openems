@@ -126,4 +126,11 @@ export enum View {
     ProtocolChecklist,
     ProtocolAvuBox,
     ConfigurationGridSetting,
+    ProtocolCommercialClusterSlaveCount,
+    ProtocolCommercialClusterSlaveInstallation,
+}
+
+export enum CommercialCluster {
+    MASTER,
+    SLAVE,
 }

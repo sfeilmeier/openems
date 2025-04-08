@@ -621,7 +621,8 @@
       "DAYS": "Tage"
     },
     "CHARGE": "Beladung",
-    "DISCHARGE": "Entladung"
+    "DISCHARGE": "Entladung",
+    "INSTALL": "Installieren"
   },
   "OFFLINE": {
     "EDGE": {
@@ -945,7 +946,9 @@
       "MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS": "Minimum modules pro String: {{ min }} und Maximum: {{ max }}",
       "EMS_BOX_CONNECTION_BOX_COMMERCIAL30": "{{ edgeShortName }} Anschlussbox",
       "EMS_BOX_GRID_CONNECTION_POINT_COMMERCIAL30": "Netztrennstelle",
-      "BATTERY_MODULE_DESCRIPTION": "Bitte geben Sie nur die letzten 8 Ziffern der Seriennummer ein."
+      "BATTERY_MODULE_DESCRIPTION": "Bitte geben Sie nur die letzten 8 Ziffern der Seriennummer ein.",
+      "BATTERY_TOWER_CLUSTER": "Batterie {{ batteryNumber }} turm {{towerNumber}}",
+      "INVALID_SERIALNUMBER_KEY": "Bitte überprüfen Sie die {{ key }} Seriennummer in {{ header }}"
     },
     "PROTOCOL_SYSTEM": {
       "FIRSTNAME": "Vorname Kontaktperson",
@@ -1038,6 +1041,31 @@
     },
     "CONFIGURATION_GRID_SETTING": {
       "TITLE": "Netzform"
+    },
+    "PROTOCOL_COMMERCIAL_CLUSTER": {
+      "SLAVE_FILED_LABEL": "Bitte geben Sie die Anzahl der zu konfigurierenden Slaves ein",
+      "SLAVES_TITLE": "Slave {{number}}",
+      "SLAVE_INSTALLATION": {
+        "CONNECTION_STATUS": {
+          "NOT_YET_CONNECTED": "Noch nicht verbunden",
+          "CONNECTED": "Verbunden",
+          "NOT_FOUND": "Slave Nicht gefunden"
+        },
+        "LOG_MESSAGE": {
+          "STARTING_AUTHENTICATION": "Authentifizierung wird gestartet...",
+          "AUTHENTICATION_SUCCESSFUL": "Authentifizierung erfolgreich. System wird aktualisiert …",
+          "UPDATE_COMPLETED": "Systemaktualisierung abgeschlossen. App wird konfiguriert …",
+          "PARTIALLY_CONFIGURED": "Konfiguration teilweise abgeschlossen.",
+          "CONFIGURED_SUCCESSFULLY": "Anwendung erfolgreich konfiguriert.",
+          "FUNCTION_TESTS_FAILED": "Funktionstest fehlgeschlagen: {{ error }}",
+          "CONFIGURATION_FAILED": "Konfiguration fehlgeschlagen: {{ error }}",
+          "SLAVE_STATUS ERROR": "Fehler beim Abrufen des Status für Slave {{ slaveNr }}"
+        }
+      }
+    },
+    "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
+      "SLAVE_COUNT_TITLE": "Informationen zur Anzahl der Slaves",
+      "SLAVE_INSTALLATION_TITLE": "Installation einzelner Speichereinheiten (Slaves)"
     }
   },
   "LIVE": {

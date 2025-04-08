@@ -219,14 +219,19 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
             });
         }
 
-        // Welcherischter, BMS and EMS box.
-        const initialStaticTowerComponents: number = 3;
+        // Speichersystemkomponenten
+        protocol.lots = [];
 
-        // Subsequent Strings will have only 1 static component. BMS submaster.
-        const subsequentStaticTowerComponents = 1;
-        const categoryElement: string = "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING";
-
-        super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, initialStaticTowerComponents, subsequentStaticTowerComponents, categoryElement);
+        this.serialNumbers.batteriesData.forEach((batteryData) => {
+            batteryData.modules.forEach((module) => {
+                // Push the data to protocol.lots
+                protocol.lots.push({
+                    category: batteryData.label,
+                    name: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label }),
+                    serialNumber: module.value,
+                });
+            });
+        });
 
         return new Promise((resolve, reject) => {
             websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {

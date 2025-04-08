@@ -24,6 +24,8 @@ import { PreInstallationComponent } from "./views/pre-installation/pre-installat
 import { PreInstallationUpdateComponent } from "./views/pre-installation-update/pre-installation-update.component";
 import { ProtocolAvuBoxComponent } from "./views/protocol-avu-box/protocol-avu-box";
 import { ProtocolChecklistComponent } from "./views/protocol-checklist/protocol-checklist.component";
+import { ProtocolCommercialClusterSlaveCountComponent } from "./views/protocol-commercial-cluster/slave-count/slave-count";
+import { ProtocolCommercialClusterSlaveInstallationComponent } from "./views/protocol-commercial-cluster/slave-installation/slave-installation";
 import { ProtocolCustomerComponent } from "./views/protocol-customer/protocol-customer.component";
 import { ProtocolFeedInLimitationComponent } from "./views/protocol-feed-in-limitation/protocol-feed-in-limitation.component";
 import { ProtocolInstallerComponent } from "./views/protocol-installer/protocol-installer.component";
@@ -150,6 +152,8 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     ProtocolChecklistComponent,
     ProtocolAvuBoxComponent,
     ConfigurationGridSettingComponent,
+    ProtocolCommercialClusterSlaveCountComponent,
+    ProtocolCommercialClusterSlaveInstallationComponent,
   ],
 })
 export class InstallationModule { }

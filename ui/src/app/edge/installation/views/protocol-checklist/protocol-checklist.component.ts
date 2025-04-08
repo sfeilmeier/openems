@@ -6,7 +6,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
-import { BatteryTarget, Commercial92Ibn, GridSetting } from "../../installation-systems/commercial/commercial-92/commercial92";
+import { AbstractCommercial92Ibn, BatteryTarget, GridSetting } from "../../installation-systems/commercial/commercial-92/abstract-commercial92";
+import { CommercialCluster } from "../../shared/enums";
 import { ComponentConfigurator, ConfigurationState, FunctionState } from "../configuration-execute/component-configurator";
 
 @Component({
@@ -17,21 +18,23 @@ import { ComponentConfigurator, ConfigurationState, FunctionState } from "../con
 export class ProtocolChecklistComponent implements OnInit {
 
     private static readonly SELECTOR = "protocol-checklist";
-    private static readonly MULTI_STEP_FIELD = "multiStepField";
-    private static readonly IP_ADDR = "ipAddress";
 
-    @Input() public ibn: Commercial92Ibn;
+    @Input() public ibn: AbstractCommercial92Ibn;
     @Input() public edge: Edge;
     @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
     @Output() public nextViewEvent: EventEmitter<any> = new EventEmitter();
 
-    protected form: FormGroup;
-    protected fields: FormlyFieldConfig[];
-    protected model;
-    protected isWaiting = false;
+    protected forms: FormGroup[] = [];
+    protected fields: FormlyFieldConfig[][] = [];
+    protected models: any[] = [];
+
+    protected isStartConfigurationDisabled: boolean[] = [];
+    protected expandedSlaveIndex: number = 0; // Track which slave's checklist is expanded
+
+    protected slavesConfiguring: (boolean | null)[] = [];
     protected isNextDisabled: boolean;
-    protected allFieldsChecked: boolean = false;
-    protected isStartConfigurationDisabled: boolean = false;
+    protected numberOfSlaves: number = 1; // By default. '1' is applied for non cluster configuration as well.
+
     protected readonly timeoutInMinutes: number = ComponentConfigurator.DELAY_FUNCTION_TEST / 60 / 1000;
     private componentConfigurator: Promise<ComponentConfigurator>;
 
@@ -41,20 +44,33 @@ export class ProtocolChecklistComponent implements OnInit {
         private service: Service,
     ) { }
 
+    protected get isWaiting(): boolean {
+        return !(this.slavesConfiguring.length > 0 && this.slavesConfiguring.every(status => status === false));
+    }
 
     public ngOnInit(): void {
-        this.form = new FormGroup({});
-        this.fields = this.getFields();
-        this.model = this.ibn.checklist;
+        this.numberOfSlaves = this.ibn.numberOfSlaves;
         this.isNextDisabled = true;
+
+        for (let i = 0; i < this.numberOfSlaves; i++) {
+            this.forms[i] = new FormGroup({});
+            this.fields[i] = this.getFields(i);
+            this.models[i] = {};
+            this.isStartConfigurationDisabled[i] = false;
+            this.slavesConfiguring[i] = null;
+        }
+    }
+
+    protected toggleExpansion(index: number) {
+        this.expandedSlaveIndex = index;
     }
 
     /**
      * Starts the configuration based on the components selected.
     */
-    public async startConfiguration() {
+    protected async startConfiguration(slaveIndex: number) {
         this.ibn.batteryStartStopTarget = BatteryTarget.AUTO;
-        this.isStartConfigurationDisabled = true;
+        this.isStartConfigurationDisabled[slaveIndex] = true;
 
         const stopOnRequest: Subject<void> = new Subject<void>();
         this.edge.getConfig(this.websocket).pipe(
@@ -64,11 +80,17 @@ export class ProtocolChecklistComponent implements OnInit {
             stopOnRequest.next();
             stopOnRequest.complete();
 
-            // Fetch component configurator
-            this.componentConfigurator = this.ibn.getComponentConfigurator(this.edge, config, this.websocket, this.service);
+            if (this.ibn.isClusterConfiguration) {
+                // Fetch component configurator
+                const edge: Edge = this.ibn.getEdge(slaveIndex);
+                this.componentConfigurator = this.ibn.getComponentConfigurator(edge, config, this.websocket, this.service, CommercialCluster.SLAVE);
+            } else {
+                // Fetch component configurator
+                this.componentConfigurator = this.ibn.getComponentConfigurator(this.edge, config, this.websocket);
+            }
 
             const resolvedConfigurator = await this.componentConfigurator; // Wait for resolution
-            this.isWaiting = true;
+            this.slavesConfiguring[slaveIndex] = true;
 
             // Starts the configuration
             resolvedConfigurator.start().then(() => {
@@ -89,8 +111,11 @@ export class ProtocolChecklistComponent implements OnInit {
                 this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.START_FUNCTION_TEST"), "warning", 5000);
                 resolvedConfigurator.startFunctionTest(this.ibn).then(() => {
                     this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.FINISH_FUNCTION_TEST"), "success");
-                    this.isWaiting = false;
-                    this.isNextDisabled = false;
+                    this.slavesConfiguring[slaveIndex] = false;
+
+                    if (slaveIndex == (this.numberOfSlaves - 1)) {
+                        this.isNextDisabled = false;
+                    }
                 });
             });
         });
@@ -101,55 +126,27 @@ export class ProtocolChecklistComponent implements OnInit {
     }
 
     protected onNextClicked() {
-        if (this.form.invalid) {
-            return;
+        for (let i = 0; i < this.numberOfSlaves; i++) {
+            if (this.forms[i].invalid) {
+                return;
+            }
         }
-        this.ibn.checklist = this.model;
+        this.ibn.checklist = this.models;
         this.nextViewEvent.emit(this.ibn);
     }
 
-    protected areAllFieldsChecked(): boolean {
-        return this.fields.every(field => {
-            const key = field.key as string; // Treat key as a string
-            return !!this.model[key]; // Check if the field is checked
+    protected areAllFieldsChecked(slaveIndex: number): boolean {
+        return this.fields[slaveIndex].every(field => {
+            const key = field.key as string;
+            return !!this.models[slaveIndex][key];
         });
     }
 
-    private arePreviousFieldsChecked(index: number): boolean {
-        let allPreviousChecked = true;
-        for (let i = 0; i < index; i++) {
-            const key = this.fields[i].key as string;
-            if (key === ProtocolChecklistComponent.MULTI_STEP_FIELD || key === ProtocolChecklistComponent.IP_ADDR) {
-                const multiStepField = this.model[key];
-                // If any step is unchecked, return false
-                if (!multiStepField || !multiStepField.every((stepChecked: boolean) => stepChecked === true)) {
-                    allPreviousChecked = false;
-                }
-            }
-
-            if (!this.model[key]) {
-                allPreviousChecked = false;
-            }
-
-            // If previous fields are not checked, reset current field's value to false
-            if (!allPreviousChecked) {
-                if (this.model[key] !== undefined && this.model[key] !== false) {
-                    if (key === ProtocolChecklistComponent.MULTI_STEP_FIELD) {
-                        this.model[key] = this.model[key].map(() => false); // Uncheck all steps
-                    } else {
-                        this.model[key] = false; // Uncheck checkbox
-                    }
-                }
-            }
-        }
-        return allPreviousChecked;
-    }
-
-    private getFields(): FormlyFieldConfig[] {
+    private getFields(index: number): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
 
         fields.push({
-            key: "connectInverter",
+            key: `connectInverter_${index}`,
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.CONNECT_INVERTER"),
@@ -159,7 +156,7 @@ export class ProtocolChecklistComponent implements OnInit {
         });
 
         fields.push({
-            key: "ipAddress",
+            key: `ipAddress_${index}`,
             type: "multi-step",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.CHANGE_NETWORK_SETTINGS"),
@@ -186,7 +183,7 @@ export class ProtocolChecklistComponent implements OnInit {
         });
 
         fields.push({
-            key: "url",
+            key: `url_${index}`,
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.IP_ADDRESS"),
@@ -197,7 +194,7 @@ export class ProtocolChecklistComponent implements OnInit {
         });
 
         fields.push({
-            key: "enterPassword",
+            key: `enterPassword_${index}`,
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.ENTER_PASSWORD"),
@@ -208,7 +205,7 @@ export class ProtocolChecklistComponent implements OnInit {
         });
 
         fields.push({
-            key: "startConfiguration",
+            key: `startConfiguration_${index}`,
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.START_CONFIGURATION"),
@@ -229,7 +226,7 @@ export class ProtocolChecklistComponent implements OnInit {
         }
 
         fields.push({
-            key: "multiStepField",
+            key: `multiStepField_${index}`,
             type: "multi-step",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.MULTI_STEP", { totalSteps: 8, listPosition: "F" }),
@@ -277,7 +274,7 @@ export class ProtocolChecklistComponent implements OnInit {
         });
 
         fields.push({
-            key: "minVoltage",
+            key: `minVoltage_${index}`,
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.MIN_VOLTAGE"),
@@ -288,7 +285,7 @@ export class ProtocolChecklistComponent implements OnInit {
         });
 
         fields.push({
-            key: "powerControl",
+            key: `powerControl_${index}`,
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.POWER_CONTROL"),

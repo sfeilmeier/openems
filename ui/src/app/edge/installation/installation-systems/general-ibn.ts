@@ -3,7 +3,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
 import { View } from "../shared/enums";
-import { SerialNumberFormData, TableData } from "../shared/ibndatatypes";
+import { TableData } from "../shared/ibndatatypes";
 import { SystemId } from "../shared/system";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
 import { AbstractIbn } from "./abstract-ibn";
@@ -36,7 +36,7 @@ export class GeneralIbn extends AbstractIbn {
     public override getSystemVariantFields(): FormlyFieldConfig[] {
         throw new Error("This is General Ibn, Method not implemented.");
     }
-    public override getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket): Promise<{ numberOfTowers: number; numberOfModulesPerTower: number; }> {
+    public override getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket): Promise<[{ numberOfTowers: number; numberOfModulesPerTower: number; }]> {
         throw new Error("This is General Ibn, Method not implemented.");
     }
     public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number): FormlyFieldConfig[] {
@@ -45,7 +45,7 @@ export class GeneralIbn extends AbstractIbn {
     public override getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number): FormlyFieldConfig[] {
         throw new Error("This is General Ibn, Method not implemented.");
     }
-    public override fillSerialNumberForms(numberOfTowers: number, numberOfModulesPerTower: number, models: any, forms: SerialNumberFormData[]): SerialNumberFormData[] {
+    public override getSerialNumberCategoryHeader(slaveNr: number, towerNr: number): string {
         throw new Error("This is General Ibn, Method not implemented.");
     }
     public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower?: number): Promise<{}> {

@@ -6,6 +6,7 @@ import { Commercial30AnschlussIbn } from "../installation-systems/commercial/com
 import { Commercial30NetztrennIbn } from "../installation-systems/commercial/commercial-30/commercial30-netztrenn";
 import { Commercial50Balancing } from "../installation-systems/commercial/commercial-50/commercial50-balancing";
 import { Commercial92Ibn } from "../installation-systems/commercial/commercial-92/commercial92";
+import { Commercial92ClusterIbn } from "../installation-systems/commercial/commercial-92/commercial92-cluster";
 import { GeneralIbn } from "../installation-systems/general-ibn";
 import { Home10FeneconIbn } from "../installation-systems/home/home-10";
 import { Home10Gen2FeneconIbn } from "../installation-systems/home/home-10-gen2";
@@ -14,6 +15,7 @@ import { Home15Gen2FeneconIbn } from "../installation-systems/home/home-15-gen2"
 import { Home20FeneconIbn } from "../installation-systems/home/home-20";
 import { Home30FeneconIbn } from "../installation-systems/home/home-30";
 import { Home6Gen2FeneconIbn } from "../installation-systems/home/home-6-gen2";
+import { EmsType } from "./ibndatatypes";
 
 export enum SystemType {
     FENECON_HOME = "FENECON Home",
@@ -42,6 +44,7 @@ export enum SystemId {
     (Commercial 30 mit Notstromversorgung)`,
     COMMERCIAL_50_BALANCING = "FENECON Commercial 50 Balancing",
     COMMERCIAL_92 = "FENECON Commercial 92",
+    COMMERCIAL_92_CLUSTER = "FENECON Commercial 92 Cluster",
 }
 
 export type HomeSystemId =
@@ -59,9 +62,10 @@ export namespace System {
      *
      * @param systemType Type of the System.
      * @param translate the translate service
+     * @param emsType The type of the EMS assigned in Odoo.
      * @returns the System IBN Object.
      */
-    export function getSystemObjectFromSystemType(systemType: SystemType, translate: TranslateService): AbstractIbn {
+    export function getSystemObjectFromSystemType(systemType: SystemType, translate: TranslateService, emsType: EmsType): AbstractIbn {
 
         switch (systemType) {
             case SystemType.FENECON_HOME:
@@ -69,7 +73,14 @@ export namespace System {
             case SystemType.HECKERT_HOME:
                 return new Home10HeckertIbn(translate);
             case SystemType.COMMERCIAL:
-                return new Commercial92Ibn(translate);
+                switch (emsType) {
+                    case "feh013":
+                        return new Commercial92Ibn(translate);
+                    case "fec013":
+                        return new Commercial92ClusterIbn(translate);
+                    default:
+                        return new Commercial30AnschlussIbn(translate);
+                }
         }
     }
 
@@ -83,7 +94,6 @@ export namespace System {
     export function getSystemObjectFromSubSystemType(subSystemType: SubSystemType, translate: TranslateService): AbstractIbn {
 
         switch (subSystemType) {
-
             case SubSystemType.COMMERCIAL_30:
                 return new Commercial30AnschlussIbn(translate);
             case SubSystemType.COMMERCIAL_50:
@@ -127,6 +137,8 @@ export namespace System {
                 return new Home15Gen2FeneconIbn(translate);
             case SystemId.FENECON_HOME_6:
                 return new Home6Gen2FeneconIbn(translate);
+            case SystemId.COMMERCIAL_92_CLUSTER:
+                return new Commercial92ClusterIbn(translate);
         }
     }
 
@@ -142,17 +154,6 @@ export namespace System {
                 return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_30;
             case SubSystemType.COMMERCIAL_50:
                 return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_50;
-            case SubSystemType.COMMERCIAL_92:
-                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL;
-        }
-    }
-
-    export function showNoteForSubsystemSelection(subSystemType: SubSystemType): boolean {
-        switch (subSystemType) {
-            case SubSystemType.COMMERCIAL_92:
-                return true;
-            default:
-                return false;
         }
     }
 
@@ -171,6 +172,16 @@ export namespace System {
                 return environment.links.MANUALS.SYSTEM.HOME.HOME_20_30;
             default:
                 return environment.links.MANUALS.SYSTEM.HOME.HOME_GEN_2;
+        }
+    }
+
+    export function getManualLinkFromSystemType(systemType: SystemType): string {
+        switch (systemType) {
+            case SystemType.FENECON_HOME:
+            case SystemType.HECKERT_HOME:
+                return environment.links.MANUALS.SYSTEM.HOME.HOME_10;
+            case SystemType.COMMERCIAL:
+                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL;
         }
     }
 

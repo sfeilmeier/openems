@@ -9,7 +9,7 @@ import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared"
 import { Category } from "../../shared/category";
 import { FeedInType, ModbusBridgeType, WebLinks } from "../../shared/enums";
 import { IbnUtils } from "../../shared/ibn.utils";
-import { ComponentData } from "../../shared/ibndatatypes";
+import { ComponentData, EmsType } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
 import { SubSystemType, SystemType } from "../../shared/system";
 import { ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../views/configuration-execute/component-configurator";
@@ -57,8 +57,6 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             category: Category.LINE_SIDE_METER_FUSE_COMMERCIAL,
             meterType: Meter.GridMeter.KDK,
         };
-
-    public numberOfModulesPerTower: number;
 
     /**
     * Returns the Modbus Serial bridge component.
@@ -228,21 +226,28 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
     public override getSubSystemFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
-        const emsType = this.getEmsType();
+        const emsType: EmsType = this.getEmsType();
 
         const componentLabel: {
             value: SubSystemType,
             label: SubSystemType,
         }[] = [];
-        if (emsType === null) {
-            componentLabel.push(
-                { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
-                { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
-            );
-        } else if (emsType === "feh013") {
-            componentLabel.push(
-                { value: SubSystemType.COMMERCIAL_92, label: SubSystemType.COMMERCIAL_92 },
-            );
+
+        switch (emsType) {
+            case "feh013":
+            case "fec013":
+                componentLabel.push(
+                    { value: SubSystemType.COMMERCIAL_92, label: SubSystemType.COMMERCIAL_92 },
+                );
+                break;
+            case null:
+                componentLabel.push(
+                    { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
+                    { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
+                );
+                break;
+            default:
+                break;
         }
 
         fields.push({
@@ -260,18 +265,15 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     }
 
     public override getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket):
-        Promise<{
-            numberOfTowers: number;
-            numberOfModulesPerTower: number;
-        }> {
+        Promise<Array<{ numberOfTowers: number; numberOfModulesPerTower: number }>> {
         return new Promise((resolve) => {
+            const channelAddresses: ChannelAddress[] = [
+                new ChannelAddress("battery0", "NumberOfTowers"),
+                new ChannelAddress("battery0", "NumberOfModulesPerTower")];
             let isResolved = false;
 
             // Edge-subscribe
-            edge.subscribeChannels(websocket, "commercial", [
-                new ChannelAddress("battery0", "NumberOfTowers"),
-                new ChannelAddress("battery0", "NumberOfModulesPerTower"),
-            ]);
+            edge.subscribeChannels(websocket, "commercial", channelAddresses);
 
             // Subject to stop the subscription to currentData
             const stopOnRequest: Subject<void> = new Subject<void>();
@@ -288,12 +290,12 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
                     // If values are available, resolve the promise with them
                     if (numberOfTowers && numberOfModulesPerTower) {
                         isResolved = true;
-                        resolve({
+                        resolve([{
                             // 10 is given as radix parameter.
                             // 2 = binary, 8 = octal, 10 = decimal, 16 = hexadecimal.
                             numberOfTowers: parseInt(numberOfTowers, 10),
                             numberOfModulesPerTower: parseInt(numberOfModulesPerTower, 10),
-                        });
+                        }]);
                     }
                 });
 
@@ -301,13 +303,13 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
                 // If data isn't available after the timeout, the
                 // promise gets resolved with default values
                 if (!isResolved) {
-                    resolve({ numberOfTowers: this.minNumberOfTowers, numberOfModulesPerTower: this.defaultNumberOfModules });
+                    resolve([{ numberOfTowers: this.minNumberOfTowers, numberOfModulesPerTower: this.defaultNumberOfModules }]);
                 }
 
                 // Unsubscribe to currentData and channels after timeout
                 stopOnRequest.next();
                 stopOnRequest.complete();
-                edge.unsubscribeChannels(websocket, AbstractCommercialIbn.SELECTOR);
+                edge.unsubscribeFromChannels(websocket, channelAddresses);
             }, 5000);
         });
     }
@@ -315,14 +317,19 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
         const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
 
-        // Welcherischter, BMS and EMS box.
-        const initialStaticTowerComponents: number = 3;
+        // Speichersystemkomponenten
+        protocol.lots = [];
 
-        // Subsequent Strings will have only 1 static component. BMS submaster.
-        const subsequentStaticTowerComponents = 1;
-        const categoryElement: string = "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING";
-
-        super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, initialStaticTowerComponents, subsequentStaticTowerComponents, categoryElement);
+        this.serialNumbers.batteriesData.forEach((batteryData) => {
+            batteryData.modules.forEach((module) => {
+                // Push the data to protocol.lots
+                protocol.lots.push({
+                    category: batteryData.label,
+                    name: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label }),
+                    serialNumber: module.value,
+                });
+            });
+        });
 
         return new Promise((resolve, reject) => {
             websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
@@ -331,6 +338,12 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
                 reject(reason);
             });
         });
+    }
+
+    public override getSerialNumberCategoryHeader(slaveNr: number, towerNr: number): string {
+        return this.serialNumbers.numberOfTowers[slaveNr] === 1
+            ? this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS")
+            : this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING", { number: towerNr + 1 });
     }
 
     /**

@@ -10,4 +10,14 @@
         </ion-button>
     </ion-item>
 
+    <!-- Displays the note only for the Comemrcial 92 system configuration -->
+    <ion-card *ngIf="showNote" class="card-with-primary-border">
+        <ion-card-header>
+            <ion-card-title translate>INSTALLATION.CONFIGURATION_EXECUTE.NOTE</ion-card-title>
+        </ion-card-header>
+        <ion-card-content style="white-space: pre-wrap;">
+            <span [innerHtml]="'INSTALLATION.CONFIGURATION_SUB_SYSTEM.NOTE.COMMERCIAL_92' | translate"></span>
+        </ion-card-content>
+    </ion-card>
+
 </installation-view>

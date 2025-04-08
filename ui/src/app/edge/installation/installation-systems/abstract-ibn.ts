@@ -7,8 +7,8 @@ import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { Category } from "../shared/category";
-import { FeedInType, View, WebLinks } from "../shared/enums";
-import { ComponentData, SerialNumberFormData, TableData } from "../shared/ibndatatypes";
+import { CommercialCluster, FeedInType, View, WebLinks } from "../shared/enums";
+import { ComponentData, EmsType, TableData } from "../shared/ibndatatypes";
 import { Meter } from "../shared/meter";
 import { System, SystemId, SystemType } from "../shared/system";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
@@ -108,7 +108,12 @@ export abstract class AbstractIbn {
 
   // Protocol Serial Numbers.
   public serialNumbers: {
-    modules: ComponentData[];
+    numberOfTowers: number[],
+    numberOfModulesPerTower: number[],
+    batteriesData?: {
+      label: string,
+      modules: ComponentData[];
+    }[],
   };
 
   // Configuration summary
@@ -418,7 +423,7 @@ export abstract class AbstractIbn {
       protocol.items.push({
         category: this.lineSideMeterFuse.category,
         name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER"),
-        value: this.lineSideMeterFuse.meterType,
+        value: this.lineSideMeterFuse.meterType ?? Meter.GridMeter.SOCOMEC,
       });
 
       const lineSideMeterFuseValue = lineSideMeterFuse.otherValue ?? lineSideMeterFuse.fixedValue;
@@ -440,71 +445,17 @@ export abstract class AbstractIbn {
   }
 
   /**
-   * Adds the serial numbers of the Battery modules and other components installed to the setup protocol given.
-   *
-   * @param protocol The SetupProtocol with already exisiting elements.
-   * @param numberOfModulesPerTower The configured number of moduler per tower for the system.
-   * @param subsequentStaticComponents The default number of fixed components per subsequent Towers/Strings.
-   * @param initialStaticTowerComponents The default number of fixed components per initial Towers/Strings.
-   * @param categoryElement the label string for category.
-   */
-  public addProtocolSerialNumbers(protocol: SetupProtocol, numberOfModulesPerTower: number, initialStaticTowerComponents: number, subsequentStaticComponents: number, categoryElement: string) {
-    const serialNumbers = this.serialNumbers;
-
-    // Speichersystemkomponenten
-    protocol.lots = [];
-
-    // Number of towers/strings
-    const numTowers = 4;
-
-    // Total number of components each tower contains.
-    const staticComponents: number = numberOfModulesPerTower + subsequentStaticComponents;
-    const numberOfComponentsTower1: number = numberOfModulesPerTower + initialStaticTowerComponents;
-
-    // Calculate the number of components in each tower
-    const numComponentsPerTower: number[] = [0];
-    for (let i = 1; i <= 4; i++) {
-      numComponentsPerTower.push(numComponentsPerTower[i - 1] + (i === 1 ? numberOfComponentsTower1 : staticComponents));
-    }
-
-    // Tower/String is valid for both Home and Industrial. String alone is valid for Commercial.
-    for (let componentCount = 0; componentCount < serialNumbers.modules.length; componentCount++) {
-      const module = serialNumbers.modules[componentCount];
-      if (module.value !== null && module.value !== "") {
-        const name: string = this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label });
-        const serialNumber: string = module.value;
-
-        // Determine the tower/string number based on the componentCount
-        for (let tower = 1; tower <= numTowers; tower++) {
-          if (componentCount < numComponentsPerTower[tower]) {
-            const category: string = this.translate.instant(categoryElement, { number: tower });
-
-            // Push the data to protocol.lots
-            protocol.lots.push({
-              category: category,
-              name: name,
-              serialNumber: serialNumber,
-            });
-
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  /**
    * Returns the ems type saved in Odoo.
    *
    * @returns the EMS type or null if it is empty.
    */
-  public getEmsType(): "feh013" | "fho011" | null {
+  public getEmsType(): EmsType {
 
     // Retrieve emsType and handle the "null" string case safely
     const rawEmsType: string = sessionStorage.getItem("emsType");
 
     // Check if the raw value is the string "null" and convert it to the correct type
-    return (rawEmsType === "null" ? null : rawEmsType) as "feh013" | "fho011" | null;
+    return (rawEmsType === "null" ? null : rawEmsType) as EmsType;
 
   }
 
@@ -575,6 +526,19 @@ export abstract class AbstractIbn {
   }
 
   /**
+   * Restricts the reading of serial numbers to specific towers configured.
+   */
+  public readSerialNumbersFromRegisters(edge: Edge, websocket: Websocket, numberOfTowers: number, numberOfModulesPerTower: number, slaveNr?: number): Promise<{}>[] {
+
+    const result: Promise<{}>[] = [];
+    for (let tower = 0; tower < numberOfTowers; tower++) {
+      result.push(this.getSerialNumbersFromEdge(tower, edge, websocket, numberOfModulesPerTower));
+    }
+
+    return result;
+  }
+
+  /**
    * Adds all fields which are System specific to be displayed in Configuration-Summary View.
    *
    * @param tableData The table data whose fields are displayed in Configuration-Summary.
@@ -587,15 +551,16 @@ export abstract class AbstractIbn {
  * @param edge the current edge.
  * @param websocket the Websocket connection.
  */
-  public abstract getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket): Promise<{ numberOfTowers: number; numberOfModulesPerTower: number }>;
+  public abstract getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket): Promise<Array<{ numberOfTowers: number; numberOfModulesPerTower: number }>>;
 
   /**
    * Returns the component fields for serial numbers based on system being installed.
    *
    * @param towerNr number of towers.
    * @param numberOfModulesPerTower number of modules per tower.
+   * @param slaveNr index of the slave from list of slaves in the commercial cluster.
    */
-  public abstract getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number): FormlyFieldConfig[];
+  public abstract getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, slaveNr?: number): FormlyFieldConfig[];
 
   /**
    * Returns the fields to enter number of towers and modules, manually.
@@ -606,18 +571,11 @@ export abstract class AbstractIbn {
   public abstract getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number): FormlyFieldConfig[];
 
   /**
-   * Fills the entire fields.
-   *
-   * @param numberOfTowers number of towers.
-   * @param numberOfModulesPerTower number of modules per tower.
-   * @param models form specific data.
-   * @param forms Array of form data to display.
+   * Returns the appropriate header for serial number category for the system.
+   * @param slaveNr the Slave Nr.
+   * @param towerNr the Tower number.
    */
-  public abstract fillSerialNumberForms(
-    numberOfTowers: number,
-    numberOfModulesPerTower: number,
-    models: any,
-    forms: SerialNumberFormData[]): SerialNumberFormData[];
+  public abstract getSerialNumberCategoryHeader(slaveNr: number, towerNr: number): string;
 
   /**
    * Retrieves the Serial numbers of the battery modules and components.
@@ -626,8 +584,9 @@ export abstract class AbstractIbn {
    * @param edge the current edge.
    * @param websocket the Websocket connection.
    * @param numberOfModulesPerTower number of modules per tower.
+   * @paramm slaveNr index of the slave from list of slaves in the commercial cluster.
    */
-  public abstract getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower?: number): Promise<{}>;
+  public abstract getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower?: number, slaveNr?: number): Promise<{}>;
 
   /**
    * View Configuration Dynamic Feed-In limitation.
@@ -648,7 +607,8 @@ export abstract class AbstractIbn {
     edge: Edge,
     config: EdgeConfig,
     websocket: Websocket,
-    service?: Service
+    service?: Service,
+    cluster?: CommercialCluster,
   ): Promise<ComponentConfigurator>;
 
   /**

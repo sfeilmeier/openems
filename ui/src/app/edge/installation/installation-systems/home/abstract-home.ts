@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
@@ -13,7 +12,7 @@ import { AppCenterUtil } from "../../shared/appcenterutil";
 import { Category } from "../../shared/category";
 import { FeedInSetting, FeedInType, View, WebLinks } from "../../shared/enums";
 import { IbnUtils } from "../../shared/ibn.utils";
-import { ComponentData, DcPv, SerialNumberFormData } from "../../shared/ibndatatypes";
+import { ComponentData, DcPv, EmsType } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
 import { FEED_IN_POWER_FACTOR_OPTIONS } from "../../shared/options";
 import { SystemId, SystemType } from "../../shared/system";
@@ -140,21 +139,10 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     super(views, translate);
   }
 
-  public override fillSerialNumberForms(
-    numberOfTowers: number,
-    numberOfModulesPerTower: number,
-    models: any,
-    forms: SerialNumberFormData[]) {
-    this.numberOfModulesPerTower = numberOfModulesPerTower;
-    for (let i = 0; i < numberOfTowers; i++) {
-      forms[i] = {
-        fieldSettings: this.getSerialNumberFields(i, numberOfModulesPerTower),
-        model: models[i],
-        formTower: new FormGroup({}),
-        header: i === 0 ? this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS") : (this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: i })),
-      };
-    }
-    return forms;
+  public override getSerialNumberCategoryHeader(slaveNr: number, towerNr: number): string {
+    return towerNr === 0
+      ? this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS")
+      : this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: towerNr });
   }
 
   public override getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number) {
@@ -357,7 +345,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     });
   }
 
-  public override getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket): Promise<{ numberOfTowers: number, numberOfModulesPerTower: number }> {
+  public override getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket): Promise<[{ numberOfTowers: number, numberOfModulesPerTower: number }]> {
     return new Promise((resolve) => {
       let isResolved = false;
 
@@ -383,7 +371,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
           isResolved = true;
           // 10 is given as radix parameter.
           // 2 = binary, 8 = octal, 10 = decimal, 16 = hexadecimal.
-          resolve({ numberOfTowers: parseInt(numberOfTowers, 10), numberOfModulesPerTower: parseInt(numberOfModulesPerTower, 10) });
+          resolve([{ numberOfTowers: parseInt(numberOfTowers, 10), numberOfModulesPerTower: parseInt(numberOfModulesPerTower, 10) }]);
         }
       });
 
@@ -391,7 +379,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         // If data isn't available after the timeout, the
         // promise gets resolved with default values
         if (!isResolved) {
-          resolve({ numberOfTowers: 1, numberOfModulesPerTower: 5 });
+          resolve([{ numberOfTowers: 1, numberOfModulesPerTower: 5 }]);
         }
 
         // Unsubscribe to currentData and channels after timeout
@@ -799,14 +787,19 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       });
     }
 
-    // Welcherischter, BMS and EMS box.
-    const initialStaticTowerComponents: number = 3;
+    // Speichersystemkomponenten
+    protocol.lots = [];
 
-    // Subsequent towers will have only 2 static components. Paralell box and BMS box.
-    const subsequentStaticTowerComponents: number = 2;
-    const categoryElement: string = "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER";
-
-    super.addProtocolSerialNumbers(protocol, this.numberOfModulesPerTower, initialStaticTowerComponents, subsequentStaticTowerComponents, categoryElement);
+    this.serialNumbers.batteriesData.forEach((batteryData) => {
+      batteryData.modules.forEach((module) => {
+        // Push the data to protocol.lots
+        protocol.lots.push({
+          category: batteryData.label,
+          name: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label }),
+          serialNumber: module.value,
+        });
+      });
+    });
 
     return new Promise((resolve, reject) => {
       websocket
@@ -823,7 +816,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public override getSystemVariantFields(): FormlyFieldConfig[] {
 
     const label = [];
-    const emsType = this.getEmsType();
+    const emsType: EmsType = this.getEmsType();
 
     switch (emsType) {
       case "feh013":
