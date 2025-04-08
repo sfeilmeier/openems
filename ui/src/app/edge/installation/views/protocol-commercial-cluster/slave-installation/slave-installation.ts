@@ -127,13 +127,13 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
     }
 
     private updateSlaveConnectionState(index: number, response: GetConnectionState.Response): void {
-        const isConnected = response.result.connectionState === "CONNECTED";
+        const connectionState = response.result.connectionState;
+        const isConnected = connectionState === "CONNECTED" || connectionState === "AUTHENTICATING";
         this.updateSlaveState(index, {
             connected: isConnected,
-            displayLabel: this.getConnectionStatusLabel(isConnected),
+            displayLabel: this.getConnectionStatusLabel(isConnected, connectionState),
         });
     }
-
 
     private handleStatusRequestError(index: number, error: any): void {
         this.handleErrorState(
@@ -407,8 +407,12 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
         console.error(error);
     }
 
-    private getConnectionStatusLabel(connected: boolean): string {
-        const statusKey = connected ? "CONNECTED" : "NOT_YET_CONNECTED";
+    private getConnectionStatusLabel(connected: boolean, connectionState?: string): string {
+        const validStates = ["CONNECTED", "AUTHENTICATING"];
+        const statusKey = connectionState && validStates.includes(connectionState)
+            ? connectionState
+            : connected ? "CONNECTED" : "NOT_YET_CONNECTED";
+
         return this.translate.instant(
             `INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.CONNECTION_STATUS.${statusKey}`
         );

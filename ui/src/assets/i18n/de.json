@@ -1049,7 +1049,8 @@
         "CONNECTION_STATUS": {
           "NOT_YET_CONNECTED": "Noch nicht verbunden",
           "CONNECTED": "Verbunden",
-          "NOT_FOUND": "Slave Nicht gefunden"
+          "NOT_FOUND": "Slave Nicht gefunden",
+          "AUTHENTICATING": "Authentifizierung"
         },
         "LOG_MESSAGE": {
           "STARTING_AUTHENTICATION": "Authentifizierung wird gestartet...",
