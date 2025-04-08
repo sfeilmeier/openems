@@ -8,15 +8,12 @@ import { Component } from "@angular/core";
       <ion-text class="ion-text-center" style="width: 100%" [innerHTML]="'ADVERT.1.TEXT' | translate">
       </ion-text>
     </ion-row>
-
-    <ion-row class="ion-padding-top ion-justify-content-center">
-      <ion-button href="https://www.youtube.com/watch?v=6JBXpeb1s5I" target="_blank" size="small" fill="outline" style="font-size: small;" translate>
-          ADVERT.1.BUTTON_LABEL
-      </ion-button>
+    <ion-row class="ion-padding-top">
+      <ion-text class="ion-text-center" style="width: 100%" [innerHTML]="'ADVERT.1.TEXT_2' | translate: {link: 'https://solar.htw-berlin.de/dein-stromspeicher-kann-mehr/'}">
+      </ion-text>
     </ion-row>
-
   </ion-grid>
   `,
   standalone: false,
 })
-export class TimeOfUseTariffAdvertComponent { }
+export class AdvertComponent { }
