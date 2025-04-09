@@ -48,7 +48,6 @@ export class RegisterUserRequest extends JsonrpcRequest {
                 company?: {
                     name: string
                 },
-                subscribeNewsletter: boolean,
                 role: string
             },
             oem: string

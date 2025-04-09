@@ -79,7 +79,6 @@ export class RegistrationModalComponent implements OnInit {
           city: this.formGroup.value.city,
           country: this.formGroup.value.country,
         },
-        subscribeNewsletter: false,
         role: this.activeSegment,
       },
       oem: environment.theme,
