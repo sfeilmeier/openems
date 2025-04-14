@@ -44,11 +44,15 @@ import io.openems.edge.battery.enfasbms.statemachine.Context;
 import io.openems.edge.battery.enfasbms.statemachine.StateMachine;
 import io.openems.edge.battery.enfasbms.statemachine.StateMachine.State;
 import io.openems.edge.battery.protection.BatteryProtection;
+import io.openems.edge.battery.protection.BatteryVoltageProtection;
+import io.openems.edge.battery.protection.BatteryVoltageProtectionLimits;
+import io.openems.edge.battery.protection.BatteryVoltageProtectionLimits.BatteryVoltageSpecification;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
 import io.openems.edge.bridge.modbus.api.BridgeModbus;
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
 import io.openems.edge.bridge.modbus.api.ModbusProtocol;
 import io.openems.edge.bridge.modbus.api.element.BitsWordElement;
+import io.openems.edge.bridge.modbus.api.element.DummyRegisterElement;
 import io.openems.edge.bridge.modbus.api.element.ModbusElement;
 import io.openems.edge.bridge.modbus.api.element.SignedDoublewordElement;
 import io.openems.edge.bridge.modbus.api.element.UnsignedDoublewordElement;
@@ -79,24 +83,24 @@ import io.openems.edge.common.taskmanager.Priority;
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
 		EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE //
 })
-public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
-		implements EnfasBms, ModbusComponent, OpenemsComponent, Battery, EventHandler, ModbusSlave, StartStoppable {
+public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements EnfasBms, ModbusComponent, OpenemsComponent,
+		Battery, BatteryVoltageProtection, EventHandler, ModbusSlave, StartStoppable {
 
 	private static final SemanticVersion OUTDATED_VERSION = new SemanticVersion(1, 0, 23);
+	private static final int MAX_16BIT_UNSIGNED_INT = 65535;
+	private static final int INNER_RESISTANCE = 150; // [mOhm]
+	private static final int MIN_ALLOWED_SOC = 0;
+	private static final int MAX_ALLOWED_SOC = 100;
+	private static final int CAPACITY = 161_100; // [Wh]
 
 	private final Logger log = LoggerFactory.getLogger(EnfasBmsImpl.class);
-
+	private final BatteryVoltageProtectionLimits<EnfasBmsImpl> voltageProtectionLimits;
 	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
 	private final AtomicBoolean allowBatteryReset = new AtomicBoolean(true);
 	private final StateMachine stateMachine = new StateMachine(State.UNDEFINED);
 
-	private static final int CAPACITY = 161_100; // [Wh]
-
 	private Config config = null;
-	private static final int MIN_ALLOWED_SOC = 0;
-	private static final int MAX_ALLOWED_SOC = 100;
 	private BatteryProtection batteryProtection = null;
-	private static final int MAX_16BIT_UNSIGNED_INT = 65535;
 
 	@Reference
 	private ConfigurationAdmin cm;
@@ -116,12 +120,15 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 				Battery.ChannelId.values(), //
 				StartStoppable.ChannelId.values(), //
 				BatteryProtection.ChannelId.values(), //
+				BatteryVoltageProtection.ChannelId.values(), //
 				EnfasBms.ChannelId.values() //
 		);
 		this.registerCellVoltageListeners();
 		this.registerCellTemperatureListeners();
 		this.registerResetBatteryListeners();
 		this._setCapacity(CAPACITY);
+		this._setInnerResistance(INNER_RESISTANCE);
+		this.voltageProtectionLimits = new BatteryVoltageProtectionLimits<>(getBatteryVoltageSpecification(), this);
 	}
 
 	@Activate
@@ -131,7 +138,9 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 				"Modbus", config.modbus_id())) {
 			return;
 		}
-		this.updateBatteryProtection(this.config.batteryProtectionType());
+		this.batteryProtection = BatteryProtection.create(this)//
+				.applyBatteryProtectionDefinition(new EnfasBatteryProtectionDefinition(), this.componentManager)
+				.build();
 	}
 
 	@Modified
@@ -141,27 +150,9 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 				"Modbus", config.modbus_id())) {
 			return;
 		}
-		this.updateBatteryProtection(this.config.batteryProtectionType());
-	}
-
-	/**
-	 * Initialize the battery protection based on the config settings.
-	 * 
-	 * @param batteryProtectionType the battery protection type.
-	 */
-	private void updateBatteryProtection(BatteryProtectionType batteryProtectionType) {
-		switch (batteryProtectionType) {
-		case DEFAULT -> {
-			this.batteryProtection = BatteryProtection.create(this)//
-					.applyBatteryProtectionDefinition(new BatteryProtectionDefault(), this.componentManager).build();
-		}
-		case EXTENDED_VOLTAGE_RANGE -> {
-			this.batteryProtection = BatteryProtection.create(this)//
-					.applyBatteryProtectionDefinition(new BatteryProtectionExtendedVoltageRange(),
-							this.componentManager)
-					.build();
-		}
-		}
+		this.batteryProtection = BatteryProtection.create(this)//
+				.applyBatteryProtectionDefinition(new EnfasBatteryProtectionDefinition(), this.componentManager)
+				.build();
 	}
 
 	@Deactivate
@@ -205,14 +196,15 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 		if (!this.isEnabled()) {
 			return;
 		}
-		switch (event.getTopic()) {
-		case EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE:
-			this.batteryProtection.apply();
-			break;
 
-		case EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE:
+		switch (event.getTopic()) {
+		case EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE -> {
+			this.batteryProtection.apply();
+			this.voltageProtectionLimits.updateLimits();
+		}
+		case EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE -> {
 			this.handleStateMachine();
-			break;
+		}
 		}
 	}
 
@@ -586,8 +578,8 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 								new UnsignedWordElement(baseReadingRegisterAddress + 89)), //
 						m(EnfasBms.ChannelId.PACK_PRECHARGE_TEMPERATURE,
 								new UnsignedWordElement(baseReadingRegisterAddress + 90)), //
-						m(Battery.ChannelId.CHARGE_MAX_VOLTAGE,
-								new UnsignedWordElement(baseReadingRegisterAddress + 91)),
+						// originally CHARGE_MAX_VOLTAGE
+						new DummyRegisterElement(baseReadingRegisterAddress + 91), //
 						m(BatteryProtection.ChannelId.BP_CHARGE_BMS,
 								new UnsignedWordElement(baseReadingRegisterAddress + 92)), //
 						m(EnfasBms.ChannelId.PACK_LIMIT_MAX_CHARGE_POWER,
@@ -598,8 +590,8 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 						m(EnfasBms.ChannelId.PACK_LIMIT_MAX_DISCHARGE_POWER,
 								new UnsignedWordElement(baseReadingRegisterAddress + 95), //
 								SCALE_FACTOR_MINUS_1),
-						m(Battery.ChannelId.DISCHARGE_MIN_VOLTAGE,
-								new UnsignedWordElement(baseReadingRegisterAddress + 96)), //
+						// originally DISCHARGE_MIN_VOLTAGE
+						new DummyRegisterElement(baseReadingRegisterAddress + 96), //
 						m(EnfasBms.ChannelId.BATTERY_SOC, new UnsignedWordElement(baseReadingRegisterAddress + 97)),
 						m(Battery.ChannelId.SOH, new UnsignedWordElement(baseReadingRegisterAddress + 98)), //
 						m(EnfasBms.ChannelId.PACK_STATE_ENERGY,
@@ -945,11 +937,11 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 		}
 		var result = multiply(value - MIN_ALLOWED_SOC, //
 				divide(100, (MAX_ALLOWED_SOC - MIN_ALLOWED_SOC)));
-		if (result < 0) {
-			result = 0;
+		if (result > 95) {
+			result = 95;
 		}
-		if (result > 100) {
-			result = 100;
+		if (result < 5) {
+			result = 5;
 		}
 		this._setSoc(result);
 	}
@@ -987,4 +979,19 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent
 		});
 		return result.get();
 	}
+
+	private static BatteryVoltageSpecification getBatteryVoltageSpecification() {
+		final var cells = 26;
+		final var modules = 9;
+		final var maximumCellVoltageLimit = 4175;
+		final var minimumCellVoltageLimit = 3143;
+		final var maximumCellVoltageOperationLimit = 4130;
+		final var minimumCellVoltageOperationLimit = 3250;
+		final var maximumChargeVoltage = 964;
+		final var minimumDischargeVoltage = 763;
+		return new BatteryVoltageSpecification(cells, modules, maximumCellVoltageLimit, minimumCellVoltageLimit,
+				maximumCellVoltageOperationLimit, minimumCellVoltageOperationLimit, maximumChargeVoltage,
+				minimumDischargeVoltage);
+	}
+
 }

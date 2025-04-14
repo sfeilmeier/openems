@@ -63,7 +63,6 @@ public class EnfasBmsImplTest {
 						.setModbusId("modbus0") //
 						.setStartStop(START) //
 						.setVersion(WUERTH_VERSION_1_0_20)//
-						.setBatteryProtectionType(BatteryProtectionType.DEFAULT)//
 						.build())
 				.next(new TestCase("1") //
 						.input(MODULE_0_MAX_CELL_VOLTAGE, 90) //
@@ -80,7 +79,6 @@ public class EnfasBmsImplTest {
 						.setModbusId("modbus0") //
 						.setStartStop(START) //
 						.setVersion(WUERTH_VERSION_1_0_20)//
-						.setBatteryProtectionType(BatteryProtectionType.DEFAULT)//
 						.build())//
 				.next(new TestCase() //
 						.input(MODULE_5_MAX_CELL_VOLTAGE, 120) //
@@ -111,7 +109,6 @@ public class EnfasBmsImplTest {
 						.setModbusId("modbus0") //
 						.setStartStop(START) //
 						.setVersion(WUERTH_VERSION_1_0_20)//
-						.setBatteryProtectionType(BatteryProtectionType.DEFAULT)//
 						.build())
 
 				.next(new TestCase() //
@@ -151,7 +148,6 @@ public class EnfasBmsImplTest {
 						.setModbusId("modbus0") //
 						.setStartStop(START) //
 						.setVersion(WUERTH_VERSION_1_0_20)//
-						.setBatteryProtectionType(BatteryProtectionType.DEFAULT)//
 						.build())
 				.next(new TestCase("1") //
 						.input(STRING_MODULE_COUNT, numberOfModules));

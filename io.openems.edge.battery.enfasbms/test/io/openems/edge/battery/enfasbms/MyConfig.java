@@ -14,7 +14,6 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		private int modbusUnitId;
 		private StartStopConfig startStop = StartStopConfig.AUTO;
 		private FirmwareVersion version = FirmwareVersion.WUERTH_VERSION_1_0_20;
-		private BatteryProtectionType batteryProtectionType = BatteryProtectionType.DEFAULT;
 
 		private Builder() {
 		}
@@ -41,11 +40,6 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 
 		public Builder setVersion(FirmwareVersion version) {
 			this.version = version;
-			return this;
-		}
-
-		public Builder setBatteryProtectionType(BatteryProtectionType batteryProtectionType) {
-			this.batteryProtectionType = batteryProtectionType;
 			return this;
 		}
 
@@ -95,8 +89,4 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		return this.builder.version;
 	}
 
-	@Override
-	public BatteryProtectionType batteryProtectionType() {
-		return this.builder.batteryProtectionType;
-	}
 }
