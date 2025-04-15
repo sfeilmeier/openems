@@ -25,6 +25,15 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.4.3",
+        changes: [
+          Changelog.UI,
+          Changelog.app(App.EVCS_AC, App.KEBA) + "Lesende Unterstützung für KEBA P40 via Modbus/TCP (Fehlerbehebung)",
+          Changelog.product(Product.INDUSTRIAL_L) + "Erweiterung der nutzbaren Batterieleistung zwischen 5 bis 95 % SoC, dynamische Berechnung der Spannungsgrenzen für Be- und Entladung",
+          { roleIsAtLeast: Role.ADMIN, change: "ESS Leistungsverteilung: OPTIMIZE_BY_KEEPING_ALL_NEAR_EQUAL" },
+        ],
+      },
+      {
         version: "2025.4.2",
         changes: [
           Changelog.UI + "Verbesserung der Farben in Hell-/Dunkelmodus; Kompatibilitätsverbesserungen mit iOS und Android; Bugfix bei historischer Darstellung des Direktverbrauchs, Bei Anlegen eines Benutzeraccounts: Verweis auf <a href='https://erp.fenecon.de/fenpost' target='_blank'>Newsletter-Anmeldeformular mit Double-Opt-In</a>;",
