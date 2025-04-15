@@ -23,9 +23,6 @@ public @interface Config {
 	@AttributeDefinition(name = "Bms firmware version?", description = "Which bms firmware version?")
 	FirmwareVersion version() default FirmwareVersion.ENFAS_VERSION_1_0_17;
 
-	@AttributeDefinition(name = "Battery protection type?", description = "Which type Battery protection?")
-	BatteryProtectionType batteryProtectionType() default BatteryProtectionType.DEFAULT;
-
 	@AttributeDefinition(name = "Start/stop behaviour?", description = "Should this Component be forced to start or stop?")
 	StartStopConfig startStop() default StartStopConfig.AUTO;
 

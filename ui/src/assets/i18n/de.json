@@ -11,6 +11,9 @@
     "openEMS": "Mehr zu OpenEMS",
     "patchnotes": "Änderungen im Monitoring zu diesem Build"
   },
+  "PAGE_HEADERS": {
+    "ENERGY_JOURNEY": "Analyse Batterieerweiterung"
+  },
   "Edge": {
     "Index": {
       "EmergencyReserve": {

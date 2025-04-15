@@ -50,12 +50,8 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 
 	public enum Property implements Type<Property, Ilk710, BundleParameter> {
 		ALIAS(alias()), //
-		BATTERY_PROTECTION_TYPE(AppDef.copyOfGeneric(defaultDef(), def -> def //
-				.setTranslatedLabelWithAppPrefix(".batteryProtectionType.label") //
-				.setDefaultValue(BatteryProtectionType.DEFAULT) //
-				.setField(JsonFormlyUtil::buildSelectFromNameable, (app, property, l, parameter, field) -> {
-					field.setOptions(OptionsFactory.of(BatteryProtectionType.class), l);
-				}))), //
+		// TODO: remove in future and update on every Industrial L
+		BATTERY_PROTECTION_TYPE(AppDef.copyOfGeneric(defaultDef())), //
 
 		BATTERY_FIRMWARE_VERSION(AppDef.copyOfGeneric(defaultDef(), def -> def //
 				.setTranslatedLabelWithAppPrefix(".batteryFirmwareVersion.label") //
@@ -143,8 +139,6 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 
 			final var isNewHardware = isOpenemsHardwareCM4Max(this.appManagerUtil);
 
-			final var batteryProtectionType = this.getEnum(p, BatteryProtectionType.class,
-					Property.BATTERY_PROTECTION_TYPE);
 			final var batteryFirmwareVersion = this.getEnum(p, BatteryFirmwareVersion.class,
 					Property.BATTERY_FIRMWARE_VERSION);
 			final var isSmokeDetectionInstalled = this.getBoolean(p, Property.IS_SMOKE_DETECTION_INSTALLED);
@@ -226,7 +220,6 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 								.addProperty("modbus.id", batteryModbusId) //
 								.addProperty("modbusUnitId", 1) //
 								.addProperty("startStop", "AUTO") //
-								.addProperty("batteryProtectionType", batteryProtectionType) //
 								.addProperty("version", batteryFirmwareVersion) //
 								.build()));
 

@@ -23,6 +23,7 @@ import io.openems.edge.battery.enfasbms.enums.CommandStateRequest;
 import io.openems.edge.battery.enfasbms.enums.ContactorState;
 import io.openems.edge.battery.enfasbms.enums.GlobalState;
 import io.openems.edge.battery.enfasbms.statemachine.StateMachine.State;
+import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.channel.Doc;
 import io.openems.edge.common.channel.DoubleReadChannel;
@@ -37,7 +38,7 @@ import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
 
-public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable {
+public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable, BatteryVoltageProtection {
 
 	/**
 	 * Gets the target Start/Stop mode from config or StartStop-Channel.

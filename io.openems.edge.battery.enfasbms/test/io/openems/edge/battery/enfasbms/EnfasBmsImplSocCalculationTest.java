@@ -1,7 +1,6 @@
 package io.openems.edge.battery.enfasbms;
 
 import static io.openems.edge.battery.api.Battery.ChannelId.SOC;
-import static io.openems.edge.battery.enfasbms.BatteryProtectionType.DEFAULT;
 import static io.openems.edge.battery.enfasbms.EnfasBms.ChannelId.BATTERY_SOC;
 import static io.openems.edge.battery.enfasbms.enums.FirmwareVersion.WUERTH_VERSION_1_0_20;
 import static io.openems.edge.common.startstop.StartStopConfig.START;
@@ -29,19 +28,24 @@ public class EnfasBmsImplSocCalculationTest {
 						.setModbusId("modbus0") //
 						.setStartStop(START) //
 						.setVersion(WUERTH_VERSION_1_0_20)//
-						.setBatteryProtectionType(DEFAULT)//
 						.build())
 				.next(new TestCase("1") //
 						.input(BATTERY_SOC, 90) //
 						.output(SOC, 90))
 				.next(new TestCase("2") //
 						.input(BATTERY_SOC, 102) //
-						.output(SOC, 100))
+						.output(SOC, 95))
 				.next(new TestCase("3") //
+						.input(BATTERY_SOC, 96) //
+						.output(SOC, 95))
+				.next(new TestCase("4") //
 						.input(BATTERY_SOC, 20)//
 						.output(SOC, 20))//
-				.next(new TestCase("4") //
+				.next(new TestCase("5") //
+						.input(BATTERY_SOC, 4)//
+						.output(SOC, 5))//
+				.next(new TestCase("6") //
 						.input(BATTERY_SOC, MAX_16BIT_UNSIGNED_INT) //
-						.output(SOC, 20));
+						.output(SOC, 5));
 	}
 }
