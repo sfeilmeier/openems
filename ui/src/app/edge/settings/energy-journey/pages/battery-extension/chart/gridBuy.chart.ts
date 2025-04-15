@@ -65,7 +65,7 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
         enabled: false,
       },
       yAxes: [{
-        unit: YAxisType.ENERGY,
+        unit: YAxisType.NONE,
         position: "left",
         yAxisId: ChartAxis.LEFT,
       }],
