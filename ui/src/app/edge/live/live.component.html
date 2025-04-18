@@ -3,10 +3,11 @@
     <ion-refresher-content refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>
   <ion-grid *ngIf="edge && edge.isOnline">
-    <ion-row class="ion-justify-content-center" *ngIf="widgets">
+    <ion-row class="ion-justify-content-center ion-no-padding" *ngIf="widgets">
 
       <!-- Left column -->
-      <ion-col size="12" size-md="8" size-lg="3" class="ion-no-padding">
+      <ion-col size="12" [attr.size-md]="navigationService.position === 'left' ? 8 : 8"
+        [attr.size-lg]="navigationService.position === 'left' ? 4 : 3" class="ion-no-padding">
         <ion-grid class="ion-no-padding">
           <ion-row>
             <ion-col size="12">

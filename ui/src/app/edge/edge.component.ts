@@ -86,10 +86,10 @@ export class EdgeComponent implements OnInit, OnDestroy, ViewWillLeave {
     }
 
     public ngOnDestroy(): void {
+        this.service.currentEdge.set(null);
         if (!this.edge) {
             return;
         }
         this.edge.unsubscribeAllChannels(this.websocket);
-        this.service.currentEdge.set(null);
     }
 }
