@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { EdgeOfflineModule } from "src/app/shared/components/edge/offline/offline.module";
+import { HelpButtonComponent } from "src/app/shared/components/modal/help-button/help-button";
 import { ModalModule } from "src/app/shared/components/modal/modal.module";
 import { PullToRefreshComponent } from "src/app/shared/components/pull-to-refresh/pull-to-refresh";
 import { SharedModule } from "./../../shared/shared.module";
@@ -73,6 +74,7 @@ import { SystemModule } from "./system/system.module";
     SharedModule,
     SystemModule,
     PullToRefreshComponent,
+    HelpButtonComponent,
   ],
   declarations: [
     AdministrationComponent,
