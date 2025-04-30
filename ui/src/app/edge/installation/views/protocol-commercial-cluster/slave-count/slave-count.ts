@@ -44,7 +44,7 @@ export class ProtocolCommercialClusterSlaveCountComponent implements OnInit {
             templateOptions: {
                 type: "number",
                 label: this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_FILED_LABEL"),
-                min: 1,
+                min: 2,
                 max: 5,
                 required: true,
             },

@@ -31,9 +31,8 @@ export enum SchedulerIdBehaviour {
 }
 
 export abstract class AbstractIbn {
-
-  // Applies for all country partner's ZIP code.
-  public static readonly COUNTRY_PARTNER_ZIP_CODE_REGEX: string = "^((\\d{5}(-\\d{4})?)|([1-9]\\d{3}\\s?[A-Z]{2})|(\\d{3}\\s?\\d{2})|(\\d{4}))$";
+  //Regex code for validating Countries.
+  public static readonly COUNTRY_PARTNER_ZIP_CODE_REGEX: RegExp = /^((\d{5}(-\d{4})?)|([1-9]\d{3}\s?[A-Z]{2})|(\d{3}\s?\d{2})|(\d{4}))$/;
 
   // Battery type
   public readonly systemType: SystemType;

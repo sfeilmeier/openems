@@ -46,6 +46,12 @@ export function registerTranslateExtension(translate: TranslateService) {
                 },
             },
             {
+                name: "zip",
+                message(err, field: FormlyFieldConfig) {
+                    return translate.stream("INSTALLATION.FORM.INVALID_ZIPCODE");;
+                },
+            },
+            {
                 name: "onlyPositiveInteger",
                 message(err, field: FormlyFieldConfig) {
                     return translate.stream("INSTALLATION.FORM.POSITIVE_INTEGER");

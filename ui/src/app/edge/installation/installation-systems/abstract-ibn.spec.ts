@@ -1,7 +1,7 @@
 import { AbstractIbn } from "./abstract-ibn";
 
 describe("#COUNTRY_PARTNER_ZIP_CODE_REGEX", () => {
-    const regex = new RegExp(AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX);
+    const regex = AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX;
 
     const testCases = [
         // Germany (5 digits)

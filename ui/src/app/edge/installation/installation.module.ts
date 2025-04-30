@@ -5,6 +5,7 @@ import { FormlyFieldConfig, FormlyModule } from "@ngx-formly/core";
 import { SetupKeyComponent } from "src/app/edge/installation/shared/reusable-input-field";
 import { SharedModule } from "src/app/shared/shared.module";
 import { SettingsModule } from "../settings/settings.module";
+import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { InstallationViewComponent } from "./installation-view/installation-view.component";
 import { InstallationComponent } from "./installation.component";
 import { CompletionComponent } from "./views/completion/completion.component";
@@ -91,6 +92,11 @@ export function Commercial50BatteryInverterSerialNumberValidator(control: FormCo
   return /^.{6}$/.test(control.value) ? null : { "commercialBatteryInverterSerialNumber": true };
 }
 
+export function ZipCodeValidator(control: FormControl): ValidationErrors {
+  // This validator checks the zip code pattern
+  return AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX.test(control.value) ? null : { "zip": true };
+}
+
 /**
  * This validator checks if the value entered is greater than minimum (default) value.
  * Workaround for default min prop in formly field.
@@ -120,6 +126,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
         { name: "commercial30BatteryInverterSerialNumber", validation: Commercial30BatteryInverterSerialNumberValidator },
         { name: "commercial50BatteryInverterSerialNumber", validation: Commercial50BatteryInverterSerialNumberValidator },
         { name: "defaultAsMinimumValue", validation: DefaultAsMinValueValidator },
+        { name: "zip", validation: ZipCodeValidator },
       ],
     }),
     SharedModule,
