@@ -4,6 +4,7 @@ import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.MULTIP
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_2;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_3;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SET_NULL_FOR_DEFAULT;
 import static io.openems.edge.common.type.TypeUtils.divide;
 import static io.openems.edge.common.type.TypeUtils.multiply;
 
@@ -49,6 +50,7 @@ import io.openems.edge.battery.protection.BatteryVoltageProtectionLimits;
 import io.openems.edge.battery.protection.BatteryVoltageProtectionLimits.BatteryVoltageSpecification;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
 import io.openems.edge.bridge.modbus.api.BridgeModbus;
+import io.openems.edge.bridge.modbus.api.ElementToChannelConverter;
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
 import io.openems.edge.bridge.modbus.api.ModbusProtocol;
 import io.openems.edge.bridge.modbus.api.element.BitsWordElement;
@@ -92,6 +94,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 	private static final int MIN_ALLOWED_SOC = 0;
 	private static final int MAX_ALLOWED_SOC = 100;
 	private static final int CAPACITY = 161_100; // [Wh]
+	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_0 = SET_NULL_FOR_DEFAULT(0);
 
 	private final Logger log = LoggerFactory.getLogger(EnfasBmsImpl.class);
 	private final BatteryVoltageProtectionLimits<EnfasBmsImpl> voltageProtectionLimits;
@@ -108,6 +111,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 	@Reference
 	private ComponentManager componentManager;
 
+	@Override
 	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
 	protected void setModbus(BridgeModbus modbus) {
 		super.setModbus(modbus);
@@ -216,7 +220,6 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 
 		// Initialize 'Start-Stop' Channel
 		this._setStartStop(StartStop.UNDEFINED);
-		this._setModbusCommunicationFailed(false);
 
 		try {
 			var context = new Context(this, this.componentManager.getClock());
@@ -341,7 +344,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 						m(EnfasBms.ChannelId.PACK_LIMIT_MAX_DISCHARGE_POWER, new UnsignedWordElement(96), //
 								SCALE_FACTOR_MINUS_1),
 						m(Battery.ChannelId.DISCHARGE_MIN_VOLTAGE, new UnsignedWordElement(97)), //
-						m(EnfasBms.ChannelId.BATTERY_SOC, new UnsignedWordElement(98)), //
+						m(EnfasBms.ChannelId.BATTERY_SOC, new UnsignedWordElement(98), SET_NULL_FOR_DEFAULT_0), //
 						m(Battery.ChannelId.SOH, new UnsignedWordElement(99)), //
 						m(EnfasBms.ChannelId.PACK_STATE_ENERGY, new UnsignedDoublewordElement(100), //
 								SCALE_FACTOR_MINUS_2),
@@ -592,7 +595,8 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 								SCALE_FACTOR_MINUS_1),
 						// originally DISCHARGE_MIN_VOLTAGE
 						new DummyRegisterElement(baseReadingRegisterAddress + 96), //
-						m(EnfasBms.ChannelId.BATTERY_SOC, new UnsignedWordElement(baseReadingRegisterAddress + 97)),
+						m(EnfasBms.ChannelId.BATTERY_SOC, new UnsignedWordElement(baseReadingRegisterAddress + 97),
+								SET_NULL_FOR_DEFAULT_0),
 						m(Battery.ChannelId.SOH, new UnsignedWordElement(baseReadingRegisterAddress + 98)), //
 						m(EnfasBms.ChannelId.PACK_STATE_ENERGY,
 								new UnsignedDoublewordElement(baseReadingRegisterAddress + 99), //
@@ -931,7 +935,10 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 	}
 
 	protected synchronized void updateSoc(Value<Integer> batSoc) {
-		final var value = batSoc.orElse(0);
+		if (!batSoc.isDefined()) {
+			return;
+		}
+		final var value = batSoc.get();
 		if (value == MAX_16BIT_UNSIGNED_INT) {
 			return;
 		}
