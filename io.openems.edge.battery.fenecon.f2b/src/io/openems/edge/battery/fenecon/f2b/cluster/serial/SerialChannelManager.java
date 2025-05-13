@@ -9,6 +9,7 @@ import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.bmw.BatteryFeneconF2bBmw;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.BatteryFeneconF2bCluster;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.ChannelManager;
+import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.type.TypeUtils;
 
@@ -46,6 +47,8 @@ public class SerialChannelManager extends ChannelManager {
 		this.calculate(INTEGER_MIN, batteries, Battery.ChannelId.DISCHARGE_MAX_CURRENT);
 		this.calculate(INTEGER_SUM, batteries, Battery.ChannelId.INNER_RESISTANCE);
 		this.calculate(INTEGER_SUM, batteries, Battery.ChannelId.CAPACITY);
+		this.calculate(INTEGER_SUM, batteries, BatteryVoltageProtection.ChannelId.BVP_CHARGE_BMS);
+		this.calculate(INTEGER_SUM, batteries, BatteryVoltageProtection.ChannelId.BVP_DISCHARGE_BMS);
 		this.updateBmwClusterVoltage(batteries);
 	}
 

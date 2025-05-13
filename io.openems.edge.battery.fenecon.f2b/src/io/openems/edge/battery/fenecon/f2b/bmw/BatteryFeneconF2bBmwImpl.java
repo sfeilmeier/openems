@@ -48,6 +48,7 @@ import io.openems.edge.battery.fenecon.f2b.bmw.statemachine.Context;
 import io.openems.edge.battery.fenecon.f2b.bmw.statemachine.StateMachine;
 import io.openems.edge.battery.fenecon.f2b.bmw.statemachine.StateMachine.State;
 import io.openems.edge.battery.protection.BatteryProtection;
+import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
 import io.openems.edge.bridge.modbus.api.BridgeModbus;
 import io.openems.edge.bridge.modbus.api.ElementToChannelConverter;
@@ -88,7 +89,7 @@ import io.openems.edge.common.type.TypeUtils;
 // TODO Extract AbstractBatteryFeneconF2b
 public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 		implements BatteryFeneconF2bBmw, BatteryFeneconF2b, ModbusComponent, OpenemsComponent, Battery, ModbusSlave,
-		StartStoppable, EventHandler, BatteryTimeoutFailure {
+		StartStoppable, EventHandler, BatteryTimeoutFailure, BatteryVoltageProtection {
 
 	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
 	private final Logger log = LoggerFactory.getLogger(BatteryFeneconF2bBmwImpl.class);
@@ -128,6 +129,7 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 				StartStoppable.ChannelId.values(), //
 				BatteryTimeoutFailure.ChannelId.values(), //
 				BatteryProtection.ChannelId.values(), //
+				BatteryVoltageProtection.ChannelId.values(), //
 				BatteryFeneconF2b.ChannelId.values(), //
 				BatteryFeneconF2bBmw.ChannelId.values() //
 		);
@@ -290,8 +292,12 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 						m(BatteryProtection.ChannelId.BP_DISCHARGE_BMS, new UnsignedWordElement(125),
 								chain(SET_NULL_FOR_DEFAULT_FFFF, SUBTRACT(8192), SCALE_FACTOR_MINUS_1, INVERT)), //
 						// U_MIN_DCHG_HVSTO
-						m(Battery.ChannelId.DISCHARGE_MIN_VOLTAGE, new UnsignedWordElement(126), //
-								chain(SET_NULL_FOR_DEFAULT_FFFF, SCALE_FACTOR_MINUS_1)), //
+						m(new UnsignedWordElement(126))//
+								.m(Battery.ChannelId.DISCHARGE_MIN_VOLTAGE, //
+										chain(SET_NULL_FOR_DEFAULT_FFFF, SCALE_FACTOR_MINUS_1, SUBTRACT(10)))//
+								.m(BatteryVoltageProtection.ChannelId.BVP_DISCHARGE_BMS, //
+										chain(SET_NULL_FOR_DEFAULT_FFFF, SCALE_FACTOR_MINUS_1, ADD(4)))//
+								.build(), //
 						m(BatteryFeneconF2bBmw.ChannelId.ALLOWED_DISCHARGE_POWER, new UnsignedWordElement(127), //
 								chain(SET_NULL_FOR_DEFAULT_FFFF, SUBTRACT(196596), MULTIPLY(3))), //
 						m(BatteryFeneconF2bBmw.ChannelId.MAX_ALLOWED_DISCHARGE_POWER, new UnsignedWordElement(128), //
@@ -303,8 +309,12 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 								chain(SET_NULL_FOR_DEFAULT_FFFF, SUBTRACT(8192), SCALE_FACTOR_MINUS_1)), //
 						// U_MAX_CHG_HVSTO, Maximum allowed charge voltage: In case the EES is be
 						// operated at a higher voltage while charging the EES might open the contactors
-						m(Battery.ChannelId.CHARGE_MAX_VOLTAGE, new UnsignedWordElement(130),
-								chain(SET_NULL_FOR_DEFAULT_FFFF, SCALE_FACTOR_MINUS_1)), //
+						m(new UnsignedWordElement(130))//
+								.m(Battery.ChannelId.CHARGE_MAX_VOLTAGE,
+										chain(SET_NULL_FOR_DEFAULT_FFFF, SCALE_FACTOR_MINUS_1, ADD(10)))//
+								.m(BatteryVoltageProtection.ChannelId.BVP_CHARGE_BMS,
+										chain(SET_NULL_FOR_DEFAULT_FFFF, SCALE_FACTOR_MINUS_1, SUBTRACT(4)))
+								.build(), //
 						m(BatteryFeneconF2bBmw.ChannelId.MAX_ALLOWED_CHARGE_POWER, new UnsignedWordElement(131), //
 								chain(SET_NULL_FOR_DEFAULT_FFFF, MULTIPLY(3))), //
 						m(BatteryFeneconF2bBmw.ChannelId.ALLOWED_CHARGE_POWER, new UnsignedWordElement(132), //
