@@ -26,7 +26,7 @@ public class PossibleBatteryCapacityExtensionUtilTest {
 
 		final double electricityPrice = 30.1;
 		var data = getData();
-		var product = new Product.Home();
+		var product = new Product.Home10Gen1();
 		var numberOfTowers = 1;
 
 		assertEquals(calculateDataPerModule(data, 5, 6, electricityPrice, product, numberOfTowers),
