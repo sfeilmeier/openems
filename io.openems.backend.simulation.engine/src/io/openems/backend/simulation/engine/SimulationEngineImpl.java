@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.openems.backend.common.component.AbstractOpenemsBackendComponent;
-import io.openems.backend.common.edgewebsocket.EdgeWebsocket;
+import io.openems.backend.common.edge.EdgeManager;
 import io.openems.backend.common.jsonrpc.SimulationEngine;
 import io.openems.backend.common.jsonrpc.request.SimulationRequest;
 import io.openems.backend.common.metadata.Metadata;
@@ -40,7 +40,7 @@ public class SimulationEngineImpl extends AbstractOpenemsBackendComponent implem
 	private volatile TimedataManager timedata;
 
 	@Reference(cardinality = ReferenceCardinality.MANDATORY, policy = ReferencePolicy.DYNAMIC)
-	private volatile EdgeWebsocket edgeWebsocket;
+	private volatile EdgeManager edgeManager;
 
 	@Reference
 	protected volatile Metadata metadata;
@@ -65,7 +65,7 @@ public class SimulationEngineImpl extends AbstractOpenemsBackendComponent implem
 
 		return switch (request.getPayload().getMethod()) {
 		case PossibleBatteryCapacityExtensionRequest.METHOD ->
-			PossibleBatteryCapacityExtensionUtil.handleRequest(this.timedata, edgeId, this.edgeWebsocket, this.metadata,
+			PossibleBatteryCapacityExtensionUtil.handleRequest(this.timedata, edgeId, this.edgeManager, this.metadata,
 					user, PossibleBatteryCapacityExtensionRequest.from(request.getPayload()));
 		default -> {
 			this.logWarn(this.log, "Unhandled Request: " + request);
