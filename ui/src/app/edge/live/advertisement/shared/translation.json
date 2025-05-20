@@ -2,18 +2,18 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "Updates zum EEG 2025 im FENECON-Webinar",
-        "TEXT": "Vielen Dank für die positive Resonanz auf unser Webinar am 28.02.2025. Wir haben die Online-Veranstaltung aufgenommen, damit sich alle Interessierten die Inhalte nachträglich ansehen können. Die Referenten waren Franz-Josef Feilmeier, Stefan Feilmeier und Alexander Stöger, Moderatorin war Sarah Mühlbauer.",
-        "BUTTON_LABEL": "Zur Video-Aufzeichnung."
+        "TITLE": "Ausgezeichnet: FEMS gewinnt renommierten The smarter E AWARD 2025",
+        "TEXT": "Ein Grund zum Feiern: Unser Energiemanagementsystem FEMS wurde mit dem renommierten The Smarter E Award 2025 ausgezeichnet - bereits zum fünften Mal geht dieser Preis an FENECON! FEMS überzeugt als offene, herstellerunabhängige Plattform für intelligentes Energiemanagement und flexible Sektorenkopplung in der Kategorie „Smart Integrated Energy“.",
+        "BUTTON_LABEL": "Mehr erfahren"
       }
     }
   },
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "Updates on the EEG 2025 in the FENECON webinar",
-        "TEXT": "Thank you for the positive response to our webinar on 28.02.2025. We have recorded the online event (held in German) so that all interested persons can view the content afterwards. The speakers were Franz-Josef Feilmeier, Stefan Feilmeier and Alexander Stöger, the moderator was Sarah Mühlbauer.",
-        "BUTTON_LABEL": "To the video recording."
+        "TITLE": "Awarded: FEMS wins prestigious The smarter E AWARD 2025",
+        "TEXT": "A reason to celebrate: Our energy management system FEMS has been awarded the famous The Smarter E Award 2025 - the fifth time FENECON has received this prize! FEMS impresses as an open, manufacturer-independent platform for intelligent energy management and flexible sector coupling in the “Smart Integrated Energy” category.",
+        "BUTTON_LABEL": "Read more"
       }
     }
   }

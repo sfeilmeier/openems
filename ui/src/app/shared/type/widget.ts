@@ -79,7 +79,12 @@ export class AdvertWidgets {
 
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
-        let list: AdvertWidget[] = [];
+        let list: AdvertWidget[] = [
+            {
+                name: "advert-1",
+                title: { languageKey: "ADVERT.1.TITLE" },
+            },
+        ];
         list = Utils.shuffleArray(list);
         return new AdvertWidgets(list);
     }
