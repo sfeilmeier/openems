@@ -25,6 +25,24 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.5.1",
+        changes: [
+          Changelog.openems("2025.5.0"),
+          Changelog.UI + "Verbesserung der Farben in Hell-/Dunkelmodus; historische Darstellungen, Verhalten bei Verbindungsabbruch",
+          Changelog.app(App.EVCS_AC, App.KEBA) + "Verbesserungen für KEBA P40",
+          Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Möglichkeit zur Umschaltung auf nur-lesenden Betrieb",
+          Changelog.app(App.TIME_OF_USE, App.OCTOPUS_HEAT) + "Fehlerbehebung bei der App-Installation",
+          Changelog.product(Product.COMMERCIAL_92) + "Verbesserungen am Inbetriebnahmeassistent (§14a EnWG, Clustersystem mit Master-Slave-Betrieb)",
+          Changelog.product(Product.INDUSTRIAL_L) + "Verbesserungen an der Systemstart-Prozedur",
+          Changelog.product(Product.INDUSTRIAL_S) + "Verbesserung der Spannungsregelung",
+          { roleIsAtLeast: Role.ADMIN, change: "Zeitvariable Netzentgelte sind intern für ENTSO-E konfigurierbar; Unterstützung im App Center folgt" },
+          { roleIsAtLeast: Role.ADMIN, change: "Modbus-Tabelle: Register für MAX_APPARENT_POWER bei SymmetricEss" },
+          { roleIsAtLeast: Role.ADMIN, change: "Von OpenEMS: Kompatibilität mit Janitza UMG104" },
+          { roleIsAtLeast: Role.ADMIN, change: "Interne Tests: EVSE, Energy-Scheduler v2 inkl. DISCHARGE_TO_GRID" },
+          Changelog.library(Library.JENETICS, Library.GUAVA, Library.GSON, Library.OKIO, Library.APACHE_FELIX_HTTP_JETTY, Library.FASTEXCEL),
+        ],
+      },
+      {
         version: "2025.4.3",
         changes: [
           Changelog.UI,
@@ -208,7 +226,7 @@ export class ChangelogComponent {
           Changelog.UI,
           Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Allgemeine Optimierungen",
           Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Fehlerbehebung beim Abrufen der Preise von der XML-Schnittstelle; Währungsumrechnung durch API der Europäischen Zentralbank",
-          Changelog.app(App.TIME_OF_USE, App.RABOT_CHARGE) + "Fehlerbehebung bei der OAuth Authentifizierung",
+          Changelog.app(App.TIME_OF_USE, App.RABOT_ENERGY) + "Fehlerbehebung bei der OAuth Authentifizierung",
           Changelog.app(App.TIME_OF_USE, App.SWISSPOWER) + "Kompatibilität mit dynamischen Stromtarifen der Swisspower-Alianz (Schweiz)",
           { roleIsAtLeast: Role.INSTALLER, change: "Inbetriebnahmeassistent: Konfiguration der Dimmung nach §14a EnWG" },
           { roleIsAtLeast: Role.INSTALLER, change: Changelog.product(Product.HOME_10, Product.HOME_20_30) + "Korrektur des Vorzeichens bei phasengenauen Stromwerten" },
