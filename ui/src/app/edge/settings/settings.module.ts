@@ -5,6 +5,7 @@ import tr from "src/app/edge/settings/shared/translation.json";
 import { ComponentsModule } from "src/app/shared/components/components.module";
 import { Language } from "src/app/shared/type/language";
 import { SharedModule } from "./../../shared/shared.module";
+import { AlertingComponent } from "./alerting/alerting.component";
 import { AppModule } from "./app/app.module";
 import { AssistantModule } from "./assistant/assistant.module";
 import { ChannelsComponent } from "./channels/channels.component";
@@ -38,6 +39,7 @@ import { SystemUpdateOldComponent } from "./systemupdate.old/systemupdate.old.co
     ComponentsModule,
   ],
   declarations: [
+    AlertingComponent,
     AliasUpdateComponent,
     ChannelsComponent,
     ComponentInstallComponent,
