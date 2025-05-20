@@ -34,7 +34,19 @@
 
     <ng-container *ngIf="!isWaiting">
         <ion-card>
-            <ion-card-content>{{'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SETUP_NOTE' | translate }}</ion-card-content>
+            <ion-card-content>
+                <ion-text>{{'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SETUP_NOTE' | translate
+                    }}</ion-text>
+
+                <ion-card-subtitle class="ion-font-weight-bolder ion-padding-top">
+                    {{'INSTALLATION.PRE_INSTALLATION.NOTE' | translate}}
+                </ion-card-subtitle>
+
+                <ion-text style="white-space: pre-line;"
+                    [innerHTML]="'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.REFRESH_NOTE' | translate">
+                </ion-text>
+
+            </ion-card-content>
         </ion-card>
 
         <ng-container *ngFor="let form of forms, let i = index">

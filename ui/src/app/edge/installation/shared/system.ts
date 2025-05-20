@@ -175,13 +175,18 @@ export namespace System {
         }
     }
 
-    export function getManualLinkFromSystemType(systemType: SystemType): string {
+    export function getManualLinkFromSystemType(systemType: SystemType, emsType: EmsType): string {
         switch (systemType) {
             case SystemType.FENECON_HOME:
             case SystemType.HECKERT_HOME:
                 return environment.links.MANUALS.SYSTEM.HOME.HOME_10;
             case SystemType.COMMERCIAL:
-                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL;
+                switch (emsType) {
+                    case "feh013":
+                        return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92;
+                    case "fec013":
+                        return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92_CLUSTER;
+                }
         }
     }
 

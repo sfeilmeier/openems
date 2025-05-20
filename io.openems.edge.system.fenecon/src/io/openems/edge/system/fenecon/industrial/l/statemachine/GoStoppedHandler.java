@@ -17,7 +17,7 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 
 		if (ess instanceof StartStoppable e) {
 			e.stop();
-			if (system.isStopped()) {
+			if (context.isStopped()) {
 				return State.STOPPED;
 			}
 		}

@@ -148,9 +148,10 @@
               <ion-item lines="none" *ngIf="selectedTower">
                 <ion-col style="flex: auto;">
                   <ion-select (ionDismiss)="updateTowerNr($event)" [(ngModel)]="selectedTower"
-                    class="custom-ion-popover" label-placement="floating" interface="popover" label="Tower"
-                    [interfaceOptions]="{ cssClass: 'custom-ion-popover' }" type="radio" fill="outline"
-                    style="white-space: initial; --color: var(--ion-color-primary)" mode="md">
+                    class="custom-ion-popover ion-select-border-color-primary" label-placement="floating"
+                    interface="popover" label="Tower" [interfaceOptions]="{ cssClass: 'custom-ion-popover' }"
+                    type="radio" fill="outline" style="white-space: initial; --color: var(--ion-color-primary)"
+                    mode="md">
                     <ng-container *ngFor="let option of towerOptions">
                       <ion-select-option [value]="option">{{option.key}}
                       </ion-select-option>
@@ -163,9 +164,10 @@
               <ion-item lines="none" *ngIf="selectedModule">
                 <ion-col style="flex: auto;">
                   <ion-select (ionDismiss)="updateModuleNr($event)" [(ngModel)]="selectedModule"
-                    class="custom-ion-popover" label-placement="floating" interface="popover" label="Module"
-                    [interfaceOptions]="{ cssClass: 'custom-ion-popover' }" type="radio" fill="outline"
-                    style="white-space: initial; --color: var(--ion-color-primary)" mode="md">
+                    class="custom-ion-popover ion-select-border-color-primary" label-placement="floating"
+                    interface="popover" label="Module" [interfaceOptions]="{ cssClass: 'custom-ion-popover' }"
+                    type="radio" fill="outline" style="white-space: initial; --color: var(--ion-color-primary)"
+                    mode="md">
                     <ion-select-option *ngFor="let option of moduleOptions" [value]="option">{{option.key}}
                     </ion-select-option>
                   </ion-select>

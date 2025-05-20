@@ -21,6 +21,7 @@ import io.openems.edge.battery.fenecon.f2b.bmw.enums.InsulationMeasurement;
 import io.openems.edge.battery.fenecon.f2b.bmw.enums.InsulationMeasurementStatus;
 import io.openems.edge.battery.fenecon.f2b.bmw.enums.RequestCharging;
 import io.openems.edge.battery.fenecon.f2b.bmw.statemachine.StateMachine.State;
+import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.common.channel.BooleanWriteChannel;
 import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.channel.Doc;
@@ -32,7 +33,8 @@ import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
 
-public interface BatteryFeneconF2bBmw extends BatteryFeneconF2b, Battery, OpenemsComponent, StartStoppable {
+public interface BatteryFeneconF2bBmw
+		extends BatteryFeneconF2b, Battery, OpenemsComponent, StartStoppable, BatteryVoltageProtection {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 

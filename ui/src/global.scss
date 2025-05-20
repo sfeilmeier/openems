@@ -169,6 +169,21 @@ formly-field-ion-radio {
     border-color: white;
 }
 
+//* Color of arrow down *//
+ion-select::part(icon) {
+    color: var(--ion-color-primary) !important;
+}
+
+.ion-select-border-color-primary {
+    --border-color: var(--ion-color-primary);
+
+    &:hover,
+    &:focus,
+    &:focus-within {
+        border-color: var(--ion-color-primary) !important;
+    }
+}
+
 .custom-ion-popover {
 
     --background: var(--ion-background-color);
@@ -257,9 +272,7 @@ html.md {
     --ion-default-font: $font-family;
 }
 
-//252px for the exact width of my-date-range-picker in PickDateComponent
 .pickdate-popover .popover-content {
-    width: 251px;
     position: center;
     overflow-y: hidden;
     overflow-x: hidden;

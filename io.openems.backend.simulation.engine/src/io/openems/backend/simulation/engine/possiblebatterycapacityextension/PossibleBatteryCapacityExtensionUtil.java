@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 
 import com.google.gson.JsonElement;
 
-import io.openems.backend.common.edgewebsocket.EdgeWebsocket;
+import io.openems.backend.common.edge.EdgeManager;
 import io.openems.backend.common.metadata.Edge;
 import io.openems.backend.common.metadata.Metadata;
 import io.openems.backend.common.metadata.User;
@@ -43,23 +43,23 @@ public final class PossibleBatteryCapacityExtensionUtil {
 	/**
 	 * Handles a {@link PossibleBatteryCapacityExtensionRequest}.
 	 * 
-	 * @param timedata      the timedata
-	 * @param edgeId        the current edge id
-	 * @param edgeWebsocket the edge websocket
-	 * @param metadata      the metadata
-	 * @param user          the user
-	 * @param request       the {@link PossibleBatteryCapacityExtensionRequest}
+	 * @param timedata    the timedata
+	 * @param edgeId      the current edge id
+	 * @param edgeManager the {@link EdgeManager}
+	 * @param metadata    the metadata
+	 * @param user        the user
+	 * @param request     the {@link PossibleBatteryCapacityExtensionRequest}
 	 * @return the JSON-RPC Success Response Future
 	 * @throws OpenemsNamedException on error
 	 */
 	public static CompletableFuture<JsonrpcResponseSuccess> handleRequest(TimedataManager timedata, String edgeId,
-			EdgeWebsocket edgeWebsocket, Metadata metadata, User user, PossibleBatteryCapacityExtensionRequest request)
+			EdgeManager edgeManager, Metadata metadata, User user, PossibleBatteryCapacityExtensionRequest request)
 			throws OpenemsNamedException {
 
 		user.assertEdgeRoleIsAtLeast(PossibleBatteryCapacityExtensionRequest.METHOD, edgeId, Role.OWNER);
 
 		var edge = metadata.getEdge(edgeId).orElseThrow(() -> new OpenemsException("Edge not available"));
-		var result = calculateSimulationData(timedata, edge, request, edgeWebsocket);
+		var result = calculateSimulationData(timedata, edge, request, edgeManager);
 
 		return CompletableFuture.completedFuture(//
 				new PossibleBatteryCapacityExtensionResponse(request.id, result) //
@@ -67,7 +67,7 @@ public final class PossibleBatteryCapacityExtensionUtil {
 	}
 
 	protected static List<DataPerModule> calculateSimulationData(TimedataManager timedata, Edge edge,
-			PossibleBatteryCapacityExtensionRequest request, EdgeWebsocket edgeWebsocket) throws OpenemsNamedException {
+			PossibleBatteryCapacityExtensionRequest request, EdgeManager edgeManager) throws OpenemsNamedException {
 
 		final Product product = Product.getProduct(edge.getProducttype());
 
@@ -76,7 +76,7 @@ public final class PossibleBatteryCapacityExtensionUtil {
 		}
 
 		var productTowerDetails = product.getProductTowerDetails();
-		var channels = edgeWebsocket.getChannelValues(edge.getId(),
+		var channels = edgeManager.getChannelValues(edge.getId(),
 				Set.of(CHANNEL_NUMBER_OF_MODULES_PER_TOWER, CHANNEL_NUMBER_OF_TOWERS));
 
 		var numberOfTowers = JsonUtils.getAsOptionalInt(channels.get(CHANNEL_NUMBER_OF_TOWERS))

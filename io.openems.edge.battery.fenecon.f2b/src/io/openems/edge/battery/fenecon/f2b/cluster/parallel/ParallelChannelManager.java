@@ -7,6 +7,7 @@ import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.BatteryFeneconF2bCluster;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.ChannelManager;
+import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.common.type.TypeUtils;
 
 public class ParallelChannelManager extends ChannelManager {
@@ -43,5 +44,7 @@ public class ParallelChannelManager extends ChannelManager {
 		this.calculate(INTEGER_MAX, batteries, Battery.ChannelId.DISCHARGE_MIN_VOLTAGE);
 		this.calculate(INTEGER_AVG, batteries, Battery.ChannelId.INNER_RESISTANCE);
 		this.calculate(INTEGER_SUM, batteries, Battery.ChannelId.CAPACITY);
+		this.calculate(INTEGER_MIN, batteries, BatteryVoltageProtection.ChannelId.BVP_CHARGE_BMS);
+		this.calculate(INTEGER_MAX, batteries, BatteryVoltageProtection.ChannelId.BVP_DISCHARGE_BMS);
 	}
 }

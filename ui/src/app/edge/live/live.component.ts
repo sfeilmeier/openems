@@ -2,6 +2,7 @@ import { Component, effect, ElementRef, OnDestroy, ViewChild } from "@angular/co
 import { ActivatedRoute, Router } from "@angular/router";
 import { RefresherCustomEvent } from "@ionic/angular";
 import { Subject } from "rxjs";
+import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Edge, EdgeConfig, EdgePermission, Service, Utils, Websocket, Widgets } from "src/app/shared/shared";
 import { AdvertWidgets } from "src/app/shared/type/widget";
@@ -34,6 +35,7 @@ export class LiveComponent implements OnDestroy {
     protected websocket: Websocket,
     private dataService: DataService,
     private router: Router,
+    protected navigationService: NavigationService,
   ) {
 
     effect(() => {

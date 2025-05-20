@@ -93,6 +93,7 @@ export class ProtocolInstallerComponent implements OnInit {
             type: "input",
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_NAME"),
+              required: true,
               disabled: true,
             },
           },
@@ -101,6 +102,7 @@ export class ProtocolInstallerComponent implements OnInit {
             type: "input",
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS"),
+              required: true,
               disabled: true,
             },
           },
@@ -109,6 +111,7 @@ export class ProtocolInstallerComponent implements OnInit {
             type: "input",
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP"),
+              required: true,
               disabled: true,
             },
           },
@@ -117,8 +120,11 @@ export class ProtocolInstallerComponent implements OnInit {
             type: "input",
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY"),
+              required: true,
               disabled: true,
-              pattern: AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX,
+            },
+            validators: {
+              validation: ["zip"],
             },
           },
           {
@@ -127,6 +133,7 @@ export class ProtocolInstallerComponent implements OnInit {
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY"),
               options: COUNTRY_OPTIONS(this.translate),
+              required: true,
               disabled: true,
             },
           },
@@ -135,6 +142,7 @@ export class ProtocolInstallerComponent implements OnInit {
             type: "input",
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL"),
+              required: true,
               disabled: true,
             },
             validators: {
@@ -146,6 +154,7 @@ export class ProtocolInstallerComponent implements OnInit {
             type: "input",
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.PHONE"),
+              required: true,
               disabled: true,
             },
           },

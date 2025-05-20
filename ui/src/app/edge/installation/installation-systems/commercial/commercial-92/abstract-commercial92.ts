@@ -371,6 +371,9 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
 
         super.setNonAbstractFields(ibnString);
 
+        // limitController14a
+        this.isController14aActivated = ibnString.isController14aActivated;
+
         if ("checklist" in ibnString) {
             this.checklist = ibnString.checklist;
         }

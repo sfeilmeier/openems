@@ -117,7 +117,7 @@ export class ConfigurationSystemComponent implements OnInit {
    */
   protected openManual(): void {
     const system: SystemType = this.form.controls.type.value;
-    window.open(System.getManualLinkFromSystemType(system));
+    window.open(System.getManualLinkFromSystemType(system, this.emsType));
   }
 
   /**

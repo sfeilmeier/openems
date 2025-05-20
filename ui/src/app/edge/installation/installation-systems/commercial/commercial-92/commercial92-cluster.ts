@@ -64,7 +64,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             SAFETY_COUNTRY: safetyCountry,
             FEED_IN_TYPE: this.feedInLimitation.feedInType,
             ...(this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
-            // HAS_ESS_LIMITER_14A: this.isController14aActivated,
+            HAS_ESS_LIMITER_14A: this.isController14aActivated,
         };
         let appId: string = "App.FENECON.Commercial.92.ClusterMaster";
         let alias: string = "commercial-92-cluster-master";

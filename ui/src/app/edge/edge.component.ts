@@ -5,8 +5,10 @@ import { ViewWillLeave } from "@ionic/angular";
 import { filter, take } from "rxjs/operators";
 import { SubscribeEdgesRequest } from "src/app/shared/jsonrpc/request/subscribeEdgesRequest";
 import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared";
+import { DataService } from "../shared/components/shared/dataservice";
 import { ProductType } from "../shared/type/widget";
 import { DateUtils } from "../shared/utils/date/dateutils";
+import { LiveDataService } from "./live/livedataservice";
 
 /*** This component is needed as a routing parent and acts as a transit station without being displayed.*/
 @Component({
@@ -16,6 +18,10 @@ import { DateUtils } from "../shared/utils/date/dateutils";
          <ion-router-outlet id="content"></ion-router-outlet>
     `,
     standalone: false,
+    providers: [{
+        useClass: LiveDataService,
+        provide: DataService,
+    }],
 })
 export class EdgeComponent implements OnInit, OnDestroy, ViewWillLeave {
 
@@ -28,6 +34,7 @@ export class EdgeComponent implements OnInit, OnDestroy, ViewWillLeave {
         private activatedRoute: ActivatedRoute,
         private service: Service,
         private websocket: Websocket,
+        private dataService: DataService,
     ) { }
 
     public ngOnInit(): void {
@@ -42,9 +49,9 @@ export class EdgeComponent implements OnInit, OnDestroy, ViewWillLeave {
                     .then(() => {
 
                         // Subscribe on these channels for the state in HeaderComponent
-                        edge.subscribeChannels(this.websocket, "", [
+                        this.dataService.getValues([
                             new ChannelAddress("_sum", "State"),
-                        ]);
+                        ], edge);
                     });
             }).catch(() => {
                 this.router.navigate(["index"]);
@@ -86,10 +93,10 @@ export class EdgeComponent implements OnInit, OnDestroy, ViewWillLeave {
     }
 
     public ngOnDestroy(): void {
+        this.service.currentEdge.set(null);
         if (!this.edge) {
             return;
         }
         this.edge.unsubscribeAllChannels(this.websocket);
-        this.service.currentEdge.set(null);
     }
 }

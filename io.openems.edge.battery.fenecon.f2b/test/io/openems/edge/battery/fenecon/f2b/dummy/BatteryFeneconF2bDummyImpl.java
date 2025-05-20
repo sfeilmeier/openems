@@ -15,6 +15,7 @@ import io.openems.edge.battery.fenecon.f2b.dummy.statemachine.Context;
 import io.openems.edge.battery.fenecon.f2b.dummy.statemachine.StateMachine;
 import io.openems.edge.battery.fenecon.f2b.dummy.statemachine.StateMachine.State;
 import io.openems.edge.battery.protection.BatteryProtection;
+import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.common.component.AbstractOpenemsComponent;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
@@ -45,6 +46,7 @@ public class BatteryFeneconF2bDummyImpl extends AbstractOpenemsComponent
 				Battery.ChannelId.values(), //
 				BatteryProtection.ChannelId.values(), //
 				BatteryFeneconF2b.ChannelId.values(), //
+				BatteryVoltageProtection.ChannelId.values(), //
 				BatteryFeneconF2bDummy.ChannelId.values()//
 		);
 		for (var channel : this.channels()) {

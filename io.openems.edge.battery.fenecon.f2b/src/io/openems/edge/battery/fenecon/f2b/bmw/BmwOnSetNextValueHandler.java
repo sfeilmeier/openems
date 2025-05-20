@@ -21,6 +21,8 @@ public class BmwOnSetNextValueHandler implements DeviceSpecificOnSetNextValueHan
 
 	public static final BmwOnSetNextValueHandler INSTANCE = new BmwOnSetNextValueHandler();
 
+	private static final int HEATING_START_TEMPERATURE = 9; // DEGREE_CELSIUS [C]
+
 	private BmwOnSetNextValueHandler() {
 	}
 
@@ -175,8 +177,8 @@ public class BmwOnSetNextValueHandler implements DeviceSpecificOnSetNextValueHan
 	 * 
 	 * <p>
 	 * In order to request heat for a serial connected batteries, serial cluster
-	 * must decide whether all battery temperatures are less than 10
-	 * {@link Unit#DEGREE_CELSIUS}
+	 * must decide whether all battery temperatures are less than
+	 * {@link HEATING_START_TEMPERATURE} {@link Unit#DEGREE_CELSIUS}
 	 * </p>
 	 * 
 	 * 
@@ -190,7 +192,7 @@ public class BmwOnSetNextValueHandler implements DeviceSpecificOnSetNextValueHan
 		ThrowingConsumer<BatteryFeneconF2bBmw, OpenemsNamedException> method = null;
 		if (batteries.stream()//
 				.allMatch(battery -> battery.getAvgCellTemperature().isDefined()//
-						&& battery.getAvgCellTemperature().get() <= 10)//
+						&& battery.getAvgCellTemperature().get() <= HEATING_START_TEMPERATURE)//
 				&& cluster.isSerialCluster() && cluster.areAllBatteriesStarted()) {
 			method = BatteryFeneconF2bBmw::startHeating;
 		} else {

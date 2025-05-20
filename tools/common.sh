@@ -141,7 +141,7 @@ common_build_android_app() {
     esac
 
     # Install depencencies for capacitor
-    NODE_ENV=${NODE_ENV} ionic cap build android -c "${THEME},${THEME}-backend-prod"
+    NODE_ENV=${NODE_ENV} ionic cap build android -c "${THEME},${THEME}-backend-prod" --no-open
 
     # Build App
     cd android
