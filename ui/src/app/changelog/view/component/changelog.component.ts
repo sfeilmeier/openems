@@ -25,6 +25,12 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.5.3",
+        changes: [
+          Changelog.UI + "Fehlerbehebung bei Inbetriebnahme von Home Systemen",
+        ],
+      },
+      {
         version: "2025.5.2",
         changes: [
           Changelog.UI + "Fehlerbehebung bei der Darstellung von Daten",
