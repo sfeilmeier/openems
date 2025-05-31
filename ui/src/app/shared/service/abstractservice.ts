@@ -5,9 +5,9 @@ import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { QueryHistoricTimeseriesEnergyResponse } from "../jsonrpc/response/queryHistoricTimeseriesEnergyResponse";
 import { ChannelAddress } from "../shared";
+import { DefaultTypes } from "../type/defaulttypes";
 import { Language } from "../type/language";
 import { AdvertWidgets } from "../type/widget";
-import { DefaultTypes } from "./defaulttypes";
 
 export abstract class AbstractService extends ErrorHandler {
 

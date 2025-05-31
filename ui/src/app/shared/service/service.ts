@@ -21,12 +21,12 @@ import { QueryHistoricTimeseriesEnergyResponse } from "../jsonrpc/response/query
 import { User } from "../jsonrpc/shared";
 import { States } from "../ngrx-store/states";
 import { ChannelAddress } from "../shared";
+import { DefaultTypes } from "../type/defaulttypes";
 import { Language } from "../type/language";
 import { Role } from "../type/role";
 import { AdvertWidgets } from "../type/widget";
 import { DateUtils } from "../utils/date/dateutils";
 import { AbstractService } from "./abstractservice";
-import { DefaultTypes } from "./defaulttypes";
 import { Websocket } from "./websocket";
 
 @Injectable()
@@ -70,7 +70,6 @@ export class Service extends AbstractService {
   /**
    * Holds the currently selected Edge.
    */
-  // public readonly currentEdge: BehaviorSubject<Edge> = new BehaviorSubject<Edge>(null);
   public readonly currentEdge: WritableSignal<Edge> = signal(null);
 
   /**

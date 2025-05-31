@@ -2,9 +2,9 @@
 import { Component, Input, OnChanges } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
-import { ChartAxis, HistoryUtils, Utils, YAxisType } from "src/app/shared/service/utils";
 import { ChannelAddress, ChartConstants } from "src/app/shared/shared";
 import { TPropType } from "src/app/shared/type/utility";
+import { ChartAxis, HistoryUtils, Utils, YAxisType } from "src/app/shared/utils/utils";
 import { SimulationResult } from "../battery-extension.module";
 import { PossibleBatteryExtensionResponse } from "../battery-extension.response";
 
