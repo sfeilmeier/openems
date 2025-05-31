@@ -465,7 +465,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             : this.feedInLimitation.feedInType === FeedInType.EXTERNAL_LIMITATION
                 ? batteryInverterData.push(
                     {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECIEVER"),
+                        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
                         value: this.translate.instant("General.yes"),
                     })
                 : batteryInverterData.push(

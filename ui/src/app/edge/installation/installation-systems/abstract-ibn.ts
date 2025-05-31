@@ -386,7 +386,7 @@ export abstract class AbstractIbn {
     protocol.items.push(
       {
         category: Category.FEED_IN_MANAGEMENT,
-        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECIEVER"),
+        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
         value: feedInLimitation.feedInType == FeedInType.EXTERNAL_LIMITATION
           ? this.translate.instant("General.yes")
           : this.translate.instant("General.no"),
