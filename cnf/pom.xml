@@ -223,7 +223,7 @@
 			<!-- Changelog: https://github.com/apache/felix-dev/commits/master/http -->
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.http.jetty12</artifactId>
-			<version>1.0.30</version>
+			<version>1.0.32</version>
 		</dependency>
 		<dependency>
 			<!-- Apache Felix Servlet API -->
@@ -304,22 +304,22 @@
 		<dependency>
 			<groupId>com.influxdb</groupId>
 			<artifactId>influxdb-client-java</artifactId>
-			<version>7.2.0</version>
+			<version>7.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.influxdb</groupId>
 			<artifactId>influxdb-client-core</artifactId>
-			<version>7.2.0</version>
+			<version>7.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.influxdb</groupId>
 			<artifactId>influxdb-client-utils</artifactId>
-			<version>7.2.0</version>
+			<version>7.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.influxdb</groupId>
 			<artifactId>flux-dsl</artifactId>
-			<version>7.2.0</version>
+			<version>7.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.java-websocket</groupId>
@@ -438,12 +438,12 @@
 		<dependency>
 			<groupId>io.prometheus</groupId>
 			<artifactId>prometheus-metrics-core</artifactId>
-			<version>1.3.2</version>
+			<version>1.3.8</version>
 		</dependency>
 		<dependency>
 			<groupId>io.prometheus</groupId>
 			<artifactId>prometheus-metrics-instrumentation-jvm</artifactId>
-			<version>1.3.2</version>
+			<version>1.3.8</version>
 		</dependency>
 		<dependency>
 			<groupId>io.prometheus</groupId>
@@ -454,7 +454,7 @@
 			<!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>4.29.0</version>
+			<version>4.31.0</version>
 		</dependency>
 	</dependencies>
 </project>
