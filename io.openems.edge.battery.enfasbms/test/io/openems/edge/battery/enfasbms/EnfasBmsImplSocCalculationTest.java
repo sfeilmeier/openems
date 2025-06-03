@@ -34,7 +34,7 @@ public class EnfasBmsImplSocCalculationTest {
 						.output(SOC, 90))
 				.next(new TestCase("2") //
 						.input(BATTERY_SOC, 102) //
-						.output(SOC, 95))
+						.output(SOC, 100))
 				.next(new TestCase("3") //
 						.input(BATTERY_SOC, 96) //
 						.output(SOC, 95))
@@ -46,6 +46,9 @@ public class EnfasBmsImplSocCalculationTest {
 						.output(SOC, 5))//
 				.next(new TestCase("6") //
 						.input(BATTERY_SOC, MAX_16BIT_UNSIGNED_INT) //
-						.output(SOC, 5));
+						.output(SOC, null))
+				.next(new TestCase("7") //
+						.input(BATTERY_SOC, -2) //
+						.output(SOC, 0));
 	}
 }
