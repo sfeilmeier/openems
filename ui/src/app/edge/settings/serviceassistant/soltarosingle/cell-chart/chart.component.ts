@@ -5,8 +5,8 @@ import { TranslateService } from "@ngx-translate/core";
 import * as Chart from "chart.js";
 import { AbstractHistoryChart } from "src/app/edge/history/abstracthistorychart";
 import { DEFAULT_TIME_CHART_OPTIONS } from "src/app/edge/history/shared";
-import { DefaultTypes } from "src/app/shared/service/defaulttypes";
 import { ChannelAddress, Service, Utils } from "src/app/shared/shared";
+import { DefaultTypes } from "src/app/shared/type/defaulttypes";
 import { ChannelChartDescription } from "../../abstractbattery.component";
 
 @Component({

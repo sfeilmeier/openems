@@ -940,14 +940,18 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 		}
 		final var value = batSoc.get();
 		if (value == MAX_16BIT_UNSIGNED_INT) {
+			this._setSoc(null);
 			return;
 		}
 		var result = multiply(value - MIN_ALLOWED_SOC, //
 				divide(100, (MAX_ALLOWED_SOC - MIN_ALLOWED_SOC)));
-		if (result > 95) {
+		// limit to 0 - 100 %
+		result = Math.max(0, Math.min(100, result));
+
+		if (result == 96) {
 			result = 95;
 		}
-		if (result < 5) {
+		if (result == 4) {
 			result = 5;
 		}
 		this._setSoc(result);

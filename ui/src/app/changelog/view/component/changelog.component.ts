@@ -25,6 +25,18 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.6.1",
+        changes: [
+          Changelog.openems("2025.6.0"),
+          Changelog.UI,
+          Changelog.app(App.EVCS_AC, App.KEBA) + "Fehlerbehebungen in der App für KEBA P40",
+          Changelog.product(Product.INDUSTRIAL_L) + "Anpassung der SoC-Anzeige im hohen und niedrigen Bereich",
+          Changelog.product(Product.HOME_20_30) + "Unterstützung für größere Leistungen am Netzzähler",
+          "KACO Batteriewechselrichter: Verbesserungen bei der Initialisierung",
+          { roleIsAtLeast: Role.ADMIN, change: "Interne Tests: neue UI-Navigation, EVSE KEBA UDP und Modbus/TCP, Heidelberg Connect" },
+        ],
+      },
+      {
         version: "2025.5.3",
         changes: [
           Changelog.UI + "Fehlerbehebung bei Inbetriebnahme von Home Systemen",
