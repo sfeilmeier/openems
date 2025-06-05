@@ -34,7 +34,6 @@ import { ModalComponent as EvseSettingsComponent } from "./edge/live/Controller/
 import { ModalComponent as IoHeatingRoomComponent } from "./edge/live/Controller/Io/HeatingRoom/modal/modal";
 import { LiveComponent as EdgeLiveComponent } from "./edge/live/live.component";
 import { LiveDataService } from "./edge/live/livedataservice";
-import { AlertingComponent as EdgeSettingsAlerting } from "./edge/settings/alerting/alerting.component";
 import { IndexComponent as EdgeSettingsAppIndex } from "./edge/settings/app/index.component";
 import { InstallAppComponent as EdgeSettingsAppInstall } from "./edge/settings/app/install.component";
 import { OAuthIndexComponent } from "./edge/settings/app/oauth/oauth.component";
@@ -161,9 +160,9 @@ export const routes: Routes = [
       { path: "settings/app/single/:appId", component: EdgeSettingsAppSingle, canActivate: [hasEdgeRole(Role.OWNER)] },
       { path: "settings/app/oauth", data: { navbarTitle: "OAuth" }, component: OAuthIndexComponent, canActivate: [hasEdgeRole(Role.ADMIN)] },
       { path: "settings/energyJourney", component: EnergyJourneyComponent, data: { navbarTitle: "Energy Journey" } },
-      { path: "settings/energyJourney/batteryExtension", component: BatteryExtensionComponent, data: { navbarTitleToBeTranslated: "PAGE_HEADERS.ENERGY_JOURNEY" } },
-      { path: "settings/energyJourney/batteryExtension/electricityPriceChoice", component: ElectricityPriceSelectionComponent, data: { navbarTitleToBeTranslated: "PAGE_HEADERS.ENERGY_JOURNEY" } },
-      { path: "settings/alerting", component: EdgeSettingsAlerting, canActivate: [hasEdgeRole(Role.OWNER)], data: { navbarTitleToBeTranslated: "Edge.Config.Index.alerting" } },
+      { path: "settings/energyJourney/batteryExtension", component: BatteryExtensionComponent, data: { navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE" } },
+      { path: "settings/energyJourney/batteryExtension/electricityPriceChoice", component: ElectricityPriceSelectionComponent, data: { navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE" } },
+      { path: "settings/alerting", loadChildren: () => import("./edge/settings/alerting/alerting.module").then(m => m.AlertingModule), canActivate: [hasEdgeRole(Role.OWNER)], data: { navbarTitleToBeTranslated: "Edge.Config.Index.alerting" } },
       { path: "settings/homeServiceAssistant", component: HomeServiceAssistantComponent, data: { navbarTitle: "Home-Assistent" } },
       { path: "settings/jsonrpctest", component: JsonrpcTestComponent, data: { navbarTitle: "Jsonrpc Test" } },
       { path: "settings/powerAssistant", component: PowerAssistantComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitle: "Power-Assistant" } },
