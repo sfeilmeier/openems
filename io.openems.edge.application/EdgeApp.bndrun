@@ -144,6 +144,8 @@
 	bnd.identity;id='io.openems.edge.fenecon.mini',\
 	bnd.identity;id='io.openems.edge.fenecon.pro',\
 	bnd.identity;id='io.openems.edge.goodwe',\
+	bnd.identity;id='io.openems.edge.heat.askoma',\
+	bnd.identity;id='io.openems.edge.heat.mypv',\
 	bnd.identity;id='io.openems.edge.io.filipowski',\
 	bnd.identity;id='io.openems.edge.io.gpio',\
 	bnd.identity;id='io.openems.edge.io.i2c',\
@@ -333,6 +335,9 @@
 	io.openems.edge.fenecon.mini;version=snapshot,\
 	io.openems.edge.fenecon.pro;version=snapshot,\
 	io.openems.edge.goodwe;version=snapshot,\
+	io.openems.edge.heat.api;version=snapshot,\
+	io.openems.edge.heat.askoma;version=snapshot,\
+	io.openems.edge.heat.mypv;version=snapshot,\
 	io.openems.edge.io.api;version=snapshot,\
 	io.openems.edge.io.filipowski;version=snapshot,\
 	io.openems.edge.io.gpio;version=snapshot,\
