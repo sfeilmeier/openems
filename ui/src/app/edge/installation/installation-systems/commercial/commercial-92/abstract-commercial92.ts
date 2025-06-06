@@ -10,7 +10,6 @@ import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
 import { CommercialCluster, FeedInType, View } from "../../../shared/enums";
-import { ComponentData } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
 import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
@@ -252,12 +251,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         const totalPvPower = 0;
         this.feedInLimitation.maximumFeedInPower = totalPvPower;
 
-        const options: ComponentData[] = [
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
-        ];
-
-        return super.getCommonFeedInLimitsFields(totalPvPower, options);
+        return super.getCommonFeedInLimitsFields(totalPvPower);
     }
 
     public override async getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service, cluster?: CommercialCluster): Promise<ComponentConfigurator> {
@@ -462,6 +456,13 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                 reject(reason);
             });
         });
+    }
+
+    public override getFeedInLimitOptions() {
+        return [
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
+        ];
     }
 
     /**
