@@ -881,9 +881,7 @@
       "EXTERNAL_CONTROLLER_RECEIVER": "Ripple control receiver",
       "PLACE_HOLDER": "Select option",
       "NO_LIMITATION": "No limitation",
-      "NA_PROTECTION": "Activate remote shutdown (central NS protection)",
-      "DYNAMIC_LIMITATION_WITH_RIPPLE_CONTROLLER": "Dynamic limitation of feed-in & ripple control receiver",
-      "MAXIMUM_FEED_IN_VALUE_DYNAMIC_AND_EXTERNAL_LIMITATION": "Value of the dynamic limitation (max feed-in value, e.g. 60% of kWp) [W]"
+      "NA_PROTECTION": "Activate remote shutdown (central NS protection)"
     },
     "PROTOCOL_INSTALLER_AND_CUSTOMER": {
       "CITY": "City",

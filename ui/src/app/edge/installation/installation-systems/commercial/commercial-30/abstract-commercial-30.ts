@@ -3,7 +3,6 @@ import { FormlyFieldConfig } from "@ngx-formly/core";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
 import { FeedInType } from "../../../shared/enums";
-import { ComponentData } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
@@ -70,16 +69,16 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
     }
 
     /**
-     * View Configuration-execute.
-     * Returns the common required configuration object for commercial-30 systems with components specific to the system.
-     *
-     * @param edge the current edge.
-     * @param config the EdgeConfig.
-     * @param websocket the Websocket connection.
-     * @param invalidateElementsAfterReadErrors specifies the number of times to check before invalidating.
-     * @param service the Service
-     * @returns ComponentConfigurator
-     */
+  * View Configuration-execute.
+  * Returns the common required configuration object for commercial-30 systems with components specific to the system.
+  *
+  * @param edge the current edge.
+  * @param config the EdgeConfig.
+  * @param websocket the Websocket connection.
+  * @param invalidateElementsAfterReadErrors specifies the number of times to check before invalidating.
+  *
+  * @returns ComponentConfigurator
+  */
     public getCommercial30ComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, invalidateElementsAfterReadErrors: number, service: Service) {
 
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
@@ -205,14 +204,6 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         });
 
         return componentConfigurator;
-    }
-
-    public override getFeedInLimitOptions(): ComponentData[] {
-        return [
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
-        ];
     }
 
     protected override getChannels(towerNr: number, numberOfModulesPerTower: number): ChannelAddress[] {
