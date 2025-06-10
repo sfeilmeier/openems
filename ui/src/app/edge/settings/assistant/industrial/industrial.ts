@@ -6,7 +6,9 @@ import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat
 import { Converter } from "src/app/shared/components/shared/converter";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Filter } from "src/app/shared/components/shared/filter";
+import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { ChannelAddress, CurrentData, Edge, EdgeConfig, Utils } from "src/app/shared/shared";
+import { ClearTimeOutFailureRequest } from "./jsonrpc/clearTimeoutFailure";
 
 @Component({
   selector: IndustrialServiceAssistantComponent.SELECTOR,
@@ -127,6 +129,13 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     this.cellTemperatureDifference = Utils.subtractSafely(
       currentData.allComponents[selectedbatteryId + "/MaxCellTemperature"],
       currentData.allComponents[selectedbatteryId + "/MinCellTemperature"],
+    );
+  }
+
+  protected clear() {
+    this.edge.sendRequest(
+      this.websocket,
+      new ComponentJsonApiRequest({ componentId: this.component.id, payload: new ClearTimeOutFailureRequest() }),
     );
   }
 

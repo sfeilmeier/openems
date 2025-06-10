@@ -1282,5 +1282,10 @@
     "FORMLY": {
       "REQUIRED": "Is required"
     }
+  },
+  "SYSTEM": {
+    "INDUSTRIAL": {
+      "CLEAR_TIMEOUT": "Reset Timeout failure: battery, battery.inverter, ess"
+    }
   }
 }
