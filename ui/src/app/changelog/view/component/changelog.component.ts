@@ -25,6 +25,18 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.6.2",
+        changes: [
+          Changelog.UI,
+          Changelog.app(App.EVCS_AC, App.KEBA) + "Fehlerbehebungen in der App für KEBA P40",
+          "FEMS App clever-PV: Anbindung an die clever-PV Push-Api",
+          { roleIsAtLeast: Role.INSTALLER, change: "Erweiterung der aktiven Benachrichtigungsfunktion durch E-Mail: bei Gesamtzustand \"Fehler\"" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.POWER_TO_HEAT, App.MY_PV, App.ASKOMA) + "Start des öffentlichen Feldtests" },
+          { roleIsAtLeast: Role.ADMIN, change: "Hinzufügen der SolarGo Statusinformationen für interne Analysen" },
+          { roleIsAtLeast: Role.ADMIN, change: "Interne Tests: Vorbereitung für PV-Prognose mit Open-Meteo Wetter-Api, Standort-Koordinaten in _meta" },
+        ],
+      },
+      {
         version: "2025.6.1",
         changes: [
           Changelog.openems("2025.6.0"),
