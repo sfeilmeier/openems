@@ -35,6 +35,7 @@ export enum GoodWe {
 export enum WorkMode {
     TIME = "TIME",
     NONE = "NONE",
+    TEMPERATURE = "TEMPERATURE",
 }
 export enum BackupEnable {
     AKTIVIERT = 1,

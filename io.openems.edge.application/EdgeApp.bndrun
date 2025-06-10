@@ -144,6 +144,8 @@
 	bnd.identity;id='io.openems.edge.fenecon.mini',\
 	bnd.identity;id='io.openems.edge.fenecon.pro',\
 	bnd.identity;id='io.openems.edge.goodwe',\
+	bnd.identity;id='io.openems.edge.heat.askoma',\
+	bnd.identity;id='io.openems.edge.heat.mypv',\
 	bnd.identity;id='io.openems.edge.io.filipowski',\
 	bnd.identity;id='io.openems.edge.io.gpio',\
 	bnd.identity;id='io.openems.edge.io.i2c',\
@@ -204,6 +206,7 @@
 	bnd.identity;id='io.openems.edge.timeofusetariff.rabotcharge',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.swisspower',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.tibber',\
+	bnd.identity;id='io.openems.edge.weather.openmeteo',\
 
 -runbundles: \
 	Java-WebSocket;version='[1.5.4,1.5.5)',\
@@ -332,6 +335,9 @@
 	io.openems.edge.fenecon.mini;version=snapshot,\
 	io.openems.edge.fenecon.pro;version=snapshot,\
 	io.openems.edge.goodwe;version=snapshot,\
+	io.openems.edge.heat.api;version=snapshot,\
+	io.openems.edge.heat.askoma;version=snapshot,\
+	io.openems.edge.heat.mypv;version=snapshot,\
 	io.openems.edge.io.api;version=snapshot,\
 	io.openems.edge.io.filipowski;version=snapshot,\
 	io.openems.edge.io.gpio;version=snapshot,\
@@ -400,6 +406,8 @@
 	io.openems.edge.timeofusetariff.rabotcharge;version=snapshot,\
 	io.openems.edge.timeofusetariff.swisspower;version=snapshot,\
 	io.openems.edge.timeofusetariff.tibber;version=snapshot,\
+	io.openems.edge.weather.api;version=snapshot,\
+	io.openems.edge.weather.openmeteo;version=snapshot,\
 	io.openems.shared.influxdb;version=snapshot,\
 	io.openems.wrapper.eu.chargetime.ocpp;version=snapshot,\
 	io.openems.wrapper.fastexcel;version=snapshot,\

@@ -66,7 +66,7 @@ public final class PossibleBatteryCapacityExtensionUtil {
 		);
 	}
 
-	protected static List<DataPerModule> calculateSimulationData(TimedataManager timedata, Edge edge,
+	protected static SimulationData calculateSimulationData(TimedataManager timedata, Edge edge,
 			PossibleBatteryCapacityExtensionRequest request, EdgeManager edgeManager) throws OpenemsNamedException {
 
 		final Product product = Product.getProduct(edge.getProducttype());
@@ -74,6 +74,9 @@ public final class PossibleBatteryCapacityExtensionUtil {
 		if (product == null) {
 			throw new OpenemsException("possible battery extension simulation not available");
 		}
+
+		var peakPower = product.getPeakPower();
+		var capacityPerModule = product.getCapacityPerModule();
 
 		var productTowerDetails = product.getProductTowerDetails();
 		var channels = edgeManager.getChannelValues(edge.getId(),
@@ -141,7 +144,7 @@ public final class PossibleBatteryCapacityExtensionUtil {
 					electricityPrice, product, currentNumberOfTowers));
 		}
 
-		return dataPerModules;
+		return new SimulationData(capacityPerModule, peakPower, dataPerModules);
 	}
 
 	protected static DataPerModule calculateDataPerModule(
@@ -193,7 +196,7 @@ public final class PossibleBatteryCapacityExtensionUtil {
 	public record DataPerModule(int numberOfModules, double gridBuy, double gridBuyCosts, int kWPeak, int capacity) {
 	}
 
-	public record SimulationData(int discharge, int charge, List<DataPerModule> dataPerModule) {
+	public record SimulationData(int capacityPerModule, int peakPower, List<DataPerModule> dataPerModule) {
 	}
 
 	public record ProductData(int kWPeak, int capacity) {

@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2025.6.1";
+    public static readonly UI_VERSION = "2025.6.2";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -78,6 +78,7 @@ export class App {
     public static readonly PEAKSHAVING_PHASE = new App("FEMS App Phasengenaue Lastspitzenkappung", "https://fenecon.de/fenecon-fems/fems-app-phasengenaue-lastspitzenkappung/");
     public static readonly SCHWELLWERTSTEUERUNG = new App("FEMS App Schwellwertsteuerung", "https://fenecon.de/fenecon-fems/fems-app-schwellwert-steuerung/");
     public static readonly MANUELLE_RELAISSTEUERUNG = new App("FEMS App Manuelle Relaissteuerung", "https://fenecon.de/fenecon-fems/fems-app-manuelle-relaissteuerung/");
+    public static readonly CLEVER_PV = new App("FEMS App clever-PV", "https://fenecon.de/fenecon-fems");
 
     public static readonly EVCS_AC = new App("FEMS App AC-Ladestation", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/");
     public static readonly KEBA = "KEBA";
@@ -92,6 +93,8 @@ export class App {
     public static readonly HEIZSTAB = "Heizstab";
     public static readonly BHKW = "Blockheizkraftwerk (BHKW)";
     public static readonly WAERMEPUMPE = "SG-Ready Wärmepumpe";
+    public static readonly MY_PV = "my-PV AC•THOR 9s";
+    public static readonly ASKOMA = "ASKOHEAT+";
 
     public static readonly METER = new App("FEMS App Erzeugungs- und Verbrauchszähler", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/");
     public static readonly SOCOMEC = "SOCOMEC";

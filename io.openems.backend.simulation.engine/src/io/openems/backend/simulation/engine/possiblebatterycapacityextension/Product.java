@@ -15,6 +15,15 @@ import io.openems.backend.simulation.engine.possiblebatterycapacityextension.Pos
 public sealed interface Product {
 
 	/**
+	 * Gets the peak power for this product.
+	 * 
+	 * @return the peak power
+	 */
+	public default int getPeakPower() {
+		return this.getProductTowerDetails().lastEntry().getValue().lastEntry().getValue().kWPeak();
+	}
+
+	/**
 	 * Gets the maximum modules per tower.
 	 * 
 	 * @param numberOfTowers the number of tower
@@ -60,13 +69,14 @@ public sealed interface Product {
 		};
 	}
 
+	/**
+	 * Gets the capacity per module.
+	 * 
+	 * @return the capacity per module
+	 */
+	public int getCapacityPerModule();
+
 	public abstract static sealed class Home implements Product permits Home10Gen1, Home6_10_15, Home20_30 {
-		/**
-		 * Gets the Capacity per Module in [Wh].
-		 * 
-		 * @return value
-		 */
-		protected abstract int getCapacityPerModule();
 
 		/**
 		 * Gets the maximum power of the inverter in [W].

@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { EdgeOfflineModule } from "src/app/shared/components/edge/offline/offline.module";
+import { HelpButtonComponent } from "src/app/shared/components/modal/help-button/help-button";
 import { ModalModule } from "src/app/shared/components/modal/modal.module";
 import { PullToRefreshComponent } from "src/app/shared/components/pull-to-refresh/pull-to-refresh";
 import { SharedModule } from "./../../shared/shared.module";
@@ -22,6 +23,7 @@ import { Controller_Ess_TimeOfUseTariff } from "./Controller/Ess/TimeOfUseTariff
 import { AdministrationComponent } from "./Controller/Evcs/administration/administration.component";
 import { Controller_Evcs } from "./Controller/Evcs/Evcs";
 import { ControllerEvseSingle } from "./Controller/Evse/EvseSingle.module";
+import { ControllerHeat } from "./Controller/Heat/HeatMyPv";
 import { Controller_Io_ChannelSingleThresholdComponent } from "./Controller/Io/ChannelSingleThreshold/Io_ChannelSingleThreshold";
 import { Controller_Io_ChannelSingleThresholdModalComponent } from "./Controller/Io/ChannelSingleThreshold/modal/modal.component";
 import { ControllerIoFixDigitalOutput } from "./Controller/Io/FixDigitalOutput/fix-digital-output.module";
@@ -64,6 +66,7 @@ import { SystemModule } from "./system/system.module";
     Controller_Ess_TimeOfUseTariff,
     Controller_Evcs,
     ControllerEvseSingle,
+    ControllerHeat,
     Controller_Io_HeatingElement,
     Controller_Io_HeatingRoom,
     ControllerIoFixDigitalOutput,
@@ -73,6 +76,7 @@ import { SystemModule } from "./system/system.module";
     SharedModule,
     SystemModule,
     PullToRefreshComponent,
+    HelpButtonComponent,
   ],
   declarations: [
     AdministrationComponent,

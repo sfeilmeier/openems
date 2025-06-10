@@ -26,8 +26,11 @@ public class ProductTest {
 		var ptd = sut.getProductTowerDetails();
 		assertEquals(16, count(ptd));
 		var last = lastProductData(ptd);
-		assertEquals(10000, (int) last.kWPeak());
-		assertEquals(66000, (int) last.capacity());
+		var peakPower = sut.getPeakPower();
+		assertEquals(10000, peakPower);
+		assertEquals(66000, last.capacity());
+		var capacityPerModule = sut.getCapacityPerModule();
+		assertEquals(2200, capacityPerModule);
 	}
 
 	@Test
@@ -36,8 +39,11 @@ public class ProductTest {
 		var ptd = sut.getProductTowerDetails();
 		assertEquals(26, count(ptd));
 		var last = lastProductData(ptd);
-		assertEquals(6000, (int) last.kWPeak());
-		assertEquals(156800, (int) last.capacity());
+		var peakPower = sut.getPeakPower();
+		assertEquals(6000, peakPower);
+		assertEquals(156800, last.capacity());
+		var capacityPerModule = sut.getCapacityPerModule();
+		assertEquals(2800, capacityPerModule);
 	}
 
 	@Test
@@ -46,8 +52,11 @@ public class ProductTest {
 		var ptd = sut.getProductTowerDetails();
 		assertEquals(26, count(ptd));
 		var last = lastProductData(ptd);
-		assertEquals(10000, (int) last.kWPeak());
-		assertEquals(156800, (int) last.capacity());
+		var peakPower = sut.getPeakPower();
+		assertEquals(10000, peakPower);
+		assertEquals(156800, last.capacity());
+		var capacityPerModule = sut.getCapacityPerModule();
+		assertEquals(2800, capacityPerModule);
 	}
 
 	@Test
@@ -56,8 +65,11 @@ public class ProductTest {
 		var ptd = sut.getProductTowerDetails();
 		assertEquals(26, count(ptd));
 		var last = lastProductData(ptd);
-		assertEquals(15000, (int) last.kWPeak());
-		assertEquals(156800, (int) last.capacity());
+		var peakPower = sut.getPeakPower();
+		assertEquals(15000, peakPower);
+		assertEquals(156800, last.capacity());
+		var capacityPerModule = sut.getCapacityPerModule();
+		assertEquals(2800, capacityPerModule);
 	}
 
 	@Test
@@ -66,8 +78,11 @@ public class ProductTest {
 		var ptd = sut.getProductTowerDetails();
 		assertEquals(28, count(ptd));
 		var last = lastProductData(ptd);
-		assertEquals(20000, (int) last.kWPeak());
-		assertEquals(168000, (int) last.capacity());
+		var peakPower = sut.getPeakPower();
+		assertEquals(20000, peakPower);
+		assertEquals(168000, last.capacity());
+		var capacityPerModule = sut.getCapacityPerModule();
+		assertEquals(2800, capacityPerModule);
 	}
 
 	@Test
@@ -76,7 +91,10 @@ public class ProductTest {
 		var ptd = sut.getProductTowerDetails();
 		assertEquals(28, count(ptd));
 		var last = lastProductData(ptd);
-		assertEquals(30000, (int) last.kWPeak());
-		assertEquals(168000, (int) last.capacity());
+		var peakPower = sut.getPeakPower();
+		assertEquals(30000, peakPower);
+		assertEquals(168000, last.capacity());
+		var capacityPerModule = sut.getCapacityPerModule();
+		assertEquals(2800, capacityPerModule);
 	}
 }
