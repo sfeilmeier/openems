@@ -75,7 +75,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       maximumFeedInPower: 0,
       naProtection: false,
       feedInSetting: FeedInSetting.QuEnableCurve,
-      fixedPowerFactor: FeedInSetting.Undefined,
+      fixedPowerFactor: FeedInSetting.Leading_1,
       isManualProperlyFollowedAndRead: false,
     };
 
@@ -442,10 +442,12 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       key: "fixedPowerFactor",
       type: "select",
       templateOptions: {
+        description: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FIXED_POWER_FACTOR_DESCRIPTION"),
         label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CONSTANT_VALUE"),
         options: FEED_IN_POWER_FACTOR_OPTIONS(),
         required: true,
       },
+      defaultValue: FeedInSetting.Leading_1,
       hideExpression: model => model.feedInSetting !== FeedInSetting.FixedPowerFactor,
     });
 
