@@ -231,10 +231,9 @@ export abstract class AbstractIbn {
    * Returns the common fields for all systems in Feed in limitation view.
    *
    * @param totalPvPower The total pv power configured.
-   * @param options The options that should be dispalyed.
    * @returns common fields for feed in limits fields.
    */
-  public getCommonFeedInLimitsFields(totalPvPower: number, options: ComponentData[]): FormlyFieldConfig[] {
+  public getCommonFeedInLimitsFields(totalPvPower: number): FormlyFieldConfig[] {
     const fields: FormlyFieldConfig[] = [];
 
     fields.push({
@@ -244,7 +243,7 @@ export abstract class AbstractIbn {
       templateOptions: {
         label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
         placeholder: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER"),
-        options: options,
+        options: this.getFeedInTypeOptions(),
         required: true,
       },
     });
@@ -257,11 +256,23 @@ export abstract class AbstractIbn {
         label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
         description: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_VALUE_DESCRIPTION"),
         required: true,
-        max: this.maxFeedInLimit, // max feed in power limit value.
+        max: this.maxFeedInLimit,
       },
       parsers: [Number],
       defaultValue: totalPvPower,
-      hideExpression: model => model.feedInType != FeedInType.DYNAMIC_LIMITATION,
+      hideExpression: model =>
+        model.feedInType !== FeedInType.DYNAMIC_LIMITATION &&
+        model.feedInType !== FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION,
+
+      expressionProperties: {
+        "templateOptions.label": (model: any) => {
+          if (model.feedInType === FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION) {
+            return this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE_DYNAMIC_AND_EXTERNAL_LIMITATION");
+          }
+
+          return this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE");
+        },
+      },
     });
 
     return fields;
@@ -387,14 +398,16 @@ export abstract class AbstractIbn {
       {
         category: Category.FEED_IN_MANAGEMENT,
         name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
-        value: feedInLimitation.feedInType == FeedInType.EXTERNAL_LIMITATION
+        value: (feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
+          feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION)
           ? this.translate.instant("General.yes")
           : this.translate.instant("General.no"),
       },
       {
         category: Category.FEED_IN_MANAGEMENT,
         name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"),
-        value: feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
+        value: (feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
+          feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION)
           ? this.translate.instant("General.yes")
           : this.translate.instant("General.no"),
       },
@@ -535,6 +548,20 @@ export abstract class AbstractIbn {
     }
 
     return result;
+  }
+
+  /**
+   * Gets the list of options that should be displayed in feedInLimitation view.
+   *
+   * @returns The options.
+   */
+  public getFeedInTypeOptions(): ComponentData[] {
+    return [
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_WITH_RIPPLE_CONTROLLER"), value: FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
+    ];
   }
 
   /**

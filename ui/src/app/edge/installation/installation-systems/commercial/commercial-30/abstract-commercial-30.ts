@@ -69,16 +69,17 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
     }
 
     /**
-  * View Configuration-execute.
-  * Returns the common required configuration object for commercial-30 systems with components specific to the system.
-  *
-  * @param edge the current edge.
-  * @param config the EdgeConfig.
-  * @param websocket the Websocket connection.
-  * @param invalidateElementsAfterReadErrors specifies the number of times to check before invalidating.
-  *
-  * @returns ComponentConfigurator
-  */
+     * View Configuration-execute.
+     * Returns the common required configuration object for commercial-30 systems with components specific to the system.
+     *
+     * @param edge the current edge.
+     * @param config the EdgeConfig.
+     * @param websocket the Websocket connection.
+     * @param invalidateElementsAfterReadErrors specifies the number of times to check before invalidating.
+     * @param service the Service
+     *
+     * @returns ComponentConfigurator
+     */
     public getCommercial30ComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, invalidateElementsAfterReadErrors: number, service: Service) {
 
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);

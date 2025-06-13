@@ -408,12 +408,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     this.feedInLimitation.maximumFeedInPower = totalPvPower;
     this.feedInLimitation.isManualProperlyFollowedAndRead = this.feedInLimitation.isManualProperlyFollowedAndRead ? this.feedInLimitation.isManualProperlyFollowedAndRead : null;
 
-    const options: ComponentData[] = [
-      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
-      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
-      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
-    ];
-    const fields: FormlyFieldConfig[] = super.getCommonFeedInLimitsFields(totalPvPower, options);
+    const fields: FormlyFieldConfig[] = super.getCommonFeedInLimitsFields(totalPvPower);
 
     fields.push({
       key: "naProtection",
@@ -516,7 +511,8 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
     const batteryInverterData: ComponentData[] = [];
 
-    this.feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
+    (this.feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
+      || this.feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION)
       ? batteryInverterData.push(
         {
           label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
@@ -1018,7 +1014,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public commonHomeProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): HomeCommonApp {
     const commonHomeAppProperties: HomeCommonApp = {
       SAFETY_COUNTRY: safetyCountry,
-      ...(this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
+      ...(this.feedInLimitation.feedInType === (FeedInType.DYNAMIC_LIMITATION || FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION) && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
       FEED_IN_SETTING: feedInSetting,
       HAS_EMERGENCY_RESERVE: this.emergencyReserve.isEnabled,
       ...(this.emergencyReserve.isEnabled && { EMERGENCY_RESERVE_ENABLED: this.emergencyReserve.isReserveSocEnabled }),

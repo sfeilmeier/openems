@@ -879,6 +879,8 @@
       "PLACE_HOLDER": "Wähle eine Option",
       "NO_LIMITATION": "Kein Einspeisemanagement",
       "NA_PROTECTION": "Fernabschaltung aktivieren (Zentraler NA-Schutz)",
+      "DYNAMIC_LIMITATION_WITH_RIPPLE_CONTROLLER": "Dynamische Begrenzung der Einspeisung & Rundsteuerempfänger",
+      "MAXIMUM_FEED_IN_VALUE_DYNAMIC_AND_EXTERNAL_LIMITATION": "Wert der dynamischen Begrenzung (max Einspeisewert, z.B. 60 % der kWp) [W]",
       "FIXED_POWER_FACTOR_DESCRIPTION": "In der Regel gibt der Netzbetreiber einen festen Verschiebungsfaktor von '1' an"
     },
     "PROTOCOL_INSTALLER_AND_CUSTOMER": {

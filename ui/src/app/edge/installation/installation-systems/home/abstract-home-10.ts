@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { FeedInSetting, FeedInType } from "../../shared/enums";
+import { ComponentData } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
 import { AbstractHomeIbn, HomeCommonApp } from "./abstract-home";
@@ -62,5 +63,13 @@ export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
 
   public override getMpptLabel(mppt: number, pv: number) {
     return this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS", { mppt: mppt, pv: pv });
+  }
+
+  public override getFeedInTypeOptions(): ComponentData[] {
+    return [
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
+    ];
   }
 }
