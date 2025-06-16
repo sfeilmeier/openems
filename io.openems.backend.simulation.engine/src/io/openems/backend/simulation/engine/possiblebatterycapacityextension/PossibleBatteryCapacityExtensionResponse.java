@@ -44,15 +44,15 @@ public class PossibleBatteryCapacityExtensionResponse extends JsonrpcResponseSuc
 		return JsonUtils.buildJsonObject() //
 				.addProperty("capacityPerModule", this.result.capacityPerModule())
 				.addProperty("peakPower", this.result.peakPower())
-				.add("simulationData",
-						this.result.dataPerModule().stream()
-								.map(dataPerModule -> JsonUtils.buildJsonObject()
-										.addProperty("numberOfModules", dataPerModule.numberOfModules())
-										.addProperty("gridBuy", dataPerModule.gridBuy())
-										.addProperty("gridBuyCosts", dataPerModule.gridBuyCosts())
-										.addProperty("kWPeak", dataPerModule.kWPeak())
-										.addProperty("capacity", dataPerModule.capacity()).build())
-								.collect(JsonUtils.toJsonArray()))
+				.add("simulationData", this.result.dataPerModule().stream() //
+						.map(dataPerModule -> JsonUtils.buildJsonObject() //
+								.addProperty("numberOfModules", dataPerModule.numberOfModules()) //
+								.addProperty("gridBuy", dataPerModule.gridBuy()) //
+								.addProperty("gridBuyCosts", dataPerModule.gridBuyCosts()) //
+								.addProperty("kWPeak", dataPerModule.kWPeak()) //
+								.addProperty("capacity", dataPerModule.capacity()) //
+								.build())
+						.collect(JsonUtils.toJsonArray()))
 				.build();
 	}
 
