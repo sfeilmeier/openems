@@ -152,6 +152,8 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Heat.HeatPump", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
 			.put("App.Heat.CHP", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
 			.put("App.Heat.HeatingElement", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
+			.put("App.Heat.Askoma.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
+			.put("App.Heat.MyPv.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
 			.put("App.PvSelfConsumption.GridOptimizedCharge",
 					"https://fenecon.de/produkte/fems/fems-app-netzdienliche-beladung/") //
 			.put("App.PvSelfConsumption.SelfConsumptionOptimization",
