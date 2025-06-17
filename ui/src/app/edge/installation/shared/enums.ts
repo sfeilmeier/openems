@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { TranslateService } from "@ngx-translate/core";
 import { Language } from "src/app/shared/type/language";
 import { environment } from "src/environments";
 
@@ -63,6 +64,21 @@ export enum WebLinks {
     GTC_LINK,
     WARRANTY_LINK_HOME,
     WARRANTY_LINK_COMMERCIAL,
+}
+
+export namespace FeedInSetting {
+    export function getFeedInSettingLabel(feedInSetting: FeedInSetting, translate: TranslateService) {
+        switch (feedInSetting) {
+            case FeedInSetting.QuEnableCurve:
+                return translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.QU_ENABLED_CURVE");
+            case FeedInSetting.PuEnableCurve:
+                return translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PU_ENABLED_CURVE");
+            case FeedInSetting.FixedPowerFactor:
+                return translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FIXED_POWER_FACTOR");
+            default:
+                return feedInSetting;
+        }
+    }
 }
 
 export namespace WebLinks {

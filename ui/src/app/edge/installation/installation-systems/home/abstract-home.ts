@@ -425,10 +425,9 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
         description: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FEED_IN_SETTING_DESCRIPTION"),
         options: [
-          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.QU_ENABLED_CURVE"), value: FeedInSetting.QuEnableCurve },
-          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PU_ENABLED_CURVE"), value: FeedInSetting.PuEnableCurve },
-          { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FIXED_POWER_FACTOR"), value: FeedInSetting.FixedPowerFactor },
-        ],
+          { label: FeedInSetting.getFeedInSettingLabel(FeedInSetting.QuEnableCurve, this.translate), value: FeedInSetting.QuEnableCurve },
+          { label: FeedInSetting.getFeedInSettingLabel(FeedInSetting.PuEnableCurve, this.translate), value: FeedInSetting.PuEnableCurve },
+          { label: FeedInSetting.getFeedInSettingLabel(FeedInSetting.FixedPowerFactor, this.translate), value: FeedInSetting.FixedPowerFactor }],
         required: true,
       },
     });
@@ -510,10 +509,11 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     });
 
     const batteryInverterData: ComponentData[] = [];
+    const isDynamicFeedInLimitation = this.feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
+      this.feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
 
-    (this.feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION
-      || this.feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION)
-      ? batteryInverterData.push(
+    if (isDynamicFeedInLimitation) {
+      batteryInverterData.push(
         {
           label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
           value: this.feedInLimitation.maximumFeedInPower,
@@ -521,18 +521,22 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         {
           label: this.translate.instant("INSTALLATION.PROTOCOL_PV.SHADE_MANAGEMENT_DEACTIVATE"),
           value: this.batteryInverter?.shadowManagementDisabled ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
-        },
-        {
-          label: this.translate.instant("Index.TYPE"),
-          value: this.feedInLimitation.feedInSetting ?? FeedInSetting.Undefined,
-        },
-      )
-      : batteryInverterData.push(
+        }
+      );
+    } else {
+      batteryInverterData.push(
         {
           label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.SHADE_MANAGEMENT_DEACTIVATED"),
           value: this.translate.instant("General.yes"),
         },
       );
+    }
+
+    batteryInverterData.push({
+      label: this.translate.instant("Index.TYPE"),
+      value: FeedInSetting.getFeedInSettingLabel(this.feedInLimitation.feedInSetting, this.translate) ?? FeedInSetting.Undefined,
+    },
+    );
 
     if (this.feedInLimitation.feedInSetting === FeedInSetting.FixedPowerFactor) {
       batteryInverterData.push({
@@ -751,31 +755,40 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         }
       }
     }
+    const isDynamicFeedInLimitation = this.feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
+      this.feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
 
-    if (feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION) {
+    if (isDynamicFeedInLimitation) {
       protocol.items.push(
         {
           category: Category.FEED_IN_MANAGEMENT,
-          name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
-          value: feedInLimitation.feedInSetting,
+          name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
+          value: this.feedInLimitation.maximumFeedInPower.toString(),
         },
       );
+    }
 
-      if (feedInLimitation.feedInSetting === FeedInSetting.FixedPowerFactor) {
-        protocol.items.push({
-          category: Category.FEED_IN_MANAGEMENT,
-          name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CONSTANT_VALUE"),
-          value: feedInLimitation.fixedPowerFactor,
-        });
-      }
+    protocol.items.push(
+      {
+        category: Category.FEED_IN_MANAGEMENT,
+        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
+        value: FeedInSetting.getFeedInSettingLabel(feedInLimitation.feedInSetting, this.translate),
+      },
+    );
 
+    if (feedInLimitation.feedInSetting === FeedInSetting.FixedPowerFactor) {
       protocol.items.push({
         category: Category.FEED_IN_MANAGEMENT,
-        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NA_PROTECTION"),
-        value: feedInLimitation.naProtection ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CONSTANT_VALUE"),
+        value: feedInLimitation.fixedPowerFactor,
       });
-
     }
+
+    protocol.items.push({
+      category: Category.FEED_IN_MANAGEMENT,
+      name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NA_PROTECTION"),
+      value: feedInLimitation.naProtection ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+    });
 
     if (this.avu?.isIncluded) {
       protocol.items.push({
@@ -1012,9 +1025,12 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   }
 
   public commonHomeProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): HomeCommonApp {
+    const isDynamicFeedIn =
+      this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION ||
+      this.feedInLimitation.feedInType === FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
     const commonHomeAppProperties: HomeCommonApp = {
       SAFETY_COUNTRY: safetyCountry,
-      ...(this.feedInLimitation.feedInType === (FeedInType.DYNAMIC_LIMITATION || FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION) && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
+      ...(isDynamicFeedIn && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
       FEED_IN_SETTING: feedInSetting,
       HAS_EMERGENCY_RESERVE: this.emergencyReserve.isEnabled,
       ...(this.emergencyReserve.isEnabled && { EMERGENCY_RESERVE_ENABLED: this.emergencyReserve.isReserveSocEnabled }),

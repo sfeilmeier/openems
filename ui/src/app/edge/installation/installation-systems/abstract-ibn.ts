@@ -394,22 +394,21 @@ export abstract class AbstractIbn {
     protocol.items = [];
 
     const feedInLimitation = this.feedInLimitation;
+    const isDynamicFeedInLimitation = feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
+      feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
+    const isExternalLimitation = feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
+      feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
+
     protocol.items.push(
       {
         category: Category.FEED_IN_MANAGEMENT,
         name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
-        value: (feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
-          feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION)
-          ? this.translate.instant("General.yes")
-          : this.translate.instant("General.no"),
+        value: isExternalLimitation ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
       },
       {
         category: Category.FEED_IN_MANAGEMENT,
         name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"),
-        value: (feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
-          feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION)
-          ? this.translate.instant("General.yes")
-          : this.translate.instant("General.no"),
+        value: isDynamicFeedInLimitation ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
       },
       {
         category: Category.FEED_IN_MANAGEMENT,
@@ -420,7 +419,7 @@ export abstract class AbstractIbn {
           : this.translate.instant("General.no"),
       });
 
-    if (feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION) {
+    if (isDynamicFeedInLimitation) {
       protocol.items.push({
         category: Category.FEED_IN_MANAGEMENT,
         name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
