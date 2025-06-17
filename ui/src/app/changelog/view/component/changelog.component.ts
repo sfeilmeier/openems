@@ -25,6 +25,21 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.6.3",
+        changes: [
+          "App Center: Fehlerbehebung bei der Deinstallation von Apps",
+          "Android App: Anpassen der Fensterhöhe bei aktivierter Android-Navigationsleiste",
+          Changelog.app(App.EVCS_AC) + "Fehlerbehebung bei 'Minimale Beladung garantieren', Anpassung der Hilfe-Links",
+          { roleIsAtLeast: Role.INSTALLER, change: "Home Inbetriebnahmeassistent Netzeinspeiselimitierung: neue Auswahlmöglichkeit 'Dynamische Einspeisung & Externe Limitierung' gleichzeitig" },
+          { roleIsAtLeast: Role.INSTALLER, change: "Home Inbetriebnahmeassistent Blindleistungsvorgabe: Änderung der Voreinstellung von Q(U) zu statischem Leistungsfaktor cos φ 1" },
+          { roleIsAtLeast: Role.ADMIN, change: "Home Batteriewechselrichter: SolarGo Register werden nicht länger gelesen, wenn diese nicht verfügbar sind." },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.POWER_TO_HEAT, App.MY_PV, App.ASKOMA) + "Heizenergie wird nun korrekt von 'Sonstiger Verbrauch' abgezogen, Fehlerbehebung bei der Darstellung von Daten in Historie" },
+          { roleIsAtLeast: Role.ADMIN, change: "Industrial L: Unterstützung für neue Würth-BMS Version (BETA); weitere Verbesserungen folgen" },
+          { roleIsAtLeast: Role.ADMIN, change: "Industrial L Service-Assistant: Button zum Reset des Timeout-Memory" },
+          { roleIsAtLeast: Role.ADMIN, change: "AppCenter: Info, welche Rolle benötigt wird um eine App zu sehen" },
+        ],
+      },
+      {
         version: "2025.6.2",
         changes: [
           Changelog.UI,
