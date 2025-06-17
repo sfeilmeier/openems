@@ -673,7 +673,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 
 	/**
 	 * Method to get the value from the channel.
-	 * 
+	 *
 	 * @param channelId channel-id to which the value to be get.
 	 * @return actual value as {@link Integer} or null
 	 */
@@ -732,7 +732,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 
 	/**
 	 * Method to return stream of enfas's max cell voltage channels.
-	 * 
+	 *
 	 * @return {@link Stream} of {@link EnfasBms}
 	 */
 	private static List<EnfasBms.ChannelId> getMaxCellVoltageChannelIds() {
@@ -750,7 +750,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 
 	/**
 	 * Method to return stream of enfas's min cell voltage channels.
-	 * 
+	 *
 	 * @return {@link Stream} of {@link EnfasBms}
 	 */
 	private static List<EnfasBms.ChannelId> getMinCellVoltageChannelIds() {
@@ -830,7 +830,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 
 	/**
 	 * Method to return stream of enfas's max cell temperature channels.
-	 * 
+	 *
 	 * @return {@link Stream} of {@link EnfasBms}
 	 */
 	private static List<EnfasBms.ChannelId> getMaxCellTemperatureChannelIds() {
@@ -848,7 +848,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 
 	/**
 	 * Method to return stream of enfas's min cell temperature channels.
-	 * 
+	 *
 	 * @return {@link Stream} of {@link EnfasBms}
 	 */
 	private static List<EnfasBms.ChannelId> getMinCellTemperatureChannelIds() {
@@ -960,7 +960,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 	/**
 	 * Helper Method that handles a Softwareversion check. Sets
 	 * {@link EnfasBms.ChannelId.SOFTWARE_VERSION_OUTDATED}
-	 * 
+	 *
 	 */
 	public void updateSoftwareVersionOutdated() {
 		this._setSoftwareVersionOutdated(isSoftwareOutdated(//
@@ -971,7 +971,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 
 	/**
 	 * Checks if the Software Version provided by Suppliers is Outdated.
-	 * 
+	 *
 	 * @param valMajor {@link Supplier} for major Software Version
 	 * @param valMinor {@link Supplier} for minor Software Version
 	 * @param valPatch {@link Supplier} for patch Software Version

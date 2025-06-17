@@ -213,15 +213,28 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 				final var batteryModbusId = "modbus" + (oneBased + 20);
 				final var batteryInverterModbusId = "modbus" + (oneBased + 10);
 
-				components.add(new EdgeConfig.Component(batteryId, //
-						translate(bundle, "App.IntegratedSystem.batteryN.alias", oneBased), //
-						"Battery.EnfasBms", JsonUtils.buildJsonObject() //
-								.addProperty("enabled", true) //
-								.addProperty("modbus.id", batteryModbusId) //
-								.addProperty("modbusUnitId", 1) //
-								.addProperty("startStop", "AUTO") //
-								.addProperty("version", batteryFirmwareVersion) //
-								.build()));
+				// TODO: in future remove EnfasBms
+				if (batteryFirmwareVersion == BatteryFirmwareVersion.WUERTH_VERSION_1_0_9) {
+					components.add(new EdgeConfig.Component(batteryId, //
+							translate(bundle, "App.IntegratedSystem.batteryN.alias", oneBased), //
+							"Battery.WuerthBms", JsonUtils.buildJsonObject() //
+									.addProperty("enabled", true) //
+									.addProperty("modbus.id", batteryModbusId) //
+									.addProperty("modbusUnitId", 1) //
+									.addProperty("startStop", "AUTO") //
+									.addProperty("version", batteryFirmwareVersion) //
+									.build()));
+				} else {
+					components.add(new EdgeConfig.Component(batteryId, //
+							translate(bundle, "App.IntegratedSystem.batteryN.alias", oneBased), //
+							"Battery.EnfasBms", JsonUtils.buildJsonObject() //
+									.addProperty("enabled", true) //
+									.addProperty("modbus.id", batteryModbusId) //
+									.addProperty("modbusUnitId", 1) //
+									.addProperty("startStop", "AUTO") //
+									.addProperty("version", batteryFirmwareVersion) //
+									.build()));
+				}
 
 				components.add(new EdgeConfig.Component(batteryInverterId, //
 						translate(bundle, "App.IntegratedSystem.batteryInverterN.alias", oneBased), //

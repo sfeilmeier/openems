@@ -25,6 +25,7 @@ export const DIRECTIONS_OPTIONS = (translate: TranslateService) => {
 export const FEED_IN_POWER_FACTOR_OPTIONS = () => {
     return [
         // Leading
+        { label: "1", value: FeedInSetting.Leading_1 },
         { label: "0.80", value: FeedInSetting.Leading_0_80 },
         { label: "0.81", value: FeedInSetting.Leading_0_81 },
         { label: "0.82", value: FeedInSetting.Leading_0_82 },
@@ -45,7 +46,6 @@ export const FEED_IN_POWER_FACTOR_OPTIONS = () => {
         { label: "0.97", value: FeedInSetting.Leading_0_97 },
         { label: "0.98", value: FeedInSetting.Leading_0_98 },
         { label: "0.99", value: FeedInSetting.Leading_0_99 },
-        { label: "1", value: FeedInSetting.Leading_1 },
         // Lagging
         { label: "-0.80", value: FeedInSetting.Lagging_0_80 },
         { label: "-0.81", value: FeedInSetting.Lagging_0_81 },

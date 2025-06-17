@@ -881,7 +881,10 @@
       "EXTERNAL_CONTROLLER_RECEIVER": "Ripple control receiver",
       "PLACE_HOLDER": "Select option",
       "NO_LIMITATION": "No limitation",
-      "NA_PROTECTION": "Activate remote shutdown (central NS protection)"
+      "NA_PROTECTION": "Activate remote shutdown (central NS protection)",
+      "DYNAMIC_LIMITATION_WITH_RIPPLE_CONTROLLER": "Dynamic limitation of feed-in & ripple control receiver",
+      "MAXIMUM_FEED_IN_VALUE_DYNAMIC_AND_EXTERNAL_LIMITATION": "Value of the dynamic limitation (max feed-in value, e.g. 60% of kWp) [W]",
+      "FIXED_POWER_FACTOR_DESCRIPTION": "Typically, the grid operator specifies a fixed power factor of '1'"
     },
     "PROTOCOL_INSTALLER_AND_CUSTOMER": {
       "CITY": "City",
@@ -1281,6 +1284,11 @@
   "GENERAL": {
     "FORMLY": {
       "REQUIRED": "Is required"
+    }
+  },
+  "SYSTEM": {
+    "INDUSTRIAL": {
+      "CLEAR_TIMEOUT": "Reset Timeout failure: battery, battery.inverter, ess"
     }
   }
 }

@@ -130,13 +130,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         const totalPvPower = 0;
         this.feedInLimitation.maximumFeedInPower = totalPvPower;
 
-        const options: ComponentData[] = [
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
-        ];
-
-        return super.getCommonFeedInLimitsFields(totalPvPower, options);
+        return super.getCommonFeedInLimitsFields(totalPvPower);
     }
 
     public override addSystemSpecificFields(tableData): void {
@@ -415,6 +409,14 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         return componentConfigurator;
     }
 
+    public override getFeedInTypeOptions(): ComponentData[] {
+        return [
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
+        ];
+    }
+
     /**
      * Returns the channel addresses for reading serial numbers of the system.
      *
@@ -454,25 +456,29 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
     protected addCustombatteryInverterData(): ComponentData[] {
         const batteryInverterData: ComponentData[] = [];
+        const feedInType = this.feedInLimitation.feedInType;
+        const isDynamicFeedInLimitataion = feedInType === FeedInType.DYNAMIC_LIMITATION ||
+            feedInType === FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
+        const isExternalLimitataion = feedInType === FeedInType.EXTERNAL_LIMITATION ||
+            feedInType === FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
 
-        this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION
-            ? batteryInverterData.push(
-                {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
-                    value: this.feedInLimitation.maximumFeedInPower,
-                },
-            )
-            : this.feedInLimitation.feedInType === FeedInType.EXTERNAL_LIMITATION
-                ? batteryInverterData.push(
-                    {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
-                        value: this.translate.instant("General.yes"),
-                    })
-                : batteryInverterData.push(
-                    {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
-                        value: this.translate.instant("General.yes"),
-                    });
+        if (isDynamicFeedInLimitataion) {
+            batteryInverterData.push({
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
+                value: this.feedInLimitation.maximumFeedInPower,
+            });
+        }
+        if (isExternalLimitataion) {
+            batteryInverterData.push({
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
+                value: this.translate.instant("General.yes"),
+            });
+        } else {
+            batteryInverterData.push({
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+                value: this.translate.instant("General.yes"),
+            });
+        }
 
         const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
         batteryInverterData.push({ label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.COUNTRY_SETTING"), value: IbnUtils.getCountryLabel(safetyCountry, this.translate) });

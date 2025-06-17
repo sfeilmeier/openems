@@ -440,6 +440,7 @@ public interface Field {
 		DIFFERENT_LOCATION("different_location_id", true), //
 		INSTALLER("installer_id", true), //
 		EDGE("fems_device_id", true),
+		TYPE("type", true),
 		CREATE_DATE("create_date", false);
 		
 		public static final String ODOO_MODEL = "fems.setup_protocol";

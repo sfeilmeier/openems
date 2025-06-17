@@ -1,0 +1,5 @@
+= Battery Würth BMS
+
+Battery implementation for communication to a battery via Würth battery management system.
+
+https://github.com/OpenEMS/openems/tree/develop/io.openems.edge.battery.wuerthbms[Source Code icon:github[]]

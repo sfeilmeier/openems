@@ -79,6 +79,24 @@
         </oe-flat-widget>
       </ion-col>
 
+      <!-- Action buttons Widget -->
+      <ion-col size-lg="3" size-md="12" size-sm="12">
+        <oe-flat-widget title="Action buttons">
+          <table class="full_width">
+            <tr>
+              <td>
+                {{'SYSTEM.INDUSTRIAL.CLEAR_TIMEOUT' | translate}}
+              </td>
+              <td class="align_right">
+                <ion-button slot="end" button (click)="clear()">
+                  <ion-icon name="send-outline"></ion-icon>
+                </ion-button>
+              </td>
+            </tr>
+          </table>
+        </oe-flat-widget>
+      </ion-col>
+
       <!-- Zellspannungen Widget -->
       <ion-col size-lg="12" size-md="12" size-sm="12">
         <oe-flat-widget title="Zellspannungen">

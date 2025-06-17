@@ -25,5 +25,5 @@ public class UndefinedHandler extends StateHandler<State, Context> {
 		case STOP -> State.GO_STOPPED;
 		};
 	}
-	
+
 }

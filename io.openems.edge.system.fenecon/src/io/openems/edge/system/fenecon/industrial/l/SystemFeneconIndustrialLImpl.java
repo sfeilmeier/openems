@@ -85,7 +85,6 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	private final List<SymmetricEss> esss = new ArrayList<>();
 	private final StateMachine stateMachine = new StateMachine(State.UNDEFINED);
 	private final List<Battery> batteries = new CopyOnWriteArrayList<>();
-	private final ChannelManager channelManager = new ChannelManager();
 	private final Envicool envicool = new Envicool();
 
 	private StartStop startStopTarget;
@@ -138,7 +137,6 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	@Modified
 	private void modified(ComponentContext context, Config config) throws OpenemsNamedException {
-		this.channelManager.deactivate();
 		super.modified(context, config.id(), config.alias(), config.enabled(), config.coolingUnitModbusUnitId(),
 				this.cm, "CoolingUnitModbus", config.coolingUnitModbus_id());
 		if (!this.applyConfig(context, config)) {
@@ -150,8 +148,6 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 		this.removeAcknowledgeCallback();
 		this.parsedConfig = ParsedConfig.from(config);
 		this.addAcknowledgeCallBack();
-
-		this.channelManager.activate(this.esss, this::_setStartStop);
 
 		this.envicool.activate(Envicool.Context.from(config, this.batteries, //
 				this.getSetBmsModeControlModeChannel(), this.getSetRunTimeControlModeChannel(), //
@@ -169,7 +165,6 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	@Deactivate
 	protected void deactivate() {
-		this.channelManager.deactivate();
 		super.deactivate();
 	}
 
