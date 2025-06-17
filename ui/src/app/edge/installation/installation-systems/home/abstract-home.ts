@@ -755,18 +755,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         }
       }
     }
-    const isDynamicFeedInLimitation = this.feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
-      this.feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
-
-    if (isDynamicFeedInLimitation) {
-      protocol.items.push(
-        {
-          category: Category.FEED_IN_MANAGEMENT,
-          name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
-          value: this.feedInLimitation.maximumFeedInPower.toString(),
-        },
-      );
-    }
 
     protocol.items.push(
       {

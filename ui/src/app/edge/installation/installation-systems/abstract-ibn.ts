@@ -431,11 +431,13 @@ export abstract class AbstractIbn {
 
     if (lineSideMeterFuse) {
 
-      protocol.items.push({
-        category: this.lineSideMeterFuse.category,
-        name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER"),
-        value: this.lineSideMeterFuse.meterType ?? Meter.GridMeter.SOCOMEC,
-      });
+      if (lineSideMeterFuse.category !== Category.LINE_SIDE_METER_FUSE_HOME && lineSideMeterFuse.meterType) {
+        protocol.items.push({
+          category: lineSideMeterFuse.category,
+          name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER"),
+          value: lineSideMeterFuse.meterType,
+        });
+      }
 
       const lineSideMeterFuseValue = lineSideMeterFuse.otherValue ?? lineSideMeterFuse.fixedValue;
 
