@@ -98,5 +98,5 @@ steps:
     commands:
       - echo $${DEV_API} > secret.json
       - source $CI_WORKSPACE/.openems-env
-      - python3 tools/deploy/android/create_release.py $VERSION_FULL secret.json
+      - python3 tools/deploy/android/create_release.py $THEME $VERSION_FULL secret.json ${CI_COMMIT_BRANCH}
     depends_on: [refresh-dev-android]

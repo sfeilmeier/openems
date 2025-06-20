@@ -1,0 +1,88 @@
+variables:
+  - &sftp-settings
+    server: ${CACHE_SERVER}
+    username: user
+    password: pass
+    ignore_branch: true
+    port: 2222
+    path: /cache
+    mount:
+      - cache
+
+  - &rsync-settings
+    user: fenecon-docs
+    hosts:
+      - ${ARTIFACT_SERVER}
+    port: 22
+    key:
+      from_secret: ssh_key_intranet
+    args: "-v"
+
+  - &app-build
+    - branch: [main]
+
+when:
+  event:
+    - push
+
+matrix:
+  THEME:
+    - fenecon
+    - heckert
+
+clone:
+  git:
+    when: *app-build
+    image: woodpeckerci/plugin-git
+
+steps:
+  restore-cache:
+    when: *app-build
+    image: appleboy/drone-sftp-cache
+    settings:
+      restore: true
+      <<: *sftp-settings
+
+  prepare-environment:
+    when: *app-build
+    image: openems-bash
+    commands:
+      - export CACHE=$CI_WORKSPACE/cache
+      - mkdir -p $CI_WORKSPACE/cache build/target
+      - source tools/common.sh
+      - common_initialize_environment
+      - common_build_snapshot_version
+      - common_save_environment $CI_WORKSPACE/.openems-env
+    depends_on: [restore-cache]
+
+  build-android-app:
+    when: *app-build
+    image: openems-android:20.21.34
+    environment:
+      THEME: ${THEME}
+    commands:
+      - source $CI_WORKSPACE/.openems-env
+      - source tools/common.sh
+      - common_build_android_app
+    depends_on: [prepare-environment]
+
+  refresh-dev-android:
+    when: *app-build
+    image: woodpeckerci/rsync:latest
+    settings:
+      <<: *rsync-settings
+      source: $CI_WORKSPACE/ui/android/target/
+      target: /var/opt/develop/fems-artifacts/html/${CI_COMMIT_BRANCH}
+    depends_on: [build-android-app]
+
+  create-android-release:
+    when: *app-build
+    image: openems-build:21.20
+    environment:
+      DEV_API:
+        from_secret: developer_api_service_account
+    commands:
+      - echo $${DEV_API} > secret.json
+      - source $CI_WORKSPACE/.openems-env
+      - python3 tools/deploy/android/create_release.py ${THEME} $VERSION_FULL secret.json ${CI_COMMIT_BRANCH}
+    depends_on: [refresh-dev-android]

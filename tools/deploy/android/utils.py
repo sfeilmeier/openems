@@ -43,8 +43,8 @@ def create_edit_id(package_name, access_token):
         raise Exception("Error response:", response.text)
 
 
-def download_bundle(aab_file_name):
-    url = f"https://dev.intranet.fenecon.de/develop/{aab_file_name}.aab"
+def download_bundle(aab_file_name, branch_name):
+    url = f"https://dev.intranet.fenecon.de/{branch_name}/{aab_file_name}.aab"
     query_parameters = {"downloadformat": "aab"}
     response = requests.get(url, params=query_parameters)
 
