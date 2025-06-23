@@ -603,6 +603,9 @@ export class EdgeConfig {
         if (natures.includes("io.openems.edge.evse.api.chargepoint.EvseChargePoint")) {
             return true;
         }
+        if (natures.includes("io.openems.edge.heat.api.Heat")) {
+            return true;
+        }
         return false;
     }
 
