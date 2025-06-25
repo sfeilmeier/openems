@@ -82,7 +82,6 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialLImpl.class);
 
-	private final List<SymmetricEss> esss = new ArrayList<>();
 	private final StateMachine stateMachine = new StateMachine(State.UNDEFINED);
 	private final List<Battery> batteries = new CopyOnWriteArrayList<>();
 	private final Envicool envicool = new Envicool();
