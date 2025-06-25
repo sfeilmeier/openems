@@ -19,7 +19,7 @@ variables:
     args: "-v"
 
   - &app-build
-    - branch: [main]
+    - branch: [main-ui, main]
 
 when:
   event:
