@@ -271,6 +271,7 @@ export enum Producttype {
   COMMERCIAL_30 = "Commercial 30-Serie",
   COMMERCIAL_50 = "Commercial 50-Serie",
   COMMERCIAL_40_45 = "COMMERCIAL 40-45",
+  COMMERCIAL_92 = "commercial-92",
   INDUSTRIAL_L = "Industrial L",
 }
 
