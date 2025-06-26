@@ -3,12 +3,12 @@ package io.openems.edge.app.integratedsystem;
 import static io.openems.edge.common.test.DummyUser.DUMMY_ADMIN;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
- 
+
 import org.junit.Before;
 import org.junit.Test;
- 
+
 import com.google.common.collect.ImmutableList;
- 
+
 import io.openems.common.utils.JsonUtils;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.l.Ilk710;
 import io.openems.edge.core.appmanager.AppManagerTestBundle;

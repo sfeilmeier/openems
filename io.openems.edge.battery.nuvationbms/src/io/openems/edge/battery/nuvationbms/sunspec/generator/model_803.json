@@ -1,0 +1,481 @@
+{
+	"group": {
+		"groups": [
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Count of modules in the string.",
+						"label": "Module Count",
+						"mandatory": "M",
+						"name": "StrModCt",
+						"size": 1,
+						"type": "uint16"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Battery string state of charge, expressed as a percentage.",
+						"label": "String SoC",
+						"mandatory": "M",
+						"name": "StrSoC",
+						"size": 1,
+						"type": "uint16"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Battery string state of health, expressed as a percentage.",
+						"label": "String SoH",
+						"mandatory": "O",
+						"name": "StrSoH",
+						"size": 1,
+						"type": "uint16"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "String current measurement.",
+						"label": "String Current",
+						"mandatory": "M",
+						"name": "StrCur",
+						"size": 1,
+						"type": "int16"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Maximum voltage for all cells in the string.",
+						"label": "Max Cell Voltage",
+						"mandatory": "M",
+						"name": "StrMaxCellVol",
+						"size": 1,
+						"type": "uint16"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Minimum voltage for all cells in the string.",
+						"label": "Min Cell Voltage",
+						"mandatory": "M",
+						"name": "StrMinCellVol",
+						"size": 1,
+						"type": "uint16"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Location of maximum and minimum cell voltages.",
+						"label": "Max/Min Cell Voltage Loc",
+						"mandatory": "O",
+						"name": "StrCellVolLoc",
+						"size": 1,
+						"type": "uint16"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Maximum temperature for all modules in the bank.",
+						"label": "Max Module Temp",
+						"mandatory": "M",
+						"name": "StrMaxModTmp",
+						"size": 1,
+						"type": "int16"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Minimum temperature for all modules in the bank.",
+						"label": "Min Module Temp",
+						"mandatory": "M",
+						"name": "StrMinModTmp",
+						"size": 1,
+						"type": "int16"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Location of maximum and minimum module temperatures.",
+						"label": "Max/Min Mod Temp Loc",
+						"mandatory": "O",
+						"name": "StrModTmpLoc",
+						"size": 1,
+						"type": "uint16"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Alarms, warnings and status values.  Bit flags.",
+						"label": "String Event 1",
+						"mandatory": "M",
+						"name": "StrEvt1",
+						"size": 2,
+						"type": "bitfield32",
+						"symbols": [
+							{
+								"name": "COMMUNICATION_ERROR",
+								"value": 0
+							},
+							{
+								"name": "OVER_TEMP_ALARM",
+								"value": 1
+							},
+							{
+								"name": "UNDER_TEMP_ALARM",
+								"value": 2
+							},
+							{
+								"name": "OVER_TEMP_WARNING",
+								"value": 3
+							},
+							{
+								"name": "UNDER_TEMP_WARNING",
+								"value": 4
+							},
+							{
+								"name": "OVER_CHARGE_CURRENT_ALARM",
+								"value": 5
+							},
+							{
+								"name": "OVER_DISCHARGE_CURRENT_ALARM",
+								"value": 6
+							},
+							{
+								"name": "OVER_CHARGE_CURRENT_WARNING",
+								"value": 7
+							},
+							{
+								"name": "OVER_DISCHARGE_CURRENT_WARNING",
+								"value": 8
+							},
+							{
+								"name": "OVER_VOLT_ALARM",
+								"value": 9
+							},
+							{
+								"name": "UNDER_VOLT_ALARM",
+								"value": 10
+							},
+							{
+								"name": "OVER_VOLT_WARNING",
+								"value": 11
+							},
+							{
+								"name": "UNDER_VOLT_WARNING",
+								"value": 12
+							},
+							{
+								"name": "CONTACTOR_ERROR",
+								"value": 13
+							},
+							{
+								"name": "FAN_ERROR",
+								"value": 14
+							},
+							{
+								"name": "CONTACTOR_STATUS",
+								"value": 15
+							},
+							{
+								"name": "GROUND_FAULT",
+								"value": 16
+							},
+							{
+								"name": "OPEN_DOOR_ERROR",
+								"value": 17
+							},
+							{
+								"name": "OTHER_ALARM",
+								"value": 18
+							},
+							{
+								"name": "OTHER_WARNING",
+								"value": 19
+							},
+							{
+								"name": "STRING_ENABLED",
+								"value": 20
+							}
+						]
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Alarms, warnings and status values.  Bit flags.",
+						"label": "String Event 2",
+						"mandatory": "O",
+						"name": "StrEvt2",
+						"size": 2,
+						"type": "bitfield32"
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "",
+						"label": "Connection Failure Reason",
+						"mandatory": "O",
+						"name": "StrConFail",
+						"size": 1,
+						"type": "enum16",
+						"symbols": [
+							{
+								"name": "NO FAILURE",
+								"value": 0
+							},
+							{
+								"name": "BUTTON_PUSHED",
+								"value": 1
+							},
+							{
+								"name": "STR_GROUND_FAULT",
+								"value": 2
+							},
+							{
+								"name": "OUTSIDE_VOLTAGE_RANGE",
+								"value": 3
+							}
+						]
+					}
+				],
+				"type": "group"
+			},
+			{
+				"count": 0,
+				"name": "string",
+				"points": [
+					{
+						"desc": "Enables and disables the string.  Should reset to 0 upon completion.",
+						"label": "Enable/Disable String",
+						"mandatory": "O",
+						"name": "StrSetEna",
+						"size": 1,
+						"type": "enum16",
+						"symbols": [
+							{
+								"name": "ENABLE",
+								"value": 1
+							},
+							{
+								"name": "DISABLE",
+								"value": 2
+							}
+						]
+					}
+				],
+				"type": "group"
+			}
+		],
+		"label": "Lithium-Ion Battery Bank Model",
+		"name": "lithium_ion_bank",
+		"points": [
+			{
+				"desc": "Model identifier",
+				"label": "Lithium-Ion Battery Model",
+				"mandatory": "M",
+				"name": "ID",
+				"size": 1,
+				"type": "uint16",
+				"value": 803
+			},
+			{
+				"desc": "Model length",
+				"label": "",
+				"mandatory": "M",
+				"name": "L",
+				"size": 1,
+				"type": "uint16"
+			},
+			{
+				"desc": "Number of strings with contactor closed.",
+				"label": "Connected String Count",
+				"mandatory": "M",
+				"name": "BConStrCt",
+				"size": 1,
+				"type": "uint16"
+			},
+			{
+				"desc": "Maximum voltage for all cells in the bank.",
+				"label": "Max Cell Voltage",
+				"mandatory": "M",
+				"name": "BMaxCellVol",
+				"size": 1,
+				"type": "uint16"
+			},
+			{
+				"desc": "Location of the cell with maximum voltage",
+				"label": "Max Cell Voltage Location",
+				"mandatory": "O",
+				"name": "BMaxCellVolLoc",
+				"size": 1,
+				"type": "uint16"
+			},
+			{
+				"desc": "Minimum voltage for all cells in the bank.",
+				"label": "Min Cell Voltage",
+				"mandatory": "M",
+				"name": "BMinCellVol",
+				"size": 1,
+				"type": "uint16"
+			},
+			{
+				"desc": "Location of the cell with minimum voltage",
+				"label": "Min Cell Voltage Location",
+				"mandatory": "O",
+				"name": "BMinCellVolLoc",
+				"size": 1,
+				"type": "uint16"
+			},
+			{
+				"desc": "Maximum temperature for all modules in the bank.",
+				"label": "Max Module Temp",
+				"mandatory": "M",
+				"name": "BMaxModTmp",
+				"size": 1,
+				"type": "int16"
+			},
+			{
+				"desc": "Location of the module with max temperature.",
+				"label": "Max Module Temp Location",
+				"mandatory": "O",
+				"name": "BMaxModTmpLoc",
+				"size": 1,
+				"type": "uint16"
+			},
+			{
+				"desc": "Minimum temperature for all modules in the bank.",
+				"label": "Min Module Temp",
+				"mandatory": "M",
+				"name": "BMinModTmp",
+				"size": 1,
+				"type": "int16"
+			},
+			{
+				"desc": "Location of the module with min temperature.",
+				"label": "Min Module Temp Location",
+				"mandatory": "O",
+				"name": "BMinModTmpLoc",
+				"size": 1,
+				"type": "uint16"
+			},
+			{
+				"desc": "Total DC current flowing to/from the battery bank.",
+				"label": "Total DC Current",
+				"mandatory": "M",
+				"name": "BTotDCCur",
+				"size": 1,
+				"type": "int16"
+			},
+			{
+				"desc": "Maximum current of any string in the bank.",
+				"label": "Max String Current",
+				"mandatory": "O",
+				"name": "BMaxStrCur",
+				"size": 1,
+				"type": "int16"
+			},
+			{
+				"desc": "Minimum current of any string in the bank.",
+				"label": "Min String Current",
+				"mandatory": "O",
+				"name": "BMinStrCur",
+				"size": 1,
+				"type": "int16"
+			},
+			{
+				"desc": "Scale factor for cell voltage.",
+				"label": "",
+				"mandatory": "M",
+				"name": "BCellVol_SF",
+				"size": 1,
+				"type": "sunssf"
+			},
+			{
+				"desc": "Scale factor for module temperatures.",
+				"label": "",
+				"mandatory": "M",
+				"name": "BModTmp_SF",
+				"size": 1,
+				"type": "sunssf"
+			},
+			{
+				"desc": "Scale factor for Total DC Current, Max String Current and Min String Current.",
+				"label": "",
+				"mandatory": "M",
+				"name": "BCurrent_SF",
+				"size": 1,
+				"type": "sunssf"
+			},
+			{
+				"desc": "Scale factor for String State of Health.",
+				"label": "",
+				"mandatory": "O",
+				"name": "StrSoH_SF",
+				"size": 1,
+				"type": "sunssf"
+			}
+		],
+		"type": "group"
+	},
+	"id": 803
+}

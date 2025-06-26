@@ -2,7 +2,6 @@ package io.openems.edge.battery.wuerthbms;
 
 import io.openems.common.test.AbstractComponentConfig;
 import io.openems.common.utils.ConfigUtils;
-import io.openems.edge.battery.wuerthbms.Config;
 import io.openems.edge.battery.wuerthbms.enums.FirmwareVersion;
 import io.openems.edge.common.startstop.StartStopConfig;
 

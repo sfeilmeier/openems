@@ -1,18 +1,5 @@
 package io.openems.edge.battery.wuerthbms;
 
-import io.openems.common.test.TimeLeapClock;
-import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
-import io.openems.edge.common.channel.value.Value;
-import io.openems.edge.common.test.AbstractComponentTest;
-import io.openems.edge.common.test.ComponentTest;
-import io.openems.edge.common.test.DummyComponentManager;
-import io.openems.edge.common.test.DummyConfigurationAdmin;
-import org.junit.Test;
-
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.util.function.Supplier;
-
 import static io.openems.common.utils.FunctionUtils.supplier;
 import static io.openems.edge.battery.api.Battery.ChannelId.MAX_CELL_VOLTAGE;
 import static io.openems.edge.battery.api.Battery.ChannelId.MIN_CELL_VOLTAGE;
@@ -23,6 +10,20 @@ import static io.openems.edge.common.startstop.StartStopConfig.START;
 import static java.time.temporal.ChronoUnit.MILLIS;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.util.function.Supplier;
+
+import org.junit.Test;
+
+import io.openems.common.test.TimeLeapClock;
+import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
+import io.openems.edge.common.channel.value.Value;
+import io.openems.edge.common.test.AbstractComponentTest;
+import io.openems.edge.common.test.ComponentTest;
+import io.openems.edge.common.test.DummyComponentManager;
+import io.openems.edge.common.test.DummyConfigurationAdmin;
 
 public class WuerthBmsImplTest {
 

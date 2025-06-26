@@ -1,5 +1,11 @@
 package io.openems.edge.battery.wuerthbms.version;
 
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.DIVIDE;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_3;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SET_NULL_FOR_DEFAULT;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.chain;
+
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.protection.BatteryProtection;
 import io.openems.edge.battery.wuerthbms.WuerthBms;
@@ -14,12 +20,6 @@ import io.openems.edge.bridge.modbus.api.task.FC16WriteRegistersTask;
 import io.openems.edge.bridge.modbus.api.task.FC2ReadInputsTask;
 import io.openems.edge.bridge.modbus.api.task.FC4ReadInputRegistersTask;
 import io.openems.edge.common.taskmanager.Priority;
-
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.DIVIDE;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_3;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SET_NULL_FOR_DEFAULT;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.chain;
 
 public class WuerthVersion109Protocol {
 
