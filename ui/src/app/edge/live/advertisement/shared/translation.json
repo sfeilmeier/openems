@@ -2,16 +2,18 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "FENECON Webinar: Gewerbespeicher im Fokus",
-        "TEXT": "Im kommenden Webinar am 26.06. von 14-15 Uhr für Installateure und Großhändler stellen wir den neuen Commercial 50 und den erweiterten Commercial 92 mit Cluster-Funktion vor.<hr> <a href='https://fenecon-gmbh.webinargeek.com/power-fuer-profis-gewerbespeicher-von-fenecon?cst=fems-widget' target='_blank'>Jetzt kostenlos anmelden</a> und moderne Gewerbespeicherlösungen live erleben!"
+        "TITLE": "Webinar verpasst? Jetzt Aufzeichnung ansehen!",
+        "TEXT": "Du konntest beim FENECON-Webinar zur Commercial-Serie nicht live dabei sein? Kein Problem - in der Aufzeichnung erfährst du alles über den neuen Commercial 50 und den Commercial 92 mit Cluster-Funktion.",
+        "LINK_TEXT": "Aufzeichnung ansehen"
       }
     }
   },
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "FENECON Webinar: Commercial storage in focus",
-        "TEXT": "In the upcoming webinar in German language for installers and wholesalers on 26.06. from 2 to 3pm, we will be presenting the new Commercial 50 and the extended Commercial 92 with cluster function.</br> <a href='https://fenecon-gmbh.webinargeek.com/power-fuer-profis-gewerbespeicher-von-fenecon?cst=fems-widget' target='_blank'>Register now</a> for free and experience modern commercial storage solutions!"
+        "TITLE": "Missed the webinar? Watch the recording now!",
+        "TEXT": "Did you miss the FENECON live webinar on the Commercial series? No problem - watch the recording (only in german) now and learn all about the new Commercial 50 and the Commercial 92 with cluster function.",
+        "LINK_TEXT": "Watch recording"
       }
     }
   }
