@@ -119,7 +119,6 @@
 	bnd.identity;id='io.openems.edge.ess.core',\
 	bnd.identity;id='io.openems.edge.ess.fenecon.commercial40',\
 	bnd.identity;id='io.openems.edge.ess.generic',\
-	bnd.identity;id='io.openems.edge.ess.refubeckhoff',\
 	bnd.identity;id='io.openems.edge.ess.sma',\
 	bnd.identity;id='io.openems.edge.evcs.alpitronic.hypercharger',\
 	bnd.identity;id='io.openems.edge.evcs.cluster',\
@@ -307,7 +306,6 @@
 	io.openems.edge.ess.core;version=snapshot,\
 	io.openems.edge.ess.fenecon.commercial40;version=snapshot,\
 	io.openems.edge.ess.generic;version=snapshot,\
-	io.openems.edge.ess.refubeckhoff;version=snapshot,\
 	io.openems.edge.ess.sma;version=snapshot,\
 	io.openems.edge.evcs.alpitronic.hypercharger;version=snapshot,\
 	io.openems.edge.evcs.api;version=snapshot,\
