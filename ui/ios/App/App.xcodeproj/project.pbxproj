@@ -31,7 +31,6 @@
 		BCA4C77B2D80921000B97D27 /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		BCA4C77C2D80921000B97D27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
 		BCA4C77D2D80921000B97D27 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
-		BCA4C7852D80924400B97D27 /* fenecon-beta-assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCA4C7842D80924400B97D27 /* fenecon-beta-assets.xcassets */; };
 		BCA4C7862D80924400B97D27 /* fenecon-beta-assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCA4C7842D80924400B97D27 /* fenecon-beta-assets.xcassets */; };
 		BE968009C567DF4A14B1AF6A /* Pods_FENECON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE47A1BA70ABECF428639602 /* Pods_FENECON.framework */; };
 /* End PBXBuildFile section */
@@ -294,7 +293,6 @@
 			files = (
 				4235BE492BBD5ACB0086D469 /* LaunchScreen.storyboard in Resources */,
 				4235BE4A2BBD5ACB0086D469 /* public in Resources */,
-				BCA4C7852D80924400B97D27 /* fenecon-beta-assets.xcassets in Resources */,
 				427BB7C82BBD5C6C00C74AAB /* heckert-assets.xcassets in Resources */,
 				4235BE4C2BBD5ACB0086D469 /* capacitor.config.json in Resources */,
 				4235BE4D2BBD5ACB0086D469 /* Main.storyboard in Resources */,
