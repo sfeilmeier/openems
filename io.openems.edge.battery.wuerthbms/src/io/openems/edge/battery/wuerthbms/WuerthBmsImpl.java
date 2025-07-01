@@ -1,8 +1,6 @@
 package io.openems.edge.battery.wuerthbms;
 
 import static io.openems.common.types.OpenemsType.INTEGER;
-import static io.openems.edge.common.type.TypeUtils.divide;
-import static io.openems.edge.common.type.TypeUtils.multiply;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;

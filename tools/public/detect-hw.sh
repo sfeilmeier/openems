@@ -1,20 +1,47 @@
 #!/bin/bash
 
+### INFO. HW REVISION EXAMPLE
+#
+# The file /etc/hardware_revision should contain:
+# HOST_MAC=18:83:C4:3D:FD:55
+# HW_NUMBER=00000000ffffffff
+# CORE_VERSION=2408261449
+# FIRMWARE_VERSION=2409161111
+# LIB_VERSION=2405071155
+# MB_VER=V2/x500
+# NPE_PLATFORM=X500CM4
+# SOFTMGR_VERSION=2312181545
+# TESTER_ID=9
+# GPRS_VERSION=2411130837
+# UNIQUE_CONFIGURATION=fenec7_dev
+# UNIQUE_TESTER_ID=fenec7_dev
+# iMC_PASS=4TGORWWQ
+# CONFIGURATION_DEVICE= RS485-AMA0 RS485-SC0 4DI 4DO VOUT3V3 USER_LED SWITCH 2SIM 2ETH RTC 2AO RS485-FTDI0
+# NPE_MODEL=Modberry-500-M4S08
+# NPE_ID=fenec_12_62549
+# NPE_HARDWARE=NPE-X500-M4S08
+# CONFIG=feneccm4s
+# CONFIG_BOARD_TYPE=bcc
+# CONFIG_BOARD_CODE=6e7d2a69949265af810fbd2209fb862f62d5
+# PCB_ID_LENGTH=20
+# PCB_ID=0425X5HFV1.0.0P62549
+
 set -e
 
 HW_CONF="/etc/openems.d/hardware.conf"
 HW_REVISION="/etc/hardware_revision"
 
 function read_hardware {
-  source "$HW_REVISION"
+  HARDWARE=$(grep "^NPE_HARDWARE=" "$HW_REVISION" | cut -d'=' -f2)
+  CONFIGURATION=$(grep "^CONFIGURATION_DEVICE=" "$HW_REVISION" | cut -d'=' -f2)
 
-  case "$cpu" in
-    "CM3") 
+  case "$HARDWARE" in
+    "NPE-X500-M3*") 
     echo "App.OpenemsHardware.CM3"
     ;;
 
-    "CM4S")
-    if [[ "$serialports" == *"3xRS485"* ]];
+    "NPE-X500-M4S*")
+    if [[ "$CONFIGURATION" == *"2AO"* && "$CONFIGURATION" == *"RS485-FTDI0"* ]];
     then
       echo "App.OpenemsHardware.CM4S.Gen2"
     else
@@ -22,8 +49,8 @@ function read_hardware {
     fi
     ;;
 
-    "CM4") 
-    if [[ "$serialports" == *"1xCanBus"* ]];
+    "NPE-X500-M4*") 
+    if [[ "$CONFIGURATION" == *"CanBus"* ]];
     then
       echo "App.OpenemsHardware.CM4Max"
     else

@@ -25,6 +25,30 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.7.1",
+        changes: [
+          Changelog.app(App.POWER_TO_HEAT) + "Fehlerbehebung beim Slider zur Konfiguration der Energie",
+          Changelog.app(App.POWER_TO_HEAT, App.MY_PV, App.ASKOMA) + "Heizenergie wird nun richtig im Verbrauch angezeigt",
+          "Einstellungen | Netzwerkkonfiguration: die aktuell zugewiesene DHCP-Adresse wird in der Netzwerkkonfiguration dargestellt.",
+          "Android App: Anpassen der Fensterhöhe bei aktivierter Android-Navigationsleiste",
+          Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Fehlerbehebung bei der Umstellung zwischen lesendem und schreibendem Modus im App Center",
+          { roleIsAtLeast: Role.INSTALLER, change: "Einstellungen | Netzwerkkonfiguration ist jetzt für Rolle 'OWNER' sichtbar" },
+          { roleIsAtLeast: Role.ADMIN, change: "Modbus/TCP Schreibzugriff: erlaubt optional dynamisches Setzen der Ziel-Leistung am Netzanschlusspunkt über Eigenverbrauchsoptimierungs-Controller" },
+          { roleIsAtLeast: Role.ADMIN, change: "Neuer Vorhersagealgorithmus für Erzeugung auf Basis historischer Daten und Wetterprognose: Start Feldtest" },
+          {
+            roleIsAtLeast: Role.ADMIN,
+            change: "Zeitvariable Netzentgelte für ENTSO-E: Preisblätter für Bayernwerk, Netze BW, EWE Netz, MITNETZ, SH Netz, Westnetz, E.DIS, Avacon, "
+              + "LEW, TE Netz verfügbar und durch ADMIN konfigurierbar. Auswahlfeld im App Center folgt.",
+          },
+          {
+            roleIsAtLeast: Role.ADMIN,
+            change: "Neuer Channel '_sum/UnmanagedProductionActivePower': dieser bildet zukünftig die theoretisch mögliche, nicht abgeregelte "
+              + "PV-Erzeugungsleistung ab als Grundlage für Prognosen und das Lastmanagement. Vorerst identisch zu '_sum/ ProductionActivePower'",
+          },
+          { roleIsAtLeast: Role.ADMIN, change: "Verbesserungen an neuer EVSE-Architektur für KEBA, Hardy-Barth und Online-Monitoring" },
+        ],
+      },
+      {
         version: "2025.6.3",
         changes: [
           "App Center: Fehlerbehebung bei der Deinstallation von Apps",

@@ -173,6 +173,7 @@
           "starting": "Startet",
           "status": "Status",
           "totalCharge": "Gesamte Beladung",
+          "totalDischarge": "Gesamte Entladung",
           "totalChargingPower": "Gesamte Ladeleistung",
           "unknown": "Unbekannt",
           "unplugged": "Ausgesteckt",
@@ -489,7 +490,11 @@
       "addIP": "Statische IP-Adressen hinzufügen",
       "validAddressWarning": "Geben Sie unter \"Statische IP-Adressen hinzufügen\" eine gültige IP-Adresse mit Netzmaske ein, z. B. 10.4.1.6/24",
       "advancedMode": "erweiterte Ansicht",
-      "submit": "Anwenden"
+      "submit": "Anwenden",
+      "DHCP": {
+        "INFO": "Die angezeigte IP-Adresse wurde dynamisch über DHCP (Dynamic Host Configuration Protocol) vergeben. Sie ist nicht dauerhaft und kann sich bei einem Neustart des Geräts oder Routers ändern.",
+        "ADDRESS": "DHCP Adresse"
+      }
     },
     "title": "{{ edgeShortName }}",
     "FOOTER": {
@@ -574,6 +579,8 @@
     "storageSystem": "Speichersystem",
     "SYSTEM_STATE": "Systemstatus",
     "TOTAL": "Gesamt",
+    "TOTAL_CHARGE": "Gesamte Beladung",
+    "TOTAL_DISCHARGE": "Gesamte Entladung",
     "totalState": "Gesamtstatus",
     "VISIBLE_FOR_ADMINS_ONLY": "Sichtbar nur für Service & Administration",
     "warning": "Warnung",

@@ -210,4 +210,8 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 		return new OAuthClientRegistration("partner-fenecon", "DUwekm35VOoAURcbFhi7pU3PcEb21A8xbSHvHiONXz");
 	}
 
+	@Override
+	public String getOpenMeteoApiKey() {
+		return "1xngdTs5XQvhKhQh";
+	}
 }

@@ -19,8 +19,11 @@ variables:
     args: "-v"
 
   - &main-build
-    - branch: [main, main-ui, develop]
+    - branch: [develop, main, main-ui]
     - evaluate: 'CI_COMMIT_MESSAGE contains "[APP]"'
+
+  - &app-build
+    - branch: [main-ui, main]
 
 when:
   event:
@@ -75,3 +78,15 @@ steps:
       source: $CI_WORKSPACE/ui/android/target/
       target: /var/opt/develop/fems-artifacts/html/${CI_COMMIT_BRANCH}
     depends_on: [build-android-app]
+
+  create-android-release:
+    when: *app-build
+    image: openems-build:21.20
+    environment:
+      DEV_API:
+        from_secret: developer_api_service_account
+    commands:
+      - echo $${DEV_API} > secret.json
+      - source $CI_WORKSPACE/.openems-env
+      - python3 tools/deploy/android/create_release.py ${THEME} $VERSION_FULL secret.json ${CI_COMMIT_BRANCH}
+    depends_on: [refresh-dev-android]

@@ -1,5 +1,13 @@
 package io.openems.edge.ess.refubeckhoff;
 
+import static io.openems.edge.common.type.Phase.SingleOrAllPhase.ALL;
+import static io.openems.edge.common.type.Phase.SingleOrAllPhase.L1;
+import static io.openems.edge.common.type.Phase.SingleOrAllPhase.L2;
+import static io.openems.edge.common.type.Phase.SingleOrAllPhase.L3;
+import static io.openems.edge.ess.power.api.Pwr.ACTIVE;
+import static io.openems.edge.ess.power.api.Pwr.REACTIVE;
+import static io.openems.edge.ess.power.api.Relationship.EQUALS;
+
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -47,10 +55,7 @@ import io.openems.edge.ess.api.ManagedAsymmetricEss;
 import io.openems.edge.ess.api.ManagedSymmetricEss;
 import io.openems.edge.ess.api.SymmetricEss;
 import io.openems.edge.ess.power.api.Constraint;
-import io.openems.edge.ess.power.api.Phase;
 import io.openems.edge.ess.power.api.Power;
-import io.openems.edge.ess.power.api.Pwr;
-import io.openems.edge.ess.power.api.Relationship;
 import io.openems.edge.ess.refubeckhoff.enums.SetOperationMode;
 import io.openems.edge.ess.refubeckhoff.enums.StopStart;
 import io.openems.edge.ess.refubeckhoff.enums.SystemState;
@@ -507,24 +512,18 @@ public class RefuBeckhoffEssImpl extends AbstractOpenemsModbusComponent implemen
 		case UNDEFINED:
 			if (this.config.symmetricMode()) {
 				return new Constraint[] {
-						this.power.createSimpleConstraint("Refu State: " + systemState, this, Phase.ALL, Pwr.ACTIVE,
-								Relationship.EQUALS, 0),
-						this.power.createSimpleConstraint("Refu State: " + systemState, this, Phase.ALL, Pwr.REACTIVE,
-								Relationship.EQUALS, 0) };
+						this.power.createSimpleConstraint("Refu State: " + systemState, this, ALL, ACTIVE, EQUALS, 0),
+						this.power.createSimpleConstraint("Refu State: " + systemState, this, ALL, REACTIVE, EQUALS, 0) //
+				};
 			} else {
 				return new Constraint[] {
-						this.power.createSimpleConstraint("Refu State: " + systemState, this, Phase.L1, Pwr.ACTIVE,
-								Relationship.EQUALS, 0),
-						this.power.createSimpleConstraint("Refu State: " + systemState, this, Phase.L2, Pwr.ACTIVE,
-								Relationship.EQUALS, 0),
-						this.power.createSimpleConstraint("Refu State: " + systemState, this, Phase.L3, Pwr.ACTIVE,
-								Relationship.EQUALS, 0),
-						this.power.createSimpleConstraint("Refu State: " + systemState, this, Phase.L3, Pwr.REACTIVE,
-								Relationship.EQUALS, 0),
-						this.power.createSimpleConstraint("Refu State: " + systemState, this, Phase.L3, Pwr.REACTIVE,
-								Relationship.EQUALS, 0),
-						this.power.createSimpleConstraint("Refu State: " + systemState, this, Phase.L3, Pwr.REACTIVE,
-								Relationship.EQUALS, 0) };
+						this.power.createSimpleConstraint("Refu State: " + systemState, this, L1, ACTIVE, EQUALS, 0),
+						this.power.createSimpleConstraint("Refu State: " + systemState, this, L2, ACTIVE, EQUALS, 0),
+						this.power.createSimpleConstraint("Refu State: " + systemState, this, L3, ACTIVE, EQUALS, 0),
+						this.power.createSimpleConstraint("Refu State: " + systemState, this, L3, REACTIVE, EQUALS, 0),
+						this.power.createSimpleConstraint("Refu State: " + systemState, this, L3, REACTIVE, EQUALS, 0),
+						this.power.createSimpleConstraint("Refu State: " + systemState, this, L3, REACTIVE, EQUALS, 0) //
+				};
 			}
 		case OPERATION:
 			break;
