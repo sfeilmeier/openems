@@ -439,8 +439,8 @@ public interface Field {
 		CUSTOMER("customer_id", true), //
 		DIFFERENT_LOCATION("different_location_id", true), //
 		INSTALLER("installer_id", true), //
-		EDGE("fems_device_id", true),
-		TYPE("type", true),
+		EDGE("fems_device_id", true), //
+		TYPE("type", true), //
 		CREATE_DATE("create_date", false);
 		
 		public static final String ODOO_MODEL = "fems.setup_protocol";
@@ -534,7 +534,13 @@ public interface Field {
 
 	public enum SetupProtocolItem implements Field {
 		SETUP_PROTOCOL("setup_protocol_id", true), //
-		SEQUENCE("sequence", true);
+		SEQUENCE("sequence", true), //
+		CATEGORY("category", false), //
+		NAME("name", false), //
+		VALUE("value", false), //
+		VIEW("view", false), //
+		FIELD("field", false), //
+		;
 
 		public static final String ODOO_MODEL = "fems.setup_protocol_item";
 		public static final String ODOO_TABLE = ODOO_MODEL.replace(".", "_");

@@ -64,6 +64,7 @@ import io.openems.backend.metadata.odoo.odoo.OdooUserRole;
 import io.openems.backend.metadata.odoo.odoo.OdooUtils.DateTime;
 import io.openems.backend.metadata.odoo.postgres.PostgresHandler;
 import io.openems.common.channel.Level;
+import io.openems.common.event.EventBuilder;
 import io.openems.common.event.EventReader;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
@@ -293,6 +294,17 @@ public class MetadataOdoo extends AbstractMetadata implements AppCenterMetadata,
 	}
 
 	@Override
+	public void createSerialNumberExtensionProtocol(String edgeId, Map<String, Map<String, String>> serialNumbers,
+			List<SetupProtocolItem> items) {
+		try {
+			this.odooHandler.createSerialNumberProtocol(((MyEdge) this.getEdgeOrError(edgeId)).getOdooId(),
+					serialNumbers, items);
+		} catch (OpenemsException e) {
+			this.log.warn("Unable to create serialnumber protocol", e);
+		}
+	}
+
+	@Override
 	public void registerUser(JsonObject jsonObject, String oem) throws OpenemsNamedException {
 		final OdooUserRole role;
 
@@ -433,6 +445,12 @@ public class MetadataOdoo extends AbstractMetadata implements AppCenterMetadata,
 					this.logWarn(this.log, "Edge [" + edge.getId() + "] " //
 							+ "Unable to insert EdgeConfigUpdate: " + e.getMessage());
 				}
+
+				EventBuilder.from(this.eventAdmin, Edge.Events.ON_UPDATE_CONFIG) //
+						.addArg(Edge.Events.OnUpdateConfig.EDGE_ID, edge.getId()) //
+						.addArg(Edge.Events.OnUpdateConfig.OLD_CONFIG, oldConfig) //
+						.addArg(Edge.Events.OnUpdateConfig.NEW_CONFIG, newConfig) //
+						.send();
 
 			} finally {
 				// Remove from pending list
