@@ -42,11 +42,8 @@ public class CreateSerialNumberProtocol implements EventHandler, DebugLoggable {
 			(ThreadPoolExecutor) Executors.newFixedThreadPool(1, Thread.ofVirtual().factory()));
 	private final AtomicInteger createdProtocolsCounter = new AtomicInteger();
 
-	private final Metadata metadata;
-
 	@Activate
 	public CreateSerialNumberProtocol(@Reference Metadata metadata) {
-		this.metadata = metadata;
 	}
 
 	@Override
