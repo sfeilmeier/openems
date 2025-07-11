@@ -31,7 +31,7 @@ export class ChartComponent extends AbstractHistoryChart implements OnInit, OnCh
     color: "rgb(0,0,255)",
   }];
 
-  public static limits = (data: HistoryUtils.ChannelData) => [{
+  public static limits = (data: HistoryUtils.ChannelData): HistoryUtils.DisplayValue[] => [{
     name: "Obergrenze",
     converter: () => {
       return Array(288).fill(3.65);
