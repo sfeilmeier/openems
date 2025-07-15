@@ -11,7 +11,7 @@ import { TranslateService } from "@ngx-translate/core";
     </ion-row>
 
     <ion-row class="ion-padding-top ion-justify-content-center">
-        <ion-button href="https://youtu.be/DCPUM2em0dc" target="_blank" size="small" fill="outline" style="font-size: small;">
+        <ion-button [href]="'ADVERT.1.LINK' | translate" target="_blank" size="small" fill="outline" style="font-size: small;">
           <span translate>ADVERT.1.LINK_TEXT</span>
         </ion-button>
       </ion-row>

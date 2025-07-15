@@ -2,18 +2,20 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "Webinar verpasst? Jetzt Aufzeichnung ansehen!",
-        "TEXT": "Du konntest beim FENECON-Webinar zur Commercial-Serie nicht live dabei sein? Kein Problem - in der Aufzeichnung erfährst du alles über den neuen Commercial 50 und den Commercial 92 mit Cluster-Funktion.",
-        "LINK_TEXT": "Aufzeichnung ansehen"
+        "TITLE": "Einmaliger Hattrick für FENECON als Innovator des Jahres",
+        "TEXT": "Wow: Bereits zum dritten Mal erhält FENECON den TOP 100-Award als „Innovator des Jahres“! <hr>Einmalig in der Geschichte des Innovationswettbewerbs. Ein Grund war, dass wir trotz rasanten Wachstums unsere strukturelle Dynamik beibehalten bzw. sogar ausbauen konnten.",
+        "LINK": "https://www.youtube.com/watch?v=Ew-8MDbtIo4",
+        "LINK_TEXT": "Mehr hier im Video!"
       }
     }
   },
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "Missed the webinar? Watch the recording now!",
-        "TEXT": "Did you miss the FENECON live webinar on the Commercial series? No problem - watch the recording (only in german) now and learn all about the new Commercial 50 and the Commercial 92 with cluster function.",
-        "LINK_TEXT": "Watch recording"
+        "TITLE": "FENECON Becomes Triple Winner of 'Innovator of the Year' Award",
+        "TEXT": "For the third consecutive year, FENECON has received the 'Innovator of the Year' title — setting a new record in the history of the TOP 100 Awards.<hr> One key reason for this exceptional recognition: despite rapid growth, FENECON has not only maintained but further strengthened its organizational agility.",
+        "LINK": "https://www.youtube.com/watch?v=Ew-8MDbtIo4",
+        "LINK_TEXT": "Watch the full story here!"
       }
     }
   }
