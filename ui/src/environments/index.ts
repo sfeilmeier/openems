@@ -3,6 +3,8 @@ import { Filter } from "src/app/index/filter/filter.component";
 import { DefaultTypes } from "src/app/shared/type/defaulttypes";
 export { environment } from "./dummy";
 
+export type BaseMeta = Pick<Environment, "links" | "images">;
+
 export type Theme = "OpenEMS" | "FENECON" | "FENECONBeta" | "Heckert";
 
 export interface Environment {
@@ -20,14 +22,19 @@ export interface Environment {
     debugMode: boolean;
 
     readonly docsUrlPrefix: string;
+    readonly images: {
+        readonly EVSE: {
+            readonly KEBA_P30: string | null,
+            readonly KEBA_P40: string | null,
+            readonly HARDY_BARTH: string | null,
+        },
+    },
     readonly links: {
-
         readonly COMMON_STORAGE: string | null,
         readonly FORGET_PASSWORD: string,
         readonly EVCS_KEBA_KECONTACT: string,
         readonly EVCS_HARDY_BARTH: string,
         readonly EVCS_OCPP_IESKEYWATTSINGLE: string,
-
         readonly CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE: string,
         readonly CONTROLLER_CHP_SOC: string
         readonly CONTROLLER_IO_CHANNEL_SINGLE_THRESHOLD: string,
@@ -113,8 +120,12 @@ export interface Environment {
                 readonly EN: string,
             }
         },
+        SYSTEM: {
+            INDUSTRIAL_S: string,
+            INDUSTRIAL_L: string,
+        },
     },
-    readonly PRODUCT_TYPES: (translate: TranslateService) => Filter | null
+    readonly PRODUCT_TYPES: (translate: TranslateService) => Filter | null,
 }
 
 /*
