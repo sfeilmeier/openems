@@ -216,13 +216,23 @@
           "activeLevel": "Aktives Level",
           "endtime": "Endzeit",
           "energy": "Energie",
-          "guaranteeMinimumHeating": "Minimale Beheizung garantieren",
+          "guaranteeMinimumHeating": "Minimale Heizdauer garantieren",
           "heatingelement": "Heizelement",
           "minimalEnergyAmount": "Minimale Energiemenge",
           "minimumRunTime": "Mindestlaufzeit",
           "priority": "Priorität",
           "time": "Zeit",
-          "timeCountdown": "Spätester Start"
+          "timeCountdown": "Spätester Start",
+          "GUARANTEE_HEATING": "Minimale Heizenergie garantieren",
+          "MINIMAL_ENERGY_LIMIT": "Minimales Energielimit",
+          "ACTIVED_FORCED_LIMIT": "Aktiv (Zusatzenergie)",
+          "DONE": "Fertig",
+          "UNREACHABLE": "Unerreichbar",
+          "CALIBRATION": "Kalibrierung",
+          "CALIBRATION_DESCRIPTION": "Der Heizstab wird kalibriert, um die Leistung der einzelnen Level des Zählers zu bekommen",
+          "HEATING_POWER": "Heizleistung",
+          "MESSAGE_UNREACHABLE": "Das Energielimit kann nicht in der Zeit erreicht werden",
+          "ENERGY_SINCE_BEGINNING": "Energie seit Beginn"
         },
         "HEAT": {
           "TEMPERATURE": "Wassertemperatur",
@@ -642,7 +652,9 @@
     },
     "CHARGE": "Beladung",
     "DISCHARGE": "Entladung",
-    "INSTALL": "Installieren"
+    "INSTALL": "Installieren",
+    "FROM": "Von",
+    "TO": "Bis"
   },
   "OFFLINE": {
     "EDGE": {
@@ -1287,6 +1299,24 @@
   "GENERAL": {
     "FORMLY": {
       "REQUIRED": "Ist erforderlich"
+    }
+  },
+  "FORMLY_FORM": {
+    "TARIFF_TABLE": {
+      "TARIFFS": {
+        "LOW": "Niedriglasttarifstufe",
+        "STANDARD": "Standardtarifstufe",
+        "HIGH": "Hochlasttarifstufe"
+      },
+      "GROSS_PREIS_TITLE": "Brutto-Preis für das Jahr {{ year }}*",
+      "ADD_TIME_SLOT": "Zeitfenster hinzufügen",
+      "PRICE_ITEMS": "Preisartikel",
+      "ADD_YEAR": "{{ year }} Jahr hinzufügen",
+      "REMOVE_YEAR": "{{ year }} Jahr entfernen",
+      "TITLE": "{{ year }} Netzentgelte",
+      "ERROR_MESSAGES": {
+        "INVALID_TIME_INPUT": "Die „Bis“-Zeit kann nicht größer oder gleich der „Von“-Zeit sein."
+      }
     }
   },
   "SYSTEM": {
