@@ -137,13 +137,13 @@ def update_track(
                 "versionCodes": [latest_version_code],
                 "status": "completed",  # Options: 'completed', 'draft', etc.
                 "releaseNotes": [
-                    #     {
-                    #     'language': 'de-DE',
-                    #     'text': 'Release notes for the new version2.'
-                    # },{
-                    #     'language': 'en-US',
-                    #     'text': 'Release notes for the new version.'
-                    # }
+                    {
+                        'language': 'de-DE',
+                        'text': 'Neue Integrationen für Heizstäbe Askoma ASKOHEAT+ und AC•THOR 9s und Eastron SDM630 Zähler, Variable Netzentgelte nach §14a EnWG Modul 3, Verbesserungen an der Einbindung von Ladestationen uvm.'
+                    },{
+                        'language': 'en-US',
+                        'text': 'New integrations for Askoma ASKOHEAT+ and AC•THOR 9s heating rods and Eastron SDM630 meter, variable grid fees according to §14a EnWG module 3, improvements in the integration of charging stations, and more.'
+                    }
                 ],
             }
         ],

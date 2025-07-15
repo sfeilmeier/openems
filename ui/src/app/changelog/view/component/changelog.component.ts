@@ -25,6 +25,22 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.7.2",
+        changes: [
+          "FENECON Home: Verbessertes Verhalten mit aktiver Blindleistungseinstellung Q(U)",
+          Changelog.app(App.EVCS_AC) + "Allgemeine Verbesserungen und Fehlerbehebungen",
+          Changelog.app(App.EVCS_AC, App.KEBA) + "Fehlerbehebung doppeltes Anstecken mit Multiladepunkt-Management, Umstellung zwischen lesendem und schreibendem Modus im App Center, Verbesserungen für KEBA P40",
+          Changelog.app(App.POWER_TO_HEAT, App.MY_PV, App.ASKOMA) + "Veröffentlichung der Apps für Askoma ASKOHEAT+ und AC•THOR 9s",
+          Changelog.app(App.PV_INVERTER, App.SOLAREDGE) + "Fehlerbehebung bei Kompatibilität mit dem Modbus/SunSpec-Protokoll von SolarEdge",
+          Changelog.app(App.PEAKSHAVING) + "Verbesserung der historischen Darstellung",
+          Changelog.app(App.METER, App.EASTRON_SDM630) + "Veröffentlichung der App für den Eastron SDM630 Verbrauchs- und Erzeugungszähler",
+          Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Variable Netzentgelte in Deutschland nach §14a EnWG Modul 3 sind jetzt im App Center aktivierbar",
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.INDUSTRIAL_L) + "Interne Remote BMS-Restart/Hard-Reset-Option" },
+          { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | Anlagenprofil: Verbesserung des Excel-Exports aller Channels" },
+          { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.COMMERCIAL_50) + "Technischer Unterbau und Vorbereitungen in FEMS" },
+        ],
+      },
+      {
         version: "2025.7.1",
         changes: [
           Changelog.app(App.POWER_TO_HEAT) + "Fehlerbehebung beim Slider zur Konfiguration der Energie",
