@@ -1,9 +1,11 @@
 package io.openems.edge.system.fenecon.industrial.l;
 
-import static io.openems.common.test.TestUtils.createDummyClock;
+import java.time.Instant;
+import java.time.ZoneOffset;
 
 import org.junit.Test;
 
+import io.openems.common.test.TimeLeapClock;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
 import io.openems.edge.common.startstop.StartStop;
@@ -32,15 +34,15 @@ public class SystemFeneconIndustrialLImplTest {
 
 	private static final ChannelAddress SMOKE_DETECTION = new ChannelAddress(IO_ID, "InputOutput7");
 	private static final ChannelAddress SMOKE_DETECTION_FAILURE = new ChannelAddress(IO_ID, "InputOutput8");
-	private static final ChannelAddress BMS_HARD_RESET = new ChannelAddress(IO_ID, "InputOutput9");
 
 	private static final ChannelAddress START_STOP = new ChannelAddress(COMPONENT_ID, "StartStop");
 
 	@Test
 	public void test() throws Exception {
+		final var clock = new TimeLeapClock(Instant.parse("2020-01-01T01:00:00.00Z"), ZoneOffset.UTC);
 		final var dummyIo = new DummyInputOutput(IO_ID);
 		new ComponentTest(new SystemFeneconIndustrialLImpl()) //
-				.addReference("componentManager", new DummyComponentManager(createDummyClock())) //
+				.addReference("componentManager", new DummyComponentManager(clock)) //
 				.addReference("setCoolingUnitModbus", new DummyModbusBridge(MODBUS_ID)) //
 				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("ess", new DummyMetaEss(ESS_ID)) //
@@ -62,7 +64,6 @@ public class SystemFeneconIndustrialLImplTest {
 						.setIsSmokeDetectionInstalled(false)//
 						.setSmokeDetection(SMOKE_DETECTION.toString())
 						.setSmokeDetectionFailure(SMOKE_DETECTION_FAILURE.toString())//
-						.setBmsHardReset(BMS_HARD_RESET.toString())//
 						.build())
 				.next(new TestCase()//
 						.input(SMOKE_DETECTION, false)//
@@ -76,9 +77,10 @@ public class SystemFeneconIndustrialLImplTest {
 
 	@Test
 	public void testWithSmokeDetection() throws Exception {
+		final var clock = new TimeLeapClock(Instant.parse("2020-01-01T01:00:00.00Z"), ZoneOffset.UTC);
 		final var dummyIo = new DummyInputOutput(IO_ID);
 		new ComponentTest(new SystemFeneconIndustrialLImpl()) //
-				.addReference("componentManager", new DummyComponentManager(createDummyClock())) //
+				.addReference("componentManager", new DummyComponentManager(clock)) //
 				.addReference("setCoolingUnitModbus", new DummyModbusBridge(MODBUS_ID)) //
 				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("ess", new DummyMetaEss(ESS_ID)) //
@@ -100,7 +102,6 @@ public class SystemFeneconIndustrialLImplTest {
 						.setIsSmokeDetectionInstalled(true)//
 						.setSmokeDetection(SMOKE_DETECTION.toString())
 						.setSmokeDetectionFailure(SMOKE_DETECTION_FAILURE.toString())//
-						.setBmsHardReset(BMS_HARD_RESET.toString())//
 						.build())
 				.next(new TestCase()//
 						.input(SMOKE_DETECTION, false)//

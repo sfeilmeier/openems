@@ -307,21 +307,6 @@ public enum Unit {
 	MILLIBAR("mbar", BAR, -3),
 
 	/**
-	 * Unit of Absolute Humidity [g/m³].
-	 */
-	GRAMS_PER_CUBIC_METER("g/m³"),
-
-	/*
-	 * Unit of Parts Per Million [ppm].
-	 */
-	PARTS_PER_MILLION("ppm"),
-
-	/**
-	 * Unit of Enthalpy [kJ/kg].
-	 */
-	KILOJOULES_PER_KILOGRAM("kJ/kg"),
-
-	/**
 	 * Unit of angular measurement in decimal degrees [°].
 	 */
 	DECIMAL_DEGREE("°");
@@ -404,8 +389,7 @@ public enum Unit {
 				KILOAMPERE_HOURS, KILOVOLT_AMPERE, KILOVOLT_AMPERE_REACTIVE, KILOVOLT_AMPERE_REACTIVE_HOURS,
 				KILOWATT_HOURS, MICROOHM, MILLIAMPERE_HOURS, MILLIOHM, MILLISECONDS, MINUTE, THOUSANDTH,
 				VOLT_AMPERE_HOURS, VOLT_AMPERE_REACTIVE_HOURS, WATT_HOURS_BY_WATT_PEAK, CUMULATED_WATT_HOURS, BAR,
-				MILLIBAR, TENTHOUSANDTH, DEZIAMPERE, DEZIVOLT, GRAMS_PER_CUBIC_METER, PARTS_PER_MILLION,
-				KILOJOULES_PER_KILOGRAM -> //
+				MILLIBAR, TENTHOUSANDTH, DEZIAMPERE, DEZIVOLT -> //
 			value + " " + this.symbol;
 
 		case ON_OFF -> //

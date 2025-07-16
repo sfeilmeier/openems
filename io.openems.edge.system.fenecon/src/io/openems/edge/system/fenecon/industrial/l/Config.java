@@ -59,9 +59,6 @@ public @interface Config {
 	@AttributeDefinition(name = "Acknowledge Channel", description = "IO for acknowledge.")
 	String acknowledgeEmergencyStop();
 
-	@AttributeDefinition(name = "BMS Hard Reset", description = "IO for BMS Hard Reset.")
-	String bmsHardReset();
-
 	@AttributeDefinition(name = "Smoke detection installed", description = "is smoke detection installed?")
 	boolean isSmokeDetectionInstalled() default false;
 

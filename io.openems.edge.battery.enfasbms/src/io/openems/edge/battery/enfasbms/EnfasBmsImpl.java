@@ -5,7 +5,6 @@ import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_2;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_3;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SET_NULL_FOR_DEFAULT;
-import static io.openems.edge.common.channel.ChannelUtils.getValues;
 import static io.openems.edge.common.type.TypeUtils.divide;
 import static io.openems.edge.common.type.TypeUtils.multiply;
 
@@ -88,9 +87,6 @@ import io.openems.edge.common.taskmanager.Priority;
 })
 public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements EnfasBms, ModbusComponent, OpenemsComponent,
 		Battery, BatteryVoltageProtection, EventHandler, ModbusSlave, StartStoppable {
-
-	public static record BatteryValues(int soc, int voltage, int chargeMaxVoltage, int dischargeMinVoltage) {
-	}
 
 	private static final SemanticVersion OUTDATED_VERSION = new SemanticVersion(1, 0, 23);
 	private static final int MAX_16BIT_UNSIGNED_INT = 65535;
@@ -211,7 +207,6 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 			this.voltageProtectionLimits.updateLimits();
 		}
 		case EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE -> {
-			this.updateBmsCommunication();
 			this.handleStateMachine();
 		}
 		}
@@ -237,18 +232,6 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 			this.channel(EnfasBms.ChannelId.RUN_FAILED).setNextValue(true);
 			this.logError(this.log, "StateMachine failed: " + e.getMessage());
 		}
-	}
-
-	/**
-	 * Sets {@link EnfasBms.ChannelId#NOT_STABLE_COMMUNICATION} to true in the
-	 * following cases; Battery started and at least one of {@link BatteryValues} is
-	 * null. And {@link EnfasBms.ChannelId#BMS_COMMUNICATION_FAILED} if the
-	 * {@link ModbusComponent.ChannelId#MODBUS_COMMUNICATION_FAILED} accordingly.
-	 */
-	private void updateBmsCommunication() {
-		var areBatteryValuesDefined = getValues(this, BatteryValues.class).isPresent();
-		this._setNotStableCommunication(!areBatteryValuesDefined);
-		this._setBmsCommunicationFailed(this.getModbusCommunicationFailed());
 	}
 
 	@Override
