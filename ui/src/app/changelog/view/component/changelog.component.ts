@@ -25,6 +25,13 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.7.3",
+        changes: [
+          Changelog.UI,
+          Changelog.app(App.POWER_TO_HEAT) + "Fehlerbehebung bei gemessenem Heizstab",
+        ],
+      },
+      {
         version: "2025.7.2",
         changes: [
           "FENECON Home: Verbessertes Verhalten mit aktiver Blindleistungseinstellung Q(U)",
