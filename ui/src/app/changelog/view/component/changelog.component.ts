@@ -42,7 +42,6 @@ export class ChangelogComponent {
           Changelog.app(App.PEAKSHAVING) + "Verbesserung der historischen Darstellung",
           Changelog.app(App.METER, App.EASTRON_SDM630) + "Veröffentlichung der App für den Eastron SDM630 Verbrauchs- und Erzeugungszähler",
           Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Variable Netzentgelte in Deutschland nach §14a EnWG Modul 3 sind jetzt im App Center aktivierbar",
-          { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.INDUSTRIAL_L) + "Interne Remote BMS-Restart/Hard-Reset-Option" },
           { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | Anlagenprofil: Verbesserung des Excel-Exports aller Channels" },
           { roleIsAtLeast: Role.ADMIN, change: Changelog.product(Product.COMMERCIAL_50) + "Technischer Unterbau und Vorbereitungen in FEMS" },
         ],

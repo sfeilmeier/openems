@@ -26,7 +26,6 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		private boolean isSmokeDetectionInstalled;
 		private String smokeDetection;
 		private String smokeDetectionFailure;
-		private String bmsHardReset;
 
 		private Builder() {
 		}
@@ -113,11 +112,6 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 
 		public Builder setSmokeDetectionFailure(String smokeDetectionFailure) {
 			this.smokeDetectionFailure = smokeDetectionFailure;
-			return this;
-		}
-
-		public Builder setBmsHardReset(String bmsHardReset) {
-			this.bmsHardReset = bmsHardReset;
 			return this;
 		}
 
@@ -215,11 +209,6 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	@Override
 	public String smokeDetectionFailure() {
 		return this.builder.smokeDetectionFailure;
-	}
-
-	@Override
-	public String bmsHardReset() {
-		return this.builder.bmsHardReset;
 	}
 
 	@Override

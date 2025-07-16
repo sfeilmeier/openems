@@ -47,7 +47,7 @@ public interface SystemFeneconIndustrialM extends OpenemsComponent, EventHandler
 	 * @return {@link StartStop}
 	 */
 	public StartStop getStartStopTarget();
-
+	
 	/**
 	 * Gets the Channel for {@link ChannelId#STATE_MACHINE}.
 	 *

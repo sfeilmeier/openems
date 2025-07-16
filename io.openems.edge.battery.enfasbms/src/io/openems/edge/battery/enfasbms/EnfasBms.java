@@ -485,10 +485,6 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable, Bat
 				.unit(PERCENT)//
 				.onChannelChange(EnfasBmsImpl::updateSoc)), //
 		USER_SOC_RAW_VALUE(Doc.of(INTEGER) //
-				.accessMode(READ_ONLY)), //
-		NOT_STABLE_COMMUNICATION(Doc.of(Level.FAULT) //
-				.accessMode(READ_ONLY)), //
-		BMS_COMMUNICATION_FAILED(Doc.of(Level.FAULT) //
 				.accessMode(READ_ONLY)) //
 		; //
 
@@ -1082,64 +1078,6 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable, Bat
 	 */
 	public default Value<Integer> getBatterySoc() {
 		return this.getBatterySocChannel().value();
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#BMS_COMMUNICATION_FAILED}.
-	 *
-	 * @return the Channel
-	 */
-	public default StateChannel getBmsCommunicationFailedChannel() {
-		return this.channel(ChannelId.BMS_COMMUNICATION_FAILED);
-	}
-
-	/**
-	 * Gets the BmsCommunicationFailed, see
-	 * {@link ChannelId#BMS_COMMUNICATION_FAILED}.
-	 *
-	 * @return the Channel {@link Value}
-	 */
-	public default Value<Boolean> getBmsCommunicationFailed() {
-		return this.getBmsCommunicationFailedChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#BMS_COMMUNICATION_FAILED} Channel.
-	 *
-	 * @param value the next value
-	 */
-	public default void _setBmsCommunicationFailed(boolean value) {
-		this.getBmsCommunicationFailedChannel().setNextValue(value);
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#NOT_STABLE_COMMUNICATION}.
-	 *
-	 * @return the Channel
-	 */
-	public default StateChannel getNotStableCommunicationChannel() {
-		return this.channel(ChannelId.NOT_STABLE_COMMUNICATION);
-	}
-
-	/**
-	 * Gets the NotStableCommunication, see
-	 * {@link ChannelId#NOT_STABLE_COMMUNICATION}.
-	 *
-	 * @return the Channel {@link Value}
-	 */
-	public default Value<Boolean> getNotStableCommunication() {
-		return this.getNotStableCommunicationChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#NOT_STABLE_COMMUNICATION} Channel.
-	 *
-	 * @param value the next value
-	 */
-	public default void _setNotStableCommunication(boolean value) {
-		this.getNotStableCommunicationChannel().setNextValue(value);
 	}
 
 }
