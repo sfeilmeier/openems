@@ -213,6 +213,11 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 	}
 
 	@Override
+	public String getOpenCageApiKey() {
+		return "84da209777eb42648ab80a68a2618423";
+	}
+
+	@Override
 	public String getOpenMeteoApiKey() {
 		return "1xngdTs5XQvhKhQh";
 	}
