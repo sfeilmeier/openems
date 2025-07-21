@@ -7,8 +7,8 @@ import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconI
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.batteryf2bClusterSerial;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.cycle;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.essGenericManagedSymmetric;
+import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.getGpioId;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.gridMeter;
-import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.io;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusInternal;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusToBattery;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusToBatteryInverter;
@@ -39,6 +39,7 @@ import io.openems.common.oem.OpenemsEdgeOem;
 import io.openems.common.session.Language;
 import io.openems.common.session.Role;
 import io.openems.edge.app.enums.ModbusType;
+import io.openems.edge.app.hardware.IoGpio;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk010.Property;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.core.appmanager.AbstractOpenemsApp;
@@ -46,11 +47,13 @@ import io.openems.edge.core.appmanager.AbstractOpenemsAppWithProps;
 import io.openems.edge.core.appmanager.AppConfiguration;
 import io.openems.edge.core.appmanager.AppDef;
 import io.openems.edge.core.appmanager.AppDescriptor;
+import io.openems.edge.core.appmanager.AppManagerUtil;
 import io.openems.edge.core.appmanager.ComponentUtil;
 import io.openems.edge.core.appmanager.ConfigurationTarget;
 import io.openems.edge.core.appmanager.OpenemsApp;
 import io.openems.edge.core.appmanager.OpenemsAppCardinality;
 import io.openems.edge.core.appmanager.OpenemsAppCategory;
+import io.openems.edge.core.appmanager.OpenemsAppInstance;
 import io.openems.edge.core.appmanager.OpenemsAppPermissions;
 import io.openems.edge.core.appmanager.Type;
 import io.openems.edge.core.appmanager.Type.Parameter.BundleParameter;
@@ -90,14 +93,18 @@ public class Isk010 extends AbstractOpenemsAppWithProps<Isk010, Property, Bundle
 
 	}
 
+	private final AppManagerUtil appManagerUtil;
+
 	@Activate
 	public Isk010(//
 			@Reference final ComponentManager componentManager, //
 			final ComponentContext componentContext, //
 			@Reference final ConfigurationAdmin cm, //
-			@Reference final ComponentUtil componentUtil //
+			@Reference final ComponentUtil componentUtil, //
+			@Reference final AppManagerUtil appManagerUtil //
 	) {
 		super(componentManager, componentContext, cm, componentUtil);
+		this.appManagerUtil = appManagerUtil;
 	}
 
 	@Override
@@ -136,6 +143,9 @@ public class Isk010 extends AbstractOpenemsAppWithProps<Isk010, Property, Bundle
 
 			final var batteryModbusType = this.getEnum(p, ModbusType.class, Property.BATTERY_MODBUS_TYPE);
 
+			final var deviceHardware = this.appManagerUtil
+					.getFirstInstantiatedAppByCategories(OpenemsAppCategory.OPENEMS_DEVICE_HARDWARE);
+
 			final var components = Lists.newArrayList(//
 					// Core-Components
 					power(), cycle(), //
@@ -147,10 +157,9 @@ public class Isk010 extends AbstractOpenemsAppWithProps<Isk010, Property, Bundle
 					essGenericManagedSymmetric(bundle, essId, batteryClusterId, "batteryInverter1"), //
 					// Bridge
 					modbusToBatteryInverter(bundle, t, 1), //
-					// IO
-					io(bundle), //
 					// Misc.
-					system(t, "System Industrial S (ISK010)", List.of(batteryId1, batteryId2)) //
+					system(t, "System Industrial S (ISK010)", getGpioId(this.appManagerUtil, deviceHardware),
+							List.of(batteryId1, batteryId2)) //
 			);
 
 			switch (batteryModbusType) {

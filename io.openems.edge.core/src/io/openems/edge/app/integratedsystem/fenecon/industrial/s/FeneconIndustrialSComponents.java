@@ -7,13 +7,18 @@ import java.util.ResourceBundle;
 
 import com.google.gson.JsonPrimitive;
 
+import io.openems.common.exceptions.OpenemsError;
+import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.types.EdgeConfig;
 import io.openems.common.types.EdgeConfig.Component;
 import io.openems.common.utils.JsonUtils;
 import io.openems.edge.app.enums.MeterType;
 import io.openems.edge.app.enums.Parity;
+import io.openems.edge.app.hardware.IoGpio;
 import io.openems.edge.app.meter.KdkMeter;
+import io.openems.edge.core.appmanager.AppManagerUtil;
 import io.openems.edge.core.appmanager.ConfigurationTarget;
+import io.openems.edge.core.appmanager.OpenemsAppInstance;
 import io.openems.edge.core.appmanager.dependency.DependencyDeclaration;
 import io.openems.edge.ess.power.api.SolverStrategy;
 
@@ -366,12 +371,14 @@ public final class FeneconIndustrialSComponents {
 	 * 
 	 * @param t         the {@link ConfigurationTarget} of the current configuration
 	 * @param alias     the alias of the component
+	 * @param ioId      the id of the gpio
 	 * @param batteries the battery ids
 	 * @return the {@link Component}
 	 */
 	public static EdgeConfig.Component system(//
 			final ConfigurationTarget t, //
 			final String alias, //
+			final String ioId, //
 			final List<String> batteries //
 	) {
 		return new EdgeConfig.Component("system0", alias, "System.Fenecon.Industrial.S", //
@@ -380,14 +387,14 @@ public final class FeneconIndustrialSComponents {
 						.add("battery.ids", batteries.stream() //
 								.map(JsonPrimitive::new) //
 								.collect(JsonUtils.toJsonArray())) //
-						.addProperty("acknowledgeEmergencyStop", "io0/DigitalOutput2") //
-						.addProperty("emergencyStopState", "io0/DigitalInput3") //
+						.addProperty("acknowledgeEmergencyStop", ioId + "/DigitalOutput2") //
+						.addProperty("emergencyStopState", ioId + "/DigitalInput3") //
 						.addProperty("ess.id", "ess0") //
-						.addProperty("fuseTripped", "io0/DigitalInput4") //
-						.addProperty("coolingUnitEnable", "io0/DigitalOutput1") //
-						.addProperty("coolingUnitError", "io0/DigitalInput1") //
+						.addProperty("fuseTripped", ioId + "/DigitalInput4") //
+						.addProperty("coolingUnitEnable", ioId + "/DigitalOutput1") //
+						.addProperty("coolingUnitError", ioId + "/DigitalInput1") //
 						.addProperty("coolingUnitMode", "AUTO") //
-						.addProperty("spdTripped", "io0/DigitalInput2") //
+						.addProperty("spdTripped", ioId + "/DigitalInput2") //
 						.onlyIf(t == ConfigurationTarget.ADD, b -> {
 							b.addProperty("startStop", "STOP");
 						}) //
@@ -423,6 +430,31 @@ public final class FeneconIndustrialSComponents {
 								.addProperty(KdkMeter.Property.MODBUS_UNIT_ID.name(), 5) //
 								.build())
 						.build());
+	}
+
+	/**
+	 * Gets the id of the gpio from the device hardware.
+	 * 
+	 * @param appManagerUtil to get the gpio instance
+	 * @param deviceHardware the current device hardware
+	 * @return the id of the gpio
+	 * @throws OpenemsError.OpenemsNamedException if no gpio was found
+	 */
+	public static String getGpioId(AppManagerUtil appManagerUtil, OpenemsAppInstance deviceHardware)
+			throws OpenemsError.OpenemsNamedException {
+		if (deviceHardware == null) {
+			throw new OpenemsException("Unable to find gpio for hardware 'UNDEFINED'.");
+		}
+
+		for (var dependency : deviceHardware.dependencies) {
+			if (!"IO_GPIO".equals(dependency.key)) {
+				continue;
+			}
+			final var instance = appManagerUtil.findInstanceByIdOrError(dependency.instanceId);
+			return instance.properties.get(IoGpio.Property.IO_ID.name()).getAsString();
+		}
+
+		throw new OpenemsException("Unable to find gpio for hardware '" + deviceHardware.appId + "'.");
 	}
 
 	private FeneconIndustrialSComponents() {

@@ -8,6 +8,7 @@ import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconI
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.cycle;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.essCluster;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.essGenericManagedSymmetric;
+import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.getGpioId;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.gridMeter;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.io;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.s.FeneconIndustrialSComponents.modbusInternal;
@@ -47,6 +48,7 @@ import io.openems.edge.core.appmanager.AbstractOpenemsAppWithProps;
 import io.openems.edge.core.appmanager.AppConfiguration;
 import io.openems.edge.core.appmanager.AppDef;
 import io.openems.edge.core.appmanager.AppDescriptor;
+import io.openems.edge.core.appmanager.AppManagerUtil;
 import io.openems.edge.core.appmanager.ComponentUtil;
 import io.openems.edge.core.appmanager.ConfigurationTarget;
 import io.openems.edge.core.appmanager.OpenemsApp;
@@ -91,14 +93,18 @@ public class Isk110 extends AbstractOpenemsAppWithProps<Isk110, Property, Bundle
 
 	}
 
+	private final AppManagerUtil appManagerUtil;
+
 	@Activate
 	public Isk110(//
 			@Reference final ComponentManager componentManager, //
 			final ComponentContext componentContext, //
 			@Reference final ConfigurationAdmin cm, //
-			@Reference final ComponentUtil componentUtil //
+			@Reference final ComponentUtil componentUtil, //
+			@Reference final AppManagerUtil appManagerUtil //
 	) {
 		super(componentManager, componentContext, cm, componentUtil);
+		this.appManagerUtil = appManagerUtil;
 	}
 
 	@Override
@@ -147,6 +153,9 @@ public class Isk110 extends AbstractOpenemsAppWithProps<Isk110, Property, Bundle
 
 			final var batteryModbusType = this.getEnum(p, ModbusType.class, Property.BATTERY_MODBUS_TYPE);
 
+			final var deviceHardware = this.appManagerUtil
+					.getFirstInstantiatedAppByCategories(OpenemsAppCategory.OPENEMS_DEVICE_HARDWARE);
+
 			final var components = Lists.newArrayList(//
 					// Core-Components
 					power(), cycle(), //
@@ -166,7 +175,7 @@ public class Isk110 extends AbstractOpenemsAppWithProps<Isk110, Property, Bundle
 					// IO
 					io(bundle), //
 					// Misc.
-					system(t, "System Industrial S (ISK110)",
+					system(t, "System Industrial S (ISK110)", getGpioId(this.appManagerUtil, deviceHardware),
 							List.of(battery11Id, battery12Id, battery21Id, battery22Id)) //
 			);
 
