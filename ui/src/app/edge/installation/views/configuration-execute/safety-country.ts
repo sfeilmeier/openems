@@ -14,6 +14,8 @@ export namespace SafetyCountry {
     export function getSafetyCountry(countryValue: Country) {
         switch (countryValue) {
             case Country.GERMANY:
+            case Country.LITHUANIA:
+                // For FENECON Home battery inverter, Lithuania is not (yet) supported as safety country. "GERMANY" is configured instead.
                 return SafetyCountry.GERMANY;
             case Country.AUSTRIA:
                 return SafetyCountry.AUSTRIA;
