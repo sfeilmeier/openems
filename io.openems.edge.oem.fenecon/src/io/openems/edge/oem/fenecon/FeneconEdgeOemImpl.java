@@ -148,6 +148,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Evcs.Webasto.Next", "") //
 			.put("App.Evcs.Webasto.Unite", "") //
 			.put("App.Hardware.IoGpio", "") //
+			.put("App.Evse.ElectricVehicle.Generic", "") //
+			.put("App.Evse.ChargePoint.Keba", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
+			.put("App.Evse.Controller.Cluster", "") //
 			.put("App.Hardware.KMtronic8Channel", "https://fenecon.de/produkte/fems/fems-relais/") //
 			.put("App.Heat.HeatPump", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
 			.put("App.Heat.CHP", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
