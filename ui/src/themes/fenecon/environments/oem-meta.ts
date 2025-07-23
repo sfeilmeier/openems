@@ -11,9 +11,7 @@ export const OemMeta: BaseMeta = {
     links: {
         COMMON_STORAGE: "ui/standardwidgets.html#_speicher",
         FORGET_PASSWORD: "https://erp.fenecon.de/web/reset_password?",
-        EVCS_HARDY_BARTH: "fems-app/includes/fems-app/includes/FEMS_App_Ladestation_eCharge_Hardy_Barth.html",
-        EVCS_KEBA_KECONTACT: "fems-app/includes/FEMS_App_Ladestation_KEBA.html",
-        EVCS_OCPP_IESKEYWATTSINGLE: "fems-app/includes/FEMS_App_Ladestation_Ies_Keywatt.html",
+        EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
 
         CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE: "fems-app/includes/FEMS_App_Netzdienliche_Beladung.html",
         CONTROLLER_CHP_SOC: "fems-app/bhkw.html",
