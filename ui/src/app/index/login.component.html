@@ -30,7 +30,7 @@
                   <ng-container *ngIf="environment.backend === 'OpenEMS Backend', else openEMSEdge">
                     <form (ngSubmit)="doLogin({ username: username.value, password: password.value})">
                       <ion-item>
-                        <ion-input appAutofill autocomplete="username" #username required type="input"
+                        <ion-input appAutofill autocomplete="username" #username required type="text"
                           [placeholder]="'E-Mail / ' + ('Login.user' | translate)"
                           [label]="'E-Mail / '  + ('Login.user' | translate)" label-placement="floating">
                         </ion-input>

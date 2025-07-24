@@ -9,6 +9,7 @@ export const OemMeta: BaseMeta = {
         },
     },
     links: {
+        DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
         COMMON_STORAGE: "ui/standardwidgets.html#_speicher",
         FORGET_PASSWORD: "https://erp.fenecon.de/web/reset_password?",
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",

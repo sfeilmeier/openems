@@ -18,6 +18,7 @@ export class RegistrationModalComponent implements OnInit {
   protected formGroup: FormGroup;
   protected activeSegment: string = "installer";
   protected readonly countries = COUNTRY_OPTIONS(this.translate);
+  protected docsLink: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,6 +30,7 @@ export class RegistrationModalComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.getForm(this.activeSegment);
+    this.docsLink = this.createEvcsDocsLink();
   }
 
   /**
@@ -124,7 +126,7 @@ export class RegistrationModalComponent implements OnInit {
         acceptPrivacyPolicy: new FormControl(false, Validators.requiredTrue),
         acceptAgb: new FormControl(false, Validators.requiredTrue),
         subscribeNewsletter: new FormControl(false),
-      });
+      }, {});
     } else {
       return this.formBuilder.group({
         firstname: new FormControl("", Validators.required),
@@ -143,6 +145,15 @@ export class RegistrationModalComponent implements OnInit {
         subscribeNewsletter: new FormControl(false),
       });
     }
+  }
+
+  private createEvcsDocsLink() {
+    const link = environment.links.DATA_PROTECTION;
+
+    if (link == null) {
+      return null;
+    }
+    return link.replace("{language}", this.service.getDocsLang());
   }
 
 }

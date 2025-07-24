@@ -1165,10 +1165,10 @@
     },
     "Form": {
       "user": {
-        "acceptPrivacyPolicy": "By creating a FENECON account, I declare that I have read and agree to the FENECON <a target=\"_blank\" href=\"https://fenecon.de/en/datenschutzerklaerung/\">Privacy Policy</a> and Terms of Use.*"
+        "acceptPrivacyPolicy": "By creating a FENECON account, I declare that I have read and agree to the FENECON <a target=\"_blank\" href={{link}}>Privacy Policy</a> and Terms of Use.*"
       },
       "installer": {
-        "acceptPrivacyPolicy": "By creating a FENECON installer account, I declare that I have read and agree to the FENECON <a target=\"_blank\" href=\"https://fenecon.de/en/datenschutzerklaerung/\">Privacy Policy</a> and Terms of Use.*"
+        "acceptPrivacyPolicy": "By creating a FENECON installer account, I declare that I have read and agree to the FENECON <a target=\"_blank\" href={{link}}>Privacy Policy</a> and Terms of Use.*"
       },
       "contactDetails": "Contact Details",
       "companyName": "Company name",
@@ -1183,7 +1183,6 @@
       "password": "Password",
       "confirmPassword": "Confirm password",
       "isElectrician": "I confirm that my company is registered in the installer register and i am therefore authorised to connect and commission a storage system.",
-      "acceptPrivacyPolicy": "By creating a FENECON installer account, I declare that I have read and agree to the FENECON <a target=\"_blank\" href=\"https://fenecon.de/en/datenschutzerklaerung/\">Privacy Policy</a> and Terms of Use.*",
       "acceptAgb": "I confirm the <a target=\"_blank\" href=\"https://fenecon.de/page/gtc/\">AGB</a>.*",
       "subscribeNewsletter": "Here you can subscribe to the <a href='https://erp.fenecon.de/fenmail' target='_blank'>FENECON newsletter</a>, which is published several times a year.",
       "company": "Company",
