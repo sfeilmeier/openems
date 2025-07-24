@@ -113,6 +113,11 @@ export abstract class AbstractIbn {
       label: string,
       modules: ComponentData[];
     }[],
+    doubleSocket?: {
+      isEnabled: boolean[][];
+      label?: string;
+    },
+    formModels?: any[],
   };
 
   // Configuration summary
@@ -156,6 +161,8 @@ export abstract class AbstractIbn {
 
   // Index of the 14a controller view.
   public readonly indexOf14aLimiterControllerView: number = 7;
+
+  public abstract readonly isDoubleSocketValid: boolean | null;
 
   constructor(public views: View[], public translate: TranslateService) { }
 
@@ -454,6 +461,29 @@ export abstract class AbstractIbn {
       value: edge.id,
     });
 
+    // Speichersystemkomponenten
+    const doubleSocketLabel: string = this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.DOUBLE_SOCKET");
+
+    protocol.lots = this.serialNumbers.batteriesData.flatMap(batteryData =>
+      batteryData.modules.map(module => {
+        // Default name and value
+        let name = this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label });
+        let value = module.value;
+
+        // Special condition for the double socket
+        if (this.isDoubleSocketValid && module.label === doubleSocketLabel) {
+          name = doubleSocketLabel;
+          value = module.value ? this.translate.instant("General.yes") : this.translate.instant("General.no");
+        }
+
+        return {
+          category: batteryData.label,
+          name: name,
+          serialNumber: value,
+        };
+      })
+    );
+
     return protocol;
   }
 
@@ -541,7 +571,7 @@ export abstract class AbstractIbn {
   /**
    * Restricts the reading of serial numbers to specific towers configured.
    */
-  public readSerialNumbersFromRegisters(edge: Edge, websocket: Websocket, numberOfTowers: number, numberOfModulesPerTower: number, slaveNr?: number): Promise<{}>[] {
+  public readSerialNumbersFromRegisters(edge: Edge, websocket: Websocket, numberOfTowers: number, numberOfModulesPerTower: number, index?: number): Promise<{}>[] {
 
     const result: Promise<{}>[] = [];
     for (let tower = 0; tower < numberOfTowers; tower++) {
@@ -585,9 +615,9 @@ export abstract class AbstractIbn {
    *
    * @param towerNr number of towers.
    * @param numberOfModulesPerTower number of modules per tower.
-   * @param slaveNr index of the slave from list of slaves in the commercial cluster.
+   * @param batteryIndex index of the battery/slave from the list of batteries (Comemrcial cluster). usually '0' for Home.
    */
-  public abstract getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, slaveNr?: number): FormlyFieldConfig[];
+  public abstract getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, batteryIndex?: number): FormlyFieldConfig[];
 
   /**
    * Returns the fields to enter number of towers and modules, manually.
@@ -599,10 +629,10 @@ export abstract class AbstractIbn {
 
   /**
    * Returns the appropriate header for serial number category for the system.
-   * @param slaveNr the Slave Nr.
-   * @param towerNr the Tower number.
+   * @param towerIndex the index of the towers.
+   * @param batteryIndex the index of the batteries. usually '0' for Home.
    */
-  public abstract getSerialNumberCategoryHeader(slaveNr: number, towerNr: number): string;
+  public abstract getSerialNumberCategoryHeader(towerIndex: number, batteryIndex?: number): string;
 
   /**
    * Retrieves the Serial numbers of the battery modules and components.

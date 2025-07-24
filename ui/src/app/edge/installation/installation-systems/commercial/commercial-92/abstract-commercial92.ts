@@ -112,7 +112,8 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         return fields;
     }
 
-    public override getSerialNumberCategoryHeader(slaveNr: number, towerNr: number): string {
+    public override getSerialNumberCategoryHeader(towerIndex: number, slaveIndex?: number): string {
+        const towerNr: number = towerIndex + 1;
         return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: towerNr + 1 });
     }
 
@@ -150,9 +151,9 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         return fields;
     }
 
-    public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, slaveNr?: number) {
+    public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, slaveIndex?: number) {
         const fields: FormlyFieldConfig[] = [];
-        const emsBoxSerialNumber: string | null = sessionStorage.getItem("emsBoxSerialNumber");
+        const slaveNr: number = slaveIndex + 1;
 
         switch (towerNr) {
             case 0:
@@ -188,7 +189,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                         required: true,
                         placeholder: "FEFxxxxxxx",
                     },
-                    defaultValue: emsBoxSerialNumber,
+                    defaultValue: this.getEmsBoxSerialNumber(slaveNr),
                     validators: {
                         validation: ["emsBoxSerialNumber"],
                     },
@@ -220,6 +221,16 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BMS_BOX"),
                 required: true,
                 placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
+                checkbox: {
+                    value: this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]?.[towerNr] ?? false,
+                    label: this.serialNumbers?.doubleSocket?.label,
+
+                    updateFn: (checked: boolean) => {
+                        if (this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]) {
+                            this.serialNumbers.doubleSocket.isEnabled[slaveIndex][towerNr] = checked;
+                        }
+                    },
+                },
             },
             validators: {
                 validation: ["batteryAndBmsBoxSerialNumber"],
@@ -418,7 +429,6 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
 
     public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
         const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
-
         const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
 
         if (safetyCountry === Country.GERMANY) {
@@ -433,20 +443,6 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             category: Category.GRID,
             name: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
             value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
-        });
-
-        // Speichersystemkomponenten
-        protocol.lots = [];
-
-        this.serialNumbers.batteriesData.forEach((batteryData) => {
-            batteryData.modules.forEach((module) => {
-                // Push the data to protocol.lots
-                protocol.lots.push({
-                    category: batteryData.label,
-                    name: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label }),
-                    serialNumber: module.value,
-                });
-            });
         });
 
         return new Promise((resolve, reject) => {
@@ -497,4 +493,6 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
     }
 
     public abstract getEdge(index: number): Edge;
+
+    public abstract getEmsBoxSerialNumber(slaveNr: number): string | null;
 }

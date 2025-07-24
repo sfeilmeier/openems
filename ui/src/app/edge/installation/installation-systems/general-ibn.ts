@@ -13,6 +13,7 @@ export class GeneralIbn extends AbstractIbn {
     public override readonly systemId = SystemId.GENERAL;
 
     public override showViewCount = false;
+    public override isDoubleSocketValid: boolean | null = null;
 
     constructor(translate: TranslateService) {
         super([
@@ -45,7 +46,7 @@ export class GeneralIbn extends AbstractIbn {
     public override getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number): FormlyFieldConfig[] {
         throw new Error("This is General Ibn, Method not implemented.");
     }
-    public override getSerialNumberCategoryHeader(slaveNr: number, towerNr: number): string {
+    public override getSerialNumberCategoryHeader(towerIndex: number): string {
         throw new Error("This is General Ibn, Method not implemented.");
     }
     public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower?: number): Promise<{}> {
