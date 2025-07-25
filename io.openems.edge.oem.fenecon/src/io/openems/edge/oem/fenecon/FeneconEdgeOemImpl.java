@@ -143,6 +143,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Evcs.IesKeywatt", "https://fenecon.de/fenecon-fems/fems-app-dc-ladestation/") //
 			.put("App.Evcs.Keba", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
 			.put("App.Evcs.Keba.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
+			.put("App.Evcs.Goe.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
 			.put("App.Evcs.Heidelberg.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
 			.put("App.Evcs.Mennekes.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
 			.put("App.Evcs.Webasto.Next", "") //
