@@ -7,9 +7,11 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.groupingBy;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -63,6 +65,7 @@ import io.openems.edge.common.taskmanager.Priority;
 import io.openems.edge.ess.api.MetaEss;
 import io.openems.edge.ess.api.SymmetricEss;
 import io.openems.edge.system.fenecon.industrial.l.envicool.Envicool;
+import io.openems.edge.system.fenecon.industrial.l.jsonrpc.BmsHardReset;
 import io.openems.edge.system.fenecon.industrial.l.jsonrpc.EmergencyStopAcknowledge;
 import io.openems.edge.system.fenecon.industrial.l.statemachine.Context;
 import io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine;
@@ -204,8 +207,9 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 			ChannelAddress fuseStateChannel, //
 			ChannelAddress psuTriggeredChannel, //
 			ChannelAddress acknowledgeEmergencyStopChannel, //
+			ChannelAddress bmsHardResetChannel, //
 			ChannelAddress smokeDetectionChannel, //
-			ChannelAddress smokeDetectionFailureChannel//
+			ChannelAddress smokeDetectionFailureChannel //
 	) {
 
 		/**
@@ -225,6 +229,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 					fromString(config.psuTriggered()), //
 					// Output Channels
 					fromString(config.acknowledgeEmergencyStop()), //
+					config.bmsHardReset() != null ? fromString(config.bmsHardReset()) : null, //
 					/**
 					 * Get the Smoke detection channel only if it is installed
 					 */
@@ -246,7 +251,8 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 		try {
 			// Prepare Context
-			var context = new Context(this, this.ess, calculateStartStop(this.getEsssList()));
+			var context = new Context(this, this.ess, calculateStartStop(this.getEsssList()),
+					this.componentManager.getClock());
 			this.stateMachine.run(context);
 			this._setRunFailed(false);
 		} catch (OpenemsNamedException e) {
@@ -315,7 +321,6 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 		try {
 			Channel<Boolean> channel = this.componentManager.getChannel(channelAddress);
 			var value = channel.value();
-
 			value.ifPresent(t -> this.channel(channelId).setNextValue(invert ? !t : t));
 		} catch (OpenemsNamedException e) {
 			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
@@ -475,7 +480,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	@Override
 	public String debugLog() {
 		return new StringBuilder() //
-				.append(this.stateMachine.getCurrentState()) //
+				.append(this.stateMachine.debugLog()) //
 				.append("|")//
 				.append("CoolingUnit: ")//
 				.append(this.getSetRunTimeControlModeChannel().value().asEnum().toString()) //
@@ -490,17 +495,17 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 			this.acknowledgeEmergencyStop();
 			return EmptyObject.INSTANCE;
 		});
+
+		builder.handleRequest(new BmsHardReset(), endpoint -> {
+			endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.ADMIN));
+		}, call -> {
+			this.stateMachine.forceNextState(State.BMS_RESET);
+			return EmptyObject.INSTANCE;
+		});
 	}
 
-	private void acknowledgeEmergencyStop() throws OpenemsNamedException {
-		try {
-			WriteChannel<Boolean> outputChannel = this.componentManager
-					.getChannel(this.parsedConfig.acknowledgeEmergencyStopChannel());
-			outputChannel.setNextWriteValue(true);
-		} catch (Exception e) {
-			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
-			throw e;
-		}
+	private void acknowledgeEmergencyStop() throws Exception {
+		this.getWriteAcknowledgeChannel().setNextWriteValue(true);
 	}
 
 	private final AtomicBoolean allowAcknowledge = new AtomicBoolean(false);
@@ -515,12 +520,10 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	private void handleAcknowledge() {
 		try {
-			WriteChannel<Boolean> outputChannel = this.componentManager
-					.getChannel(this.parsedConfig.acknowledgeEmergencyStopChannel());
 			if (!this.isInEmergencyStopState() && this.allowAcknowledge.get()) {
-				outputChannel.setNextWriteValue(false);
+				this.getWriteAcknowledgeChannel().setNextWriteValue(false);
 			}
-		} catch (OpenemsNamedException e) {
+		} catch (Exception e) {
 			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
 		}
 	}
@@ -529,10 +532,8 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 		// TODO Would be better to keep IO as a @Reference.
 		// See https://git.intranet.fenecon.de/FENECON/fems/pulls/799#issuecomment-23990
 		try {
-			WriteChannel<Boolean> channel = this.componentManager
-					.getChannel(this.parsedConfig.acknowledgeEmergencyStopChannel());
-			channel.onSetNextWrite(this.acknowledgeCallback);
-		} catch (OpenemsNamedException e) {
+			this.getWriteAcknowledgeChannel().onSetNextWrite(this.acknowledgeCallback);
+		} catch (Exception e) {
 			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
 		}
 	}
@@ -543,12 +544,64 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 		}
 
 		try {
-			WriteChannel<Boolean> outputChannel = this.componentManager
-					.getChannel(this.parsedConfig.acknowledgeEmergencyStopChannel());
-			outputChannel.getOnSetNextWrites().remove(this.acknowledgeCallback);
-
+			this.getWriteAcknowledgeChannel().getOnSetNextWrites().remove(this.acknowledgeCallback);
 		} catch (Exception e) {
 			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Gets the started batteries.
+	 * 
+	 * @return the list of started batteries.
+	 */
+	public List<Battery> getStartedBatteries() {
+		return this.getMatchedBatteries(StartStoppable::isStarted);
+	}
+
+	/**
+	 * Gets the batteries which has fault.
+	 * 
+	 * @return the list of faulty batteries
+	 */
+	public List<Battery> getFaultBatteries() {
+		return this.getMatchedBatteries(OpenemsComponent::hasFaults);
+	}
+
+	/**
+	 * This method returns a list of batteries where batteries matched with required
+	 * conditions.
+	 * 
+	 * @param method asked battery condition,e.g. {@link #isStarted()}
+	 * @return List of {@link Battery}.
+	 */
+	private List<Battery> getMatchedBatteries(Predicate<Battery> method) {
+		return this.batteries.stream()//
+				.filter(method)//
+				.toList();
+	}
+
+	private WriteChannel<Boolean> getWriteAcknowledgeChannel() throws Exception {
+		try {
+			return this.componentManager.getChannel(this.parsedConfig.acknowledgeEmergencyStopChannel());
+		} catch (Exception e) {
+			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
+			throw e;
+		}
+	}
+
+	/**
+	 * Gets the {@link ParsedConfig#bmsHardResetChannel}.
+	 * 
+	 * @return the output channel {@link WriteChannel}
+	 * @throws Exception on error
+	 */
+	public WriteChannel<Boolean> getWriteBmsHardResetChannel() throws Exception {
+		try {
+			return this.componentManager.getChannel(this.parsedConfig.bmsHardResetChannel());
+		} catch (Exception e) {
+			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
+			throw e;
 		}
 	}
 }

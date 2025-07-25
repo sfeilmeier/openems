@@ -23,5 +23,5 @@ public class Context extends AbstractContext<SystemFeneconIndustrialSImpl> {
 	public boolean isStopped() {
 		return this.startStop == StartStop.STOP;
 	}
-	
+
 }

@@ -82,6 +82,9 @@ import io.openems.edge.common.taskmanager.Priority;
 public class WuerthBmsImpl extends AbstractOpenemsModbusComponent implements WuerthBms, ModbusComponent,
 		OpenemsComponent, Battery, BatteryVoltageProtection, EventHandler, ModbusSlave, StartStoppable {
 
+	public record BatteryValues(int soc, int voltage, int chargeMaxVoltage, int dischargeMinVoltage) {
+	}
+
 	private static final SemanticVersion OUTDATED_VERSION = new SemanticVersion(1, 0, 9);
 	private static final int MAX_16BIT_UNSIGNED_INT = 65535;
 	private static final int CAPACITY = 161_100; // [Wh]

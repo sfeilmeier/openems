@@ -113,7 +113,9 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 		SMOKE_DETECTION(Doc.of(Level.FAULT)//
 				.text("Smoke Detected!")),
 		SMOKE_DETECTION_FAILURE(Doc.of(Level.WARNING)//
-				.text("Failure in the Smoke detection system!"));
+				.text("Failure in the Smoke Detection System")), //
+		BMS_HARD_RESET(Doc.of(OpenemsType.BOOLEAN)), //
+		;
 
 		private final Doc doc;
 
