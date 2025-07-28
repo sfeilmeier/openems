@@ -77,7 +77,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.appService.listen();
     SplashScreen.hide();
-
   }
 
   ngOnDestroy() {

@@ -3,9 +3,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RefresherCustomEvent } from "@ionic/angular";
 import { Subject } from "rxjs";
 import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
-import { NavigationPageComponent } from "src/app/shared/components/navigation/view/view";
+import { ViewUtils } from "src/app/shared/components/navigation/view/shared/shared";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Edge, EdgeConfig, EdgePermission, Service, Utils, Websocket, Widgets } from "src/app/shared/shared";
+import { TSignalValue } from "src/app/shared/type/utility";
 import { AdvertWidgets } from "src/app/shared/type/widget";
 import { DateTimeUtils } from "src/app/shared/utils/datetime/datetime-utils";
 
@@ -56,8 +57,8 @@ export class LiveComponent implements OnDestroy {
     });
   }
 
-  private static calculatePaddingBottom(position: string | null) {
-    return 100 - NavigationPageComponent.calculateHeight(position);
+  private static calculatePaddingBottom(position: TSignalValue<NavigationService["position"]> | null) {
+    return 100 - ViewUtils.getViewHeight(position);
   }
 
   public ionViewWillEnter() {
