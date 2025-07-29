@@ -15,9 +15,11 @@ public class MyConfigSerial extends AbstractComponentConfig implements ConfigSer
 		private int databits;
 		private Stopbit stopbits;
 		private Parity parity;
+		private boolean enableTermination;
+		private int delayBeforeTx;
+		private int delayAfterTx;
 		private LogVerbosity logVerbosity;
 		private int invalidateElementsAfterReadErrors;
-		private boolean restricted;
 
 		private Builder() {
 		}
@@ -52,8 +54,18 @@ public class MyConfigSerial extends AbstractComponentConfig implements ConfigSer
 			return this;
 		}
 
-		public Builder setRestricted(boolean restricted) {
-			this.restricted = restricted;
+		public Builder setEnableTermination(boolean enableTermination) {
+			this.enableTermination = enableTermination;
+			return this;
+		}
+
+		public Builder setDelayBeforeTx(int delay) {
+			this.delayBeforeTx = delay;
+			return this;
+		}
+
+		public Builder setDelayAfterTx(int delay) {
+			this.delayAfterTx = delay;
 			return this;
 		}
 
@@ -114,11 +126,6 @@ public class MyConfigSerial extends AbstractComponentConfig implements ConfigSer
 	}
 
 	@Override
-	public boolean restricted() {
-		return this.builder.restricted;
-	}
-
-	@Override
 	public LogVerbosity logVerbosity() {
 		return this.builder.logVerbosity;
 	}
@@ -127,4 +134,5 @@ public class MyConfigSerial extends AbstractComponentConfig implements ConfigSer
 	public int invalidateElementsAfterReadErrors() {
 		return this.builder.invalidateElementsAfterReadErrors;
 	}
+
 }
