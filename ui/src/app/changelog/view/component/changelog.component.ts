@@ -25,6 +25,18 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.7.4",
+        changes: [
+          Changelog.app(App.EVCS_AC, App.KEBA) + "(P40) In Abhängigkeit von der KEBA Firmware-Version: Warnung bei inkompatiblen Versionen; Korrektur der Energiewerte in Versionen unter 1.2.1",
+          Changelog.app(App.EVCS_AC, App.GO_E) + "Einbindung der Wallbox go-e Charger Gemini flex (nur lesend))",
+          Changelog.app(App.SCHWELLWERTSTEUERUNG) + "Fehlerbehebung in der Darstellung",
+          { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | System: Firmware-Update für GoodWe Batteriewechselrichter" },
+          { roleIsAtLeast: Role.ADMIN, change: "Inbetriebnahmeassistent: Litauen kann als Installations-/Kundenadresse angegeben werden" },
+          { roleIsAtLeast: Role.ADMIN, change: "Verbesserungen an neuer EVSE-Architektur für Ladesäulen" },
+          { roleIsAtLeast: Role.ADMIN, change: "Weiterführung des UI-Redesigns; aktivierbar für ADMINs im Benutzerprofil" },
+        ],
+      },
+      {
         version: "2025.7.3",
         changes: [
           Changelog.UI,

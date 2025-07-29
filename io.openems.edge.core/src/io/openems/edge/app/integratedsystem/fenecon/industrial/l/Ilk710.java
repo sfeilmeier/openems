@@ -157,6 +157,7 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 									.addProperty("coolingUnitModbus.id", modbusIdToCoolingUnit) //
 									.addProperty("coolingUnitModbusUnitId", 1) //
 									.addProperty("coolingUnitMode", "ENABLED") //
+									.addProperty("bmsHardReset", "io0/DigitalOutput1") //
 									.addProperty("acknowledgeEmergencyStop", "io0/DigitalOutput2") //
 									.addProperty("emergencyStopState", "io0/DigitalInput3") //
 									.addProperty("spdTripped", "io0/DigitalInput2") //

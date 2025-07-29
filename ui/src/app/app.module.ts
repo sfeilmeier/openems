@@ -22,7 +22,6 @@ import { SettingsModule as EdgeSettingsModule } from "./edge/settings/settings.m
 import { SystemLogComponent } from "./edge/settings/systemlog/systemlog.component";
 import { IndexModule } from "./index/index.module";
 import { PlatFormService } from "./platform.service";
-import { RegistrationModule } from "./registration/registration.module";
 import { NavigationComponent } from "./shared/components/navigation/navigation.component";
 import { NavigationService } from "./shared/components/navigation/service/navigation.service";
 import { StatusSingleComponent } from "./shared/components/status/single/status.component";
@@ -58,7 +57,6 @@ import { UserModule } from "./user/user.module";
     SharedModule,
     TranslateModule.forRoot({ loader: { provide: TranslateLoader, useClass: MyTranslateLoader } }),
     UserModule,
-    RegistrationModule,
     SetupKeyComponent,
   ],
   providers: [

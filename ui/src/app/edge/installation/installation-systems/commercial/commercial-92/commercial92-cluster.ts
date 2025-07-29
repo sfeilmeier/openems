@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { filter, Subject, takeUntil } from "rxjs";
 import { SumState } from "src/app/index/shared/sumState";
@@ -7,7 +6,6 @@ import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componen
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
-import { Category } from "../../../shared/category";
 import { CommercialCluster, FeedInType, View } from "../../../shared/enums";
 import { SystemId } from "../../../shared/system";
 import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
@@ -131,111 +129,17 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         );
     }
 
-    public override getSerialNumberCategoryHeader(slaveNr: number, towerNr: number): string {
-        return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER_CLUSTER", { batteryNumber: slaveNr, towerNumber: towerNr + 1 });
+    public override getSerialNumberCategoryHeader(towerIndex: number, slaveIndex: number,): string {
+        const slaveNr: number = slaveIndex + 1;
+        const towerNr: number = towerIndex + 1;
+        return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER_CLUSTER", { batteryNumber: slaveNr, towerNumber: towerNr });
     }
-
-    public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, slaveNr: number) {
-        const fields: FormlyFieldConfig[] = [];
-
-        switch (towerNr) {
-            case 0:
-                fields.push({
-                    key: "batteryInverter",
-                    type: "input",
-                    templateOptions: {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER"),
-                        required: true,
-                        placeholder: "xxxxxxxxxxxxxxxx",
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                fields.push({
-                    key: "parallelBox",
-                    type: "input",
-                    templateOptions: {
-                        label: "Parallel Box",
-                        required: true,
-                        prefix: "FCP",
-                        placeholder: "xxxxxxxxx",
-                    },
-                    validators: {
-                        validation: ["boxSerialNumber"],
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                fields.push({
-                    key: "emsBox",
-                    type: "input",
-                    templateOptions: {
-                        label: Category.toTranslatedString(Category.EMS_BOX_LABEL_HOME, this.translate),
-                        required: true,
-                        placeholder: "FEFxxxxxxx",
-                    },
-                    defaultValue: this.emsBoxSerialNumbers[slaveNr - 1],
-                    validators: {
-                        validation: ["emsBoxSerialNumber"],
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                break;
-            default:
-                fields.push({
-                    key: "extensionBox",
-                    type: "input",
-                    templateOptions: {
-                        label: "Extension Box",
-                        required: true,
-                        prefix: "FEE",
-                        placeholder: "xxxxxxxxx",
-                    },
-                    validators: {
-                        validation: ["boxSerialNumber"],
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                break;
-        }
-
-        fields.push({
-            key: "bmsBox",
-            type: "input",
-            templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BMS_BOX"),
-                required: true,
-                placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
-            },
-            validators: {
-                validation: ["batteryAndBmsBoxSerialNumber"],
-            },
-            wrappers: ["input-serial-number"],
-        });
-
-        for (let moduleNr = 0; moduleNr < numberOfModulesPerTower; moduleNr++) {
-            fields.push({
-                key: "module" + moduleNr,
-                type: "input",
-                templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") + (moduleNr + 1),
-                    required: true,
-                    placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
-                },
-                validators: {
-                    validation: ["batteryAndBmsBoxSerialNumber"],
-                },
-                wrappers: ["input-serial-number"],
-            });
-        }
-
-        return fields;
-    }
-
 
     /**
      * Restricts the reading of serial numbers to specific towers configured.
      */
-    public override readSerialNumbersFromRegisters(edge: Edge, websocket: Websocket, numberOfTowers: number, numberOfModulesPerTower: number, slaveNr: number): Promise<{}>[] {
-
+    public override readSerialNumbersFromRegisters(edge: Edge, websocket: Websocket, numberOfTowers: number, numberOfModulesPerTower: number, index: number): Promise<{}>[] {
+        const slaveNr = index + 1; // Convert 0-based index to 1-based slave number
         const result: Promise<{}>[] = [];
         // Only process towers for the given slaveNr
         for (let tower = 0; tower < numberOfTowers; tower++) {
@@ -368,5 +272,9 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                 edge.unsubscribeFromChannels(websocket, channelAddresses);
             }, 5000);
         });
+    }
+
+    public override getEmsBoxSerialNumber(slaveNr: number): string | null {
+        return this.emsBoxSerialNumbers[slaveNr - 1] ?? null;
     }
 }

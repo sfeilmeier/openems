@@ -47,7 +47,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   private static readonly TOWER_DATA_TIMEOUT = 5_000; // five seconds
 
   public override readonly systemType: SystemType = SystemType.FENECON_HOME;
-
+  public override readonly isDoubleSocketValid: boolean = true;
 
   // Protocol-pv-component
   public batteryInverter?: {
@@ -139,10 +139,10 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     super(views, translate);
   }
 
-  public override getSerialNumberCategoryHeader(slaveNr: number, towerNr: number): string {
-    return towerNr === 0
+  public override getSerialNumberCategoryHeader(towerIndex: number): string {
+    return towerIndex === 0
       ? this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS")
-      : this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: towerNr });
+      : this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: towerIndex });
   }
 
   public override getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number) {
@@ -179,7 +179,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     return fields;
   }
 
-  public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number) {
+  public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, batteryIndex: number) {
     const fields: FormlyFieldConfig[] = [];
     const emsBoxSerialNumber: string = sessionStorage.getItem("emsBoxSerialNumber");
 
@@ -254,6 +254,18 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BMS_BOX"),
         required: true,
         placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
+        ...(this.isDoubleSocketValid && {
+          checkbox: {
+            value: this.serialNumbers?.doubleSocket?.isEnabled?.[batteryIndex]?.[towerNr] ?? false,
+            label: this.serialNumbers?.doubleSocket?.label,
+
+            updateFn: (checked: boolean) => {
+              if (this.serialNumbers?.doubleSocket?.isEnabled?.[batteryIndex]) {
+                this.serialNumbers.doubleSocket.isEnabled[batteryIndex][towerNr] = checked;
+              }
+            },
+          },
+        }),
       },
       validators: {
         validation: ["batteryAndBmsBoxSerialNumber"],
@@ -379,7 +391,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         // If data isn't available after the timeout, the
         // promise gets resolved with default values
         if (!isResolved) {
-          resolve([{ numberOfTowers: 1, numberOfModulesPerTower: 5 }]);
+          resolve([{ numberOfTowers: 1, numberOfModulesPerTower: this.minNumberOfModulesPerTower }]);
         }
 
         // Unsubscribe to currentData and channels after timeout
@@ -785,20 +797,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         value: this.avu.serialNumber,
       });
     }
-
-    // Speichersystemkomponenten
-    protocol.lots = [];
-
-    this.serialNumbers.batteriesData.forEach((batteryData) => {
-      batteryData.modules.forEach((module) => {
-        // Push the data to protocol.lots
-        protocol.lots.push({
-          category: batteryData.label,
-          name: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label }),
-          serialNumber: module.value,
-        });
-      });
-    });
 
     return new Promise((resolve, reject) => {
       websocket

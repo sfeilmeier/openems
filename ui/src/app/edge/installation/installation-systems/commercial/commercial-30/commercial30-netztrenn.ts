@@ -219,20 +219,6 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
             });
         }
 
-        // Speichersystemkomponenten
-        protocol.lots = [];
-
-        this.serialNumbers.batteriesData.forEach((batteryData) => {
-            batteryData.modules.forEach((module) => {
-                // Push the data to protocol.lots
-                protocol.lots.push({
-                    category: batteryData.label,
-                    name: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label }),
-                    serialNumber: module.value,
-                });
-            });
-        });
-
         return new Promise((resolve, reject) => {
             websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
                 resolve(response.result["setupProtocolId"]);

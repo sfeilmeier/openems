@@ -626,7 +626,8 @@
       "sweden": "Schweden",
       "switzerland": "Schweiz",
       "czech": "Tschechische Republik",
-      "GREECE": "Griechenland"
+      "GREECE": "Griechenland",
+      "LITHUANIA": "Litauen"
     },
     "yes": "Ja",
     "no": "Nein",
@@ -985,7 +986,9 @@
       "BATTERY_MODULE_DESCRIPTION": "Bitte geben Sie nur die letzten 8 Ziffern der Seriennummer ein.",
       "BATTERY_TOWER_CLUSTER": "Batterie {{ batteryNumber }} turm {{towerNumber}}",
       "INVALID_SERIALNUMBER_KEY": "Bitte überprüfen Sie die {{ key }} Seriennummer in {{ header }}",
-      "REFRESH_NOTE": "Falls nicht alle Seriennummern angezeigt werden, aktualisieren Sie bitte Ihren Browser.\nDas Auslesen der Seriennummern kann einige Minuten in Anspruch nehmen."
+      "REFRESH_NOTE": "Falls nicht alle Seriennummern angezeigt werden, aktualisieren Sie bitte Ihren Browser.\nDas Auslesen der Seriennummern kann einige Minuten in Anspruch nehmen.",
+      "DOUBLE_SOCKET_LABEL": "Im Doppelsockel verbaut",
+      "DOUBLE_SOCKET": "Doppelsockel"
     },
     "PROTOCOL_SYSTEM": {
       "FIRSTNAME": "Vorname Kontaktperson",
@@ -1161,10 +1164,10 @@
     },
     "Form": {
       "user": {
-        "acceptPrivacyPolicy": "Durch das Erstellen eines FENECON Accounts erkläre ich, die FENECON <a target=\"_blank\" href=\"https://fenecon.de/datenschutzerklaerung/\">Datenschutzerklärung</a> und die Nutzungsbedingungen gelesen zu haben und stimme ihnen zu.*"
+        "acceptPrivacyPolicy": "Durch das Erstellen eines FENECON Accounts erkläre ich, die FENECON <a target=\"_blank\" href={{link}}>Datenschutzerklärung</a> und die Nutzungsbedingungen gelesen zu haben und stimme ihnen zu.*"
       },
       "installer": {
-        "acceptPrivacyPolicy": "Durch das Erstellen eines FENECON Installateur Accounts erkläre ich, die FENECON <a target=\"_blank\" href=\"https://fenecon.de/datenschutzerklaerung/\">Datenschutzerklärung</a> und die Nutzungsbedingungen gelesen zu haben und stimme ihnen zu.*"
+        "acceptPrivacyPolicy": "Durch das Erstellen eines FENECON Installateur Accounts erkläre ich, die FENECON <a target=\"_blank\" href={{link}}>Datenschutzerklärung</a> und die Nutzungsbedingungen gelesen zu haben und stimme ihnen zu.*"
       },
       "contactDetails": "Kontaktdaten",
       "company": "Firma",
@@ -1180,7 +1183,6 @@
       "password": "Passwort",
       "confirmPassword": "Passwort wiederholen",
       "isElectrician": "Hiermit bestätige ich, dass mein Betrieb ins Installateursverzeichnis eingetragen ist und somit bin ich berechtigt ein Speichersystem anzuschließen und in Betrieb zu nehmen.*",
-      "acceptPrivacyPolicy": "Durch das Erstellen eines FENECON Installateur Accounts erkläre ich, die FENECON <a target=\"_blank\" href=\"https://fenecon.de/datenschutzerklaerung/\">Datenschutzerklärung</a> und die Nutzungsbedingungen gelesen zu haben und stimme ihnen zu.*",
       "acceptAgb": "Hiermit bestätige ich die <a target=\"_blank\" href=\"https://fenecon.de/allgemeine-lieferungs-und-zahlungsbedingungen/\">AGB</a>.*",
       "subscribeNewsletter": "Hier können Sie den mehrmals pro Jahr erscheinenden <a href='https://erp.fenecon.de/fenpost' target='_blank'>FENECON Newsletter</a> abonnieren.",
       "confirmEmail": "E-Mail Adresse wiederholen",
@@ -1298,7 +1300,8 @@
   },
   "GENERAL": {
     "FORMLY": {
-      "REQUIRED": "Ist erforderlich"
+      "REQUIRED": "Ist erforderlich",
+      "INITIALIZING_ERROR": "Fehler beim Initialisieren der Komponente"
     }
   },
   "FORMLY_FORM": {

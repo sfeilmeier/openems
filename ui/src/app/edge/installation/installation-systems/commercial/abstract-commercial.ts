@@ -22,6 +22,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     public override readonly showRundSteuerManual: boolean = false;
     public override showViewCount: boolean = false;
     public readonly minNumberOfTowers: number = 1;
+    public override readonly isDoubleSocketValid: boolean = true;
     public modbusBridgeType: ModbusBridgeType;
 
     // configuration-emergency-reserve
@@ -311,20 +312,6 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
         const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
 
-        // Speichersystemkomponenten
-        protocol.lots = [];
-
-        this.serialNumbers.batteriesData.forEach((batteryData) => {
-            batteryData.modules.forEach((module) => {
-                // Push the data to protocol.lots
-                protocol.lots.push({
-                    category: batteryData.label,
-                    name: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label }),
-                    serialNumber: module.value,
-                });
-            });
-        });
-
         return new Promise((resolve, reject) => {
             websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
                 resolve(response.result["setupProtocolId"]);
@@ -334,10 +321,12 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         });
     }
 
-    public override getSerialNumberCategoryHeader(slaveNr: number, towerNr: number): string {
+    public override getSerialNumberCategoryHeader(towerIndex: number, slaveIndex: number): string {
+        const slaveNr: number = slaveIndex + 1;
+        const towerNr: number = towerIndex + 1;
         return this.serialNumbers.numberOfTowers[slaveNr] === 1
             ? this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BESS_COMPONENTS")
-            : this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING", { number: towerNr + 1 });
+            : this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_STRING", { stringNumber: towerNr });
     }
 
     /**

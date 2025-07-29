@@ -628,7 +628,8 @@
       "sweden": "Sweden",
       "netherlands": "Netherlands",
       "switzerland": "Switzerland",
-      "GREECE": "Greece"
+      "GREECE": "Greece",
+      "LITHUANIA": "Lithuania"
     },
     "yes": "Yes",
     "no": "No",
@@ -987,7 +988,9 @@
       "BATTERY_MODULE_DESCRIPTION": "Please only enter the last 8 digits of the serial number.",
       "BATTERY_TOWER_CLUSTER": "Battery {{ batteryNumber }} Tower {{towerNumber}}",
       "INVALID_SERIALNUMBER_KEY": "Please check the {{ key }} serialnumber in {{ header }}",
-      "REFRESH_NOTE": "If not all serial numbers are displayed, please refresh your browser.\nReading the serial numbers may take a few minutes."
+      "REFRESH_NOTE": "If not all serial numbers are displayed, please refresh your browser.\nReading the serial numbers may take a few minutes.",
+      "DOUBLE_SOCKET_LABEL": "Installed in the double socket",
+      "DOUBLE_SOCKET": "Double socket"
     },
     "PROTOCOL_SYSTEM": {
       "FIRSTNAME": "First name of the contact person",
@@ -1164,10 +1167,10 @@
     },
     "Form": {
       "user": {
-        "acceptPrivacyPolicy": "By creating a FENECON account, I declare that I have read and agree to the FENECON <a target=\"_blank\" href=\"https://fenecon.de/en/datenschutzerklaerung/\">Privacy Policy</a> and Terms of Use.*"
+        "acceptPrivacyPolicy": "By creating a FENECON account, I declare that I have read and agree to the FENECON <a target=\"_blank\" href={{link}}>Privacy Policy</a> and Terms of Use.*"
       },
       "installer": {
-        "acceptPrivacyPolicy": "By creating a FENECON installer account, I declare that I have read and agree to the FENECON <a target=\"_blank\" href=\"https://fenecon.de/en/datenschutzerklaerung/\">Privacy Policy</a> and Terms of Use.*"
+        "acceptPrivacyPolicy": "By creating a FENECON installer account, I declare that I have read and agree to the FENECON <a target=\"_blank\" href={{link}}>Privacy Policy</a> and Terms of Use.*"
       },
       "contactDetails": "Contact Details",
       "companyName": "Company name",
@@ -1182,7 +1185,6 @@
       "password": "Password",
       "confirmPassword": "Confirm password",
       "isElectrician": "I confirm that my company is registered in the installer register and i am therefore authorised to connect and commission a storage system.",
-      "acceptPrivacyPolicy": "By creating a FENECON installer account, I declare that I have read and agree to the FENECON <a target=\"_blank\" href=\"https://fenecon.de/en/datenschutzerklaerung/\">Privacy Policy</a> and Terms of Use.*",
       "acceptAgb": "I confirm the <a target=\"_blank\" href=\"https://fenecon.de/page/gtc/\">AGB</a>.*",
       "subscribeNewsletter": "Here you can subscribe to the <a href='https://erp.fenecon.de/fenmail' target='_blank'>FENECON newsletter</a>, which is published several times a year.",
       "company": "Company",
@@ -1301,7 +1303,8 @@
   },
   "GENERAL": {
     "FORMLY": {
-      "REQUIRED": "Is required"
+      "REQUIRED": "Is required",
+      "INITIALIZING_ERROR": "Error initializing component"
     }
   },
   "FORMLY_FORM": {

@@ -9,11 +9,10 @@ export const OemMeta: BaseMeta = {
         },
     },
     links: {
+        DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
         COMMON_STORAGE: null,
         FORGET_PASSWORD: "#",
-        EVCS_HARDY_BARTH: "io.openems.edge.evcs.hardybarth/readme.adoc",
-        EVCS_KEBA_KECONTACT: "io.openems.edge.evcs.keba.kecontact/readme.adoc",
-        EVCS_OCPP_IESKEYWATTSINGLE: "io.openems.edge.evcs.ocpp.ies.keywatt.singleccs/readme.adoc",
+        EVCS: "https://docs.fenecon.de/topics/emobility_overview.htm",
 
         CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE: "io.openems.edge.controller.ess.gridoptimizedcharge/readme.adoc",
         CONTROLLER_CHP_SOC: "io.openems.edge.controller.chp.soc/readme.adoc",

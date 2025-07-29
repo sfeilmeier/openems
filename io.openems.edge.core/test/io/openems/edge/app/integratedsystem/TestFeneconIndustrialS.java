@@ -7,12 +7,14 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 
 import io.openems.common.utils.JsonUtils;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk110;
 import io.openems.edge.core.appmanager.AppManagerTestBundle;
 import io.openems.edge.core.appmanager.Apps;
+import io.openems.edge.core.appmanager.OpenemsApp;
 import io.openems.edge.core.appmanager.OpenemsAppInstance;
 import io.openems.edge.core.appmanager.jsonrpc.AddAppInstance;
 
@@ -20,13 +22,17 @@ public class TestFeneconIndustrialS {
 
 	private AppManagerTestBundle appManagerTestBundle;
 
+	private OpenemsApp hardwareApp;
+
 	@Before
 	public void beforeEach() throws Exception {
 		this.appManagerTestBundle = new AppManagerTestBundle(null, null, t -> {
-			return Apps.of(t, //
-					Apps::feneconIndustrialSIsk110, //
-					Apps::feneconIndustrialSIsk010, //
-					Apps::feneconIndustrialSIsk011 //
+			return ImmutableList.of(//
+					Apps.feneconIndustrialSIsk110(t), //
+					Apps.feneconIndustrialSIsk010(t), //
+					Apps.feneconIndustrialSIsk011(t), //
+					this.hardwareApp = Apps.techbaseCm4(t), //
+					Apps.ioGpio(t) //
 			);
 		});
 	}
@@ -50,14 +56,19 @@ public class TestFeneconIndustrialS {
 		var fullConfig = fullSettings();
 
 		this.appManagerTestBundle.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
+				new AddAppInstance.Request(this.hardwareApp.getAppId(), "key", "alias", new JsonObject()));
+
+		this.appManagerTestBundle.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
 				new AddAppInstance.Request(appId, "key", "alias", fullConfig));
 
 		// make sure every dependency got installed
-		assertEquals(this.appManagerTestBundle.sut.getInstantiatedApps().size(), 1);
+		assertEquals(this.appManagerTestBundle.sut.getInstantiatedApps().size(), 3);
 
 		// check properties of created apps
 		for (var instance : this.appManagerTestBundle.sut.getInstantiatedApps()) {
 			final var expectedDependencies = switch (instance.appId) {
+				case "App.OpenemsHardware.CM4" -> 1;
+				case "App.Hardware.IoGpio" -> 0;
 			default -> {
 				if (instance.appId.equals(appId)) {
 					yield 0;

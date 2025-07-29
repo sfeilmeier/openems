@@ -47,6 +47,7 @@ export enum BatteryStateMachine {
     GO_RUNNING = 10, //
     RUNNING = 11, //
     GO_STOPPED = 20, //
+    STOPPED = 21, //
     ERROR = 30, //
 }
 export enum DredCmd {

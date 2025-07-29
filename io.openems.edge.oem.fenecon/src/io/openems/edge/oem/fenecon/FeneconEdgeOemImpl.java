@@ -143,11 +143,15 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Evcs.IesKeywatt", "https://fenecon.de/fenecon-fems/fems-app-dc-ladestation/") //
 			.put("App.Evcs.Keba", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
 			.put("App.Evcs.Keba.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
+			.put("App.Evcs.Goe.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
 			.put("App.Evcs.Heidelberg.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
 			.put("App.Evcs.Mennekes.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
 			.put("App.Evcs.Webasto.Next", "") //
 			.put("App.Evcs.Webasto.Unite", "") //
 			.put("App.Hardware.IoGpio", "") //
+			.put("App.Evse.ElectricVehicle.Generic", "") //
+			.put("App.Evse.ChargePoint.Keba", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
+			.put("App.Evse.Controller.Cluster", "") //
 			.put("App.Hardware.KMtronic8Channel", "https://fenecon.de/produkte/fems/fems-relais/") //
 			.put("App.Heat.HeatPump", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
 			.put("App.Heat.CHP", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
@@ -210,6 +214,11 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 	@Override
 	public OAuthClientRegistration getRabotChargeCredentials() {
 		return new OAuthClientRegistration("partner-fenecon", "DUwekm35VOoAURcbFhi7pU3PcEb21A8xbSHvHiONXz");
+	}
+
+	@Override
+	public String getOpenCageApiKey() {
+		return "84da209777eb42648ab80a68a2618423";
 	}
 
 	@Override

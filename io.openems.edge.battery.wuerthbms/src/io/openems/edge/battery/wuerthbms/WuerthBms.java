@@ -602,7 +602,13 @@ public interface WuerthBms extends Battery, OpenemsComponent, StartStoppable, Ba
 				.text("CRC Value for LockStatus")), //
 		LOCK_STATUS_CRC_LSB(Doc.of(INTEGER)), //
 
-		;
+		USER_SOC_RAW_VALUE(Doc.of(INTEGER) //
+				.accessMode(READ_ONLY)), //
+		NOT_STABLE_COMMUNICATION(Doc.of(Level.FAULT) //
+				.accessMode(READ_ONLY)), //
+		BMS_COMMUNICATION_FAILED(Doc.of(Level.FAULT) //
+				.accessMode(READ_ONLY)) //
+		; //
 
 		private final Doc doc;
 
@@ -1161,24 +1167,6 @@ public interface WuerthBms extends Battery, OpenemsComponent, StartStoppable, Ba
 	}
 
 	/**
-	 * Gets the Channel for {@link ChannelId#BATTERY_SOC}.
-	 *
-	 * @return the Channel
-	 */
-	default Channel<Integer> getBatterySocChannel() {
-		return this.channel(ChannelId.BATTERY_SOC);
-	}
-
-	/**
-	 * Gets the channel value see {@link ChannelId#BATTERY_SOC}.
-	 *
-	 * @return the Channel {@link Value}
-	 */
-	default Value<Integer> getBatterySoc() {
-		return this.getBatterySocChannel().value();
-	}
-
-	/**
 	 * Gets the Channel for {@link ChannelId#NUMBER_OF_MODULES}.
 	 *
 	 * @return the Channel
@@ -1270,6 +1258,64 @@ public interface WuerthBms extends Battery, OpenemsComponent, StartStoppable, Ba
 	 */
 	default Value<Integer> getNumberOfTemperatureSensorsPerModule() {
 		return this.getNumberOfTemperatureSensorsPerModuleChannel().value();
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#BMS_COMMUNICATION_FAILED}.
+	 *
+	 * @return the Channel
+	 */
+	default StateChannel getBmsCommunicationFailedChannel() {
+		return this.channel(ChannelId.BMS_COMMUNICATION_FAILED);
+	}
+
+	/**
+	 * Gets the BmsCommunicationFailed, see
+	 * {@link ChannelId#BMS_COMMUNICATION_FAILED}.
+	 *
+	 * @return the Channel {@link Value}
+	 */
+	default Value<Boolean> getBmsCommunicationFailed() {
+		return this.getBmsCommunicationFailedChannel().value();
+	}
+
+	/**
+	 * Internal method to set the 'nextValue' on
+	 * {@link ChannelId#BMS_COMMUNICATION_FAILED} Channel.
+	 *
+	 * @param value the next value
+	 */
+	default void _setBmsCommunicationFailed(boolean value) {
+		this.getBmsCommunicationFailedChannel().setNextValue(value);
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#NOT_STABLE_COMMUNICATION}.
+	 *
+	 * @return the Channel
+	 */
+	default StateChannel getNotStableCommunicationChannel() {
+		return this.channel(ChannelId.NOT_STABLE_COMMUNICATION);
+	}
+
+	/**
+	 * Gets the NotStableCommunication, see
+	 * {@link ChannelId#NOT_STABLE_COMMUNICATION}.
+	 *
+	 * @return the Channel {@link Value}
+	 */
+	default Value<Boolean> getNotStableCommunication() {
+		return this.getNotStableCommunicationChannel().value();
+	}
+
+	/**
+	 * Internal method to set the 'nextValue' on
+	 * {@link ChannelId#NOT_STABLE_COMMUNICATION} Channel.
+	 *
+	 * @param value the next value
+	 */
+	default void _setNotStableCommunication(boolean value) {
+		this.getNotStableCommunicationChannel().setNextValue(value);
 	}
 
 }

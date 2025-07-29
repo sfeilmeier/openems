@@ -31,6 +31,7 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
   protected cellVoltageDifference: number | null = null;
   protected cellTemperatureDifference: number | null = null;
   protected batteries: EdgeConfig.Component[] = [];
+  protected esss: EdgeConfig.Component[] = [];
   protected batteryInverters: EdgeConfig.Component[] = [];
   protected tower: { [batteryId: string]: { [id: string]: any } } = {};
   protected systemFeneconIndustrialL: { [id: string]: any } = {};
@@ -73,6 +74,8 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
         new ChannelAddress(battery.id, "PackShuntTemperature"),
       );
     }
+
+    this.esss = this.config.getComponentsByFactory("Ess.Generic.ManagedSymmetric");
 
     return channels;
   }
@@ -133,10 +136,12 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
   }
 
   protected clear() {
-    this.edge.sendRequest(
-      this.websocket,
-      new ComponentJsonApiRequest({ componentId: this.component.id, payload: new ClearTimeOutFailureRequest() }),
-    );
+    this.esss.forEach((ess) => {
+      this.edge.sendRequest(
+        this.websocket,
+        new ComponentJsonApiRequest({ componentId: ess.id, payload: new ClearTimeOutFailureRequest() }),
+      );
+    });
   }
 
   protected VOLTAGE_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {

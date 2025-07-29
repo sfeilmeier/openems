@@ -90,6 +90,10 @@ export class Commercial92Ibn extends AbstractCommercial92Ibn {
         return JSON.parse(sessionStorage.getItem("edge")) as Edge;
     }
 
+    public override getEmsBoxSerialNumber(slaveNr: number): string | null {
+        return sessionStorage.getItem("emsBoxSerialNumber");
+    }
+
     protected override addCustombatteryInverterData(): ComponentData[] {
         const batteryInverterData: ComponentData[] = super.addCustombatteryInverterData();
         const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;

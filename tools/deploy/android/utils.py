@@ -139,10 +139,10 @@ def update_track(
                 "releaseNotes": [
                     {
                         'language': 'de-DE',
-                        'text': 'Neue Integrationen für Heizstäbe Askoma ASKOHEAT+ und AC•THOR 9s und Eastron SDM630 Zähler, Variable Netzentgelte nach §14a EnWG Modul 3, Verbesserungen an der Einbindung von Ladestationen uvm.'
+                        'text': 'Neue Integration für Wallbox go-e Charger Gemini flex (lesend) und allgemeine Verbesserungen'
                     },{
                         'language': 'en-US',
-                        'text': 'New integrations for Askoma ASKOHEAT+ and AC•THOR 9s heating rods and Eastron SDM630 meter, variable grid fees according to §14a EnWG module 3, improvements in the integration of charging stations, and more.'
+                        'text': 'New integrations for Wallbox go-e Charger Gemini flex (read-only) and general improvements'
                     }
                 ],
             }
