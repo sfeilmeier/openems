@@ -2,20 +2,20 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "Einmaliger Hattrick für FENECON als Innovator des Jahres",
-        "TEXT": "Wow: Bereits zum dritten Mal erhält FENECON den TOP 100-Award als „Innovator des Jahres“! <hr>Einmalig in der Geschichte des Innovationswettbewerbs. Ein Grund war, dass wir trotz rasanten Wachstums unsere strukturelle Dynamik beibehalten bzw. sogar ausbauen konnten.",
-        "LINK": "https://www.youtube.com/watch?v=Ew-8MDbtIo4",
-        "LINK_TEXT": "Mehr hier im Video!"
+        "TITLE": "Gemeinsam besser - mit Ihrem Feedback!",
+        "TEXT": "Mit Ihrer Rückmeldung entwickeln wir genau das, was Sie wirklich brauchen. Wir bitten Sie daher um eine kurze Teilnahme an unserer Partner-Umfrage zur neuen AVU-Box speziell für HOME 15/20/30. Das Ausfüllen dauert nur wenige Minuten. Herzlichen Dank!",
+        "LINK": "https://forms.cloud.microsoft/e/DkPAiP6FQ1",
+        "LINK_TEXT": "Zur Umfrage"
       }
     }
   },
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "FENECON Becomes Triple Winner of 'Innovator of the Year' Award",
-        "TEXT": "For the third consecutive year, FENECON has received the 'Innovator of the Year' title — setting a new record in the history of the TOP 100 Awards.<hr> One key reason for this exceptional recognition: despite rapid growth, FENECON has not only maintained but further strengthened its organizational agility.",
-        "LINK": "https://www.youtube.com/watch?v=Ew-8MDbtIo4",
-        "LINK_TEXT": "Watch the full story here!"
+        "TITLE": "Join the talk - Your Feedback Moves Us Forward",
+        "TEXT": "Your feedback shapes solutions that truly fit your needs. We invite you to participate in our brief partner survey about the new AVU Box for HOME 15/20/30. The survey only takes a few minutes. Your insights are highly appreciated!",
+        "LINK": "https://forms.cloud.microsoft/e/DkPAiP6FQ1",
+        "LINK_TEXT": "Start Survey Here"
       }
     }
   }
