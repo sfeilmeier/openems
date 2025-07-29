@@ -36,6 +36,9 @@ import io.openems.edge.bridge.modbus.api.Stopbit;
 	@AttributeDefinition(name = "Parity", description = "The parity - 'none', 'even', 'odd', 'mark' or 'space'")
 	Parity parity() default Parity.NONE;
 
+	@AttributeDefinition(name = "Disable port configuration", description = "Disables OpenEMS from accessing driver configuration methods. This should never be activated, except in cases involving USB-to-Serial converters with buggy device drivers")
+	boolean restricted() default true;
+
 	@AttributeDefinition(name = "Log-Verbosity", description = "The log verbosity.")
 	LogVerbosity logVerbosity() default LogVerbosity.NONE;
 
@@ -43,4 +46,5 @@ import io.openems.edge.bridge.modbus.api.Stopbit;
 	int invalidateElementsAfterReadErrors() default 1;
 
 	String webconsole_configurationFactory_nameHint() default "Bridge Modbus/RTU Serial [{id}]";
+
 }
