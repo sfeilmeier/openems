@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
-import { FeedInType } from "../../shared/enums";
+import { DynamicLimitationType, FeedInType } from "../../shared/enums";
 import { System } from "../../shared/system";
 
 @Component({
@@ -24,6 +24,7 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
   public model;
   public showRundSteuerManual: boolean;
   public readonly FeedInType = FeedInType;
+  public readonly DynamicLimitationType = DynamicLimitationType;
   private totalPvPower: number = 0;
 
   public ngOnInit() {

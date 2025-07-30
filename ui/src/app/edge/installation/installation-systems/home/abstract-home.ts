@@ -10,7 +10,7 @@ import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/sh
 
 import { AppCenterUtil } from "../../shared/appcenterutil";
 import { Category } from "../../shared/category";
-import { FeedInSetting, FeedInType, View, WebLinks } from "../../shared/enums";
+import { DynamicLimitationType, FeedInSetting, FeedInType, View, WebLinks } from "../../shared/enums";
 import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, DcPv, EmsType } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
@@ -65,6 +65,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   // protocol-dynamic-feed-in-limitation
   public override feedInLimitation?: {
     feedInType: FeedInType,
+    dynamicLimitationType: DynamicLimitationType,
     maximumFeedInPower?: number;
     naProtection: boolean;
     feedInSetting?: FeedInSetting;
@@ -72,6 +73,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     isManualProperlyFollowedAndRead?: boolean;
   } = {
       feedInType: FeedInType.NO_LIMITATION,
+      dynamicLimitationType: DynamicLimitationType.NO_LIMITATION,
       maximumFeedInPower: 0,
       naProtection: false,
       feedInSetting: FeedInSetting.FixedPowerFactor,
@@ -420,7 +422,8 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     this.feedInLimitation.maximumFeedInPower = totalPvPower;
     this.feedInLimitation.isManualProperlyFollowedAndRead = this.feedInLimitation.isManualProperlyFollowedAndRead ? this.feedInLimitation.isManualProperlyFollowedAndRead : null;
 
-    const fields: FormlyFieldConfig[] = super.getCommonFeedInLimitsFields(totalPvPower);
+    const fields: FormlyFieldConfig[] = super.getCommonFeedInLimitsFields();
+    fields.push(...super.getDynamicLimitationFields(totalPvPower));
 
     fields.push({
       key: "naProtection",
@@ -476,6 +479,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     this.feedInLimitation.feedInSetting = model.feedInSetting ?? FeedInSetting.Undefined;
     this.feedInLimitation.fixedPowerFactor = model.fixedPowerFactor ?? FeedInSetting.Undefined;
     this.feedInLimitation.isManualProperlyFollowedAndRead = model.isManualProperlyFollowedAndRead;
+    this.feedInLimitation.dynamicLimitationType = model.dynamicLimitationType;
   }
 
   public override setRequiredControllers() {
@@ -521,34 +525,26 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     });
 
     const batteryInverterData: ComponentData[] = [];
-    const isDynamicFeedInLimitation = this.feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
-      this.feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
 
-    if (isDynamicFeedInLimitation) {
-      batteryInverterData.push(
-        {
-          label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
-          value: this.feedInLimitation.maximumFeedInPower,
-        },
-        {
-          label: this.translate.instant("INSTALLATION.PROTOCOL_PV.SHADE_MANAGEMENT_DEACTIVATE"),
-          value: this.batteryInverter?.shadowManagementDisabled ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
-        }
-      );
-    } else {
-      batteryInverterData.push(
-        {
-          label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.SHADE_MANAGEMENT_DEACTIVATED"),
-          value: this.translate.instant("General.yes"),
-        },
-      );
-    }
+    batteryInverterData.push(
+      {
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.SHADE_MANAGEMENT_DEACTIVATED"),
+        value: this.translate.instant("General.yes"),
+      },
+    );
 
     batteryInverterData.push({
       label: this.translate.instant("Index.TYPE"),
       value: FeedInSetting.getFeedInSettingLabel(this.feedInLimitation.feedInSetting, this.translate) ?? FeedInSetting.Undefined,
     },
     );
+
+    if (this.feedInLimitation.dynamicLimitationType === DynamicLimitationType.DYNAMIC_LIMITATION) {
+      batteryInverterData.push({
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
+        value: this.feedInLimitation.maximumFeedInPower,
+      });
+    }
 
     if (this.feedInLimitation.feedInSetting === FeedInSetting.FixedPowerFactor) {
       batteryInverterData.push({
@@ -876,14 +872,23 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     const baseMode = AppCenterUtil.isAppManagerAvailable(edge) ? BaseMode.AppManager : BaseMode.UI;
 
     componentConfigurator.addInstallAppCallback(() => {
-      return AppCenterUtil.createOrUpdateApp(
-        edge,
-        websocket,
-        this.homeAppId,
-        this.homeAppAlias,
-        homeAppProperties,
-        AppCenterUtil.keyForIntegratedSystems(),
-      );
+      return AppCenterUtil.getAppInstances(edge, websocket, "App.Core.Meta").then(response => {
+        const instance = response.result.instances[0];
+        instance.properties["GRID_FEED_IN_LIMITATION_TYPE"] = this.feedInLimitation.dynamicLimitationType;
+        instance.properties["MAXIMUM_GRID_FEED_IN_LIMIT"] = this.feedInLimitation.maximumFeedInPower;
+        return AppCenterUtil.updateApp(edge, websocket, instance.instanceId, instance.alias, {
+          ...instance.properties,
+        });
+      }).finally(() => {
+        return AppCenterUtil.createOrUpdateApp(
+          edge,
+          websocket,
+          this.homeAppId,
+          this.homeAppAlias,
+          homeAppProperties,
+          AppCenterUtil.keyForIntegratedSystems(),
+        );
+      });
     });
 
     if (!this.estimatedConfig) {
@@ -1011,12 +1016,8 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   }
 
   public commonHomeProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): HomeCommonApp {
-    const isDynamicFeedIn =
-      this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION ||
-      this.feedInLimitation.feedInType === FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
     const commonHomeAppProperties: HomeCommonApp = {
       SAFETY_COUNTRY: safetyCountry,
-      ...(isDynamicFeedIn && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
       FEED_IN_SETTING: feedInSetting,
       HAS_EMERGENCY_RESERVE: this.emergencyReserve.isEnabled,
       ...(this.emergencyReserve.isEnabled && { EMERGENCY_RESERVE_ENABLED: this.emergencyReserve.isReserveSocEnabled }),

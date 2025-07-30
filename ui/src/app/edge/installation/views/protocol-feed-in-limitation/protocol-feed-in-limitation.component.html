@@ -4,7 +4,8 @@
 
   <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
 
-  <ion-card *ngIf="(form.controls['feedInType']?.value === FeedInType.DYNAMIC_LIMITATION) && !showRundSteuerManual">
+  <ion-card
+    *ngIf="(form.controls['dynamicLimitationType']?.value === DynamicLimitationType.DYNAMIC_LIMITATION) && !showRundSteuerManual">
     <ion-card-content>
       <ion-card-subtitle color="success">Info:</ion-card-subtitle>
 
