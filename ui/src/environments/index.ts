@@ -86,6 +86,10 @@ export interface Environment {
                     readonly COMMERCIAL_92: string,
                     readonly COMMERCIAL_92_CLUSTER: string,
                 },
+                readonly INDUSTRIAL?: {
+                    S: string,
+                    L: string
+                }
             },
 
             readonly RUNDSTEUER: {
@@ -115,6 +119,14 @@ export interface Environment {
         },
         readonly ENERGY_JOURNEY: {
             readonly HOME_10: {
+                readonly DE: string,
+                readonly EN: string,
+            },
+            readonly HOME_6_10_15: {
+                readonly DE: string,
+                readonly EN: string,
+            },
+            readonly HOME_20_30: {
                 readonly DE: string,
                 readonly EN: string,
             }

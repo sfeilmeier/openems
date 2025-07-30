@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { IonicModule } from "@ionic/angular";
 import { SharedModule } from "src/app/shared/shared.module";
 import { EnergyJourneySharedModule } from "../../shared/shared.module";
 import { ElectricityPriceSelectionComponent } from "../electricity-price-choice/electricity-price-selection";
@@ -10,12 +11,14 @@ import { DetailComponent } from "./details/details";
   imports: [
     SharedModule,
     EnergyJourneySharedModule,
+    IonicModule,
   ],
   declarations: [
     BatteryExtensionComponent,
     DetailComponent,
     ElectricityPriceSelectionComponent,
-    GridBuyChartComponent],
+    GridBuyChartComponent,
+  ],
   exports: [
     BatteryExtensionComponent,
     DetailComponent,
@@ -33,6 +36,4 @@ export type SimulationResult = {
     kWPeak: number,
     capacity: number,
   }[],
-  charge: number,
-  discharge: number,
 };

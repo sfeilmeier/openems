@@ -17,8 +17,6 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
 
   @Input({ required: true }) public simulatedData: SimulationResult = {
     simulationData: [],
-    charge: 0,
-    discharge: 0,
   };
   @Input({ required: true }) public fromDate: Date;
   @Input({ required: true }) public toDate: Date;

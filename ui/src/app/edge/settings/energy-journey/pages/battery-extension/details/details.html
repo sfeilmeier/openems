@@ -1,4 +1,4 @@
-<ion-card [title]="'Details'" *ngIf="tableData">
+<ion-card *ngIf="tableData">
   <ion-card-content>
     <ion-grid class="desktop-view" *ngIf="!isSmartPhoneResolution, else smartPhoneResolution">
       <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5); color: var(--ion-color-text)">
@@ -28,9 +28,16 @@
         </ion-col>
         <ion-col class="ion-no-padding"
           *ngFor="let maxChargeDischargePowerIncrease of tableData.maxChargeDischargePowerIncrease; let i = index">
-          {{maxChargeDischargePowerIncrease}}
-          <br>
-          {{tableData.totalChargeDischargePower[i]}}
+
+          @if(maxChargeDischargePowerIncrease < 0){ <span
+            [title]="'SETTINGS.ENERGY_JOURNEY.DECREASE_IN_PEAK_POWER_TOOLTIP' | translate">
+            {{maxChargeDischargePowerIncrease | converter: FORMAT_TO_INCREASE}}
+            </span>
+            }@else {
+            {{maxChargeDischargePowerIncrease | converter: FORMAT_TO_INCREASE}}
+            }
+            <br>
+            {{tableData.totalChargeDischargePower[i]}}
         </ion-col>
       </ion-row>
 
@@ -61,19 +68,22 @@
 
     <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
 
-    <ion-row>
-      {{"SETTINGS.ENERGY_JOURNEY.CHARGE_DISCHARGE_POWER_NOTE" | translate}}
-    </ion-row>
-    <ion-row>
-      <a [href]="productLink" target="_blank">{{"SETTINGS.ENERGY_JOURNEY.MORE_DETAILS" | translate}}</a>
-    </ion-row>
+    <ng-container *ngIf="product">
 
-    <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
-    <ion-row>
-      <b>{{"SETTINGS.ENERGY_JOURNEY.DISCLAIMER" | translate}}</b>
-      <hr>
-      {{"SETTINGS.ENERGY_JOURNEY.DISCLAIMER_TEXT" | translate}}
-    </ion-row>
+      <!-- Avoids line break on building link -->
+      <ion-row [innerHTML]="`<span style='display: inherit'>` +  ('SETTINGS.ENERGY_JOURNEY.CHARGE_DISCHARGE_POWER_NOTE' | translate: {
+      productName: product.name,
+        productLink: product.link,
+      }) + '</span>'">
+      </ion-row>
+
+      <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
+      <ion-row>
+        <b>{{"SETTINGS.ENERGY_JOURNEY.DISCLAIMER" | translate}}</b>
+        <hr>
+        {{"SETTINGS.ENERGY_JOURNEY.DISCLAIMER_TEXT" | translate}}
+      </ion-row>
+    </ng-container>
   </ion-card-content>
 </ion-card>
 
