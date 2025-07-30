@@ -93,7 +93,7 @@
     </ion-row>
 
     <ion-row>
-      <ion-col size-lg="3" size-md="6" size-sm="12">
+      <ion-col size-lg="6" size-md="6" size-sm="12">
         <oe-flat-widget title="Wechselrichter (batteryInverter0)">
           <!-- <oe-flat-widget-line [name]="'Leistungsfreigaben (Beladen / Entladen)'">
             <oe-flat-widget-line-item
@@ -130,6 +130,23 @@
             [converter]="Converter.CONVERT_TO_EXTERNAL_RECEIVER_LIMITATION"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'DREDCmd'" [channelAddress]="'batteryInverter0/DredCmd'"
             [converter]="Converter.CONVERT_TO_DRED_CMD"></oe-flat-widget-line>
+
+          <oe-flat-widget-horizontal-line></oe-flat-widget-horizontal-line>
+
+          <oe-flat-widget-line class="ion-padding-top" [name]="'Blindleistung'"
+            [channelAddress]="'batteryInverter0/ReactivePower'"
+            [converter]="Converter.POWER_IN_VOLT_AMPERE_REACTIVE"></oe-flat-widget-line>
+          <oe-flat-widget-line [name]="'Wirkleistung'" [channelAddress]="'batteryInverter0/ActivePower'"
+            [converter]="Converter.POWER_IN_WATT"></oe-flat-widget-line>
+          <oe-flat-widget-line [name]="'Scheinleistung'" [channelAddress]="'batteryInverter0/ApparentPower'"
+            [converter]="Converter.POWER_IN_VOLT_AMPERE" [filter]></oe-flat-widget-line>
+
+          <ng-container *ngIf="isReactiveChartAllowed">
+            <div style="display: flex; justify-content: center;">
+              <pickdate [historyPeriods]="['day', 'week']"></pickdate>
+            </div>
+            <oe-reactive-power-chart [componentId]="'batteryInverter0'"></oe-reactive-power-chart>
+          </ng-container>
         </oe-flat-widget>
       </ion-col>
 
@@ -176,14 +193,10 @@
             </ion-col>
           </ion-row>
 
-          <ion-card>
-            <ion-card-content>
-              <div style="display: flex; justify-content: center;">
-                <pickdate [historyPeriods]="['day', 'week']"></pickdate>
-              </div>
-              <cellVoltageChart [towerId]="selectedTower" [moduleId]="selectedModule"></cellVoltageChart>
-            </ion-card-content>
-          </ion-card>
+          <div style="display: flex; justify-content: center;">
+            <pickdate [historyPeriods]="['day', 'week']"></pickdate>
+          </div>
+          <cellVoltageChart [towerId]="selectedTower" [moduleId]="selectedModule"></cellVoltageChart>
         </oe-flat-widget>
       </ion-col>
 

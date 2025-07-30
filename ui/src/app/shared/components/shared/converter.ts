@@ -96,6 +96,34 @@ export namespace Converter {
   };
 
   /**
+  * Formats a apparent power value as Volt-Ampere [VA].
+  *
+  * Value 1000 -> "1.000 VA".
+  * Value null -> "-".
+  *
+  * @param value the power value
+  * @returns formatted value; '-' for null
+  */
+  export const POWER_IN_VOLT_AMPERE: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      Formatter.FORMAT_VOLT_AMPERE(value));
+  };
+
+  /**
+  * Formats a apparent power value as Volt-Ampere [VA].
+  *
+  * Value 1000 -> "1.000 VA".
+  * Value null -> "-".
+  *
+  * @param value the power value
+  * @returns formatted value; '-' for null
+  */
+  export const POWER_IN_VOLT_AMPERE_REACTIVE: Converter = (raw) => {
+    return IF_NUMBER(raw, value =>
+      Formatter.FORMAT_VOLT_AMPERE_REACTIVE(value));
+  };
+
+  /**
    * Formats a Power value as Watt [W].
    *
    * Value 1000 -> "1.000 W".
@@ -265,7 +293,12 @@ export namespace Converter {
 
   export const CONVERT_TO_DRED_CMD: Converter = (raw) => {
     return IF_NUMBER(raw, value => {
-      return DredCmd[value].toLowerCase();
+
+      if (value in DredCmd) {
+        return DredCmd[value].toLowerCase();
+      }
+
+      return "-";
     });
   };
 
