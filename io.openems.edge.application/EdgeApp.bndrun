@@ -114,7 +114,6 @@
 	bnd.identity;id='io.openems.edge.core',\
 	bnd.identity;id='io.openems.edge.edge2edge',\
 	bnd.identity;id='io.openems.edge.energy',\
-	bnd.identity;id='io.openems.edge.ess.byd.container',\
 	bnd.identity;id='io.openems.edge.ess.cluster',\
 	bnd.identity;id='io.openems.edge.ess.core',\
 	bnd.identity;id='io.openems.edge.ess.fenecon.commercial40',\
@@ -123,7 +122,6 @@
 	bnd.identity;id='io.openems.edge.evcs.alpitronic.hypercharger',\
 	bnd.identity;id='io.openems.edge.evcs.cluster',\
 	bnd.identity;id='io.openems.edge.evcs.core',\
-	bnd.identity;id='io.openems.edge.evcs.dezony',\
 	bnd.identity;id='io.openems.edge.evcs.goe',\
 	bnd.identity;id='io.openems.edge.evcs.goe.chargerhome',\
 	bnd.identity;id='io.openems.edge.evcs.heidelberg',\
@@ -302,7 +300,6 @@
 	io.openems.edge.energy;version=snapshot,\
 	io.openems.edge.energy.api;version=snapshot,\
 	io.openems.edge.ess.api;version=snapshot,\
-	io.openems.edge.ess.byd.container;version=snapshot,\
 	io.openems.edge.ess.cluster;version=snapshot,\
 	io.openems.edge.ess.core;version=snapshot,\
 	io.openems.edge.ess.fenecon.commercial40;version=snapshot,\
@@ -312,7 +309,6 @@
 	io.openems.edge.evcs.api;version=snapshot,\
 	io.openems.edge.evcs.cluster;version=snapshot,\
 	io.openems.edge.evcs.core;version=snapshot,\
-	io.openems.edge.evcs.dezony;version=snapshot,\
 	io.openems.edge.evcs.goe;version=snapshot,\
 	io.openems.edge.evcs.goe.chargerhome;version=snapshot,\
 	io.openems.edge.evcs.heidelberg;version=snapshot,\
