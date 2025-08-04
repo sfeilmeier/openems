@@ -130,6 +130,19 @@ function update_sources {
   done
 }
 
+function install_debian_apt_key {
+    local version_number=$1
+    local version_name=$2
+
+    local keystore="/etc/apt/trusted.gpg.d/debian-archive-${version_name}.asc"
+
+    if [ ! -f "$keystore" ]; then
+        local keytmp=$(mktemp /tmp/archive-key.XXXXXX)
+        wget "https://deb.fenecon.de/debian-keys/archive-key-${version_number}.asc" -O "${keytmp}"
+        install -m 644 "${keytmp}" "${keystore}"
+    fi
+}
+
 function install_freexian_apt_key {
     local keytmp="/tmp/freexian-archive-extended-lts.gpg"
     local keystore="/etc/apt/trusted.gpg.d/freexian-archive-extended-lts.gpg"
@@ -191,6 +204,7 @@ function update_to_stretch {
 }
 
 function update_to_buster {
+  install_debian_apt_key 10 buster;
   echo "deb http://deb.fenecon.de/debian/ buster main contrib non-free" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
@@ -222,6 +236,7 @@ function update_to_buster {
 }
 
 function update_to_bullseye {
+  install_debian_apt_key 11 bullseye;
   echo "deb http://deb.fenecon.de/debian/ bullseye main contrib non-free" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
@@ -253,6 +268,7 @@ function update_to_bullseye {
 }
 
 function update_to_bookworm {
+  install_debian_apt_key 12 bookworm;
   echo "deb http://deb.fenecon.de/debian/ bookworm main contrib non-free-firmware" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
