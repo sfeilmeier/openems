@@ -39,6 +39,7 @@ import { IndexComponent as EdgeSettingsAppIndex } from "./edge/settings/app/inde
 import { InstallAppComponent as EdgeSettingsAppInstall } from "./edge/settings/app/install.component";
 import { OAuthIndexComponent } from "./edge/settings/app/oauth/oauth.component";
 import { SingleAppComponent as EdgeSettingsAppSingle } from "./edge/settings/app/single.component";
+import { UpdateAppComponent as EdgeSettingsAppUpdate } from "./edge/settings/app/update.component";
 import { HomeServiceAssistantComponent } from "./edge/settings/assistant/home/home";
 import { IndustrialServiceAssistantComponent } from "./edge/settings/assistant/industrial/industrial";
 import { PowerAssistantComponent } from "./edge/settings/assistant/powerassistant/powerassistant";
@@ -167,7 +168,7 @@ export const routes: Routes = [
       { path: "settings/system.old", component: EdgeSettingsSystemUpdateOldComponent },
       { path: "settings/app", canActivate: [hasEdgeRole(Role.OWNER)], data: { navbarTitle: environment.edgeShortName + " Apps" }, component: EdgeSettingsAppIndex },
       { path: "settings/app/install/:appId", component: EdgeSettingsAppInstall, canActivate: [hasEdgeRole(Role.OWNER)] },
-      // { path: "settings/app/update/:appId", component: EdgeSettingsAppUpdate, canActivate: [hasEdgeRole(Role.OWNER)] },
+      { path: "settings/app/update/:appId", component: EdgeSettingsAppUpdate, canActivate: [hasEdgeRole(Role.OWNER)] },
       { path: "settings/app/single/:appId", component: EdgeSettingsAppSingle, canActivate: [hasEdgeRole(Role.OWNER)] },
       { path: "settings/app/oauth", data: { navbarTitle: "OAuth" }, component: OAuthIndexComponent, canActivate: [hasEdgeRole(Role.ADMIN)] },
       { path: "settings/energyJourney", component: EnergyJourneyComponent, data: { navbarTitle: "Energy Journey" } },
