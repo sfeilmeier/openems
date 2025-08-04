@@ -31,6 +31,7 @@ import { ModalComponent as EvseForecastComponent } from "./edge/live/Controller/
 import { ModalComponent as EvseHistoryComponent } from "./edge/live/Controller/Evse/pages/history/history";
 import { ModalComponent as EvseSingleComponent } from "./edge/live/Controller/Evse/pages/home";
 import { EvseSettingsComponent } from "./edge/live/Controller/Evse/pages/settings/settings";
+import { UpdateAppConfigComponent } from "./edge/live/Controller/Evse/pages/update-app-config/update-app-config";
 import { ModalComponent as IoHeatingRoomComponent } from "./edge/live/Controller/Io/HeatingRoom/modal/modal";
 import { LiveComponent as EdgeLiveComponent } from "./edge/live/live.component";
 import { LiveDataService } from "./edge/live/livedataservice";
@@ -38,7 +39,6 @@ import { IndexComponent as EdgeSettingsAppIndex } from "./edge/settings/app/inde
 import { InstallAppComponent as EdgeSettingsAppInstall } from "./edge/settings/app/install.component";
 import { OAuthIndexComponent } from "./edge/settings/app/oauth/oauth.component";
 import { SingleAppComponent as EdgeSettingsAppSingle } from "./edge/settings/app/single.component";
-import { UpdateAppComponent as EdgeSettingsAppUpdate } from "./edge/settings/app/update.component";
 import { HomeServiceAssistantComponent } from "./edge/settings/assistant/home/home";
 import { IndustrialServiceAssistantComponent } from "./edge/settings/assistant/industrial/industrial";
 import { PowerAssistantComponent } from "./edge/settings/assistant/powerassistant/powerassistant";
@@ -138,6 +138,11 @@ export const routes: Routes = [
           { path: "evse/:componentId/history", component: EvseHistoryComponent },
           { path: "evse/:componentId/settings", component: EvseSettingsComponent },
           { path: "evse/:componentId/forecast", component: EvseForecastComponent },
+          {
+            path: "evse/:componentId/car/update/:appId",
+            component: UpdateAppConfigComponent,
+            canActivate: [hasEdgeRole(Role.OWNER)],
+          },
           { path: "io-heating-room/:componentId", component: IoHeatingRoomComponent },
           ...history(true),
         ],
@@ -162,7 +167,7 @@ export const routes: Routes = [
       { path: "settings/system.old", component: EdgeSettingsSystemUpdateOldComponent },
       { path: "settings/app", canActivate: [hasEdgeRole(Role.OWNER)], data: { navbarTitle: environment.edgeShortName + " Apps" }, component: EdgeSettingsAppIndex },
       { path: "settings/app/install/:appId", component: EdgeSettingsAppInstall, canActivate: [hasEdgeRole(Role.OWNER)] },
-      { path: "settings/app/update/:appId", component: EdgeSettingsAppUpdate, canActivate: [hasEdgeRole(Role.OWNER)] },
+      // { path: "settings/app/update/:appId", component: EdgeSettingsAppUpdate, canActivate: [hasEdgeRole(Role.OWNER)] },
       { path: "settings/app/single/:appId", component: EdgeSettingsAppSingle, canActivate: [hasEdgeRole(Role.OWNER)] },
       { path: "settings/app/oauth", data: { navbarTitle: "OAuth" }, component: OAuthIndexComponent, canActivate: [hasEdgeRole(Role.ADMIN)] },
       { path: "settings/energyJourney", component: EnergyJourneyComponent, data: { navbarTitle: "Energy Journey" } },
