@@ -63,7 +63,8 @@ public class TestFeneconHome6 {
 		for (var instance : appManagerTestBundle.sut.getInstantiatedApps()) {
 			final var expectedDependencies = switch (instance.appId) {
 			case "App.FENECON.Home6" -> 3;
-			case "App.PvSelfConsumption.GridOptimizedCharge", "App.PvSelfConsumption.SelfConsumptionOptimization" -> 0;
+			case "App.PvSelfConsumption.GridOptimizedCharge" -> 0;
+			case "App.PvSelfConsumption.SelfConsumptionOptimization" -> 0;
 			case "App.Ess.PrepareBatteryExtension" -> 0;
 			default -> throw new Exception("App with ID[" + instance.appId + "] should not have been created!");
 			};
@@ -122,7 +123,7 @@ public class TestFeneconHome6 {
 	 * 
 	 * @return the settings object
 	 */
-	public static JsonObject fullSettings() {
+	public static final JsonObject fullSettings() {
 		return JsonUtils.buildJsonObject() //
 				.addProperty("SAFETY_COUNTRY", "GERMANY") //
 				.addProperty("MAX_FEED_IN_POWER", 1000) //

@@ -23,12 +23,10 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	@AttributeDefinition(name = "Grid-Meter-Id", description = "ID of the Grid-Meter.")
 	String meter_id() default "meter0";
 
-	@Deprecated
-	@AttributeDefinition(name = "Is Sell-To-Grid-Limit enabled?", description = "Is the sell to grid limit logic enabled? (deprecated, use=Meta#gridFeedInLimitationType)")
+	@AttributeDefinition(name = "Is Sell-To-Grid-Limit enabled?", description = "Is the sell to grid limit logic enabled?.")
 	boolean sellToGridLimitEnabled() default true;
 
-	@Deprecated
-	@AttributeDefinition(name = "Maximum allowed Sell-To-Grid power", description = "The target limit for sell-to-grid power. (deprecated, use=Meta#maximumGridFeedInLimit)")
+	@AttributeDefinition(name = "Maximum allowed Sell-To-Grid power", description = "The target limit for sell-to-grid power.")
 	int maximumSellToGridPower() default 7000;
 
 	@AttributeDefinition(name = "Risk level of the customer", description = "Low Risk: More often 100% SoC but more PV-curtails possible - High Risk: More PV-curtails avoided but less weight on the SoC.")

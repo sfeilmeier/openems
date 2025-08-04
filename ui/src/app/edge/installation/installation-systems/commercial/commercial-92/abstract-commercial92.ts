@@ -9,7 +9,7 @@ import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/sh
 import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
-import { CommercialCluster, DynamicLimitationType, FeedInType, View } from "../../../shared/enums";
+import { CommercialCluster, FeedInType, View } from "../../../shared/enums";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
 import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
@@ -21,6 +21,7 @@ import { AbstractCommercialIbn } from "../abstract-commercial";
 export type Commercial92App = {
     SAFETY_COUNTRY: SafetyCountry,
     FEED_IN_TYPE: FeedInType,
+    MAX_FEED_IN_POWER?: number,
     BATTERY_TARGET: BatteryTarget,
     HAS_ESS_LIMITER_14A: boolean,
 };
@@ -52,7 +53,6 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
     // protocol-dynamic-feed-in-limitation
     public override feedInLimitation? = {
         feedInType: FeedInType.NO_LIMITATION,
-        dynamicLimitationType: DynamicLimitationType.NO_LIMITATION,
         maximumFeedInPower: 0,
     };
 
@@ -258,14 +258,11 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
     }
 
     public override getFeedInLimitFields(): FormlyFieldConfig[] {
-        return super.getCommonFeedInLimitsFields();
-    }
-
-    public override getDynamicLimitationFields(): FormlyFieldConfig[] {
+        // Update the feedInlimitation field
         const totalPvPower = 0;
         this.feedInLimitation.maximumFeedInPower = totalPvPower;
 
-        return super.getDynamicLimitationFields(totalPvPower);
+        return super.getCommonFeedInLimitsFields(totalPvPower);
     }
 
     public override async getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service, cluster?: CommercialCluster): Promise<ComponentConfigurator> {
@@ -286,6 +283,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         const appProperties: Commercial92App = {
             SAFETY_COUNTRY: safetyCountry,
             FEED_IN_TYPE: this.feedInLimitation.feedInType,
+            ...(this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
             BATTERY_TARGET: this.batteryStartStopTarget,
             HAS_ESS_LIMITER_14A: this.isController14aActivated,
         };
@@ -458,7 +456,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
 
     public override getFeedInTypeOptions() {
         return [
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
             { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
         ];
     }

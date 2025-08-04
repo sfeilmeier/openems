@@ -7,7 +7,7 @@ import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { Category } from "../shared/category";
-import { CommercialCluster, DynamicLimitationType, FeedInType, View, WebLinks } from "../shared/enums";
+import { CommercialCluster, FeedInType, View, WebLinks } from "../shared/enums";
 import { ComponentData, EmsType, TableData } from "../shared/ibndatatypes";
 import { Meter } from "../shared/meter";
 import { System, SystemId, SystemType } from "../shared/system";
@@ -93,8 +93,7 @@ export abstract class AbstractIbn {
 
   // protocol-dynamic-feed-in-limitation
   public feedInLimitation?: {
-    feedInType: FeedInType;
-    dynamicLimitationType: DynamicLimitationType;
+    feedInType: FeedInType,
     maximumFeedInPower?: number;
   };
 
@@ -238,9 +237,10 @@ export abstract class AbstractIbn {
   /**
    * Returns the common fields for all systems in Feed in limitation view.
    *
+   * @param totalPvPower The total pv power configured.
    * @returns common fields for feed in limits fields.
    */
-  public getCommonFeedInLimitsFields(): FormlyFieldConfig[] {
+  public getCommonFeedInLimitsFields(totalPvPower: number): FormlyFieldConfig[] {
     const fields: FormlyFieldConfig[] = [];
 
     fields.push({
@@ -251,31 +251,6 @@ export abstract class AbstractIbn {
         label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
         placeholder: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER"),
         options: this.getFeedInTypeOptions(),
-        required: true,
-      },
-    });
-
-    return fields;
-  }
-
-
-  /**
- * Returns the common fields for all systems in Feed in limitation view.
- *
- * @param totalPvPower The total pv power configured.
- * @returns common fields for feed in limits fields.
- */
-  public getDynamicLimitationFields(totalPvPower: number): FormlyFieldConfig[] {
-    const fields: FormlyFieldConfig[] = [];
-
-    fields.push({
-      key: "dynamicLimitationType",
-      type: "select",
-      className: "white-space-initial",
-      templateOptions: {
-        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.LIMITATION"),
-        placeholder: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER"),
-        options: this.dynamicFeedInLimitationOptions(),
         required: true,
       },
     });
@@ -293,10 +268,15 @@ export abstract class AbstractIbn {
       parsers: [Number],
       defaultValue: totalPvPower,
       hideExpression: model =>
-        model.dynamicLimitationType !== DynamicLimitationType.DYNAMIC_LIMITATION,
+        model.feedInType !== FeedInType.DYNAMIC_LIMITATION &&
+        model.feedInType !== FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION,
 
       expressionProperties: {
         "templateOptions.label": (model: any) => {
+          if (model.feedInType === FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION) {
+            return this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE_DYNAMIC_AND_EXTERNAL_LIMITATION");
+          }
+
           return this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE");
         },
       },
@@ -421,14 +401,21 @@ export abstract class AbstractIbn {
     protocol.items = [];
 
     const feedInLimitation = this.feedInLimitation;
-    const isExternalLimitation = feedInLimitation.feedInType == FeedInType.EXTERNAL_LIMITATION;
-    const isDynamicFeedInLimitation = this.feedInLimitation.dynamicLimitationType === DynamicLimitationType.DYNAMIC_LIMITATION;
+    const isDynamicFeedInLimitation = feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
+      feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
+    const isExternalLimitation = feedInLimitation.feedInType == FeedInType.DYNAMIC_LIMITATION ||
+      feedInLimitation.feedInType == FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
 
     protocol.items.push(
       {
         category: Category.FEED_IN_MANAGEMENT,
         name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
         value: isExternalLimitation ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+      },
+      {
+        category: Category.FEED_IN_MANAGEMENT,
+        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"),
+        value: isDynamicFeedInLimitation ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
       },
       {
         category: Category.FEED_IN_MANAGEMENT,
@@ -601,20 +588,10 @@ export abstract class AbstractIbn {
    */
   public getFeedInTypeOptions(): ComponentData[] {
     return [
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_WITH_RIPPLE_CONTROLLER"), value: FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
       { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
       { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
-    ];
-  }
-
-  /**
- * Gets the list of options that should be displayed in dynamicFeedInLimitation view.
- *
- * @returns The options.
- */
-  public dynamicFeedInLimitationOptions(): ComponentData[] {
-    return [
-      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: DynamicLimitationType.DYNAMIC_LIMITATION },
-      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: DynamicLimitationType.NO_LIMITATION },
     ];
   }
 

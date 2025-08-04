@@ -3,7 +3,7 @@ import { FormlyFieldConfig } from "@ngx-formly/core";
 import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { environment } from "src/environments";
 
-import { DynamicLimitationType } from "../../../shared/enums";
+import { FeedInType } from "../../../shared/enums";
 import { Meter } from "../../../shared/meter";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
 import { SchedulerIdBehaviour } from "../../abstract-ibn";
@@ -238,7 +238,7 @@ export abstract class AbstractCommercial50Ibn extends AbstractCommercialIbn {
             mode: ConfigurationMode.RemoveAndConfigure,
         });
 
-        if (this.feedInLimitation.dynamicLimitationType === DynamicLimitationType.DYNAMIC_LIMITATION) {
+        if (this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION) {
             // ctrlGridOptimizedCharge0
             componentConfigurator.add({
                 factoryId: "Controller.Ess.GridOptimizedCharge",
@@ -282,7 +282,7 @@ export abstract class AbstractCommercial50Ibn extends AbstractCommercialIbn {
 
     public setRequiredControllers() {
         this.requiredControllerIds = [];
-        if (this.feedInLimitation.dynamicLimitationType === DynamicLimitationType.DYNAMIC_LIMITATION) {
+        if (this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION) {
             this.requiredControllerIds.push({
                 componentId: "ctrlGridOptimizedCharge0",
                 behaviour: SchedulerIdBehaviour.ALWAYS_INCLUDE,

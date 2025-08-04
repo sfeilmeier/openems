@@ -1,7 +1,6 @@
 package io.openems.edge.core.meta;
 
 import static io.openems.common.test.TestUtils.createDummyClock;
-import static io.openems.common.types.CurrencyConfig.EUR;
 import static io.openems.edge.bridge.http.dummy.DummyBridgeHttpFactory.cycleSubscriber;
 import static io.openems.edge.bridge.http.dummy.DummyBridgeHttpFactory.dummyBridgeHttpExecutor;
 import static io.openems.edge.bridge.http.dummy.DummyBridgeHttpFactory.dummyEndpointFetcher;
@@ -37,8 +36,6 @@ public class MetaImplTest {
 				.addReference("oem", oem) //
 				.addReference("httpBridgeFactory", factory)//
 				.activate(MyConfig.create() //
-						.setCurrency(EUR) //
-						.setGridFeedInLimitationType(GridFeedInLimitationType.NO_LIMITATION) //
 						.build());
 	}
 }

@@ -7,7 +7,7 @@ import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrp
 import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared";
 
 import { Category } from "../../shared/category";
-import { DynamicLimitationType, FeedInType, ModbusBridgeType, WebLinks } from "../../shared/enums";
+import { FeedInType, ModbusBridgeType, WebLinks } from "../../shared/enums";
 import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, EmsType } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
@@ -36,7 +36,6 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     // protocol-dynamic-feed-in-limitation
     public override feedInLimitation? = {
         feedInType: FeedInType.NO_LIMITATION,
-        dynamicLimitationType: DynamicLimitationType.NO_LIMITATION,
         maximumFeedInPower: 0,
     };
 
@@ -127,7 +126,12 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     }
 
     public getFeedInLimitFields() {
-        return super.getCommonFeedInLimitsFields();
+
+        // Update the feedInlimitation field
+        const totalPvPower = 0;
+        this.feedInLimitation.maximumFeedInPower = totalPvPower;
+
+        return super.getCommonFeedInLimitsFields(totalPvPower);
     }
 
     public override addSystemSpecificFields(tableData): void {
@@ -396,15 +400,9 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
     public override getFeedInTypeOptions(): ComponentData[] {
         return [
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
             { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
             { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
-        ];
-    }
-
-    public override dynamicFeedInLimitationOptions(): ComponentData[] {
-        return [
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: DynamicLimitationType.DYNAMIC_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: DynamicLimitationType.NO_LIMITATION },
         ];
     }
 
@@ -448,18 +446,21 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     protected addCustombatteryInverterData(): ComponentData[] {
         const batteryInverterData: ComponentData[] = [];
         const feedInType = this.feedInLimitation.feedInType;
-        const isExternalLimitataion = feedInType === FeedInType.EXTERNAL_LIMITATION;
-        const isDynamicFeedInLimitation = this.feedInLimitation.dynamicLimitationType === DynamicLimitationType.DYNAMIC_LIMITATION;
+        const isDynamicFeedInLimitataion = feedInType === FeedInType.DYNAMIC_LIMITATION ||
+            feedInType === FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
+        const isExternalLimitataion = feedInType === FeedInType.EXTERNAL_LIMITATION ||
+            feedInType === FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
 
+        if (isDynamicFeedInLimitataion) {
+            batteryInverterData.push({
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
+                value: this.feedInLimitation.maximumFeedInPower,
+            });
+        }
         if (isExternalLimitataion) {
             batteryInverterData.push({
                 label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
                 value: this.translate.instant("General.yes"),
-            });
-        } else if (isDynamicFeedInLimitation) {
-            batteryInverterData.push({
-                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
-                value: this.feedInLimitation.maximumFeedInPower,
             });
         } else {
             batteryInverterData.push({

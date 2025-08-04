@@ -2,7 +2,6 @@ package io.openems.edge.controller.ess.gridoptimizedcharge;
 
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
-import io.openems.edge.common.meta.GridFeedInLimitationType;
 
 public class SellToGridLimit {
 
@@ -28,7 +27,7 @@ public class SellToGridLimit {
 	 */
 	protected Integer getSellToGridLimit() throws OpenemsNamedException {
 
-		if (this.parent.meta.getGridFeedInLimitationType().asEnum() == GridFeedInLimitationType.NO_LIMITATION) {
+		if (!this.parent.config.sellToGridLimitEnabled()) {
 			this.setSellToGridLimitChannelsAndLastLimit(SellToGridLimitState.DISABLED, null);
 			return null;
 		}
@@ -42,7 +41,16 @@ public class SellToGridLimit {
 		// State of charge
 		int soc = this.parent.ess.getSoc().getOrError();
 
-		var maximumSellToGridPower = applyBuffer(soc, this.parent.maximumSellToGridPower);
+		var maximumSellToGridPower = this.parent.config.maximumSellToGridPower();
+
+		// Reduce the maximum sell to grid power with a buffer, to avoid PV curtail
+		// TODO improve logic to make sure we always meet the maximum sell to grid
+		// power. Right now we simply try to target a value 5 % below the configured
+		// maximum sell to grid power.
+		if (soc < 100) {
+			maximumSellToGridPower = Math.round(maximumSellToGridPower * 0.95F);
+			this.parent.logDebug("Reduced SellToGridPowerLimit: " + maximumSellToGridPower);
+		}
 
 		// Calculate actual limit for Ess
 		var essMinChargePower = gridPower + essActivePower + maximumSellToGridPower;
@@ -128,17 +136,5 @@ public class SellToGridLimit {
 		int dcProduction = this.parent.sum.getProductionDcActualPower().orElse(0);
 		var essMinChargePowerAc = essMinChargePower - dcProduction;
 		this.parent._setSellToGridLimitMinimumChargeLimit(essMinChargePowerAc * -1);
-	}
-
-	// Reduce the maximum sell to grid power with a buffer, to avoid PV curtail
-	// TODO improve logic to make sure we always meet the maximum sell to grid
-	// power. Right now we simply try to target a value 5 % below the configured
-	// maximum sell to grid power.
-	protected static int applyBuffer(int soc, int maximumSellToGridPower) {
-		if (soc < 100) {
-			var buffer = Math.max(maximumSellToGridPower * 0.05F, 150); // TODO: Document and DEFAULT_VALUE
-			return Math.round(maximumSellToGridPower - buffer);
-		}
-		return maximumSellToGridPower;
 	}
 }

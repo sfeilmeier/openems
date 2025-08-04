@@ -7,7 +7,7 @@ import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
 import { Category } from "../../../shared/category";
 import { Coupler } from "../../../shared/coupler";
-import { DynamicLimitationType, ModbusBridgeType, View } from "../../../shared/enums";
+import { FeedInType, ModbusBridgeType, View } from "../../../shared/enums";
 import { IbnUtils } from "../../../shared/ibn.utils";
 import { SystemId } from "../../../shared/system";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
@@ -63,7 +63,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
                 , behaviour: SchedulerIdBehaviour.ALWAYS_INCLUDE,
             });
         }
-        if (this.feedInLimitation.dynamicLimitationType === DynamicLimitationType.DYNAMIC_LIMITATION) {
+        if (this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION) {
             this.requiredControllerIds.push({
                 componentId: "ctrlGridOptimizedCharge0"
                 , behaviour: SchedulerIdBehaviour.ALWAYS_INCLUDE,

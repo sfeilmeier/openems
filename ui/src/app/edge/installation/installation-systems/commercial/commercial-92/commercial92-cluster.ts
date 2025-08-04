@@ -6,7 +6,7 @@ import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componen
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
-import { CommercialCluster, View } from "../../../shared/enums";
+import { CommercialCluster, FeedInType, View } from "../../../shared/enums";
 import { SystemId } from "../../../shared/system";
 import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
 import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
@@ -61,6 +61,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             NUMBER_OF_SLAVES: this.numberOfSlaves,
             SAFETY_COUNTRY: safetyCountry,
             FEED_IN_TYPE: this.feedInLimitation.feedInType,
+            ...(this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
             HAS_ESS_LIMITER_14A: this.isController14aActivated,
         };
         let appId: string = "App.FENECON.Commercial.92.ClusterMaster";

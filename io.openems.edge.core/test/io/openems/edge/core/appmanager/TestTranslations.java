@@ -24,13 +24,11 @@ import io.openems.edge.app.integratedsystem.TestFeneconHome20;
 import io.openems.edge.app.integratedsystem.TestFeneconHome30;
 import io.openems.edge.app.integratedsystem.TestFeneconHome6;
 import io.openems.edge.app.integratedsystem.TestFeneconIndustrialS;
-import io.openems.edge.common.user.User;
 import io.openems.edge.core.appmanager.jsonrpc.AddAppInstance;
 
 public class TestTranslations {
 
 	private record TestTranslation(OpenemsApp app, boolean validateAppAssistant, JsonObject config) {
-
 	}
 
 	private AppManagerTestBundle testBundle;
@@ -145,6 +143,7 @@ public class TestTranslations {
 					.addProperty("OUTPUT_CHANNEL_PHASE_L3", "io0/Relay3") //
 					.build()));
 			this.apps.add(new TestTranslation(Apps.gridOptimizedCharge(t), true, JsonUtils.buildJsonObject() //
+					.addProperty("MAXIMUM_SELL_TO_GRID_POWER", 60) //
 					.build()));
 			this.apps.add(new TestTranslation(Apps.selfConsumptionOptimization(t), true, JsonUtils.buildJsonObject() //
 					.addProperty("ESS_ID", "ess0") //
