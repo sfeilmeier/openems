@@ -139,10 +139,10 @@ def update_track(
                 "releaseNotes": [
                     {
                         'language': 'de-DE',
-                        'text': 'Neue Integration für Wallbox go-e Charger Gemini flex (lesend) und allgemeine Verbesserungen'
+                        'text': 'Allgemeine Verbesserungen'
                     },{
                         'language': 'en-US',
-                        'text': 'New integrations for Wallbox go-e Charger Gemini flex (read-only) and general improvements'
+                        'text': 'General improvements'
                     }
                 ],
             }
