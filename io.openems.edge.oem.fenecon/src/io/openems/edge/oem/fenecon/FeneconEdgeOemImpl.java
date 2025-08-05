@@ -182,6 +182,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.PeakShaving.PeakShaving", "https://fenecon.de/fenecon-fems/fems-app-lastspitzenkappung/") //
 			.put("App.PeakShaving.PhaseAccuratePeakShaving",
 					"https://fenecon.de/fenecon-fems/fems-app-phasengenaue-lastspitzenkappung/") //
+			.put("App.PeakShaving.TimeSlotPeakShaving", "https://fenecon.de/fenecon-fems/fems-app-hochlastzeitfenster/") //
 			.put("App.OpenemsHardware.BeagleBoneBlack", "") //
 			.put("App.OpenemsHardware.Compulab", "") //
 			.put("App.OpenemsHardware.CM3", "") //

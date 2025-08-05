@@ -34,8 +34,6 @@ export class BatteryExtensionComponent extends AbstractFlatWidget {
   protected spinnerId: string = "batteryExtensionSpinner";
   protected simulatedData: SimulationResult = {
     simulationData: [],
-    charge: 0,
-    discharge: 0,
   };
   protected electricityPrice: number | null = null;
   protected chartTitle: string | null = null;

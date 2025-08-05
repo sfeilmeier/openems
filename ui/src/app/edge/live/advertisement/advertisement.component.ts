@@ -54,11 +54,15 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
 
     // Slide to random first view
     const index = this.swiperRef?.nativeElement.swiper.activeIndex ?? 0;
-    this.title = this.advertWidgets.list[index].title ?? { rawTitle: environment.edgeShortName + " - App" };
+
+    if (Array.isArray(this.advertWidgets.list) && this.advertWidgets.list != null && index in this.advertWidgets.list) {
+      this.title = this.advertWidgets.list[index].title;
+    } else {
+      this.title = { rawTitle: environment.edgeShortName + " - App" };
+    }
 
     // Determine whether to display rawTitle or not
     this.displayRawTitle = "rawTitle" in this.title;
-
     this.changeNextPrevButtons();
   }
 

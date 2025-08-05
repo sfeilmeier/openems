@@ -19,6 +19,7 @@ import { Edge } from "./components/edge/edge";
 import { User } from "./jsonrpc/shared";
 import { DefaultTypes } from "./type/defaulttypes";
 import { Role } from "./type/role";
+import { StringUtils } from "./utils/string/string.utils";
 
 addIcons({
   "oe-consumption": "assets/img/icon/consumption.svg",
@@ -65,7 +66,7 @@ export class EdgePermission {
    */
   public static isEnergyJourneyAllowed(edge: Edge): boolean {
     const isDateAtLeastOneYearAgo = isBefore(edge.firstSetupProtocol, subDays(subYears(new Date(), 1), 1));
-    return isDateAtLeastOneYearAgo && edge.producttype === Producttype.HOME;
+    return isDateAtLeastOneYearAgo && StringUtils.isIn(edge.producttype, [Producttype.HOME, Producttype.HOME_6, Producttype.HOME_10, Producttype.HOME_15, Producttype.HOME_20, Producttype.HOME_30]);
   }
 
   /**
@@ -261,7 +262,7 @@ export class UserPermission {
 }
 
 export enum Producttype {
-  HOME = "home",
+  HOME = "home", // home 10 first gen
   HOME_6 = "home-6",
   HOME_10 = "home-10",
   HOME_15 = "home-15",

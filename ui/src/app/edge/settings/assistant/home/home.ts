@@ -9,7 +9,8 @@ import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Filter } from "src/app/shared/components/shared/filter";
 import { ChannelAddress, CurrentData, EdgeConfig, Utils } from "src/app/shared/shared";
 import { ArrayUtils } from "src/app/shared/utils/array/array.utils";
-import { HomeCellVoltageOptions } from "./chart/chart";
+import { AssistantEdgePermission } from "../permission";
+import { HomeCellVoltageOptions } from "./chart/oe-cell-voltage.chart";
 
 @Component({
   selector: HomeServiceAssistantComponent.SELECTOR,
@@ -44,6 +45,8 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
     value: null,
   }];
 
+  protected isReactiveChartAllowed: boolean = false;
+
   protected override afterIsInitialized() {
     if (this.config?.components) {
       this.chargerComponents = Object.values(this.config.components)
@@ -56,6 +59,8 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
 
       this.setTowerModuleOptions();
     }
+
+    this.isReactiveChartAllowed = AssistantEdgePermission.isReactiveChartAllowed(this.edge);
   }
 
   protected override getChannelAddresses(): ChannelAddress[] {

@@ -102,6 +102,14 @@ export const OemMeta: BaseMeta = {
                 DE: "https://fenecon.de/wp-content/uploads/2023/04/2024-01_FENECON_Home-10_Produktblatt_DE_Web-1.pdf",
                 EN: "https://fenecon.de/wp-content/uploads/2023/04/2024-01_FENECON_Home-10_Produktblatt_EN_Web.pdf",
             },
+            HOME_6_10_15: {
+                DE: "https://docs.fenecon.de/pdfs/home-avu/2025/de/2025-04_FENECON_Home_6-10-15_Produktblatt_DE.pdf",
+                EN: "https://docs.fenecon.de/pdfs/home-avu/2025/en/2025-04_FENECON_Home_6-10-15_Produktblatt_EN.pdf",
+            },
+            HOME_20_30: {
+                DE: "https://docs.fenecon.de/pdfs/home-avu/2025/de/2025-05_FENECON_Home_20-30_Produktblatt_DE.pdf",
+                EN: "https://docs.fenecon.de/pdfs/home-avu/2025/de/2025-05_FENECON_Home_20-30_Produktblatt_EN.pdf",
+            },
         },
     },
 };

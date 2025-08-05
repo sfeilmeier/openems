@@ -29,7 +29,6 @@ import io.openems.edge.core.appmanager.jsonrpc.AddAppInstance;
 public class TestTranslations {
 
 	private record TestTranslation(OpenemsApp app, boolean validateAppAssistant, JsonObject config) {
-
 	}
 
 	private AppManagerTestBundle testBundle;
@@ -122,8 +121,8 @@ public class TestTranslations {
 			this.apps.add(new TestTranslation(Apps.webastoNext(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.webastoUnite(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.evcsCluster(t), true, new JsonObject()));
-			this.apps.add(new TestTranslation(Apps.kebaEvse(t), true, JsonUtils.buildJsonObject()
-					.addProperty("ELECTRIC_VEHICLE_ID", UUID.randomUUID().toString())
+			this.apps.add(new TestTranslation(Apps.kebaEvse(t), true, JsonUtils.buildJsonObject() //
+					.addProperty("ELECTRIC_VEHICLE_ID", UUID.randomUUID().toString()) //
 					.build()));
 			this.apps.add(new TestTranslation(Apps.clusterEvse(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.genericVehicle(t), true, new JsonObject()));
@@ -204,6 +203,10 @@ public class TestTranslations {
 					.addProperty("METER_ID", "meter0") //
 					.build()));
 			this.apps.add(new TestTranslation(Apps.phaseAccuratePeakShaving(t), true, JsonUtils.buildJsonObject() //
+					.addProperty("ESS_ID", "ess0") //
+					.addProperty("METER_ID", "meter0") //
+					.build()));
+			this.apps.add(new TestTranslation(Apps.timeSlotPeakShaving(t), true, JsonUtils.buildJsonObject() //
 					.addProperty("ESS_ID", "ess0") //
 					.addProperty("METER_ID", "meter0") //
 					.build()));
