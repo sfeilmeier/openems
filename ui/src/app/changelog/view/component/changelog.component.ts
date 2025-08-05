@@ -25,15 +25,27 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.8.1",
+        changes: [
+          Changelog.openems("2025.8.0"),
+          Changelog.app(App.EVCS_AC, App.KEBA) + "(P40) Warnung bei inkompatibler Firmware-Version unter 1.2.2",
+          "FENECON Home: Einstellungen | Energy Journey. Simulation der Einsparungen durch einer Batterieerweiterung",
+          { roleIsAtLeast: Role.INSTALLER, change: "FENECON Home im App Center: Verbesserung der Netzeinstellungen" },
+          Changelog.app(App.POWER_TO_HEAT) + "Umbenennung der Heizstab-Apps 'my-PV lesend' und 'ASKOMA lesend'",
+          { roleIsAtLeast: Role.ADMIN, change: "FENECON Industrial: FEMS App Hochlastzeitfenster über App Center installierbar" },
+          { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | Channels: Auswahlmöglichkeit für mehrere Channels einer Komponente gleichzeitig" },
+        ],
+      },
+      {
         version: "2025.7.4",
         changes: [
-          Changelog.app(App.EVCS_AC, App.KEBA) + "(P40) In Abhängigkeit von der KEBA Firmware-Version: Warnung bei inkompatiblen Versionen; Korrektur der Energiewerte in Versionen unter 1.2.1",
+          Changelog.app(App.EVCS_AC, App.KEBA) + "(P40) Korrektur der Energiewerte bei Firmware-Versionen unter 1.1.9",
           Changelog.app(App.EVCS_AC, App.GO_E) + "Einbindung der Wallbox go-e Charger Gemini flex (nur lesend))",
           Changelog.app(App.SCHWELLWERTSTEUERUNG) + "Fehlerbehebung in der Darstellung",
           { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | System: Firmware-Update für GoodWe Batteriewechselrichter" },
           { roleIsAtLeast: Role.ADMIN, change: "Inbetriebnahmeassistent: Litauen kann als Installations-/Kundenadresse angegeben werden" },
           { roleIsAtLeast: Role.ADMIN, change: "Verbesserungen an neuer EVSE-Architektur für Ladesäulen" },
-          { roleIsAtLeast: Role.ADMIN, change: "Weiterführung des UI-Redesigns; aktivierbar für ADMINs im Benutzerprofil" },
+          { roleIsAtLeast: Role.ADMIN, change: "UI Neue Navigation: aktivierbar für ADMINs im Benutzerprofil" },
         ],
       },
       {
@@ -61,6 +73,7 @@ export class ChangelogComponent {
       {
         version: "2025.7.1",
         changes: [
+          Changelog.openems("2025.7.0"),
           Changelog.app(App.POWER_TO_HEAT) + "Fehlerbehebung beim Slider zur Konfiguration der Energie",
           Changelog.app(App.POWER_TO_HEAT, App.MY_PV, App.ASKOMA) + "Heizenergie wird nun richtig im Verbrauch angezeigt",
           "Einstellungen | Netzwerkkonfiguration: die aktuell zugewiesene DHCP-Adresse wird in der Netzwerkkonfiguration dargestellt.",
