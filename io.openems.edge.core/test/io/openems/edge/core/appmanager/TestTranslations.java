@@ -24,11 +24,13 @@ import io.openems.edge.app.integratedsystem.TestFeneconHome20;
 import io.openems.edge.app.integratedsystem.TestFeneconHome30;
 import io.openems.edge.app.integratedsystem.TestFeneconHome6;
 import io.openems.edge.app.integratedsystem.TestFeneconIndustrialS;
+import io.openems.edge.app.timeofusetariff.AncillaryCostsProps.GermanDSO;
 import io.openems.edge.core.appmanager.jsonrpc.AddAppInstance;
 
 public class TestTranslations {
 
 	private record TestTranslation(OpenemsApp app, boolean validateAppAssistant, JsonObject config) {
+
 	}
 
 	private AppManagerTestBundle testBundle;
@@ -58,6 +60,10 @@ public class TestTranslations {
 					new TestTranslation(Apps.feneconIndustrialSIsk110(t), true, TestFeneconIndustrialS.fullSettings()));
 			this.apps.add(
 					new TestTranslation(Apps.feneconIndustrialSIsk011(t), true, TestFeneconIndustrialS.fullSettings()));
+			this.apps.add(new TestTranslation(Apps.ancillaryCosts(t), true, JsonUtils.buildJsonObject() //
+					.addProperty("FIXED_ELECTRICITY_TARIFF", 0.0) //
+					.addProperty("GERMAN_DSO", GermanDSO.BAYERNWERK) //
+					.build()));
 			this.apps.add(new TestTranslation(Apps.awattarHourly(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.entsoE(t), true, JsonUtils.buildJsonObject() //
 					.addProperty("BIDDING_ZONE", "GERMANY") //
