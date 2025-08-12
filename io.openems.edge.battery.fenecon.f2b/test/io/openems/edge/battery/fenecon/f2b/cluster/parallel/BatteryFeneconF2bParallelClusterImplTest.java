@@ -4,6 +4,7 @@ import static io.openems.common.test.TestUtils.createDummyClock;
 
 import org.junit.Test;
 
+import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.StateMachine;
 import io.openems.edge.battery.fenecon.f2b.dummy.BatteryFeneconF2bDummyImpl;
 import io.openems.edge.battery.fenecon.f2b.dummy.statemachine.StateMachine.State;
@@ -12,7 +13,6 @@ import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
-import io.openems.edge.common.test.DummyConfigurationAdmin;
 
 public class BatteryFeneconF2bParallelClusterImplTest {
 

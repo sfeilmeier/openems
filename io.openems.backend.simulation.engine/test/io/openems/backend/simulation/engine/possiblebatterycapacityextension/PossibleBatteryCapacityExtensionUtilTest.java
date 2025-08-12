@@ -38,9 +38,12 @@ public class PossibleBatteryCapacityExtensionUtilTest {
 	}
 
 	private static SortedMap<ZonedDateTime, SortedMap<ChannelAddress, JsonElement>> getData() throws IOException {
-		try (var br = new BufferedReader(new InputStreamReader(
-				PossibleBatteryCapacityExtensionUtilTest.class.getResource("simulatedData.csv").openStream()))) {
-			return br.lines().map(l -> l.split(";")) //
+		final var simulatedDataCsv = PossibleBatteryCapacityExtensionUtilTest.class.getResource("simulatedData.csv");
+		try (final var inputStream = simulatedDataCsv.openStream();
+				final var inputStreamReader = new InputStreamReader(inputStream);
+					final var br = new BufferedReader(inputStreamReader)) {
+			return br.lines() //
+					.map(l -> l.split(";")) //
 					.collect(ImmutableSortedMap
 							.<String[], ZonedDateTime, SortedMap<ChannelAddress, JsonElement>>toImmutableSortedMap(//
 									Comparator.naturalOrder(), //
