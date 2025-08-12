@@ -48,7 +48,6 @@ export class ConfigurationGridSettingComponent implements OnInit {
                 key: "gridSetting",
                 type: "radio",
                 templateOptions: {
-                    hideLabel: true,
                     radioSlot: "start",
                     options: [
                         { label: GridSetting.VDE_AR_N_4105, value: GridSetting.VDE_AR_N_4105 },
