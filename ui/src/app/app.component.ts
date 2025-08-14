@@ -134,7 +134,9 @@ export class AppComponent implements OnInit, OnDestroy {
     timer(1 /* immediately */, 5 * 60 * 1000 /* and then every 5 minutes */)
       .pipe(
         switchMap(() => this.http.get<CachetComponentStatus>("https://status.fenecon.de/api/v1/components/3")),
-        retry())
+        retry(
+          { count: 5, delay: 5000 }
+        ))
       .subscribe((data) => {
         switch (data.data.status) {
           case 2:
