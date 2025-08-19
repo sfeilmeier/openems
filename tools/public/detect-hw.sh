@@ -36,11 +36,11 @@ function read_hardware {
   CONFIGURATION=$(grep "^CONFIGURATION_DEVICE=" "$HW_REVISION" | cut -d'=' -f2)
 
   case "$HARDWARE" in
-    "NPE-X500-M3*") 
+    "NPE-X500-M3"*) 
     echo "App.OpenemsHardware.CM3"
     ;;
 
-    "NPE-X500-M4S*")
+    "NPE-X500-M4S"*)
     if [[ "$CONFIGURATION" == *"2AO"* && "$CONFIGURATION" == *"RS485-FTDI0"* ]];
     then
       echo "App.OpenemsHardware.CM4S.Gen2"
@@ -49,7 +49,7 @@ function read_hardware {
     fi
     ;;
 
-    "NPE-X500-M4*") 
+    "NPE-X500-M4"*) 
     if [[ "$CONFIGURATION" == *"CanBus"* ]];
     then
       echo "App.OpenemsHardware.CM4Max"
