@@ -294,7 +294,7 @@ public enum KacoSunSpecModel implements SunSpecModel {
 			PLAUSIBILITY_FAULT_RELAY(105, "plausibilityFaultRelay", Level.FAULT), //
 			PLAUSIBILITY_ERROR_DCDC(106, "plausibilityErrorDcdc"), //
 			CHECK_SURGE_PROTECTION(107, "checkSurgeProtection"), //
-			EXTERNAL_COMMUNICATION(196, "externalCommunication", Level.FAULT), //
+			EXTERNAL_COMMUNICATION(196, "externalCommunication", Level.WARNING), //
 			SYMMETRY_ERROR_PARALLEL(197, "symmetryErrorParallel"), //
 			BATTERY_DISCONNECTED(198, "batteryDisconnected"), //
 			BATTERY_CONSTRAINTS_MISSING(199, "batteryConstraintsMissing"), //
