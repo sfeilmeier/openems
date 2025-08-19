@@ -2,20 +2,20 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "Gemeinsam besser - mit Ihrem Feedback!",
-        "TEXT": "Mit Ihrer Rückmeldung entwickeln wir genau das, was Sie wirklich brauchen. Wir bitten Sie daher um eine kurze Teilnahme an unserer Partner-Umfrage zur neuen AVU-Box speziell für HOME 15/20/30. Das Ausfüllen dauert nur wenige Minuten. Herzlichen Dank!",
-        "LINK": "https://forms.cloud.microsoft/e/DkPAiP6FQ1",
-        "LINK_TEXT": "Zur Umfrage"
+        "TITLE": "Immer auf dem neuesten Stand sein",
+        "TEXT": "Kennen Sie schon unseren Newsletter? Erhalten Sie spannende Einblicke in aktuelle Termine und Veransaltungen, Produktneuheiten sowie Unternehmensentwicklungen.</br></br>Ob Updates zu FEMS-Apps, Sonderaktionen oder branchenpolitische Neuerungen - mit der FENpost sind Sie immer up to date!",
+        "LINK": "https://erp.fenecon.de/fenmail",
+        "LINK_TEXT": "Jetzt abonnieren!"
       }
     }
   },
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "Join the talk - Your Feedback Moves Us Forward",
-        "TEXT": "Your feedback shapes solutions that truly fit your needs. We invite you to participate in our brief partner survey about the new AVU Box for HOME 15/20/30. The survey only takes a few minutes. Your insights are highly appreciated!",
-        "LINK": "https://forms.cloud.microsoft/e/DkPAiP6FQ1",
-        "LINK_TEXT": "Start Survey Here"
+        "TITLE": "Always up to date",
+        "TEXT": "Have you heard about our newsletter? Get the latest news about current events and appointments, product innovations, and key company developments.</br> Whether it's updates on the FEMS Apps, special promotions, or sector-political - with the FENmail, you'll always stay up to date!",
+        "LINK": "https://erp.fenecon.de/fenmail",
+        "LINK_TEXT": "Subscribe now!"
       }
     }
   }
