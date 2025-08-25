@@ -3,6 +3,11 @@ package io.openems.edge.system.fenecon.industrial.l;
 import static io.openems.common.types.ChannelAddress.fromString;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.MULTIPLY;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_1_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_2_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_HEATER_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_PUMP_RUNNING_STATE;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.groupingBy;
 
@@ -69,6 +74,9 @@ import io.openems.edge.system.fenecon.industrial.l.jsonrpc.EmergencyStopAcknowle
 import io.openems.edge.system.fenecon.industrial.l.statemachine.Context;
 import io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine;
 import io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine.State;
+import io.openems.edge.timedata.api.Timedata;
+import io.openems.edge.timedata.api.TimedataProvider;
+import io.openems.edge.timedata.api.utils.CalculateActiveTime;
 
 @Designate(ocd = Config.class, factory = true)
 @Component(//
@@ -80,7 +88,7 @@ import io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine.Sta
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE //
 })
 public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent implements SystemFeneconIndustrialL,
-		ModbusComponent, OpenemsComponent, StartStoppable, EventHandler, ComponentJsonApi {
+		ModbusComponent, OpenemsComponent, StartStoppable, EventHandler, ComponentJsonApi, TimedataProvider {
 
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialLImpl.class);
 
@@ -90,6 +98,17 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	private StartStop startStopTarget;
 	private ParsedConfig parsedConfig;
+
+	private final CalculateActiveTime calculatePumpRunningTime = new CalculateActiveTime(this,
+			CUMULATED_TIME_PUMP_RUNNING_STATE);
+	private final CalculateActiveTime calculateHeaterRunningTime = new CalculateActiveTime(this,
+			CUMULATED_TIME_HEATER_RUNNING_STATE);
+	private final CalculateActiveTime calculateCompressor1RunningTime = new CalculateActiveTime(this,
+			CUMULATED_TIME_COMPRESSOR_1_RUNNING_STATE);
+	private final CalculateActiveTime calculateCompressor2RunningTime = new CalculateActiveTime(this,
+			CUMULATED_TIME_COMPRESSOR_2_RUNNING_STATE);
+	private final CalculateActiveTime calculateCompressor1and2RunningTime = new CalculateActiveTime(this,
+			CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE);
 
 	@Reference
 	private ConfigurationAdmin cm;
@@ -104,6 +123,9 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	@Reference
 	private SymmetricEss ess;
+
+	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.OPTIONAL)
+	private volatile Timedata timedata = null;
 
 	@Reference(//
 			policy = ReferencePolicy.DYNAMIC, //
@@ -195,6 +217,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 						SystemFeneconIndustrialL.ChannelId.SMOKE_DETECTION_FAILURE);
 			}
 			this.handleAcknowledge();
+			this.updateCumulatedActiveTimeChannels();
 		}
 		}
 	}
@@ -213,7 +236,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 		/**
 		 * Sets the config input-output channels as {@link ChannelAddress}.
-		 * 
+		 *
 		 * @param config the {@link Config}
 		 * @return a record for ConfigChannels
 		 * @throws OpenemsNamedException on error
@@ -309,7 +332,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	/**
 	 * Gets the channel value from given {@link ChannelAddress} and sets on the
 	 * given method.
-	 * 
+	 *
 	 * @param channelAddress the channel value to be read from.
 	 * @param channelId      the {@link SystemFeneconIndustrialL.ChannelId} to set
 	 *                       the current value.
@@ -450,8 +473,8 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	/**
 	 * Gets the channel value from given channel address.
-	 * 
-	 * @return true if its not null, or its defined and true.
+	 *
+	 * @return true if it's not null, or its defined and true.
 	 */
 	public boolean isInEmergencyStopState() {
 		try {
@@ -551,7 +574,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	/**
 	 * Gets the started batteries.
-	 * 
+	 *
 	 * @return the list of started batteries.
 	 */
 	public List<Battery> getStartedBatteries() {
@@ -560,7 +583,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	/**
 	 * Gets the batteries which has fault.
-	 * 
+	 *
 	 * @return the list of faulty batteries
 	 */
 	public List<Battery> getFaultBatteries() {
@@ -570,7 +593,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	/**
 	 * This method returns a list of batteries where batteries matched with required
 	 * conditions.
-	 * 
+	 *
 	 * @param method asked battery condition,e.g. {@link #isStarted()}
 	 * @return List of {@link Battery}.
 	 */
@@ -591,7 +614,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	/**
 	 * Gets the {@link ParsedConfig#bmsHardResetChannel}.
-	 * 
+	 *
 	 * @return the output channel {@link WriteChannel}
 	 * @throws Exception on error
 	 */
@@ -602,5 +625,23 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
 			throw e;
 		}
+	}
+
+	protected void updateCumulatedActiveTimeChannels() {
+		final var compressor1RunningState = this.getCompressor1RunningState().orElse(false);
+		final var compressor2RunningState = this.getCompressor2RunningState().orElse(false);
+		final var heaterRunningState = this.getHeaterRunningState().orElse(false);
+		final var pumpRunningState = this.getPumpRunningState().orElse(false);
+
+		this.calculateCompressor1RunningTime.update(compressor1RunningState);
+		this.calculateCompressor2RunningTime.update(compressor2RunningState);
+		this.calculateCompressor1and2RunningTime.update(compressor1RunningState && compressor2RunningState);
+		this.calculateHeaterRunningTime.update(heaterRunningState);
+		this.calculatePumpRunningTime.update(pumpRunningState);
+	}
+
+	@Override
+	public Timedata getTimedata() {
+		return this.timedata;
 	}
 }

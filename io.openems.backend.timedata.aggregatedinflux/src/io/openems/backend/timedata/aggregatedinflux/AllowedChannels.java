@@ -175,6 +175,10 @@ public final class AllowedChannels {
 				.putAll(multiChannels(ctrlEssRippleControlReceiver, "CumulatedRestrictionTime", DataType.LONG)) //
 				.putAll(multiChannels(heat, "ActiveConsumptionEnergy", DataType.LONG)) // @Deprecated(use=ActiveProductionEnergy)
 				.putAll(multiChannels(heat, "ActiveProductionEnergy", DataType.LONG)) //
+				.put("system0/CumulatedTimeCompressor1RunningState", DataType.LONG) //
+				.put("system0/CumulatedTimeCompressor2RunningState", DataType.LONG) //
+				.put("system0/CumulatedTimeCompressor1And2RunningState", DataType.LONG) //
+				.put("system0/CumulatedTimePumpRunningState", DataType.LONG) //
 				.build();
 	}
 
