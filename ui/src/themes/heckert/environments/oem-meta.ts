@@ -12,7 +12,7 @@ export const OemMeta: BaseMeta = {
         DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
         COMMON_STORAGE: null,
         FORGET_PASSWORD: "#",
-        EVCS: "https://docs.fenecon.de/topics/emobility_overview.htm",
+        EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
 
         CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE: "io.openems.edge.controller.ess.gridoptimizedcharge/readme.adoc",
         CONTROLLER_CHP_SOC: "io.openems.edge.controller.chp.soc/readme.adoc",
