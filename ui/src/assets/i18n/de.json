@@ -1,4 +1,12 @@
 {
+  "TOAST": {
+    "MIGRATION": {
+      "HEADER": "<big>Wichtiger Hinweis</big>",
+      "CONTENT": "Am <b>Freitag, den 05.09.2025</b>, findet in der Zeit von 17:00 bis voraussichtlich 20:00 Uhr (MESZ) eine Optimierung unserer IT-Infrastruktur statt. Einzelne Systeme werden noch über das gesamte Wochenende getestet und gewartet. Spätestens am Montag den 08.09.2025 sind alle Systeme wieder voll funktionsfähig.<br><br>Während dieses Wartungsfensters ist unser Backend Server teilweise nicht erreichbar und es wird zu umfassenden Einschränkungen beim Zugriff auf verschiedene Online-Dienste kommen.",
+      "LINK_TEXT": "Mehr Details",
+      "LINK": "https://fenecon.de/eingeschraenkte-erreichbarkeit"
+    }
+  },
   "About": {
     "DESCRIPTION": "Dieses Energiemanagementsystem wird auf Basis von OpenEMS als Open-Source-Software entwickelt. OpenEMS - das Open Source Energy Management System - ist eine modulare Plattform für Energiemanagement-Anwendungen. Es wurde von FENECON initiiert und wird mittlerweile von einer großen Zahl an Unternehmen, Universitäten und Instituten sowohl zur Forschung und Entwicklung verwendet, als auch für deren eigene Energiemanagementsysteme eingesetzt. Die Entwicklung wird in der OpenEMS Association e.V. koordiniert.",
     "CONTACT": "Für Rückfragen und Anregungen zum Energiemanagement und unseren Produkten, wenden Sie sich bitte an unser Team unter <a href=\"mailto:service@fenecon.de\">service&#64;fenecon.de</a>. Für Fragen zu OpenEMS steht Ihnen das <a target=\"_blank\" href=\"https://community.openems.io/\">OpenEMS Community-Forum</a> zur Verfügung.",
