@@ -24,6 +24,7 @@ import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.function.ThrowingTriFunction;
 import io.openems.common.oem.OpenemsEdgeOem;
 import io.openems.common.session.Language;
+import io.openems.common.session.Role;
 import io.openems.common.types.CurrencyConfig;
 import io.openems.common.types.EdgeConfig;
 import io.openems.common.utils.JsonUtils;
@@ -42,6 +43,7 @@ import io.openems.edge.core.appmanager.Nameable;
 import io.openems.edge.core.appmanager.OpenemsApp;
 import io.openems.edge.core.appmanager.OpenemsAppCardinality;
 import io.openems.edge.core.appmanager.OpenemsAppCategory;
+import io.openems.edge.core.appmanager.OpenemsAppPermissions;
 import io.openems.edge.core.appmanager.Type;
 import io.openems.edge.core.appmanager.dependency.Tasks;
 import io.openems.edge.core.appmanager.dependency.aggregatetask.SchedulerByCentralOrderConfiguration.SchedulerComponent;
@@ -140,7 +142,7 @@ public class AncillaryCosts extends
 
 			if (germanDso == GermanDSO.OTHER) {
 				final var tariffTable = this.getJsonArray(p, Property.TARIFF_TABLE);
-				
+
 				// parsing here to throw any exceptions.
 				parseSchedule(tariffTable);
 
@@ -206,6 +208,14 @@ public class AncillaryCosts extends
 	@Override
 	protected AncillaryCosts getApp() {
 		return this;
+	}
+
+	@Override
+	public OpenemsAppPermissions getAppPermissions() {
+		return OpenemsAppPermissions.create() //
+				.setCanSee(Role.ADMIN) //
+				.setCanInstall(Role.ADMIN) //
+				.build();
 	}
 
 }
