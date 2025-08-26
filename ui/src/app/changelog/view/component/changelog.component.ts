@@ -25,6 +25,15 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.8.2",
+        changes: [
+          "KACO Batteriewechselrichter: Verbesserte Darstellung von Statusmeldungen",
+          Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Variable Netzentgelte: Verbesserungen im Eingabeformular für Preisblätter",
+          Changelog.app(App.TIME_OF_USE) + "Verbesserungen im Betrieb ohne PV-Anlage",
+          Changelog.app(App.EVCS_AC) + "Verbesserungen in der historischen Darstellung",
+        ],
+      },
+      {
         version: "2025.8.1",
         changes: [
           Changelog.openems("2025.8.0"),
