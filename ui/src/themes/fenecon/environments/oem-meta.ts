@@ -33,7 +33,7 @@ export const OemMeta: BaseMeta = {
         EVCS_CLUSTER: "fems-app/includes/FEMS_App_Multi-Ladepunkt-Management.html",
 
         SYSTEM: {
-            INDUSTRIAL_S: "https://docs.fenecon.de/_/de/industrial/industrial_s/betriebsanleitung/Fenecon_Industrial_S_Betriebsanleitung.html",
+            INDUSTRIAL_S: "https://docs.fenecon.de/de/industrial/industrial_s/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Industrial_S.html",
             INDUSTRIAL_L: "#",
         },
 

@@ -26,6 +26,14 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
   public readonly FeedInType = FeedInType;
   private totalPvPower: number = 0;
 
+  public get isDynamicLimitation(): boolean {
+    return this.form.get("feedInType")?.value === FeedInType.DYNAMIC_LIMITATION;
+  }
+
+  public get isExternalLimitation(): boolean {
+    return this.form.get("feedInType")?.value === FeedInType.EXTERNAL_LIMITATION;
+  }
+
   public ngOnInit() {
     this.showRundSteuerManual = this.ibn.showRundSteuerManual;
     this.form = new FormGroup({});

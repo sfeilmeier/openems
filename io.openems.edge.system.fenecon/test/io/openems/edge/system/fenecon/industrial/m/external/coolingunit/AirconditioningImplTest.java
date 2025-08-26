@@ -2,11 +2,11 @@ package io.openems.edge.system.fenecon.industrial.m.external.coolingunit;
 
 import org.junit.Test;
 
+import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
-import io.openems.edge.common.test.DummyConfigurationAdmin;
 import io.openems.edge.io.test.DummyInputOutput;
 import io.openems.edge.system.fenecon.industrial.m.dummy.DummyBatteryInverterRefuStore88kImpl;
 

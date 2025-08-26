@@ -118,6 +118,9 @@ export class ProtocolInstallerComponent implements OnInit {
               required: true,
               disabled: !isMissing("zip"),
             },
+            validators: {
+              validation: ["zip"],
+            },
           },
           {
             key: "city",
@@ -126,9 +129,6 @@ export class ProtocolInstallerComponent implements OnInit {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY"),
               required: true,
               disabled: !isMissing("city"),
-            },
-            validators: {
-              validation: ["zip"],
             },
           },
           {

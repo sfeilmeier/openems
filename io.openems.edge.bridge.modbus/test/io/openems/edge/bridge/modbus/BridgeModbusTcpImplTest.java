@@ -45,6 +45,8 @@ public class BridgeModbusTcpImplTest {
 			var processImage = new SimpleProcessImage(UNIT_ID);
 			Register register100 = new SimpleRegister(123);
 			processImage.addRegister(100, register100);
+			Register register101 = new SimpleRegister(321);
+			processImage.addRegister(101, register101);
 			slave.addProcessImage(UNIT_ID, processImage);
 			slave.open();
 
@@ -102,7 +104,9 @@ public class BridgeModbusTcpImplTest {
 		}
 
 		public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-			REGISTER_100(Doc.of(OpenemsType.INTEGER)); //
+			REGISTER_100(Doc.of(OpenemsType.INTEGER)), //
+			REGISTER_101(Doc.of(OpenemsType.SHORT)), //
+			;
 
 			private final Doc doc;
 
@@ -120,7 +124,8 @@ public class BridgeModbusTcpImplTest {
 		protected ModbusProtocol defineModbusProtocol() {
 			return new ModbusProtocol(this, //
 					new FC3ReadRegistersTask(100, Priority.HIGH, //
-							m(ChannelId.REGISTER_100, new UnsignedWordElement(100)))); //
+							m(ChannelId.REGISTER_100, new UnsignedWordElement(100)),
+							m(ChannelId.REGISTER_101, new UnsignedWordElement(101)))); //
 		}
 
 	}

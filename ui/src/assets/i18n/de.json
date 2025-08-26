@@ -1,4 +1,12 @@
 {
+  "TOAST": {
+    "MIGRATION": {
+      "HEADER": "<big>Wichtiger Hinweis</big>",
+      "CONTENT": "Am <b>Freitag, den 05.09.2025</b>, findet in der Zeit von 17:00 bis voraussichtlich 20:00 Uhr (MESZ) eine Optimierung unserer IT-Infrastruktur statt. Einzelne Systeme werden noch über das gesamte Wochenende getestet und gewartet. Spätestens am Montag den 08.09.2025 sind alle Systeme wieder voll funktionsfähig.<br><br>Während dieses Wartungsfensters ist unser Backend Server teilweise nicht erreichbar und es wird zu umfassenden Einschränkungen beim Zugriff auf verschiedene Online-Dienste kommen.",
+      "LINK_TEXT": "Mehr Details",
+      "LINK": "https://fenecon.de/eingeschraenkte-erreichbarkeit"
+    }
+  },
   "About": {
     "DESCRIPTION": "Dieses Energiemanagementsystem wird auf Basis von OpenEMS als Open-Source-Software entwickelt. OpenEMS - das Open Source Energy Management System - ist eine modulare Plattform für Energiemanagement-Anwendungen. Es wurde von FENECON initiiert und wird mittlerweile von einer großen Zahl an Unternehmen, Universitäten und Instituten sowohl zur Forschung und Entwicklung verwendet, als auch für deren eigene Energiemanagementsysteme eingesetzt. Die Entwicklung wird in der OpenEMS Association e.V. koordiniert.",
     "CONTACT": "Für Rückfragen und Anregungen zum Energiemanagement und unseren Produkten, wenden Sie sich bitte an unser Team unter <a href=\"mailto:service@fenecon.de\">service&#64;fenecon.de</a>. Für Fragen zu OpenEMS steht Ihnen das <a target=\"_blank\" href=\"https://community.openems.io/\">OpenEMS Community-Forum</a> zur Verfügung.",
@@ -480,7 +488,10 @@
         "successDelete": "App erfolgreich entfernt",
         "failDelete": "Entfernen der App fehlgeschlagen: {{error}}",
         "DELETE_CONFIRM_HEADLINE": "Sind Sie sicher, dass die App entfernt werden soll?",
-        "DELETE_CONFIRM_DESCRIPTION": "Beim Entfernen werden alle Komponenten und Einstellungen gelöscht, die von dieser App angelegt wurden."
+        "DELETE_CONFIRM_DESCRIPTION": "Beim Entfernen werden alle Komponenten und Einstellungen gelöscht, die von dieser App angelegt wurden.",
+        "technicalName": "Technischer Name",
+        "category": "Kategorie",
+        "cardinality": "Kardinalität"
       }
     },
     "Service": {
@@ -779,7 +790,7 @@
       "GRID_OPTIMIZED_CHARGE": "Netzdienliche Beladung",
       "TIME_OF_USE_TARIFF": "Dynamischer Stromtarif",
       "LEGEND": "Legende",
-      "NOT_YET_CONFIGURED": "noch nicht konfiguriert/ausgeführt",
+      "NOT_YET_CONFIGURED": "noch nicht konfiguriert / ausgeführt",
       "PARTIAL_CONFIGURATION": "Es konnten nicht alle Komponenten richtig konfiguriert werden.",
       "PRE_CONFIGURED": "vorkonfiguriert / Warnung",
       "PROGNOSIS": "Prognose",
@@ -811,7 +822,8 @@
       "PREPARE_BATTERY_EXTENSION": "Batterienachrüstung",
       "COMMERCIAL_BATTERY_NOTE": "\nWenn Sie nun auf “WEITER ->” klicken, stehen Ihnen ca. 15  Minuten zur vollständigen Durchführung der restlichen Inbetriebnahme (IBN) zur Verfügung. Danach geht die BMS in einen zur Sicherheit eingestellten “Time-Out”. Normalerweise ist diese Zeit ausreichend, um die letzten Schritte der IBN in Ruhe abzuschließen. \nSollte die Zeit trotzdem nicht genügen, können Sie die IBN erneut von vorne starten.",
       "NOTE": "Bitte beachten Sie:",
-      "UNDEFINED_COMPONENT_CONFIGURATOR": "Komponentenkonfigurator ist nicht definiert"
+      "UNDEFINED_COMPONENT_CONFIGURATOR": "Komponentenkonfigurator ist nicht definiert",
+      "IS_BEING_CONFIGURED": "wird konfiguriert"
     },
     "CONFIGURATION_LINE_SIDE_METER_FUSE": {
       "FIXED_VALUE_DESCRIPTION": "Mit welcher Stromstärke ist der Zähler abgesichert?",
@@ -902,7 +914,9 @@
       "NA_PROTECTION": "Fernabschaltung aktivieren (Zentraler NA-Schutz)",
       "DYNAMIC_LIMITATION_WITH_RIPPLE_CONTROLLER": "Dynamische Begrenzung der Einspeisung & Rundsteuerempfänger",
       "MAXIMUM_FEED_IN_VALUE_DYNAMIC_AND_EXTERNAL_LIMITATION": "Wert der dynamischen Begrenzung (max Einspeisewert, z.B. 60 % der kWp) [W]",
-      "FIXED_POWER_FACTOR_DESCRIPTION": "In der Regel gibt der Netzbetreiber einen festen Verschiebungsfaktor von '1' an"
+      "FIXED_POWER_FACTOR_DESCRIPTION": "In der Regel gibt der Netzbetreiber einen festen Verschiebungsfaktor von '1' an",
+      "INFO_TEXT": "Ihr Energiespeicher versucht durch intelligentes Laden, eine Abregelung der PV-Anlage zu vermeiden.",
+      "WARNING_TEXT": "Dies ersetzt nicht die ordnungsgemäße Konfiguration des PV-Wechselrichters!"
     },
     "PROTOCOL_INSTALLER_AND_CUSTOMER": {
       "CITY": "Ort",
@@ -1108,6 +1122,10 @@
     "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
       "SLAVE_COUNT_TITLE": "Informationen zur Anzahl der Slaves",
       "SLAVE_INSTALLATION_TITLE": "Installation einzelner Speichereinheiten (Slaves)"
+    },
+    "SHARED": {
+      "NOTE": "Hinweis",
+      "WARNING": "Warnung"
     }
   },
   "LIVE": {

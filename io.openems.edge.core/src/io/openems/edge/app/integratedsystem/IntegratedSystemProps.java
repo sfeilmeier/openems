@@ -28,6 +28,7 @@ import io.openems.edge.core.appmanager.Type.Parameter.BundleProvider;
 import io.openems.edge.core.appmanager.formly.Exp;
 import io.openems.edge.core.appmanager.formly.JsonFormlyUtil;
 import io.openems.edge.core.appmanager.formly.builder.InputBuilder;
+import io.openems.edge.core.appmanager.formly.builder.LinkBuilder;
 import io.openems.edge.core.appmanager.formly.expression.BooleanExpression;
 
 public final class IntegratedSystemProps {
@@ -185,8 +186,10 @@ public final class IntegratedSystemProps {
 	) {
 		return AppDef.copyOfGeneric(defaultDef(), def -> def //
 				.setField(JsonFormlyUtil::buildInputFromNameable, (app, property, l, parameter, field) -> {
-					field.onlyShowIf(Exp.currentModelValue(gridMeterType)
-							.equal(Exp.staticValue(GoodWeGridMeterCategory.COMMERCIAL_METER)));
+					if (gridMeterType != null) {
+						field.onlyShowIf(Exp.currentModelValue(gridMeterType)
+								.equal(Exp.staticValue(GoodWeGridMeterCategory.COMMERCIAL_METER)));
+					}
 					field.setInputType(NUMBER) //
 							.setMin(0) //
 							.onlyPositiveNumbers();
@@ -208,6 +211,15 @@ public final class IntegratedSystemProps {
 		}), def -> def //
 				.setTranslatedLabel("App.IntegratedSystem.ctRatioFirst.label") //
 				.setDefaultValue(200));
+	}
+
+	/**
+	 * Creates a {@link AppDef} for the first value of the CT-Ratio.
+	 *
+	 * @return the created {@link AppDef}
+	 */
+	public static AppDef<OpenemsApp, Nameable, BundleProvider> ctRatioFirst() {
+		return ctRatioFirst(null);
 	}
 
 	/**
@@ -356,6 +368,20 @@ public final class IntegratedSystemProps {
 					if (!FeneconHomeComponents.isLimiter14aCompatible(hardwareType)) {
 						field.disabled(true);
 					}
+				}));
+	}
+
+	/**
+	 * Creates a {@link AppDef} for the feed in link.
+	 *
+	 * @return the created {@link AppDef}
+	 */
+	public static AppDef<OpenemsApp, Nameable, BundleProvider> feedInLink() {
+		return AppDef.copyOfGeneric(defaultDef(), def -> def//
+				.setTranslatedLabel("App.IntegratedSystem.feedInLink.label") //
+				.setTranslatedDescription("App.IntegratedSystem.feedInLink.description") //
+				.setField(JsonFormlyUtil::buildLink, (app, property, l, parameter, field) -> {
+					field.setLink(new LinkBuilder.AppUpdateLink("App.Core.Meta"));
 				}));
 	}
 

@@ -124,6 +124,7 @@ steps:
     environment:
       OEMS_EDGE_OUTPUT: "build/target/edge.jar"
       OEMS_BACKEND_OUTPUT: "build/target/backend.jar"
+      GRADLE_ARGS: "--console=plain --warn --parallel"
     commands:
       - source $CI_WORKSPACE/.woodpecker-env
       - source $CI_WORKSPACE/.openems-env
@@ -132,9 +133,12 @@ steps:
       - common_initialize_environment
       - echo "Build Version $VERSION"
       - |
-        common_run_checkstyle --console=plain --warn --parallel --max-workers=4 && \
-        common_build_edge --console=plain --warn --parallel --max-workers=2 && \
-        common_build_backend --console=plain --warn --parallel --max-workers=2;
+        set -e
+        common_run_checkstyle $GRADLE_ARGS --max-workers=4;
+        common_build_edge $GRADLE_ARGS --max-workers=2;
+        common_check_file "$OEMS_EDGE_OUTPUT" "OpenEMS Edge JAR missing!";
+        common_build_backend $GRADLE_ARGS --max-workers=2;
+        common_check_file "$OEMS_BACKEND_OUTPUT" "OpenEMS Backend JAR missing!";
     depends_on: [prepare-environment]
 
   build-debian-package:

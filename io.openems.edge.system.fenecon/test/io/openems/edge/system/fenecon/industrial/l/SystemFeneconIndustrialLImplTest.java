@@ -1,20 +1,35 @@
 package io.openems.edge.system.fenecon.industrial.l;
 
 import static io.openems.common.test.TestUtils.createDummyClock;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.COMPRESSOR_1_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.COMPRESSOR_2_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_1_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_2_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_HEATER_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_PUMP_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.HEATER_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.PUMP_RUNNING_STATE;
+
+import java.util.Map;
 
 import org.junit.Test;
+import org.osgi.service.event.Event;
 
+import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
+import io.openems.edge.common.event.EdgeEventConstants;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
-import io.openems.edge.common.test.DummyConfigurationAdmin;
+import io.openems.edge.common.test.DummyCycle;
 import io.openems.edge.ess.test.DummyMetaEss;
 import io.openems.edge.io.test.DummyInputOutput;
 import io.openems.edge.system.fenecon.industrial.l.envicool.Envicool;
+import io.openems.edge.timedata.test.DummyTimedata;
 
 public class SystemFeneconIndustrialLImplTest {
 
@@ -110,5 +125,59 @@ public class SystemFeneconIndustrialLImplTest {
 						.input(SMOKE_DETECTION_FAILURE, true)//
 						.input(START_STOP, StartStop.STOP)//
 						.output(SMOKE_DETECTION_FAILURE, true));
+	}
+
+	@Test
+	public void testCumulatedTimeChannels() throws Exception {
+		final var dummyIo = new DummyInputOutput(IO_ID);
+		final var sut = new SystemFeneconIndustrialLImpl();
+		final var timedata = new DummyTimedata("timedata");
+		final var event = new Event(EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, Map.of());
+		new ComponentTest(sut) //
+				.addReference("componentManager", new DummyComponentManager(createDummyClock())) //
+				.addReference("setCoolingUnitModbus", new DummyModbusBridge(MODBUS_ID)) //
+				.addReference("cm", new DummyConfigurationAdmin()) //
+				.addReference("ess", new DummyMetaEss(ESS_ID)) //
+				.addReference("timedata", timedata) //
+				.addComponent(new DummyCycle(1000)) //
+				.addComponent(dummyIo) //
+				.activate(MyConfig.create() //
+						.setId(COMPONENT_ID) //
+						.setStartStopConfig(StartStopConfig.START) //
+						.setCoolingUnitModbusId(MODBUS_ID) //
+						.setEssId(ESS_ID) //
+						.setBatteryIds(BATTERY1_ID, BATTERY2_ID) //
+						.setCoolingUnitMode(Envicool.Mode.DISABLED) //
+						.setCoolingUnitCoolingSetPoint(20) //
+						.setCoolingUnitHeatingSetPoint(10) //
+						.setEmergencyStopState(EMERGENCY_STOP_STATE.toString()) //
+						.setAcknowledgeEmergencyStop(ACKNOWLEDGE_EMERGENCY_STOP.toString()) //
+						.setSpdTripped(SPD_STATE.toString()) //
+						.setFuseTripped(FUSE_STATE.toString()) //
+						.setPsuTriggered(PSU_TRIGGERED.toString()) //
+						.setIsSmokeDetectionInstalled(false) //
+						.setSmokeDetection(SMOKE_DETECTION.toString()) //
+						.setSmokeDetectionFailure(SMOKE_DETECTION_FAILURE.toString()) //
+						.setBmsHardReset(BMS_HARD_RESET.toString()) //
+						.build())
+				.next(new TestCase() //
+						.input(HEATER_RUNNING_STATE, true) //
+						.input(PUMP_RUNNING_STATE, true) //
+						.input(COMPRESSOR_1_RUNNING_STATE, true) //
+						.input(COMPRESSOR_2_RUNNING_STATE, true) //
+						.output(CUMULATED_TIME_HEATER_RUNNING_STATE, null) //
+						.output(CUMULATED_TIME_PUMP_RUNNING_STATE, null) //
+						.output(CUMULATED_TIME_COMPRESSOR_1_RUNNING_STATE, null) //
+						.output(CUMULATED_TIME_COMPRESSOR_2_RUNNING_STATE, null) //
+						.output(CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE, null)) //
+				.next(new TestCase() //
+						.onBeforeProcessImage(() -> sut.handleEvent(event))) //
+				.next(new TestCase() //
+						.output(CUMULATED_TIME_HEATER_RUNNING_STATE, 0) //
+						.output(CUMULATED_TIME_PUMP_RUNNING_STATE, 0) //
+						.output(CUMULATED_TIME_COMPRESSOR_1_RUNNING_STATE, 0) //
+						.output(CUMULATED_TIME_COMPRESSOR_2_RUNNING_STATE, 0) //
+						.output(CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE, 0)) //
+		;
 	}
 }

@@ -118,7 +118,6 @@
 	bnd.identity;id='io.openems.edge.ess.core',\
 	bnd.identity;id='io.openems.edge.ess.fenecon.commercial40',\
 	bnd.identity;id='io.openems.edge.ess.generic',\
-	bnd.identity;id='io.openems.edge.ess.sma',\
 	bnd.identity;id='io.openems.edge.evcs.alpitronic.hypercharger',\
 	bnd.identity;id='io.openems.edge.evcs.cluster',\
 	bnd.identity;id='io.openems.edge.evcs.core',\
@@ -140,6 +139,7 @@
 	bnd.identity;id='io.openems.edge.fenecon.dess',\
 	bnd.identity;id='io.openems.edge.fenecon.mini',\
 	bnd.identity;id='io.openems.edge.fenecon.pro',\
+	bnd.identity;id='io.openems.edge.fronius',\
 	bnd.identity;id='io.openems.edge.goodwe',\
 	bnd.identity;id='io.openems.edge.heat.askoma',\
 	bnd.identity;id='io.openems.edge.heat.mypv',\
@@ -168,7 +168,6 @@
 	bnd.identity;id='io.openems.edge.meter.pqplus',\
 	bnd.identity;id='io.openems.edge.meter.schneider.acti9.smartlink',\
 	bnd.identity;id='io.openems.edge.meter.siemens',\
-	bnd.identity;id='io.openems.edge.meter.sma.shm20',\
 	bnd.identity;id='io.openems.edge.meter.socomec',\
 	bnd.identity;id='io.openems.edge.meter.virtual',\
 	bnd.identity;id='io.openems.edge.meter.weidmueller',\
@@ -179,19 +178,19 @@
 	bnd.identity;id='io.openems.edge.predictor.production.linearmodel',\
 	bnd.identity;id='io.openems.edge.predictor.similardaymodel',\
 	bnd.identity;id='io.openems.edge.pvinverter.cluster',\
-	bnd.identity;id='io.openems.edge.pvinverter.fronius',\
 	bnd.identity;id='io.openems.edge.pvinverter.kaco.blueplanet',\
 	bnd.identity;id='io.openems.edge.pvinverter.kostal',\
-	bnd.identity;id='io.openems.edge.pvinverter.sma',\
 	bnd.identity;id='io.openems.edge.pvinverter.solarlog',\
 	bnd.identity;id='io.openems.edge.scheduler.allalphabetically',\
 	bnd.identity;id='io.openems.edge.scheduler.daily',\
 	bnd.identity;id='io.openems.edge.scheduler.fixedorder',\
 	bnd.identity;id='io.openems.edge.simulator',\
+	bnd.identity;id='io.openems.edge.sma',\
 	bnd.identity;id='io.openems.edge.solaredge',\
 	bnd.identity;id='io.openems.edge.system.fenecon',\
 	bnd.identity;id='io.openems.edge.timedata.influxdb',\
 	bnd.identity;id='io.openems.edge.timedata.rrd4j',\
+	bnd.identity;id='io.openems.edge.timeofusetariff.ancillarycosts',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.awattar',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.corrently',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.entsoe',\
@@ -202,7 +201,7 @@
 	bnd.identity;id='io.openems.edge.timeofusetariff.swisspower',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.tibber',\
 	bnd.identity;id='io.openems.edge.weather.openmeteo',\
-	
+
 -runbundles: \
 	Java-WebSocket;version='[1.6.0,1.6.1)',\
 	bcpkix;version='[1.81.0,1.81.1)',\
@@ -216,7 +215,7 @@
 	com.google.guava.failureaccess;version='[1.0.3,1.0.4)',\
 	com.squareup.okhttp3;version='[5.1.0,5.1.1)',\
 	com.squareup.okhttp3.logging;version='[5.1.0,5.1.1)',\
-	com.squareup.okio;version='[3.15.0,3.15.1)',\
+	com.squareup.okio;version='[3.16.0,3.16.1)',\
 	com.sun.jna;version='[5.17.0,5.17.1)',\
 	io.openems.common;version=snapshot,\
 	io.openems.edge.application;version=snapshot,\
@@ -304,7 +303,6 @@
 	io.openems.edge.ess.core;version=snapshot,\
 	io.openems.edge.ess.fenecon.commercial40;version=snapshot,\
 	io.openems.edge.ess.generic;version=snapshot,\
-	io.openems.edge.ess.sma;version=snapshot,\
 	io.openems.edge.evcs.alpitronic.hypercharger;version=snapshot,\
 	io.openems.edge.evcs.api;version=snapshot,\
 	io.openems.edge.evcs.cluster;version=snapshot,\
@@ -328,6 +326,7 @@
 	io.openems.edge.fenecon.dess;version=snapshot,\
 	io.openems.edge.fenecon.mini;version=snapshot,\
 	io.openems.edge.fenecon.pro;version=snapshot,\
+	io.openems.edge.fronius;version=snapshot,\
 	io.openems.edge.goodwe;version=snapshot,\
 	io.openems.edge.heat.api;version=snapshot,\
 	io.openems.edge.heat.askoma;version=snapshot,\
@@ -359,7 +358,6 @@
 	io.openems.edge.meter.pqplus;version=snapshot,\
 	io.openems.edge.meter.schneider.acti9.smartlink;version=snapshot,\
 	io.openems.edge.meter.siemens;version=snapshot,\
-	io.openems.edge.meter.sma.shm20;version=snapshot,\
 	io.openems.edge.meter.socomec;version=snapshot,\
 	io.openems.edge.meter.virtual;version=snapshot,\
 	io.openems.edge.meter.weidmueller;version=snapshot,\
@@ -372,22 +370,22 @@
 	io.openems.edge.predictor.similardaymodel;version=snapshot,\
 	io.openems.edge.pvinverter.api;version=snapshot,\
 	io.openems.edge.pvinverter.cluster;version=snapshot,\
-	io.openems.edge.pvinverter.fronius;version=snapshot,\
 	io.openems.edge.pvinverter.kaco.blueplanet;version=snapshot,\
 	io.openems.edge.pvinverter.kostal;version=snapshot,\
-	io.openems.edge.pvinverter.sma;version=snapshot,\
 	io.openems.edge.pvinverter.solarlog;version=snapshot,\
 	io.openems.edge.scheduler.allalphabetically;version=snapshot,\
 	io.openems.edge.scheduler.api;version=snapshot,\
 	io.openems.edge.scheduler.daily;version=snapshot,\
 	io.openems.edge.scheduler.fixedorder;version=snapshot,\
 	io.openems.edge.simulator;version=snapshot,\
+	io.openems.edge.sma;version=snapshot,\
 	io.openems.edge.solaredge;version=snapshot,\
 	io.openems.edge.system.fenecon;version=snapshot,\
 	io.openems.edge.thermometer.api;version=snapshot,\
 	io.openems.edge.timedata.api;version=snapshot,\
 	io.openems.edge.timedata.influxdb;version=snapshot,\
 	io.openems.edge.timedata.rrd4j;version=snapshot,\
+	io.openems.edge.timeofusetariff.ancillarycosts;version=snapshot,\
 	io.openems.edge.timeofusetariff.api;version=snapshot,\
 	io.openems.edge.timeofusetariff.awattar;version=snapshot,\
 	io.openems.edge.timeofusetariff.corrently;version=snapshot,\
@@ -439,7 +437,7 @@
 	org.apache.felix.webconsole;version='[5.0.12,5.0.13)',\
 	org.apache.felix.webconsole.plugins.ds;version='[2.3.0,2.3.1)',\
 	org.eclipse.paho.mqttv5.client;version='[1.2.5,1.2.6)',\
-	org.jetbrains.kotlin.osgi-bundle;version='[2.2.0,2.2.1)',\
+	org.jetbrains.kotlin.osgi-bundle;version='[2.2.10,2.2.11)',\
 	org.jsr-305;version='[3.0.2,3.0.3)',\
 	org.ops4j.pax.logging.pax-logging-api;version='[2.3.0,2.3.1)',\
 	org.ops4j.pax.logging.pax-logging-log4j2;version='[2.3.0,2.3.1)',\

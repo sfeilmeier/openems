@@ -1,5 +1,7 @@
 package io.openems.edge.system.fenecon.industrial.l;
 
+import static io.openems.common.channel.PersistencePriority.HIGH;
+
 import org.osgi.service.event.EventHandler;
 
 import io.openems.common.channel.AccessMode;
@@ -32,11 +34,14 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 		 * Envicool CoolingUnit.
 		 */
 		PUMP_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN) //
-				.accessMode(AccessMode.READ_ONLY)), //
+				.accessMode(AccessMode.READ_ONLY) //
+				.persistencePriority(HIGH)), //
 		COMPRESSOR_1_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN) //
-				.accessMode(AccessMode.READ_ONLY)), //
+				.accessMode(AccessMode.READ_ONLY) //
+				.persistencePriority(HIGH)), //
 		COMPRESSOR_2_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN) //
-				.accessMode(AccessMode.READ_ONLY)), //
+				.accessMode(AccessMode.READ_ONLY) //
+				.persistencePriority(HIGH)), //
 		WATER_OUTLET_TEMP(Doc.of(OpenemsType.INTEGER) //
 				.accessMode(AccessMode.READ_ONLY) //
 				.unit(Unit.DEGREE_CELSIUS)), //
@@ -50,7 +55,8 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 				.accessMode(AccessMode.READ_ONLY) //
 				.unit(Unit.MILLIBAR)), //
 		HEATER_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN) //
-				.accessMode(AccessMode.READ_ONLY)), //
+				.accessMode(AccessMode.READ_ONLY) //
+				.persistencePriority(HIGH)), //
 		SET_WATER_OUTLET_PRESSURE(Doc.of(OpenemsType.DOUBLE) //
 				.accessMode(AccessMode.READ_WRITE) //
 				.unit(Unit.MILLIBAR)),
@@ -113,8 +119,28 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 		SMOKE_DETECTION(Doc.of(Level.FAULT)//
 				.text("Smoke Detected!")),
 		SMOKE_DETECTION_FAILURE(Doc.of(Level.WARNING)//
-				.text("Failure in the Smoke Detection System")), //
+				.text("Failure in the Smoke detection system!")), //
 		BMS_HARD_RESET(Doc.of(OpenemsType.BOOLEAN)), //
+		CUMULATED_TIME_PUMP_RUNNING_STATE(Doc.of(OpenemsType.INTEGER) //
+				.unit(Unit.CUMULATED_SECONDS) //
+				.text("Accumulated runtime of cooling unit with pump active, measured in seconds.") //
+				.persistencePriority(HIGH)), //
+		CUMULATED_TIME_COMPRESSOR_1_RUNNING_STATE(Doc.of(OpenemsType.INTEGER) //
+				.unit(Unit.CUMULATED_SECONDS) //
+				.text("Accumulated runtime of cooling unit with compressor 1 active, measured in seconds.") //
+				.persistencePriority(HIGH)), //
+		CUMULATED_TIME_COMPRESSOR_2_RUNNING_STATE(Doc.of(OpenemsType.INTEGER) //
+				.unit(Unit.CUMULATED_SECONDS) //
+				.text("Accumulated runtime of cooling unit with compressor 2 active, measured in seconds.") //
+				.persistencePriority(HIGH)), //
+		CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE(Doc.of(OpenemsType.INTEGER) //
+				.unit(Unit.CUMULATED_SECONDS) //
+				.text("Accumulated runtime of cooling unit with compressor 1 & 2 active, measured in seconds.") //
+				.persistencePriority(HIGH)), //
+		CUMULATED_TIME_HEATER_RUNNING_STATE(Doc.of(OpenemsType.INTEGER) //
+				.unit(Unit.CUMULATED_SECONDS) //
+				.text("Accumulated runtime of cooling unit with heater active, measured in seconds.") //
+				.persistencePriority(HIGH)), //
 		;
 
 		private final Doc doc;
@@ -260,8 +286,8 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 	 *
 	 * @return the Channel {@link Value}
 	 */
-	public default boolean getPumpRunningState() {
-		return this.getPumpRunningStateChannel().value().asOptional().get();
+	public default Value<Boolean> getPumpRunningState() {
+		return this.getPumpRunningStateChannel().value();
 	}
 
 	/**
@@ -279,8 +305,8 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 	 *
 	 * @return the Channel {@link Value}
 	 */
-	public default boolean getHeaterRunningState() {
-		return this.getHeaterRunningStateChannel().value().asOptional().get();
+	public default Value<Boolean> getHeaterRunningState() {
+		return this.getHeaterRunningStateChannel().value();
 	}
 
 	/**
@@ -298,8 +324,8 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 	 *
 	 * @return the Channel {@link Value}
 	 */
-	public default boolean getCompressor1RunningState() {
-		return this.getCompressor1RunningStateChannel().value().asOptional().get();
+	public default Value<Boolean> getCompressor1RunningState() {
+		return this.getCompressor1RunningStateChannel().value();
 	}
 
 	/**
@@ -317,8 +343,8 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 	 *
 	 * @return the Channel {@link Value}
 	 */
-	public default boolean getCompressor2RunningState() {
-		return this.getCompressor2RunningStateChannel().value().asOptional().get();
+	public default Value<Boolean> getCompressor2RunningState() {
+		return this.getCompressor2RunningStateChannel().value();
 	}
 
 }
