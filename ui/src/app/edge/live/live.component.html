@@ -21,14 +21,15 @@
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ng-container *ngFor="let widget of widgets.list; let i = index" [ngSwitch]="widget.name">
-                <ng-container *ngVar="(i + 1) as id">
-                  <!-- Systemcomponent -->
-                  <Industrial_S *ngSwitchCase="'System.Fenecon.Industrial.S'" [componentId]="widget.componentId">
-                  </Industrial_S>
-                  <Industrial_L *ngSwitchCase="'System.Fenecon.Industrial.L'" [componentId]="widget.componentId">
-                  </Industrial_L>
-                </ng-container>
+              <ng-container *ngFor="let widget of widgets.list" [ngSwitch]="widget.name">
+                <!-- Systemcomponent -->
+                <Industrial_S *ngSwitchCase="'System.Fenecon.Industrial.S'" [componentId]="widget.componentId">
+                </Industrial_S>
+                <Industrial_L *ngSwitchCase="'System.Fenecon.Industrial.L'" [componentId]="widget.componentId">
+                </Industrial_L>
+                <!-- Weather-->
+                <weather [componentId]="widget.componentId" *ngSwitchCase="'Weather.OpenMeteo'"
+                  class="ion-hide-sm-down"></weather>
               </ng-container>
             </ion-col>
           </ion-row>

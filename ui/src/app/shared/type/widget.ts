@@ -48,6 +48,7 @@ export enum WidgetFactory {
     "Evcs.Cluster.SelfConsumption",
     "System.Fenecon.Industrial.S",
     "System.Fenecon.Industrial.L",
+    "Weather.OpenMeteo",
 }
 
 export type Icon = {
