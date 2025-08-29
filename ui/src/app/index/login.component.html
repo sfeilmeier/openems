@@ -63,6 +63,7 @@
                           </ion-row>
                           <ion-row>
                             <a class="ion-float-left" size="small"
+                              (keydown.enter)="doDemoLogin({ username: 'demo@fenecon.de', password: 'femsdemo' })"
                               (click)="doDemoLogin({ username: 'demo@fenecon.de', password: 'femsdemo' })"
                               style="text-decoration: none;">
                               <small translate>Login.DEMO_ACCESS</small>

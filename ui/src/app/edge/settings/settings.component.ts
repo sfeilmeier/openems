@@ -54,4 +54,5 @@ export class SettingsComponent implements OnInit {
         && UserPermission.isUserAllowedToSeeEnergyJourney(user);
     });
   }
+
 }

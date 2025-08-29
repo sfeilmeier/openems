@@ -8,9 +8,9 @@
             <ion-label translate>Edge.Config.Index.systemProfile</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" routerLink="/device/{{ edge.id }}/settings/profile">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/profile'}">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -22,9 +22,9 @@
             <ion-label translate>Edge.Config.Index.log</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" routerLink="/device/{{ edge.id }}/settings/systemlog">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/systemlog'}">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -36,9 +36,9 @@
             <ion-label translate>Edge.Config.Index.networkConfiguration</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" routerLink="/device/{{ edge.id }}/settings/network">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/network'}">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -51,9 +51,9 @@
               {edgeShortName: environment.edgeShortName} }}</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" routerLink="/device/{{ edge.id }}/settings/app">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/app'}">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -65,9 +65,9 @@
             <ion-label>{{ environment.edgeShortName }} System</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" routerLink="/device/{{ edge.id }}/settings/system">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/system'}">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -79,9 +79,9 @@
             <ion-label translate>Edge.Config.Index.alerting</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" routerLink="/device/{{ edge.id }}/settings/alerting">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/alerting'}">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -93,9 +93,9 @@
             <ion-label>Energy Journey</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" routerLink="/device/{{ edge.id }}/settings/energyJourney">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/energyJourney'}">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -115,10 +115,10 @@
             <ion-label translate>Edge.Config.Index.adjustComponents</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light"
-              routerLink="/device/{{ edge.id }}/settings/component.update">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/component.update'}" color="light">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
+
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -130,10 +130,9 @@
             <ion-label translate>Edge.Config.Index.addComponents</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light"
-              routerLink="/device/{{ edge.id }}/settings/component.install">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/component.install'}" color="light">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -146,9 +145,10 @@
             <ion-label>Channels</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light" routerLink="/device/{{ edge.id }}/settings/channels">
+
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/channels'}" color="light">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -160,9 +160,10 @@
             <ion-label translate>Edge.Config.Index.systemExecute</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light" routerLink="/device/{{ edge.id }}/settings/systemexecute">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/systemexecute'}" color="light">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
+
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -175,10 +176,9 @@
           </ion-item>
           <ion-card-content>
             <ion-note>Für Home 10 optimiert</ion-note>
-            <ion-button class="ion-float-right" color="light"
-              routerLink="/device/{{ edge.id }}/settings/homeServiceAssistant">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/homeServiceAssistent'}" color="light">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -190,10 +190,9 @@
             <ion-label>Industrial L Service Assistent</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light"
-              routerLink="/device/{{ edge.id }}/settings/industrialLAssistant">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/industrialLAssistant'}" color="light">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -205,10 +204,9 @@
             <ion-label>Commercial Service Assistant</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light"
-              routerLink="/device/{{ edge.id }}/settings/serviceAssistant">
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/serviceAssistant'}" color="light">
               <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -220,10 +218,9 @@
             <ion-label>Power Assistant</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light"
-              routerLink="/device/{{ edge.id }}/settings/powerAssistant">
-              <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/powerAssistant'}" color="light"> <ion-icon
+                slot="icon-only" name="arrow-forward-outline"></ion-icon>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -235,9 +232,9 @@
             <ion-label>Jsonrpc test</ion-label>
           </ion-item>
           <ion-card-content>
-            <ion-button class="ion-float-right" color="light" routerLink="/device/{{ edge.id }}/settings/jsonrpctest">
-              <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
+            <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/jsonrpctest'}" color="light"> <ion-icon
+                slot="icon-only" name="arrow-forward-outline"></ion-icon>
+            </oe-flat-button>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -250,9 +247,15 @@
             </ion-item>
             <ion-card-content>
               <ion-note>Für Home 10 optimiert</ion-note>
-              <ion-button class="ion-float-right" routerLink="/device/{{ edge.id }}/settings/homeServiceAssistent">
+              <!-- <ion-button class="ion-float-right"
+                routerLink="/device/{{ edge.id }}/settings/homeServiceAssistent"
+                (click)="navigateAbsolute('/device/'+ edge.id + '/settings/homeServiceAssistent')">
                 <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
-              </ion-button>
+              </ion-button> -->
+
+              <oe-flat-button [link]="{ text: '/device/'+ edge.id + '/settings/homeServiceAssistent'}" color="light">
+                <ion-icon slot="icon-only" name="arrow-forward-outline"></ion-icon>
+              </oe-flat-button>
             </ion-card-content>
           </ion-card>
         </ion-col>
