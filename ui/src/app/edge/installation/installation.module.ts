@@ -5,6 +5,7 @@ import { FormlyFieldConfig, FormlyModule } from "@ngx-formly/core";
 import { SetupKeyComponent } from "src/app/edge/installation/shared/reusable-input-field";
 import { SharedModule } from "src/app/shared/shared.module";
 import { SettingsModule } from "../settings/settings.module";
+import { OeSystemUpdateComponent } from "../settings/system/oe-system-update.component";
 import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { InstallationViewComponent } from "./installation-view/installation-view.component";
 import { InstallationComponent } from "./installation.component";
@@ -132,6 +133,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     SharedModule,
     SettingsModule,
     SetupKeyComponent,
+    OeSystemUpdateComponent,
   ],
   declarations: [
     CompletionComponent,
@@ -143,9 +145,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     ProtocolInstallerComponent,
     ProtocolSystemComponent,
     InstallationComponent,
-    InstallationViewComponent,
     PreInstallationComponent,
-    PreInstallationUpdateComponent,
     ConfigurationSystemComponent,
     ProtocolPvComponent,
     ConfigurationSummaryComponent,
@@ -158,6 +158,8 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     ConfigurationEssLimiter14aComponent,
     ProtocolChecklistComponent,
     ProtocolAvuBoxComponent,
+    PreInstallationUpdateComponent,
+    InstallationViewComponent,
     ConfigurationGridSettingComponent,
     ProtocolCommercialClusterSlaveCountComponent,
     ProtocolCommercialClusterSlaveInstallationComponent,

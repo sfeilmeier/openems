@@ -1,23 +1,34 @@
 // @ts-strict-ignore
 import { formatNumber } from "@angular/common";
 import { Component } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
+import { ComponentsBaseModule } from "src/app/shared/components/components.module";
 import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
+import { PickdateComponentModule } from "src/app/shared/components/pickdate/pickdate.module";
 import { Converter } from "src/app/shared/components/shared/converter";
-import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Filter } from "src/app/shared/components/shared/filter";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
+import { LiveDataServiceProvider } from "src/app/shared/provider/live-data-service-provider";
+import { LocaleProvider } from "src/app/shared/provider/locale-provider";
 import { ChannelAddress, CurrentData, Edge, EdgeConfig, Utils } from "src/app/shared/shared";
+import { CommonUiModule } from "../../../../shared/common-ui.module";
+import { ChartComponent } from "./chart/chart";
 import { ClearTimeOutFailureRequest } from "./jsonrpc/clearTimeoutFailure";
 
 @Component({
   selector: IndustrialServiceAssistantComponent.SELECTOR,
   templateUrl: "./industrial.html",
-  providers: [{
-    useClass: LiveDataService,
-    provide: DataService,
-  }],
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonUiModule,
+    ChartComponent,
+    ComponentsBaseModule,
+    LiveDataServiceProvider,
+    LocaleProvider,
+    PickdateComponentModule,
+    FormsModule,
+  ],
 })
 export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
 

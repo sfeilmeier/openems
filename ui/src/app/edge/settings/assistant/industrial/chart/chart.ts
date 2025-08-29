@@ -1,12 +1,26 @@
 import { Component, Input, OnChanges } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { FormlyModule } from "@ngx-formly/core";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
+import { ChartComponentsModule } from "src/app/shared/components/chart/chart.module";
+import { ComponentsBaseModule } from "src/app/shared/components/components.module";
+import { HistoryDataErrorModule } from "src/app/shared/components/history-data-error/history-data-error.module";
 import { ChannelAddress, EdgeConfig, Utils } from "src/app/shared/shared";
 import { ChartAxis, HistoryUtils, YAxisType } from "src/app/shared/utils/utils";
+import { CommonUiModule } from "../../../../../shared/common-ui.module";
 
 @Component({
   selector: "industrial_chart",
   templateUrl: "../../../../../shared/components/chart/abstracthistorychart.html",
-  standalone: false,
+  standalone: true,
+  imports: [
+    RouterModule,
+    CommonUiModule,
+    ComponentsBaseModule,
+    ChartComponentsModule,
+    FormlyModule,
+    HistoryDataErrorModule,
+  ],
 })
 export class ChartComponent extends AbstractHistoryChart implements OnChanges {
   @Input({ required: true }) public selectedBattery!: EdgeConfig.Component;

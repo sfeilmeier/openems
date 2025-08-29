@@ -1,10 +1,9 @@
-import { CommonModule, KeyValue } from "@angular/common";
+import { KeyValue } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
-import { IonicModule } from "@ionic/angular";
-import { TranslateModule } from "@ngx-translate/core";
 import { BaseChartDirective } from "ng2-charts";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { CommonUiModule } from "src/app/shared/common-ui.module";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
 import { ChartComponentsModule } from "src/app/shared/components/chart/chart.module";
 import { HistoryDataErrorModule } from "src/app/shared/components/history-data-error/history-data-error.module";
@@ -19,9 +18,7 @@ export type HomeCellVoltageOptions = KeyValue<string, string | null> | null;
     imports: [
         BaseChartDirective,
         ReactiveFormsModule,
-        CommonModule,
-        IonicModule,
-        TranslateModule,
+        CommonUiModule,
         ChartComponentsModule,
         HistoryDataErrorModule,
         NgxSpinnerModule,

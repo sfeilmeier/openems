@@ -1,6 +1,9 @@
 // @ts-strict-ignore
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterModule } from "@angular/router";
+import { NgxSpinnerComponent } from "ngx-spinner";
+import { PipeComponentsModule } from "src/app/shared/pipe/pipe.module";
+import { CommonUiModule } from "../../../shared/common-ui.module";
 import { Edge, EdgeConfig, Service, Websocket } from "../../../shared/shared";
 
 interface MyEdgeConfigComponent extends EdgeConfig.Component {
@@ -10,7 +13,13 @@ interface MyEdgeConfigComponent extends EdgeConfig.Component {
 @Component({
   selector: ServiceAssistantComponent.SELECTOR,
   templateUrl: "./serviceassistant.component.html",
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonUiModule,
+    PipeComponentsModule,
+    NgxSpinnerComponent,
+    RouterModule,
+  ],
 })
 export class ServiceAssistantComponent implements OnInit {
 

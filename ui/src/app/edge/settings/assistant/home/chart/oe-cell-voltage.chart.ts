@@ -1,15 +1,23 @@
 import { KeyValue } from "@angular/common";
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { ChartBaseModule } from "src/app/shared/chart-base.module";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
 import { ChannelAddress } from "src/app/shared/shared";
 import { ArrayUtils } from "src/app/shared/utils/array/array.utils";
 import { ChartAxis, HistoryUtils, YAxisType } from "src/app/shared/utils/utils";
+import { CommonUiModule } from "../../../../../shared/common-ui.module";
 
 export type HomeCellVoltageOptions = KeyValue<string, string | null> | null;
 @Component({
   selector: "cellVoltageChart",
   templateUrl: "../../../../../shared/components/chart/abstracthistorychart.html",
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonUiModule,
+    RouterModule,
+    ChartBaseModule,
+  ],
 })
 export class ChartComponent extends AbstractHistoryChart implements OnInit, OnChanges {
 
