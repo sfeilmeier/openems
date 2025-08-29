@@ -12,7 +12,7 @@ export LANG=C
 
 export PACKAGE="fems"
 FORCE_UPDATE=false
-DEB_PATH="http://fenecon.de/fems-download/${PACKAGE}-latest.deb"
+DEB_PATH="https://fenecon.de/fems-download/${PACKAGE}-latest.deb"
 UPDATE_LOCK_FILE="/tmp/fems-update.lock"
 
 # Parse command line paramaters
@@ -163,13 +163,13 @@ fi
 case "$VERSION_CODENAME" in
     "jessie" | "stretch" )
         install_freexian_apt_key;
-        echo "deb http://deb.fenecon.de/debian-elts/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
+        echo "deb https://deb.fenecon.de/debian-elts/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
 
     "buster" | "bullseye")
-        echo "deb http://deb.fenecon.de/debian/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
+        echo "deb https://deb.fenecon.de/debian/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
 
     "bookworm" | "trixie" )
-        echo "deb http://deb.fenecon.de/debian/ $VERSION_CODENAME main contrib non-free-firmware" > "/etc/apt/sources.list";;
+        echo "deb https://deb.fenecon.de/debian/ $VERSION_CODENAME main contrib non-free-firmware" > "/etc/apt/sources.list";;
 esac
 
 # Remove alternate sources
@@ -271,8 +271,8 @@ if ! is_installed temurin-21-jre; then
     apt_install libasound2
 
     echo "# Install JRE 21"
-    dpkg_download_install http://fenecon.de/fems-download/deb/adoptium-ca-certificates-latest.deb
-    dpkg_download_install http://fenecon.de/fems-download/deb/temurin-21-jre-armhf-latest.deb
+    dpkg_download_install https://fenecon.de/fems-download/deb/adoptium-ca-certificates-latest.deb
+    dpkg_download_install https://fenecon.de/fems-download/deb/temurin-21-jre-armhf-latest.deb
     update-alternatives --set 'java' '/usr/lib/jvm/temurin-21-jre-armhf/bin/java'
 fi
 
@@ -294,7 +294,7 @@ if [ ! -f "/etc/openems.d/hardware.conf" ]; then
 fi
 
 export CURRENT_VERSION="$(dpkg-query --showformat='${Version}' --show $PACKAGE)"
-export LATEST_VERSION="$(wget -qO- http://fenecon.de/debian-test/${PACKAGE}-latest.version)"
+export LATEST_VERSION="$(wget -qO- https://fenecon.de/debian-test/${PACKAGE}-latest.version)"
 if [ "$CURRENT_VERSION" = "$LATEST_VERSION" -a "$FORCE_UPDATE" = false ]; then
     echo "# $PACKAGE: latest version [$LATEST_VERSION] is already installed"
 else
