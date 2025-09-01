@@ -1,6 +1,6 @@
 {
   "name": "openems-ui",
-  "version": "2025.8.3-SNAPSHOT",
+  "version": "2025.9.1-SNAPSHOT",
   "license": "AGPL-3.0",
   "private": true,
   "dependencies": {
