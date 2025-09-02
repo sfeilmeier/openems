@@ -102,6 +102,16 @@ function install_debian_apt_key {
     fi
 }
 
+function install_raspbian_apt_key {
+    local keytmp="/tmp/raspbian.public.key"
+    local keystore="/etc/apt/trusted.gpg.d/raspbian.asc"
+    
+    if [ ! -f "$keystore" ]; then
+        wget "https://deb.fenecon.de/debian-keys/raspbian.public.key" -O "${keytmp}"
+        install -m 644 "${keytmp}" "${keystore}"
+    fi
+}
+
 function apt_upgrade  {
     APT_LISTCHANGES_FRONTEND=none DEBIAN_FRONTEND=noninteractive \
     apt-get upgrade -y \
@@ -161,11 +171,11 @@ fi
 
 # Set fenecon apt source
 case "$VERSION_CODENAME" in
-    "jessie" | "stretch" )
+    "jessie" | "stretch" | "buster" )
         install_freexian_apt_key;
         echo "deb https://deb.fenecon.de/debian-elts/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
 
-    "buster" | "bullseye")
+    "bullseye")
         echo "deb https://deb.fenecon.de/debian/ $VERSION_CODENAME main contrib non-free" > "/etc/apt/sources.list";;
 
     "bookworm" | "trixie" )
@@ -175,10 +185,16 @@ esac
 # Remove alternate sources
 find /etc/apt/sources.list.d -name "*.list" -delete
 
+# Modberry add raspbian source
+if [[ "$( cat /proc/cpuinfo | grep Hardware )" == *"BCM"* ]]; then
+    install_raspbian_apt_key;
+    echo "deb https://deb.fenecon.de/raspbian/ $VERSION_CODENAME main contrib non-free rpi" > "/etc/apt/sources.list.d/raspi.list"
+fi
+
 # Install apt keys
-install_debian_apt_key 10 buster
 install_debian_apt_key 11 bullseye
 install_debian_apt_key 12 bookworm
+install_debian_apt_key 13 trixie
 
 vacuum;
 apt_remove build-essential;
