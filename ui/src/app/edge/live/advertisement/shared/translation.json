@@ -2,20 +2,20 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "Immer auf dem neuesten Stand sein",
-        "TEXT": "Kennen Sie schon unseren Newsletter? Erhalten Sie spannende Einblicke in aktuelle Termine und Veransaltungen, Produktneuheiten sowie Unternehmensentwicklungen.</br></br>Ob Updates zu FEMS-Apps, Sonderaktionen oder branchenpolitische Neuerungen - mit der FENpost sind Sie immer up to date!",
-        "LINK": "https://erp.fenecon.de/fenmail",
-        "LINK_TEXT": "Jetzt abonnieren!"
+        "TITLE": "Investieren in FENECON: Entdecken Sie unsere neue Kampagne",
+        "TEXT": "Genauso wie unsere Kunden treibt uns der Wunsch nach Unabhängigkeit an - in unserem Fall von Finanzinvestoren und Konzernen. Wir wollen unabhängig bleiben und unsere Vision der 100% Energiewende weiter erfolgreich umsetzen.",
+        "LINK": "",
+        "LINK_TEXT": "Zu den Details..."
       }
     }
   },
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "Always up to date",
-        "TEXT": "Have you heard about our newsletter? Get the latest news about current events and appointments, product innovations, and key company developments.</br> Whether it's updates on the FEMS Apps, special promotions, or sector-political - with the FENmail, you'll always stay up to date!",
-        "LINK": "https://erp.fenecon.de/fenmail",
-        "LINK_TEXT": "Subscribe now!"
+        "TITLE": "Invest in FENECON: Discover our new campaign",
+        "TEXT": "Just like our customers, we are driven by the desire for independence - in our case, from financial investors and corporations. We want to remain independent and continue to successfully pursue our vision of a 100% energy transition.",
+        "LINK": "",
+        "LINK_TEXT": "See details..."
       }
     }
   }
