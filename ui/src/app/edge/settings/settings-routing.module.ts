@@ -19,6 +19,7 @@ import { SystemUpdateOldComponent as EdgeSettingsSystemUpdateOldComponent } from
 export const settingsRoutes: Routes = [
     { path: "", data: { navbarTitleToBeTranslated: "Menu.edgeSettings" }, component: SettingsComponent },
     { path: "industrialLAssistant", loadComponent: () => import("./assistant/industrial/industrial").then(m => m.IndustrialServiceAssistantComponent), data: { navbarTitle: "Industrial L-Assistent" } },
+    { path: "homeServiceAssistent", loadComponent: () => import("./assistant/home/home").then(m => m.HomeServiceAssistantComponent), data: { navbarTitle: "Home Service Assistent" } },
     { path: "channels", component: EdgeSettingsChannelsComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitle: "Channels" } },
     { path: "component.install", component: EdgeSettingsComponentInstallIndexComponentComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitleToBeTranslated: "Edge.Config.Index.addComponents" } },
     { path: "component.install/:factoryId", component: EdgeSettingsComponentInstallComponentComponent, canActivate: [hasEdgeRole(Role.ADMIN)], data: { navbarTitleToBeTranslated: "Edge.Config.Index.addComponents" } },
