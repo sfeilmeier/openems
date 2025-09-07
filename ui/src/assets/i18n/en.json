@@ -1,12 +1,4 @@
 {
-  "TOAST": {
-    "MIGRATION": {
-      "HEADER": "<big>Important note</big>",
-      "CONTENT": "On <b>Friday, September 5, 2025</b>, between 5:00 p.m. and approximately 8:00 p.m. (CEST), we will be performing optimizations to our IT infrastructure. Individual systems will continue to be tested and maintained throughout the weekend. All systems will be fully functional again by Monday, September 8, 2025, at the latest.<br><br>During this maintenance window, our backend server will be partially unavailable and there will be extensive restrictions on access to various online services.",
-      "LINK_TEXT": "More details",
-      "LINK": "https://fenecon.de/en/limited-availability-due-to-system-maintenance"
-    }
-  },
   "About": {
     "DESCRIPTION": "Our FENECON Energy Management System (FEMS) is based on OpenEMS, the Open Source Energy Management System. It is a modular platform for energy management applications. It was initiated by FENECON and is now used by a large number of companies, universities and institutes for research and development, as well as for their own energy management systems. The development is coordinated by the OpenEMS Association e.V.",
     "CONTACT": "If you have any questions or suggestions regarding energy management and our products, please contact our team at <a href=\"mailto:service@fenecon.de\">service&#64;fenecon.de</a>. The <a target=\"_blank\" href=\"https://community.openems.io/\">OpenEMS Community Forum</a> is available for questions about OpenEMS.",
