@@ -1339,7 +1339,8 @@
   },
   "SYSTEM": {
     "INDUSTRIAL": {
-      "CLEAR_TIMEOUT": "Reset Timeout failure: battery, battery.inverter, ess"
+      "CLEAR_TIMEOUT": "Reset Timeout failure: battery, battery.inverter, ess",
+      "BMS_HARD_RESET": "BMS hard reset"
     }
   }
 }

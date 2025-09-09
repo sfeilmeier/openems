@@ -3,6 +3,7 @@ import { formatNumber } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
+import { ClearTimeOutFailureRequest } from "src/app/edge/live/system/industrial/jsonrpc/clearTimeoutFailure";
 import { ComponentsBaseModule } from "src/app/shared/components/components.module";
 import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
 import { PickdateComponentModule } from "src/app/shared/components/pickdate/pickdate.module";
@@ -14,7 +15,6 @@ import { LocaleProvider } from "src/app/shared/provider/locale-provider";
 import { ChannelAddress, CurrentData, Edge, EdgeConfig, Utils } from "src/app/shared/shared";
 import { CommonUiModule } from "../../../../shared/common-ui.module";
 import { ChartComponent } from "./chart/chart";
-import { ClearTimeOutFailureRequest } from "./jsonrpc/clearTimeoutFailure";
 
 @Component({
   selector: IndustrialServiceAssistantComponent.SELECTOR,
