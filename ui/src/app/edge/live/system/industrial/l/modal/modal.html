@@ -12,12 +12,12 @@
 
     <oe-modal-horizontal-line></oe-modal-horizontal-line>
 
-    <table class="full_width">
+    <table class="full_width" *ngIf="edge.roleIsAtLeast(Role.INSTALLER)">
         <tr>
-            <td [style.width]="(leftColumnWidth ?? 65)  + '%'" *ngIf="edge.roleIsAtLeast(this.Role.INSTALLER)">
+            <td>
                 {{'SYSTEM.INDUSTRIAL.BMS_HARD_RESET' | translate}}
             </td>
-            <td [style.width]="(leftColumnWidth ?? 65)  + '%'" class="align_right">
+            <td class="align_right">
                 <ion-button slot="end" button (click)="reset()">
                     <ion-icon name="send-outline"></ion-icon>
                 </ion-button>
