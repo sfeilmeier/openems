@@ -891,6 +891,8 @@
       "CHOOSE": "Typ",
       "LIMITATION": "Limitierung",
       "CONSTANT_VALUE": "Cos φ Festwert",
+      "INDUCTIVE": "induktiv",
+      "CAPACITIVE": "kapazitiv",
       "DYNAMIC_LIMITATION_ACTIVATED": "Dynamische Begrenzung der Einspeisung aktiviert?",
       "DYNAMIC_LIMITATION": "Dynamische Begrenzung der Einspeisung",
       "EXTERNAL_CONTROLLER_CHECK": "Der Rundsteuerempfänger wurde lt. Anleitung ordnungsgemäß und vollständig installiert.",

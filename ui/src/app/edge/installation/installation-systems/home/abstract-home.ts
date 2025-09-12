@@ -453,7 +453,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
       templateOptions: {
         description: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FIXED_POWER_FACTOR_DESCRIPTION"),
         label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CONSTANT_VALUE"),
-        options: FEED_IN_POWER_FACTOR_OPTIONS(),
+        options: FEED_IN_POWER_FACTOR_OPTIONS(this.translate),
         required: true,
       },
       defaultValue: FeedInSetting.Leading_1,
@@ -549,7 +549,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     if (this.feedInLimitation.feedInSetting === FeedInSetting.FixedPowerFactor) {
       batteryInverterData.push({
         label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CONSTANT_VALUE"),
-        value: this.feedInLimitation.fixedPowerFactor,
+        value: this.formatPowerFactor(this.feedInLimitation.fixedPowerFactor),
       });
     }
 
@@ -1071,6 +1071,20 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   }
 
   /**
+* Converts a FeedInSetting value into the corresponding display label
+* based on FEED_IN_POWER_FACTOR_OPTIONS.
+*
+* @param setting The FeedInSetting value to format.
+* @returns The display label for the given FeedInSetting
+*/
+  public formatPowerFactor(setting: FeedInSetting): string {
+    const option = FEED_IN_POWER_FACTOR_OPTIONS(this.translate).find(
+      o => o.value === setting
+    );
+    return option ? option.label : String(setting);
+  }
+
+  /**
    * Generates and returns the Specific properties required for Home APP variant.
    *
    * @param safetyCountry Safety Country configured.
@@ -1087,3 +1101,4 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
    */
   public abstract getMpptLabel(mppt: number, pv: number);
 }
+
