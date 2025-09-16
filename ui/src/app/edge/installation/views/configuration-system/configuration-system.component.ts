@@ -33,12 +33,8 @@ export class ConfigurationSystemComponent implements OnInit {
 
   constructor(private translate: TranslateService, private websocket: Websocket) { }
 
-  protected get showNote(): boolean {
-    return this.form.controls.type?.value && (this.emsType === "fec013" || this.emsType === "feh013");
-  }
-
   protected get showManual(): boolean {
-    return this.form.controls.type?.value && (environment.theme === "Heckert" || this.showNote);
+    return this.form.controls.type?.value && environment.theme === "Heckert";
   }
 
   public ngOnInit() {
@@ -113,11 +109,10 @@ export class ConfigurationSystemComponent implements OnInit {
   }
 
   /**
-   * Redirects to the appropriate url for Heckert system manual.
+   * Redirects to the url for Heckert system manual.
    */
   protected openManual(): void {
-    const system: SystemType = this.form.controls.type.value;
-    window.open(System.getManualLinkFromSystemType(system, this.emsType));
+    window.open(environment.links.MANUALS.SYSTEM.HOME.HOME_10);
   }
 
   /**
@@ -125,7 +120,7 @@ export class ConfigurationSystemComponent implements OnInit {
    */
   private setIbn(): void {
     const system: SystemType = this.form.controls.type.value;
-    this.ibn = System.getSystemObjectFromSystemType(system, this.translate, this.emsType);
+    this.ibn = System.getSystemObjectFromSystemType(system, this.translate);
   }
 
 }

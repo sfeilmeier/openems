@@ -26,6 +26,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             View.PreInstallation,
             View.PreInstallationUpdate,
             View.ConfigurationSystem,
+            View.ConfigurationSubSystem,
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
@@ -39,12 +40,6 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             View.ProtocolSerialNumbers,
             View.Completion,
         ], translate);
-    }
-
-    public override removeOrAddView(edge: Edge): void {
-        super.removeOrAddView(edge);
-        this.removeOrAddEssLimiter14aView();
-        this.removeOrAddGridSettingView();
     }
 
     public override async getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service, cluster?: CommercialCluster): Promise<ComponentConfigurator> {
@@ -198,9 +193,9 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         return channelAddresses;
     }
 
-    public override setNonAbstractFields(ibnString: any) {
+    public override populateFromData(ibnString: any) {
 
-        super.setNonAbstractFields(ibnString);
+        super.populateFromData(ibnString);
 
         this.slaveEdges = ibnString.slaveEdges;
         this.numberOfSlaves = ibnString.numberOfSlaves;

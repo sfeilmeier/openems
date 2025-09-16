@@ -72,7 +72,7 @@ export class InstallationComponent implements OnInit {
         ibn.feedInLimitation = ibnString.feedInLimitation ?? {};
         ibn.serialNumbers = ibnString.serialNumbers ?? {};
 
-        ibn.setNonAbstractFields(ibnString);
+        ibn.populateFromData(ibnString);
       }
     }
 

@@ -27,7 +27,7 @@ export class ConfigurationEmergencyReserveComponent implements OnInit {
   public ngOnInit() {
 
     this.form = new FormGroup({});
-    this.fields = this.getFields();
+    this.fields = this.ibn.getEmergencyReserveFields();
     this.model = this.ibn.emergencyReserve ?? {
       isEnabled: true,
       value: 20,
@@ -47,51 +47,6 @@ export class ConfigurationEmergencyReserveComponent implements OnInit {
 
     this.ibn.emergencyReserve = this.model;
     this.nextViewEvent.emit(this.ibn);
-  }
-
-  public getFields(): FormlyFieldConfig[] {
-
-    let fields: FormlyFieldConfig[] = [];
-
-    fields.push({
-      key: "isEnabled",
-      type: "checkbox",
-      templateOptions: {
-        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ENABLED"),
-      },
-    });
-
-    fields.push({
-      key: "isReserveSocEnabled",
-      type: "toggle",
-      templateOptions: {
-        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ACTIVATED"),
-      },
-      hideExpression: model => !model.isEnabled,
-    });
-
-    fields.push({
-      key: "value",
-      type: "range",
-      templateOptions: {
-        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.VALUE"),
-        note: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_NOTE"),
-        description: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT") + " 20%",
-        required: true,
-        min: this.ibn.emergencyReserve.minValue,
-        max: 100,
-        pin: true,
-        unit: "%",
-        change: (field) => { field.props.description = this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT") + " " + field.formControl.value + "%"; },
-      },
-      parsers: [Number],
-      hideExpression: model => !model.isEnabled || !model.isReserveSocEnabled,
-    });
-
-    // Adds the fields only for Commercial-30 Netztrennstelle.
-    fields = this.ibn.getAdditionalEmergencyReserveFields(fields);
-
-    return fields;
   }
 
   public setEmergencyReserve(model: any) {

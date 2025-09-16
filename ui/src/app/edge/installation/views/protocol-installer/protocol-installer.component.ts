@@ -50,7 +50,7 @@ export class ProtocolInstallerComponent implements OnInit {
       this.service.stopSpinner(this.spinnerId);
       this.form = new FormGroup({});
       this.model = userInformation;
-      this.fields = this.getFields(userInformation);
+      this.fields = this.getFields();
     });
   }
 
@@ -68,10 +68,7 @@ export class ProtocolInstallerComponent implements OnInit {
     this.nextViewEvent.emit(this.ibn);
   }
 
-  public getFields(model: UserInformation): FormlyFieldConfig[] {
-
-    // Checks if any filed is blank.
-    const isMissing = (field: keyof UserInformation) => !model[field]?.trim();
+  public getFields(): FormlyFieldConfig[] {
 
     return [
       {
@@ -98,7 +95,7 @@ export class ProtocolInstallerComponent implements OnInit {
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_NAME"),
               required: true,
-              disabled: !isMissing("companyName"),
+              disabled: true,
             },
           },
           {
@@ -107,7 +104,7 @@ export class ProtocolInstallerComponent implements OnInit {
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS"),
               required: true,
-              disabled: !isMissing("street"),
+              disabled: true,
             },
           },
           {
@@ -116,7 +113,7 @@ export class ProtocolInstallerComponent implements OnInit {
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP"),
               required: true,
-              disabled: !isMissing("zip"),
+              disabled: true,
             },
             validators: {
               validation: ["zip"],
@@ -128,7 +125,7 @@ export class ProtocolInstallerComponent implements OnInit {
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY"),
               required: true,
-              disabled: !isMissing("city"),
+              disabled: true,
             },
           },
           {
@@ -138,7 +135,7 @@ export class ProtocolInstallerComponent implements OnInit {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY"),
               options: COUNTRY_OPTIONS(this.translate),
               required: true,
-              disabled: !isMissing("country"),
+              disabled: true,
             },
           },
           {
@@ -147,7 +144,7 @@ export class ProtocolInstallerComponent implements OnInit {
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL"),
               required: true,
-              disabled: !isMissing("email"),
+              disabled: true,
             },
             validators: {
               validation: [Validators.email],
@@ -159,7 +156,7 @@ export class ProtocolInstallerComponent implements OnInit {
             templateOptions: {
               label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.PHONE"),
               required: true,
-              disabled: !isMissing("phone"),
+              disabled: true,
             },
           },
         ],

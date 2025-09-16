@@ -4,6 +4,7 @@ import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
+import { EmsType } from "../../shared/ibndatatypes";
 import { SubSystemType, System } from "../../shared/system";
 
 @Component({
@@ -22,12 +23,20 @@ export class ConfigurationSubSystemComponent implements OnInit {
     public form: FormGroup;
     public fields: FormlyFieldConfig[];
     public model;
+    private emsType: EmsType = null;
 
     constructor(private translate: TranslateService) { }
+
+    protected get showNote(): boolean {
+        const subSystemType = this.form.controls.subType?.value as SubSystemType;
+        return subSystemType && subSystemType === SubSystemType.COMMERCIAL_92;
+    }
 
     public ngOnInit() {
         this.form = new FormGroup({});
         this.fields = this.ibn.getSubSystemFields();
+
+        this.emsType = sessionStorage.getItem("emsType") as EmsType;
     }
 
     public onNextClicked() {
@@ -36,7 +45,8 @@ export class ConfigurationSubSystemComponent implements OnInit {
         }
         // Sets the ibn object.
         const subSystem: SubSystemType = this.form.controls.subType.value;
-        this.ibn = System.getSystemObjectFromSubSystemType(subSystem, this.translate);
+        this.ibn = System.getSystemObjectFromSubSystemType(subSystem, this.translate, this.emsType);
+        this.ibn.showViewCount = true;
 
         this.nextViewEvent.emit(this.ibn);
     }
@@ -50,6 +60,6 @@ export class ConfigurationSubSystemComponent implements OnInit {
      */
     protected openManual(): void {
         const subSystem: SubSystemType = this.form.controls.subType.value;
-        window.open(System.getSubSystemTypeLink(subSystem));
+        window.open(System.getSubSystemTypeLink(subSystem, this.emsType));
     }
 }

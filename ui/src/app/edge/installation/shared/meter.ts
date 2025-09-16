@@ -43,6 +43,9 @@ export namespace Meter {
             case GridMeterCategory.SMART_METER:
                 return translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.WITH_CT", { type: type ?? standardType });
             case GridMeterCategory.COMMERCIAL_METER:
+                if (type != null && type === standardType) {
+                    return translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.WITHOUT_CT_STANDARD_DELIVERY");
+                }
                 return translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.WITHOUT_CT");
             case GridMeterCategory.INTEGRATED_METER:
                 return translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.INTEGRATED", { type: type ?? optionalType });

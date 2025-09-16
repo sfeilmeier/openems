@@ -1,18 +1,39 @@
 // @ts-strict-ignore
 import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
 import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { environment } from "src/environments";
 
-import { DynamicLimitationType } from "../../../shared/enums";
+import { GridFeedInLimitationType, View } from "../../../shared/enums";
 import { Meter } from "../../../shared/meter";
+import { SystemId } from "../../../shared/system";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
 import { SchedulerIdBehaviour } from "../../abstract-ibn";
 import { AbstractCommercialIbn } from "../abstract-commercial";
 
-export abstract class AbstractCommercial50Ibn extends AbstractCommercialIbn {
+export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
 
+    public override readonly systemId: SystemId = SystemId.COMMERCIAL_50_GEN_1;
     public override readonly defaultNumberOfModules: number = 20;
-    public override showViewCount: boolean = true;
+
+    constructor(translate: TranslateService) {
+        super([
+            View.PreInstallation,
+            View.PreInstallationUpdate,
+            View.ConfigurationSystem,
+            View.ConfigurationSubSystem,
+            View.ProtocolInstaller,
+            View.ProtocolCustomer,
+            View.ProtocolSystem,
+            View.ConfigurationLineSideMeterFuse,
+            View.ConfigurationCommercialModbuBridge,
+            View.ProtocolFeedInLimitation,
+            View.ConfigurationSummary,
+            View.ConfigurationExecute,
+            View.ProtocolSerialNumbers,
+            View.Completion,
+        ], translate);
+    }
 
     public override getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number) {
         const fields: FormlyFieldConfig[] = [];
@@ -238,7 +259,7 @@ export abstract class AbstractCommercial50Ibn extends AbstractCommercialIbn {
             mode: ConfigurationMode.RemoveAndConfigure,
         });
 
-        if (this.feedInLimitation.dynamicLimitationType === DynamicLimitationType.DYNAMIC_LIMITATION) {
+        if (this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION) {
             // ctrlGridOptimizedCharge0
             componentConfigurator.add({
                 factoryId: "Controller.Ess.GridOptimizedCharge",
@@ -282,7 +303,7 @@ export abstract class AbstractCommercial50Ibn extends AbstractCommercialIbn {
 
     public setRequiredControllers() {
         this.requiredControllerIds = [];
-        if (this.feedInLimitation.dynamicLimitationType === DynamicLimitationType.DYNAMIC_LIMITATION) {
+        if (this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION) {
             this.requiredControllerIds.push({
                 componentId: "ctrlGridOptimizedCharge0",
                 behaviour: SchedulerIdBehaviour.ALWAYS_INCLUDE,

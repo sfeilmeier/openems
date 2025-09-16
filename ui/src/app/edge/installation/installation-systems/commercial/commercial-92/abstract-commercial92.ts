@@ -9,9 +9,10 @@ import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/sh
 import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
-import { CommercialCluster, DynamicLimitationType, FeedInType, View } from "../../../shared/enums";
+import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View } from "../../../shared/enums";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
+import { ViewUtils } from "../../../shared/view.utils";
 import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
 import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
@@ -20,7 +21,7 @@ import { AbstractCommercialIbn } from "../abstract-commercial";
 
 export type Commercial92App = {
     SAFETY_COUNTRY: SafetyCountry,
-    FEED_IN_TYPE: FeedInType,
+    FEED_IN_TYPE: ExternalLimitationType,
     BATTERY_TARGET: BatteryTarget,
     HAS_ESS_LIMITER_14A: boolean,
 };
@@ -30,17 +31,11 @@ export enum BatteryTarget {
     AUTO = "AUTO",
 }
 
-export enum GridSetting {
-    VDE_AR_N_4105 = "VDE-AR-N 4105",
-    VDE_AR_N_4110 = "VDE-AR-N 4110",
-}
-
 export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
 
     public override WAIT_FOR_BATTERY_SERIAL_NUMBERS = 8 * 60 * 1000;
 
-    public override readonly systemId: SystemId = SystemId.COMMERCIAL_92;
-    public override showViewCount: boolean = true;
+    public override readonly systemId: SystemId = SystemId.COMMERCIAL_92_WITHOUT_CLUSTER;
     public override readonly defaultNumberOfModules = 15;
     public override readonly minNumberOfTowers: number = 2;
     public override readonly maxFeedInLimit: number = 6000000;
@@ -51,8 +46,8 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
 
     // protocol-dynamic-feed-in-limitation
     public override feedInLimitation? = {
-        feedInType: FeedInType.NO_LIMITATION,
-        dynamicLimitationType: DynamicLimitationType.NO_LIMITATION,
+        feedInType: ExternalLimitationType.NO_LIMITATION,
+        dynamicLimitationType: GridFeedInLimitationType.NO_LIMITATION,
         maximumFeedInPower: 0,
     };
 
@@ -114,7 +109,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
 
     public override getSerialNumberCategoryHeader(towerIndex: number, slaveIndex?: number): string {
         const towerNr: number = towerIndex + 1;
-        return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: towerNr + 1 });
+        return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: towerNr });
     }
 
     public override getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number) {
@@ -258,10 +253,6 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
     }
 
     public override getFeedInLimitFields(): FormlyFieldConfig[] {
-        return super.getCommonFeedInLimitsFields();
-    }
-
-    public override getDynamicLimitationFields(): FormlyFieldConfig[] {
         const totalPvPower = 0;
         this.feedInLimitation.maximumFeedInPower = totalPvPower;
 
@@ -374,9 +365,9 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         });
     }
 
-    public override setNonAbstractFields(ibnString: any) {
+    public override populateFromData(ibnString: any) {
 
-        super.setNonAbstractFields(ibnString);
+        super.populateFromData(ibnString);
 
         // limitController14a
         this.isController14aActivated = ibnString.isController14aActivated;
@@ -384,10 +375,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         if ("checklist" in ibnString) {
             this.checklist = ibnString.checklist;
         }
-
-        if (ibnString.gridSetting) {
-            this.gridSetting = ibnString.gridSetting;
-        }
+        this.gridSetting = ibnString.gridSetting ?? null;
     }
 
     /**
@@ -456,42 +444,36 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         });
     }
 
-    public override getFeedInTypeOptions() {
-        return [
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
-        ];
-    }
-
-    /**
-     * Manages the presence of the ConfigurationGridSettingComponent view based on country location.
-     *
-     * @remarks
-     * Performs two main operations:
-     * 1. Removes the ConfigurationGridSettingComponent view and resets the gridSetting to the default "VDE_AR_N_4105" when the location is not Germany
-     * 2. Re-adds the ConfigurationGridSettingComponent view (if missing) when the location is Germany,
-     * handling accidental country selection rollbacks
-     *
-     */
-    protected removeOrAddGridSettingView() {
+    public override removeOrAddView(edge: Edge): void {
         const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
-        const existingIndexOfView: number = this.views.indexOf(View.ConfigurationGridSetting);
-        const indexOfViewToBeAdded: number = 9;
 
-        if (location && location !== Country.GERMANY) {
-            if (existingIndexOfView != -1) {
-                // Remove ConfigurationGridSettingComponent.
-                this.views.splice(existingIndexOfView, 1);
+        super.removeOrAddView(edge);
+        // Limiter 14a view
+        ViewUtils.handleViewPresence({
+            location,
+            targetCountry: Country.GERMANY,
+            views: this.views,
+            viewToToggle: View.ConfigurationEssLimiter14aComponent,
+            insertIndex: this.indexOf14aLimiterControllerView,
+            shouldClear: () => {
+                this.isController14aActivated = false;
+            },
+            shouldSet: () => {
+                this.isController14aActivated = true;
+            },
+        });
+
+        // Grid setting view
+        ViewUtils.handleViewPresence({
+            location,
+            targetCountry: Country.GERMANY,
+            views: this.views,
+            viewToToggle: View.ConfigurationGridSetting,
+            insertIndex: 9,
+            shouldClear: () => {
                 this.gridSetting = null;
-            }
-            return;
-        }
-
-        if (existingIndexOfView === -1) {
-            // Add ConfigurationGridSettingComponent.
-            // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
-            this.views.splice(indexOfViewToBeAdded, 0, View.ConfigurationGridSetting);
-        }
+            },
+        });
     }
 
     public abstract getEdge(index: number): Edge;

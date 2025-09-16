@@ -11,12 +11,14 @@ import { AbstractCommercial92Ibn } from "./abstract-commercial92";
 export class Commercial92Ibn extends AbstractCommercial92Ibn {
 
     public override isClusterConfiguration: boolean = false;
+    public override readonly isDoubleSocketValid: boolean = true;
 
     constructor(translate: TranslateService) {
         super([
             View.PreInstallation,
             View.PreInstallationUpdate,
             View.ConfigurationSystem,
+            View.ConfigurationSubSystem,
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
@@ -30,12 +32,6 @@ export class Commercial92Ibn extends AbstractCommercial92Ibn {
             View.ProtocolChecklist,
             View.Completion,
         ], translate);
-    }
-
-    public override removeOrAddView(edge: Edge): void {
-        super.removeOrAddView(edge);
-        this.removeOrAddEssLimiter14aView();
-        this.removeOrAddGridSettingView();
     }
 
     public override addSystemSpecificFields(tableData): void {

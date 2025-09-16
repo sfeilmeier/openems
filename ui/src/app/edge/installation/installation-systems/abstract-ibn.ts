@@ -7,10 +7,12 @@ import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { Category } from "../shared/category";
-import { CommercialCluster, DynamicLimitationType, FeedInType, View, WebLinks } from "../shared/enums";
+import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View, WebLinks } from "../shared/enums";
+import { GridSettingUtils } from "../shared/gridsetting.utils";
 import { ComponentData, EmsType, TableData } from "../shared/ibndatatypes";
 import { Meter } from "../shared/meter";
 import { System, SystemId, SystemType } from "../shared/system";
+import { ViewUtils } from "../shared/view.utils";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
 
 export type SerialNumberData = {
@@ -93,8 +95,8 @@ export abstract class AbstractIbn {
 
   // protocol-dynamic-feed-in-limitation
   public feedInLimitation?: {
-    feedInType: FeedInType;
-    dynamicLimitationType: DynamicLimitationType;
+    feedInType: ExternalLimitationType;
+    dynamicLimitationType: GridFeedInLimitationType;
     maximumFeedInPower?: number;
   };
 
@@ -125,6 +127,12 @@ export abstract class AbstractIbn {
   public gtcAndWarrantyLinks: {
     gtcLink: WebLinks;
     warrantyLink: WebLinks;
+  };
+
+  // configuration Energy Flow Meter
+  public energyFlowMeter: {
+    meter: Meter.GridMeterCategory;
+    value?: number;
   };
 
   //Controller-Id's
@@ -163,7 +171,7 @@ export abstract class AbstractIbn {
   // Index of the 14a controller view.
   public readonly indexOf14aLimiterControllerView: number = 7;
 
-  public abstract readonly isDoubleSocketValid: boolean | null;
+  public readonly isDoubleSocketValid: boolean = false;
 
   constructor(public views: View[], public translate: TranslateService) { }
 
@@ -206,23 +214,53 @@ export abstract class AbstractIbn {
   }
 
   /**
-   * Sets the Non abstract fields for the IBN object from session storage or from specific views.
+   * Gets the Emergency reserve fields.
    *
-   * for eg: commercial 50 features, modbus bridge type from commercial systems and many more.
-   *
-   * @param model model information from the view.
-   */
-  public setNonAbstractFields(model: any) { }
-
-  /**
-   * Gets the additional Emergency reserve fields.
-   *
-   * eg: Coupler fields from Commercial 30 Netztrenstelle variant.
-   *
-   * @param fields fields for the componenet.
    * @returns The fields to be displayed.
    */
-  public getAdditionalEmergencyReserveFields(fields: FormlyFieldConfig[]): FormlyFieldConfig[] {
+  public getEmergencyReserveFields(): FormlyFieldConfig[] {
+    const fields: FormlyFieldConfig[] = [];
+
+    fields.push({
+      key: "isEnabled",
+      type: "checkbox",
+      templateOptions: {
+        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ENABLED"),
+      },
+      expressions: {
+        "templateOptions.disabled": (field) => {
+          return !(field.model?.isStsBoxAvailable ?? true);
+        },
+      },
+    });
+
+    fields.push({
+      key: "isReserveSocEnabled",
+      type: "toggle",
+      templateOptions: {
+        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ACTIVATED"),
+      },
+      hideExpression: model => !model.isEnabled,
+    });
+
+    fields.push({
+      key: "value",
+      type: "range",
+      templateOptions: {
+        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.VALUE"),
+        note: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_NOTE"),
+        description: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT") + " 20%",
+        required: true,
+        min: this.emergencyReserve.minValue,
+        max: 100,
+        pin: true,
+        unit: "%",
+        change: (field) => { field.props.description = this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT") + " " + field.formControl.value + "%"; },
+      },
+      parsers: [Number],
+      hideExpression: model => !model.isEnabled || !model.isReserveSocEnabled,
+    });
+
     return fields;
   }
 
@@ -236,11 +274,11 @@ export abstract class AbstractIbn {
   }
 
   /**
-   * Returns the common fields for all systems in Feed in limitation view.
+   * Returns the External Feed in limit fields for all systems in Feed in limitation view.
    *
    * @returns common fields for feed in limits fields.
    */
-  public getCommonFeedInLimitsFields(): FormlyFieldConfig[] {
+  public getExternalFeedInLimitsFields(): FormlyFieldConfig[] {
     const fields: FormlyFieldConfig[] = [];
 
     fields.push({
@@ -248,9 +286,9 @@ export abstract class AbstractIbn {
       type: "select",
       className: "white-space-initial",
       templateOptions: {
-        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CHOOSE"),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE"),
         placeholder: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER"),
-        options: this.getFeedInTypeOptions(),
+        options: this.getExternalLimitationTypeOptions(),
         required: true,
       },
     });
@@ -273,7 +311,7 @@ export abstract class AbstractIbn {
       type: "select",
       className: "white-space-initial",
       templateOptions: {
-        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.LIMITATION"),
+        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_TYPE"),
         placeholder: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER"),
         options: this.dynamicFeedInLimitationOptions(),
         required: true,
@@ -293,7 +331,7 @@ export abstract class AbstractIbn {
       parsers: [Number],
       defaultValue: totalPvPower,
       hideExpression: model =>
-        model.dynamicLimitationType !== DynamicLimitationType.DYNAMIC_LIMITATION,
+        model.dynamicLimitationType !== GridFeedInLimitationType.DYNAMIC_LIMITATION,
 
       expressionProperties: {
         "templateOptions.label": (model: any) => {
@@ -421,8 +459,8 @@ export abstract class AbstractIbn {
     protocol.items = [];
 
     const feedInLimitation = this.feedInLimitation;
-    const isExternalLimitation = feedInLimitation.feedInType == FeedInType.EXTERNAL_LIMITATION;
-    const isDynamicFeedInLimitation = this.feedInLimitation.dynamicLimitationType === DynamicLimitationType.DYNAMIC_LIMITATION;
+    const isExternalLimitation = feedInLimitation.feedInType == ExternalLimitationType.EXTERNAL_LIMITATION;
+    const isDynamicFeedInLimitation = this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION;
 
     protocol.items.push(
       {
@@ -434,7 +472,7 @@ export abstract class AbstractIbn {
         category: Category.FEED_IN_MANAGEMENT,
         name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
 
-        value: feedInLimitation.feedInType == FeedInType.NO_LIMITATION
+        value: feedInLimitation.feedInType == ExternalLimitationType.NO_LIMITATION
           ? this.translate.instant("General.yes")
           : this.translate.instant("General.no"),
       });
@@ -461,11 +499,13 @@ export abstract class AbstractIbn {
 
       const lineSideMeterFuseValue = lineSideMeterFuse.otherValue ?? lineSideMeterFuse.fixedValue;
 
-      protocol.items.push({
-        category: this.lineSideMeterFuse.category,
-        name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
-        value: lineSideMeterFuseValue ? lineSideMeterFuseValue.toString() : "",
-      });
+      if (lineSideMeterFuseValue != null) {
+        protocol.items.push({
+          category: this.lineSideMeterFuse.category,
+          name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
+          value: lineSideMeterFuseValue ? lineSideMeterFuseValue.toString() : "",
+        });
+      }
     }
 
     protocol.items.push({
@@ -533,52 +573,7 @@ export abstract class AbstractIbn {
    * @param edge the current edge.
    */
   public removeOrAddView(edge: Edge): void {
-    // TODO remove when every edge starts with at least the required version
-    // only show update view if the update requests are implemented
-    if (!edge) {
-      return;
-    }
-
-    // Removes the view if the version is not at least '2021.19.1'.
-    if (!edge.isVersionAtLeast("2021.19.1")) {
-      const indexOfUpdate = this.views.indexOf(View.PreInstallationUpdate);
-      if (indexOfUpdate != -1) {
-        this.views.splice(indexOfUpdate, 1);
-      }
-    }
-  }
-
-  /**
-   * Manages the presence of the ConfigurationEssLimiter14aComponent view based on country location.
-   *
-   * @remarks
-   * Performs two main operations:
-   * 1. Removes the ConfigurationEssLimiter14aComponent view and deactivates the controller flag when the location is not Germany
-   * 2. Re-adds the ConfigurationEssLimiter14aComponent view (if missing) and activates the controller flag when the location is Germany,
-   * handling accidental country selection rollbacks
-   *
-   */
-  public removeOrAddEssLimiter14aView(): void {
-
-    const location: Country = this.location?.isEqualToCustomerData ? this.customer.country : this.location?.country;
-    const indexOfView: number = this.views.indexOf(View.ConfigurationEssLimiter14aComponent);
-
-    if (location && location !== Country.GERMANY) {
-      const indexOfUpdate: number = indexOfView;
-      if (indexOfUpdate != -1) {
-        // Remove ConfigurationEssLimiter14aComponent.
-        this.views.splice(indexOfUpdate, 1);
-        this.isController14aActivated = false;
-      }
-      return;
-    }
-
-    if (indexOfView === -1) {
-      // Add ConfigurationEssLimiter14aComponent.
-      // This is valid only when installer accidentally selects a wrong country and comes back changes it to "Germany".
-      this.views.splice(this.indexOf14aLimiterControllerView, 0, View.ConfigurationEssLimiter14aComponent);
-      this.isController14aActivated = true;
-    }
+    ViewUtils.handlePreinstallationUpdate(this.views, edge);
   }
 
   /**
@@ -599,10 +594,17 @@ export abstract class AbstractIbn {
    *
    * @returns The options.
    */
-  public getFeedInTypeOptions(): ComponentData[] {
+  public getExternalLimitationTypeOptions(): ComponentData[] {
     return [
-      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
-      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: ExternalLimitationType.EXTERNAL_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: ExternalLimitationType.NO_LIMITATION },
+    ];
+  }
+
+  public getGridSettingOptions() {
+    return [
+      { label: GridSettingUtils.getDisplayName(GridSetting.VDE_4105), value: GridSetting.VDE_4105 },
+      { label: GridSettingUtils.getDisplayName(GridSetting.VDE_4110), value: GridSetting.VDE_4110 },
     ];
   }
 
@@ -613,8 +615,8 @@ export abstract class AbstractIbn {
  */
   public dynamicFeedInLimitationOptions(): ComponentData[] {
     return [
-      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: DynamicLimitationType.DYNAMIC_LIMITATION },
-      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: DynamicLimitationType.NO_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: GridFeedInLimitationType.DYNAMIC_LIMITATION },
+      { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: GridFeedInLimitationType.NO_LIMITATION },
     ];
   }
 
@@ -709,4 +711,16 @@ export abstract class AbstractIbn {
    * Returns the fields that has system variants specific to the 'System Type' selected in previous step.
    */
   public abstract getSystemVariantFields(): FormlyFieldConfig[];
+
+  /**
+   * Populates the properties of this IBN instance from a plain data object.
+   *
+   * @remarks
+   * This is typically used to restore the state of the object after it has been deserialized from JSON stored in `sessionStorage`.
+   *
+   * This function copies the data from that plain object onto a new, fully-functional class instance, ensuring all implementation-specific properties like `gridSetting` or `emergencyReserve` are correctly populated.
+   *
+   * @param source The plain data object containing the state to restore.
+   */
+  public abstract populateFromData(source: any);
 }

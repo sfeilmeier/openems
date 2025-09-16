@@ -1,10 +1,12 @@
 // @ts-strict-ignore
+import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { environment } from "src/environments";
 import { AbstractIbn } from "../installation-systems/abstract-ibn";
 import { Commercial30AnschlussIbn } from "../installation-systems/commercial/commercial-30/commercial30-anschluss";
 import { Commercial30NetztrennIbn } from "../installation-systems/commercial/commercial-30/commercial30-netztrenn";
-import { Commercial50Balancing } from "../installation-systems/commercial/commercial-50/commercial50-balancing";
+import { Commercial50Gen1Ibn } from "../installation-systems/commercial/commercial-50/commercial-50-gen1";
+import { Commercial50Gen3Ibn } from "../installation-systems/commercial/commercial-50/commercial-50-gen3";
 import { Commercial92Ibn } from "../installation-systems/commercial/commercial-92/commercial92";
 import { Commercial92ClusterIbn } from "../installation-systems/commercial/commercial-92/commercial92-cluster";
 import { GeneralIbn } from "../installation-systems/general-ibn";
@@ -26,7 +28,7 @@ export enum SystemType {
 export enum SubSystemType {
     COMMERCIAL_30 = "FENECON Commercial 30",
     COMMERCIAL_50 = "FENECON Commercial 50",
-    COMMERCIAL_92 = "FENECON Commercial",
+    COMMERCIAL_92 = "FENECON Commercial 92",
 }
 
 export enum SystemId {
@@ -42,8 +44,9 @@ export enum SystemId {
     (Commercial 30 ohne Notstromversorgung)`,
     COMMERCIAL_30_NETZTRENNSTELLE = `Netztrennstelle 
     (Commercial 30 mit Notstromversorgung)`,
-    COMMERCIAL_50_BALANCING = "FENECON Commercial 50 Balancing",
-    COMMERCIAL_92 = "FENECON Commercial 92",
+    COMMERCIAL_50_GEN_1 = "Commercial 50 (Gen 1)",
+    COMMERCIAL_50_GEN_3 = "Commercial 50 (Gen 3)",
+    COMMERCIAL_92_WITHOUT_CLUSTER = "FENECON Commercial 92",
     COMMERCIAL_92_CLUSTER = "FENECON Commercial 92 Cluster",
 }
 
@@ -62,10 +65,9 @@ export namespace System {
      *
      * @param systemType Type of the System.
      * @param translate the translate service
-     * @param emsType The type of the EMS assigned in Odoo.
      * @returns the System IBN Object.
      */
-    export function getSystemObjectFromSystemType(systemType: SystemType, translate: TranslateService, emsType: EmsType): AbstractIbn {
+    export function getSystemObjectFromSystemType(systemType: SystemType, translate: TranslateService): AbstractIbn {
 
         switch (systemType) {
             case SystemType.FENECON_HOME:
@@ -73,14 +75,7 @@ export namespace System {
             case SystemType.HECKERT_HOME:
                 return new Home10HeckertIbn(translate);
             case SystemType.COMMERCIAL:
-                switch (emsType) {
-                    case "feh013":
-                        return new Commercial92Ibn(translate);
-                    case "fec013":
-                        return new Commercial92ClusterIbn(translate);
-                    default:
-                        return new Commercial30AnschlussIbn(translate);
-                }
+                return new Commercial92Ibn(translate);
         }
     }
 
@@ -89,17 +84,28 @@ export namespace System {
      *
      * @param systemType Type of the System.
      * @param translate the translate service
+     * @param emsType The type of the EMS assigned in Odoo.
      * @returns the System IBN Object.
      */
-    export function getSystemObjectFromSubSystemType(subSystemType: SubSystemType, translate: TranslateService): AbstractIbn {
+    export function getSystemObjectFromSubSystemType(subSystemType: SubSystemType, translate: TranslateService, emsType: EmsType): AbstractIbn {
 
         switch (subSystemType) {
             case SubSystemType.COMMERCIAL_30:
                 return new Commercial30AnschlussIbn(translate);
             case SubSystemType.COMMERCIAL_50:
-                return new Commercial50Balancing(translate);
+                if (emsType === null) {
+                    return new Commercial50Gen1Ibn(translate);
+                } else if (emsType === "feh013") {
+                    return new Commercial50Gen3Ibn(translate);
+                }
+                break;
             case SubSystemType.COMMERCIAL_92:
-                return new Commercial92Ibn(translate);
+                switch (emsType) {
+                    case "fec013":
+                        return new Commercial92ClusterIbn(translate);
+                    case "feh013":
+                        return new Commercial92Ibn(translate);
+                }
         }
     }
 
@@ -123,9 +129,9 @@ export namespace System {
                 return new Commercial30AnschlussIbn(translate);
             case SystemId.COMMERCIAL_30_NETZTRENNSTELLE:
                 return new Commercial30NetztrennIbn(translate);
-            case SystemId.COMMERCIAL_50_BALANCING:
-                return new Commercial50Balancing(translate);
-            case SystemId.COMMERCIAL_92:
+            case SystemId.COMMERCIAL_50_GEN_1:
+                return new Commercial50Gen1Ibn(translate);
+            case SystemId.COMMERCIAL_92_WITHOUT_CLUSTER:
                 return new Commercial92Ibn(translate);
             case SystemId.FENECON_HOME_20:
                 return new Home20FeneconIbn(translate);
@@ -139,6 +145,8 @@ export namespace System {
                 return new Home6Gen2FeneconIbn(translate);
             case SystemId.COMMERCIAL_92_CLUSTER:
                 return new Commercial92ClusterIbn(translate);
+            case SystemId.COMMERCIAL_50_GEN_3:
+                return new Commercial50Gen3Ibn(translate);
         }
     }
 
@@ -146,14 +154,23 @@ export namespace System {
      * Returns the URL for the System type.
      *
      * @param systemType Type of the System.
+     * @param emsType The type of the EMS assigned in Odoo.
      * @returns the url.
      */
-    export function getSubSystemTypeLink(subSystemType: SubSystemType): string {
+    export function getSubSystemTypeLink(subSystemType: SubSystemType, emsType: EmsType): string {
         switch (subSystemType) {
             case SubSystemType.COMMERCIAL_30:
                 return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_30;
             case SubSystemType.COMMERCIAL_50:
-                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_50;
+                if (emsType === "feh013") {
+                    return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_50_GEN_3;
+                }
+                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_50_GEN_1;
+            case SubSystemType.COMMERCIAL_92:
+                if (emsType === "feh013") {
+                    return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92_CLUSTER;
+                }
+                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92;
         }
     }
 
@@ -172,21 +189,6 @@ export namespace System {
                 return environment.links.MANUALS.SYSTEM.HOME.HOME_20_30;
             default:
                 return environment.links.MANUALS.SYSTEM.HOME.HOME_GEN_2;
-        }
-    }
-
-    export function getManualLinkFromSystemType(systemType: SystemType, emsType: EmsType): string {
-        switch (systemType) {
-            case SystemType.FENECON_HOME:
-            case SystemType.HECKERT_HOME:
-                return environment.links.MANUALS.SYSTEM.HOME.HOME_10;
-            case SystemType.COMMERCIAL:
-                switch (emsType) {
-                    case "feh013":
-                        return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92;
-                    case "fec013":
-                        return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92_CLUSTER;
-                }
         }
     }
 
@@ -224,5 +226,49 @@ export namespace System {
             default:
                 return environment.links.MANUALS.RUNDSTEUER.HOME;
         }
+    }
+
+    export function getSubSystemFields(emsType: EmsType, translate: TranslateService) {
+        const fields: FormlyFieldConfig[] = [];
+
+        const componentLabel: {
+            value: SubSystemType,
+            label: SubSystemType,
+        }[] = [];
+
+        switch (emsType) {
+            case "feh013":
+                componentLabel.push(
+                    { value: SubSystemType.COMMERCIAL_92, label: SubSystemType.COMMERCIAL_92 },
+                    { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
+                );
+                break;
+            case "fec013":
+                componentLabel.push(
+                    { value: SubSystemType.COMMERCIAL_92, label: SubSystemType.COMMERCIAL_92 },
+                );
+                break;
+            case null:
+                componentLabel.push(
+                    { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
+                    { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
+                );
+                break;
+            default:
+                break;
+        }
+
+        fields.push({
+            key: "subType",
+            type: "radio",
+            className: "line-break",
+            templateOptions: {
+                label: translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME"),
+                options: componentLabel,
+                required: true,
+            },
+        });
+
+        return fields;
     }
 }

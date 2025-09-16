@@ -21,13 +21,14 @@ export class Home30FeneconIbn extends AbstractHomeIbn {
 
     public override readonly systemId: SystemId = SystemId.FENECON_HOME_30;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
-    public override readonly homeAppAlias: string = "FENECON Home 30";
-    public override readonly homeAppId: string = "App.FENECON.Home.30";
+    public override readonly appAlias: string = "FENECON Home 30";
+    public override readonly appId: string = "App.FENECON.Home.30";
     public override readonly maxNumberOfModulesPerTower: number = 15;
     public override readonly maxNumberOfPvStrings: number = 6;
     public override readonly maxNumberOfMppt: number = 3;
     public override readonly maxNumberOfTowers: number = 5;
     public override readonly minNumberOfModulesPerTower: number = 5;
+    public override readonly minNumberOfTowers: number = 1;
     public override readonly relayFactoryId: string = "IO.KMtronic";
     public override readonly defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.SMART_METER;
 
@@ -66,15 +67,15 @@ export class Home30FeneconIbn extends AbstractHomeIbn {
         ], translate);
     }
 
-    public override getHomeAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): HomeCommonApp & HomeAdditionalApp & Home30Mppt {
+    public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): HomeCommonApp & HomeAdditionalApp & Home30Mppt {
 
         const dc1: DcPv = this.pv.dc[0];
         const dc2: DcPv = this.pv.dc[1];
         const dc3: DcPv = this.pv.dc[2];
 
         const home30AppProperties: HomeCommonApp & HomeAdditionalApp & Home30Mppt = {
-            ...this.commonHomeProperties(safetyCountry, feedInSetting),
-            ...this.additonalHomeProperties(),
+            ...this.commonProperties(safetyCountry, feedInSetting),
+            ...this.additionalProperties(),
             HAS_MPPT_1: dc1.isSelected,
             ...(dc1.isSelected && { ALIAS_MPPT_1: dc1.alias }),
             HAS_MPPT_2: dc2.isSelected,
@@ -91,10 +92,6 @@ export class Home30FeneconIbn extends AbstractHomeIbn {
     }
 
     public override getMpptLabel(mppt: number, pv: number) {
-        // Each MPPT label associates with two PV strings, calculated as adjacent pairs.
-        // For example, MPPT 1 uses PV1 and PV2, MPPT 2 uses PV3 and PV4, and so on.
-        const firstPvString = pv * 2 - 1;
-        const secondPvString = pv * 2;
-        return this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS_BOTH_STRINGS", { mppt: mppt, pv1: firstPvString, pv2: secondPvString });
+        return this.getTwoStringMpptLabel(mppt, pv);
     }
 }

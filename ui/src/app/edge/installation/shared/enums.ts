@@ -1,7 +1,4 @@
 // @ts-strict-ignore
-import { TranslateService } from "@ngx-translate/core";
-import { Language } from "src/app/shared/type/language";
-import { environment } from "src/environments";
 
 export enum FeedInSetting {
     QuEnableCurve = "QU_ENABLE_CURVE",
@@ -53,12 +50,13 @@ export enum FeedInSetting {
     Undefined = "UNDEFINED",
 }
 
-export enum FeedInType {
+// matched names based on how it is defiend in APP center.
+export enum ExternalLimitationType {
     EXTERNAL_LIMITATION = "EXTERNAL_LIMITATION",
     NO_LIMITATION = "NO_LIMITATION",
 }
 
-export enum DynamicLimitationType {
+export enum GridFeedInLimitationType {
     DYNAMIC_LIMITATION = "DYNAMIC_LIMITATION",
     NO_LIMITATION = "NO_LIMITATION",
 }
@@ -67,53 +65,6 @@ export enum WebLinks {
     GTC_LINK,
     WARRANTY_LINK_HOME,
     WARRANTY_LINK_COMMERCIAL,
-}
-
-export namespace FeedInSetting {
-    export function getFeedInSettingLabel(feedInSetting: FeedInSetting, translate: TranslateService) {
-        switch (feedInSetting) {
-            case FeedInSetting.QuEnableCurve:
-                return translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.QU_ENABLED_CURVE");
-            case FeedInSetting.PuEnableCurve:
-                return translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PU_ENABLED_CURVE");
-            case FeedInSetting.FixedPowerFactor:
-                return translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FIXED_POWER_FACTOR");
-            default:
-                return feedInSetting;
-        }
-    }
-}
-
-export namespace WebLinks {
-    export function getLink(link: WebLinks): string {
-        const lang: string = Language.getByKey(localStorage.LANGUAGE).key ?? Language.DEFAULT.key;
-        switch (link) {
-            case WebLinks.GTC_LINK:
-                switch (lang) {
-                    case "de":
-                    default:
-                        return environment.links.GTC.DE;
-                    case "en":
-                        return environment.links.GTC.EN;
-                }
-            case WebLinks.WARRANTY_LINK_HOME:
-                switch (lang) {
-                    case "de":
-                    default:
-                        return environment.links.WARRANTY.HOME.DE;
-                    case "en":
-                        return environment.links.WARRANTY.HOME.EN;
-                }
-            case WebLinks.WARRANTY_LINK_COMMERCIAL:
-                switch (lang) {
-                    case "de":
-                    default:
-                        return environment.links.WARRANTY.COMMERCIAL.DE;
-                    case "en":
-                        return environment.links.WARRANTY.COMMERCIAL.EN;
-                }
-        }
-    }
 }
 
 // Specific for Configuration-commercial-modbusbridge
@@ -148,9 +99,15 @@ export enum View {
     ConfigurationGridSetting,
     ProtocolCommercialClusterSlaveCount,
     ProtocolCommercialClusterSlaveInstallation,
+    ConfigurationStsBox,
 }
 
 export enum CommercialCluster {
     MASTER,
     SLAVE,
+}
+
+export enum GridSetting {
+    VDE_4105 = "VDE_4105",
+    VDE_4110 = "VDE_4110",
 }

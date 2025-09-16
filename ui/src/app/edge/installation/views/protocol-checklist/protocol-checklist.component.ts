@@ -6,8 +6,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
-import { AbstractCommercial92Ibn, BatteryTarget, GridSetting } from "../../installation-systems/commercial/commercial-92/abstract-commercial92";
-import { CommercialCluster } from "../../shared/enums";
+import { AbstractCommercial92Ibn, BatteryTarget } from "../../installation-systems/commercial/commercial-92/abstract-commercial92";
+import { CommercialCluster, GridSetting } from "../../shared/enums";
 import { ComponentConfigurator, ConfigurationState, FunctionState } from "../configuration-execute/component-configurator";
 
 @Component({
@@ -215,12 +215,12 @@ export class ProtocolChecklistComponent implements OnInit {
         });
 
         // Default VDE-AR-N 4105
-        let gridSetting: GridSetting = GridSetting.VDE_AR_N_4105;
+        let gridSetting: GridSetting = GridSetting.VDE_4105;
         let voltageLimit: string = "600.0";
         let url: string[] = ["assets/img/commercial-checklist/step2.1.png", "assets/img/commercial-checklist/step2.2.png"];
 
-        if (this.ibn.gridSetting && this.ibn.gridSetting === GridSetting.VDE_AR_N_4110) { // Undefined for other countries
-            gridSetting = GridSetting.VDE_AR_N_4110;
+        if (this.ibn.gridSetting && this.ibn.gridSetting === GridSetting.VDE_4110) { // Undefined for other countries
+            gridSetting = GridSetting.VDE_4110;
             voltageLimit = "650.0";
             url = ["assets/img/commercial-checklist/step2_4110.png"];
         }
