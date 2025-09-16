@@ -2,20 +2,20 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "Investieren in FENECON: Entdecken Sie unsere neue Kampagne",
-        "TEXT": "Genauso wie unsere Kunden treibt uns der Wunsch nach Unabhängigkeit an - in unserem Fall von Finanzinvestoren und Konzernen. Wir wollen unabhängig bleiben und unsere Vision der 100% Energiewende weiter erfolgreich umsetzen.",
-        "LINK": "",
-        "LINK_TEXT": "Zu den Details..."
+        "TITLE": "Commercial 50: vertiefendes Webinar",
+        "TEXT": "Bereiten Sie sich optimal auf den Auslieferstart des FENECON Commercial 50 vor! In unserem Webinar am 23.09. exklusiv für Installateure erhalten Sie praxisnahe Einblicke zu Produkt, Installation und Auslegung.",
+        "LINK": "https://fenecon-gmbh.webinargeek.com/commercial-50-fuer-installateure-die-wichtigsten-infos-zu-installation-auslegung?cst=fems-widget",
+        "LINK_TEXT": "Zur Anmeldung"
       }
     }
   },
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "Invest in FENECON: Discover our new campaign",
-        "TEXT": "Just like our customers, we are driven by the desire for independence - in our case, from financial investors and corporations. We want to remain independent and continue to successfully pursue our vision of a 100% energy transition.",
-        "LINK": "",
-        "LINK_TEXT": "See details..."
+        "TITLE": "In-Depth Webinar: Commercial 50",
+        "TEXT": "Get optimally prepared for the market launch of the FENECON Commercial 50! In our webinar on 23 September, exclusively for installers, you will gain practical insights into the product, installation, and system design (webinar will be in german).",
+        "LINK": "https://fenecon-gmbh.webinargeek.com/commercial-50-fuer-installateure-die-wichtigsten-infos-zu-installation-auslegung?cst=fems-widget",
+        "LINK_TEXT": "Register now"
       }
     }
   }

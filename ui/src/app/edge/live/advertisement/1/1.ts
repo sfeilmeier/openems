@@ -1,7 +1,5 @@
 import { Component } from "@angular/core";
-import { ModalController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
-import { Advert1ModalComponent } from "./modal/modal";
 
 @Component({
   selector: "advert-1",
@@ -12,7 +10,7 @@ import { Advert1ModalComponent } from "./modal/modal";
     </ion-row>
 
     <ion-row class="ion-padding-top ion-justify-content-center">
-      <ion-button (click)="presentModal()" size="small" fill="outline" style="font-size: small;">
+      <ion-button [href]="'ADVERT.1.LINK' | translate" target="_blank" size="small" fill="outline" style="font-size: small;">
         <span translate>ADVERT.1.LINK_TEXT</span>
       </ion-button>
     </ion-row>
@@ -24,13 +22,6 @@ export class Advert1Component {
 
   constructor(
     protected readonly translate: TranslateService,
-    private readonly modalController: ModalController
   ) { }
 
-  protected async presentModal() {
-    const modal = await this.modalController.create({
-      component: Advert1ModalComponent,
-    });
-    return await modal.present();
-  }
 }
