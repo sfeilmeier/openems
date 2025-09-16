@@ -12,6 +12,7 @@ import { DetailsOverviewComponent } from "./edge/history/common/production/detai
 import { OverviewComponent as ProductionChartOverviewComponent } from "./edge/history/common/production/overview/overview";
 import { OverviewComponent as SelfconsumptionChartOverviewComponent } from "./edge/history/common/selfconsumption/overview/overview";
 import { OverviewComponent as ChannelthresholdChartOverviewComponent } from "./edge/history/Controller/ChannelThreshold/overview/overview";
+import { OverviewComponent as EnerixControlOverviewComponent } from "./edge/history/Controller/EnerixControl/overview/overview";
 import { OverviewComponent as GridOptimizedChargeChartOverviewComponent } from "./edge/history/Controller/Ess/GridoptimizedCharge/overview/overview";
 import { OverviewComponent as TimeOfUseTariffOverviewComponent } from "./edge/history/Controller/Ess/TimeOfUseTariff/overview/overview";
 import { OverviewComponent as HeatchartOverviewComponent, OverviewComponent as HeatmypvchartOverviewComponent } from "./edge/history/Controller/Heat/overview/overview";
@@ -54,6 +55,7 @@ export const history: (customHeaders: boolean) => Routes = (customHeaders) => [{
     // History Chart Pages
     { path: ":componentId/asymmetricpeakshavingchart", component: AsymmetricPeakshavingChartOverviewComponent },
     { path: ":componentId/delayedselltogridchart", component: DelayedSellToGridChartOverviewComponent },
+    { path: ":componentId/enerixcontrolchart", component: EnerixControlOverviewComponent },
     { path: ":componentId/gridOptimizedChargeChart", component: GridOptimizedChargeChartOverviewComponent },
     { path: ":componentId/heatingelementchart", component: HeatingelementChartOverviewComponent },
     { path: ":componentId/heatmypvchart", component: HeatmypvchartOverviewComponent },
