@@ -1,7 +1,9 @@
 // @ts-strict-ignore
 import { AfterContentChecked, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ModalController } from "@ionic/angular";
+import { isAfter } from "date-fns";
 import { register } from "swiper/element/bundle";
+import { Role } from "src/app/shared/type/role";
 import { AdvertWidget, AdvertWidgets } from "src/app/shared/type/widget";
 import { environment } from "src/environments";
 import { Service } from "../../../shared/shared";
@@ -15,6 +17,7 @@ register();
 })
 
 export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDestroy {
+  private static readonly MAX_SHOW_DATE = new Date(2025, 8, 24);
 
   @Input() public advertWidgets: AdvertWidgets;
 
@@ -28,12 +31,18 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
   protected enableBtn: boolean = false;
   protected disablePrevBtn: boolean | null = null;
   protected disableNextBtn: boolean | null = null;
+  protected isAtLeastInstaller: boolean = false;
+  protected hasMaxShowDateBeenReached: boolean = false;
 
   constructor(
     public modalCtrl: ModalController,
     public service: Service,
     private cdref: ChangeDetectorRef,
-  ) { }
+  ) {
+    this.service.getCurrentEdge().then(edge => {
+      this.isAtLeastInstaller = edge.roleIsAtLeast(Role.INSTALLER);
+    });
+  }
 
   ngAfterContentChecked() {
     this.cdref.detectChanges();
@@ -41,6 +50,7 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
 
   ngOnInit() {
     this.setSlideConfig();
+    this.hasMaxShowDateBeenReached = isAfter(new Date(), AdvertisementComponent.MAX_SHOW_DATE);
   }
 
   ngOnDestroy() {

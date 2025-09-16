@@ -1,12 +1,4 @@
 {
-  "TOAST": {
-    "MIGRATION": {
-      "HEADER": "<big>Wichtiger Hinweis</big>",
-      "CONTENT": "Am <b>Freitag, den 05.09.2025</b>, findet in der Zeit von 17:00 bis voraussichtlich 20:00 Uhr (MESZ) eine Optimierung unserer IT-Infrastruktur statt. Einzelne Systeme werden noch über das gesamte Wochenende getestet und gewartet. Spätestens am Montag den 08.09.2025 sind alle Systeme wieder voll funktionsfähig.<br><br>Während dieses Wartungsfensters ist unser Backend Server teilweise nicht erreichbar und es wird zu umfassenden Einschränkungen beim Zugriff auf verschiedene Online-Dienste kommen.",
-      "LINK_TEXT": "Mehr Details",
-      "LINK": "https://fenecon.de/eingeschraenkte-erreichbarkeit"
-    }
-  },
   "About": {
     "DESCRIPTION": "Dieses Energiemanagementsystem wird auf Basis von OpenEMS als Open-Source-Software entwickelt. OpenEMS - das Open Source Energy Management System - ist eine modulare Plattform für Energiemanagement-Anwendungen. Es wurde von FENECON initiiert und wird mittlerweile von einer großen Zahl an Unternehmen, Universitäten und Instituten sowohl zur Forschung und Entwicklung verwendet, als auch für deren eigene Energiemanagementsysteme eingesetzt. Die Entwicklung wird in der OpenEMS Association e.V. koordiniert.",
     "CONTACT": "Für Rückfragen und Anregungen zum Energiemanagement und unseren Produkten, wenden Sie sich bitte an unser Team unter <a href=\"mailto:service@fenecon.de\">service&#64;fenecon.de</a>. Für Fragen zu OpenEMS steht Ihnen das <a target=\"_blank\" href=\"https://community.openems.io/\">OpenEMS Community-Forum</a> zur Verfügung.",
@@ -95,7 +87,7 @@
           "considerGridFeedInLimit": "Maximale Netzeinspeisung berücksichtigen",
           "endTime": "Endzeit",
           "endTimeDescription": "Die Beladung erfolgt nicht mit der Maximalleistung für wenige Stunden, sondern gleichmäßig über einen längeren Zeitraum.",
-          "endTimeDetailedDescription": "Die Beladung erfolgt nicht mit der Maximalleistung für wenige Stunden, sondern gleichmäßig mit maximal {{ value1 }} bis {{ value2 }} Uhr.",
+          "endTimeDetailedDescription": "Die Beladung erfolgt nicht mit der Maximalleistung für wenige Stunden, sondern gleichmäßig mit maximal {{ maxChargingPowerW }} bis {{ endTime }}.",
           "endTimeLong": "Endzeitpunkt der beschränkten Beladung",
           "expectedSoc": "Erwarteter Ladezustand",
           "expectedSocWithoutSellToGridLimit": "Ohne Vermeidung der maximalen Netzeinspeisung",
@@ -242,6 +234,19 @@
           "HEATING_POWER": "Heizleistung",
           "MESSAGE_UNREACHABLE": "Das Energielimit kann nicht in der Zeit erreicht werden",
           "ENERGY_SINCE_BEGINNING": "Energie seit Beginn"
+        },
+        "ENERIX_CONTROL": {
+          "OVERWRITE": "aktive Übersteuerung",
+          "NO_OVERWRITE": "keine Übersteuerung",
+          "OVERWRITE_MODE": "Übersteuerungsmodus",
+          "NO_DISCHARGE": "Keine Entladung",
+          "NO_INPUT": "Kein Befehl",
+          "DISCONNECTED": "Keine Verbindung",
+          "CONNECTED": "Verbunden",
+          "FORCE_CHARGE": "Beladung erzwungen",
+          "READ_ONLY": "Lesend",
+          "NOTE": "Bitte beachten Sie:",
+          "OVERWRITE_INFO": "Bei Aktivierung dieser Funktion werden die Standard-Einstellung zur Be- und Entladung des Speichers durch externe Vorgaben der enerix Franchise GmbH & Co. KG ersetzt. Dadurch kann es zu Abweichungen vom gewohnten Betriebsverhalten kommen - zum Beispiel kann Strom aus dem Netz bezogen werden, obwohl das Speichersystem ausreichend geladen ist."
         },
         "HEAT": {
           "TEMPERATURE": "Wassertemperatur",
@@ -655,6 +660,9 @@
     "SUM_STATE": "Systemzustand",
     "SYSTEM": "System",
     "RESTART": "Neu starten",
+    "SUFFIX": {
+      "HOUR": "Uhr"
+    },
     "TIME": {
       "HOUR": "Stunde",
       "HOURS": "Stunden",
@@ -878,7 +886,8 @@
       "EMAIL_MATCH": "E-Mails stimmen nicht überein.",
       "EMAIL": "{{ email }} ist keine gültige E-Mail-Adresse.",
       "POSITIVE_INTEGER": "Nur positive Ganzzahlen erlaubt.",
-      "INVALID_ZIPCODE": "Ungültiges Postleitzahlenformat"
+      "INVALID_ZIPCODE": "Ungültiges Postleitzahlenformat",
+      "STS_SERIAL_NUMBER_REQUIREMENT": "Die Seriennummer wird benötigt, wenn eine STS-Box vorhanden ist."
     },
     "FORWARD": "weiter",
     "LOAD": "laden...",
@@ -894,7 +903,10 @@
     },
     "PROTOCOL_FEED_IN_MANAGEMENT": {
       "CHOOSE": "Typ",
+      "LIMITATION": "Limitierung",
       "CONSTANT_VALUE": "Cos φ Festwert",
+      "INDUCTIVE": "induktiv",
+      "CAPACITIVE": "kapazitiv",
       "DYNAMIC_LIMITATION_ACTIVATED": "Dynamische Begrenzung der Einspeisung aktiviert?",
       "DYNAMIC_LIMITATION": "Dynamische Begrenzung der Einspeisung",
       "EXTERNAL_CONTROLLER_CHECK": "Der Rundsteuerempfänger wurde lt. Anleitung ordnungsgemäß und vollständig installiert.",
@@ -910,13 +922,15 @@
       "TITLE": "Einspeisemanagement",
       "EXTERNAL_CONTROLLER_RECEIVER": "Rundsteuerempfänger",
       "PLACE_HOLDER": "Wähle eine Option",
-      "NO_LIMITATION": "Kein Einspeisemanagement",
+      "NO_LIMITATION": "Kein Limitierung",
       "NA_PROTECTION": "Fernabschaltung aktivieren (Zentraler NA-Schutz)",
       "DYNAMIC_LIMITATION_WITH_RIPPLE_CONTROLLER": "Dynamische Begrenzung der Einspeisung & Rundsteuerempfänger",
       "MAXIMUM_FEED_IN_VALUE_DYNAMIC_AND_EXTERNAL_LIMITATION": "Wert der dynamischen Begrenzung (max Einspeisewert, z.B. 60 % der kWp) [W]",
       "FIXED_POWER_FACTOR_DESCRIPTION": "In der Regel gibt der Netzbetreiber einen festen Verschiebungsfaktor von '1' an",
       "INFO_TEXT": "Ihr Energiespeicher versucht durch intelligentes Laden, eine Abregelung der PV-Anlage zu vermeiden.",
-      "WARNING_TEXT": "Dies ersetzt nicht die ordnungsgemäße Konfiguration des PV-Wechselrichters!"
+      "WARNING_TEXT": "Dies ersetzt nicht die ordnungsgemäße Konfiguration des PV-Wechselrichters!",
+      "DYNAMIC_LIMITATION_TYPE": "Einspeiselimitierung",
+      "EXTERNAL_LIMITATION_TYPE": "Externe Limitierung"
     },
     "PROTOCOL_INSTALLER_AND_CUSTOMER": {
       "CITY": "Ort",
@@ -1002,8 +1016,8 @@
       "BATTERY_TOWER_CLUSTER": "Batterie {{ batteryNumber }} turm {{towerNumber}}",
       "INVALID_SERIALNUMBER_KEY": "Bitte überprüfen Sie die {{ key }} Seriennummer in {{ header }}",
       "REFRESH_NOTE": "Falls nicht alle Seriennummern angezeigt werden, aktualisieren Sie bitte Ihren Browser.\nDas Auslesen der Seriennummern kann einige Minuten in Anspruch nehmen.",
-      "DOUBLE_SOCKET_LABEL": "Im Doppelsockel verbaut",
-      "DOUBLE_SOCKET": "Doppelsockel"
+      "DOUBLE_SOCKET_LABEL": "Splitsockel verbaut",
+      "DOUBLE_SOCKET": "Splitsockel"
     },
     "PROTOCOL_SYSTEM": {
       "FIRSTNAME": "Vorname Kontaktperson",
@@ -1039,7 +1053,8 @@
         "TYPE": {
           "STANDARD": "Standardlieferumfang",
           "OPTIONAL": "Optional"
-        }
+        },
+        "WITHOUT_CT_STANDARD_DELIVERY": "3-Phasensensor ohne Stromwandler (Standardlieferumfang)"
       },
       "CONVERTER_RATIO": "Primärstrom (200–5000A)"
     },
@@ -1122,6 +1137,11 @@
     "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
       "SLAVE_COUNT_TITLE": "Informationen zur Anzahl der Slaves",
       "SLAVE_INSTALLATION_TITLE": "Installation einzelner Speichereinheiten (Slaves)"
+    },
+    "CONFIGURATION_STS_BOX": {
+      "HELP_TEXT": "Die Seriennummer der STS-Box befindet sich auf dem Typenschild seitlich der STS-Box",
+      "STS_BOX_AVAILABLE": "Ist eine STS-Box für Notstromfähigkeit installiert:",
+      "LABEL": "STS Box"
     },
     "SHARED": {
       "NOTE": "Hinweis",
@@ -1343,7 +1363,8 @@
   },
   "SYSTEM": {
     "INDUSTRIAL": {
-      "CLEAR_TIMEOUT": "Reset Timeout Fehler: battery, battery.inverter, ess"
+      "CLEAR_TIMEOUT": "Reset Timeout Fehler: battery, battery.inverter, ess",
+      "BMS_HARD_RESET": "BMS hard reset"
     }
   }
 }

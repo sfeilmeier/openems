@@ -117,6 +117,10 @@ export function registerTranslateExtension(translate: TranslateService) {
                     return translate.stream("INSTALLATION.FORM.MIN", { min: field.defaultValue - 1 });
                 },
             },
+            {
+                name: "serialNumberRequired",
+                message: translate.stream("INSTALLATION.FORM.STS_SERIAL_NUMBER_REQUIREMENT"),
+            },
         ],
         extensions: [
             {

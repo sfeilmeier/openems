@@ -1,10 +1,11 @@
 // @ts-strict-ignore
 import { NgModule } from "@angular/core";
-import { FormControl, ValidationErrors } from "@angular/forms";
+import { AbstractControl, FormControl, ValidationErrors } from "@angular/forms";
 import { FormlyFieldConfig, FormlyModule } from "@ngx-formly/core";
 import { SetupKeyComponent } from "src/app/edge/installation/shared/reusable-input-field";
 import { SharedModule } from "src/app/shared/shared.module";
 import { SettingsModule } from "../settings/settings.module";
+import { OeSystemUpdateComponent } from "../settings/system/oe-system-update.component";
 import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { InstallationViewComponent } from "./installation-view/installation-view.component";
 import { InstallationComponent } from "./installation.component";
@@ -17,6 +18,7 @@ import { ConfigurationExecuteComponent } from "./views/configuration-execute/con
 import { ConfigurationGridSettingComponent } from "./views/configuration-grid-setting/configuration-grid-setting";
 import { ConfigurationLineSideMeterFuseComponent } from "./views/configuration-line-side-meter-fuse/configuration-line-side-meter-fuse.component";
 import { ConfigurationMpptSelectionComponent } from "./views/configuration-mppt-selection/configuration-mppt-selection.component";
+import { ConfigurationStsBoxComponent } from "./views/configuration-sts-box/configuration-sts-box.component";
 import { ConfigurationSubSystemComponent } from "./views/configuration-sub-system/configuration-sub-system";
 import { ConfigurationSummaryComponent } from "./views/configuration-summary/configuration-summary.component";
 import { ConfigurationSystemComponent } from "./views/configuration-system/configuration-system.component";
@@ -97,6 +99,24 @@ export function ZipCodeValidator(control: FormControl): ValidationErrors {
   return AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX.test(control.value) ? null : { "zip": true };
 }
 
+export function serialNumberRequiredWhenCheckedValidator(control: AbstractControl, field: FormlyFieldConfig): ValidationErrors {
+  if (control.value == null || !control.value) {
+    return null;
+  }
+
+  const snKey = field.props?.serialNumberField?.key;
+  if (snKey == null) {
+    return null;
+  }
+
+  const serialValue = field.model[snKey] as string;
+  if (serialValue != null && !serialValue) {
+    return { "serialNumberRequired": true };
+  }
+
+  return null;
+}
+
 /**
  * This validator checks if the value entered is greater than minimum (default) value.
  * Workaround for default min prop in formly field.
@@ -127,11 +147,13 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
         { name: "commercial50BatteryInverterSerialNumber", validation: Commercial50BatteryInverterSerialNumberValidator },
         { name: "defaultAsMinimumValue", validation: DefaultAsMinValueValidator },
         { name: "zip", validation: ZipCodeValidator },
+        { name: "serialNumberRequiredWhenChecked", validation: serialNumberRequiredWhenCheckedValidator },
       ],
     }),
     SharedModule,
     SettingsModule,
     SetupKeyComponent,
+    OeSystemUpdateComponent,
   ],
   declarations: [
     CompletionComponent,
@@ -143,9 +165,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     ProtocolInstallerComponent,
     ProtocolSystemComponent,
     InstallationComponent,
-    InstallationViewComponent,
     PreInstallationComponent,
-    PreInstallationUpdateComponent,
     ConfigurationSystemComponent,
     ProtocolPvComponent,
     ConfigurationSummaryComponent,
@@ -158,9 +178,12 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     ConfigurationEssLimiter14aComponent,
     ProtocolChecklistComponent,
     ProtocolAvuBoxComponent,
+    PreInstallationUpdateComponent,
+    InstallationViewComponent,
     ConfigurationGridSettingComponent,
     ProtocolCommercialClusterSlaveCountComponent,
     ProtocolCommercialClusterSlaveInstallationComponent,
+    ConfigurationStsBoxComponent,
   ],
 })
 export class InstallationModule { }

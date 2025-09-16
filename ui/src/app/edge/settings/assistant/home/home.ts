@@ -2,24 +2,33 @@
 import { formatNumber } from "@angular/common";
 import { Component } from "@angular/core";
 import { SelectCustomEvent } from "@ionic/angular";
-import { LiveDataService } from "src/app/edge/live/livedataservice";
+import { ComponentsBaseModule } from "src/app/shared/components/components.module";
 import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
+import { PickdateComponentModule } from "src/app/shared/components/pickdate/pickdate.module";
 import { Converter } from "src/app/shared/components/shared/converter";
-import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Filter } from "src/app/shared/components/shared/filter";
+import { LiveDataServiceProvider } from "src/app/shared/provider/live-data-service-provider";
+import { LocaleProvider } from "src/app/shared/provider/locale-provider";
 import { ChannelAddress, CurrentData, EdgeConfig, Utils } from "src/app/shared/shared";
 import { ArrayUtils } from "src/app/shared/utils/array/array.utils";
+import { CommonUiModule } from "../../../../shared/common-ui.module";
 import { AssistantEdgePermission } from "../permission";
-import { HomeCellVoltageOptions } from "./chart/oe-cell-voltage.chart";
+import { ChartComponent as CellVoltageChart, HomeCellVoltageOptions } from "./chart/oe-cell-voltage.chart";
+import { ChartComponent as ReactiveChart } from "./chart/oe-reactive.chart";
 
 @Component({
   selector: HomeServiceAssistantComponent.SELECTOR,
   templateUrl: "./home.html",
-  providers: [{
-    useClass: LiveDataService,
-    provide: DataService,
-  }],
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonUiModule,
+    CellVoltageChart,
+    ReactiveChart,
+    PickdateComponentModule,
+    LiveDataServiceProvider,
+    LocaleProvider,
+    ComponentsBaseModule,
+  ],
 })
 export class HomeServiceAssistantComponent extends AbstractFlatWidget {
 

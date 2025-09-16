@@ -1,9 +1,7 @@
 // @ts-strict-ignore
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
-import { EdgePermission, Producttype, Utils } from "../shared";
-import { StringUtils } from "../utils/string/string.utils";
-import { Role } from "./role";
+import { EdgePermission, Utils } from "../shared";
 
 export enum WidgetClass {
     "Energymonitor",
@@ -31,6 +29,7 @@ export enum WidgetFactory {
     "Controller.Asymmetric.PeakShaving",
     "Controller.ChannelThreshold",
     "Controller.CHP.SoC",
+    "Controller.Clever-PV",
     "Controller.Ess.DelayedSellToGrid",
     "Controller.Ess.FixActivePower",
     "Controller.Ess.GridOptimizedCharge",
@@ -48,6 +47,7 @@ export enum WidgetFactory {
     "Evcs.Cluster.SelfConsumption",
     "System.Fenecon.Industrial.S",
     "System.Fenecon.Industrial.L",
+    "Weather.OpenMeteo",
 }
 
 export type Icon = {
@@ -85,29 +85,29 @@ export class AdvertWidgets {
 
         let list: AdvertWidget[] = [];
 
-        const allowedProducttypes: Producttype[] = [
-            Producttype.HOME,
-            Producttype.HOME_6,
-            Producttype.HOME_10,
-            Producttype.HOME_15,
-            Producttype.HOME_20,
-            Producttype.HOME_20_30,
-            Producttype.HOME_30,
-            Producttype.COMMERCIAL_92,
-            Producttype.COMMERCIAL_92_CLUSTER,
-            Producttype.INDUSTRIAL_S,
-            Producttype.INDUSTRIAL_M,
-            Producttype.INDUSTRIAL_L,
-        ];
+        // const allowedProducttypes: Producttype[] = [
+        //     Producttype.HOME,
+        //     Producttype.HOME_6,
+        //     Producttype.HOME_10,
+        //     Producttype.HOME_15,
+        //     Producttype.HOME_20,
+        //     Producttype.HOME_20_30,
+        //     Producttype.HOME_30,
+        //     Producttype.COMMERCIAL_92,
+        //     Producttype.COMMERCIAL_92_CLUSTER,
+        //     Producttype.INDUSTRIAL_S,
+        //     Producttype.INDUSTRIAL_M,
+        //     Producttype.INDUSTRIAL_L,
+        // ];
 
-        if (edge.roleIsAtLeast(Role.INSTALLER) && StringUtils.isIn(edge.producttype, allowedProducttypes)) {
-            list.push(
-                {
-                    name: "advert-1",
-                    title: { languageKey: "ADVERT.1.TITLE" },
-                }
-            );
-        };
+        // if (StringUtils.isIn(edge.producttype, allowedProducttypes)) {
+        list.push(
+            {
+                name: "advert-1",
+                title: { languageKey: "ADVERT.1.TITLE" },
+            }
+        );
+        // };
         list = Utils.shuffleArray(list);
         return new AdvertWidgets(list);
     }
@@ -187,7 +187,14 @@ export class Widgets {
             }
         }
         for (const factory of Object.values(WidgetFactory).filter(v => typeof v === "string")) {
+            // Widget should be shown only when readonly property is set to true
             for (const componentId of config.getComponentIdsByFactory(factory.toString())) {
+                if (factory === "Controller.Clever-PV") {
+                    const value = config.getComponentProperties(componentId)["readOnly"];
+                    if (value === true || value === undefined || value === null) {
+                        continue;
+                    }
+                }
                 const component = config.getComponent(componentId);
                 if (component.isEnabled) {
                     list.push({ name: factory, componentId: componentId, alias: component.alias });

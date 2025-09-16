@@ -1,10 +1,14 @@
 import { Component, effect } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
+import { FormlyModule } from "@ngx-formly/core";
 import { CookieService } from "ngx-cookie-service";
 import { JsonrpcResponseError } from "src/app/shared/jsonrpc/base";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
+import { PipeComponentsModule } from "src/app/shared/pipe/pipe.module";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { environment } from "src/environments";
+import { CommonUiModule } from "../../../../shared/common-ui.module";
 import { Connect } from "./jsonrpc/connect";
 import { DisconnectOAuthConnection } from "./jsonrpc/disconnectOAuthConnection";
 import { GetAllOAuthProvider, OAuthMetaInfo } from "./jsonrpc/getAllOAuthProvider";
@@ -14,7 +18,15 @@ import { InitiateConnect } from "./jsonrpc/initiateConnect";
 @Component({
   selector: OAuthIndexComponent.SELECTOR,
   templateUrl: "./oauth.component.html",
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonUiModule,
+    PipeComponentsModule,
+    RouterModule,
+    FormsModule,
+    FormlyModule,
+    ReactiveFormsModule,
+  ],
 })
 export class OAuthIndexComponent {
 

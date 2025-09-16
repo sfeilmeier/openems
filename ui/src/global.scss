@@ -25,6 +25,7 @@
 @use "node_modules/@ionic/angular/css/text-alignment.css" as *;
 @use "node_modules/@ionic/angular/css/text-transformation.css" as *;
 @use "node_modules/@ionic/angular/css/typography.css" as *;
+
 /* ngx-spinner */
 @use "node_modules/ngx-spinner/animations/ball-clip-rotate-multiple.css" as *;
 @use "./environments/index.scss" as *;
@@ -549,6 +550,23 @@ formly-input-section {
 
     ion-buttons {
         color: var(--ion-color-toggle-background) !important;
+    }
+
+    // Accessibility 2.1.2
+    .oe-focused {
+        border: 0.1em solid var(--ion-color-dark);
+        outline: var(--ion-focus-outline-width) solid var(--ion-focus-outline-color);
+        outline-offset: var(--ion-focus-outline-offset);
+    }
+
+    ion-button.ion-focused,
+    ion-segment-button.ion-focused,
+    ion-toggle.ion-focused,
+    ion-item.ion-focused,
+    ion-input.ion-focused,
+    ion-chip:focus-within,
+    ion-toggle:focus-within {
+        @extend .oe-focused;
     }
 }
 

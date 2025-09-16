@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# Run script:
+# wget https://fenecon.de/fems-tools/update-distro.sh -O /tmp/update-distro.sh
+# nohup bash /tmp/update-distro.sh > /tmp/distro-nohup.log 2>&1 &
+# tail -f /tmp/distro-nohup.log
+#
 
 if [ "$EUID" -ne 0 ]; then
   echo "run with elevated privileges; sudo or root!"
@@ -173,16 +179,17 @@ function prevent_multiple_exec {
 
 function update_to_stretch {
   install_freexian_apt_key;
-  echo "deb http://deb.fenecon.de/debian-elts/ stretch main contrib non-free" > "/tmp/sources.list"
+  echo "deb https://deb.fenecon.de/debian-elts/ stretch main contrib non-free" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
-    echo "deb http://deb.fenecon.de/raspbian-legacy/ stretch main contrib non-free rpi" > "/tmp/raspi.list"
+    echo "deb https://deb.fenecon.de/raspbian-legacy/ stretch main contrib non-free rpi" > "/tmp/raspi.list"
   fi
   
   echo "update all packages"
   ensure_updated;
   
   echo "update sources.list"
+  apt_get install -y apt-transport-https
   update_sources;
 
   echo "stretch" > $UPDATE_INFO_FILE
@@ -195,20 +202,21 @@ function update_to_stretch {
   bash curl wget aptitude xz-utils systemd vim unzip \
   at git iptables java-common lsof ncdu nginx-light ntpdate \
   python-pymodbus python-socksipychain screen ufw vim wget
-  
+
   start_service systemd-resolved
   start_service systemd-networkd
+  start_service systemd-timesyncd
   
   # Make sure systemd resolved is properly activated
   ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
 }
 
 function update_to_buster {
-  install_debian_apt_key 10 buster;
-  echo "deb http://deb.fenecon.de/debian/ buster main contrib non-free" > "/tmp/sources.list"
+  install_freexian_apt_key;
+  echo "deb https://deb.fenecon.de/debian-elts/ buster main contrib non-free" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
-    echo "deb http://deb.fenecon.de/raspbian/ buster main contrib non-free rpi" > "/tmp/raspi.list"
+    echo "deb https://deb.fenecon.de/raspbian/ buster main contrib non-free rpi" > "/tmp/raspi.list"
   fi
   
   echo "update all packages"
@@ -230,6 +238,7 @@ function update_to_buster {
   
   start_service systemd-resolved
   start_service systemd-networkd
+  start_service systemd-timesyncd
   
   # Make sure systemd resolved is properly activated
   ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
@@ -237,10 +246,10 @@ function update_to_buster {
 
 function update_to_bullseye {
   install_debian_apt_key 11 bullseye;
-  echo "deb http://deb.fenecon.de/debian/ bullseye main contrib non-free" > "/tmp/sources.list"
+  echo "deb https://deb.fenecon.de/debian/ bullseye main contrib non-free" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
-    echo "deb http://deb.fenecon.de/raspbian/ bullseye main contrib non-free rpi" > "/tmp/raspi.list"
+    echo "deb https://deb.fenecon.de/raspbian/ bullseye main contrib non-free rpi" > "/tmp/raspi.list"
   fi
   
   echo "update all packages"
@@ -258,10 +267,12 @@ function update_to_bullseye {
   apt_get install -y \
   bash curl wget aptitude xz-utils systemd vim unzip python-is-python3 python3 \
   at git iptables java-common lsof ncdu nginx-light ntpdate \
-  python3-pymodbus python3-socksipychain screen ufw vim wget
+  python3-pymodbus python3-socksipychain screen ufw vim wget \
+  systemd-timesyncd
   
   start_service systemd-resolved
   start_service systemd-networkd
+  start_service systemd-timesyncd
   
   # Make sure systemd resolved is properly activated
   ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
@@ -269,10 +280,10 @@ function update_to_bullseye {
 
 function update_to_bookworm {
   install_debian_apt_key 12 bookworm;
-  echo "deb http://deb.fenecon.de/debian/ bookworm main contrib non-free-firmware" > "/tmp/sources.list"
+  echo "deb https://deb.fenecon.de/debian/ bookworm main contrib non-free-firmware" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
-    echo "deb http://deb.fenecon.de/raspbian/ bookworm main contrib non-free rpi" > "/tmp/raspi.list"
+    echo "deb https://deb.fenecon.de/raspbian/ bookworm main contrib non-free rpi" > "/tmp/raspi.list"
   fi
   
   echo "update all packages"
@@ -291,10 +302,11 @@ function update_to_bookworm {
   bash curl wget aptitude xz-utils systemd vim unzip python-is-python3 python3 \
   at git iptables java-common lsof ncdu nginx-light ntpdate \
   python3-pymodbus python3-socksipychain screen ufw vim wget \
-  systemd-resolved
+  systemd-resolved systemd-timesyncd
   
   start_service systemd-resolved
   start_service systemd-networkd
+  start_service systemd-timesyncd
   
   # Make sure systemd resolved is properly activated
   ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
@@ -317,8 +329,9 @@ check_system;
 
 echo "distro update to $VERSION_NEXT"
 
-{
+set -o pipefail
 
+{
 start_time=$(date +%s)
 
 case "$VERSION_NEXT" in

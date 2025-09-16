@@ -23,4 +23,5 @@ export class Advert1Component {
   constructor(
     protected readonly translate: TranslateService,
   ) { }
+
 }

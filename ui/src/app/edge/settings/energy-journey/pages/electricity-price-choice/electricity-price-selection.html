@@ -24,8 +24,11 @@
                 </ion-input>
               </ion-item>
               <ion-item [disabled]="!formGroup.controls['electricityPrice'].dirty" class="ion-float-right" lines="none">
-                <ion-button fill="outline" (click)="onNextClicked()">
-                  {{ "SETTINGS.ENERGY_JOURNEY.START_ANALYSIS" | translate }}</ion-button>
+                <oe-flat-button
+                  [link]="{routeRelative: route, text: '../', queryParams: {electricityPrice: this.formGroup?.controls['electricityPrice'].value}}"
+                  color="primary">
+                  <span translate>SETTINGS.ENERGY_JOURNEY.START_ANALYSIS</span>
+                </oe-flat-button>
               </ion-item>
             </form>
           </oe-flat-widget>

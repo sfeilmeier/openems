@@ -13,7 +13,6 @@ export class GeneralIbn extends AbstractIbn {
     public override readonly systemId = SystemId.GENERAL;
 
     public override showViewCount = false;
-    public override isDoubleSocketValid: boolean | null = null;
 
     constructor(translate: TranslateService) {
         super([
@@ -65,6 +64,9 @@ export class GeneralIbn extends AbstractIbn {
         throw new Error("This is General Ibn, Method not implemented.");
     }
     public override addSystemSpecificFields(tableData: TableData[]): void {
+        throw new Error("This is General Ibn, Method not implemented.");
+    }
+    public override populateFromData(source: any) {
         throw new Error("This is General Ibn, Method not implemented.");
     }
 }

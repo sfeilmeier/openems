@@ -2,7 +2,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
-import { GridSetting } from "../../installation-systems/commercial/commercial-92/abstract-commercial92";
+import { Commercial50Gen3Ibn } from "../../installation-systems/commercial/commercial-50/commercial-50-gen3";
 import { Commercial92Ibn } from "../../installation-systems/commercial/commercial-92/commercial92";
 
 @Component({
@@ -14,7 +14,7 @@ export class ConfigurationGridSettingComponent implements OnInit {
 
     private static readonly SELECTOR = "configuration-grid-setting";
 
-    @Input() public ibn: Commercial92Ibn;
+    @Input() public ibn: Commercial92Ibn | Commercial50Gen3Ibn;
     @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
     @Output() public nextViewEvent = new EventEmitter<any>();
 
@@ -49,10 +49,7 @@ export class ConfigurationGridSettingComponent implements OnInit {
                 type: "radio",
                 templateOptions: {
                     radioSlot: "start",
-                    options: [
-                        { label: GridSetting.VDE_AR_N_4105, value: GridSetting.VDE_AR_N_4105 },
-                        { label: GridSetting.VDE_AR_N_4110, value: GridSetting.VDE_AR_N_4110 },
-                    ],
+                    options: this.ibn.getGridSettingOptions(),
                     required: true,
                 },
             },

@@ -7,11 +7,11 @@ import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrp
 import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared";
 
 import { Category } from "../../shared/category";
-import { FeedInType, ModbusBridgeType, WebLinks } from "../../shared/enums";
+import { ExternalLimitationType, GridFeedInLimitationType, ModbusBridgeType, WebLinks } from "../../shared/enums";
 import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, EmsType } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
-import { SubSystemType, SystemType } from "../../shared/system";
+import { System, SystemId, SystemType } from "../../shared/system";
 import { ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../views/configuration-execute/component-configurator";
 import { AbstractIbn } from "../abstract-ibn";
 
@@ -20,9 +20,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
     public override readonly systemType: SystemType = SystemType.COMMERCIAL;
     public override readonly showRundSteuerManual: boolean = false;
-    public override showViewCount: boolean = false;
     public readonly minNumberOfTowers: number = 1;
-    public override readonly isDoubleSocketValid: boolean = true;
     public modbusBridgeType: ModbusBridgeType;
 
     // configuration-emergency-reserve
@@ -35,7 +33,8 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
     // protocol-dynamic-feed-in-limitation
     public override feedInLimitation? = {
-        feedInType: FeedInType.NO_LIMITATION,
+        feedInType: ExternalLimitationType.NO_LIMITATION,
+        dynamicLimitationType: GridFeedInLimitationType.NO_LIMITATION,
         maximumFeedInPower: 0,
     };
 
@@ -126,12 +125,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     }
 
     public getFeedInLimitFields() {
-
-        // Update the feedInlimitation field
-        const totalPvPower = 0;
-        this.feedInLimitation.maximumFeedInPower = totalPvPower;
-
-        return super.getCommonFeedInLimitsFields(totalPvPower);
+        return super.getExternalFeedInLimitsFields();
     }
 
     public override addSystemSpecificFields(tableData): void {
@@ -210,7 +204,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         });
     }
 
-    public override setNonAbstractFields(ibnString: any) {
+    public override populateFromData(ibnString: any) {
 
         // Configuration commercial modbus bridge
         if ("modbusBridgeType" in ibnString) {
@@ -220,41 +214,47 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     }
 
     public override getSubSystemFields(): FormlyFieldConfig[] {
-        const fields: FormlyFieldConfig[] = [];
         const emsType: EmsType = this.getEmsType();
 
-        const componentLabel: {
-            value: SubSystemType,
-            label: SubSystemType,
-        }[] = [];
+        return System.getSubSystemFields(emsType, this.translate);
+    }
+
+    public override getSystemVariantFields(): FormlyFieldConfig[] {
+
+        const label = [];
+        const emsType: EmsType = this.getEmsType();
 
         switch (emsType) {
             case "feh013":
+                label.push(
+                    { value: SystemId.COMMERCIAL_92_WITHOUT_CLUSTER, label: SystemId.COMMERCIAL_92_WITHOUT_CLUSTER },
+                    { value: SystemId.COMMERCIAL_50_GEN_3, label: SystemId.COMMERCIAL_50_GEN_3 },
+                );
+                break;
             case "fec013":
-                componentLabel.push(
-                    { value: SubSystemType.COMMERCIAL_92, label: SubSystemType.COMMERCIAL_92 },
+                label.push(
+                    { value: SystemId.COMMERCIAL_92_CLUSTER, label: SystemId.COMMERCIAL_92_CLUSTER },
                 );
                 break;
             case null:
-                componentLabel.push(
-                    { value: SubSystemType.COMMERCIAL_30, label: SubSystemType.COMMERCIAL_30 },
-                    { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
+                label.push(
+                    { value: SystemId.COMMERCIAL_30_ANSCHLUSS, label: SystemId.COMMERCIAL_30_ANSCHLUSS },
+                    { value: SystemId.COMMERCIAL_30_NETZTRENNSTELLE, label: SystemId.COMMERCIAL_30_NETZTRENNSTELLE },
+                    { value: SystemId.COMMERCIAL_50_GEN_1, label: SystemId.COMMERCIAL_50_GEN_1 },
                 );
-                break;
-            default:
                 break;
         }
 
-        fields.push({
-            key: "subType",
+        const fields: FormlyFieldConfig[] = [{
+            key: "system",
             type: "radio",
-            className: "line-break",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME"),
-                options: componentLabel,
+                type: "radio",
+                options: label,
                 required: true,
             },
-        });
+        }];
 
         return fields;
     }
@@ -398,11 +398,10 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         return componentConfigurator;
     }
 
-    public override getFeedInTypeOptions(): ComponentData[] {
+    public override dynamicFeedInLimitationOptions(): ComponentData[] {
         return [
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: FeedInType.DYNAMIC_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: FeedInType.EXTERNAL_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: FeedInType.NO_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: GridFeedInLimitationType.DYNAMIC_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: GridFeedInLimitationType.NO_LIMITATION },
         ];
     }
 
@@ -446,21 +445,18 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     protected addCustombatteryInverterData(): ComponentData[] {
         const batteryInverterData: ComponentData[] = [];
         const feedInType = this.feedInLimitation.feedInType;
-        const isDynamicFeedInLimitataion = feedInType === FeedInType.DYNAMIC_LIMITATION ||
-            feedInType === FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
-        const isExternalLimitataion = feedInType === FeedInType.EXTERNAL_LIMITATION ||
-            feedInType === FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION;
+        const isExternalLimitataion = feedInType === ExternalLimitationType.EXTERNAL_LIMITATION;
+        const isDynamicFeedInLimitation = this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION;
 
-        if (isDynamicFeedInLimitataion) {
-            batteryInverterData.push({
-                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
-                value: this.feedInLimitation.maximumFeedInPower,
-            });
-        }
         if (isExternalLimitataion) {
             batteryInverterData.push({
                 label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
                 value: this.translate.instant("General.yes"),
+            });
+        } else if (isDynamicFeedInLimitation) {
+            batteryInverterData.push({
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
+                value: this.feedInLimitation.maximumFeedInPower,
             });
         } else {
             batteryInverterData.push({

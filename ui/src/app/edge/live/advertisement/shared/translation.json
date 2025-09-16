@@ -2,20 +2,20 @@
   "de": {
     "ADVERT": {
       "1": {
-        "TITLE": "Immer auf dem neuesten Stand sein",
-        "TEXT": "Kennen Sie schon unseren Newsletter? Erhalten Sie spannende Einblicke in aktuelle Termine und Veransaltungen, Produktneuheiten sowie Unternehmensentwicklungen.</br></br>Ob Updates zu FEMS-Apps, Sonderaktionen oder branchenpolitische Neuerungen - mit der FENpost sind Sie immer up to date!",
-        "LINK": "https://erp.fenecon.de/fenmail",
-        "LINK_TEXT": "Jetzt abonnieren!"
+        "TITLE": "Commercial 50: vertiefendes Webinar",
+        "TEXT": "Bereiten Sie sich optimal auf den Auslieferstart des FENECON Commercial 50 vor! In unserem Webinar am 23.09. exklusiv für Installateure erhalten Sie praxisnahe Einblicke zu Produkt, Installation und Auslegung.",
+        "LINK": "https://fenecon-gmbh.webinargeek.com/commercial-50-fuer-installateure-die-wichtigsten-infos-zu-installation-auslegung?cst=fems-widget",
+        "LINK_TEXT": "Zur Anmeldung"
       }
     }
   },
   "en": {
     "ADVERT": {
       "1": {
-        "TITLE": "Always up to date",
-        "TEXT": "Have you heard about our newsletter? Get the latest news about current events and appointments, product innovations, and key company developments.</br> Whether it's updates on the FEMS Apps, special promotions, or sector-political - with the FENmail, you'll always stay up to date!",
-        "LINK": "https://erp.fenecon.de/fenmail",
-        "LINK_TEXT": "Subscribe now!"
+        "TITLE": "In-Depth Webinar: Commercial 50",
+        "TEXT": "Get optimally prepared for the market launch of the FENECON Commercial 50! In our webinar on 23 September, exclusively for installers, you will gain practical insights into the product, installation, and system design (webinar will be in german).",
+        "LINK": "https://fenecon-gmbh.webinargeek.com/commercial-50-fuer-installateure-die-wichtigsten-infos-zu-installation-auslegung?cst=fems-widget",
+        "LINK_TEXT": "Register now"
       }
     }
   }

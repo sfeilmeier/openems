@@ -7,19 +7,21 @@ import { Meter } from "../../shared/meter";
 import { SystemId } from "../../shared/system";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
 import { AbstractHomeIbn } from "./abstract-home";
+import { AbstractHomeGen2Ibn } from "./abstract-home-gen2";
 
-export class Home6Gen2FeneconIbn extends AbstractHomeIbn {
+export class Home6Gen2FeneconIbn extends AbstractHomeGen2Ibn {
 
     public override readonly maxNumberOfModulesPerTower: number = 14;
     public override readonly maxNumberOfPvStrings: number = 2;
     public override readonly maxNumberOfMppt: number = 0;
     public override readonly maxNumberOfTowers: number = 3;
     public override readonly minNumberOfModulesPerTower: number = 3;
+    public override readonly minNumberOfTowers: number = 1;
 
     public override readonly systemId: SystemId = SystemId.FENECON_HOME_6;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
-    public override readonly homeAppId: string = "App.FENECON.Home6";
-    public override readonly homeAppAlias: string = "FENECON Home";
+    public override readonly appId: string = "App.FENECON.Home6";
+    public override readonly appAlias: string = "FENECON Home";
     public override readonly defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.INTEGRATED_METER;
 
     public override mppt: {
@@ -54,13 +56,13 @@ export class Home6Gen2FeneconIbn extends AbstractHomeIbn {
         ], translate);
     }
 
-    public override getHomeAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): {} {
+    public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): {} {
         const dc1 = this.pv.dc[0];
         const dc2 = this.pv.dc[1];
 
         const home6Gen2AppProperties = {
-            ...this.commonHomeProperties(safetyCountry, feedInSetting),
-            ...this.additonalHomeProperties(),
+            ...this.commonProperties(safetyCountry, feedInSetting),
+            ...this.additionalProperties(),
             HAS_DC_PV1: dc1.isSelected,
             ...(dc1.isSelected && { DC_PV1_ALIAS: dc1.alias }),
             HAS_DC_PV2: dc2.isSelected,

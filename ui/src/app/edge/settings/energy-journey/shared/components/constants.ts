@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { Formatter } from "src/app/shared/components/shared/formatter";
@@ -37,6 +38,7 @@ export class EnergyJourneyConstantsComponent implements OnChanges {
 
     constructor(
         private translate: TranslateService,
+        private route: ActivatedRoute,
     ) { }
 
     ngOnChanges(changes: SimpleChanges) {

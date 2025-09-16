@@ -1,4 +1,4 @@
-<ion-card>
+<ion-card *ngIf="isAtLeastInstaller && !hasMaxShowDateBeenReached">
     <ion-item lines="full" color="light" style="--background: var(--ion-background-color-card-header)"
         class="ion-text-center">
         <ion-icon name="oe-megafon" size="normal"></ion-icon>

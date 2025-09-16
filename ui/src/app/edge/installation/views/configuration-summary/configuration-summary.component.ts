@@ -8,9 +8,9 @@ import { environment } from "src/environments";
 import { COUNTRY_OPTIONS } from "../../../../shared/type/country";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { Category } from "../../shared/category";
-import { WebLinks } from "../../shared/enums";
 import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, TableData } from "../../shared/ibndatatypes";
+import { WebLinkUtils } from "../../shared/weblink.utils";
 
 @Component({
   selector: ConfigurationSummaryComponent.SELECTOR,
@@ -69,7 +69,7 @@ export class ConfigurationSummaryComponent implements OnInit {
         label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.GTC_ACCEPT"),
         required: true,
         description: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT"),
-        url: WebLinks.getLink(this.ibn.gtcAndWarrantyLinks.gtcLink),
+        url: WebLinkUtils.getLink(this.ibn.gtcAndWarrantyLinks.gtcLink),
       },
       wrappers: ["form-field-checkbox-hyperlink"],
     });
@@ -82,7 +82,7 @@ export class ConfigurationSummaryComponent implements OnInit {
         required: true,
         defaultValue: false,
         description: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT"),
-        url: WebLinks.getLink(this.ibn.gtcAndWarrantyLinks.warrantyLink),
+        url: WebLinkUtils.getLink(this.ibn.gtcAndWarrantyLinks.warrantyLink),
       },
       wrappers: ["form-field-checkbox-hyperlink"],
     });
@@ -121,10 +121,9 @@ export class ConfigurationSummaryComponent implements OnInit {
     ];
 
     const lineSideMeterFuseTitle: string = Category.toTranslatedString(this.ibn.lineSideMeterFuse.category, this.translate);
-    if (this.ibn.lineSideMeterFuse.otherValue) {
-      generalData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.otherValue });
-    } else {
-      generalData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.fixedValue });
+    const lineSideMeterFuseValue: number | null = this.ibn.lineSideMeterFuse.otherValue ?? this.ibn.lineSideMeterFuse.fixedValue;
+    if (lineSideMeterFuseValue != null) {
+      generalData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.otherValue ?? this.ibn.lineSideMeterFuse.fixedValue });
     }
 
     tableData.push({
@@ -158,37 +157,6 @@ export class ConfigurationSummaryComponent implements OnInit {
         rows: element.rows,
       };
     });
-  }
-
-  /**
-   * Fills data based on the provided category.
-   *
-   * @param data  The data object containing information to be filled.
-   * @param category The category determining which data fields to include.
-   * @returns An array of ComponentData objects filled based on the provided data and category.
-   */
-  private fillData(data: any, category: Category.CUSTOMER | Category.INSTALLER | Category.BATTERY_LOCATION): ComponentData[] {
-    const rows: ComponentData[] = [];
-
-    if ((category === Category.CUSTOMER && data.isCorporateClient) || (category === Category.INSTALLER)) {
-      rows.push({ label: this.translate.instant("Register.Form.company"), value: data.companyName });
-    }
-
-    rows.push(
-      { label: this.translate.instant("Register.Form.lastname"), value: data.lastName },
-      { label: this.translate.instant("Register.Form.firstname"), value: data.firstName },
-      { label: this.translate.instant("Register.Form.street"), value: data.street },
-      { label: this.translate.instant("Register.Form.zip"), value: data.zip },
-      { label: this.translate.instant("Register.Form.city"), value: data.city },
-      { label: this.translate.instant("Register.Form.country"), value: this.getCountryLabel(data.country) },
-      { label: this.translate.instant("Register.Form.email"), value: data.email },
-    );
-
-    if (data.phone) {
-      rows.push({ label: this.translate.instant("Register.Form.phone"), value: data.phone });
-    }
-
-    return rows;
   }
 
 }

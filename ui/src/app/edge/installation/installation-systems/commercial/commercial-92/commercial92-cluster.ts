@@ -6,7 +6,7 @@ import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componen
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
-import { CommercialCluster, FeedInType, View } from "../../../shared/enums";
+import { CommercialCluster, View } from "../../../shared/enums";
 import { SystemId } from "../../../shared/system";
 import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
 import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
@@ -26,6 +26,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             View.PreInstallation,
             View.PreInstallationUpdate,
             View.ConfigurationSystem,
+            View.ConfigurationSubSystem,
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
@@ -39,12 +40,6 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             View.ProtocolSerialNumbers,
             View.Completion,
         ], translate);
-    }
-
-    public override removeOrAddView(edge: Edge): void {
-        super.removeOrAddView(edge);
-        this.removeOrAddEssLimiter14aView();
-        this.removeOrAddGridSettingView();
     }
 
     public override async getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service, cluster?: CommercialCluster): Promise<ComponentConfigurator> {
@@ -61,7 +56,6 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             NUMBER_OF_SLAVES: this.numberOfSlaves,
             SAFETY_COUNTRY: safetyCountry,
             FEED_IN_TYPE: this.feedInLimitation.feedInType,
-            ...(this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION && { MAX_FEED_IN_POWER: this.feedInLimitation.maximumFeedInPower }),
             HAS_ESS_LIMITER_14A: this.isController14aActivated,
         };
         let appId: string = "App.FENECON.Commercial.92.ClusterMaster";
@@ -199,9 +193,9 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         return channelAddresses;
     }
 
-    public override setNonAbstractFields(ibnString: any) {
+    public override populateFromData(ibnString: any) {
 
-        super.setNonAbstractFields(ibnString);
+        super.populateFromData(ibnString);
 
         this.slaveEdges = ibnString.slaveEdges;
         this.numberOfSlaves = ibnString.numberOfSlaves;

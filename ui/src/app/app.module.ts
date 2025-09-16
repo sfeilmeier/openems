@@ -19,7 +19,6 @@ import { EdgeModule } from "./edge/edge.module";
 import { InstallationModule } from "./edge/installation/installation.module";
 import { SetupKeyComponent } from "./edge/installation/shared/reusable-input-field";
 import { SettingsModule as EdgeSettingsModule } from "./edge/settings/settings.module";
-import { SystemLogComponent } from "./edge/settings/systemlog/systemlog.component";
 import { IndexModule } from "./index/index.module";
 import { PlatFormService } from "./platform.service";
 import { NavigationComponent } from "./shared/components/navigation/navigation.component";
@@ -40,7 +39,6 @@ import { UserModule } from "./user/user.module";
     AppComponent,
     ChartOptionsPopoverComponent,
     StatusSingleComponent,
-    SystemLogComponent,
     NavigationComponent,
   ],
   imports: [

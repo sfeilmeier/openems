@@ -24,9 +24,11 @@
                         </ul>
                     </ion-col>
                     <ion-col sizeXs="12" sizeSm="12" sizeLg="4" sizeMd="4" class="ion-align-self-end ion-text-end">
-                        <ion-button fill="outline" [routerLink]="['./electricityPriceChoice']"
-                            [queryParams]="{electricityPrice: electricityPrice}" size="small"
-                            translate>SETTINGS.ENERGY_JOURNEY.CONSTANTS.EDIT</ion-button>
+                        <oe-flat-button
+                            [link]="{routeRelative: route, text: './electricityPriceChoice', queryParams: {electricityPrice: electricityPrice}}"
+                            color="primary">
+                            <span translate>SETTINGS.ENERGY_JOURNEY.CONSTANTS.EDIT</span>
+                        </oe-flat-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>

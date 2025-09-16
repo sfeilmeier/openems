@@ -2,7 +2,7 @@
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
-import { FeedInType } from "../../../shared/enums";
+import { GridFeedInLimitationType } from "../../../shared/enums";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
@@ -165,7 +165,7 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
             mode: ConfigurationMode.RemoveAndConfigure,
         });
 
-        if (this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION) {
+        if (this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION) {
             // ctrlGridOptimizedCharge0
             componentConfigurator.add({
                 factoryId: "Controller.Ess.GridOptimizedCharge",

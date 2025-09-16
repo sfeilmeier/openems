@@ -4,7 +4,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { environment } from "src/environments";
 
-import { FeedInType, View } from "../../../shared/enums";
+import { GridFeedInLimitationType, View } from "../../../shared/enums";
 import { SystemId } from "../../../shared/system";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
 import { SchedulerIdBehaviour } from "../../abstract-ibn";
@@ -37,7 +37,7 @@ export class Commercial30AnschlussIbn extends AbstractCommercial30Ibn {
 
     public setRequiredControllers() {
         this.requiredControllerIds = [];
-        if (this.feedInLimitation.feedInType === FeedInType.DYNAMIC_LIMITATION) {
+        if (this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION) {
             this.requiredControllerIds.push({
                 componentId: "ctrlGridOptimizedCharge0",
                 behaviour: SchedulerIdBehaviour.ALWAYS_INCLUDE,

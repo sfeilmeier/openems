@@ -112,6 +112,10 @@
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
                 </protocol-serial-numbers>
 
+                <configuration-sts-box *ngSwitchCase="view.ConfigurationStsBox" [edge]="edge" [ibn]="ibn"
+                    (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
+                </configuration-sts-box>
+
                 <completion *ngSwitchCase="view.Completion" [edge]="edge" [ibn]="ibn"
                     (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView()">
                 </completion>

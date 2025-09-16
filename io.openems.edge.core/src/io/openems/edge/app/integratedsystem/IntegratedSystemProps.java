@@ -15,7 +15,9 @@ import java.util.function.Function;
 import com.google.gson.JsonPrimitive;
 
 import io.openems.common.session.Language;
-import io.openems.edge.app.enums.FeedInType;
+import io.openems.common.utils.ArrayUtils;
+import io.openems.common.utils.JsonUtils;
+import io.openems.edge.app.enums.ExternalLimitationType;
 import io.openems.edge.app.enums.OptionsFactory;
 import io.openems.edge.app.enums.SafetyCountry;
 import io.openems.edge.core.appmanager.AbstractOpenemsApp;
@@ -49,16 +51,36 @@ public final class IntegratedSystemProps {
 	/**
 	 * Creates a {@link AppDef} for a feed in type.
 	 * 
-	 * @param exclude the {@link FeedInType FeedInTypes} to exclude
+	 * @param exclude the {@link ExternalLimitationType FeedInTypes} to exclude
 	 * 
 	 * @return the created {@link AppDef}
 	 */
-	public static final AppDef<OpenemsApp, Nameable, BundleProvider> feedInType(FeedInType... exclude) {
+	public static final AppDef<OpenemsApp, Nameable, BundleProvider> externalLimitationType(
+			ExternalLimitationType... exclude) {
 		return AppDef.copyOfGeneric(defaultDef(), def -> def //
-				.setTranslatedLabel("App.IntegratedSystem.feedInType.label") //
-				.setDefaultValue(FeedInType.DYNAMIC_LIMITATION) //
+				.setTranslatedLabel("App.IntegratedSystem.externalLimitationType.label") //
+				.setDefaultValue(ExternalLimitationType.NO_LIMITATION) //
 				.setField(JsonFormlyUtil::buildSelectFromNameable, (app, property, l, parameter, field) -> {
-					field.setOptions(OptionsFactory.of(FeedInType.class, exclude), l);
+
+					final var excludeCombinedArray = ArrayUtils.concat(exclude,
+							new ExternalLimitationType[] { ExternalLimitationType.DYNAMIC_AND_EXTERNAL_LIMITATION,
+									ExternalLimitationType.DYNAMIC_LIMITATION });
+
+					field.setOptions(OptionsFactory.of(ExternalLimitationType.class, excludeCombinedArray), l);
+				}) //
+				.valueMapper((app, property, l, parameter, props) -> {
+					final var currentValue = props.get(property.name());
+					return JsonUtils.getAsOptionalEnum(ExternalLimitationType.class, currentValue) //
+							.map(externalLimitationType -> {
+								return switch (externalLimitationType) {
+								case NO_LIMITATION, DYNAMIC_LIMITATION -> ExternalLimitationType.NO_LIMITATION;
+								case EXTERNAL_LIMITATION, DYNAMIC_AND_EXTERNAL_LIMITATION ->
+									ExternalLimitationType.EXTERNAL_LIMITATION;
+								};
+							}) //
+							.map(Enum::name) //
+							.map(JsonPrimitive::new) //
+							.orElse(null);
 				}));
 	}
 
@@ -97,8 +119,8 @@ public final class IntegratedSystemProps {
 							.setMin(0);
 					if (nameableToBeChecked != null) {
 						final var exp = Exp
-								.array(Exp.staticValue(FeedInType.DYNAMIC_LIMITATION),
-										Exp.staticValue(FeedInType.DYNAMIC_AND_EXTERNAL_LIMITATION))
+								.array(Exp.staticValue(ExternalLimitationType.DYNAMIC_LIMITATION),
+										Exp.staticValue(ExternalLimitationType.DYNAMIC_AND_EXTERNAL_LIMITATION))
 								.some(t -> t.equal(Exp.currentModelValue(nameableToBeChecked)));
 						field.onlyShowIf(additionalShowChecks.apply(exp));
 					}
