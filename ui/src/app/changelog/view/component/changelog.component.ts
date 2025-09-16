@@ -24,6 +24,17 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.9.1",
+        changes: [
+          Changelog.UI,
+          "Optimierung der Keyboardnavigation gemäß WCAG (Web Content Accessibility Guidelines)",
+          { roleIsAtLeast: Role.INSTALLER, change: "Im Inbetriebnahmeassistent ist die Auswahl für den Cos µ Festwert nun auf Werte zwischen (-)0,9 und (-)0,99 limitiert" },
+          { roleIsAtLeast: Role.INSTALLER, change: Changelog.product(Product.COMMERCIAL_50) + "Verfügbarkeit des Inbetriebnahmeassistenten" },
+          { roleIsAtLeast: Role.ADMIN, change: "GoodWe Wechselrichter & Netzdienliche Beladung: Vereinheitlichung der maximal festgelegten Netzeinspeisung in der Meta App. Bereits gesetzte Werte werden in die Meta App übernommen." },
+          { roleIsAtLeast: Role.ADMIN, change: "Verbesserungen an neuer EVSE-Architektur für Ladesäulen" },
+        ],
+      },
+      {
         version: "2025.8.2",
         changes: [
           "KACO Batteriewechselrichter: Verbesserte Darstellung von Statusmeldungen",
