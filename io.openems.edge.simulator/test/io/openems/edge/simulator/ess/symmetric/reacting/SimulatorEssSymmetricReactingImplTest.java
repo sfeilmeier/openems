@@ -4,6 +4,7 @@ import java.time.temporal.ChronoUnit;
 
 import org.junit.Test;
 
+import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.test.TestUtils;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.common.sum.GridMode;
