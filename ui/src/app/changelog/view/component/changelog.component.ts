@@ -24,6 +24,14 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.9.2",
+        changes: [
+          Changelog.product(Product.COMMERCIAL_50) + "Auslieferstart und Integration im Inbetriebnahmeassistenten",
+          Changelog.app(App.TIME_OF_USE, App.TIBBER) + "Umstellung auf 15-Minuten-Werte zum 01. Oktober 2025",
+          { roleIsAtLeast: Role.ADMIN, change: "Rundsteuerempfänger: Netzeinspeisung wird über digitale Eingänge auf 0%, 30%, 60%, oder auf maximale Netzeinspeisung reduziert" },
+        ],
+      },
+      {
         version: "2025.9.1",
         changes: [
           Changelog.UI,
