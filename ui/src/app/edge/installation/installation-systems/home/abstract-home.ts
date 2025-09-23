@@ -119,6 +119,8 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public override readonly showRundSteuerManual: boolean = true;
   public override showViewCount: boolean = false;
   public override readonly defaultNumberOfModules: number = 5;
+  public readonly parallelBoxPrefix: string = "FHP";
+  public readonly emsBoxPrefix: string | null = null;
 
   private numberOfModulesPerTower: number;
   public abstract mppt: any;
@@ -180,7 +182,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
   public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, batteryIndex: number) {
     const fields: FormlyFieldConfig[] = [];
-    const emsBoxSerialNumber: string = sessionStorage.getItem("emsBoxSerialNumber");
+    const emsBoxSerialNumber: string | null = sessionStorage.getItem("emsBoxSerialNumber")?.slice(this.emsBoxPrefix?.length) ?? null;
 
     switch (towerNr) {
       case 0:
@@ -203,6 +205,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
           templateOptions: {
             label: Category.toTranslatedString(this.emsBoxLabel, this.translate),
             required: true,
+            prefix: this.emsBoxPrefix,
             placeholder: "xxxxxxxxxx",
           },
           defaultValue: emsBoxSerialNumber,
@@ -219,7 +222,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
           templateOptions: {
             label: "Parallel Box",
             required: true,
-            prefix: "FHP",
+            prefix: this.parallelBoxPrefix,
             placeholder: "xxxxxxxxx",
           },
           validators: {
@@ -733,13 +736,14 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     const baseMode = AppCenterUtil.isAppManagerAvailable(edge) ? BaseMode.AppManager : BaseMode.UI;
 
     componentConfigurator.addInstallAppCallback(() => {
-      return AppCenterUtil.createOrUpdateApp(
+      return AppCenterUtil.updateMetaAndInstallApp(
         edge,
         websocket,
         this.appId,
         this.appAlias,
         appProperties,
-        AppCenterUtil.keyForIntegratedSystems(),
+        this.feedInLimitation.dynamicLimitationType,
+        this.feedInLimitation.maximumFeedInPower
       );
     });
 
@@ -1049,12 +1053,15 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     const isExternalLimitataion = this.feedInLimitation.feedInType === ExternalLimitationType.EXTERNAL_LIMITATION;
     const isDynamicFeedInLimitation = this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION;
 
-    if (isExternalLimitataion) {
-      batteryInverterData.push({
-        label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
-        value: this.translate.instant("General.yes"),
-      });
-    }
+    batteryInverterData.push({
+      label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE"),
+      value: isExternalLimitataion ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION") : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+    });
+
+    batteryInverterData.push({
+      label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_TYPE"),
+      value: isDynamicFeedInLimitation ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION") : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+    });
 
     if (isDynamicFeedInLimitation) {
       batteryInverterData.push({

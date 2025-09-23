@@ -282,7 +282,15 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         };
 
         componentConfigurator.addInstallAppCallback(() => {
-            return AppCenterUtil.createOrUpdateApp(edge, websocket, appId, appAlias, appProperties, AppCenterUtil.keyForIntegratedSystems());
+            return AppCenterUtil.updateMetaAndInstallApp(
+                edge,
+                websocket,
+                appId,
+                appAlias,
+                appProperties,
+                this.feedInLimitation.dynamicLimitationType,
+                this.feedInLimitation.maximumFeedInPower
+            );
         });
 
         // Send request and process components

@@ -55,7 +55,7 @@ export class ConfigurationStsBoxComponent implements OnInit {
             key: "isStsBoxAvailable",
             type: "checkbox",
             props: {
-                label: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE"),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_FIELD_LABEL"),
                 url: "assets/img/commercial/sts-box.png",
                 imagePositionToLeft: true,
 

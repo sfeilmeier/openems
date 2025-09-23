@@ -11,7 +11,7 @@ import { ExternalLimitationType, FeedInSetting, GridSetting, View } from "../../
 import { GridSettingUtils } from "../../../shared/gridsetting.utils";
 import { ComponentData, DcPv, EmsType } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
-import { System, SystemId } from "../../../shared/system";
+import { System, SystemId, SystemType } from "../../../shared/system";
 import { ViewUtils } from "../../../shared/view.utils";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
 import { AbstractHomeIbn } from "../../home/abstract-home";
@@ -42,6 +42,7 @@ export type Commercial50Gen3App = {
 export class Commercial50Gen3Ibn extends AbstractHomeIbn {
 
     public static override BASE_IMAGE_PATH = "assets/img/commercial/commercial-50-mppt/";
+    public override readonly systemType: SystemType = SystemType.COMMERCIAL;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_50_GEN_3;
     public override readonly defaultNumberOfModules: number = 2;
     public override readonly minNumberOfTowers: number = 2;
@@ -51,12 +52,15 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
     public override readonly maxNumberOfPvStrings: number = 8;
     public override readonly maxNumberOfMppt: number = 4;
     public override readonly isDoubleSocketValid: boolean = true;
+    public override readonly maxFeedInLimit: number = Number.MAX_VALUE;
     public gridSetting: GridSetting | null = null;
 
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
     public override appId: string = "App.FENECON.Commercial.50.Gen3";
     public override appAlias: string = "FENECON Commercial 50";
     public override defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.COMMERCIAL_METER;
+    public override readonly parallelBoxPrefix: string = "FCP1";
+    public override readonly emsBoxPrefix: string | null = "FEF";
 
     public override energyFlowMeter: {
         meter: Meter.GridMeterCategory;

@@ -450,18 +450,20 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
         if (isExternalLimitataion) {
             batteryInverterData.push({
-                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
-                value: this.translate.instant("General.yes"),
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE"),
+                value: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"),
             });
-        } else if (isDynamicFeedInLimitation) {
+        }
+
+        batteryInverterData.push({
+            label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_TYPE"),
+            value: isDynamicFeedInLimitation ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION") : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+        });
+
+        if (isDynamicFeedInLimitation) {
             batteryInverterData.push({
                 label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
                 value: this.feedInLimitation.maximumFeedInPower,
-            });
-        } else {
-            batteryInverterData.push({
-                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
-                value: this.translate.instant("General.yes"),
             });
         }
 
