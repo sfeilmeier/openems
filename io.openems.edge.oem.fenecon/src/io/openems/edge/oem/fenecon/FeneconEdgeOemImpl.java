@@ -5,6 +5,7 @@ import static io.openems.common.OpenemsConstants.VERSION_DEV_BRANCH;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
+import java.util.Random;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -22,10 +23,12 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 	private static final Logger LOG = LoggerFactory.getLogger(FeneconEdgeOemImpl.class);
 
 	private final String manufacturerEmsSerialNumber;
+	private final Random random;
 
 	@Activate
 	public FeneconEdgeOemImpl() {
 		this.manufacturerEmsSerialNumber = readManufacturerEmsSerialNumber();
+		this.random = new Random();
 	}
 
 	@Override
@@ -116,7 +119,8 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.FENECON.Industrial.S.ISK010", "https://fenecon.de/fenecon-industrial-s/") //
 			.put("App.FENECON.Industrial.S.ISK110", "https://fenecon.de/fenecon-industrial-s/") //
 			.put("App.FENECON.Industrial.S.ISK011", "https://fenecon.de/fenecon-industrial-s/") //
-			.put("App.TimeOfUseTariff.AncillaryCosts", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
+			.put("App.TimeOfUseTariff.AncillaryCosts",
+					"https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Awattar", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.ENTSO-E", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.GroupeE", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
@@ -226,6 +230,12 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 
 	@Override
 	public String getOpenMeteoApiKey() {
-		return "1xngdTs5XQvhKhQh";
+		String[] apiKeys = { //
+				"koAynywShAFEm8v", //
+				"4CDCv1GPZv1quBe", //
+				"Py1oBPk2zo4T9oo", //
+		};
+		int randomIndex = this.random.nextInt(apiKeys.length);
+		return apiKeys[randomIndex];
 	}
 }

@@ -459,23 +459,20 @@ export abstract class AbstractIbn {
     protocol.items = [];
 
     const feedInLimitation = this.feedInLimitation;
-    const isExternalLimitation = feedInLimitation.feedInType == ExternalLimitationType.EXTERNAL_LIMITATION;
-    const isDynamicFeedInLimitation = this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION;
+    const isExternalLimitataion = feedInLimitation.feedInType === ExternalLimitationType.EXTERNAL_LIMITATION;
+    const isDynamicFeedInLimitation = feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION;
 
-    protocol.items.push(
-      {
-        category: Category.FEED_IN_MANAGEMENT,
-        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_CONTROLLER_RECEIVER"),
-        value: isExternalLimitation ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
-      },
-      {
-        category: Category.FEED_IN_MANAGEMENT,
-        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+    protocol.items.push({
+      category: Category.FEED_IN_MANAGEMENT,
+      name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE"),
+      value: isExternalLimitataion ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION") : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+    });
 
-        value: feedInLimitation.feedInType == ExternalLimitationType.NO_LIMITATION
-          ? this.translate.instant("General.yes")
-          : this.translate.instant("General.no"),
-      });
+    protocol.items.push({
+      category: Category.FEED_IN_MANAGEMENT,
+      name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_TYPE"),
+      value: isDynamicFeedInLimitation ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION") : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+    });
 
     if (isDynamicFeedInLimitation) {
       protocol.items.push({

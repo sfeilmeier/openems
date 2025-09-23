@@ -4,7 +4,7 @@ import { AddAppInstance } from "../../settings/app/jsonrpc/addAppInstance";
 import { DeleteAppInstance } from "../../settings/app/jsonrpc/deleteAppInstance";
 import { GetAppInstances } from "../../settings/app/jsonrpc/getAppInstances";
 import { UpdateAppInstance } from "../../settings/app/jsonrpc/updateAppInstance";
-
+import { GridFeedInLimitationType } from "./enums";
 
 export class AppCenterUtil {
 
@@ -212,4 +212,50 @@ export class AppCenterUtil {
         return "0000-0000-0000-0001";
     }
 
+    /**
+     * Updates GRID_FEED_IN_LIMITATION settings in App.Core.Meta and then ensures the given app is created or updated.
+     *
+     * @param edge the edge
+     * @param websocket the websocket
+     * @param appId the appId to create or update after updating Meta
+     * @param alias the alias for the app
+     * @param properties properties for the app to create/update
+     * @param dynamicLimitationType the limitationType
+     * @param maximumFeedInPower The maximum feed in power
+     */
+    public static updateMetaAndInstallApp(
+        edge: Edge,
+        websocket: Websocket,
+        appId: string,
+        alias: string,
+        properties: {},
+        dynamicLimitationType: GridFeedInLimitationType,
+        maximumFeedInPower: number,
+    ): Promise<any> {
+        return AppCenterUtil.getAppInstances(edge, websocket, "App.Core.Meta")
+            .then(response => {
+                const instance = response?.result?.instances[0] ?? null;
+                if (instance == null) {
+                    return Promise.reject("App.Core.Meta instance not found");
+                }
+
+                // patch properties
+                instance.properties["GRID_FEED_IN_LIMITATION_TYPE"] = dynamicLimitationType;
+                instance.properties["MAXIMUM_GRID_FEED_IN_LIMIT"] = maximumFeedInPower;
+
+                return AppCenterUtil.updateApp(edge, websocket, instance.instanceId, instance.alias, {
+                    ...instance.properties,
+                });
+            })
+            .finally(() => {
+                return AppCenterUtil.createOrUpdateApp(
+                    edge,
+                    websocket,
+                    appId,
+                    alias,
+                    properties,
+                    AppCenterUtil.keyForIntegratedSystems(),
+                );
+            });
+    }
 }

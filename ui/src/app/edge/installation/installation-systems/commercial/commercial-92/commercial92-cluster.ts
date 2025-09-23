@@ -74,7 +74,15 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         const baseMode = AppCenterUtil.isAppManagerAvailable(edge) ? BaseMode.AppManager : BaseMode.UI;
 
         componentConfigurator.addInstallAppCallback(() => {
-            return AppCenterUtil.createOrUpdateApp(edge, websocket, appId, alias, appProperties, AppCenterUtil.keyForIntegratedSystems());
+            return AppCenterUtil.updateMetaAndInstallApp(
+                edge,
+                websocket,
+                appId,
+                alias,
+                appProperties,
+                this.feedInLimitation.dynamicLimitationType,
+                this.feedInLimitation.maximumFeedInPower
+            );
         });
 
         // Send request and process components

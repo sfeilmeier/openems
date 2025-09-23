@@ -56,18 +56,45 @@ export function BatteryInverterSerialNumberValidator(control: FormControl): Vali
   return /^.{16}$/.test(control.value) ? null : { "batteryInverterSerialNumber": true };
 }
 
-export function EmsBoxSerialNumberValidator(control: FormControl): ValidationErrors {
+export function EmsBoxSerialNumberValidator(control: FormControl, field: FormlyFieldConfig): ValidationErrors {
   // This validator only checks the value after the prefix, Applies for Home and Commercial but not Netztrenstelle.
-  return /^F[CEH][FS]\d{9}$/.test(control.value) ? null : { "emsBoxSerialNumber": true };
+  const value: string = control.value ?? "";
+  const prefix: string | null = field?.props?.prefix ?? null;
+
+  const DIGITS_ONLY_REGEX = /^\d{9}$/;
+  const FULL_SERIAL_REGEX = /^F[CEH][FS]\d{9}$/;
+
+  if (prefix !== null) {
+    // When a prefix is already given, we only validate the number part
+    return DIGITS_ONLY_REGEX.test(value) ? null : { emsBoxSerialNumber: true };
+  }
+
+  // When no prefix is given, expect the full serial format
+  return FULL_SERIAL_REGEX.test(value) ? null : { emsBoxSerialNumber: true };
 }
 
 export function EmsBoxNetztrennstelleSerialNumberValidator(control: FormControl): ValidationErrors {
   return /^\d{4}$/.test(control.value) ? null : { "emsBoxNetztrennstelleSerialNumber": true };
 }
 
-export function BoxSerialNumberValidator(control: FormControl): ValidationErrors {
+export function BoxSerialNumberValidator(control: FormControl, field: FormlyFieldConfig): ValidationErrors {
   // This validator only checks the value after the prefix
-  return /^\d{9}$/.test(control.value) ? null : { "boxSerialNumber": true };
+  const BoxSerialNumberRules: Record<string, RegExp> = {
+    FHP: /^\d{9}$/,
+    FCP: /^\d{9}$/,
+    FEE: /^\d{9}$/,
+    FHA: /^\d{9}$/,
+    FCP1: /^\d{8}$/,
+  };
+
+  const value: string = control.value ?? "";
+  const prefix: string | null = field?.props?.prefix ?? null;
+
+  if (prefix !== null && BoxSerialNumberRules[prefix]?.test(value)) {
+    return null;
+  }
+
+  return { boxSerialNumber: true };
 }
 
 export function BatteryAndBmsBoxSerialNumberValidator(control: FormControl): ValidationErrors {
