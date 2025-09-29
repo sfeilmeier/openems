@@ -438,16 +438,14 @@ public class GoodWeBatteryInverterImpl extends AbstractGoodWe implements GoodWeB
 		}
 	}
 
-
 	private void handleFixedPowerFactor(GoodWeType goodweType, EnableCurve fixedPowerFactorEnable,
 			FixedPowerFactor fixedPowerFactor) throws IllegalArgumentException, OpenemsNamedException {
 
 		// TODO: Add individual handling related to each GoodWeType
 		switch (goodweType) {
 		case FENECON_50K -> {
-			setWriteValueIfNotRead(this.channel(GoodWe.ChannelId.FIXED_POWER_FACTOR_V2), fixedPowerFactorEnable);
-			setWriteValueIfNotRead(this.channel(GoodWe.ChannelId.ENABLE_FIXED_POWER_FACTOR_V2),
-					fixedPowerFactor != null);
+			setWriteValueIfNotRead(this.channel(GoodWe.ChannelId.ENABLE_FIXED_POWER_FACTOR_V2), fixedPowerFactorEnable);
+			setWriteValueIfNotRead(this.channel(GoodWe.ChannelId.FIXED_POWER_FACTOR_V2), fixedPowerFactor);
 		}
 		case FENECON_FHI_10_DAH, FENECON_FHI_20_DAH, FENECON_FHI_29_9_DAH, FENECON_GEN2_10K, FENECON_GEN2_15K,
 				FENECON_GEN2_6K, GOODWE_10K_BT, GOODWE_10K_ET, GOODWE_5K_BT, GOODWE_5K_ET, GOODWE_8K_BT,
@@ -705,13 +703,16 @@ public class GoodWeBatteryInverterImpl extends AbstractGoodWe implements GoodWeB
 	}
 
 	protected static Integer calculateSurplusPower(BatteryData battery, Integer productionPower, int maxDcCurrent) {
-		// Is DC Charge Current available?
-		if (battery.chargeMaxCurrent == null || battery.chargeMaxCurrent >= maxDcCurrent) {
-			return null;
-		}
+		if (battery.chargeMaxCurrent == null /* Charge Max Current is not available */
+				|| battery.chargeMaxCurrent >= maxDcCurrent /* Charge Max Current is higher than inverter limit */
+				|| battery.chargeMaxCurrent < 0 /* Battery is in Force-Discharge mode */
 
-		// Is DC PV Production available?
-		if (productionPower == null || productionPower <= 0) {
+				|| battery.voltage == null /* Battery Voltage is not available */
+				|| battery.voltage < 0 /* Battery Voltage is negative */
+
+				|| productionPower == null /* Production Power is not available */
+				|| productionPower <= 0 /* Production Power is zero or negative */
+		) {
 			return null;
 		}
 
@@ -736,7 +737,7 @@ public class GoodWeBatteryInverterImpl extends AbstractGoodWe implements GoodWeB
 
 		// Calculate ActivePower, Energy and Max-AC-Power.
 		this.updatePowerAndEnergyChannels(battery.getSoc().get(), battery.getCurrent().get());
-		this.calculateMaxAcPower(this.getMaxApparentPower().orElse(0));
+		this.handleMaxAcPower(this.getMaxApparentPower().orElse(0));
 
 		this.handleGridFeed(this.config, this.meta.getGridFeedInLimitationType().asEnum());
 
@@ -783,7 +784,7 @@ public class GoodWeBatteryInverterImpl extends AbstractGoodWe implements GoodWeB
 		var enableFeedInLimit = limitType == GridFeedInLimitationType.DYNAMIC_LIMITATION;
 		var gridFeedInLimit = this.meta.getMaximumGridFeedInLimit();
 
-		if (this.rcr != null && this.rcr.isEnabled()) {
+		if (this.rcr != null && this.rcr.isEnabled() && this.getMaxApparentPower().isDefined()) {
 			gridFeedInLimit = this.rcr.getGridFeedInValue(this.getMaxApparentPower().get());
 		}
 

@@ -36,3 +36,12 @@ export type dcForm = {
 };
 
 export type EmsType = "feh013" | "fho011" | "fec011" | "fec013" | null;
+
+export enum ExtensionBoxPrefix {
+    FHP = "FHP",
+    FCP = "FCP",
+    FEE = "FEE",
+    FHA = "FHA",
+    FCP1 = "FCP1",
+    FHE = "FHE",
+}

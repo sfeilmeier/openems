@@ -24,6 +24,14 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.9.3",
+        changes: [
+          "FENECON Home: Verbesserte Leistungsvorgaben in den Grenzbereichen für Be-/Entladung",
+          Changelog.app(App.EVCS_AC) + "Fehlerbehebung bei Verbrauchswidget: Wallboxen wurden doppelt angezeigt",
+          { roleIsAtLeast: Role.INSTALLER, change: "Inbetriebnahmeassistent: Fehlerbehebung der Seriennummernvalidierung bei Extension Box" },
+        ],
+      },
+      {
         version: "2025.9.2",
         changes: [
           Changelog.product(Product.COMMERCIAL_50) + "Auslieferstart und Integration im Inbetriebnahmeassistenten",
