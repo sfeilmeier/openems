@@ -1,5 +1,5 @@
 <ion-content>
-  <ng-container *ngIf="formGroup">
+  @if (formGroup) {
     <ion-grid>
       <ion-row class="full_width ion-justify-content-center ion-padding-top">
         <ion-col sizeLg="6" sizeMd="10" sizeSm="12">
@@ -13,9 +13,7 @@
             <oe-flat-widget-line style="font-weight: bolder;" leftColumnWidth="100"
               [name]="'SETTINGS.ENERGY_JOURNEY.ELECTRICITY_PRICE_VALUE_TEXT' | translate">
             </oe-flat-widget-line>
-
             <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
-
             <form [formGroup]="formGroup">
               <ion-item class="ion-no-padding" lines="inset">
                 <ion-label>Cent/kWh</ion-label>
@@ -35,7 +33,6 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-
-  </ng-container>
+  }
 
 </ion-content>
