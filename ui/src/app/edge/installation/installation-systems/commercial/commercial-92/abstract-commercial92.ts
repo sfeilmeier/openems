@@ -10,6 +10,7 @@ import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
 import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View } from "../../../shared/enums";
+import { ExtensionBoxPrefix } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
 import { ViewUtils } from "../../../shared/view.utils";
@@ -198,7 +199,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                     templateOptions: {
                         label: "Extension Box",
                         required: true,
-                        prefix: "FEE",
+                        prefix: ExtensionBoxPrefix.FEE,
                         placeholder: "xxxxxxxxx",
                     },
                     validators: {

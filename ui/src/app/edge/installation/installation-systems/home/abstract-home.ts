@@ -14,7 +14,7 @@ import { Category } from "../../shared/category";
 import { ExternalLimitationType, FeedInSetting, GridFeedInLimitationType, View, WebLinks } from "../../shared/enums";
 import { FeedInSettingUtils } from "../../shared/feedinsetting.utils";
 import { IbnUtils } from "../../shared/ibn.utils";
-import { ComponentData, DcPv, EmsType } from "../../shared/ibndatatypes";
+import { ComponentData, DcPv, EmsType, ExtensionBoxPrefix } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
 import { FEED_IN_POWER_FACTOR_OPTIONS } from "../../shared/options";
 import { SystemId, SystemType } from "../../shared/system";
@@ -119,7 +119,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public override readonly showRundSteuerManual: boolean = true;
   public override showViewCount: boolean = false;
   public override readonly defaultNumberOfModules: number = 5;
-  public readonly parallelBoxPrefix: string = "FHP";
+  public readonly parallelBoxPrefix: string = ExtensionBoxPrefix.FHP;
   public readonly emsBoxPrefix: string | null = null;
 
   private numberOfModulesPerTower: number;
@@ -238,7 +238,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
           templateOptions: {
             label: "Extension Box",
             required: true,
-            prefix: "FHE",
+            prefix: ExtensionBoxPrefix.FHE,
             placeholder: "xxxxxxxxx",
           },
           validators: {

@@ -9,7 +9,7 @@ import { Country } from "src/app/shared/type/country";
 import { Category } from "../../../shared/category";
 import { ExternalLimitationType, FeedInSetting, GridSetting, View } from "../../../shared/enums";
 import { GridSettingUtils } from "../../../shared/gridsetting.utils";
-import { ComponentData, DcPv, EmsType } from "../../../shared/ibndatatypes";
+import { ComponentData, DcPv, EmsType, ExtensionBoxPrefix } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
 import { System, SystemId, SystemType } from "../../../shared/system";
 import { ViewUtils } from "../../../shared/view.utils";
@@ -59,7 +59,7 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
     public override appId: string = "App.FENECON.Commercial.50.Gen3";
     public override appAlias: string = "FENECON Commercial 50";
     public override defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.COMMERCIAL_METER;
-    public override readonly parallelBoxPrefix: string = "FCP1";
+    public override readonly parallelBoxPrefix: string = ExtensionBoxPrefix.FCP1;
     public override readonly emsBoxPrefix: string | null = "FEF";
 
     public override energyFlowMeter: {

@@ -9,6 +9,7 @@ import { OeSystemUpdateComponent } from "../settings/system/oe-system-update.com
 import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { InstallationViewComponent } from "./installation-view/installation-view.component";
 import { InstallationComponent } from "./installation.component";
+import { ExtensionBoxPrefix } from "./shared/ibndatatypes";
 import { CompletionComponent } from "./views/completion/completion.component";
 import { ConfigurationCommercialModbuBridgeComponent } from "./views/configuration-commercial-modbusbridge/configuration-commercial-modbusbridge";
 import { ConfigurationEmergencyReserveComponent } from "./views/configuration-emergency-reserve/configuration-emergency-reserve.component";
@@ -80,11 +81,12 @@ export function EmsBoxNetztrennstelleSerialNumberValidator(control: FormControl)
 export function BoxSerialNumberValidator(control: FormControl, field: FormlyFieldConfig): ValidationErrors {
   // This validator only checks the value after the prefix
   const BoxSerialNumberRules: Record<string, RegExp> = {
-    FHP: /^\d{9}$/,
-    FCP: /^\d{9}$/,
-    FEE: /^\d{9}$/,
-    FHA: /^\d{9}$/,
-    FCP1: /^\d{8}$/,
+    [ExtensionBoxPrefix.FHP]: /^\d{9}$/,
+    [ExtensionBoxPrefix.FCP]: /^\d{9}$/,
+    [ExtensionBoxPrefix.FEE]: /^\d{9}$/,
+    [ExtensionBoxPrefix.FHA]: /^\d{9}$/,
+    [ExtensionBoxPrefix.FCP1]: /^\d{8}$/,
+    [ExtensionBoxPrefix.FHE]: /^\d{9}$/,
   };
 
   const value: string = control.value ?? "";
