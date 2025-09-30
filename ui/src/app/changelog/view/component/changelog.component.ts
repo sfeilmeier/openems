@@ -24,6 +24,13 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.9.4",
+        changes: [
+          "Einführung der Funktion \"Dynamischer Rundsteuerempfänger\" über die FEMS-Anschlussbox für Home 20, 30 & Commercial 50. Ermöglicht die Abregelung am Netzanschlusspunkt statt direkt an der Erzeugungsanlage",
+          "FEMS App Zeitvariable Netzentgelte: öffentliche Verfügbarkeit",
+        ],
+      },
+      {
         version: "2025.9.3",
         changes: [
           "FENECON Home: Verbesserte Leistungsvorgaben in den Grenzbereichen für Be-/Entladung",
