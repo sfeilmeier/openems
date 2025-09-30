@@ -1,39 +1,40 @@
 <installation-view iconName="clipboard-outline" header="{{ 'INSTALLATION.PROTOCOL_CHECKLIST_PAGE_TITLE' | translate }}"
-    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isNextDisabled]="isNextDisabled"
-    [isWaiting]="isWaiting">
+  (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isNextDisabled]="isNextDisabled"
+  [isWaiting]="isWaiting">
 
-    <ng-container *ngFor="let formInstance of forms; let i = index">
-        <ion-item *ngIf="ibn.isClusterConfiguration" button (click)="toggleExpansion(i)">
-            <ion-label>{{ 'INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVES_TITLE' | translate:{ number: i + 1 }
-                }}</ion-label>
-            <ion-icon [name]="expandedSlaveIndex === i ? 'chevron-down-outline' : 'chevron-forward-outline'"
-                slot="end"></ion-icon>
+  @for (formInstance of forms; track formInstance; let i = $index) {
+    @if (ibn.isClusterConfiguration) {
+      <ion-item button (click)="toggleExpansion(i)">
+        <ion-label>{{ 'INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVES_TITLE' | translate:{ number: i + 1 }
+        }}</ion-label>
+        <ion-icon [name]="expandedSlaveIndex === i ? 'chevron-down-outline' : 'chevron-forward-outline'"
+        slot="end"></ion-icon>
+      </ion-item>
+    }
+    @if (expandedSlaveIndex === i) {
+      <div>
+        <formly-form [form]="forms[i]" [fields]="fields[i]" [model]="models[i]"></formly-form>
+        <ion-row class="ion-padding">
+          <ion-col>
+            <ion-icon color="primary" name="information-outline" size="large"></ion-icon>
+          </ion-col>
+          <ion-col size="11">
+            <div>
+              {{ 'INSTALLATION.PROTOCOL_CHECKLIST.TIMEOUT_NOTE' | translate:{timeoutInMinutes:
+              timeoutInMinutes} }}
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-item lines="none">
+          <ion-button (click)="startConfiguration(i)"
+            [disabled]="!areAllFieldsChecked(i) || isStartConfigurationDisabled[i]" slot="end">
+            <ion-label>{{ slavesConfiguring[i] ? ('INSTALLATION.CONFIGURATION_EXECUTE.WAITING' | translate) :
+            ('INSTALLATION.CONFIGURATION_EXECUTE.START' | translate) }}</ion-label>
+            <ion-icon name="play-outline" slot="start"></ion-icon>
+          </ion-button>
         </ion-item>
-
-        <div *ngIf="expandedSlaveIndex === i">
-            <formly-form [form]="forms[i]" [fields]="fields[i]" [model]="models[i]"></formly-form>
-
-            <ion-row class="ion-padding">
-                <ion-col>
-                    <ion-icon color="primary" name="information-outline" size="large"></ion-icon>
-                </ion-col>
-                <ion-col size="11">
-                    <div>
-                        {{ 'INSTALLATION.PROTOCOL_CHECKLIST.TIMEOUT_NOTE' | translate:{timeoutInMinutes:
-                        timeoutInMinutes} }}
-                    </div>
-                </ion-col>
-            </ion-row>
-
-            <ion-item lines="none">
-                <ion-button (click)="startConfiguration(i)"
-                    [disabled]="!areAllFieldsChecked(i) || isStartConfigurationDisabled[i]" slot="end">
-                    <ion-label>{{ slavesConfiguring[i] ? ('INSTALLATION.CONFIGURATION_EXECUTE.WAITING' | translate) :
-                        ('INSTALLATION.CONFIGURATION_EXECUTE.START' | translate) }}</ion-label>
-                    <ion-icon name="play-outline" slot="start"></ion-icon>
-                </ion-button>
-            </ion-item>
-        </div>
-    </ng-container>
+      </div>
+    }
+  }
 
 </installation-view>

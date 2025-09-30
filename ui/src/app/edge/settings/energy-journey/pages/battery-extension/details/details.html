@@ -1,76 +1,133 @@
-<ion-card *ngIf="tableData">
-  <ion-card-content>
-    <ion-grid class="desktop-view" *ngIf="!isSmartPhoneResolution, else smartPhoneResolution">
-      <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5); color: var(--ion-color-text)">
-        <ion-col>
-          &nbsp;
-        </ion-col>
-        <ion-col *ngFor="let numberOfModulesDiff of tableData.numberOfModulesDiff">
-          {{numberOfModulesDiff}}
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          {{"SETTINGS.ENERGY_JOURNEY.SAVINGS_LABEL" | translate}}
-        </ion-col>
-        <ion-col *ngFor="let gridSaving of tableData.gridSaving; let i = index">
-          {{gridSaving}}
-        </ion-col>
-      </ion-row>
-
-      <ion-row style="background-color: var(--ion-color-light);">
-        <ion-col>
-          {{"SETTINGS.ENERGY_JOURNEY.CHARGE_DISCHARGE_CAPACITY" | translate}}
-          <ion-row>
-            {{"SETTINGS.ENERGY_JOURNEY.TOTAL" | translate}}
-          </ion-row>
-        </ion-col>
-        <ion-col class="ion-no-padding"
-          *ngFor="let maxChargeDischargePowerIncrease of tableData.maxChargeDischargePowerIncrease; let i = index">
-
-          @if(maxChargeDischargePowerIncrease < 0){ <span
-            [title]="'SETTINGS.ENERGY_JOURNEY.DECREASE_IN_PEAK_POWER_TOOLTIP' | translate">
-            {{maxChargeDischargePowerIncrease | converter: FORMAT_TO_INCREASE}}
-            </span>
-            }@else {
-            {{maxChargeDischargePowerIncrease | converter: FORMAT_TO_INCREASE}}
+@if (tableData) {
+  <ion-card>
+    <ion-card-content>
+      @if (!isSmartPhoneResolution) {
+        <ion-grid class="desktop-view">
+          <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5); color: var(--ion-color-text)">
+            <ion-col>
+              &nbsp;
+            </ion-col>
+            @for (numberOfModulesDiff of tableData.numberOfModulesDiff; track numberOfModulesDiff) {
+              <ion-col>
+                {{numberOfModulesDiff}}
+              </ion-col>
             }
-            <br>
-            {{tableData.totalChargeDischargePower[i]}}
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          {{"SETTINGS.ENERGY_JOURNEY.TOTAL_CAPACITY" | translate}}
-          <ion-row>
-            {{"SETTINGS.ENERGY_JOURNEY.TOTAL" | translate}}
           </ion-row>
-        </ion-col>
-        <ion-col *ngFor="let capacityIncrease of tableData.capacityIncrease; let i = index">
-          {{capacityIncrease}}
-          <br>
-          {{tableData.totalCapacity[i]}}
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <oe-flat-widget-horizontal-line></oe-flat-widget-horizontal-line>
-
-    <ion-row>
-      {{"SETTINGS.ENERGY_JOURNEY.POTENTIAL_SAVINGS_NOTE" | translate}}
-    </ion-row>
-    <ion-row>
-      <ion-text style="font-size: smaller; padding-left: 2%;">
-        {{"SETTINGS.ENERGY_JOURNEY.POTENTIAL_SAVINGS_CALCULATION_NOTE" | translate}}
-      </ion-text>
-    </ion-row>
-
-    <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
-
-    <ng-container *ngIf="product">
-
-      <!-- Avoids line break on building link -->
+          <ion-row>
+            <ion-col>
+              {{"SETTINGS.ENERGY_JOURNEY.SAVINGS_LABEL" | translate}}
+            </ion-col>
+            @for (gridSaving of tableData.gridSaving; track gridSaving; let i = $index) {
+              <ion-col>
+                {{gridSaving}}
+              </ion-col>
+            }
+          </ion-row>
+          <ion-row style="background-color: var(--ion-color-light);">
+            <ion-col>
+              {{"SETTINGS.ENERGY_JOURNEY.CHARGE_DISCHARGE_CAPACITY" | translate}}
+              <ion-row>
+                {{"SETTINGS.ENERGY_JOURNEY.TOTAL" | translate}}
+              </ion-row>
+            </ion-col>
+            @for (maxChargeDischargePowerIncrease of tableData.maxChargeDischargePowerIncrease; track maxChargeDischargePowerIncrease; let i = $index) {
+              <ion-col class="ion-no-padding"
+                >
+                @if(maxChargeDischargePowerIncrease < 0){ <span
+                  [title]="'SETTINGS.ENERGY_JOURNEY.DECREASE_IN_PEAK_POWER_TOOLTIP' | translate">
+                  {{maxChargeDischargePowerIncrease | converter: FORMAT_TO_INCREASE}}
+                </span>
+                }@else {
+                {{maxChargeDischargePowerIncrease | converter: FORMAT_TO_INCREASE}}
+              }
+              <br>
+                {{tableData.totalChargeDischargePower[i]}}
+              </ion-col>
+            }
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              {{"SETTINGS.ENERGY_JOURNEY.TOTAL_CAPACITY" | translate}}
+              <ion-row>
+                {{"SETTINGS.ENERGY_JOURNEY.TOTAL" | translate}}
+              </ion-row>
+            </ion-col>
+            @for (capacityIncrease of tableData.capacityIncrease; track capacityIncrease; let i = $index) {
+              <ion-col>
+                {{capacityIncrease}}
+                <br>
+                  {{tableData.totalCapacity[i]}}
+                </ion-col>
+              }
+            </ion-row>
+          </ion-grid>
+        } @else {
+          <ion-grid class="smartPhone-view">
+            <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5)">
+              <ion-col>
+                {{"SETTINGS.ENERGY_JOURNEY.SAVINGS_LABEL" | translate}}
+              </ion-col>
+            </ion-row>
+            @for (numberOfModulesDiff of tableData.numberOfModulesDiff; track numberOfModulesDiff; let i = $index) {
+              <ion-row>
+                <ion-col size="4">
+                  {{numberOfModulesDiff}}
+                </ion-col>
+                <ion-col>
+                  {{tableData.gridSaving[i]}}
+                </ion-col>
+              </ion-row>
+            }
+            <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5);margin-top: 5%;">
+              <ion-col>
+                {{"SETTINGS.ENERGY_JOURNEY.CHARGE_DISCHARGE_CAPACITY" | translate}}
+                <br>
+                  {{"SETTINGS.ENERGY_JOURNEY.TOTAL" | translate}}
+                </ion-col>
+              </ion-row>
+              @for (numberOfModulesDiff of tableData.numberOfModulesDiff; track numberOfModulesDiff; let i = $index) {
+                <ion-row>
+                  <ion-col size="4">
+                    {{numberOfModulesDiff}}
+                  </ion-col>
+                  <ion-col>
+                    {{tableData.maxChargeDischargePowerIncrease[i]}}
+                    {{tableData.totalChargeDischargePower[i]}}
+                  </ion-col>
+                </ion-row>
+              }
+              <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5); margin-top: 5%;">
+                <ion-col>
+                  {{"SETTINGS.ENERGY_JOURNEY.TOTAL_CAPACITY" | translate}}
+                  <br>
+                    {{"SETTINGS.ENERGY_JOURNEY.TOTAL" | translate}}
+                  </ion-col>
+                </ion-row>
+                @for (numberOfModulesDiff of tableData.numberOfModulesDiff; track numberOfModulesDiff; let i = $index) {
+                  <ion-row>
+                    <ion-col size="4">
+                      {{numberOfModulesDiff}}
+                    </ion-col>
+                    <ion-col>
+                      {{tableData.capacityIncrease[i]}}
+                      {{tableData.totalCapacity[i]}}
+                    </ion-col>
+                  </ion-row>
+                }
+              </ion-grid>
+            }
+            <oe-flat-widget-horizontal-line></oe-flat-widget-horizontal-line>
+            <ion-row>
+              {{"SETTINGS.ENERGY_JOURNEY.POTENTIAL_SAVINGS_NOTE" | translate}}
+            </ion-row>
+            <ion-row>
+              <ion-text style="font-size: smaller; padding-left: 2%;">
+                {{"SETTINGS.ENERGY_JOURNEY.POTENTIAL_SAVINGS_CALCULATION_NOTE" | translate}}
+              </ion-text>
+            </ion-row>
+            <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
+            @if (product) {
+              <!-- Avoids line break on building link -->
       <ion-row [innerHTML]="`<span style='display: inherit'>` +  ('SETTINGS.ENERGY_JOURNEY.CHARGE_DISCHARGE_POWER_NOTE' | translate: {
       productName: product.name,
         productLink: product.link,
@@ -82,58 +139,9 @@
         <b>{{"SETTINGS.ENERGY_JOURNEY.DISCLAIMER" | translate}}</b>
         <hr>
         {{"SETTINGS.ENERGY_JOURNEY.DISCLAIMER_TEXT" | translate}}
-      </ion-row>
-    </ng-container>
-  </ion-card-content>
-</ion-card>
+              </ion-row>
+            }
+          </ion-card-content>
+        </ion-card>
+      }
 
-<ng-template #smartPhoneResolution>
-  <ion-grid class="smartPhone-view">
-    <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5)">
-      <ion-col>
-        {{"SETTINGS.ENERGY_JOURNEY.SAVINGS_LABEL" | translate}}
-      </ion-col>
-    </ion-row>
-    <ion-row *ngFor="let numberOfModulesDiff of tableData.numberOfModulesDiff; let i = index">
-      <ion-col size="4">
-        {{numberOfModulesDiff}}
-      </ion-col>
-      <ion-col>
-        {{tableData.gridSaving[i]}}
-      </ion-col>
-    </ion-row>
-
-    <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5);margin-top: 5%;">
-      <ion-col>
-        {{"SETTINGS.ENERGY_JOURNEY.CHARGE_DISCHARGE_CAPACITY" | translate}}
-        <br>
-        {{"SETTINGS.ENERGY_JOURNEY.TOTAL" | translate}}
-      </ion-col>
-    </ion-row>
-    <ion-row *ngFor="let numberOfModulesDiff of tableData.numberOfModulesDiff; let i = index">
-      <ion-col size="4">
-        {{numberOfModulesDiff}}
-      </ion-col>
-      <ion-col>
-        {{tableData.maxChargeDischargePowerIncrease[i]}}
-        {{tableData.totalChargeDischargePower[i]}}
-      </ion-col>
-    </ion-row>
-    <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5); margin-top: 5%;">
-      <ion-col>
-        {{"SETTINGS.ENERGY_JOURNEY.TOTAL_CAPACITY" | translate}}
-        <br>
-        {{"SETTINGS.ENERGY_JOURNEY.TOTAL" | translate}}
-      </ion-col>
-    </ion-row>
-    <ion-row *ngFor="let numberOfModulesDiff of tableData.numberOfModulesDiff; let i = index">
-      <ion-col size="4">
-        {{numberOfModulesDiff}}
-      </ion-col>
-      <ion-col>
-        {{tableData.capacityIncrease[i]}}
-        {{tableData.totalCapacity[i]}}
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ng-template>

@@ -1,71 +1,70 @@
 <installation-view iconName="clipboard-outline"
-    header="{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SERIAL_NUMBER' | translate }}"
-    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isWaiting]="isWaiting">
+  header="{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SERIAL_NUMBER' | translate }}"
+  (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isWaiting]="isWaiting">
 
-    <ngx-spinner [name]="spinnerId"></ngx-spinner>
+  <ngx-spinner [name]="spinnerId"></ngx-spinner>
 
-    <ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-item lines="full">
+        <ion-label>
+          <ion-card-title>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SYSTEM_SETUP' | translate }}
+          </ion-card-title>
+        </ion-label>
+      </ion-item>
+    </ion-card-header>
+    @for (batteryForm of batterySettingsForms; track batteryForm; let i = $index) {
+      @if (batterySettingsForms.length > 1) {
         <ion-card-header>
-            <ion-item lines="full">
-                <ion-label>
-                    <ion-card-title>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SYSTEM_SETUP' | translate }}
-                    </ion-card-title>
-                </ion-label>
-            </ion-item>
+          <ion-item lines="none">
+            <ion-card-subtitle>Slave {{ i + 1 }}
+            </ion-card-subtitle>
+          </ion-item>
         </ion-card-header>
-        <ng-container *ngFor="let batteryForm of batterySettingsForms; let i = index">
-            <ion-card-header *ngIf="batterySettingsForms.length > 1">
-                <ion-item lines="none">
-                    <ion-card-subtitle>Slave {{ i + 1 }}
-                    </ion-card-subtitle>
-                </ion-item>
-            </ion-card-header>
-            <ion-card-content>
-                <formly-form [form]=" batteryForm.formGroup" [fields]="batteryForm.fields"
-                    [model]="batteryForm.model"></formly-form>
-            </ion-card-content>
-        </ng-container>
-        <ion-item>
-            <ion-button (click)="saveSettings()">
-                <ion-label>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.CONFIRM' | translate }}</ion-label>
-            </ion-button>
-        </ion-item>
+      }
+      <ion-card-content>
+        <formly-form [form]=" batteryForm.formGroup" [fields]="batteryForm.fields"
+        [model]="batteryForm.model"></formly-form>
+      </ion-card-content>
+    }
+    <ion-item>
+      <ion-button (click)="saveSettings()">
+        <ion-label>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.CONFIRM' | translate }}</ion-label>
+      </ion-button>
+    </ion-item>
+  </ion-card>
+
+  @if (!isWaiting) {
+    <ion-card>
+      <ion-card-content>
+        <ion-text>{{'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SETUP_NOTE' | translate
+        }}</ion-text>
+        <ion-card-subtitle class="ion-font-weight-bolder ion-padding-top">
+          {{'INSTALLATION.PRE_INSTALLATION.NOTE' | translate}}
+        </ion-card-subtitle>
+        <ion-text style="white-space: pre-line;"
+          [innerHTML]="'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.REFRESH_NOTE' | translate">
+        </ion-text>
+      </ion-card-content>
     </ion-card>
-
-    <ng-container *ngIf="!isWaiting">
-        <ion-card>
-            <ion-card-content>
-                <ion-text>{{'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SETUP_NOTE' | translate
-                    }}</ion-text>
-
-                <ion-card-subtitle class="ion-font-weight-bolder ion-padding-top">
-                    {{'INSTALLATION.PRE_INSTALLATION.NOTE' | translate}}
-                </ion-card-subtitle>
-
-                <ion-text style="white-space: pre-line;"
-                    [innerHTML]="'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.REFRESH_NOTE' | translate">
-                </ion-text>
-
-            </ion-card-content>
-        </ion-card>
-
-        <ng-container *ngFor="let form of forms, let i = index">
-            <ion-card>
-                <ion-card-header>
-                    <ion-item>
-                        <ion-card-title>{{form.header}}</ion-card-title>
-                    </ion-item>
-                </ion-card-header>
-                <ion-card-content>
-                    <formly-form [form]="form.formGroup" [fields]="form.fieldSettings" [model]="form.model">
-                    </formly-form>
-                </ion-card-content>
-            </ion-card>
-        </ng-container>
-
-        <ion-card *ngIf="!isCommercial92">
-            <ion-card-content>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NEXT_BUTTON_DESCRIPTION' | translate }}
-            </ion-card-content>
-        </ion-card>
-    </ng-container>
+    @for (form of forms; track form; let i = $index) {
+      <ion-card>
+        <ion-card-header>
+          <ion-item>
+            <ion-card-title>{{form.header}}</ion-card-title>
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+          <formly-form [form]="form.formGroup" [fields]="form.fieldSettings" [model]="form.model">
+          </formly-form>
+        </ion-card-content>
+      </ion-card>
+    }
+    @if (!isCommercial92) {
+      <ion-card>
+        <ion-card-content>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NEXT_BUTTON_DESCRIPTION' | translate }}
+        </ion-card-content>
+      </ion-card>
+    }
+  }
 </installation-view>

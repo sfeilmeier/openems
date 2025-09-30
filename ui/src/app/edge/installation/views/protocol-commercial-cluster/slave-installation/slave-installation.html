@@ -1,74 +1,84 @@
 <installation-view iconName="settings-outline"
-    header="{{ 'INSTALLATION.CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION_TITLE' | translate }}"
-    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isNextDisabled]="isNextDisabled">
+  header="{{ 'INSTALLATION.CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION_TITLE' | translate }}"
+  (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isNextDisabled]="isNextDisabled">
 
-    <ng-container *ngFor="let state of slaveStates; let index = index">
-        <ion-card>
-            <ion-row>
-                <ion-col>
-                    <ion-card-header>
-                        <ion-card-title>
-                            {{ 'INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVES_TITLE' | translate: { number: index + 1
-                            } }}
-                        </ion-card-title>
-                    </ion-card-header>
-                </ion-col>
-                <ion-col style="align-content: center;">
-                    <ion-item lines="none">
-                        <span>Status: {{ state.displayLabel }}</span>
-                        <ion-icon [name]="state.connected ? 'checkmark-circle-outline' : 'alert-circle-outline'"
-                            [color]="state.connected ? 'success' : 'danger'"></ion-icon>
-                        <ion-button *ngIf="!state.connected" size="small" button (click)="requestSlaveStatuses()">
-                            <ion-icon name="refresh-outline"></ion-icon>
-                        </ion-button>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row class="ion-justify-content-center ion-align-items-center"
-                *ngIf="state.connected && (state.configuring === null || (state.configuring === false && state.configurationFailed))">
-                <ion-col class="ion-text-center">
-                    <oe-setup-key-input [placeholder]="'XXXX-XXXX-XXXX-XXXX'" (submitEvent)="state.setupKey = $event">
-                    </oe-setup-key-input>
-                </ion-col>
-                <ion-col>
-                    <ion-button [disabled]="state.configuring" (click)="installSlave(index)">
-                        {{'General.INSTALL'| translate}}
-                    </ion-button>
-                </ion-col>
-            </ion-row>
-            <ion-row
-                *ngIf="state.configuring && !state.updateFinished && state.executeSystemUpdate?.systemUpdateState?.running">
-                <ion-col size="8">
-                    <!-- Update is running -->
-                    <ion-item lines="none">
-                        <ion-label>{{'SETTINGS.SYSTEM_UPDATE.UPDATE_TIME'| translate}}
-                        </ion-label>
-                    </ion-item>
-                    <ion-item lines="none">
-                        <oe-flat-widget-percentagebar [value]="state.percentCompleted"></oe-flat-widget-percentagebar>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ngx-spinner [name]="spinnerId"></ngx-spinner>
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="!state.validKey" class="ion-justify-content-center">
-                <ion-card-content>
-                    <ion-card-subtitle
-                        style="color: var(--ion-color-warning); font-weight: bold;">{{'INSTALLATION.PRE_INSTALLATION.NOTE'
-                        | translate}}</ion-card-subtitle>
-                    <ion-text color="dark">
-                        {{ 'INSTALLATION.PRE_INSTALLATION.WRONG_KEY_NOTE' | translate }}
-                    </ion-text>
-                </ion-card-content>
-            </ion-row>
-            <ion-row *ngIf="state.logMessage as message" class="ion-justify-content-center">
-                <ion-card-content>
-                    <ion-text color="dark">
-                        {{ message }}
-                    </ion-text>
-                </ion-card-content>
-            </ion-row>
-        </ion-card>
-    </ng-container>
+  @for (state of slaveStates; track state; let index = $index) {
+    <ion-card>
+      <ion-row>
+        <ion-col>
+          <ion-card-header>
+            <ion-card-title>
+              {{ 'INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVES_TITLE' | translate: { number: index + 1
+              } }}
+            </ion-card-title>
+          </ion-card-header>
+        </ion-col>
+        <ion-col style="align-content: center;">
+          <ion-item lines="none">
+            <span>Status: {{ state.displayLabel }}</span>
+            <ion-icon [name]="state.connected ? 'checkmark-circle-outline' : 'alert-circle-outline'"
+            [color]="state.connected ? 'success' : 'danger'"></ion-icon>
+            @if (!state.connected) {
+              <ion-button size="small" button (click)="requestSlaveStatuses()">
+                <ion-icon name="refresh-outline"></ion-icon>
+              </ion-button>
+            }
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      @if (state.connected && (state.configuring === null || (state.configuring === false && state.configurationFailed))) {
+        <ion-row class="ion-justify-content-center ion-align-items-center"
+          >
+          <ion-col class="ion-text-center">
+            <oe-setup-key-input [placeholder]="'XXXX-XXXX-XXXX-XXXX'" (submitEvent)="state.setupKey = $event">
+            </oe-setup-key-input>
+          </ion-col>
+          <ion-col>
+            <ion-button [disabled]="state.configuring" (click)="installSlave(index)">
+              {{'General.INSTALL'| translate}}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      }
+      @if (state.configuring && !state.updateFinished && state.executeSystemUpdate?.systemUpdateState?.running) {
+        <ion-row
+          >
+          <ion-col size="8">
+            <!-- Update is running -->
+            <ion-item lines="none">
+              <ion-label>{{'SETTINGS.SYSTEM_UPDATE.UPDATE_TIME'| translate}}
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <oe-flat-widget-percentagebar [value]="state.percentCompleted"></oe-flat-widget-percentagebar>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ngx-spinner [name]="spinnerId"></ngx-spinner>
+          </ion-col>
+        </ion-row>
+      }
+      @if (!state.validKey) {
+        <ion-row class="ion-justify-content-center">
+          <ion-card-content>
+            <ion-card-subtitle
+              style="color: var(--ion-color-warning); font-weight: bold;">{{'INSTALLATION.PRE_INSTALLATION.NOTE'
+            | translate}}</ion-card-subtitle>
+            <ion-text color="dark">
+              {{ 'INSTALLATION.PRE_INSTALLATION.WRONG_KEY_NOTE' | translate }}
+            </ion-text>
+          </ion-card-content>
+        </ion-row>
+      }
+      @if (state.logMessage; as message) {
+        <ion-row class="ion-justify-content-center">
+          <ion-card-content>
+            <ion-text color="dark">
+              {{ message }}
+            </ion-text>
+          </ion-card-content>
+        </ion-row>
+      }
+    </ion-card>
+  }
 </installation-view>

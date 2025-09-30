@@ -1,13 +1,15 @@
 <installation-view iconName="settings-outline" header="{{'INSTALLATION.CONFIGURATION_SYSTEM.TITLE'|translate}}"
-    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()">
+  (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()">
 
-    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
 
-    <ion-item *ngIf="showManual">
-        <ion-button (click)="openManual()">
-            <ion-label>{{ 'INSTALLATION.CONFIGURATION_SYSTEM.OPEN_INSTRUCTIONS' | translate}}</ion-label>
-            <ion-icon name="open-outline" slot="start"></ion-icon>
-        </ion-button>
+  @if (showManual) {
+    <ion-item>
+      <ion-button (click)="openManual()">
+        <ion-label>{{ 'INSTALLATION.CONFIGURATION_SYSTEM.OPEN_INSTRUCTIONS' | translate}}</ion-label>
+        <ion-icon name="open-outline" slot="start"></ion-icon>
+      </ion-button>
     </ion-item>
+  }
 
 </installation-view>
