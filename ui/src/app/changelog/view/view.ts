@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
 import { ChangelogComponent } from "./component/changelog.component";
@@ -6,6 +7,6 @@ import { ChangelogComponent } from "./component/changelog.component";
   selector: "changelogViewComponent",
   templateUrl: "./view.html",
   standalone: true,
-  imports: [IonicModule, ChangelogComponent],
+  imports: [IonicModule, CommonModule, ChangelogComponent],
 })
 export class ChangelogViewComponent { }

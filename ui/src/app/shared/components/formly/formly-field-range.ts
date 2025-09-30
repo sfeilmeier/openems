@@ -4,9 +4,7 @@ import { FieldType } from "@ngx-formly/core";
 @Component({
   selector: "formly-range-type",
   template: `
-    @if (props.note) {
-      <p class="ion-padding-top"> {{ props.note }} </p>
-    }
+    <p *ngIf="props.note" class="ion-padding-top"> {{ props.note }} </p>
     <ion-range
       class="ion-padding-top"
       [min]="props.min"
@@ -24,23 +22,17 @@ import { FieldType } from "@ngx-formly/core";
       <ion-label slot="end">{{ props.max }}</ion-label>
     </ion-range>
 
-    @if (to.description) {
-      <p class="description-text">
-        {{ to.description }}
-      </p>
-    }
+    <p *ngIf="to.description" class="description-text">
+      {{ to.description }}
+    </p>
 
     <!-- Validation errors -->
-    @if (showError) {
-      <ion-text color="danger">
-        @if (formControl.errors?.required) {
-          <p>
-            {{ props.required ? (props.label + ' ' + ('GENERAL.FORMLY.REQUIRED' | translate)) : '' }}
-          </p>
-        }
-      </ion-text>
-    }
-    `,
+    <ion-text color="danger" *ngIf="showError">
+      <p *ngIf="formControl.errors?.required">
+        {{ props.required ? (props.label + ' ' + ('GENERAL.FORMLY.REQUIRED' | translate)) : '' }}
+      </p>
+    </ion-text>
+  `,
   standalone: false,
 })
 export class FormlyRangeTypeComponent extends FieldType {

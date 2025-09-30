@@ -5,13 +5,15 @@ import { FieldType } from "@ngx-formly/core";
   selector: "formly-custom-select",
   encapsulation: ViewEncapsulation.None,
   template: `
-    @if (selectOptions?.length === 1) {
+    <ng-container *ngIf="selectOptions?.length === 1; else multiOptionSelect">
       <ion-item lines="none">
         <ion-label>{{ props.label }}</ion-label>
         <ion-text>{{ selectOptions[0]?.label }}</ion-text>
       </ion-item>
       <input type="hidden" [formControl]="formControl" [value]="selectOptions[0]?.value" />
-    } @else {
+    </ng-container>
+
+    <ng-template #multiOptionSelect>
       <ion-select
         [id]="id"
         [label]="props.label + (to.required ? '*' : '')"
@@ -22,21 +24,19 @@ import { FieldType } from "@ngx-formly/core";
         [formControl]="formControl"
         [formlyAttributes]="field"
         [multiple]="props.multiple ?? false"
-        >
-        @for (option of selectOptions; track option) {
+      >
+        <ng-container *ngFor="let option of selectOptions">
           <ion-select-option [value]="option.value">
             {{ option.label }}
           </ion-select-option>
-        }
+        </ng-container>
       </ion-select>
-    }
+    </ng-template>
 
-    @if (to.description) {
-      <p style="font-size: x-small;" class="ion-margin-bottom ion-text-secondary">
-        {{ to.description }}
-      </p>
-    }
-    `,
+    <p *ngIf="to.description" style="font-size: x-small;" class="ion-margin-bottom ion-text-secondary">
+      {{ to.description }}
+    </p>
+  `,
   standalone: false,
   styles: [`
       :host {

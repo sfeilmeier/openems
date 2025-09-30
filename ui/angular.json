@@ -10,11 +10,9 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular/build:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "chart.js"
-            ],
+            "allowedCommonJsDependencies": ["chart.js"],
             "baseHref": "/",
             "budgets": [
               {
@@ -24,30 +22,24 @@
               }
             ],
             "index": "src/index.html",
+            "main": "src/main.ts",
             "namedChunks": false,
-            "outputPath": {
-              "base": "target"
-            },
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "outputPath": "target",
+            "polyfills": "src/polyfills.ts",
             "scripts": [],
             "tsConfig": "tsconfig.app.json",
+            "vendorChunk": false,
             "aot": false,
+            "buildOptimizer": false,
             "extractLicenses": false,
             "optimization": false,
             "outputHashing": "none",
-            "sourceMap": true,
-            "browser": "src/main.ts",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "."
-              ]
-            }
+            "sourceMap": true
           },
           "configurations": {
             "prod": {
               "aot": true,
+              "buildOptimizer": true,
               "extractLicenses": true,
               "optimization": {
                 "scripts": true,
@@ -58,7 +50,8 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "sourceMap": false
+              "sourceMap": false,
+              "serviceWorker": true
             },
             "openems": {
               "assets": [
@@ -80,9 +73,7 @@
                 }
               ],
               "stylePreprocessorOptions": {
-                "includePaths": [
-                  "src/themes/openems/scss"
-                ]
+                "includePaths": ["src/themes/openems/scss"]
               },
               "styles": [
                 "src/themes/openems/scss/variables.scss",
@@ -222,9 +213,7 @@
                 }
               ],
               "stylePreprocessorOptions": {
-                "includePaths": [
-                  "src/themes/fenecon/scss"
-                ]
+                "includePaths": ["src/themes/fenecon/scss"]
               },
               "styles": [
                 "src/themes/fenecon/scss/variables.scss",
@@ -396,9 +385,7 @@
                 }
               ],
               "stylePreprocessorOptions": {
-                "includePaths": [
-                  "src/themes/heckert/scss"
-                ]
+                "includePaths": ["src/themes/heckert/scss"]
               },
               "styles": [
                 "src/themes/heckert/scss/variables.scss",
@@ -473,7 +460,7 @@
           }
         },
         "serve": {
-          "builder": "@angular/build:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "buildTarget": "app:build:openems,openems-edge-dev"
           },
@@ -528,28 +515,21 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "polyfills": [
-              "src/polyfills.ts"
-            ]
+            "scripts": []
           },
           "configurations": {
             "local": {
-              "tsConfig": "tsconfig.spec.json",
-              "karmaConfig": "karma.conf.local.js",
-              "polyfills": [
-                "src/polyfills.ts"
-              ]
+              "karmaConfig": "karma.conf.local.js"
             }
           }
         }
@@ -558,31 +538,5 @@
   },
   "cli": {
     "analytics": false
-  },
-  "schematics": {
-    "@schematics/angular:component": {
-      "type": "component"
-    },
-    "@schematics/angular:directive": {
-      "type": "directive"
-    },
-    "@schematics/angular:service": {
-      "type": "service"
-    },
-    "@schematics/angular:guard": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:interceptor": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:module": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:pipe": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:resolver": {
-      "typeSeparator": "."
-    }
   }
 }

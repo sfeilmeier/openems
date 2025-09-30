@@ -1,7 +1,7 @@
-@if (isInitialized) {
-  <oe-flat-widget [modalComponent]="modalComponent" [icon]="{name: 'square-outline'}"
+<oe-flat-widget [modalComponent]="modalComponent" *ngIf="isInitialized" [icon]="{name: 'square-outline'}"
     title="FENECON Industrial L">
+
     <oe-modal-line [name]="'General.state' | translate" [converter]="CONVERT_INDUSTRIAL_STATE"
-    [channelAddress]="'system0/StateMachine'"></oe-modal-line>
-  </oe-flat-widget>
-}
+        [channelAddress]="'system0/StateMachine'"></oe-modal-line>
+
+</oe-flat-widget>

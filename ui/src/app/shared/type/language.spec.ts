@@ -34,7 +34,7 @@ describe("Language", () => {
     };
 
     spyOn(console, "warn");
-    TEST_CONTEXT.translate.use("cz");
+    TEST_CONTEXT.translate.currentLang = "cz";
     await Language.setAdditionalTranslationFile(json, TEST_CONTEXT.translate);
     expect(console.warn).toHaveBeenCalledWith("No translation available for Language cz. Implemented languages are: de");
   });

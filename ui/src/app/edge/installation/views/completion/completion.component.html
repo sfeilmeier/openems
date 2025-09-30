@@ -1,11 +1,9 @@
 <installation-view iconName="checkmark-done-outline" header="{{ 'INSTALLATION.COMPLETION.TITLE' | translate }}"
   (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" isLastView="true" [isWaiting]="isWaiting">
 
-  @if (system) {
-    <p style="width: 100%" class="ion-padding">
-      {{'INSTALLATION.COMPLETION.SUB_TITLE' | translate: { value: system } }}
-    </p>
-  }
+  <p *ngIf="system" style="width: 100%" class="ion-padding">
+    {{'INSTALLATION.COMPLETION.SUB_TITLE' | translate: { value: system } }}
+  </p>
 
   <table class="full_width">
     <tr>
@@ -23,15 +21,13 @@
         </ion-text>
       </td>
     </tr>
-    @if (showHeckertNote) {
-      <tr>
-        <td style="width: 100%" class="ion-padding">
-          <ion-text>
-            {{'INSTALLATION.COMPLETION.HECKERT_NOTE' | translate}}
-          </ion-text>
-        </td>
-      </tr>
-    }
+    <tr *ngIf="showHeckertNote">
+      <td style="width: 100%" class="ion-padding">
+        <ion-text>
+          {{'INSTALLATION.COMPLETION.HECKERT_NOTE' | translate}}
+        </ion-text>
+      </td>
+    </tr>
     <tr>
       <td style="width: 100%" class="ion-padding">
         <ion-button size="small" (click)="navigate()" [disabled]="isWaiting">

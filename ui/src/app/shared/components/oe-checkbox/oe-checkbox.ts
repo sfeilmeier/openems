@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { IonCheckbox, IonicModule } from "@ionic/angular";
@@ -11,10 +12,11 @@ import { IonCheckbox, IonicModule } from "@ionic/angular";
     templateUrl: "./oe-checkbox.html",
     standalone: true,
     imports: [
-    IonicModule,
-    FormsModule,
-    ReactiveFormsModule,
-],
+        CommonModule,
+        IonicModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
 })
 export class OeCheckboxComponent {
 

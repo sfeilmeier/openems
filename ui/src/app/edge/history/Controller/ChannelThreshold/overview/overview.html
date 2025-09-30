@@ -1,6 +1,4 @@
-@if (isInitialized) {
-  <oe-chart [showTotal]="showTotal" (setShowTotal)="setShowTotal($event)"
-    [period]="service.historyPeriod" [title]="'Edge.Index.Widgets.Channeltreshold.TITLE'| translate">
-    <totalChart [isOnlyChart]="true"></totalChart>
-  </oe-chart>
-}
+<oe-chart [showTotal]="showTotal" (setShowTotal)="setShowTotal($event)" *ngIf="isInitialized"
+  [period]="service.historyPeriod" [title]="'Edge.Index.Widgets.Channeltreshold.TITLE'| translate">
+  <totalChart [isOnlyChart]="true"></totalChart>
+</oe-chart>

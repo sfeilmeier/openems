@@ -1,6 +1,4 @@
-@if (isInitialized) {
-  <oe-chart [title]="component.alias">
+<oe-chart *ngIf="isInitialized" [title]="component.alias">
     <scheduleChart [isOnlyChart]="true">
     </scheduleChart>
-  </oe-chart>
-}
+</oe-chart>

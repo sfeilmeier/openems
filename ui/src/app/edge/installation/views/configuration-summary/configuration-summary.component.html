@@ -3,29 +3,25 @@
   (nextClicked)="onNextClicked()">
 
   <ion-list>
-    @for (block of tableData; track block) {
-      <ion-item lines="none">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div>
-                <b>{{block.header}}</b>
-              </div>
-            </ion-col>
-          </ion-row>
-          @for (row of block.rows; track row) {
-            <ion-row>
-              <ion-col style="border: 1px solid black; border-right: none;">
-                <div>
-                  <b>{{row.label}}</b>
-                </div>
-              </ion-col>
-              <ion-col style="border: 1px solid black">{{row.value}}</ion-col>
-            </ion-row>
-          }
-        </ion-grid>
-      </ion-item>
-    }
+    <ion-item *ngFor="let block of tableData" lines="none">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div>
+              <b>{{block.header}}</b>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let row of block.rows;">
+          <ion-col style="border: 1px solid black; border-right: none;">
+            <div>
+              <b>{{row.label}}</b>
+            </div>
+          </ion-col>
+          <ion-col style="border: 1px solid black">{{row.value}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
   </ion-list>
 
   <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>

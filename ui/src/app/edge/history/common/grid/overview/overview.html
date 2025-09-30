@@ -1,10 +1,6 @@
-@if (isInitialized) {
-  <oe-chart [title]="'General.grid' | translate" [showPhases]="showPhases" (setShowPhases)="setShowPhases($event)"
-    [period]="service.historyPeriod">
+<oe-chart [title]="'General.grid' | translate" [showPhases]="showPhases" (setShowPhases)="setShowPhases($event)"
+    *ngIf="isInitialized" [period]="service.historyPeriod">
     <gridchart [isOnlyChart]="true" [showPhases]="showPhases" [showTotal]="showTotal">
     </gridchart>
-  </oe-chart>
-}
-@if (isInitialized && isAllowed) {
-  <oe-footer-subnavigation [navigationOptions]="navigationButtons" ></oe-footer-subnavigation>
-}
+</oe-chart>
+<oe-footer-subnavigation *ngIf="isInitialized && isAllowed" [navigationOptions]="navigationButtons" ></oe-footer-subnavigation>

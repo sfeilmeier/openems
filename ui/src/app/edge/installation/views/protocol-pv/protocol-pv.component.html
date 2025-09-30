@@ -1,9 +1,7 @@
-@if (forms) {
-  <installation-view iconName="clipboard-outline" header="{{ 'INSTALLATION.PROTOCOL_PV.TITLE_PV' | translate }}"
-    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()">
-    @for (form of forms; track form) {
-      <formly-form [form]="form.formGroup" [fields]="form.fields" [model]="form.model">
-      </formly-form>
-    }
-  </installation-view>
-}
+<installation-view iconName="clipboard-outline" header="{{ 'INSTALLATION.PROTOCOL_PV.TITLE_PV' | translate }}"
+  (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" *ngIf="forms">
+
+  <formly-form *ngFor="let form of forms" [form]="form.formGroup" [fields]="form.fields" [model]="form.model">
+  </formly-form>
+
+</installation-view>

@@ -13,20 +13,14 @@ import { FormlyFieldConfig } from "@ngx-formly/core";
   selector: "oe-formly-skeleton-wrapper",
   template: `
 <div>
-  @if (!show) {
-    <ion-list>
-      @for (field of fields; track field) {
-        <ion-item>
-          <ion-skeleton-text [animated]="true" style="width: 100%"></ion-skeleton-text>
-        </ion-item>
-      }
-    </ion-list>
-  }
-  @if (show) {
-    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-  }
+  <ion-list *ngIf="!show">
+    <ion-item *ngFor="let field of fields">
+      <ion-skeleton-text [animated]="true" style="width: 100%"></ion-skeleton-text>
+    </ion-item>
+  </ion-list>
+  <formly-form *ngIf="show" [form]="form" [fields]="fields" [model]="model"></formly-form>
 </div>
-`,
+  `,
   standalone: false,
 })
 export class FormlyFieldWithLoadingAnimationComponent {

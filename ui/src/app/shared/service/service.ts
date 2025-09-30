@@ -104,15 +104,14 @@ export class Service extends AbstractService {
     // add language
     translate.addLangs(Language.ALL.map(l => l.key));
     // this language will be used as a fallback when a translation isn't found in the current language
-    translate.setFallbackLang(Language.DEFAULT.key);
-    translate.use(Language.DEFAULT.key);
+    translate.setDefaultLang(Language.DEFAULT.key);
 
     // initialize history period
     this.historyPeriod = new BehaviorSubject(new DefaultTypes.HistoryPeriod(new Date(), new Date()));
 
     // React on Language Change and update language
     translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      registerLocaleData(Language.getLocale(Language.getByKey(event.lang)?.key ?? Language.DEFAULT.key));
+      this.setLang(Language.getByKey(event.lang));
     });
   }
 
@@ -130,7 +129,7 @@ export class Service extends AbstractService {
     return "de";
 
     // TODO: Redo when translations for docs are available
-    // if (this.translate.getCurrentLang() == "de") {
+    // if (this.translate.currentLang == "de") {
     //   return "de";
     // } else {
     //   return "en";

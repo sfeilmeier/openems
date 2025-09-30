@@ -1,27 +1,25 @@
 <installation-view iconName="settings-outline" header="{{'INSTALLATION.CONFIGURATION_SYSTEM.TITLE'|translate}}"
-  (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()">
+    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()">
 
-  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
 
-  @if (form.controls.subType?.value) {
-    <ion-item lines="none">
-      <ion-button (click)="openManual()">
-        <ion-label>{{ 'INSTALLATION.CONFIGURATION_SYSTEM.OPEN_INSTRUCTIONS' | translate}}</ion-label>
-        <ion-icon name="open-outline" slot="start"></ion-icon>
-      </ion-button>
-    </ion-item>
-  }
+    <ng-container *ngIf="form.controls.subType?.value">
+        <ion-item lines="none">
+            <ion-button (click)="openManual()">
+                <ion-label>{{ 'INSTALLATION.CONFIGURATION_SYSTEM.OPEN_INSTRUCTIONS' | translate}}</ion-label>
+                <ion-icon name="open-outline" slot="start"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ng-container>
 
-  <!-- Displays the note only for the Comemrcial 92 system configuration -->
-  @if (showNote) {
-    <ion-card class="card-with-primary-border">
-      <ion-card-header>
-        <ion-card-title translate>INSTALLATION.CONFIGURATION_EXECUTE.NOTE</ion-card-title>
-      </ion-card-header>
-      <ion-card-content style="white-space: pre-wrap;">
-        <span [innerHtml]="'INSTALLATION.CONFIGURATION_SUB_SYSTEM.NOTE.COMMERCIAL_92' | translate"></span>
-      </ion-card-content>
+    <!-- Displays the note only for the Comemrcial 92 system configuration -->
+    <ion-card *ngIf="showNote" class="card-with-primary-border">
+        <ion-card-header>
+            <ion-card-title translate>INSTALLATION.CONFIGURATION_EXECUTE.NOTE</ion-card-title>
+        </ion-card-header>
+        <ion-card-content style="white-space: pre-wrap;">
+            <span [innerHtml]="'INSTALLATION.CONFIGURATION_SUB_SYSTEM.NOTE.COMMERCIAL_92' | translate"></span>
+        </ion-card-content>
     </ion-card>
-  }
 
 </installation-view>

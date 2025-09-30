@@ -1,3 +1,1 @@
-@if (_link && label) {
-  <a [href]="_link">{{label}}</a>
-}
+<a *ngIf="_link && label" [href]="_link">{{label}}</a>

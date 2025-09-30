@@ -4,23 +4,21 @@ import { Converter } from "src/app/shared/components/shared/converter";
 @Component({
     selector: "oe-energy-journey-constant-line",
     template: `
-            @if (category !== null && value !== null) {
-              <ion-row>
+            <ion-row *ngIf="category !== null && value !== null">
                 <ion-col size="6">
-                  <ion-label>
+                <ion-label>
                     {{category}}
-                  </ion-label>
+                </ion-label>
                 </ion-col>
                 <ion-col size="6">
-                  <div disabled="true" type="text"
+                    <div disabled="true" type="text"
                     [class]="editable ? 'editable' : 'constant'"
-                    style="padding-left: 5%; text-align: center;">
-                    {{value | converter: converter}}
-                  </div>
+                        style="padding-left: 5%; text-align: center;">
+                        {{value | converter: converter}}
+                    </div>
                 </ion-col>
-              </ion-row>
-            }
-            `,
+            </ion-row>
+    `,
     styles: [
         `
         :host{

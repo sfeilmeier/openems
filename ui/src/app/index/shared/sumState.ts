@@ -15,35 +15,25 @@ export enum SumState {
   selector: "oe-sum-state",
   template: `
   <ion-col class="sum-state-icon">
-    @if (!isEdgeOnline) {
+    <ng-container *ngIf="!isEdgeOnline, else showSystemState">
       <ion-icon name="cloud-offline-outline" color="danger"></ion-icon>
-    } @else {
-      @if (!isAtLeastInstaller) {
+    </ng-container>
+
+    <ng-template #showSystemState>
+      <ng-container *ngIf="!isAtLeastInstaller, else showAllStates">
         <ion-icon color="primary" name="play-outline"></ion-icon>
-      } @else {
-        <ng-container class="sum-state-icon">
-          @switch (sumState) {
-            @case (SUM_STATE.OK) {
-              <ion-icon color="success" name="checkmark-circle-outline"></ion-icon>
-            }
-            @case (SUM_STATE.INFO) {
-              <ion-icon color="success" name="information-circle-outline"></ion-icon>
-            }
-            @case (SUM_STATE.WARNING) {
-              <ion-icon color="warning" name="warning-outline"></ion-icon>
-            }
-            @case (SUM_STATE.FAULT) {
-              <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
-            }
-            @default {
-              <ion-icon color="primary" name="play-outline"></ion-icon>
-            }
-          }
-        </ng-container>
-      }
-    }
+      </ng-container>
+    </ng-template>
 
-
+      <ng-template #showAllStates>
+          <ng-container [ngSwitch]="sumState" class="sum-state-icon">
+            <ion-icon *ngSwitchCase="SUM_STATE.OK" color="success" name="checkmark-circle-outline"></ion-icon>
+            <ion-icon *ngSwitchCase="SUM_STATE.INFO" color="success" name="information-circle-outline"></ion-icon>
+            <ion-icon *ngSwitchCase="SUM_STATE.WARNING" color="warning" name="warning-outline"></ion-icon>
+            <ion-icon *ngSwitchCase="SUM_STATE.FAULT" color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-icon *ngSwitchDefault color="primary" name="play-outline"></ion-icon>
+          </ng-container>
+        </ng-template>
   </ion-col>
   `,
   styles: [`
