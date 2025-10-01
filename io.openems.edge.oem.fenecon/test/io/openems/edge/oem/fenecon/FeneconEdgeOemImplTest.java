@@ -21,7 +21,7 @@ public class FeneconEdgeOemImplTest {
 	@Test
 	public void testGetSystemUpdateParamsDev() {
 		var p = getSystemUpdateParams("feature/foo-bar");
-		assertEquals("https://dev.intranet.fenecon.de/feature/foo-bar/fems.version", p.latestVersionUrl());
+		assertEquals("https://fenecon.de/fems-download-dev/feature/foo-bar/fems.version", p.latestVersionUrl());
 		assertEquals("-fb \"feature/foo-bar\"", p.updateScriptParams());
 	}
 

@@ -83,7 +83,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			latestVersionUrl = "https://fenecon.de/fems-download/fems-latest.version";
 			updateScriptParams = "";
 		} else {
-			latestVersionUrl = "https://dev.intranet.fenecon.de/" + devBranch + "/fems.version";
+			latestVersionUrl = "https://fenecon.de/fems-download-dev/" + devBranch + "/fems.version";
 			updateScriptParams = "-fb \"" + devBranch + "\"";
 		}
 
