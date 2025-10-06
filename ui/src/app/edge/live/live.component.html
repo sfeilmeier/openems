@@ -29,7 +29,8 @@
                 </Industrial_L>
                 <!-- Weather-->
                 <weather [componentId]="widget.componentId" *ngSwitchCase="'Weather.OpenMeteo'"
-                  class="ion-hide-sm-down"></weather>
+                  class="ion-hide-sm-down">
+                </weather>
               </ng-container>
             </ion-col>
           </ion-row>
@@ -40,12 +41,9 @@
       <ion-col size="12" size-md="8" size-lg="6" class="ion-no-padding">
         <ion-grid class="ion-no-padding">
           <ion-row>
-            <ion-col *ngIf="service.isPartnerAllowed(edge)" size="12" size-lg="6" class="ion-no-padding">
-              <partner></partner>
-            </ion-col>
+
             <!-- Regular Widgets -->
             <ng-container *ngFor="let clazz of widgets.classes; let i = index" [ngSwitch]="clazz">
-
 
               <ion-col *ngSwitchCase="'Common_Autarchy'" size="12" size-lg="6" class="ion-no-padding">
                 <Common_Autarchy></Common_Autarchy>
