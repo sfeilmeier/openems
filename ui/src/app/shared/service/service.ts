@@ -439,7 +439,7 @@ export class Service extends AbstractService {
       message: message,
       color: level,
       duration: duration ?? 4000,
-      cssClass: "container",
+      id: "toast-container",
     });
     toast.present();
   }

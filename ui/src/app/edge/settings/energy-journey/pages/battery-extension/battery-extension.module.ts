@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
-import { FlatButtonComponent } from "src/app/shared/components/flat/flat-widget-button/flat-widget-button";
+import { FlatWidgetButtonComponent } from "src/app/shared/components/flat/flat-widget-button/flat-widget-button";
 import { SharedModule } from "src/app/shared/shared.module";
 import { EnergyJourneySharedModule } from "../../shared/shared.module";
 import { ElectricityPriceSelectionComponent } from "../electricity-price-choice/electricity-price-selection";
@@ -13,7 +13,7 @@ import { DetailComponent } from "./details/details";
     SharedModule,
     EnergyJourneySharedModule,
     IonicModule,
-    FlatButtonComponent,
+    FlatWidgetButtonComponent,
   ],
   declarations: [
     BatteryExtensionComponent,

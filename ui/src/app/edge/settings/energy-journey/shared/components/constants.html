@@ -3,7 +3,7 @@
   @if (simulatedData?.simulationData?.length > 0) {
     <ion-item color="light" lines="full">
       <ion-icon name="analytics" slot="start" size="large" color="primary"></ion-icon>
-      <ion-label slot="start">{{"SETTINGS.ENERGY_JOURNEY.CONSTANTS.TITLE"  | translate}}</ion-label>
+      <ion-label slot="start">{{"SETTINGS.ENERGY_JOURNEY.CONSTANTS.TITLE" | translate}}</ion-label>
     </ion-item>
     <ion-card-content>
       <ion-grid>
@@ -30,6 +30,7 @@
             <oe-flat-button
               [link]="{routeRelative: route, text: './electricityPriceChoice', queryParams: {electricityPrice: electricityPrice}}"
               color="primary">
+              <ion-icon name="pencil-outline" slot="start"></ion-icon>
               <span translate>SETTINGS.ENERGY_JOURNEY.CONSTANTS.EDIT</span>
             </oe-flat-button>
           </ion-col>
