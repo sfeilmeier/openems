@@ -55,6 +55,10 @@ export const theme = {
                     value: "Commercial 50-Serie",
                 },
                 {
+                    name: "Commercial 50 Gen 3",
+                    value: "Commercial-50-gen-3",
+                },
+                {
                     name: "Commercial 92",
                     value: "commercial-92",
                 },
