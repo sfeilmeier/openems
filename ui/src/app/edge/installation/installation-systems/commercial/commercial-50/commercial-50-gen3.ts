@@ -114,6 +114,11 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
         ], translate);
     }
 
+    public override getSerialNumberCategoryHeader(towerIndex: number): string {
+        const towerNr: number = towerIndex + 1;
+        return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: towerNr });
+    }
+
     public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, slaveIndex?: number): FormlyFieldConfig[] {
         const headFields: FormlyFieldConfig[] = towerNr === 0
             ? [
