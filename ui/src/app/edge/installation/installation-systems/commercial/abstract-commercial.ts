@@ -304,7 +304,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
                 // Unsubscribe to currentData and channels after timeout
                 stopOnRequest.next();
                 stopOnRequest.complete();
-                edge.unsubscribeFromChannels(websocket, channelAddresses);
+                edge.unsubscribeFromChannels("commercial", websocket, channelAddresses);
             }, 5000);
         });
     }
