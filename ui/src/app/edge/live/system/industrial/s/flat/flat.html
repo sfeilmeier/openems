@@ -1,8 +1,7 @@
 @if (isInitialized) {
-  <oe-flat-widget (click)="presentModal()" [modalComponent]="modalComponent"
-    [icon]="{name: 'square-outline'}" title="FENECON Industrial S">
+  <oe-flat-widget [modalComponent]="modalComponent" [icon]="{name: 'square-outline'}" title="FENECON Industrial S">
     <oe-modal-line [name]="'General.state' | translate" [converter]="CONVERT_INDUSTRIAL_STATE"
-    [channelAddress]="'system0/StateMachine'"></oe-modal-line>
+      [channelAddress]="'system0/StateMachine'"></oe-modal-line>
     <oe-modal-horizontal-line></oe-modal-horizontal-line>
     <table class="full_width">
       <tr>
@@ -10,7 +9,7 @@
           {{'SYSTEM.INDUSTRIAL.CLEAR_TIMEOUT' | translate}}
         </td>
         <td [style.width]="(leftColumnWidth ?? 65)  + '%'" class="align_right">
-          <ion-button slot="end" button (click)="clear()">
+          <ion-button slot="end" button (click)="clear(); $event.stopPropagation();">
             <ion-icon name="send-outline"></ion-icon>
           </ion-button>
         </td>
