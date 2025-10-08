@@ -1298,7 +1298,8 @@
       "INTRO_2": "Mit uns sind Sie bestens für Ihre 100-%-Energiewende vorbereitet.",
       "TO_THE_ANALYSIS": "Zur Analyse",
       "CURRENT_NUMBER_OF_MODULES": "Aktuell",
-      "SIMULATION_NOT_STARTED": "Simulation nicht gestartet"
+      "SIMULATION_NOT_STARTED": "Simulation nicht gestartet",
+      "MODULE_COUNT": "Modulanzahl"
     }
   },
   "CHANNELS": {

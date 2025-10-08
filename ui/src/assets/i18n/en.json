@@ -1285,7 +1285,8 @@
       "INTRO_2": "With us, you are ideally prepared for your 100 % energy transition.",
       "TO_THE_ANALYSIS": "View analysis",
       "CURRENT_NUMBER_OF_MODULES": "Current",
-      "SIMULATION_NOT_STARTED": "Simulation not started"
+      "SIMULATION_NOT_STARTED": "Simulation not started",
+      "MODULE_COUNT": "Number of modules"
     }
   },
   "CHANNELS": {
