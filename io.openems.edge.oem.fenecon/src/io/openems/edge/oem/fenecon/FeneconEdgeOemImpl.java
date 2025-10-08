@@ -119,6 +119,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.FENECON.Industrial.S.ISK010", "https://fenecon.de/fenecon-industrial-s/") //
 			.put("App.FENECON.Industrial.S.ISK110", "https://fenecon.de/fenecon-industrial-s/") //
 			.put("App.FENECON.Industrial.S.ISK011", "https://fenecon.de/fenecon-industrial-s/") //
+			.put("App.FENECON.ProHybrid.10", "") //
 			.put("App.TimeOfUseTariff.AncillaryCosts",
 					"https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Awattar", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
