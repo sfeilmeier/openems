@@ -1,0 +1,280 @@
+name: Main-Build
+run-name: Main Build for FEMS
+on: 
+  push:
+    branches: [ main, develop ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  MAVEN_OPTS: -Dmaven.repo.local=/cache/maven
+  CI_COMMIT_BRANCH: ${{ github.ref_name }}
+  CI_GROUP: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: "tools/\nui/\nio.openems.common/\n.gitea/"
+      - name: Environment
+        id: env
+        run: |
+          echo "CI_GROUP=${CI_GROUP}"
+          mkdir /env
+          source tools/common.sh
+          common_initialize_environment
+          common_build_snapshot_version
+          common_save_environment /env/openems.env
+          common_create_version_file /env/fems.version
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          source: /env/
+          verbose: "true"
+
+  build-jars:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          verbose: "true"
+      
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: gradle
+
+      - name: Checkstyle
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_update_version_in_code
+          common_run_checkstyle --console=plain --warn --parallel --max-workers=4
+
+      - name: Build Edge & Backend
+        env:
+          OEMS_EDGE_OUTPUT: "build/target/edge.jar"
+          OEMS_BACKEND_OUTPUT: "build/target/backend.jar"
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_update_version_in_code
+          echo "Build Version $VERSION"
+          common_build_edge --console=plain --warn --parallel --max-workers=2
+          common_check_file "$OEMS_EDGE_OUTPUT" "OpenEMS Edge JAR missing!"
+          common_build_backend --console=plain --warn --parallel --max-workers=2
+          common_check_file "$OEMS_BACKEND_OUTPUT" "OpenEMS Backend JAR missing!"
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: jars
+          source: build/target/
+          verbose: "true"
+
+  build-ui:
+    runs-on: ubuntu-latest-ui
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: "tools/\nui/\n.gitea/"
+
+      - name: Download artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          verbose: "true"
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Test UI
+        run: |
+          export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_update_version_in_code
+          echo "Testing UI for $OEM"
+          cd ui
+          npm ci --prefer-offline --force
+          node_modules/.bin/ng lint
+          node_modules/.bin/tsc
+          node_modules/.bin/tsc-strict
+          node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-prod,prod"
+          npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          rm -r target/
+
+      - name: Build UI
+        run: |
+          export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_update_version_in_code
+          echo "Build for $OEM"
+          cd ui
+          node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-edge-prod,prod"
+          tar -C target/ -czf fems-ui.tar.gz .
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: ui
+          source: ui/fems-ui.tar.gz
+
+  build-debian:
+    runs-on: ubuntu-latest
+    needs: [setup, build-jars, build-ui]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: "tools/\n.gitea/"
+
+      - name: Download Environment artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          target: /artifacts/
+
+      - name: Download UI artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: ui
+          target: /artifacts/
+
+      - name: Download Jars artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: jars
+          target: /artifacts/
+
+      - name: Check artifacts
+        run: ls -lR /artifacts/
+
+      - name: Prepare Environment
+        run: |
+          export EDGE_DESTINATION="tools/debian/usr/lib/openems/"
+          export UI_DESTINATION="tools/debian/usr/share/openems-fems/www/"
+
+          mkdir -p ${EDGE_DESTINATION}
+          cp -v /artifacts/edge.jar ${EDGE_DESTINATION}/openems.jar
+
+          mkdir -p ${UI_DESTINATION}
+          tar -xvzf /artifacts/fems-ui.tar.gz -C ${UI_DESTINATION} > /dev/null
+          count=$(find "${UI_DESTINATION}" -type f | wc -l)
+          echo "Extracted $count files to ${UI_DESTINATION}"
+
+          mkdir -p /build/target/
+
+      - name: Build Debian Package
+        run: |
+          source tools/common.sh
+          source /artifacts/openems.env
+          export SKIP_DEB_INITIALIZE=true
+          common_update_version_in_code
+          bash -x tools/build-debian-package.sh /build/target/
+          ls -l /build/target/
+      
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: deb
+          source: /build/target/
+          verbose: "true"
+
+  upload:
+    needs: [setup, build-jars, build-ui, build-debian]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: "tools/\n.gitea/"
+
+      - name: Download Environment artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          target: /artifacts/
+
+      - name: Download UI artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: ui
+          target: /artifacts/
+
+      - name: Download Jars artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: jars
+          target: /artifacts/
+
+      - name: Download Debian artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: deb
+          target: /artifacts/
+
+      - name: Check artifacts
+        run: ls -lR /artifacts/
+
+      - name: Setup SSH
+        uses: ./.gitea/actions/setup-ssh
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          host: ${{ vars.DEV_SERVER_HOST }}
+
+      - name: Upload artifacts
+        run: |
+          if [[ -z "${CI_COMMIT_BRANCH}" ]]; then echo "CI_COMMIT_BRANCH is not set"; exit 1; fi
+          echo "Upload to ${DEV_ENV}/${CI_COMMIT_BRANCH}/"
+          rsync --mkpath /artifacts/backend.jar ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar
+          rsync --mkpath /artifacts/edge.jar ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar
+          rsync --mkpath /artifacts/fems-ui.tar.gz ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz
+          rsync --mkpath /artifacts/openems.env ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/openems.env
+          rsync --mkpath /artifacts/fems.deb ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems.deb
+          rsync --mkpath /artifacts/fems.version ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems.version

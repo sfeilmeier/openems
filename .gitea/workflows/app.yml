@@ -1,0 +1,119 @@
+name: App-Build
+run-name: App Build for FEMS
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, develop, main-ui ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI_COMMIT_BRANCH: ${{ github.ref_name }}
+  CI_GROUP: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Environment
+        id: env
+        run: |
+          echo "CI_GROUP=${CI_GROUP}"
+          mkdir /env
+          source tools/common.sh
+          common_initialize_environment
+          common_build_snapshot_version
+          common_save_environment /env/openems.env
+          common_create_version_file /env/fems.version
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          source: /env/
+          verbose: "true"
+
+  build-app:
+    runs-on: ubuntu-latest-android
+    needs: setup
+    strategy:
+      fail-fast: true
+      matrix:
+        theme: [fenecon, heckert]
+        include:
+          - theme: fenecon
+          - theme: heckert
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: "tools/\nui/\n.gitea/\n.gradle-wrapper"
+
+      - name: Download artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          verbose: "true"
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: ui/package-lock.json
+
+      - name: Build android app
+        run: |
+          export THEME=${{ matrix.theme }}
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_build_android_app
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: ui
+          source: ui/android/target/
+
+  upload:
+    runs-on: ubuntu-latest
+    needs: [build-app]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ".gitea/"
+
+      - name: Download UI artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: ui
+          target: /artifacts/
+
+      - name: Setup SSH
+        run: |
+          apt-get update
+          apt-get install -y rsync ssh
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ vars.DEV_SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Check artifacts
+        run: ls -lR /artifacts/
+
+      - name: Update App
+        run: |
+          echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
+          rsync --mkpath /artifacts/* ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/
