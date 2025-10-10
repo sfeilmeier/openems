@@ -60,4 +60,4 @@ export namespace GetOAuthConnectionState {
 
 }
 
-export type ConnectionState = "CONNECTED" | "NOT_CONNECTED" | "EXPIRED" | "VALIDATING";
+export type ConnectionState = "UNDEFINED" | "CONNECTED" | "NOT_CONNECTED" | "EXPIRED" | "VALIDATING";
