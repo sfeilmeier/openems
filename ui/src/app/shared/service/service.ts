@@ -24,7 +24,7 @@ import { ChannelAddress } from "../shared";
 import { DefaultTypes } from "../type/defaulttypes";
 import { Language } from "../type/language";
 import { Role } from "../type/role";
-import { AdvertWidgets } from "../type/widget";
+import { AdvertWidget, AdvertWidgets } from "../type/widget";
 import { DateUtils } from "../utils/date/dateutils";
 import { AbstractService } from "./abstractservice";
 import { RouteService } from "./route.service";
@@ -444,17 +444,18 @@ export class Service extends AbstractService {
     toast.present();
   }
 
-  public showAdvertWidgets(advertWidgets: AdvertWidgets): boolean {
+  public getAvailableAdvertWidgets(advertWidgets: AdvertWidgets): AdvertWidget[] {
+
     // Show adverts only for FENECON
     if (environment.theme != "FENECON") {
-      return false;
+      return [];
     }
 
     // No widgets available
     if (advertWidgets.list.length == 0) {
-      return false;
+      return [];
     }
 
-    return true;
+    return advertWidgets.list;
   }
 }

@@ -108,5 +108,5 @@ export abstract class AbstractService extends ErrorHandler {
    * @param advertWidgets the advertWidgets
    * @returns true if advertWidgets should be shown, false if not
    */
-  abstract showAdvertWidgets(advertWidgets: AdvertWidgets);
+  abstract getAvailableAdvertWidgets(advertWidgets: AdvertWidgets);
 }

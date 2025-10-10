@@ -1,7 +1,8 @@
 // @ts-strict-ignore
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
-import { EdgePermission, Utils } from "../shared";
+import { EdgePermission, Producttype, Utils } from "../shared";
+import { StringUtils } from "../utils/string/string.utils";
 
 export enum WidgetClass {
     "Energymonitor",
@@ -85,29 +86,29 @@ export class AdvertWidgets {
 
         let list: AdvertWidget[] = [];
 
-        // const allowedProducttypes: Producttype[] = [
-        //     Producttype.HOME,
-        //     Producttype.HOME_6,
-        //     Producttype.HOME_10,
-        //     Producttype.HOME_15,
-        //     Producttype.HOME_20,
-        //     Producttype.HOME_20_30,
-        //     Producttype.HOME_30,
-        //     Producttype.COMMERCIAL_92,
-        //     Producttype.COMMERCIAL_92_CLUSTER,
-        //     Producttype.INDUSTRIAL_S,
-        //     Producttype.INDUSTRIAL_M,
-        //     Producttype.INDUSTRIAL_L,
-        // ];
+        const allowedProducttypes: Producttype[] = [
+            Producttype.HOME,
+            Producttype.HOME_6,
+            Producttype.HOME_10,
+            Producttype.HOME_15,
+            Producttype.HOME_20,
+            Producttype.HOME_20_30,
+            Producttype.HOME_30,
+            Producttype.COMMERCIAL_92,
+            Producttype.COMMERCIAL_92_CLUSTER,
+            Producttype.INDUSTRIAL_S,
+            Producttype.INDUSTRIAL_M,
+            Producttype.INDUSTRIAL_L,
+        ];
 
-        // if (StringUtils.isIn(edge.producttype, allowedProducttypes)) {
-        list.push(
-            {
-                name: "advert-1",
-                title: { languageKey: "ADVERT.1.TITLE" },
-            }
-        );
-        // };
+        if (StringUtils.isIn(edge.producttype, allowedProducttypes)) {
+            list.push(
+                {
+                    name: "advert-1",
+                    title: { languageKey: "ADVERT.1.TITLE" },
+                }
+            );
+        };
         list = Utils.shuffleArray(list);
         return new AdvertWidgets(list);
     }

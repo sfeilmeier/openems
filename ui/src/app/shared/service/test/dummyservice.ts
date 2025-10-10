@@ -18,7 +18,7 @@ export class DummyService extends AbstractService {
 
     private readonly edgeConfig = new EdgeConfig(this.edge, undefined);
 
-    override showAdvertWidgets(advertWidgets: AdvertWidgets) {
+    override getAvailableAdvertWidgets(advertWidgets: AdvertWidgets) {
         throw new Error("Method not implemented.");
     }
 

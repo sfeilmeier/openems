@@ -1,14 +1,11 @@
 // @ts-strict-ignore
 import { AfterContentChecked, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ModalController } from "@ionic/angular";
-import { isAfter } from "date-fns";
-import { register } from "swiper/element/bundle";
 import { Role } from "src/app/shared/type/role";
-import { AdvertWidget, AdvertWidgets } from "src/app/shared/type/widget";
+import { AdvertWidget } from "src/app/shared/type/widget";
 import { environment } from "src/environments";
 import { Service } from "../../../shared/shared";
 
-register();
 
 @Component({
   selector: "advertisement",
@@ -19,7 +16,7 @@ register();
 export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDestroy {
   private static readonly MAX_SHOW_DATE = new Date(2025, 8, 24);
 
-  @Input() public advertWidgets: AdvertWidgets;
+  @Input() public advertWidgets: AdvertWidget[];
 
   @ViewChild("swiper") public swiperRef: ElementRef | undefined;
 
@@ -32,7 +29,6 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
   protected disablePrevBtn: boolean | null = null;
   protected disableNextBtn: boolean | null = null;
   protected isAtLeastInstaller: boolean = false;
-  protected hasMaxShowDateBeenReached: boolean = false;
 
   constructor(
     public modalCtrl: ModalController,
@@ -50,7 +46,6 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
 
   ngOnInit() {
     this.setSlideConfig();
-    this.hasMaxShowDateBeenReached = isAfter(new Date(), AdvertisementComponent.MAX_SHOW_DATE);
   }
 
   ngOnDestroy() {
@@ -65,8 +60,8 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
     // Slide to random first view
     const index = this.swiperRef?.nativeElement.swiper.activeIndex ?? 0;
 
-    if (Array.isArray(this.advertWidgets.list) && this.advertWidgets.list != null && index in this.advertWidgets.list) {
-      this.title = this.advertWidgets.list[index].title;
+    if (Array.isArray(this.advertWidgets) && this.advertWidgets != null && index in this.advertWidgets) {
+      this.title = this.advertWidgets[index].title;
     } else {
       this.title = { rawTitle: environment.edgeShortName + " - App" };
     }

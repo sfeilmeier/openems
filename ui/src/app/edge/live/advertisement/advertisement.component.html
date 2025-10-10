@@ -1,40 +1,38 @@
-@if (isAtLeastInstaller && !hasMaxShowDateBeenReached) {
-  <ion-card>
-    <ion-item lines="full" color="light" style="--background: var(--ion-background-color-card-header)"
-      class="ion-text-center">
-      <ion-icon name="oe-megafon" size="normal"></ion-icon>
-      @if (title) {
-        <ion-label class="white-space-initial" style="text-align: center">
-          {{title.rawTitle ?? (title.languageKey | translate)}}
-        </ion-label>
-      }
-      @if (enableBtn) {
-        <ion-buttons slot="end">
-          @if (!disablePrevBtn) {
-            <ion-button size="small" fill="clear" (click)="swipePrevious()">
-              <ion-icon name="arrow-back-outline"></ion-icon>
-            </ion-button>
-          }
-          @if (!disableNextBtn) {
-            <ion-button size="small" fill="clear" (click)="swipeNext()">
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </ion-button>
-          }
-        </ion-buttons>
-      }
-    </ion-item>
-    <ion-card-content style="color: var(--ion-card-content);" class="ion-no-padding">
-      <swiper-container autoplay="true" speed="5000" #swiper (swiperslidechange)="setSlideConfig()">
-        @for (widget of advertWidgets.list; track widget) {
-          @switch (widget.name) {
-            @case ('advert-1') {
-              <swiper-slide>
-                <advert-1></advert-1>
-              </swiper-slide>
-            }
+<ion-card>
+  <ion-item lines="full" color="light" style="--background: var(--ion-background-color-card-header)"
+    class="ion-text-center">
+    <ion-icon name="oe-megafon" size="normal"></ion-icon>
+    @if (title) {
+      <ion-label class="white-space-initial" style="text-align: center">
+        {{title.rawTitle ?? (title.languageKey | translate)}}
+      </ion-label>
+    }
+    @if (enableBtn) {
+      <ion-buttons slot="end">
+        @if (!disablePrevBtn) {
+          <ion-button size="small" fill="clear" (click)="swipePrevious()">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+          </ion-button>
+        }
+        @if (!disableNextBtn) {
+          <ion-button size="small" fill="clear" (click)="swipeNext()">
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        }
+      </ion-buttons>
+    }
+  </ion-item>
+  <ion-card-content style="color: var(--ion-card-content);" class="ion-no-padding">
+    <swiper-container autoplay="true" speed="5000" #swiper (swiperslidechange)="setSlideConfig()">
+      @for (widget of advertWidgets; track widget) {
+        @switch (widget.name) {
+          @case ('advert-1') {
+            <swiper-slide>
+              <advert-1></advert-1>
+            </swiper-slide>
           }
         }
-      </swiper-container>
-    </ion-card-content>
-  </ion-card>
-}
+      }
+    </swiper-container>
+  </ion-card-content>
+</ion-card>
