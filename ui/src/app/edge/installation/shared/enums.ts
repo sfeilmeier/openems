@@ -53,6 +53,7 @@ export enum FeedInSetting {
 // matched names based on how it is defiend in APP center.
 export enum ExternalLimitationType {
     EXTERNAL_LIMITATION = "EXTERNAL_LIMITATION",
+    DYNAMIC_EXTERNAL_LIMITATION = "DYNAMIC_EXTERNAL_LIMITATION",
     NO_LIMITATION = "NO_LIMITATION",
 }
 

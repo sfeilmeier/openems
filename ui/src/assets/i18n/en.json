@@ -927,7 +927,8 @@
       "INFO_TEXT": "Your energy storage system attempts to avoid curtailing the PV system through intelligent charging.",
       "WARNING_TEXT": "This does not replace the proper configuration of the PV inverter!",
       "DYNAMIC_LIMITATION_TYPE": "Feed-in limitation",
-      "EXTERNAL_LIMITATION_TYPE": "External Limitation"
+      "EXTERNAL_LIMITATION_TYPE": "External Limitation",
+      "DYNAMIC_EXTERNAL_LIMITATION": "Dynamic External controller"
     },
     "PROTOCOL_INSTALLER_AND_CUSTOMER": {
       "CITY": "City",

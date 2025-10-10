@@ -1052,10 +1052,17 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     const batteryInverterData: ComponentData[] = [];
     const isExternalLimitataion = this.feedInLimitation.feedInType === ExternalLimitationType.EXTERNAL_LIMITATION;
     const isDynamicFeedInLimitation = this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION;
+    const isDynamicExternalLimitation = this.feedInLimitation.feedInType === ExternalLimitationType.DYNAMIC_EXTERNAL_LIMITATION;
+
+    const ExternalimitationValue = isExternalLimitataion
+      ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION")
+      : isDynamicExternalLimitation
+        ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_EXTERNAL_LIMITATION")
+        : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION");
 
     batteryInverterData.push({
       label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE"),
-      value: isExternalLimitataion ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION") : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+      value: ExternalimitationValue,
     });
 
     batteryInverterData.push({

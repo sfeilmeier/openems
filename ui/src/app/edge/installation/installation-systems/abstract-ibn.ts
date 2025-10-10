@@ -459,14 +459,30 @@ export abstract class AbstractIbn {
     protocol.items = [];
 
     const feedInLimitation = this.feedInLimitation;
-    const isExternalLimitataion = feedInLimitation.feedInType === ExternalLimitationType.EXTERNAL_LIMITATION;
-    const isDynamicFeedInLimitation = feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION;
+    const isExternalLimitation = feedInLimitation.feedInType == ExternalLimitationType.EXTERNAL_LIMITATION;
+    const isDynamicFeedInLimitation = this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION;
+    const isDynamicExternalLimitation = this.feedInLimitation.feedInType === ExternalLimitationType.DYNAMIC_EXTERNAL_LIMITATION;
 
-    protocol.items.push({
-      category: Category.FEED_IN_MANAGEMENT,
-      name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE"),
-      value: isExternalLimitataion ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION") : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
-    });
+    const fields = this.getFeedInLimitFields();
+
+    // check if any field has a key containing "feedInType"
+    const hasFeedInTypeField = fields.some(f =>
+      typeof f.key === "string" && f.key.includes("feedInType")
+    );
+
+    if (hasFeedInTypeField) {
+      const ExternalLimitationValue = isExternalLimitation
+        ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION")
+        : isDynamicExternalLimitation
+          ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_EXTERNAL_LIMITATION")
+          : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION");
+
+      protocol.items.push({
+        category: Category.FEED_IN_MANAGEMENT,
+        name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE"),
+        value: ExternalLimitationValue,
+      });
+    }
 
     protocol.items.push({
       category: Category.FEED_IN_MANAGEMENT,
@@ -485,7 +501,6 @@ export abstract class AbstractIbn {
     }
 
     if (lineSideMeterFuse) {
-
       if (lineSideMeterFuse.category !== Category.LINE_SIDE_METER_FUSE_HOME && lineSideMeterFuse.meterType) {
         protocol.items.push({
           category: lineSideMeterFuse.category,

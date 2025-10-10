@@ -382,4 +382,12 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
             { label: GridSettingUtils.getDisplayName(GridSetting.VDE_4105), value: GridSetting.VDE_4105 },
         ];
     }
+
+    public override getExternalLimitationTypeOptions(): ComponentData[] {
+        return [
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: ExternalLimitationType.EXTERNAL_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_EXTERNAL_LIMITATION"), value: ExternalLimitationType.DYNAMIC_EXTERNAL_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: ExternalLimitationType.NO_LIMITATION },
+        ];
+    }
 }

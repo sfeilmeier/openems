@@ -941,7 +941,8 @@
       "INFO_TEXT": "Ihr Energiespeicher versucht durch intelligentes Laden, eine Abregelung der PV-Anlage zu vermeiden.",
       "WARNING_TEXT": "Dies ersetzt nicht die ordnungsgemäße Konfiguration des PV-Wechselrichters!",
       "DYNAMIC_LIMITATION_TYPE": "Einspeiselimitierung",
-      "EXTERNAL_LIMITATION_TYPE": "Externe Limitierung"
+      "EXTERNAL_LIMITATION_TYPE": "Externe Limitierung",
+      "DYNAMIC_EXTERNAL_LIMITATION": "Dynamischer Rundsteuerempfänger"
     },
     "PROTOCOL_INSTALLER_AND_CUSTOMER": {
       "CITY": "Ort",
