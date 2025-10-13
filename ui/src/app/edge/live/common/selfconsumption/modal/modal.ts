@@ -18,6 +18,7 @@ export class ModalComponent extends AbstractFormlyComponent {
     public static generateView(translate: TranslateService): OeFormlyView {
         return {
             title: translate.instant("General.selfConsumption"),
+            helpKey: "REDIRECT.COMMON_SELFCONSUMPTION",
             lines: [{
                 type: "info-line",
                 name: translate.instant("Edge.Index.Widgets.selfconsumptionInfo"),

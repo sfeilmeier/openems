@@ -9,11 +9,26 @@ export const OemMeta: BaseMeta = {
         },
     },
     links: {
-        DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
-        COMMON_STORAGE: "ui/standardwidgets.html#_speicher",
         FORGET_PASSWORD: "https://erp.fenecon.de/web/reset_password?",
-        EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
+        DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
 
+        REDIRECT: {
+            COMMON_STORAGE: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_storage",
+            COMMON_AUTARCHY: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_autarchy",
+            COMMON_CONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_consumption",
+            COMMON_GRID: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_grid",
+            COMMON_PRODUCTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_production",
+            COMMON_SELFCONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_selfconsumption",
+
+            EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/de/evcs_keba",
+            EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/de/evcs_hardybarth",
+            EVCS_MENNEKES: "https://docs.fenecon.de/redirect/fenecon/de/evcs_mennekes",
+            EVCS_GO_E: "https://docs.fenecon.de/redirect/fenecon/de/evcs_goe",
+            EVCS_IES: "https://docs.fenecon.de/redirect/fenecon/de/evcs_ies",
+            EVCS_ALPITRONIC_HYPER: "https://docs.fenecon.de/redirect/fenecon/de/evcs_alpitronichyper",
+        },
+
+        EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
         CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE: "fems-app/includes/FEMS_App_Netzdienliche_Beladung.html",
         CONTROLLER_CHP_SOC: "fems-app/bhkw.html",
         CONTROLLER_IO_CHANNEL_SINGLE_THRESHOLD: "fems-app/includes/FEMS_App_Schwellwertsteuerung.html",
