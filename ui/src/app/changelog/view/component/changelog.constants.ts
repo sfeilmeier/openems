@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2025.10.1-SNAPSHOT";
+    public static readonly UI_VERSION = "2025.10.1";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -104,6 +104,7 @@ export class App {
     public static readonly CARLO_GAVAZZI = "CARLO GAVAZZI";
     public static readonly DISCOVERGY = "Discovergy";
     public static readonly EASTRON_SDM630 = "Eastron SDM630";
+    public static readonly PQ_PLUS = "PQ Plus";
 
     public static readonly PV_INVERTER = new App("FEMS App PV-Wechselrichter", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/");
     public static readonly KACO = "KACO";
@@ -121,6 +122,8 @@ export class App {
     public static readonly SWISSPOWER = "Swisspower";
     public static readonly OCTOPUS_GO = "Octopus Go";
     public static readonly OCTOPUS_HEAT = "Octopus Heat";
+    public static readonly LUOX_ENERGY = "LUOX Energy";
+    public static readonly ANCILLARY_COSTS  = "Zeitvariable Netzentgelte";
 
     // private to disallow creating other instances of this type
     private constructor(public readonly name: string, public readonly url: string) {
