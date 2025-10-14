@@ -11,7 +11,7 @@ import { Common_Autarchy } from "./common/autarchy/Common_Autarchy";
 import { Common_Consumption } from "./common/consumption/Common_Consumption";
 import { Common_Grid } from "./common/grid/Common_Grid";
 import { Common_Production } from "./common/production/Common_Production";
-import { Common_Selfconsumption } from "./common/selfconsumption/Common_Selfconsumption";
+import { CommonSelfconsumption } from "./common/selfconsumption/common-selfconsumption";
 import { StorageModalComponent } from "./common/storage/modal/modal.component";
 import { StorageComponent } from "./common/storage/storage.component";
 import { WeatherModule } from "./common/weather/weather.module";
@@ -47,9 +47,9 @@ import { InfoComponent } from "./info/info.component";
 import { Io_Api_DigitalInputComponent } from "./Io/Api_DigitalInput/Io_Api_DigitalInput";
 import { Io_Api_DigitalInput_ModalComponent } from "./Io/Api_DigitalInput/modal/modal.component";
 import { LiveComponent } from "./live.component";
-import { Evcs_Api_ClusterComponent } from "./Multiple/Evcs_Api_Cluster/Evcs_Api_Cluster";
-import { EvcsChartComponent } from "./Multiple/Evcs_Api_Cluster/modal/evcs-chart/evcs.chart";
-import { Evcs_Api_ClusterModalComponent } from "./Multiple/Evcs_Api_Cluster/modal/evcsCluster-modal.page";
+import { FlatComponent as EvcsClusterApiFlatComponent } from "./Multiple/evcs-api-cluster/flat/flat";
+import { ChartComponent as EvcsClusterApiChartComponent } from "./Multiple/evcs-api-cluster/modal/chart/chart";
+import { ModalComponent as EvcsClusterApiModalComponent } from "./Multiple/evcs-api-cluster/modal/modal";
 import { SystemModule } from "./system/system.module";
 
 @NgModule({
@@ -61,7 +61,7 @@ import { SystemModule } from "./system/system.module";
     Common_Consumption,
     Common_Grid,
     Common_Production,
-    Common_Selfconsumption,
+    CommonSelfconsumption,
     Controller_Api_ModbusTcp,
     Controller_EnerixControl,
     Controller_Ess_FixActivePower,
@@ -81,6 +81,7 @@ import { SystemModule } from "./system/system.module";
     SystemModule,
     PullToRefreshComponent,
     HelpButtonComponent,
+    EvcsClusterApiChartComponent,
   ],
   declarations: [
     AdministrationComponent,
@@ -99,9 +100,8 @@ import { SystemModule } from "./system/system.module";
     Controller_Symmetric_TimeSlot_PeakShavingModalComponent,
     DelayedSellToGridComponent,
     DelayedSellToGridModalComponent,
-    Evcs_Api_ClusterComponent,
-    Evcs_Api_ClusterModalComponent,
-    EvcsChartComponent,
+    EvcsClusterApiFlatComponent,
+    EvcsClusterApiModalComponent,
     InfoComponent,
     Io_Api_DigitalInput_ModalComponent,
     Io_Api_DigitalInputComponent,

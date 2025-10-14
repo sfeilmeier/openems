@@ -101,7 +101,7 @@ export class AdvertWidgets {
             Producttype.INDUSTRIAL_L,
         ];
 
-        if (StringUtils.isIn(edge.producttype, allowedProducttypes)) {
+        if (StringUtils.isInArr(edge.producttype, allowedProducttypes)) {
             list.push(
                 {
                     name: "advert-1",

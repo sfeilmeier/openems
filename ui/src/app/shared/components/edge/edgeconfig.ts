@@ -1,6 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
-import { ChannelAddress, Widgets } from "../../shared";
+import { ChannelAddress } from "../../shared";
 import { AdvertWidgets } from "../../type/widget";
+import { Widgets } from "../../type/widgets";
 import { Edge } from "./edge";
 
 export interface CategorizedComponents {
@@ -771,8 +772,6 @@ export class EdgeConfig {
     public getPropertyFromComponent<T>(component: EdgeConfig.Component | null, property: string): T | null {
         return component?.properties[property] ?? null;
     }
-
-
 }
 
 export enum PersistencePriority {

@@ -16,7 +16,7 @@ import { Service } from "../../../shared/shared";
 export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDestroy {
   private static readonly MAX_SHOW_DATE = new Date(2025, 8, 24);
 
-  @Input() public advertWidgets: AdvertWidget[];
+  @Input() public advertWidgets: AdvertWidget[] = [];
 
   @ViewChild("swiper") public swiperRef: ElementRef | undefined;
 

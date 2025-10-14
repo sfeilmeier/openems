@@ -9,7 +9,6 @@ export { ChannelAddress } from "./type/channeladdress";
 export { CurrentData } from "./type/currentdata";
 export { BackupEnable, BatteryInverterState, BatteryMode, BatteryStateMachine, DredCmd, GoodWe, GridMode, SafetyCountryCode } from "./type/general";
 export { SystemLog } from "./type/systemlog";
-export { Widget, WidgetFactory, WidgetNature, Widgets } from "./type/widget";
 export { Utils } from "./utils/utils";
 import { AlertController, AlertOptions } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
@@ -66,7 +65,7 @@ export class EdgePermission {
    */
   public static isEnergyJourneyAllowed(edge: Edge): boolean {
     const isDateAtLeastOneYearAgo = isBefore(edge.firstSetupProtocol, subDays(subYears(new Date(), 1), 1));
-    return isDateAtLeastOneYearAgo && StringUtils.isIn(edge.producttype, [Producttype.HOME, Producttype.HOME_6, Producttype.HOME_10, Producttype.HOME_15, Producttype.HOME_20, Producttype.HOME_30]);
+    return isDateAtLeastOneYearAgo && StringUtils.isInArr(edge.producttype, [Producttype.HOME, Producttype.HOME_6, Producttype.HOME_10, Producttype.HOME_15, Producttype.HOME_20, Producttype.HOME_30]);
   }
 
   /**

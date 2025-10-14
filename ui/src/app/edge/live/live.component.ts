@@ -5,9 +5,11 @@ import { Subject } from "rxjs";
 import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
 import { ViewUtils } from "src/app/shared/components/navigation/view/shared/shared";
 import { DataService } from "src/app/shared/components/shared/dataservice";
-import { Edge, EdgeConfig, EdgePermission, Service, Utils, Websocket, Widgets } from "src/app/shared/shared";
+import { UserService } from "src/app/shared/service/user.service";
+import { Edge, EdgeConfig, EdgePermission, Service, Utils, Websocket } from "src/app/shared/shared";
 import { TSignalValue } from "src/app/shared/type/utility";
 import { AdvertWidget } from "src/app/shared/type/widget";
+import { Widgets } from "src/app/shared/type/widgets";
 import { DateTimeUtils } from "src/app/shared/utils/datetime/datetime-utils";
 
 @Component({
@@ -39,6 +41,7 @@ export class LiveComponent implements OnDestroy {
     private dataService: DataService,
     private router: Router,
     protected navigationService: NavigationService,
+    private userService: UserService,
   ) {
 
     effect(() => {
@@ -50,14 +53,14 @@ export class LiveComponent implements OnDestroy {
 
       this.service.getConfig().then(config => {
         this.config = config;
-        this.widgets = config.widgets;
+        this.widgets = navigationService.getWidgets(config.widgets, userService.currentUser(), edge);
         this.advertWidgets = this.service.getAvailableAdvertWidgets(config.advertWidgets);
       });
       this.checkIfRefreshNeeded();
     });
   }
 
-  private static calculatePaddingBottom(position: TSignalValue<NavigationService["position"]> | null) {
+  private static calculatePaddingBottom(position: TSignalValue<NavigationService["position"]>) {
     return 100 - ViewUtils.getViewHeight(position);
   }
 
