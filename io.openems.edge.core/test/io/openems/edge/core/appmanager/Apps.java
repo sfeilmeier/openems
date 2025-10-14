@@ -63,6 +63,7 @@ import io.openems.edge.app.integratedsystem.FeneconHome15;
 import io.openems.edge.app.integratedsystem.FeneconHome20;
 import io.openems.edge.app.integratedsystem.FeneconHome30;
 import io.openems.edge.app.integratedsystem.FeneconHome6;
+import io.openems.edge.app.integratedsystem.FeneconProHybrid10;
 import io.openems.edge.app.integratedsystem.TestFeneconHome10;
 import io.openems.edge.app.integratedsystem.TestFeneconHome10Gen2;
 import io.openems.edge.app.integratedsystem.TestFeneconHome20;
@@ -103,6 +104,7 @@ import io.openems.edge.app.pvinverter.SolarEdgePvInverter;
 import io.openems.edge.app.pvselfconsumption.GridOptimizedCharge;
 import io.openems.edge.app.pvselfconsumption.SelfConsumptionOptimization;
 import io.openems.edge.app.timeofusetariff.AncillaryCosts;
+import io.openems.edge.app.timeofusetariff.AppLuoxEnergy;
 import io.openems.edge.app.timeofusetariff.AwattarHourly;
 import io.openems.edge.app.timeofusetariff.EntsoE;
 import io.openems.edge.app.timeofusetariff.GroupeE;
@@ -280,6 +282,16 @@ public final class Apps {
 		return app(t, Isk011::new, "App.FENECON.Industrial.S.ISK011");
 	}
 
+	/**
+	 * Test method for creating a {@link FeneconProHybrid10}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconProHybrid10 feneconProHybrid10(AppManagerTestBundle t) {
+		return app(t, FeneconProHybrid10::new, "App.FENECON.ProHybrid.10");
+	}
+
 	// TimeOfUseTariff
 
 	/**
@@ -290,6 +302,16 @@ public final class Apps {
 	 */
 	public static final AncillaryCosts ancillaryCosts(AppManagerTestBundle t) {
 		return app(t, AncillaryCosts::new, "App.TimeOfUseTariff.AncillaryCosts");
+	}
+
+	/**
+	 * Test method for creating a {@link AppLuoxEnergy}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final AppLuoxEnergy luoxEnergy(AppManagerTestBundle t) {
+		return app(t, AppLuoxEnergy::new, "App.TimeOfUseTariff.LuoxEnergy");
 	}
 
 	/**

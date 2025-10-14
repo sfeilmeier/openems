@@ -60,10 +60,14 @@ public class TestTranslations {
 					new TestTranslation(Apps.feneconIndustrialSIsk110(t), true, TestFeneconIndustrialS.fullSettings()));
 			this.apps.add(
 					new TestTranslation(Apps.feneconIndustrialSIsk011(t), true, TestFeneconIndustrialS.fullSettings()));
+			this.apps.add(new TestTranslation(Apps.feneconProHybrid10(t), true, JsonUtils.buildJsonObject() //
+					.addProperty("USER_KEY", "xxx") //
+					.build()));
 			this.apps.add(new TestTranslation(Apps.ancillaryCosts(t), true, JsonUtils.buildJsonObject() //
 					.addProperty("FIXED_ELECTRICITY_TARIFF", 0.0) //
 					.addProperty("GERMAN_DSO", GermanDSO.BAYERNWERK) //
 					.build()));
+			this.apps.add(new TestTranslation(Apps.luoxEnergy(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.awattarHourly(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.entsoE(t), true, JsonUtils.buildJsonObject() //
 					.addProperty("BIDDING_ZONE", "GERMANY") //

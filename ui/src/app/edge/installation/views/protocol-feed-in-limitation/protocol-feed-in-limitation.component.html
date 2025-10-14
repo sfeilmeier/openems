@@ -4,37 +4,40 @@
 
   <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
 
-  <ion-card *ngIf="isDynamicLimitation && !showRundSteuerManual">
-    <ion-card-content>
-      <ion-row class="ion-padding-bottom">
-        <ion-col>
-          <ion-text color="success">
-            <strong>{{ 'INSTALLATION.SHARED.NOTE' | translate }}:</strong>
-          </ion-text>
-          <p class="ion-no-margin">
-            {{ 'INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.INFO_TEXT' | translate }}
-          </p>
-        </ion-col>
-      </ion-row>
+  @if (isDynamicLimitation && !showRundSteuerManual) {
+    <ion-card>
+      <ion-card-content>
+        <ion-row class="ion-padding-bottom">
+          <ion-col>
+            <ion-text color="success">
+              <strong>{{ 'INSTALLATION.SHARED.NOTE' | translate }}:</strong>
+            </ion-text>
+            <p class="ion-no-margin">
+              {{ 'INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.INFO_TEXT' | translate }}
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text color="danger">
+              <strong>{{ 'INSTALLATION.SHARED.WARNING' | translate }}:</strong>
+            </ion-text>
+            <p class="ion-no-margin">
+              {{ 'INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.WARNING_TEXT' | translate }}
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  }
 
-      <ion-row>
-        <ion-col>
-          <ion-text color="danger">
-            <strong>{{ 'INSTALLATION.SHARED.WARNING' | translate }}:</strong>
-          </ion-text>
-          <p class="ion-no-margin">
-            {{ 'INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.WARNING_TEXT' | translate }}
-          </p>
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-item *ngIf="isExternalLimitation && showRundSteuerManual">
-    <ion-button (click)="openManual()" slot="end">
-      <ion-label>{{ 'INSTALLATION.PROTOCOL_PV.OPEN_MANUAL' | translate }}</ion-label>
-      <ion-icon name="open-outline" slot="start"></ion-icon>
-    </ion-button>
-  </ion-item>
+  @if (isExternalLimitation && showRundSteuerManual) {
+    <ion-item>
+      <ion-button (click)="openManual()" slot="end">
+        <ion-label>{{ 'INSTALLATION.PROTOCOL_PV.OPEN_MANUAL' | translate }}</ion-label>
+        <ion-icon name="open-outline" slot="start"></ion-icon>
+      </ion-button>
+    </ion-item>
+  }
 
 </installation-view>

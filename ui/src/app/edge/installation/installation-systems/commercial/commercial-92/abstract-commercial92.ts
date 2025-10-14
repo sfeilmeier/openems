@@ -361,14 +361,14 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                     // If all serial numbers are resolved
                     stopOnRequest.next();
                     stopOnRequest.complete();
-                    edge.unsubscribeFromChannels(websocket, Object.values(channelAddresses));
+                    edge.unsubscribeFromChannels(subscriptionId, websocket, Object.values(channelAddresses));
                     resolve(serialNumbers);
                 }
             });
             setTimeout(() => {
                 stopOnRequest.next();
                 stopOnRequest.complete();
-                edge.unsubscribeFromChannels(websocket, Object.values(channelAddresses));
+                edge.unsubscribeFromChannels(subscriptionId, websocket, Object.values(channelAddresses));
                 resolve(serialNumbers); // Resolve with available data
             }, 5_000);
         });

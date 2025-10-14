@@ -7,7 +7,7 @@ import { ViewUtils } from "src/app/shared/components/navigation/view/shared/shar
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Edge, EdgeConfig, EdgePermission, Service, Utils, Websocket, Widgets } from "src/app/shared/shared";
 import { TSignalValue } from "src/app/shared/type/utility";
-import { AdvertWidgets } from "src/app/shared/type/widget";
+import { AdvertWidget } from "src/app/shared/type/widget";
 import { DateTimeUtils } from "src/app/shared/utils/datetime/datetime-utils";
 
 @Component({
@@ -22,7 +22,7 @@ export class LiveComponent implements OnDestroy {
   protected edge: Edge | null = null;
   protected config: EdgeConfig | null = null;
   protected widgets: Widgets | null = null;
-  protected advertWidgets: AdvertWidgets | null = null;
+  protected advertWidgets: AdvertWidget[] = [];
   protected isModbusTcpWidgetAllowed: boolean = false;
   protected showRefreshDragDown: boolean = false;
   protected showNewFooter: boolean = false;
@@ -51,7 +51,7 @@ export class LiveComponent implements OnDestroy {
       this.service.getConfig().then(config => {
         this.config = config;
         this.widgets = config.widgets;
-        this.advertWidgets = config.advertWidgets;
+        this.advertWidgets = this.service.getAvailableAdvertWidgets(config.advertWidgets);
       });
       this.checkIfRefreshNeeded();
     });

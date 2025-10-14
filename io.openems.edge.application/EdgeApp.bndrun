@@ -199,6 +199,7 @@
 	bnd.identity;id='io.openems.edge.timeofusetariff.entsoe',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.groupe',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.hassfurt',\
+	bnd.identity;id='io.openems.edge.timeofusetariff.luox',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.manual',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.rabotcharge',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.swisspower',\
@@ -221,6 +222,7 @@
 	com.squareup.okio;version='[3.16.0,3.16.1)',\
 	com.sun.jna;version='[5.18.0,5.18.1)',\
 	io.openems.common;version=snapshot,\
+	io.openems.common.bridge.http;version=snapshot,\
 	io.openems.edge.application;version=snapshot,\
 	io.openems.edge.battery.api;version=snapshot,\
 	io.openems.edge.battery.bmw;version=snapshot,\
@@ -398,6 +400,7 @@
 	io.openems.edge.timeofusetariff.entsoe;version=snapshot,\
 	io.openems.edge.timeofusetariff.groupe;version=snapshot,\
 	io.openems.edge.timeofusetariff.hassfurt;version=snapshot,\
+	io.openems.edge.timeofusetariff.luox;version=snapshot,\
 	io.openems.edge.timeofusetariff.manual;version=snapshot,\
 	io.openems.edge.timeofusetariff.rabotcharge;version=snapshot,\
 	io.openems.edge.timeofusetariff.swisspower;version=snapshot,\

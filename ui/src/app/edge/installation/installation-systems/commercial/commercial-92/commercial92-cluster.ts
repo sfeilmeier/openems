@@ -172,14 +172,14 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                     // If all serial numbers are resolved
                     stopOnRequest.next();
                     stopOnRequest.complete();
-                    edge.unsubscribeFromChannels(websocket, Object.values(channelAddresses));
+                    edge.unsubscribeFromChannels(subscriptionId, websocket, Object.values(channelAddresses));
                     resolve(serialNumbers);
                 }
             });
             setTimeout(() => {
                 stopOnRequest.next();
                 stopOnRequest.complete();
-                edge.unsubscribeFromChannels(websocket, Object.values(channelAddresses));
+                edge.unsubscribeFromChannels(subscriptionId, websocket, Object.values(channelAddresses));
                 resolve(serialNumbers); // Resolve with available data
             }, 5_000);
         });
@@ -271,7 +271,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                 // Unsubscribe to currentData and channels after timeout
                 stopOnRequest.next();
                 stopOnRequest.complete();
-                edge.unsubscribeFromChannels(websocket, channelAddresses);
+                edge.unsubscribeFromChannels("commercial", websocket, channelAddresses);
             }, 5000);
         });
     }

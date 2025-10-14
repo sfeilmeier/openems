@@ -1,0 +1,26 @@
+name: "Setup SSH connection"
+description: "Setup SSH connection for deployment"
+inputs:
+  ssh-key:
+    description: "The SSH key to use"
+    required: true
+  host:
+    description: "The host to connect to"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Dependencies
+      shell: bash
+      run: |
+        apt-get update -qq && apt-get install -y -qq rsync ssh || true
+        rm -rf /var/lib/apt/lists/*
+
+    - name: Upload build artifact
+      shell: bash
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ inputs.ssh-key }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ inputs.host }} >> ~/.ssh/known_hosts

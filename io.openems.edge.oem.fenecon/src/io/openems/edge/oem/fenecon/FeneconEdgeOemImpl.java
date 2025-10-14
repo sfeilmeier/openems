@@ -83,7 +83,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			latestVersionUrl = "https://fenecon.de/fems-download/fems-latest.version";
 			updateScriptParams = "";
 		} else {
-			latestVersionUrl = "https://dev.intranet.fenecon.de/" + devBranch + "/fems.version";
+			latestVersionUrl = "https://fenecon.de/fems-download-dev/" + devBranch + "/fems.version";
 			updateScriptParams = "-fb \"" + devBranch + "\"";
 		}
 
@@ -119,6 +119,8 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.FENECON.Industrial.S.ISK010", "https://fenecon.de/fenecon-industrial-s/") //
 			.put("App.FENECON.Industrial.S.ISK110", "https://fenecon.de/fenecon-industrial-s/") //
 			.put("App.FENECON.Industrial.S.ISK011", "https://fenecon.de/fenecon-industrial-s/") //
+			.put("App.FENECON.ProHybrid.10", "") //
+			.put("App.TimeOfUseTariff.LuoxEnergy", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.AncillaryCosts",
 					"https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
 			.put("App.TimeOfUseTariff.Awattar", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //

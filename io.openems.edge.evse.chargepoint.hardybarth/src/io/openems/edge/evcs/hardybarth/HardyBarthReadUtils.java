@@ -6,10 +6,10 @@ import static io.openems.common.types.OpenemsType.LONG;
 import static io.openems.common.types.OpenemsType.STRING;
 import static io.openems.common.utils.JsonUtils.parseToJsonObject;
 import static io.openems.edge.evcs.api.Evcs.evaluatePhaseCountFromCurrent;
-import static io.openems.edge.evcs.api.PhaseRotation.setPhaseRotatedActivePowerChannels;
-import static io.openems.edge.evcs.api.PhaseRotation.setPhaseRotatedCurrentChannels;
-import static io.openems.edge.evcs.api.PhaseRotation.setPhaseRotatedVoltageChannels;
 import static io.openems.edge.evcs.hardybarth.EvcsHardyBarth.SCALE_FACTOR_MINUS_1;
+import static io.openems.edge.meter.api.PhaseRotation.setPhaseRotatedActivePowerChannels;
+import static io.openems.edge.meter.api.PhaseRotation.setPhaseRotatedCurrentChannels;
+import static io.openems.edge.meter.api.PhaseRotation.setPhaseRotatedVoltageChannels;
 import static java.lang.Math.round;
 
 import java.util.Optional;
@@ -20,10 +20,10 @@ import com.google.gson.JsonElement;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.types.OpenemsType;
 import io.openems.common.utils.JsonUtils;
-import io.openems.edge.bridge.http.api.HttpResponse;
+import io.openems.common.bridge.http.api.HttpResponse;
 import io.openems.edge.common.type.TypeUtils;
-import io.openems.edge.evcs.api.PhaseRotation;
 import io.openems.edge.evcs.api.Status;
+import io.openems.edge.meter.api.PhaseRotation;
 
 public class HardyBarthReadUtils {
 	private final EvcsHardyBarthImpl parent;

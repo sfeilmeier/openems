@@ -59,7 +59,7 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
     public override appId: string = "App.FENECON.Commercial.50.Gen3";
     public override appAlias: string = "FENECON Commercial 50";
     public override defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.COMMERCIAL_METER;
-    public override readonly parallelBoxPrefix: string = ExtensionBoxPrefix.FCP1;
+    public override readonly parallelBoxPrefix: string = ExtensionBoxPrefix.FCP;
     public override readonly emsBoxPrefix: string | null = "FEF";
 
     public override energyFlowMeter: {
@@ -112,6 +112,104 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
             View.ProtocolSerialNumbers,
             View.Completion,
         ], translate);
+    }
+
+    public override getSerialNumberCategoryHeader(towerIndex: number): string {
+        const towerNr: number = towerIndex + 1;
+        return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: towerNr });
+    }
+
+    public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, slaveIndex?: number): FormlyFieldConfig[] {
+        const headFields: FormlyFieldConfig[] = towerNr === 0
+            ? [
+                {
+                    key: "batteryInverter",
+                    type: "input",
+                    templateOptions: {
+                        label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER"),
+                        required: true,
+                        placeholder: "xxxxxxxxxxxxxxxx",
+                    },
+                    wrappers: ["input-serial-number"],
+                },
+                {
+                    key: "parallelBox",
+                    type: "input",
+                    templateOptions: {
+                        label: "Parallel Box",
+                        required: true,
+                        prefix: this.parallelBoxPrefix,
+                        placeholder: "xxxxxxxxx",
+                    },
+                    validators: { validation: ["boxSerialNumber"] },
+                    wrappers: ["input-serial-number"],
+                },
+                {
+                    key: "emsBox",
+                    type: "input",
+                    templateOptions: {
+                        label: Category.toTranslatedString(Category.EMS_BOX_LABEL_HOME, this.translate),
+                        required: true,
+                        placeholder: "FEFxxxxxxx",
+                    },
+                    validators: { validation: ["emsBoxSerialNumber"] },
+                    wrappers: ["input-serial-number"],
+                },
+            ]
+            : [
+                {
+                    key: "extensionBox",
+                    type: "input",
+                    templateOptions: {
+                        label: "Extension Box",
+                        required: true,
+                        prefix: ExtensionBoxPrefix.FEE,
+                        placeholder: "xxxxxxxxx",
+                    },
+                    validators: { validation: ["boxSerialNumber"] },
+                    wrappers: ["input-serial-number"],
+                },
+            ];
+
+        const bmsField: FormlyFieldConfig = {
+            key: "bmsBox",
+            type: "input",
+            templateOptions: {
+                label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BMS_BOX"),
+                required: true,
+                placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
+                checkbox: {
+                    value: this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]?.[towerNr] ?? false,
+                    label: this.serialNumbers?.doubleSocket?.label,
+                    updateFn: (checked: boolean) => {
+                        if (this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]) {
+                            this.serialNumbers.doubleSocket.isEnabled[slaveIndex][towerNr] = checked;
+                        }
+                    },
+                },
+            },
+            validators: { validation: ["batteryAndBmsBoxSerialNumber"] },
+            wrappers: ["input-serial-number"],
+        };
+
+        const moduleFields: FormlyFieldConfig[] = Array.from(
+            { length: numberOfModulesPerTower },
+            (_, moduleNr) => ({
+                key: "module" + moduleNr,
+                type: "input",
+                templateOptions: {
+                    label:
+                        this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") +
+                        (moduleNr + 1),
+                    required: true,
+                    placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
+                },
+                validators: { validation: ["batteryAndBmsBoxSerialNumber"] },
+                wrappers: ["input-serial-number"],
+            })
+        );
+
+        return [...headFields, bmsField, ...moduleFields];
     }
 
     public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): {} {
@@ -282,6 +380,14 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
     public override getGridSettingOptions() {
         return [
             { label: GridSettingUtils.getDisplayName(GridSetting.VDE_4105), value: GridSetting.VDE_4105 },
+        ];
+    }
+
+    public override getExternalLimitationTypeOptions(): ComponentData[] {
+        return [
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: ExternalLimitationType.EXTERNAL_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_EXTERNAL_LIMITATION"), value: ExternalLimitationType.DYNAMIC_EXTERNAL_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: ExternalLimitationType.NO_LIMITATION },
         ];
     }
 }

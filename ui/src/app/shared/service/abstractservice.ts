@@ -108,12 +108,5 @@ export abstract class AbstractService extends ErrorHandler {
    * @param advertWidgets the advertWidgets
    * @returns true if advertWidgets should be shown, false if not
    */
-  abstract showAdvertWidgets(advertWidgets: AdvertWidgets);
-
-  /**
-   * checks if fems is allowed to show partner widget
-   */
-  // TODO: encapsulate data for different partners
-  abstract isPartnerAllowed(edge: Edge): boolean;
-
+  abstract getAvailableAdvertWidgets(advertWidgets: AdvertWidgets);
 }

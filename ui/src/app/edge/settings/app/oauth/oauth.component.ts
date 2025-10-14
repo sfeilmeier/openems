@@ -30,9 +30,8 @@ import { InitiateConnect } from "./jsonrpc/initiateConnect";
 })
 export class OAuthIndexComponent {
 
+  public static readonly OAUTH_CORE_COMPONENT_ID = "_oauth2";
   private static readonly SELECTOR = "oauth-index";
-
-  private static readonly OAUTH_CORE_COMPONENT_ID = "_oauth2";
 
   protected metaInfos: (OAuthMetaInfo & { connectionState: null | ConnectionState })[] = [];
 

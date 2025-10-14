@@ -9,7 +9,7 @@ import { EvcsComponent } from "../components/edge/components/evcsComponent";
 import { JsonrpcResponseSuccess } from "../jsonrpc/base";
 import { Base64PayloadResponse } from "../jsonrpc/response/base64PayloadResponse";
 import { QueryHistoricTimeseriesEnergyResponse } from "../jsonrpc/response/queryHistoricTimeseriesEnergyResponse";
-import { ChannelAddress, Currency, EdgeConfig } from "../shared";
+import { ChannelAddress, ChartConstants, Currency, EdgeConfig } from "../shared";
 
 /**
  * @deprecated use seperate utils class
@@ -788,25 +788,37 @@ export namespace HistoryUtils {
  * TODO Lukas refactor
  */
   export type ChannelData = {
-    [name: string]: number[]
+    [name: string]: number[];
   };
 
-  export type ChartData = {
-    /** Input Channels that need to be queried from the database */
-    input: InputChannel[],
-    /** Output Channels that will be shown in the chart */
-    output: (data: ChannelData, labels?: (string | Date)[]) => DisplayValue<HistoryUtils.CustomOptions>[],
-    tooltip: {
-      /** Format of Number displayed */
-      formatNumber: string,
-      afterTitle?: (stack: string) => string,
-      /** Defaults to true */
-      enabled?: boolean,
-    },
-    yAxes: yAxes[],
-    /** Rounds slightly negative values, defaults to false */
-    normalizeOutputData?: boolean,
-  };
+  export class ChartData {
+    /** Static empty instance */
+    public static readonly EMPTY = new ChartData();
+
+    constructor(
+      /** Input Channels that need to be queried from the database */
+      public input: InputChannel[] = [],
+
+      /** Output Channels that will be shown in the chart */
+      public output: (
+        data: ChannelData,
+        labels?: (string | Date)[]
+      ) => DisplayValue<HistoryUtils.CustomOptions>[] = () => [],
+
+      public tooltip: {
+        /** Format of Number displayed */
+        formatNumber: string;
+        afterTitle?: (stack: string) => string;
+        /** Defaults to true */
+        enabled?: boolean;
+      } = { formatNumber: "", enabled: false },
+
+      public yAxes: yAxes[] = [],
+
+      /** Rounds slightly negative values, defaults to false */
+      public normalizeOutputData?: boolean,
+    ) { }
+  }
 
   export type yAxes = {
     /** Name to be displayed on the left y-axis, also the unit to be displayed in tooltips and legend */
@@ -920,8 +932,7 @@ export namespace TimeOfUseTariffUtils {
       case dischargeLabel:
       case chargeConsumptionLabel:
       case balancingLabel:
-        // Show floating point number for values between 0 and 1
-        return label + ": " + formatNumber(value, locale, "1.0-4") + " " + currencyLabel;
+        return label + ": " + formatNumber(value, locale, ChartConstants.NumberFormat.TWO) + " " + currencyLabel;
 
       default:
       case gridBuyLabel:

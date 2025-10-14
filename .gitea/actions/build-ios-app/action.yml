@@ -1,0 +1,44 @@
+name: "Build iOS App"
+description: "Build an iOS app"
+inputs:
+  mac-host:
+    description: "The mac host to use"
+    required: true
+  mac-user:
+    description: "The mac user to use"
+    required: false
+    default: "fems"
+  mac-ssh-key:
+    description: "The mac ssh key to use"
+    required: true
+  theme:
+    description: "The theme to use"
+    required: true
+  configuration:
+    description: "The configuration to use (Debug|Release)"
+    required: true
+  branch-name:
+    description: "The branch-name to use"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Dependencies
+      shell: bash
+      run: |
+        apt-get update -qq && apt-get install -y -qq ssh || true
+        rm -rf /var/lib/apt/lists/*
+
+    - name: Setup SSH
+      shell: bash
+      run: |
+        mkdir -p ~/.ssh
+        printf "%s\n" "${{ inputs.mac-ssh-key }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
+    - name: Build app
+      shell: bash
+      run: |
+        echo "ssh -o StrictHostKeyChecking=no ${{ inputs.mac-user }}@${{ inputs.mac-host }} /Users/fems/process_ios_app.sh ${{ inputs.theme }} ${{ inputs.configuration }} ${{ inputs.branch-name }}"
+        /usr/bin/ssh -o StrictHostKeyChecking=no ${{ inputs.mac-user }}@${{ inputs.mac-host }} /Users/fems/process_ios_app.sh ${{ inputs.theme }} ${{ inputs.configuration }} ${{ inputs.branch-name }}

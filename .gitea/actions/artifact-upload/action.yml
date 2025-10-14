@@ -1,0 +1,45 @@
+name: "Upload a build artifact"
+description: "Upload a build artifact to the cache"
+inputs:
+  user:
+    description: "The user name to use for the upload"
+    required: true
+  password:
+    description: "The password to use for the upload"
+    required: true
+  name:
+    description: "The cache key to use"
+    required: true
+  source:
+    description: "The path or file to upload"
+    required: true
+  recursive:
+    description: "Whether to upload directories recursively (true|false)"
+    required: false
+    default: "true"
+  verbose:
+    description: "Whether to enable verbose output (true|false)"
+    required: false
+    default: "false"
+  options:
+    description: "Additional options to pass to the upload command"
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Upload build artifact
+      shell: bash
+      run: |
+        reference=fems-${{ github.sha }}_${{ inputs.name }}
+        opts=""
+        if [[ "${{ inputs.recursive }}" == "true" ]]; then opts="--recursive"; fi
+
+        /tools/mc alias set local http://gitea-runner-cache:9000 ${{ inputs.user }} ${{ inputs.password }}
+        echo "mc cp $opts ${{ inputs.source }} local/cache-fems/$reference  ${{ inputs.options }}"
+        if [[ "${{ inputs.verbose }}" == "true" ]]; then
+          /tools/mc cp $opts "${{ inputs.source }}" local/cache-fems/$reference/ ${{ inputs.options }}
+        else
+          /tools/mc cp $opts "${{ inputs.source }}" local/cache-fems/$reference/ ${{ inputs.options }} > /dev/null
+        fi

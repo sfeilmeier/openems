@@ -1,0 +1,256 @@
+name: CI-Build
+run-name: CI Build for FEMS
+on:
+  pull_request:
+    branches:
+      - 'action/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  MAVEN_OPTS: -Dmaven.repo.local=/cache/maven
+  CI_COMMIT_BRANCH: ${{ github.head_ref }}
+  CI_GROUP: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Environment
+        id: env
+        run: |
+          echo "CI_GROUP=${CI_GROUP}"
+          mkdir /env
+          source tools/common.sh
+          common_initialize_environment
+          common_build_snapshot_version
+          common_save_environment /env/openems.env
+          common_create_version_file /env/fems.version
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          source: /env/
+          verbose: "true"
+
+  build-jars:
+    runs-on: ubuntu-latest
+    needs: setup
+    if: |
+      contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Edge') ||
+      contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Backend')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          verbose: "true"
+      
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: gradle
+
+      - name: Checkstyle
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_update_version_in_code
+          common_run_checkstyle --console=plain --warn --parallel --max-workers=4
+
+      - name: Build Edge
+        if: |
+          contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Edge')
+        env:
+          OEMS_EDGE_OUTPUT: "build/target/edge.jar"
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_update_version_in_code
+          echo "Build Version $VERSION"
+          common_build_edge --console=plain --warn --parallel --max-workers=2
+          common_check_file "$OEMS_EDGE_OUTPUT" "OpenEMS Edge JAR missing!"
+
+      - name: Build Backend
+        if: |
+          contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Backend')
+        env:
+          OEMS_BACKEND_OUTPUT: "build/target/backend.jar"
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_update_version_in_code
+          echo "Build Version $VERSION"
+          common_build_backend --console=plain --warn --parallel --max-workers=2
+          common_check_file "$OEMS_BACKEND_OUTPUT" "OpenEMS Backend JAR missing!"
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: jars
+          source: build/target/
+
+  build-ui:
+    runs-on: ubuntu-latest-ui
+    needs: setup
+    if: |
+      contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'UI')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: "tools/\nui/\n.gitea/"
+
+      - name: Download artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          verbose: "true"
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: ui/package-lock.json
+
+      - name: Test UI
+        run: |
+          pwd
+          echo "$(pwd)"
+          export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_update_version_in_code
+          echo "Testing UI for $OEM"
+          cd ui
+          npm ci --prefer-offline --force
+          node_modules/.bin/ng lint
+          node_modules/.bin/tsc
+          node_modules/.bin/tsc-strict
+          node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-prod,prod"
+          npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          rm -r target/
+
+      - name: Build UI
+        run: |
+          export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_update_version_in_code
+          echo "Build for $OEM"
+          cd ui
+          node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-edge-prod,prod"
+          tar -C target/ -czf fems-ui.tar.gz .
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: ui
+          source: ui/fems-ui.tar.gz
+
+  upload:
+    runs-on: ubuntu-latest
+    needs: [build-jars, build-ui]
+    if: |
+      always() &&   
+      (needs.build-jars.result == 'skipped' || needs.build-jars.result == 'success') &&
+      (needs.build-ui.result == 'skipped' || needs.build-ui.result == 'success')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ".gitea/"
+
+      - name: Download Environment artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          target: /artifacts/
+
+      - name: Download UI artifact
+        uses: ./.gitea/actions/artifact-download
+        if: needs.build-ui.result == 'success'
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: ui
+          target: /artifacts/
+
+      - name: Download Jars artifact
+        uses: ./.gitea/actions/artifact-download
+        if: needs.build-jars.result == 'success'
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: jars
+          target: /artifacts/
+
+      - name: Setup SSH
+        uses: ./.gitea/actions/setup-ssh
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          host: ${{ vars.DEV_SERVER_HOST }}
+
+      - name: Check artifacts
+        run: ls -lR /artifacts/
+
+      - name: Update Edge
+        run: |
+          if [ -f /artifacts/edge.jar ]; then
+            echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar"
+            rsync --mkpath /artifacts/edge.jar ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar
+          else
+            echo "Delete from ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar"
+            ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "rm ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar || true"
+          fi
+
+      - name: Update Backend
+        run: |
+          if [ -f /artifacts/backend.jar ]; then
+            echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar"
+            rsync --mkpath /artifacts/backend.jar ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar
+          else
+            echo "Delete from ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar"
+            ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "rm ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar || true"
+          fi
+
+      - name: Update UI
+        run: |
+          if [ -f /artifacts/fems-ui.tar.gz ]; then
+            echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz"
+            rsync --mkpath /artifacts/fems-ui.tar.gz ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz
+            ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "/opt/gitea/develop/fems-ui/update-nginx.sh ${CI_COMMIT_BRANCH} || true"
+          else
+            echo "Delete from ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz"
+            ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "rm ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz || true"
+            ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "/opt/gitea/develop/fems-ui/update-nginx.sh ${CI_COMMIT_BRANCH} --cleanup || true"
+          fi
+
+      - name: Update Environment
+        run: |
+          rsync --mkpath /artifacts/openems.env ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/openems.env

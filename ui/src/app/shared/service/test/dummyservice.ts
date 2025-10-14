@@ -18,7 +18,7 @@ export class DummyService extends AbstractService {
 
     private readonly edgeConfig = new EdgeConfig(this.edge, undefined);
 
-    override showAdvertWidgets(advertWidgets: AdvertWidgets) {
+    override getAvailableAdvertWidgets(advertWidgets: AdvertWidgets) {
         throw new Error("Method not implemented.");
     }
 
@@ -61,9 +61,6 @@ export class DummyService extends AbstractService {
         throw new Error("Method not implemented.");
     }
     toast(message: string, level: "success" | "warning" | "danger") {
-        throw new Error("Method not implemented.");
-    }
-    isPartnerAllowed(edge: Edge): boolean {
         throw new Error("Method not implemented.");
     }
     // https://v16.angular.io/api/core/ErrorHandler#errorhandler

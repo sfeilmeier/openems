@@ -1,13 +1,12 @@
-<oe-modal title="FENECON Industrial S" [component]="component" [formGroup]="formGroup" *ngIf="isInitialized"
+@if (isInitialized) {
+  <oe-modal title="FENECON Industrial S" [component]="component" [formGroup]="formGroup"
     helpKey="SYSTEM.INDUSTRIAL_S">
-
     <oe-modal-line [name]="'Edge.Index.Widgets.SYSTEM.OVERALL_SYSTEM' | translate"></oe-modal-line>
     <oe-modal-buttons [formGroup]="formGroup" controlName="startStop" [component]="component" [buttons]="[
     { name: 'START', value: 'START', icon: {color:'success', name: 'sunny'}},
     { name: 'STOP', value: 'STOP', icon: {color:'danger', name: 'power'}}]">
     </oe-modal-buttons>
-
     <oe-modal-info-line [info]="'Edge.Index.Widgets.SYSTEM.INDUSTRIAL.NOTE' | translate"
-        style="font-size: small;"></oe-modal-info-line>
-
-</oe-modal>
+    style="font-size: small;"></oe-modal-info-line>
+  </oe-modal>
+}

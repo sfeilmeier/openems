@@ -24,7 +24,7 @@ import { ChannelAddress } from "../shared";
 import { DefaultTypes } from "../type/defaulttypes";
 import { Language } from "../type/language";
 import { Role } from "../type/role";
-import { AdvertWidgets } from "../type/widget";
+import { AdvertWidget, AdvertWidgets } from "../type/widget";
 import { DateUtils } from "../utils/date/dateutils";
 import { AbstractService } from "./abstractservice";
 import { RouteService } from "./route.service";
@@ -104,14 +104,15 @@ export class Service extends AbstractService {
     // add language
     translate.addLangs(Language.ALL.map(l => l.key));
     // this language will be used as a fallback when a translation isn't found in the current language
-    translate.setDefaultLang(Language.DEFAULT.key);
+    translate.setFallbackLang(Language.DEFAULT.key);
+    translate.use(Language.DEFAULT.key);
 
     // initialize history period
     this.historyPeriod = new BehaviorSubject(new DefaultTypes.HistoryPeriod(new Date(), new Date()));
 
     // React on Language Change and update language
     translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.setLang(Language.getByKey(event.lang));
+      registerLocaleData(Language.getLocale(Language.getByKey(event.lang)?.key ?? Language.DEFAULT.key));
     });
   }
 
@@ -129,7 +130,7 @@ export class Service extends AbstractService {
     return "de";
 
     // TODO: Redo when translations for docs are available
-    // if (this.translate.currentLang == "de") {
+    // if (this.translate.getCurrentLang() == "de") {
     //   return "de";
     // } else {
     //   return "en";
@@ -438,32 +439,23 @@ export class Service extends AbstractService {
       message: message,
       color: level,
       duration: duration ?? 4000,
-      cssClass: "container",
+      id: "toast-container",
     });
     toast.present();
   }
 
-  public showAdvertWidgets(advertWidgets: AdvertWidgets): boolean {
+  public getAvailableAdvertWidgets(advertWidgets: AdvertWidgets): AdvertWidget[] {
+
     // Show adverts only for FENECON
     if (environment.theme != "FENECON") {
-      return false;
+      return [];
     }
 
     // No widgets available
     if (advertWidgets.list.length == 0) {
-      return false;
+      return [];
     }
 
-    return true;
-  }
-
-  // TODO: encapsulate data for different partners
-  public isPartnerAllowed(edge: Edge): boolean {
-    if (!edge) {
-      return false;
-    }
-    if (["fems1267", "fems1495", "fems1886"].includes(edge.id)) {
-      return true;
-    }
+    return advertWidgets.list;
   }
 }

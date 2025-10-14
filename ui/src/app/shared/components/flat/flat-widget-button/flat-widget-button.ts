@@ -1,7 +1,6 @@
-import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { ActivatedRoute, Params, Router, RouterModule } from "@angular/router";
-import { IonicModule } from "@ionic/angular";
+import { IonButton, IonicModule } from "@ionic/angular";
 import { Icon } from "src/app/shared/type/widget";
 
 @Component({
@@ -10,19 +9,19 @@ import { Icon } from "src/app/shared/type/widget";
     standalone: true,
     imports: [
         IonicModule,
-        CommonModule,
         RouterModule,
     ],
 })
-export class FlatButtonComponent {
+export class FlatWidgetButtonComponent {
 
-    @Input({ required: true }) protected link: { routeRelative?: ActivatedRoute, text: string, queryParams?: Params } | null = null;
-    @Input({ required: true }) protected color: "light" | "medium" | "primary" = "primary";
+    @Input() public link: { routeRelative?: ActivatedRoute, text: string, queryParams?: Params } | null = null;
+    @Input() public color: "light" | "medium" | "primary" = "primary";
+    @Input() public disabled: IonButton["disabled"] = false;
+    @Input() public fill: IonButton["fill"] = "solid";
 
     constructor(
         private router: Router,
-    ) {
-    }
+    ) { }
 
     protected navigateTo() {
         if (this.link == null) {

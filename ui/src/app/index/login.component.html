@@ -1,4 +1,5 @@
-<ion-content class="background" *ngIf="environment.theme === 'FENECON', else defaultLoginScreen">
+@if (environment.theme === 'FENECON') {
+<ion-content class="background">
   <ion-grid style="align-content: center; height: 100%;vertical-align: middle;">
     <ion-row class="ion-justify-content-center ion-align-items-center ion-padding" style="height: 100%;">
       <ion-col size-lg="4" size-sm="10" size-md="8">
@@ -10,8 +11,8 @@
                   [src]="currentThemeMode === 'dark' ? 'assets/img/fenecon-logo-dark.png' : 'assets/img/fenecon-logo-light.png'" />
               </ion-row>
               <ion-row class="ion-justify-content-center">
-                <ion-label translate>
-                  Login.ENERGY_JOURNEY_SLOGAN
+                <ion-label>
+                  {{"Login.ENERGY_JOURNEY_SLOGAN" | translate}}
                 </ion-label>
               </ion-row>
             </ion-grid>
@@ -20,82 +21,76 @@
             <ion-grid>
               <ion-row class="ion-justify-content-center ion-no-padding">
                 <ion-item lines="none">
-                  <ion-label color="primary" style="font-size: x-large; font-weight: bold;" translate>
-                    Login.title
+                  <ion-label color="primary" style="font-size: x-large; font-weight: bold;">
+                    {{"Login.title" | translate}}
                   </ion-label>
                 </ion-item>
               </ion-row>
               <ion-row>
                 <ion-col size="12">
-                  <ng-container *ngIf="environment.backend === 'OpenEMS Backend', else openEMSEdge">
-                    <form (ngSubmit)="doLogin({ username: username.value, password: password.value})">
-                      <ion-item>
-                        <ion-input appAutofill autocomplete="username" #username required type="text"
-                          [placeholder]="'E-Mail / ' + ('Login.user' | translate)"
-                          [label]="'E-Mail / '  + ('Login.user' | translate)" label-placement="floating">
-                        </ion-input>
-                      </ion-item>
-                      <ion-item class="ion-align-items-end ion-full-width">
-                        <ion-input appAutofill autocomplete="current-password"
-                          [label]="'Login.passwordLabel' | translate" type="{{ showPassword ? 'text' : 'password' }}"
-                          #password required [placeholder]="'Login.passwordLabel' | translate"
-                          label-placement="floating"></ion-input>
-                        <ion-icon style="fill: var(--ion-color-primary);"
-                          name="{{ showPassword ? 'eye-outline' : 'eye-off-outline' }}" slot="end"
-                          (click)="showPassword = !showPassword"></ion-icon>
-                      </ion-item>
-                      <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
-
-                      <ion-button fill="outline" [disabled]="formIsDisabled" type="submit"
-                        style="width: 100%; --border-radius: 20px" class="ion-padding" translate>
-                        Login.SIGN_IN
-                      </ion-button>
-                      <ion-item lines="none" class="ion-margin-top">
-                        <ion-grid>
-                          <ion-row>
-                            <a class="ion-float-left" size="small" [href]="environment.links.FORGET_PASSWORD"
-                              style="text-decoration: none;">
-                              <small translate>Login.passwordReset</small>
-                            </a>
-                          </ion-row>
-                          <ion-row>
-                            <registration style="cursor: pointer;"></registration>
-                          </ion-row>
-                          <ion-row>
-                            <a class="ion-float-left" size="small"
-                              (keydown.enter)="doDemoLogin({ username: 'demo@fenecon.de', password: 'femsdemo' })"
-                              (click)="doDemoLogin({ username: 'demo@fenecon.de', password: 'femsdemo' })"
-                              style="text-decoration: none;">
-                              <small translate>Login.DEMO_ACCESS</small>
-                            </a>
-                          </ion-row>
-                        </ion-grid>
-                      </ion-item>
-                    </form>
-                  </ng-container>
-
-                  <ng-template #openEMSEdge>
-                    <form (ngSubmit)="doLogin({ password: password.value})">
-                      <ion-item>
-                        <ion-text class="ion-text-wrap" color="medium" translate>
-                          Login.preamble
-                        </ion-text>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label position="floating" translate>Login.passwordLabel</ion-label>
-                        <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate"
-                          value="user"></ion-input>
-                      </ion-item>
-
-                      <!-- workaround for submit with enter key https://github.com/ionic-team/ionic-framework/issues/19368 -->
-                      <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
-
-                      <ion-button [disabled]="formIsDisabled" type="submit" fill="outline" [disabled]="formIsDisabled"
-                        type="submit" style="width: 100%; --border-radius: 20px" class="ion-padding" translate>
-                        Login.SIGN_IN
-                      </ion-button>
-                    </form>
-                  </ng-template>
+                  @if (environment.backend === 'OpenEMS Backend') {
+                  <form (ngSubmit)="doLogin({ username: username.value, password: password.value})">
+                    <ion-item>
+                      <ion-input appAutofill autocomplete="username" #username required type="text"
+                        [placeholder]="'E-Mail / ' + ('Login.user' | translate)"
+                        [label]="'E-Mail / '  + ('Login.user' | translate)" label-placement="floating">
+                      </ion-input>
+                    </ion-item>
+                    <ion-item class="ion-align-items-end ion-full-width">
+                      <ion-input appAutofill autocomplete="current-password" [label]="'Login.passwordLabel' | translate"
+                        type="{{ showPassword ? 'text' : 'password' }}" #password required
+                        [placeholder]="'Login.passwordLabel' | translate" label-placement="floating"></ion-input>
+                      <ion-icon style="fill: var(--ion-color-primary);"
+                        name="{{ showPassword ? 'eye-outline' : 'eye-off-outline' }}" slot="end"
+                        (click)="showPassword = !showPassword"></ion-icon>
+                    </ion-item>
+                    <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
+                    <ion-button fill="outline" [disabled]="formIsDisabled" type="submit"
+                      style="width: 100%; --border-radius: 20px" class="ion-padding" translate>
+                      Login.SIGN_IN
+                    </ion-button>
+                    <ion-item lines="none" class="ion-margin-top">
+                      <ion-grid>
+                        <ion-row>
+                          <a class="ion-float-left" size="small" [href]="environment.links.FORGET_PASSWORD"
+                            style="text-decoration: none;">
+                            <small translate>Login.passwordReset</small>
+                          </a>
+                        </ion-row>
+                        <ion-row>
+                          <registration style="cursor: pointer;"></registration>
+                        </ion-row>
+                        <ion-row>
+                          <a class="ion-float-left" size="small"
+                            (keydown.enter)="doDemoLogin({ username: 'demo@fenecon.de', password: 'femsdemo' })"
+                            (click)="doDemoLogin({ username: 'demo@fenecon.de', password: 'femsdemo' })"
+                            style="text-decoration: none;">
+                            <small translate>Login.DEMO_ACCESS</small>
+                          </a>
+                        </ion-row>
+                      </ion-grid>
+                    </ion-item>
+                  </form>
+                  } @else {
+                  <form (ngSubmit)="doLogin({ password: password.value})">
+                    <ion-item>
+                      <ion-text class="ion-text-wrap" color="medium" translate>
+                        Login.preamble
+                      </ion-text>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label position="floating">{{"Login.passwordLabel" | translate}}</ion-label>
+                      <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate"
+                        value="user"></ion-input>
+                    </ion-item>
+                    <!-- workaround for submit with enter key https://github.com/ionic-team/ionic-framework/issues/19368 -->
+                    <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
+                    <ion-button [disabled]="formIsDisabled" type="submit" fill="outline" [disabled]="formIsDisabled"
+                      type="submit" style="width: 100%; --border-radius: 20px" class="ion-padding" translate>
+                      Login.SIGN_IN
+                    </ion-button>
+                  </form>
+                  }
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -103,13 +98,15 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="!isApp">
+    @if (!isApp) {
+    <ion-row>
       <ion-grid>
         <ion-row class="ion-justify-content-center ion-no-padding">
           <ion-col size-lg="4" size-sm="10" size-md="8">
             <ion-grid>
               <ion-row class="ion-justify-content-center ion-no-padding">
-                <ion-col *ngIf="operatingSystem !== 'Android'">
+                @if (operatingSystem !== 'Android') {
+                <ion-col>
                   <ion-card id="click-trigger">
                     <ion-item (click)="showPopoverOrRedirectToStore('ios')">
                       <ion-icon style="margin-right: 5%;" size="large" color="black" name="logo-apple"
@@ -131,7 +128,9 @@
                     </ng-template>
                   </ion-popover>
                 </ion-col>
-                <ion-col *ngIf="operatingSystem !== 'iOS'">
+                }
+                @if (operatingSystem !== 'iOS') {
+                <ion-col>
                   <ion-card id="android-trigger">
                     <ion-item (click)="showPopoverOrRedirectToStore('android')">
                       <ion-icon style="margin-right: 5%;" size="large" name="logo-google-playstore" slot="start"
@@ -153,107 +152,109 @@
                     </ng-template>
                   </ion-popover>
                 </ion-col>
+                }
               </ion-row>
             </ion-grid>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-row>
+    }
   </ion-grid>
 </ion-content>
-
-<ng-template #defaultLoginScreen>
-  <header></header>
-  <ion-content>
-    <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        <ngx-spinner [name]='"loginspinner"'></ngx-spinner>
-        <ion-col size="12" size-md="6" size-lg="4">
-
-          <ng-container [ngSwitch]="websocket.status">
-
-            <!-- Sent authentication request; waiting for response -->
-            <ion-card *ngSwitchCase="'authenticating'">
-            </ion-card>
-
-            <!-- Login is required. Waiting for credentials input -->
-            <ion-card *ngSwitchCase="'waiting for credentials'">
-              <ion-item color="primary" lines="full">
-                <ion-icon slot="start" name="person-outline"></ion-icon>
-                <ion-label translate>Login.title</ion-label>
+} @else {
+<header></header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ngx-spinner [name]='"loginspinner"'></ngx-spinner>
+      <ion-col size="12" size-md="6" size-lg="4">
+        @switch (websocket.status) {
+        <!-- Sent authentication request; waiting for response -->
+        @case ('authenticating') {
+        <ion-card>
+        </ion-card>
+        }
+        <!-- Login is required. Waiting for credentials input -->
+        @case ('waiting for credentials') {
+        <ion-card>
+          <ion-item color="primary" lines="full">
+            <ion-icon slot="start" name="person-outline"></ion-icon>
+            <ion-label>{{"Login.title" | translate}}</ion-label>
+          </ion-item>
+          <!-- OpenEMS Edge Login -->
+          @if (environment.backend === 'OpenEMS Edge') {
+          <ion-card-content>
+            <form (ngSubmit)="doLogin({ password: password.value})">
+              <div class="ion-padding">
+                <ion-item>
+                  <ion-text class="ion-text-wrap" color="medium" translate>
+                    Login.preamble
+                  </ion-text>
+                </ion-item>
+                <ion-item>
+                  <ion-input #password required type="password" [label]="'Login.passwordLabel' | translate"
+                    label-placement="floating" [placeholder]="'Login.passwordLabel' | translate"
+                    value="user"></ion-input>
+                </ion-item>
+                <!-- workaround for submit with enter key https://github.com/ionic-team/ionic-framework/issues/19368 -->
+                <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
+                <ion-button [disabled]="formIsDisabled" type="submit" class="ion-float-right">
+                  <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </form>
+          </ion-card-content>
+          }
+          <!-- OpenEMS Backend Login -->
+          @if (environment.backend === 'OpenEMS Backend') {
+          <ion-card-content>
+            <form (ngSubmit)="doLogin({ username: username.value, password: password.value})">
+              <ion-item>
+                <ion-input #username required type="input" [placeholder]="'E-Mail / ' + ('Login.user' | translate)"
+                  [label]="'E-Mail / '  + ('Login.user' | translate)" label-placement="floating">
+                </ion-input>
               </ion-item>
-
-              <!-- OpenEMS Edge Login -->
-              <ion-card-content *ngIf="environment.backend === 'OpenEMS Edge'">
-                <form (ngSubmit)="doLogin({ password: password.value})">
-                  <div class="ion-padding">
-                    <ion-item>
-                      <ion-text class="ion-text-wrap" color="medium" translate>
-                        Login.preamble
-                      </ion-text>
-                    </ion-item>
-                    <ion-item>
-                      <ion-input #password required type="password" [label]="'Login.passwordLabel' | translate"
-                        label-placement="floating" [placeholder]="'Login.passwordLabel' | translate"
-                        value="user"></ion-input>
-                    </ion-item>
-
-                    <!-- workaround for submit with enter key https://github.com/ionic-team/ionic-framework/issues/19368 -->
-                    <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
-
-                    <ion-button [disabled]="formIsDisabled" type="submit" class="ion-float-right">
-                      <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
+              <ion-item>
+                <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate"
+                  label-placement="floating" [label]="'Login.passwordLabel' | translate">
+                </ion-input>
+              </ion-item>
+              <!-- workaround for submit with enter key https://github.com/ionic-team/ionic-framework/issues/19368 -->
+              <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
+              <ion-item lines="none" class="ion-margin-top">
+                <table class=" full_width">
+                  <tr>
+                    <th>
+                  <tr>
+                    <a class="ion-float-left" size="small" [href]="environment.links.FORGET_PASSWORD"
+                      style="text-decoration: none;">
+                      <small translate>Login.passwordReset</small>
+                    </a>
+                  </tr>
+                  @if (!isApp) {
+                  <tr>
+                    <registration style="cursor: pointer;"></registration>
+                  </tr>
+                  }
+                  </th>
+                  <th>
+                    <ion-button [disabled]="formIsDisabled" type="submit" class="ion-float-right" size="medium">
+                      <small>Login</small>
+                      <ion-icon slot="end" name="log-in-outline"></ion-icon>
                     </ion-button>
-                  </div>
-                </form>
-              </ion-card-content>
-
-              <!-- OpenEMS Backend Login -->
-              <ion-card-content *ngIf="environment.backend === 'OpenEMS Backend'">
-                <form (ngSubmit)="doLogin({ username: username.value, password: password.value})">
-                  <ion-item>
-                    <ion-input #username required type="input" [placeholder]="'E-Mail / ' + ('Login.user' | translate)"
-                      [label]="'E-Mail / '  + ('Login.user' | translate)" label-placement="floating">
-                    </ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-input #password required type="password" [placeholder]="'Login.passwordLabel' | translate"
-                      label-placement="floating" [label]="'Login.passwordLabel' | translate">
-                    </ion-input>
-                  </ion-item>
-
-                  <!-- workaround for submit with enter key https://github.com/ionic-team/ionic-framework/issues/19368 -->
-                  <input type="submit" style="visibility: hidden; position: absolute; position: -999px" />
-
-                  <ion-item lines="none" class="ion-margin-top">
-                    <table class=" full_width">
-                      <tr>
-                        <th>
-                      <tr>
-                        <a class="ion-float-left" size="small" [href]="environment.links.FORGET_PASSWORD"
-                          style="text-decoration: none;">
-                          <small translate>Login.passwordReset</small>
-                        </a>
-                      </tr>
-                      <tr *ngIf="!isApp">
-                        <registration style="cursor: pointer;"></registration>
-                      </tr>
-                      </th>
-                      <th>
-                        <ion-button [disabled]="formIsDisabled" type="submit" class="ion-float-right" size="medium">
-                          <small>Login</small>
-                          <ion-icon slot="end" name="log-in-outline"></ion-icon>
-                        </ion-button>
-                      </th>
-                      </tr>
-                    </table>
-                  </ion-item>
-                </form>
-              </ion-card-content>
-            </ion-card>
-          </ng-container>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
-</ng-template>
+                  </th>
+                  </tr>
+                </table>
+              </ion-item>
+            </form>
+          </ion-card-content>
+          }
+        </ion-card>
+        }
+        }
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+}

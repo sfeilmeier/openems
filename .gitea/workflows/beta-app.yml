@@ -1,0 +1,155 @@
+name: Beta-App-Build
+run-name: Beta App Build for FEMS
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI_COMMIT_BRANCH: ${{ github.ref_name }}
+  CI_GROUP: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Environment
+        id: env
+        run: |
+          echo "CI_GROUP=${CI_GROUP}"
+          mkdir /env
+          source tools/common.sh
+          common_initialize_environment
+          common_build_snapshot_version
+          common_save_environment /env/openems.env
+          common_create_version_file /env/fems.version
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          source: /env/
+          verbose: "true"
+
+  build-android-app:
+    runs-on: ubuntu-latest-android
+    needs: setup
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: "tools/\nui/\n.gitea/\n.gradle-wrapper"
+
+      - name: Download artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          verbose: "true"
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: ui/package-lock.json
+
+      - name: Build Android App
+        run: |
+          export THEME=feneconbeta
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_build_android_app
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: ui
+          source: ui/android/target/
+
+  build-ios-app:
+    runs-on: ubuntu-latest
+    needs: setup
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: "tools/\n.gitea/"
+
+      - name: build iOS App
+        uses: ./.gitea/actions/build-ios-app
+        with:
+          mac-host: ${{ vars.MAC_HOST }}
+          mac-user: "fems"
+          mac-ssh-key: ${{ secrets.MAC_SSH_KEY }}
+          theme: feneconbeta
+          configuration: Release
+          branch-name: ${{ github.ref_name }}
+
+  upload:
+    runs-on: ubuntu-latest
+    needs: [build-android-app, build-ios-app]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ".gitea/"
+
+      - name: Download UI artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: ui
+          target: /artifacts/
+
+      - name: Set up SSH
+        uses: ./.gitea/actions/setup-ssh
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          host: ${{ vars.DEV_SERVER_HOST }}
+
+      - name: Check artifacts
+        run: ls -lR /artifacts/
+
+      - name: Update App
+        run: |
+          echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
+          rsync --mkpath /artifacts/* ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/
+
+  create-android-release:
+    runs-on: ubuntu-latest
+    needs: [upload]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ".gitea/\ntools/"
+
+      - name: Download Environment artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          target: /artifacts/
+          verbose: "true"
+
+      - name: Dependencies
+        run: |
+          apt-get update -qq && apt-get install -y -qq python3 python3-requests python3-google-auth || true
+          rm -rf /var/lib/apt/lists/*
+
+      - name: Release App
+        run: |
+          echo ${{ secrets.DEV_API }} > secret.json
+          source /artifacts/openems.env
+          python3 tools/deploy/android/create_release.py feneconbeta ${VERSION_FULL} secret.json ${CI_COMMIT_BRANCH}

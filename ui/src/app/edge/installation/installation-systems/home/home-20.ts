@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { TranslateService } from "@ngx-translate/core";
 import { Category } from "../../shared/category";
-import { FeedInSetting, View } from "../../shared/enums";
-import { DcPv } from "../../shared/ibndatatypes";
+import { ExternalLimitationType, FeedInSetting, View } from "../../shared/enums";
+import { ComponentData, DcPv } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
 import { SystemId } from "../../shared/system";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
@@ -86,5 +86,13 @@ export class Home20FeneconIbn extends AbstractHomeIbn {
 
     public override getMpptLabel(mppt: number, pv: number) {
         return this.getTwoStringMpptLabel(mppt, pv);
+    }
+
+    public override getExternalLimitationTypeOptions(): ComponentData[] {
+        return [
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: ExternalLimitationType.EXTERNAL_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_EXTERNAL_LIMITATION"), value: ExternalLimitationType.DYNAMIC_EXTERNAL_LIMITATION },
+            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: ExternalLimitationType.NO_LIMITATION },
+        ];
     }
 }

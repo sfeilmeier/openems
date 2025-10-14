@@ -24,10 +24,23 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.10.1",
+        changes: [
+          Changelog.openems("2025.10.0"),
+          Changelog.UI + "Links zur Dokumentation in Apps eingefügt, Stabilere Aktualisierung der Daten",
+          Changelog.app(App.TIME_OF_USE, App.LUOX_ENERGY) + "Kompatibilität mit LUOX Dynamisch",
+          Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Umstellung der Standardeinstellung auf 15-Minuten-Werte",
+          Changelog.app(App.METER, App.PQ_PLUS) + "Kompatibilität mit den PQ Plus Zählern UMD 96 und UMD 97",
+          { roleIsAtLeast: Role.INSTALLER, change: "Inbetriebnahmeassistent: Einführung der Auswahloption \"Externe limitierung\" | \"Dynamischer Rundsteuerempfänger\"" },
+          Changelog.app(App.PV_INVERTER, App.SOLAREDGE) + "Einstellbarkeit der Modbus Unit-ID",
+          Changelog.library(Library.ANGULAR),
+        ],
+      },
+      {
         version: "2025.9.4",
         changes: [
           "Einführung der Funktion \"Dynamischer Rundsteuerempfänger\" über die FEMS-Anschlussbox für Home 20, 30 & Commercial 50. Ermöglicht die Abregelung am Netzanschlusspunkt statt direkt an der Erzeugungsanlage",
-          "FEMS App Zeitvariable Netzentgelte: öffentliche Verfügbarkeit",
+          Changelog.app(App.TIME_OF_USE, App.ANCILLARY_COSTS) + "Öffentliche Verfügbarkeit",
         ],
       },
       {
@@ -49,6 +62,7 @@ export class ChangelogComponent {
       {
         version: "2025.9.1",
         changes: [
+          Changelog.openems("2025.9.0"),
           Changelog.UI,
           "Optimierung der Keyboardnavigation gemäß WCAG (Web Content Accessibility Guidelines)",
           { roleIsAtLeast: Role.INSTALLER, change: "Im Inbetriebnahmeassistent ist die Auswahl für den Cos µ Festwert nun auf Werte zwischen (-)0,9 und (-)0,99 limitiert" },

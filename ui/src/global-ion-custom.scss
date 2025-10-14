@@ -20,6 +20,14 @@
     padding-top: 0;
 }
 
+.ion-padding-top-triple {
+    padding-top: calc(var(--ion-padding) * 3);
+}
+
+.ion-padding-bottom-triple {
+    padding-bottom: calc(var(--ion-padding) * 3);
+}
+
 /** Font */
 .ion-font-size-medium {
     font-size: medium !important;
@@ -105,6 +113,10 @@
     &::part(label) {
         white-space: pre-wrap;
     }
+}
+
+.ion-white-space-nowrap {
+    white-space: nowrap !important;
 }
 
 .ion-align-content-center {
