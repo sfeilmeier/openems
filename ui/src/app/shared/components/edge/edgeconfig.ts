@@ -1,6 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
-import { ChannelAddress, Widgets } from "../../shared";
+import { ChannelAddress } from "../../shared";
 import { AdvertWidgets } from "../../type/widget";
+import { Widgets } from "../../type/widgets";
 import { Edge } from "./edge";
 
 export interface CategorizedComponents {
