@@ -75,6 +75,6 @@ jobs:
 
       - name: Upload Debian Package
         run: |
-          echo "Upload to ${DEV_ENV}/${CI_COMMIT_BRANCH}/"
-          rsync --mkpath /build/target/fems.deb ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${DEV_ENV}/${CI_COMMIT_BRANCH}/fems.deb
-          rsync --mkpath /build/target/fems.version ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${DEV_ENV}/${CI_COMMIT_BRANCH}/fems.version
+          echo "Upload to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
+          rsync --mkpath /build/target/fems.deb ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems.deb
+          rsync --mkpath /build/target/fems.version ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems.version
