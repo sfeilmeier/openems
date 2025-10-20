@@ -148,7 +148,7 @@ export abstract class AbstractIbn {
   public readonly showRundSteuerManual: boolean;
 
   // Show view count along with Schritt number on top of page.
-  public showViewCount: boolean;
+  public showViewCount: boolean = false;
 
   // Contains default number of battery modules per tower based on system.
   public readonly defaultNumberOfModules: number;

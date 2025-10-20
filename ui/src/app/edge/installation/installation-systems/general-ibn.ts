@@ -12,8 +12,6 @@ export class GeneralIbn extends AbstractIbn {
 
     public override readonly systemId = SystemId.GENERAL;
 
-    public override showViewCount = false;
-
     constructor(translate: TranslateService) {
         super([
             View.PreInstallation,
