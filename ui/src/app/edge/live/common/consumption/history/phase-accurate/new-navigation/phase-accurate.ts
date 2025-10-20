@@ -8,10 +8,10 @@ import { Service } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 
 @Component({
-  templateUrl: "./details.overview.html",
+  templateUrl: "./phase-accurate.html",
   standalone: false,
 })
-export class DetailsOverviewComponent extends AbstractHistoryChartOverview {
+export class CommonConsumptionSingleHistoryOverviewComponent extends AbstractHistoryChartOverview {
   protected navigationButtons: NavigationOption[] = [];
   protected componentType: "sum" | "consumptionMeter" | "evcs" | "heat" | null = null;
 

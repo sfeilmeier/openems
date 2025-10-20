@@ -8,7 +8,7 @@ import { PullToRefreshComponent } from "src/app/shared/components/pull-to-refres
 import { SharedModule } from "./../../shared/shared.module";
 import { AdvertisementModule } from "./advertisement/advertisement.module";
 import { Common_Autarchy } from "./common/autarchy/Common_Autarchy";
-import { Common_Consumption } from "./common/consumption/Common_Consumption";
+import { CommonConsumption } from "./common/consumption/common-consumption";
 import { Common_Grid } from "./common/grid/Common_Grid";
 import { Common_Production } from "./common/production/Common_Production";
 import { CommonSelfconsumption } from "./common/selfconsumption/common-selfconsumption";
@@ -58,7 +58,7 @@ import { SystemModule } from "./system/system.module";
     BrowserAnimationsModule,
     BrowserModule,
     Common_Autarchy,
-    Common_Consumption,
+    CommonConsumption,
     Common_Grid,
     Common_Production,
     CommonSelfconsumption,
