@@ -4,6 +4,19 @@
 	<artifactId>central</artifactId>
 	<version>0.0.0</version>
 	<packaging>pom</packaging>
+	<repositories>
+	  <repository>
+	    <name>Central Portal Snapshots</name>
+	    <id>central-portal-snapshots</id>
+	    <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+	    <releases>
+	      <enabled>false</enabled>
+	    </releases>
+	    <snapshots>
+	      <enabled>true</enabled>
+	    </snapshots>
+	  </repository>
+	</repositories>
 	<dependencies>
 		<!-- biz -->
 		<dependency>
@@ -17,13 +30,13 @@
 		<dependency>
 			<groupId>com.fazecast</groupId>
 			<artifactId>jSerialComm</artifactId>
-			<version>2.5.1</version>
+			<version>2.11.0</version>
 		</dependency>
 		<dependency>
-			<!-- Changelog: https://github.com/steveohara/j2mod/blob/master/RELEASE_NOTES.md -->
-			<groupId>com.ghgande</groupId>
+			<!-- Changelog: https://github.com/OpenEMS/j2mod/releases -->
+			<groupId>io.openems</groupId>
 			<artifactId>j2mod</artifactId>
-			<version>2.5.5</version>
+			<version>3.2.2-openems.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.rzymek</groupId>
