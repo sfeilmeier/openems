@@ -24,6 +24,15 @@ export class ChangelogComponent {
     changes: Array<string | { roleIsAtLeast: Role, change: string }>
   }[] = [
       {
+        version: "2025.10.2",
+        changes: [
+          Changelog.UI,
+          "FEMS App Wetter: Schrittweise Einführung der Wettervorhersage sowie einer optimierten, wetterbasierten Erzeugungsprognose",
+          Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Aktualisierung auf geänderte API-Schnittstelle von ENTSO-E",
+          Changelog.library(Library.OKHTTP, Library.APACHE_FELIX_HTTP_JETTY),
+        ],
+      },
+      {
         version: "2025.10.1",
         changes: [
           Changelog.openems("2025.10.0"),

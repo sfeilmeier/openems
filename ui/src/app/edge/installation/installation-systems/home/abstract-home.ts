@@ -117,7 +117,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
   public readonly imageUrl: string = "assets/img/Home-Typenschild-web.jpg";
   public readonly relayFactoryId: string = "IO.KMtronic.4Port"; // Default 'Home10' factoryId.
   public override readonly showRundSteuerManual: boolean = true;
-  public override showViewCount: boolean = false;
   public override readonly defaultNumberOfModules: number = 5;
   public readonly parallelBoxPrefix: string = ExtensionBoxPrefix.FHP;
   public readonly emsBoxPrefix: string | null = null;

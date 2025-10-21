@@ -35,8 +35,7 @@ export class ConfigurationSubSystemComponent implements OnInit {
     public ngOnInit() {
         this.form = new FormGroup({});
         this.fields = this.ibn.getSubSystemFields();
-
-        this.emsType = sessionStorage.getItem("emsType") as EmsType;
+        this.emsType = this.ibn.getEmsType();
     }
 
     public onNextClicked() {

@@ -52,7 +52,7 @@
                 <ion-label style="white-space: initial; text-align: center;">
                   {{"Edge.Config.App.notAvailable" | translate}}</ion-label>
               </ion-item>
-              <div class="ion-padding" slot="content">
+              <div class="ion-padding" slot="content" (ngDomChange)="onDomChange($event, app.appId)">
                 <ion-label>
                   @for (message of app.status.errorCompatibleMessages; track message) {
                     <div>
@@ -152,7 +152,7 @@
         <ion-col>
           <ion-segment [(ngModel)]="selectedBundle">
             @for (bundle of key.bundles; track bundle; let i = $index) {
-              <ion-segment-button value={ {i}} (click)="updateSelection()">
+              <ion-segment-button [value]="i" (click)="updateSelection()">
                 <ion-text text-nowrap>
                   {{ bundle.length }}
                 </ion-text>

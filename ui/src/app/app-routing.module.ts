@@ -3,8 +3,6 @@ import { NoPreloading, RedirectFunction, RouterModule, Routes } from "@angular/r
 import { CookieService } from "ngx-cookie-service";
 import { environment } from "src/environments";
 import { EdgeComponent } from "./edge/edge.component";
-import { DetailsOverviewComponent as ConsumptionDetailsOverviewComponent } from "./edge/history/common/consumption/details/details.overview";
-import { OverviewComponent as ConsumptionChartOverviewComponent } from "./edge/history/common/consumption/overview/overview";
 import { DetailsOverviewComponent } from "./edge/history/common/production/details/details.overview";
 import { OverviewComponent as ProductionChartOverviewComponent } from "./edge/history/common/production/overview/overview";
 import { OverviewComponent as ChannelthresholdChartOverviewComponent } from "./edge/history/Controller/ChannelThreshold/overview/overview";
@@ -24,6 +22,8 @@ import { HistoryDataService } from "./edge/history/historydataservice";
 import { HistoryParentComponent } from "./edge/history/historyparent.component";
 import { InstallationComponent } from "./edge/installation/installation.component";
 import { OverviewComponent as CommonAutarchyHistoryOverviewComponent } from "./edge/live/common/autarchy/history/overview/overview";
+import { CommonConsumptionHistoryOverviewComponent } from "./edge/live/common/consumption/history/overview/overview";
+import { CommonConsumptionDetailsOverviewComponent } from "./edge/live/common/consumption/history/phase-accurate/overview/overview";
 import { CommonGridDetailsExternalLimitationOverviewComponent } from "./edge/live/common/grid/history/details/external-limitation/overview/details.overview";
 import { CommonGridDetailsPhaseAccurateOverviewComponent } from "./edge/live/common/grid/history/details/phase-accurate/overview/details.overview";
 import { CommonGridOverviewComponent } from "./edge/live/common/grid/history/overview/overview";
@@ -56,8 +56,8 @@ export const history: (/** Determines if titles in headers can be set */ customH
     { path: ":componentId/symmetricpeakshavingchart", component: SymmetricPeakshavingChartOverviewComponent },
     { path: ":componentId/timeslotpeakshavingchart", component: TimeslotPeakshavingChartOverviewComponent },
     { path: "autarchychart", component: CommonAutarchyHistoryOverviewComponent },
-    { path: "consumptionchart", component: ConsumptionChartOverviewComponent },
-    { path: "consumptionchart/:componentId", component: ConsumptionDetailsOverviewComponent },
+    { path: "consumptionchart", component: CommonConsumptionHistoryOverviewComponent },
+    { path: "consumptionchart/:componentId", component: CommonConsumptionDetailsOverviewComponent },
     { path: "consumptionchart/:componentId/currentVoltage", component: CurrentAndVoltageOverviewComponent },
     { path: "gridchart", component: CommonGridOverviewComponent },
     { path: "gridchart/externalLimitation", component: CommonGridDetailsExternalLimitationOverviewComponent },

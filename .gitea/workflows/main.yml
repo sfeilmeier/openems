@@ -271,7 +271,7 @@ jobs:
       - name: Upload artifacts
         run: |
           if [[ -z "${CI_COMMIT_BRANCH}" ]]; then echo "CI_COMMIT_BRANCH is not set"; exit 1; fi
-          echo "Upload to ${DEV_ENV}/${CI_COMMIT_BRANCH}/"
+          echo "Upload to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
           rsync --mkpath /artifacts/backend.jar ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar
           rsync --mkpath /artifacts/edge.jar ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar
           rsync --mkpath /artifacts/fems-ui.tar.gz ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz
