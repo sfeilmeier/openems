@@ -178,6 +178,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Meter.CarloGavazzi", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
 			.put("App.Meter.PqPlus", "") //
 			.put("App.Meter.Janitza", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
+			.put("App.GridMeter.Janitza", "") //
 			.put("App.Meter.Discovergy", "")//
 			.put("App.Meter.PhoenixContact", "")//
 			.put("App.Meter.Eastron", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/")//
