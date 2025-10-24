@@ -98,7 +98,7 @@ steps:
       - *main-build
       - *message-debian
       - *ui-only
-    image: openems-build:21.20
+    image: openems-build:21.22
     commands:
       - export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
       - source $CI_WORKSPACE/.woodpecker-env
@@ -120,7 +120,7 @@ steps:
       - *main-build
       - *message-debian
       - *java-only
-    image: openems-build:21.20
+    image: openems-build:21.22
     environment:
       OEMS_EDGE_OUTPUT: "build/target/edge.jar"
       OEMS_BACKEND_OUTPUT: "build/target/backend.jar"
@@ -145,7 +145,7 @@ steps:
     when:
       - *main-build
       - *message-debian
-    image: openems-build:21.20
+    image: openems-build:21.22
     commands:
       - source $CI_WORKSPACE/.woodpecker-env
       - source $CI_WORKSPACE/.openems-env

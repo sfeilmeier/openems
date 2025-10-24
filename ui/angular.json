@@ -23,6 +23,9 @@
                 "maximumError": "20mb"
               }
             ],
+            "externalDependencies": [
+              "@stencil/core"
+            ],
             "index": "src/index.html",
             "namedChunks": false,
             "outputPath": {
