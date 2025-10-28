@@ -337,7 +337,7 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
 
         batteryInverterData.push({
             label: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE"),
-            value: this.emergencyReserve.isStsBoxAvailable ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+            value: this.emergencyReserve.isStsBoxAvailable ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
         });
 
         if (this.emergencyReserve.isStsBoxAvailable) {
@@ -364,7 +364,7 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
         protocol.items.push({
             category: Category.STS_BOX,
             name: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE"),
-            value: emergencyReserve.isStsBoxAvailable ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+            value: emergencyReserve.isStsBoxAvailable ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
         });
 
         if (emergencyReserve.isStsBoxAvailable) {

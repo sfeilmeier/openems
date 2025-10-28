@@ -104,7 +104,7 @@ export class ProtocolAvuBoxComponent implements OnInit {
                 key: "yes",
                 type: "checkbox-button",
                 props: {
-                    label: this.translate.instant("General.yes"),
+                    label: this.translate.instant("GENERAL.YES"),
                     buttonAvailable: true,
                     buttonText: this.translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.OPEN_INSTRUCTIONS"),
                     onButtonClick: () => {
@@ -159,7 +159,7 @@ export class ProtocolAvuBoxComponent implements OnInit {
                 key: "no",
                 type: "checkbox-button",
                 props: {
-                    label: this.translate.instant("General.no"),
+                    label: this.translate.instant("GENERAL.NO"),
                     buttonAvailable: false,
                     required: true,
                 },

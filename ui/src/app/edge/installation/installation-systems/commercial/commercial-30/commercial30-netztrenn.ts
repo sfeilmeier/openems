@@ -208,7 +208,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         protocol.items.push({
             category: Category.EMERGENCY_RESERVE,
             name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE", { symbol: "?" }),
-            value: emergencyReserve.isEnabled ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+            value: emergencyReserve.isEnabled ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
         });
 
         if (emergencyReserve.isEnabled) {

@@ -7,24 +7,24 @@
           @for (battery of batteries; track battery) {
             <oe-flat-widget-line leftColumnWidth="5" [name]="battery.alias">
               <oe-flat-widget-line-item [channelAddress]="battery.id + '/Soc'"
-              [converter]="Converter.STATE_IN_PERCENT"></oe-flat-widget-line-item>
+                [converter]="Converter.STATE_IN_PERCENT"></oe-flat-widget-line-item>
               <oe-flat-widget-line-item [channelAddress]="battery.id + '/Voltage'"
-              [converter]="Converter.VOLTAGE_TO_VOLT"></oe-flat-widget-line-item>
+                [converter]="Converter.VOLTAGE_TO_VOLT"></oe-flat-widget-line-item>
               <oe-flat-widget-line-item [name]="'Zellspannungsdifferenz'" [value]="cellVoltageDifferences[battery.id]"
-              [converter]="VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS"></oe-flat-widget-line-item>
+                [converter]="VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS"></oe-flat-widget-line-item>
               <oe-flat-widget-line-item [name]="'ShuntTemperature'"
                 [channelAddress]="battery.id + '/PackShuntTemperature'"
-              [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line-item>
+                [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line-item>
               <oe-flat-widget-line-item [name]="'maxTemp'" [channelAddress]="battery.id + '/MaxCellTemperature'"
-              [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line-item>
+                [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line-item>
               <oe-flat-widget-line-item [name]="'minTemp'" [channelAddress]="battery.id + '/MinCellTemperature'"
-              [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line-item>
+                [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line-item>
               @if (tower[battery.id]?.['Firmware']) {
                 <oe-flat-widget-line-item [name]="'FW'"
-                [value]="tower[battery.id]?.['Firmware']"></oe-flat-widget-line-item>
+                  [value]="tower[battery.id]?.['Firmware']"></oe-flat-widget-line-item>
               }
               <oe-flat-widget-line-item [channelAddress]="battery.id + '/StateMachine'"
-              [converter]="Converter.CONVERT_TO_BATTERY_STATE"></oe-flat-widget-line-item>
+                [converter]="Converter.CONVERT_TO_BATTERY_STATE"></oe-flat-widget-line-item>
             </oe-flat-widget-line>
           }
         </oe-flat-widget>
@@ -36,11 +36,11 @@
           @for (batteryInverter of batteryInverters; track batteryInverter) {
             <oe-flat-widget-line leftColumnWidth="20" [name]="batteryInverter.alias">
               <oe-flat-widget-line-item [name]="'Firmware'"
-              [channelAddress]="batteryInverter.id + '/S1Vr'"></oe-flat-widget-line-item>
+                [channelAddress]="batteryInverter.id + '/S1Vr'"></oe-flat-widget-line-item>
               <oe-flat-widget-line-item [channelAddress]="batteryInverter.id + '/S64201CurrentState'"
-              [converter]="Converter.CONVERT_TO_BATTERY_INVERTER_STATE"></oe-flat-widget-line-item>
+                [converter]="Converter.CONVERT_TO_BATTERY_INVERTER_STATE"></oe-flat-widget-line-item>
               <oe-flat-widget-line-item [channelAddress]="batteryInverter.id + '/StateMachine'"
-              [converter]="Converter.CONVERT_TO_BATTERY_STATE"></oe-flat-widget-line-item>
+                [converter]="Converter.CONVERT_TO_BATTERY_STATE"></oe-flat-widget-line-item>
             </oe-flat-widget-line>
           }
         </oe-flat-widget>
@@ -50,34 +50,34 @@
       <ion-col size-lg="3" size-md="12" size-sm="12">
         <oe-flat-widget title="Cooling Unit">
           <oe-flat-widget-line [name]="'STATUS'"
-          [value]="systemFeneconIndustrialL['HeatingState']"></oe-flat-widget-line>
+            [value]="systemFeneconIndustrialL['HeatingState']"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Pump Status'" [channelAddress]="'system0/PumpRunningState'"
-          [converter]="Converter.CONVERT_TO_ENABLED_DISABLED_STATE"></oe-flat-widget-line>
+            [converter]="Converter.CONVERT_TO_ENABLED_DISABLED_STATE"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Water Inlet Temp'" [channelAddress]="'system0/WaterInletTemp'"
-          [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line>
+            [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Water Outlet Temp'" [channelAddress]="'system0/WaterOutletTemp'"
-          [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line>
+            [converter]="Converter.TEMPERATURE_IN_DEGREES"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Water Inlet Pressure'" [channelAddress]="'system0/WaterInletPressure'"
-          [converter]="Converter.CONVERT_TO_BAR"></oe-flat-widget-line>
+            [converter]="Converter.CONVERT_TO_BAR"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Water Outlet Pressure'" [channelAddress]="'system0/WaterOutletPressure'"
-          [converter]="Converter.CONVERT_TO_BAR"></oe-flat-widget-line>
+            [converter]="Converter.CONVERT_TO_BAR"></oe-flat-widget-line>
         </oe-flat-widget>
       </ion-col>
 
       <!-- Speichersystem Widget -->
       <ion-col size-lg="3" size-md="12" size-sm="12">
         <oe-flat-widget title="Speichersystem">
-          <oe-flat-widget-line [name]="'General.soc' | translate" [channelAddress]="'_sum/EssSoc'"
-          [converter]="Converter.STATE_IN_PERCENT"></oe-flat-widget-line>
+          <oe-flat-widget-line [name]="'GENERAL.SOC' | translate" [channelAddress]="'_sum/EssSoc'"
+            [converter]="Converter.STATE_IN_PERCENT"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Be- & Entladeleistung'" [channelAddress]="'_sum/EssDischargePower'"
-          [converter]="Converter.POWER_IN_WATT"></oe-flat-widget-line>
+            [converter]="Converter.POWER_IN_WATT"></oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Leistungsfreigaben (Beladen / Entladen) in [W]'">
             <oe-flat-widget-line-item [channelAddress]="'_sum/EssMinDischargePower'"></oe-flat-widget-line-item>
             <oe-flat-widget-line-item [value]="'|'"></oe-flat-widget-line-item>
             <oe-flat-widget-line-item [channelAddress]="'_sum/EssMaxDischargePower'"></oe-flat-widget-line-item>
           </oe-flat-widget-line>
           <oe-flat-widget-line [name]="'Status'" [channelAddress]="'system0/StateMachine'"
-          [converter]="Converter.CONVERT_TO_ESS_STATE"></oe-flat-widget-line>
+            [converter]="Converter.CONVERT_TO_ESS_STATE"></oe-flat-widget-line>
         </oe-flat-widget>
       </ion-col>
 
@@ -122,13 +122,13 @@
                 <ion-col size-lg="6" size-md="12" size-sm="12">
                   <oe-flat-widget-line [name]="'Minimale Zellspannung'"
                     [channelAddress]="selectedBattery.id + '/MinCellVoltage'"
-                  [converter]="VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS"></oe-flat-widget-line>
+                    [converter]="VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS"></oe-flat-widget-line>
                   <oe-flat-widget-line [name]="'Maximale Zellspannung'"
                     [channelAddress]="selectedBattery.id + '/MaxCellVoltage'"
-                  [converter]="VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS"></oe-flat-widget-line>
+                    [converter]="VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS"></oe-flat-widget-line>
                   <oe-flat-widget-line [name]="'Maximale Zellspannungsdifferenz'" [value]="cellVoltageDifference"
                     [converter]="VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS"
-                  [style.color]="cellVoltageDifference > 50 ? 'red' : (cellVoltageDifference >= 20 && cellVoltageDifference < 50 ? 'orange' : 'green')"></oe-flat-widget-line>
+                    [style.color]="cellVoltageDifference > 50 ? 'red' : (cellVoltageDifference >= 20 && cellVoltageDifference < 50 ? 'orange' : 'green')"></oe-flat-widget-line>
                 </ion-col>
               </ion-row>
             </ion-grid>

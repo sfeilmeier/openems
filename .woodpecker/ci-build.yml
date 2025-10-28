@@ -108,7 +108,7 @@ steps:
       - cd ui
       - npm ci --prefer-offline --cache $npm_config_cache --force
       - node_modules/.bin/ng config cli.cache.path "$NG_CLI_CACHE_PATH"
-      - node_modules/.bin/ng lint
+      - npm run lint
       - node_modules/.bin/tsc
       - node_modules/.bin/tsc-strict
       - node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-prod,prod"

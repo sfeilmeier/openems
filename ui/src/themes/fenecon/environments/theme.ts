@@ -1,9 +1,9 @@
 import { TranslateService } from "@ngx-translate/core";
 import { Filter } from "src/app/index/filter/filter.component";
-import { Theme } from "src/environments";
+import { Environment, Theme } from "src/environments";
 import { OemMeta } from "./oem-meta";
 
-export const theme = {
+export const theme: Omit<Environment, "url" | "backend" | "production" | "debugMode"> = {
     theme: "FENECON" as Theme,
 
     uiTitle: "FENECON Online-Monitoring",
@@ -15,7 +15,7 @@ export const theme = {
 
     PRODUCT_TYPES: (translate: TranslateService): Filter => (
         {
-            placeholder: translate.instant("Index.TYPE"),
+            placeholder: translate.instant("INDEX.TYPE"),
             category: "producttype",
             options: [
                 {
