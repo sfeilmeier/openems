@@ -29,7 +29,6 @@ public class BridgeModbusSerialImplTest {
 						.setStopbits(Stopbit.ONE) //
 						.setInvalidateElementsAfterReadErrors(1) //
 						.setLogVerbosity(LogVerbosity.NONE) //
-						.setOverwritePortConfiguration(false) //
 						.build()) //
 				.next(new TestCase() //
 						.output(StartStoppable.ChannelId.START_STOP, StartStop.UNDEFINED) //

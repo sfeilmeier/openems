@@ -63,9 +63,6 @@ public class BridgeModbusSerialImpl extends AbstractModbusBridge
 	/** The configured parity. */
 	private Parity parity;
 
-	/** Do not configure underlying Port. */
-	private boolean overwritePortConfiguration;
-
 	public BridgeModbusSerialImpl() {
 		super(//
 				OpenemsComponent.ChannelId.values(), //
@@ -96,7 +93,6 @@ public class BridgeModbusSerialImpl extends AbstractModbusBridge
 		this.databits = config.databits();
 		this.stopbits = config.stopbits();
 		this.parity = config.parity();
-		this.overwritePortConfiguration = config.overwritePortConfiguration();
 	}
 
 	@Override
@@ -107,11 +103,10 @@ public class BridgeModbusSerialImpl extends AbstractModbusBridge
 
 	@Override
 	public void closeModbusConnection() {
-		if (this._connection == null) {
-			return;
+		if (this._connection != null) {
+			this._connection.close();
+			this._connection = null;
 		}
-		this._connection.close();
-		this._connection = null;
 	}
 
 	@Override
@@ -120,8 +115,9 @@ public class BridgeModbusSerialImpl extends AbstractModbusBridge
 			this.closeModbusConnection();
 			return null;
 		}
-		final var connection = this.getModbusConnection();
-		final var transaction = new ModbusSerialTransaction(connection);
+
+		var connection = this.getModbusConnection();
+		var transaction = new ModbusSerialTransaction(connection);
 		transaction.setRetries(AbstractModbusBridge.DEFAULT_RETRIES);
 		return transaction;
 	}
@@ -133,7 +129,7 @@ public class BridgeModbusSerialImpl extends AbstractModbusBridge
 			/*
 			 * create new connection
 			 */
-			final var params = new SerialParameters();
+			var params = new SerialParameters();
 			params.setPortName(this.portName);
 			params.setBaudRate(this.baudrate);
 			params.setDatabits(this.databits);
@@ -141,21 +137,8 @@ public class BridgeModbusSerialImpl extends AbstractModbusBridge
 			params.setParity(this.parity.getValue());
 			params.setEncoding(Modbus.SERIAL_ENCODING_RTU);
 			params.setEcho(false);
-			if (this.overwritePortConfiguration) {
-				/* RS485 Settings */
-				params.setRs485Mode(true);
-				params.setRs485TxEnableActiveHigh(true);
-				params.setRs485RxDuringTx(false);
-				params.setRs485EnableTermination(false);
-				params.setRs485DelayBeforeTxMicroseconds(0);
-				params.setRs485DelayAfterTxMicroseconds(0);	
-			}
 			var connection = new SerialConnection(params);
 			this._connection = connection;
-			if (!this.overwritePortConfiguration) {
-				this._connection.disablePortConfiguration();
-			}
-			this._connection.setTimeout(AbstractModbusBridge.DEFAULT_TIMEOUT);
 		}
 		if (!this._connection.isOpen()) {
 			try {
@@ -164,9 +147,9 @@ public class BridgeModbusSerialImpl extends AbstractModbusBridge
 				throw new OpenemsException("Connection via [" + this.portName + "] failed: " + e.getMessage());
 			}
 
-			final var transport = (ModbusSerialTransport) this._connection.getModbusTransport();
+			var transport = (ModbusSerialTransport) this._connection.getModbusTransport();
 			transport.setTimeout(AbstractModbusBridge.DEFAULT_TIMEOUT);
-			
+
 			// Sometimes read after write happens too quickly and causes read errors.
 			// Add 1ms additional waiting time between write request and read response
 			transport.addListener(new AbstractSerialTransportListener() {
