@@ -27,12 +27,12 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         value: number;
         coupler: Coupler
     } = {
-            isEnabled: true,
-            minValue: 15,
-            value: 20,
-            isReserveSocEnabled: false,
-            coupler: Coupler.WAGO,
-        };
+        isEnabled: true,
+        minValue: 15,
+        value: 20,
+        isReserveSocEnabled: false,
+        coupler: Coupler.WAGO,
+    };
 
     constructor(translate: TranslateService) {
         super([

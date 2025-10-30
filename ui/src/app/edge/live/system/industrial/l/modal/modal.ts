@@ -6,21 +6,21 @@ import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componen
 import { BmsHardResetRequest } from "../../jsonrpc/bmsHardReset";
 
 @Component({
-  templateUrl: "./modal.html",
-  standalone: false,
+    templateUrl: "./modal.html",
+    standalone: false,
 })
 export class ModalComponent extends AbstractModal {
 
-  protected override getFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      startStop: new FormControl(this.component?.properties.startStop),
-    });
-  }
+    protected override getFormGroup(): FormGroup {
+        return this.formBuilder.group({
+            startStop: new FormControl(this.component?.properties.startStop),
+        });
+    }
 
-  protected reset() {
-    this.edge.sendRequest(
-      this.websocket,
-      new ComponentJsonApiRequest({ componentId: this.component.id, payload: new BmsHardResetRequest() }),
-    );
-  }
+    protected reset() {
+        this.edge.sendRequest(
+            this.websocket,
+            new ComponentJsonApiRequest({ componentId: this.component.id, payload: new BmsHardResetRequest() }),
+        );
+    }
 }

@@ -38,11 +38,11 @@ export class Home30FeneconIbn extends AbstractHomeIbn {
         mppt2: boolean,
         mppt3: boolean,
     } = {
-            connectionCheck: false,
-            mppt1: false,
-            mppt2: false,
-            mppt3: false,
-        };
+        connectionCheck: false,
+        mppt1: false,
+        mppt2: false,
+        mppt3: false,
+    };
 
     constructor(public override translate: TranslateService) {
         super([

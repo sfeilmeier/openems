@@ -74,14 +74,14 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         fixedPowerFactor?: FeedInSetting;
         isManualProperlyFollowedAndRead?: boolean;
     } = {
-            feedInType: ExternalLimitationType.NO_LIMITATION,
-            dynamicLimitationType: GridFeedInLimitationType.NO_LIMITATION,
-            maximumFeedInPower: 0,
-            naProtection: false,
-            feedInSetting: FeedInSetting.FixedPowerFactor,
-            fixedPowerFactor: FeedInSetting.Leading_1,
-            isManualProperlyFollowedAndRead: false,
-        };
+        feedInType: ExternalLimitationType.NO_LIMITATION,
+        dynamicLimitationType: GridFeedInLimitationType.NO_LIMITATION,
+        maximumFeedInPower: 0,
+        naProtection: false,
+        feedInSetting: FeedInSetting.FixedPowerFactor,
+        fixedPowerFactor: FeedInSetting.Leading_1,
+        isManualProperlyFollowedAndRead: false,
+    };
 
     // protocol-pv
     public pv?: {
@@ -96,17 +96,17 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         fixedValue?: number;
         otherValue?: number;
     } = {
-            category: Category.LINE_SIDE_METER_FUSE_HOME,
-        };
+        category: Category.LINE_SIDE_METER_FUSE_HOME,
+    };
 
     //Configuration Summary
     public override gtcAndWarrantyLinks: {
         gtcLink: WebLinks;
         warrantyLink: WebLinks;
     } = {
-            gtcLink: WebLinks.GTC_LINK,
-            warrantyLink: WebLinks.WARRANTY_LINK_HOME,
-        };
+        gtcLink: WebLinks.GTC_LINK,
+        warrantyLink: WebLinks.WARRANTY_LINK_HOME,
+    };
 
     // protocol avu box
     public avu: {

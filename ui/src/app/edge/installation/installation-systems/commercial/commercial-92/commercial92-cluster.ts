@@ -211,7 +211,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
     }
 
     public override getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket):
-        Promise<Array<{ numberOfTowers: number; numberOfModulesPerTower: number }>> {
+    Promise<Array<{ numberOfTowers: number; numberOfModulesPerTower: number }>> {
         return new Promise((resolve) => {
             const channelAddresses: ChannelAddress[] = [];
 

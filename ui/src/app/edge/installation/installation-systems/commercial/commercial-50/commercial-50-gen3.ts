@@ -66,8 +66,8 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
         meter: Meter.GridMeterCategory;
         value?: number;
     } = {
-            meter: Meter.GridMeterCategory.COMMERCIAL_METER,
-        };
+        meter: Meter.GridMeterCategory.COMMERCIAL_METER,
+    };
 
     // configuration-emergency-reserve
     public override emergencyReserve? = {
@@ -85,11 +85,11 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
         mppt3: boolean,
         mppt4: boolean,
     } = {
-            mppt1: false,
-            mppt2: false,
-            mppt3: false,
-            mppt4: false,
-        };
+        mppt1: false,
+        mppt2: false,
+        mppt3: false,
+        mppt4: false,
+    };
 
     constructor(translate: TranslateService) {
         super([

@@ -12,115 +12,115 @@ import { ComponentData, EmsType } from "../../shared/ibndatatypes";
 import { System, SystemType } from "../../shared/system";
 
 @Component({
-  selector: ConfigurationSystemComponent.SELECTOR,
-  templateUrl: "./configuration-system.component.html",
-  standalone: false,
+    selector: ConfigurationSystemComponent.SELECTOR,
+    templateUrl: "./configuration-system.component.html",
+    standalone: false,
 })
 export class ConfigurationSystemComponent implements OnInit {
-  private static readonly SELECTOR = "configuration-system";
+    private static readonly SELECTOR = "configuration-system";
 
-  @Input() public ibn: AbstractIbn;
-  @Input() public edge: Edge;
+    @Input() public ibn: AbstractIbn;
+    @Input() public edge: Edge;
 
-  @Output() public nextViewEvent = new EventEmitter();
-  @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
+    @Output() public nextViewEvent = new EventEmitter();
+    @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
 
-  protected form: FormGroup;
-  protected fields: FormlyFieldConfig[];
-  protected model;
+    protected form: FormGroup;
+    protected fields: FormlyFieldConfig[];
+    protected model;
 
-  private emsType: EmsType = null;
+    private emsType: EmsType = null;
 
-  constructor(private translate: TranslateService, private websocket: Websocket) { }
+    constructor(private translate: TranslateService, private websocket: Websocket) { }
 
-  protected get showManual(): boolean {
-    return this.form.controls.type?.value && environment.theme === "Heckert";
-  }
-
-  public ngOnInit() {
-    this.form = new FormGroup({});
-    this.websocket.sendRequest(
-      new GetEmsTypeRequest({ edgeId: this.edge.id })).then((response: GetEmsTypeResponse) => {
-        this.emsType = response.result.emsType ?? null;
-        sessionStorage.setItem("emsType", this.emsType);
-      }).catch(error => {
-        console.log(error);
-      }).finally(() => {
-        this.fields = this.getFields();
-      });
-  }
-
-  public onNextClicked() {
-    if (this.form.invalid) {
-      return;
+    protected get showManual(): boolean {
+        return this.form.controls.type?.value && environment.theme === "Heckert";
     }
-    // Sets the ibn object.
-    this.setIbn();
-    this.nextViewEvent.emit(this.ibn);
-  }
 
-  public getFields(): FormlyFieldConfig[] {
-    const fields: FormlyFieldConfig[] = [];
-    const options: ComponentData[] = [];
+    public ngOnInit() {
+        this.form = new FormGroup({});
+        this.websocket.sendRequest(
+            new GetEmsTypeRequest({ edgeId: this.edge.id })).then((response: GetEmsTypeResponse) => {
+            this.emsType = response.result.emsType ?? null;
+            sessionStorage.setItem("emsType", this.emsType);
+        }).catch(error => {
+            console.log(error);
+        }).finally(() => {
+            this.fields = this.getFields();
+        });
+    }
 
-    switch (environment.theme) {
-      case "Heckert":
-        options.push({ value: SystemType.HECKERT_HOME, label: SystemType.HECKERT_HOME });
-        break;
-      case "FENECON":
-      default:
-        // Home stays valid for all systems, but variants will change (configuration system variant).
-        switch (this.emsType) {
-          case "feh013": // New type
-          case null: // No type is set in Odoo
-            options.push(
-              { value: SystemType.FENECON_HOME, label: SystemType.FENECON_HOME },
-              { value: SystemType.COMMERCIAL, label: SystemType.COMMERCIAL },
-            );
-            break;
-          case "fho011": // old type
-            options.push({ value: SystemType.FENECON_HOME, label: SystemType.FENECON_HOME });
-            break;
-          case "fec011":
-          case "fec013":
-            options.push(
-              { value: SystemType.COMMERCIAL, label: SystemType.COMMERCIAL },
-            );
-            break;
+    public onNextClicked() {
+        if (this.form.invalid) {
+            return;
         }
-        break;
+        // Sets the ibn object.
+        this.setIbn();
+        this.nextViewEvent.emit(this.ibn);
     }
 
-    fields.push({
-      key: "type",
-      type: "radio",
-      templateOptions: {
-        label: this.translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME"),
-        type: "radio",
-        options: options,
-        required: true,
-      },
-    });
-    return fields;
-  }
+    public getFields(): FormlyFieldConfig[] {
+        const fields: FormlyFieldConfig[] = [];
+        const options: ComponentData[] = [];
 
-  public onPreviousClicked() {
-    this.previousViewEvent.emit();
-  }
+        switch (environment.theme) {
+            case "Heckert":
+                options.push({ value: SystemType.HECKERT_HOME, label: SystemType.HECKERT_HOME });
+                break;
+            case "FENECON":
+            default:
+                // Home stays valid for all systems, but variants will change (configuration system variant).
+                switch (this.emsType) {
+                    case "feh013": // New type
+                    case null: // No type is set in Odoo
+                        options.push(
+                            { value: SystemType.FENECON_HOME, label: SystemType.FENECON_HOME },
+                            { value: SystemType.COMMERCIAL, label: SystemType.COMMERCIAL },
+                        );
+                        break;
+                    case "fho011": // old type
+                        options.push({ value: SystemType.FENECON_HOME, label: SystemType.FENECON_HOME });
+                        break;
+                    case "fec011":
+                    case "fec013":
+                        options.push(
+                            { value: SystemType.COMMERCIAL, label: SystemType.COMMERCIAL },
+                        );
+                        break;
+                }
+                break;
+        }
 
-  /**
+        fields.push({
+            key: "type",
+            type: "radio",
+            templateOptions: {
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME"),
+                type: "radio",
+                options: options,
+                required: true,
+            },
+        });
+        return fields;
+    }
+
+    public onPreviousClicked() {
+        this.previousViewEvent.emit();
+    }
+
+    /**
    * Redirects to the url for Heckert system manual.
    */
-  protected openManual(): void {
-    window.open(environment.links.MANUALS.SYSTEM.HOME.HOME_10);
-  }
+    protected openManual(): void {
+        window.open(environment.links.MANUALS.SYSTEM.HOME.HOME_10);
+    }
 
-  /**
+    /**
    * Loads the appropriate Ibn object.
    */
-  private setIbn(): void {
-    const system: SystemType = this.form.controls.type.value;
-    this.ibn = System.getSystemObjectFromSystemType(system, this.translate);
-  }
+    private setIbn(): void {
+        const system: SystemType = this.form.controls.type.value;
+        this.ibn = System.getSystemObjectFromSystemType(system, this.translate);
+    }
 
 }

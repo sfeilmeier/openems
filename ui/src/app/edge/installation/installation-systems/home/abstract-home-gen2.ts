@@ -12,15 +12,15 @@ export abstract class AbstractHomeGen2Ibn extends AbstractHomeIbn {
             value: Meter.GridMeterCategory;
             label: string;
         }[] = [
-                {
-                    value: Meter.GridMeterCategory.SMART_METER, //
-                    label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.SMART_METER, this.translate, optionalType),
-                },
-                {
-                    value: Meter.GridMeterCategory.INTEGRATED_METER, //
-                    label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.INTEGRATED_METER, this.translate, standardType),
-                },
-            ];
+            {
+                value: Meter.GridMeterCategory.SMART_METER, //
+                label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.SMART_METER, this.translate, optionalType),
+            },
+            {
+                value: Meter.GridMeterCategory.INTEGRATED_METER, //
+                label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.INTEGRATED_METER, this.translate, standardType),
+            },
+        ];
 
         return options;
     }

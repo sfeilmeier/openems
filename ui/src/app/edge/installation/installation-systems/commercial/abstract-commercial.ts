@@ -43,9 +43,9 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         gtcLink: WebLinks;
         warrantyLink: WebLinks;
     } = {
-            gtcLink: WebLinks.GTC_LINK,
-            warrantyLink: WebLinks.WARRANTY_LINK_COMMERCIAL,
-        };
+        gtcLink: WebLinks.GTC_LINK,
+        warrantyLink: WebLinks.WARRANTY_LINK_COMMERCIAL,
+    };
 
     // Protocol line side meter fuse
     public override lineSideMeterFuse?: {
@@ -54,9 +54,9 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         otherValue?: number;
         meterType: Meter.GridMeter;
     } = {
-            category: Category.LINE_SIDE_METER_FUSE_COMMERCIAL,
-            meterType: Meter.GridMeter.KDK,
-        };
+        category: Category.LINE_SIDE_METER_FUSE_COMMERCIAL,
+        meterType: Meter.GridMeter.KDK,
+    };
 
     /**
     * Returns the Modbus Serial bridge component.
@@ -260,7 +260,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     }
 
     public override getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket):
-        Promise<Array<{ numberOfTowers: number; numberOfModulesPerTower: number }>> {
+    Promise<Array<{ numberOfTowers: number; numberOfModulesPerTower: number }>> {
         return new Promise((resolve) => {
             const channelAddresses: ChannelAddress[] = [
                 new ChannelAddress("battery0", "NumberOfTowers"),

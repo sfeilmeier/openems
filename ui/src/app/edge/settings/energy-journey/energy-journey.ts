@@ -6,29 +6,29 @@ import { Edge, EdgePermission, EnergyJourneyWidget, Service } from "src/app/shar
 import { CommonUiModule } from "../../../shared/common-ui.module";
 
 @Component({
-  selector: "energy-journey",
-  templateUrl: "./energy-journey.html",
-  standalone: true,
-  imports: [
-    CommonUiModule,
-    PipeComponentsModule,
-    RouterModule,
-  ],
+    selector: "energy-journey",
+    templateUrl: "./energy-journey.html",
+    standalone: true,
+    imports: [
+        CommonUiModule,
+        PipeComponentsModule,
+        RouterModule,
+    ],
 })
 export class EnergyJourneyComponent implements OnInit {
 
-  protected edge: Edge | null = null;
-  protected allowedWidgets: EnergyJourneyWidget[] = [];
+    protected edge: Edge | null = null;
+    protected allowedWidgets: EnergyJourneyWidget[] = [];
 
-  constructor(
-    private service: Service,
-    private translate: TranslateService,
-  ) { }
+    constructor(
+        private service: Service,
+        private translate: TranslateService,
+    ) { }
 
-  ngOnInit() {
-    this.service.getCurrentEdge().then(edge => {
-      this.edge = edge;
-      this.allowedWidgets = EdgePermission.getAllowedEnergyJourneyWidgets(this.edge, this.translate); // TODO
-    });
-  }
+    ngOnInit() {
+        this.service.getCurrentEdge().then(edge => {
+            this.edge = edge;
+            this.allowedWidgets = EdgePermission.getAllowedEnergyJourneyWidgets(this.edge, this.translate); // TODO
+        });
+    }
 }

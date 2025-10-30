@@ -28,9 +28,9 @@ export class Home6Gen2FeneconIbn extends AbstractHomeGen2Ibn {
         mppt1: boolean;
         mppt2: boolean;
     } = {
-            mppt1: false,
-            mppt2: false,
-        };
+        mppt1: false,
+        mppt2: false,
+    };
 
     constructor(public override translate: TranslateService) {
         super([

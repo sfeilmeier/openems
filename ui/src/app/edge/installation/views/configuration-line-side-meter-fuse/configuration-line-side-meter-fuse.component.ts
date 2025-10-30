@@ -7,43 +7,43 @@ import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { Category } from "../../shared/category";
 
 @Component({
-  selector: ConfigurationLineSideMeterFuseComponent.SELECTOR,
-  templateUrl: "./configuration-line-side-meter-fuse.component.html",
-  standalone: false,
+    selector: ConfigurationLineSideMeterFuseComponent.SELECTOR,
+    templateUrl: "./configuration-line-side-meter-fuse.component.html",
+    standalone: false,
 })
 export class ConfigurationLineSideMeterFuseComponent implements OnInit {
 
-  private static readonly SELECTOR = "configuration-line-side-meter-fuse";
+    private static readonly SELECTOR = "configuration-line-side-meter-fuse";
 
-  @Input() public ibn: AbstractIbn;
-  @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
-  @Output() public nextViewEvent = new EventEmitter<AbstractIbn>();
+    @Input() public ibn: AbstractIbn;
+    @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
+    @Output() public nextViewEvent = new EventEmitter<AbstractIbn>();
 
-  protected form: FormGroup;
-  protected fields: FormlyFieldConfig[];
-  protected model;
-  protected header: string;
+    protected form: FormGroup;
+    protected fields: FormlyFieldConfig[];
+    protected model;
+    protected header: string;
 
-  constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) { }
 
-  public ngOnInit() {
-    this.header = Category.toTranslatedString(this.ibn.lineSideMeterFuse.category, this.translate);
-    this.form = new FormGroup({});
-    this.fields = this.ibn.getLineSideMeterFuseFields();
-    this.model = this.ibn.lineSideMeterFuse ?? {};
-  }
-
-  public onPreviousClicked() {
-    this.previousViewEvent.emit();
-  }
-
-  public onNextClicked() {
-
-    if (this.form.invalid) {
-      return;
+    public ngOnInit() {
+        this.header = Category.toTranslatedString(this.ibn.lineSideMeterFuse.category, this.translate);
+        this.form = new FormGroup({});
+        this.fields = this.ibn.getLineSideMeterFuseFields();
+        this.model = this.ibn.lineSideMeterFuse ?? {};
     }
 
-    this.ibn.lineSideMeterFuse = this.model;
-    this.nextViewEvent.emit(this.ibn);
-  }
+    public onPreviousClicked() {
+        this.previousViewEvent.emit();
+    }
+
+    public onNextClicked() {
+
+        if (this.form.invalid) {
+            return;
+        }
+
+        this.ibn.lineSideMeterFuse = this.model;
+        this.nextViewEvent.emit(this.ibn);
+    }
 }

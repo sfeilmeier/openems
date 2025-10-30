@@ -13,115 +13,115 @@ import { Role } from "src/app/shared/type/role";
 import { environment } from "src/environments";
 
 @Component({
-  selector: PreInstallationComponent.SELECTOR,
-  templateUrl: "./pre-installation.component.html",
-  standalone: false,
+    selector: PreInstallationComponent.SELECTOR,
+    templateUrl: "./pre-installation.component.html",
+    standalone: false,
 })
 export class PreInstallationComponent implements OnInit {
-  private static readonly SELECTOR = "pre-installation";
+    private static readonly SELECTOR = "pre-installation";
 
-  @Output() public nextViewEvent = new EventEmitter();
-  @Output() public edgeChange = new EventEmitter<Edge>();
-  public edge: Edge;
+    @Output() public nextViewEvent = new EventEmitter();
+    @Output() public edgeChange = new EventEmitter<Edge>();
+    public edge: Edge;
 
 
-  public form: FormGroup;
-  public fields: FormlyFieldConfig[];
-  public model;
-  public isWaiting = false;
-  public image: string;
-  protected setupKey: string | null = null;
-  protected validKey: boolean = true;
+    public form: FormGroup;
+    public fields: FormlyFieldConfig[];
+    public model;
+    public isWaiting = false;
+    public image: string;
+    protected setupKey: string | null = null;
+    protected validKey: boolean = true;
 
-  constructor(
-    private service: Service,
-    public websocket: Websocket,
-    private translate: TranslateService,
-  ) { }
+    constructor(
+        private service: Service,
+        public websocket: Websocket,
+        private translate: TranslateService,
+    ) { }
 
-  public ngOnInit() {
-    this.form = new FormGroup({});
+    public ngOnInit() {
+        this.form = new FormGroup({});
 
-    if (environment.theme === "Heckert") {
-      this.image = "assets/img/Home-Typenschild-web.jpg";
-    } else {
-      this.image = "assets/img/Home-Commercial-Installer-Key.png";
+        if (environment.theme === "Heckert") {
+            this.image = "assets/img/Home-Typenschild-web.jpg";
+        } else {
+            this.image = "assets/img/Home-Commercial-Installer-Key.png";
+        }
     }
-  }
 
-  public onNextClicked() {
-    this.isWaiting = true;
+    public onNextClicked() {
+        this.isWaiting = true;
 
-    this.websocket
-      .sendRequest(new AddEdgeToUserRequest({ setupPassword: this.setupKey }))
-      .then((response: AddEdgeToUserResponse) => {
-        const edge = response.result.edge;
-        const emsBoxSerialNumber: string = response.result.serialNumber;
+        this.websocket
+            .sendRequest(new AddEdgeToUserRequest({ setupPassword: this.setupKey }))
+            .then((response: AddEdgeToUserResponse) => {
+                const edge = response.result.edge;
+                const emsBoxSerialNumber: string = response.result.serialNumber;
 
-        // Test if edge is online
-        if (!edge.online) {
-          this.service.toast(
-            this.translate.instant("INSTALLATION.PRE_INSTALLATION.EDGE_OFFLINE", { edgeShortName: environment.edgeShortName }), "danger",
-          );
-          return;
-        }
+                // Test if edge is online
+                if (!edge.online) {
+                    this.service.toast(
+                        this.translate.instant("INSTALLATION.PRE_INSTALLATION.EDGE_OFFLINE", { edgeShortName: environment.edgeShortName }), "danger",
+                    );
+                    return;
+                }
 
-        // TODO either add lastmessage and role to response or call getEdgeRequest
-        this.edge = new Edge(
-          edge.id,
-          edge.comment, edge.producttype, edge.version, Role.INSTALLER, edge.online, null, SumState.OK, null,
-        );
+                // TODO either add lastmessage and role to response or call getEdgeRequest
+                this.edge = new Edge(
+                    edge.id,
+                    edge.comment, edge.producttype, edge.version, Role.INSTALLER, edge.online, null, SumState.OK, null,
+                );
 
-        // Get metadata
-        const metadata = this.service.metadata?.getValue();
+                // Get metadata
+                const metadata = this.service.metadata?.getValue();
 
-        // Test if metadata is available
-        if (!metadata) {
-          return;
-        }
+                // Test if metadata is available
+                if (!metadata) {
+                    return;
+                }
 
-        // Add edge to metadata
-        metadata.edges[edge.id] = this.edge;
+                // Add edge to metadata
+                metadata.edges[edge.id] = this.edge;
 
-        // Update metadata
-        this.service.metadata.next({
-          user: metadata.user,
-          edges: metadata.edges,
-        });
+                // Update metadata
+                this.service.metadata.next({
+                    user: metadata.user,
+                    edges: metadata.edges,
+                });
 
-        this.service.metadata
-          .pipe(
-            filter(metadata => metadata != null),
-            take(1))
-          .subscribe(metadata => {
-            this.edge = metadata.edges[edge.id];
-          });
+                this.service.metadata
+                    .pipe(
+                        filter(metadata => metadata != null),
+                        take(1))
+                    .subscribe(metadata => {
+                        this.edge = metadata.edges[edge.id];
+                    });
 
 
-        // Add to session Storage.
-        sessionStorage.setItem("edge", JSON.stringify(edge));
-        if (emsBoxSerialNumber) {
-          // Store Fems Box Serial number only if it is existing in Odoo.
-          sessionStorage.setItem("emsBoxSerialNumber", emsBoxSerialNumber);
-        }
+                // Add to session Storage.
+                sessionStorage.setItem("edge", JSON.stringify(edge));
+                if (emsBoxSerialNumber) {
+                    // Store Fems Box Serial number only if it is existing in Odoo.
+                    sessionStorage.setItem("emsBoxSerialNumber", emsBoxSerialNumber);
+                }
 
-        // Start installation process
-        this.service.toast(
-          this.translate.instant("INSTALLATION.PRE_INSTALLATION.INSTALLATION_SUCCESS", { edgeId: this.edge.id }),
-          "success",
-        );
+                // Start installation process
+                this.service.toast(
+                    this.translate.instant("INSTALLATION.PRE_INSTALLATION.INSTALLATION_SUCCESS", { edgeId: this.edge.id }),
+                    "success",
+                );
 
-        this.edgeChange.emit(this.edge);
-        this.nextViewEvent.emit();
-        this.websocket.sendRequest(new SubscribeEdgesRequest({ edges: [this.edge.id] }));
-      })
-      .catch((reason) => {
-        this.service.toast(this.translate.instant("INSTALLATION.PRE_INSTALLATION.AUTHENTICATION_FAILED"), "danger");
-        this.validKey = false;
-        console.log(reason);
-      })
-      .finally(() => {
-        this.isWaiting = false;
-      });
-  }
+                this.edgeChange.emit(this.edge);
+                this.nextViewEvent.emit();
+                this.websocket.sendRequest(new SubscribeEdgesRequest({ edges: [this.edge.id] }));
+            })
+            .catch((reason) => {
+                this.service.toast(this.translate.instant("INSTALLATION.PRE_INSTALLATION.AUTHENTICATION_FAILED"), "danger");
+                this.validKey = false;
+                console.log(reason);
+            })
+            .finally(() => {
+                this.isWaiting = false;
+            });
+    }
 }

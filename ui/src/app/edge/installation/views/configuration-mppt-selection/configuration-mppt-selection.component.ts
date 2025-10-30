@@ -9,77 +9,77 @@ import { Home20FeneconIbn } from "../../installation-systems/home/home-20";
 import { Home30FeneconIbn } from "../../installation-systems/home/home-30";
 
 @Component({
-  selector: ConfigurationMpptSelectionComponent.SELECTOR,
-  templateUrl: "./configuration-mppt-selection.component.html",
-  standalone: false,
+    selector: ConfigurationMpptSelectionComponent.SELECTOR,
+    templateUrl: "./configuration-mppt-selection.component.html",
+    standalone: false,
 })
 export class ConfigurationMpptSelectionComponent implements OnInit {
-  private static readonly SELECTOR = "configuration-mppt-selection";
+    private static readonly SELECTOR = "configuration-mppt-selection";
 
-  @Input() public ibn: Home20FeneconIbn | Home30FeneconIbn | Home10Gen2FeneconIbn | Home15Gen2FeneconIbn | Commercial50Gen3Ibn;
-  @Output() public nextViewEvent = new EventEmitter();
-  @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
+    @Input() public ibn: Home20FeneconIbn | Home30FeneconIbn | Home10Gen2FeneconIbn | Home15Gen2FeneconIbn | Commercial50Gen3Ibn;
+    @Output() public nextViewEvent = new EventEmitter();
+    @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
 
-  protected form: FormGroup;
-  protected fields: FormlyFieldConfig[];
-  protected model;
-  protected isNextDisabled: boolean;
+    protected form: FormGroup;
+    protected fields: FormlyFieldConfig[];
+    protected model;
+    protected isNextDisabled: boolean;
 
-  public ngOnInit() {
-    this.form = new FormGroup({});
-    this.model = this.ibn.mppt;
-    this.isNextDisabled = !this.model.connectionCheck;
-    this.fields = this.getFields();
-  }
-
-  public onNextClicked() {
-    if (this.form.invalid) {
-      return;
-    }
-    this.ibn.mppt = this.model;
-    this.nextViewEvent.emit(this.ibn);
-  }
-
-  public getFields(): FormlyFieldConfig[] {
-    const fields: FormlyFieldConfig[] = [];
-    const maxStrings: number = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
-
-    for (let strings = 1; strings <= maxStrings; strings++) {
-
-      const mppt = strings;
-      const key: string = "mppt" + mppt;
-      const label: string = this.ibn.getMpptLabel(mppt, strings);
-      const defaultValue: boolean = this.model[key];
-
-      fields.push({
-        key: key,
-        props: {
-          label: label,
-          url: this.ibn.maxNumberOfMppt > 0 ? this.ibn.getImageUrl(mppt) : this.ibn.getImageUrl(strings),
-        },
-        defaultValue: defaultValue,
-        wrappers: ["formly-field-checkbox-with-image"],
-      });
+    public ngOnInit() {
+        this.form = new FormGroup({});
+        this.model = this.ibn.mppt;
+        this.isNextDisabled = !this.model.connectionCheck;
+        this.fields = this.getFields();
     }
 
-    fields.push({
-      key: "connectionCheck",
-      type: "checkbox",
-      props: {
-        label: "Wurden alle Anschlüsse kontrolliert?",
-        required: true,
-        change: (field) => {
-          this.isNextDisabled = !field.formControl.value;
-        },
-      },
-      defaultValue: false,
-    });
+    public onNextClicked() {
+        if (this.form.invalid) {
+            return;
+        }
+        this.ibn.mppt = this.model;
+        this.nextViewEvent.emit(this.ibn);
+    }
 
-    return fields;
-  }
+    public getFields(): FormlyFieldConfig[] {
+        const fields: FormlyFieldConfig[] = [];
+        const maxStrings: number = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
 
-  public onPreviousClicked() {
-    this.previousViewEvent.emit();
-  }
+        for (let strings = 1; strings <= maxStrings; strings++) {
+
+            const mppt = strings;
+            const key: string = "mppt" + mppt;
+            const label: string = this.ibn.getMpptLabel(mppt, strings);
+            const defaultValue: boolean = this.model[key];
+
+            fields.push({
+                key: key,
+                props: {
+                    label: label,
+                    url: this.ibn.maxNumberOfMppt > 0 ? this.ibn.getImageUrl(mppt) : this.ibn.getImageUrl(strings),
+                },
+                defaultValue: defaultValue,
+                wrappers: ["formly-field-checkbox-with-image"],
+            });
+        }
+
+        fields.push({
+            key: "connectionCheck",
+            type: "checkbox",
+            props: {
+                label: "Wurden alle Anschlüsse kontrolliert?",
+                required: true,
+                change: (field) => {
+                    this.isNextDisabled = !field.formControl.value;
+                },
+            },
+            defaultValue: false,
+        });
+
+        return fields;
+    }
+
+    public onPreviousClicked() {
+        this.previousViewEvent.emit();
+    }
 
 }
