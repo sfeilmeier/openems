@@ -1,6 +1,6 @@
 {
   "name": "openems-ui",
-  "version": "2025.10.3-SNAPSHOT",
+  "version": "2025.11.1-SNAPSHOT",
   "license": "AGPL-3.0",
   "private": true,
   "dependencies": {
@@ -105,7 +105,7 @@
     "typescript-strict-plugin": "^2.4.4"
   },
   "scripts": {
-    "lint": "npm run lint:i18n && ng lint",
+    "lint": "ng lint && npm run lint:i18n",
     "test": "ng test",
     "capacitor-assets": "capacitor-assets",
     "lint:i18n": "node scripts/lint-translation-keys.js"
