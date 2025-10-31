@@ -693,6 +693,15 @@
         "VISIBLE_HERE_AFTER_INSTALLATION": "After your {{value}} has been commissioned by an installer, you will see it at this point.",
         "FIRST_SETUP_PROTOCOL": "Initial commissioning"
     },
+    "ORDER": {
+        "ASCENDING": "Ascending {{edgeShortName}} no.",
+        "DESCENDING": "Descending {{edgeShortName}} no.",
+        "A_TO_Z": "Designation A - Z",
+        "Z_TO_A": "Designation Z - A",
+        "OK_TO_FAULT": "System status OK - Fault",
+        "FAULT_TO_OK": "System status Fault - OK",
+        "SORTING": "Sorting"
+    },
     "OFFLINE": {
         "EDGE": {
             "LOCAL_ACCESS_CURRENTLY_NOT_POSSIBLE": "Local access currently not possible",
