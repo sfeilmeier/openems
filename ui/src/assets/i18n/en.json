@@ -678,7 +678,8 @@
         "TO": "To",
         "FORMLY": {
             "REQUIRED": "Is required",
-            "INITIALIZING_ERROR": "Error initializing component"
+            "INITIALIZING_ERROR": "Error initializing component",
+            "LINK_TO_DOCS": "link to docs"
         }
     },
     "INDEX": {

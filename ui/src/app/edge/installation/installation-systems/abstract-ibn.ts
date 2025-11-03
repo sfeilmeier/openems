@@ -11,6 +11,7 @@ import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, Gr
 import { GridSettingUtils } from "../shared/gridsetting.utils";
 import { ComponentData, EmsType, TableData } from "../shared/ibndatatypes";
 import { Meter } from "../shared/meter";
+import { EXTERNAL_LIMITATION_OPTIONS_WITHOUT_DYNAMIC_EXTERNAL_CONTROLLER } from "../shared/options";
 import { System, SystemId, SystemType } from "../shared/system";
 import { ViewUtils } from "../shared/view.utils";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
@@ -209,7 +210,7 @@ export abstract class AbstractIbn {
                 });
             }
         }
-        batteryData.push({ label: this.translate.instant("Index.TYPE"), value: this.systemType });
+        batteryData.push({ label: this.translate.instant("INDEX.TYPE"), value: this.systemType });
         return batteryData;
     }
 
@@ -607,10 +608,7 @@ export abstract class AbstractIbn {
      * @returns The options.
      */
     public getExternalLimitationTypeOptions(): ComponentData[] {
-        return [
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: ExternalLimitationType.EXTERNAL_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: ExternalLimitationType.NO_LIMITATION },
-        ];
+        return EXTERNAL_LIMITATION_OPTIONS_WITHOUT_DYNAMIC_EXTERNAL_CONTROLLER(this.translate);
     }
 
     public getGridSettingOptions() {

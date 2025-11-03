@@ -32,7 +32,7 @@
   }
 
   @if (isExternalLimitation && showRundSteuerManual) {
-    <ion-item>
+    <ion-item lines="none">
       <ion-button (click)="openManual()" slot="end">
         <ion-label>{{ 'INSTALLATION.PROTOCOL_PV.OPEN_MANUAL' | translate }}</ion-label>
         <ion-icon name="open-outline" slot="start"></ion-icon>

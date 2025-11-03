@@ -6,11 +6,13 @@ import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
 import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { Edge, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
+import { environment } from "src/environments";
 import { Category } from "../../../shared/category";
 import { ExternalLimitationType, FeedInSetting, GridSetting, View } from "../../../shared/enums";
 import { GridSettingUtils } from "../../../shared/gridsetting.utils";
 import { ComponentData, DcPv, EmsType, ExtensionBoxPrefix } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
+import { EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES } from "../../../shared/options";
 import { System, SystemId, SystemType } from "../../../shared/system";
 import { ViewUtils } from "../../../shared/view.utils";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
@@ -384,10 +386,7 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
     }
 
     public override getExternalLimitationTypeOptions(): ComponentData[] {
-        return [
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"), value: ExternalLimitationType.EXTERNAL_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_EXTERNAL_LIMITATION"), value: ExternalLimitationType.DYNAMIC_EXTERNAL_LIMITATION },
-            { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: ExternalLimitationType.NO_LIMITATION },
-        ];
+        const docLink = environment.links.MANUALS.RUNDSTEUER.COMMERCIAL_50_GEN_3;
+        return EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES(this.translate, docLink);
     }
 }
