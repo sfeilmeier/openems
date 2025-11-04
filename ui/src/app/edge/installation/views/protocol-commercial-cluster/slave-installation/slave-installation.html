@@ -7,17 +7,14 @@
       <ion-row>
         <ion-col>
           <ion-card-header>
-            <ion-card-title>
-              {{ 'INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVES_TITLE' | translate: { number: index + 1
-              } }}
-            </ion-card-title>
+            <ion-card-title>{{ 'INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVES_TITLE'| translate: { number: index + 1} }}</ion-card-title>
           </ion-card-header>
         </ion-col>
         <ion-col style="align-content: center;">
           <ion-item lines="none">
             <span>Status: {{ state.displayLabel }}</span>
             <ion-icon [name]="state.connected ? 'checkmark-circle-outline' : 'alert-circle-outline'"
-            [color]="state.connected ? 'success' : 'danger'"></ion-icon>
+              [color]="state.connected ? 'success' : 'danger'"></ion-icon>
             @if (!state.connected) {
               <ion-button size="small" button (click)="requestSlaveStatuses()">
                 <ion-icon name="refresh-outline"></ion-icon>
@@ -27,22 +24,20 @@
         </ion-col>
       </ion-row>
       @if (state.connected && (state.configuring === null || (state.configuring === false && state.configurationFailed))) {
-        <ion-row class="ion-justify-content-center ion-align-items-center"
-          >
+        <ion-row class="ion-justify-content-center ion-align-items-center">
           <ion-col class="ion-text-center">
             <oe-setup-key-input [placeholder]="'XXXX-XXXX-XXXX-XXXX'" (submitEvent)="state.setupKey = $event">
             </oe-setup-key-input>
           </ion-col>
           <ion-col>
             <ion-button [disabled]="state.configuring" (click)="installSlave(index)">
-              {{'General.INSTALL'| translate}}
+              {{ 'GENERAL.INSTALL'| translate }}
             </ion-button>
           </ion-col>
         </ion-row>
       }
       @if (state.configuring && !state.updateFinished && state.executeSystemUpdate?.systemUpdateState?.running) {
-        <ion-row
-          >
+        <ion-row>
           <ion-col size="8">
             <!-- Update is running -->
             <ion-item lines="none">
@@ -62,8 +57,7 @@
         <ion-row class="ion-justify-content-center">
           <ion-card-content>
             <ion-card-subtitle
-              style="color: var(--ion-color-warning); font-weight: bold;">{{'INSTALLATION.PRE_INSTALLATION.NOTE'
-            | translate}}</ion-card-subtitle>
+              style="color: var(--ion-color-warning); font-weight: bold;">{{ 'INSTALLATION.PRE_INSTALLATION.NOTE'| translate }}</ion-card-subtitle>
             <ion-text color="dark">
               {{ 'INSTALLATION.PRE_INSTALLATION.WRONG_KEY_NOTE' | translate }}
             </ion-text>

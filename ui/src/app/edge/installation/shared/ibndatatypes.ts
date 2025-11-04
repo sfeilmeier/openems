@@ -5,6 +5,8 @@ import { Category } from "./category";
 export type ComponentData = {
     label: string;
     value: any;
+    imageUrl?: string;
+    docUrl?: string;
 };
 
 export type SerialNumberFormData = {

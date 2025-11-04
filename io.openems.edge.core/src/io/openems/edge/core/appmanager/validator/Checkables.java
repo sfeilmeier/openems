@@ -41,6 +41,16 @@ public final class Checkables {
 
 	/**
 	 * Creates a {@link CheckableConfig} which checks if the installed system is an
+	 * Industrial L.
+	 *
+	 * @return the {@link CheckableConfig}
+	 */
+	public static CheckableConfig checkIndustrialL() {
+		return empty(CheckIndustrial.COMPONENT_NAME);
+	}
+
+	/**
+	 * Creates a {@link CheckableConfig} which checks if the installed system is an
 	 * Industrial.
 	 *
 	 * @return the {@link CheckableConfig}
@@ -67,6 +77,16 @@ public final class Checkables {
 	 */
 	public static CheckableConfig checkCommercial92() {
 		return empty(CheckCommercial92.COMPONENT_NAME);
+	}
+
+	/**
+	 * Creates a {@link CheckableConfig} which checks if the installed system is a
+	 * Commercial 92.
+	 *
+	 * @return the {@link CheckableConfig}
+	 */
+	public static CheckableConfig checkCommercial92Master() {
+		return empty(CheckCommercial92Master.COMPONENT_NAME);
 	}
 
 	/**

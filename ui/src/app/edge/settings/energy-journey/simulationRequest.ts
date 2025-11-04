@@ -12,11 +12,11 @@ import { JsonrpcRequest } from "src/app/shared/jsonrpc/base";
  */
 export class SimulationRequest extends JsonrpcRequest {
 
-  private static METHOD: string = "simulation";
+    private static METHOD: string = "simulation";
 
-  public constructor(
-    public override readonly params: {},
-  ) {
-    super(SimulationRequest.METHOD, params);
-  }
+    public constructor(
+        public override readonly params: {},
+    ) {
+        super(SimulationRequest.METHOD, params);
+    }
 }

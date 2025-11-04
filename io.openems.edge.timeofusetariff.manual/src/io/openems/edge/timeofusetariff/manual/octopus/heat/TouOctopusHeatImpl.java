@@ -1,6 +1,7 @@
 package io.openems.edge.timeofusetariff.manual.octopus.heat;
 
 import static io.openems.common.jscalendar.JSCalendar.RecurrenceFrequency.DAILY;
+import static io.openems.edge.common.channel.ChannelUtils.setValue;
 import static io.openems.edge.timeofusetariff.api.utils.TimeOfUseTariffUtils.generateDebugLog;
 
 import java.time.Duration;
@@ -14,10 +15,9 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 
-import com.google.common.collect.ImmutableList;
-
 import io.openems.common.jscalendar.JSCalendar;
 import io.openems.edge.common.component.AbstractOpenemsComponent;
+import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.meta.Meta;
 import io.openems.edge.timeofusetariff.api.TimeOfUsePrices;
@@ -35,6 +35,9 @@ public class TouOctopusHeatImpl extends AbstractOpenemsComponent
 
 	@Reference
 	private Meta meta;
+
+	@Reference
+	private ComponentManager componentManager;
 
 	private TouManualHelper helper = null;
 
@@ -60,31 +63,31 @@ public class TouOctopusHeatImpl extends AbstractOpenemsComponent
 			return;
 		}
 
-		final var schedule = ImmutableList.of(
-				// Lower price from 02:00 to 06:00
-				JSCalendar.Task.<Double>create() //
+		final var clock = this.componentManager.getClock();
+		final var schedule = JSCalendar.Tasks.<Double>create() //
+				.setClock(clock) //
+				.add(t -> t // Lower price from 02:00 to 06:00
 						.setStart(LocalTime.of(2, 0)) //
 						.setDuration(Duration.ofHours(4))//
 						.addRecurrenceRule(b -> b.setFrequency(DAILY))//
 						.setPayload(lowPrice) //
-						.build(),
-
-				// Lower price from 12:00 to 16:00
-				JSCalendar.Task.<Double>create() //
+						.build()) //
+				.add(t -> t // Lower price from 12:00 to 16:00
 						.setStart(LocalTime.of(12, 0)) //
 						.setDuration(Duration.ofHours(4)) //
 						.addRecurrenceRule(b -> b.setFrequency(DAILY)) //
 						.setPayload(lowPrice) //
-						.build(),
-				// Higher price from 18:00 to 21:00
-				JSCalendar.Task.<Double>create() //
+						.build())
+				.add(t -> t // Higher price from 18:00 to 21:00
 						.setStart(LocalTime.of(18, 0)) //
 						.setDuration(Duration.ofHours(3)) //
 						.addRecurrenceRule(b -> b.setFrequency(DAILY)) //
-						.setPayload(highPrice).build());
+						.setPayload(highPrice) //
+						.build()) //
+				.build();
 
-		this.helper = new TouManualHelper(schedule, standardPrice);
-		this.channel(TouOctopusHeat.ChannelId.INVALID_PRICE).setNextValue(false);
+		this.helper = new TouManualHelper(clock, schedule, standardPrice);
+		setValue(this, TouOctopusHeat.ChannelId.INVALID_PRICE, false);
 	}
 
 	@Deactivate

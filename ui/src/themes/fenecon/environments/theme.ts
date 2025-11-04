@@ -15,76 +15,77 @@ export const theme = {
 
     PRODUCT_TYPES: (translate: TranslateService): Filter => (
         {
-            placeholder: translate.instant("Index.TYPE"),
+            multiple: true,
+            placeholder: translate.instant("INDEX.TYPE"),
             category: "producttype",
             options: [
                 {
                     name: "Home 6",
-                    value: "home-6",
+                    option: { value: "home-6" },
                 },
                 {
                     name: "Home 10",
-                    value: "home",
+                    option: { value: "home" },
                 },
                 {
                     name: "Home 10 (Gen2)",
-                    value: "home-10",
+                    option: { value: "home-10" },
                 },
                 {
                     name: "Home 20 & 30",
-                    value: "Home 20 & 30",
+                    option: { value: "Home 20 & 30" },
                 },
                 {
                     name: "Home 15",
-                    value: "home-15",
+                    option: { value: "home-15" },
                 },
                 {
                     name: "Home 20",
-                    value: "home-20",
+                    option: { value: "home-20" },
                 },
                 {
                     name: "Home 30",
-                    value: "home-30",
+                    option: { value: "home-30" },
                 },
                 {
                     name: "Commercial 30",
-                    value: "Commercial 30-Serie",
+                    option: { value: "Commercial 30-Serie" },
                 },
                 {
                     name: "Commercial 50",
-                    value: "Commercial 50-Serie",
+                    option: { value: "Commercial 50-Serie" },
                 },
                 {
                     name: "Commercial 50 (Gen3)",
-                    value: "Commercial-50-gen-3",
+                    option: { value: "Commercial-50-gen-3" },
                 },
                 {
                     name: "Commercial 92",
-                    value: "commercial-92",
+                    option: { value: "commercial-92" },
                 },
                 {
                     name: "Commercial 92 Cluster",
-                    value: "commercial-92-cluster",
+                    option: { value: "commercial-92-cluster" },
                 },
                 {
                     name: "Commercial 92 Cluster Slave",
-                    value: "commercial-92-cluster-slave",
+                    option: { value: "commercial-92-cluster-slave" },
                 },
                 {
                     name: "Industrial S",
-                    value: "Industrial S",
+                    option: { value: "Industrial S" },
                 },
                 {
                     name: "Industrial M",
-                    value: "Industrial M",
+                    option: { value: "Industrial M" },
                 },
                 {
                     name: "Industrial L",
-                    value: "Industrial L",
+                    option: { value: "Industrial L" },
                 },
                 {
                     name: "Industrial XL",
-                    value: "industrial-xl",
+                    option: { value: "industrial-xl" },
                 },
             ],
         }),

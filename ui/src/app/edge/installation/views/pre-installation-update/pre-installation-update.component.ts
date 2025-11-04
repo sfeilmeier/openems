@@ -5,44 +5,44 @@ import { SystemUpdateState } from "src/app/edge/settings/system/getSystemUpdateS
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 
 @Component({
-  selector: PreInstallationUpdateComponent.SELECTOR,
-  templateUrl: "./pre-installation-update.component.html",
-  standalone: false,
+    selector: PreInstallationUpdateComponent.SELECTOR,
+    templateUrl: "./pre-installation-update.component.html",
+    standalone: false,
 })
 export class PreInstallationUpdateComponent {
-  private static readonly SELECTOR = "pre-installation-update";
+    private static readonly SELECTOR = "pre-installation-update";
 
-  @Output() public nextViewEvent = new EventEmitter();
-  @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
+    @Output() public nextViewEvent = new EventEmitter();
+    @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
 
-  @Input() public edge: Edge;
-  public readonly spinnerId: string = PreInstallationUpdateComponent.SELECTOR;
+    @Input() public edge: Edge;
+    public readonly spinnerId: string = PreInstallationUpdateComponent.SELECTOR;
 
-  protected isWaiting: boolean;
-  protected isUpdated: boolean;
+    protected isWaiting: boolean;
+    protected isUpdated: boolean;
 
-  constructor(private service: Service, public websocket: Websocket, private translate: TranslateService) { }
+    constructor(private service: Service, public websocket: Websocket, private translate: TranslateService) { }
 
-  public onNextClicked() {
-    if (!this.isUpdated) {
-      this.service.toast(this.translate.instant("INSTALLATION.SYSTEM_UPDATE.UPDATE_WARNING"), "danger");
-      return;
+    public onNextClicked() {
+        if (!this.isUpdated) {
+            this.service.toast(this.translate.instant("INSTALLATION.SYSTEM_UPDATE.UPDATE_WARNING"), "danger");
+            return;
+        }
+        this.nextViewEvent.emit();
     }
-    this.nextViewEvent.emit();
-  }
 
-  public updateStateChanged(updateState: SystemUpdateState) {
-    if (updateState.running) {
-      this.isWaiting = true;
-      return;
-    } else if (updateState.updated) {
-      this.isUpdated = true;
+    public updateStateChanged(updateState: SystemUpdateState) {
+        if (updateState.running) {
+            this.isWaiting = true;
+            return;
+        } else if (updateState.updated) {
+            this.isUpdated = true;
+        }
+        this.isWaiting = false;
     }
-    this.isWaiting = false;
-  }
 
-  public onPreviousClicked() {
-    this.previousViewEvent.emit();
-  }
+    public onPreviousClicked() {
+        this.previousViewEvent.emit();
+    }
 
 }

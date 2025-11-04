@@ -66,7 +66,6 @@ export class ConfigurationCommercialModbuBridgeComponent implements OnInit {
                 options: modbusBridgeLabel,
             },
             defaultValue: ModbusBridgeType.TCP_IP,
-            wrappers: ["formly-field-radio-with-image"],
         });
         return fields;
     }

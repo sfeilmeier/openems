@@ -1,7 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { ChangelogComponent } from "src/app/changelog/view/component/changelog.component";
-import tr from "src/app/edge/settings/shared/translation.json";
 import { ComponentsModule } from "src/app/shared/components/components.module";
 import { FlatWidgetButtonComponent } from "src/app/shared/components/flat/flat-widget-button/flat-widget-button";
 import { HelpButtonComponent } from "src/app/shared/components/modal/help-button/help-button";
@@ -15,6 +14,8 @@ import { ComponentInstallComponent } from "./component/install/install.component
 import { IndexComponent as ComponentUpdateIndexComponent } from "./component/update/index.component";
 import { ComponentUpdateComponent } from "./component/update/update.component";
 import { EnergyJourneyModule } from "./energy-journey/energy-journey.module";
+import de from "./i18n/de.json";
+import en from "./i18n/en.json";
 import { JsonrpcTestModule } from "./jsonrpctest/jsonrpctest.module";
 import { NetworkOldComponent } from "./network.old/network.old.component";
 import { ServiceAssistantModule } from "./serviceassistant/serviceassistant.module";
@@ -22,37 +23,39 @@ import { SystemExecuteComponent } from "./systemexecute/systemexecute.component"
 import { SystemUpdateOldComponent } from "./systemupdate.old/systemupdate.old.component";
 
 @NgModule({
-  imports: [
-    AppModule,
-    EnergyJourneyModule,
-    JsonrpcTestModule,
-    SharedModule,
-    ServiceAssistantModule,
-    ChangelogComponent,
-    ComponentsModule,
-    HelpButtonComponent,
-    FlatWidgetButtonComponent,
-    UpdateAppComponent,
-  ],
-  declarations: [
-    ChannelsComponent,
-    ComponentInstallComponent,
-    ComponentInstallIndexComponent,
-    ComponentUpdateComponent,
-    ComponentUpdateIndexComponent,
-    NetworkOldComponent,
-    SystemExecuteComponent,
-    SystemUpdateOldComponent,
-  ],
-  exports: [
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [
+        AppModule,
+        EnergyJourneyModule,
+        JsonrpcTestModule,
+        SharedModule,
+        ServiceAssistantModule,
+        ChangelogComponent,
+        ComponentsModule,
+        HelpButtonComponent,
+        FlatWidgetButtonComponent,
+        UpdateAppComponent,
+    ],
+    declarations: [
+        ChannelsComponent,
+        ComponentInstallComponent,
+        ComponentInstallIndexComponent,
+        ComponentUpdateComponent,
+        ComponentUpdateIndexComponent,
+        NetworkOldComponent,
+        SystemExecuteComponent,
+        SystemUpdateOldComponent,
+    ],
+    exports: [
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SettingsModule {
 
-  constructor(private translate: TranslateService) {
-    Language.setAdditionalTranslationFile(tr, translate).then(({ lang, translations, shouldMerge }) => {
-      translate.setTranslation(lang, translations, shouldMerge);
-    });
-  }
+    constructor(private translate: TranslateService) {
+        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+            for (const { lang, translation, shouldMerge } of translations) {
+                translate.setTranslation(lang, translation, shouldMerge);
+            }
+        });
+    }
 }

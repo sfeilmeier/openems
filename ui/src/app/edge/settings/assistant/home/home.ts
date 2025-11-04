@@ -17,151 +17,151 @@ import { ChartComponent as CellVoltageChart, HomeCellVoltageOptions } from "./ch
 import { ChartComponent as ReactiveChart } from "./chart/oe-reactive.chart";
 
 @Component({
-  selector: HomeServiceAssistantComponent.SELECTOR,
-  templateUrl: "./home.html",
-  standalone: true,
-  imports: [
-    CommonUiModule,
-    CellVoltageChart,
-    ReactiveChart,
-    PickdateComponentModule,
-    LiveDataServiceProvider,
-    LocaleProvider,
-    ComponentsBaseModule,
-  ],
+    selector: HomeServiceAssistantComponent.SELECTOR,
+    templateUrl: "./home.html",
+    standalone: true,
+    imports: [
+        CommonUiModule,
+        CellVoltageChart,
+        ReactiveChart,
+        PickdateComponentModule,
+        LiveDataServiceProvider,
+        LocaleProvider,
+        ComponentsBaseModule,
+    ],
 })
 export class HomeServiceAssistantComponent extends AbstractFlatWidget {
 
-  private static readonly SELECTOR = "homeserviceassistant";
+    private static readonly SELECTOR = "homeserviceassistant";
 
-  public chargerComponents: EdgeConfig.Component[] = [];
-  public Filter = Filter;
-  public convertToGridMeterCategory: Converter;
+    public chargerComponents: EdgeConfig.Component[] = [];
+    public Filter = Filter;
+    public convertToGridMeterCategory: Converter;
 
-  protected cellVoltageDifference: number | null = null;
-  protected cellTemperatureDifference: number | null = null;
-  protected date: string = this.service?.historyPeriod?.value?.getText(this.translate, this.service) ?? "";
-  protected CONVERT_TO_GRID_METER_CATEGORY = Converter.CONVERT_TO_GRID_METER_CATEGORY(this.translate);
-  protected readonly options: [];
-  protected selectedTower: HomeCellVoltageOptions = null;
-  protected selectedModule: HomeCellVoltageOptions = null;
-  protected towerOptions: HomeCellVoltageOptions[] = [{
-    key: "Gesamt",
-    value: null,
-  }];
-  protected moduleOptions: HomeCellVoltageOptions[] = [{
-    key: "Gesamt",
-    value: null,
-  }];
+    protected cellVoltageDifference: number | null = null;
+    protected cellTemperatureDifference: number | null = null;
+    protected date: string = this.service?.historyPeriod?.value?.getText(this.translate, this.service) ?? "";
+    protected CONVERT_TO_GRID_METER_CATEGORY = Converter.CONVERT_TO_GRID_METER_CATEGORY(this.translate);
+    protected readonly options: [];
+    protected selectedTower: HomeCellVoltageOptions = null;
+    protected selectedModule: HomeCellVoltageOptions = null;
+    protected towerOptions: HomeCellVoltageOptions[] = [{
+        key: "Gesamt",
+        value: null,
+    }];
+    protected moduleOptions: HomeCellVoltageOptions[] = [{
+        key: "Gesamt",
+        value: null,
+    }];
 
-  protected isReactiveChartAllowed: boolean = false;
+    protected isReactiveChartAllowed: boolean = false;
 
-  protected override afterIsInitialized() {
-    if (this.config?.components) {
-      this.chargerComponents = Object.values(this.config.components)
-        .filter(component => [
-          "GoodWe.Charger-PV1",
-          "GoodWe.Charger-PV2",
-          "GoodWe.Charger.Two-String",
-          "GoodWe.Charger.Mppt.Two-String",
-        ].some(factoryId => factoryId === component.factoryId));
+    protected override afterIsInitialized() {
+        if (this.config?.components) {
+            this.chargerComponents = Object.values(this.config.components)
+                .filter(component => [
+                    "GoodWe.Charger-PV1",
+                    "GoodWe.Charger-PV2",
+                    "GoodWe.Charger.Two-String",
+                    "GoodWe.Charger.Mppt.Two-String",
+                ].some(factoryId => factoryId === component.factoryId));
 
-      this.setTowerModuleOptions();
+            this.setTowerModuleOptions();
+        }
+
+        this.isReactiveChartAllowed = AssistantEdgePermission.isReactiveChartAllowed(this.edge);
     }
 
-    this.isReactiveChartAllowed = AssistantEdgePermission.isReactiveChartAllowed(this.edge);
-  }
+    protected override getChannelAddresses(): ChannelAddress[] {
+        return [
+            new ChannelAddress("battery0", "MaxCellVoltage"),
+            new ChannelAddress("battery0", "MinCellVoltage"),
+            new ChannelAddress("battery0", "MinCellTemperature"),
+            new ChannelAddress("battery0", "MinCellTemperature"),
+            new ChannelAddress("battery0", "NumberOfTowers"),
+            new ChannelAddress("battery0", "NumberOfModulesPerTower"),
+        ];
+    }
 
-  protected override getChannelAddresses(): ChannelAddress[] {
-    return [
-      new ChannelAddress("battery0", "MaxCellVoltage"),
-      new ChannelAddress("battery0", "MinCellVoltage"),
-      new ChannelAddress("battery0", "MinCellTemperature"),
-      new ChannelAddress("battery0", "MinCellTemperature"),
-      new ChannelAddress("battery0", "NumberOfTowers"),
-      new ChannelAddress("battery0", "NumberOfModulesPerTower"),
-    ];
-  }
+    protected override onCurrentData(currentData: CurrentData): void {
+        this.cellVoltageDifference = Utils.subtractSafely(currentData.allComponents["battery0/MaxCellVoltage"], currentData.allComponents["battery0/MinCellVoltage"]);
+        this.cellTemperatureDifference = Utils.subtractSafely(currentData.allComponents["battery0/MaxCellTemperature"], currentData.allComponents["battery0/MinCellTemperature"]);
+    }
 
-  protected override onCurrentData(currentData: CurrentData): void {
-    this.cellVoltageDifference = Utils.subtractSafely(currentData.allComponents["battery0/MaxCellVoltage"], currentData.allComponents["battery0/MinCellVoltage"]);
-    this.cellTemperatureDifference = Utils.subtractSafely(currentData.allComponents["battery0/MaxCellTemperature"], currentData.allComponents["battery0/MinCellTemperature"]);
-  }
+    protected VOLTAGE_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
+        return Converter.IF_NUMBER(raw, value => formatNumber(value, "de", "1.0-3") + " V");
+    };
 
-  protected VOLTAGE_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-    return Converter.IF_NUMBER(raw, value => formatNumber(value, "de", "1.0-3") + " V");
-  };
+    protected VOLTAGE_IN_MILLI_VOLT_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
+        return Converter.IF_NUMBER(raw, value =>
+            formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " V");
+    };
 
-  protected VOLTAGE_IN_MILLI_VOLT_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-    return Converter.IF_NUMBER(raw, value =>
-      formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " V");
-  };
+    protected VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
+        return Converter.IF_NUMBER(raw, value =>
+            formatNumber(value, "de", "1.0-0") + " mV");
+    };
 
-  protected VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-    return Converter.IF_NUMBER(raw, value =>
-      formatNumber(value, "de", "1.0-0") + " mV");
-  };
+    protected AMPERE_IN_MILLI_AMPERE_TO_AMPERE_WITH_3_DECIMALS: Converter = (raw): string => {
+        return Converter.IF_NUMBER(raw, value =>
+            formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " A",
+        );
+    };
 
-  protected AMPERE_IN_MILLI_AMPERE_TO_AMPERE_WITH_3_DECIMALS: Converter = (raw): string => {
-    return Converter.IF_NUMBER(raw, value =>
-      formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " A",
-    );
-  };
+    protected updateTowerNr(event: Event) {
+        this.selectedTower = (event as SelectCustomEvent).target.value;
+        this.addSerialNumbersToModules();
+    }
 
-  protected updateTowerNr(event: Event) {
-    this.selectedTower = (event as SelectCustomEvent).target.value;
-    this.addSerialNumbersToModules();
-  }
+    protected updateModuleNr(event: Event) {
+        this.selectedModule = (event as SelectCustomEvent).target.value;
+    }
 
-  protected updateModuleNr(event: Event) {
-    this.selectedModule = (event as SelectCustomEvent).target.value;
-  }
+    private async addSerialNumbersToModules() {
 
-  private async addSerialNumbersToModules() {
+        const moduleOptions = [];
+        this.moduleOptions.forEach(({ key, value: moduleNr }) => {
+            if (!moduleNr) {
+                return;
+            }
 
-    const moduleOptions = [];
-    this.moduleOptions.forEach(({ key, value: moduleNr }) => {
-      if (!moduleNr) {
-        return;
-      }
-
-      const channel = new ChannelAddress("battery0", `Tower${this.selectedTower.value}Module${moduleNr}SerialNumber`);
-      this.subscribeAndGetFirstValidValueForChannel(channel).then((channelValue) => {
-        moduleOptions.push({
-          key: key + " - " + channelValue,
-          value: moduleNr,
+            const channel = new ChannelAddress("battery0", `Tower${this.selectedTower.value}Module${moduleNr}SerialNumber`);
+            this.subscribeAndGetFirstValidValueForChannel(channel).then((channelValue) => {
+                moduleOptions.push({
+                    key: key + " - " + channelValue,
+                    value: moduleNr,
+                });
+            });
         });
-      });
-    });
 
-    this.moduleOptions = moduleOptions;
-  }
-
-  private async setTowerModuleOptions() {
-    const battery = Object.values(this.config.components).find(el => el.factoryId === "Battery.Fenecon.Home");
-    if (!battery) {
-      return;
+        this.moduleOptions = moduleOptions;
     }
 
-    const numberOfTowers = await this.getFirstValidValueForChannel(new ChannelAddress(battery.id, "NumberOfTowers"));
-    this.towerOptions.push(
-      ...(numberOfTowers ? ArrayUtils.getArrayOfLength(numberOfTowers).map(el => ({
-        key: "Tower" + el,
-        value: el.toString(),
-      }))
-        : []));
-    this.selectedTower = this.towerOptions[0];
+    private async setTowerModuleOptions() {
+        const battery = Object.values(this.config.components).find(el => el.factoryId === "Battery.Fenecon.Home");
+        if (!battery) {
+            return;
+        }
 
-    const numberOfModules = await this.getFirstValidValueForChannel(new ChannelAddress(battery.id, "NumberOfModulesPerTower"));
-    this.moduleOptions.push(
-      ...(numberOfModules ? ArrayUtils.getArrayOfLength(numberOfModules).map(el => {
-        return {
-          key: "Module" + el,
-          value: el.toString(),
-        };
-      })
-        : []));
+        const numberOfTowers = await this.getFirstValidValueForChannel(new ChannelAddress(battery.id, "NumberOfTowers"));
+        this.towerOptions.push(
+            ...(numberOfTowers ? ArrayUtils.getArrayOfLength(numberOfTowers).map(el => ({
+                key: "Tower" + el,
+                value: el.toString(),
+            }))
+                : []));
+        this.selectedTower = this.towerOptions[0];
 
-    this.selectedModule = this.moduleOptions[0];
-  }
+        const numberOfModules = await this.getFirstValidValueForChannel(new ChannelAddress(battery.id, "NumberOfModulesPerTower"));
+        this.moduleOptions.push(
+            ...(numberOfModules ? ArrayUtils.getArrayOfLength(numberOfModules).map(el => {
+                return {
+                    key: "Module" + el,
+                    value: el.toString(),
+                };
+            })
+                : []));
+
+        this.selectedModule = this.moduleOptions[0];
+    }
 }

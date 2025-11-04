@@ -12,6 +12,7 @@ import static java.time.LocalTime.MAX;
 import static java.time.LocalTime.MIDNIGHT;
 import static java.time.LocalTime.MIN;
 
+import java.time.Clock;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ import com.google.gson.JsonArray;
 
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
-import io.openems.common.jscalendar.JSCalendar.Task;
+import io.openems.common.jscalendar.JSCalendar;
 import io.openems.common.jsonrpc.serialization.JsonObjectPathActual;
 import io.openems.common.utils.JsonUtils;
 import io.openems.edge.timeofusetariff.api.AncillaryCosts.GridFee.Tariff;
@@ -185,14 +186,16 @@ public class AncillaryCosts {
 
 		/**
 		 * Converts a structured list of {@code DateRange} and {@code TimeRange}
-		 * definitions into a flat {@link ImmutableList} of {@link Task} objects, each
-		 * representing a non-repeating time window with an associated price (tariff).
+		 * definitions into a {@link JSCalendar.Tasks} object, each Task representing a
+		 * non-repeating time window with an associated price (tariff).
 		 * 
-		 * @return an {@link ImmutableList} of {@link Task} instances representing the
-		 *         full tariff schedule.
+		 * @param clock The {!link Clock}.
+		 * @return a {@link JSCalendar.Tasks} instance representing the full tariff
+		 *         schedule.
 		 */
-		public ImmutableList<Task<Double>> toSchedule() {
-			final var tasks = ImmutableList.<Task<Double>>builder();
+		public JSCalendar.Tasks<Double> toSchedule(Clock clock) {
+			final var tasks = JSCalendar.Tasks.<Double>create() //
+					.setClock(clock);
 
 			// Process all DateRanges defined in the GridFee configuration
 			for (var dateRange : this.dateRanges) {
@@ -211,15 +214,13 @@ public class AncillaryCosts {
 					};
 
 					final var startDateTime = LocalDateTime.of(dateRange.start(), timeRange.start());
-					final var task = Task.<Double>create() //
+					tasks.add(t -> t //
 							.setStart(startDateTime) //
 							.setDuration(duration) //
 							.addRecurrenceRule(b -> b.setFrequency(DAILY) //
 									.setUntil(dateRange.end())) //
 							.setPayload(payload)//
-							.build();
-
-					tasks.add(task);
+							.build());
 				}
 			}
 
@@ -242,19 +243,21 @@ public class AncillaryCosts {
 	 * back to parsing a custom schedule from the {@code "schedule"} JSON array
 	 * using {@link #parseSchedule(JsonArray)}.
 	 * 
+	 * @param clock          The {@link Clock}
 	 * @param ancillaryCosts the JSON configuration object
-	 * @return A list of {@link Task} instances representing daily recurring tariff
+	 * @return {@link JSCalendar.Tasks} representing daily recurring tariff
 	 *         intervals.
 	 * @throws OpenemsNamedException on error
 	 */
-	public static ImmutableList<Task<Double>> parseForGermany(String ancillaryCosts) throws OpenemsNamedException {
+	public static JSCalendar.Tasks<Double> parseForGermany(Clock clock, String ancillaryCosts)
+			throws OpenemsNamedException {
 
 		var j = new JsonObjectPathActual.JsonObjectPathActualNonNull(parseToJsonObject(ancillaryCosts));
 
 		try {
 			var dsoOpt = j.getOptionalEnum("dso", GermanDSO.class);
 			if (dsoOpt.isPresent()) {
-				return dsoOpt.get().gridFee.toSchedule();
+				return dsoOpt.get().gridFee.toSchedule(clock);
 			}
 		} catch (IllegalArgumentException e) {
 			// Invalid enum value like "OTHER" or "null"
@@ -263,31 +266,33 @@ public class AncillaryCosts {
 		var schedule = j.getJsonArrayOrNull("schedule");
 
 		if (schedule == null) {
-			return ImmutableList.of();
+			return JSCalendar.Tasks.empty();
 		}
 
-		return parseSchedule(j.getJsonArray("schedule"));
+		return parseSchedule(clock, j.getJsonArray("schedule"));
 
 	}
 
 	/**
-	 * Parses a JSON-based tariff schedule into a list of recurring {@link Task}
-	 * instances, each representing a time-bound tariff applied daily over a
-	 * specified quarter.
+	 * Parses a JSON-based tariff schedule into a {@link JSCalendar.Tasks} instance,
+	 * each Task representing a time-bound tariff applied daily over a specified
+	 * quarter.
 	 * 
 	 * <p>
 	 * The input JSON is expected to be structured by year and quarters, with daily
 	 * time intervals for each tariff type (`lowTariff`, `standardTariff`,
 	 * `highTariff`).
 	 * 
+	 * @param clock    The {@link Clock}
 	 * @param schedule A JSON array containing yearly tariff schedules structured by
 	 *                 quarter.
-	 * @return A list of {@link Task} objects representing daily recurring tariff
+	 * @return A {@link JSCalendar.Tasks} object representing daily recurring tariff
 	 *         intervals.
-	 * @throws OpenemsNamedException OpenemsNamedException on error.
+	 * @throws OpenemsNamedException on error.
 	 */
-	public static ImmutableList<Task<Double>> parseSchedule(JsonArray schedule) throws OpenemsNamedException {
-		final var tasks = ImmutableList.<Task<Double>>builder();
+	public static JSCalendar.Tasks<Double> parseSchedule(Clock clock, JsonArray schedule) throws OpenemsNamedException {
+		final var tasks = JSCalendar.Tasks.<Double>create() //
+				.setClock(clock);
 
 		for (var yearData : schedule) {
 			var year = getAsInt(yearData, "year");
@@ -319,7 +324,7 @@ public class AncillaryCosts {
 						break;
 					}
 				}
-				
+
 				if (hasFullDaySchedule && dailySchedules.size() > 1) {
 					throw new OpenemsException("A full-day tariff (00:00-00:00) is defined for Quarter " + quarterNumber
 							+ ". No other time slots are allowed.");
@@ -385,16 +390,14 @@ public class AncillaryCosts {
 					var duration = calculateDuration(fromTime, toTime);
 					var taskStart = LocalDateTime.of(q.start, fromTime);
 
-					var task = Task.<Double>create() //
+					tasks.add(t -> t //
 							.setStart(taskStart) //
 							.setDuration(duration) //
 							.addRecurrenceRule(rr -> rr //
 									.setFrequency(DAILY) //
 									.setUntil(q.end)) //
 							.setPayload(payload) //
-							.build();
-
-					tasks.add(task);
+							.build());
 				}
 
 				// Create list of all intervals for gap detection
@@ -412,15 +415,13 @@ public class AncillaryCosts {
 						var duration = calculateDuration(stdInterval.from, stdInterval.to);
 						var taskStart = LocalDateTime.of(q.start, stdInterval.from);
 
-						var stdTask = Task.<Double>create() //
+						tasks.add(t -> t //
 								.setStart(taskStart) //
 								.setDuration(duration) //
 								.addRecurrenceRule(rr -> rr.setFrequency(DAILY) //
 										.setUntil(q.end))
 								.setPayload(standardTariff) //
-								.build();
-
-						tasks.add(stdTask);
+								.build());
 					}
 
 					// Special handling for midnight end time
@@ -438,15 +439,13 @@ public class AncillaryCosts {
 					var duration = calculateDuration(stdInterval.from, stdInterval.to);
 					var taskStart = LocalDateTime.of(q.start, stdInterval.from);
 
-					var stdTask = Task.<Double>create() //
+					tasks.add(t -> t //
 							.setStart(taskStart) //
 							.setDuration(duration) //
 							.addRecurrenceRule(rr -> rr.setFrequency(DAILY) //
 									.setUntil(q.end)) //
 							.setPayload(standardTariff) //
-							.build();
-
-					tasks.add(stdTask);
+							.build());
 				}
 			}
 		}

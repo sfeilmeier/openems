@@ -31,10 +31,10 @@ export abstract class AbstractBattery {
         this.service.startSpinner(this._abstractBatterySpinner);
         this.importantWriteChannelDescriptions = this.getImportantWriteChannelDescriptions();
         this.importantReadChannelDescriptions.push(
-            { category: "Edge.Service.entireSystem", channels: this.getImportantSystemReadChannelDescriptions() },
-            { category: "Edge.Service.Cell.voltages", channels: this.getImportantCellVoltageReadChannelDescriptions() },
-            { category: "Edge.Service.Cell.temperatures", channels: this.getImportantCellTemperatureReadChannelDescriptions() },
-            { category: "Edge.Service.Cell.insulation", channels: this.getImportantInsulationReadChannelDescriptions() },
+            { category: "EDGE.SERVICE.ENTIRE_SYSTEM", channels: this.getImportantSystemReadChannelDescriptions() },
+            { category: "EDGE.SERVICE.CELL.VOLTAGES", channels: this.getImportantCellVoltageReadChannelDescriptions() },
+            { category: "EDGE.SERVICE.CELL.TEMPERATURES", channels: this.getImportantCellTemperatureReadChannelDescriptions() },
+            { category: "EDGE.SERVICE.CELL.INSULATION", channels: this.getImportantInsulationReadChannelDescriptions() },
         );
 
         this.getImportantAdditionalReadChannelDescriptions().forEach(categorizedChannelDescription => {

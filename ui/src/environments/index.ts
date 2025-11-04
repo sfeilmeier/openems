@@ -113,6 +113,8 @@ export interface Environment {
             readonly RUNDSTEUER: {
                 readonly HOME: string,
                 readonly HOME_GEN_2: string,
+                readonly HOME_20_30: string,
+                readonly COMMERCIAL_50_GEN_3: string,
             },
 
             readonly AVU: string,
@@ -158,8 +160,8 @@ export interface Environment {
 }
 
 /*
- * Return the proper websocket scheme (WS or WSS) depending on whether the page is accessed via HTTP or HTTPS.
+ * Return the proper websocket scheme ("ws" or "wss") depending on whether the page is accessed via HTTP or HTTPS.
  */
-export function getWebsocketScheme(): string {
-    return window.location.protocol === "https:" ? "wss://" : "ws://";
+export function getWebsocketScheme(protocol: string = window.location.protocol): string {
+    return protocol === "https:" ? "wss" : "ws";
 }

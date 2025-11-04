@@ -441,7 +441,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         protocol.items.push({
             category: Category.GRID,
             name: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
-            value: this.isController14aActivated ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+            value: this.isController14aActivated ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
         });
 
         return new Promise((resolve, reject) => {

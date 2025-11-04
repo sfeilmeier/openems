@@ -1,5 +1,6 @@
 import { TranslateService } from "@ngx-translate/core";
-import { FeedInSetting } from "./enums";
+import { Language } from "src/app/shared/type/language";
+import { ExternalLimitationType, FeedInSetting } from "./enums";
 
 export const DIRECTIONS_OPTIONS = (translate: TranslateService) => {
     const south = translate.instant("INSTALLATION.PROTOCOL_PV.DIRECTIONS.SOUTH");
@@ -53,3 +54,43 @@ export const FEED_IN_POWER_FACTOR_OPTIONS = (translate: TranslateService) => {
     ];
 };
 
+export const EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES = (translate: TranslateService, docLink: string) => {
+    const BASE_PATH: string = "assets/img/ibn/feed-in-limit/";
+    const supportedLangs = [Language.DE.key, Language.EN.key];
+    let lang: string = Language.getByKey(localStorage.LANGUAGE)?.key ?? Language.DEFAULT.key;
+
+    if (!supportedLangs.includes(lang)) {
+        lang = Language.EN.key;
+    }
+
+    return [
+        {
+            label: translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+            value: ExternalLimitationType.NO_LIMITATION,
+        },
+        {
+            label: translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_EXTERNAL_LIMITATION"),
+            value: ExternalLimitationType.DYNAMIC_EXTERNAL_LIMITATION,
+            imageUrl: `${BASE_PATH}dynamicExternalControl-${lang}.png`,
+            docUrl: docLink,
+        },
+        {
+            label: translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"),
+            value: ExternalLimitationType.EXTERNAL_LIMITATION,
+            imageUrl: `${BASE_PATH}externalController-${lang}.png`,
+        },
+    ];
+};
+
+export const EXTERNAL_LIMITATION_OPTIONS_WITHOUT_DYNAMIC_EXTERNAL_CONTROLLER = (translate: TranslateService) => {
+    return [
+        {
+            label: translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"),
+            value: ExternalLimitationType.EXTERNAL_LIMITATION,
+        },
+        {
+            label: translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
+            value: ExternalLimitationType.NO_LIMITATION,
+        },
+    ];
+};

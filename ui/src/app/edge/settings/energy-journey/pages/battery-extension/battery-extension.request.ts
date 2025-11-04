@@ -18,22 +18,22 @@ import { JsonrpcRequest } from "src/app/shared/jsonrpc/base";
  */
 export class PossibleBatteryExtensionRequest extends JsonrpcRequest {
 
-  private static METHOD: string = "possibleBatteryCapacityExtension";
+    private static METHOD: string = "possibleBatteryCapacityExtension";
 
-  public constructor(
-    private fromDate: Date,
-    private toDate: Date,
-    private electricityPrice: number,
-  ) {
-    super(PossibleBatteryExtensionRequest.METHOD, {
-      fromDate: format(fromDate, "yyyy-MM-dd"),
-      toDate: format(toDate, "yyyy-MM-dd"),
-      electricityPrice: electricityPrice,
-    });
+    public constructor(
+        private fromDate: Date,
+        private toDate: Date,
+        private electricityPrice: number,
+    ) {
+        super(PossibleBatteryExtensionRequest.METHOD, {
+            fromDate: format(fromDate, "yyyy-MM-dd"),
+            toDate: format(toDate, "yyyy-MM-dd"),
+            electricityPrice: electricityPrice,
+        });
 
-    delete this.fromDate;
-    delete this.toDate;
-    delete this.electricityPrice;
-  }
+        delete this.fromDate;
+        delete this.toDate;
+        delete this.electricityPrice;
+    }
 
 }

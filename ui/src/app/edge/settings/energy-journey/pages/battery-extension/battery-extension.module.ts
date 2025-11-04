@@ -9,33 +9,33 @@ import { GridBuyChartComponent } from "./chart/gridBuy.chart";
 import { DetailComponent } from "./details/details";
 
 @NgModule({
-  imports: [
-    SharedModule,
-    EnergyJourneySharedModule,
-    IonicModule,
-    FlatWidgetButtonComponent,
-  ],
-  declarations: [
-    BatteryExtensionComponent,
-    DetailComponent,
-    ElectricityPriceSelectionComponent,
-    GridBuyChartComponent,
-  ],
-  exports: [
-    BatteryExtensionComponent,
-    DetailComponent,
-    ElectricityPriceSelectionComponent,
-    GridBuyChartComponent,
-  ],
+    imports: [
+        SharedModule,
+        EnergyJourneySharedModule,
+        IonicModule,
+        FlatWidgetButtonComponent,
+    ],
+    declarations: [
+        BatteryExtensionComponent,
+        DetailComponent,
+        ElectricityPriceSelectionComponent,
+        GridBuyChartComponent,
+    ],
+    exports: [
+        BatteryExtensionComponent,
+        DetailComponent,
+        ElectricityPriceSelectionComponent,
+        GridBuyChartComponent,
+    ],
 })
 export class BatteryExtensionModule { }
 
 export type SimulationResult = {
-  simulationData: {
-    numberOfModules: number,
-    gridBuy: number,
-    gridBuyCosts: number,
-    kWPeak: number,
-    capacity: number,
-  }[],
+    simulationData: {
+        numberOfModules: number,
+        gridBuy: number,
+        gridBuyCosts: number,
+        kWPeak: number,
+        capacity: number,
+    }[],
 };

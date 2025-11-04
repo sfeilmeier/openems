@@ -27,12 +27,12 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         value: number;
         coupler: Coupler
     } = {
-            isEnabled: true,
-            minValue: 15,
-            value: 20,
-            isReserveSocEnabled: false,
-            coupler: Coupler.WAGO,
-        };
+        isEnabled: true,
+        minValue: 15,
+        value: 20,
+        isReserveSocEnabled: false,
+        coupler: Coupler.WAGO,
+    };
 
     constructor(translate: TranslateService) {
         super([
@@ -208,7 +208,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         protocol.items.push({
             category: Category.EMERGENCY_RESERVE,
             name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE", { symbol: "?" }),
-            value: emergencyReserve.isEnabled ? this.translate.instant("General.yes") : this.translate.instant("General.no"),
+            value: emergencyReserve.isEnabled ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
         });
 
         if (emergencyReserve.isEnabled) {
@@ -259,12 +259,13 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
     public override getEmergencyReserveFields(): FormlyFieldConfig[] {
 
         const fields: FormlyFieldConfig[] = super.getEmergencyReserveFields();
-
         fields.push({
             key: "coupler",
+            type: "radio",
             props: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.COUPLER_TITLE"),
                 required: true,
+                radioSlot: "start",
                 options: [
                     {
                         label: Coupler.toLabelString(Coupler.WAGO, this.translate),
@@ -278,7 +279,6 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
                     },
                 ],
             },
-            wrappers: ["formly-field-radio-with-image"],
             defaultValue: this.emergencyReserve.coupler,
         });
 
