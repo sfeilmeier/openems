@@ -24,6 +24,16 @@ export class ChangelogComponent {
         changes: Array<string | { roleIsAtLeast: Role, change: string }>
     }[] = [
         {
+            version: "2025.11.1",
+            changes: [
+                Changelog.openems("2025.11.0"),
+                Changelog.UI,
+                Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Verbesserungen bei Unterbrechung des Ladevorgangs",
+                { roleIsAtLeast: Role.INSTALLER, change: "Inbetriebnahmeassistent: Bessere Erklärung der Funktion \"Externe limitierung\" | \"Dynamischer Rundsteuerempfänger\"" },
+                Changelog.library(Library.OKHTTP, Library.APACHE_FELIX_HTTP_JETTY),
+            ],
+        },
+        {
             version: "2025.10.2",
             changes: [
                 Changelog.UI,
