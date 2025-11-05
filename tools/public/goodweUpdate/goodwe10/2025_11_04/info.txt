@@ -1,0 +1,5 @@
+Version 04.11.2025
+ARM: 336 (410-02041-32(336)OL-R.bin)
+DSP: 197 (410-04029-12(V211).bin)
+
+"This FW is mainly for solving fuse blown caused by precharge error."
