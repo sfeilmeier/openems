@@ -3,7 +3,8 @@ import { formatNumber } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
-import { ClearTimeOutFailureRequest } from "src/app/edge/live/system/industrial/jsonrpc/clearTimeoutFailure";
+import { ClearTimeOutFailureRequest } from "src/app/edge/live/system/industrial/jsonrpc/ClearTimeOutFailureRequest";
+import { EssErrorAcknowledge } from "src/app/edge/live/system/industrial/jsonrpc/essErrorAcknowledge";
 import { ComponentsBaseModule } from "src/app/shared/components/components.module";
 import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
 import { PickdateComponentModule } from "src/app/shared/components/pickdate/pickdate.module";
@@ -148,9 +149,15 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
 
     protected clear() {
         this.esss.forEach((ess) => {
+            let payload;
+            if (this.edge.isVersionAtLeast("2025.11.3")) {
+                payload = new EssErrorAcknowledge();
+            } else {
+                payload = new ClearTimeOutFailureRequest();
+            }
             this.edge.sendRequest(
                 this.websocket,
-                new ComponentJsonApiRequest({ componentId: ess.id, payload: new ClearTimeOutFailureRequest() }),
+                new ComponentJsonApiRequest({ componentId: ess.id, payload: payload }),
             );
         });
     }

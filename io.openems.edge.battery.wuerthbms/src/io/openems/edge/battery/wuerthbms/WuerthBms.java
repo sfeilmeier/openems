@@ -21,6 +21,7 @@ import static io.openems.common.types.OpenemsType.STRING;
 import io.openems.common.channel.Level;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.edge.battery.api.Battery;
+import io.openems.edge.battery.api.BatteryErrorAcknowledge;
 import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.battery.wuerthbms.enums.BalancingState;
 import io.openems.edge.battery.wuerthbms.enums.BmsState;
@@ -43,7 +44,8 @@ import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
 
-public interface WuerthBms extends Battery, OpenemsComponent, StartStoppable, BatteryVoltageProtection {
+public interface WuerthBms
+		extends Battery, BatteryErrorAcknowledge, OpenemsComponent, StartStoppable, BatteryVoltageProtection {
 
 	/**
 	 * Gets the target Start/Stop mode from config or StartStop-Channel.
@@ -53,23 +55,6 @@ public interface WuerthBms extends Battery, OpenemsComponent, StartStoppable, Ba
 	StartStop getStartStopTarget();
 
 	enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-		/**
-		 * Stop battery timeout passed.
-		 *
-		 * <p>
-		 * This fault forces the EssGeneric into the GO_STOPPED state.
-		 */
-		TIMEOUT_STOP_BATTERY(Doc.of(Level.FAULT) //
-				.text("Stop battery timeout passed!")), //
-
-		/**
-		 * Start battery timeout passed.
-		 *
-		 * <p>
-		 * This fault forces the EssGeneric into the GO_STOPPED state.
-		 */
-		TIMEOUT_START_BATTERY(Doc.of(Level.FAULT) //
-				.text("Start battery timeout passed!")), //
 
 		/**
 		 * State of the battery. (SystemGlobalState)
@@ -704,62 +689,6 @@ public interface WuerthBms extends Battery, OpenemsComponent, StartStoppable, Ba
 	 */
 	default WriteChannel<Boolean> getResetBatteryCommandChannel() {
 		return this.channel(ChannelId.RESET_BATTERY_COMMAND);
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#TIMEOUT_START_BATTERY}.
-	 *
-	 * @return the Channel
-	 */
-	default StateChannel getTimeoutStartBatteryChannel() {
-		return this.channel(ChannelId.TIMEOUT_START_BATTERY);
-	}
-
-	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#TIMEOUT_START_BATTERY}.
-	 *
-	 * @return the Channel {@link Value}
-	 */
-	default Value<Boolean> getTimeoutStartBattery() {
-		return this.getTimeoutStartBatteryChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#TIMEOUT_START_BATTERY} Channel.
-	 *
-	 * @param value the next value
-	 */
-	default void _setTimeoutStartBattery(Boolean value) {
-		this.getTimeoutStartBatteryChannel().setNextValue(value);
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#TIMEOUT_STOP_BATTERY}.
-	 *
-	 * @return the Channel
-	 */
-	default StateChannel getTimeoutStopBatteryChannel() {
-		return this.channel(ChannelId.TIMEOUT_STOP_BATTERY);
-	}
-
-	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#TIMEOUT_STOP_BATTERY}.
-	 *
-	 * @return the Channel {@link Value}
-	 */
-	default Value<Boolean> getTimeoutStopBattery() {
-		return this.getTimeoutStopBatteryChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#TIMEOUT_STOP_BATTERY} Channel.
-	 *
-	 * @param value the next value
-	 */
-	default void _setTimeoutStopBattery(Boolean value) {
-		this.getTimeoutStopBatteryChannel().setNextValue(value);
 	}
 
 	/**

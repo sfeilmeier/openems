@@ -16,6 +16,7 @@ import io.openems.common.channel.AccessMode;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.edge.battery.api.Battery;
+import io.openems.edge.battery.api.BatteryErrorAcknowledge;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.cluster.parallel.BatteryFeneconF2bClusterParallel;
 import io.openems.edge.battery.fenecon.f2b.cluster.serial.BatteryFeneconF2bClusterSerial;
@@ -220,7 +221,7 @@ public abstract class AbstractBatteryFeneconF2bCluster extends AbstractOpenemsCo
 	}
 
 	@Override
-	public void clearBatteryTimeoutFailure() {
+	public void executeBatteryErrorAcknowledge() {
 		this._setTimeoutStartBattery(false);
 		this._setTimeoutStopBattery(false);
 		this._setAtLeastOneBatteryInError(false);
@@ -230,8 +231,6 @@ public abstract class AbstractBatteryFeneconF2bCluster extends AbstractOpenemsCo
 		this._setOneBatteryNotRunning(false);
 		this._setTimeoutWaitForBatteriesStatus(false);
 		this._setAllBatteriesAreInFault(false);
-		this.batteries.forEach(b -> {
-			b.clearBatteryTimeoutFailure();
-		});
+		this.batteries.forEach(BatteryErrorAcknowledge::executeBatteryErrorAcknowledge);
 	}
 }

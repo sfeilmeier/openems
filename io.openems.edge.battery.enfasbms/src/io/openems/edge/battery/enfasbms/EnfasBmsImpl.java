@@ -41,6 +41,7 @@ import io.openems.common.types.OpenemsType;
 import io.openems.common.types.SemanticVersion;
 import io.openems.common.utils.FunctionUtils;
 import io.openems.edge.battery.api.Battery;
+import io.openems.edge.battery.api.BatteryErrorAcknowledge;
 import io.openems.edge.battery.enfasbms.statemachine.Context;
 import io.openems.edge.battery.enfasbms.statemachine.StateMachine;
 import io.openems.edge.battery.enfasbms.statemachine.StateMachine.State;
@@ -61,6 +62,7 @@ import io.openems.edge.bridge.modbus.api.element.UnsignedDoublewordElement;
 import io.openems.edge.bridge.modbus.api.element.UnsignedWordElement;
 import io.openems.edge.bridge.modbus.api.task.FC16WriteRegistersTask;
 import io.openems.edge.bridge.modbus.api.task.FC4ReadInputRegistersTask;
+import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.channel.ChannelId.ChannelIdImpl;
 import io.openems.edge.common.channel.Doc;
 import io.openems.edge.common.channel.IntegerReadChannel;
@@ -86,7 +88,7 @@ import io.openems.edge.common.taskmanager.Priority;
 		EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE //
 })
 public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements EnfasBms, ModbusComponent, OpenemsComponent,
-		Battery, BatteryVoltageProtection, EventHandler, ModbusSlave, StartStoppable {
+		Battery, BatteryErrorAcknowledge, BatteryVoltageProtection, EventHandler, ModbusSlave, StartStoppable {
 
 	public record BatteryValues(int soc, int voltage, int chargeMaxVoltage, int dischargeMinVoltage) {
 	}
@@ -125,6 +127,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 				OpenemsComponent.ChannelId.values(), //
 				ModbusComponent.ChannelId.values(), //
 				Battery.ChannelId.values(), //
+				BatteryErrorAcknowledge.ChannelId.values(), //
 				StartStoppable.ChannelId.values(), //
 				BatteryProtection.ChannelId.values(), //
 				BatteryVoltageProtection.ChannelId.values(), //
@@ -1006,6 +1009,14 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 		return new BatteryVoltageSpecification(cells, modules, maximumCellVoltageLimit, minimumCellVoltageLimit,
 				maximumCellVoltageOperationLimit, minimumCellVoltageOperationLimit, maximumChargeVoltage,
 				minimumDischargeVoltage);
+	}
+
+	@Override
+	public List<Channel<?>> defineBatteryErrorAcknowledgeChannels() {
+		return List.of(//
+				this.getModbusCommunicationFailedChannel(), //
+				this.getTimeoutStartBatteryChannel(), this.getTimeoutStopBatteryChannel(),
+				this.getBmsCommunicationFailedChannel(), this.getNotStableCommunicationChannel());
 	}
 
 }

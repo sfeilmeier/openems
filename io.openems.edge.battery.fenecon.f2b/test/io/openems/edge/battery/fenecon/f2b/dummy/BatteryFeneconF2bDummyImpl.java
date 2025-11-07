@@ -226,9 +226,4 @@ public class BatteryFeneconF2bDummyImpl extends AbstractOpenemsComponent
 	public DeviceSpecificOnSetNextValueHandler<? extends BatteryFeneconF2b> getDeviceSpecificOnSetNextValueHandler() {
 		return null;
 	}
-
-	@Override
-	public void clearBatteryTimeoutFailure() {
-
-	}
 }

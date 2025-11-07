@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.edge.battery.api.Battery;
-import io.openems.edge.battery.api.BatteryTimeoutFailure;
+import io.openems.edge.battery.api.BatteryErrorAcknowledge;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.DeviceSpecificOnSetNextValueHandler;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.AbstractBatteryFeneconF2bCluster;
@@ -58,7 +58,7 @@ import io.openems.edge.common.startstop.StartStoppable;
 })
 public class BatteryFeneconF2bClusterParallelImpl extends AbstractBatteryFeneconF2bCluster
 		implements BatteryFeneconF2bClusterParallel, BatteryFeneconF2bCluster, BatteryFeneconF2b, Battery,
-		OpenemsComponent, EventHandler, ModbusSlave, StartStoppable, BatteryTimeoutFailure, BatteryVoltageProtection {
+		OpenemsComponent, EventHandler, ModbusSlave, StartStoppable, BatteryErrorAcknowledge, BatteryVoltageProtection {
 
 	private final Logger log = LoggerFactory.getLogger(BatteryFeneconF2bClusterParallelImpl.class);
 	private final ParallelChannelManager channelManager = new ParallelChannelManager(this);
@@ -94,7 +94,7 @@ public class BatteryFeneconF2bClusterParallelImpl extends AbstractBatteryFenecon
 				OpenemsComponent.ChannelId.values(), //
 				Battery.ChannelId.values(), //
 				StartStoppable.ChannelId.values(), //
-				BatteryTimeoutFailure.ChannelId.values(), //
+				BatteryErrorAcknowledge.ChannelId.values(), //
 				BatteryFeneconF2b.ChannelId.values(), //
 				BatteryProtection.ChannelId.values(), //
 				BatteryVoltageProtection.ChannelId.values(), //
