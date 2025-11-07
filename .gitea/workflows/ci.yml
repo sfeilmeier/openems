@@ -83,6 +83,7 @@ jobs:
           source openems.env
           common_update_version_in_code
           echo "Build Version $VERSION"
+          common_test_edge --console=plain --warn --parallel --max-workers=4
           common_build_edge --console=plain --warn --parallel --max-workers=2
           common_check_file "$OEMS_EDGE_OUTPUT" "OpenEMS Edge JAR missing!"
 
@@ -97,6 +98,7 @@ jobs:
           source openems.env
           common_update_version_in_code
           echo "Build Version $VERSION"
+          common_test_backend --console=plain --warn --parallel --max-workers=4
           common_build_backend --console=plain --warn --parallel --max-workers=2
           common_check_file "$OEMS_BACKEND_OUTPUT" "OpenEMS Backend JAR missing!"
 
