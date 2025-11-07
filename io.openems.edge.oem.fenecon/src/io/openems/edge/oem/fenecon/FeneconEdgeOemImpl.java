@@ -143,7 +143,8 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Api.ModbusRtu.ReadWrite", "") //
 			.put("App.Api.RestJson.ReadOnly", "https://fenecon.de/produkte/fems/fems-app-rest-json-lesend/") //
 			.put("App.Api.RestJson.ReadWrite", "https://fenecon.de/fenecon-fems/fems-app-rest-json-schreibzugriff/") //
-			.put("App.Timedata.InfluxDb", "")
+			.put("App.Timedata.InfluxDb", "") //
+			.put("App.Evcs.Abl.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
 			.put("App.Evcs.Alpitronic", "https://fenecon.de/fenecon-fems/fems-app-dc-ladestation/") //
 			.put("App.Evcs.Cluster", "https://fenecon.de/produkte/fems/fems-app-multiladepunkt-management/") //
 			.put("App.Evcs.HardyBarth", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
