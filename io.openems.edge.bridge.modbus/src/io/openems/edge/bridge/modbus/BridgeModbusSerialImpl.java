@@ -137,6 +137,7 @@ public class BridgeModbusSerialImpl extends AbstractModbusBridge
 			params.setParity(this.parity.getValue());
 			params.setEncoding(Modbus.SERIAL_ENCODING_RTU);
 			params.setEcho(false);
+			params.disableRs485Control();
 			var connection = new SerialConnection(params);
 			this._connection = connection;
 		}
