@@ -1,5 +1,6 @@
 package io.openems.edge.system.fenecon.industrial.s;
 
+import static io.openems.common.session.Role.ADMIN;
 import static io.openems.common.types.ChannelAddress.fromString;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.groupingBy;
@@ -32,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.function.ThrowingConsumer;
 import io.openems.common.jsonrpc.base.GenericJsonrpcResponseSuccess;
+import io.openems.common.jsonrpc.serialization.EmptyObject;
 import io.openems.common.session.Role;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
@@ -48,8 +50,11 @@ import io.openems.edge.common.jsonapi.EdgeGuards;
 import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
+import io.openems.edge.ess.api.EssErrorAcknowledge;
+import io.openems.edge.ess.api.EssErrorAcknowledgeRequest;
 import io.openems.edge.ess.api.MetaEss;
 import io.openems.edge.ess.api.SymmetricEss;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.ErrorAcknowledgeRpc;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitContext;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitStateMachine;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitStateMachine.CoolingUnitState;
@@ -67,8 +72,8 @@ import io.openems.edge.system.fenecon.industrial.s.statemachine.StateMachine.Sta
 @EventTopics({ //
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
 })
-public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
-		implements SystemFeneconIndustrialS, OpenemsComponent, StartStoppable, EventHandler, ComponentJsonApi {
+public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent implements SystemFeneconIndustrialS,
+		OpenemsComponent, StartStoppable, EventHandler, ComponentJsonApi, ErrorAcknowledgeRpc {
 
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialSImpl.class);
 	private final StateMachine stateMachine = new StateMachine(State.UNDEFINED);
@@ -337,7 +342,7 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 	/**
 	 * Gets the channel value from given channel address.
 	 * 
-	 * @return true if its not null, or its defined and true.
+	 * @return true if it's not null, or its defined and true.
 	 */
 	public boolean isInEmergencyStopState() {
 		try {
@@ -367,6 +372,14 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 			this.acknowledgeEmergencyStop();
 
 			return new GenericJsonrpcResponseSuccess(call.getRequest().getId());
+		});
+
+		this.executeErrorAcknowledgeRpc(builder, () -> {
+			for (var ess : this.getEsssList()) {
+				if (ess instanceof EssErrorAcknowledge genericEss) {
+					genericEss.executeErrorAcknowledge();
+				}
+			}
 		});
 	}
 
@@ -465,4 +478,27 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
 			});
 		}
 	};
+
+	@Override
+	public void executeErrorAcknowledgeRpc(JsonApiBuilder builder) {
+		builder.handleRequest(new EssErrorAcknowledgeRequest(), endpoint -> {
+			endpoint.setGuards(EdgeGuards.roleIsAtleast(ADMIN));
+		}, call -> {
+			var channels = this.defineChannelsForErrorAcknowledge();
+			channels.forEach(c -> c.setNextValue(null));
+			this.getEsssList().forEach(ess -> {
+				if (ess instanceof EssErrorAcknowledge genericEss) {
+					genericEss.executeErrorAcknowledge();
+				}
+			});
+			return EmptyObject.INSTANCE;
+		});
+	}
+
+	@Override
+	public List<Channel<?>> defineChannelsForErrorAcknowledge() {
+		return List.of(//
+				getRunFailedChannel() //
+		);
+	}
 }

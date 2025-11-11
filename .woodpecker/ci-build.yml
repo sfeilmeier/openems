@@ -135,6 +135,7 @@ steps:
       - |
         set -e
         common_run_checkstyle $GRADLE_ARGS --max-workers=4;
+        common_test $GRADLE_ARGS --max-workers=4;
         common_build_edge $GRADLE_ARGS --max-workers=2;
         common_check_file "$OEMS_EDGE_OUTPUT" "OpenEMS Edge JAR missing!";
         common_build_backend $GRADLE_ARGS --max-workers=2;

@@ -38,7 +38,7 @@ import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.types.OpenemsType;
 import io.openems.edge.battery.api.Battery;
-import io.openems.edge.battery.api.BatteryTimeoutFailure;
+import io.openems.edge.battery.api.BatteryErrorAcknowledge;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.BatteryProtectionDefinitionType;
 import io.openems.edge.battery.fenecon.f2b.bmw.enums.CoolingApproval;
@@ -89,7 +89,7 @@ import io.openems.edge.common.type.TypeUtils;
 // TODO Extract AbstractBatteryFeneconF2b
 public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 		implements BatteryFeneconF2bBmw, BatteryFeneconF2b, ModbusComponent, OpenemsComponent, Battery, ModbusSlave,
-		StartStoppable, EventHandler, BatteryTimeoutFailure, BatteryVoltageProtection {
+		StartStoppable, EventHandler, BatteryErrorAcknowledge, BatteryVoltageProtection {
 
 	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
 	private final Logger log = LoggerFactory.getLogger(BatteryFeneconF2bBmwImpl.class);
@@ -127,7 +127,7 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 				ModbusComponent.ChannelId.values(), //
 				Battery.ChannelId.values(), //
 				StartStoppable.ChannelId.values(), //
-				BatteryTimeoutFailure.ChannelId.values(), //
+				BatteryErrorAcknowledge.ChannelId.values(), //
 				BatteryProtection.ChannelId.values(), //
 				BatteryVoltageProtection.ChannelId.values(), //
 				BatteryFeneconF2b.ChannelId.values(), //
@@ -638,11 +638,4 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 	public BmwOnSetNextValueHandler getDeviceSpecificOnSetNextValueHandler() {
 		return BmwOnSetNextValueHandler.INSTANCE;
 	}
-
-	@Override
-	public void clearBatteryTimeoutFailure() {
-		this._setTimeoutStartBattery(false);
-		this._setTimeoutStopBattery(false);
-	}
-
 }

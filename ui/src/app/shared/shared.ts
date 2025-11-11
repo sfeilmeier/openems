@@ -35,11 +35,11 @@ addIcons({
 export class Permission {
 
     /**
-   * Gets the allowed energy journey widgets, used in {@link EnergyJourneyComponent}
-   *
-   * @param ibnDate the first setup protocol date - ibn date
-   * @returns the list of allowed widgets
-   */
+     * Gets the allowed energy journey widgets, used in {@link EnergyJourneyComponent}
+     *
+     * @param ibnDate the first setup protocol date - ibn date
+     * @returns the list of allowed widgets
+     */
     public static getAllowedEnergyJourneyWidgets(edge: Edge, translate: TranslateService): EnergyJourneyWidget[] {
         return EdgePermission.getAllowedEnergyJourneyWidgets(edge, translate);
     }
@@ -48,33 +48,33 @@ export class Permission {
 export class EdgePermission {
 
     /**
-  * Checks if user is allowed to see {@link ProfileComponent} setup protocol download
-  *
-  * @param edge the edge
-  * @returns true, if user is at least {@link Role.OWNER}
-  */
+     * Checks if user is allowed to see {@link ProfileComponent} setup protocol download
+     *
+     * @param edge the edge
+     * @returns true, if user is at least {@link Role.OWNER}
+     */
     public static isUserAllowedToSetupProtocolDownload(edge: Edge): boolean {
         return Role.isAtLeast(edge.role, Role.OWNER);
     }
 
     /**
-   * Checks if the {@link EnergyJourneyComponent energy journey} is allowed to be seen
-   *
-   * @param ibnDate the ibn date - first setup protocol date
-   * @returns true, if ibnDate is at least one year ago and edge producttype is 'Home 10'
-   */
+     * Checks if the {@link EnergyJourneyComponent energy journey} is allowed to be seen
+     *
+     * @param ibnDate the ibn date - first setup protocol date
+     * @returns true, if ibnDate is at least one year ago and edge producttype is 'Home 10'
+     */
     public static isEnergyJourneyAllowed(edge: Edge): boolean {
         const isDateAtLeastOneYearAgo = isBefore(edge.firstSetupProtocol, subDays(subYears(new Date(), 1), 1));
         return isDateAtLeastOneYearAgo && StringUtils.isInArr(edge.producttype, [Producttype.HOME, Producttype.HOME_6, Producttype.HOME_10, Producttype.HOME_15, Producttype.HOME_20, Producttype.HOME_30]);
     }
 
     /**
-   * Gets the allowed energy journey widgets for this edge
-   * and if ibn date is at least one year old, it gets the correspondent widgets accordingly
-   *
-   * @param ibnDate the first setup protocol date - ibn date
-   * @returns the list of allowed widgets for this edge
-   */
+     * Gets the allowed energy journey widgets for this edge
+     * and if ibn date is at least one year old, it gets the correspondent widgets accordingly
+     *
+     * @param ibnDate the first setup protocol date - ibn date
+     * @returns the list of allowed widgets for this edge
+     */
     public static getAllowedEnergyJourneyWidgets(edge: Edge, translate: TranslateService): EnergyJourneyWidget[] {
         const isDateAtLeastOneYearAgo = EdgePermission.isEnergyJourneyAllowed(edge);
         if (!isDateAtLeastOneYearAgo) {
@@ -91,13 +91,13 @@ export class EdgePermission {
     }
 
     /**
-   * Gets the allowed history periods for this edge, used in {@link PickDatePopoverComponent}
-   * and if histroyPeriods exist, it gets the correspondent periods accordingly
-   *
-   * @param edge the edge
-   * @param historyPeriods the historyPeriods i.e 'day', 'week' or 'custom'
-   * @returns the list of allowed periods for this edge
-   */
+     * Gets the allowed history periods for this edge, used in {@link PickDatePopoverComponent}
+     * and if histroyPeriods exist, it gets the correspondent periods accordingly
+     *
+     * @param edge the edge
+     * @param historyPeriods the historyPeriods i.e 'day', 'week' or 'custom'
+     * @returns the list of allowed periods for this edge
+     */
     public static getAllowedHistoryPeriods(edge: Edge, historyPeriods?: DefaultTypes.PeriodStringValues[]) {
 
         if (historyPeriods?.length > 0) {
@@ -121,27 +121,27 @@ export class EdgePermission {
     }
 
     /**
-   * Determines if the edge has its channels in the edgeconfig
-   * or if they should be obtained with a separate request.
-   *
-   * The reason this was introduced is to reduce the size of the EdgeConfig
-   * and therefore improve performance in network, backend, ui, edge.
-   *
-   * @returns true if the channels are included in the edgeconfig
-   */
+     * Determines if the edge has its channels in the edgeconfig
+     * or if they should be obtained with a separate request.
+     *
+     * The reason this was introduced is to reduce the size of the EdgeConfig
+     * and therefore improve performance in network, backend, ui, edge.
+     *
+     * @returns true if the channels are included in the edgeconfig
+     */
     public static hasChannelsInEdgeConfig(edge: Edge): boolean {
         return !edge.isVersionAtLeast("2024.6.1");
     }
 
     /**
-   * Determines if the edge has only the factories which are used by the
-   * active components in the edgeconfig or if all factories are inlcuded.
-   *
-   * The reason this was introduced is to reduce the size of the EdgeConfig
-   * and therefore improve performance in network, backend, ui, edge.
-   *
-   * @returns true if only the factories of the used components are in the edgeconfig
-   */
+     * Determines if the edge has only the factories which are used by the
+     * active components in the edgeconfig or if all factories are inlcuded.
+     *
+     * The reason this was introduced is to reduce the size of the EdgeConfig
+     * and therefore improve performance in network, backend, ui, edge.
+     *
+     * @returns true if only the factories of the used components are in the edgeconfig
+     */
     public static hasReducedFactories(edge: Edge): boolean {
         return edge.isVersionAtLeast("2024.6.1");
     }
@@ -150,22 +150,22 @@ export class EdgePermission {
 export class UserPermission {
 
     /**
-   * Checks if user is allowed to see  {@link EnergyJourneyComponent}
-   *
-   * @param user the current user
-   * @param edge the edge
-   * @returns true, if user is at least {@link Role.OWNER}
-   */
+     * Checks if user is allowed to see  {@link EnergyJourneyComponent}
+     *
+     * @param user the current user
+     * @param edge the edge
+     * @returns true, if user is at least {@link Role.OWNER}
+     */
     public static isUserAllowedToSeeEnergyJourney(user: User): boolean {
         return Role.isAtLeast(user.globalRole, Role.OWNER);
     }
 
     /**
-   * Checks if user is allowed to see  {@link FooterComponent}
-   *
-   * @param user the current user
-   * @returns true, if user is at least {@link Role.GUEST}
-   */
+     * Checks if user is allowed to see  {@link FooterComponent}
+     *
+     * @param user the current user
+     * @returns true, if user is at least {@link Role.GUEST}
+     */
     public static isUserAllowedToSeeFooter(user: User): boolean {
         return Role.isAtLeast(user.globalRole, Role.GUEST);
     }
@@ -180,12 +180,12 @@ export class UserPermission {
     }
 
     /**
-   * Checks if user is allowed to see {@link HomeServiceAssistantComponent}
-   * Producttype needs to be Producttype.HOME or Producttype.HOME_20_30 and globalRole needs to be admin
-   *
-   * @param user the current user
-   * @returns true, if user is at least admin
-   */
+     * Checks if user is allowed to see {@link HomeServiceAssistantComponent}
+     * Producttype needs to be Producttype.HOME or Producttype.HOME_20_30 and globalRole needs to be admin
+     *
+     * @param user the current user
+     * @returns true, if user is at least admin
+     */
     public static isUserAllowedToSeeHomeAssistant(user: User, edge: Edge): boolean {
         const isProductTypeAllowed = (() => {
             switch (edge.producttype) {
@@ -205,12 +205,12 @@ export class UserPermission {
     }
 
     /**
-  * Checks if user is allowed to see {@link ServiceAssistantComponent}
-  * Producttype needs to be Commercial and globalRole needs to be admin
-  *
-  * @param user the current user
-  * @returns true, if user is at least admin
-  */
+     * Checks if user is allowed to see {@link ServiceAssistantComponent}
+     * Producttype needs to be Commercial and globalRole needs to be admin
+     *
+     * @param user the current user
+     * @returns true, if user is at least admin
+     */
     public static isUserAllowedToSeeCommercialServiceAssistant(user: User, edge: Edge) {
         const isProductTypeAllowed = (() => {
             switch (edge.producttype) {
@@ -238,22 +238,22 @@ export class UserPermission {
     }
 
     /**
-  * Checks if user is allowed to see {@link SystemRestartComponent}
-  *
-  * @param user the current user
-  * @returns true, if user is at least {@link Role.ADMIN} and edge version is at least 2024.2.2
-  */
+     * Checks if user is allowed to see {@link SystemRestartComponent}
+     *
+     * @param user the current user
+     * @returns true, if user is at least {@link Role.ADMIN} and edge version is at least 2024.2.2
+     */
     public static isAllowedToSeeSystemRestart(user: User, edge: Edge) {
         const isAllowed = edge?.isVersionAtLeast("2024.2.2");
         return Role.isAtLeast(user?.globalRole, Role.OWNER) && isAllowed;
     }
 
     /**
-  * Checks if user is allowed to see additional updates.
-  *
-  * @param edge the current {@link Edge}
-  * @returns true, if user has access to see additional updates
-  */
+     * Checks if user is allowed to see additional updates.
+     *
+     * @param edge the current {@link Edge}
+     * @returns true, if user has access to see additional updates
+     */
     public static isAllowedToSeeAdditionalUpdates(edge: Edge) {
         return edge.isVersionAtLeast("2025.5.4") && edge.roleIsAtLeast(Role.ADMIN);
     }
@@ -281,11 +281,11 @@ export enum Producttype {
 export namespace Currency {
 
     /**
-   * This method returns the corresponding label based on the user-selected currency in "core.meta."
-   *
-   * @param currency The currency enum.
-   * @returns the Currencylabel
-   */
+     * This method returns the corresponding label based on the user-selected currency in "core.meta."
+     *
+     * @param currency The currency enum.
+     * @returns the Currencylabel
+     */
     export function getCurrencyLabelByCurrency(currency: string): Label {
         switch (currency) {
             case "SEK":
@@ -298,11 +298,11 @@ export namespace Currency {
     }
 
     /**
-   * This method returns the corresponding label for the chart based on the user-selected currency.
-   *
-   * @param currency The currency enum.
-   * @returns the Currency Unit label
-   */
+     * This method returns the corresponding label for the chart based on the user-selected currency.
+     *
+     * @param currency The currency enum.
+     * @returns the Currency Unit label
+     */
     export function getChartCurrencyUnitLabel(currency: string) {
         switch (currency) {
             case "SEK":
@@ -360,8 +360,8 @@ export enum Limiter14aRestriction {
 }
 
 /**
-* Presents a simple
-*/
+ * Presents a simple
+ */
 export async function presentAlert(alertController: AlertController, translate: TranslateService, alertOptions: AlertOptions) {
 
     if (!alertOptions?.buttons) {

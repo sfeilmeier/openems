@@ -48,23 +48,6 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable, Bat
 	public StartStop getStartStopTarget();
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-		/**
-		 * Stop battery timeout passed.
-		 * 
-		 * <p>
-		 * This fault forces the EssGeneric into the GO_STOPPED state.
-		 */
-		TIMEOUT_STOP_BATTERY(Doc.of(Level.FAULT) //
-				.text("Stop battery timeout passed!")), //
-		/**
-		 * Start battery timeout passed.
-		 * 
-		 * <p>
-		 * This fault forces the EssGeneric into the GO_STOPPED state.
-		 */
-		TIMEOUT_START_BATTERY(Doc.of(Level.FAULT) //
-				.text("Start battery timeout passed!")), //
-
 		MODULE_0_AVG_CELL_VOLTAGE(Doc.of(INTEGER) //
 				.unit(MILLIVOLT) //
 				.text("Average Temperature on Module 0")),
@@ -586,62 +569,6 @@ public interface EnfasBms extends Battery, OpenemsComponent, StartStoppable, Bat
 	 */
 	public default WriteChannel<Boolean> getResetBatteryCommandChannel() {
 		return this.channel(ChannelId.RESET_BATTERY_COMMAND);
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#TIMEOUT_START_BATTERY}.
-	 * 
-	 * @return the Channel
-	 */
-	public default StateChannel getTimeoutStartBatteryChannel() {
-		return this.channel(ChannelId.TIMEOUT_START_BATTERY);
-	}
-
-	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#TIMEOUT_START_BATTERY}.
-	 * 
-	 * @return the Channel {@link Value}
-	 */
-	public default Value<Boolean> getTimeoutStartBattery() {
-		return this.getTimeoutStartBatteryChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#TIMEOUT_START_BATTERY} Channel.
-	 * 
-	 * @param value the next value
-	 */
-	public default void _setTimeoutStartBattery(Boolean value) {
-		this.getTimeoutStartBatteryChannel().setNextValue(value);
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#TIMEOUT_STOP_BATTERY}.
-	 * 
-	 * @return the Channel
-	 */
-	public default StateChannel getTimeoutStopBatteryChannel() {
-		return this.channel(ChannelId.TIMEOUT_STOP_BATTERY);
-	}
-
-	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#TIMEOUT_STOP_BATTERY}.
-	 * 
-	 * @return the Channel {@link Value}
-	 */
-	public default Value<Boolean> getTimeoutStopBattery() {
-		return this.getTimeoutStopBatteryChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#TIMEOUT_STOP_BATTERY} Channel.
-	 * 
-	 * @param value the next value
-	 */
-	public default void _setTimeoutStopBattery(Boolean value) {
-		this.getTimeoutStopBatteryChannel().setNextValue(value);
 	}
 
 	/**

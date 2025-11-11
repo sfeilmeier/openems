@@ -1,5 +1,6 @@
 package io.openems.edge.system.fenecon.industrial.l;
 
+import static io.openems.common.session.Role.ADMIN;
 import static io.openems.common.types.ChannelAddress.fromString;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.MULTIPLY;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
@@ -66,8 +67,11 @@ import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.startstop.StartStoppable;
 import io.openems.edge.common.taskmanager.Priority;
+import io.openems.edge.ess.api.EssErrorAcknowledge;
+import io.openems.edge.ess.api.EssErrorAcknowledgeRequest;
 import io.openems.edge.ess.api.MetaEss;
 import io.openems.edge.ess.api.SymmetricEss;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.ErrorAcknowledgeRpc;
 import io.openems.edge.system.fenecon.industrial.l.envicool.Envicool;
 import io.openems.edge.system.fenecon.industrial.l.jsonrpc.BmsHardReset;
 import io.openems.edge.system.fenecon.industrial.l.jsonrpc.EmergencyStopAcknowledge;
@@ -87,8 +91,9 @@ import io.openems.edge.timedata.api.utils.CalculateActiveTime;
 @EventTopics({ //
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE //
 })
-public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent implements SystemFeneconIndustrialL,
-		ModbusComponent, OpenemsComponent, StartStoppable, EventHandler, ComponentJsonApi, TimedataProvider {
+public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
+		implements SystemFeneconIndustrialL, ModbusComponent, OpenemsComponent, StartStoppable, EventHandler,
+		ComponentJsonApi, TimedataProvider, ErrorAcknowledgeRpc {
 
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialLImpl.class);
 
@@ -524,6 +529,14 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 			this.stateMachine.forceNextState(State.BMS_RESET);
 			return EmptyObject.INSTANCE;
 		});
+
+		this.executeErrorAcknowledgeRpc(builder, () -> {
+			for (var ess : this.getEsssList()) {
+				if (ess instanceof EssErrorAcknowledge genericEss) {
+					genericEss.executeErrorAcknowledge();
+				}
+			}
+		});
 	}
 
 	private void acknowledgeEmergencyStop() throws Exception {
@@ -643,5 +656,29 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	@Override
 	public Timedata getTimedata() {
 		return this.timedata;
+	}
+
+	@Override
+	public void executeErrorAcknowledgeRpc(JsonApiBuilder builder) {
+		builder.handleRequest(new EssErrorAcknowledgeRequest(), endpoint -> {
+			endpoint.setGuards(EdgeGuards.roleIsAtleast(ADMIN));
+		}, call -> {
+			var channels = this.defineChannelsForErrorAcknowledge();
+			channels.forEach(c -> c.setNextValue(null));
+			this.getEsssList().forEach(ess -> {
+				if (ess instanceof EssErrorAcknowledge genericEss) {
+					genericEss.executeErrorAcknowledge();
+				}
+			});
+			return EmptyObject.INSTANCE;
+		});
+	}
+
+	@Override
+	public List<Channel<?>> defineChannelsForErrorAcknowledge() {
+		return List.of(//
+				getModbusCommunicationFailedChannel(), //
+				getRunFailedChannel() //
+		);
 	}
 }

@@ -14,6 +14,7 @@ import io.openems.common.utils.JsonUtils;
 import io.openems.edge.app.TestADependencyToC;
 import io.openems.edge.app.TestBDependencyToC;
 import io.openems.edge.app.TestC;
+import io.openems.edge.app.TestComponentDefConfig;
 import io.openems.edge.app.TestFilter;
 import io.openems.edge.app.TestMapPropName;
 import io.openems.edge.app.TestMultipleIds;
@@ -41,6 +42,7 @@ import io.openems.edge.app.evcs.IesKeywattEvcs;
 import io.openems.edge.app.evcs.KebaEvcs;
 import io.openems.edge.app.evcs.WebastoNextEvcs;
 import io.openems.edge.app.evcs.WebastoUniteEvcs;
+import io.openems.edge.app.evcs.readonly.AblEvcsReadOnly;
 import io.openems.edge.app.evcs.readonly.AppGoeEvcsReadOnly;
 import io.openems.edge.app.evcs.readonly.AppHardyBarthReadOnly;
 import io.openems.edge.app.evcs.readonly.HeidelbergEvcsReadOnly;
@@ -515,6 +517,16 @@ public final class Apps {
 		return app(t, TestMapPropName::new, "App.Test.TestMapPropName");
 	}
 
+	/**
+	 * Test method for creating a {@link TestComponentDefConfig}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final TestComponentDefConfig testComponentDefConfig(AppManagerTestBundle t) {
+		return app(t, TestComponentDefConfig::new, "App.Test.TestComponentDefConfig");
+	}
+
 	// Test
 
 	/**
@@ -779,6 +791,16 @@ public final class Apps {
 	 */
 	public static final TimedataInfluxDb timedataInfluxDb(AppManagerTestBundle t) {
 		return app(t, TimedataInfluxDb::new, "App.Timedata.InfluxDb");
+	}
+
+	/**
+	 * Test method for creating a {@link AblEvcsReadOnly}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final AblEvcsReadOnly ablEvcs(AppManagerTestBundle t) {
+		return app(t, AblEvcsReadOnly::new, "App.Evcs.Abl.ReadOnly");
 	}
 
 	/**

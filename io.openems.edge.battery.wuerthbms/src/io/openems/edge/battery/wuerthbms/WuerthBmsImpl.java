@@ -37,6 +37,7 @@ import io.openems.common.types.OptionsEnum;
 import io.openems.common.types.SemanticVersion;
 import io.openems.common.utils.FunctionUtils;
 import io.openems.edge.battery.api.Battery;
+import io.openems.edge.battery.api.BatteryErrorAcknowledge;
 import io.openems.edge.battery.protection.BatteryProtection;
 import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.battery.protection.BatteryVoltageProtectionLimits;
@@ -79,8 +80,9 @@ import io.openems.edge.common.taskmanager.Priority;
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
 		EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE //
 })
-public class WuerthBmsImpl extends AbstractOpenemsModbusComponent implements WuerthBms, ModbusComponent,
-		OpenemsComponent, Battery, BatteryVoltageProtection, EventHandler, ModbusSlave, StartStoppable {
+public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
+		implements WuerthBms, ModbusComponent, OpenemsComponent, Battery, BatteryErrorAcknowledge,
+		BatteryVoltageProtection, EventHandler, ModbusSlave, StartStoppable {
 
 	public record BatteryValues(int soc, int voltage, int chargeMaxVoltage, int dischargeMinVoltage) {
 	}
@@ -124,6 +126,7 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent implements Wue
 				OpenemsComponent.ChannelId.values(), //
 				ModbusComponent.ChannelId.values(), //
 				Battery.ChannelId.values(), //
+				BatteryErrorAcknowledge.ChannelId.values(), //
 				StartStoppable.ChannelId.values(), //
 				BatteryProtection.ChannelId.values(), //
 				BatteryVoltageProtection.ChannelId.values(), //
@@ -660,4 +663,11 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent implements Wue
 				minimumDischargeVoltage);
 	}
 
+	@Override
+	public List<Channel<?>> defineBatteryErrorAcknowledgeChannels() {
+		return List.of(//
+				this.getModbusCommunicationFailedChannel(), //
+				this.getTimeoutStartBatteryChannel(), this.getTimeoutStopBatteryChannel(),
+				this.getBmsCommunicationFailedChannel(), this.getNotStableCommunicationChannel());
+	}
 }
