@@ -24,6 +24,13 @@ export class ChangelogComponent {
         changes: Array<string | { roleIsAtLeast: Role, change: string }>
     }[] = [
         {
+            version: "2025.11.2",
+            changes: [
+                Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Fehlerbehebungen",
+                Changelog.app(App.TIME_OF_USE, App.OCTOPUS_HEAT) + "Kompatibilität mit zeitvariablen Netzentgelten nach §14a Modul 3 EnWG",
+            ],
+        },
+        {
             version: "2025.11.1",
             changes: [
                 Changelog.openems("2025.11.0"),
