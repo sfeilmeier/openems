@@ -305,7 +305,7 @@
                 },
                 {
                   "replace": "src/environments/dummy.ts",
-                  "with": "src/themes/fenecon/environments/backend-prod.ts"
+                  "with": "src/themes/fenecon/beta/environments/backend-prod.ts"
                 },
                 {
                   "replace": "src/environments/oem-meta.ts",
@@ -498,7 +498,7 @@
               "buildTarget": "app:build:fenecon,fenecon-backend-dev"
             },
             "feneconbeta-backend-prod": {
-              "buildTarget": "app:build:feneconbeta,fenecon-backend-prod"
+              "buildTarget": "app:build:feneconbeta,feneconbeta-backend-prod"
             },
             "feneconbeta-backend-dev": {
               "buildTarget": "app:build:feneconbeta,fenecon-backend-dev"

@@ -8,6 +8,7 @@ import { UserService } from "src/app/shared/service/user.service";
 import { TEnumKeys, TMutable } from "src/app/shared/type/utility";
 import { WidgetClass } from "src/app/shared/type/widget";
 import { Widgets } from "src/app/shared/type/widgets";
+import { environment } from "src/environments";
 import { Edge, EdgeConfig, Service } from "../../../shared";
 import { ArrayUtils } from "../../../utils/array/array.utils";
 import { AssertionUtils } from "../../../utils/assertions/assertions.utils";
@@ -47,6 +48,10 @@ export class NavigationService {
 
     public static forceNewNavigation(edge: Edge | null): boolean {
         const config = edge?.getCurrentConfig() ?? null;
+
+        if (environment.theme === "FENECONBeta") {
+            return true;
+        }
 
         if (config == null) {
             return false;
