@@ -18,15 +18,7 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		private int coolingUnitModbusUnitId;
 		private int coolingUnitCoolingSetPoint;
 		private int coolingUnitHeatingSetPoint;
-		private String emergencyStopState;
-		private String acknowledgeEmergencyStop;
-		private String spdTripped;
-		private String fuseTripped;
-		private String psuTriggered;
 		private boolean isSmokeDetectionInstalled;
-		private String smokeDetection;
-		private String smokeDetectionFailure;
-		private String bmsHardReset;
 
 		private Builder() {
 		}
@@ -76,48 +68,8 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 			return this;
 		}
 
-		public Builder setEmergencyStopState(String emergencyStopState) {
-			this.emergencyStopState = emergencyStopState;
-			return this;
-		}
-
-		public Builder setAcknowledgeEmergencyStop(String acknowledgeEmergencyStop) {
-			this.acknowledgeEmergencyStop = acknowledgeEmergencyStop;
-			return this;
-		}
-
-		public Builder setSpdTripped(String spdTripped) {
-			this.spdTripped = spdTripped;
-			return this;
-		}
-
-		public Builder setFuseTripped(String fuseTripped) {
-			this.fuseTripped = fuseTripped;
-			return this;
-		}
-
-		public Builder setPsuTriggered(String psuTriggered) {
-			this.psuTriggered = psuTriggered;
-			return this;
-		}
-
 		public Builder setIsSmokeDetectionInstalled(boolean isSmokeDetectionInstalled) {
 			this.isSmokeDetectionInstalled = isSmokeDetectionInstalled;
-			return this;
-		}
-
-		public Builder setSmokeDetection(String smokeDetection) {
-			this.smokeDetection = smokeDetection;
-			return this;
-		}
-
-		public Builder setSmokeDetectionFailure(String smokeDetectionFailure) {
-			this.smokeDetectionFailure = smokeDetectionFailure;
-			return this;
-		}
-
-		public Builder setBmsHardReset(String bmsHardReset) {
-			this.bmsHardReset = bmsHardReset;
 			return this;
 		}
 
@@ -177,49 +129,8 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		return this.builder.coolingUnitHeatingSetPoint;
 	}
 
-	@Override
-	public String emergencyStopState() {
-		return this.builder.emergencyStopState;
-	}
-
-	@Override
-	public String acknowledgeEmergencyStop() {
-		return this.builder.acknowledgeEmergencyStop;
-	}
-
-	@Override
-	public String spdTripped() {
-		return this.builder.spdTripped;
-	}
-
-	@Override
-	public String fuseTripped() {
-		return this.builder.fuseTripped;
-	}
-
-	@Override
-	public String psuTriggered() {
-		return this.builder.psuTriggered;
-	}
-
-	@Override
 	public boolean isSmokeDetectionInstalled() {
 		return this.builder.isSmokeDetectionInstalled;
-	}
-
-	@Override
-	public String smokeDetection() {
-		return this.builder.smokeDetection;
-	}
-
-	@Override
-	public String smokeDetectionFailure() {
-		return this.builder.smokeDetectionFailure;
-	}
-
-	@Override
-	public String bmsHardReset() {
-		return this.builder.bmsHardReset;
 	}
 
 	@Override

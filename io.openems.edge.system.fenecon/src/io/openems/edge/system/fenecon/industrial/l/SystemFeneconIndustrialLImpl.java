@@ -1,7 +1,6 @@
 package io.openems.edge.system.fenecon.industrial.l;
 
 import static io.openems.common.session.Role.ADMIN;
-import static io.openems.common.types.ChannelAddress.fromString;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.MULTIPLY;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
 import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE;
@@ -9,6 +8,14 @@ import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustria
 import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_2_RUNNING_STATE;
 import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_HEATER_RUNNING_STATE;
 import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_PUMP_RUNNING_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.ACKNOWLEDGE_EMERGENCY_STOP;
+import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.BMS_HARD_RESET;
+import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.EMERGENCY_STOP_STATE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.FUSE_TRIPPED;
+import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.PSU_TRIPPED;
+import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.SMOKE_DETECTION;
+import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.SMOKE_DETECTION_FAILURE;
+import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.SPD_TRIPPED;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.groupingBy;
 
@@ -158,25 +165,20 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	private void activate(ComponentContext context, Config config) throws OpenemsNamedException {
 		super.activate(context, config.id(), config.alias(), config.enabled(), config.coolingUnitModbusUnitId(),
 				this.cm, "CoolingUnitModbus", config.coolingUnitModbus_id());
-		if (!this.applyConfig(context, config)) {
-			return;
-		}
+		this.applyConfig(config);
 	}
 
 	@Modified
 	private void modified(ComponentContext context, Config config) throws OpenemsNamedException {
 		super.modified(context, config.id(), config.alias(), config.enabled(), config.coolingUnitModbusUnitId(),
 				this.cm, "CoolingUnitModbus", config.coolingUnitModbus_id());
-		if (!this.applyConfig(context, config)) {
-			return;
-		}
+		this.applyConfig(config);
 	}
 
-	private boolean applyConfig(ComponentContext context, Config config) throws OpenemsNamedException {
+	private boolean applyConfig(Config config) throws OpenemsNamedException {
 		this.removeAcknowledgeCallback();
 		this.parsedConfig = ParsedConfig.from(config);
 		this.addAcknowledgeCallBack();
-
 		this.envicool.activate(Envicool.Context.from(config, this.batteries, //
 				this.getSetBmsModeControlModeChannel(), this.getSetRunTimeControlModeChannel(), //
 				this.getSetCoolingPointChannel(), this.getSetHeatingPointChannel(), //
@@ -250,21 +252,21 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 			return new ParsedConfig(//
 					config.startStop(), //
 					// Input Channels
-					fromString(config.emergencyStopState()), //
-					fromString(config.spdTripped()), //
-					fromString(config.fuseTripped()), //
-					fromString(config.psuTriggered()), //
+					EMERGENCY_STOP_STATE.getAddress(), //
+					SPD_TRIPPED.getAddress(), //
+					FUSE_TRIPPED.getAddress(), //
+					PSU_TRIPPED.getAddress(), //
 					// Output Channels
-					fromString(config.acknowledgeEmergencyStop()), //
-					config.bmsHardReset() != null ? fromString(config.bmsHardReset()) : null, //
+					ACKNOWLEDGE_EMERGENCY_STOP.getAddress(), //
+					BMS_HARD_RESET.getAddress(), //
 					/**
 					 * Get the Smoke detection channel only if it is installed
 					 */
-					config.isSmokeDetectionInstalled() ? fromString(config.smokeDetection()) : null,
+					config.isSmokeDetectionInstalled() ? SMOKE_DETECTION.getAddress() : null,
 					/**
 					 * Get the Smoke detection failure channel only if it is installed
 					 */
-					config.isSmokeDetectionInstalled() ? fromString(config.smokeDetectionFailure()) : null//
+					config.isSmokeDetectionInstalled() ? SMOKE_DETECTION_FAILURE.getAddress() : null//
 			);
 		}
 	}
@@ -348,7 +350,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 		try {
 			Channel<Boolean> channel = this.componentManager.getChannel(channelAddress);
 			var value = channel.value();
-			value.ifPresent(t -> this.channel(channelId).setNextValue(invert ? !t : t));
+			value.ifPresent(t -> this.channel(channelId).setNextValue(invert != t));
 		} catch (OpenemsNamedException e) {
 			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
 		}
