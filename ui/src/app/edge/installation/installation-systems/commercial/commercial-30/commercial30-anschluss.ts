@@ -25,6 +25,7 @@ export class Commercial30AnschlussIbn extends AbstractCommercial30Ibn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ProtocolSystemLocation,
             View.ConfigurationLineSideMeterFuse,
             View.ConfigurationCommercialModbuBridge,
             View.ProtocolFeedInLimitation,

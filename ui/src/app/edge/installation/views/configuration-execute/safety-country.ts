@@ -21,7 +21,7 @@ export namespace SafetyCountry {
                 return SafetyCountry.AUSTRIA;
             case Country.SWITZERLAND:
                 return SafetyCountry.SWITZERLAND;
-            case Country.CZECH_REPUBLIK:
+            case Country.CZECH_REPUBLIC:
                 return SafetyCountry.CZECH_REPUBLIK;
             case Country.NETHERLANDS:
                 return SafetyCountry.NETHERLANDS;

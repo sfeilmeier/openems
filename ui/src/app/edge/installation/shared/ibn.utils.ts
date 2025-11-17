@@ -132,21 +132,21 @@ export class IbnUtils {
         const rows: ComponentData[] = [];
 
         if ((category === Category.CUSTOMER && data.isCorporateClient) || (category === Category.INSTALLER)) {
-            rows.push({ label: translate.instant("Register.Form.company"), value: data.companyName });
+            rows.push({ label: translate.instant("REGISTER.FORM.COMPANY"), value: data.companyName });
         }
 
         rows.push(
-            { label: translate.instant("Register.Form.lastname"), value: data.lastName },
-            { label: translate.instant("Register.Form.firstname"), value: data.firstName },
-            { label: translate.instant("Register.Form.street"), value: data.street },
-            { label: translate.instant("Register.Form.zip"), value: data.zip },
-            { label: translate.instant("Register.Form.city"), value: data.city },
-            { label: translate.instant("Register.Form.country"), value: IbnUtils.getCountryLabel(data.country, translate) },
-            { label: translate.instant("Register.Form.email"), value: data.email },
+            { label: translate.instant("REGISTER.FORM.LASTNAME"), value: data.lastName },
+            { label: translate.instant("REGISTER.FORM.FIRSTNAME"), value: data.firstName },
+            { label: translate.instant("REGISTER.FORM.STREET"), value: data.street },
+            { label: translate.instant("REGISTER.FORM.ZIP"), value: data.zip },
+            { label: translate.instant("REGISTER.FORM.CITY"), value: data.city },
+            { label: translate.instant("REGISTER.FORM.COUNTRY"), value: IbnUtils.getCountryLabel(data.country, translate) },
+            { label: translate.instant("REGISTER.FORM.EMAIL"), value: data.email },
         );
 
         if (data.phone) {
-            rows.push({ label: translate.instant("Register.Form.phone"), value: data.phone });
+            rows.push({ label: translate.instant("REGISTER.FORM.PHONE"), value: data.phone });
         }
 
         return rows;

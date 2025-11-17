@@ -44,6 +44,7 @@ export class Home15Gen2FeneconIbn extends AbstractHomeGen2Ibn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ProtocolSystemLocation,
             View.ConfigurationEssLimiter14aComponent,
             View.ConfigurationEmergencyReserve,
             View.ConfigurationEnergyFlowMeter,

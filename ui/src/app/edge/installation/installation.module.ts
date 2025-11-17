@@ -36,6 +36,7 @@ import { ProtocolInstallerComponent } from "./views/protocol-installer/protocol-
 import { ProtocolPvComponent } from "./views/protocol-pv/protocol-pv.component";
 import { ProtocolSerialNumbersComponent } from "./views/protocol-serial-numbers/protocol-serial-numbers.component";
 import { ProtocolSystemComponent } from "./views/protocol-system/protocol-system.component";
+import { ProtocolSystemLocationValidationComponent } from "./views/protocol-system-location/protocol-system-location.component";
 
 //#region Validators
 export function EmailMatchValidator(control: FormControl): ValidationErrors {
@@ -66,7 +67,7 @@ export function EmsBoxSerialNumberValidator(control: FormControl, field: FormlyF
     const FULL_SERIAL_REGEX = /^F[CEH][FS]\d{9}$/;
 
     if (prefix !== null) {
-    // When a prefix is already given, we only validate the number part
+        // When a prefix is already given, we only validate the number part
         return DIGITS_ONLY_REGEX.test(value) ? null : { emsBoxSerialNumber: true };
     }
 
@@ -213,6 +214,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
         ProtocolCommercialClusterSlaveCountComponent,
         ProtocolCommercialClusterSlaveInstallationComponent,
         ConfigurationStsBoxComponent,
+        ProtocolSystemLocationValidationComponent,
     ],
 })
 export class InstallationModule { }

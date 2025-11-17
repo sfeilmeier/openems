@@ -5,6 +5,7 @@ import { Category } from "./category";
 export type ComponentData = {
     label: string;
     value: any;
+    default?: boolean;
     imageUrl?: string;
     docUrl?: string;
 };

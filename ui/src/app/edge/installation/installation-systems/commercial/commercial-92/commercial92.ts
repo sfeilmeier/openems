@@ -22,6 +22,7 @@ export class Commercial92Ibn extends AbstractCommercial92Ibn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ProtocolSystemLocation,
             View.ConfigurationEssLimiter14aComponent,
             View.ConfigurationLineSideMeterFuse,
             View.ProtocolFeedInLimitation,

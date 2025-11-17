@@ -25,6 +25,7 @@ export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ProtocolSystemLocation,
             View.ConfigurationLineSideMeterFuse,
             View.ConfigurationCommercialModbuBridge,
             View.ProtocolFeedInLimitation,

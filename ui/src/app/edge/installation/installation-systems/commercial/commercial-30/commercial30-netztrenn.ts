@@ -44,6 +44,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ProtocolSystemLocation,
             View.ConfigurationEmergencyReserve,
             View.ConfigurationLineSideMeterFuse,
             View.ConfigurationCommercialModbuBridge,
