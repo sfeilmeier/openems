@@ -1,10 +1,10 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE": "Investieren in FENECON: Entdecken Sie unsere neue Kampagne",
-            "TEXT": "Genauso wie unsere Kunden treibt uns der Wunsch nach Unabhängigkeit an - in unserem Fall von Finanzinvestoren und Konzernen. Wir wollen unabhängig bleiben und unsere Vision der 100% Energiewende weiter erfolgreich umsetzen.",
-            "LINK": "",
-            "LINK_TEXT": "Zu den Details..."
+            "TITLE": "Updates: Dynamische Stromtarife",
+            "TEXT": "LUOX Energy ist als neuer Anbieter mit einem dynamischen Stromtarif im FEMS verfügbar. Beim Anbieter rabot.charge erhalten FENECON-Kunden außerdem einen exklusiven Rabatt und sparen sich die Grundgebühr in den ersten 12 Monaten.",
+            "LINK": "https://funnel.rabot.energy/?pt=244b1d86-253f-4183-b22c-9b7f3cd69524&tt=RiskPremium&offerType=multiOffer&utm_source=b2baff&utm_medium=Fenecon&utm_campaign=Fenecon-hp&voucherCode=Fenecon&fromWordpress=true",
+            "LINK_TEXT": "Zum Angebot von rabot.charge"
         }
     }
 }
