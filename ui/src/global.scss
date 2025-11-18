@@ -149,6 +149,10 @@ formly-field-ion-radio {
     }
 }
 
+.ion-custom-padding {
+    padding: 0.325rem;
+}
+
 .custom-channels-text {
     color: var(--ion-color-text-channels) !important;
 }
@@ -369,6 +373,11 @@ ion-checkbox {
     .checkbox-icon {
         display: none;
     }
+}
+
+ion-skeleton-text {
+    --background: var(--ion-skeleton-gradient);
+    --background-rgb: var(--ion-color-light-contrast-rgb);
 }
 
 #toast-container {

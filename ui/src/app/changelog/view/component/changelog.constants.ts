@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2025.11.2";
+    public static readonly UI_VERSION = "2025.11.3";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -158,9 +158,11 @@ export class Library {
     public static readonly GSON = new Library("GSON", "com.google.gson");
     public static readonly HIKARI_CP = new Library("HikariCP", "hikaricp");
     public static readonly INFLUXDB = new Library("influxdb-java", "influxdb-java");
-    public static readonly JNA = new Library("JNA", "net.java.dev.jna");
     public static readonly JAVA_WEBSOCKET = new Library("Java-WebSocket", "org.java-websocket");
+    public static readonly J2MOD = new Library("j2mod", "io.openems.j2mod");
     public static readonly JENETICS = new Library("Jenetics", "io.jenetics");
+    public static readonly JNA = new Library("JNA", "net.java.dev.jna");
+    public static readonly JSERIALCOMM = new Library("jSerialComm", "com.fazecast.jSerialComm");
     public static readonly RETROFIT = new Library("Retrofit", "com.squareup.retrofit");
     public static readonly MOSHI = new Library("Moshi", "com.squareup.moshi");
     public static readonly MSGPACK = new Library("MsgPack", "org.msgpack");

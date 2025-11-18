@@ -30,6 +30,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ProtocolSystemLocation,
             View.ConfigurationLineSideMeterFuse,
             View.ProtocolFeedInLimitation,
             View.ProtocolCommercialClusterSlaveCount,

@@ -1,10 +1,10 @@
 {
   "ADVERT": {
     "1": {
-      "TITLE": "Invest in FENECON: Discover our new campaign",
-      "TEXT": "Just like our customers, we are driven by the desire for independence - in our case, from financial investors and corporations. We want to remain independent and continue to successfully pursue our vision of a 100% energy transition.",
-      "LINK": "",
-      "LINK_TEXT": "See details..."
+      "TITLE": "Updates: Time-of-Use Tariff",
+      "TEXT": "LUOX Energy is now available in FEMS as a new provider offering time-of-use tariffs. At the provider rabot.charge, FENECON customers also receive an exclusive discount and save the basic fee for the first 12 months.",
+      "LINK": "https://funnel.rabot.energy/?pt=244b1d86-253f-4183-b22c-9b7f3cd69524&tt=RiskPremium&offerType=multiOffer&utm_source=b2baff&utm_medium=Fenecon&utm_campaign=Fenecon-hp&voucherCode=Fenecon&fromWordpress=true",
+      "LINK_TEXT": "Go to rabot.charge offer"
     }
   }
 }

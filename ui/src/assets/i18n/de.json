@@ -141,6 +141,10 @@
           "LOW_THRESHOLD": "Unterer Schwellenwert"
         },
         "EVCS": {
+          "PHASE_SWITCHING": "Phasenumschaltung",
+          "FORCE_SINGLE_PHASE": "1-phasig Laden",
+          "FORCE_THREE_PHASE": "3-phasig Laden",
+          "AUTOMATIC_SWITCHING": "Automatisch",
           "ACTIVATE_CHARGING": "Aktivieren der Ladesäule",
           "AMOUNT_OF_CHARGING_STATIONS": "Anzahl der Ladestationen",
           "CABLE": "Kabel",
@@ -603,6 +607,8 @@
     "MODE": "Modus",
     "MORE": "Mehr...",
     "NO_VALUE": "Kein Wert",
+    "OPEN": "Öffnen",
+    "BACK": "Zurück",
     "OFF": "Aus",
     "OFF_GRID": "Keine Netzverbindung!",
     "OK": "ok",
@@ -615,6 +621,7 @@
     "POWER": "Leistung",
     "PRODUCTION": "Erzeugung",
     "RENAME": "Umbenennen",
+    "REPORT": "Bericht",
     "REPORT_VALUE": "Fehlerhafte Daten melden",
     "SEARCH": "Suchen",
     "SELF_CONSUMPTION": "Eigenverbrauch",
@@ -1179,6 +1186,14 @@
     "SHARED": {
       "NOTE": "Hinweis",
       "WARNING": "Warnung"
+    },
+    "PROTOCOL_SYSTEM_LOCATION_VALIDATION": {
+      "TITLE": "Adressvalidierung des Speicherstandorts",
+      "BUTTON_LABEL": "Validierung durchführen",
+      "GEO_CODE_RESULT_LABEL": "Bitte wählen Sie die übereinstimmende Adresse aus:",
+      "ADDRESS_LIST_TITLE": "Welche Addresse trifft für den Standort der {{ edgeShortName }}{{ id }} zu?*",
+      "ADDRESS_LIST_NOTE": "Die richtige Adresse ist nicht dabei? Bearbeiten Sie oben Ihre Angaben und führen Sie die Validierung erneut durch.",
+      "UNKNOWN_ADDRESS": "Die Koordinaten werden manuell im Nachgang für den kompletten Funktionsumfang, unter Systemseinstellungen, eingepflegt."
     }
   },
   "LIVE": {

@@ -6,7 +6,6 @@ import { AdvertWidget } from "src/app/shared/type/widget";
 import { environment } from "src/environments";
 import { Service } from "../../../shared/shared";
 
-
 @Component({
     selector: "advertisement",
     templateUrl: "./advertisement.component.html",

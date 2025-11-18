@@ -102,6 +102,7 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ProtocolSystemLocation,
             View.ConfigurationEssLimiter14aComponent,
             View.ConfigurationEnergyFlowMeter,
             View.ConfigurationMpptSelection,

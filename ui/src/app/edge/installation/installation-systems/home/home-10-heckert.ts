@@ -20,6 +20,7 @@ export class Home10HeckertIbn extends AbstractHome10Ibn {
             View.ProtocolInstaller,
             View.ProtocolCustomer,
             View.ProtocolSystem,
+            View.ProtocolSystemLocation,
             View.ConfigurationEssLimiter14aComponent,
             View.ConfigurationEmergencyReserve,
             View.ConfigurationLineSideMeterFuse,

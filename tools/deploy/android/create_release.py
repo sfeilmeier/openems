@@ -12,7 +12,6 @@ class Theme(str, Enum):
 
     @classmethod
     def from_key(cls, value: str) -> "Theme":
-        print(cls)
         try:
             return cls[value]
         except ValueError:
@@ -89,7 +88,7 @@ def create_full_release(
 def create_release_without_bundle(service_account_file, package_name):
     """updates the release track, also updates a current releases details
 
-    - Uses aab version code for new release
+    - Uses previous uploaded aab version code for new release
     - Updates track production
 
     """

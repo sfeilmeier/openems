@@ -14,7 +14,6 @@ import io.openems.edge.common.channel.EnumWriteChannel;
 import io.openems.edge.common.channel.IntegerWriteChannel;
 import io.openems.edge.common.type.TypeUtils;
 import io.openems.edge.system.fenecon.industrial.l.Config;
-import io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL;
 
 public class Envicool {
 
