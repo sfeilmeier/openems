@@ -24,10 +24,18 @@ export class ChangelogComponent {
         changes: Array<string | { roleIsAtLeast: Role, change: string }>
     }[] = [
         {
+            version: "2025.11.3",
+            changes: [
+                Changelog.UI + "Anzeige des Ladezustands im Energiemonitor, Verbesserung der Barrierefreiheit gemäß WCAG (Web Content Accessibility Guidelines)",
+                Changelog.app(App.MODBUS_TCP_API) + "Verbesserte Stabilität bei Verbindungsabbrüchen (Timeout)",
+                Changelog.library(Library.J2MOD, Library.JSERIALCOMM),
+            ],
+        },
+        {
             version: "2025.11.2",
             changes: [
                 Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Fehlerbehebungen",
-                Changelog.app(App.TIME_OF_USE, App.OCTOPUS_HEAT) + "Kompatibilität mit zeitvariablen Netzentgelten nach §14a Modul 3 EnWG",
+                Changelog.app(App.TIME_OF_USE, App.OCTOPUS_HEAT, App.OCTOPUS_GO) + "Kompatibilität mit zeitvariablen Netzentgelten nach §14a Modul 3 EnWG",
             ],
         },
         {
