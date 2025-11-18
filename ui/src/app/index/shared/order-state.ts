@@ -44,23 +44,25 @@ export const ORDER_STATES = (translate: TranslateService): SortOrderFilter => ({
                 }],
             },
         },
-        {
-            name: translate.instant("ORDER.OK_TO_FAULT", { edgeShortName: environment.edgeShortName }),
-            option: {
-                value: [{
-                    field: "sumState",
-                    sortOrder: "DESC",
-                }],
-            },
-        },
-        {
-            name: translate.instant("ORDER.FAULT_TO_OK"),
-            option: {
-                value: [{
-                    field: "sumState",
-                    sortOrder: "ASC",
-                }],
-            },
-        },
+        /** Deactivated temporarily
+         {
+             name: translate.instant("ORDER.OK_TO_FAULT", { edgeShortName: environment.edgeShortName }),
+             option: {
+                 value: [{
+                     field: "sumState",
+                     sortOrder: "ASC",
+                 }],
+             },
+         },
+         {
+             name: translate.instant("ORDER.FAULT_TO_OK"),
+             option: {
+                 value: [{
+                     field: "sumState",
+                     sortOrder: "DESC",
+                 }],
+             },
+         },
+         */
     ],
 });
