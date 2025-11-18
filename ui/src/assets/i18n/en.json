@@ -141,6 +141,10 @@
           "LOW_THRESHOLD": "Low Threshold"
         },
         "EVCS": {
+          "PHASE_SWITCHING": "Phase Switching",
+          "FORCE_SINGLE_PHASE": "1-phase charging",
+          "FORCE_THREE_PHASE": "3-phase charging",
+          "AUTOMATIC_SWITCHING": "Automatic",
           "ACTIVATE_CHARGING": "Activate the charging station",
           "AMOUNT_OF_CHARGING_STATIONS": "Amount of charging stations",
           "CABLE": "Cable",
