@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angu
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-import { Subject, takeUntil } from "rxjs";
+import { Subject } from "rxjs";
+import { FormlyUtils } from "src/app/shared/components/formly/formly-utils";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { Edge, Websocket } from "src/app/shared/shared";
 import { COUNTRY_OPTIONS, CountryUtils } from "src/app/shared/type/country";
@@ -42,7 +43,22 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
     };
 
     protected geoCodeForm: FormGroup = new FormGroup({});
-    protected geoCodeFields: FormlyFieldConfig[] = [];
+    protected geoCodeFields: FormlyFieldConfig[] = [{
+        key: "index",
+        type: "radio",
+        templateOptions: {
+            radioSlot: "start",
+            label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.GEO_CODE_RESULT_LABEL"),
+            type: "radio",
+            options: [],
+            required: true,
+        },
+        hooks: {
+            onChanges: ({ form, model, options }) => {
+                this.isNextDisabled = !Number.isInteger(model.index);
+            },
+        },
+    }];
     protected geoCodeModel: { index: number | null } = { index: null };
 
     protected readonly environment: Environment = environment;
@@ -188,33 +204,27 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
             );
 
             const result = (response as GeoCodeJsonRpc.Response).result.geocodingResults;
-            this.geoCodeFields = this.generateGeoCodeFields(result);
+            this.geoCodeForm = new FormGroup({});
+            this.fillGeoCodeFields(result);
             this.addressesAvailable = Array.isArray(result) && result.length > 0;
 
             this.geoResults = result ?? [];
-            this.geoCodeForm = new FormGroup({});
-
-            this.geoCodeForm.valueChanges
-                .pipe(takeUntil(this.destroy))
-                .subscribe(value => {
-                    this.isNextDisabled = !Number.isInteger(value?.index);
-                });
         } catch (err) {
             console.error("GeoCode validation failed:", err);
             this.addressesAvailable = false;
             this.isNextDisabled = true;
         } finally {
             this.isValidating = false;
+            this.isNextDisabled = false;
         }
     }
 
-    private generateGeoCodeFields(result?: GeoResult[]): FormlyFieldConfig[] {
-        const fields: FormlyFieldConfig[] = [];
+    private fillGeoCodeFields(results?: GeoResult[]) {
         const options: ComponentData[] = [];
 
         let selectedIndex = 0;
 
-        result?.forEach((geoCode, index) => {
+        results?.forEach((geoCode, index) => {
             const street = geoCode.road && geoCode.houseNumber
                 ? `${geoCode.road} ${geoCode.houseNumber}, `
                 : "";
@@ -233,7 +243,7 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
             }
         });
 
-        if (!this.hasMatchingAddress(result)) {
+        if (!this.hasMatchingAddress(results)) {
             options.push({
                 value: options.length, // last option
                 label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.UNKNOWN_ADDRESS"),
@@ -242,21 +252,13 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
         }
 
         this.geoCodeModel.index = selectedIndex;
-
-        fields.push({
-            key: "index",
-            type: "radio",
-            defaultValue: selectedIndex,
-            templateOptions: {
-                radioSlot: "start",
-                label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.GEO_CODE_RESULT_LABEL"),
-                type: "radio",
-                options: options,
-                required: true,
-            },
+        this.geoCodeFields = FormlyUtils.changeFormlyFieldTemplateOptions("index", this.geoCodeFields, (props) => {
+            if (props == null) {
+                return props;
+            }
+            props.options = options;
+            return props;
         });
-
-        return fields;
     }
 
     private getLocation() {
