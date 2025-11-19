@@ -29,7 +29,8 @@ export class FilterComponent {
     constructor(public service: Service) { }
 
     @Input() public set filters(_filters: (Filter<string> | SortOrderFilter)[]) {
-        this.allFilters = _filters.map(FilterComponent.ADD_UNIQUE_ID_TO_FILTER_OPTION);
+
+        this.allFilters = _filters.filter(el => el != null).map(FilterComponent.ADD_UNIQUE_ID_TO_FILTER_OPTION);
 
         if (this.allFilters == null || this.allFilters.length === 0) {
             return;
