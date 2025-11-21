@@ -175,6 +175,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 					"https://fenecon.de/produkte/fems/fems-app-manuelle-relaissteuerung/") //
 			.put("App.LoadControl.ThresholdControl", "https://fenecon.de/produkte/fems/fems-app-schwellwert-steuerung/") //
 			// TODO URL veraltet
+			.put("App.Meter.Shelly", "") //
 			.put("App.Meter.Socomec", "https://fenecon.de/produkte/fems/fems-app-socomec-zaehler/") //
 			.put("App.Meter.CarloGavazzi", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
 			.put("App.Meter.PqPlus", "") //
