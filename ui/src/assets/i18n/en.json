@@ -142,8 +142,9 @@
         },
         "EVCS": {
           "PHASE_SWITCHING": "Phase Switching",
-          "FORCE_SINGLE_PHASE": "1-phase charging",
-          "FORCE_THREE_PHASE": "3-phase charging",
+          "PHASE_SWITCHING_INFO": "How many phases should the vehicle be loaded with?",
+          "FORCE_SINGLE_PHASE": "1-phase",
+          "FORCE_THREE_PHASE": "3-phase",
           "AUTOMATIC_SWITCHING": "Automatic",
           "ACTIVATE_CHARGING": "Activate the charging station",
           "AMOUNT_OF_CHARGING_STATIONS": "Amount of charging stations",
