@@ -1,4 +1,4 @@
-package io.openems.edge.system.fenecon.industrial.l.jsonrpc;
+package io.openems.edge.system.fenecon.industrial.jsonrpc;
 
 import io.openems.common.jsonrpc.serialization.EmptyObject;
 import io.openems.common.jsonrpc.serialization.EndpointRequestType;
@@ -17,6 +17,8 @@ import io.openems.common.jsonrpc.serialization.JsonSerializer;
  * </pre>
  */
 public class EmergencyStopAcknowledge implements EndpointRequestType<EmptyObject, EmptyObject> {
+
+    public static final String METHOD = "emergencyStopAcknowledge";
 
 	@Override
 	public String getMethod() {

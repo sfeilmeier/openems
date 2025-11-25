@@ -1,6 +1,5 @@
 package io.openems.edge.system.fenecon.industrial.s;
 
-import static io.openems.common.session.Role.ADMIN;
 import static io.openems.common.types.ChannelAddress.fromString;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.groupingBy;
@@ -32,7 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.function.ThrowingConsumer;
-import io.openems.common.jsonrpc.base.GenericJsonrpcResponseSuccess;
 import io.openems.common.jsonrpc.serialization.EmptyObject;
 import io.openems.common.session.Role;
 import io.openems.common.types.ChannelAddress;
@@ -51,14 +49,14 @@ import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
 import io.openems.edge.ess.api.EssErrorAcknowledge;
-import io.openems.edge.ess.api.EssErrorAcknowledgeRequest;
 import io.openems.edge.ess.api.MetaEss;
 import io.openems.edge.ess.api.SymmetricEss;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.EmergencyStopAcknowledge;
 import io.openems.edge.system.fenecon.industrial.jsonrpc.ErrorAcknowledgeRpc;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.SystemErrorAcknowledge;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitContext;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitStateMachine;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitStateMachine.CoolingUnitState;
-import io.openems.edge.system.fenecon.industrial.s.jsonrpc.EmergencyStopAcknowledgeRequest;
 import io.openems.edge.system.fenecon.industrial.s.statemachine.Context;
 import io.openems.edge.system.fenecon.industrial.s.statemachine.StateMachine;
 import io.openems.edge.system.fenecon.industrial.s.statemachine.StateMachine.State;
@@ -366,15 +364,13 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent imple
 
 	@Override
 	public void buildJsonApiRoutes(JsonApiBuilder builder) {
-		builder.handleRequest(EmergencyStopAcknowledgeRequest.METHOD, endpoint -> {
+		builder.handleRequest(new EmergencyStopAcknowledge(), endpoint -> {
 			endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.INSTALLER));
 		}, call -> {
 			this.acknowledgeEmergencyStop();
-
-			return new GenericJsonrpcResponseSuccess(call.getRequest().getId());
+			return EmptyObject.INSTANCE;
 		});
-
-		this.executeErrorAcknowledgeRpc(builder, () -> {
+		this.executeErrorAcknowledgeRpc(builder, new SystemErrorAcknowledge(), () -> {
 			for (var ess : this.getEsssList()) {
 				if (ess instanceof EssErrorAcknowledge genericEss) {
 					genericEss.executeErrorAcknowledge();
@@ -478,22 +474,6 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent imple
 			});
 		}
 	};
-
-	@Override
-	public void executeErrorAcknowledgeRpc(JsonApiBuilder builder) {
-		builder.handleRequest(new EssErrorAcknowledgeRequest(), endpoint -> {
-			endpoint.setGuards(EdgeGuards.roleIsAtleast(ADMIN));
-		}, call -> {
-			var channels = this.defineChannelsForErrorAcknowledge();
-			channels.forEach(c -> c.setNextValue(null));
-			this.getEsssList().forEach(ess -> {
-				if (ess instanceof EssErrorAcknowledge genericEss) {
-					genericEss.executeErrorAcknowledge();
-				}
-			});
-			return EmptyObject.INSTANCE;
-		});
-	}
 
 	@Override
 	public List<Channel<?>> defineChannelsForErrorAcknowledge() {

@@ -16,6 +16,8 @@ import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.S
 import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.SMOKE_DETECTION;
 import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.SMOKE_DETECTION_FAILURE;
 import static io.openems.edge.system.fenecon.industrial.l.SystemInputChannelsL.SystemInputChannels.SPD_TRIPPED;
+import static io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine.State.BMS_RESET;
+import static io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine.State.UNDEFINED;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.groupingBy;
 
@@ -47,6 +49,7 @@ import org.slf4j.LoggerFactory;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.function.ThrowingConsumer;
 import io.openems.common.jsonrpc.serialization.EmptyObject;
+import io.openems.common.jsonrpc.serialization.EndpointRequestType;
 import io.openems.common.session.Role;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.battery.api.Battery;
@@ -75,16 +78,15 @@ import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.startstop.StartStoppable;
 import io.openems.edge.common.taskmanager.Priority;
 import io.openems.edge.ess.api.EssErrorAcknowledge;
-import io.openems.edge.ess.api.EssErrorAcknowledgeRequest;
 import io.openems.edge.ess.api.MetaEss;
 import io.openems.edge.ess.api.SymmetricEss;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.BmsHardReset;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.EmergencyStopAcknowledge;
 import io.openems.edge.system.fenecon.industrial.jsonrpc.ErrorAcknowledgeRpc;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.SystemErrorAcknowledge;
 import io.openems.edge.system.fenecon.industrial.l.envicool.Envicool;
-import io.openems.edge.system.fenecon.industrial.l.jsonrpc.BmsHardReset;
-import io.openems.edge.system.fenecon.industrial.l.jsonrpc.EmergencyStopAcknowledge;
 import io.openems.edge.system.fenecon.industrial.l.statemachine.Context;
 import io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine;
-import io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine.State;
 import io.openems.edge.timedata.api.Timedata;
 import io.openems.edge.timedata.api.TimedataProvider;
 import io.openems.edge.timedata.api.utils.CalculateActiveTime;
@@ -104,7 +106,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialLImpl.class);
 
-	private final StateMachine stateMachine = new StateMachine(State.UNDEFINED);
+	private final StateMachine stateMachine = new StateMachine(UNDEFINED);
 	private final List<Battery> batteries = new CopyOnWriteArrayList<>();
 	private final Envicool envicool = new Envicool();
 
@@ -528,11 +530,12 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 		builder.handleRequest(new BmsHardReset(), endpoint -> {
 			endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.ADMIN));
 		}, call -> {
-			this.stateMachine.forceNextState(State.BMS_RESET);
+			this.stateMachine.forceNextState(BMS_RESET);
 			return EmptyObject.INSTANCE;
 		});
 
-		this.executeErrorAcknowledgeRpc(builder, () -> {
+		this.executeErrorAcknowledgeRpc(builder, new SystemErrorAcknowledge(), () -> {
+			this.stateMachine.forceNextState(UNDEFINED);
 			for (var ess : this.getEsssList()) {
 				if (ess instanceof EssErrorAcknowledge genericEss) {
 					genericEss.executeErrorAcknowledge();
@@ -661,19 +664,19 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	}
 
 	@Override
-	public void executeErrorAcknowledgeRpc(JsonApiBuilder builder) {
-		builder.handleRequest(new EssErrorAcknowledgeRequest(), endpoint -> {
-			endpoint.setGuards(EdgeGuards.roleIsAtleast(ADMIN));
-		}, call -> {
-			var channels = this.defineChannelsForErrorAcknowledge();
-			channels.forEach(c -> c.setNextValue(null));
-			this.getEsssList().forEach(ess -> {
-				if (ess instanceof EssErrorAcknowledge genericEss) {
-					genericEss.executeErrorAcknowledge();
-				}
-			});
-			return EmptyObject.INSTANCE;
-		});
+	public void executeErrorAcknowledgeRpc(JsonApiBuilder builder,
+			EndpointRequestType<EmptyObject, EmptyObject> request) {
+		builder.handleRequest(request, endpoint -> endpoint.setGuards(EdgeGuards.roleIsAtleast(ADMIN)), //
+				call -> {
+					var channels = this.defineChannelsForErrorAcknowledge();
+					channels.forEach(c -> c.setNextValue(null));
+					this.getEsssList().forEach(ess -> {
+						if (ess instanceof EssErrorAcknowledge genericEss) {
+							genericEss.executeErrorAcknowledge();
+						}
+					});
+					return EmptyObject.INSTANCE;
+				});
 	}
 
 	@Override
