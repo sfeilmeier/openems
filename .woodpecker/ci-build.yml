@@ -111,7 +111,7 @@ steps:
       - npm run lint
       - node_modules/.bin/tsc
       - node_modules/.bin/tsc-strict
-      - node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-prod,prod"
+      - node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-docker"
       - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
     depends_on: [prepare-environment]
 
