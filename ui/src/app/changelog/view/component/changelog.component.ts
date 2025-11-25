@@ -26,6 +26,15 @@ export class ChangelogComponent {
         {
             version: "2025.11.3",
             changes: [
+                Changelog.UI,
+                "Optimierung der Regelgeschwindkeit in Multi-Use-Anwendungen",
+                { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.ENERIX_CONTROL) + "Zusätzlicher Modus zur Beladung des Speichers aus dem Netz" },
+                { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.METER, App.SHELLY_PLUG_S) + "Installierbar für ADMINs, bald kostenlos für alle" },
+            ],
+        },
+        {
+            version: "2025.11.3",
+            changes: [
                 Changelog.UI + "Anzeige des Ladezustands im Energiemonitor, Verbesserung der Barrierefreiheit gemäß WCAG (Web Content Accessibility Guidelines)",
                 Changelog.app(App.MODBUS_TCP_API) + "Verbesserte Stabilität bei Verbindungsabbrüchen (Timeout)",
                 Changelog.library(Library.J2MOD, Library.JSERIALCOMM),

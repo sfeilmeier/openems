@@ -142,8 +142,9 @@
         },
         "EVCS": {
           "PHASE_SWITCHING": "Phase Switching",
-          "FORCE_SINGLE_PHASE": "1-phase charging",
-          "FORCE_THREE_PHASE": "3-phase charging",
+          "PHASE_SWITCHING_INFO": "How many phases should the vehicle be loaded with?",
+          "FORCE_SINGLE_PHASE": "1-phase",
+          "FORCE_THREE_PHASE": "3-phase",
           "AUTOMATIC_SWITCHING": "Automatic",
           "ACTIVATE_CHARGING": "Activate the charging station",
           "AMOUNT_OF_CHARGING_STATIONS": "Amount of charging stations",
@@ -238,6 +239,20 @@
           "HEATING_POWER": "Heating power",
           "MESSAGE_UNREACHABLE": "The energy limit can't be reached in time",
           "ENERGY_SINCE_BEGINNING": "Energy since beginning"
+        },
+        "ENERIX_CONTROL": {
+          "OVERWRITE": "Overwrite active",
+          "NO_OVERWRITE": "No overwrite",
+          "OVERWRITE_MODE": "Overwrite mode",
+          "NO_DISCHARGE": "No discharge",
+          "NO_INPUT": "No input",
+          "DISCONNECTED": "Disconnected",
+          "CONNECTED": "Connected",
+          "CHARGE_FROM_GRID": "Charge from grid",
+          "READ_ONLY": "Read only",
+          "NOTE": "Please note:",
+          "OVERWRITE_INFO": "When this function is activated, the standard settings for charging and discharging the storage system are replaced by external specifications from enerix Franchise GmbH & Co. KG. This may lead to deviations from the usual operating behavior - for example, electricity may be drawn from the grid even though the storage system is sufficiently charged.",
+          "CHARGE_CONSUMPTION": "ATTENTION: Actively charging the battery from the grid beyond the technically necessary trickle charge requires registration of the storage system. If in doubt, please contact your installer. By pressing the blue \"Save\" button, you confirm that you have completed this check. Please note: To be eligible for funding under the Renewable Energy Sources Act (EEG 2023), the storage system must only store electricity generated from renewable energy sources and/or mine gas. When this function is activated, the storage system will be charged with grid electricity. Depending on your electricity supply contract, this grid electricity may also be generated from fossil fuels and/or nuclear power. Therefore, we cannot guarantee that the storage system will be charged exclusively with electricity from renewable energy sources and/or mine gas."
         },
         "HEAT": {
           "TEMPERATURE": "Current temperature",

@@ -31,8 +31,6 @@ public interface ControllerApiBackend extends Controller, OpenemsComponent, Even
 				// Make sure this is always persisted, as it is required for resending
 				.persistencePriority(PersistencePriority.VERY_HIGH) //
 				.text("Latest timestamp of successfully resent data")), //
-		WRONG_APIKEY_CONFIGURATION(Doc.of(Level.WARNING) //
-				.text("FEMS Apikey-Configurations do not match")), //
 		;
 
 		private final Doc doc;

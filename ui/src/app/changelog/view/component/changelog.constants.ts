@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2025.11.3";
+    public static readonly UI_VERSION = "2025.11.4";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -79,6 +79,7 @@ export class App {
     public static readonly SCHWELLWERTSTEUERUNG = new App("FEMS App Schwellwertsteuerung", "https://fenecon.de/fenecon-fems/fems-app-schwellwert-steuerung/");
     public static readonly MANUELLE_RELAISSTEUERUNG = new App("FEMS App Manuelle Relaissteuerung", "https://fenecon.de/fenecon-fems/fems-app-manuelle-relaissteuerung/");
     public static readonly CLEVER_PV = new App("FEMS App clever-PV", "https://fenecon.de/fenecon-fems");
+    public static readonly ENERIX_CONTROL = new App("FEMS App enerixControl", "https://fenecon.de/fenecon-fems");
 
     public static readonly EVCS_AC = new App("FEMS App AC-Ladestation", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/");
     public static readonly KEBA = "KEBA";
@@ -105,6 +106,7 @@ export class App {
     public static readonly DISCOVERGY = "Discovergy";
     public static readonly EASTRON_SDM630 = "Eastron SDM630";
     public static readonly PQ_PLUS = "PQ Plus";
+    public static readonly SHELLY_PLUG_S = "Shelly Plug S";
 
     public static readonly PV_INVERTER = new App("FEMS App PV-Wechselrichter", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/");
     public static readonly KACO = "KACO";

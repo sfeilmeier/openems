@@ -113,12 +113,12 @@ export const OemMeta: BaseMeta = {
                 EN: "#",
             },
             HOME_6_10_15: {
-                DE: "https://docs.fenecon.de/download/fenecon/en/FENECON_Home_6-10-15_Produktblatt.pdf",
-                EN: "https://docs.fenecon.de/download/fenecon/en/FENECON_Home_6-10-15_Produktblatt.pdf",
+                DE: "https://docs.fenecon.de/download/fenecon/en/fenecon_home_6-10-15_productsheet.pdf",
+                EN: "https://docs.fenecon.de/download/fenecon/en/fenecon_home_6-10-15_productsheet.pdf",
             },
             HOME_20_30: {
-                DE: "https://docs.fenecon.de/download/fenecon/de/FENECON_Home_20-30_Produktblatt.pdf",
-                EN: "https://docs.fenecon.de/download/fenecon/en/FENECON_Home_20-30_Produktblatt.pdf",
+                DE: "https://docs.fenecon.de/download/fenecon/de/fenecon_home_20-30_productsheet.pdf",
+                EN: "https://docs.fenecon.de/download/fenecon/en/fenecon_home_20-30_productsheet.pdf",
             },
         },
     },
