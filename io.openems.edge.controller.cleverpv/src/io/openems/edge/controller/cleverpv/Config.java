@@ -5,6 +5,8 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
+import io.openems.common.types.DebugMode;
+
 @ObjectClassDefinition(//
 		name = "Controller Clever-PV", //
 		description = "This controller connects to Clever-PV")
