@@ -1,18 +1,17 @@
 name: CI-Build
 run-name: CI Build for FEMS
 on:
-  pull_request:
-    branches:
-      - 'action/**'
+  workflow_dispatch:
 
+# https://docs.gitea.com/next/usage/actions/comparison#concurrency
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
 env:
   MAVEN_OPTS: -Dmaven.repo.local=/cache/maven
   CI_COMMIT_BRANCH: ${{ github.head_ref }}
-  CI_GROUP: ${{ github.workflow }}-${{ github.ref }}
+  CI_GROUP: ${{ github.workflow }}-${{ github.head_ref }}
 
 jobs:
   setup:
@@ -63,6 +62,17 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
           cache: gradle
+
+      - name: Restore build cache
+        uses: actions/cache/restore@v3
+        with:
+          key: fems_cache_gradle
+          path: |
+            ~/.gradle/wrapper
+
+      - name: Gradle Wrapper
+        run: |
+          ./gradlew wrapper
 
       - name: Checkstyle
         run: |
@@ -118,7 +128,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: "tools/\nui/\n.gitea/"
+          sparse-checkout: |
+            tools/
+            ui/
+            .gitea/
 
       - name: Download artifact
         uses: ./.gitea/actions/artifact-download
@@ -135,19 +148,18 @@ jobs:
           cache: 'npm'
           cache-dependency-path: ui/package-lock.json
 
+      - name: npm install
+        run: |
+          cd ui
+          npm set registry http://npm-cache:4873
+          npm ci --prefer-offline --force
+
       - name: Test UI
         run: |
-          pwd
-          echo "$(pwd)"
           export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
-          source tools/common.sh
-          common_initialize_environment
-          source openems.env
-          common_update_version_in_code
           echo "Testing UI for $OEM"
           cd ui
-          npm ci --prefer-offline --force
-          node_modules/.bin/ng lint
+          npm run lint
           node_modules/.bin/tsc
           node_modules/.bin/tsc-strict
           node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-prod,prod"
@@ -164,6 +176,7 @@ jobs:
           echo "Build for $OEM"
           cd ui
           node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-edge-prod,prod"
+          echo "Bundle fems-ui.tar.gz"
           tar -C target/ -czf fems-ui.tar.gz .
 
       - name: Upload artifact
@@ -186,31 +199,19 @@ jobs:
         with:
           sparse-checkout: ".gitea/"
 
-      - name: Download Environment artifact
+      - name: Download artifacts
         uses: ./.gitea/actions/artifact-download
         with:
           user: fems
           password: ${{ secrets.MINIO_ACCESS_KEY }}
-          name: environment
+          name: |
+            environment
+            jars
+            ui
           target: /artifacts/
 
-      - name: Download UI artifact
-        uses: ./.gitea/actions/artifact-download
-        if: needs.build-ui.result == 'success'
-        with:
-          user: fems
-          password: ${{ secrets.MINIO_ACCESS_KEY }}
-          name: ui
-          target: /artifacts/
-
-      - name: Download Jars artifact
-        uses: ./.gitea/actions/artifact-download
-        if: needs.build-jars.result == 'success'
-        with:
-          user: fems
-          password: ${{ secrets.MINIO_ACCESS_KEY }}
-          name: jars
-          target: /artifacts/
+      - name: Check artifacts
+        run: ls -lR /artifacts/
 
       - name: Setup SSH
         uses: ./.gitea/actions/setup-ssh
@@ -218,41 +219,70 @@ jobs:
           ssh-key: ${{ secrets.DEPLOY_KEY }}
           host: ${{ vars.DEV_SERVER_HOST }}
 
-      - name: Check artifacts
-        run: ls -lR /artifacts/
-
       - name: Update Edge
+        env:
+          DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
+          DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
         run: |
           if [ -f /artifacts/edge.jar ]; then
-            echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar"
-            rsync --mkpath /artifacts/edge.jar ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar
+            echo "Deploying to $DEPLOY_DIR/edge.jar"
+            rsync --mkpath /artifacts/edge.jar $DEPLOY_HOST:$DEPLOY_DIR/edge.jar
           else
-            echo "Delete from ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar"
-            ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "rm ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar || true"
+            echo "Delete from $DEPLOY_DIR/edge.jar"
+            ssh $DEPLOY_HOST "rm $DEPLOY_DIR/edge.jar || true"
           fi
 
       - name: Update Backend
+        env:
+          DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
+          DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
         run: |
           if [ -f /artifacts/backend.jar ]; then
-            echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar"
-            rsync --mkpath /artifacts/backend.jar ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar
+            echo "Deploying to $DEPLOY_DIR/backend.jar"
+            rsync --mkpath /artifacts/backend.jar $DEPLOY_HOST:$DEPLOY_DIR/backend.jar
           else
-            echo "Delete from ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar"
-            ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "rm ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar || true"
+            echo "Delete from $DEPLOY_DIR/backend.jar"
+            ssh $DEPLOY_HOST "rm $DEPLOY_DIR/backend.jar || true"
           fi
 
       - name: Update UI
+        env:
+          DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
+          DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
         run: |
           if [ -f /artifacts/fems-ui.tar.gz ]; then
-            echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz"
-            rsync --mkpath /artifacts/fems-ui.tar.gz ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz
-            ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "/opt/gitea/develop/fems-ui/update-nginx.sh ${CI_COMMIT_BRANCH} || true"
+            echo "Deploying to $DEPLOY_DIR/fems-ui.tar.gz"
+            rsync --mkpath /artifacts/fems-ui.tar.gz $DEPLOY_HOST:$DEPLOY_DIR/fems-ui.tar.gz
+            ssh $DEPLOY_HOST "/opt/gitea/develop/fems-ui/update-nginx.sh ${CI_COMMIT_BRANCH}"
           else
-            echo "Delete from ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz"
-            ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "rm ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz || true"
-            ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "/opt/gitea/develop/fems-ui/update-nginx.sh ${CI_COMMIT_BRANCH} --cleanup || true"
+            echo "Delete from $DEPLOY_DIR/fems-ui.tar.gz"
+            ssh $DEPLOY_HOST "rm $DEPLOY_DIR/fems-ui.tar.gz || true"
+            ssh $DEPLOY_HOST "/opt/gitea/develop/fems-ui/update-nginx.sh ${CI_COMMIT_BRANCH} --cleanup || true"
           fi
 
       - name: Update Environment
         run: |
+          echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/openems.env"
           rsync --mkpath /artifacts/openems.env ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/openems.env
+
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: [build-jars, build-ui, upload]
+    if: always()
+    continue-on-error: true
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .gitea/
+
+      - name: Clear build cache
+        uses: ./.gitea/actions/artifact-clear
+        continue-on-error: true
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: |
+            environment
+            jars
+            ui
