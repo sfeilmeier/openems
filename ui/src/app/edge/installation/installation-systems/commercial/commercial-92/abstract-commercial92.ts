@@ -22,6 +22,7 @@ import { AbstractCommercialIbn } from "../abstract-commercial";
 
 export type Commercial92App = {
     SAFETY_COUNTRY: SafetyCountry,
+    GRID_CODE: GridSetting | null,
     FEED_IN_TYPE: ExternalLimitationType,
     BATTERY_TARGET: BatteryTarget,
     HAS_ESS_LIMITER_14A: boolean,
@@ -280,6 +281,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             FEED_IN_TYPE: this.feedInLimitation.feedInType,
             BATTERY_TARGET: this.batteryStartStopTarget,
             HAS_ESS_LIMITER_14A: this.isController14aActivated,
+            GRID_CODE: this.gridSetting,
         };
 
         componentConfigurator.addInstallAppCallback(() => {

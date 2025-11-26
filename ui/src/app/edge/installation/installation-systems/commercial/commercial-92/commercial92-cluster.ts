@@ -64,6 +64,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
 
         if (cluster && cluster == CommercialCluster.SLAVE) {
             appProperties = {
+                GRID_CODE: this.gridSetting,
                 BATTERY_TARGET: this.batteryStartStopTarget,
             };
 
