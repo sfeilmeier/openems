@@ -1412,7 +1412,7 @@
   "SYSTEM": {
     "INDUSTRIAL": {
       "BMS_HARD_RESET": "BMS hard reset",
-      "CLEAR_TIMEOUT": "Reset Timeout Fehler: battery, battery.inverter, ess"
+      "SYSTEM_ERROR_ACKNOWLEDGE": "Reset System Fehler: System Komponente, Batterien, Wechselrichter, Ess"
     }
   }
 }

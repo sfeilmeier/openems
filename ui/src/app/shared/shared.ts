@@ -145,6 +145,16 @@ export class EdgePermission {
     public static hasReducedFactories(edge: Edge): boolean {
         return edge.isVersionAtLeast("2024.6.1");
     }
+
+    /**
+     * Checks if the edge version is at least 2025.12.1 to cover systemErrorAcknowledge JSON-RPC request.
+     *
+     * @param edge The edge to check
+     * @returns True if the edge is 2025.12.1
+     */
+    public static hasSystemErrorAcknowledge(edge: Edge): boolean {
+        return edge.isVersionAtLeast("2025.12.1");
+    }
 }
 
 export class UserPermission {
