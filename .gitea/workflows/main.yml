@@ -77,8 +77,14 @@ jobs:
           source tools/common.sh
           common_initialize_environment
           source openems.env
-          common_update_version_in_code
           common_run_checkstyle --console=plain --warn --parallel --max-workers=4
+
+      - name: Test
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_test --console=plain --warn --parallel --max-workers=4
 
       - name: Build Edge & Backend
         env:
@@ -117,7 +123,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: "tools/\nui/\n.gitea/"
+          sparse-checkout: |
+            tools/
+            ui/
+            .gitea/
 
       - name: Download artifact
         uses: ./.gitea/actions/artifact-download
@@ -152,6 +161,7 @@ jobs:
           node_modules/.bin/tsc-strict
           node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-prod,prod"
           npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          tar -C target/ -czf fems-ui-backend.tar.gz .
           rm -r target/
 
       - name: Build UI
@@ -164,7 +174,7 @@ jobs:
           echo "Build for $OEM"
           cd ui
           node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-edge-prod,prod"
-          tar -C target/ -czf fems-ui.tar.gz .
+          tar -C target/ -czf fems-ui-edge.tar.gz .
 
       - name: Upload artifact
         uses: ./.gitea/actions/artifact-upload
@@ -172,7 +182,10 @@ jobs:
           user: fems
           password: ${{ secrets.MINIO_ACCESS_KEY }}
           name: ui
-          source: ui/fems-ui.tar.gz
+          verbose: "true" 
+          source: |
+            ui/fems-ui-edge.tar.gz
+            ui/fems-ui-backend.tar.gz
 
   build-debian:
     runs-on: ubuntu-latest
@@ -180,47 +193,36 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: "tools/\n.gitea/"
+          sparse-checkout: |
+            tools/
+            .gitea/
 
-      - name: Download Environment artifact
+      - name: Download artifacts
         uses: ./.gitea/actions/artifact-download
         with:
           user: fems
           password: ${{ secrets.MINIO_ACCESS_KEY }}
-          name: environment
-          target: /artifacts/
-
-      - name: Download UI artifact
-        uses: ./.gitea/actions/artifact-download
-        with:
-          user: fems
-          password: ${{ secrets.MINIO_ACCESS_KEY }}
-          name: ui
-          target: /artifacts/
-
-      - name: Download Jars artifact
-        uses: ./.gitea/actions/artifact-download
-        with:
-          user: fems
-          password: ${{ secrets.MINIO_ACCESS_KEY }}
-          name: jars
+          name: |
+            environment
+            jars
+            ui
           target: /artifacts/
 
       - name: Check artifacts
         run: ls -lR /artifacts/
 
       - name: Prepare Environment
+        env:
+          EDGE_DESTINATION: "tools/debian/usr/lib/openems/"
+          UI_DESTINATION: "tools/debian/usr/share/openems-fems/www/"
         run: |
-          export EDGE_DESTINATION="tools/debian/usr/lib/openems/"
-          export UI_DESTINATION="tools/debian/usr/share/openems-fems/www/"
+          mkdir -p $EDGE_DESTINATION
+          cp -v /artifacts/edge.jar $EDGE_DESTINATION/openems.jar
 
-          mkdir -p ${EDGE_DESTINATION}
-          cp -v /artifacts/edge.jar ${EDGE_DESTINATION}/openems.jar
-
-          mkdir -p ${UI_DESTINATION}
-          tar -xvzf /artifacts/fems-ui.tar.gz -C ${UI_DESTINATION} > /dev/null
-          count=$(find "${UI_DESTINATION}" -type f | wc -l)
-          echo "Extracted $count files to ${UI_DESTINATION}"
+          mkdir -p $UI_DESTINATION
+          tar -xvzf /artifacts/fems-ui-edge.tar.gz -C $UI_DESTINATION > /dev/null
+          count=$(find "$UI_DESTINATION" -type f | wc -l)
+          echo "Extracted $count files to $UI_DESTINATION"
 
           mkdir -p /build/target/
 
@@ -248,38 +250,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: "tools/\n.gitea/"
+          sparse-checkout: |
+            tools/
+            .gitea/
 
-      - name: Download Environment artifact
+      - name: Download artifacts
         uses: ./.gitea/actions/artifact-download
         with:
           user: fems
           password: ${{ secrets.MINIO_ACCESS_KEY }}
-          name: environment
-          target: /artifacts/
-
-      - name: Download UI artifact
-        uses: ./.gitea/actions/artifact-download
-        with:
-          user: fems
-          password: ${{ secrets.MINIO_ACCESS_KEY }}
-          name: ui
-          target: /artifacts/
-
-      - name: Download Jars artifact
-        uses: ./.gitea/actions/artifact-download
-        with:
-          user: fems
-          password: ${{ secrets.MINIO_ACCESS_KEY }}
-          name: jars
-          target: /artifacts/
-
-      - name: Download Debian artifact
-        uses: ./.gitea/actions/artifact-download
-        with:
-          user: fems
-          password: ${{ secrets.MINIO_ACCESS_KEY }}
-          name: deb
+          name: |
+            environment
+            jars
+            ui
+            deb
           target: /artifacts/
 
       - name: Check artifacts
@@ -292,15 +276,14 @@ jobs:
           host: ${{ vars.DEV_SERVER_HOST }}
 
       - name: Upload artifacts
+        env:
+          DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
+          DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
         run: |
           if [[ -z "${CI_COMMIT_BRANCH}" ]]; then echo "CI_COMMIT_BRANCH is not set"; exit 1; fi
-          echo "Upload to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
-          rsync --mkpath /artifacts/backend.jar ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/backend.jar
-          rsync --mkpath /artifacts/edge.jar ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar
-          rsync --mkpath /artifacts/fems-ui.tar.gz ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz
-          rsync --mkpath /artifacts/openems.env ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/openems.env
-          rsync --mkpath /artifacts/fems.deb ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems.deb
-          rsync --mkpath /artifacts/fems.version ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems.version
+          echo "Upload to $DEPLOY_DIR/"
+          rsync --mkpath /artifacts/* $DEPLOY_HOST:$DEPLOY_DIR/
+          ssh $DEPLOY_HOST "/opt/gitea/develop/fems-ui/update-nginx.sh ${CI_COMMIT_BRANCH}"
 
   cleanup:
     runs-on: ubuntu-latest

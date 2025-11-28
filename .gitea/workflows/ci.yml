@@ -2,16 +2,17 @@ name: CI-Build
 run-name: CI Build for FEMS
 on:
   workflow_dispatch:
+  #pull_request:
 
 # https://docs.gitea.com/next/usage/actions/comparison#concurrency
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 env:
   MAVEN_OPTS: -Dmaven.repo.local=/cache/maven
-  CI_COMMIT_BRANCH: ${{ github.head_ref }}
-  CI_GROUP: ${{ github.workflow }}-${{ github.head_ref }}
+  CI_COMMIT_BRANCH: ${{ github.head_ref || github.ref_name }}
+  CI_GROUP: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
 
 jobs:
   setup:
@@ -39,12 +40,11 @@ jobs:
           source: /env/
           verbose: "true"
 
-  build-jars:
+  build-edge:
     runs-on: ubuntu-latest
     needs: setup
     if: |
-      contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Edge') ||
-      contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Backend')
+      contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Edge') || (gitea.event_name == 'workflow_dispatch')
     steps:
       - uses: actions/checkout@v4
 
@@ -79,12 +79,16 @@ jobs:
           source tools/common.sh
           common_initialize_environment
           source openems.env
-          common_update_version_in_code
-          common_run_checkstyle --console=plain --warn --parallel --max-workers=4
+          common_checkstyle_edge --console=plain --warn --parallel --max-workers=4
 
-      - name: Build Edge
-        if: |
-          contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Edge')
+      - name: Test
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_test_edge --console=plain --warn --parallel --max-workers=4
+
+      - name: Build Jar
         env:
           OEMS_EDGE_OUTPUT: "build/target/edge.jar"
         run: |
@@ -93,13 +97,66 @@ jobs:
           source openems.env
           common_update_version_in_code
           echo "Build Version $VERSION"
-          common_test_edge --console=plain --warn --parallel --max-workers=4
           common_build_edge --console=plain --warn --parallel --max-workers=2
           common_check_file "$OEMS_EDGE_OUTPUT" "OpenEMS Edge JAR missing!"
 
-      - name: Build Backend
-        if: |
-          contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Backend')
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: jars
+          source: build/target/
+
+  build-backend:
+    runs-on: ubuntu-latest
+    needs: setup
+    if: |
+      contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Backend') || (gitea.event_name == 'workflow_dispatch')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          verbose: "true"
+      
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: gradle
+
+      - name: Restore build cache
+        uses: actions/cache/restore@v3
+        with:
+          key: fems_cache_gradle
+          path: |
+            ~/.gradle/wrapper
+
+      - name: Gradle Wrapper
+        run: |
+          ./gradlew wrapper
+
+      - name: Checkstyle
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_checkstyle_backend --console=plain --warn --parallel --max-workers=4
+
+      - name: Test
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_test_backend --console=plain --warn --parallel --max-workers=4
+
+      - name: Build Jar
         env:
           OEMS_BACKEND_OUTPUT: "build/target/backend.jar"
         run: |
@@ -108,7 +165,6 @@ jobs:
           source openems.env
           common_update_version_in_code
           echo "Build Version $VERSION"
-          common_test_backend --console=plain --warn --parallel --max-workers=4
           common_build_backend --console=plain --warn --parallel --max-workers=2
           common_check_file "$OEMS_BACKEND_OUTPUT" "OpenEMS Backend JAR missing!"
 
@@ -124,7 +180,7 @@ jobs:
     runs-on: ubuntu-latest-ui
     needs: setup
     if: |
-      contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'UI')
+      contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'UI') || (gitea.event_name == 'workflow_dispatch')
     steps:
       - uses: actions/checkout@v4
         with:
@@ -162,8 +218,10 @@ jobs:
           npm run lint
           node_modules/.bin/tsc
           node_modules/.bin/tsc-strict
-          node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-prod,prod"
+          node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-docker"
           npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          echo "Bundle fems-ui-backend.tar.gz"
+          tar -C target/ -czf fems-ui-backend.tar.gz .
           rm -r target/
 
       - name: Build UI
@@ -176,8 +234,8 @@ jobs:
           echo "Build for $OEM"
           cd ui
           node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-edge-prod,prod"
-          echo "Bundle fems-ui.tar.gz"
-          tar -C target/ -czf fems-ui.tar.gz .
+          echo "Bundle fems-ui-edge.tar.gz"
+          tar -C target/ -czf fems-ui-edge.tar.gz .
 
       - name: Upload artifact
         uses: ./.gitea/actions/artifact-upload
@@ -185,27 +243,43 @@ jobs:
           user: fems
           password: ${{ secrets.MINIO_ACCESS_KEY }}
           name: ui
-          source: ui/fems-ui.tar.gz
+          source: |
+            ui/fems-ui-edge.tar.gz
+            ui/fems-ui-backend.tar.gz
 
   upload:
     runs-on: ubuntu-latest
-    needs: [build-jars, build-ui]
+    needs: [build-edge, build-backend, build-ui]
     if: |
       always() &&   
-      (needs.build-jars.result == 'skipped' || needs.build-jars.result == 'success') &&
+      (needs.build-edge.result == 'skipped' || needs.build-edge.result == 'success') &&
+      (needs.build-backend.result == 'skipped' || needs.build-backend.result == 'success') &&
       (needs.build-ui.result == 'skipped' || needs.build-ui.result == 'success')
+    env:
+      DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
+      DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: ".gitea/"
 
-      - name: Download artifacts
+      - name: Download environment
         uses: ./.gitea/actions/artifact-download
         with:
           user: fems
           password: ${{ secrets.MINIO_ACCESS_KEY }}
           name: |
             environment
+          target: /artifacts/
+
+      - name: Download artifacts
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          verbose: "true"
+          fail-on-missing: "false"
+          name: |
             jars
             ui
           target: /artifacts/
@@ -220,54 +294,48 @@ jobs:
           host: ${{ vars.DEV_SERVER_HOST }}
 
       - name: Update Edge
-        env:
-          DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
-          DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
         run: |
           if [ -f /artifacts/edge.jar ]; then
-            echo "Deploying to $DEPLOY_DIR/edge.jar"
-            rsync --mkpath /artifacts/edge.jar $DEPLOY_HOST:$DEPLOY_DIR/edge.jar
+            echo "Deploying to ${{ env.DEPLOY_DIR }}/edge.jar"
+            rsync --mkpath /artifacts/edge.jar ${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_DIR }}/edge.jar
           else
-            echo "Delete from $DEPLOY_DIR/edge.jar"
-            ssh $DEPLOY_HOST "rm $DEPLOY_DIR/edge.jar || true"
+            echo "Delete from ${{ env.DEPLOY_DIR }}/edge.jar"
+            ssh ${{ env.DEPLOY_HOST }} "rm ${{ env.DEPLOY_DIR }}/edge.jar || true"
           fi
 
       - name: Update Backend
-        env:
-          DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
-          DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
         run: |
           if [ -f /artifacts/backend.jar ]; then
-            echo "Deploying to $DEPLOY_DIR/backend.jar"
-            rsync --mkpath /artifacts/backend.jar $DEPLOY_HOST:$DEPLOY_DIR/backend.jar
+            echo "Deploying to ${{ env.DEPLOY_DIR }}/backend.jar"
+            rsync --mkpath /artifacts/backend.jar ${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_DIR }}/backend.jar
           else
-            echo "Delete from $DEPLOY_DIR/backend.jar"
-            ssh $DEPLOY_HOST "rm $DEPLOY_DIR/backend.jar || true"
+            echo "Delete from ${{ env.DEPLOY_DIR }}/backend.jar"
+            ssh ${{ env.DEPLOY_HOST }} "rm ${{ env.DEPLOY_DIR }}/backend.jar || true"
           fi
 
       - name: Update UI
-        env:
-          DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
-          DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
         run: |
-          if [ -f /artifacts/fems-ui.tar.gz ]; then
-            echo "Deploying to $DEPLOY_DIR/fems-ui.tar.gz"
-            rsync --mkpath /artifacts/fems-ui.tar.gz $DEPLOY_HOST:$DEPLOY_DIR/fems-ui.tar.gz
-            ssh $DEPLOY_HOST "/opt/gitea/develop/fems-ui/update-nginx.sh ${CI_COMMIT_BRANCH}"
+          if [ -f /artifacts/fems-ui-edge.tar.gz ] && [ -f /artifacts/fems-ui-backend.tar.gz ]; then
+            echo "Deploying to ${{ env.DEPLOY_DIR }}/fems-ui-edge.tar.gz"
+            echo "Deploying to ${{ env.DEPLOY_DIR }}/fems-ui-backend.tar.gz"
+            rsync --mkpath /artifacts/fems-ui-edge.tar.gz ${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_DIR }}/fems-ui-edge.tar.gz
+            rsync --mkpath /artifacts/fems-ui-backend.tar.gz ${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_DIR }}/fems-ui-backend.tar.gz
+            ssh ${{ env.DEPLOY_HOST }} "/opt/gitea/develop/fems-ui/update-nginx.sh ${{ env.CI_COMMIT_BRANCH }}"
           else
-            echo "Delete from $DEPLOY_DIR/fems-ui.tar.gz"
-            ssh $DEPLOY_HOST "rm $DEPLOY_DIR/fems-ui.tar.gz || true"
-            ssh $DEPLOY_HOST "/opt/gitea/develop/fems-ui/update-nginx.sh ${CI_COMMIT_BRANCH} --cleanup || true"
+            echo "Delete from ${{ env.DEPLOY_DIR }}/fems-ui-edge.tar.gz"
+            echo "Delete from ${{ env.DEPLOY_DIR }}/fems-ui-backend.tar.gz"
+            ssh ${{ env.DEPLOY_HOST }} "rm ${{ env.DEPLOY_DIR }}/fems-ui-*.tar.gz || true"
+            ssh ${{ env.DEPLOY_HOST }} "/opt/gitea/develop/fems-ui/update-nginx.sh ${{ env.CI_COMMIT_BRANCH }} --cleanup || true"
           fi
 
       - name: Update Environment
         run: |
-          echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/openems.env"
-          rsync --mkpath /artifacts/openems.env ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/openems.env
+          echo "Deploying to ${{ env.DEPLOY_DIR }}/openems.env"
+          rsync --mkpath /artifacts/openems.env ${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_DIR }}/openems.env
 
   cleanup:
     runs-on: ubuntu-latest
-    needs: [build-jars, build-ui, upload]
+    needs: [build-backend, build-edge, build-ui, upload]
     if: always()
     continue-on-error: true
     steps:

@@ -21,7 +21,7 @@ inputs:
   fail-on-missing:
     description: "Whether to fail the action if an artifact is missing (true|false)"
     required: false
-    default: "false"
+    default: "true"
   verbose:
     description: "Whether to enable verbose output (true|false)"
     required: false
