@@ -2,9 +2,9 @@
   <ion-content>
     <ion-grid>
       <ion-row class="ion-justify-content-left ion-padding-top">
-        <ion-col size-lg="6" size-md="8" size-sm="12" class="ion-padding">
+        <ion-col size-lg="5" size-md="8" size-sm="12" class="ion-padding">
           <ion-item lines="none">
-            <ion-text style="color: lightslategrey;">
+            <ion-text style="color: var(--ion-card-content);">
               {{ "SETTINGS.ENERGY_JOURNEY.SEE_CHANGES_TEXT" | translate }}
               <br>
                 {{ "SETTINGS.ENERGY_JOURNEY.SEE_CHANGES_SUB_TEXT" | translate }}
@@ -20,10 +20,10 @@
                 <ion-card style="border-radius: 1em;opacity: 0.9;">
                   <img src="assets/img/icon/energy-journey-batteryExtension.webp" width="100%" />
                   <ion-card-content>
-                    <ion-text style="font-size: larger; font-weight: bold;">
+                    <ion-text style="font-size: larger; font-weight: bold; color: var(--ion-card-content)">
                       {{widget.slogan}}
                     </ion-text>
-                    <div class="ion-padding">
+                    <div class="ion-padding" style="color: var(--ion-card-content)">
                       {{widget.description}}
                       <ion-row class="full_width align_right">
                         <ion-col class="align_right full_width">
