@@ -139,6 +139,11 @@ formly-field-ion-radio {
     text-shadow: var(--ion-text-shadow);
 }
 
+.percentage-style-dark {
+    fill: var(--ion-text-color-dark);
+    text-shadow: var(--ion-text-shadow);
+}
+
 .ion-card-style {
     ion-item {
         --background: var(--ion-color-primary);

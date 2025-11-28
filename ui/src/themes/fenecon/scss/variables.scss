@@ -22,16 +22,17 @@ $font-family: var(--ion-font-family);
 
 :root[data-theme="light"] {
     /** primary **/
-    --ion-color-primary: #36aed1;
+    --ion-color-primary: #0fcdf8;
     --ion-color-primary-rgb: rgb(54, 174, 209);
     --ion-color-primary-contrast-rgb: 255, 255, 255;
     --ion-color-primary-contrast: #fff;
     --ion-color-primary-shade: #287e96;
     --ion-color-primary-shade-rgb: rgb(40, 126, 150);
     --ion-color-primary-tint: rgb(54, 174, 209, 0.3);
+    --ion-color-primary-footer: #f4f4f4;
 
     /** secondary **/
-    --ion-color-secondary: #76b8cb;
+    --ion-color-secondary: #0EB8DF;
     --ion-color-secondary-rgb: 50, 219, 100;
     --ion-color-secondary-contrast: #ffffff;
     --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -42,7 +43,7 @@ $font-family: var(--ion-font-family);
     --ion-item-background: var(--ion-background-color);
     --ion-color-shadow-rgba: rgba(0, 0, 0, 0.3);
     --ion-background-color-card-header: #f4f4f4;
-    --ion-color-active-percentagebar: #36aed1;
+    --ion-color-active-percentagebar: #0fcdf8;
     --ion-background-percentagebar-color: #f4f4f4;
     --ion-color-text-percentage-bar: #000000;
     --ion-color-toggle-checked-border: #0d7999;
@@ -50,12 +51,13 @@ $font-family: var(--ion-font-family);
 
 :root[data-theme="dark"] {
     /** primary **/
-    --ion-color-primary: #36aed1; // Header Color and Active Bars.
+    --ion-color-primary: #0fcdf8; // Header Color and Active Bars.
     --ion-color-primary-rgb: 61, 92, 116;
-    --ion-color-primary-contrast: #f4f4f4; // sets the color of Button segments
+    --ion-color-primary-contrast: #00204E; // sets the color of Button segments
     --ion-color-primary-contrast-rgb: 255, 255, 255;
     --ion-color-primary-shade: #55a2b9;
     --ion-color-primary-tint: #226f86ba;
+    --ion-color-primary-footer: #f4f4f4;
 
     /** secondary **/
     --ion-color-secondary: #454b64; // SubHeader color of History section
