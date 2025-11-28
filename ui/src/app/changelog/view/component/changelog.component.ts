@@ -139,7 +139,7 @@ export class ChangelogComponent {
             version: "2025.7.4",
             changes: [
                 Changelog.app(App.EVCS_AC, App.KEBA) + "(P40) Korrektur der Energiewerte bei Firmware-Versionen unter 1.1.9",
-                Changelog.app(App.EVCS_AC, App.GO_E) + "Einbindung der Wallbox go-e Charger Gemini flex (nur lesend))",
+                Changelog.app(App.EVCS_AC_LESEND, App.GO_E) + "Einbindung der Wallbox go-e Charger Gemini flex (nur lesend))",
                 Changelog.app(App.SCHWELLWERTSTEUERUNG) + "Fehlerbehebung in der Darstellung",
                 { roleIsAtLeast: Role.ADMIN, change: "Einstellungen | System: Firmware-Update für GoodWe Batteriewechselrichter" },
                 { roleIsAtLeast: Role.ADMIN, change: "Inbetriebnahmeassistent: Litauen kann als Installations-/Kundenadresse angegeben werden" },
@@ -160,7 +160,7 @@ export class ChangelogComponent {
                 "FENECON Home: Verbessertes Verhalten mit aktiver Blindleistungseinstellung Q(U)",
                 Changelog.app(App.EVCS_AC) + "Allgemeine Verbesserungen und Fehlerbehebungen",
                 Changelog.app(App.EVCS_AC, App.KEBA) + "Fehlerbehebung doppeltes Anstecken mit Multiladepunkt-Management, Umstellung zwischen lesendem und schreibendem Modus im App Center, Verbesserungen für KEBA P40",
-                Changelog.app(App.POWER_TO_HEAT, App.MY_PV, App.ASKOMA) + "Veröffentlichung der Apps für Askoma ASKOHEAT+ und AC•THOR 9s",
+                Changelog.app(App.POWER_TO_HEAT_LESEND, App.MY_PV, App.ASKOMA) + "Veröffentlichung der Apps für Askoma ASKOHEAT+ und AC•THOR 9s",
                 Changelog.app(App.PV_INVERTER, App.SOLAREDGE) + "Fehlerbehebung bei Kompatibilität mit dem Modbus/SunSpec-Protokoll von SolarEdge",
                 Changelog.app(App.PEAKSHAVING) + "Verbesserung der historischen Darstellung",
                 Changelog.app(App.METER, App.EASTRON_SDM630) + "Veröffentlichung der App für den Eastron SDM630 Verbrauchs- und Erzeugungszähler",
@@ -174,7 +174,7 @@ export class ChangelogComponent {
             changes: [
                 Changelog.openems("2025.7.0"),
                 Changelog.app(App.POWER_TO_HEAT) + "Fehlerbehebung beim Slider zur Konfiguration der Energie",
-                Changelog.app(App.POWER_TO_HEAT, App.MY_PV, App.ASKOMA) + "Heizenergie wird nun richtig im Verbrauch angezeigt",
+                Changelog.app(App.POWER_TO_HEAT_LESEND, App.MY_PV, App.ASKOMA) + "Heizenergie wird nun richtig im Verbrauch angezeigt",
                 "Einstellungen | Netzwerkkonfiguration: die aktuell zugewiesene DHCP-Adresse wird in der Netzwerkkonfiguration dargestellt.",
                 "Android App: Anpassen der Fensterhöhe bei aktivierter Android-Navigationsleiste",
                 Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Fehlerbehebung bei der Umstellung zwischen lesendem und schreibendem Modus im App Center",
@@ -203,7 +203,7 @@ export class ChangelogComponent {
                 { roleIsAtLeast: Role.INSTALLER, change: "Home Inbetriebnahmeassistent Netzeinspeiselimitierung: neue Auswahlmöglichkeit 'Dynamische Einspeisung & Externe Limitierung' gleichzeitig" },
                 { roleIsAtLeast: Role.INSTALLER, change: "Home Inbetriebnahmeassistent Blindleistungsvorgabe: Änderung der Voreinstellung von Q(U) zu statischem Leistungsfaktor cos φ 1" },
                 { roleIsAtLeast: Role.ADMIN, change: "Home Batteriewechselrichter: SolarGo Register werden nicht länger gelesen, wenn diese nicht verfügbar sind." },
-                { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.POWER_TO_HEAT, App.MY_PV, App.ASKOMA) + "Heizenergie wird nun korrekt von 'Sonstiger Verbrauch' abgezogen, Fehlerbehebung bei der Darstellung von Daten in Historie" },
+                { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.POWER_TO_HEAT_LESEND, App.MY_PV, App.ASKOMA) + "Heizenergie wird nun korrekt von 'Sonstiger Verbrauch' abgezogen, Fehlerbehebung bei der Darstellung von Daten in Historie" },
                 { roleIsAtLeast: Role.ADMIN, change: "Industrial L: Unterstützung für neue Würth-BMS Version (BETA); weitere Verbesserungen folgen" },
                 { roleIsAtLeast: Role.ADMIN, change: "Industrial L Service-Assistant: Button zum Reset des Timeout-Memory" },
                 { roleIsAtLeast: Role.ADMIN, change: "AppCenter: Info, welche Rolle benötigt wird um eine App zu sehen" },
@@ -216,7 +216,7 @@ export class ChangelogComponent {
                 Changelog.app(App.EVCS_AC, App.KEBA) + "Fehlerbehebungen in der App für KEBA P40",
                 "FEMS App clever-PV: Anbindung an die clever-PV Push-Api",
                 { roleIsAtLeast: Role.INSTALLER, change: "Erweiterung der aktiven Benachrichtigungsfunktion durch E-Mail: bei Gesamtzustand \"Fehler\"" },
-                { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.POWER_TO_HEAT, App.MY_PV, App.ASKOMA) + "Start des öffentlichen Feldtests" },
+                { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.POWER_TO_HEAT_LESEND, App.MY_PV, App.ASKOMA) + "Start des öffentlichen Feldtests" },
                 { roleIsAtLeast: Role.ADMIN, change: "Hinzufügen der SolarGo Statusinformationen für interne Analysen" },
                 { roleIsAtLeast: Role.ADMIN, change: "Interne Tests: Vorbereitung für PV-Prognose mit Open-Meteo Wetter-Api, Standort-Koordinaten in _meta" },
             ],
@@ -280,13 +280,13 @@ export class ChangelogComponent {
                 Changelog.app(App.MODBUS_TCP_API) + "Fehlerbehebung bei der Initialisierung der Register-Tabelle",
                 Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Verbesserte Kompatibilität mit RFID-Authentifizierung",
                 Changelog.app(App.EVCS_AC, App.KEBA) + "Lesende Unterstützung für KEBA P40 via Modbus/TCP",
-                Changelog.app(App.EVCS_AC, App.MENNEKES) + "Korrekte Darstellung historischer Energiewerte",
+                Changelog.app(App.EVCS_AC_LESEND, App.MENNEKES) + "Korrekte Darstellung historischer Energiewerte",
                 Changelog.app(App.TIME_OF_USE) + "Neuer unterstützter Stromtarif: FEMS App Octopus Heat",
                 { roleIsAtLeast: Role.ADMIN, change: "Neue Komponente '_serialNumber' speichert Seriennummern von FENECON Home Batterien und Wechselrichter" },
                 { roleIsAtLeast: Role.ADMIN, change: "Verbesserungen für Master-Slave-Betrieb: Einstellung für Firewall-Forwarding, Edge2Edge via Websocket" },
                 { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC, App.KEBA) + "Schreibende Unterstützung für KEBA P40 via Modbus/TCP aktivierbar für Admins (BETA-Test)" },
                 { roleIsAtLeast: Role.ADMIN, change: "Interne App 'Meta' ist nur noch für Admin sichtbar" },
-                { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Fehlerbehebung für große Commercial- oder Industrial-Systeme" },
+                { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.NETZDIENLICHE_BELADUNG_INDUSTRIAL) + "Fehlerbehebung für große Commercial- oder Industrial-Systeme" },
                 Changelog.library(Library.PAX_LOGGING),
             ],
         },
@@ -370,7 +370,7 @@ export class ChangelogComponent {
                 Changelog.UI + "Verbesserungen an FEMS App Heizstab und FEMS App Modbus/TCP Api, Darstellungen in Historie, Multiladepunktmanagement",
                 "Notstromreserve: verbessertes Verhalten bei Beladung aus dem Netz",
                 Changelog.app(App.PV_INVERTER, App.FRONIUS) + "lese exakte Stromwerte (allgemeine Verbesserung bei SunSpec Gleitkommazahlen)",
-                Changelog.app(App.EVCS_AC, App.MENNEKES) + "Einbindung der Mennekes Amtron Professional (nur lesend))",
+                Changelog.app(App.EVCS_AC_LESEND, App.MENNEKES) + "Einbindung der Mennekes Amtron Professional (nur lesend))",
                 { roleIsAtLeast: Role.INSTALLER, change: "FENECON Home: Korrektur eines Anzeigefehlers in der Historie bei niedrigen Leistungen" },
                 { roleIsAtLeast: Role.INSTALLER, change: "FENECON Home: Fehlerbehebung bei den Einstellungen zur Blindleistung" },
                 { roleIsAtLeast: Role.ADMIN, change: "App Center: App zum Einstellen von globalen Systemeinstellungen. Derzeit: Speicher-Beladung aus dem Netz erlaubt? Lokale Währung" },
@@ -397,7 +397,7 @@ export class ChangelogComponent {
             changes: [
                 "Live | Speichersystem: neue Einstellung um Notstromreserve aktiv aus dem Netz zu beladen",
                 Changelog.app(App.TIME_OF_USE) + "Darstellung in der historischen Ansicht verbessert: bessere Sichtbarkeit der niedrigsten Tagespreise",
-                { roleIsAtLeast: Role.INSTALLER, change: Changelog.app(App.EVCS_AC, App.MENNEKES) + "Einbindung der Mennekes Amtron Professional (nur lesend))" },
+                { roleIsAtLeast: Role.INSTALLER, change: Changelog.app(App.EVCS_AC_LESEND, App.MENNEKES) + "Einbindung der Mennekes Amtron Professional (nur lesend))" },
                 { roleIsAtLeast: Role.ADMIN, change: Changelog.UI + "Verbesserungen am Dark Mode" },
                 { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC) + "Angleichung der Statusmeldungen an Standard: Entfernen des Status 'Auto ist voll'" },
                 Changelog.library(Library.JAVA_JRE, Library.BNDTOOLS, Library.PAX_LOGGING),
@@ -409,7 +409,7 @@ export class ChangelogComponent {
                 Changelog.UI + "kleine Farbanpassungen in Vorbereitung auf einen Dunkelmodus (Dark Mode)",
                 Changelog.app(App.TIME_OF_USE) + "Verbesserung des Verhaltens bei Beladung aus dem Netz, Fehlerbehebung in der Diagramm-Darstellung",
                 { roleIsAtLeast: Role.INSTALLER, change: "Inbetriebnahmeassistent: Auswahloption für Installation in Griechenland" },
-                { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC, App.MENNEKES) + "Implementierung der Mennekes Amtron Professional (nur lesend, nur installierbar durch ADMIN)" },
+                { roleIsAtLeast: Role.ADMIN, change: Changelog.app(App.EVCS_AC_LESEND, App.MENNEKES) + "Implementierung der Mennekes Amtron Professional (nur lesend, nur installierbar durch ADMIN)" },
                 { roleIsAtLeast: Role.ADMIN, change: "Erzeugungs-/Verbrauchsprognose: Fehlerbehebung wenn lokale Daten fehlen (nur ADMIN)" },
                 { roleIsAtLeast: Role.ADMIN, change: "Benutzer | Allgemeine Einstellungen | Theme: Light (=heller Modus), Dark (=dunkler Modus) oder System (=Betriebssystemeinstellung)" },
             ],
@@ -486,7 +486,7 @@ export class ChangelogComponent {
             changes: [
                 Changelog.UI + "Allgemeine Verbesserungen, Fehlerbehebung im Bereich Historie",
                 Changelog.product(Product.COMMERCIAL_92) + "Produktkompatibilität und Inbetriebnahmeassistent",
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Warnung bei fehlender App zur Erfassung der PV-Erzeugung",
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + "Warnung bei fehlender App zur Erfassung der PV-Erzeugung",
                 Changelog.app(App.EVCS_AC, App.KEBA) + "Keine Fehlermeldung mehr, wenn für §14a EnWG-Kompatibilität an der Ladesäule Dip-Switch 2.6 gesetzt wurde",
                 Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Warnung bei fehlenden Zählerwerten",
                 Changelog.app(App.EVCS_AC, App.KEBA, App.HARDY_BARTH) + "Visualisierung der Umschaltzeit im Automatikmodus",
@@ -512,7 +512,7 @@ export class ChangelogComponent {
                 Changelog.UI + "Allgemeine Verbesserungen, Fehlerbehebung und Performance-Optimierungen",
                 Changelog.app(App.MODBUS_TCP_API) + "Visualisierung der Schreibzugriffe in Live und Historie",
                 "Optimierungen an der lokalen Zeitreihendatenbank ('RRD4j')",
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Korrektur einer fehlerhaften Statusmeldung bei ausgeschalteter netzdienlicher Beladung",
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + "Korrektur einer fehlerhaften Statusmeldung bei ausgeschalteter netzdienlicher Beladung",
                 "Verbesserungen an der System-Update-Funktion",
                 { roleIsAtLeast: Role.ADMIN, change: "AppCenter-App für PQ-Plus Zähler UMD96 und UMD97" },
                 { roleIsAtLeast: Role.ADMIN, change: "AppCenter-App für Phoenix Contact Zähler EEM-MB370-24DC" },
@@ -1247,7 +1247,7 @@ export class ChangelogComponent {
             version: "2022.10.4",
             changes: [
                 Changelog.app(App.TIME_OF_USE, App.TIBBER) + "Allgemeine Verbesserungen",
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Fehlerbehebung bei der Darstellung der Zielzeit in der richtigen Zeitzone",
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + "Fehlerbehebung bei der Darstellung der Zielzeit in der richtigen Zeitzone",
                 "Umfangreiche Anpassungen an den Möglichkeiten zur Netzwerkkonfiguration",
                 "Anzeige aktueller Systemstatus-Meldungen, z. B. bei Wartungsarbeiten",
                 "Fehlerbehebung in der Anzeige dreiphasiger historischer Verbrauchs- und Erzeugungsdaten",
@@ -1287,7 +1287,7 @@ export class ChangelogComponent {
             changes: [
                 Changelog.UI,
                 Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistenten",
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Fehlerbehebung in der Darstellung der Live-Daten",
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + "Fehlerbehebung in der Darstellung der Live-Daten",
                 Changelog.UI + "Fehlerbehebung bei Farbdarstellung in der historischen Ansicht",
                 Changelog.UI + "Historische Ansicht der eingestellten oder deaktivierten Notstromreserve",
                 { roleIsAtLeast: Role.ADMIN, change: "Aktivieriung ESLint für automatische Prüfung der Codequalität im UI" },
@@ -1469,7 +1469,7 @@ export class ChangelogComponent {
         {
             version: "2022.5.4",
             changes: [
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Fehlerbehebung wenn keine Produktion verfügbar ist; Verbesserte Darstellung des aktiven Zeitraums in der Historie",
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + "Fehlerbehebung wenn keine Produktion verfügbar ist; Verbesserte Darstellung des aktiven Zeitraums in der Historie",
                 "Verbesserte Darstellung des aktiven Zeitraums in der Historie",
                 Changelog.library(Library.POSTGRESQL),
                 { roleIsAtLeast: Role.ADMIN, change: "Refactoring des Component-Managers" },
@@ -1479,7 +1479,7 @@ export class ChangelogComponent {
         {
             version: "2022.5.2",
             changes: [
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Allgemeine Verbesserungen; Sicherstellung einer minimalen Beladeleistung",
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + "Allgemeine Verbesserungen; Sicherstellung einer minimalen Beladeleistung",
                 Changelog.product(Product.PRO_HYBRID_10) + "Kompatibilität mit KACO Firmware Version 8 (nur lesend)",
                 Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + "Fehlerbehebung in der Anzeige bei Ladezustand 0 %",
                 Changelog.product(Product.COMMERCIAL_30) + "Verbesserung an Implementierung Sinexcel (Ländereinstellung, Notstrom)",
@@ -1494,7 +1494,7 @@ export class ChangelogComponent {
             changes: [
                 Changelog.openems("2022.5.0"),
                 Changelog.app(App.POWER_TO_HEAT, App.HEIZSTAB) + "Korrektur der Anzeige des Betriebsstundenzählers in der historischen Darstellung",
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Korrektur der Anzeige des Betriebsstundenzählers in der historischen Darstellung",
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + "Korrektur der Anzeige des Betriebsstundenzählers in der historischen Darstellung",
                 Changelog.library(Library.INFLUXDB),
                 Changelog.UI + "Fehlerbehebung bei Konfiguration von Uhrzeiten",
                 { roleIsAtLeast: Role.ADMIN, change: "Soltaro-Batterien Version C: PreAlarmCellVoltageHigh und PreAlarmTotalVoltageHigh ausgeblendet" },
@@ -1550,7 +1550,7 @@ export class ChangelogComponent {
                 Changelog.openems("2022.3.0"),
                 Changelog.UI + "Anzeigen/Ändern der Kontaktdaten im Benutzer-Menü",
                 Changelog.UI + "Beim Login mit Benutzername/E-Mail-Adresse wird die Groß-/Kleinschreibung ignoriert",
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Überarbeitung des Widgets im Online-Monitoring",
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + "Überarbeitung des Widgets im Online-Monitoring",
                 Changelog.product(Product.PRO_HYBRID_10) + "Kompatibilität mit KACO Firmware Version 8 (nur lesend)",
                 Changelog.app(App.MODBUS_TCP_API) + "Auslesen On-Grid-/Off-Grid-Modus + Überarbeitung der Beschreibungen in der Excel-Datei",
                 Changelog.app(App.PV_INVERTER, App.FRONIUS) + "Kompatibilität mit Fronius PV-Wechselrichtern. Getestet mit Fronius Symo",
@@ -1567,7 +1567,7 @@ export class ChangelogComponent {
             version: "2022.2.2",
             changes: [
                 Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION + " am Inbetriebnahmeassistent: Dynamische Begrenzung der Netzeinspeiseleistung in Österreich",
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Änderungen an der maximalen Netzeinspeiseleistung müssen durch erneutes Ausführen des Inbetriebnahmeassistenten gesetzt werden",
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + "Änderungen an der maximalen Netzeinspeiseleistung müssen durch erneutes Ausführen des Inbetriebnahmeassistenten gesetzt werden",
             ],
         },
         {
@@ -1777,7 +1777,7 @@ export class ChangelogComponent {
                 Changelog.product(Product.HOME_10) + "Verbesserungen an der Notstromfunktion: Algorithmus zur Vorhaltung einer Notstromreserve; einstellbar via IBN-Assistent oder über das Widget 'Speichersystem' im Online-Monitoring",
                 Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + "Verbesserung der Fehlermeldung bei Kommunikationsabbruch (Cluster Version B)",
                 Changelog.library(Library.GRADLE),
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + Changelog.GENERAL_OPTIMIZATION,
                 Changelog.product(Product.HOME_10) + "Fehlerbehebung bei der Start-Prozedur",
                 { roleIsAtLeast: Role.ADMIN, change: "Die 'openems.jar'-Datei für jeden Branch wird jetzt automatisch bei jedem 'push' gebaut. Download unter 'https://dev.intranet.fenecon.de/{branch}/openems.jar'" },
                 { roleIsAtLeast: Role.ADMIN, change: "Mit einer Konfigurationseinstellungen in der 'Sum'-Komponente können jetzt Warnungen und Fehler des Gesamtsystems ignoriert/ausgeblendet werden" },
@@ -1837,7 +1837,7 @@ export class ChangelogComponent {
             changes: [
                 Changelog.EDGE + "Fehlerbehebung bei Datenkonvertierung sehr großer Zahlen",
                 Changelog.product(Product.COMMERCIAL_30, Product.COMMERCIAL_50) + "Verbesserung der Aufzeichnung von Zellspannungen",
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + Changelog.GENERAL_OPTIMIZATION,
                 Changelog.app(App.EVCS_AC, App.HARDY_BARTH) + "Verwende werkseitige Standard-IP 192.168.25.30",
                 Changelog.product(Product.HOME_10, Product.PRO_HYBRID_GW, Product.PRO_HYBRID_AC_GW) + Changelog.GENERAL_OPTIMIZATION,
             ],
@@ -1964,7 +1964,7 @@ export class ChangelogComponent {
             version: "2021.13.1",
             changes: [
                 Changelog.openems("2021.13.0"),
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + Changelog.GENERAL_OPTIMIZATION,
                 Changelog.app(App.METER, App.JANITZA) + Changelog.GENERAL_OPTIMIZATION,
                 Changelog.GENERAL_OPTIMIZATION + " an Beta-Version für go-e Charger Home",
                 Changelog.EDGE + "Verarbeitung 'read-only' Modus von Speichersystemen",
@@ -1995,7 +1995,7 @@ export class ChangelogComponent {
         {
             version: "2021.12.3",
             changes: [
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + Changelog.GENERAL_OPTIMIZATION,
             ],
         },
         {
@@ -2078,13 +2078,13 @@ export class ChangelogComponent {
         {
             version: "2021.10.4",
             changes: [
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + Changelog.GENERAL_OPTIMIZATION,
             ],
         },
         {
             version: "2021.10.3",
             changes: [
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + Changelog.GENERAL_OPTIMIZATION,
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + Changelog.GENERAL_OPTIMIZATION,
             ],
         },
         {
@@ -2101,7 +2101,7 @@ export class ChangelogComponent {
                 Changelog.EDGE,
                 Changelog.library(Library.IONIC, Library.NGX_FORMLY, Library.MYDATEPICKER, Library.D3, Library.DATE_FNS, Library.NGX_SPINNER, Library.RXJS, Library.GRADLE),
                 Changelog.product(Product.HOME_10) + Changelog.GENERAL_OPTIMIZATION,
-                Changelog.app(App.NETZDIENLICHE_BELADUNG) + "Release",
+                Changelog.app(App.NETZDIENLICHE_BELADUNG_HC) + "Release",
             ],
         },
         {
