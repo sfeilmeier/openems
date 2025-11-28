@@ -455,6 +455,26 @@ export class Utils {
     }
 
     /**
+  * Gets the image path for storage depending on State-of-Charge.
+  *
+  * @param soc the state-of-charge
+  * @returns the image path
+  */
+    public static getFeneconStorageSocSegment(soc: number | null): string {
+        if (!soc || soc < 10) {
+            return "0";
+        } else if (soc < 30) {
+            return "25";
+        } else if (soc < 60) {
+            return "50";
+        } else if (soc < 90) {
+            return "75";
+        } else {
+            return "100";
+        }
+    }
+
+    /**
    * Download a JSONRPC Base64PayloadResponse in Excel (XLSX) file format.
    *
    * @param response the Base64PayloadResponse

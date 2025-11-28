@@ -213,6 +213,11 @@
                 },
                 {
                   "glob": "**/*.svg",
+                  "input": "src/themes/fenecon/icons",
+                  "output": "./icons"
+                },
+                {
+                  "glob": "**/*.svg",
                   "input": "node_modules/ionicons/dist/ionicons/svg",
                   "output": "./svg"
                 },
