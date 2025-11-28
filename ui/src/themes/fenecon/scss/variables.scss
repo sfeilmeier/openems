@@ -4,6 +4,10 @@ $secondary-color: white;
 $secondary-color-contrast: var(--ion-color-secondary-contrast);
 $font-family: var(--ion-font-family);
 
+:root {
+    --ion-font-family: "Open Sans";
+}
+
 /* Custom FeneconHeadline font */
 @font-face {
     font-family: 'FeneconHeadline';

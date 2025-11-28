@@ -32,6 +32,9 @@
 @use "variables" as *;
 @use "./global-ion-custom.scss" as *;
 
+/* Open Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+
 ion-alert {
     color: green;
     --color: red;
@@ -244,7 +247,7 @@ ion-select::part(icon) {
 }
 
 .command-textbox {
-    font-family: monospace;
+    font-family: var(--ion-font-family);
     color: var(--ion-color-text);
 }
 
@@ -315,7 +318,7 @@ ion-range {
 }
 
 ion-label {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--ion-font-family);
 }
 
 ion-item.noPadding {
