@@ -1,6 +1,7 @@
 <formly-form [form]="form" [fields]="[]" [model]="model"></formly-form>
 
-<oe-modal [title]="props.attributes.title" *ngIf="props" [helpKey]="props.attributes.helpKey" useDefaultPrefix="false">
+<oe-modal [title]="props.attributes.title" *ngIf="props" [helpKey]="props.attributes.helpKey" useDefaultPrefix="false"
+  [isCommonWidget]="props.attributes.isCommonWidget === 'true'">
     <ngx-spinner name="formly-field-modal"></ngx-spinner>
     <ng-container *ngFor="let entry of props.options">
         <ng-container *ngFor="let line of entry.lines">
