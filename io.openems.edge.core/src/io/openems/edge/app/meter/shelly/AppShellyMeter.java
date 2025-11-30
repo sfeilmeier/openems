@@ -20,7 +20,6 @@ import io.openems.common.exceptions.OpenemsError;
 import io.openems.common.function.ThrowingTriFunction;
 import io.openems.common.oem.OpenemsEdgeOem;
 import io.openems.common.session.Language;
-import io.openems.common.session.Role;
 import io.openems.common.types.EdgeConfig;
 import io.openems.common.utils.JsonUtils;
 import io.openems.edge.app.enums.MeterType;
@@ -39,7 +38,6 @@ import io.openems.edge.core.appmanager.ConfigurationTarget;
 import io.openems.edge.core.appmanager.OpenemsApp;
 import io.openems.edge.core.appmanager.OpenemsAppCardinality;
 import io.openems.edge.core.appmanager.OpenemsAppCategory;
-import io.openems.edge.core.appmanager.OpenemsAppPermissions;
 import io.openems.edge.core.appmanager.Type;
 import io.openems.edge.core.appmanager.dependency.Tasks;
 import io.openems.edge.core.appmanager.formly.Exp;
@@ -82,7 +80,7 @@ public class AppShellyMeter
 					field.setOptions(OptionsFactory.of(ShellyType.class), l);
 				}))),
 		PHASE(MeterProps.singlePhase()), //
-		TYPE(MeterProps.type(MeterType.GRID) //
+		TYPE(MeterProps.type(MeterType.GRID)//
 				.setDefaultValue(MeterType.CONSUMPTION_METERED)), //
 		;
 
@@ -164,15 +162,6 @@ public class AppShellyMeter
 					.addTask(Tasks.component(components)) //
 					.build();
 		};
-	}
-
-	@Override
-	public OpenemsAppPermissions getAppPermissions() {
-		return OpenemsAppPermissions.create() //
-				.setCanSee(Role.ADMIN) //
-				.setCanInstall(Role.ADMIN) //
-				.setCanDelete(Role.ADMIN) //
-				.build();
 	}
 
 	@Override

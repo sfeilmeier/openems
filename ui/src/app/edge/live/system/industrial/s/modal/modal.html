@@ -7,5 +7,20 @@
     </oe-modal-buttons>
     <oe-modal-info-line [info]="'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.NOTE' | translate"
       style="font-size: small;"></oe-modal-info-line>
+    <oe-modal-horizontal-line></oe-modal-horizontal-line>
+    @if (isAtLeastAdmin && canSeeSystemErrorAcknowledge) {
+      <table class="full_width">
+        <tr>
+          <td>
+            {{'SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE' | translate}}
+          </td>
+          <td class="align_right">
+            <ion-button slot="end" button (click)="systemErrorAcknowledge()">
+              <ion-icon name="send-outline"></ion-icon>
+            </ion-button>
+          </td>
+        </tr>
+      </table>
+    }
   </oe-modal>
 }

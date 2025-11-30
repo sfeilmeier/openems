@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 24 24" xml:space="preserve" version="1.0"
+    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="root">
+    <defs>
+        <rect id="segment" width="8" height="2.5" rx=".5" ry=".5" fill="currentColor" />
+    </defs>
+    <g transform="rotate(90 12 12)">
+        <rect x="10" y="2" width="4" height="1" rx=".2" ry=".2" fill="currentColor"/>
+        <path d="M6,4v18h12V4H6ZM17,20.5c0,.28-.22.5-.5.5H7.5c-.28,0-.5-.22-.5-.5V5.5c0-.28.22-.5.5-.5h9c.28,0,.5.22.5.5v15Z" fill="currentColor"/>
+        <g  fill="currentColor">
+            <g stroke-width="0.5">   
+                <use id="segment-3" x="8" y="17.5" href="#segment" display="var(--storage-segment-0)" />    
+                <use id="segment-2" x="8" y="13.67" href="#segment" display="var(--storage-segment-1)"/>
+                <use id="segment-1" x="8" y="9.83" href="#segment" display="var(--storage-segment-2)" />
+                <use id="segment-0" x="8" y="6" href="#segment" display="var(--storage-segment-3)" />  
+            </g>
+        </g>    
+    </g>
+</svg>

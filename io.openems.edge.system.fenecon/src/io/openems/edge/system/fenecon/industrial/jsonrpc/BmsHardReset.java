@@ -1,4 +1,4 @@
-package io.openems.edge.system.fenecon.industrial.l.jsonrpc;
+package io.openems.edge.system.fenecon.industrial.jsonrpc;
 
 import io.openems.common.jsonrpc.serialization.EmptyObject;
 import io.openems.common.jsonrpc.serialization.EndpointRequestType;

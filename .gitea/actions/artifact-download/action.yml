@@ -8,7 +8,7 @@ inputs:
     description: "The password to use for the download"
     required: true
   name:
-    description: "The cache key to use"
+    description: "The cache keys to use. Separated by newlines or commas"
     required: true
   target:
     description: "The path to download the artifact to"
@@ -16,6 +16,10 @@ inputs:
     default: "./"
   recursive:
     description: "Whether to download directories recursively (true|false)"
+    required: false
+    default: "true"
+  fail-on-missing:
+    description: "Whether to fail the action if an artifact is missing (true|false)"
     required: false
     default: "true"
   verbose:
@@ -33,14 +37,28 @@ runs:
     - name: Download build artifact
       shell: bash
       run: |
-        reference=fems-${{ github.sha }}_${{ inputs.name }}
         opts=""
         if [[ "${{ inputs.recursive }}" == "true" ]]; then opts="--recursive"; fi
-        
+        # Split names by newline to support multiple names
+        names=$(echo "${{ inputs.name }}" | tr ',' '\n')
         /tools/mc alias set local http://gitea-runner-cache:9000 ${{ inputs.user }} ${{ inputs.password }}
-        echo "mc cp $opts local/cache-fems/$reference ${{ inputs.source }} ${{ inputs.options }}"
-        if [[ "${{ inputs.verbose }}" == "true" ]]; then
-          /tools/mc cp $opts local/cache-fems/$reference/ "${{ inputs.target }}"
-        else
-          /tools/mc cp $opts local/cache-fems/$reference/ "${{ inputs.target }}" > /dev/null
-        fi
+        for name in $names; do
+          reference=fems-${{ github.sha }}_$name
+          
+          # Check if the artifact exists before trying to download
+          if /tools/mc stat local/cache-fems/$reference > /dev/null 2>&1; then
+            echo "mc cp $opts local/cache-fems/$reference/ "${{ inputs.target }}""
+            if [[ "${{ inputs.verbose }}" == "true" ]]; then
+              /tools/mc cp $opts local/cache-fems/$reference/ "${{ inputs.target }}"
+            else
+              /tools/mc cp $opts local/cache-fems/$reference/ "${{ inputs.target }}" > /dev/null
+            fi
+          else
+            if [[ "${{ inputs.fail-on-missing }}" == "true" ]]; then
+              echo "Error: Artifact $reference not found!"
+              exit 1
+            elif [[ "${{ inputs.verbose }}" == "true" ]]; then
+              echo "Warning: Artifact $reference not found, skipping..."
+            fi
+          fi
+        done

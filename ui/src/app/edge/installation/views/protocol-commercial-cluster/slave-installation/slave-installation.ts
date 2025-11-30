@@ -139,7 +139,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
         this.handleErrorState(
             index,
             error,
-            this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.SLAVE_STATUS ERROR", { slaveNr: index + 1 }),
+            this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.SLAVE_STATUS_ERROR", { slaveNr: index + 1 }),
         );
         console.error(error);
         this.updateSlaveState(index, {

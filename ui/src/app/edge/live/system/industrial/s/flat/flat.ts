@@ -2,9 +2,6 @@ import { Component } from "@angular/core";
 import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
 import { Modal } from "src/app/shared/components/flat/flat";
 import { Converter } from "src/app/shared/components/shared/converter";
-import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
-import { ClearTimeOutFailureRequest } from "../../jsonrpc/ClearTimeOutFailureRequest";
-import { EssErrorAcknowledge } from "../../jsonrpc/essErrorAcknowledge";
 import { ModalComponent } from "../modal/modal";
 
 @Component({
@@ -30,16 +27,4 @@ export class FlatComponent extends AbstractFlatWidget {
         };
     }
 
-    protected clear() {
-        let payload;
-        if (this.edge.isVersionAtLeast("2025.11.3")) {
-            payload = new EssErrorAcknowledge();
-        } else {
-            payload = new ClearTimeOutFailureRequest();
-        }
-        this.edge.sendRequest(
-            this.websocket,
-            new ComponentJsonApiRequest({ componentId: this.component.id, payload: payload }),
-        );
-    }
 }

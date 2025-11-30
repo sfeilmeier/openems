@@ -105,95 +105,114 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 	}
 
 	private final Map<String, String> appToWebsiteUrl = new ImmutableMap.Builder<String, String>() //
-			.put("App.FENECON.Home", "https://fenecon.de/fenecon-home-10/") //
-			.put("App.FENECON.Home.20", "https://fenecon.de/fenecon-home-20-30/") //
-			.put("App.FENECON.Home.30", "https://fenecon.de/fenecon-home-20-30/") //
-			.put("App.FENECON.Home6", "https://fenecon.de/fenecon-home-6-10-15/") //
-			.put("App.FENECON.Home10.Gen2", "https://fenecon.de/fenecon-home-6-10-15/") //
-			.put("App.FENECON.Home15", "https://fenecon.de/fenecon-home-6-10-15/") //
-			.put("App.FENECON.Commercial.50.Gen3", "https://fenecon.de/fenecon-commercial-50/") //
-			.put("App.FENECON.Commercial.92", "https://fenecon.de/fenecon-commercial-92/") //
-			.put("App.FENECON.Commercial.92.ClusterMaster", "") //
-			.put("App.FENECON.Commercial.92.ClusterSlave", "") //
-			.put("App.FENECON.Industrial.L.ILK710", "https://fenecon.de/fenecon-industrial-l/") //
-			.put("App.FENECON.Industrial.S.ISK010", "https://fenecon.de/fenecon-industrial-s/") //
-			.put("App.FENECON.Industrial.S.ISK110", "https://fenecon.de/fenecon-industrial-s/") //
-			.put("App.FENECON.Industrial.S.ISK011", "https://fenecon.de/fenecon-industrial-s/") //
-			.put("App.FENECON.ProHybrid.10", "") //
-			.put("App.TimeOfUseTariff.LuoxEnergy", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.AncillaryCosts",
-					"https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.Awattar", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.ENTSO-E", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.GroupeE", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.Hassfurt", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.OctopusGo", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.OctopusHeat", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.Stromdao", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.Swisspower", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.Tibber", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			.put("App.TimeOfUseTariff.RabotCharge", "https://fenecon.de/fenecon-fems/fems-app-dynamischer-stromtarif/") //
-			// TODO add website when available
+			// Products
+			.put("App.FENECON.Home", "https://docs.fenecon.de/de/home/home_10-1_overview.html") //
+			.put("App.FENECON.Home.20", "https://fenecon.de/fenecon-home-20-30") //
+			.put("App.FENECON.Home.30", "https://fenecon.de/fenecon-home-20-30") //
+			.put("App.FENECON.Home6", "https://fenecon.de/fenecon-home-6-10-15") //
+			.put("App.FENECON.Home10.Gen2", "https://fenecon.de/fenecon-home-6-10-15") //
+			.put("App.FENECON.Home15", "https://fenecon.de/fenecon-home-6-10-15") //
+			.put("App.FENECON.Commercial.50.Gen3", "https://fenecon.de/fenecon-commercial-50") //
+			.put("App.FENECON.Commercial.92", "https://fenecon.de/fenecon-commercial-92") //
+			.put("App.FENECON.Commercial.92.ClusterMaster", "https://fenecon.de/fenecon-commercial-92") //
+			.put("App.FENECON.Commercial.92.ClusterSlave", "https://fenecon.de/fenecon-commercial-92") //
+			.put("App.FENECON.Industrial.L.ILK710", "https://fenecon.de/fenecon-industrial-l") //
+			.put("App.FENECON.Industrial.S.ISK010", "https://fenecon.de/fenecon-industrial-s") //
+			.put("App.FENECON.Industrial.S.ISK110", "https://fenecon.de/fenecon-industrial-s") //
+			.put("App.FENECON.Industrial.S.ISK011", "https://fenecon.de/fenecon-industrial-s") //
+			.put("App.FENECON.ProHybrid.10", "https://docs.fenecon.de/de/legacy.html#_2018") //
+
+			// Basis-Apps
+			.put("App.PvSelfConsumption.SelfConsumptionOptimization",
+					"https://fenecon.de/fems-eigenverbrauchsoptimierung-hc") //
+			.put("App.PvSelfConsumption.GridOptimizedCharge",
+					"https://fenecon.de/fems-netzdienliche-beladung-hc") //
+			.put("App.Api.ModbusTcp.ReadOnly", "https://fenecon.de/fems-modbus-tcp-lesend") //
+			.put("App.Api.RestJson.ReadOnly", "https://fenecon.de/fems-rest-json-lesend") //
+
+			// Allgemein
+			.put("App.TimeOfUseTariff.LuoxEnergy", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.AncillaryCosts", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.Awattar", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.ENTSO-E", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.GroupeE", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.Hassfurt", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.OctopusGo", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.OctopusHeat", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.Stromdao", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.Swisspower", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.Tibber", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.TimeOfUseTariff.RabotCharge", "https://fenecon.de/fems-dynamischer-stromtarif") //
+			.put("App.Meter.Socomec", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler") //
+			.put("App.Meter.CarloGavazzi", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler") //
+			.put("App.Meter.PqPlus", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler") //
+			.put("App.Meter.Janitza", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler") //
+			.put("App.Meter.Discovergy", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler") //
+			.put("App.Meter.PhoenixContact", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler") //
+			.put("App.Meter.Eastron", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler") //
+			.put("App.Meter.Kdk", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler") //
+			.put("App.Meter.Shelly", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler") //
+			.put("App.PvInverter.Fronius", "https://fenecon.de/fems-pv-wechselrichter") //
+			.put("App.PvInverter.Kaco", "https://fenecon.de/fems-pv-wechselrichter") //
+			.put("App.PvInverter.Kostal", "https://fenecon.de/fems-pv-wechselrichter") //
+			.put("App.PvInverter.Sma", "https://fenecon.de/fems-pv-wechselrichter") //
+			.put("App.PvInverter.SolarEdge", "https://fenecon.de/fems-pv-wechselrichter") //
+
+			// Wärmemanagement
+			.put("App.Heat.HeatPump", "https://fenecon.de/fems-power-to-heat") //
+			.put("App.Heat.CHP", "https://fenecon.de/fems-power-to-heat") //
+			.put("App.Heat.HeatingElement", "https://fenecon.de/fems-power-to-heat") //
+			.put("App.Heat.Askoma.ReadOnly", "https://fenecon.de/fems-power-to-heat-lesend") //
+			.put("App.Heat.MyPv.ReadOnly", "https://fenecon.de/fems-power-to-heat-lesend") //
+
+			// E-Mobilität
+			.put("App.Evcs.Keba", "https://fenecon.de/fems-ac-ladestation") //
+			.put("App.Evse.ChargePoint.Keba", "https://fenecon.de/fems-ac-ladestation") //
+			.put("App.Evcs.HardyBarth", "https://fenecon.de/fems-ac-ladestation") //
+			.put("App.Evcs.Abl.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evcs.HardyBarth.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evcs.Keba.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evcs.Goe.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evcs.Heidelberg.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evcs.Mennekes.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evcs.Alpitronic", "https://fenecon.de/fems-dc-ladestation") //
+			.put("App.Evcs.IesKeywatt", "https://fenecon.de/fems-dc-ladestation") //
+			.put("App.Evcs.Cluster", "https://fenecon.de/fems-multiladepunkt-management") //
+
+			// Lastspitzenkappung und atypische Netznutzung
+			.put("App.PeakShaving.PeakShaving", "https://fenecon.de/fems-lastspitzenkappung") //
+			.put("App.PeakShaving.PhaseAccuratePeakShaving",
+					"https://fenecon.de/fems-phasengenaue-lastspitzenkappung") //
+			.put("App.PeakShaving.TimeSlotPeakShaving", "https://fenecon.de/fems-hochlastzeitfenster") //
+
+			// Laststeuerung
+			.put("App.LoadControl.ThresholdControl", "https://fenecon.de/fems-schwellwertsteuerung") //
+			.put("App.LoadControl.ManualRelayControl", "https://fenecon.de/fems-manuelle-relaissteuerung") //
+
+			// Schnittstellen
+			.put("App.Api.ModbusTcp.ReadWrite", "https://fenecon.de/fems-schreibzugriff-heimspeicher") //
+			.put("App.Api.RestJson.ReadWrite", "https://fenecon.de/fems-schreibzugriff-heimspeicher") //
+			.put("App.Hardware.KMtronic8Channel", "https://fenecon.de/fems-relainsboard-8kanal-tcp") //
+
+			// Andere
+			.put("App.GridMeter.Janitza", "") //
 			.put("App.Cloud.EnerixControl", "") //
 			.put("App.Cloud.Clever-PV", "") //
-			// TODO folgende URLs sind veraltet
-			.put("App.Api.ModbusTcp.ReadOnly", "https://fenecon.de/produkte/fems/fems-app-modbus-tcp-lesend/") //
-			.put("App.Api.ModbusTcp.ReadWrite", "https://fenecon.de/produkte/fems/fems-app-modbus-tcp-schreibzugriff/") //
 			.put("App.Api.ModbusRtu.ReadOnly", "") //
 			.put("App.Api.ModbusRtu.ReadWrite", "") //
-			.put("App.Api.RestJson.ReadOnly", "https://fenecon.de/produkte/fems/fems-app-rest-json-lesend/") //
-			.put("App.Api.RestJson.ReadWrite", "https://fenecon.de/fenecon-fems/fems-app-rest-json-schreibzugriff/") //
 			.put("App.Timedata.InfluxDb", "") //
-			.put("App.Evcs.Abl.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
-			.put("App.Evcs.Alpitronic", "https://fenecon.de/fenecon-fems/fems-app-dc-ladestation/") //
-			.put("App.Evcs.Cluster", "https://fenecon.de/produkte/fems/fems-app-multiladepunkt-management/") //
-			.put("App.Evcs.HardyBarth", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
-			.put("App.Evcs.HardyBarth.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
-			.put("App.Evcs.IesKeywatt", "https://fenecon.de/fenecon-fems/fems-app-dc-ladestation/") //
-			.put("App.Evcs.Keba", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
-			.put("App.Evcs.Keba.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
-			.put("App.Evcs.Goe.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
-			.put("App.Evcs.Heidelberg.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
-			.put("App.Evcs.Mennekes.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation-lesend/") //
 			.put("App.Evcs.Webasto.Next", "") //
 			.put("App.Evcs.Webasto.Unite", "") //
 			.put("App.Hardware.IoGpio", "") //
 			.put("App.Evse.ElectricVehicle.Generic", "") //
-			.put("App.Evse.ChargePoint.Keba", "https://fenecon.de/fenecon-fems/fems-app-ac-ladestation/") //
 			.put("App.Evse.Controller.Cluster", "") //
-			.put("App.Hardware.KMtronic8Channel", "https://fenecon.de/produkte/fems/fems-relais/") //
-			.put("App.Heat.HeatPump", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
-			.put("App.Heat.CHP", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
-			.put("App.Heat.HeatingElement", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
-			.put("App.Heat.Askoma.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
-			.put("App.Heat.MyPv.ReadOnly", "https://fenecon.de/fenecon-fems/fems-app-power-to-heat/") //
-			.put("App.PvSelfConsumption.GridOptimizedCharge",
-					"https://fenecon.de/produkte/fems/fems-app-netzdienliche-beladung/") //
-			.put("App.PvSelfConsumption.SelfConsumptionOptimization",
-					"https://fenecon.de/produkte/fems/fems-app-eigenverbrauchsoptimierung/") //
-			.put("App.LoadControl.ManualRelayControl",
-					"https://fenecon.de/produkte/fems/fems-app-manuelle-relaissteuerung/") //
-			.put("App.LoadControl.ThresholdControl", "https://fenecon.de/produkte/fems/fems-app-schwellwert-steuerung/") //
-			// TODO URL veraltet
-			.put("App.Meter.Shelly", "") //
-			.put("App.Meter.Socomec", "https://fenecon.de/produkte/fems/fems-app-socomec-zaehler/") //
-			.put("App.Meter.CarloGavazzi", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
-			.put("App.Meter.PqPlus", "") //
-			.put("App.Meter.Janitza", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/") //
-			.put("App.GridMeter.Janitza", "") //
-			.put("App.Meter.Discovergy", "")//
-			.put("App.Meter.PhoenixContact", "")//
-			.put("App.Meter.Eastron", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/")//
-			.put("App.Meter.Kdk", "https://fenecon.de/fenecon-fems/fems-app-erzeugungs-und-verbrauchszaehler/")//
-			.put("App.PvInverter.Fronius", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
-			.put("App.PvInverter.Kaco", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
-			.put("App.PvInverter.Kostal", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
-			.put("App.PvInverter.Sma", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
-			.put("App.PvInverter.SolarEdge", "https://fenecon.de/fenecon-fems/fems-app-pv-wechselrichter/") //
-			.put("App.PeakShaving.PeakShaving", "https://fenecon.de/fenecon-fems/fems-app-lastspitzenkappung/") //
-			.put("App.PeakShaving.PhaseAccuratePeakShaving",
-					"https://fenecon.de/fenecon-fems/fems-app-phasengenaue-lastspitzenkappung/") //
-			.put("App.PeakShaving.TimeSlotPeakShaving", "https://fenecon.de/fenecon-fems/fems-app-hochlastzeitfenster/") //
+			.put("App.Ess.FixActivePower", "") //
+			.put("App.Ess.FixStateOfCharge", "") //
+			.put("App.Ess.PowerPlantController", "") //
+			.put("App.Ess.PrepareBatteryExtension", "") //
+			.put("App.Ess.Limiter14a", "") //
+
+			// Hardware
 			.put("App.OpenemsHardware.BeagleBoneBlack", "") //
 			.put("App.OpenemsHardware.Compulab", "") //
 			.put("App.OpenemsHardware.CM3", "") //
@@ -201,11 +220,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.OpenemsHardware.CM4Max", "") //
 			.put("App.OpenemsHardware.CM4S", "") //
 			.put("App.OpenemsHardware.CM4S.Gen2", "") //
-			.put("App.Ess.FixActivePower", "") //
-			.put("App.Ess.FixStateOfCharge", "") //
-			.put("App.Ess.PowerPlantController", "") //
-			.put("App.Ess.PrepareBatteryExtension", "") //
-			.put("App.Ess.Limiter14a", "") //
+
 			.build();
 
 	@Override

@@ -1,0 +1,52 @@
+name: "Clear a build artifact"
+description: "Clear a build artifact from the cache"
+inputs:
+  user:
+    description: "The user name to use to clear artifacts"
+    required: true
+  password:
+    description: "The password to use to clear artifacts"
+    required: true
+  name:
+    description: "The cache keys to clear. Separated by newlines or commas"
+    required: true
+  target:
+    description: "The path to clear the artifact from"
+    required: false
+    default: "./"
+  recursive:
+    description: "Whether to clear directories recursively (true|false)"
+    required: false
+    default: "true"
+  verbose:
+    description: "Whether to enable verbose output (true|false)"
+    required: false
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Clear build artifact
+      env:
+        CACHE_CONTAINER: cache-fems
+      shell: bash
+      run: |
+        opts=""
+        if [[ "${{ inputs.recursive }}" == "true" ]]; then opts="--recursive --force"; fi
+        # Split names by newline to support multiple names
+        names=$(echo "${{ inputs.name }}" | tr ',' '\n')
+        /tools/mc alias set local http://gitea-runner-cache:9000 ${{ inputs.user }} ${{ inputs.password }}
+        for name in $names; do
+          reference=fems-${{ github.sha }}_$name
+
+          if /tools/mc ls local/${{ env.CACHE_CONTAINER }}/$reference > /dev/null 2>&1; then
+            echo "mc rm $opts local/${{ env.CACHE_CONTAINER }}/$reference/"
+            if [[ "${{ inputs.verbose }}" == "true" ]]; then
+              /tools/mc rm $opts local/${{ env.CACHE_CONTAINER }}/$reference/
+            else
+              /tools/mc rm $opts local/${{ env.CACHE_CONTAINER }}/$reference/ > /dev/null
+            fi
+          elif [[ "${{ inputs.verbose }}" == "true" ]]; then
+            echo "Warning: Artifact $reference not found, skipping..."
+          fi
+        done

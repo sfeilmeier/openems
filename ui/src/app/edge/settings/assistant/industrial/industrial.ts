@@ -3,8 +3,7 @@ import { formatNumber } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
-import { ClearTimeOutFailureRequest } from "src/app/edge/live/system/industrial/jsonrpc/ClearTimeOutFailureRequest";
-import { EssErrorAcknowledge } from "src/app/edge/live/system/industrial/jsonrpc/essErrorAcknowledge";
+import { SystemErrorAcknowledge } from "src/app/edge/live/system/industrial/jsonrpc/systemErrorAcknowledge";
 import { ComponentsBaseModule } from "src/app/shared/components/components.module";
 import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
 import { PickdateComponentModule } from "src/app/shared/components/pickdate/pickdate.module";
@@ -13,7 +12,7 @@ import { Filter } from "src/app/shared/components/shared/filter";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { LiveDataServiceProvider } from "src/app/shared/provider/live-data-service-provider";
 import { LocaleProvider } from "src/app/shared/provider/locale-provider";
-import { ChannelAddress, CurrentData, Edge, EdgeConfig, Utils } from "src/app/shared/shared";
+import { ChannelAddress, CurrentData, Edge, EdgeConfig, EdgePermission, Utils } from "src/app/shared/shared";
 import { CommonUiModule } from "../../../../shared/common-ui.module";
 import { ChartComponent } from "./chart/chart";
 
@@ -50,6 +49,7 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     protected CONVERT_TO_GRID_METER_CATEGORY = Converter.CONVERT_TO_GRID_METER_CATEGORY(this.translate);
     protected date: string = this.service?.historyPeriod?.value?.getText(this.translate, this.service) ?? "";
     protected currentEdge: Edge | null = null;
+    protected canSeeSystemErrorAcknowledge: boolean = false;
 
     private static getHeatingState(currentData: CurrentData): any {
         if (currentData.allComponents["system0/HeaterRunningState"] == 1) {
@@ -98,7 +98,7 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
             this.chargerComponents = Object.values(this.config.components)
                 .filter(component =>
                     component.factoryId === "GoodWe.Charger-PV1" ||
-          component.factoryId === "GoodWe.Charger-PV2",
+                    component.factoryId === "GoodWe.Charger-PV2",
                 );
         }
 
@@ -122,7 +122,7 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
                 "Firmware": IndustrialServiceAssistantComponent.getBatteryFirmwareString(data, battery.id, patchKey),
             };
         }
-
+        this.canSeeSystemErrorAcknowledge = EdgePermission.hasSystemErrorAcknowledge(this.currentEdge);
     }
 
 
@@ -147,17 +147,11 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
         );
     }
 
-    protected clear() {
+    protected systemErrorAcknowledge() {
         this.esss.forEach((ess) => {
-            let payload;
-            if (this.edge.isVersionAtLeast("2025.11.3")) {
-                payload = new EssErrorAcknowledge();
-            } else {
-                payload = new ClearTimeOutFailureRequest();
-            }
             this.edge.sendRequest(
                 this.websocket,
-                new ComponentJsonApiRequest({ componentId: ess.id, payload: payload }),
+                new ComponentJsonApiRequest({ componentId: ess.id, payload: new SystemErrorAcknowledge() }),
             );
         });
     }

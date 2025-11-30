@@ -14,6 +14,7 @@ import { AlertController, AlertOptions } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { isBefore, subDays, subYears } from "date-fns";
 import { addIcons } from "ionicons";
+import { environment } from "src/environments";
 import { Edge } from "./components/edge/edge";
 import { User } from "./jsonrpc/shared";
 import { DefaultTypes } from "./type/defaulttypes";
@@ -21,15 +22,17 @@ import { Role } from "./type/role";
 import { StringUtils } from "./utils/string/string.utils";
 
 addIcons({
-    "oe-consumption": "assets/img/icon/consumption.svg",
-    "oe-evcs": "assets/img/icon/evcs.svg",
-    "oe-grid": "assets/img/icon/grid.svg",
-    "oe-grid-storage": "assets/img/icon/gridStorage.svg",
-    "oe-grid-restriction": "assets/img/icon/gridRestriction.svg",
-    "oe-megafon": "assets/img/icon/megafon.svg",
-    "oe-offgrid": "assets/img/icon/offgrid.svg",
-    "oe-production": "assets/img/icon/production.svg",
-    "oe-storage": "assets/img/icon/storage.svg",
+    "oe-consumption": environment.icons.COMMON.CONSUMPTION,
+    "oe-heatpump": environment.icons.COMMON.HEATPUMP,
+    "oe-selfconsumption": environment.icons.COMMON.SELFCONSUMPTION,
+    "oe-evcs": environment.icons.COMMON.EVCS,
+    "oe-grid": environment.icons.COMMON.GRID,
+    "oe-grid-storage": environment.icons.COMMON.GRID_STORAGE,
+    "oe-grid-restriction": environment.icons.COMMON.GRID_RESTRICTION,
+    "oe-megafon": environment.icons.COMMON.MEGAFON,
+    "oe-offgrid": environment.icons.COMMON.OFFGRID,
+    "oe-production": environment.icons.COMMON.PRODUCTION,
+    "oe-storage": environment.icons.COMMON.STORAGE,
 });
 
 export class Permission {
@@ -144,6 +147,16 @@ export class EdgePermission {
      */
     public static hasReducedFactories(edge: Edge): boolean {
         return edge.isVersionAtLeast("2024.6.1");
+    }
+
+    /**
+     * Checks if the edge version is at least 2025.12.1 to cover systemErrorAcknowledge JSON-RPC request.
+     *
+     * @param edge The edge to check
+     * @returns True if the edge is 2025.12.1
+     */
+    public static hasSystemErrorAcknowledge(edge: Edge): boolean {
+        return edge.isVersionAtLeast("2025.12.1");
     }
 }
 

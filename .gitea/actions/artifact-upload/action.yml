@@ -11,7 +11,7 @@ inputs:
     description: "The cache key to use"
     required: true
   source:
-    description: "The path or file to upload"
+    description: "The paths or files to upload. Separated by newlines or commas"
     required: true
   recursive:
     description: "Whether to upload directories recursively (true|false)"
@@ -25,6 +25,10 @@ inputs:
     description: "Additional options to pass to the upload command"
     required: false
     default: ""
+  fail-on-missing:
+    description: "Whether to fail the action if an artifact is missing (true|false)"
+    required: false
+    default: "true"
 
 runs:
   using: "composite"
@@ -35,11 +39,25 @@ runs:
         reference=fems-${{ github.sha }}_${{ inputs.name }}
         opts=""
         if [[ "${{ inputs.recursive }}" == "true" ]]; then opts="--recursive"; fi
-
         /tools/mc alias set local http://gitea-runner-cache:9000 ${{ inputs.user }} ${{ inputs.password }}
-        echo "mc cp $opts ${{ inputs.source }} local/cache-fems/$reference  ${{ inputs.options }}"
-        if [[ "${{ inputs.verbose }}" == "true" ]]; then
-          /tools/mc cp $opts "${{ inputs.source }}" local/cache-fems/$reference/ ${{ inputs.options }}
-        else
-          /tools/mc cp $opts "${{ inputs.source }}" local/cache-fems/$reference/ ${{ inputs.options }} > /dev/null
-        fi
+
+        paths=$(echo "${{ inputs.source }}" | tr ',' '\n')
+        for path in $paths; do
+          if [[ ! -e "$path" ]]; then
+            if [[ "${{ inputs.fail-on-missing }}" == "true" ]]; then
+              echo "Error: Source path $path not found!"
+              exit 1
+            else
+              echo "Warning: Source path $path not found! Skipping..."
+              continue
+            fi
+          else
+            echo "mc cp $opts $path local/cache-fems/$reference  ${{ inputs.options }}"
+            if [[ "${{ inputs.verbose }}" == "true" ]]; then
+              /tools/mc cp $opts "$path" local/cache-fems/$reference/ ${{ inputs.options }}
+            else
+              /tools/mc cp $opts "$path" local/cache-fems/$reference/ ${{ inputs.options }} > /dev/null
+            fi
+          fi
+        done
+        

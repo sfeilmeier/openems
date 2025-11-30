@@ -8,7 +8,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  CI_COMMIT_BRANCH: ${{ github.ref_name }}
+  CI_COMMIT_BRANCH: ${{ github.head_ref || github.ref_name }}
 
 jobs:
   build-debian:
@@ -16,7 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: "tools/\n.gitea/"
+          sparse-checkout: |
+            tools/
+            .gitea/
 
       - name: Setup SSH
         uses: ./.gitea/actions/setup-ssh
@@ -25,45 +27,48 @@ jobs:
           host: ${{ vars.DEV_SERVER_HOST }}
 
       - name: Prepare Environment
+        env:
+          OPENEMS_ENV: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/openems.env"
         run: |
-          export OPENEMS_ENV="${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/openems.env"
           # Get environment
-          rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${OPENEMS_ENV} ./openems.env
+          rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:$OPENEMS_ENV ./openems.env
           mkdir -p /build/target/
 
       - name: Download UI
+        env:
+          UI_BUNDLE: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/fems-ui-edge.tar.gz"
+          UI_DESTINATION: "tools/debian/usr/share/openems-fems/www/"
         run: |
-          export UI_BUNDLE="${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui.tar.gz"
-          export ARTIFACT_EXISTS=$(ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "test -e ${UI_BUNDLE} && echo true || echo false")
-          export UI_DESTINATION="tools/debian/usr/share/openems-fems/www/"
+          export ARTIFACT_EXISTS=$(ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "test -e $UI_BUNDLE && echo true || echo false")
 
           if [[ "$ARTIFACT_EXISTS" == "true" ]]; then
-            echo "Get UI artifact ${UI_BUNDLE}"
-            rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${UI_BUNDLE} ./fems-ui.tar.gz
+            echo "Get UI artifact $UI_BUNDLE"
+            rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:$UI_BUNDLE ./fems-ui-edge.tar.gz
           else
             echo "UI artifacts not found! Use 'develop' instead"
-            rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/develop/fems-ui.tar.gz ./fems-ui.tar.gz
+            rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/develop/fems-ui-edge.tar.gz ./fems-ui-edge.tar.gz
           fi
-          mkdir -p ${UI_DESTINATION}
-          tar -xvzf fems-ui.tar.gz -C ${UI_DESTINATION} > /dev/null
-          count=$(find "${UI_DESTINATION}" -type f | wc -l)
-          echo "Extracted $count files to ${UI_DESTINATION}"
+          mkdir -p $UI_DESTINATION
+          tar -xvzf fems-ui-edge.tar.gz -C $UI_DESTINATION > /dev/null
+          count=$(find "$UI_DESTINATION" -type f | wc -l)
+          echo "Extracted $count files to $UI_DESTINATION"
 
       - name: Download Edge
+        env:
+          EDGE_JAR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/edge.jar"
+          EDGE_DESTINATION: "tools/debian/usr/lib/openems/"
         run: |
-          export EDGE_JAR="${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar"
-          export ARTIFACT_EXISTS=$(ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "test -e ${EDGE_JAR} && echo true || echo false")
-          export EDGE_DESTINATION="tools/debian/usr/lib/openems/"
+          export ARTIFACT_EXISTS=$(ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "test -e $EDGE_JAR && echo true || echo false")
 
           if [[ "$ARTIFACT_EXISTS" == "true" ]]; then
-            echo "Get Edge JAR ${EDGE_JAR}"
-            rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${EDGE_JAR} ./edge.jar
+            echo "Get Edge JAR $EDGE_JAR"
+            rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:$EDGE_JAR ./edge.jar
           else
             echo "Edge JAR not found! Use 'develop' instead"
             rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/develop/edge.jar ./edge.jar
           fi
-          mkdir -p ${EDGE_DESTINATION}
-          mv -v edge.jar ${EDGE_DESTINATION}/openems.jar
+          mkdir -p $EDGE_DESTINATION
+          mv -v edge.jar $EDGE_DESTINATION/openems.jar
 
       - name: Build Debian Package
         run: |

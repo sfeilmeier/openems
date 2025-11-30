@@ -25,7 +25,7 @@
     --ion-color-environmental-tint: #bbff5d;
 
     /** production **/
-    --ion-color-production: #36aed1;
+    --ion-color-production: #0fcdf8;
     --ion-color-production-rgb: 54, 174, 209;
     --ion-color-production-contrast: #fff;
     --ion-color-production-contrast-rgb: 255, 255, 255;
@@ -157,6 +157,7 @@
     --ion-color-emergencyreserve-rgba: rgba(1, 1, 1, 0);
     --ion-color-grey-primary: rgba(128, 128, 128, 1);
     --ion-color-grey-rgba: rgba(128, 128, 128, 0.05);
+    --ion-card-content: #444444;
     --ion-card-content-color: #737373; // #f4f4f4 in case the percentage-style class is applied.
     --ion-card-header-shadow: var(--ion-color-light-shade);
     --ion-color-charge-primary: rgba(0, 223, 0, 1); // Base //
@@ -189,7 +190,7 @@
     --ion-color-success-tint: #1a9956;
 
     /** warning **/
-    --ion-color-warning: #f7b731;
+    --ion-color-warning: #f6ff00;
     --ion-color-warning-rgb: 247, 183, 49;
     --ion-color-warning-contrast: #191205;
     --ion-color-warning-contrast-rgb: 25, 18, 5;
@@ -275,7 +276,7 @@
     --ion-background-percentagebar-color: #384352;
 
     /** Card **/
-    --ion-card-content: #cccccc;
+    --ion-card-content: #EBEBEB;
     --ion-card-content-color: #cccccc;
     --ion-card-header-shadow: #59677a;
     --ion-color-label: var(--ion-item-color);

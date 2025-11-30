@@ -138,15 +138,37 @@ tasks.named('wrapper') {
 	jarFile = rootProject.file('.gradle-wrapper/gradle-wrapper.jar')
 }
 
-task checkstyleAll() {
+task checkstyleEdge() {
 	group = 'OpenEMS-Test'
-	description = 'Checkstyle all bundles'
+	description = 'Checkstyle Edge bundles'
 
-	subprojects.each { proj ->
+	subprojects.findAll { it.hasProperty('isEdge') }.each { proj ->
 		if (proj.tasks.findAll { it.name == 'checkstyleMain' }) {
 			dependsOn(proj.checkstyleMain)
 		}
 	}
+}
+
+task checkstyleBackend() {
+	group = 'OpenEMS-Test'
+	description = 'Checkstyle Backend bundles'
+
+	subprojects.findAll { it.hasProperty('isBackend') }.each { proj ->
+		if (proj.tasks.findAll { it.name == 'checkstyleMain' }) {
+			dependsOn(proj.checkstyleMain)
+		}
+	}
+}
+
+task checkstyleAll() {
+	group = 'OpenEMS-Test'
+	description = 'Checkstyle all bundles'
+
+	def edge = tasks.getByPath(':checkstyleEdge')
+	def backend = tasks.getByPath(':checkstyleBackend')
+	
+	dependsOn edge
+	dependsOn backend
 }
 
 task testEdge() {
