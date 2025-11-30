@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2025.12.1-SNAPSHOT";
+    public static readonly UI_VERSION = "2025.12.1";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -98,7 +98,7 @@ export class App {
     public static readonly DISCOVERGY = "Discovergy";
     public static readonly EASTRON_SDM630 = "Eastron SDM630";
     public static readonly PQ_PLUS = "PQ Plus";
-    public static readonly SHELLY_PLUG_S = "Shelly Plug S";
+    public static readonly SHELLY_DIY = "Shelly DIY";
 
     public static readonly PV_INVERTER = new App("FEMS App PV-Wechselrichter", "https://fenecon.de/fems-pv-wechselrichter");
     public static readonly KACO = "KACO";
