@@ -17,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Objects;
 
-import io.openems.edge.common.test.DummyMeta;
 import org.junit.Test;
 
 import com.google.gson.JsonNull;
