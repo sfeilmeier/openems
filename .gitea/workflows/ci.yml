@@ -207,7 +207,9 @@ jobs:
       - name: npm install
         run: |
           cd ui
-          npm set registry http://npm-cache:4873
+          if [ -n "${{ vars.NPM_REGISTRY }}" ]; then 
+            npm set registry "${{ vars.NPM_REGISTRY }}"; 
+          fi
           npm ci --prefer-offline --force
 
       - name: Test UI
