@@ -40,7 +40,14 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
         this.form = new FormGroup({});
         this.fields = this.ibn.getFeedInLimitFields();
         this.model = this.ibn.feedInLimitation ?? {};
-        this.totalPvPower = this.model.maximumFeedInPower;
+        this.totalPvPower = this.ibn.getTotalPvPower();
+
+        if (this.ibn.feedInLimitation?.maximumFeedInPower !== 0) {
+            this.model.maximumFeedInPower = this.ibn.feedInLimitation.maximumFeedInPower;
+        } else {
+            this.model.maximumFeedInPower = this.totalPvPower;
+        }
+
     }
 
     public onPreviousClicked() {
@@ -54,8 +61,6 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
 
         // fields are different for different system. So we do it in individual system level.
         this.ibn.setFeedInLimitFields(this.model);
-
-        this.ibn.feedInLimitation.maximumFeedInPower = this.form.controls["maximumFeedInPower"]?.dirty ? this.form.controls["maximumFeedInPower"].value : this.totalPvPower;
         this.nextViewEvent.emit(this.ibn);
     }
 

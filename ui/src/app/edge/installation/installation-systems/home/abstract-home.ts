@@ -9,6 +9,7 @@ import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrp
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
 import { Country } from "src/app/shared/type/country";
+import { NumberUtils } from "src/app/shared/utils/number/number-utils";
 import { AppCenterUtil } from "../../shared/appcenterutil";
 import { Category } from "../../shared/category";
 import { ExternalLimitationType, FeedInSetting, GridFeedInLimitationType, View, WebLinks } from "../../shared/enums";
@@ -406,24 +407,11 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
     public getFeedInLimitFields() {
 
-        const pv: {
-            dc?: DcPv[];
-        } = this.pv;
-
-        let totalPvPower: number = 0;
-        for (const dc of pv.dc) {
-            totalPvPower += (dc.isSelected ? Number.parseInt(dc.value.toString()) : 0);
-        }
-
-        // maximum limit for feed in power is 25000.
-        totalPvPower = Math.min(totalPvPower, this.maxFeedInLimit);
-
         // Update the feedInlimitation field
-        this.feedInLimitation.maximumFeedInPower = totalPvPower;
         this.feedInLimitation.isManualProperlyFollowedAndRead = this.feedInLimitation.isManualProperlyFollowedAndRead ? this.feedInLimitation.isManualProperlyFollowedAndRead : null;
 
         const fields: FormlyFieldConfig[] = super.getExternalFeedInLimitsFields();
-        fields.push(...super.getDynamicLimitationFields(totalPvPower));
+        fields.push(...super.getDynamicLimitationFields());
 
         fields.push({
             key: "naProtection",
@@ -480,6 +468,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         this.feedInLimitation.fixedPowerFactor = model.fixedPowerFactor ?? FeedInSetting.Undefined;
         this.feedInLimitation.isManualProperlyFollowedAndRead = model.isManualProperlyFollowedAndRead;
         this.feedInLimitation.dynamicLimitationType = model.dynamicLimitationType;
+        this.feedInLimitation.maximumFeedInPower = model.maximumFeedInPower ?? this.getTotalPvPower();
     }
 
     public override setRequiredControllers() {
@@ -1112,6 +1101,16 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         const firstPvString = pv * 2 - 1;
         const secondPvString = pv * 2;
         return this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS_BOTH_STRINGS", { mppt: mppt, pv1: firstPvString, pv2: secondPvString });
+    }
+
+    public override getTotalPvPower(): number {
+        let totalPvPower: number = 0;
+        for (const dc of this.pv.dc) {
+            totalPvPower += NumberUtils.parseNumberSafelyOrElse(dc.value?.toString() ?? null, 0);
+        }
+
+        // maximum limit for feed in power is 25000.
+        return Math.min(totalPvPower, this.maxFeedInLimit);
     }
 
     /**

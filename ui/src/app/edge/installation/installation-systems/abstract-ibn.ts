@@ -301,10 +301,9 @@ export abstract class AbstractIbn {
     /**
    * Returns the common fields for all systems in Feed in limitation view.
    *
-   * @param totalPvPower The total pv power configured.
    * @returns common fields for feed in limits fields.
    */
-    public getDynamicLimitationFields(totalPvPower: number): FormlyFieldConfig[] {
+    public getDynamicLimitationFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
 
         fields.push({
@@ -330,14 +329,13 @@ export abstract class AbstractIbn {
                 max: this.maxFeedInLimit,
             },
             parsers: [Number],
-            defaultValue: totalPvPower,
+            defaultValue: this.getTotalPvPower(),
             hideExpression: model =>
                 model.dynamicLimitationType !== GridFeedInLimitationType.DYNAMIC_LIMITATION,
 
             expressionProperties: {
-                "templateOptions.label": (model: any) => {
-                    return this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE");
-                },
+                "templateOptions.label": () =>
+                    this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
             },
         });
 
@@ -628,6 +626,15 @@ export abstract class AbstractIbn {
             { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"), value: GridFeedInLimitationType.DYNAMIC_LIMITATION },
             { label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"), value: GridFeedInLimitationType.NO_LIMITATION },
         ];
+    }
+
+    /**
+     * Calculates the total pv (MPPT) power installed.
+     *
+     * @returns the combined total pv power installed.
+     */
+    public getTotalPvPower(): number {
+        return 0;
     }
 
     /**
