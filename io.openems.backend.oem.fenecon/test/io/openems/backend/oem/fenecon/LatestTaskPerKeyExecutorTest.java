@@ -1,11 +1,11 @@
 package io.openems.backend.oem.fenecon;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.junit.Test;
@@ -32,11 +32,17 @@ public class LatestTaskPerKeyExecutorTest {
 			shouldCompleted.complete(null);
 		});
 		lock.unlock();
-
-		shouldCompleted.get();
-
-		assertFalse(neverCompleted.isDone());
-		assertTrue(shouldCompleted.isDone());
+		
+		CompletableFuture.anyOf(neverCompleted, shouldCompleted) //
+			.orTimeout(1, TimeUnit.SECONDS) //
+			.join();
+		
+		final var hasNeverCompleted = neverCompleted.isDone();
+		final var hasShouldCompleted = shouldCompleted.isDone();
+		assertTrue("Only the latest task for the same key should be executed. shouldCompleted: " //
+				+ hasShouldCompleted + ", neverCompleted: " + hasNeverCompleted, //
+				hasShouldCompleted && !hasNeverCompleted);
+		
 
 		executor.shutdown();
 	}

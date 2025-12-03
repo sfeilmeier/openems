@@ -204,6 +204,7 @@ jobs:
         with:
           user: fems
           password: ${{ secrets.MINIO_ACCESS_KEY }}
+          verbose: "true"
           name: |
             environment
             jars

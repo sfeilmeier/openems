@@ -36,7 +36,7 @@ runs:
     - name: Upload build artifact
       shell: bash
       run: |
-        reference=fems-${{ github.sha }}_${{ inputs.name }}
+        reference=fems-${{ github.run_id }}_${{ inputs.name }}
         opts=""
         if [[ "${{ inputs.recursive }}" == "true" ]]; then opts="--recursive"; fi
         /tools/mc alias set local http://gitea-runner-cache:9000 ${{ inputs.user }} ${{ inputs.password }}
