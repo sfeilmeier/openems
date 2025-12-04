@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
+import { Language } from "src/app/shared/type/language";
 import { environment } from "src/environments";
 import { AbstractIbn } from "../installation-systems/abstract-ibn";
 import { Commercial30AnschlussIbn } from "../installation-systems/commercial/commercial-30/commercial30-anschluss";
@@ -181,14 +182,27 @@ export namespace System {
      * @returns the url.
      */
     export function getHomeSystemInstructionsLink(homeSystemId: HomeSystemId): string {
+        const lang: string = Language.getByKey(localStorage.LANGUAGE)?.key ?? Language.DEFAULT.key;
         switch (homeSystemId) {
             case SystemId.FENECON_HOME_10:
                 return environment.links.MANUALS.SYSTEM.HOME.HOME_10;
             case SystemId.FENECON_HOME_20:
             case SystemId.FENECON_HOME_30:
-                return environment.links.MANUALS.SYSTEM.HOME.HOME_20_30;
+                switch (lang) {
+                    case "de":
+                    default:
+                        return environment.links.MANUALS.SYSTEM.HOME.HOME_20_30.DE;
+                    case "en":
+                        return environment.links.MANUALS.SYSTEM.HOME.HOME_20_30.EN;
+                }
             default:
-                return environment.links.MANUALS.SYSTEM.HOME.HOME_GEN_2;
+                switch (lang) {
+                    case "de":
+                    default:
+                        return environment.links.MANUALS.SYSTEM.HOME.HOME_GEN_2.DE;
+                    case "en":
+                        return environment.links.MANUALS.SYSTEM.HOME.HOME_GEN_2.EN;
+                }
         }
     }
 

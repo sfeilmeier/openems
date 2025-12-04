@@ -776,6 +776,7 @@
       "DOWNLOAD_SUCCESS": "Protokoll erfolgreich heruntergeladen",
       "HECKERT_NOTE": "Eine kostenlose App steht nun im App-Center für Sie bereit zur Installation.",
       "INVALID_PAYLOAD": "Ungültige Antwort vom Server",
+      "NAVIGATION_LABEL": "Zum App Center",
       "NOTE": "Hier geht's weiter zum App Center, um weitere Komponenten zu konfigurieren und Apps zu installieren.",
       "SUB_TITLE": "Sie haben den {{ value }} erfolgreich in Betrieb genommen.",
       "TITLE": "Abschließen"
@@ -888,6 +889,10 @@
       "TITLE_HOME": "Vorsicherung Hausanschlusszähler",
       "VALUE": "Wert [A]"
     },
+    "CONFIGURATION_MPPT_SELECTION": {
+      "NOTE": "Weitere Erzeuger können im Anschluss über das App Center konfiguriert werden.",
+      "CONNECTION_CHECK_LABEL": "Wurden alle Anschlüsse kontrolliert?"
+    },
     "CONFIGURATION_MPPT_SELECTION_NOTE": "Weitere Erzeuger können im Anschluss über das App Center konfiguriert werden.",
     "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
       "SLAVE_COUNT_TITLE": "Informationen zur Anzahl der Slaves",
@@ -904,8 +909,10 @@
         "COMMERCIAL_92": "Bevor Sie weiter fortfahren, stellen Sie sicher, dass Sie für die reibungslose Durchführung der kommenden Schritte - insbesondere zur Konfiguration des KACO-Wechselrichters - folgende/-s Endgerät verwenden:\n\neinen Laptop mit “LAN-WLAN-parallel” Funktion \noder\nzwei mobile Endgeräte, mit jeweils einer WLAN und einer LAN-Funktion"
       }
     },
+    "CONFIGURATION_SYSTEM_VARIANT": "Auswahl der verbauten Komponente",
     "CONFIGURATION_SUMMARY": {
       "ACCEPT": "akzeptieren",
+      "ACCEPT_TERMS": "Akzeptieren Sie die AGB und Garantiebedingungen um fortzufahren.",
       "ALIAS_WITH_LABEL_HOME_DC": "Alias MPPT{{mppt}}",
       "BATTERY": "Batterie",
       "BATTERY_LOCATION": "Standort",

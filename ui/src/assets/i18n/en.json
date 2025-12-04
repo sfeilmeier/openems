@@ -766,11 +766,12 @@
     "CLICK_RECOMMENDATION": "Please click on the \"Add\" button below if you want to commission a {{ edgeShortName }}.",
     "COMPLETE": "To Online-Monitoring",
     "COMPLETION": {
-      "DOWNLOAD": "IBN-Protocol download",
+      "DOWNLOAD": "Download report",
       "DOWNLOAD_ERROR": "The Protocol could not be downloaded",
       "DOWNLOAD_SUCCESS": "Protocol downloaded successfully",
       "HECKERT_NOTE": "A free app is now available for you to install in the app center.",
       "INVALID_PAYLOAD": "Invalid response from server",
+      "NAVIGATION_LABEL": "Go to App Center",
       "NOTE": "Click here to go to the App Center to configure additional components and install apps.",
       "SUB_TITLE": "You have successfully commisioned the {{ value }}.",
       "TITLE": "Set-up complete"
@@ -883,6 +884,10 @@
       "TITLE_HOME": "Circuit breaker at the grid connection point",
       "VALUE": "Value [A]"
     },
+    "CONFIGURATION_MPPT_SELECTION": {
+      "NOTE": "Additional generators can then be configured via the App Center.",
+      "CONNECTION_CHECK_LABEL": "Have all connections been checked?"
+    },
     "CONFIGURATION_MPPT_SELECTION_NOTE": "Additional generators can then be configured via the App Center.",
     "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
       "SLAVE_COUNT_TITLE": "Information about the number of slaves",
@@ -899,8 +904,9 @@
         "COMMERCIAL_92": "Before you continue, make sure that you use the following device(s) to ensure that the next steps - especially for configuring the KACO inverter - run smoothly:\n\na laptop with “LAN-WLAN parallel” function\nor\ntwo mobile devices, each with a WLAN and a LAN function"
       }
     },
+    "CONFIGURATION_SYSTEM_VARIANT": "Select installed component",
     "CONFIGURATION_SUMMARY": {
-      "ACCEPT": "acceptation",
+      "ACCEPT": "accepted",
       "ALIAS_WITH_LABEL_HOME_DC": "Alias MPPT{{mppt}}",
       "BATTERY": "Battery",
       "BATTERY_LOCATION": "BESS Location",
@@ -924,6 +930,7 @@
       "PRODUCER": "Generator",
       "SUMMARY": "Summary",
       "TIME_OF_INSTALLATION": "Time of the installation",
+      "ACCEPT_TERMS": "Accept the GTC and Warranty Terms to proceed.",
       "VALUE_WITH_LABEL_HOME_DC": "Value MPPT{{ mppt }} {{ symbol }}",
       "WARRANTY_TERMS": "Warranty terms"
     },
@@ -1062,8 +1069,8 @@
       "LAST_NAME": "Last name",
       "PHONE": "Phone number",
       "STREET_ADDRESS": "Street adress",
-      "TITLE_CUSTOMER": "Contact data - End customer",
-      "TITLE_INSTALLER": "Contact data - Installer",
+      "TITLE_CUSTOMER": "Contact details - End customer",
+      "TITLE_INSTALLER": "Contact details - Installer",
       "ZIP": "ZIP code"
     },
     "PROTOCOL_PV": {
@@ -1123,7 +1130,7 @@
       "MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS": "Minimum modules per string: {{ min }} and Maximum: {{ max }}",
       "MINIMUM_AND_MAXIMUM_STRINGS": "Minimum Strings: {{ min }} and Maximum: {{ max }}",
       "MODULES_PER_STRINGS_DESCRIPTION": "Modules per String for Commercial-50 system: {{ number }}",
-      "NEXT_BUTTON_DESCRIPTION": "By clicking on “next” button, the IBN protocol will be automatically sent to FENECON GmbH.",
+      "NEXT_BUTTON_DESCRIPTION": "By clicking on “next” button, the Commissioning report/“IBN“ report will be automatically sent to FENECON GmbH.",
       "NUMBER_OF_MODULES_PER_STRINGS": "Number of Modules per String",
       "NUMBER_OF_MODULES_PER_TOWER": "Number of modules per tower",
       "NUMBER_OF_STRINGS": "Number of Strings",

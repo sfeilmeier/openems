@@ -79,8 +79,14 @@ export const OemMeta: BaseMeta = {
             SYSTEM: {
                 HOME: {
                     HOME_10: "https://docs.fenecon.de/_/de/home/home_10/montage_und_service_anleitung/Montage_und_Serviceanleitung_Home.html",
-                    HOME_20_30: "https://docs.fenecon.de/_/de/home/home_20-30/montage_und_service_anleitung/Montage_und_Serviceanleitung_Home_20-30.html",
-                    HOME_GEN_2: "https://docs.fenecon.de/de/home/home_6-10-15/betrieb_und_serviceanleitung/Betriebsanleitung_Home_6-10-15.html",
+                    HOME_20_30: {
+                        DE: "https://docs.fenecon.de/_/de/home/home_20-30/montage_und_service_anleitung/Montage_und_Serviceanleitung_Home_20-30.html",
+                        EN: "https://docs.fenecon.de/en/home/home_20-30_overview.html",
+                    },
+                    HOME_GEN_2: {
+                        DE: "https://docs.fenecon.de/de/home/home_6-10-15/betrieb_und_serviceanleitung/Betriebsanleitung_Home_6-10-15.html",
+                        EN: "https://docs.fenecon.de/en/home/home_6-10-15_overview.html",
+                    },
                 },
                 COMMERCIAL: {
                     COMMERCIAL_30: "https://docs.fenecon.de/_/de/commercial/commercial_30/montage_und_serviceanleitung/Montage_und_Serviceanleitung_Commercial_30.html",
