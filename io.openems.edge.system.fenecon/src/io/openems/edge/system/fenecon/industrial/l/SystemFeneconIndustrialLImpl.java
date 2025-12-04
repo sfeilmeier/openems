@@ -528,7 +528,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 		});
 
 		builder.handleRequest(new BmsHardReset(), endpoint -> {
-			endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.ADMIN));
+			endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.INSTALLER));
 		}, call -> {
 			this.stateMachine.forceNextState(BMS_RESET);
 			return EmptyObject.INSTANCE;
