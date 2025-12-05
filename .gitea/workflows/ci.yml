@@ -2,7 +2,7 @@ name: CI-Build
 run-name: CI Build for FEMS
 on:
   workflow_dispatch:
-  #pull_request:
+  pull_request:
 
 # https://docs.gitea.com/next/usage/actions/comparison#concurrency
 concurrency:
