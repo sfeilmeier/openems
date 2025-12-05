@@ -170,7 +170,7 @@ export abstract class AbstractIbn {
     public isController14aActivated: boolean = true;
 
     // Index of the 14a controller view.
-    public readonly indexOf14aLimiterControllerView: number = 7;
+    public readonly indexOf14aLimiterControllerView: number = 8;
 
     public readonly isDoubleSocketValid: boolean = false;
 

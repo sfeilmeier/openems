@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-import { Subject } from "rxjs";
 import { FormlyUtils } from "src/app/shared/components/formly/formly-utils";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { Edge, Websocket } from "src/app/shared/shared";
@@ -10,7 +9,6 @@ import { COUNTRY_OPTIONS, CountryUtils } from "src/app/shared/type/country";
 import { ObjectUtils } from "src/app/shared/utils/object/object.utils";
 import { environment, Environment } from "src/environments";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
-import { AppCenterUtil } from "../../shared/appcenterutil";
 import { ComponentData } from "../../shared/ibndatatypes";
 import { GeoCodeJsonRpc, GeoResult } from "./json-rpc/geo-code-json-rpc";
 
@@ -26,7 +24,7 @@ interface LocationModel {
     templateUrl: "./protocol-system-location.component.html",
     standalone: false,
 })
-export class ProtocolSystemLocationValidationComponent implements OnInit, OnDestroy {
+export class ProtocolSystemLocationValidationComponent implements OnInit {
     @Input() public ibn!: AbstractIbn;
     @Input() public edge!: Edge;
 
@@ -46,17 +44,11 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
     protected geoCodeFields: FormlyFieldConfig[] = [{
         key: "index",
         type: "radio",
-        templateOptions: {
+        props: {
             radioSlot: "start",
             label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.GEO_CODE_RESULT_LABEL"),
-            type: "radio",
             options: [],
             required: true,
-        },
-        hooks: {
-            onChanges: ({ form, model, options }) => {
-                this.isNextDisabled = !Number.isInteger(model.index);
-            },
         },
     }];
     protected geoCodeModel: { index: number | null } = { index: null };
@@ -67,9 +59,9 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
     protected addressesAvailable: boolean = false;
     protected isNextDisabled: boolean = true;
     protected id: number | null = null;
+    protected unkownAddressOptionIndex: number = 0;
 
     private geoResults: GeoResult[] = [];
-    private destroy = new Subject<void>();
 
     constructor(private translate: TranslateService, private websocket: Websocket) { }
 
@@ -83,11 +75,6 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
             zip: location?.zip ?? "",
         };
         this.id = this.edge.getNameNumber();
-    }
-
-    public ngOnDestroy() {
-        this.destroy.next();
-        this.destroy.complete();
     }
 
     public onPreviousClicked() {
@@ -104,7 +91,7 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
 
         const selectedIndex = this.geoCodeModel.index;
 
-        if (selectedIndex === this.geoResults.length) {
+        if (selectedIndex === this.unkownAddressOptionIndex) {
             // Unknown address option selected
             this.isWaiting = false;
             this.nextViewEvent.emit(this.ibn);
@@ -119,24 +106,17 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
         const selectedGeo: GeoResult = this.geoResults[selectedIndex];
         this.fillLocationFromGeoResult(selectedGeo);
 
-        const response = await AppCenterUtil.getAppInstances(this.edge, this.websocket, "App.Core.Meta");
-        const instance = response?.result?.instances[0] ?? null;
-        if (instance == null) {
-            return Promise.reject("App.Core.Meta instance not found");
-        }
-
         // Defaults based on edge implementation are set incase the values are null.
-        const updatedProperties = {
-            ...instance.properties,
-            PLACE_NAME: selectedGeo.placeName ?? "",
-            POSTCODE: selectedGeo.postcode ?? "",
-            LATITUDE: selectedGeo.latitude ?? -999.0,
-            LONGITUDE: selectedGeo.longitude ?? -999.0,
-            TIMEZONE: selectedGeo.timezone ?? "",
-            SUBDIVISION_CODE: selectedGeo.subdivisionCode?.replace("-", "_") ?? "UNDEFINED", // DE-BY -> DE_BY
-        };
+        const properties = [
+            { name: "placeName", value: selectedGeo.placeName ?? "" },
+            { name: "postcode", value: selectedGeo.postcode ?? "" },
+            { name: "latitude", value: selectedGeo.latitude ?? -999.0 },
+            { name: "longitude", value: selectedGeo.longitude ?? -999.0 },
+            { name: "timezone", value: selectedGeo.timezone ?? "" },
+            { name: "subdivisionCode", value: selectedGeo.subdivisionCode?.replace("-", "_") ?? "UNDEFINED" },// DE-BY -> DE_BY
+        ];
 
-        await AppCenterUtil.updateApp(this.edge, this.websocket, instance.instanceId, instance.alias, updatedProperties);
+        await this.edge.updateAppConfig(this.websocket, "_meta", properties);
 
         this.isWaiting = false;
         this.nextViewEvent.emit(this.ibn);
@@ -244,21 +224,26 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
         });
 
         if (!this.hasMatchingAddress(results)) {
+            const lastIndex = options.length;
             options.push({
-                value: options.length, // last option
+                value: options.length,
                 label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.UNKNOWN_ADDRESS"),
                 default: options.length == 0,
             });
+
+            this.unkownAddressOptionIndex = lastIndex;
         }
 
-        this.geoCodeModel.index = selectedIndex;
-        this.geoCodeFields = FormlyUtils.changeFormlyFieldTemplateOptions("index", this.geoCodeFields, (props) => {
+        this.geoCodeFields = FormlyUtils.changeFormlyFieldProps("index", this.geoCodeFields, (props) => {
             if (props == null) {
                 return props;
             }
+
             props.options = options;
             return props;
         });
+
+        this.geoCodeModel.index = selectedIndex;
     }
 
     private getLocation() {
@@ -287,14 +272,7 @@ export class ProtocolSystemLocationValidationComponent implements OnInit, OnDest
         }
 
         return results.some(result => {
-            const streetMatch = result.road && result.houseNumber
-                ? `${result.road}, ${result.houseNumber}` === this.model.street
-                : false;
-
-            return streetMatch &&
-                result.postcode === this.model.zip &&
-                result.placeName === this.model.city &&
-                CountryUtils.fromCountryCode(result.country ?? "") === this.model.country;
+            return this.isMatchingAddress(result);
         });
     }
 
