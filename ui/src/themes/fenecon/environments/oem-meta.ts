@@ -158,7 +158,7 @@ export const OemMeta: BaseMeta = {
             SELFCONSUMPTION: "icons/selfconsumption_fenecon.svg",
             EVCS: "icons/evcs_fenecon.svg",
             GRID: "icons/grid_fenecon.svg",
-            GRID_STORAGE: "assets/img/icon/gridStorage.svg",
+            GRID_STORAGE: "assets/img/icon/gridStorage_fenecon.svg",
             GRID_RESTRICTION: "icons/gridRestriction_fenecon.svg",
             MEGAFON: "assets/img/icon/megafon.svg",
             OFFGRID: "icons/offgrid_fenecon.svg",
