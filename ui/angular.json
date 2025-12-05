@@ -248,6 +248,11 @@
                 },
                 {
                   "glob": "**/*.svg",
+                  "input": "src/themes/fenecon/icons",
+                  "output": "./icons"
+                },
+                {
+                  "glob": "**/*.svg",
                   "input": "node_modules/ionicons/dist/ionicons/svg",
                   "output": "./svg"
                 },
@@ -503,10 +508,10 @@
               "buildTarget": "app:build:fenecon,fenecon-backend-dev"
             },
             "feneconbeta-backend-prod": {
-              "buildTarget": "app:build:feneconbeta,feneconbeta-backend-prod"
+              "buildTarget": "app:build:fenecon,feneconbeta,feneconbeta-backend-prod"
             },
             "feneconbeta-backend-dev": {
-              "buildTarget": "app:build:feneconbeta,fenecon-backend-dev"
+              "buildTarget": "app:build:fenecon,feneconbeta,fenecon-backend-dev"
             },
             "fenecon-edge-dev": {
               "buildTarget": "app:build:fenecon,fenecon-edge-dev"

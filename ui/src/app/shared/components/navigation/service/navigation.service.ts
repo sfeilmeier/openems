@@ -49,12 +49,12 @@ export class NavigationService {
     public static forceNewNavigation(edge: Edge | null): boolean {
         const config = edge?.getCurrentConfig() ?? null;
 
-        if (environment.theme === "FENECONBeta") {
-            return true;
-        }
-
         if (config == null) {
             return false;
+        }
+
+        if (environment.theme === "FENECONBeta") {
+            return true;
         }
 
         // If edgeconfig includes this factories, user gets forced to use new ui navigation
