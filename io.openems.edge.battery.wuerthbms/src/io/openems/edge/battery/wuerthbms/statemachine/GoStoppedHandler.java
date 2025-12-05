@@ -28,7 +28,7 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 		}
 
 		if (context.checkCurrent()) {
-			battery.setCommandStateRequest(CommandStateRequest.COMMAND_OPEN_CONTACTORS);
+			battery.setCommandStateRequest(CommandStateRequest.OPEN_CONTACTORS);
 		}
 
 		if (context.isStopped()) {

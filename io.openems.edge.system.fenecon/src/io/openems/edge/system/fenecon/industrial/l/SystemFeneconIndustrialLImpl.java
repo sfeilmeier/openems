@@ -151,7 +151,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	}
 
 	protected synchronized void removeBattery(Battery battery) {
-		this.batteries.add(battery);
+		this.batteries.remove(battery);
 	}
 
 	public SystemFeneconIndustrialLImpl() {
@@ -217,6 +217,8 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 					SystemFeneconIndustrialL.ChannelId.FUSE_TRIPPED);
 			this.handleInputChannel(this.parsedConfig.psuTriggeredChannel(),
 					SystemFeneconIndustrialL.ChannelId.PSU_TRIGGERED);
+			this.handleInputChannel(this.parsedConfig.bmsHardResetChannel(),
+					SystemFeneconIndustrialL.ChannelId.BMS_HARD_RESET);
 			if (this.parsedConfig.smokeDetectionChannel != null) {
 				this.handleInputChannel(this.parsedConfig.smokeDetectionChannel(), //
 						SystemFeneconIndustrialL.ChannelId.SMOKE_DETECTION, true);

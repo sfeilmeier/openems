@@ -3,7 +3,6 @@ package io.openems.edge.system.fenecon.industrial.l.statemachine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.timedata.Timeout;
 import io.openems.common.utils.EnumUtils;
@@ -20,11 +19,11 @@ public class BmsResetHandler extends StateHandler<State, Context> {
 		STOP_SYSTEM, SWITCH_ON, SWITCH_OFF, FINISHED
 	}
 
-	protected static record ErrorState(ErrorSubState subState) {
+	protected record ErrorState(ErrorSubState subState) {
 	}
 
 	@Override
-	protected void onEntry(Context context) throws OpenemsNamedException {
+	protected void onEntry(Context context) {
 		this.errorState = new ErrorState(ErrorSubState.STOP_SYSTEM);
 	}
 
@@ -77,9 +76,7 @@ public class BmsResetHandler extends StateHandler<State, Context> {
 			outputChannel.setNextWriteValue(false);
 			yield ErrorSubState.FINISHED;
 		}
-		case FINISHED -> {
-			yield ErrorSubState.FINISHED;
-		}
+		case FINISHED -> ErrorSubState.FINISHED;
 		};
 	}
 

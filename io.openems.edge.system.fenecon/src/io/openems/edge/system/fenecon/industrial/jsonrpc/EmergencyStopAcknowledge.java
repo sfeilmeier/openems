@@ -18,7 +18,7 @@ import io.openems.common.jsonrpc.serialization.JsonSerializer;
  */
 public class EmergencyStopAcknowledge implements EndpointRequestType<EmptyObject, EmptyObject> {
 
-    public static final String METHOD = "emergencyStopAcknowledge";
+	public static final String METHOD = "emergencyStopAcknowledge";
 
 	@Override
 	public String getMethod() {

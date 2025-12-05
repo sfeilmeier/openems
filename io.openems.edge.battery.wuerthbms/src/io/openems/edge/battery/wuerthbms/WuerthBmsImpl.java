@@ -1,26 +1,29 @@
 package io.openems.edge.battery.wuerthbms;
 
+import static io.openems.common.types.OpenemsType.BOOLEAN;
 import static io.openems.common.types.OpenemsType.INTEGER;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SET_NULL_FOR_DEFAULT;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.chain;
+import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE;
+import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE;
+import static org.osgi.service.component.annotations.ConfigurationPolicy.REQUIRE;
+import static org.osgi.service.component.annotations.ReferenceCardinality.MANDATORY;
+import static org.osgi.service.component.annotations.ReferencePolicy.STATIC;
+import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 import org.osgi.service.event.propertytypes.EventTopics;
@@ -33,8 +36,6 @@ import io.openems.common.channel.Unit;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.types.OpenemsType;
-import io.openems.common.types.OptionsEnum;
-import io.openems.common.types.SemanticVersion;
 import io.openems.common.utils.FunctionUtils;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.api.BatteryErrorAcknowledge;
@@ -42,28 +43,28 @@ import io.openems.edge.battery.protection.BatteryProtection;
 import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.battery.protection.BatteryVoltageProtectionLimits;
 import io.openems.edge.battery.protection.BatteryVoltageProtectionLimits.BatteryVoltageSpecification;
-import io.openems.edge.battery.wuerthbms.enums.CellBalancingState;
-import io.openems.edge.battery.wuerthbms.enums.FirmwareVersion;
 import io.openems.edge.battery.wuerthbms.statemachine.Context;
 import io.openems.edge.battery.wuerthbms.statemachine.StateMachine;
 import io.openems.edge.battery.wuerthbms.statemachine.StateMachine.State;
-import io.openems.edge.battery.wuerthbms.version.WuerthVersion109Protocol;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
 import io.openems.edge.bridge.modbus.api.BridgeModbus;
 import io.openems.edge.bridge.modbus.api.ElementToChannelConverter;
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
 import io.openems.edge.bridge.modbus.api.ModbusProtocol;
+import io.openems.edge.bridge.modbus.api.element.BitsWordElement;
+import io.openems.edge.bridge.modbus.api.element.DummyRegisterElement;
 import io.openems.edge.bridge.modbus.api.element.ModbusElement;
+import io.openems.edge.bridge.modbus.api.element.SignedWordElement;
 import io.openems.edge.bridge.modbus.api.element.UnsignedWordElement;
+import io.openems.edge.bridge.modbus.api.task.FC16WriteRegistersTask;
+import io.openems.edge.bridge.modbus.api.task.FC3ReadRegistersTask;
 import io.openems.edge.bridge.modbus.api.task.FC4ReadInputRegistersTask;
 import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.channel.ChannelId.ChannelIdImpl;
 import io.openems.edge.common.channel.Doc;
 import io.openems.edge.common.channel.internal.OpenemsTypeDoc;
-import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
-import io.openems.edge.common.event.EdgeEventConstants;
 import io.openems.edge.common.modbusslave.ModbusSlave;
 import io.openems.edge.common.modbusslave.ModbusSlaveNatureTable;
 import io.openems.edge.common.modbusslave.ModbusSlaveTable;
@@ -75,11 +76,10 @@ import io.openems.edge.common.taskmanager.Priority;
 @Component(//
 		name = "Battery.WuerthBms", //
 		immediate = true, //
-		configurationPolicy = ConfigurationPolicy.REQUIRE)
+		configurationPolicy = REQUIRE)
 @EventTopics({ //
-		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
-		EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE //
-})
+		TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
+		TOPIC_CYCLE_AFTER_PROCESS_IMAGE })
 public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		implements WuerthBms, ModbusComponent, OpenemsComponent, Battery, BatteryErrorAcknowledge,
 		BatteryVoltageProtection, EventHandler, ModbusSlave, StartStoppable {
@@ -87,8 +87,8 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 	public record BatteryValues(int soc, int voltage, int chargeMaxVoltage, int dischargeMinVoltage) {
 	}
 
-	private static final SemanticVersion OUTDATED_VERSION = new SemanticVersion(1, 0, 9);
-	private static final int MAX_16BIT_UNSIGNED_INT = 65535;
+	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_0 = SET_NULL_FOR_DEFAULT(0);
+	private static final int INNER_RESISTANCE = 150; // [mOhm]
 	private static final int CAPACITY = 161_100; // [Wh]
 
 	private final Logger log = LoggerFactory.getLogger(WuerthBmsImpl.class);
@@ -106,7 +106,7 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 	@Reference
 	private ComponentManager componentManager;
 
-	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(policy = STATIC, policyOption = GREEDY, cardinality = MANDATORY)
 	protected void setModbus(BridgeModbus modbus) {
 		super.setModbus(modbus);
 	}
@@ -134,24 +134,13 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		);
 		this.registerResetBatteryListeners();
 		this._setCapacity(CAPACITY);
+		this._setInnerResistance(INNER_RESISTANCE);
 	}
 
 	@Activate
 	private void activate(ComponentContext context, Config config) throws OpenemsException {
 		this.config = config;
 		if (super.activate(context, config.id(), config.alias(), config.enabled(), config.modbusUnitId(), this.cm,
-				"Modbus", config.modbus_id())) {
-			return;
-		}
-		this.batteryProtection = BatteryProtection.create(this)//
-				.applyBatteryProtectionDefinition(new WuerthBatteryProtectionDefinition(), this.componentManager)
-				.build();
-	}
-
-	@Modified
-	private void modified(ComponentContext context, Config config) throws OpenemsException {
-		this.config = config;
-		if (super.modified(context, config.id(), config.alias(), config.enabled(), config.modbusUnitId(), this.cm,
 				"Modbus", config.modbus_id())) {
 			return;
 		}
@@ -203,29 +192,21 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		}
 
 		switch (event.getTopic()) {
-		case EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE -> {
+		case TOPIC_CYCLE_BEFORE_PROCESS_IMAGE -> {
 			this.batteryProtection.apply();
-			if (this.voltageProtectionLimits != null) {
-				this.voltageProtectionLimits.updateLimits();
-			}
+			this.updateVoltageProtectionLimits();
 		}
-		case EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE -> this.handleStateMachine();
+		case TOPIC_CYCLE_AFTER_PROCESS_IMAGE -> this.handleStateMachine();
 		}
 	}
 
-	/**
-	 * Handles the State-Machine.
-	 */
 	private void handleStateMachine() {
 		this.channel(WuerthBms.ChannelId.STATE_MACHINE).setNextValue(this.stateMachine.getCurrentState());
-
-		// Initialize 'Start-Stop' Channel
 		this._setStartStop(StartStop.UNDEFINED);
 
 		try {
 			var context = new Context(this, this.componentManager.getClock());
 
-			// Call the StateMachine
 			this.stateMachine.run(context);
 			this.channel(WuerthBms.ChannelId.RUN_FAILED).setNextValue(false);
 
@@ -237,178 +218,337 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 
 	@Override
 	protected ModbusProtocol defineModbusProtocol() {
-		return switch (this.config.version()) {
-		case WUERTH_VERSION_1_0_9 -> WuerthVersion109Protocol.getProtocol(this);
-		};
-	}
+		final var baseWrite = 40000; // Base Register Address for Write-Registers
+		return new ModbusProtocol(this, //
+				new FC4ReadInputRegistersTask(30000, Priority.HIGH, //
+						m(WuerthBms.ChannelId.RELAY_FEEDBACK_0_AUX_0, new UnsignedWordElement(30000)),
+						m(WuerthBms.ChannelId.RELAY_FEEDBACK_0_AUX_1, new UnsignedWordElement(30001)),
+						m(WuerthBms.ChannelId.SYSTEM_GLOBAL_STATE, new UnsignedWordElement(30002)),
+						m(WuerthBms.ChannelId.PRECHARGE_ENERGY, new UnsignedWordElement(30003), SCALE_FACTOR_MINUS_1),
+						m(WuerthBms.ChannelId.SYSTEM_CONTACTOR_STATE, new UnsignedWordElement(30004)),
+						m(WuerthBms.ChannelId.SYSTEM_BALANCING_STATE, new UnsignedWordElement(30005)),
+						m(WuerthBms.ChannelId.RELAY_FEEDBACK_1_AUX_0, new UnsignedWordElement(30006)),
+						m(WuerthBms.ChannelId.RELAY_FEEDBACK_1_AUX_1, new UnsignedWordElement(30007)),
+						m(Battery.ChannelId.CURRENT, new SignedWordElement(30008)),
+						m(WuerthBms.ChannelId.PACK_SHUNT_TEMPERATURE, new UnsignedWordElement(30009), //
+								SCALE_FACTOR_MINUS_1), //
+						m(Battery.ChannelId.VOLTAGE, new UnsignedWordElement(30010)), //
+						m(Battery.ChannelId.CHARGE_MAX_VOLTAGE, new UnsignedWordElement(30011)), //
+						m(BatteryProtection.ChannelId.BP_CHARGE_BMS, new UnsignedWordElement(30012)),
+						m(WuerthBms.ChannelId.CELL_VOLT_PLAUSIBILITY, new UnsignedWordElement(30013)),
+						m(BatteryProtection.ChannelId.BP_DISCHARGE_BMS, new UnsignedWordElement(30014)),
+						m(WuerthBms.ChannelId.STACK_CELLS_PLAUSIBILITY, new UnsignedWordElement(30015)),
+						m(Battery.ChannelId.DISCHARGE_MIN_VOLTAGE, new UnsignedWordElement(30016)), //
+						m(new UnsignedWordElement(30017)) //
+								.m(WuerthBms.ChannelId.PACK_STATE_SOC, SET_NULL_FOR_DEFAULT_0) //
+								.m(Battery.ChannelId.SOC, chain(SET_NULL_FOR_DEFAULT_0, SCALE_FACTOR_MINUS_1)) //
+								.build(), //
+						m(Battery.ChannelId.SOH, new UnsignedWordElement(30018)),
+						m(WuerthBms.ChannelId.PACK_STATE_ENERGY, new UnsignedWordElement(30019)),
+						m(WuerthBms.ChannelId.PACK_VOLTAGE, new UnsignedWordElement(30020), SCALE_FACTOR_MINUS_1), //
+						m(WuerthBms.ChannelId.PACK_HIGH_VOLTAGE_PLUS, new UnsignedWordElement(30021), //
+								SCALE_FACTOR_MINUS_1), //
+						m(WuerthBms.ChannelId.PACK_HIGH_VOLTAGE_MINUS, new UnsignedWordElement(30022)), //
+						m(WuerthBms.ChannelId.SW_VERSION_MAJOR, new UnsignedWordElement(30023)), //
+						m(WuerthBms.ChannelId.SW_VERSION_MINOR, new UnsignedWordElement(30024)), //
+						m(WuerthBms.ChannelId.SW_VERSION_PATCH, new UnsignedWordElement(30025)), //
+						m(WuerthBms.ChannelId.COM_LAST_FAILED_CSC, new UnsignedWordElement(30026)), //
+						m(WuerthBms.ChannelId.STRING_MODULE_COUNT, new UnsignedWordElement(30027)), //
+						m(WuerthBms.ChannelId.KL_30, new UnsignedWordElement(30028)), //
+						m(WuerthBms.ChannelId.KL_30C, new UnsignedWordElement(30029)), //
+						m(WuerthBms.ChannelId.CELL_OPEN_WIRE_DETECTION, new UnsignedWordElement(30030)), //
+						m(WuerthBms.ChannelId.CSC_OPEN_WIRE_DETECTION, new UnsignedWordElement(30031)), //
+						m(WuerthBms.ChannelId.CVCM_FAULT_CASE, new UnsignedWordElement(30032)), //
+						m(WuerthBms.ChannelId.PACK_REMAINING_CAPACITY, new UnsignedWordElement(30033)), //
+						m(WuerthBms.ChannelId.CONTACTOR_SOH, new UnsignedWordElement(30034)), //
+						m(WuerthBms.ChannelId.DIAG_LAST_FAILED_CSC, new UnsignedWordElement(30035)), //
+						m(WuerthBms.ChannelId.LATENT_LAST_FAILED_CSC, new UnsignedWordElement(30036)), //
+						m(WuerthBms.ChannelId.SHUTDOWN_PATH_CAUSE, new UnsignedWordElement(30037)), //
+						m(WuerthBms.ChannelId.SHUTDOWN_PATH_TEST_FAIL, new UnsignedWordElement(30038)), //
+						m(WuerthBms.ChannelId.PACK_CURRENT_MA, new UnsignedWordElement(30039)), //
+						m(WuerthBms.ChannelId.AVG_CELL_VOLTAGE_STRING, new UnsignedWordElement(30040)), //
+						m(Battery.ChannelId.MAX_CELL_VOLTAGE, new UnsignedWordElement(30041)), //
+						m(Battery.ChannelId.MIN_CELL_VOLTAGE, new UnsignedWordElement(30042)), //
+						m(WuerthBms.ChannelId.AVG_TEMPERATURE_STRING, new UnsignedWordElement(30043)), //
+						m(Battery.ChannelId.MAX_CELL_TEMPERATURE, new UnsignedWordElement(30044)), //
+						m(Battery.ChannelId.MIN_CELL_TEMPERATURE, new UnsignedWordElement(30045)), //
+						new DummyRegisterElement(30046), //
+						m(new BitsWordElement(30047, this) //
+								.bit(0, WuerthBms.ChannelId.CELL_OT_CUTOFF) //
+								.bit(1, WuerthBms.ChannelId.CELL_OT_MAX) //
+								.bit(2, WuerthBms.ChannelId.CELL_OT_WARN) //
+								.bit(3, WuerthBms.ChannelId.CELL_OV_CUTOFF) //
+								.bit(4, WuerthBms.ChannelId.CELL_OV_MAX) //
+								.bit(5, WuerthBms.ChannelId.CELL_OV_WARN) //
+								.bit(6, WuerthBms.ChannelId.CELL_UT_CUTOFF) //
+								.bit(7, WuerthBms.ChannelId.CELL_UT_MAX) //
+								.bit(8, WuerthBms.ChannelId.CELL_UT_WARN) //
+								.bit(9, WuerthBms.ChannelId.CELL_UV_CUTOFF) //
+								.bit(10, WuerthBms.ChannelId.CELL_UV_MAX) //
+								.bit(11, WuerthBms.ChannelId.CELL_UV_WARN) //
+								.bit(12, WuerthBms.ChannelId.COMMUNICATION_ERROR) //
+								.bit(13, WuerthBms.ChannelId.CONT_NEGATIVE_ERR) //
+								.bit(14, WuerthBms.ChannelId.CONT_POSITIVE_ERR) //
+								.bit(15, WuerthBms.ChannelId.CURRENT_OC_CHARGE)), //
 
-	protected synchronized void updateSoc(Value<Integer> batSoc) {
-		if (!batSoc.isDefined()) {
-			return;
-		}
-		var value = batSoc.get();
-		if (value == MAX_16BIT_UNSIGNED_INT) {
-			this._setSoc(null);
-			return;
-		}
-		// limit to 0 - 100 %
-		value = Math.max(0, Math.min(100, value));
+						m(new BitsWordElement(30048, this) //
+								.bit(0, WuerthBms.ChannelId.CURRENT_OC_DISCHARGE) //
+								.bit(1, WuerthBms.ChannelId.CURRENT_MEASURE_ERROR) //
+								.bit(2, WuerthBms.ChannelId.INSULATION_ERROR) //
+								.bit(3, WuerthBms.ChannelId.VOLT_PLAUSIBILITY_ERROR) //
+								.bit(4, WuerthBms.ChannelId.SOC_ERROR) //
+								.bit(5, WuerthBms.ChannelId.SOH_ERROR) //
+								.bit(6, WuerthBms.ChannelId.STRING_CONNECTED) //
+								.bit(7, WuerthBms.ChannelId.TEMP_DIFFERENCE_ERROR) //
+								.bit(8, WuerthBms.ChannelId.BALANCING_ERROR) //
+								.bit(9, WuerthBms.ChannelId.SOC_HIGH_ERROR) //
+								.bit(10, WuerthBms.ChannelId.SOC_RECALIBRATION_WARNING) //
+								.bit(11, WuerthBms.ChannelId.SYSTEM_LOCK_STATUS) //
+								.bit(12, WuerthBms.ChannelId.SHUTDOWN_PATH_ACTIVE) //
+								.bit(13, WuerthBms.ChannelId.MCU_EVENT_DIE_TEMP) //
+								.bit(14, WuerthBms.ChannelId.SHUNT_OVERTEMPERATURE) //
+								.bit(15, WuerthBms.ChannelId.PRECHARGE_FAILED)), //
 
-		if (value == 96) {
-			value = 95;
-		}
-		if (value == 4) {
-			value = 5;
-		}
-		this._setSoc(value);
-	}
+						m(new BitsWordElement(30049, this) //
+								.bit(0, WuerthBms.ChannelId.KL_30_C_FAULT) //
+								.bit(1, WuerthBms.ChannelId.CALIBRATION_PASSED) //
+								.bit(2, WuerthBms.ChannelId.SET_IP_FAIL) //
+								.bit(3, WuerthBms.ChannelId.FEEDBACK_BROKEN) //
+								.bit(4, WuerthBms.ChannelId.PRECHARGE_ENERGY_MAX) //
+								.bit(5, WuerthBms.ChannelId.CONTACTOR_SOH_WARNING)) //
+				), //
 
-	/**
-	 * Helper Method that handles a software version check. Sets
-	 * {@link WuerthBms.ChannelId#SOFTWARE_VERSION_OUTDATED}
-	 */
-	public void updateSoftwareVersionOutdated() {
-		this._setSoftwareVersionOutdated(//
-				isSoftwareOutdated(//
-						this::getSoftwareVersionMajor, //
-						this::getSoftwareVersionMinor, //
-						this::getSoftwareVersionPatch));
-	}
+				new FC4ReadInputRegistersTask(33000, Priority.LOW, //
+						m(WuerthBms.ChannelId.CFG_MODULE_CNT, new SignedWordElement(33000)), //
+						m(WuerthBms.ChannelId.CFG_CELL_CNT, new SignedWordElement(33001)), //
+						m(WuerthBms.ChannelId.CFG_TEMP_SENS_CNT, new SignedWordElement(33002)), //
+						m(WuerthBms.ChannelId.CFG_TEMP_SENS_CNT_PER_MODULE, new SignedWordElement(33003)), //
+						m(WuerthBms.ChannelId.CFG_CSC_PER_MODULE, new SignedWordElement(33004)), //
+						m(WuerthBms.ChannelId.CFG_CSC_CELL_CSC_CNT, new SignedWordElement(33005)), //
+						m(WuerthBms.ChannelId.CFG_CSC_TEMP_SENS_CSC, new SignedWordElement(33006)), //
+						m(WuerthBms.ChannelId.CFG_CSC_TEMP_SENSORS, new SignedWordElement(33007)), //
+						m(WuerthBms.ChannelId.CFG_CSC_TEMP_T4, new UnsignedWordElement(33008)), //
+						m(WuerthBms.ChannelId.CFG_CSC_NTC_RNTC, new UnsignedWordElement(33009)), //
+						m(WuerthBms.ChannelId.CFG_CSC_NTC_REFTEMP, new UnsignedWordElement(33010)), //
+						m(WuerthBms.ChannelId.CFG_CSC_NTC_REFRES, new UnsignedWordElement(33011)), //
+						m(WuerthBms.ChannelId.CFG_CSC_NTC_BETA, new UnsignedWordElement(33012)), //
+						m(WuerthBms.ChannelId.CFG_CSC_NTC_CHANNELS, new UnsignedWordElement(33013)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CAPACITY_AH, new UnsignedWordElement(33014)), //
+						m(WuerthBms.ChannelId.CFG_BATT_RELAX_PERIOD_MIN, new UnsignedWordElement(33015)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_SAFE_OV_V, new UnsignedWordElement(33016)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_CUTOFF_OV_V, new UnsignedWordElement(33017)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_WARN_OV_V, new UnsignedWordElement(33018)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_SAFE_UV_V, new UnsignedWordElement(33019)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_CUTOFF_UV_V, new UnsignedWordElement(33020)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_WARN_UV_V, new UnsignedWordElement(33021)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_CUTOFF_VOLTAGE_FTTI_MS, new UnsignedWordElement(33022)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_SAFE_VOLTAGE_FTTI_MS, new UnsignedWordElement(33023)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_SAFETY_TEMP_MAX, new UnsignedWordElement(33024)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_OPERATION_TEMP_MAX, new UnsignedWordElement(33025)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_WARN_TEMP_MAX, new UnsignedWordElement(33026)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_SAFETY_TEMP_MIN, new UnsignedWordElement(33027)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_OPERATION_TEMP_MIN, new UnsignedWordElement(33028)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_WARN_TEMP_MIN, new UnsignedWordElement(33029)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_CUTOFF_TEMPERATURE_FTTI_MS, new UnsignedWordElement(33030)), //
+						m(WuerthBms.ChannelId.CFG_BATT_CELL_SAFE_TEMPERATURE_FTTI_MS, new UnsignedWordElement(33031)), //
+						m(WuerthBms.ChannelId.CFG_BATT_STRING_MIN_V, new UnsignedWordElement(33032)), //
+						m(WuerthBms.ChannelId.CFG_BATT_STRING_MAX_V, new UnsignedWordElement(33033)), //
+						new DummyRegisterElement(33034, 33039), // not implemented by Würth
+						m(WuerthBms.ChannelId.CFG_CHARGE_CURRENT_LIMIT_TOLERANCE_A, new UnsignedWordElement(33040)), //
+						m(WuerthBms.ChannelId.CFG_SHUNT_TEMPERATURE_HIGH, new UnsignedWordElement(33041)), //
+						m(WuerthBms.ChannelId.CFG_BALANCE_ACTIVATE, new UnsignedWordElement(33042)), //
+						m(WuerthBms.ChannelId.CFG_BALANCING_ACTIVATE_MV, new UnsignedWordElement(33043)), //
+						m(WuerthBms.ChannelId.CFG_BALANCING_DEACTIVE_MV, new UnsignedWordElement(33044)), //
+						m(WuerthBms.ChannelId.CFG_BALANCING_MIN_CELL_VOLTAGE_MV, new UnsignedWordElement(33045)), //
+						new DummyRegisterElement(33046), // not implemented by Würth
+						m(WuerthBms.ChannelId.CFG_BATT_PLAUS_THRESHOLD_PERCENT, new UnsignedWordElement(33047)), //
+						new DummyRegisterElement(33048), // not implemented by Würth
+						m(WuerthBms.ChannelId.CFG_BMS_IDLE_CURRENT_ABS_MA, new UnsignedWordElement(33049)), //
+						m(WuerthBms.ChannelId.CFG_BMS_MAXIMUM_SOC, new UnsignedWordElement(33050)), //
+						m(WuerthBms.ChannelId.CFG_BMS_MINIMUM_SOC, new UnsignedWordElement(33051)), //
+						new DummyRegisterElement(33052, 33058), // not implemented by Würth
+						m(WuerthBms.ChannelId.CFG_PRECHARGE_THRESHOLD, new UnsignedWordElement(33059)), //
+						new DummyRegisterElement(33060), // not implemented by Würth
+						m(WuerthBms.ChannelId.CFG_PRECHARGE_TIMEOUT, new UnsignedWordElement(33061)), //
+						m(WuerthBms.ChannelId.CFG_CONTACTOR_NEGATIVE_TIMEOUT, new UnsignedWordElement(33062)), //
+						m(WuerthBms.ChannelId.CFG_CONTACTOR_POSITIVE_TIMEOUT, new UnsignedWordElement(33063)), //
+						m(WuerthBms.ChannelId.CFG_CONTACTOR_UNDERLOAD_CURRENT, new UnsignedWordElement(33064)), //
+						new DummyRegisterElement(33065, 33067), // not implemented by Würth
+						m(WuerthBms.ChannelId.CFG_PRECHARGE_ONBOARD, new UnsignedWordElement(33068)), //
+						m(WuerthBms.ChannelId.CFG_CONTACTOR_ACTIVATION_TIME_MS, new UnsignedWordElement(33069)), //
+						new DummyRegisterElement(33070, 33073), // not implemented by Würth
+						m(WuerthBms.ChannelId.TEMPDEP_CURRENT_MONITOR_ACTIVE, new UnsignedWordElement(33074)), //
+						m(WuerthBms.ChannelId.TEMPDEP_CURRENT_SHUNT_TOL_ERROR_PERC, new UnsignedWordElement(33075)), //
+						m(WuerthBms.ChannelId.TEMPDEP_CURRENT_LTC_MEAS_ERROR_PERC, new UnsignedWordElement(33076)), //
+						m(WuerthBms.ChannelId.TEMPDEP_CURRENT_SHUNT_MAX_ERROR_PERC, new UnsignedWordElement(33077)), //
+						m(WuerthBms.ChannelId.TEMPDEP_CURRENT_OVERCURRENT_SHUTDOWN_MS, new UnsignedWordElement(33078)), //
+						m(WuerthBms.ChannelId.OVER_CURRENT_COMPARATOR_ACTIVE, new UnsignedWordElement(33079)), //
+						m(WuerthBms.ChannelId.OVER_CURRENT_CURRENT_LIMIT_A, new UnsignedWordElement(33080)), //
+						m(WuerthBms.ChannelId.OVER_CURRENT_COMPARATOR_LIMIT_MV, new UnsignedWordElement(33081)), //
+						m(WuerthBms.ChannelId.OVER_CURRENT_OVERCURRENT_SAFETY_MS, new UnsignedWordElement(33082)), //
+						m(WuerthBms.ChannelId.CELL_MONITORING_DIAG_FTTI_MS, new UnsignedWordElement(33083)), //
+						new DummyRegisterElement(33084), // not implemented by Würth
+						m(WuerthBms.ChannelId.DIE_TEMP_LIMIT_WARNING_LOWER_DEGC, new UnsignedWordElement(33085)), //
+						m(WuerthBms.ChannelId.DIE_TEMP_LIMIT_WARNING_UPPER_DEGC, new UnsignedWordElement(33086)), //
+						m(WuerthBms.ChannelId.DIE_TEMP_LIMIT_SAFETY_LOWER_DEGC, new UnsignedWordElement(33087)), //
+						m(WuerthBms.ChannelId.DIE_TEMP_LIMIT_SAFETY_UPPER_DEGC, new UnsignedWordElement(33088)), //
+						m(WuerthBms.ChannelId.DIE_TEMP_LIMIT_SMU_LOWER_DEGC, new UnsignedWordElement(33089)), //
+						m(WuerthBms.ChannelId.DIE_TEMP_LIMIT_SMU_UPPER_DEGC, new UnsignedWordElement(33090)), //
+						m(WuerthBms.ChannelId.CSC_VOLTAGE_MEASUREMENT_ERROR_COMBINED_MV,
+								new UnsignedWordElement(33091)), //
+						m(WuerthBms.ChannelId.CSC_TEMPERATURE_MEASUREMENT_ERROR_COMBINED_DEGC,
+								new UnsignedWordElement(33092)), //
+						m(WuerthBms.ChannelId.CSC_VOLTAGE_MEASUREMENT_PLAUSIBILITY_THRESHOLD_MV,
+								new UnsignedWordElement(33093)), //
+						m(WuerthBms.ChannelId.CSC_STACK_VS_SUM_PLAUSIBILITY_THRESHOLD_MV,
+								new UnsignedWordElement(33094)), //
+						m(WuerthBms.ChannelId.CSC_ALLOWED_COM_RETRIES, new UnsignedWordElement(33095)), //
+						m(WuerthBms.ChannelId.CSC_CELLBALANCINGTIME_PER_DIAG_CYCLE_MS, new UnsignedWordElement(33096)), //
+						m(WuerthBms.ChannelId.BMS_CONTACTOR_INVERTED, new UnsignedWordElement(33097)), //
+						m(WuerthBms.ChannelId.RELAY_AUX0_OPEN_MV, new UnsignedWordElement(33098)), //
+						m(WuerthBms.ChannelId.RELAY_AUX1_OPEN_MV, new UnsignedWordElement(33099)), //
+						m(WuerthBms.ChannelId.RELAY_AUX0_CLOSED_MV, new UnsignedWordElement(33100)), //
+						m(WuerthBms.ChannelId.RELAY_AUX1_CLOSED_MV, new UnsignedWordElement(33101)), //
+						m(WuerthBms.ChannelId.RELAY_AUX_DEVIATION_MAX_MV, new UnsignedWordElement(33102)), //
+						m(WuerthBms.ChannelId.WEBCM_DEV_ACTIVATE_BALANCING, new UnsignedWordElement(33103)), //
+						m(WuerthBms.ChannelId.WEBCM_DEV_ACTIVATE_ALLRUNTIME_CHECKS, new UnsignedWordElement(33104)), //
+						m(WuerthBms.ChannelId.WEBCM_DEV_ACTIVATE_RANGE_CHECKS, new UnsignedWordElement(33105)), //
+						m(WuerthBms.ChannelId.TEST_WEOS_DEACTIVATE_AREA_CHECK, new UnsignedWordElement(33106)), //
+						m(WuerthBms.ChannelId.TEST_WEOS_DEACTIVATE_BUS_MPU, new UnsignedWordElement(33107)), //
+						m(WuerthBms.ChannelId.TEST_WEOS_ALL_CORE0_TASKS_PRIVILEGED, new UnsignedWordElement(33108)), //
+						m(WuerthBms.ChannelId.OV_CUTOFF_MIN_TEMP, new UnsignedWordElement(33109)), //
+						m(WuerthBms.ChannelId.OV_CUTOFF_MAX_TEMP, new UnsignedWordElement(33110)), //
+						m(WuerthBms.ChannelId.UV_CUTOFF_MIN_TEMP, new UnsignedWordElement(33111)), //
+						m(WuerthBms.ChannelId.UV_CUTOFF_MAX_TEMP, new UnsignedWordElement(33112)), //
+						m(WuerthBms.ChannelId.OV_SAFE_MIN_TEMP, new UnsignedWordElement(33113)), //
+						m(WuerthBms.ChannelId.OV_SAFE_MAX_TEMP, new UnsignedWordElement(33114)), //
+						m(WuerthBms.ChannelId.UV_SAFE_MIN_TEMP, new UnsignedWordElement(33115)), //
+						m(WuerthBms.ChannelId.UV_SAFE_MAX_TEMP, new UnsignedWordElement(33116)), //
+						m(WuerthBms.ChannelId.CURRENT_CHARGE_MIN_TEMP, new UnsignedWordElement(33117)), //
+						m(WuerthBms.ChannelId.CURRENT_CHARGE_MAX_TEMP, new UnsignedWordElement(33118)), //
+						m(WuerthBms.ChannelId.CURRENT_DISCHARGE_MIN_TEMP, new UnsignedWordElement(33119)), //
+						m(WuerthBms.ChannelId.CURRENT_DISCHARGE_MAX_TEMP, new UnsignedWordElement(33120)), //
+						m(WuerthBms.ChannelId.CFG_OVERCURRENT_SAFE_STATE, new UnsignedWordElement(33121)), //
+						m(WuerthBms.ChannelId.CFG_OVER_CURRENT_SAFE_STATE_THRESHOLD, new UnsignedWordElement(33122)), //
+						m(WuerthBms.ChannelId.CFG_PRECHARGE_MAX_ENERGY_WS, new UnsignedWordElement(33123),
+								SCALE_FACTOR_MINUS_1) //
+				), //
 
-	/**
-	 * Checks if the Software Version provided by Suppliers is Outdated.
-	 *
-	 * @param valMajor {@link Supplier} for major Software Version
-	 * @param valMinor {@link Supplier} for minor Software Version
-	 * @param valPatch {@link Supplier} for patch Software Version
-	 * @return is software outdated
-	 */
-	public static boolean isSoftwareOutdated(Supplier<Value<Integer>> valMajor, //
-			Supplier<Value<Integer>> valMinor, //
-			Supplier<Value<Integer>> valPatch) {
-		Value<Integer> major = valMajor.get();
-		Value<Integer> minor = valMinor.get();
-		Value<Integer> patch = valPatch.get();
+				new FC4ReadInputRegistersTask(33200, Priority.LOW, //
+						m(WuerthBms.ChannelId.SOC_MIN, new SignedWordElement(33200)), //
+						m(WuerthBms.ChannelId.SOC_MAX, new SignedWordElement(33201)), //
+						m(WuerthBms.ChannelId.LOCK_STATUS_CRC_MSB, new SignedWordElement(33202)), //
+						m(WuerthBms.ChannelId.LOCK_STATUS_CRC_LSB, new SignedWordElement(33203)) //
+				),
 
-		if (major.isDefined() && minor.isDefined() && patch.isDefined()) {
-			SemanticVersion version = new SemanticVersion(major.get(), minor.get(), patch.get());
-			return !version.isAtLeast(OUTDATED_VERSION);
-		}
-		return false;
-	}
+				new FC16WriteRegistersTask(baseWrite, //
+						m(WuerthBms.ChannelId.COMMAND_STATE_REQUEST, new UnsignedWordElement(baseWrite)), //
+						new DummyRegisterElement(40001, 40004), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_1, new UnsignedWordElement(baseWrite + 5)), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_2, new UnsignedWordElement(baseWrite + 6)), //
+						m(WuerthBms.ChannelId.COMMAND_ALIVE_COUNTER, new UnsignedWordElement(baseWrite + 7)), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_SYSTEM_LOCK_MSB, new UnsignedWordElement(baseWrite + 8)), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_SYSTEM_LOCK_LSB, new UnsignedWordElement(baseWrite + 9)), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_SYSTEM_LOCK_CRC_MSB,
+								new UnsignedWordElement(baseWrite + 10)), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_SYSTEM_LOCK_CRC_LSB,
+								new UnsignedWordElement(baseWrite + 11)), //
+						new DummyRegisterElement(40012, 40013), //
+						m(WuerthBms.ChannelId.REGULATION_REMAINING_CAPACITY, new UnsignedWordElement(baseWrite + 14)), //
+						m(WuerthBms.ChannelId.REGULATION_REMAINING_POWER_CAPABILITY,
+								new UnsignedWordElement(baseWrite + 15)), //
+						m(WuerthBms.ChannelId.REGULATION_ROUND_TRIP_EFFICIENCY,
+								new UnsignedWordElement(baseWrite + 16)), //
+						m(WuerthBms.ChannelId.REGULATION_SELF_DISCHARGING_RATE,
+								new UnsignedWordElement(baseWrite + 17)), //
+						m(WuerthBms.ChannelId.REGULATION_ENERGY_THROUGHPUT_OVERALL_IN_MSB,
+								new UnsignedWordElement(baseWrite + 18)), //
+						m(WuerthBms.ChannelId.REGULATION_ENERGY_THROUGHPUT_OVERALL_IN_LSB,
+								new UnsignedWordElement(baseWrite + 19)), //
+						m(WuerthBms.ChannelId.REGULATION_ENERGY_THROUGHPUT_OVERALL_OUT_MSB,
+								new UnsignedWordElement(baseWrite + 20)), //
+						m(WuerthBms.ChannelId.REGULATION_ENERGY_THROUGHPUT_OVERALL_OUT_LSB,
+								new UnsignedWordElement(baseWrite + 21)), //
+						m(WuerthBms.ChannelId.REGULATION_NUM_CHARGE_DISCHARGE_CYCLES,
+								new UnsignedWordElement(baseWrite + 22)), //
+						m(WuerthBms.ChannelId.SHUNT_CALIBRATION_MSB, new UnsignedWordElement(baseWrite + 23)), //
+						m(WuerthBms.ChannelId.SHUNT_CALIBRATION_LSB, new UnsignedWordElement(baseWrite + 24)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET0, new UnsignedWordElement(baseWrite + 25)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET1, new UnsignedWordElement(baseWrite + 26)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET2, new UnsignedWordElement(baseWrite + 27)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET3, new UnsignedWordElement(baseWrite + 28)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET4, new UnsignedWordElement(baseWrite + 29)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET5, new UnsignedWordElement(baseWrite + 30)), //
+						m(WuerthBms.ChannelId.IP_BYTE0, new UnsignedWordElement(baseWrite + 31)), //
+						m(WuerthBms.ChannelId.IP_BYTE1, new UnsignedWordElement(baseWrite + 32)), //
+						m(WuerthBms.ChannelId.IP_BYTE2, new UnsignedWordElement(baseWrite + 33)), //
+						m(WuerthBms.ChannelId.IP_BYTE3, new UnsignedWordElement(baseWrite + 34)), //
+						m(WuerthBms.ChannelId.GW_BYTE0, new UnsignedWordElement(baseWrite + 35)), //
+						m(WuerthBms.ChannelId.GW_BYTE1, new UnsignedWordElement(baseWrite + 36)), //
+						m(WuerthBms.ChannelId.GW_BYTE2, new UnsignedWordElement(baseWrite + 37)), //
+						m(WuerthBms.ChannelId.GW_BYTE3, new UnsignedWordElement(baseWrite + 38)), //
+						m(WuerthBms.ChannelId.HW_SERIAL_NUMBER_CODE_0, new UnsignedWordElement(baseWrite + 39)), //
+						m(WuerthBms.ChannelId.HW_SERIAL_NUMBER_CODE_1, new UnsignedWordElement(baseWrite + 40)), //
+						m(WuerthBms.ChannelId.HW_SERIAL_NUMBER_CODE_2, new UnsignedWordElement(baseWrite + 41)), //
+						m(WuerthBms.ChannelId.HW_SERIAL_NUMBER_LETTER, new UnsignedWordElement(baseWrite + 42)), //
+						m(WuerthBms.ChannelId.COMMAND_SOH_RESET, new UnsignedWordElement(baseWrite + 43)), //
+						m(WuerthBms.ChannelId.COMMAND_SOH_HIGH_RESOLUTION_LSB, new UnsignedWordElement(baseWrite + 44)), //
+						m(WuerthBms.ChannelId.COMMAND_SOH_HIGH_RESOLUTION_MSB, new UnsignedWordElement(baseWrite + 45)) //
+				),
 
-	protected void initializeDynamicChannels() {
-		if (!this.areCellsAndModulesDefined()) {
-			return;
-		}
-		if (this.config.version() == FirmwareVersion.WUERTH_VERSION_1_0_9) {
-			final DynamicChannel[] params = { //
-					new DynamicChannel("AVG_CELL_VOLTAGE", Unit.VOLT), //
-					new DynamicChannel("MAX_CELL_VOLTAGE", Unit.VOLT), //
-					new DynamicChannel("MIN_CELL_VOLTAGE", Unit.VOLT), //
-					new DynamicChannel("AVG_TEMPERATURE", Unit.DEGREE_CELSIUS), //
-					new DynamicChannel("MAX_TEMPERATURE", Unit.DEGREE_CELSIUS), //
-					new DynamicChannel("MIN_TEMPERATURE", Unit.DEGREE_CELSIUS), //
-					new DynamicChannel("SOH", Unit.PERCENT), //
-					new DynamicChannel("STATE_ENERGY", Unit.WATT_HOURS), //
-					new DynamicChannel("REMAINING_CAPACITY", Unit.AMPERE_HOURS) };
-			this.initializeDynamicModuleChannels(30040, params);
-			this.initializeDynamicCellChannels(30409);
-			this.registerCellVoltageListeners();
-			this.registerCellTemperatureListeners();
-		}
-	}
-
-	/**
-	 * Method to dynamically create the module channels.
-	 * 
-	 * @param startAddress    the start address of the register range.
-	 * @param dynamicChannels the channels which are dynamically created. See
-	 *                        {@link DynamicChannel}.
-	 */
-	protected void initializeDynamicModuleChannels(int startAddress, DynamicChannel[] dynamicChannels) {
-		final int numberOfModules = this.getStringModuleCount().get();
-		List<ModbusElement> elements = new ArrayList<>();
-		int address = startAddress;
-
-		for (int moduleIndex = 0; moduleIndex < numberOfModules; moduleIndex++) {
-			for (DynamicChannel channel : dynamicChannels) {
-				String channelId = "MODULE_" + moduleIndex + "_" + channel.suffix();
-
-				elements.add(m(this.generateModuleChannel(channelId, INTEGER, c -> c.unit(channel.unit())),
-						new UnsignedWordElement(address++)));
-			}
-		}
-
-		this.addModbusTask(startAddress, elements.toArray(ModbusElement[]::new));
-	}
-
-	/**
-	 * Method to dynamically crate cell channels.
-	 * 
-	 * @param baseCellElementAddress the start address of the register range.
-	 */
-	protected void initializeDynamicCellChannels(int baseCellElementAddress) {
-		final int temperatureSensors = getNumberOfTemperatureSensorsPerModule().get();
-		final int modules = getNumberOfModules().get();
-		final int cells = getNumberOfCells().get() + getNumberOfCellsCsc().get();
-		if (this.config.version() == FirmwareVersion.WUERTH_VERSION_1_0_9) {
-			for (int moduleIndex = 0; moduleIndex < modules; moduleIndex++) {
-				int offset = baseCellElementAddress + (moduleIndex * 63);
-				this.addVoltageChannels(moduleIndex, offset, cells);
-				this.addBalanceChannels(moduleIndex, offset + 28, cells);
-				this.addTemperatureChannels(moduleIndex, offset + 56, temperatureSensors);
-			}
-
-			for (int moduleIndex = 0; moduleIndex < modules; moduleIndex++) {
-				int offset = 33204 + (moduleIndex * 35);
-				this.addLockVoltageChannels(moduleIndex, offset, cells);
-				this.addLockTemperatureChannels(moduleIndex, offset + 28, temperatureSensors);
-			}
-		}
-	}
-
-	/**
-	 * Registers listeners for 'onChange' event of any MODULE_X_MIN_CELL_VOLTAGE and
-	 * MODULE_X_MAX_CELL_VOLTAGE to update the total 'MinCellVoltage' and
-	 * 'MaxCellVoltage' Channels.
-	 */
-	public void registerCellVoltageListeners() {
-		this.getDynamicChannelsByName("MAX_CELL_VOLTAGE") //
-				.forEach(c -> c.onChange((a, b) -> this.updateMaxCellVoltage()));
-
-		this.getDynamicChannelsByName("MIN_CELL_VOLTAGE") //
-				.forEach(c -> c.onChange((a, b) -> this.updateMinCellVoltage()));
-	}
-
-	/**
-	 * Called at 'onChange' event of any MODULE_X_MAX_CELL_VOLTAGE channel. Updates
-	 * the total 'MaxCellVoltage' Channel.
-	 */
-	private void updateMaxCellVoltage() {
-		this.getDynamicChannelsByName("MAX_CELL_VOLTAGE").stream() //
-				.filter(c -> c.getNextValue().get() != null)//
-				.map(c -> (int) c.getNextValue().get())//
-				.max(Comparator.naturalOrder())//
-				.ifPresentOrElse(//
-						this::_setMaxCellVoltage, //
-						() -> this._setMaxCellVoltage(null)//
-				);
-	}
-
-	/**
-	 * Called at 'onChange' event of any MODULE_X_MIN_CELL_VOLTAGE channel. Updates
-	 * the 'MinCellVoltage' Channel.
-	 */
-	private void updateMinCellVoltage() {
-		this.getDynamicChannelsByName("MIN_CELL_VOLTAGE").stream() //
-				.filter(c -> c.getNextValue().get() != null)//
-				.map(c -> (int) c.getNextValue().get())//
-				.min(Comparator.naturalOrder())//
-				.ifPresentOrElse(//
-						this::_setMinCellVoltage, //
-						() -> this._setMinCellVoltage(null)//
-				);
+				new FC3ReadRegistersTask(baseWrite, Priority.LOW, //
+						m(WuerthBms.ChannelId.COMMAND_STATE_REQUEST, new UnsignedWordElement(baseWrite)), //
+						new DummyRegisterElement(40001, 40004), // not implemented by Würth
+						m(WuerthBms.ChannelId.COMMAND_RESET_1, new UnsignedWordElement(baseWrite + 5)), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_2, new UnsignedWordElement(baseWrite + 6)), //
+						m(WuerthBms.ChannelId.COMMAND_ALIVE_COUNTER, new UnsignedWordElement(baseWrite + 7)), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_SYSTEM_LOCK_MSB, new UnsignedWordElement(baseWrite + 8)), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_SYSTEM_LOCK_LSB, new UnsignedWordElement(baseWrite + 9)), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_SYSTEM_LOCK_CRC_MSB,
+								new UnsignedWordElement(baseWrite + 10)), //
+						m(WuerthBms.ChannelId.COMMAND_RESET_SYSTEM_LOCK_CRC_LSB,
+								new UnsignedWordElement(baseWrite + 11)), //
+						new DummyRegisterElement(40012, 40013), // not implemented by Würth
+						m(WuerthBms.ChannelId.REGULATION_REMAINING_CAPACITY, new UnsignedWordElement(baseWrite + 14)), //
+						m(WuerthBms.ChannelId.REGULATION_REMAINING_POWER_CAPABILITY,
+								new UnsignedWordElement(baseWrite + 15)), //
+						m(WuerthBms.ChannelId.REGULATION_ROUND_TRIP_EFFICIENCY,
+								new UnsignedWordElement(baseWrite + 16)), //
+						m(WuerthBms.ChannelId.REGULATION_SELF_DISCHARGING_RATE,
+								new UnsignedWordElement(baseWrite + 17)), //
+						m(WuerthBms.ChannelId.REGULATION_ENERGY_THROUGHPUT_OVERALL_IN_MSB,
+								new UnsignedWordElement(baseWrite + 18)), //
+						m(WuerthBms.ChannelId.REGULATION_ENERGY_THROUGHPUT_OVERALL_IN_LSB,
+								new UnsignedWordElement(baseWrite + 19)), //
+						m(WuerthBms.ChannelId.REGULATION_ENERGY_THROUGHPUT_OVERALL_OUT_MSB,
+								new UnsignedWordElement(baseWrite + 20)), //
+						m(WuerthBms.ChannelId.REGULATION_ENERGY_THROUGHPUT_OVERALL_OUT_LSB,
+								new UnsignedWordElement(baseWrite + 21)), //
+						m(WuerthBms.ChannelId.REGULATION_NUM_CHARGE_DISCHARGE_CYCLES,
+								new UnsignedWordElement(baseWrite + 22)), //
+						new DummyRegisterElement(baseWrite + 23, baseWrite + 24), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET0, new UnsignedWordElement(baseWrite + 25)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET1, new UnsignedWordElement(baseWrite + 26)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET2, new UnsignedWordElement(baseWrite + 27)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET3, new UnsignedWordElement(baseWrite + 28)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET4, new UnsignedWordElement(baseWrite + 29)), //
+						m(WuerthBms.ChannelId.MAC_ADDRESS_OCTET5, new UnsignedWordElement(baseWrite + 30)), //
+						m(WuerthBms.ChannelId.IP_BYTE0, new UnsignedWordElement(baseWrite + 31)), //
+						m(WuerthBms.ChannelId.IP_BYTE1, new UnsignedWordElement(baseWrite + 32)), //
+						m(WuerthBms.ChannelId.IP_BYTE2, new UnsignedWordElement(baseWrite + 33)), //
+						m(WuerthBms.ChannelId.IP_BYTE3, new UnsignedWordElement(baseWrite + 34)), //
+						m(WuerthBms.ChannelId.GW_BYTE0, new UnsignedWordElement(baseWrite + 35)), //
+						m(WuerthBms.ChannelId.GW_BYTE1, new UnsignedWordElement(baseWrite + 36)), //
+						m(WuerthBms.ChannelId.GW_BYTE2, new UnsignedWordElement(baseWrite + 37)), //
+						m(WuerthBms.ChannelId.GW_BYTE3, new UnsignedWordElement(baseWrite + 38)), //
+						m(WuerthBms.ChannelId.HW_SERIAL_NUMBER_CODE_0, new UnsignedWordElement(baseWrite + 39)), //
+						m(WuerthBms.ChannelId.HW_SERIAL_NUMBER_CODE_1, new UnsignedWordElement(baseWrite + 40)), //
+						m(WuerthBms.ChannelId.HW_SERIAL_NUMBER_CODE_2, new UnsignedWordElement(baseWrite + 41)), //
+						m(WuerthBms.ChannelId.HW_SERIAL_NUMBER_LETTER, new UnsignedWordElement(baseWrite + 42)), //
+						m(WuerthBms.ChannelId.COMMAND_SOH_RESET, new UnsignedWordElement(baseWrite + 43)), //
+						m(WuerthBms.ChannelId.COMMAND_SOH_HIGH_RESOLUTION_LSB, new UnsignedWordElement(baseWrite + 44)), //
+						m(WuerthBms.ChannelId.COMMAND_SOH_HIGH_RESOLUTION_MSB, new UnsignedWordElement(baseWrite + 45)) //
+				));
 	}
 
 	private void registerResetBatteryListeners() {
@@ -426,65 +566,102 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 	}
 
 	/**
-	 * Registers listeners for 'onChange' event of any MODULE_X_MIN_TEMPERATURE and
-	 * MODULE_X_MAX_TEMPERATURE to update the total 'MinCellTemperature' and
-	 * 'MaxCellTemperature' Channels.
+	 * Removes all dynamically generated channels that start with "MODULE", to avoid
+	 * duplicates or outdated entries.
 	 */
-	public void registerCellTemperatureListeners() {
-		this.getDynamicChannelsByName("MAX_TEMPERATURE") //
-				.forEach(c -> c.onChange((a, b) -> this.updateMaxCellTemperature()));
+	private void clearOldDynamicChannels() {
+		for (var channel : new ArrayList<>(this.channels())) {
+			if (channel.channelId().name().startsWith("MODULE")) {
+				if (this.removeChannel(channel)) {
+					this.log.debug("Removed Würth channel {}", channel.channelId());
+				}
+			}
+		}
+	}
 
-		this.getDynamicChannelsByName("MIN_TEMPERATURE") //
-				.forEach(c -> c.onChange((a, b) -> this.updateMinCellTemperature()));
+	private BatteryVoltageSpecification getBatteryVoltageSpecification() {
+		final var cells = this.getCfgCellCnt().get() + this.getCfgCscCellCscCnt().get();
+		final var modules = this.getCfgModuleCnt().get();
+		final var maximumCellVoltageLimit = this.getCfgBattCellCutoffOvV().get();
+		final var minimumCellVoltageLimit = this.getCfgBattCellCutoffUvV().get();
+		final var maximumCellVoltageOperationLimit = 4130;
+		final var minimumCellVoltageOperationLimit = 3250;
+		final var maximumChargeVoltage = 967;
+		final var minimumDischargeVoltage = 760;
+		return new BatteryVoltageSpecification(cells, modules, maximumCellVoltageLimit, minimumCellVoltageLimit,
+				maximumCellVoltageOperationLimit, minimumCellVoltageOperationLimit, maximumChargeVoltage,
+				minimumDischargeVoltage);
+	}
+
+	protected void initializeDynamicChannels() {
+		if (!this.areCellsAndModulesDefined()) {
+			return;
+		}
+		this.clearOldDynamicChannels();
+		final DynamicChannel[] dynamicChannels = { //
+				new DynamicChannel("AVG_CELL_VOLTAGE", Unit.MILLIVOLT), //
+				new DynamicChannel("MAX_CELL_VOLTAGE", Unit.MILLIVOLT), //
+				new DynamicChannel("MIN_CELL_VOLTAGE", Unit.MILLIVOLT), //
+				new DynamicChannel("AVG_TEMPERATURE", Unit.DEGREE_CELSIUS), //
+				new DynamicChannel("MAX_TEMPERATURE", Unit.DEGREE_CELSIUS), //
+				new DynamicChannel("MIN_TEMPERATURE", Unit.DEGREE_CELSIUS), //
+				new DynamicChannel("SOH", Unit.PERCENT) //
+		};
+
+		this.initializeDynamicModuleChannels(30100, dynamicChannels);
+		this.initializeDynamicCellChannels(30460);
+
 	}
 
 	/**
-	 * Called at 'onChange' event of any MODULE_X_MAX_TEMPERATURE channel. Updates
-	 * the total 'MaxCellTemperature' Channel.
-	 */
-	private void updateMaxCellTemperature() {
-		this.getDynamicChannelsByName("MAX_TEMPERATURE").stream() //
-				.filter(c -> c.getNextValue().get() != null)//
-				.map(c -> (int) c.getNextValue().get())//
-				.max(Comparator.naturalOrder())//
-				.ifPresentOrElse(//
-						this::_setMaxCellTemperature, //
-						() -> this._setMaxCellTemperature(null)//
-				);
-	}
-
-	/**
-	 * Called at 'onChange' event of any MODULE_X_MIN_TEMPERATURE channel. Updates
-	 * the 'MinCellTemperature' Channel.
-	 */
-	private void updateMinCellTemperature() {
-		this.getDynamicChannelsByName("MIN_TEMPERATURE").stream() //
-				.filter(c -> c.getNextValue().get() != null)//
-				.map(c -> (int) c.getNextValue().get())//
-				.min(Comparator.naturalOrder())//
-				.ifPresentOrElse(//
-						this::_setMinCellTemperature, //
-						() -> this._setMinCellTemperature(null)//
-				);
-	}
-
-	/**
-	 * Returns a list of dynamically created channels. For example, in Würth version
-	 * 1.0.9, module channels follow the format: ModuleXChannelName.
+	 * Method to dynamically create the module channels.
 	 *
-	 * @param channelSuffix the suffix of the channel, e.g., "MAX_CELL_VOLTAGE".
-	 * @return a list of matching channel addresses.
+	 * @param startAddress    the start address of the register range.
+	 * @param dynamicChannels the channels which are dynamically created. See
+	 *                        {@link DynamicChannel}.
 	 */
-	private List<Channel<?>> getDynamicChannelsByName(String channelSuffix) {
-		return this.channels().stream() //
-				.filter(c -> c.channelId().name().startsWith("MODULE")//
-						&& c.channelId().name().endsWith(channelSuffix))
-				.toList(); //
+	protected void initializeDynamicModuleChannels(int startAddress, DynamicChannel[] dynamicChannels) {
+		final int numberOfModules = this.getCfgModuleCnt().get();
+		List<ModbusElement> elements = new ArrayList<>();
+		int address = startAddress;
+
+		for (int moduleIndex = 0; moduleIndex < numberOfModules; moduleIndex++) {
+			for (DynamicChannel channel : dynamicChannels) {
+				String channelId = "MODULE_" + moduleIndex + "_" + channel.suffix();
+
+				elements.add(m(this.generateModuleChannel(channelId, INTEGER, c -> c.unit(channel.unit())),
+						new UnsignedWordElement(address++)));
+			}
+		}
+		this.addModbusTask(startAddress, Priority.HIGH, elements.toArray(ModbusElement[]::new));
 	}
 
-	private void addModbusTask(int baseCellElementAddress, ModbusElement... elements) {
+	/**
+	 * Method to dynamically crate cell channels.
+	 *
+	 * @param baseCellElementAddress the start address of the register range.
+	 */
+	protected void initializeDynamicCellChannels(int baseCellElementAddress) {
+		final int temperatureSensors = this.getCfgTempSensCntPerModule().get();
+		final int modules = this.getCfgModuleCnt().get();
+		final int cells = this.getCfgCellCnt().get() + this.getCfgCscCellCscCnt().get();
+		for (int moduleIndex = 0; moduleIndex < modules; moduleIndex++) {
+			int offset = baseCellElementAddress + (moduleIndex * 63);
+			this.addVoltageChannels(moduleIndex, offset, cells);
+			this.addBalanceChannels(moduleIndex, offset + 28, cells);
+			this.addTemperatureChannels(moduleIndex, offset + 56, temperatureSensors);
+		}
+
+		for (int moduleIndex = 0; moduleIndex < modules; moduleIndex++) {
+			int offset = 33204 + (moduleIndex * 35);
+			this.addLockVoltageChannels(moduleIndex, offset, cells);
+			this.addLockTemperatureChannels(moduleIndex, offset + 28, temperatureSensors);
+		}
+	}
+
+	private void addModbusTask(int baseCellElementAddress, Priority priority, ModbusElement... elements) {
 		this.getModbusProtocol()//
-				.addTask(new FC4ReadInputRegistersTask(baseCellElementAddress, Priority.LOW, elements));
+				.addTask(new FC4ReadInputRegistersTask(baseCellElementAddress, priority, elements));
 	}
 
 	private ChannelIdImpl generateModuleChannel(String channelName, OpenemsType openemsType,
@@ -498,46 +675,8 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		return channelId;
 	}
 
-	private ChannelIdImpl generateModuleChannel(String channelName, OptionsEnum[] optionsEnum) {
-		final var doc = Doc.of(optionsEnum);
-		var channelId = new ChannelIdImpl(channelName, doc);
-		this.addChannel(channelId);
-		return channelId;
-	}
-
 	private ChannelIdImpl generateModuleChannel(String channelIdSuffix, OpenemsType openemsType) {
 		return this.generateModuleChannel(channelIdSuffix, openemsType, FunctionUtils::doNothing);
-	}
-
-	/**
-	 * Maps the given {@link io.openems.edge.common.channel.ChannelId} to the
-	 * provided {@link ModbusElement}. This method utilizes the internal {@code m()}
-	 * method to perform the actual mapping and returns the result.
-	 *
-	 * @param <T>       the type of the element that extends {@link ModbusElement}.
-	 * @param channelId the identifier of the channel to map the element to.
-	 * @param element   the Modbus element to be mapped.
-	 * @return the mapped element of type {@code T}.
-	 */
-	public <T extends ModbusElement> T map(io.openems.edge.common.channel.ChannelId channelId, T element) {
-		return m(channelId, element);
-	}
-
-	/**
-	 * Maps the given {@link io.openems.edge.common.channel.ChannelId} to the
-	 * provided {@link ModbusElement} along with the
-	 * {@link ElementToChannelConverter}. This method utilizes the internal
-	 * {@code m()} method to perform the actual mapping and returns the result.
-	 *
-	 * @param <T>       the type of the element that extends {@link ModbusElement}.
-	 * @param channelId the identifier of the channel to map the element to.
-	 * @param element   the Modbus element to be mapped.
-	 * @param converter The {@link ElementToChannelConverter}
-	 * @return the mapped element of type {@code T}.
-	 */
-	public <T extends ModbusElement> T map(io.openems.edge.common.channel.ChannelId channelId, T element,
-			ElementToChannelConverter converter) {
-		return m(channelId, element, converter);
 	}
 
 	/**
@@ -548,11 +687,13 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 	 * @return true if all required channels have been defined
 	 */
 	private boolean areCellsAndModulesDefined() {
-		return getNumberOfModules().isDefined()//
-				&& getNumberOfCells().isDefined()//
-				&& getNumberOfCellsCsc().isDefined()//
-				&& getNumberOfTemperatureSensorsPerModule().isDefined()//
-				&& getNumberOfTemperatureSensors().isDefined();//
+		return getCfgModuleCnt().isDefined()//
+				&& getCfgCellCnt().isDefined()//
+				&& getCfgCscCellCscCnt().isDefined()//
+				&& getCfgBattCellCutoffOvV().isDefined()//
+				&& getCfgBattCellCutoffUvV().isDefined()//
+				&& getCfgTempSensCntPerModule().isDefined()//
+				&& getCfgTempSensCnt().isDefined();//
 	}
 
 	/**
@@ -569,7 +710,7 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 			elements.add(m(this.generateModuleChannel("MODULE_" + moduleIndex + "_CELL_" + i + "_VOLTAGE", INTEGER,
 					c -> c.unit(Unit.MILLIVOLT)), new UnsignedWordElement(startAddress + i)));
 		}
-		this.addModbusTask(startAddress, elements.toArray(ModbusElement[]::new));
+		this.addModbusTask(startAddress, Priority.LOW, elements.toArray(ModbusElement[]::new));
 	}
 
 	/**
@@ -583,10 +724,10 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 	private void addBalanceChannels(int moduleIndex, int startAddress, int cells) {
 		List<ModbusElement> elements = new ArrayList<>();
 		for (int i = 0; i < cells; i++) {
-			elements.add(m(this.generateModuleChannel("MODULE_" + moduleIndex + "_CELL_" + i + "_BALANCE",
-					CellBalancingState.values()), new UnsignedWordElement(startAddress + i)));
+			elements.add(m(this.generateModuleChannel("MODULE_" + moduleIndex + "_CELL_" + i + "_BALANCE", BOOLEAN),
+					new UnsignedWordElement(startAddress + i)));
 		}
-		this.addModbusTask(startAddress, elements.toArray(ModbusElement[]::new));
+		this.addModbusTask(startAddress, Priority.LOW, elements.toArray(ModbusElement[]::new));
 	}
 
 	/**
@@ -603,7 +744,7 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 			elements.add(m(this.generateModuleChannel("MODULE_" + moduleIndex + "_TEMPSENSE_" + i, INTEGER,
 					c -> c.unit(Unit.DEGREE_CELSIUS)), new UnsignedWordElement(startAddress + i)));
 		}
-		this.addModbusTask(startAddress, elements.toArray(ModbusElement[]::new));
+		this.addModbusTask(startAddress, Priority.LOW, elements.toArray(ModbusElement[]::new));
 	}
 
 	/**
@@ -621,7 +762,7 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 					m(this.generateModuleChannel("MODULE_" + moduleIndex + "_LOCK_STATUS_VOLTAGE_CSC" + i, INTEGER),
 							new UnsignedWordElement(startAddress + i)));
 		}
-		this.addModbusTask(startAddress, elements.toArray(ModbusElement[]::new));
+		this.addModbusTask(startAddress, Priority.LOW, elements.toArray(ModbusElement[]::new));
 	}
 
 	/**
@@ -635,32 +776,31 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 	private void addLockTemperatureChannels(int moduleIndex, int startAddress, int sensors) {
 		List<ModbusElement> elements = new ArrayList<>();
 		for (int i = 0; i < sensors; i++) {
-			elements.add(
-					m(this.generateModuleChannel("MODULE_" + moduleIndex + "_LOCK_STATUS_TEMPERATURE_CSC" + i, INTEGER),
-							new UnsignedWordElement(startAddress + i)));
+			elements.add(m(this.generateModuleChannel("MODULE_" + moduleIndex + "_LOCK_STATUS_TEMPERATURE_CSC" + i,
+					INTEGER, c -> c.unit(Unit.DEGREE_CELSIUS)), new UnsignedWordElement(startAddress + i)));
 		}
-		this.addModbusTask(startAddress, elements.toArray(ModbusElement[]::new));
+		this.addModbusTask(startAddress, Priority.LOW, elements.toArray(ModbusElement[]::new));
 	}
 
-	protected void setBatteryVoltageProtection() {
-		if (this.areCellsAndModulesDefined()) {
+	/**
+	 * On BMS startup, relevant channels for voltage protection are undefined. Thus,
+	 * it is set after a few cycles.
+	 */
+	private void ensureVoltageProtectionLimits() {
+		if (this.voltageProtectionLimits == null && this.areCellsAndModulesDefined()) {
 			this.voltageProtectionLimits = new BatteryVoltageProtectionLimits<>(this.getBatteryVoltageSpecification(),
 					this);
 		}
 	}
 
-	private BatteryVoltageSpecification getBatteryVoltageSpecification() {
-		final var cells = this.getNumberOfCells().get() + this.getNumberOfCellsCsc().get();
-		final var modules = this.getNumberOfModules().get();
-		final var maximumCellVoltageLimit = 4175;
-		final var minimumCellVoltageLimit = 3143;
-		final var maximumCellVoltageOperationLimit = 4130;
-		final var minimumCellVoltageOperationLimit = 3250;
-		final var maximumChargeVoltage = 964;
-		final var minimumDischargeVoltage = 763;
-		return new BatteryVoltageSpecification(cells, modules, maximumCellVoltageLimit, minimumCellVoltageLimit,
-				maximumCellVoltageOperationLimit, minimumCellVoltageOperationLimit, maximumChargeVoltage,
-				minimumDischargeVoltage);
+	/**
+	 * Updates the voltage protection limit. Assures that the variable is not null.
+	 */
+	private void updateVoltageProtectionLimits() {
+		this.ensureVoltageProtectionLimits();
+		if (this.voltageProtectionLimits != null) {
+			this.voltageProtectionLimits.updateLimits();
+		}
 	}
 
 	@Override

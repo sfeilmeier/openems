@@ -2,18 +2,16 @@ package io.openems.edge.battery.wuerthbms.enums;
 
 import io.openems.common.types.OptionsEnum;
 
-public enum BalancingState implements OptionsEnum {
+public enum EoLCommand implements OptionsEnum {
 
-	UNDEFINED(-1, "Undefined"), //
-	PENDING(0, "Balancing pending"), //
-	ACTIVE(1, "Balancing active"), //
-	DONE(2, "Balancing done"), //
-	INACTIVE(3, "Balancing inactive"); //
+	DO_NOTHING(-1, "Do nothing"), //
+	OPEN(0, "Close contactors"), //
+	CLOSE(1, "Open contactors"); //
 
 	private final int value;
 	private final String name;
 
-	BalancingState(int value, String name) {
+	EoLCommand(int value, String name) {
 		this.value = value;
 		this.name = name;
 	}
@@ -30,7 +28,7 @@ public enum BalancingState implements OptionsEnum {
 
 	@Override
 	public OptionsEnum getUndefined() {
-		return UNDEFINED;
+		return DO_NOTHING;
 	}
 
 }

@@ -2,18 +2,23 @@ package io.openems.edge.battery.wuerthbms.enums;
 
 import io.openems.common.types.OptionsEnum;
 
-public enum CellBalancingState implements OptionsEnum {
+public enum SystemContactorState implements OptionsEnum {
 
 	UNDEFINED(-1, "Undefined"), //
-	INIT(0, "Init"), //
-	ONGOING(1, "Cell balance ongoing"), //
-	FINISHED(2, "Cell balance finished"), //
-	NOT_NEEDED(3, "Cell balance not needed"); //
+	IGNORE(0, "Contactor ignore"), //
+	INIT(1, "Contactor init"), //
+	CLOSING(2, "Contactor closing"), //
+	OPENING(3, "Contactor opening"), //
+	CLOSED(4, "Contactor closed"), //
+	OPEN(5, "Contactor open"), //
+	ERROR(6, "Contactor error"), //
+	LOCKED(7, "Contactor locked"), //
+	;
 
 	private final int value;
 	private final String name;
 
-	CellBalancingState(int value, String name) {
+	SystemContactorState(int value, String name) {
 		this.value = value;
 		this.name = name;
 	}
@@ -32,5 +37,4 @@ public enum CellBalancingState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
-
 }

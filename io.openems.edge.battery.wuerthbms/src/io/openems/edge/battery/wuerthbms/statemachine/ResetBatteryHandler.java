@@ -7,8 +7,8 @@ import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.timedata.Timeout;
 import io.openems.common.utils.EnumUtils;
 import io.openems.edge.battery.wuerthbms.WuerthBms;
-import io.openems.edge.battery.wuerthbms.enums.BmsState;
 import io.openems.edge.battery.wuerthbms.enums.CommandStateRequest;
+import io.openems.edge.battery.wuerthbms.enums.SystemGlobalState;
 import io.openems.edge.battery.wuerthbms.statemachine.StateMachine.State;
 import io.openems.edge.common.statemachine.StateHandler;
 
@@ -78,7 +78,7 @@ public class ResetBatteryHandler extends StateHandler<State, Context> {
 		}
 		case WAIT_2 -> {
 			if (this.waitAfterSecondOperation.elapsed(context.clock) //
-					|| battery.getBatteryState() != BmsState.SAFE_STATE) {
+					|| battery.getSystemGlobalState() != SystemGlobalState.SAFE) {
 				yield SubState.FINISHED;
 			}
 			// Keep waiting
@@ -91,8 +91,14 @@ public class ResetBatteryHandler extends StateHandler<State, Context> {
 	private SubState handleFirstOperation(Context context) throws OpenemsNamedException {
 		var battery = context.getParent();
 		this.callCommonSetMethods(battery);
-		battery.setCommandReset1(43690);
-		battery.setCommandReset2(21845);
+		// To reset the signal should be sent twice and together with Command_Reset2
+		// - first time value 0xAAAA
+		// - second time value 0x132A
+		battery.setCommandReset1(0xAAAA);
+		// To reset the signal should be sent twice and together with Command_Reset1
+		// - first time value 0x5555
+		// - second time value 0xECD5
+		battery.setCommandReset2(0x5555);
 		battery.setCommandAliveCounter(1);
 		return SubState.WAIT_1;
 	}
@@ -100,18 +106,14 @@ public class ResetBatteryHandler extends StateHandler<State, Context> {
 	private SubState handleSecondOperation(Context context) throws OpenemsNamedException {
 		final var battery = context.getParent();
 		this.callCommonSetMethods(battery);
-		battery.setCommandReset1(4906);
-		battery.setCommandReset2(60629);
+		battery.setCommandReset1(0x132A);
+		battery.setCommandReset2(0xECD5);
 		battery.setCommandAliveCounter(2);
 		return SubState.WAIT_2;
 	}
 
 	private void callCommonSetMethods(WuerthBms battery) throws OpenemsNamedException {
-		battery.setCommandStateRequest(CommandStateRequest.COMMAND_DO_NOTHING);
-		battery.setCommandActivateBalancing(0);
-		battery.setCommandBalancingThreshold(0);
-		battery.setCommandCustomCurrentChargeLimit(0);
-		battery.setCommandCustomCurrentDischargeLimit(0);
+		battery.setCommandStateRequest(CommandStateRequest.DO_NOTHING);
 	}
 
 	@Override

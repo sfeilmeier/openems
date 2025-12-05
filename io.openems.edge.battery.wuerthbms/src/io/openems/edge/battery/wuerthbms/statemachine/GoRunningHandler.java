@@ -26,7 +26,7 @@ public class GoRunningHandler extends StateHandler<State, Context> {
 			battery._setTimeoutStartBattery(true);
 			return State.ERROR;
 		}
-		battery.setCommandStateRequest(CommandStateRequest.COMMAND_CLOSE_CONTACTORS);
+		battery.setCommandStateRequest(CommandStateRequest.CLOSE_CONTACTORS);
 		if (context.isStarted()) {
 			return State.RUNNING;
 		}
