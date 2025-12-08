@@ -1,10 +1,10 @@
 {
   "ADVERT": {
     "1": {
-      "TITLE": "Updates: Time-of-Use Tariff",
-      "TEXT": "LUOX Energy is now available in FEMS as a new provider offering time-of-use tariffs. At the provider rabot.charge, FENECON customers also receive an exclusive discount and save the basic fee for the first 12 months.",
-      "LINK": "https://funnel.rabot.energy/?pt=244b1d86-253f-4183-b22c-9b7f3cd69524&tt=RiskPremium&offerType=multiOffer&utm_source=b2baff&utm_medium=Fenecon&utm_campaign=Fenecon-hp&voucherCode=Fenecon&fromWordpress=true",
-      "LINK_TEXT": "Go to rabot.charge offer"
+      "TITLE": "BETA App: Try it now!",
+      "TEXT": "FENECON pioneers can now test the latest features in our FENECON Beta App for Android. Download the app directly from the Google Play Store, glance at the new design updates, and play an active role in shaping the future of our applications.",
+      "LINK": "https://play.google.com/store/apps/details?id=io.fenecon.ui&utm_source=emea_Med",
+      "LINK_TEXT": "Go to Google Play Store"
     }
   }
 }

@@ -289,6 +289,8 @@ export enum Producttype {
     INDUSTRIAL_S = "Industrial S",
     INDUSTRIAL_M = "Industrial M",
     INDUSTRIAL_L = "Industrial L",
+    INDUSTRIAL_L_US = "industrial-l-us",
+    INDUSTRIAL_XL = "industrial-xl",
 }
 
 export namespace Currency {
