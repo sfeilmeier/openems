@@ -25,6 +25,20 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2025.12.2",
+                changes: [
+                    "PV-Erzeugungsprognose: Allgemeine Verbesserungen, Einführung einer automatischen Schnee-Erkennung",
+                    "Anpassungen an den neuen FENECON-Markenauftritt: Mehr dazu auf www.fenecon.de",
+                    "Verbesserungen am Inbetriebnahmeassistent",
+                    "Verbesserung der Barrierefreiheit gemäß WCAG (Web Content Accessibility Guidelines)",
+                    "Fehlerbehebungen in der Seiten-Navigation und bei Diagrammen mit mehreren Y-Achsen",
+                    "FEMS App clever-PV: Fehlerbehebungen",
+                    { roleIsAtLeast: Role.INSTALLER, change: "FENECON Industrial S und L: Einführung eines Reset-Buttons" },
+                    { roleIsAtLeast: Role.INSTALLER, change: "FENECON Industrial L: Kompatibilität mit Würth Batteriemanagementsystem" },
+                    { roleIsAtLeast: Role.ADMIN, change: "Start Rollout der neuen KI-Verbrauchsprognose" },
+                ],
+            },
+            {
                 version: "2025.12.1",
                 changes: [
                     "Anpassungen an den neuen FENECON-Markenauftritt: Mehr dazu auf www.fenecon.de",
