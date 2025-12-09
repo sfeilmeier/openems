@@ -1,6 +1,6 @@
 package io.openems.edge.system.fenecon.industrial.jsonrpc;
 
-import static io.openems.common.session.Role.ADMIN;
+import static io.openems.common.session.Role.INSTALLER;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public interface ErrorAcknowledgeRpc {
 	 */
 	default void executeErrorAcknowledgeRpc(JsonApiBuilder builder,
 			EndpointRequestType<EmptyObject, EmptyObject> request, Runnable callback) {
-		builder.handleRequest(request, endpoint -> endpoint.setGuards(EdgeGuards.roleIsAtleast(ADMIN)), //
+		builder.handleRequest(request, endpoint -> endpoint.setGuards(EdgeGuards.roleIsAtleast(INSTALLER)), //
 				call -> {
 					var channels = this.defineChannelsForErrorAcknowledge();
 					channels.forEach(c -> c.setNextValue(null));

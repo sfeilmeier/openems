@@ -8,7 +8,7 @@
     <oe-modal-info-line [info]="'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.NOTE' | translate"
       style="font-size: small;"></oe-modal-info-line>
     <oe-modal-horizontal-line></oe-modal-horizontal-line>
-    @if (isAtLeastAdmin && canSeeSystemErrorAcknowledge) {
+    @if (isAtLeastInstaller && canSeeSystemErrorAcknowledge) {
       <table class="full_width">
         <tr>
           <td>

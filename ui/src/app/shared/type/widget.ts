@@ -100,6 +100,8 @@ export class AdvertWidgets {
             Producttype.INDUSTRIAL_S,
             Producttype.INDUSTRIAL_M,
             Producttype.INDUSTRIAL_L,
+            Producttype.INDUSTRIAL_L_US,
+            Producttype.INDUSTRIAL_XL,
         ];
 
         if (StringUtils.isInArr(edge.producttype, allowedProducttypes)) {

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { AfterContentChecked, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { Role } from "src/app/shared/type/role";
@@ -17,9 +16,9 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
 
     @Input() public advertWidgets: AdvertWidget[] = [];
 
-    @ViewChild("swiper") public swiperRef: ElementRef | undefined;
+    @ViewChild("swiper") public swiperRef: ElementRef | null = null;
 
-    public title: AdvertWidget["title"];
+    public title: AdvertWidget["title"] | null = null;
 
     // New properties to check which title to display
     public displayRawTitle: boolean = false;
@@ -48,7 +47,10 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
     }
 
     ngOnDestroy() {
-        this.swiperRef?.nativeElement.swiper.autoplay.stop();
+        if (this.swiperRef?.nativeElement?.swiper == null) {
+            return;
+        }
+        this.swiperRef?.nativeElement.swiper?.autoplay.stop();
     }
 
     /**
@@ -57,7 +59,10 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
     protected setSlideConfig() {
 
         // Slide to random first view
-        const index = this.swiperRef?.nativeElement.swiper.activeIndex ?? 0;
+        let index = 0;
+        if (this.swiperRef?.nativeElement?.swiper) {
+            index = this.swiperRef?.nativeElement.swiper.activeIndex ?? 0;
+        }
 
         if (Array.isArray(this.advertWidgets) && this.advertWidgets != null && index in this.advertWidgets) {
             this.title = this.advertWidgets[index].title;
@@ -66,21 +71,28 @@ export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDe
         }
 
         // Determine whether to display rawTitle or not
-        this.displayRawTitle = "rawTitle" in this.title;
+        this.displayRawTitle = this.title != null && "rawTitle" in this.title;
         this.changeNextPrevButtons();
     }
 
     protected swipeNext() {
-        this.swiperRef?.nativeElement.swiper.slideNext();
+        if (this.swiperRef?.nativeElement?.swiper) {
+            this.swiperRef?.nativeElement.swiper.slideNext();
+        }
     }
 
     protected swipePrevious() {
-        this.swiperRef?.nativeElement.swiper.slidePrev();
+        if (this.swiperRef?.nativeElement?.swiper) {
+            this.swiperRef?.nativeElement.swiper.slidePrev();
+        }
     }
 
     private changeNextPrevButtons() {
 
         // enables or disables nav buttons generally
+        if (this.swiperRef?.nativeElement?.swiper?.slides == null) {
+            return;
+        }
         const length = this.swiperRef?.nativeElement.swiper.slides.length ?? 0;
         this.enableBtn = length > 1;
 

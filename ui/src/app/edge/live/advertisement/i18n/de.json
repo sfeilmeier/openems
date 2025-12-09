@@ -1,10 +1,10 @@
 {
-    "ADVERT": {
-        "1": {
-            "TITLE": "Updates: Dynamische Stromtarife",
-            "TEXT": "LUOX Energy ist als neuer Anbieter mit einem dynamischen Stromtarif im FEMS verfügbar. Beim Anbieter rabot.charge erhalten FENECON-Kunden außerdem einen exklusiven Rabatt und sparen sich die Grundgebühr in den ersten 12 Monaten.",
-            "LINK": "https://funnel.rabot.energy/?pt=244b1d86-253f-4183-b22c-9b7f3cd69524&tt=RiskPremium&offerType=multiOffer&utm_source=b2baff&utm_medium=Fenecon&utm_campaign=Fenecon-hp&voucherCode=Fenecon&fromWordpress=true",
-            "LINK_TEXT": "Zum Angebot von rabot.charge"
-        }
+  "ADVERT": {
+    "1": {
+      "TITLE": "BETA-App: Jetzt ausprobieren!",
+      "TEXT": "FENECON Pioniere können nun die neuesten Features in unserer FENECON Beta App für Android testen. Downloaden Sie die App direkt im Google Play Store und werfen Sie einen Blick auf neue Design-Updates und gestalten Sie die Zukunft unserer Anwendungen aktiv mit.",
+      "LINK": "https://play.google.com/store/apps/details?id=io.fenecon.ui&utm_source=emea_Med",
+      "LINK_TEXT": "Zum Google Play Store"
     }
+  }
 }

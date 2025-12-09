@@ -12,11 +12,6 @@ public class ErrorHandler extends StateHandler<State, Context> {
 		if (!battery.hasFaults() && context.isStopped()) {
 			return State.STOPPED;
 		}
-
-		final var isCommunicationError = battery.getStringEventCommunicationError().orElse(false);
-		if (isCommunicationError) {
-			return State.RESET_BATTERY;
-		}
 		return State.ERROR;
 	}
 

@@ -140,27 +140,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: ui/package-lock.json
 
       - name: npm install
         run: |
           cd ui
-          npm set registry http://npm-cache:4873
+          if [ -n "${{ vars.NPM_REGISTRY }}" ]; then 
+            npm set registry "${{ vars.NPM_REGISTRY }}"; 
+          fi
           npm ci --prefer-offline --force
 
       - name: Test UI
         run: |
           export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
-          source tools/common.sh
-          common_initialize_environment
-          source openems.env
-          common_update_version_in_code
           echo "Testing UI for $OEM"
           cd ui
-          node_modules/.bin/ng lint
+          npm run lint
           node_modules/.bin/tsc
           node_modules/.bin/tsc-strict
           node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-prod,prod"
           npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          echo "Bundle fems-ui-backend.tar.gz"
           tar -C target/ -czf fems-ui-backend.tar.gz .
           rm -r target/
 
@@ -174,6 +175,7 @@ jobs:
           echo "Build for $OEM"
           cd ui
           node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-edge-prod,prod"
+          echo "Bundle fems-ui-edge.tar.gz"
           tar -C target/ -czf fems-ui-edge.tar.gz .
 
       - name: Upload artifact
@@ -202,6 +204,7 @@ jobs:
         with:
           user: fems
           password: ${{ secrets.MINIO_ACCESS_KEY }}
+          verbose: "true"
           name: |
             environment
             jars

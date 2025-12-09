@@ -13,7 +13,6 @@ import static org.osgi.service.component.annotations.ReferencePolicyOption.GREED
 import java.time.Duration;
 import java.util.Optional;
 
-import io.openems.edge.common.meta.Meta;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

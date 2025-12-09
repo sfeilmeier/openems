@@ -1,14 +1,14 @@
-<installation-view iconName="cloud-download-outline" header="Systemupdate" (nextClicked)="onNextClicked()"
-    (previousClicked)="onPreviousClicked()" [isWaiting]="isWaiting">
-    <ion-grid>
-        <ion-row>
-            <ion-col>
-                <ion-item lines="none">
-                    <oe-system-update style="width: 100%;" [edge]="edge" [executeUpdateInstantly]="true"
-                        (stateChanged)="updateStateChanged($event)">
-                    </oe-system-update>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+<installation-view iconName="cloud-download-outline" header="{{ 'EDGE.INDEX.SYSTEMUPDATE' | translate }}"
+  (nextClicked)="onNextClicked()" (previousClicked)="onPreviousClicked()" [isWaiting]="isWaiting">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none">
+          <oe-system-update style="width: 100%;" [edge]="edge" [executeUpdateInstantly]="true"
+            (stateChanged)="updateStateChanged($event)">
+          </oe-system-update>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </installation-view>

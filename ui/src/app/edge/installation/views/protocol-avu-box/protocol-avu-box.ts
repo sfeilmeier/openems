@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
+import { Language } from "src/app/shared/type/language";
 import { environment } from "src/environments";
 import { AbstractHomeIbn } from "../../installation-systems/home/abstract-home";
 import { IbnUtils } from "../../shared/ibn.utils";
@@ -42,6 +43,7 @@ export class ProtocolAvuBoxComponent implements OnInit {
     protected model;
     protected fields: FormlyFieldConfig[];
     protected isNextDisabled: boolean;
+    protected imageLink: string | null = null;
 
     constructor(private translate: TranslateService) { }
 
@@ -50,8 +52,19 @@ export class ProtocolAvuBoxComponent implements OnInit {
         this.form = new FormGroup({});
         this.initializeModel();
         this.isNextDisabled = !(this.model.yes || this.model.no);
-
         this.fields = this.getFields();
+
+        const lang: string = Language.getByKey(localStorage.LANGUAGE)?.key ?? Language.DEFAULT.key;
+
+        switch (lang) {
+            case "de":
+                this.imageLink = "assets/img/ibn/avu-box/home-avu-box-de.jpg";
+                break;
+            case "en":
+            default:
+                this.imageLink = "assets/img/ibn/avu-box/home-avu-box-en.png";
+                break;
+        }
     }
 
     protected onNextClicked() {

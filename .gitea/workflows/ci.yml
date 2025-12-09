@@ -2,7 +2,7 @@ name: CI-Build
 run-name: CI Build for FEMS
 on:
   workflow_dispatch:
-  #pull_request:
+  pull_request:
 
 # https://docs.gitea.com/next/usage/actions/comparison#concurrency
 concurrency:
@@ -207,7 +207,9 @@ jobs:
       - name: npm install
         run: |
           cd ui
-          npm set registry http://npm-cache:4873
+          if [ -n "${{ vars.NPM_REGISTRY }}" ]; then 
+            npm set registry "${{ vars.NPM_REGISTRY }}"; 
+          fi
           npm ci --prefer-offline --force
 
       - name: Test UI

@@ -29,9 +29,8 @@ public class Context extends AbstractContext<WuerthBmsImpl> {
 	 * @return true if battery is in started
 	 */
 	public boolean isStarted() {
-		final var batteryState = this.getParent().getBatteryState();
-		return switch (batteryState) {
-		case CHARGE_STATE, DISCHARGE_STATE, IDLE_STATE -> true;
+		return switch (this.getParent().getSystemGlobalState()) {
+		case CHARGE, DISCHARGE, IDLE -> true;
 		default -> false;
 		};
 	}
@@ -42,8 +41,8 @@ public class Context extends AbstractContext<WuerthBmsImpl> {
 	 * @return true if battery is stopped
 	 */
 	public boolean isStopped() {
-		return switch (this.getParent().getBatteryState()) {
-		case OFFLINE_STATE -> true;
+		return switch (this.getParent().getSystemGlobalState()) {
+		case OFFLINE -> true;
 		default -> false;
 		};
 	}

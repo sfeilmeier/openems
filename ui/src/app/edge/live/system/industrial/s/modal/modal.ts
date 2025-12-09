@@ -11,13 +11,13 @@ import { SystemErrorAcknowledge } from "../../jsonrpc/systemErrorAcknowledge";
 })
 export class ModalComponent extends AbstractModal {
 
-    protected isAtLeastAdmin: boolean = false;
+    protected isAtLeastInstaller: boolean = false;
     protected canSeeSystemErrorAcknowledge: boolean = false;
 
     public override ngOnInit() {
         super.ngOnInit();
         this.service.getCurrentEdge().then(edge => {
-            this.isAtLeastAdmin = edge.roleIsAtLeast(this.Role.ADMIN);
+            this.isAtLeastInstaller = edge.roleIsAtLeast(this.Role.INSTALLER);
             this.canSeeSystemErrorAcknowledge = EdgePermission.hasSystemErrorAcknowledge(edge);
         });
     }

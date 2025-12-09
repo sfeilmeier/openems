@@ -255,10 +255,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
     }
 
     public override getFeedInLimitFields(): FormlyFieldConfig[] {
-        const totalPvPower = 0;
-        this.feedInLimitation.maximumFeedInPower = totalPvPower;
-
-        return super.getDynamicLimitationFields(totalPvPower);
+        return super.getDynamicLimitationFields();
     }
 
     public override async getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service, cluster?: CommercialCluster): Promise<ComponentConfigurator> {

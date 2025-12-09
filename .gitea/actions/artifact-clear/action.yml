@@ -37,7 +37,7 @@ runs:
         names=$(echo "${{ inputs.name }}" | tr ',' '\n')
         /tools/mc alias set local http://gitea-runner-cache:9000 ${{ inputs.user }} ${{ inputs.password }}
         for name in $names; do
-          reference=fems-${{ github.sha }}_$name
+          reference=fems-${{ github.run_id }}_$name
 
           if /tools/mc ls local/${{ env.CACHE_CONTAINER }}/$reference > /dev/null 2>&1; then
             echo "mc rm $opts local/${{ env.CACHE_CONTAINER }}/$reference/"

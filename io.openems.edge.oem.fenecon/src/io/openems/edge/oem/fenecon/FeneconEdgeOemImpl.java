@@ -211,6 +211,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Ess.PowerPlantController", "") //
 			.put("App.Ess.PrepareBatteryExtension", "") //
 			.put("App.Ess.Limiter14a", "") //
+			.put("App.Prediction.UnmanagedConsumption", "") //
 
 			// Hardware
 			.put("App.OpenemsHardware.BeagleBoneBlack", "") //
@@ -220,7 +221,6 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.OpenemsHardware.CM4Max", "") //
 			.put("App.OpenemsHardware.CM4S", "") //
 			.put("App.OpenemsHardware.CM4S.Gen2", "") //
-
 			.build();
 
 	@Override

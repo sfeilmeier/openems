@@ -34,7 +34,10 @@ public class LatestTaskPerKeyExecutor<K> {
 			return;
 		}
 		this.executor.execute(() -> {
-			this.latestTasks.remove(key).run();
+			final var latestTask = this.latestTasks.remove(key);
+			if (latestTask != null) {
+				latestTask.run();
+			}
 		});
 	}
 

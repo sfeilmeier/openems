@@ -5,7 +5,7 @@ import io.openems.common.jsonrpc.serialization.EndpointRequestType;
 import io.openems.common.jsonrpc.serialization.JsonSerializer;
 
 /**
- * Wraps a JSON-RPC Request to hard reset the all BMS devices.
+ * Wraps a JSON-RPC Request to reset errors occurring on a BMS.
  *
  * <pre>
  * {

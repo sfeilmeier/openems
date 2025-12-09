@@ -182,7 +182,7 @@ export class Utils {
         const set2 = new Set(v2);
 
         return v1.every(item => set2.has(item)) &&
-      v2.every(item => set1.has(item));
+            v2.every(item => set1.has(item));
     }
 
     public static getRandomInteger(min: number, max: number) {
@@ -461,13 +461,13 @@ export class Utils {
   * @returns the image path
   */
     public static getFeneconStorageSocSegment(soc: number | null): string {
-        if (!soc || soc < 10) {
+        if (!soc || soc < 1) {
             return "0";
-        } else if (soc < 30) {
+        } else if (soc < 26) {
             return "25";
-        } else if (soc < 60) {
+        } else if (soc < 51) {
             return "50";
-        } else if (soc < 90) {
+        } else if (soc < 76) {
             return "75";
         } else {
             return "100";
@@ -481,8 +481,8 @@ export class Utils {
    * @param filename the filename without .xlsx suffix
    */
     public static downloadXlsx(response: Base64PayloadResponse, filename: string) {
-    // decode base64 string, remove space for IE compatibility
-    // source: https://stackoverflow.com/questions/36036280/base64-representing-pdf-to-blob-javascript/45872086
+        // decode base64 string, remove space for IE compatibility
+        // source: https://stackoverflow.com/questions/36036280/base64-representing-pdf-to-blob-javascript/45872086
         const binary = atob(response.result.payload.replace(/\s/g, ""));
         const len = binary.length;
         const buffer = new ArrayBuffer(len);
@@ -815,7 +815,7 @@ export namespace HistoryUtils {
     };
 
     export class ChartData {
-    /** Static empty instance */
+        /** Static empty instance */
         public static readonly EMPTY = new ChartData();
 
         constructor(
@@ -844,7 +844,7 @@ export namespace HistoryUtils {
     }
 
     export type yAxes = {
-    /** Name to be displayed on the left y-axis, also the unit to be displayed in tooltips and legend */
+        /** Name to be displayed on the left y-axis, also the unit to be displayed in tooltips and legend */
         unit: YAxisType,
         position: "left" | "right" | "bottom" | "top",
         yAxisId: ChartAxis,

@@ -31,6 +31,7 @@ import { Role } from "../../type/role";
 import { Widgets } from "../../type/widgets";
 import { ArrayUtils } from "../../utils/array/array.utils";
 import { PromiseUtils } from "../../utils/promise/promise.utils";
+import { StringUtils } from "../../utils/string/string.utils";
 import { NavigationId, NavigationTree } from "../navigation/shared";
 import { Name } from "../shared/name";
 import { CurrentData } from "./currentdata";
@@ -78,12 +79,13 @@ export class Edge {
      * Gets the edge number from the edge id.
      *
      * @example
-     * If the edge id is "xxxx1234", this method will return 1234.
+     * "xxxx1234" -> 1234
+     * "User1ID50" -> 50
      *
      * @returns The edge number.
      */
     public getNameNumber(): number {
-        return Number.parseInt(this.id.replace(/\D/g, ""));
+        return StringUtils.getTrailingNumber(this.id);
     }
 
     /**

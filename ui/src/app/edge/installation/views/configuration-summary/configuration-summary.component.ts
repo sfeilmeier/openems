@@ -49,7 +49,7 @@ export class ConfigurationSummaryComponent implements OnInit {
 
     public onNextClicked() {
         if (!this.model.isAgbAccepted || !this.model.isGuaranteeConditionsAccepted) {
-            this.service.toast("Akzeptieren Sie die AGB und Garantiebedingungen um fortzufahren.", "warning");
+            this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT_TERMS"), "warning");
             return;
         }
         if (!this.model.isDevicesActiveChecked) {
