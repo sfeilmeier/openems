@@ -1,7 +1,6 @@
 name: App-Build
 run-name: App Build for FEMS
 on:
-  workflow_dispatch:
   push:
     branches: [ main, develop, main-ui ]
 
@@ -11,7 +10,7 @@ concurrency:
 
 env:
   CI_COMMIT_BRANCH: ${{ github.ref_name }}
-  CI_GROUP: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  CI_GROUP: ${{ github.workflow }}-${{ github.ref_name }}
 
 jobs:
   setup:
@@ -46,13 +45,14 @@ jobs:
       fail-fast: true
       matrix:
         theme: [fenecon, heckert]
-        include:
-          - theme: fenecon
-          - theme: heckert
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: "tools/\nui/\n.gitea/\n.gradle-wrapper"
+          sparse-checkout: |
+            tools/
+            ui/
+            .gitea/
+            .gradle-wrapper/
 
       - name: Download artifact
         uses: ./.gitea/actions/artifact-download
@@ -117,6 +117,38 @@ jobs:
         run: |
           echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
           rsync --mkpath /artifacts/* ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/
+
+  release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/main-ui'
+    needs: [upload]
+    strategy:
+      fail-fast: true
+      matrix:
+        theme: [fenecon, heckert]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools/
+            .gitea/
+
+      - name: Download artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          verbose: "true"
+
+      - name: Create Android Release
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          echo ${ secrets.DEVELOPER_API_SERVICE_ACCOUNT } > secret.json
+          source openems.env
+          python3 tools/deploy/android/create_release.py "${{ matrix.theme }}" "$VERSION_FULL" secret.json ${CI_COMMIT_BRANCH}
 
   cleanup:
     runs-on: ubuntu-latest
