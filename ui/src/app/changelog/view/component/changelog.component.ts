@@ -25,6 +25,12 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2025.12.3",
+                changes: [
+                    "Fehlerbehebung im lokalen Monitoring",
+                ],
+            },
+            {
                 version: "2025.12.2",
                 changes: [
                     "PV-Erzeugungsprognose: Allgemeine Verbesserungen, Einführung einer automatischen Schnee-Erkennung",
