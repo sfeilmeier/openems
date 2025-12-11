@@ -119,7 +119,7 @@ jobs:
           rsync --mkpath /artifacts/* ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/
 
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-android
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/main-ui'
     needs: [upload]
     strategy:
@@ -147,7 +147,7 @@ jobs:
           source tools/common.sh
           common_initialize_environment
           source openems.env
-          echo ${ secrets.DEVELOPER_API_SERVICE_ACCOUNT } > secret.json
+          echo ${{ secrets.DEVELOPER_API_SERVICE_ACCOUNT }} > secret.json
           source openems.env
           python3 tools/deploy/android/create_release.py "${{ matrix.theme }}" "$VERSION_FULL" secret.json ${CI_COMMIT_BRANCH}
 
