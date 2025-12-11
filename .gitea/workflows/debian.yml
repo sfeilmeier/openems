@@ -13,6 +13,10 @@ env:
 jobs:
   build-debian:
     runs-on: ubuntu-latest
+    env:
+      OPENEMS_ENV: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/openems.env" 
+      EDGE_JAR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/edge.jar"
+      UI_BUNDLE: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/fems-ui-edge.tar.gz"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,24 +30,34 @@ jobs:
           ssh-key: ${{ secrets.DEPLOY_KEY }}
           host: ${{ vars.DEV_SERVER_HOST }}
 
+      - name: Check Artifacts
+        run: |
+          export EDGE_EXISTS=$(ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "test -e ${{ env.EDGE_JAR }} && echo true || echo false")
+          export UI_EXISTS=$(ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "test -e ${{ env.UI_BUNDLE }} && echo true || echo false")
+
+          echo "Edge JAR exists: $EDGE_EXISTS"
+          echo "UI Bundle exists: $UI_EXISTS"
+
+          if [[ "$EDGE_EXISTS" == "false" && "$UI_EXISTS" == "false" ]]; then
+            echo "No artifacts found for branch '${{ env.CI_COMMIT_BRANCH }}'! Aborting build."
+            exit 1
+          fi
+
       - name: Prepare Environment
-        env:
-          OPENEMS_ENV: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/openems.env"
         run: |
           # Get environment
-          rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:$OPENEMS_ENV ./openems.env
+          rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ env.OPENEMS_ENV }} ./openems.env
           mkdir -p /build/target/
 
       - name: Download UI
         env:
-          UI_BUNDLE: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/fems-ui-edge.tar.gz"
           UI_DESTINATION: "tools/debian/usr/share/openems-fems/www/"
         run: |
-          export ARTIFACT_EXISTS=$(ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "test -e $UI_BUNDLE && echo true || echo false")
+          export ARTIFACT_EXISTS=$(ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "test -e ${{ env.UI_BUNDLE }} && echo true || echo false")
 
           if [[ "$ARTIFACT_EXISTS" == "true" ]]; then
-            echo "Get UI artifact $UI_BUNDLE"
-            rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:$UI_BUNDLE ./fems-ui-edge.tar.gz
+            echo "Get UI artifact ${{ env.UI_BUNDLE }}"
+            rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ env.UI_BUNDLE }} ./fems-ui-edge.tar.gz
           else
             echo "UI artifacts not found! Use 'develop' instead"
             rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/develop/fems-ui-edge.tar.gz ./fems-ui-edge.tar.gz
@@ -55,14 +69,13 @@ jobs:
 
       - name: Download Edge
         env:
-          EDGE_JAR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/edge.jar"
           EDGE_DESTINATION: "tools/debian/usr/lib/openems/"
         run: |
-          export ARTIFACT_EXISTS=$(ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "test -e $EDGE_JAR && echo true || echo false")
+          export ARTIFACT_EXISTS=$(ssh ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }} "test -e ${{ env.EDGE_JAR }} && echo true || echo false")
 
           if [[ "$ARTIFACT_EXISTS" == "true" ]]; then
-            echo "Get Edge JAR $EDGE_JAR"
-            rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:$EDGE_JAR ./edge.jar
+            echo "Get Edge JAR ${{ env.EDGE_JAR }}"
+            rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ env.EDGE_JAR }} ./edge.jar
           else
             echo "Edge JAR not found! Use 'develop' instead"
             rsync ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/develop/edge.jar ./edge.jar
@@ -80,6 +93,6 @@ jobs:
 
       - name: Upload Debian Package
         run: |
-          echo "Upload to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
-          rsync --mkpath /build/target/fems.deb ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems.deb
-          rsync --mkpath /build/target/fems.version ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems.version
+          echo "Upload to ${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/"
+          rsync --mkpath /build/target/fems.deb ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/fems.deb
+          rsync --mkpath /build/target/fems.version ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/fems.version
