@@ -3,6 +3,7 @@ plugins {
 	id 'java'
 	id 'com.github.node-gradle.node'
 	id 'org.barfuin.gradle.jacocolog'
+	id 'org.sonarqube'
 }
 
 repositories {
