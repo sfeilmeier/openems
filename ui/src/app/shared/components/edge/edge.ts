@@ -529,6 +529,7 @@ export class Edge {
                     break;
             }
         }
+        navigationTree.setChild(NavigationId.LIVE, new NavigationTree("navigation-info", { baseString: "navigation-info" }, { name: "information-outline" }, translate.instant("GENERAL.HELP"), "label", [], null));
 
         return navigationTree;
     }
