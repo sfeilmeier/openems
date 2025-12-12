@@ -17,17 +17,17 @@ export enum WeatherIcon {
 
 export function registerWeatherIcons(): void {
     addIcons({
-        "oe-clear-day": environment.icons.WEATHER.CLEAR_DAY,
-        "oe-clear-night": environment.icons.WEATHER.CLEAR_NIGHT,
-        "oe-partly-cloudy-day": environment.icons.WEATHER.PARTLY_CLOUDY_DAY,
-        "oe-partly-cloudy-night": environment.icons.WEATHER.PARTLY_CLOUDY_NIGHT,
-        "oe-thunderstorm": environment.icons.WEATHER.THUNDERSTORM,
-        "oe-weather-cloudy": environment.icons.WEATHER.WEATHER_CLOUDY,
-        "oe-weather-foggy": environment.icons.WEATHER.WEATHER_FOGGY,
-        "oe-weather-mix": environment.icons.WEATHER.WEATHER_MIX,
-        "oe-weather-rainy": environment.icons.WEATHER.WEATHER_RAINY,
-        "oe-weather-snowy": environment.icons.WEATHER.WEATHER_SNOWY,
-        "oe-sunshine-duration": environment.icons.WEATHER.SUNSHINE_DURATION,
-        "oe-help": environment.icons.WEATHER.HELP,
+        "oe-clear-day": environment.icons.COMMON.WEATHER.CLEAR_DAY,
+        "oe-clear-night": environment.icons.COMMON.WEATHER.CLEAR_NIGHT,
+        "oe-partly-cloudy-day": environment.icons.COMMON.WEATHER.PARTLY_CLOUDY_DAY,
+        "oe-partly-cloudy-night": environment.icons.COMMON.WEATHER.PARTLY_CLOUDY_NIGHT,
+        "oe-thunderstorm": environment.icons.COMMON.WEATHER.THUNDERSTORM,
+        "oe-weather-cloudy": environment.icons.COMMON.WEATHER.WEATHER_CLOUDY,
+        "oe-weather-foggy": environment.icons.COMMON.WEATHER.WEATHER_FOGGY,
+        "oe-weather-mix": environment.icons.COMMON.WEATHER.WEATHER_MIX,
+        "oe-weather-rainy": environment.icons.COMMON.WEATHER.WEATHER_RAINY,
+        "oe-weather-snowy": environment.icons.COMMON.WEATHER.WEATHER_SNOWY,
+        "oe-sunshine-duration": environment.icons.COMMON.WEATHER.SUNSHINE_DURATION,
+        "oe-help": environment.icons.COMMON.WEATHER.HELP,
     });
 }

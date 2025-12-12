@@ -13,7 +13,7 @@
         <ion-col style="align-content: center;">
           <ion-item lines="none">
             <span>Status: {{ state.displayLabel }}</span>
-            <ion-icon [name]="state.connected ? 'checkmark-circle-outline' : 'alert-circle-outline'"
+            <ion-icon [name]="state.connected ? 'oe-checkmark' : 'oe-error'"
               [color]="state.connected ? 'success' : 'danger'"></ion-icon>
             @if (!state.connected) {
               <ion-button size="small" button (click)="requestSlaveStatuses()">

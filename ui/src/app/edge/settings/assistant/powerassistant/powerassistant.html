@@ -3,7 +3,7 @@
   @for (d of component.channels; track d) {
     @if (d) {
       <oe-flat-widget-line [name]="'> ' + d.title + ' (' + d.address + ')'" [value]="d.value"
-      [converter]="d.converter"></oe-flat-widget-line>
+        [converter]="d.converter"></oe-flat-widget-line>
     }
     @if (!d) {
       <oe-flat-widget-line name="> "></oe-flat-widget-line>
@@ -17,7 +17,7 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-sm="12" size-md="10" size="8">
         <ion-item>
-          <ion-icon slot="start" size="large" name="information-circle-outline"></ion-icon>
+          <ion-icon slot="start" size="large" name="oe-info"></ion-icon>
           <ion-text text-nowrap translate>SETTINGS.POWER_ASSISTANT.INFO
           </ion-text>
         </ion-item>
@@ -49,8 +49,7 @@
       <ion-col size="12" size-sm="12" size-md="10" size="8">
         <oe-flat-widget title="Not-implemented Controllers">
           @for (component of ignoredControllers; track component) {
-            <oe-flat-widget-line [name]="component.alias"
-            [value]="component.id"></oe-flat-widget-line>
+            <oe-flat-widget-line [name]="component.alias" [value]="component.id"></oe-flat-widget-line>
           }
         </oe-flat-widget>
       </ion-col>

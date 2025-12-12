@@ -23,9 +23,9 @@ import { StringUtils } from "./utils/string/string.utils";
 
 addIcons({
     "oe-consumption": environment.icons.COMMON.CONSUMPTION,
-    "oe-heatpump": environment.icons.COMMON.HEATPUMP,
+    "oe-heatpump": environment.icons.COMPONENT.HEATPUMP,
     "oe-selfconsumption": environment.icons.COMMON.SELFCONSUMPTION,
-    "oe-evcs": environment.icons.COMMON.EVCS,
+    "oe-evcs": environment.icons.COMPONENT.EVCS,
     "oe-grid": environment.icons.COMMON.GRID,
     "oe-grid-storage": environment.icons.COMMON.GRID_STORAGE,
     "oe-grid-restriction": environment.icons.COMMON.GRID_RESTRICTION,
@@ -33,6 +33,10 @@ addIcons({
     "oe-offgrid": environment.icons.COMMON.OFFGRID,
     "oe-production": environment.icons.COMMON.PRODUCTION,
     "oe-storage": environment.icons.COMMON.STORAGE,
+    "oe-checkmark": environment.icons.STATUS.CHECKMARK,
+    "oe-error": environment.icons.STATUS.ERROR,
+    "oe-warning": environment.icons.STATUS.WARNING,
+    "oe-info": environment.icons.STATUS.INFO,
 });
 
 export class Permission {
