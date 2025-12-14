@@ -302,7 +302,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	public List<BatteryFeneconF2b> getNotStoppedBatteries();
 
 	/**
-	 * Are there any faults reported by any battery components?
+	 * Are there any faults reported by any battery components?.
 	 *
 	 * <p>
 	 * Evaluates all Batteries {@link StateChannel}s and returns true if any Channel
@@ -313,7 +313,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	public boolean getAndUpdateHasAnyBatteryFault();
 
 	/**
-	 * Are there any faults reported by all battery components?
+	 * Are there any faults reported by all battery components?.
 	 *
 	 * <p>
 	 * Evaluates all Batteries {@link StateChannel}s and returns true if any Channel
