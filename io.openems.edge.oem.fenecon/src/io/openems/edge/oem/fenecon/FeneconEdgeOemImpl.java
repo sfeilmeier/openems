@@ -197,6 +197,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Hardware.KMtronic8Channel", "https://fenecon.de/fems-relainsboard-8kanal-tcp") //
 
 			// Andere
+			.put("App.System.Fenecon.Home", "") //
 			.put("App.GridMeter.Janitza", "") //
 			.put("App.Cloud.EnerixControl", "") //
 			.put("App.Cloud.Clever-PV", "") //
