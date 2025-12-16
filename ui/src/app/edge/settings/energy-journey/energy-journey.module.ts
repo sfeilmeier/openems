@@ -1,5 +1,8 @@
 import { NgModule } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { WeatherForecastApprovalComponent } from "src/app/shared/components/edge/popover/data-privacy/popover";
+import dePopover from "src/app/shared/components/edge/popover/shared/i18n/de.json";
+import enPopover from "src/app/shared/components/edge/popover/shared/i18n/en.json";
 import { FlatWidgetButtonComponent } from "src/app/shared/components/flat/flat-widget-button/flat-widget-button";
 import { SharedModule } from "src/app/shared/shared.module";
 import { Language } from "src/app/shared/type/language";
@@ -15,6 +18,7 @@ import { EnergyJourneySharedModule } from "./shared/shared.module";
         BatteryExtensionModule,
         EnergyJourneySharedModule,
         FlatWidgetButtonComponent,
+        WeatherForecastApprovalComponent,
     ],
     declarations: [
     ],
@@ -25,10 +29,16 @@ import { EnergyJourneySharedModule } from "./shared/shared.module";
 export class EnergyJourneyModule {
 
     constructor(private translate: TranslateService) {
+        Language.normalizeAdditionalTranslationFiles({ de: dePopover, en: enPopover }).then((translations) => {
+            for (const { lang, translation, shouldMerge } of translations) {
+                translate.setTranslation(lang, translation, shouldMerge);
+            }
+        });
         Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {
                 translate.setTranslation(lang, translation, shouldMerge);
             }
         });
+
     }
 }

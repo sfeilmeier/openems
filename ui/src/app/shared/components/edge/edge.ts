@@ -30,6 +30,7 @@ import { ChannelAddress, EdgePermission, SystemLog, Websocket } from "../../shar
 import { Role } from "../../type/role";
 import { Widgets } from "../../type/widgets";
 import { ArrayUtils } from "../../utils/array/array.utils";
+import { ObjectUtils } from "../../utils/object/object.utils";
 import { PromiseUtils } from "../../utils/promise/promise.utils";
 import { StringUtils } from "../../utils/string/string.utils";
 import { NavigationId, NavigationTree } from "../navigation/shared";
@@ -37,6 +38,10 @@ import { Name } from "../shared/name";
 import { CurrentData } from "./currentdata";
 import { EdgeConfig } from "./edgeconfig";
 import { ThirdPartyUsageAcceptance } from "./popover/shared/third-party-usage-acceptance";
+
+export enum EdgeSettings {
+    ANNUAL_REVIEW_2025 = "annual_review_2025",
+}
 
 export class Edge {
 
@@ -69,6 +74,7 @@ export class Edge {
         public readonly lastmessage: Date,
         public readonly sumState: SumState,
         public readonly firstSetupProtocol: Date,
+        public settings: Partial<{ [k in EdgeSettings]: number | boolean | string }>,
     ) { }
 
     setIsSubscribed(isSubscribed: boolean) {
@@ -532,6 +538,11 @@ export class Edge {
         navigationTree.setChild(NavigationId.LIVE, new NavigationTree("navigation-info", { baseString: "navigation-info" }, { name: "information-outline" }, translate.instant("GENERAL.HELP"), "label", [], null));
 
         return navigationTree;
+    }
+
+    public shouldShowAnnualReviewPopover(): boolean {
+        return this.role === Role.OWNER
+            && ObjectUtils.getKeySafely(this.settings, EdgeSettings.ANNUAL_REVIEW_2025) != null;
     }
 
     /**

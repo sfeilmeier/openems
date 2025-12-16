@@ -10,15 +10,19 @@ export { CurrentData } from "./type/currentdata";
 export { BackupEnable, BatteryInverterState, BatteryMode, BatteryStateMachine, DredCmd, GoodWe, GridMode, SafetyCountryCode } from "./type/general";
 export { SystemLog } from "./type/systemlog";
 export { Utils } from "./utils/utils";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AlertController, AlertOptions } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { isBefore, subDays, subYears } from "date-fns";
 import { addIcons } from "ionicons";
 import { environment } from "src/environments";
-import { Edge } from "./components/edge/edge";
+import { Edge, EdgeSettings } from "./components/edge/edge";
+import { MarketingAnnualReviewButtonComponent } from "./components/edge/popover/annual-review/button/button";
+import { ButtonLabel } from "./components/modal/modal-button/modal-button";
 import { User } from "./jsonrpc/shared";
 import { DefaultTypes } from "./type/defaulttypes";
 import { Role } from "./type/role";
+import { ObjectUtils } from "./utils/object/object.utils";
 import { StringUtils } from "./utils/string/string.utils";
 
 addIcons({
@@ -47,8 +51,8 @@ export class Permission {
      * @param ibnDate the first setup protocol date - ibn date
      * @returns the list of allowed widgets
      */
-    public static getAllowedEnergyJourneyWidgets(edge: Edge, translate: TranslateService): EnergyJourneyWidget[] {
-        return EdgePermission.getAllowedEnergyJourneyWidgets(edge, translate);
+    public static getAllowedEnergyJourneyWidgets(edge: Edge, translate: TranslateService, router: Router, route: ActivatedRoute): EnergyJourneyWidget[] {
+        return EdgePermission.getAllowedEnergyJourneyWidgets(edge, translate, router, route);
     }
 }
 
@@ -83,7 +87,8 @@ export class EdgePermission {
      */
     public static isEnergyJourneyAllowed(edge: Edge): boolean {
         const isDateAtLeastOneYearAgo = isBefore(edge.firstSetupProtocol, subDays(subYears(new Date(), 1), 1));
-        return isDateAtLeastOneYearAgo && StringUtils.isInArr(edge.producttype, [Producttype.HOME, Producttype.HOME_6, Producttype.HOME_10, Producttype.HOME_15, Producttype.HOME_20, Producttype.HOME_30]);
+        return isDateAtLeastOneYearAgo
+            && StringUtils.isInArr(edge.producttype, [Producttype.HOME, Producttype.HOME_6, Producttype.HOME_10, Producttype.HOME_15, Producttype.HOME_20, Producttype.HOME_30]);
     }
 
     /**
@@ -93,19 +98,33 @@ export class EdgePermission {
      * @param ibnDate the first setup protocol date - ibn date
      * @returns the list of allowed widgets for this edge
      */
-    public static getAllowedEnergyJourneyWidgets(edge: Edge, translate: TranslateService): EnergyJourneyWidget[] {
+    public static getAllowedEnergyJourneyWidgets(edge: Edge, translate: TranslateService, router: Router, route: ActivatedRoute): EnergyJourneyWidget[] {
         const isDateAtLeastOneYearAgo = EdgePermission.isEnergyJourneyAllowed(edge);
         if (!isDateAtLeastOneYearAgo) {
             return [];
         }
 
         return [new EnergyJourneyWidget(
-            translate.instant("SETTINGS.ENERGY_JOURNEY.WIDGET_TITLE"),
+            `${translate.instant("SETTINGS.ENERGY_JOURNEY.SEE_CHANGES_TEXT")}
+              <br>
+              ${translate.instant("SETTINGS.ENERGY_JOURNEY.SEE_CHANGES_SUB_TEXT")}
+              <hr>
+              ${translate.instant("SETTINGS.ENERGY_JOURNEY.SEE_CHANGES_SLOGAN")}
+            `,
             translate.instant("SETTINGS.ENERGY_JOURNEY.SLOGAN"),
             translate.instant("SETTINGS.ENERGY_JOURNEY.DESCRIPTION"),
-            ["batteryExtension", "electricityPriceChoice"],
-            translate.instant("SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS"),
-        )];
+            { name: translate.instant("SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS"), callback: () => router.navigate(["batteryExtension", "electricityPriceChoice"], { relativeTo: route }) },
+            "assets/img/icon/energy-journey-batteryExtension.webp",
+        ),
+        ...(ObjectUtils.getKeySafely(edge?.settings, EdgeSettings.ANNUAL_REVIEW_2025) !== null
+            ? [new EnergyJourneyWidget(
+                translate.instant("POPOVER.ANNUAL_REVIEW.HEADER_TEXT"),
+                translate.instant("POPOVER.ANNUAL_REVIEW.TITLE"),
+                translate.instant("POPOVER.ANNUAL_REVIEW.DESCRIPTION"),
+                { name: translate.instant("POPOVER.ANNUAL_REVIEW.BUTTON_TEXT"), callback: () => window.open(MarketingAnnualReviewButtonComponent.buildLink(edge).text, "_blank") },
+                "assets/img/annual-review-horizontal.png",)]
+            : []),
+        ];
     }
 
     /**
@@ -413,10 +432,10 @@ export async function presentAlert(alertController: AlertController, translate: 
 
 export class EnergyJourneyWidget {
     constructor(
-        private label: string,
+        private headerText: string,
         private slogan: string,
         private description: string,
-        private link: string[],
-        private buttonText: string,
+        private button: Omit<ButtonLabel, "value">,
+        private imgSrc: string,
     ) { }
 }

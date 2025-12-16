@@ -69,7 +69,7 @@ export class PreInstallationComponent implements OnInit {
                 // TODO either add lastmessage and role to response or call getEdgeRequest
                 this.edge = new Edge(
                     edge.id,
-                    edge.comment, edge.producttype, edge.version, Role.INSTALLER, edge.online, null, SumState.OK, null,
+                    edge.comment, edge.producttype, edge.version, Role.INSTALLER, edge.online, null, SumState.OK, null, null,
                 );
 
                 // Get metadata

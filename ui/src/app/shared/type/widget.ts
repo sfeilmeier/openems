@@ -1,8 +1,9 @@
 // @ts-strict-ignore
-import { Edge } from "../components/edge/edge";
+import { Edge, EdgeSettings } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
-import { EdgePermission, Producttype, Utils } from "../shared";
-import { StringUtils } from "../utils/string/string.utils";
+import { EdgePermission, Utils } from "../shared";
+import { ObjectUtils } from "../utils/object/object.utils";
+import { Role } from "./role";
 import { TEnumKeys } from "./utility";
 
 export enum WidgetClass {
@@ -87,28 +88,21 @@ export class AdvertWidgets {
 
         let list: AdvertWidget[] = [];
 
-        const allowedProducttypes: Producttype[] = [
-            Producttype.HOME,
-            Producttype.HOME_6,
-            Producttype.HOME_10,
-            Producttype.HOME_15,
-            Producttype.HOME_20,
-            Producttype.HOME_20_30,
-            Producttype.HOME_30,
-            Producttype.COMMERCIAL_92,
-            Producttype.COMMERCIAL_92_CLUSTER,
-            Producttype.INDUSTRIAL_S,
-            Producttype.INDUSTRIAL_M,
-            Producttype.INDUSTRIAL_L,
-            Producttype.INDUSTRIAL_L_US,
-            Producttype.INDUSTRIAL_XL,
-        ];
+        // const allowedProducttypes: Producttype[] = [
+        //     Producttype.HOME,
+        //     Producttype.HOME_6,
+        //     Producttype.HOME_10,
+        //     Producttype.HOME_15,
+        //     Producttype.HOME_20,
+        //     Producttype.HOME_20_30,
+        //     Producttype.HOME_30,
+        // ];
 
-        if (StringUtils.isInArr(edge.producttype, allowedProducttypes)) {
+        if (ObjectUtils.getKeySafely(edge.settings, EdgeSettings.ANNUAL_REVIEW_2025) && (edge.role == Role.OWNER || edge.role == Role.INSTALLER)) {
             list.push(
                 {
                     name: "advert-1",
-                    title: { languageKey: "ADVERT.1.TITLE" },
+                    title: { languageKey: edge.roleIsAtLeast(Role.INSTALLER) ? "ADVERT.1.TITLE_INSTALLER" : "ADVERT.1.TITLE_OWNER" },
                 }
             );
         };
