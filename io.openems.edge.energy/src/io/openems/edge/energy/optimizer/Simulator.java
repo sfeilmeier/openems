@@ -7,7 +7,6 @@ import static io.openems.edge.common.type.TypeUtils.fitWithin;
 import static io.openems.edge.energy.optimizer.InitialPopulationUtils.generateInitialPopulation;
 import static io.openems.edge.energy.optimizer.SimulationResult.EMPTY_SIMULATION_RESULT;
 import static java.lang.Math.max;
-import static java.lang.Thread.currentThread;
 
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -38,6 +37,7 @@ import io.openems.edge.energy.api.handler.EnergyScheduleHandler;
 import io.openems.edge.energy.api.handler.EnergyScheduleHandler.Fitness;
 import io.openems.edge.energy.api.simulation.EnergyFlow;
 import io.openems.edge.energy.api.simulation.GlobalOptimizationContext;
+import io.openems.edge.energy.api.simulation.GlobalOptimizationContext.Period;
 import io.openems.edge.energy.api.simulation.GlobalScheduleContext;
 import io.openems.edge.energy.optimizer.ModeCombinations.Mode;
 import io.openems.edge.energy.optimizer.ModeCombinations.ModeCombination;
@@ -146,33 +146,35 @@ public class Simulator {
 
 		final EnergyFlow energyFlow = ef.solve();
 
-		// Calculate Grid-Buy Cost
-		if (energyFlow.getGrid() > 0) {
-			// Filter negative prices
-			var price = max(0, period.price());
+		if (period instanceof Period.WithPrice periodWithPrice) {
+			// Calculate Grid-Buy Cost
+			if (energyFlow.getGrid() > 0) {
+				// Filter negative prices
+				var price = max(0, periodWithPrice.price());
 
-			int buyFromGrid = max(0, energyFlow.getGrid());
-			int chargeEss = max(0, -energyFlow.getEss());
-			int gridToEss = Math.min(buyFromGrid, chargeEss);
-			int gridToCons = buyFromGrid - gridToEss;
-			fitness.addGridBuyCost(
-					// Cost for direct Consumption
-					gridToCons * price
-							// Cost for future Consumption after storage
-							+ max(0, gridToEss) * price * gsc.goc.riskLevel().efficiencyFactor);
-		}
+				int buyFromGrid = max(0, energyFlow.getGrid());
+				int chargeEss = max(0, -energyFlow.getEss());
+				int gridToEss = Math.min(buyFromGrid, chargeEss);
+				int gridToCons = buyFromGrid - gridToEss;
+				fitness.addGridBuyCost(
+						// Cost for direct Consumption
+						gridToCons * price
+								// Cost for future Consumption after storage
+								+ max(0, gridToEss) * price * gsc.goc.riskLevel().efficiencyFactor);
+			}
 
-		// Calculate Grid-Sell Revenue
-		if (energyFlow.getGrid() < 0) {
-			// Filter negative prices
-			var price = max(0, period.price());
+			// Calculate Grid-Sell Revenue
+			if (energyFlow.getGrid() < 0) {
+				// Filter negative prices
+				var price = max(0, periodWithPrice.price());
 
-			int sellToGrid = max(0, -energyFlow.getGrid());
-			int dischargeEnergy = max(0, energyFlow.getEss());
-			int essToGrid = Math.min(sellToGrid, dischargeEnergy);
-			fitness.addGridSellRevenue(//
-					// Revenue for Discharge-to-Grid
-					essToGrid * price);
+				int sellToGrid = max(0, -energyFlow.getGrid());
+				int dischargeEnergy = max(0, energyFlow.getEss());
+				int essToGrid = Math.min(sellToGrid, dischargeEnergy);
+				fitness.addGridSellRevenue(//
+						// Revenue for Discharge-to-Grid
+						essToGrid * price);
+			}
 		}
 
 		if (bestScheduleCollector != null) {
@@ -208,8 +210,10 @@ public class Simulator {
 	 *                                   {@link EvolutionStream}
 	 * @return the best Schedule
 	 */
-	public SimulationResult getBestSchedule(SimulationResult previousResult, boolean isCurrentPeriodFixed,
-			Function<Engine.Builder<IntegerGene, Fitness>, Engine.Builder<IntegerGene, Fitness>> engineInterceptor,
+	public SimulationResult getBestSchedule(//
+			SimulationResult previousResult, //
+			boolean isCurrentPeriodFixed,
+			Function<Engine.Builder<IntegerGene, Fitness>, Engine.Builder<IntegerGene, Fitness>> engineInterceptor, //
 			Function<EvolutionStream<IntegerGene, Fitness>, EvolutionStream<IntegerGene, Fitness>> evolutionStreamInterceptor) {
 		final var codec = EshCodec.of(this.goc, this.modeCombinations, previousResult, isCurrentPeriodFixed);
 		if (codec == null) {
@@ -257,7 +261,7 @@ public class Simulator {
 
 		var stream = engine.build() //
 				.stream(initialPopulation) //
-				.limit(result -> !currentThread().isInterrupted());
+				.limit(result -> !Thread.currentThread().isInterrupted());
 		if (evolutionStreamInterceptor != null) {
 			stream = evolutionStreamInterceptor.apply(stream);
 		}

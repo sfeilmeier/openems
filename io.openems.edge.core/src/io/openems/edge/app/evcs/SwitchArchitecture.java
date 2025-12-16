@@ -1,5 +1,7 @@
 package io.openems.edge.app.evcs;
 
+import static io.openems.edge.core.appmanager.TranslationUtil.translate;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,6 +19,8 @@ import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.jsonrpc.request.UpdateComponentConfigRequest;
 import io.openems.common.jsonrpc.type.CreateComponentConfig;
 import io.openems.common.jsonrpc.type.DeleteComponentConfig;
+import io.openems.common.jsonrpc.type.UpdateComponentConfig;
+import io.openems.common.oem.OpenemsEdgeOem;
 import io.openems.common.utils.JsonUtils;
 import io.openems.common.utils.JsonUtils.JsonArrayBuilder;
 import io.openems.edge.common.component.ComponentManager;
@@ -24,14 +28,17 @@ import io.openems.edge.common.jsonapi.ComponentJsonApi;
 import io.openems.edge.common.jsonapi.EdgeKeys;
 import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.user.User;
+import io.openems.edge.core.appmanager.AbstractOpenemsAppWithProps;
 import io.openems.edge.core.appmanager.AppManagerImpl;
 import io.openems.edge.core.appmanager.AppManagerUtil;
 import io.openems.edge.core.appmanager.OpenemsAppCategory;
 import io.openems.edge.core.appmanager.OpenemsAppInstance;
 import io.openems.edge.core.appmanager.dependency.Dependency;
 import io.openems.edge.core.appmanager.jsonrpc.CanSwitchEvcsEvse;
+import io.openems.edge.core.appmanager.jsonrpc.CanSwitchEvcsEvse.Version;
 import io.openems.edge.core.appmanager.jsonrpc.SwitchEvcsEvse;
 import io.openems.edge.core.appmanager.jsonrpc.SwitchEvcsEvse.Response;
+import io.openems.edge.energy.api.EnergyScheduler;
 
 @Component
 public final class SwitchArchitecture implements ComponentJsonApi {
@@ -47,11 +54,16 @@ public final class SwitchArchitecture implements ComponentJsonApi {
 	private final AppManagerUtil appManagerUtil;
 	private final ComponentManager componentManager;
 	private final AppManagerImpl appManager;
+	private final OpenemsEdgeOem oem;
 
 	@Activate
-	public SwitchArchitecture(@Reference AppManagerUtil appManagerUtil, //
+	public SwitchArchitecture(//
+			@Reference AppManagerUtil appManagerUtil, //
 			@Reference ComponentManager componentManager, //
-			@Reference AppManagerImpl appManager) {
+			@Reference AppManagerImpl appManager, //
+			@Reference OpenemsEdgeOem oem //
+	) {
+		this.oem = oem;
 		this.appManagerUtil = appManagerUtil;
 		this.componentManager = componentManager;
 		this.appManager = appManager;
@@ -65,7 +77,7 @@ public final class SwitchArchitecture implements ComponentJsonApi {
 					Checks if emobility architecture can be switched.
 					""".stripIndent());
 		}, call -> {
-			return this.handleCanSwitch();
+			return this.handleCanSwitch(call.get(EdgeKeys.USER_KEY));
 		});
 
 		builder.handleRequest(new SwitchEvcsEvse(), endpoint -> {
@@ -81,12 +93,13 @@ public final class SwitchArchitecture implements ComponentJsonApi {
 	/**
 	 * Checks if the system can be switched.
 	 * 
+	 * @param user the {@link User}
 	 * @return {@link CanSwitchEvcsEvse.Response}
 	 * @throws OpenemsNamedException on error
 	 */
-	public CanSwitchEvcsEvse.Response handleCanSwitch() throws OpenemsNamedException {
+	public CanSwitchEvcsEvse.Response handleCanSwitch(User user) throws OpenemsNamedException {
 		final var instantiatedApps = new ArrayList<OpenemsAppInstance>(this.appManagerUtil.getInstantiatedApps());
-		return new CanSwitchEvcsEvse.Response(this.validateInstantiatedApps(instantiatedApps));
+		return this.validateInstantiatedApps(instantiatedApps, user);
 	}
 
 	/**
@@ -106,15 +119,16 @@ public final class SwitchArchitecture implements ComponentJsonApi {
 				.toList();
 
 		try {
-			if (!this.validateInstantiatedApps(instantiatedApps)) {
+			final var canSwitch = this.validateInstantiatedApps(instantiatedApps, user);
+			if (!canSwitch.canSwitch()) {
 				throw new OpenemsException("Can not switch on this config");
 			}
 
-			final var current = JsonUtils.getAsString(appInstances.getFirst().properties.get("ARCHITECTURE_TYPE"));
+			final var current = canSwitch.current();
 
 			final var response = new ArrayList<OpenemsAppInstance>();
 
-			if (current.equals("EVSE")) {
+			if (current == Version.NEW) {
 				var evcsIds = JsonUtils.buildJsonArray();
 				final var clusterEvse = this.componentManager.getAllComponents().stream()
 						.filter(t -> t.id().equals("ctrlEvseCluster0")).findAny();
@@ -149,9 +163,18 @@ public final class SwitchArchitecture implements ComponentJsonApi {
 				instantiatedApps.addAll(response);
 
 				this.appManager.updateAppManagerConfiguration(user, instantiatedApps);
+
+				// Switch to EnergyScheduler V1
+				var esProperty = new UpdateComponentConfigRequest.Property(//
+						"version", //
+						io.openems.edge.energy.api.Version.V1_ESS_ONLY.name());
+				var esRequest = new UpdateComponentConfig.Request(//
+						EnergyScheduler.SINGLETON_COMPONENT_ID, //
+						List.of(esProperty));
+				this.componentManager.handleUpdateComponentConfigRequest(user, esRequest);
 			}
 
-			if (current.equals("EVCS")) {
+			if (current == Version.OLD) {
 				var cluster = this.componentManager.getAllComponents().stream()
 						.filter(t -> t.id().equals("evcsCluster0")).findAny();
 				if (cluster.isPresent()) {
@@ -177,6 +200,15 @@ public final class SwitchArchitecture implements ComponentJsonApi {
 				));
 				newApps.addAll(response);
 				this.appManager.updateAppManagerConfiguration(user, newApps);
+
+				// Switch to EnergyScheduler V2
+				var esProperty = new UpdateComponentConfigRequest.Property(//
+						"version", //
+						io.openems.edge.energy.api.Version.V2_ENERGY_SCHEDULABLE.name());
+				var esRequest = new UpdateComponentConfig.Request(//
+						EnergyScheduler.SINGLETON_COMPONENT_ID, //
+						List.of(esProperty));
+				this.componentManager.handleUpdateComponentConfigRequest(user, esRequest);
 			}
 			return new Response(response);
 
@@ -489,9 +521,16 @@ public final class SwitchArchitecture implements ComponentJsonApi {
 		response.add(newInstance);
 	}
 
-	private boolean validateInstantiatedApps(ArrayList<OpenemsAppInstance> instantiatedApps)
-			throws OpenemsNamedException {
+	private CanSwitchEvcsEvse.Response validateInstantiatedApps(ArrayList<OpenemsAppInstance> instantiatedApps,
+			User user) throws OpenemsNamedException {
+
 		Set<String> excluded = Set.of("App.Evse.Controller.Cluster", "App.Evcs.Cluster");
+
+		var bundle = AbstractOpenemsAppWithProps.createResourceBundle(user.getLanguage());
+
+		var uiText = translate(bundle, "App.Evse.switch.uiText");
+		var uiInfoText = translate(bundle, "App.Evse.switch.uiInfoText");
+		var infoLink = this.oem.getLink("SwitchEvcsLink");
 
 		final var evcsApps = instantiatedApps.stream().filter(t -> {
 			final var app = this.appManagerUtil.findAppById(t.appId);
@@ -501,45 +540,48 @@ public final class SwitchArchitecture implements ComponentJsonApi {
 
 			final var categories = Arrays.asList(app.get().getCategories());
 
-			final var isEvcsApp = categories.contains(OpenemsAppCategory.EVCS) //
+			final var isEvcsApp = categories.contains(OpenemsAppCategory.EVCS)
 					|| categories.contains(OpenemsAppCategory.EVCS_READ_ONLY);
 
 			return isEvcsApp && !excluded.contains(t.appId);
 		}).toList();
 
+		// No EVCS apps → valid, but no architecture
 		if (evcsApps.isEmpty()) {
-			return true;
+			return new CanSwitchEvcsEvse.Response(true, null, uiText, uiInfoText, infoLink);
 		}
 
+		// Only valid apps allowed
 		final var invalidFound = evcsApps.stream().anyMatch(t -> !VALID_APPS.contains(t.appId));
 
 		if (invalidFound) {
-			return false;
+			return new CanSwitchEvcsEvse.Response(false, null, uiText, uiInfoText, infoLink);
 		}
 
-		final var notOnlyWrite = evcsApps.stream().anyMatch(t -> {
-			return JsonUtils.getAsOptionalBoolean(t.properties.get("READ_ONLY"))//
-					.orElse(true);
-		});
+		// Must be write-enabled only
+		final var notOnlyWrite = evcsApps.stream()
+				.anyMatch(t -> JsonUtils.getAsOptionalBoolean(t.properties.get("READ_ONLY")).orElse(true));
 
 		if (notOnlyWrite) {
-			return false;
+			return new CanSwitchEvcsEvse.Response(false, null, uiText, uiInfoText, infoLink);
 		}
 
+		// Extract FIRST architecture safely
 		final var firstArch = JsonUtils.getAsString(evcsApps.getFirst().properties.get("ARCHITECTURE_TYPE"));
 
+		// KEBA must be P40 only
 		final var notOnlyP40 = evcsApps.stream().anyMatch(t -> {
 			if (!t.appId.equals("App.Evcs.Keba")) {
 				return false;
 			}
-			return JsonUtils.getAsOptionalString(evcsApps.getFirst().properties.get("HARDWARE_TYPE")).orElse("P40")//
-					.equals("P30");
+			return JsonUtils.getAsOptionalString(t.properties.get("HARDWARE_TYPE")).orElse("P40").equals("P30");
 		});
 
 		if (notOnlyP40) {
-			return false;
+			return new CanSwitchEvcsEvse.Response(false, null, uiText, uiInfoText, infoLink);
 		}
 
+		// Architecture mismatch check
 		final var mismatch = evcsApps.stream().anyMatch(t -> {
 			try {
 				return !JsonUtils.getAsString(t.properties.get("ARCHITECTURE_TYPE")).equals(firstArch);
@@ -548,7 +590,19 @@ public final class SwitchArchitecture implements ComponentJsonApi {
 			}
 		});
 
-		return !mismatch;
+		if (mismatch) {
+			return new CanSwitchEvcsEvse.Response(false, null, uiText, uiInfoText, infoLink);
+		}
+
+		Version current;
+
+		if (firstArch.equals("EVSE")) {
+			current = Version.NEW;
+		} else {
+			current = Version.OLD;
+		}
+
+		return new CanSwitchEvcsEvse.Response(true, current, uiText, uiInfoText, infoLink);
 	}
 
 	@Override

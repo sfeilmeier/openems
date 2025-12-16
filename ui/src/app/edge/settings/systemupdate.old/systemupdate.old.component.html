@@ -9,7 +9,7 @@
           <ion-col size="12">
             <ion-card>
               <ion-item lines="full" color="danger">
-                <ion-icon slot="start" name="alert-circle-outline" color="primary"></ion-icon>
+                <ion-icon slot="start" name="oe-error" color="primary"></ion-icon>
                 <ion-label>{{ edge.id }} ist nicht online!</ion-label>
               </ion-item>
             </ion-card>
@@ -57,14 +57,13 @@
                   <ion-col>{{ package.latestVersion }}</ion-col>
                   <ion-col>
                     @if (package.isUpdateAvailable === true) {
-                      <ion-button [disabled]="isCurrentlyInstalling"
-                        (click)="updatePackage(package)">Neueste Version
+                      <ion-button [disabled]="isCurrentlyInstalling" (click)="updatePackage(package)">Neueste Version
                         installieren
                       </ion-button>
                     }
                     @if (package.isUpdateAvailable === false) {
                       <p>
-                        <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+                        <ion-icon name="oe-checkmark" color="success"></ion-icon>
                         Version ist aktuell
                       </p>
                     }

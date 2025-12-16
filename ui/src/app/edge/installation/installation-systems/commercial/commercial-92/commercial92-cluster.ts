@@ -129,7 +129,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
 
         return new Edge(
             edge.id, edge.comment, edge.producttype, edge.version,
-            Role.INSTALLER, edge.online, null, SumState.OK, null
+            Role.INSTALLER, edge.online, null, SumState.OK, null, null,
         );
     }
 

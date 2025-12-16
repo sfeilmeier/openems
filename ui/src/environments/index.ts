@@ -23,25 +23,9 @@ export interface Environment {
 
     readonly docsUrlPrefix: string;
     readonly icons: {
-        readonly WEATHER: {
-            readonly "CLEAR_DAY": string,
-            readonly "CLEAR_NIGHT": string,
-            readonly "PARTLY_CLOUDY_DAY": string,
-            readonly "PARTLY_CLOUDY_NIGHT": string,
-            readonly "THUNDERSTORM": string,
-            readonly "WEATHER_CLOUDY": string,
-            readonly "WEATHER_FOGGY": string,
-            readonly "WEATHER_MIX": string,
-            readonly "WEATHER_RAINY": string,
-            readonly "WEATHER_SNOWY": string,
-            readonly "SUNSHINE_DURATION": string,
-            readonly "HELP": string,
-        },
-        readonly COMMON: {
+        readonly "COMMON": {
             readonly "CONSUMPTION": string,
-            readonly "HEATPUMP": string,
             readonly "SELFCONSUMPTION": string,
-            readonly "EVCS": string,
             readonly "GRID": string,
             readonly "GRID_STORAGE": string,
             readonly "GRID_RESTRICTION": string,
@@ -49,6 +33,31 @@ export interface Environment {
             readonly "OFFGRID": string,
             readonly "PRODUCTION": string,
             readonly "STORAGE": string,
+
+            readonly "WEATHER": {
+                readonly "CLEAR_DAY": string,
+                readonly "CLEAR_NIGHT": string,
+                readonly "PARTLY_CLOUDY_DAY": string,
+                readonly "PARTLY_CLOUDY_NIGHT": string,
+                readonly "THUNDERSTORM": string,
+                readonly "WEATHER_CLOUDY": string,
+                readonly "WEATHER_FOGGY": string,
+                readonly "WEATHER_MIX": string,
+                readonly "WEATHER_RAINY": string,
+                readonly "WEATHER_SNOWY": string,
+                readonly "SUNSHINE_DURATION": string,
+                readonly "HELP": string,
+            },
+        },
+        readonly "COMPONENT": {
+            readonly "HEATPUMP": string,
+            readonly "EVCS": string,
+        },
+        readonly "STATUS": {
+            readonly "CHECKMARK": string,
+            readonly "ERROR": string,
+            readonly "WARNING": string,
+            readonly "INFO": string,
         },
     },
     readonly images: {
@@ -61,6 +70,7 @@ export interface Environment {
     },
     readonly links: {
         readonly REDIRECT: {
+            readonly BETA_CHANGE_LOG: string | null,
             readonly COMMON_STORAGE: string | null,
             readonly COMMON_AUTARCHY: string | null,
             readonly COMMON_CONSUMPTION: string | null,

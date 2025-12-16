@@ -13,12 +13,11 @@
                     <ion-label style="font-weight: bold;">Gelesene Werte</ion-label>
                   </ion-item>
                   @for (categorizedReadChannelDescriptions of importantReadChannelDescriptions; track categorizedReadChannelDescriptions) {
-                    <ion-list
-                      >
+                    <ion-list>
                       <ion-item-group>
                         <ion-item-divider color="light">
                           <ion-label style="font-weight: bold;">
-                          {{categorizedReadChannelDescriptions.category | translate}}</ion-label>
+                            {{categorizedReadChannelDescriptions.category | translate}}</ion-label>
                         </ion-item-divider>
                         @for (channelDescription of
                           categorizedReadChannelDescriptions.channels; track channelDescription) {
@@ -39,8 +38,7 @@
                                         </ion-text>
                                       }
                                       @if (channelDescription.dependentChannelNames) {
-                                        <ion-text
-                                          >
+                                        <ion-text>
                                           (
                                           @for (dependentChannel of channelDescription.dependentChannelNames; track dependentChannel) {
                                             {{ currentData[component.id
@@ -55,8 +53,7 @@
                                       @if (channelConfig.category === 'ENUM') {
                                         @for (option of (channelConfig.options | keys); track option) {
                                           @if (option.value === currentData[address.toString()]) {
-                                            <span
-                                              >
+                                            <span>
                                               ({{ option.key }})
                                             </span>
                                           }
@@ -66,22 +63,20 @@
                                       @if (channelConfig.category === 'STATE') {
                                         @if (currentData[address.toString()] === 1) {
                                           <span>
-                                          (State is SET)</span>
+                                            (State is SET)</span>
                                         }
                                         @if (currentData[address.toString()] === 0) {
                                           <span>
-                                          (State is not set)</span>
+                                            (State is not set)</span>
                                         }
                                       }
                                       <!-- show active/inactive string for StateChannels -->
                                       @if (channelConfig.category === 'OPENEMS_TYPE' && channelConfig.type === 'BOOLEAN') {
                                         @if (currentData[address.toString()] === 1) {
-                                          <span
-                                          >(On)</span>
+                                          <span>(On)</span>
                                         }
                                         @if (currentData[address.toString()] === 0) {
-                                          <span
-                                          >(Off)</span>
+                                          <span>(Off)</span>
                                         }
                                       }
                                     </ion-text>
@@ -110,14 +105,13 @@
                           <ion-item lines="none">
                             <ion-label> Gesamtchart:</ion-label>
                             <p style="font-size: small">
-                              <ion-icon name="alert-circle-outline"></ion-icon>
+                              <ion-icon name="oe-error"></ion-icon>
                               Muss manuell aktualisiert werden
                             </p>
                           </ion-item>
                           <ion-item padding-bottom padding-top class="ion-text-wrap">
                             <!--padding-bottom padding-top lines="none"-->
-                            <soltarocellchart padding-bottom padding-top style="width: 90%"
-                              [battery]="component.id"
+                            <soltarocellchart padding-bottom padding-top style="width: 90%" [battery]="component.id"
                               [channels]="importantCellChartChannelDescriptions">
                             </soltarocellchart>
                           </ion-item>
@@ -126,12 +120,10 @@
                               Zuschaltspannungen und Abschaltspannungen sowie weitere Channels
                               können
                               für längere Zeit Lehr/Undefined bleiben, nachdem das Backend
-                            neugestartet wurde</ion-text>
+                              neugestartet wurde</ion-text>
                           </ion-item>
                           @if (currentData[component.id +'/_PropertyReduceTasks']) {
-                            <ion-item
-                              padding-bottom padding-top style="font-size: small"
-                              class="ion-text-wrap">
+                            <ion-item padding-bottom padding-top style="font-size: small" class="ion-text-wrap">
                               <ion-text color="danger">
                                 Reduce Tasks ist in der Komponente {{component.id}} aktiviert:
                                 <br />
@@ -164,19 +156,16 @@
                       </ion-label>
                     </ion-item>
                     @for (categorizedChannelDescriptions of importantWriteChannelDescriptions; track categorizedChannelDescriptions) {
-                      <ion-row style="padding-top: 20px;" class="ion-justify-content-center"
-                        >
+                      <ion-row style="padding-top: 20px;" class="ion-justify-content-center">
                         <ion-item-divider padding-top color="light">
                           <ion-label style="font-weight: bold;">
-                          {{categorizedChannelDescriptions.category}}</ion-label>
+                            {{categorizedChannelDescriptions.category}}</ion-label>
                         </ion-item-divider>
                         @for (channelDescription of categorizedChannelDescriptions.channels; track channelDescription) {
-                          <ion-col
-                            size="12" size-lg="6" size-md="12">
+                          <ion-col size="12" size-lg="6" size-md="12">
                             <ion-list>
                               @if (getChannelAddress(component.id, channelDescription.channelName); as address) {
-                                <ion-card
-                                  >
+                                <ion-card>
                                   <ion-item color="light" lines="full">
                                     <ion-icon slot="start" name="today-outline" color="primary">
                                     </ion-icon>
@@ -185,8 +174,7 @@
                                     }}({{channelDescription.register}})</ion-label>
                                   </ion-item>
                                   @if (channelDefinitions[channelDescription.channelName]; as channelConfig) {
-                                    <ion-card-content
-                                      >
+                                    <ion-card-content>
                                       <ion-item>
                                         <ion-text class="ion-text-wrap">
                                           {{ channelDescription.description }}
@@ -200,9 +188,8 @@
                                           / Access-Mode: {{ channelConfig.accessMode }}
                                         </ion-text>
                                         @if (channelDescription.requiredInput; as default) {
-                                          <ion-text color="medium"
-                                            >
-                                          &nbsp;/ Required: {{default}}</ion-text>
+                                          <ion-text color="medium">
+                                            &nbsp;/ Required: {{default}}</ion-text>
                                         }
                                       </ion-item>
                                       @if (channelConfig.accessMode !== 'WO') {
@@ -226,8 +213,7 @@
                                             @if (channelConfig.category === 'ENUM') {
                                               @for (option of (channelConfig.options | keys); track option) {
                                                 @if (option.value === currentData[address.toString()]) {
-                                                  <span
-                                                    >
+                                                  <span>
                                                     ({{ option.key }})
                                                   </span>
                                                 }
@@ -237,22 +223,20 @@
                                             @if (channelConfig.category === 'STATE') {
                                               @if (currentData[address.toString()] === 1) {
                                                 <span>
-                                                (State is SET)</span>
+                                                  (State is SET)</span>
                                               }
                                               @if (currentData[address.toString()] === 0) {
                                                 <span>
-                                                (State is not set)</span>
+                                                  (State is not set)</span>
                                               }
                                             }
                                             <!-- show active/inactive string for StateChannels -->
                                             @if (channelConfig.category === 'OPENEMS_TYPE' && channelConfig.type === 'BOOLEAN') {
                                               @if (currentData[address.toString()] === 1) {
-                                                <span
-                                                >(On)</span>
+                                                <span>(On)</span>
                                               }
                                               @if (currentData[address.toString()] === 0) {
-                                                <span
-                                                >(Off)</span>
+                                                <span>(Off)</span>
                                               }
                                             }
                                           </ion-text>
@@ -260,16 +244,13 @@
                                       }
                                       <!-- show input field to write value for RW/RO channels -->
                                       @if (['RW', 'WO'].includes(channelConfig.accessMode)) {
-                                        <ion-item
-                                          >
+                                        <ion-item>
                                           <ion-label>Set value
                                           </ion-label>
                                           @if (channelConfig.type === 'BOOLEAN') {
                                             <!-- show Toggle for boolean value  -->
-                                            <ion-toggle tabindex="0" mode="md"
-                                            #valueToggle></ion-toggle>
-                                            <ion-button
-                                              (click)="setChannelValue(address, valueToggle.checked)"
+                                            <ion-toggle tabindex="0" mode="md" #valueToggle></ion-toggle>
+                                            <ion-button (click)="setChannelValue(address, valueToggle.checked)"
                                               slot="end" color="light">
                                               <ion-icon slot="icon-only" name="send-outline">
                                               </ion-icon>
@@ -277,9 +258,8 @@
                                           } @else {
                                             <ion-input placeholder="value" #value>
                                             </ion-input>
-                                            <ion-button
-                                              (click)="setChannelValue(address, value.value)"
-                                              slot="end" color="light">
+                                            <ion-button (click)="setChannelValue(address, value.value)" slot="end"
+                                              color="light">
                                               <ion-icon slot="icon-only" name="send-outline">
                                               </ion-icon>
                                             </ion-button>
@@ -289,11 +269,9 @@
                                     </ion-card-content>
                                   }
                                   @if (!channelDefinitions[channelDescription.channelName]) {
-                                    <ion-card-content
-                                      >
+                                    <ion-card-content>
                                       <ion-item>
-                                        <ion-label class="ion-text-wrap" color="medium"
-                                          lines="none">
+                                        <ion-label class="ion-text-wrap" color="medium" lines="none">
                                           Für diese Batterie aktuell noch nicht verfügbar
                                         </ion-label>
                                       </ion-item>

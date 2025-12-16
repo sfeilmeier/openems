@@ -1,10 +1,14 @@
 {
   "ADVERT": {
     "1": {
-      "TITLE": "BETA-App: Jetzt ausprobieren!",
-      "TEXT": "FENECON Pioniere können nun die neuesten Features in unserer FENECON Beta App für Android testen. Downloaden Sie die App direkt im Google Play Store und werfen Sie einen Blick auf neue Design-Updates und gestalten Sie die Zukunft unserer Anwendungen aktiv mit.",
-      "LINK": "https://play.google.com/store/apps/details?id=io.fenecon.ui&utm_source=emea_Med",
-      "LINK_TEXT": "Zum Google Play Store"
+      "TITLE_OWNER": "Entdecke deine Energy Journey 2025!",
+      "TITLE_INSTALLER": "Jahresrückblick und Weiterempfehlungsprogramm",
+      "TEXT_OWNER": "Dein persönlicher Jahresrückblick ist ab sofort online! Entdecke die Highlights deiner persönlichen Energienutzung, wie dein FENECON Speicher dein Zuhause unterstützt hat, welchen Beitrag du für die Energiewende geleistet hast und vor allem: wie sehr sich das 2025 für dich gelohnt hat.",
+      "TEXT_INSTALLER": "Der persönliche Jahresrückblick Ihrer Kundinnen und Kunden ist jetzt live - und eröffnet auch Ihnen neue Möglichkeiten. Nutzen Sie die Kampagne „Meine Energy Journey 2025“, um Ihre Kunden aktiv zu begleiten. Inklusive neuem Weiterempfehlungsprogramm!",
+      "LINK_INSTALLER": "https://www.fenecon.de/meine-energy-journey-2025",
+      "LINK_OWNER": "https://fenecon.de/fems-wrapped-2025/{{uuid}}",
+      "LINK_TEXT_INSTALLER": "Mehr erfahren",
+      "LINK_TEXT_OWNER": "Meinen Jahresrückblick ansehen"
     }
   }
 }

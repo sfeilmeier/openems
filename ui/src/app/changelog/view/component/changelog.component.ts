@@ -25,6 +25,28 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2025.12.4",
+                changes: [
+                    "Veröffentlichung <a href='https://www.fenecon.de/meine-energy-journey-2025' target='_blank'>Meine Energy Journey 2025</a> - Dein persönlicher Jahresrückblick",
+                    Changelog.app(App.TIME_OF_USE) + "Aktualisierung der hinterlegten zeitvariablen Netzentgelte für 2026",
+                    "FENECON Online-Monitoring: Allgemeine Verbesserung, Neue Icons",
+                    "Öffentlicher BETA-Feldtest der neuen App KEBA (BETA). Details und Neuheiten in <a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>FENECON Docs</a>",
+                    Changelog.product(Product.COMMERCIAL_50) + "Kompatibilität mit der App Lastspitzenkappung",
+                    { roleIsAtLeast: Role.INSTALLER, change: "FENECON Home: Entfernen der obsoleten Option 'Hat AC-Zähler' im App Center" },
+                ],
+            },
+            {
+                version: "2025.12.4",
+                changes: [
+                    "Veröffentlichung <a href='https://www.fenecon.de/meine-energy-journey-2025' target='_blank'>Meine Energy Journey 2025</a> - Dein persönlicher Jahresrückblick",
+                    Changelog.app(App.TIME_OF_USE) + "Aktualisierung der hinterlegten zeitvariablen Netzentgelte für 2026",
+                    "FENECON Online-Monitoring: Allgemeine Verbesserung, Neue Icons",
+                    "Öffentlicher BETA-Feldtest der neuen App KEBA (BETA). Details und Neuheiten finden Sie <a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>hier</a>",
+                    { roleIsAtLeast: Role.INSTALLER, change: "FENECON Home: Entfernen der obsoleten Option 'Hat AC-Zähler' im App Center" },
+                    Changelog.product(Product.COMMERCIAL_50) + "Kompatibilität mit der App Lastspitzenkappung",
+                ],
+            },
+            {
                 version: "2025.12.3",
                 changes: [
                     "Fehlerbehebung im lokalen Monitoring",

@@ -154,7 +154,7 @@
                 }
               </ion-select>
             </ion-item>
-            @if (environment.theme === 'FENECON') {
+            @if (environment.theme === 'FENECON' || environment.theme === 'FENECONBeta') {
               <ion-item id="theme-switcher" lines="none" class="page-content">
                 <ion-select #themeSelect (ionChange)="setTheme(themeSelect.value)" [value]="userTheme"
                   interface="popover" [interfaceOptions]="{ cssClass: 'custom-ion-popover' }" label="Theme">

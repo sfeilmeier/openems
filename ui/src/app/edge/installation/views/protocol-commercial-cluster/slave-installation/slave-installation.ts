@@ -170,7 +170,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
     private async processConnectedSlave(index: number, edge: AddEdgeToUserResponse["result"]["edge"]) {
         const newEdge = new Edge(
             edge.id, edge.comment, edge.producttype, edge.version,
-            Role.INSTALLER, edge.online, null, SumState.OK, null
+            Role.INSTALLER, edge.online, null, SumState.OK, null, null
         );
         this.updateMetadata(newEdge);
         this.updateSlaveState(index, {

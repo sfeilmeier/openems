@@ -104,6 +104,10 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 		return StringUtils.toShortString(mesn, 32);
 	}
 
+	private final Map<String, String> links = new ImmutableMap.Builder<String, String>()//
+			.put("SwitchEvcsLink", "https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html") //
+			.build();
+
 	private final Map<String, String> appToWebsiteUrl = new ImmutableMap.Builder<String, String>() //
 			// Products
 			.put("App.FENECON.Home", "https://docs.fenecon.de/de/home/home_10-1_overview.html") //
@@ -125,8 +129,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			// Basis-Apps
 			.put("App.PvSelfConsumption.SelfConsumptionOptimization",
 					"https://fenecon.de/fems-eigenverbrauchsoptimierung-hc") //
-			.put("App.PvSelfConsumption.GridOptimizedCharge",
-					"https://fenecon.de/fems-netzdienliche-beladung-hc") //
+			.put("App.PvSelfConsumption.GridOptimizedCharge", "https://fenecon.de/fems-netzdienliche-beladung-hc") //
 			.put("App.Api.ModbusTcp.ReadOnly", "https://fenecon.de/fems-modbus-tcp-lesend") //
 			.put("App.Api.RestJson.ReadOnly", "https://fenecon.de/fems-rest-json-lesend") //
 
@@ -181,8 +184,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 
 			// Lastspitzenkappung und atypische Netznutzung
 			.put("App.PeakShaving.PeakShaving", "https://fenecon.de/fems-lastspitzenkappung") //
-			.put("App.PeakShaving.PhaseAccuratePeakShaving",
-					"https://fenecon.de/fems-phasengenaue-lastspitzenkappung") //
+			.put("App.PeakShaving.PhaseAccuratePeakShaving", "https://fenecon.de/fems-phasengenaue-lastspitzenkappung") //
 			.put("App.PeakShaving.TimeSlotPeakShaving", "https://fenecon.de/fems-hochlastzeitfenster") //
 
 			// Laststeuerung
@@ -195,6 +197,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Hardware.KMtronic8Channel", "https://fenecon.de/fems-relainsboard-8kanal-tcp") //
 
 			// Andere
+			.put("App.System.Fenecon.Home", "") //
 			.put("App.GridMeter.Janitza", "") //
 			.put("App.Cloud.EnerixControl", "") //
 			.put("App.Cloud.Clever-PV", "") //
@@ -222,6 +225,11 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.OpenemsHardware.CM4S", "") //
 			.put("App.OpenemsHardware.CM4S.Gen2", "") //
 			.build();
+
+	@Override
+	public String getLink(String key) {
+		return this.links.get(key);
+	}
 
 	@Override
 	public String getAppWebsiteUrl(String appId) {

@@ -19,6 +19,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools/
+            .gitea/
+            io.openems.common/src/io/openems/common/OpenemsConstants.java
+            ui/package.json
+            ui/package-lock.json
+            ui/src/app/changelog/view/component/changelog.constants.ts
+
+      - name: Check Workflow environment
+        run: |
+          echo "Event Name: ${{ gitea.event_name }}"
+          if ! [ "${{ gitea.event_name }}" = "pull_request" ]; then
+            echo "Not a pull request event."
+            exit 0
+          fi
+
+          LABELS_JSON='${{ toJson(gitea.event.pull_request.labels) }}'
+          echo "Labels: ${LABELS_JSON}"
+          if echo "${LABELS_JSON}" | jq -r '.[].name' | grep -Eq '^(Edge|Backend|UI)$'; then
+            echo "Valid label found; proceeding."
+          else
+            echo "No valid labels found in PR! At least one of 'Edge', 'Backend' or 'UI' label is required."
+            exit 1
+          fi
 
       - name: Environment
         id: env

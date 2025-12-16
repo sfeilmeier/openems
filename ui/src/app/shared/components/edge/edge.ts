@@ -30,6 +30,7 @@ import { ChannelAddress, EdgePermission, SystemLog, Websocket } from "../../shar
 import { Role } from "../../type/role";
 import { Widgets } from "../../type/widgets";
 import { ArrayUtils } from "../../utils/array/array.utils";
+import { ObjectUtils } from "../../utils/object/object.utils";
 import { PromiseUtils } from "../../utils/promise/promise.utils";
 import { StringUtils } from "../../utils/string/string.utils";
 import { NavigationId, NavigationTree } from "../navigation/shared";
@@ -37,6 +38,10 @@ import { Name } from "../shared/name";
 import { CurrentData } from "./currentdata";
 import { EdgeConfig } from "./edgeconfig";
 import { ThirdPartyUsageAcceptance } from "./popover/shared/third-party-usage-acceptance";
+
+export enum EdgeSettings {
+    ANNUAL_REVIEW_2025 = "annual_review_2025",
+}
 
 export class Edge {
 
@@ -69,6 +74,7 @@ export class Edge {
         public readonly lastmessage: Date,
         public readonly sumState: SumState,
         public readonly firstSetupProtocol: Date,
+        public settings: Partial<{ [k in EdgeSettings]: number | boolean | string }>,
     ) { }
 
     setIsSubscribed(isSubscribed: boolean) {
@@ -515,7 +521,10 @@ export class Edge {
                                 new NavigationTree("history", { baseString: "history" }, { name: "stats-chart-outline", color: "warning" }, translate.instant("GENERAL.HISTORY"), baseMode, [], null),
                                 new NavigationTree("energy-limit", { baseString: "energy-limit" }, { name: "settings-outline", color: "medium" }, translate.instant("GENERAL.ENERGY_LIMIT"), baseMode, [], null),
                                 new NavigationTree("phase-switching", { baseString: "phase-switching" }, { name: "menu-outline", color: "warning" }, translate.instant("EDGE.INDEX.WIDGETS.EVCS.PHASE_SWITCHING"), "label", [], null),
-
+                                new NavigationTree("schedule", { baseString: "schedule" }, { name: "calendar-outline", color: "warning" }, translate.instant("EDGE.INDEX.WIDGETS.EVSE.SCHEDULE.SCHEDULE"), baseMode, [
+                                    new NavigationTree("add-task", { baseString: "add-task"}, {name: "add-outline", color: "medium"}, translate.instant("EDGE.INDEX.WIDGETS.EVSE.SCHEDULE.ADD_TASK"), baseMode, [], null),
+                                ], null),
+                                new NavigationTree("charge-mode", { baseString: "charge-mode"}, {name: "checkmark-done-outline", color: "medium"}, translate.instant("EDGE.INDEX.WIDGETS.EVSE.CHARGE_MODE"), baseMode, [], null),
                                 ...(this.roleIsAtLeast(Role.OWNER)
                                     ? [new NavigationTree("car", { baseString: "car/update/App.Evse.ElectricVehicle.Generic" }, { name: "car-sport-outline", color: "success" }, translate.instant("EVSE_SINGLE.HOME.VEHICLES"), baseMode, [], null)]
                                     : []),
@@ -529,8 +538,14 @@ export class Edge {
                     break;
             }
         }
+        navigationTree.setChild(NavigationId.LIVE, new NavigationTree("navigation-info", { baseString: "navigation-info" }, { name: "information-outline" }, translate.instant("GENERAL.HELP"), "label", [], null));
 
         return navigationTree;
+    }
+
+    public shouldShowAnnualReviewPopover(): boolean {
+        return this.role === Role.OWNER
+            && ObjectUtils.getKeySafely(this.settings, EdgeSettings.ANNUAL_REVIEW_2025) != null;
     }
 
     /**

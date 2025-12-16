@@ -43,7 +43,9 @@ public class EshUtils {
 
 		protected static EnergyDistribution fromSimulator(Period period, OptimizationContext clusterCoc,
 				ClusterScheduleContext clusterCsc, SingleModes mode) {
-			final var surplusEnergy = period.production() - period.consumption();
+			final var surplusEnergy = period instanceof Period.WithPrediction wp //
+					? wp.production() - wp.consumption() //
+					: 0; // default to zero
 
 			final var entries = clusterCoc.clusterConfig().singleParams().values().stream() //
 					.map(p -> {
@@ -175,6 +177,7 @@ public class EshUtils {
 					switch (ot.payload()) {
 					case Payload.Manual m -> manualModes.put(p.componentId(), t, m.mode());
 					case Payload.Smart s -> smartPayloads.put(p.componentId(), t, s);
+					case null -> System.out.println("Task has no payload: " + ot.toString());
 					}
 				}
 			}
