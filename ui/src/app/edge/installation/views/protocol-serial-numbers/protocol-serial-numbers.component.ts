@@ -6,6 +6,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { ArrayUtils } from "src/app/shared/utils/array/array.utils";
 import { ObjectUtils } from "src/app/shared/utils/object/object.utils";
+import { environment } from "src/environments";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { Commercial92Ibn } from "../../installation-systems/commercial/commercial-92/commercial92";
 import { ComponentData, SerialNumberFormData } from "../../shared/ibndatatypes";
@@ -23,21 +24,21 @@ export class ProtocolSerialNumbersComponent implements OnInit {
     @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
     @Output() public nextViewEvent = new EventEmitter<AbstractIbn>();
 
-    protected forms: SerialNumberFormData[];
-
     protected batterySettingsForms: {
         formGroup: FormGroup,
         fields: FormlyFieldConfig[],
         model: any
     }[] = [];
 
+    protected forms: SerialNumberFormData[] = [];
     protected numberOfTowersPerBattery: number[] = [];
     protected numberOfModulesPerTowerPerBattery: number[] = [];
-
     protected spinnerId: string;
     protected isWaiting = false;
-
     protected isCommercial92: boolean | null = null;
+    protected readonly environment = environment;
+    protected showRetryScreen: boolean = false;
+    protected isManualEntryMode: boolean = false;
     private duplicateSerialNumbers: string[] = [];
 
     constructor(
@@ -223,6 +224,14 @@ export class ProtocolSerialNumbersComponent implements OnInit {
             const flattenedPromises = batteryPromises.flat();
 
             Promise.all(flattenedPromises).then((modelsArray) => {
+                const dataFound = modelsArray.some(model => model && Object.keys(model).length > 0);
+
+                if (!dataFound && !this.isManualEntryMode) {
+                    this.showRetryScreen = true;
+                } else {
+                    this.showRetryScreen = false;
+                }
+
                 const forms: SerialNumberFormData[] = [];
                 let modelIndex = 0;
 
@@ -285,6 +294,27 @@ export class ProtocolSerialNumbersComponent implements OnInit {
             .forEach((value) => this.duplicateSerialNumbers.push(value.label));
 
         return serialNumbers;
+    }
+
+    public async retryFetch() {
+        this.isManualEntryMode = false; // Reset manual mode
+
+        this.service.startSpinner(this.spinnerId);
+
+        // Check whether edge is online
+        this.edge = await this.service.updateCurrentEdge(this.edge.id);
+
+        if (!this.edge.isOnline) {
+            this.service.stopSpinner(this.spinnerId);
+            return;
+        }
+
+        this.saveSettings();
+    }
+
+    public enableManualEntry() {
+        this.isManualEntryMode = true;
+        this.showRetryScreen = false;
     }
 
     /**
