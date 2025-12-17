@@ -147,8 +147,7 @@ jobs:
           source tools/common.sh
           common_initialize_environment
           source openems.env
-          echo ${{ secrets.DEVELOPER_API_SERVICE_ACCOUNT }} > secret.json
-          source openems.env
+          echo -n "${{ secrets.DEVELOPER_API_SERVICE_ACCOUNT }}" | base64 -d > secret.json
           python3 tools/deploy/android/create_release.py "${{ matrix.theme }}" "$VERSION_FULL" secret.json ${CI_COMMIT_BRANCH}
 
   cleanup:
