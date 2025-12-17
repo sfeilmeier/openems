@@ -4,81 +4,82 @@ import { Theme } from 'src/environments';
 let config: CapacitorConfig;
 
 const baseConfig: CapacitorConfig = {
-  webDir: 'target',
-  server: {
-    androidScheme: 'https',
-    iosScheme: 'https',
-  },
-  android: {
-    adjustMarginsForEdgeToEdge: 'auto'
-  },
-  plugins: {
-    SplashScreen: {
-      launchShowDuration: 1000,
-      launchAutoHide: false,
-      launchFadeOutDuration: 1000,
-      backgroundColor: "#ffffffff",
-      androidSplashResourceName: "splash",
-      androidScaleType: "CENTER_INSIDE",
-      splashFullScreen: false,
-      splashImmersive: true,
-      useDialog: true,
+    webDir: 'target',
+    server: {
+        androidScheme: 'https',
+        iosScheme: 'https',
     },
-    CapacitorCookies: {
-      enabled: true,
+    android: {
+        adjustMarginsForEdgeToEdge: 'auto',
     },
-  },
+    // loggingBehavior: "production",
+    plugins: {
+        SplashScreen: {
+            launchShowDuration: 1000,
+            launchAutoHide: false,
+            launchFadeOutDuration: 1000,
+            backgroundColor: "#ffffffff",
+            androidSplashResourceName: "splash",
+            androidScaleType: "CENTER_INSIDE",
+            splashFullScreen: false,
+            splashImmersive: true,
+            useDialog: true,
+        },
+        CapacitorCookies: {
+            enabled: true,
+        },
+    },
 };
 
 switch (process.env.NODE_ENV as (Theme | "FENECONBetaIos")) {
-  case 'FENECON':
-    config = {
-      ...baseConfig,
-      appId: 'de.fenecon.fems',
-      appName: 'FENECON',
-      server: {
-        ...baseConfig.server,
-        hostname: 'portal.fenecon.de',
-      },
-    };
-    break;
-  case 'FENECONBeta':
-    config = {
-      ...baseConfig,
-      appId: 'io.fenecon.ui',
-      appName: 'FENECON BETA App',
-      server: {
-        ...baseConfig.server,
-        hostname: 'portal.fenecon.de',
-      },
-    };
-    break;
+    case 'FENECON':
+        config = {
+            ...baseConfig,
+            appId: 'de.fenecon.fems',
+            appName: 'FENECON',
+            server: {
+                ...baseConfig.server,
+                hostname: 'portal.fenecon.de',
+            },
+        };
+        break;
+    case 'FENECONBeta':
+        config = {
+            ...baseConfig,
+            appId: 'io.fenecon.ui',
+            appName: 'FENECON BETA App',
+            server: {
+                ...baseConfig.server,
+                hostname: 'portal.fenecon.de',
+            },
+        };
+        break;
 
-  // Failed to create android and ios app with same package id
-  case 'FENECONBetaIos':
-    config = {
-      ...baseConfig,
-      appId: 'io.fenecon.ios',
-      appName: 'FENECON BETA App',
-      server: {
-        ...baseConfig.server,
-        hostname: 'portal.fenecon.de',
-      },
-    };
-    break;
-  case 'Heckert':
-    config = {
-      ...baseConfig,
-      appId: 'com.heckertsolar.ems',
-      appName: 'Heckert',
-      server: {
-        ...baseConfig.server,
-        hostname: 'symphon-e.heckert-solar.com',
-      },
-    };
-    break;
-  default:
-    throw new Error(`Capacitor config for theme ${process.env.NODE_ENV} not implemented.`);
+    // Failed to create android and ios app with same package id
+    case 'FENECONBetaIos':
+        config = {
+            ...baseConfig,
+            appId: 'io.fenecon.ios',
+            appName: 'FENECON BETA App',
+            server: {
+                ...baseConfig.server,
+                hostname: 'portal.fenecon.de',
+            },
+        };
+        break;
+    case 'Heckert':
+        config = {
+            ...baseConfig,
+            appId: 'com.heckertsolar.ems',
+            appName: 'Heckert',
+            server: {
+                ...baseConfig.server,
+                hostname: 'symphon-e.heckert-solar.com',
+            },
+        };
+        break;
+    default:
+        throw new Error(`Capacitor config for theme ${process.env.NODE_ENV} not implemented.`);
 
 }
 export default config;

@@ -65,7 +65,7 @@ export const OemMeta: BaseMeta = {
             EVCS_IES: "https://docs.fenecon.de/redirect/fenecon/de/evcs_ies",
             EVCS_ALPITRONIC_HYPER: "https://docs.fenecon.de/redirect/fenecon/de/evcs_alpitronichyper",
         },
-        FORGET_PASSWORD: "#",
+        FORGET_PASSWORD: "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
 
         CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE: "io.openems.edge.controller.ess.gridoptimizedcharge/readme.adoc",

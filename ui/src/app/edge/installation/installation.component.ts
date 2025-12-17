@@ -130,8 +130,8 @@ export class InstallationComponent implements OnInit {
    */
     public displayViewAtIndex(index: number) {
         this.logger.debug("View: " + Object.keys(View)[Object.values(View).indexOf(this.ibn.views[index])]
-      + ", Edge: " + (this.edge?.id ?? "")
-      + ", SystemId: " + (this.ibn?.systemId ?? ""));
+            + ", Edge: " + (this.edge?.id ?? "")
+            + ", SystemId: " + (this.ibn?.systemId ?? ""));
 
         this.ibn.removeOrAddView(this.edge);
         const viewCount = this.ibn.views.length;
