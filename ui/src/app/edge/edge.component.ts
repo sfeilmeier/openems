@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { Component, effect, OnDestroy, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { ModalController, ViewWillLeave } from "@ionic/angular";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { MarketingAnnualReviewComponent } from "../shared/components/edge/popover/annual-review/popover";
@@ -28,6 +29,7 @@ export class EdgeComponent implements OnDestroy, ViewWillLeave, OnInit {
         private websocket: Websocket,
         private pagination: Pagination,
         private popoverCtrl: ModalController,
+        private router: Router,
         private userService: UserService,
     ) {
 
