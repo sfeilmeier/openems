@@ -56,7 +56,7 @@ public final class PossibleBatteryCapacityExtensionUtil {
 			EdgeManager edgeManager, Metadata metadata, User user, PossibleBatteryCapacityExtensionRequest request)
 			throws OpenemsNamedException {
 
-		user.assertEdgeRoleIsAtLeast(PossibleBatteryCapacityExtensionRequest.METHOD, edgeId, Role.OWNER);
+		metadata.assertUserRole(user, edgeId, Role.OWNER, PossibleBatteryCapacityExtensionRequest.METHOD);
 
 		var edge = metadata.getEdge(edgeId).orElseThrow(() -> new OpenemsException("Edge not available"));
 		var result = calculateSimulationData(timedata, edge, request, edgeManager);
