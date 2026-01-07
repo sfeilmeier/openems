@@ -118,6 +118,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.FENECON.Home15", "https://fenecon.de/fenecon-home-6-10-15") //
 			.put("App.FENECON.Commercial.50.Gen3", "https://fenecon.de/fenecon-commercial-50") //
 			.put("App.FENECON.Commercial.92", "https://fenecon.de/fenecon-commercial-92") //
+			.put("App.FENECON.Commercial.100", "") //
 			.put("App.FENECON.Commercial.92.ClusterMaster", "https://fenecon.de/fenecon-commercial-92") //
 			.put("App.FENECON.Commercial.92.ClusterSlave", "https://fenecon.de/fenecon-commercial-92") //
 			.put("App.FENECON.Industrial.L.ILK710", "https://fenecon.de/fenecon-industrial-l") //
