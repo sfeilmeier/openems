@@ -1,0 +1,4 @@
+Java files located:
+https://git.intranet.fenecon.de/sebastian.asen/GoodWeUpdate
+
+Uses same update Script as Goodwe ETT (20 & 30)
