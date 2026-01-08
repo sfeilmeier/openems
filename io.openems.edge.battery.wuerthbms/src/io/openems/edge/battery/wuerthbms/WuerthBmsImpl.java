@@ -233,12 +233,12 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 						m(WuerthBms.ChannelId.PACK_SHUNT_TEMPERATURE, new UnsignedWordElement(30009), //
 								SCALE_FACTOR_MINUS_1), //
 						m(Battery.ChannelId.VOLTAGE, new UnsignedWordElement(30010)), //
-						m(Battery.ChannelId.CHARGE_MAX_VOLTAGE, new UnsignedWordElement(30011)), //
+						m(WuerthBms.ChannelId.PACK_LIMIT_MAX_BATTERY_VOLTAGE, new UnsignedWordElement(30011)), //
 						m(BatteryProtection.ChannelId.BP_CHARGE_BMS, new UnsignedWordElement(30012)),
 						m(WuerthBms.ChannelId.CELL_VOLT_PLAUSIBILITY, new UnsignedWordElement(30013)),
 						m(BatteryProtection.ChannelId.BP_DISCHARGE_BMS, new UnsignedWordElement(30014)),
 						m(WuerthBms.ChannelId.STACK_CELLS_PLAUSIBILITY, new UnsignedWordElement(30015)),
-						m(Battery.ChannelId.DISCHARGE_MIN_VOLTAGE, new UnsignedWordElement(30016)), //
+						m(WuerthBms.ChannelId.PACK_LIMIT_MIN_BATTERY_VOLTAGE, new UnsignedWordElement(30016)), //
 						m(new UnsignedWordElement(30017)) //
 								.m(WuerthBms.ChannelId.PACK_STATE_SOC, SET_NULL_FOR_DEFAULT_0) //
 								.m(Battery.ChannelId.SOC, chain(SET_NULL_FOR_DEFAULT_0, SCALE_FACTOR_MINUS_1)) //
@@ -264,8 +264,8 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 						m(WuerthBms.ChannelId.DIAG_LAST_FAILED_CSC, new UnsignedWordElement(30035)), //
 						m(WuerthBms.ChannelId.LATENT_LAST_FAILED_CSC, new UnsignedWordElement(30036)), //
 						m(WuerthBms.ChannelId.SHUTDOWN_PATH_CAUSE, new UnsignedWordElement(30037)), //
-						m(WuerthBms.ChannelId.SHUTDOWN_PATH_TEST_FAIL, new UnsignedWordElement(30038)), //
-						m(WuerthBms.ChannelId.PACK_CURRENT_MA, new UnsignedWordElement(30039)), //
+						m(WuerthBms.ChannelId.START_UP_PATH_TEST_FAIL, new UnsignedWordElement(30038)), //
+						m(WuerthBms.ChannelId.PACK_CURRENT_MA, new SignedWordElement(30039)), //
 						m(WuerthBms.ChannelId.AVG_CELL_VOLTAGE_STRING, new UnsignedWordElement(30040)), //
 						m(Battery.ChannelId.MAX_CELL_VOLTAGE, new UnsignedWordElement(30041)), //
 						m(Battery.ChannelId.MIN_CELL_VOLTAGE, new UnsignedWordElement(30042)), //
@@ -605,7 +605,9 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 				new DynamicChannel("AVG_TEMPERATURE", Unit.DEGREE_CELSIUS), //
 				new DynamicChannel("MAX_TEMPERATURE", Unit.DEGREE_CELSIUS), //
 				new DynamicChannel("MIN_TEMPERATURE", Unit.DEGREE_CELSIUS), //
-				new DynamicChannel("SOH", Unit.PERCENT) //
+				new DynamicChannel("SOH", Unit.PERCENT), //
+				new DynamicChannel("STATE_ENERGY", Unit.KILOWATT_HOURS), //
+				new DynamicChannel("REMAINING_CAPACITY", Unit.NONE) //
 		};
 
 		this.initializeDynamicModuleChannels(30100, dynamicChannels);

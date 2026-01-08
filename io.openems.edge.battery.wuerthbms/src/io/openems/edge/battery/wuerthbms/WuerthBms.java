@@ -31,7 +31,7 @@ import io.openems.edge.battery.api.BatteryErrorAcknowledge;
 import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.battery.wuerthbms.enums.CommandStateRequest;
 import io.openems.edge.battery.wuerthbms.enums.ShutdownPathCause;
-import io.openems.edge.battery.wuerthbms.enums.ShutdownPathTestFail;
+import io.openems.edge.battery.wuerthbms.enums.StartUpPathTestFail;
 import io.openems.edge.battery.wuerthbms.enums.SystemBalancingState;
 import io.openems.edge.battery.wuerthbms.enums.SystemContactorState;
 import io.openems.edge.battery.wuerthbms.enums.SystemGlobalState;
@@ -384,6 +384,12 @@ public interface WuerthBms
 				.accessMode(READ_ONLY)//
 				.unit(THOUSANDTH)), //
 		// New protocol
+		PACK_LIMIT_MAX_BATTERY_VOLTAGE(Doc.of(INTEGER)//
+				.unit(VOLT)//
+				.text("Maximum battery voltage allowed")),
+		PACK_LIMIT_MIN_BATTERY_VOLTAGE(Doc.of(INTEGER)//
+				.unit(VOLT)//
+				.text("Minimum battery voltage")),
 		CELL_VOLT_PLAUSIBILITY(Doc.of(INTEGER)//
 				.text("Checks the deviation between neighbour cells voltages - the number shows which CSC has this problem")), //
 		STACK_CELLS_PLAUSIBILITY(Doc.of(INTEGER)//
@@ -413,7 +419,7 @@ public interface WuerthBms
 				.text("Average Temperature on String")), //
 
 		SHUTDOWN_PATH_CAUSE(Doc.of(ShutdownPathCause.values())), //
-		SHUTDOWN_PATH_TEST_FAIL(Doc.of(ShutdownPathTestFail.values())), //
+		START_UP_PATH_TEST_FAIL(Doc.of(StartUpPathTestFail.values())), //
 
 		CFG_MODULE_CNT(Doc.of(INTEGER)//
 				.accessMode(READ_ONLY)//
