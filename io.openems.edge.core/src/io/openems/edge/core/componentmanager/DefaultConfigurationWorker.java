@@ -92,34 +92,6 @@ public class DefaultConfigurationWorker extends ComponentManagerWorker {
 		final var defaultConfigurationFailed = new AtomicBoolean(false);
 
 		/*
-		 * Create Default Logging configuration
-		 */
-		if (existingConfigs.stream().noneMatch(c -> "org.ops4j.pax.logging".equals(c.pid) //
-				&& !DictionaryUtils.containsAnyKey(c.properties, "log4j2.rootLogger.level"))) {
-			// Adding Configuration manually, because this is not a OpenEMS Configuration
-			try {
-				var log4j = new Hashtable<String, Object>();
-				log4j.put("log4j2.appender.console.type", "Console");
-				log4j.put("log4j2.appender.console.name", "console");
-				log4j.put("log4j2.appender.console.layout.type", "PatternLayout");
-				log4j.put("log4j2.appender.console.layout.pattern", "%d{ISO8601} [%-8.8t] %-5p [%-30.30c] %m%n");
-
-				log4j.put("log4j2.appender.paxosgi.type", "PaxOsgi");
-				log4j.put("log4j2.appender.paxosgi.name", "paxosgi");
-
-				log4j.put("log4j2.rootLogger.level", "INFO");
-				log4j.put("log4j2.rootLogger.appenderRef.console.ref", "console");
-				log4j.put("log4j2.rootLogger.appenderRef.paxosgi.ref", "paxosgi");
-				var config = this.parent.cm.getConfiguration("org.ops4j.pax.logging", null);
-				config.update(log4j);
-			} catch (IOException e) {
-				this.parent.logError(this.log, "Unable to create Default Logging configuration: " + e.getMessage());
-				e.printStackTrace();
-				defaultConfigurationFailed.set(true);
-			}
-		}
-
-		/*
 		 * Delete configuration for deprecated Controller.Api.Rest
 		 */
 		existingConfigs.stream().filter(c -> //
