@@ -7,6 +7,7 @@ import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat
 import { PickdateComponentModule } from "src/app/shared/components/pickdate/pickdate.module";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { Filter } from "src/app/shared/components/shared/filter";
+import { SetChannelValueRequest } from "src/app/shared/jsonrpc/request/setChannelValueRequest";
 import { LiveDataServiceProvider } from "src/app/shared/provider/live-data-service-provider";
 import { LocaleProvider } from "src/app/shared/provider/locale-provider";
 import { ChannelAddress, CurrentData, EdgeConfig, Utils } from "src/app/shared/shared";
@@ -117,6 +118,16 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
         this.selectedModule = (event as SelectCustomEvent).target.value;
     }
 
+    protected reset() {
+        this.edge.sendRequest(
+            this.service.websocket,
+            new SetChannelValueRequest({
+                componentId: "batteryInverter0",
+                channelId: "FactorySetting",
+                value: 1,
+            }));
+    }
+
     private async addSerialNumbersToModules() {
 
         const moduleOptions = [];
@@ -164,4 +175,5 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
 
         this.selectedModule = this.moduleOptions[0];
     }
+
 }

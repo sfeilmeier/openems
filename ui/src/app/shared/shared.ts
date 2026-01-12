@@ -243,6 +243,7 @@ export class UserPermission {
                 case Producttype.HOME_15:
                 case Producttype.HOME_20:
                 case Producttype.HOME_30:
+                case Producttype.COMMERCIAL_50_GEN_3:
                     return true;
                 default:
                     return false;
@@ -317,6 +318,7 @@ export enum Producttype {
     HOME_20_30 = "Home 20 & 30",
     COMMERCIAL_30 = "Commercial 30-Serie",
     COMMERCIAL_50 = "Commercial 50-Serie",
+    COMMERCIAL_50_GEN_3 = "Commercial-50-gen-3",
     COMMERCIAL_40_45 = "COMMERCIAL 40-45",
     COMMERCIAL_92 = "commercial-92",
     COMMERCIAL_92_CLUSTER = "commercial-92-cluster",

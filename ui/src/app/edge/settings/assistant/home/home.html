@@ -97,6 +97,12 @@
     <ion-row>
       <ion-col size-lg="6" size-md="6" size-sm="12">
         <oe-flat-widget title="Wechselrichter (batteryInverter0)">
+          <ion-item lines="none">
+            <ion-button (click)="reset()" slot="end" color="light">
+              Reset
+              <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
           <!-- <oe-flat-widget-line [name]="'Leistungsfreigaben (Beladen / Entladen)'">
           <oe-flat-widget-line-item
           [channelAddress]="'batteryInverter0/AllowedChargePower'"></oe-flat-widget-line-item>
