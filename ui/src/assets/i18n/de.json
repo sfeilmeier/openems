@@ -1407,11 +1407,6 @@
       }
     },
     "ENERGY_JOURNEY": {
-      "CURRENT_NUMBER_OF_MODULES": "Aktuell",
-      "INTRO_1": "Sehen Sie den Veränderungen in der Energiewelt gelassen entgegen.",
-      "INTRO_2": "Mit uns sind Sie bestens für Ihre 100-%-Energiewende vorbereitet.",
-      "MODULE_COUNT": "Modulanzahl",
-      "SIMULATION_NOT_STARTED": "Simulation nicht gestartet",
       "TO_THE_ANALYSIS": "Zur Analyse"
     },
     "POWER_ASSISTANT": {

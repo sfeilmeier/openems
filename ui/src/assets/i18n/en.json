@@ -1404,11 +1404,6 @@
       }
     },
     "ENERGY_JOURNEY": {
-      "CURRENT_NUMBER_OF_MODULES": "Current",
-      "INTRO_1": "Take a fresh look at the changes in the energy world.",
-      "INTRO_2": "With us, you are ideally prepared for your 100 % energy transition.",
-      "MODULE_COUNT": "Number of modules",
-      "SIMULATION_NOT_STARTED": "Simulation not started",
       "TO_THE_ANALYSIS": "View analysis"
     },
     "POWER_ASSISTANT": {
