@@ -102,7 +102,7 @@ export class SystemUpdateOldComponent implements OnInit, OnDestroy {
                     timeoutSeconds: 300,
                     runInBackground: false,
                     command: "which at || DEBIAN_FRONTEND=noninteractive apt-get -y install at; "
-            + "echo 'wget http://fenecon.de/debian-test/update-fems.sh -O /tmp/update-fems.sh && chmod +x /tmp/update-fems.sh && /tmp/update-fems.sh' | at now",
+                        + "echo 'wget http://fenecon.de/debian-test/update-fems.sh -O /tmp/update-fems.sh && chmod +x /tmp/update-fems.sh && /tmp/update-fems.sh' | at now",
                 }),
 
             })).catch(reason => {
@@ -114,13 +114,13 @@ export class SystemUpdateOldComponent implements OnInit, OnDestroy {
         this.log("INFO", "Lese Versionen von FEMS");
 
         const command = ""
-      // Read currently installed version
-      + "dpkg-query --showformat='" + this.package.name + " current:${Version}\\n' --show " + this.package.name + "; "
-      // Read latest version
-      + "echo -n \"" + this.package.name + " latest:\"; "
-      + "wget -qO- http://fenecon.de/debian-test/" + this.package.name + "-latest.version; "
-      // Read running deb/dpkg processes
-      + "ps ax | grep 'update-fems.sh\\|wget.*deb\\|dpkg' | wc -l";
+            // Read currently installed version
+            + "dpkg-query --showformat='" + this.package.name + " current:${Version}\\n' --show " + this.package.name + "; "
+            // Read latest version
+            + "echo -n \"" + this.package.name + " latest:\"; "
+            + "wget -qO- http://fenecon.de/debian-test/" + this.package.name + "-latest.version; "
+            // Read running deb/dpkg processes
+            + "ps ax | grep 'update-fems.sh\\|wget.*deb\\|dpkg' | wc -l";
 
         this.edge.sendRequest(this.websocket,
             new ComponentJsonApiRequest({
@@ -135,9 +135,9 @@ export class SystemUpdateOldComponent implements OnInit, OnDestroy {
             })).then(response => {
             const result = (response as ExecuteSystemCommandResponse).result;
             this.log("INFO", "Versionen gelesen: "
-          + result.stdout.join(", ") + " | "
-          + result.stderr.join(", ")
-              .replace("dpkg-query: no packages found matching fems", "veralteter Stand mit openems-core/openems-core-fems Paketen"),
+                    + result.stdout.join(", ") + " | "
+                    + result.stderr.join(", ")
+                        .replace("dpkg-query: no packages found matching fems", "veralteter Stand mit openems-core/openems-core-fems Paketen"),
             );
 
             if (result.stderr.length >= 1 && result.stderr[0].includes("dpkg-query: no packages found matching fems")) {

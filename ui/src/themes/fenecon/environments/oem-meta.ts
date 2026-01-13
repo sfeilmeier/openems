@@ -10,9 +10,8 @@ export const OemMeta: BaseMeta = {
         },
     },
     links: {
-        FORGET_PASSWORD: "https://erp.fenecon.de/web/reset_password?",
+        FORGET_PASSWORD: "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
-
         REDIRECT: {
             BETA_CHANGE_LOG: "https://docs.fenecon.de/redirect/fenecon/de/beta_change_log",
             COMMON_STORAGE: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_storage",

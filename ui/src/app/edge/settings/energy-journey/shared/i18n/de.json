@@ -1,7 +1,6 @@
 {
     "SETTINGS": {
         "ENERGY_JOURNEY": {
-            "TO_THE_ANALYSIS": "Zur Analyse",
             "CURRENT_NUMBER_OF_MODULES": "Aktuell",
             "SIMULATION_NOT_STARTED": "Simulation nicht gestartet",
             "WIDGET_TITLE": "Batterieerweiterung",

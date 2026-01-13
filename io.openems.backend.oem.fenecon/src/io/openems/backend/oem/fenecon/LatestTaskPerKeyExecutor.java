@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import io.openems.common.utils.ThreadPoolUtils;
@@ -28,17 +29,23 @@ public class LatestTaskPerKeyExecutor<K> {
 	 * @param task the task to execute
 	 */
 	public void execute(K key, Runnable task) {
-		final var prevTask = this.latestTasks.put(key, task);
-		if (prevTask != null) {
-			this.discardedTasks.incrementAndGet();
-			return;
-		}
-		this.executor.execute(() -> {
-			final var latestTask = this.latestTasks.remove(key);
-			if (latestTask != null) {
-				latestTask.run();
+		final var schedule = new AtomicBoolean(false);
+		this.latestTasks.compute(key, (k, v) -> { 
+			if (v == null) {
+				schedule.set(true);
+			} else {
+				this.discardedTasks.incrementAndGet();
 			}
+			return task;
 		});
+		if (schedule.get()) {
+			this.executor.execute(() -> {
+				final var latestTask = this.latestTasks.remove(key);
+				if (latestTask != null) {
+					latestTask.run();
+				}
+			});
+		}
 	}
 
 	/**

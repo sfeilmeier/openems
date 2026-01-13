@@ -53,7 +53,7 @@ export class NetworkOldComponent implements OnInit {
     }
 
     public submit(iface: InterfaceForm) {
-    // Unset Gateway and DNS if DHCP is activated
+        // Unset Gateway and DNS if DHCP is activated
         if (iface.model.dhcp) {
             iface.model.gateway = null;
             iface.model.dns = null;

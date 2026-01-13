@@ -3,9 +3,8 @@ import { Filter } from "src/app/index/filter/filter.component";
 import { DefaultTypes } from "src/app/shared/type/defaulttypes";
 export { environment } from "./dummy";
 
-export type BaseMeta = Pick<Environment, "icons" | "links" | "images">;
-
 export type Theme = "OpenEMS" | "FENECON" | "FENECONBeta" | "Heckert";
+export type BaseMeta = Pick<Environment, "icons" | "links" | "images">;
 
 export interface Environment {
     readonly theme: Theme;
@@ -20,6 +19,7 @@ export interface Environment {
 
     readonly production: boolean;
     debugMode: boolean;
+
 
     readonly docsUrlPrefix: string;
     readonly icons: {

@@ -178,6 +178,7 @@
       "DEC": "Dez",
       "END_DATE": "Enddatum wählen",
       "EXPORT": "Download als EXCEL-Datei",
+      "EXPORT_LOADING": "Bericht lädt - vielen Dank für Deine Geduld",
       "EXTERNAL_LIMITATION": "Externe Limitierung",
       "FEB": "Feb",
       "FRI": "Fr",
@@ -1139,6 +1140,8 @@
       "CONFIRM": "speichern",
       "DOUBLE_SOCKET": "Splitsockel",
       "DOUBLE_SOCKET_LABEL": "Splitsockel verbaut",
+      "EDGE_TIMEOUT_DESC": "Es gab ein Problem beim automatischen Ermitteln der Seriennummern. Möglicherweise ist das System noch nicht vollständig hochgefahren.",
+      "ENTER_MANUALLY": "Seriennummern manuell eingeben",
       "EMS_BOX_COMMERCIAL": "{{ edgeShortname }} Anschlussbox",
       "EMS_BOX_CONNECTION_BOX_COMMERCIAL30": "{{ edgeShortName }} Anschlussbox",
       "EMS_BOX_GRID_CONNECTION_POINT_COMMERCIAL30": "Netztrennstelle",
@@ -1152,18 +1155,25 @@
       "MINIMUM_AND_MAXIMUM_STRINGS": "Minimum Strings: {{ min }} und Maximum: {{ max }}",
       "MODULES_PER_STRINGS_DESCRIPTION": "Modules pro String für Commercial-50 system: {{ number }}",
       "NEXT_BUTTON_DESCRIPTION": "Wenn Sie jetzt auf weiter klicken, wird das IBN-Protokoll automatisch an die FENECON GmbH übermittelt.",
+      "NO_DATA_FOUND": "Nicht alle Seriennummern wurden gefunden",
       "NUMBER_OF_MODULES_PER_STRINGS": "Anzahl Module pro String",
       "NUMBER_OF_MODULES_PER_TOWER": "Anzahl Module pro Turm",
       "NUMBER_OF_STRINGS": "Anzahl Strings",
       "NUMBER_OF_TOWERS": "Anzahl Türme",
       "READ_DESCRIPTION": "Bitte überprüfen Sie die \"Voreinstellungen\". Bitte lesen Sie die Beschreibung der Felder.",
-      "REFRESH_NOTE": "Falls nicht alle Seriennummern angezeigt werden, aktualisieren Sie bitte Ihren Browser.\nDas Auslesen der Seriennummern kann einige Minuten in Anspruch nehmen.",
       "SAME_SERIAL_NUMBERS": "{{ serialNumbers }} haben gleiche Seriennummern ",
       "SENT_SUCCESSFULLY": "Das Protokoll wurde erfolgreich versendet.",
       "SERIAL_NUMBER": "Seriennummern",
       "SETUP_NOTE": "Vervollständigen Sie die Seriennummern, indem Sie die Platzhalter (mit \"x\" gekennzeichnet) durch die entsprechenden Zeichen ersetzen.",
       "SINGLE_SERIAL_NUMBER": "{{ label }} Seriennummer",
-      "SYSTEM_SETUP": "Voreinstellungen"
+      "SYSTEM_SETUP": "Voreinstellungen",
+      "TROUBLESHOOTING": {
+        "INTRO": "Sollten weiterhin keine Daten gefunden werden, befolgen Sie diese Schritte:",
+        "STEP_LAN": "Prüfen Sie, ob das LAN-Kabel korrekt steckt",
+        "STEP_BRIDGES": "Prüfen Sie, ob die Endbrücke gemäß der Anleitung gesteckt wurde",
+        "STEP_MANUAL": "Besteht das Problem weiterhin, können Sie die Seriennummern manuell erfassen und nach dem Abschließen der Inbetriebnahme Kontakt mit dem FENECON-Service aufnehmen"
+      },
+      "TRY_READING_AGAIN": "Auslesen erneut starten"
     },
     "PROTOCOL_SYSTEM": {
       "FIRSTNAME": "Vorname Kontaktperson",
@@ -1210,7 +1220,8 @@
     "REQUEST_TIMEOUT": "Zeitüberschreitung der Anforderung. Versuche es später noch einmal.",
     "SIGN_IN": "Anmelden",
     "TITLE": "Login",
-    "USER": "Benutzer"
+    "USER": "Benutzer",
+    "EMPLOYEE_LOGIN": "Mitarbeiter Login"
   },
   "MENU": {
     "ACCESS_LEVEL": "Zugriffslevel",
@@ -1396,11 +1407,6 @@
       }
     },
     "ENERGY_JOURNEY": {
-      "CURRENT_NUMBER_OF_MODULES": "Aktuell",
-      "INTRO_1": "Sehen Sie den Veränderungen in der Energiewelt gelassen entgegen.",
-      "INTRO_2": "Mit uns sind Sie bestens für Ihre 100-%-Energiewende vorbereitet.",
-      "MODULE_COUNT": "Modulanzahl",
-      "SIMULATION_NOT_STARTED": "Simulation nicht gestartet",
       "TO_THE_ANALYSIS": "Zur Analyse"
     },
     "POWER_ASSISTANT": {

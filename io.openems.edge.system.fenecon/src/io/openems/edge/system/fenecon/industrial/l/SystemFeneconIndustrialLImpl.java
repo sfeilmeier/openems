@@ -48,6 +48,7 @@ import org.slf4j.LoggerFactory;
 
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.function.ThrowingConsumer;
+import io.openems.common.jscalendar.JSCalendar;
 import io.openems.common.jsonrpc.serialization.EmptyObject;
 import io.openems.common.jsonrpc.serialization.EndpointRequestType;
 import io.openems.common.session.Role;
@@ -72,6 +73,7 @@ import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.event.EdgeEventConstants;
 import io.openems.edge.common.jsonapi.ComponentJsonApi;
 import io.openems.edge.common.jsonapi.EdgeGuards;
+import io.openems.edge.common.jsonapi.JSCalendarApi;
 import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStopConfig;
@@ -141,6 +143,8 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.OPTIONAL)
 	private volatile Timedata timedata = null;
 
+	private JSCalendar.Tasks<Void> tasks;
+
 	@Reference(//
 			policy = ReferencePolicy.DYNAMIC, //
 			policyOption = ReferencePolicyOption.GREEDY, //
@@ -180,6 +184,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	private boolean applyConfig(Config config) throws OpenemsNamedException {
 		this.removeAcknowledgeCallback();
 		this.parsedConfig = ParsedConfig.from(config);
+		this.tasks = JSCalendar.Tasks.fromStringOrEmpty(this.componentManager.getClock(), config.restartTasks());
 		this.addAcknowledgeCallBack();
 		this.envicool.activate(Envicool.Context.from(config, this.batteries, //
 				this.getSetBmsModeControlModeChannel(), this.getSetRunTimeControlModeChannel(), //
@@ -229,6 +234,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 			}
 			this.handleAcknowledge();
 			this.updateCumulatedActiveTimeChannels();
+			this.handleRestartTasks();
 		}
 		}
 	}
@@ -544,6 +550,18 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 				}
 			}
 		});
+
+		JSCalendarApi.buildJsonApiRoutes(//
+				builder, //
+				JSCalendar.VOID_SERIALIZER, //
+				() -> this.tasks, //
+				() -> new JSCalendarApi.UpdateJsCalendarRecord(//
+						this.cm, //
+						this.componentManager, //
+						this.servicePid(), //
+						"jsCalendar"//
+				)//
+		);
 	}
 
 	private void acknowledgeEmergencyStop() throws Exception {
@@ -687,5 +705,16 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 				getModbusCommunicationFailedChannel(), //
 				getRunFailedChannel() //
 		);
+	}
+
+	private void handleRestartTasks() {
+		if (this.tasks == null) {
+			return;
+		}
+		var activeTask = this.tasks.getActiveOneTask();
+		if (activeTask == null) {
+			return;
+		}
+		this.stateMachine.forceNextState(BMS_RESET);
 	}
 }

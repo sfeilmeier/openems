@@ -1,0 +1,6 @@
+Version 08.01.2026
+ARM: ? (410-02113-11(475)OL-B.bin)
+DSP: ? (410-04073-04(409,409)OL-R.bin)
+STS: ? (410-04075-04(409)OL-R.bin)
+
+"Latest version. No specific bug fixes mentioned."

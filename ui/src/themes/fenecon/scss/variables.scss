@@ -87,3 +87,12 @@ $font-family: var(--ion-font-family);
 .oe-ci-font-family-bold {
     font-family: 'FeneconHeadlineBold' !important;
 }
+
+ion-content.background {
+    --background: url('../../../assets/img/fenecon-energy-journey.jpg') 40% 80% / cover no-repeat fixed;
+
+    ion-card {
+        border-radius: 1em;
+        opacity: 0.9;
+    }
+}

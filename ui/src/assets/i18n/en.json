@@ -178,6 +178,7 @@
       "DEC": "Dec",
       "END_DATE": "Select End Date",
       "EXPORT": "download as excel file",
+      "EXPORT_LOADING": "Report loading - thank you for your patience",
       "EXTERNAL_LIMITATION": "External Limitation",
       "FEB": "Feb",
       "FRI": "Fri",
@@ -630,6 +631,7 @@
     "DIRECT_CONSUMPTION": "Direct consumption",
     "DISCHARGE": "Discharge",
     "EDIT": "Edit",
+    "ENERGY_LIMIT": "Energy limit",
     "FAILED": "failed",
     "FAULT": "Fault",
     "FOR": "for",
@@ -1134,11 +1136,13 @@
       "CONFIRM": "Confirm",
       "DOUBLE_SOCKET": "Split socket",
       "DOUBLE_SOCKET_LABEL": "Split socket installed",
+      "EDGE_TIMEOUT_DESC": "We could not read the serial numbers automatically. The system might be busy starting up.",
       "EMS_BOX_COMMERCIAL": "{{ edgeShortname }} Connection Box",
       "EMS_BOX_CONNECTION_BOX_COMMERCIAL30": "{{ edgeShortName }}  Connection Box",
       "EMS_BOX_GRID_CONNECTION_POINT_COMMERCIAL30": "Grid connection point",
       "EMS_BOX_HECKERT": "EMS Box",
       "EMS_BOX_HOME": "EMS Box ({{edgeShortName }} Box)",
+      "ENTER_MANUALLY": "Enter serial numbers Manually",
       "ENTER_VALID_ADDRESS": "To apply the settings, enter valid values.",
       "ERROR_SENDING": "Error sending Protocols.",
       "INVALID_SERIALNUMBER_KEY": "Please check the {{ key }} serialnumber in {{ header }}",
@@ -1147,18 +1151,25 @@
       "MINIMUM_AND_MAXIMUM_STRINGS": "Minimum Strings: {{ min }} and Maximum: {{ max }}",
       "MODULES_PER_STRINGS_DESCRIPTION": "Modules per String for Commercial-50 system: {{ number }}",
       "NEXT_BUTTON_DESCRIPTION": "By clicking on “next” button, the Commissioning report/“IBN“ report will be automatically sent to FENECON GmbH.",
+      "NO_DATA_FOUND": "No serial numbers found",
       "NUMBER_OF_MODULES_PER_STRINGS": "Number of Modules per String",
       "NUMBER_OF_MODULES_PER_TOWER": "Number of modules per tower",
       "NUMBER_OF_STRINGS": "Number of Strings",
       "NUMBER_OF_TOWERS": "Number of Towers",
       "READ_DESCRIPTION": "Please check the \"System setup\". Please read the description of the fields.",
-      "REFRESH_NOTE": "If not all serial numbers are displayed, please refresh your browser.\nReading the serial numbers may take a few minutes.",
       "SAME_SERIAL_NUMBERS": "{{ serialNumbers }} have the same serial numbers",
       "SENT_SUCCESSFULLY": "The Protocols sent successfully.",
       "SERIAL_NUMBER": "Serial numbers",
       "SETUP_NOTE": "Complete the serial numbers by replacing the placeholders (marked with \"x\") with the appropriate characters.",
       "SINGLE_SERIAL_NUMBER": " {{ label }} Serial number",
-      "SYSTEM_SETUP": "System setup"
+      "SYSTEM_SETUP": "System setup",
+      "TROUBLESHOOTING": {
+        "INTRO": "If no data is found, please follow these steps:",
+        "STEP_LAN": "Check if the LAN cable is correctly connected",
+        "STEP_BRIDGES": "Check if the jumper plug has been connected according to the instructions",
+        "STEP_MANUAL": "If the problem persists, you can manually enter the serial numbers and contact FENECON service after completing the commissioning process."
+      },
+      "TRY_READING_AGAIN": "Retry reading"
     },
     "PROTOCOL_SYSTEM": {
       "FIRSTNAME": "First name of the contact person",
@@ -1206,7 +1217,8 @@
     "REQUEST_TIMEOUT": "Your request has timed out. Please try again later.",
     "SIGN_IN": "Sign in",
     "TITLE": "Login",
-    "USER": "User"
+    "USER": "User",
+    "EMPLOYEE_LOGIN": "Employee Login"
   },
   "MENU": {
     "ACCESS_LEVEL": "Access Level",
@@ -1392,11 +1404,6 @@
       }
     },
     "ENERGY_JOURNEY": {
-      "CURRENT_NUMBER_OF_MODULES": "Current",
-      "INTRO_1": "Take a fresh look at the changes in the energy world.",
-      "INTRO_2": "With us, you are ideally prepared for your 100 % energy transition.",
-      "MODULE_COUNT": "Number of modules",
-      "SIMULATION_NOT_STARTED": "Simulation not started",
       "TO_THE_ANALYSIS": "View analysis"
     },
     "POWER_ASSISTANT": {

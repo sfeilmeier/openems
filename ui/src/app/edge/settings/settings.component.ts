@@ -53,7 +53,7 @@ export class SettingsComponent implements OnInit {
             this.canSeeHomeAssistant = UserPermission.isUserAllowedToSeeHomeAssistant(user, edge);
             this.canSeeCommercialAssistant = UserPermission.isUserAllowedToSeeCommercialServiceAssistant(user, edge);
             this.canSeeEnergyJourney = EdgePermission.isEnergyJourneyAllowed(edge)
-        && UserPermission.isUserAllowedToSeeEnergyJourney(user);
+                && UserPermission.isUserAllowedToSeeEnergyJourney(user);
         });
     }
 

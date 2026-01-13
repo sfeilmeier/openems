@@ -12,6 +12,7 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		private String id;
 		private StartStopConfig startStopConfig;
 		private String essId;
+		private String restartTask;
 		private String[] batteryIds;
 		private String coolingUnitModbusId;
 		private Envicool.Mode coolingUnitMode;
@@ -40,6 +41,11 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 
 		public Builder setBatteryIds(String... batteryIds) {
 			this.batteryIds = batteryIds;
+			return this;
+		}
+
+		public Builder setRestartTask(String restartTask) {
+			this.restartTask = restartTask;
 			return this;
 		}
 
@@ -151,5 +157,10 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	@Override
 	public String CoolingUnitModbus_target() {
 		return ConfigUtils.generateReferenceTargetFilter(this.id(), this.coolingUnitModbus_id());
+	}
+
+	@Override
+	public String restartTasks() {
+		return this.builder.restartTask;
 	}
 }
