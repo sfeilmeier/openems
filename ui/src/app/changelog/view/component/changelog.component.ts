@@ -25,6 +25,15 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2026.1.1",
+                changes: [
+                    Changelog.openems("2026.1.0"),
+                    Changelog.UI,
+                    "Verbesserungen am Inbetriebnahmeassistent: Automatische Erfassung der Seriennummern",
+                    "Kontinuierliche Verbesserungen am BETA-Feldtest. Details und Neuheiten in <a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>FENECON Docs</a>",
+                ],
+            },
+            {
                 version: "2025.12.4",
                 changes: [
                     "Veröffentlichung <a href='https://www.fenecon.de/meine-energy-journey-2025' target='_blank'>Meine Energy Journey 2025</a> - Dein persönlicher Jahresrückblick",
