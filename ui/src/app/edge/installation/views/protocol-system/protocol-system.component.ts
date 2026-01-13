@@ -89,6 +89,9 @@ export class ProtocolSystemComponent implements OnInit {
                 required: true,
             },
             hideExpression: model => model.isEqualToCustomerData,
+            validators: {
+                validation: ["person-name-prohibited-characters"],
+            },
         });
 
         fields.push({
@@ -99,6 +102,9 @@ export class ProtocolSystemComponent implements OnInit {
                 required: true,
             },
             hideExpression: model => model.isEqualToCustomerData,
+            validators: {
+                validation: ["person-name-prohibited-characters"],
+            },
         });
 
         fields.push({

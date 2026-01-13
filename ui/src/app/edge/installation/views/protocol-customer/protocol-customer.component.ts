@@ -78,6 +78,9 @@ export class ProtocolCustomerComponent implements OnInit {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.LAST_NAME"),
                 required: true,
             },
+            validators: {
+                validation: ["person-name-prohibited-characters"],
+            },
         });
 
         fields.push({
@@ -86,6 +89,9 @@ export class ProtocolCustomerComponent implements OnInit {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.FIRST_NAME"),
                 required: true,
+            },
+            validators: {
+                validation: ["person-name-prohibited-characters"],
             },
         });
 
