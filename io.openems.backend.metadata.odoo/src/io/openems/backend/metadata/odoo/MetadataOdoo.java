@@ -88,7 +88,8 @@ import io.openems.common.utils.JsonUtils;
 		name = "Metadata.Odoo", //
 		configurationPolicy = ConfigurationPolicy.REQUIRE, //
 		service = { AppCenterMetadata.class, AppCenterMetadata.EdgeData.class, AppCenterMetadata.UiData.class,
-				Metadata.class, Mailer.class, EventHandler.class, DebugLoggable.class }, immediate = true //
+				Metadata.class, Mailer.class, EventHandler.class, DebugLoggable.class }, //
+		immediate = true //
 )
 @EventTopics({ //
 		Edge.Events.ALL_EVENTS //
@@ -97,6 +98,11 @@ public class MetadataOdoo extends AbstractMetadata implements AppCenterMetadata,
 		AppCenterMetadata.UiData, Metadata, Mailer, EventHandler, DebugLoggable, AuthUserPasswordAuthenticationService {
 
 	public static final String ID = "metadata0";
+
+	public static final String ODOO_MODULE_NAME = "fems";
+	public static final String ODOO_EDGE_NAME = "fems";
+	public static final String ODOO_SETUP_PROTOCOL_EDGE_FIELD = "fems_device_id";
+	public static final int EXPECTED_NUMBER_OF_EDGES = 50_000;
 
 	private final Logger log = LoggerFactory.getLogger(MetadataOdoo.class);
 	private final EdgeCache edgeCache;
