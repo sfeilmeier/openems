@@ -2,10 +2,15 @@
 import { NgModule } from "@angular/core";
 import { AbstractControl, FormControl, ValidationErrors } from "@angular/forms";
 import { FormlyFieldConfig, FormlyModule } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
 import { SetupKeyComponent } from "src/app/edge/installation/shared/reusable-input-field";
 import { SharedModule } from "src/app/shared/shared.module";
+import { Language } from "src/app/shared/type/language";
+import { AlertingComponent } from "../settings/alerting/component/alerting.component";
 import { SettingsModule } from "../settings/settings.module";
 import { OeSystemUpdateComponent } from "../settings/system/oe-system-update.component";
+import de from "./i18n/de.json";
+import en from "./i18n/en.json";
 import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { InstallationViewComponent } from "./installation-view/installation-view.component";
 import { InstallationComponent } from "./installation.component";
@@ -184,6 +189,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
         SettingsModule,
         SetupKeyComponent,
         OeSystemUpdateComponent,
+        AlertingComponent,
     ],
     declarations: [
         CompletionComponent,
@@ -217,6 +223,15 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
         ProtocolSystemLocationValidationComponent,
     ],
 })
-export class InstallationModule { }
+export class InstallationModule {
+
+    constructor(translate: TranslateService) {
+        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+            for (const { lang, translation, shouldMerge } of translations) {
+                translate.setTranslation(lang, translation, shouldMerge);
+            }
+        });
+    }
+}
 
 // TODO rename to Setup or SetupAssistant to be in line with SetupProtocol on Backend side

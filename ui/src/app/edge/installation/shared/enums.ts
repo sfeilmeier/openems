@@ -102,6 +102,7 @@ export enum View {
     ProtocolCommercialClusterSlaveInstallation,
     ConfigurationStsBox,
     ProtocolSystemLocation,
+    Alerting,
 }
 
 export enum CommercialCluster {

@@ -71,6 +71,7 @@ export class InstallationComponent implements OnInit {
                 ibn.lineSideMeterFuse = ibnString.lineSideMeterFuse ?? {};
                 ibn.feedInLimitation = ibnString.feedInLimitation ?? {};
                 ibn.serialNumbers = ibnString.serialNumbers ?? {};
+                ibn.currentUserAlertingSettings = ibnString.currentUserAlertingSettings ?? {};
 
                 ibn.populateFromData(ibnString);
             }

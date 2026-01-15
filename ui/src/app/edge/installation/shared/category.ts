@@ -2,6 +2,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { environment } from "src/environments";
 
 export enum Category {
+    ALERTING,
     LINE_SIDE_METER_FUSE_COMMERCIAL,
     LINE_SIDE_METER_FUSE_HOME,
     FEED_IN_MANAGEMENT,
@@ -64,6 +65,8 @@ export namespace Category {
                 return translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.LABEL");
             case Category.STS_BOX:
                 return translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.LABEL");
+            case Category.ALERTING:
+                return translate.instant("EDGE.CONFIG.INDEX.ALERTING");
         }
     }
 }

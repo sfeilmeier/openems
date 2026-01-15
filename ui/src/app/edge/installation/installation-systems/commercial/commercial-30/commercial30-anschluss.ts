@@ -32,6 +32,7 @@ export class Commercial30AnschlussIbn extends AbstractCommercial30Ibn {
             View.ConfigurationSummary,
             View.ConfigurationExecute,
             View.ProtocolSerialNumbers,
+            View.Alerting,
             View.Completion,
         ], translate);
     }
