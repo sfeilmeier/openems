@@ -7,6 +7,7 @@ export const theme = {
     theme: "FENECON" as Theme,
 
     uiTitle: "FENECON Online-Monitoring",
+    uiTitleShort: "FENECON",
     edgeShortName: "FEMS",
     edgeLongName: "FENECON",
     defaultLanguage: "de",
