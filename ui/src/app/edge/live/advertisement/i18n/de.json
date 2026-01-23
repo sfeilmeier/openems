@@ -1,14 +1,14 @@
 {
-  "ADVERT": {
-    "1": {
-      "TITLE_OWNER": "Entdecke deine Energy Journey 2025!",
-      "TITLE_INSTALLER": "Jahresrückblick und Weiterempfehlungsprogramm",
-      "TEXT_OWNER": "Dein persönlicher Jahresrückblick ist ab sofort online! Entdecke die Highlights deiner persönlichen Energienutzung, wie dein FENECON Speicher dein Zuhause unterstützt hat, welchen Beitrag du für die Energiewende geleistet hast und vor allem: wie sehr sich das 2025 für dich gelohnt hat.",
-      "TEXT_INSTALLER": "Der persönliche Jahresrückblick Ihrer Kundinnen und Kunden ist jetzt live - und eröffnet auch Ihnen neue Möglichkeiten. Nutzen Sie die Kampagne „Meine Energy Journey 2025“, um Ihre Kunden aktiv zu begleiten. Inklusive neuem Weiterempfehlungsprogramm!",
-      "LINK_INSTALLER": "https://www.fenecon.de/meine-energy-journey-2025",
-      "LINK_OWNER": "https://fenecon.de/fems-wrapped-2025/{{uuid}}",
-      "LINK_TEXT_INSTALLER": "Mehr erfahren",
-      "LINK_TEXT_OWNER": "Meinen Jahresrückblick ansehen"
+    "ADVERT": {
+        "1": {
+            "TITLE_OWNER": "Lohnt sich mehr Speicher für Sie?",
+            "TITLE_INSTALLER": "Batterieerweiterungen besser beraten",
+            "TEXT_OWNER": "Mit dem Energy-Journey-Rechner sehen Sie schnell und einfach, wie sich eine Batterieerweiterung positiv auf Ihre Energiekosten auswirken kann. Hier im Online Monitoring ausprobieren und entdecken, was noch in Ihrem System steckt.",
+            "TEXT_INSTALLER": "Der Energy-Journey-Rechner unterstützt Sie bei der Kundenberatung: Zeigen Sie direkt im Online Monitoring, wie sich eine Speichererweiterung auf Kosten und Eigenverbrauch auswirkt.",
+            "LINK_INSTALLER": "https://www.fenecon.de/meine-energy-journey-2025",
+            "LINK_OWNER": "https://fenecon.de/fems-wrapped-2025/{{uuid}}",
+            "LINK_TEXT_INSTALLER": "Zum Rechner",
+            "LINK_TEXT_OWNER": "Jetzt ausprobieren"
+        }
     }
-  }
 }
