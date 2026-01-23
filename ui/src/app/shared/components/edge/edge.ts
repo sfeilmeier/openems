@@ -215,7 +215,7 @@ export class Edge {
 
         const channelsToSubscribe = channels.map(channel => channel.toString());
 
-        if (ArrayUtils.containsAll({ strings: channelsToSubscribe, arr: previousChannels })) {
+        if (previousChannels.length > 0 && ArrayUtils.containsAll({ strings: channelsToSubscribe, arr: previousChannels })) {
             return;
         }
 
@@ -522,9 +522,9 @@ export class Edge {
                                 new NavigationTree("energy-limit", { baseString: "energy-limit" }, { name: "settings-outline", color: "medium" }, translate.instant("GENERAL.ENERGY_LIMIT"), baseMode, [], null),
                                 new NavigationTree("phase-switching", { baseString: "phase-switching" }, { name: "menu-outline", color: "warning" }, translate.instant("EDGE.INDEX.WIDGETS.EVCS.PHASE_SWITCHING"), "label", [], null),
                                 new NavigationTree("schedule", { baseString: "schedule" }, { name: "calendar-outline", color: "warning" }, translate.instant("EDGE.INDEX.WIDGETS.EVSE.SCHEDULE.SCHEDULE"), baseMode, [
-                                    new NavigationTree("add-task", { baseString: "add-task"}, {name: "add-outline", color: "medium"}, translate.instant("EDGE.INDEX.WIDGETS.EVSE.SCHEDULE.ADD_TASK"), baseMode, [], null),
+                                    new NavigationTree("add-task", { baseString: "add-task" }, { name: "add-outline", color: "medium" }, translate.instant("EDGE.INDEX.WIDGETS.EVSE.SCHEDULE.ADD_TASK"), baseMode, [], null),
                                 ], null),
-                                new NavigationTree("charge-mode", { baseString: "charge-mode"}, {name: "checkmark-done-outline", color: "medium"}, translate.instant("EDGE.INDEX.WIDGETS.EVSE.CHARGE_MODE"), baseMode, [], null),
+                                new NavigationTree("charge-mode", { baseString: "charge-mode" }, { name: "checkmark-done-outline", color: "medium" }, translate.instant("EDGE.INDEX.WIDGETS.EVSE.CHARGE_MODE"), baseMode, [], null),
                                 ...(this.roleIsAtLeast(Role.OWNER)
                                     ? [new NavigationTree("car", { baseString: "car/update/App.Evse.ElectricVehicle.Generic" }, { name: "car-sport-outline", color: "success" }, translate.instant("EVSE_SINGLE.HOME.VEHICLES"), baseMode, [], null)]
                                     : []),
