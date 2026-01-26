@@ -266,4 +266,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 		int randomIndex = ThreadLocalRandom.current().nextInt(apiKeys.length);
 		return apiKeys[randomIndex];
 	}
+
+	@Override
+	public String getHardyBarthApiToken() {
+		return "hjkerwrq4tdgSdtze4e4Vhffgjfurz664g_dwfjsd_fjfadhisaguzy8dgtuawftzfghJad1hvxy gaghDSJdfghjkerswhjk_ewrhjsdfg5hjkdfghuqwfgaeghjdHfhjvcxjkaqj_klhasklysAjkladsjlsa";
+	}
 }
