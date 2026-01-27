@@ -43,13 +43,11 @@ public sealed interface EnergyScheduleHandler permits WithDifferentModes, WithOn
 	public JsonObject toJson();
 
 	/**
-	 * Triggers a rescheduling event by the EnergyScheduler.
-	 *
-	 * @param reason         a descriptive reason for logging/debugging
-	 * @param rescheduleMode defines how the current period is handled
-	 * @throws NullPointerException if {@code rescheduleMode} is {@code null}
+	 * Triggers Rescheduling by the Energy Scheduler.
+	 * 
+	 * @param reason a reason
 	 */
-	public void triggerReschedule(String reason, RescheduleMode rescheduleMode);
+	public void triggerReschedule(String reason);
 
 	/**
 	 * Creates a ControllerScheduleContext.

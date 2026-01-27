@@ -2,7 +2,6 @@ package io.openems.edge.controller.evse.cluster;
 
 import static io.openems.edge.controller.evse.cluster.EnergyScheduler.buildEnergyScheduleHandler;
 import static io.openems.edge.controller.evse.cluster.RunUtils.calculate;
-import static io.openems.edge.energy.api.handler.RescheduleMode.OPTIMIZE_CURRENT_PERIOD;
 import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE;
 import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
 import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
@@ -71,21 +70,20 @@ public class ControllerEvseClusterImpl extends AbstractOpenemsComponent
 	@Reference(cardinality = MULTIPLE, policy = DYNAMIC, policyOption = GREEDY)
 	private void bindController(ControllerEvseSingle ctrl) {
 		this.ctrls.add(ctrl);
-		Optional.ofNullable(this.energyScheduleHandler).ifPresent(
-				esh -> esh.triggerReschedule("ControllerEvseClusterImpl::bindController()", OPTIMIZE_CURRENT_PERIOD));
+		Optional.ofNullable(this.energyScheduleHandler)
+				.ifPresent(esh -> esh.triggerReschedule("ControllerEvseClusterImpl::bindController()"));
 	}
 
 	@SuppressWarnings("unused")
 	private void unbindController(ControllerEvseSingle ctrl) {
 		this.ctrls.remove(ctrl);
-		Optional.ofNullable(this.energyScheduleHandler).ifPresent(
-				esh -> esh.triggerReschedule("ControllerEvseClusterImpl::unbindController()", OPTIMIZE_CURRENT_PERIOD));
+		Optional.ofNullable(this.energyScheduleHandler)
+				.ifPresent(esh -> esh.triggerReschedule("ControllerEvseClusterImpl::unbindController()"));
 	}
 
 	@SuppressWarnings("unused")
 	private void updatedController(ControllerEvseSingle ctrl) {
-		this.energyScheduleHandler.triggerReschedule("ControllerEvseClusterImpl::modifiedController()",
-				OPTIMIZE_CURRENT_PERIOD);
+		this.energyScheduleHandler.triggerReschedule("ControllerEvseClusterImpl::modifiedController()");
 	}
 
 	public ControllerEvseClusterImpl() {
