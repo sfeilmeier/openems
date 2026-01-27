@@ -167,6 +167,7 @@
 	bnd.identity;id='io.openems.edge.meter.carlo.gavazzi',\
 	bnd.identity;id='io.openems.edge.meter.discovergy',\
 	bnd.identity;id='io.openems.edge.meter.eastron',\
+	bnd.identity;id='io.openems.edge.meter.hager',\
 	bnd.identity;id='io.openems.edge.meter.janitza',\
 	bnd.identity;id='io.openems.edge.meter.kdk',\
 	bnd.identity;id='io.openems.edge.meter.phoenixcontact',\
@@ -221,7 +222,7 @@
 	com.google.gson;version='[2.13.2,2.13.3)',\
 	com.google.guava;version='[33.5.0,33.5.1)',\
 	com.google.guava.failureaccess;version='[1.0.3,1.0.4)',\
-	com.google.protobuf;version='[4.33.2,4.33.3)',\
+	com.google.protobuf;version='[4.33.4,4.33.5)',\
 	com.opencsv;version='[5.9.0,5.9.1)',\
 	com.squareup.okhttp3;version='[5.3.2,5.3.3)',\
 	com.squareup.okhttp3.logging;version='[5.3.2,5.3.3)',\
@@ -367,6 +368,7 @@
 	io.openems.edge.meter.carlo.gavazzi;version=snapshot,\
 	io.openems.edge.meter.discovergy;version=snapshot,\
 	io.openems.edge.meter.eastron;version=snapshot,\
+	io.openems.edge.meter.hager;version=snapshot,\
 	io.openems.edge.meter.janitza;version=snapshot,\
 	io.openems.edge.meter.kdk;version=snapshot,\
 	io.openems.edge.meter.phoenixcontact;version=snapshot,\
