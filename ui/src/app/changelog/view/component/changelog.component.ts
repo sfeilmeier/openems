@@ -25,6 +25,12 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2026.1.3",
+                changes: [
+                    "FENECON Home 10 (Gen1): Fehlerbehebung im SMART-Mode (seit 2026.1.2)",
+                ],
+            },
+            {
                 version: "2026.1.2",
                 changes: [
                     Changelog.UI,
