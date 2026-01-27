@@ -55,6 +55,7 @@ export class Home15Gen2FeneconIbn extends AbstractHomeGen2Ibn {
             View.ConfigurationSummary,
             View.ConfigurationExecute,
             View.ProtocolSerialNumbers,
+            View.Alerting,
             View.Completion,
         ], translate);
     }

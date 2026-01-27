@@ -6,6 +6,7 @@ import { SetupProtocol } from "src/app/shared/jsonrpc/request/submitSetupProtoco
 import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
+import { DetailedAlertingSetting } from "../../settings/alerting/component/alerting.component";
 import { Category } from "../shared/category";
 import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View, WebLinks } from "../shared/enums";
 import { GridSettingUtils } from "../shared/gridsetting.utils";
@@ -173,6 +174,8 @@ export abstract class AbstractIbn {
     public readonly indexOf14aLimiterControllerView: number = 8;
 
     public readonly isDoubleSocketValid: boolean = false;
+
+    public currentUserAlertingSettings: DetailedAlertingSetting | null = null;
 
     constructor(public views: View[], public translate: TranslateService) { }
 
@@ -548,6 +551,16 @@ export abstract class AbstractIbn {
             })
         );
 
+        protocol.items.push({
+            category: Category.ALERTING,
+            name: this.translate.instant("GENERAL.FAULT"),
+            value: this.translate.instant(this.currentUserAlertingSettings.isFaultActive ? "GENERAL.YES" : "GENERAL.NO"),
+        }, {
+            category: Category.ALERTING,
+            name: this.translate.instant("INSTALLATION.OFFLINE"),
+            value: this.translate.instant(this.currentUserAlertingSettings.isOfflineActive ? "GENERAL.YES" : "GENERAL.NO"),
+        });
+
         return protocol;
     }
 
@@ -635,6 +648,10 @@ export abstract class AbstractIbn {
      */
     public getTotalPvPower(): number {
         return 0;
+    }
+
+    public setCurrentUserAlertingSettings(detailedAlertingSetting: DetailedAlertingSetting) {
+        this.currentUserAlertingSettings = detailedAlertingSetting;
     }
 
     /**

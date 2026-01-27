@@ -62,6 +62,7 @@ export class Home20FeneconIbn extends AbstractHomeIbn {
             View.ConfigurationSummary,
             View.ConfigurationExecute,
             View.ProtocolSerialNumbers,
+            View.Alerting,
             View.Completion,
         ], translate);
     }

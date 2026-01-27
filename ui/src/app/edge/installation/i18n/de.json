@@ -1,0 +1,6 @@
+{
+    "INSTALLATION": {
+        "ALERTING_INFO": "Richte dir als Installateur E-Mail-Benachrichtigungen ein, wenn das FEMS für eine bestimmte Zeit offline ist oder einen Fehler meldet. Versendet wird die Nachricht an die bei der Inbetriebnahme angegebene E-Mail-Adresse.",
+        "OFFLINE": "Offline"
+    }
+}

@@ -1,5 +1,7 @@
 package io.openems.backend.metadata.odoo.odoo;
 
+import static io.openems.backend.metadata.odoo.MetadataOdoo.ODOO_EDGE_NAME;
+import static io.openems.backend.metadata.odoo.MetadataOdoo.ODOO_MODULE_NAME;
 import static io.openems.backend.metadata.odoo.odoo.OdooUtils.getAs;
 import static io.openems.backend.metadata.odoo.odoo.OdooUtils.getAsEnum;
 import static io.openems.backend.metadata.odoo.odoo.OdooUtils.getAsOptional;
@@ -24,6 +26,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,6 +49,7 @@ import io.openems.backend.common.metadata.Metadata.SetupProtocolCoreInfo;
 import io.openems.backend.common.metadata.Metadata.SetupProtocolItem;
 import io.openems.backend.common.metadata.User;
 import io.openems.backend.metadata.odoo.Config;
+import io.openems.backend.metadata.odoo.DebugExecutor;
 import io.openems.backend.metadata.odoo.EdgeCache;
 import io.openems.backend.metadata.odoo.Field;
 import io.openems.backend.metadata.odoo.Field.AlertingSetting;
@@ -74,10 +79,19 @@ public class OdooHandler {
 	private final Logger log = LoggerFactory.getLogger(OdooHandler.class);
 	private final Credentials credentials;
 
-	public OdooHandler(MetadataOdoo parent, EdgeCache edgeCache, Config config) {
+	private volatile CompletableFuture<String> adminLoginFuture = CompletableFuture
+			.failedFuture(new RuntimeException());
+
+	private final DebugExecutor refreshToken;
+	private final DebugExecutor executor;
+
+	public OdooHandler(MetadataOdoo parent, EdgeCache edgeCache, Config config, DebugExecutor refreshToken,
+			DebugExecutor executor) {
 		this.parent = parent;
 		this.edgeCache = edgeCache;
 		this.credentials = Credentials.fromConfig(config);
+		this.refreshToken = refreshToken;
+		this.executor = executor;
 	}
 
 	/**
@@ -162,13 +176,7 @@ public class OdooHandler {
 	}
 
 	private void assignEdgeToUser(String externalUserId, int edgeId, OdooUserRole userRole) throws OpenemsException {
-		final var userIds = this.getUserIdsWithExternalId(externalUserId);
-		if (userIds.length != 1) {
-			throw new OpenemsException("User not found for login [" + externalUserId + "]");
-		}
-		final var userId = userIds[0];
-
-		this.assignEdgeToUser(userId, edgeId, userRole);
+		this.assignEdgeToUser(this.getUserIdByExternalIdOrThrow(externalUserId), edgeId, userRole);
 	}
 
 	/**
@@ -229,13 +237,18 @@ public class OdooHandler {
 	 * @return the {@link JsonObject} received from /openems_backend/info.
 	 * @throws OpenemsNamedException on error
 	 */
-	public JsonObject authenticateSession(String externalUserId) throws OpenemsNamedException {
-		return getAsJsonObject(OdooUtils.sendAdminJsonrpcRequest(this.credentials, "/openems_backend/info",
-				JsonUtils.buildJsonObject() //
-						.add("params", JsonUtils.buildJsonObject() //
-								.addProperty("external_uid", externalUserId) //
-								.build())
-						.build()).result);
+	public CompletableFuture<JsonObject> authenticateSession(String externalUserId) {
+		return this.executeAdminRequest(session -> {
+			return this.executor.submit("authenticateSession", () -> {
+				return OdooUtils.sendJsonrpcRequest(this.credentials.url() + "/openems_backend/info",
+						"session_id=" + session, buildJsonObject() //
+								.add("params", buildJsonObject() //
+										.addProperty("external_uid", externalUserId) //
+										.build())
+								.build()).result
+						.getAsJsonObject();
+			});
+		});
 	}
 
 	/**
@@ -246,7 +259,7 @@ public class OdooHandler {
 	 */
 	public void logout(String sessionId) {
 		try {
-			OdooUtils.sendJsonrpcRequest(this.credentials.getUrl() + "/web/session/destroy", "session_id=" + sessionId,
+			OdooUtils.sendJsonrpcRequest(this.credentials.url() + "/web/session/destroy", "session_id=" + sessionId,
 					new JsonObject());
 		} catch (OpenemsNamedException e) {
 			this.log.warn("Unable to logout session [" + sessionId + "]: " + e.getMessage());
@@ -428,7 +441,8 @@ public class OdooHandler {
 	 * @throws OpenemsNamedException on error
 	 */
 	public byte[] getOdooSetupProtocolReport(int setupProtocolId) throws OpenemsNamedException {
-		return OdooUtils.getOdooReport(this.credentials, "fems.report_fems_setup_protocol_template", setupProtocolId);
+		return OdooUtils.getOdooReport(this.credentials,
+				ODOO_MODULE_NAME + ".report_" + ODOO_MODULE_NAME + "_setup_protocol_template", setupProtocolId);
 	}
 
 	/**
@@ -504,9 +518,8 @@ public class OdooHandler {
 	 */
 	public int submitSetupProtocol(User user, JsonObject setupProtocolJson) throws OpenemsNamedException {
 		final var userJson = getAsJsonObject(setupProtocolJson, "customer");
-		final var edgeJson = getAsJsonObject(setupProtocolJson, "fems");
+		final var edgeJson = getAsJsonObject(setupProtocolJson, ODOO_EDGE_NAME);
 		final var installerJson = getAsJsonObject(setupProtocolJson, "installer");
-		final var oem = getAsString(setupProtocolJson, "oem").toUpperCase();
 
 		final var edgeId = getAsString(edgeJson, "id");
 		final var foundEdge = OdooUtils.search(this.credentials, Field.EdgeDevice.ODOO_MODEL,
@@ -622,71 +635,22 @@ public class OdooHandler {
 	}
 
 	/**
-	 * Create an Odoo user and return thats id. If user already exists the user will
-	 * be updated and return the user id.
-	 *
-	 * @param userJson the {@link Partner} to create user
-	 * @param password the password to set for the new user
-	 * @param oem      OEM name
-	 * @return the Odoo user id
-	 * @throws OpenemsNamedException on error
-	 */
-	private int createOdooUser(JsonObject userJson, String password, String oem) throws OpenemsNamedException {
-		var customerFields = new HashMap<>(this.updateAddress(userJson));
-		customerFields.putAll(this.updateCompany(userJson));
-
-		getAsOptionalString(userJson, "firstname") //
-				.ifPresent(firstname -> customerFields.put(Field.Partner.FIRSTNAME.id(), firstname));
-		getAsOptionalString(userJson, "lastname") //
-				.ifPresent(lastname -> customerFields.put(Field.Partner.LASTNAME.id(), lastname));
-
-		var email = getAsString(userJson, "email").toLowerCase();
-		customerFields.put(Field.Partner.EMAIL.id(), email);
-
-		getAsOptionalString(userJson, "phone") //
-				.ifPresent(phone -> customerFields.put(Field.Partner.PHONE.id(), phone));
-
-		var userFound = OdooUtils.search(this.credentials, Field.User.ODOO_MODEL,
-				new Domain(Field.User.LOGIN, Operator.EQ, email));
-
-		if (userFound.length == 1) {
-			// update existing user
-			var userId = userFound[0];
-			OdooUtils.write(this.credentials, Field.User.ODOO_MODEL, new Integer[] { userId }, customerFields);
-			return userId;
-		}
-
-		customerFields.put(Field.User.LOGIN.id(), email);
-		customerFields.put(Field.User.PASSWORD.id(), password);
-		customerFields.put(Field.User.GLOBAL_ROLE.id(), OdooUserRole.OWNER.getOdooRole());
-		customerFields.put(Field.User.GROUPS.id(), OdooUserRole.OWNER.toOdooIds());
-		var createdUserId = OdooUtils.create(this.credentials, Field.User.ODOO_MODEL, customerFields);
-
-		try {
-			this.addTagToPartner(createdUserId);
-		} catch (OpenemsException e) {
-			this.log.warn("Unable to add tag for Odoo user id [" + createdUserId + "]", e);
-		}
-
-		this.sendRegistrationMail(createdUserId, password, oem);
-		return createdUserId;
-	}
-
-	/**
 	 * Add tags to the referenced partner for given user id.
 	 *
-	 * @param userId to get Odoo partner
+	 * @param userId   to get Odoo partner
+	 * @param tagNames the tags to add
 	 * @throws OpenemsException on error
 	 */
-	private void addTagToPartner(int userId) throws OpenemsException {
-		var createdViaIbnTag = OdooUtils.getObjectReference(this.credentials, "fems",
-				"res_partner_category_created_via_ibn");
-		var customerTag = OdooUtils.getObjectReference(this.credentials, "fems", "res_partner_category_customer");
+	private void addTagsToPartner(int userId, List<String> tagNames) throws OpenemsException {
+		if (tagNames.isEmpty()) {
+			return;
+		}
+		final var tagIds = OdooUtils.getObjectReferences(this.credentials, "fems", tagNames);
 
 		var partnerId = this.getOdooPartnerId(userId);
 
 		OdooUtils.write(this.credentials, Field.Partner.ODOO_MODEL, new Integer[] { partnerId },
-				new FieldValue<>(Field.Partner.CATEGORY_ID, new Integer[] { createdViaIbnTag, customerTag }));
+				new FieldValue<>(Field.Partner.CATEGORY_ID, tagIds));
 	}
 
 	/**
@@ -1063,6 +1027,22 @@ public class OdooHandler {
 
 		final var includePasswordInRegistrationEmail = getAsOptionalBoolean(jsonObject,
 				"includePasswordInRegistrationEmail").orElse(false);
+
+		final var tagNames = new ArrayList<String>();
+		if (role == OdooUserRole.OWNER) {
+			tagNames.add("res_partner_category_customer");
+		}
+		// includePasswordInRegistrationEmail => Account got created via IBN
+		if (includePasswordInRegistrationEmail) {
+			tagNames.add("res_partner_category_created_via_ibn");
+		}
+
+		try {
+			this.addTagsToPartner(createdUserId, tagNames);
+		} catch (Exception e) {
+			this.log.warn("Unable to add tag for Odoo user id [" + createdUserId + "]", e);
+		}
+
 		if (password != null && includePasswordInRegistrationEmail) {
 			this.sendRegistrationMail(createdUserId, password, oem);
 		} else {
@@ -1130,11 +1110,8 @@ public class OdooHandler {
 	 */
 	public void updateUserLanguage(User user, Language language) throws OpenemsException {
 		try {
-			final var userIds = this.getUserIdsWithExternalId(user.getUserId());
-			if (userIds.length != 1) {
-				throw new OpenemsException("User not found for login [" + user.getUserId() + "]");
-			}
-			OdooUtils.write(this.credentials, Field.User.ODOO_MODEL, userIds, //
+			final var userId = this.getUserIdByExternalIdOrThrow(user.getUserId());
+			OdooUtils.write(this.credentials, Field.User.ODOO_MODEL, new Integer[] { userId }, //
 					new FieldValue<>(Field.User.OPENEMS_LANGUAGE, language.name()));
 			user.setLanguage(language);
 		} catch (OpenemsNamedException ex) {
@@ -1142,9 +1119,17 @@ public class OdooHandler {
 		}
 	}
 
-	private Integer[] getUserIdsWithExternalId(String externalId) throws OpenemsException {
+	private Integer[] getUserIdsByExternalId(String externalId) throws OpenemsException {
 		return OdooUtils.search(this.credentials, Field.User.ODOO_MODEL,
 				new Domain(Field.User.OAUTH_UID, Operator.EQ, externalId));
+	}
+
+	private int getUserIdByExternalIdOrThrow(String externalId) throws OpenemsException {
+		final var userIds = this.getUserIdsByExternalId(externalId);
+		if (userIds.length != 1) {
+			throw new OpenemsException("User not found for external id [" + externalId + "]");
+		}
+		return userIds[0];
 	}
 
 	private Integer[] getUserIdsWithEmail(String email) throws OpenemsException {
@@ -1561,8 +1546,10 @@ public class OdooHandler {
 	 * @param userAlertingSettings list of users
 	 * @throws OpenemsException on error
 	 */
-	public void setUserAlertingSettings(MyUser user, String edgeId, List<UserAlertingSettings> userAlertingSettings)
+	public void setUserAlertingSettings(User user, String edgeId, List<UserAlertingSettings> userAlertingSettings)
 			throws OpenemsException {
+
+		final var userId = this.getUserIdByExternalIdOrThrow(user.getUserId());
 
 		// search edge by id
 		var edgeIds = OdooUtils.search(this.credentials, Field.EdgeDevice.ODOO_MODEL,
@@ -1587,7 +1574,7 @@ public class OdooHandler {
 			} else {
 				OdooUtils.create(this.credentials, AlertingSetting.ODOO_MODEL, //
 						new FieldValue<>(AlertingSetting.DEVICE_ODOO_ID, deviceId), //
-						new FieldValue<>(AlertingSetting.USER_ODOO_ID, user.getOdooId()), //
+						new FieldValue<>(AlertingSetting.USER_ODOO_ID, userId), //
 						new FieldValue<>(AlertingSetting.OFFLINE_DELAY, setting.edgeOfflineDelay()), //
 						new FieldValue<>(AlertingSetting.FAULT_DELAY, setting.edgeFaultDelay()), //
 						new FieldValue<>(AlertingSetting.WARNING_DELAY, setting.edgeWarningDelay()), //
@@ -1607,7 +1594,7 @@ public class OdooHandler {
 	 * @return the edges
 	 * @throws OpenemsNamedException on error
 	 */
-	public JsonObject getEdges(User user, PaginationOptions paginationOptions) throws OpenemsNamedException {
+	public CompletableFuture<JsonObject> getEdges(User user, PaginationOptions paginationOptions) {
 		var request = buildJsonObject() //
 				.add("params", buildJsonObject() //
 						.addProperty("external_uid", user.getUserId()) //
@@ -1619,8 +1606,17 @@ public class OdooHandler {
 						.build()) //
 				.build();
 
-		return getAsJsonObject(
-				OdooUtils.sendAdminJsonrpcRequest(this.credentials, "/openems_backend/get_edges", request).result);
+		return this.executeAdminRequest(session -> {
+			return this.executor.submit("getEdges", () -> {
+				try {
+					return getAsJsonObject(
+							OdooUtils.sendJsonrpcRequest(this.credentials.url() + "/openems_backend/get_edges",
+									"session_id=" + session, request).result);
+				} catch (OpenemsNamedException e) {
+					throw new RuntimeException(e);
+				}
+			});
+		});
 	}
 
 	/**
@@ -1631,7 +1627,7 @@ public class OdooHandler {
 	 * @return the edge with the role of the user
 	 * @throws OpenemsNamedException on error
 	 */
-	public JsonObject getEdgeWithRole(User user, String edgeId) throws OpenemsNamedException {
+	public CompletableFuture<JsonObject> getEdgeWithRole(User user, String edgeId) {
 		var request = buildJsonObject() //
 				.add("params", buildJsonObject() //
 						.addProperty("external_uid", user.getUserId()) //
@@ -1639,8 +1635,17 @@ public class OdooHandler {
 						.build()) //
 				.build();
 
-		return getAsJsonObject(OdooUtils.sendAdminJsonrpcRequest(this.credentials,
-				"/openems_backend/get_edge_with_role", request).result);
+		return this.executeAdminRequest(session -> {
+			return this.executor.submit("getEdgeWithRole", () -> {
+				try {
+					return getAsJsonObject(
+							OdooUtils.sendJsonrpcRequest(this.credentials.url() + "/openems_backend/get_edge_with_role",
+									"session_id=" + session, request).result);
+				} catch (OpenemsNamedException e) {
+					throw new RuntimeException(e);
+				}
+			});
+		});
 	}
 
 	/**
@@ -1677,6 +1682,47 @@ public class OdooHandler {
 						.addProperty("userId", user.getId()) //
 						.build()) //
 				.build());
+	}
+
+	private CompletableFuture<String> authenticateAsAdmin() {
+		var currentFuture = this.adminLoginFuture;
+		if (!currentFuture.isDone()) {
+			return currentFuture;
+		}
+
+		synchronized (this) {
+			currentFuture = this.adminLoginFuture;
+			if (!currentFuture.isDone()) {
+				return currentFuture;
+			}
+
+			return this.adminLoginFuture = this.refreshToken.submit("authenticateAsAdmin", () -> {
+				try {
+					return OdooUtils.loginAdmin(this.credentials);
+				} catch (Exception e) {
+					this.log.warn("Unable to authenticate as admin", e);
+					throw e;
+				}
+			}).orTimeout(5, TimeUnit.MINUTES);
+		}
+	}
+
+	private <T> CompletableFuture<T> executeAdminRequest(Function<String, CompletableFuture<T>> request) {
+		return this.adminLoginFuture.exceptionallyCompose(t -> this.authenticateAsAdmin()) //
+				.thenCompose(token -> {
+					return request.apply(token).exceptionallyCompose(throwable -> {
+
+						// retry once if authentication failed
+						if (throwable instanceof SessionExpiredException
+								|| throwable.getCause() instanceof SessionExpiredException) {
+							this.log.info("Session expired, re-authenticating as admin and retrying request",
+									throwable);
+							return this.authenticateAsAdmin().thenCompose(request);
+						}
+
+						return CompletableFuture.failedFuture(throwable);
+					});
+				});
 	}
 
 }

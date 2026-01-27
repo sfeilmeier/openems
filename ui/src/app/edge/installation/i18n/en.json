@@ -1,0 +1,6 @@
+{
+    "INSTALLATION": {
+        "ALERTING_INFO": "Set up email notifications as an installer when the FEMS is offline for a certain period of time or reports an error. The message is sent to the email address provided during commissioning.",
+        "OFFLINE": "Offline"
+    }
+}

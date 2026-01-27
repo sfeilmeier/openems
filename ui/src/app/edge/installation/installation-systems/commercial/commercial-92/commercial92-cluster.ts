@@ -39,6 +39,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             View.ProtocolCommercialClusterSlaveInstallation,
             View.ProtocolChecklist,
             View.ProtocolSerialNumbers,
+            View.Alerting,
             View.Completion,
         ], translate);
     }

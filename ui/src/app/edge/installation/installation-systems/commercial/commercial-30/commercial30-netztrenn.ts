@@ -52,6 +52,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
             View.ConfigurationSummary,
             View.ConfigurationExecute,
             View.ProtocolSerialNumbers,
+            View.Alerting,
             View.Completion,
         ], translate);
     }

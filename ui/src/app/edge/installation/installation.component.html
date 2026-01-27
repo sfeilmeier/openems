@@ -12,6 +12,24 @@
 
     @if (websocket.status === 'online') {
       @switch (displayedView) {
+        @case (view.Alerting){
+          <installation-view iconName="notifications-outline"
+            header="{{ 'EDGE.CONFIG.INDEX.ALERTING' | translate }}"
+            (nextClicked)="displayNextView(ibn)"
+            (previousClicked)="displayPreviousView()">
+            <ion-grid class="ion-padding">
+              <ion-row>
+                <ion-text>
+                  {{'INSTALLATION.ALERTING_INFO' | translate}}
+                </ion-text>
+              </ion-row>
+            </ion-grid>
+            <alerting
+                (currentUserAlertingSettings)="ibn.setCurrentUserAlertingSettings($event)"
+                [css]="{sizeMd: 12}">
+            </alerting>
+          </installation-view>
+        }
         @case (view.PreInstallation) {
           <pre-installation (edgeChange)="edge=$event" (nextViewEvent)="displayNextView($event)">
           </pre-installation>

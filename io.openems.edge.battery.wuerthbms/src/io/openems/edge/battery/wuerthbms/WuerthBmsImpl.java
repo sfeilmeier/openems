@@ -2,9 +2,8 @@ package io.openems.edge.battery.wuerthbms;
 
 import static io.openems.common.types.OpenemsType.BOOLEAN;
 import static io.openems.common.types.OpenemsType.INTEGER;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.DIRECT_1_TO_1;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SET_NULL_FOR_DEFAULT;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.chain;
 import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE;
 import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE;
 import static org.osgi.service.component.annotations.ConfigurationPolicy.REQUIRE;
@@ -48,7 +47,6 @@ import io.openems.edge.battery.wuerthbms.statemachine.StateMachine;
 import io.openems.edge.battery.wuerthbms.statemachine.StateMachine.State;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
 import io.openems.edge.bridge.modbus.api.BridgeModbus;
-import io.openems.edge.bridge.modbus.api.ElementToChannelConverter;
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
 import io.openems.edge.bridge.modbus.api.ModbusProtocol;
 import io.openems.edge.bridge.modbus.api.element.BitsWordElement;
@@ -87,7 +85,6 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 	public record BatteryValues(int soc, int voltage, int chargeMaxVoltage, int dischargeMinVoltage) {
 	}
 
-	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_0 = SET_NULL_FOR_DEFAULT(0);
 	private static final int INNER_RESISTANCE = 150; // [mOhm]
 	private static final int CAPACITY = 161_100; // [Wh]
 
@@ -240,8 +237,8 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 						m(WuerthBms.ChannelId.STACK_CELLS_PLAUSIBILITY, new UnsignedWordElement(30015)),
 						m(WuerthBms.ChannelId.PACK_LIMIT_MIN_BATTERY_VOLTAGE, new UnsignedWordElement(30016)), //
 						m(new UnsignedWordElement(30017)) //
-								.m(WuerthBms.ChannelId.PACK_STATE_SOC, SET_NULL_FOR_DEFAULT_0) //
-								.m(Battery.ChannelId.SOC, chain(SET_NULL_FOR_DEFAULT_0, SCALE_FACTOR_MINUS_1)) //
+								.m(WuerthBms.ChannelId.PACK_STATE_SOC, DIRECT_1_TO_1) //
+								.m(Battery.ChannelId.SOC, SCALE_FACTOR_MINUS_1) //
 								.build(), //
 						m(Battery.ChannelId.SOH, new UnsignedWordElement(30018)),
 						m(WuerthBms.ChannelId.PACK_STATE_ENERGY, new UnsignedWordElement(30019)),

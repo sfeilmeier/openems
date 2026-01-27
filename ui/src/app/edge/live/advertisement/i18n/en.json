@@ -1,10 +1,14 @@
 {
-  "ADVERT": {
-    "1": {
-      "TITLE": "BETA App: Try it now!",
-      "TEXT": "FENECON pioneers can now test the latest features in our FENECON Beta App for Android. Download the app directly from the Google Play Store, glance at the new design updates, and play an active role in shaping the future of our applications.",
-      "LINK": "https://play.google.com/store/apps/details?id=io.fenecon.ui&utm_source=emea_Med",
-      "LINK_TEXT": "Go to Google Play Store"
+    "ADVERT": {
+        "1": {
+            "TITLE_OWNER": "Is more storage worth it for you?",
+            "TITLE_INSTALLER": "Advise on battery expansions",
+            "TEXT_OWNER": "With the Energy Journey Calculator, you can quickly and easily see how a battery expansion could positively impact your energy costs. Try it out right here in the online monitoring and discover the full potential of your system.",
+            "TEXT_INSTALLER": "The Energy Journey Calculator supports you in customer consultations: show directly in the online monitoring how a battery expansion affects costs and self-consumption.",
+            "LINK_INSTALLER": "https://www.fenecon.de/meine-energy-journey-2025",
+            "LINK_OWNER": "https://fenecon.de/fems-wrapped-2025/{{uuid}}",
+            "LINK_TEXT_INSTALLER": "Try it now",
+            "LINK_TEXT_OWNER": "Try it now"
+        }
     }
-  }
 }

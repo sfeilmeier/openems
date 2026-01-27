@@ -1,8 +1,7 @@
 // @ts-strict-ignore
-import { Edge, EdgeSettings } from "../components/edge/edge";
+import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { EdgePermission, Utils } from "../shared";
-import { ObjectUtils } from "../utils/object/object.utils";
 import { Role } from "./role";
 import { TEnumKeys } from "./utility";
 
@@ -87,18 +86,7 @@ export class AdvertWidgets {
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
         let list: AdvertWidget[] = [];
-
-        // const allowedProducttypes: Producttype[] = [
-        //     Producttype.HOME,
-        //     Producttype.HOME_6,
-        //     Producttype.HOME_10,
-        //     Producttype.HOME_15,
-        //     Producttype.HOME_20,
-        //     Producttype.HOME_20_30,
-        //     Producttype.HOME_30,
-        // ];
-
-        if (ObjectUtils.getKeySafely(edge.settings, EdgeSettings.ANNUAL_REVIEW_2025) && (edge.role == Role.OWNER || edge.role == Role.INSTALLER)) {
+        if (EdgePermission.isEnergyJourneyAllowed(edge)) {
             list.push(
                 {
                     name: "advert-1",

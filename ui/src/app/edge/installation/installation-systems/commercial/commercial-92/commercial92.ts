@@ -31,6 +31,7 @@ export class Commercial92Ibn extends AbstractCommercial92Ibn {
             View.ConfigurationExecute,
             View.ProtocolSerialNumbers,
             View.ProtocolChecklist,
+            View.Alerting,
             View.Completion,
         ], translate);
     }

@@ -100,6 +100,7 @@ export class PreInstallationComponent implements OnInit {
 
                 // Add to session Storage.
                 sessionStorage.setItem("edge", JSON.stringify(edge));
+                this.service.currentEdge.set(this.edge);
                 if (emsBoxSerialNumber) {
                     // Store Fems Box Serial number only if it is existing in Odoo.
                     sessionStorage.setItem("emsBoxSerialNumber", emsBoxSerialNumber);

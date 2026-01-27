@@ -5,6 +5,7 @@ export const theme: Omit<Environment, "url" | "backend" | "production" | "debugM
     theme: "Heckert" as Theme,
 
     uiTitle: "Heckert Solar Symphon-E Online Monitoring",
+    uiTitleShort: "Heckert",
     edgeShortName: "EMS",
     edgeLongName: "Heckert Solar Symphon-E",
     defaultLanguage: "de",

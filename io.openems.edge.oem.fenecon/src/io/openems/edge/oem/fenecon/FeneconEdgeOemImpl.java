@@ -5,7 +5,7 @@ import static io.openems.common.OpenemsConstants.VERSION_DEV_BRANCH;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -23,12 +23,10 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 	private static final Logger LOG = LoggerFactory.getLogger(FeneconEdgeOemImpl.class);
 
 	private final String manufacturerEmsSerialNumber;
-	private final Random random;
 
 	@Activate
 	public FeneconEdgeOemImpl() {
 		this.manufacturerEmsSerialNumber = readManufacturerEmsSerialNumber();
-		this.random = new Random();
 	}
 
 	@Override
@@ -215,6 +213,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Ess.PowerPlantController", "") //
 			.put("App.Ess.PrepareBatteryExtension", "") //
 			.put("App.Ess.Limiter14a", "") //
+			.put("App.Prediction.Default", "") //
 			.put("App.Prediction.UnmanagedConsumption", "") //
 
 			// Hardware
@@ -264,7 +263,12 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 				"4CDCv1GPZv1quBe", //
 				"Py1oBPk2zo4T9oo", //
 		};
-		int randomIndex = this.random.nextInt(apiKeys.length);
+		int randomIndex = ThreadLocalRandom.current().nextInt(apiKeys.length);
 		return apiKeys[randomIndex];
+	}
+
+	@Override
+	public String getHardyBarthApiToken() {
+		return "hjkerwrq4tdgSdtze4e4Vhffgjfurz664g_dwfjsd_fjfadhisaguzy8dgtuawftzfghJad1hvxy gaghDSJdfghjkerswhjk_ewrhjsdfg5hjkdfghuqwfgaeghjdHfhjvcxjkaqj_klhasklysAjkladsjlsa";
 	}
 }

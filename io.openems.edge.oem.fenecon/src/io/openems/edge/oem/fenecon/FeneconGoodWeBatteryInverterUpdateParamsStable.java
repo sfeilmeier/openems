@@ -33,7 +33,7 @@ public class FeneconGoodWeBatteryInverterUpdateParamsStable implements GoodWeBat
 	public GoodWeUpdateParams getParams(GoodWeType goodWeType) {
 		return switch (goodWeType) {
 		case UNDEFINED, GOODWE_10K_BT, GOODWE_8K_BT, GOODWE_5K_BT, GOODWE_10K_ET, GOODWE_8K_ET, GOODWE_5K_ET,
-				FENECON_GEN2_6K, FENECON_GEN2_10K, FENECON_GEN2_15K, FENECON_50K ->
+				FENECON_GEN2_6K, FENECON_GEN2_10K, FENECON_GEN2_15K, FENECON_50K, FENECON_100K ->
 			null;
 		case FENECON_FHI_10_DAH ->
 			new GoodWeUpdateParams("goodwe10", "2025_03_12", new GoodWeVersion(12, 197, 30, 60322));

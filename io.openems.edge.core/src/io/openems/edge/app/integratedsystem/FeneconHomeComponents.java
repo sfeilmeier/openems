@@ -6,6 +6,7 @@ import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.types.EdgeConfig;
 import io.openems.common.types.EdgeConfig.Component;
+import io.openems.common.utils.FunctionUtils;
 import io.openems.common.utils.JsonUtils;
 import io.openems.edge.app.enums.ExternalLimitationType;
 import io.openems.edge.app.enums.Parity;
@@ -355,41 +356,6 @@ public final class FeneconHomeComponents {
 	}
 
 	/**
-	 * Creates a default predictor component for a FENECON Home.
-	 *
-	 * @param bundle the translation bundle
-	 * @param t      the current {@link ConfigurationTarget}
-	 * @return the {@link Component}
-	 */
-	public static EdgeConfig.Component predictor(//
-			final ResourceBundle bundle, //
-			final ConfigurationTarget t //
-	) {
-		return new EdgeConfig.Component("predictor0",
-				TranslationUtil.getTranslation(bundle, "App.IntegratedSystem.predictor0.alias"),
-				"Predictor.PersistenceModel", //
-				JsonUtils.buildJsonObject() //
-						.addProperty("enabled", true) //
-						.onlyIf(t == ConfigurationTarget.ADD, b -> b//
-								.add("channelAddresses", JsonUtils.buildJsonArray() //
-										.add("_sum/ProductionActivePower") //
-										.add("_sum/ConsumptionActivePower") //
-										.build())) //
-						.build());
-	}
-
-	/**
-	 * Creates a default predictor task for a PersistenceModel Predictor.
-	 * 
-	 * @return the {@link Task}
-	 */
-	public static Task<PredictorManagerByCentralOrderConfiguration> persistencePredictorTask() {
-		return Tasks.predictorManagerByCentralOrder(//
-				new PredictorManagerByCentralOrderConfiguration.PredictorManagerComponent("predictor0",
-						"Predictor.PersistenceModel"));
-	}
-
-	/**
 	 * Creates a default ctrlEssSurplusFeedToGrid component for a FENECON Home.
 	 *
 	 * @param bundle the translation bundle
@@ -603,9 +569,13 @@ public final class FeneconHomeComponents {
 	/**
 	 * Creates a default stateLED dependency for a FENECON Home.
 	 * 
+	 * @param ioId the id of the io component
+	 * 
 	 * @return the {@link DependencyDeclaration}
 	 */
-	public static DependencyDeclaration stateLed() {
+	public static DependencyDeclaration stateLed(String ioId)
+			throws OpenemsNamedException {
+
 		return new DependencyDeclaration("STATE_LED", //
 				DependencyDeclaration.CreatePolicy.IF_NOT_EXISTING, //
 				DependencyDeclaration.UpdatePolicy.IF_MINE, //
@@ -615,7 +585,7 @@ public final class FeneconHomeComponents {
 				DependencyDeclaration.AppDependencyConfig.create() //
 						.setAppId("App.System.Fenecon.Home") //
 						.setInitialProperties(JsonUtils.buildJsonObject() //
-								.addProperty(SystemFeneconHome.Property.RELAY_ID.name(), "io1") //
+								.addProperty(SystemFeneconHome.Property.RELAY_ID.name(), ioId) //
 								.addProperty(SystemFeneconHome.Property.LED_ORDER.name(), "DEFAULT_RED_BLUE_GREEN") //
 								.build())
 						.build());
@@ -820,6 +790,23 @@ public final class FeneconHomeComponents {
 			true;
 		default -> false;
 		};
+	}
+
+	/**
+	 * Creates a default predictionDefault dependency for a FENECON Home.
+	 *
+	 * @return the {@link DependencyDeclaration}
+	 */
+	public static DependencyDeclaration predictionDefault() {
+		return new DependencyDeclaration("PREDICTION_DEFAULT", //
+				DependencyDeclaration.CreatePolicy.IF_NOT_EXISTING, //
+				DependencyDeclaration.UpdatePolicy.ALWAYS, //
+				DependencyDeclaration.DeletePolicy.IF_MINE, //
+				DependencyDeclaration.DependencyUpdatePolicy.ALLOW_ONLY_UNCONFIGURED_PROPERTIES, //
+				DependencyDeclaration.DependencyDeletePolicy.NOT_ALLOWED, //
+				DependencyDeclaration.AppDependencyConfig.create()//
+						.setAppId("App.Prediction.Default")//
+						.build());
 	}
 
 	/**
