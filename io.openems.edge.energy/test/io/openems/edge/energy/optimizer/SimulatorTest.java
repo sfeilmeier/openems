@@ -5,7 +5,9 @@ import static io.openems.edge.energy.api.EnergyUtils.socToEnergy;
 import static io.openems.edge.energy.optimizer.SimulationResult.EMPTY_SIMULATION_RESULT;
 import static org.junit.Assert.assertEquals;
 
+import java.time.Duration;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -89,16 +91,22 @@ public class SimulatorTest {
 	 */
 	public static SimulationResult generateDummySimulationResult() {
 		final var simulator = DUMMY_SIMULATOR;
+		simulator.setEarliestCallbackDelay(Duration.ZERO);
 
-		return simulator.getBestSchedule(EMPTY_SIMULATION_RESULT, true /* isCurrentPeriodFixed */, //
+		var result = new AtomicReference<SimulationResult>();
+		simulator.runOptimization(//
+				() -> EMPTY_SIMULATION_RESULT, //
+				false /* optimizeCurrentPeriod */, //
 				engine -> engine //
 						.populationSize(1), //
 				stream -> stream //
-						.limit(byFixedGeneration(1)));
+						.limit(byFixedGeneration(1)), //
+				result::set);
+		return result.get();
 	}
 
 	@Test
-	public void testGetBestSchedule() {
+	public void testRunOptimization() {
 		var simulationResult = generateDummySimulationResult();
 
 		assertEquals(2, simulationResult.schedules().size());

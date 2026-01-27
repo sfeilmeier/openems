@@ -14,9 +14,11 @@ import static io.openems.edge.energy.optimizer.SimulationResult.EMPTY_SIMULATION
 import static io.openems.edge.energy.optimizer.Utils.logSimulationResult;
 import static java.time.Duration.ofSeconds;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
@@ -68,13 +70,18 @@ public final class AppUtils {
 
 	private static void simulate(GlobalOptimizationContext gsc, long executionLimitSeconds) {
 		var simulator = new Simulator(gsc);
+		simulator.setEarliestCallbackDelay(Duration.ZERO);
 
-		var simulationResult = simulator.getBestSchedule(EMPTY_SIMULATION_RESULT, //
-				false /* isCurrentPeriodFixed */, null, //
+		var simulationResult = new AtomicReference<SimulationResult>();
+		simulator.runOptimization(//
+				() -> EMPTY_SIMULATION_RESULT, //
+				false /* optimizeCurrentPeriod */, //
+				null, //
 				stream -> stream //
-						.limit(byExecutionTime(ofSeconds(executionLimitSeconds))));
+						.limit(byExecutionTime(ofSeconds(executionLimitSeconds))), //
+				simulationResult::set);
 
-		logSimulationResult(simulator, simulationResult);
+		logSimulationResult(simulator, simulationResult.get());
 	}
 
 	/**
