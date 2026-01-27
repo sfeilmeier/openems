@@ -25,6 +25,16 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2026.1.2",
+                changes: [
+                    Changelog.UI,
+                    "Verbesserungen am Inbetriebnahmeassistent: Benachrichtungseinstellungen einstellbar für Installateure",
+                    Changelog.app(App.METER, App.SHELLY_DIY) + "Info 'A new Firmware Update is available.' nur noch, wenn ein neueres stabiles Update verfügbar ist; Validierung kompatibler Geräte",
+                    "Verbesserung der Backend-Stabilität",
+                    "Kontinuierliche Verbesserungen am BETA-Feldtest. Kompatibilität mit Hardy Barth Wallbox. Details und Neuheiten in <a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>FENECON Docs</a>",
+                ],
+            },
+            {
                 version: "2026.1.1",
                 changes: [
                     Changelog.openems("2026.1.0"),
