@@ -1,6 +1,10 @@
 <oe-navigation-view *ngIf="edge">
   <oe-refresh-view [refresh]="handleRefresh" [show]="showRefreshDragDown">
-    <ion-grid *ngIf="edge && edge.isOnline">
+    <ion-refresher mode="ios" slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content refreshingSpinner="crescent"></ion-refresher-content>
+    </ion-refresher>
+  </oe-refresh-view>
+  <ion-grid *ngIf="edge && edge.isOnline">
     <ion-row class="ion-justify-content-center ion-no-padding" *ngIf="widgets">
 
       <!-- Left column -->
@@ -34,7 +38,7 @@
       </ion-col>
 
       <!-- Widgets -->
-      <ion-col size="12" size-md="8" [attr.size-lg]="navigationService.position() === 'left' ? 8 : 6" class="ion-no-padding">
+      <ion-col size="12" size-md="8" size-lg="6" class="ion-no-padding">
         <ion-grid class="ion-no-padding">
           <ion-row>
 
@@ -205,5 +209,5 @@
     </ion-row>
   </ion-grid>
 
-  </oe-refresh-view>
+  <!-- </oe-refresh-view> -->
 </oe-navigation-view>

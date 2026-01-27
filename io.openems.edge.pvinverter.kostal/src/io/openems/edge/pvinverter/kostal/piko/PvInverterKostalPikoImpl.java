@@ -207,13 +207,16 @@ public class PvInverterKostalPikoImpl extends AbstractOpenemsComponent
 		// Total Energy - second value (HTML provides kWh, need to convert to Wh)
 		Long totalYield = null;
 		if (index < valueCells.size()) {
-			totalYield = this.parseLongValueAsWatthours(valueCells.get(index++).text());
+			totalYield = this.parseLongValue(valueCells.get(index++).text());
+			if (totalYield != null) {
+          		totalYield = totalYield * 1000; // Convert kWh to Wh
+      		}
 		}
 
-		// Day Energy - third value (HTML provides kWh, need to convert to Wh)
+		// Day Energy - third value
 		Long dayYield = null;
 		if (index < valueCells.size()) {
-			dayYield = this.parseLongValueAsWatthours(valueCells.get(index++).text());
+			dayYield = this.parseLongValue(valueCells.get(index++).text());
 		}
 
 		// String 1 Voltage - fourth value (Cell 3)
@@ -438,26 +441,9 @@ public class PvInverterKostalPikoImpl extends AbstractOpenemsComponent
 		}
 	}
 
-	/**
-	 * Parse a String containing a LongValue and convert from kWh to Wh.
-	 *
-	 * @param text The LongValue to parse
-	 * @return Wh as Long, or null if text is invalid or empty
-	 */
-	private Long parseLongValueAsWatthours(String text) {
-		String cleaned = this.cleanTextForParsing(text);
-		if (cleaned == null) {
-			return null;
-		}
-
-		try {
-			// Parse as float and convert to watthours
-			float kwh = Float.parseFloat(cleaned);
-			return (long) (kwh * 1000);
-		} catch (NumberFormatException e) {
-			this.logDebug(this.log, "Failed to parse float value: " + text);
-			return null;
-		}
+	private Long parseLongValue(String text) {
+		Integer intValue = this.parseIntegerValue(text);
+		return intValue != null ? intValue.longValue() : null;
 	}
 
 	private Integer parseFloatAsMilliamps(String text) {

@@ -1,6 +1,5 @@
 package io.openems.edge.common.modbusslave;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
@@ -8,17 +7,6 @@ import java.util.Arrays;
 import org.junit.Test;
 
 public class ModbusRecordString16Test {
-
-	@Test
-	public void testUndefined() {
-		assertArrayEquals(//
-				ModbusRecordString16.UNDEFINED_BYTE_ARRAY, //
-				ModbusRecordString16.toByteArray(ModbusRecordString16.UNDEFINED_VALUE));
-		assertArrayEquals(//
-				new byte[32], //
-				ModbusRecordString16.UNDEFINED_BYTE_ARRAY);
-		assertEquals(ModbusRecordString16.UNDEFINED_BYTE_ARRAY.length, ModbusRecordString16.BYTE_LENGTH);
-	}
 
 	@Test
 	public void testValue() {

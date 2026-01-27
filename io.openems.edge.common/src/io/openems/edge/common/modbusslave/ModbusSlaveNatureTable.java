@@ -17,10 +17,10 @@ public final class ModbusSlaveNatureTable {
 	 * Generates a hash code from a string text.
 	 * 
 	 * @param text the text (e.g. "OpenemsComponent")
-	 * @return the hash value (e.g. "0xb3dc")
+	 * @return the short hash value (e.g. "0xb3dc")
 	 */
-	public static int generateHash(String text) {
-		return text.hashCode() & 0xFFFF;
+	public static short generateHash(String text) {
+		return (short) text.hashCode();
 	}
 
 	public static class Builder {
@@ -106,7 +106,7 @@ public final class ModbusSlaveNatureTable {
 		 * @param value  the value
 		 * @return myself
 		 */
-		public Builder uint16(int offset, String name, int value) {
+		public Builder uint16(int offset, String name, short value) {
 			this.add(new ModbusRecordUint16(offset, name, value));
 			return this;
 		}
@@ -301,7 +301,7 @@ public final class ModbusSlaveNatureTable {
 	 * 
 	 * @return the Hash code, e.g. "0xb3dc" for "OpenemsComponent"
 	 */
-	public int getNatureHash() {
+	public short getNatureHash() {
 		return generateHash(this.getNatureName());
 	}
 

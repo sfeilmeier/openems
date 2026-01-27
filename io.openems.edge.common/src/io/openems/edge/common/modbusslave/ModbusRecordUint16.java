@@ -1,18 +1,20 @@
 package io.openems.edge.common.modbusslave;
 
+import java.nio.ByteBuffer;
+
 import io.openems.common.types.OpenemsType;
 import io.openems.common.types.OptionsEnum;
 import io.openems.edge.common.type.TypeUtils;
 
 public class ModbusRecordUint16 extends ModbusRecordConstant {
 
-	public static final int UNDEFINED_VALUE = 65535;
-	public static final byte[] UNDEFINED_BYTE_ARRAY = toByteArray(UNDEFINED_VALUE);
+	public static final byte[] UNDEFINED_VALUE = { (byte) 0xFF, (byte) 0xFF };
+
 	public static final int BYTE_LENGTH = 2;
 
-	protected final Integer value;
+	protected final Short value;
 
-	public ModbusRecordUint16(int offset, String name, Integer value) {
+	public ModbusRecordUint16(int offset, String name, Short value) {
 		super(offset, name, ModbusType.UINT16, toByteArray(value));
 		this.value = value;
 	}
@@ -28,11 +30,8 @@ public class ModbusRecordUint16 extends ModbusRecordConstant {
 	 * @param value the value
 	 * @return the byte array
 	 */
-	public static byte[] toByteArray(int value) {
-		return new byte[] { //
-				(byte) (value >>> 8), //
-				(byte) (value) //
-		};
+	public static byte[] toByteArray(short value) {
+		return ByteBuffer.allocate(BYTE_LENGTH).putShort(value).array();
 	}
 
 	/**
@@ -43,14 +42,14 @@ public class ModbusRecordUint16 extends ModbusRecordConstant {
 	 */
 	public static byte[] toByteArray(Object value) {
 		if (value == null || (value instanceof OptionsEnum oe && oe.isUndefined())) {
-			return UNDEFINED_BYTE_ARRAY;
+			return UNDEFINED_VALUE;
 		}
-		return toByteArray((int) TypeUtils.getAsType(OpenemsType.INTEGER, value));
+		return toByteArray((short) TypeUtils.getAsType(OpenemsType.SHORT, value));
 	}
 
 	@Override
 	public String getValueDescription() {
-		return this.value != null ? "\"" + Integer.toString(this.value) + "\"" : "";
+		return this.value != null ? "\"" + Short.toString(this.value) + "\"" : "";
 	}
 
 }

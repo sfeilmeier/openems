@@ -1,25 +1,27 @@
 package io.openems.edge.common.modbusslave;
 
+import java.nio.ByteBuffer;
+
 import io.openems.common.types.OpenemsType;
 import io.openems.common.types.OptionsEnum;
 import io.openems.edge.common.type.TypeUtils;
 
 public class ModbusRecordUint32 extends ModbusRecordConstant {
 
-	public static final long UNDEFINED_VALUE = 4294967295L;
-	public static final byte[] UNDEFINED_BYTE_ARRAY = toByteArray(UNDEFINED_VALUE);
+	public static final byte[] UNDEFINED_VALUE = { (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF };
+
 	public static final int BYTE_LENGTH = 4;
 
-	protected final Long value;
+	protected final Integer value;
 
-	public ModbusRecordUint32(int offset, String name, Long value) {
+	public ModbusRecordUint32(int offset, String name, Integer value) {
 		super(offset, name, ModbusType.UINT32, toByteArray(value));
 		this.value = value;
 	}
 
 	@Override
 	public String toString() {
-		return generateToString("ModbusRecordUInt32", this.value, Long::toHexString);
+		return generateToString("ModbusRecordUInt32", this.value, Integer::toHexString);
 	}
 
 	/**
@@ -28,13 +30,8 @@ public class ModbusRecordUint32 extends ModbusRecordConstant {
 	 * @param value the value
 	 * @return the byte array
 	 */
-	public static byte[] toByteArray(long value) {
-		return new byte[] { //
-				(byte) (value >>> 24), //
-				(byte) (value >>> 16), //
-				(byte) (value >>> 8), //
-				(byte) (value) //
-		};
+	public static byte[] toByteArray(int value) {
+		return ByteBuffer.allocate(BYTE_LENGTH).putInt(value).array();
 	}
 
 	/**
@@ -45,14 +42,14 @@ public class ModbusRecordUint32 extends ModbusRecordConstant {
 	 */
 	public static byte[] toByteArray(Object value) {
 		if (value == null || (value instanceof OptionsEnum oe && oe.isUndefined())) {
-			return UNDEFINED_BYTE_ARRAY;
+			return UNDEFINED_VALUE;
 		}
-		return toByteArray((long) TypeUtils.getAsType(OpenemsType.LONG, value));
+		return toByteArray((int) TypeUtils.getAsType(OpenemsType.INTEGER, value));
 	}
 
 	@Override
 	public String getValueDescription() {
-		return this.value != null ? "\"" + Long.toString(this.value) + "\"" : "";
+		return this.value != null ? "\"" + Integer.toString(this.value) + "\"" : "";
 	}
 
 }
