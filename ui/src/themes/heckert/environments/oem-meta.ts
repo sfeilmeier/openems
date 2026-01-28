@@ -64,6 +64,9 @@ export const OemMeta: BaseMeta = {
             EVCS_GO_E: "https://docs.fenecon.de/redirect/fenecon/de/evcs_goe",
             EVCS_IES: "https://docs.fenecon.de/redirect/fenecon/de/evcs_ies",
             EVCS_ALPITRONIC_HYPER: "https://docs.fenecon.de/redirect/fenecon/de/evcs_alpitronichyper",
+            SETTINGS_ALERTING: null,
+            SETTINGS_NETWORK_CONFIGURATION: null,
+            WEATHER_WIDGET: null,
         },
         FORGET_PASSWORD: "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
@@ -82,8 +85,6 @@ export const OemMeta: BaseMeta = {
         CONTROLLER_API_REST_READ: "io.openems.edge.controller.api.rest/readme.adoc",
         CONTROLLER_API_REST_READWRITE: "io.openems.edge.controller.api.rest/readme.adoc",
 
-        SETTINGS_ALERTING: null,
-        SETTINGS_NETWORK_CONFIGURATION: null,
         EVCS_CLUSTER: "io.openems.edge.evcs.cluster/readme.adoc",
 
         SYSTEM: {
