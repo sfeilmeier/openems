@@ -36,7 +36,7 @@ public class FeneconGoodWeBatteryInverterUpdateParamsStable implements GoodWeBat
 				FENECON_GEN2_6K, FENECON_GEN2_10K, FENECON_GEN2_15K, FENECON_50K ->
 			null;
 		case FENECON_FHI_10_DAH ->
-			new GoodWeUpdateParams("goodwe10", "2025_03_12", new GoodWeVersion(12, 197, 30, 60322));
+			new GoodWeUpdateParams("goodwe10", "2026_01_08", new GoodWeVersion(12, 197, 32, 336));
 		case FENECON_FHI_20_DAH, FENECON_FHI_29_9_DAH ->
 			new GoodWeUpdateParams("goodwe20_30", "14_10_24", new GoodWeVersion(6, 9054, 8, 424));
 		};
