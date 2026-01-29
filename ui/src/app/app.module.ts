@@ -21,7 +21,7 @@ import { SetupKeyComponent } from "./edge/installation/shared/reusable-input-fie
 import { SettingsModule as EdgeSettingsModule } from "./edge/settings/settings.module";
 import { IndexModule } from "./index/index.module";
 import { PlatFormService } from "./platform.service";
-import { NavigationComponent } from "./shared/components/navigation/navigation.component";
+import { NavigationComponent } from "./shared/components/navigation/action-sheet-modal";
 import { NavigationService } from "./shared/components/navigation/service/navigation.service";
 import { ChartOptionsPopoverComponent } from "./shared/legacy/chartoptions/popover/popover.component";
 import { AppStateTracker } from "./shared/ngrx-store/states";

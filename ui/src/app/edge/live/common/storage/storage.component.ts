@@ -8,7 +8,6 @@ import { Language } from "src/app/shared/type/language";
 import { Role } from "src/app/shared/type/role";
 import { DateUtils } from "src/app/shared/utils/date/dateutils";
 
-import { environment } from "src/environments";
 import { AdminStorageModalComponent } from "./admin-modal/admin-modal.component";
 import { InstallerOwnerGuestStorageModalComponent } from "./installer-owner-guest-modal/installer-owner-guest-modal.component";
 
@@ -207,11 +206,7 @@ export class StorageComponent extends AbstractFlatWidget {
 
         // Check total State_of_Charge for dynamical icon in widget-header
         const soc = currentData.allComponents["_sum/EssSoc"];
-        if (environment.theme == "FENECON") {
-            this.storageIconStyle = "storage-fenecon-" + Utils.getFeneconStorageSocSegment(soc);
-        } else {
-            this.storageIconStyle = "storage-" + Utils.getStorageSocSegment(soc);
-        }
+        this.storageIconStyle = "storage-" + Utils.getStorageSocSegment(soc);
 
         for (const essId in this.emergencyReserveComponents) {
             const controller = this.emergencyReserveComponents[essId];

@@ -13,6 +13,7 @@ import { PlatFormService } from "./platform.service";
 import { NavigationService } from "./shared/components/navigation/service/navigation.service";
 import { AppStateTracker } from "./shared/ngrx-store/states";
 import { GlobalRouteChangeHandler } from "./shared/service/globalRouteChangeHandler";
+import { LayoutRefreshService } from "./shared/service/layoutRefreshService";
 import { RouteService } from "./shared/service/route.service";
 import { UserService } from "./shared/service/user.service";
 import { Service, UserPermission, Websocket } from "./shared/shared";
@@ -64,6 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
         protected navCtrl: NavController,
         private translate: TranslateService,
         private routeService: RouteService,
+        private layoutRefresh: LayoutRefreshService,
     ) {
         service.setLang(Language.getByKey(localStorage.LANGUAGE) ?? Language.getByBrowserLang(navigator.language));
 
@@ -158,5 +160,9 @@ export class AppComponent implements OnInit, OnDestroy {
                         break;
                 }
             });
+    }
+
+    private onActivate() {
+        this.layoutRefresh.request(300);
     }
 }
