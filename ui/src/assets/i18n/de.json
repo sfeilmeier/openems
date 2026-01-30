@@ -1187,12 +1187,7 @@
       "TITLE": "Speicherstandort"
     },
     "PROTOCOL_SYSTEM_LOCATION_VALIDATION": {
-      "ADDRESS_LIST_NOTE": "Die richtige Adresse ist nicht dabei? Bearbeiten Sie oben Ihre Angaben und führen Sie die Validierung erneut durch.",
-      "ADDRESS_LIST_TITLE": "Welche Addresse trifft für den Standort der {{ edgeShortName }}{{ id }} zu?*",
-      "BUTTON_LABEL": "Validierung durchführen",
-      "GEO_CODE_RESULT_LABEL": "Bitte wählen Sie die übereinstimmende Adresse aus:",
-      "TITLE": "Adressvalidierung des Speicherstandorts",
-      "UNKNOWN_ADDRESS": "Die Koordinaten werden manuell im Nachgang für den kompletten Funktionsumfang, unter Systemseinstellungen, eingepflegt."
+      "TITLE": "Adressvalidierung des Speicherstandorts"
     },
     "SHARED": {
       "NOTE": "Hinweis",

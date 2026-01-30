@@ -1,20 +1,5 @@
+import { GeoResult } from "src/app/shared/components/system-location-validator/system-location-validator.component";
 import { JsonrpcRequest, JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
-
-export type GeoResult = {
-    country: string,
-    countryCode: string,
-    currency: string,
-    houseNumber: string,
-    latitude: string,
-    longitude: string,
-    openStreetMapUrl: string,
-    placeName: string,
-    postcode: string,
-    road: string,
-    subdivision: string,
-    subdivisionCode: string,
-    timezone: string,
-};
 
 export namespace GeoCodeJsonRpc {
 
