@@ -30,6 +30,11 @@ export const OemMeta: BaseMeta = {
             SETTINGS_NETWORK_CONFIGURATION: "https://docs.fenecon.de/redirect/fenecon/de/technical_documentation",
             SETTINGS_ALERTING: "https://docs.fenecon.de/redirect/fenecon/de/alerting",
             WEATHER_WIDGET: "https://docs.fenecon.de/redirect/fenecon/de/weather",
+            SYSTEM: {
+                INDUSTRIAL_S_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_s_manual",
+                INDUSTRIAL_M_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_m_manual",
+                INDUSTRIAL_L_OVERVIEW: "https://docs.fenecon.de/redirect/fenecon/de/industrial_l_overview",
+            },
         },
 
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",

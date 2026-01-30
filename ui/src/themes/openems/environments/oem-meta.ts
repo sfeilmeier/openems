@@ -66,6 +66,11 @@ export const OemMeta: BaseMeta = {
             SETTINGS_ALERTING: null,
             SETTINGS_NETWORK_CONFIGURATION: null,
             WEATHER_WIDGET: null,
+            SYSTEM: {
+                INDUSTRIAL_S_MANUAL: null,
+                INDUSTRIAL_M_MANUAL: null,
+                INDUSTRIAL_L_OVERVIEW: null,
+            },
         },
         FORGET_PASSWORD: "#",
         EVCS: null,

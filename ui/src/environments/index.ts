@@ -85,10 +85,14 @@ export interface Environment {
             readonly EVCS_GO_E: string | null,
             readonly EVCS_IES: string | null,
             readonly EVCS_ALPITRONIC_HYPER: string | null,
-
             readonly SETTINGS_ALERTING: string | null,
             readonly SETTINGS_NETWORK_CONFIGURATION: string | null,
             readonly WEATHER_WIDGET: string | null,
+            readonly SYSTEM: {
+                readonly INDUSTRIAL_S_MANUAL: string | null,
+                readonly INDUSTRIAL_M_MANUAL: string | null,
+                readonly INDUSTRIAL_L_OVERVIEW: string | null,
+            }
         }
 
 

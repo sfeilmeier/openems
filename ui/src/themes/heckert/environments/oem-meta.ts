@@ -67,6 +67,11 @@ export const OemMeta: BaseMeta = {
             SETTINGS_ALERTING: null,
             SETTINGS_NETWORK_CONFIGURATION: null,
             WEATHER_WIDGET: null,
+            SYSTEM: {
+                INDUSTRIAL_S_MANUAL: null,
+                INDUSTRIAL_M_MANUAL: null,
+                INDUSTRIAL_L_OVERVIEW: null,
+            },
         },
         FORGET_PASSWORD: "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",

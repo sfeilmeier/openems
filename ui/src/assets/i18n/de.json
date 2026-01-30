@@ -519,7 +519,11 @@
         },
         "SYSTEM": {
           "INDUSTRIAL": {
-            "NOTE": "Startet oder stoppt das Gesamtsystem, inklusive Batteriewechselrichter und Batterien."
+            "NOTE": "Startet oder stoppt das Gesamtsystem, inklusive Batteriewechselrichter & Batterien",
+            "RESET": "RESET",
+            "BMS_HARD_RESET": "BMS hard reset",
+            "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Systemfehler reset:",
+            "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "beinhaltet System Komponente, Batterien, Wechselrichter, ESS"
           },
           "OVERALL_SYSTEM": "Gesamtsystem"
         },
@@ -1437,12 +1441,6 @@
       "UPDATE_SEARCH": "Suche nach Updates...",
       "UPDATE_TIME": "(Dies kann bis zu 10 min dauern)",
       "WARNING": "Im Rahmen des Systemupdates wird {{system}} neu gestartet und dabei die Kommunikation unterbrochen. In dieser Zeit werden keine Daten aufgezeichnet oder Komponenten angesteuert. Bitte stellen Sie sicher, dass sich das Gesamtsystem in einem sicheren Zustand befindet."
-    }
-  },
-  "SYSTEM": {
-    "INDUSTRIAL": {
-      "BMS_HARD_RESET": "BMS hard reset",
-      "SYSTEM_ERROR_ACKNOWLEDGE": "Reset System Fehler: System Komponente, Batterien, Wechselrichter, Ess"
     }
   },
   "EVSE_SINGLE": {
