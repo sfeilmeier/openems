@@ -519,7 +519,11 @@
         },
         "SYSTEM": {
           "INDUSTRIAL": {
-            "NOTE": "Startet oder stoppt das Gesamtsystem, inklusive Batteriewechselrichter und Batterien."
+            "NOTE": "Startet oder stoppt das Gesamtsystem, inklusive Batteriewechselrichter & Batterien",
+            "RESET": "RESET",
+            "BMS_HARD_RESET": "BMS hard reset",
+            "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Systemfehler reset:",
+            "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "beinhaltet System Komponente, Batterien, Wechselrichter, ESS"
           },
           "OVERALL_SYSTEM": "Gesamtsystem"
         },
@@ -544,7 +548,8 @@
             "SCHEDULE": "Zeitplan",
             "ADD_TASK": "Aufgabe hinzufügen"
           },
-          "CHARGE_MODE": "Lademodus"
+          "CHARGE_MODE": "Lademodus",
+          "VEHICLE_ID_ERROR": "Die Fahrzeug-ID konnte nicht gefunden werden. Bitte überprüfen Sie die Konfiguration. Alle registrierten Fahrzeuge werden angezeigt."
         }
       }
     },
@@ -1182,12 +1187,7 @@
       "TITLE": "Speicherstandort"
     },
     "PROTOCOL_SYSTEM_LOCATION_VALIDATION": {
-      "ADDRESS_LIST_NOTE": "Die richtige Adresse ist nicht dabei? Bearbeiten Sie oben Ihre Angaben und führen Sie die Validierung erneut durch.",
-      "ADDRESS_LIST_TITLE": "Welche Addresse trifft für den Standort der {{ edgeShortName }}{{ id }} zu?*",
-      "BUTTON_LABEL": "Validierung durchführen",
-      "GEO_CODE_RESULT_LABEL": "Bitte wählen Sie die übereinstimmende Adresse aus:",
-      "TITLE": "Adressvalidierung des Speicherstandorts",
-      "UNKNOWN_ADDRESS": "Die Koordinaten werden manuell im Nachgang für den kompletten Funktionsumfang, unter Systemseinstellungen, eingepflegt."
+      "TITLE": "Adressvalidierung des Speicherstandorts"
     },
     "SHARED": {
       "NOTE": "Hinweis",
@@ -1436,12 +1436,6 @@
       "UPDATE_SEARCH": "Suche nach Updates...",
       "UPDATE_TIME": "(Dies kann bis zu 10 min dauern)",
       "WARNING": "Im Rahmen des Systemupdates wird {{system}} neu gestartet und dabei die Kommunikation unterbrochen. In dieser Zeit werden keine Daten aufgezeichnet oder Komponenten angesteuert. Bitte stellen Sie sicher, dass sich das Gesamtsystem in einem sicheren Zustand befindet."
-    }
-  },
-  "SYSTEM": {
-    "INDUSTRIAL": {
-      "BMS_HARD_RESET": "BMS hard reset",
-      "SYSTEM_ERROR_ACKNOWLEDGE": "Reset System Fehler: System Komponente, Batterien, Wechselrichter, Ess"
     }
   },
   "EVSE_SINGLE": {

@@ -78,7 +78,7 @@ public class ContextRefreshMinVoltageParamTest {
         // Initial
         if (this.initial != null) {
             TestUtils.withValue(this.ess, MIN_CELL_VOLTAGE, this.initial);
-            context.refreshMeasurementChargingMinVoltageFromEss();
+            context.refreshMeasurementChargingVoltageRange();
             assertEquals(this.initial, context.getMeasurementChargingMaxMinVoltage());
         } else {
             // explicitly ensure it's null
@@ -87,7 +87,7 @@ public class ContextRefreshMinVoltageParamTest {
 
         // Update
         TestUtils.withValue(this.ess, MIN_CELL_VOLTAGE, this.update);
-        context.refreshMeasurementChargingMinVoltageFromEss();
+        context.refreshMeasurementChargingVoltageRange();
         assertEquals(this.expected, context.getMeasurementChargingMaxMinVoltage());
     }
 }

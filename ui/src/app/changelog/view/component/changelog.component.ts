@@ -25,6 +25,14 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2026.2.1",
+                changes: [
+                    Changelog.UI + "(Pull-to-Refresh, Barrierefreiheit gewäß WCAG 1.4.4)",
+                    "Neu: Koordinaten/Adressvalidierung im Anlagenprofil",
+                    "<a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>BETA Feldtest</a>: Verbesserte Ansicht für Tablets",
+                ],
+            },
+            {
                 version: "2026.1.3",
                 changes: [
                     "FENECON Home 10 (Gen1): Fehlerbehebung im SMART-Mode (seit 2026.1.2)",

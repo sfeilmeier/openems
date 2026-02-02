@@ -27,6 +27,14 @@ export const OemMeta: BaseMeta = {
             EVCS_GO_E: "https://docs.fenecon.de/redirect/fenecon/de/evcs_goe",
             EVCS_IES: "https://docs.fenecon.de/redirect/fenecon/de/evcs_ies",
             EVCS_ALPITRONIC_HYPER: "https://docs.fenecon.de/redirect/fenecon/de/evcs_alpitronichyper",
+            SETTINGS_NETWORK_CONFIGURATION: "https://docs.fenecon.de/redirect/fenecon/de/technical_documentation",
+            SETTINGS_ALERTING: "https://docs.fenecon.de/redirect/fenecon/de/alerting",
+            WEATHER_WIDGET: "https://docs.fenecon.de/redirect/fenecon/de/weather",
+            SYSTEM: {
+                INDUSTRIAL_S_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_s_manual",
+                INDUSTRIAL_M_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_m_manual",
+                INDUSTRIAL_L_OVERVIEW: "https://docs.fenecon.de/redirect/fenecon/de/industrial_l_overview",
+            },
         },
 
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
@@ -44,8 +52,6 @@ export const OemMeta: BaseMeta = {
         CONTROLLER_API_REST_READ: "fems-app/FEMS_App_REST_JSON.html#_lesezugriff",
         CONTROLLER_API_REST_READWRITE: "fems-app/FEMS_App_REST_JSON.html#_schreibzugriff",
 
-        SETTINGS_ALERTING: "ui/settings.html#_benachrichtigung",
-        SETTINGS_NETWORK_CONFIGURATION: "ui/settings.html#_netzwerkkonfiguration",
         EVCS_CLUSTER: "fems-app/includes/FEMS_App_Multi-Ladepunkt-Management.html",
 
         SYSTEM: {
@@ -128,8 +134,8 @@ export const OemMeta: BaseMeta = {
                 EN: "https://docs.fenecon.de/download/fenecon/en/fenecon_home_10_productsheet.pdf",
             },
             HOME_6_10_15: {
-                DE: "https://docs.fenecon.de/download/fenecon/de/fenecon_home_6-10-15_productsheet.pdf",
-                EN: "https://docs.fenecon.de/download/fenecon/en/fenecon_home_6-10-15_productsheet.pdf",
+                DE: "https://docs.fenecon.de/pdfs/home-avu/2025/de/MAR1135_FENECON_Produktblatt_H6-10-15_Web.pdf",
+                EN: "https://docs.fenecon.de/pdfs/home-avu/2025/de/MAR1135_FENECON_Produktblatt_H6-10-15_Web.pdf",
             },
             HOME_20_30: {
                 DE: "https://docs.fenecon.de/download/fenecon/de/fenecon_home_20-30_productsheet.pdf",

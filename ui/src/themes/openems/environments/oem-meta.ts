@@ -63,6 +63,14 @@ export const OemMeta: BaseMeta = {
             EVCS_GO_E: null,
             EVCS_IES: null,
             EVCS_ALPITRONIC_HYPER: null,
+            SETTINGS_ALERTING: null,
+            SETTINGS_NETWORK_CONFIGURATION: null,
+            WEATHER_WIDGET: null,
+            SYSTEM: {
+                INDUSTRIAL_S_MANUAL: null,
+                INDUSTRIAL_M_MANUAL: null,
+                INDUSTRIAL_L_OVERVIEW: null,
+            },
         },
         FORGET_PASSWORD: "#",
         EVCS: null,
@@ -80,8 +88,6 @@ export const OemMeta: BaseMeta = {
         CONTROLLER_API_REST_READ: "io.openems.edge.controller.api.rest/readme.adoc",
         CONTROLLER_API_REST_READWRITE: "io.openems.edge.controller.api.rest/readme.adoc",
 
-        SETTINGS_ALERTING: null,
-        SETTINGS_NETWORK_CONFIGURATION: null,
         EVCS_CLUSTER: "io.openems.edge.evcs.cluster/readme.adoc",
 
         SYSTEM: {

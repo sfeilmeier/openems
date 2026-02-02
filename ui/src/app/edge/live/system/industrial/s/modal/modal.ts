@@ -29,11 +29,12 @@ export class ModalComponent extends AbstractModal {
     }
 
     protected systemErrorAcknowledge() {
-        if (this.edge && this.websocket && this.component) {
-            this.edge.sendRequest(
-                this.websocket,
-                new ComponentJsonApiRequest({ componentId: this.component.id, payload: new SystemErrorAcknowledge() }),
-            );
+        if (this.edge == null || this.websocket == null || this.component == null) {
+            return;
         }
+        this.edge.sendRequest(
+            this.websocket,
+            new ComponentJsonApiRequest({ componentId: this.component.id, payload: new SystemErrorAcknowledge() }),
+        );
     }
 }

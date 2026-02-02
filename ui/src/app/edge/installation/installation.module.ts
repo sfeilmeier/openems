@@ -4,6 +4,7 @@ import { AbstractControl, FormControl, ValidationErrors } from "@angular/forms";
 import { FormlyFieldConfig, FormlyModule } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { SetupKeyComponent } from "src/app/edge/installation/shared/reusable-input-field";
+import { SystemLocationValidatorComponent } from "src/app/shared/components/system-location-validator/system-location-validator.component";
 import { SharedModule } from "src/app/shared/shared.module";
 import { Language } from "src/app/shared/type/language";
 import { AlertingComponent } from "../settings/alerting/component/alerting.component";
@@ -190,6 +191,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
         SetupKeyComponent,
         OeSystemUpdateComponent,
         AlertingComponent,
+        SystemLocationValidatorComponent,
     ],
     declarations: [
         CompletionComponent,

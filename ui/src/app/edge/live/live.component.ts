@@ -4,6 +4,7 @@ import { RefresherCustomEvent } from "@ionic/angular";
 import { Subject } from "rxjs";
 import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
 import { DataService } from "src/app/shared/components/shared/dataservice";
+import { LayoutRefreshService } from "src/app/shared/service/layoutRefreshService";
 import { UserService } from "src/app/shared/service/user.service";
 import { Edge, EdgeConfig, EdgePermission, Service, Utils, Websocket } from "src/app/shared/shared";
 import { AdvertWidget } from "src/app/shared/type/widget";
@@ -39,6 +40,7 @@ export class LiveComponent implements OnDestroy {
         private router: Router,
         protected navigationService: NavigationService,
         private userService: UserService,
+        private layoutRefresh: LayoutRefreshService,
     ) {
 
         effect(() => {
@@ -59,6 +61,7 @@ export class LiveComponent implements OnDestroy {
         if (this.widgets?.list) {
             this.showNewFooter = this.widgets?.list.filter(item => item.name == "Evse.Controller.Single" || item.name == "Controller.IO.Heating.Room")?.length > 0;
         }
+        this.layoutRefresh.request(300);
     }
 
     ionViewWillLeave() {

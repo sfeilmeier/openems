@@ -30,20 +30,24 @@ export class ModalComponent extends AbstractModal {
     }
 
     protected bmsHardReset(): void {
-        if (this.edge && this.websocket && this.component) {
-            this.edge.sendRequest(
-                this.websocket,
-                new ComponentJsonApiRequest({ componentId: this.component?.id, payload: new BmsHardResetRequest() }),
-            );
+        if (this.edge == null || this.websocket == null || this.component == null) {
+            return;
         }
+        this.edge.sendRequest(
+            this.websocket,
+            new ComponentJsonApiRequest({ componentId: this.component?.id, payload: new BmsHardResetRequest() }),
+        );
+
     }
 
     protected systemErrorAcknowledge(): void {
-        if (this.edge && this.websocket && this.component) {
-            this.edge.sendRequest(
-                this.websocket,
-                new ComponentJsonApiRequest({ componentId: this.component?.id, payload: new SystemErrorAcknowledge() }),
-            );
+        if (this.edge == null || this.websocket == null || this.component == null) {
+            return;
         }
+        this.edge.sendRequest(
+            this.websocket,
+            new ComponentJsonApiRequest({ componentId: this.component?.id, payload: new SystemErrorAcknowledge() }),
+        );
+
     }
 }

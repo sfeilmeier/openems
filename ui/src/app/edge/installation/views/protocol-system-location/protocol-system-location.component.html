@@ -1,49 +1,13 @@
 <installation-view iconName="clipboard-outline"
-  header="{{ 'INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.TITLE' | translate }}"
-  (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isNextDisabled]="isNextDisabled"
-  [isWaiting]="isWaiting">
+    header="{{ 'INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.TITLE' | translate }}"
+    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()"
+    [isNextDisabled]="isNextDisabled"
+    [isWaiting]="isWaiting">
 
-  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-
-  <ion-item lines="none">
-    <ion-button class="ion-float-right" (click)="validation()" [disabled]="isValidating || form.invalid" slot="end">
-      <ion-label>{{ 'INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.BUTTON_LABEL' | translate }}</ion-label>
-      <ion-icon name="sync-outline" slot="start"></ion-icon>
-    </ion-button>
-  </ion-item>
-
-  @if (!isValidating) {
-    @if (addressesAvailable){
-      <ion-card>
-        <ion-item>
-          <ion-label class="ion-font-size-larger">
-            {{ 'INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.ADDRESS_LIST_TITLE' | translate: { edgeShortName:
-                environment.edgeShortName, id: id } }}
-          </ion-label>
-        </ion-item>
-        <ion-card-content>
-          <formly-form [form]="geoCodeForm" [fields]="geoCodeFields" [model]="geoCodeModel">
-          </formly-form>
-          <oe-modal-info-line [info]="'INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.ADDRESS_LIST_NOTE' | translate"
-            style="font-size: small;"></oe-modal-info-line>
-        </ion-card-content>
-
-      </ion-card>
+    @if (edge && locationModel) {
+    <system-location-validator [ibn]="ibn" [edge]="edge" context="INSTALLATION"
+        (isBusyChange)="onValidatorBusy($event)">
+    </system-location-validator>
     }
-  } @else {
-    <ion-card>
-      <ion-list>
-        <ion-list-header>
-          <ion-skeleton-text [animated]=" true" style="width: 30%"></ion-skeleton-text>
-        </ion-list-header>
-        <ion-item>
-          <ion-label>
-            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card>
-  }
+
 </installation-view>
