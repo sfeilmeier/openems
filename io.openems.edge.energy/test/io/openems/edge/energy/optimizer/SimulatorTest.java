@@ -4,6 +4,7 @@ import static io.jenetics.engine.Limits.byFixedGeneration;
 import static io.openems.edge.energy.api.EnergyUtils.socToEnergy;
 import static io.openems.edge.energy.optimizer.SimulationResult.EMPTY_SIMULATION_RESULT;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.time.Duration;
 import java.util.Random;
@@ -26,6 +27,7 @@ import io.openems.edge.energy.api.handler.EnergyScheduleHandler;
 import io.openems.edge.energy.api.handler.EshWithDifferentModes;
 import io.openems.edge.energy.api.handler.OneMode;
 import io.openems.edge.energy.api.simulation.GlobalOptimizationContext;
+import io.openems.edge.energy.api.simulation.GlobalOptimizationContext.Period;
 import io.openems.edge.energy.api.test.DummyGlobalOptimizationContext;
 import io.openems.edge.ess.api.ManagedSymmetricEss;
 import io.openems.edge.ess.test.DummyManagedSymmetricEss;
@@ -103,6 +105,25 @@ public class SimulatorTest {
 						.limit(byFixedGeneration(1)), //
 				result::set);
 		return result.get();
+	}
+
+	@Test
+	public void testPeriods() {
+		final var ps = GOC.periods();
+		for (var i = 0; i < ps.size(); i++) {
+			final var p = ps.get(i);
+			assertEquals("Index is not set correctly", i, p.index());
+			if (i < 24) {
+				assertTrue(p instanceof Period.Quarter);
+			} else {
+				assertTrue(p instanceof Period.Hour);
+				final var qps = ((Period.Hour) p).quarterPeriods();
+				for (var j = 0; j < 4; j++) {
+					final var qp = qps.get(j);
+					assertEquals("Index is not set correctly", j, qp.index());
+				}
+			}
+		}
 	}
 
 	@Test

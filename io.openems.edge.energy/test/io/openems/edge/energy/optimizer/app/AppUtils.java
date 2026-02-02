@@ -3,6 +3,7 @@ package io.openems.edge.energy.optimizer.app;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static io.jenetics.engine.Limits.byExecutionTime;
 import static io.openems.common.jsonrpc.serialization.JsonSerializerUtil.jsonObjectSerializer;
+import static io.openems.common.utils.FunctionUtils.doNothing;
 import static io.openems.common.utils.JsonUtils.buildJsonObject;
 import static io.openems.common.utils.JsonUtils.getAsJsonObject;
 import static io.openems.common.utils.JsonUtils.parseToJsonObject;
@@ -12,8 +13,10 @@ import static io.openems.edge.energy.api.EnergyConstants.SUM_PRODUCTION;
 import static io.openems.edge.energy.api.EnergyConstants.SUM_UNMANAGED_CONSUMPTION;
 import static io.openems.edge.energy.optimizer.SimulationResult.EMPTY_SIMULATION_RESULT;
 import static io.openems.edge.energy.optimizer.Utils.logSimulationResult;
+import static io.openems.edge.energy.optimizer.app.PlotUtils.plotGlobalOptimizationContext;
 import static java.time.Duration.ofSeconds;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -42,9 +45,10 @@ import io.openems.edge.energy.api.RiskLevel;
 import io.openems.edge.energy.api.simulation.GlobalOptimizationContext;
 import io.openems.edge.energy.api.simulation.GlobalOptimizationContext.Ess;
 import io.openems.edge.energy.api.simulation.GlobalOptimizationContext.Grid;
-import io.openems.edge.energy.api.simulation.GlobalOptimizationContext.PeriodDuration;
+import io.openems.edge.energy.api.simulation.GocUtils.PeriodDuration;
 import io.openems.edge.energy.optimizer.SimulationResult;
 import io.openems.edge.energy.optimizer.Simulator;
+import io.openems.edge.energy.optimizer.app.PlotUtils.PlotSettings;
 import io.openems.edge.predictor.api.manager.PredictorManager;
 import io.openems.edge.predictor.api.prediction.Prediction;
 import io.openems.edge.predictor.api.test.DummyPredictor;
@@ -58,18 +62,29 @@ public final class AppUtils {
 	private AppUtils() {
 	}
 
-	protected static void simulateFromLog(String log, long executionLimitSeconds)
-			throws IllegalArgumentException, OpenemsNamedException {
-		simulateFromJson(parseLog(log), executionLimitSeconds);
+	protected static void simulateFromLog(String log, long executionLimitSeconds, PlotSettings plotSettings)
+			throws IllegalArgumentException, OpenemsNamedException, IOException {
+		simulateFromJson(parseLog(log), executionLimitSeconds, plotSettings);
 	}
 
-	protected static void simulateFromJson(JsonObject json, long executionLimitSeconds)
-			throws IllegalArgumentException, OpenemsNamedException {
-		simulate(globalOptimizationContextSerializer().deserialize(json), executionLimitSeconds);
+	protected static void simulateFromJson(JsonObject json, long executionLimitSeconds, PlotSettings plotSettings)
+			throws IllegalArgumentException, OpenemsNamedException, IOException {
+		final var goc = globalOptimizationContextSerializer().deserialize(json);
+		switch (plotSettings) {
+		case DISABLE, SIMULATION_RESULT_ALL, SIMULATION_RESULT_BATTERY, SIMULATION_RESULT_POWER,
+				SIMULATION_RESULT_PRICE ->
+			doNothing();
+		case GLOBAL_OPTIMIZATION_CONTEXT_ALL -> {
+			plotGlobalOptimizationContext(plotSettings, goc);
+			return;
+		}
+		}
+		simulate(goc, executionLimitSeconds, plotSettings);
 	}
 
-	private static void simulate(GlobalOptimizationContext gsc, long executionLimitSeconds) {
-		var simulator = new Simulator(gsc);
+	private static void simulate(GlobalOptimizationContext goc, long executionLimitSeconds, PlotSettings plotSettings)
+			throws IOException {
+		var simulator = new Simulator(goc);
 		simulator.setEarliestCallbackDelay(Duration.ZERO);
 
 		var simulationResult = new AtomicReference<SimulationResult>();
@@ -81,7 +96,9 @@ public final class AppUtils {
 						.limit(byExecutionTime(ofSeconds(executionLimitSeconds))), //
 				simulationResult::set);
 
-		logSimulationResult(simulator, simulationResult.get());
+		final var sr = simulationResult.get();
+		logSimulationResult(simulator, sr);
+		PlotUtils.plotSimulationResult(plotSettings, goc, sr);
 	}
 
 	/**
