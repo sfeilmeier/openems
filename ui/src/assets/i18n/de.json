@@ -1118,7 +1118,7 @@
       "DUPLICATE": " MPPT {{ mppt }} doppelt belegt (beschriftet mit \"PV{{ pv }}\")",
       "INSTALLED_POWER": "Installierte Leistung [Wₚ]",
       "INSTALLED_POWER_PER_STRING": "Installierte Leistung pro String [Wₚ]",
-      "MARKED_AS": " MPPT {{ mppt }} (beschriftet mit \"PV{{ pv }}\")",
+      "MARKED_AS": " MPPT {{ mppt }} (beschriftet mit \"PV{{ mppt }}\")",
       "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (beschriftet mit \"PV{{ pv1 }}\" & \"PV{{ pv2 }}\")",
       "MODULE_TYPE": "Modultyp",
       "MODULE_TYPE_DESCRIPTION": "z. B. Hersteller und Leistung",

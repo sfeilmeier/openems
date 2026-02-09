@@ -88,8 +88,8 @@ export class Home20FeneconIbn extends AbstractHomeIbn {
         return `${AbstractHomeIbn.BASE_IMAGE_PATH}Home_20_MPPT${mppt}.png`;
     }
 
-    public override getMpptLabel(mppt: number, pv: number) {
-        return this.getTwoStringMpptLabel(mppt, pv);
+    public override getMpptLabel(mppt: number) {
+        return this.getTwoStringMpptLabel(mppt);
     }
 
     public override getExternalLimitationTypeOptions(): ComponentData[] {

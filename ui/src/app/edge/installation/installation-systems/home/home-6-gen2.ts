@@ -78,8 +78,8 @@ export class Home6Gen2FeneconIbn extends AbstractHomeGen2Ibn {
         return `${AbstractHomeIbn.BASE_IMAGE_PATH}Home_6_MPPT${mppt}.png`;
     }
 
-    public override getMpptLabel(mppt: number, pv: number) {
-        return "MPPT" + pv;
+    public override getMpptLabel(mppt: number) {
+        return "MPPT" + mppt;
     }
 
     public override getEnergyFlowMeterFields() {

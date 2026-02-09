@@ -42,8 +42,10 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
         this.model = this.ibn.feedInLimitation ?? {};
         this.totalPvPower = this.ibn.getTotalPvPower();
 
-        if (this.ibn.feedInLimitation?.maximumFeedInPower !== 0) {
-            this.model.maximumFeedInPower = this.ibn.feedInLimitation.maximumFeedInPower;
+        const maximumFeedInPower = this.ibn.feedInLimitation?.maximumFeedInPower;
+
+        if (maximumFeedInPower != null && maximumFeedInPower !== 0) {
+            this.model.maximumFeedInPower = maximumFeedInPower;
         } else {
             this.model.maximumFeedInPower = this.totalPvPower;
         }

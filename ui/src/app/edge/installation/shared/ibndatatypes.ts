@@ -32,7 +32,7 @@ export type DcPv = {
     portsConnected?: boolean,
 };
 
-export type dcForm = {
+export type DcForm = {
     formGroup: FormGroup<any>;
     fields: FormlyFieldConfig[];
     model: any;
