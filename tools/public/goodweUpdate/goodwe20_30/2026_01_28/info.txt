@@ -1,0 +1,6 @@
+Version 28.01.2026
+ARM: 8.446 (410-02071-16(446)OL-R.bin)
+DSP: 6.13011 (410-04062-13(13011)OL-T.bin)
+
+1. Resolves the issue of PV Power Output cessation after the battery reachs the cutoff SoC in self-use mode when the export power limit function is disabled.
+2. Address the issue of abrupt and excessive noise caused by a sudden drop in fan speed when the PV current decreases after reaching 24A
