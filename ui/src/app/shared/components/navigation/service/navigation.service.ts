@@ -101,7 +101,8 @@ export class NavigationService {
         const currentUrl = this.routeService.currentUrl();
         AssertionUtils.assertIsDefined(currentUrl);
 
-        const currentSegments = currentUrl.split("/");
+        const currentPathWithoutParams = currentUrl.split(/[?]/, 1)[0];
+        const currentSegments = currentPathWithoutParams.split("/");
         const newSegments = link.routerLink.baseString.split("/");
 
         if (ArrayUtils.containsAll({ strings: currentSegments, arr: newSegments })) {
@@ -114,7 +115,10 @@ export class NavigationService {
             // Navigate forward
             const startIndex = currentSegments.findIndex(el => newSegments.find(i => i == el));
             const newRoute = [...currentSegments.slice(0, startIndex), ...newSegments];
-            this.router.navigate(newRoute);
+
+            this.router.navigate(newRoute, link.routerLink.queryParams
+                ? { queryParams: link.routerLink.queryParams }
+                : undefined);
         }
     }
 
@@ -309,7 +313,8 @@ export class NavigationService {
                 return null;
             }
 
-            const some = url.split("/").slice().reverse();
+            const urlWithoutQueryParmas = url.split(/[?]/, 1)[0];
+            const some = urlWithoutQueryParmas.split("/").slice().reverse();
             const urlSegments = tree.routerLink.baseString.split("/").slice().reverse();
 
             const foundNode = ArrayUtils.containsAll({ strings: some.slice(0, urlSegments.length), arr: urlSegments });
