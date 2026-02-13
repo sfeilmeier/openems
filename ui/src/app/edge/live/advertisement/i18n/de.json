@@ -1,14 +1,9 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE_OWNER": "Lohnt sich mehr Speicher für Sie?",
-            "TITLE_INSTALLER": "Batterieerweiterungen besser beraten",
-            "TEXT_OWNER": "Mit dem Energy-Journey-Rechner sehen Sie schnell und einfach, wie sich eine Batterieerweiterung positiv auf Ihre Energiekosten auswirken kann. Hier im Online Monitoring ausprobieren und entdecken, was noch in Ihrem System steckt.",
-            "TEXT_INSTALLER": "Der Energy-Journey-Rechner unterstützt Sie bei der Kundenberatung: Zeigen Sie direkt im Online Monitoring, wie sich eine Speichererweiterung auf Kosten und Eigenverbrauch auswirkt.",
-            "LINK_INSTALLER": "https://www.fenecon.de/meine-energy-journey-2025",
-            "LINK_OWNER": "https://fenecon.de/fems-wrapped-2025/{{uuid}}",
-            "LINK_TEXT_INSTALLER": "Zum Rechner",
-            "LINK_TEXT_OWNER": "Jetzt ausprobieren"
+            "TITLE": "Beta AC-Ladestation testen",
+            "TEXT": "Entdecke jetzt die neue Beta-Funktion der FEMS App AC-Ladestation! Teste damit neue Features wie die manuelle Phasenumschaltung und das zeitbasierte Laden des E-Autos aus. Die Beta-Funktion kann im App Center bei der App AC-Ladestation direkt per Klick aktiviert werden.",
+            "LINK_TEXT": "zum App Center"
         }
     }
 }
