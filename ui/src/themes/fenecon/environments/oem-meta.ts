@@ -154,7 +154,6 @@ export const OemMeta: BaseMeta = {
             PRODUCTION: "icons/common/production.svg",
             STORAGE: "icons/common/storage.svg",
             MEGAFON: "assets/img/icon/megafon.svg",
-
             WEATHER: {
                 CLEAR_DAY: "assets/img/icon/clear_day.svg",
                 CLEAR_NIGHT: "icons/common/weather/clear_night.svg",
@@ -168,6 +167,13 @@ export const OemMeta: BaseMeta = {
                 WEATHER_SNOWY: "icons/common/weather/weather_snowy.svg",
                 SUNSHINE_DURATION: "assets/img/icon/sunshine_duration.svg",
                 HELP: "assets/img/icon/help.svg",
+            },
+            OFFLINE: {
+                CLOUD_OFFLINE_OUTLINE: "icons/common/offline/cloud_offline_outline.svg",
+            },
+            TIME_OF_USE: {
+                TIME_OF_USE: "icons/common/time_of_use/time_of_use.svg",
+                TIME_OF_USE_THIN: "icons/common/time_of_use/time_of_use-thin.svg",
             },
         },
         COMPONENT: {
