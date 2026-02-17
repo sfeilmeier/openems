@@ -49,6 +49,13 @@ export interface Environment {
                 readonly "SUNSHINE_DURATION": string,
                 readonly "HELP": string,
             },
+            readonly "OFFLINE": {
+                readonly "CLOUD_OFFLINE_OUTLINE": string,
+            },
+            readonly "TIME_OF_USE": {
+                readonly "TIME_OF_USE": string,
+                readonly "TIME_OF_USE_THIN": string,
+            },
         },
         readonly "COMPONENT": {
             readonly "HEATPUMP": string,
@@ -78,6 +85,7 @@ export interface Environment {
             readonly COMMON_GRID: string | null,
             readonly COMMON_PRODUCTION: string | null,
             readonly COMMON_SELFCONSUMPTION: string | null,
+            readonly OFFLINE_INSTRUCTIONS: string | null,
 
             readonly EVCS_KEBA: string | null,
             readonly EVCS_HARDY_BARTH: string | null,

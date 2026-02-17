@@ -52,11 +52,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
     public override readonly systemType: SystemType = SystemType.FENECON_HOME;
 
-    // Protocol-pv-component
-    public batteryInverter?: {
-        shadowManagementDisabled?: boolean;
-    };
-
     // configuration-emergency-reserve
     public override emergencyReserve? = {
         isEnabled: true,
@@ -866,7 +861,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
             HAS_EMERGENCY_RESERVE: this.emergencyReserve.isEnabled,
             ...(this.emergencyReserve.isEnabled && { EMERGENCY_RESERVE_ENABLED: this.emergencyReserve.isReserveSocEnabled }),
             ...(this.emergencyReserve.isReserveSocEnabled && { EMERGENCY_RESERVE_SOC: this.emergencyReserve.value }),
-            ...(this.batteryInverter?.shadowManagementDisabled && { SHADOW_MANAGEMENT_DISABLED: true }),
+            SHADOW_MANAGEMENT_DISABLED: true, // It's always set to true.
             HAS_ESS_LIMITER_14A: this.isController14aActivated,
             NA_PROTECTION_ENABLED: this.feedInLimitation.naProtection,
         };
@@ -1095,11 +1090,11 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         return batteryInverterData;
     }
 
-    public getTwoStringMpptLabel(mppt: number, pv: number): string {
+    public getTwoStringMpptLabel(mppt: number): string {
         // Each MPPT label associates with two PV strings, calculated as adjacent pairs.
         // For example, MPPT 1 uses PV1 and PV2, MPPT 2 uses PV3 and PV4, and so on.
-        const firstPvString = pv * 2 - 1;
-        const secondPvString = pv * 2;
+        const firstPvString = mppt * 2 - 1;
+        const secondPvString = mppt * 2;
         return this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS_BOTH_STRINGS", { mppt: mppt, pv1: firstPvString, pv2: secondPvString });
     }
 
@@ -1126,8 +1121,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
      * Returns the appropriate label to be displayed during the "ConfigurationMpptSelection" and "ProtocolPV"
      *
      * @param mppt the mppt number
-     * @param pv the pv number
      */
-    public abstract getMpptLabel(mppt: number, pv: number): string;
+    public abstract getMpptLabel(mppt: number): string;
 }
 

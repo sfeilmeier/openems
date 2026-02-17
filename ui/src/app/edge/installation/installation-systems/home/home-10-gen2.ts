@@ -87,7 +87,7 @@ export class Home10Gen2FeneconIbn extends AbstractHomeGen2Ibn {
         return `${AbstractHomeIbn.BASE_IMAGE_PATH}Home_10_15_MPPT${mppt}.png`;
     }
 
-    public override getMpptLabel(mppt: number, pv: number) {
-        return "MPPT" + pv;
+    public override getMpptLabel(mppt: number) {
+        return "MPPT" + mppt;
     }
 }

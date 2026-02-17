@@ -1,59 +1,81 @@
-// @ts-strict-ignore
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-import { tap } from "rxjs/operators";
+import { distinctUntilChanged, tap } from "rxjs";
 import { Utils } from "src/app/shared/shared";
-import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { AbstractHomeIbn } from "../../installation-systems/home/abstract-home";
-import { dcForm } from "../../shared/ibndatatypes";
+import { DcForm } from "../../shared/ibndatatypes";
 import { DIRECTIONS_OPTIONS } from "../../shared/options";
+
+interface ProtocolForm extends DcForm {
+    uiLabel: string;
+    mpptIndex: number;
+}
 
 @Component({
     selector: "protocol-pv",
     templateUrl: "./protocol-pv.component.html",
     standalone: false,
+    styles: [`
+        .text-small {
+            font-size: 0.875rem;
+        }
+  `],
 })
 export class ProtocolPvComponent implements OnInit {
 
-    @Input() public ibn: AbstractHomeIbn;
-    @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
-    @Output() public nextViewEvent = new EventEmitter<AbstractIbn>();
+    @Input() public ibn!: AbstractHomeIbn;
+    @Output() public previousViewEvent = new EventEmitter<void>();
+    @Output() public nextViewEvent = new EventEmitter<AbstractHomeIbn>();
 
-    public forms: Array<dcForm> = [];
+    protected forms: Array<ProtocolForm> = [];
+    protected expandedAccordions: string[] = [];
+    private maxStrings: number = 0;
+
     public constructor(private translate: TranslateService) { }
-
 
     public ngOnInit() {
 
-        // Initialize PV-Object
+        // Initialize Data
         this.ibn.pv ??= {};
         this.ibn.pv.dc ??= [];
-        const maxStrings: number = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
 
-        for (let formNr = 0; formNr <= maxStrings; formNr++) {
-            const form: dcForm = {
-                formGroup: new FormGroup({}),
-                fields: [],
-                model: {},
+        this.maxStrings = this.ibn.maxNumberOfMppt > 0
+            ? this.ibn.maxNumberOfMppt
+            : this.ibn.maxNumberOfPvStrings;
+
+        for (let i = 0; i < this.maxStrings; i++) {
+            const mpptNumber = i + 1;
+            const mpptKey = "mppt" + mpptNumber;
+            const isEnabled = this.ibn.mppt ? this.ibn.mppt[mpptKey] === true : true;
+            let model = { isSelected: false }; // Default
+
+            if (isEnabled) {
+                const existingDc = this.ibn.pv?.dc?.[i];
+                model = existingDc ?? { isSelected: this.ibn.maxNumberOfMppt > 0 };
+            }
+
+            const formGroup = new FormGroup({});
+            const label = this.ibn.getMpptLabel(mpptNumber);
+
+            const form: ProtocolForm = {
+                formGroup,
+                model,
+                fields: isEnabled ? this.createFields(i, mpptNumber) : [],
+                uiLabel: label,
+                mpptIndex: i,
             };
 
             this.forms.push(form);
-
-            // form 0 is always for shadow management and later forms are for MPPT's.
-            if (formNr === 0) {
-                form.model = this.ibn.batteryInverter ?? {
-                    shadowManagementDisabled: false,
-                };
-            } else {
-                // forms[1], forms[2]... = dc[0], dc[1]...
-                form.model = this.ibn.pv.dc[formNr - 1] ?? {
-                    isSelected: this.ibn.maxNumberOfMppt > 0,
-                };
-            }
         }
-        this.getFields();
+
+        const firstEnabledIndex = this.forms.findIndex(f => f.fields.length > 0);
+
+        if (firstEnabledIndex > -1) {
+            // We use +1 because HTML uses (i + 1) for the ID.
+            this.expandedAccordions = [`mppt-${firstEnabledIndex + 1}`];
+        }
     }
 
     public onPreviousClicked() {
@@ -61,157 +83,164 @@ export class ProtocolPvComponent implements OnInit {
     }
 
     public onNextClicked() {
+        let isValid = true;
 
         // Iterate over forms and prohibit onNextClicked if forms are not valid
         for (const form of this.forms) {
             if (form.formGroup.invalid) {
-                return;
+                form.formGroup.markAllAsTouched();
+                isValid = false;
             }
         }
 
-        // Resetting to avoiding duplicate entries in the array.
-        this.ibn.pv.dc = [];
-        const maxStrings: number = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
+        if (!isValid) {
+            return;
+        }
 
-        for (let formNr = 0; formNr <= maxStrings; formNr++) {
-            if (formNr === 0) {
-                this.ibn.batteryInverter = this.forms[formNr].model;
+        // Reset and rebuild the DC array
+        // We ensure 'pv' exists first
+        if (!this.ibn.pv) {
+            this.ibn.pv = {};
+        }
+        this.ibn.pv!.dc = [];
+
+
+        for (let formNr = 0; formNr < this.forms.length; formNr++) {
+            if (this.isMpptEnabled(formNr)) {
+                this.ibn.pv!.dc.push(Utils.deepCopy(this.forms[formNr].model));
             } else {
-                if (this.ibn.mppt["mppt" + formNr]) {
-                    this.ibn.pv.dc.push(Utils.deepCopy(this.forms[formNr].model));
-                } else {
-                    this.ibn.pv.dc.push({
-                        isSelected: false,
-                    });
-                }
+                // Push placeholder to maintain index alignment
+                this.ibn.pv.dc.push({ isSelected: false });
             }
         }
         this.nextViewEvent.emit(this.ibn);
+
     }
 
-    public getFields(): void {
+    private isMpptEnabled(index: number): boolean {
 
-        this.forms[0].fields.push({
-            key: "shadowManagementDisabled",
-            type: "checkbox",
-            templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_PV.SHADE_MANAGEMENT_DEACTIVATE"),
-                description: this.translate.instant("INSTALLATION.PROTOCOL_PV.SHADE_MANAGEMENT_DESCRIPTION"),
+        // If no mppt config object exists (legacy systems), assume true
+        if (!this.ibn.mppt) {
+            return true;
+        }
+
+        return this.ibn.mppt["mppt" + (index + 1)] === true;
+    }
+
+    private createFields(index: number, mpptNumber: number): FormlyFieldConfig[] {
+        const fields: FormlyFieldConfig[] = [
+            {
+                key: "isSelected",
+                type: "checkbox",
+                templateOptions: {
+                    label: this.translate.instant("INSTALLATION.ENABLE_MPPT", { mpptNumber }),
+                },
+                hooks: {
+                    onInit: (field) => {
+                        return field.formControl?.valueChanges.pipe(
+                            // distinctUntilChanged prevents duplicate triggers
+                            distinctUntilChanged(),
+                            tap((isSelected: boolean) => {
+                                if (isSelected) {
+                                    this.handleCopyLogic(index);
+                                }
+                            })
+                        );
+                    },
+                },
             },
-        });
-        const maxStrings: number = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
-
-        //  For DC-PVs
-        for (let i = 0; i < maxStrings; i++) {
-            // In Home 20 & 30, It is always possible to configure two pv strings under one mppt.
-            // So dividing the strings with 2 for actual mppt number.
-            const mppt = i + 1;
-            const key: string = "mppt" + mppt;
-            if (this.ibn.mppt[key] !== true) {
-                continue;
-            }
-
-            this.forms[i + 1]?.fields.push(
-                {
-                    key: "isSelected",
-                    type: "checkbox",
-                    hooks: {
-                        onInit: (field: FormlyFieldConfig) => {
-
-                            if (this.ibn.maxNumberOfPvStrings <= 2 || i % 2) {
-                                return;
-                            }
-
-                            // subscription and unsubscribe is handled by formly
-                            return field.form.get("isSelected").valueChanges.pipe(
-                                tap(isSelected => {
-                                    if (isSelected) {
-                                        const field = this.forms[i - 1].formGroup.value;
-
-                                        const value: number = field.value;
-                                        const moduleType: string = field.moduleType;
-                                        const modulesPerString: number = field.modulesPerString;
-
-                                        this.forms[i].fields.find(field => field.key == "value").formControl.setValue(value);
-                                        this.forms[i].fields.find(field => field.key == "moduleType").formControl.setValue(moduleType);
-                                        this.forms[i].fields.find(field => field.key == "modulesPerString").formControl.setValue(modulesPerString);
-                                    }
-                                }),
-                            );
-                        },
-                    },
-                    props: {
-                        label: this.ibn.getMpptLabel(mppt, i + 1),
-                    },
+            {
+                key: "alias",
+                type: "input",
+                templateOptions: {
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_PV.ALIAS"),
+                    description: this.translate.instant("INSTALLATION.PROTOCOL_PV.ALIAS_DESCRIPTION_PV"),
+                    required: true,
                 },
-                {
-                    key: "alias",
-                    type: "input",
-                    templateOptions: {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_PV.ALIAS"),
-                        description: this.translate.instant("INSTALLATION.PROTOCOL_PV.ALIAS_DESCRIPTION_PV"),
-                        required: true,
-                    },
-                    hideExpression: model => !model.isSelected,
+                hideExpression: (model) => !model.isSelected,
+            },
+            {
+                key: "value",
+                type: "input",
+                defaultValue: 1000,
+                templateOptions: {
+                    type: "number",
+                    label: this.ibn.maxNumberOfMppt > 0
+                        ? this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER_PER_STRING")
+                        : this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER"),
+                    required: true,
                 },
-                {
-                    key: "value",
-                    type: "input",
-                    defaultValue: 1000, // Acts as minimum value through "defaultAsMinimumValue" validator
-                    templateOptions: {
-                        type: "number",
-                        label: this.ibn.maxNumberOfMppt > 0
-                            ? this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER_PER_STRING")
-                            : this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER"),
-                        required: true,
-                    },
-                    validators: {
-                        validation: ["onlyPositiveInteger", "defaultAsMinimumValue"],
-                    },
-                    hideExpression: model => !model.isSelected,
+                validators: {
+                    validation: ["onlyPositiveInteger", "defaultAsMinimumValue"],
                 },
-                {
-                    key: "orientation",
-                    type: "select",
-                    templateOptions: {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_PV.ORIENTATION"),
-                        options: DIRECTIONS_OPTIONS(this.translate),
-                    },
-                    hideExpression: model => !model.isSelected,
+                hideExpression: (model) => !model.isSelected,
+            },
+            {
+                key: "orientation",
+                type: "select",
+                templateOptions: {
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_PV.ORIENTATION"),
+                    options: DIRECTIONS_OPTIONS(this.translate),
                 },
-                {
-                    key: "moduleType",
-                    type: "input",
-                    templateOptions: {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_PV.MODULE_TYPE"),
-                        description: this.translate.instant("INSTALLATION.PROTOCOL_PV.MODULE_TYPE_DESCRIPTION"),
-                    },
-                    hideExpression: model => !model.isSelected,
+                hideExpression: (model) => !model.isSelected,
+            },
+            {
+                key: "moduleType",
+                type: "input",
+                templateOptions: {
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_PV.MODULE_TYPE"),
+                    description: this.translate.instant("INSTALLATION.PROTOCOL_PV.MODULE_TYPE_DESCRIPTION"),
                 },
-                {
-                    key: "modulesPerString",
-                    type: "input",
-                    templateOptions: {
-                        type: "number",
-                        label: this.ibn.maxNumberOfMppt > 0
-                            ? this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES_PER_STRING")
-                            : this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES"),
-                    },
-                    parsers: [Number],
-                    hideExpression: model => !model.isSelected,
-                });
+                hideExpression: (model) => !model.isSelected,
+            },
+            {
+                key: "modulesPerString",
+                type: "input",
+                templateOptions: {
+                    type: "number",
+                    label: this.ibn.maxNumberOfMppt > 0
+                        ? this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES_PER_STRING")
+                        : this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES"),
+                },
+                parsers: [Number],
+                hideExpression: (model) => !model.isSelected,
+            },
+        ];
 
-            // Visible only for Home 20 and 30.
-            if (this.ibn.maxNumberOfMppt > 0) {
-                this.forms[i + 1]?.fields.push({
-                    key: "portsConnected",
-                    type: "checkbox",
-                    props: {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_PV.BOTH_SELECTED_LABEL", { pv1: i * 2 + 1, pv2: i * 2 + 2 }),
-                    },
-                    hideExpression: model => !model.isSelected,
-                });
-            }
+        // Ports Connected Logic
+        if (this.ibn.maxNumberOfMppt > 0) {
+            fields.push({
+                key: "portsConnected",
+                type: "checkbox",
+                props: {
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_PV.BOTH_SELECTED_LABEL", {
+                        pv1: index * 2 + 1,
+                        pv2: index * 2 + 2,
+                    }),
+                },
+                hideExpression: (model) => !model.isSelected,
+            });
+        }
+
+        return fields;
+    }
+
+    private handleCopyLogic(currentIndex: number): void {
+        if (currentIndex === 0) {
+            return;
+        }
+
+        const previousForm = this.forms[currentIndex - 1];
+        const currentForm = this.forms[currentIndex];
+
+        if (previousForm && previousForm.model.isSelected) {
+            const { value, moduleType, modulesPerString } = previousForm.formGroup.value;
+            // Patching checks for undefined automatically usually
+            currentForm.formGroup.patchValue({
+                value,
+                moduleType,
+                modulesPerString,
+            });
         }
     }
 }

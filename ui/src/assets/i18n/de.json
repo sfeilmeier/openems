@@ -523,7 +523,8 @@
             "RESET": "RESET",
             "BMS_HARD_RESET": "BMS hard reset",
             "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Systemfehler reset:",
-            "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "beinhaltet System Komponente, Batterien, Wechselrichter, ESS"
+            "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "beinhaltet System Komponente, Batterien, Wechselrichter, ESS",
+	    "MAINTENANCE_WINDOW": "Wartungsfenster"
           },
           "OVERALL_SYSTEM": "Gesamtsystem"
         },
@@ -532,7 +533,7 @@
           "CHART_TITLE": "Aktueller Fahrplan",
           "CHART_WARNING_NOTE": "Die Grafik zeigt die vergangenen drei Stunden, sowie die zukünftig geplante Betriebsweise für den Zeitraum, für den die dynamischen Netzbezugspreise zur Verfügung stehen. Bitte beachten Sie, dass der Fahrplan kontinuierlich neu berechnet wird und sich somit im Tagesverlauf ändern kann.",
           "CONTROL_MODE_DESCRIPTION": {
-            "CHARGE_CONSUMPTION": "Teilnahme am BETA-Test: Diese Funktion befindet sich noch in der aktiven Entwicklung und wird stetig weiter verbessert.<br/><br/>Durch die aktive Beladung der Batterie aus dem Netz in Zeiten mit niedrigen Strompreisen kann Netzbezug zu teuren Zeiten vermieden werden.<br/><br/>ACHTUNG: Die aktive Beladung der Batterie aus dem Netz über die technisch notwendige Erhaltungsladung hinaus erfordert eine entsprechende Anmeldung des Speichersystems. Im Zweifel wenden Sie sich hierzu bitte an Ihren Installateur. Mit Betätigung des blauen \"Speichern\"-Buttons bestätigen Sie, dass Sie diese Prüfung durchgeführt haben.<br/><br/>Beachten Sie: Voraussetzung für die Inanspruchnahme einer Förderung nach dem Gesetz für den Ausbau erneuerbarer Energien (EEG 2023) ist, dass im Speicher ausschließlich Strom zwischengespeichert wird, der aus erneuerbaren Energien und/oder Grubengas stammt. Bei Aktivierung dieser Funktion wird der Speicher mit Netzstrom geladen. Dieser Netzstrom wird, je nach Stromlieferungsvertrag, ggf. auch aus fossilen Energieträgern und/oder Atomkraft gewonnen. Daher können wir nicht gewährleisten, dass der Speicher ausschließlich mit Strom aus erneuerbaren Energien und/oder Grubengas geladen wird."
+            "CHARGE_CONSUMPTION": "Durch die aktive Beladung der Batterie aus dem Netz in Zeiten mit niedrigen Strompreisen kann Netzbezug zu teuren Zeiten vermieden werden.<br/><br/>ACHTUNG: Die aktive Beladung der Batterie aus dem Netz über die technisch notwendige Erhaltungsladung hinaus erfordert eine entsprechende Anmeldung des Speichersystems. Im Zweifel wenden Sie sich hierzu bitte an Ihren Installateur. Mit Betätigung des blauen \"Speichern\"-Buttons bestätigen Sie, dass Sie diese Prüfung durchgeführt haben.<br/><br/>Beachten Sie: Voraussetzung für die Inanspruchnahme einer Förderung nach dem Gesetz für den Ausbau erneuerbarer Energien (EEG 2023) ist, dass im Speicher ausschließlich Strom zwischengespeichert wird, der aus erneuerbaren Energien und/oder Grubengas stammt. Bei Aktivierung dieser Funktion wird der Speicher mit Netzstrom geladen. Dieser Netzstrom wird, je nach Stromlieferungsvertrag, ggf. auch aus fossilen Energieträgern und/oder Atomkraft gewonnen. Daher können wir nicht gewährleisten, dass der Speicher ausschließlich mit Strom aus erneuerbaren Energien und/oder Grubengas geladen wird."
           },
           "POWER_SOC_CHART_TITLE": "Vorhersagen (Nur für Admins)",
           "PRICE": "Aktueller Bezugsstrompreis",
@@ -1118,7 +1119,7 @@
       "DUPLICATE": " MPPT {{ mppt }} doppelt belegt (beschriftet mit \"PV{{ pv }}\")",
       "INSTALLED_POWER": "Installierte Leistung [Wₚ]",
       "INSTALLED_POWER_PER_STRING": "Installierte Leistung pro String [Wₚ]",
-      "MARKED_AS": " MPPT {{ mppt }} (beschriftet mit \"PV{{ pv }}\")",
+      "MARKED_AS": " MPPT {{ mppt }} (beschriftet mit \"PV{{ mppt }}\")",
       "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (beschriftet mit \"PV{{ pv1 }}\" & \"PV{{ pv2 }}\")",
       "MODULE_TYPE": "Modultyp",
       "MODULE_TYPE_DESCRIPTION": "z. B. Hersteller und Leistung",
@@ -1276,7 +1277,7 @@
         "HEADER": "{{edgeShortName}} neu starten und LAN-Stecker prüfen"
       },
       "STEP_FIREWALL": {
-        "DESCRIPTION": "Einstellungen der Firewall können die Internetverbindung zum {{edgeShortName}} begrenzen. Besonders bei Erstinbetriebnahmen ist dies häufig der Fall. Bitte überprüfen Sie mithilfe der <a href=\"https://docs.fenecon.de/de/fems/ui/introduction.html#_offlinelokal\" target=\"_blank\">Anleitung</a> die Ports und Dienste, die auf dem {{edgeShortName}} aktiv sind.",
+        "DESCRIPTION": "Einstellungen der Firewall können die Internetverbindung zum {{edgeShortName}} begrenzen. Besonders bei Erstinbetriebnahmen ist dies häufig der Fall. Bitte überprüfen Sie mithilfe der <a href={{link}} target=\"_blank\">Anleitung</a> die Ports und Dienste, die auf dem {{edgeShortName}} aktiv sind.",
         "HEADER": "Portfreigabe/Firewall prüfen"
       },
       "STEP_SERVICE": {

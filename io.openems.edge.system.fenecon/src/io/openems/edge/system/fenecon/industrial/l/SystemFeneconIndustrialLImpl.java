@@ -559,7 +559,7 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 						this.cm, //
 						this.componentManager, //
 						this.servicePid(), //
-						"jsCalendar"//
+						"restartTasks"//
 				)//
 		);
 	}

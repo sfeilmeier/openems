@@ -266,8 +266,8 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
         this.requiredControllerIds = [];
     }
 
-    public getMpptLabel(mppt: number, pv: number) {
-        return this.getTwoStringMpptLabel(mppt, pv);
+    public getMpptLabel(mppt: number) {
+        return this.getTwoStringMpptLabel(mppt);
     }
 
     public getImageUrl(mppt: number): string {

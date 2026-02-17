@@ -2,7 +2,6 @@
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { EdgePermission, Utils } from "../shared";
-import { Role } from "./role";
 import { TEnumKeys } from "./utility";
 
 export enum WidgetClass {
@@ -85,15 +84,12 @@ export class AdvertWidgets {
 
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
 
-        let list: AdvertWidget[] = [];
-        if (EdgePermission.isEnergyJourneyAllowed(edge)) {
-            list.push(
-                {
-                    name: "advert-1",
-                    title: { languageKey: edge.roleIsAtLeast(Role.INSTALLER) ? "ADVERT.1.TITLE_INSTALLER" : "ADVERT.1.TITLE_OWNER" },
-                }
-            );
-        };
+        let list: AdvertWidget[] = [
+            {
+                name: "advert-1",
+                title: { languageKey: "ADVERT.1.TITLE" },
+            },
+        ];
         list = Utils.shuffleArray(list);
         return new AdvertWidgets(list);
     }

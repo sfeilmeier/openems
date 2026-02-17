@@ -47,11 +47,11 @@
           <oe-flat-widget [title]="meter.displayName">
             @for (phase of ['L1', 'L2', 'L3']; track phase) {
               <oe-flat-widget-line leftColumnWidth="20" [name]="'Phase ' + phase">
-                <oe-flat-widget-line-item [channelAddress]="meter.id + '/Voltage' + phase"
+                <oe-flat-widget-line-item leftColumnWidth="10" [channelAddress]="meter.id + '/Voltage' + phase"
                   [converter]="VOLTAGE_IN_MILLI_VOLT_TO_VOLT_WITH_3_DECIMALS"></oe-flat-widget-line-item>
-                <oe-flat-widget-line-item [channelAddress]="meter.id + '/Current' + phase"
+                <oe-flat-widget-line-item leftColumnWidth="10" [channelAddress]="meter.id + '/Current' + phase"
                   [converter]="AMPERE_IN_MILLI_AMPERE_TO_AMPERE_WITH_3_DECIMALS"></oe-flat-widget-line-item>
-                <oe-flat-widget-line-item [channelAddress]="meter.id + '/ActivePower' + phase"
+                <oe-flat-widget-line-item leftColumnWidth="10" [channelAddress]="meter.id + '/ActivePower' + phase"
                   [converter]="Converter.POWER_IN_WATT"></oe-flat-widget-line-item>
               </oe-flat-widget-line>
             }
@@ -153,7 +153,8 @@
             <div style="display: flex; justify-content: center;">
               <pickdate [historyPeriods]="['day', 'week']"></pickdate>
             </div>
-            <oe-reactive-power-chart [componentId]="'batteryInverter0'"></oe-reactive-power-chart>
+            <oe-reactive-power-chart style="position: relative;"
+              [componentId]="'batteryInverter0'"></oe-reactive-power-chart>
           }
         </oe-flat-widget>
       </ion-col>
@@ -208,7 +209,8 @@
           <div style="display: flex; justify-content: center;">
             <pickdate [historyPeriods]="['day', 'week']"></pickdate>
           </div>
-          <oe-cell-voltage-chart [towerId]="selectedTower" [moduleId]="selectedModule"></oe-cell-voltage-chart>
+          <oe-cell-voltage-chart style="position: relative;" [towerId]="selectedTower"
+            [moduleId]="selectedModule"></oe-cell-voltage-chart>
         </oe-flat-widget>
       </ion-col>
 

@@ -524,7 +524,8 @@
             "RESET": "RESET",
             "BMS_HARD_RESET": "BMS hard reset",
             "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "System error acknowledge:",
-            "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "includes system components, batteries, inverters, ESS"
+            "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "includes system components, batteries, inverters, ESS",
+            "MAINTENANCE_WINDOW": "Maintenance window"
           },
           "OVERALL_SYSTEM": "Overall system"
         },
@@ -533,7 +534,7 @@
           "CHART_TITLE": "Planned Schedule",
           "CHART_WARNING_NOTE": "The graphic shows the past three hours as well as the future planned operating mode for the period for which the dynamic grid purchase prices are available. Please note that the planned schedule is subject to continuous recalculation and may change throughout the day.",
           "CONTROL_MODE_DESCRIPTION": {
-            "CHARGE_CONSUMPTION": "Participation in BETA-Test: This feature is under active development and will be continuously improved.<br/><br/>By actively charging the battery from grid in periods of low electricity prices, buying energy in periods with high price can be avoided.<br/><br/>ATTENTION: Actively charging the battery from grid beyond the technically necessary maintenance charging, requires an appropriate registration of the storage system. If in doubt, please verify with your installer. By pressing the blue \"Save\" button you confirm that this verification has been done.<br/><br/>Be aware: Precondition for the German Renewable Energy Sources Act (EEG 2023) grant is that only energy from renewable sources and/or pit gas is stored in the battery. By activating this function the battery is charged with energy from the grid. This energy is, depending on the individual power-supply contract, probably generated from fossil and/or nuclear power sources. Thus we cannot guarantee that the battery is exclusively charged with energy gained from renewable sources and/or pit gas."
+            "CHARGE_CONSUMPTION": "By actively charging the battery from grid in periods of low electricity prices, buying energy in periods with high price can be avoided.<br/><br/>ATTENTION: Actively charging the battery from grid beyond the technically necessary maintenance charging, requires an appropriate registration of the storage system. If in doubt, please verify with your installer. By pressing the blue \"Save\" button you confirm that this verification has been done.<br/><br/>Be aware: Precondition for the German Renewable Energy Sources Act (EEG 2023) grant is that only energy from renewable sources and/or pit gas is stored in the battery. By activating this function the battery is charged with energy from the grid. This energy is, depending on the individual power-supply contract, probably generated from fossil and/or nuclear power sources. Thus we cannot guarantee that the battery is exclusively charged with energy gained from renewable sources and/or pit gas."
           },
           "POWER_SOC_CHART_TITLE": "Forecasts (Only for Admins)",
           "PRICE": "Current price",
@@ -1114,7 +1115,7 @@
       "DUPLICATE": " MPPT {{ mppt }} double occupied (marked as \"PV{{ pv }}\")",
       "INSTALLED_POWER": "Installed power [Wₚ]",
       "INSTALLED_POWER_PER_STRING": "Installed power per string [Wₚ]",
-      "MARKED_AS": " MPPT {{ mppt }} (marked as \"PV{{ pv }}\")",
+      "MARKED_AS": " MPPT {{ mppt }} (marked as \"PV{{ mppt }}\")",
       "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (marked as \"PV{{ pv1 }}\" & \"PV{{ pv2 }}\")",
       "MODULE_TYPE": "Type of modules",
       "MODULE_TYPE_DESCRIPTION": "e.g. Manufuturer and Power",
@@ -1273,7 +1274,7 @@
         "HEADER": "Restart {{edgeShortName}} and check LAN connection"
       },
       "STEP_FIREWALL": {
-        "DESCRIPTION": "Firewall settings can limit the internet connection to the {{edgeShortName}}. This happens especially when putting the system into service for the first time. Please use the <a href=\"https://docs.fenecon.de/de/fems/ui/introduction.html#_offlinelokal\" target=\"_blank\">instructions</a> to check the ports and services that are active on {{edgeShortName}}.",
+        "DESCRIPTION": "Firewall settings can limit the internet connection to the {{edgeShortName}}. This happens especially when putting the system into service for the first time. Please use the <a href={{link}} target=\"_blank\">instructions</a> to check the ports and services that are active on {{edgeShortName}}.",
         "HEADER": "Check port forwarding/firewall settings"
       },
       "STEP_SERVICE": {

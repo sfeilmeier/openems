@@ -87,7 +87,7 @@ export class Home15Gen2FeneconIbn extends AbstractHomeGen2Ibn {
         return this.getGen2EnergyFlowMeterFields();
     }
 
-    public override getMpptLabel(mppt: number, pv: number) {
-        return "MPPT" + pv;
+    public override getMpptLabel(mppt: number) {
+        return "MPPT" + mppt;
     }
 }

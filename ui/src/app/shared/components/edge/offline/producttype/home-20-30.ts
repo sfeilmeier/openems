@@ -1,12 +1,6 @@
 import { Component } from "@angular/core";
 import { environment } from "src/environments";
-import { ManualComponent } from "./default";
-
-export interface OfflineStep {
-    header: string;
-    description: string;
-    children?: OfflineStep[];
-}
+import { ManualComponent, OfflineStep } from "./default";
 
 @Component({
     selector: "oe-manual-home-20-30",
@@ -32,6 +26,6 @@ export class Home2030ManualComponent extends ManualComponent {
         ],
     }, {
         header: this.translate.instant("OFFLINE.DEFAULT.STEP_FIREWALL.HEADER", { edgeShortName: environment.edgeShortName }),
-        description: this.translate.instant("OFFLINE.DEFAULT.STEP_FIREWALL.DESCRIPTION", { edgeShortName: environment.edgeShortName }),
+        description: ManualComponent.FIREWALL_DESCRIPTION(this.service, this.translate),
     }];
 }

@@ -1,14 +1,9 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE_OWNER": "Is more storage worth it for you?",
-            "TITLE_INSTALLER": "Advise on battery expansions",
-            "TEXT_OWNER": "With the Energy Journey Calculator, you can quickly and easily see how a battery expansion could positively impact your energy costs. Try it out right here in the online monitoring and discover the full potential of your system.",
-            "TEXT_INSTALLER": "The Energy Journey Calculator supports you in customer consultations: show directly in the online monitoring how a battery expansion affects costs and self-consumption.",
-            "LINK_INSTALLER": "https://www.fenecon.de/meine-energy-journey-2025",
-            "LINK_OWNER": "https://fenecon.de/fems-wrapped-2025/{{uuid}}",
-            "LINK_TEXT_INSTALLER": "Try it now",
-            "LINK_TEXT_OWNER": "Try it now"
+            "TITLE": "Test Beta features now",
+            "TEXT": "Discover the new Beta feature in the FEMS AC Charging Station app! Try functions like manual phase switching and scheduled EV charging. Activate the Beta directly in the App Center under the AC Charging Station app with a single click.",
+            "LINK_TEXT": "to App Center"
         }
     }
 }

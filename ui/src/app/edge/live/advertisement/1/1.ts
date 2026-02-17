@@ -2,7 +2,6 @@ import { Component, effect } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Service } from "src/app/shared/shared";
-import { Role } from "src/app/shared/type/role";
 
 @Component({
     selector: "advert-1",
@@ -13,8 +12,8 @@ import { Role } from "src/app/shared/type/role";
         </ion-row>
 
         <ion-row class="ion-padding-top ion-justify-content-center">
-            <ion-button (click)="navigateToEnergyJourney()" target="_blank" size="small" fill="outline" style="font-size: small;">
-                <span>{{linkText}}</span>
+            <ion-button (click)="navigateToAppCenter()" target="_blank" size="small" fill="outline" style="font-size: small;">
+                <span>{{linkText | translate}}</span>
             </ion-button>
         </ion-row>
     </ion-grid>
@@ -40,12 +39,12 @@ export class Advert1Component {
                 return;
             }
 
-            this.text = edge.role === Role.INSTALLER ? "ADVERT.1.TEXT_INSTALLER" : "ADVERT.1.TEXT_OWNER";
-            this.linkText = edge.role === Role.INSTALLER ? translate.instant("ADVERT.1.LINK_TEXT_INSTALLER") : translate.instant("ADVERT.1.LINK_TEXT_OWNER");
+            this.text = "ADVERT.1.TEXT";
+            this.linkText = "ADVERT.1.LINK_TEXT";
         });
     }
 
-    navigateToEnergyJourney() {
-        this.router.navigate(["../settings/energyJourney"], { relativeTo: this.route });
+    navigateToAppCenter() {
+        this.router.navigate(["../settings/app"], { relativeTo: this.route });
     }
 }

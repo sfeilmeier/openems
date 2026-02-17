@@ -51,7 +51,7 @@ export class ConfigurationMpptSelectionComponent implements OnInit {
 
             const mppt = strings;
             const key: string = "mppt" + mppt;
-            const label: string = this.ibn.getMpptLabel(mppt, strings);
+            const label: string = this.ibn.getMpptLabel(mppt);
             const defaultValue: boolean = this.model[key];
 
             fields.push({

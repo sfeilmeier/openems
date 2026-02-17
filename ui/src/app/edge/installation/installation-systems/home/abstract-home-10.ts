@@ -61,8 +61,8 @@ export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
         return home10AppProperties;
     }
 
-    public override getMpptLabel(mppt: number, pv: number) {
-        return this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS", { mppt: mppt, pv: pv });
+    public override getMpptLabel(mppt: number) {
+        return this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS", { mppt: mppt });
     }
 
 }

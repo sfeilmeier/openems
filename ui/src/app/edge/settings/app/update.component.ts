@@ -10,6 +10,7 @@ import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componen
 import { PipeComponentsModule } from "src/app/shared/pipe/pipe.module";
 import { RouteService } from "src/app/shared/service/route.service";
 import { Edge, EdgePermission, Service, Utils, Websocket } from "../../../shared/shared";
+import { extractErrorMessage } from "../../../shared/utils/error/error.utils";
 import { InstallAppComponent } from "./install.component";
 import { CanSwitchArchitecture } from "./jsonrpc/canSwitchArchitecture";
 import { DeleteAppInstance } from "./jsonrpc/deleteAppInstance";
@@ -111,13 +112,16 @@ export class UpdateAppComponent implements OnInit {
                         payload: new GetAppAssistant.Request({ appId: appId }),
                     })).then(getAppAssistantResponse => {
                     const appAssistant = (getAppAssistantResponse as GetAppAssistant.Response).result;
-                    if (this.edge == null || componentId == null) {
+
+                    if (this.isAppCenter == true) {
+                        this.setInstance(appAssistant, null, recInstances, null, appId);
                         return;
                     }
-                    const component = this.edge.getCurrentConfig()?.getComponent(componentId);
 
-                    if (this.isAppCenter == true || component == null) {
-                        this.setInstance(appAssistant, componentId, recInstances, null);
+                    const filterComponentId = this.routeService.getQueryParam<string>("componentId");
+
+                    if (filterComponentId == null) {
+                        this.setInstance(appAssistant, componentId, recInstances, null, appId);
                         return;
                     }
 
@@ -128,7 +132,7 @@ export class UpdateAppComponent implements OnInit {
                                 filter: {
                                     component: {
                                         componentId: [
-                                            component.getPropertyFromComponent("electricVehicle.id") ?? "",
+                                            filterComponentId,
                                         ],
                                     },
                                 },
@@ -139,7 +143,7 @@ export class UpdateAppComponent implements OnInit {
                         })).then(queryAppInstancesByFilter => {
                         const queryedAppInstance = (queryAppInstancesByFilter as QueryAppInstancesByFilter.Response).result.apps;
 
-                        this.setInstance(appAssistant, componentId, recInstances, queryedAppInstance);
+                        this.setInstance(appAssistant, filterComponentId, recInstances, queryedAppInstance, appId);
                     }).catch(InstallAppComponent.errorToast(this.service, error => "Error while receiving App-Instances for [" + appId + "]: " + error));
                 }).catch(InstallAppComponent.errorToast(this.service, error => "Error while receiving App Assistant for [" + appId + "]: " + error));
             }).catch(InstallAppComponent.errorToast(this.service, error => "Error while receiving App-Instances for [" + appId + "]: " + error));
@@ -190,10 +194,11 @@ export class UpdateAppComponent implements OnInit {
                 payload: new SwitchArchitecture.Request(this.switchMethod),
             })).then(response => {
             const navigationExtras = { state: { appInstanceChange: true } };
-            this.router.navigate(["device/" + (currentEdge) + "/settings/app/"], navigationExtras);
+            this.router.navigate(["device/" + (currentEdge.id) + "/settings/app/"], navigationExtras);
             this.service.toast(this.translate.instant("EDGE.CONFIG.APP.SUCCESS_UPDATE"), "success");
         }).catch(reason => {
-            this.service.toast(reason, "danger");
+            const errorMessage = extractErrorMessage(reason);
+            this.service.toast(errorMessage, "danger");
         }).finally(() => {
             this.instances.forEach(instance => {
                 this.service.stopSpinner(instance.instanceId);
@@ -290,14 +295,19 @@ export class UpdateAppComponent implements OnInit {
             });
     }
 
-    private setInstance(appAssistant: GetAppAssistant.AppAssistant, componentId: any, recInstances: GetAppInstances.AppInstance[], queryedAppInstance: QueryAppInstancesByFilter.AppInstance[] | null) {
+    private setInstance(appAssistant: GetAppAssistant.AppAssistant, componentId: string | null, recInstances: GetAppInstances.AppInstance[], queryedAppInstance: QueryAppInstancesByFilter.AppInstance[] | null, appId: string) {
         this.appName = appAssistant.name;
         this.instances = [];
 
         const first = queryedAppInstance?.[0];
         const instanceId = first?.instanceId ?? first?.["instanceId"];
 
-        if (instanceId == null) {
+        if (this.isAppCenter == true) {
+            this.buildUiInstances(recInstances, appAssistant);
+            return;
+        }
+
+        if (instanceId == null && appId == "App.Evse.ElectricVehicle.Generic") {
             this.service.toast(this.translateService.instant("EDGE.INDEX.WIDGETS.EVSE.VEHICLE_ID_ERROR"), "warning");
             this.buildUiInstances(recInstances, appAssistant);
             return;

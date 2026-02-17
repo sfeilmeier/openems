@@ -27,6 +27,13 @@ export const OemMeta: BaseMeta = {
                 SUNSHINE_DURATION: "assets/img/icon/sunshine_duration.svg",
                 HELP: "assets/img/icon/help.svg",
             },
+            OFFLINE: {
+                CLOUD_OFFLINE_OUTLINE: "icons/common/offline/cloud_offline_outline.svg",
+            },
+            TIME_OF_USE: {
+                TIME_OF_USE: "icons/common/time_of_use/time_of_use.svg",
+                TIME_OF_USE_THIN: "icons/common/time_of_use/time_of_use-thin.svg",
+            },
         },
         COMPONENT: {
             HEATPUMP: flame,
@@ -72,6 +79,7 @@ export const OemMeta: BaseMeta = {
                 INDUSTRIAL_M_MANUAL: null,
                 INDUSTRIAL_L_OVERVIEW: null,
             },
+            OFFLINE_INSTRUCTIONS: null,
         },
         FORGET_PASSWORD: "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",

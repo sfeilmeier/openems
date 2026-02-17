@@ -66,7 +66,7 @@ public class SwitchEvcsEvseTest {
 				any(User.class), //
 				any(UpdateComponentConfig.Request.class));
 
-		this.sa = new SwitchArchitecture(this.amtb.appManagerUtil, this.cmSpy, this.amtb.sut,
+		this.sa = new SwitchArchitecture(this.amtb.appManagerUtil, this.cmSpy, this.amtb.componentUtil, this.amtb.sut,
 				new DummyOpenemsEdgeOem());
 	}
 
@@ -91,7 +91,7 @@ public class SwitchEvcsEvseTest {
 		var response = this.sa.handleCanSwitch(DUMMY_ADMIN);
 		assertFalse(response.canSwitch());
 	}
-	
+
 	@Test
 	public void testCanSwitchOld() throws Exception {
 		this.amtb.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
@@ -104,10 +104,10 @@ public class SwitchEvcsEvseTest {
 
 		var response = this.sa.handleCanSwitch(DUMMY_ADMIN);
 		assertTrue(response.canSwitch());
-		assertEquals(Version.OLD,response.current());
-		
+		assertEquals(Version.OLD, response.current());
+
 		var responseSwitch = this.sa.handleSwitchEmobilityArchitecture(DUMMY_ADMIN);
-		
+		assertEquals(3, responseSwitch.apps().size());
 	}
 
 	@Test
@@ -238,7 +238,7 @@ public class SwitchEvcsEvseTest {
 		assertEquals(1, switchResponse.apps().stream().filter(t -> t.appId.equals("App.Evcs.Cluster")).toList().size());
 		assertEquals(1, switchResponse.apps().stream().filter(t -> t.appId.equals("App.Evcs.Keba")).toList().size());
 	}
-	
+
 	@Test
 	public void testMixedEvcsToEvse() throws Exception {
 		this.amtb.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
@@ -251,7 +251,7 @@ public class SwitchEvcsEvseTest {
 						.addProperty("ALIAS_CP_2", "testAppCp2") //
 						.addProperty("READ_ONLY", false) //
 						.build()));
-		
+
 		this.amtb.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
 				new Request(this.kebaApp.getAppId(), null, "testApp", JsonUtils.buildJsonObject()//
 						.addProperty("ARCHITECTURE_TYPE", "EVCS") //
@@ -280,8 +280,58 @@ public class SwitchEvcsEvseTest {
 	}
 
 	@Test
-	public void testEvseToEvcs() throws Exception {
+	public void testEvseToEvcs2() throws Exception {
+		var vehicleAppInstance = this.amtb.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
+				new AddAppInstance.Request("App.Evse.ElectricVehicle.Generic",
+						// TODO: make vehicle generic app free of charge
+						"0000-0000-0000", "EV1", //
+						JsonUtils.buildJsonObject()// default values
+								.build()));
 
+		this.amtb.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
+				new Request(this.kebaApp.getAppId(), null, "testApp", JsonUtils.buildJsonObject()//
+						.addProperty("ARCHITECTURE_TYPE", "EVSE") //
+						.addProperty("HARDWARE_TYPE", "P40") //
+						.addProperty("IP", "192.168.25.11") //
+						.addProperty("PHASE_ROTATION", "L1_L2_L3") //
+						.addProperty("ELECTRIC_VEHICLE_ID", vehicleAppInstance.instance().instanceId.toString())
+						.addProperty("MODBUS_UNIT_ID", 255) //
+						.addProperty("READ_ONLY", false) //
+						.build()));
+
+		vehicleAppInstance = this.amtb.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
+				new AddAppInstance.Request("App.Evse.ElectricVehicle.Generic",
+						// TODO: make vehicle generic app free of charge
+						"0000-0000-0000", "EV2", //
+						JsonUtils.buildJsonObject()// default values
+								.build()));
+
+		this.amtb.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
+				new Request(this.kebaApp.getAppId(), null, "testApp2", JsonUtils.buildJsonObject()//
+						.addProperty("ARCHITECTURE_TYPE", "EVSE") //
+						.addProperty("HARDWARE_TYPE", "P30") //
+						.addProperty("IP", "192.168.25.12") //
+						.addProperty("ELECTRIC_VEHICLE_ID", vehicleAppInstance.instance().instanceId.toString())
+						.addProperty("PHASE_ROTATION", "L1_L2_L3") //
+						.addProperty("HAS_S10_PHASE_SWITCHING", false)//
+						.addProperty("READ_ONLY", false) //
+						.build()));
+
+		this.amtb.assertInstalledApps(5);
+		assertTrue(this.sa.handleCanSwitch(DUMMY_ADMIN).canSwitch());
+		var response = this.sa.handleSwitchEmobilityArchitecture(DUMMY_ADMIN);
+		assertEquals(2, response.apps().stream().filter(t -> t.appId.equals("App.Evcs.Keba")).toList().size());
+		var kebas = response.apps().stream().filter(t -> t.appId.equals("App.Evcs.Keba")).toList();
+		var hardwareTypes = kebas.stream().map(t -> t.properties.get("HARDWARE_TYPE")).map(t -> t.getAsString())
+				.toList();
+
+		assertTrue("Expected one KEBA to be P30", hardwareTypes.contains("P30"));
+		assertTrue("Expected one KEBA to be P40", hardwareTypes.contains("P40"));
+		assertEquals(1, response.apps().stream().filter(t -> t.appId.equals("App.Evcs.Cluster")).toList().size());
+	}
+
+	@Test
+	public void testEvseToEvcs() throws Exception {
 		var vehicleAppInstance = this.amtb.sut.handleAddAppInstanceRequest(DUMMY_ADMIN,
 				new AddAppInstance.Request("App.Evse.ElectricVehicle.Generic",
 						// TODO: make vehicle generic app free of charge
