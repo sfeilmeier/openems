@@ -4,12 +4,14 @@ import { ModalModule } from "src/app/shared/components/modal/modal.module";
 import { SharedModule } from "src/app/shared/shared.module";
 import { FlatComponent } from "./flat/flat";
 import { ModalComponent } from "./modal/modal";
+import { SystemIndustrialLHomeComponent } from "./new-navigation/new-navigation";
 
 @NgModule({
     imports: [
         BrowserModule,
         SharedModule,
         ModalModule,
+        SystemIndustrialLHomeComponent,
     ],
     declarations: [
         FlatComponent,

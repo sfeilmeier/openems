@@ -12,7 +12,6 @@ import { StringUtils } from "src/app/shared/utils/string/string.utils";
 import { environment } from "src/environments";
 import { FlatWidgetButtonComponent } from "../../../flat/flat-widget-button/flat-widget-button";
 import { ModalComponentsModule } from "../../../modal/modal.module";
-import { OeCheckboxComponent } from "../../../oe-checkbox/oe-checkbox";
 import { OeImageComponent } from "../../../oe-img/oe-img";
 import { Edge } from "../../edge";
 import de from "../shared/i18n/de.json";
@@ -28,9 +27,7 @@ import { MarketingAnnualReviewButtonComponent } from "./button/button";
         IonicModule,
         ModalComponentsModule,
         TranslateModule,
-        OeCheckboxComponent,
         NgxSpinnerModule,
-        FlatWidgetButtonComponent,
         MarketingAnnualReviewButtonComponent,
     ],
 })

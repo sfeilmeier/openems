@@ -523,7 +523,8 @@
             "RESET": "RESET",
             "BMS_HARD_RESET": "BMS hard reset",
             "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Systemfehler reset:",
-            "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "beinhaltet System Komponente, Batterien, Wechselrichter, ESS"
+            "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "beinhaltet System Komponente, Batterien, Wechselrichter, ESS",
+	    "MAINTENANCE_WINDOW": "Wartungsfenster"
           },
           "OVERALL_SYSTEM": "Gesamtsystem"
         },

@@ -524,7 +524,8 @@
             "RESET": "RESET",
             "BMS_HARD_RESET": "BMS hard reset",
             "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "System error acknowledge:",
-            "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "includes system components, batteries, inverters, ESS"
+            "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "includes system components, batteries, inverters, ESS",
+            "MAINTENANCE_WINDOW": "Maintenance window"
           },
           "OVERALL_SYSTEM": "Overall system"
         },

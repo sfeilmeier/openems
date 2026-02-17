@@ -21,7 +21,6 @@ import { EdgeSettings } from "../../../edge";
         IonicModule,
         ModalComponentsModule,
         TranslateModule,
-        FlatWidgetButtonComponent,
     ],
 })
 

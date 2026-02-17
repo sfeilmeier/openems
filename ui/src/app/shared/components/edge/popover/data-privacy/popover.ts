@@ -4,8 +4,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { IonicModule, ModalController } from "@ionic/angular";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { NgxSpinnerModule } from "ngx-spinner";
-import { v4 as uuidv4 } from "uuid";
 
+import { v4 as uuidv4 } from "uuid";
 import { WeatherIcon } from "src/app/edge/live/common/weather/models/weather-icon";
 import { AddAppInstance } from "src/app/edge/settings/app/jsonrpc/addAppInstance";
 import { AppCenter } from "src/app/edge/settings/app/keypopup/appCenter";
