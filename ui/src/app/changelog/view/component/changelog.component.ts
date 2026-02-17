@@ -25,6 +25,15 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2026.2.2",
+                changes: [
+                    { roleIsAtLeast: Role.INSTALLER, change: "Verbesserungen am Inbetriebnahmeassistent: übersichtlichere Konfiguration der MPP-Tracker" },
+                    Changelog.UI + "(Performanceoptimierung und Fehlerbehebung in der Navigation)",
+                    Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Kompatibilität mit Gebotszone Litauen",
+                    "<a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>BETA Feldtest</a>: Freigabe für KEBA P30, konservativere Verbrauchsvorhersagen, verbessertes Verhalten bei HT/NT-Tarifen wie Octopus Go/Heat, allgemeine Fehlerbehebungen und Verbesserungen",
+                ],
+            },
+            {
                 version: "2026.2.1",
                 changes: [
                     Changelog.UI + "(Pull-to-Refresh, Barrierefreiheit gewäß WCAG 1.4.4)",
