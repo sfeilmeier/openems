@@ -20,6 +20,7 @@ export const OemMeta: BaseMeta = {
             COMMON_GRID: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_grid",
             COMMON_PRODUCTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_production",
             COMMON_SELFCONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_selfconsumption",
+            OFFLINE_INSTRUCTIONS: "https://docs.fenecon.de/redirect/fenecon/{language}/installation_firewall_target_address",
 
             EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/de/evcs_keba",
             EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/de/evcs_hardybarth",

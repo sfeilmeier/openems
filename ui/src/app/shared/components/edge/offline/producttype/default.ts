@@ -1,5 +1,6 @@
-import { Component, Input } from "@angular/core";
+import { Component, inject, Input } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { Service } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { environment } from "src/environments";
 
@@ -16,6 +17,9 @@ export interface OfflineStep {
 })
 export class ManualComponent {
 
+
+    protected service = inject(Service);
+
     protected steps: OfflineStep[] = [
         {
             header: this.translate.instant("OFFLINE.HOME_10.STEP_EMS_RESTART.HEADER", { edgeShortName: environment.edgeShortName }),
@@ -27,10 +31,11 @@ export class ManualComponent {
         },
         {
             header: this.translate.instant("OFFLINE.DEFAULT.STEP_FIREWALL.HEADER"),
-            description: this.translate.instant("OFFLINE.DEFAULT.STEP_FIREWALL.DESCRIPTION", { edgeShortName: environment.edgeShortName }),
+            description: ManualComponent.FIREWALL_DESCRIPTION(this.service, this.translate),
         }];
 
     constructor(protected translate: TranslateService) { }
+
 
     @Input() set role(value: Role) {
         const roleSpecificStep = this.getRoleSpecificSteps(value);
@@ -38,6 +43,13 @@ export class ManualComponent {
             this.steps.push(roleSpecificStep);
         }
     }
+
+    protected static readonly FIREWALL_DESCRIPTION: (service: Service, translate: TranslateService) => OfflineStep["description"]
+        = (service, translate) => translate.instant("OFFLINE.DEFAULT.STEP_FIREWALL.DESCRIPTION",
+            {
+                edgeShortName: environment.edgeShortName,
+                link: environment.links.REDIRECT.OFFLINE_INSTRUCTIONS?.replace("{language}", service.getDocsLang()) ?? "",
+            });
 
     protected getRoleSpecificSteps(role?: Role): OfflineStep | undefined {
         if (role === null || role === undefined) {

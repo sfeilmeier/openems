@@ -1273,7 +1273,7 @@
         "HEADER": "Restart {{edgeShortName}} and check LAN connection"
       },
       "STEP_FIREWALL": {
-        "DESCRIPTION": "Firewall settings can limit the internet connection to the {{edgeShortName}}. This happens especially when putting the system into service for the first time. Please use the <a href=\"https://docs.fenecon.de/de/fems/ui/introduction.html#_offlinelokal\" target=\"_blank\">instructions</a> to check the ports and services that are active on {{edgeShortName}}.",
+        "DESCRIPTION": "Firewall settings can limit the internet connection to the {{edgeShortName}}. This happens especially when putting the system into service for the first time. Please use the <a href={{link}} target=\"_blank\">instructions</a> to check the ports and services that are active on {{edgeShortName}}.",
         "HEADER": "Check port forwarding/firewall settings"
       },
       "STEP_SERVICE": {

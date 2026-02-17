@@ -79,6 +79,7 @@ export const OemMeta: BaseMeta = {
                 INDUSTRIAL_M_MANUAL: null,
                 INDUSTRIAL_L_OVERVIEW: null,
             },
+            OFFLINE_INSTRUCTIONS: null,
         },
         FORGET_PASSWORD: "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",

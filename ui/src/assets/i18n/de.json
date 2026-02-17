@@ -1276,7 +1276,7 @@
         "HEADER": "{{edgeShortName}} neu starten und LAN-Stecker prüfen"
       },
       "STEP_FIREWALL": {
-        "DESCRIPTION": "Einstellungen der Firewall können die Internetverbindung zum {{edgeShortName}} begrenzen. Besonders bei Erstinbetriebnahmen ist dies häufig der Fall. Bitte überprüfen Sie mithilfe der <a href=\"https://docs.fenecon.de/de/fems/ui/introduction.html#_offlinelokal\" target=\"_blank\">Anleitung</a> die Ports und Dienste, die auf dem {{edgeShortName}} aktiv sind.",
+        "DESCRIPTION": "Einstellungen der Firewall können die Internetverbindung zum {{edgeShortName}} begrenzen. Besonders bei Erstinbetriebnahmen ist dies häufig der Fall. Bitte überprüfen Sie mithilfe der <a href={{link}} target=\"_blank\">Anleitung</a> die Ports und Dienste, die auf dem {{edgeShortName}} aktiv sind.",
         "HEADER": "Portfreigabe/Firewall prüfen"
       },
       "STEP_SERVICE": {

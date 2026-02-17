@@ -32,6 +32,7 @@ export class Home10ManualComponent extends ManualComponent {
         ],
     }, {
         header: this.translate.instant("OFFLINE.DEFAULT.STEP_FIREWALL.HEADER"),
-        description: this.translate.instant("OFFLINE.DEFAULT.STEP_FIREWALL.DESCRIPTION", { edgeShortName: environment.edgeShortName }),
+        description: ManualComponent.FIREWALL_DESCRIPTION(this.service, this.translate),
+
     }];
 }
