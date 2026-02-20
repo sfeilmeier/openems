@@ -7,7 +7,7 @@ export namespace SharedSystemIndustrialL {
 
     export function getNavigationTree(translate: TranslateService, componentId: EdgeConfig.Component["id"]): ConstructorParameters<typeof NavigationTree> | null {
 
-        return new NavigationTree(componentId + "/industrial-l", { baseString: componentId + "/industrial-l" }, { name: "help-outline", color: "medium" }, "FENECON Industrial L", "label", [
+        return new NavigationTree(componentId + "/industrial-l", { baseString: componentId + "/industrial-l" }, { name: "battery-full-outline", color: "medium" }, "FENECON Industrial L", "label", [
             new NavigationTree("schedule", { baseString: "schedule" }, { name: "calendar-outline", color: "warning" }, translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.MAINTENANCE_WINDOW"), "label", [
             ], null),
         ], null).toConstructorParams();

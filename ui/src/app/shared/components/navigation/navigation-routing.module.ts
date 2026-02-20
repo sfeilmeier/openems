@@ -16,6 +16,7 @@ import { SystemIndustrialLHomeComponent } from "src/app/edge/live/system/industr
 import { IndustrialLScheduleComponent as SystemIndustrialLScheduleComponent } from "src/app/edge/live/system/industrial/l/schedule/schedule.component";
 import { SystemIndustrialLAddTaskComponent } from "src/app/edge/live/system/industrial/l/schedule/task/add/add";
 import { SystemIndustrialLEditTaskComponent } from "src/app/edge/live/system/industrial/l/schedule/task/edit/edit";
+import { SystemIndustrialXlHomeComponent } from "src/app/edge/live/system/industrial/xl/new-navigation/new-navigation";
 import { CurrentVoltageOverviewComponent } from "src/app/shared/components/edge/meter/currentVoltage/new-navigation/new-navigation";
 import { hasEdgeRole, hasUserSettings } from "src/app/shared/guards/functional-guards";
 import { Role } from "src/app/shared/type/role";
@@ -76,6 +77,7 @@ export const newNavigationRoutes: Routes = [
     { path: ":componentId/industrial-l/schedule", component: SystemIndustrialLScheduleComponent },
     { path: ":componentId/industrial-l/schedule/add-task", component: SystemIndustrialLAddTaskComponent, canActivate: [hasEdgeRole(Role.ADMIN), hasUserSettings(UserSettings.IS_DEVELOPER)] },
     { path: ":componentId/industrial-l/schedule/task/:taskId", component: SystemIndustrialLEditTaskComponent, canActivate: [hasEdgeRole(Role.ADMIN), hasUserSettings(UserSettings.IS_DEVELOPER)] },
+    { path: ":componentId/industrial-xl", component: SystemIndustrialXlHomeComponent },
     ...history(true),
 ];
 

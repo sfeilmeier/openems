@@ -1,0 +1,43 @@
+@if (isInitialized) {
+  <oe-modal title="FENECON Industrial XL" [component]="component" [formGroup]="formGroup" useDefaultPrefix="false"
+    helpKey="REDIRECT.SYSTEM.INDUSTRIAL_XL_MANUAL">
+    <oe-modal-line [name]="'EDGE.INDEX.WIDGETS.SYSTEM.OVERALL_SYSTEM' | translate"></oe-modal-line>
+    <oe-modal-buttons [formGroup]="formGroup" controlName="startStop" [component]="component" [buttons]="[
+    { name: 'START', value: 'START', icon: {color:'success', name: 'play-outline'}},
+    { name: 'STOP', value: 'STOP', icon: {color:'danger', name: 'stop-outline'}}]">
+    </oe-modal-buttons>
+    <oe-modal-info-line [info]="'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.NOTE' | translate"
+      style="font-size: small;"></oe-modal-info-line>
+    @if (isAtLeastInstaller && canSeeSystemErrorAcknowledge) {
+      <table class="full_width ion-margin-top ion-margin-bottom">
+        <tr>
+          <td [style.width]="(leftColumnWidth ?? 65)  + '%'">
+            {{'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER' | translate}}
+            <br> {{'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_TEXT' | translate}}
+          </td>
+          <td [style.width]="(leftColumnWidth ?? 65)  + '%'" class="align_right">
+            <ion-button slot="end" button (click)="systemErrorAcknowledge();">
+              {{'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.RESET' | translate}}
+              <ion-icon name="reload-outline"></ion-icon>
+            </ion-button>
+          </td>
+        </tr>
+      </table>
+      <oe-modal-horizontal-line></oe-modal-horizontal-line>
+      <table class="full_width ion-margin-top ion-margin-bottom">
+        <tr>
+          <td [style.width]="(leftColumnWidth ?? 65)  + '%'">
+            {{'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.CLEAR_COOLING_UNIT_ERRORS_HEADER' | translate}}
+            <br> {{'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.CLEAR_COOLING_UNIT_ERRORS_TEXT' | translate}}
+          </td>
+          <td [style.width]="(leftColumnWidth ?? 65)  + '%'" class="align_right">
+            <ion-button slot="end" button (click)="clearCoolingUnitErrors();">
+              {{'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.RESET' | translate}}
+              <ion-icon name="reload-outline"></ion-icon>
+            </ion-button>
+          </td>
+        </tr>
+      </table>
+    }
+  </oe-modal>
+}

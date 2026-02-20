@@ -35,6 +35,7 @@ export const OemMeta: BaseMeta = {
                 INDUSTRIAL_S_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_s_manual",
                 INDUSTRIAL_M_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_m_manual",
                 INDUSTRIAL_L_OVERVIEW: "https://docs.fenecon.de/redirect/fenecon/de/industrial_l_overview",
+                INDUSTRIAL_XL_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_xl_manual",
             },
         },
 

@@ -524,7 +524,9 @@
             "BMS_HARD_RESET": "BMS hard reset",
             "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Systemfehler reset:",
             "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "beinhaltet System Komponente, Batterien, Wechselrichter, ESS",
-	          "MAINTENANCE_WINDOW": "Wartungsfenster"
+            "MAINTENANCE_WINDOW": "Wartungsfenster",
+            "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Klimaanlagen reset:",
+            "CLEAR_COOLING_UNIT_ERRORS_TEXT": "notwendig für Klimaanlagen Fehler"
           },
           "OVERALL_SYSTEM": "Gesamtsystem"
         },
