@@ -66,9 +66,9 @@ public class FeneconProHybridGw
 	public enum Property implements Type<Property, FeneconProHybridGw, Parameter.BundleParameter> {
 		ALIAS(alias()), //
 		// DC PV Charger 1
-		HAS_DC_PV1(AppDef.copyOfGeneric(defaultDef(), def -> def //
-				.setTranslatedLabel("App.FENECON.Home.hasDcPV1.label") //
-				.setDefaultValue(false) //
+		HAS_DC_PV1(AppDef.copyOfGeneric(defaultDef(), def -> def//
+				.setTranslatedLabel("App.FENECON.Home.hasDcPV1.label")//
+				.setDefaultValue(false)//
 				.setField(JsonFormlyUtil::buildCheckboxFromNameable))), //
 		DC_PV1_ALIAS(AppDef.copyOfGeneric(defaultDef(), def -> def //
 				.setLabel("DC-PV 1 Alias") //
@@ -78,8 +78,8 @@ public class FeneconProHybridGw
 				}))), //
 
 		// DC PV Charger 2
-		HAS_DC_PV2(AppDef.copyOfGeneric(defaultDef(), def -> def //
-				.setTranslatedLabel("App.FENECON.Home.hasDcPV2.label") //
+		HAS_DC_PV2(AppDef.copyOfGeneric(defaultDef(), def -> def//
+				.setTranslatedLabel("App.FENECON.Home.hasDcPV2.label")//
 				.setDefaultValue(false)//
 				.setField(JsonFormlyUtil::buildCheckboxFromNameable))), //
 		DC_PV2_ALIAS(AppDef.copyOfGeneric(defaultDef(), def -> def //

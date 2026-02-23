@@ -79,9 +79,9 @@ public class TestTranslations {
 					.build()));
 			this.apps.add(new TestTranslation(Apps.feneconProHybridGW(t), true, JsonUtils.buildJsonObject() //
 					.addProperty("HAS_DC_PV1", "true") //
-					.addProperty("DC_PV1_ALIAS", "charger0")
+					.addProperty("DC_PV1_ALIAS", "charger0") //
 					.addProperty("HAS_DC_PV1", "false") //
-					.addProperty("DC_PV1_ALIAS", "charger1")
+					.addProperty("DC_PV1_ALIAS", "charger1") //
 					.build()));
 			this.apps.add(new TestTranslation(Apps.ancillaryCosts(t), true, JsonUtils.buildJsonObject() //
 					.addProperty("FIXED_ELECTRICITY_TARIFF", 0.0) //
