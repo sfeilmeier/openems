@@ -25,12 +25,21 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2026.2.3",
+                changes: [
+                    Changelog.product(Product.INDUSTRIAL_XL) + "Verbesserung der UI-Darstellung",
+                    Changelog.app(App.TIME_OF_USE, App.EWS_SCHOENAU) + "Kompatibilität mit dem Tarif \"Ökostrom Dynamisch\" der Elektrizitätswerke Schönau (EWS)",
+                    "<a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>BETA Feldtest (E-Mobility)</a>: Fehlerbehebungen beim Wechsel zwischen Standard-Modus und BETA-Test; Verbesserungen bei Navigationsansicht am Desktop, Hardy-Barth Wallbox-Integration, Kombination Dreiphasige/Einphasige Ladesäule/Auto",
+                    Changelog.library(Library.J2MOD),
+                ],
+            },
+            {
                 version: "2026.2.2",
                 changes: [
                     { roleIsAtLeast: Role.INSTALLER, change: "Verbesserungen am Inbetriebnahmeassistent: übersichtlichere Konfiguration der MPP-Tracker" },
                     Changelog.UI + "(Performanceoptimierung und Fehlerbehebung in der Navigation)",
                     Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Kompatibilität mit Gebotszone Litauen",
-                    "<a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>BETA Feldtest</a>: Freigabe für KEBA P30, konservativere Verbrauchsvorhersagen, verbessertes Verhalten bei HT/NT-Tarifen wie Octopus Go/Heat, allgemeine Fehlerbehebungen und Verbesserungen",
+                    "<a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>BETA Feldtest (E-Mobility)</a>: Freigabe für KEBA P30, konservativere Verbrauchsvorhersagen, verbessertes Verhalten bei HT/NT-Tarifen wie Octopus Go/Heat, allgemeine Fehlerbehebungen und Verbesserungen",
                 ],
             },
             {
@@ -38,7 +47,7 @@ export class ChangelogComponent {
                 changes: [
                     Changelog.UI + "(Pull-to-Refresh, Barrierefreiheit gewäß WCAG 1.4.4)",
                     "Neu: Koordinaten/Adressvalidierung im Anlagenprofil",
-                    "<a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>BETA Feldtest</a>: Verbesserte Ansicht für Tablets",
+                    "<a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>BETA Feldtest (E-Mobility)</a>: Verbesserte Ansicht für Tablets",
                 ],
             },
             {
