@@ -17,7 +17,7 @@
             <ion-col>
               {{"SETTINGS.ENERGY_JOURNEY.SAVINGS_LABEL" | translate}}
             </ion-col>
-            @for (gridSaving of tableData.gridSaving; track gridSaving; let i = $index) {
+            @for (gridSaving of tableData.gridSaving; track $index;; let i = $index) {
               <ion-col>
                 {{gridSaving}}
               </ion-col>
@@ -30,7 +30,7 @@
                 {{"SETTINGS.ENERGY_JOURNEY.TOTAL" | translate}}
               </ion-row>
             </ion-col>
-            @for (maxChargeDischargePowerIncrease of tableData.maxChargeDischargePowerIncrease; track maxChargeDischargePowerIncrease; let i = $index) {
+            @for (maxChargeDischargePowerIncrease of tableData.maxChargeDischargePowerIncrease; track $index; let i = $index) {
               <ion-col class="ion-no-padding"
                 >
                 @if(maxChargeDischargePowerIncrease < 0){ <span

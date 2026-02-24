@@ -78,6 +78,7 @@ export const OemMeta: BaseMeta = {
                 INDUSTRIAL_S_MANUAL: null,
                 INDUSTRIAL_M_MANUAL: null,
                 INDUSTRIAL_L_OVERVIEW: null,
+                INDUSTRIAL_XL_MANUAL: null,
             },
             OFFLINE_INSTRUCTIONS: null,
         },

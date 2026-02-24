@@ -109,9 +109,9 @@ export class SystemIndustrialLHomeComponent extends AbstractFormlyComponent {
 
         return {
             title: "FENECON Industrial L",
-            helpKey: "REDIRECT.COMMON_CONSUMPTION",
+            helpKey: "REDIRECT.SYSTEM.INDUSTRIAL_L_MANUAL",
             lines: lines,
-            component: new EdgeConfig.Component(),
+            component: self.component!,
         };
     }
 

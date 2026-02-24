@@ -160,15 +160,6 @@ public interface Meta extends ModbusSlave {
 	}
 
 	/**
-	 * Internal method to set the 'nextValue' on {@link ChannelId#CURRENCY} Channel.
-	 *
-	 * @param value the next value
-	 */
-	public default void _setCurrency(Currency value) {
-		this.getCurrencyChannel().setNextValue(value);
-	}
-
-	/**
 	 * Gets the Channel for {@link ChannelId#IS_ESS_CHARGE_FROM_GRID_ALLOWED}.
 	 *
 	 * @return the Channel
@@ -197,16 +188,6 @@ public interface Meta extends ModbusSlave {
 	}
 
 	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#GRID_FEED_IN_LIMITATION_TYPE} Channel.
-	 *
-	 * @param value the next value
-	 */
-	public default void _setGridFeedInLimitationType(GridFeedInLimitationType value) {
-		this.getGridFeedInLimitationTypeChannel().setNextValue(value);
-	}
-
-	/**
 	 * Gets whether charging the ESS from grid is allowed. See
 	 * {@link ChannelId#IS_ESS_CHARGE_FROM_GRID_ALLOWED}.
 	 *
@@ -214,16 +195,6 @@ public interface Meta extends ModbusSlave {
 	 */
 	public default boolean getIsEssChargeFromGridAllowed() {
 		return this.getIsEssChargeFromGridAllowedChannel().value().orElse(false);
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#IS_ESS_CHARGE_FROM_GRID_ALLOWED} Channel.
-	 *
-	 * @param value the next value
-	 */
-	public default void _setIsEssChargeFromGridAllowed(boolean value) {
-		this.getIsEssChargeFromGridAllowedChannel().setNextValue(value);
 	}
 
 	/**
@@ -250,16 +221,6 @@ public interface Meta extends ModbusSlave {
 	 */
 	public default Value<Integer> getMaximumGridFeedInLimitValue() {
 		return this.getMaximumGridFeedInLimitChannel().value();
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#MAXIMUM_GRID_FEED_IN_LIMIT} Channel.
-	 *
-	 * @param value the next value
-	 */
-	public default void _setMaximumGridFeedInLimit(int value) {
-		this.getMaximumGridFeedInLimitChannel().setNextValue(value);
 	}
 
 	/**
@@ -328,6 +289,27 @@ public interface Meta extends ModbusSlave {
 	 * @return the time zone, or null if not set
 	 */
 	public ZoneId getTimezone();
+
+	/**
+	 * Returns the continuous hard limit for Grid-Sell Power in [W].
+	 * 
+	 * <p>
+	 * This value is derived from GridConnectionPointFuseLimit.
+	 * 
+	 * @return the value
+	 */
+	public int getGridSellHardLimit();
+
+	/**
+	 * Returns the continuous hard limit for Grid-Buy Power in [W].
+	 * 
+	 * <p>
+	 * This value is derived from GridConnectionPointFuseLimit and
+	 * {@link ChannelId#MAXIMUM_GRID_FEED_IN_LIMIT}.
+	 * 
+	 * @return the value
+	 */
+	public int getGridBuyHardLimit();
 
 	/**
 	 * Returns the {@link GridBuySoftLimit} {@link JSCalendar.Tasks}.

@@ -3,7 +3,7 @@ import { environment } from "src/environments";
 
 export class Changelog {
 
-    public static readonly UI_VERSION = "2026.2.2";
+    public static readonly UI_VERSION = "2026.2.3";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
     public static readonly EDGE = Changelog.GENERAL_OPTIMIZATION + " am " + environment.edgeShortName + ".";
@@ -79,16 +79,17 @@ export class App {
 
     // Allgemein
     public static readonly TIME_OF_USE = new App("FEMS App Dynamischer Stromtarif", "https://fenecon.de/fems-dynamischer-stromtarif");
+    public static readonly ANCILLARY_COSTS = "Zeitvariable Netzentgelte";
     public static readonly AWATTAR = "Awattar HOURLY";
-    public static readonly TIBBER = "Tibber";
     public static readonly CORRENTLY = "STROMDAO Corrently";
-    public static readonly RABOT_ENERGY = "rabot.energy";
     public static readonly ENTSO_E = "ENTSO-E";
-    public static readonly SWISSPOWER = "Swisspower";
+    public static readonly EWS_SCHOENAU = "EWS Schönau";
+    public static readonly LUOX_ENERGY = "LUOX Energy";
     public static readonly OCTOPUS_GO = "Octopus Go";
     public static readonly OCTOPUS_HEAT = "Octopus Heat";
-    public static readonly LUOX_ENERGY = "LUOX Energy";
-    public static readonly ANCILLARY_COSTS = "Zeitvariable Netzentgelte";
+    public static readonly RABOT_ENERGY = "rabot.energy";
+    public static readonly SWISSPOWER = "Swisspower";
+    public static readonly TIBBER = "Tibber";
 
     public static readonly METER = new App("FEMS App Erzeugungs- und Verbrauchszähler", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler");
     public static readonly SOCOMEC = "SOCOMEC";

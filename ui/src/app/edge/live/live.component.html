@@ -23,10 +23,11 @@
                 </Industrial_S>
                 <Industrial_L *ngSwitchCase="'System.Fenecon.Industrial.L'" [componentId]="widget.componentId">
                 </Industrial_L>
+                <Industrial_Xl *ngSwitchCase="'System.Fenecon.Industrial.Xl'" [componentId]="widget.componentId">
+                </Industrial_Xl>
                 <!-- Weather-->
                 <weather [componentId]="widget.componentId" *ngSwitchCase="'Weather.OpenMeteo'"
-                  class="ion-hide-sm-down">
-                </weather>
+                  class="ion-hide-sm-down"></weather>
               </ng-container>
             </ion-col>
           </ion-row>

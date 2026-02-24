@@ -171,7 +171,7 @@ export class DetailComponent implements OnInit, OnChanges {
         }
 
         const energyJourneyLinks: typeof environment.links.ENERGY_JOURNEY = environment.links.ENERGY_JOURNEY;
-        const key: EnergyJourneyLinkKeys = ((this.locale.toUpperCase() in ["DE", "EN"]) ? this.locale.toUpperCase() : "EN") as EnergyJourneyLinkKeys;
+        const key: EnergyJourneyLinkKeys = ((["DE", "EN"].includes(this.locale.toUpperCase())) ? this.locale.toUpperCase() : "EN") as EnergyJourneyLinkKeys;
 
         switch (edge.producttype) {
             case Producttype.HOME:

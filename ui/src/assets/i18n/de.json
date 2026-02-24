@@ -524,7 +524,9 @@
             "BMS_HARD_RESET": "BMS hard reset",
             "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Systemfehler reset:",
             "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "beinhaltet System Komponente, Batterien, Wechselrichter, ESS",
-	    "MAINTENANCE_WINDOW": "Wartungsfenster"
+            "MAINTENANCE_WINDOW": "Wartungsfenster",
+            "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Klimaanlagen reset:",
+            "CLEAR_COOLING_UNIT_ERRORS_TEXT": "notwendig für Klimaanlagen Fehler"
           },
           "OVERALL_SYSTEM": "Gesamtsystem"
         },
@@ -540,7 +542,8 @@
           "STATE": {
             "BALANCING": "Eigenverbrauchsoptimierung",
             "CHARGE_GRID": "Beladung aus dem Netz freigegeben",
-            "DELAY_DISCHARGE": "Entladung verzögert"
+            "DELAY_DISCHARGE": "Entladung verzögert",
+            "PEAK_SHAVING": "Lastspitzenkappung"
           }
         },
         "TWO_WAY_INFO_GRID": "Negative Werte entsprechen Netzeinspeisung, Positive Werte entsprechen Netzbezug",

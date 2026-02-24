@@ -100,6 +100,7 @@ export interface Environment {
                 readonly INDUSTRIAL_S_MANUAL: string | null,
                 readonly INDUSTRIAL_M_MANUAL: string | null,
                 readonly INDUSTRIAL_L_OVERVIEW: string | null,
+                readonly INDUSTRIAL_XL_MANUAL: string | null,
             }
         }
 

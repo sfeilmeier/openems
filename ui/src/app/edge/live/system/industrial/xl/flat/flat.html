@@ -1,0 +1,6 @@
+@if (isInitialized) {
+  <oe-flat-widget [modalComponent]="modalComponent" [icon]="{name: 'square-outline'}" title="FENECON Industrial XL">
+    <oe-modal-line [name]="'GENERAL.STATE' | translate" [converter]="CONVERT_INDUSTRIAL_STATE"
+      [channelAddress]="'system0/StateMachine'"></oe-modal-line>
+  </oe-flat-widget>
+}

@@ -525,7 +525,9 @@
             "BMS_HARD_RESET": "BMS hard reset",
             "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "System error acknowledge:",
             "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "includes system components, batteries, inverters, ESS",
-            "MAINTENANCE_WINDOW": "Maintenance window"
+            "MAINTENANCE_WINDOW": "Maintenance window",
+            "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Cooling unit reset:",
+            "CLEAR_COOLING_UNIT_ERRORS_TEXT": "necessary for cooling unit errors"
           },
           "OVERALL_SYSTEM": "Overall system"
         },
@@ -541,7 +543,8 @@
           "STATE": {
             "BALANCING": "Self-consumption optimization",
             "CHARGE_GRID": "Charge from grid allowed",
-            "DELAY_DISCHARGE": "Delayed discharge"
+            "DELAY_DISCHARGE": "Delayed discharge",
+            "PEAK_SHAVING": "Peak shaving"
           }
         },
         "TWO_WAY_INFO_GRID": "Negative values correspond to grid feed-in, Positive values correspond to mains supply",

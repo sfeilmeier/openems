@@ -69,6 +69,7 @@ import io.openems.edge.app.integratedsystem.FeneconHome20;
 import io.openems.edge.app.integratedsystem.FeneconHome30;
 import io.openems.edge.app.integratedsystem.FeneconHome6;
 import io.openems.edge.app.integratedsystem.FeneconProHybrid10;
+import io.openems.edge.app.integratedsystem.FeneconProHybridGw;
 import io.openems.edge.app.integratedsystem.SystemFeneconHome;
 import io.openems.edge.app.integratedsystem.TestFeneconHome10;
 import io.openems.edge.app.integratedsystem.TestFeneconHome10Gen2;
@@ -312,6 +313,16 @@ public final class Apps {
 	 */
 	public static final FeneconProHybrid10 feneconProHybrid10(AppManagerTestBundle t) {
 		return app(t, FeneconProHybrid10::new, "App.FENECON.ProHybrid.10");
+	}
+
+	/**
+	 * Test method for creating a {@link FeneconProHybridGw}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconProHybridGw feneconProHybridGW(AppManagerTestBundle t) {
+		return app(t, FeneconProHybridGw::new, "App.FENECON.ProHybrid.GW");
 	}
 
 	// TimeOfUseTariff

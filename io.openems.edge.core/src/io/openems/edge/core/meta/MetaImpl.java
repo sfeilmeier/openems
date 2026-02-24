@@ -2,6 +2,7 @@ package io.openems.edge.core.meta;
 
 import static io.openems.common.utils.StringUtils.emptyToNull;
 import static io.openems.common.utils.ThreadPoolUtils.shutdownAndAwaitTermination;
+import static io.openems.edge.common.channel.ChannelUtils.setValue;
 import static io.openems.edge.common.jsonapi.EdgeGuards.roleIsAtleast;
 
 import java.time.Instant;
@@ -43,6 +44,7 @@ import io.openems.edge.common.meta.types.Coordinates;
 import io.openems.edge.common.meta.types.SubdivisionCode;
 import io.openems.edge.common.modbusslave.ModbusSlave;
 import io.openems.edge.common.modbusslave.ModbusSlaveTable;
+import io.openems.edge.common.type.TypeUtils;
 import io.openems.edge.core.meta.geocoding.GeocodeJsonRpcEndpoint;
 import io.openems.edge.core.meta.geocoding.OpenCageGeocodingService;
 
@@ -124,10 +126,13 @@ public class MetaImpl extends AbstractOpenemsComponent
 
 	private void applyConfig(Config config) {
 		this.config = config;
-		this._setCurrency(Currency.fromCurrencyConfig(config.currency()));
-		this._setIsEssChargeFromGridAllowed(config.isEssChargeFromGridAllowed());
-		this._setMaximumGridFeedInLimit(config.maximumGridFeedInLimit());
-		this._setGridFeedInLimitationType(config.gridFeedInLimitationType().getGridFeedInLimitationType());
+		setValue(this, Meta.ChannelId.CURRENCY, Currency.fromCurrencyConfig(config.currency()));
+		setValue(this, Meta.ChannelId.IS_ESS_CHARGE_FROM_GRID_ALLOWED, config.isEssChargeFromGridAllowed());
+		setValue(this, Meta.ChannelId.MAXIMUM_GRID_FEED_IN_LIMIT, config.maximumGridFeedInLimit() > 0 //
+				? config.maximumGridFeedInLimit() //
+				: null);
+		setValue(this, Meta.ChannelId.GRID_FEED_IN_LIMITATION_TYPE,
+				config.gridFeedInLimitationType().getGridFeedInLimitationType());
 		this.gridBuySoftLimit = JSCalendar.Tasks.fromStringOrEmpty(this.componentManager.getClock(),
 				config.gridBuySoftLimit(), GridBuySoftLimit.serializer());
 	}
@@ -140,6 +145,22 @@ public class MetaImpl extends AbstractOpenemsComponent
 	@Override
 	public int getGridConnectionPointFuseLimit() {
 		return this.config.gridConnectionPointFuseLimit();
+	}
+
+	/**
+	 * Gets the {@link #getGridConnectionPointFuseLimit()} as three-phase in [W].
+	 * 
+	 * <p>
+	 * NOTE: this currently uses static values for voltage (400 V) and cos(φ) (1)
+	 * internally.
+	 * 
+	 * @return the value
+	 */
+	private int getGridConnectionPointFuseLimitInWatt() {
+		final var voltage = 400.0; // [V]
+		final var cosPhi = 1; // cos(φ)
+		final var current = this.getGridConnectionPointFuseLimit(); // [A]
+		return Double.valueOf(Math.sqrt(3) * voltage * current * cosPhi).intValue();
 	}
 
 	@Override
@@ -168,6 +189,18 @@ public class MetaImpl extends AbstractOpenemsComponent
 		return (timeZoneString == null || timeZoneString.isBlank()) //
 				? null //
 				: ZoneId.of(timeZoneString);
+	}
+
+	@Override
+	public int getGridSellHardLimit() {
+		return this.getGridConnectionPointFuseLimitInWatt();
+	}
+
+	@Override
+	public int getGridBuyHardLimit() {
+		final var powerFromFuseLimit = this.getGridConnectionPointFuseLimitInWatt();
+		final var powerFromMaximumGridFeedInLimit = this.getMaximumGridFeedInLimitValue().orElse(null);
+		return TypeUtils.min(powerFromFuseLimit, powerFromMaximumGridFeedInLimit);
 	}
 
 	@Override

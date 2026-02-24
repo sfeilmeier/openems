@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>local</groupId>
 	<artifactId>central</artifactId>
@@ -48,7 +50,7 @@
 			<!-- Changelog: https://github.com/OpenEMS/j2mod/releases -->
 			<groupId>io.openems</groupId>
 			<artifactId>j2mod</artifactId>
-			<version>3.2.2-openems.2</version>
+			<version>3.3.0-openems.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.rzymek</groupId>
@@ -570,7 +572,7 @@
 			<!-- used by io.openems.backend.authentication.oauth -->
   			<groupId>com.auth0</groupId>
   			<artifactId>auth0</artifactId>
-  			<version>3.0.0</version>
+  			<version>3.2.0</version>
 		</dependency>
 			<!-- used by io.openems.backend.authentication.oauth -->
 		<dependency>

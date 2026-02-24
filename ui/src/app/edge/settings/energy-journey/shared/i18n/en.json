@@ -3,6 +3,7 @@
     "ENERGY_JOURNEY": {
       "CURRENT_NUMBER_OF_MODULES": "Current",
       "SIMULATION_NOT_STARTED": "Simulation not started",
+      "MODULE_COUNT": "Number of modules",
       "WIDGET_TITLE": "Battery extension",
       "SLOGAN": "Battery extension: is it worth it?",
       "DESCRIPTION": "Whether it is worth retrofitting your energy storage system depends on various factors. \nYour system has been in operation for more than a year. \nAnalyse here what effect a battery extension would have had",
