@@ -99,7 +99,7 @@ export class SystemIndustrialXlHomeComponent extends AbstractFormlyComponent {
             title: "FENECON Industrial XL",
             helpKey: "REDIRECT.SYSTEM.INDUSTRIAL_XL_MANUAL",
             lines: lines,
-            component: new EdgeConfig.Component(),
+            component: self.component!,
         };
     }
 
