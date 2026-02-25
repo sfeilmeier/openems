@@ -88,8 +88,8 @@ export class ComponentConfigurator {
      * @returns a promise of type void
      */
     public start(): Promise<void> {
+        // first update scheduler to make sure it is created
         return new Promise((resolve, reject) => {
-            // first update scheduler to make sure it is created
             this.updateScheduler().then(() => {
                 // execute app install callbacks
                 const installApp = new Promise<void>((resolve, reject) => {
@@ -210,7 +210,7 @@ export class ComponentConfigurator {
                     }
 
                     // Do edge subscribe for all channels
-                    this.edge.subscribeChannels(this.websocket, "component-configurator", channelAddresses);
+                    this.edge.subscribeChannelsWithState(this.websocket, "component-configurator", channelAddresses);
 
                     // Subscribe to the new channel
                     const subscription: Subscription = this.edge.currentData.pipe(
@@ -472,7 +472,7 @@ export class ComponentConfigurator {
 
             if (!scheduler) {
                 // If scheduler doesn't exist, it gets created and configured as required
-                this.edge.createComponentConfig(this.websocket, "Scheduler.AllAlphabetically", [
+                this.edge.createComponentConfigWithState(this.websocket, "Scheduler.AllAlphabetically", [
                     { name: "id", value: "scheduler0" },
                     { name: "controllers.ids", value: controllerIds },
                 ])
@@ -495,7 +495,7 @@ export class ComponentConfigurator {
 
                 newControllerIds = existingControllerIds.concat(newControllerIds);
 
-                this.edge.updateComponentConfig(this.websocket, "scheduler0", [
+                this.edge.updateComponentConfigWithState(this.websocket, "scheduler0", [
                     { name: "controllers.ids", value: newControllerIds },
                 ])
                     .then(value => resolve(value))

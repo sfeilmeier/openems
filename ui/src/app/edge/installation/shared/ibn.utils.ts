@@ -43,7 +43,7 @@ export class IbnUtils {
     public static addIpAddress(interfaceName: string, ip: string, edge: Edge, websocket: Websocket) {
         let iface: Interface;
 
-        edge.sendRequest(
+        edge.sendStateFullRequest(
             websocket,
             new ComponentJsonApiRequest({ componentId: "_host", payload: new GetNetworkConfigRequest() }),
         ).then((response) => {
@@ -98,7 +98,7 @@ export class IbnUtils {
             };
             params.interfaces[iface.name] = iface.model;
 
-            edge.sendRequest(
+            edge.sendStateFullRequest(
                 websocket,
                 new ComponentJsonApiRequest({ componentId: "_host", payload: new SetNetworkConfigRequest(params) }),
             ).then(() => true).catch((reason) => {

@@ -68,7 +68,7 @@ export class CompletionComponent implements OnInit {
 
         while (attempt < this.MAX_RETRIES) {
             try {
-                const response: Base64PayloadResponse = await this.websocket.sendRequest(request) as Base64PayloadResponse;
+                const response: Base64PayloadResponse = await this.websocket.sendStateFullRequest(request) as Base64PayloadResponse;
 
                 if (!response?.result?.payload) {
                     this.service.toast(this.translate.instant("INSTALLATION.COMPLETION.INVALID_PAYLOAD"), "danger", 3000);

@@ -3,6 +3,7 @@ import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
+import { v4 as uuidv4 } from "uuid";
 import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
@@ -26,6 +27,7 @@ import { GetEstimatedConfigResponse } from "../../views/configuration-execute/js
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
 import { AbstractIbn, SchedulerIdBehaviour } from "../abstract-ibn";
 
+
 export type HomeAdditionalApp = {
     FEED_IN_TYPE: ExternalLimitationType,
     GRID_METER_CATEGORY: Meter.GridMeterCategory,
@@ -47,7 +49,7 @@ export type HomeCommonApp = {
 export abstract class AbstractHomeIbn extends AbstractIbn {
     public static BASE_IMAGE_PATH = "assets/img/home-mppt/";
     private static readonly SELECTOR = "Home";
-    private static readonly MODULE_DATA_TIMEOUT = 12_000; // two minutes
+    private static readonly MODULE_DATA_TIMEOUT = 2_000; // two seconds
     private static readonly TOWER_DATA_TIMEOUT = 5_000; // five seconds
 
     public override readonly systemType: SystemType = SystemType.FENECON_HOME;
@@ -293,7 +295,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         return new Promise((resolve) => {
             let isResolved = false;
             const channelAddresses: { [key: string]: ChannelAddress } = {};
-            const subscriptionId = AbstractHomeIbn.SELECTOR + "-tower" + towerNr;
+            const subscriptionId = uuidv4();
             const model: {} = {};
 
             // Gather channel addresses
@@ -305,7 +307,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
             }
 
             // Edge-subscribe
-            edge.subscribeChannels(websocket, subscriptionId, Object.values(channelAddresses));
+            edge.subscribeChannelsWithState(websocket, subscriptionId, Object.values(channelAddresses));
 
             // Subject to stop the subscription to currentData
             const stopOnRequest: Subject<void> = new Subject<void>();
@@ -357,10 +359,9 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     public override getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket): Promise<[{ numberOfTowers: number, numberOfModulesPerTower: number }]> {
         return new Promise((resolve) => {
             let isResolved = false;
-            const subscriptionId = this.systemId.toString();
 
             // Edge-subscribe
-            edge.subscribeChannels(websocket, subscriptionId, [
+            edge.subscribeChannelsWithState(websocket, uuidv4(), [
                 new ChannelAddress("battery0", "NumberOfTowers"),
                 new ChannelAddress("battery0", "NumberOfModulesPerTower"),
             ]);
@@ -643,7 +644,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
         return new Promise((resolve, reject) => {
             websocket
-                .sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate))
+                .sendStateFullRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate))
                 .then((response: JsonrpcResponseSuccess) => {
                     resolve(response.result["setupProtocolId"]);
                 })
@@ -732,7 +733,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
         if (this.estimatedConfig === null) {
             // Send request and process components
-            this.estimatedConfig = await edge.sendRequest(
+            this.estimatedConfig = await edge.sendStateFullRequest(
                 websocket,
                 new ComponentJsonApiRequest({
                     componentId: "_appManager",

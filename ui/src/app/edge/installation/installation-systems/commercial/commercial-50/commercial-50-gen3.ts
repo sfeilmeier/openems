@@ -321,7 +321,7 @@ export class Commercial50Gen3Ibn extends AbstractHomeIbn {
 
         return new Promise((resolve, reject) => {
             websocket
-                .sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate))
+                .sendStateFullRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate))
                 .then((response: JsonrpcResponseSuccess) => {
                     resolve(response.result["setupProtocolId"]);
                 })

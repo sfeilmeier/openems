@@ -294,7 +294,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         });
 
         // Send request and process components
-        const estimatedConfig: GetEstimatedConfigResponse = await edge.sendRequest(
+        const estimatedConfig: GetEstimatedConfigResponse = await edge.sendStateFullRequest(
             websocket,
             new ComponentJsonApiRequest({
                 componentId: "_appManager",
@@ -345,7 +345,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             const channelAddresses = this.getChannelAddresses(towerNr, numberOfModulesPerTower);
 
             // Edge-subscribe
-            edge.subscribeChannels(websocket, subscriptionId, Object.values(channelAddresses));
+            edge.subscribeChannelsWithState(websocket, subscriptionId, Object.values(channelAddresses));
 
             // Subject to stop the subscription to currentData
             const stopOnRequest: Subject<void> = new Subject<void>();
@@ -444,7 +444,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         });
 
         return new Promise((resolve, reject) => {
-            websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
+            websocket.sendStateFullRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
                 resolve(response.result["setupProtocolId"]);
             }).catch((reason) => {
                 reject(reason);
