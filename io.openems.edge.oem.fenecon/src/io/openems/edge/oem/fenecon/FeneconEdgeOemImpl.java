@@ -199,6 +199,8 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			// Andere
 			.put("App.System.Fenecon.Home", "") //
 			.put("App.GridMeter.Janitza", "") //
+			.put("App.GridMeter.GoodWe", "") //
+			.put("App.GridMeter.Kdk", "") //
 			.put("App.Cloud.EnerixControl", "") //
 			.put("App.Cloud.Clever-PV", "") //
 			.put("App.Api.ModbusRtu.ReadOnly", "") //
