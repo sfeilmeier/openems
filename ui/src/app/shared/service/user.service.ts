@@ -169,7 +169,7 @@ export class UserService {
         if (environment.backend === "OpenEMS Edge") {
             return Promise.resolve([new UnimplementedInEdgeError(request), null]);
         }
-        return JsonRpcUtils.handle(this.service.websocket.sendSafeRequest(request));
+        return JsonRpcUtils.handle(this.service.websocket.sendRequest(request));
     }
 
     /**

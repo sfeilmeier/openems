@@ -1,5 +1,4 @@
 import { Component, effect } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Service } from "src/app/shared/shared";
 
@@ -12,7 +11,7 @@ import { Service } from "src/app/shared/shared";
         </ion-row>
 
         <ion-row class="ion-padding-top ion-justify-content-center">
-            <ion-button (click)="navigateToAppCenter()" target="_blank" size="small" fill="outline" style="font-size: small;">
+            <ion-button [href]="link | translate" target="_blank" size="small" fill="outline" style="font-size: small;">
                 <span>{{linkText | translate}}</span>
             </ion-button>
         </ion-row>
@@ -29,8 +28,6 @@ export class Advert1Component {
     constructor(
         protected readonly translate: TranslateService,
         private service: Service,
-        private router: Router,
-        private route: ActivatedRoute,
     ) {
         effect(() => {
             const edge = this.service.currentEdge();
@@ -40,11 +37,8 @@ export class Advert1Component {
             }
 
             this.text = "ADVERT.1.TEXT";
+            this.link = "ADVERT.1.LINK";
             this.linkText = "ADVERT.1.LINK_TEXT";
         });
-    }
-
-    navigateToAppCenter() {
-        this.router.navigate(["../settings/app"], { relativeTo: this.route });
     }
 }

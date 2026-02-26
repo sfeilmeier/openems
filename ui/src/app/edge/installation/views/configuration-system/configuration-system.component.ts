@@ -39,7 +39,7 @@ export class ConfigurationSystemComponent implements OnInit {
 
     public ngOnInit() {
         this.form = new FormGroup({});
-        this.websocket.sendRequest(
+        this.websocket.sendStateFullRequest(
             new GetEmsTypeRequest({ edgeId: this.edge.id })).then((response: GetEmsTypeResponse) => {
             this.emsType = response.result.emsType ?? null;
             sessionStorage.setItem("emsType", this.emsType);

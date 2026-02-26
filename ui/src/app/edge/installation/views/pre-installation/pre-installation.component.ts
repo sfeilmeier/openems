@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, computed, EventEmitter, inject, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -8,6 +8,8 @@ import { SumState } from "src/app/index/shared/sumState";
 import { AddEdgeToUserRequest } from "src/app/shared/jsonrpc/request/addEdgeToUserRequest";
 import { SubscribeEdgesRequest } from "src/app/shared/jsonrpc/request/subscribeEdgesRequest";
 import { AddEdgeToUserResponse } from "src/app/shared/jsonrpc/response/addEdgeToUserResponse";
+import { States } from "src/app/shared/ngrx-store/states";
+import { UserService } from "src/app/shared/service/user.service";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { environment } from "src/environments";
@@ -24,7 +26,6 @@ export class PreInstallationComponent implements OnInit {
     @Output() public edgeChange = new EventEmitter<Edge>();
     public edge: Edge;
 
-
     public form: FormGroup;
     public fields: FormlyFieldConfig[];
     public model;
@@ -32,6 +33,9 @@ export class PreInstallationComponent implements OnInit {
     public image: string;
     protected setupKey: string | null = null;
     protected validKey: boolean = true;
+    protected isWebsocketConnected = computed(() => States.isAtLeast(this.websocket.state(), States.AUTHENTICATED));
+    protected isAdmin = computed(() => this.userService.currentUser()?.isAtLeast(Role.ADMIN) ?? false);
+    private userService = inject(UserService);
 
     constructor(
         private service: Service,
@@ -53,7 +57,7 @@ export class PreInstallationComponent implements OnInit {
         this.isWaiting = true;
 
         this.websocket
-            .sendRequest(new AddEdgeToUserRequest({ setupPassword: this.setupKey }))
+            .sendStateFullRequest(new AddEdgeToUserRequest({ setupPassword: this.setupKey }))
             .then((response: AddEdgeToUserResponse) => {
                 const edge = response.result.edge;
                 const emsBoxSerialNumber: string = response.result.serialNumber;
@@ -114,7 +118,7 @@ export class PreInstallationComponent implements OnInit {
 
                 this.edgeChange.emit(this.edge);
                 this.nextViewEvent.emit();
-                this.websocket.sendRequest(new SubscribeEdgesRequest({ edges: [this.edge.id] }));
+                this.websocket.sendStateFullRequest(new SubscribeEdgesRequest({ edges: [this.edge.id] }));
             })
             .catch((reason) => {
                 this.service.toast(this.translate.instant("INSTALLATION.PRE_INSTALLATION.AUTHENTICATION_FAILED"), "danger");

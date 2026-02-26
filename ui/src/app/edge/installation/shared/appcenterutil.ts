@@ -81,7 +81,7 @@ export class AppCenterUtil {
      */
     public static getAppInstances(edge: Edge, websocket: Websocket, appId: string): Promise<GetAppInstances.Response> {
         return new Promise<GetAppInstances.Response>((resolve, reject) => {
-            edge.sendRequest(websocket,
+            edge.sendStateFullRequest(websocket,
                 new ComponentJsonApiRequest({
                     componentId: "_appManager",
                     payload: new GetAppInstances.Request({
@@ -130,7 +130,7 @@ export class AppCenterUtil {
     public static removeInstances(edge: Edge, websocket: Websocket, instanceIds: string[]): Promise<any[]> {
         const promises: Promise<any>[] = [];
         instanceIds.forEach(instanceId => {
-            promises.push(edge.sendRequest(websocket,
+            promises.push(edge.sendStateFullRequest(websocket,
                 new ComponentJsonApiRequest({
                     componentId: "_appManager",
                     payload: new DeleteAppInstance.Request({
@@ -155,7 +155,7 @@ export class AppCenterUtil {
     public static updateApp(edge: Edge, websocket: Websocket, instanceId: string, alias: string, properties: {})
         : Promise<UpdateAppInstance.Response> {
         return new Promise<UpdateAppInstance.Response>((resolve, reject) => {
-            edge.sendRequest(websocket,
+            edge.sendStateFullRequest(websocket,
                 new ComponentJsonApiRequest({
                     componentId: "_appManager",
                     payload: new UpdateAppInstance.Request({
@@ -182,7 +182,7 @@ export class AppCenterUtil {
     public static createAppInstance(edge: Edge, websocket: Websocket, appId: string, alias: string, properties: {}, key: string)
         : Promise<AddAppInstance.Response> {
         return new Promise<AddAppInstance.Response>((resolve, reject) => {
-            edge.sendRequest(websocket,
+            edge.sendStateFullRequest(websocket,
                 new ComponentJsonApiRequest({
                     componentId: "_appManager",
                     payload: new AddAppInstance.Request({

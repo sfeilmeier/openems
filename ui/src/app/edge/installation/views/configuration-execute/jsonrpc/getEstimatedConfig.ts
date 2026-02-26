@@ -1,4 +1,5 @@
 import { JsonrpcRequest } from "src/app/shared/jsonrpc/base";
+import { States } from "src/app/shared/ngrx-store/states";
 
 /**
  * <pre>
@@ -19,6 +20,7 @@ import { JsonrpcRequest } from "src/app/shared/jsonrpc/base";
 export class GetEstimatedConfigRequest extends JsonrpcRequest {
 
     private static METHOD: string = "getEstimatedConfiguration";
+    protected override requiredState: States = States.EDGE_SELECTED;
 
     public constructor(
         public override readonly params: {

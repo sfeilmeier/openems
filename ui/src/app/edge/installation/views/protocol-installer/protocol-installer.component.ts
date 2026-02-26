@@ -167,7 +167,7 @@ export class ProtocolInstallerComponent implements OnInit {
     public getUserInformation(): Promise<UserInformation> {
         return new Promise((resolve) => {
             this.service.websocket
-                .sendRequest(new GetUserInformationRequest())
+                .sendStateFullRequest(new GetUserInformationRequest())
                 .then((response: GetUserInformationResponse) => {
                     const user = response.result.user;
 

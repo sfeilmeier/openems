@@ -2,7 +2,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
-import { SubscribeEdgesRequest } from "src/app/shared/jsonrpc/request/subscribeEdgesRequest";
 import { Edge, Logger, Service, Websocket } from "src/app/shared/shared";
 import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { GeneralIbn } from "./installation-systems/general-ibn";
@@ -94,10 +93,9 @@ export class InstallationComponent implements OnInit {
             this.service.updateCurrentEdge(edgeId).then((edge) => {
                 this.edge = edge;
                 this.displayViewAtIndex(viewIndex);
-                this.websocket.sendRequest(new SubscribeEdgesRequest({ edges: [this.edge.id] }));
             }).catch(() => {
                 // View with index 0 will always be the Pre-InstallationView,
-                //so if there is non subscribable edge due to being offline or not reachable, the IBN will be directed back to its initial page.
+                // so if there is non subscribable edge due to being offline or not reachable, the IBN will be directed back to its initial page.
                 this.displayViewAtIndex(0);
             });
         } else {

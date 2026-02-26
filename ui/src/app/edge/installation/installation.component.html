@@ -1,175 +1,166 @@
 <ion-content>
-  <ion-grid>
+    <ion-grid>
 
-    <ion-row class="ion-justify-content-center">
-      <ion-progress-bar [value]="progressValue"
-        style="transform: scaleY(2);margin-bottom: 0.5%; margin-top: 0.5%; border-radius: 50px;">
-      </ion-progress-bar>
-      <ion-item lines="none">
-        <ion-title>{{progressText}}</ion-title>
-      </ion-item>
-    </ion-row>
+        <ion-row class="ion-justify-content-center">
+            <ion-progress-bar [value]="progressValue"
+                style="transform: scaleY(2);margin-bottom: 0.5%; margin-top: 0.5%; border-radius: 50px;">
+            </ion-progress-bar>
+            <ion-item lines="none">
+                <ion-title>{{progressText}}</ion-title>
+            </ion-item>
+        </ion-row>
 
-    @if (websocket.status === 'online') {
-      @switch (displayedView) {
+        @switch (displayedView) {
         @case (view.Alerting){
-          <installation-view iconName="notifications-outline"
-            header="{{ 'EDGE.CONFIG.INDEX.ALERTING' | translate }}"
-            (nextClicked)="displayNextView(ibn)"
-            (previousClicked)="displayPreviousView()">
+        <installation-view iconName="notifications-outline" header="{{ 'EDGE.CONFIG.INDEX.ALERTING' | translate }}"
+            (nextClicked)="displayNextView(ibn)" (previousClicked)="displayPreviousView()">
             <ion-grid class="ion-padding">
-              <ion-row>
-                <ion-text>
-                  {{'INSTALLATION.ALERTING_INFO' | translate}}
-                </ion-text>
-              </ion-row>
+                <ion-row>
+                    <ion-text>
+                        {{'INSTALLATION.ALERTING_INFO' | translate}}
+                    </ion-text>
+                </ion-row>
             </ion-grid>
-            <alerting
-                (currentUserAlertingSettings)="ibn.setCurrentUserAlertingSettings($event)"
-                [css]="{sizeMd: 12}">
+            <alerting (currentUserAlertingSettings)="ibn.setCurrentUserAlertingSettings($event)" [css]="{sizeMd: 12}">
             </alerting>
-          </installation-view>
+        </installation-view>
         }
         @case (view.PreInstallation) {
-          <pre-installation (edgeChange)="edge=$event" (nextViewEvent)="displayNextView($event)">
-          </pre-installation>
+        <pre-installation (edgeChange)="edge=$event" (nextViewEvent)="displayNextView($event)">
+        </pre-installation>
         }
         @case (view.PreInstallationUpdate) {
-          <pre-installation-update (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)"
+        <pre-installation-update (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)"
             [edge]="edge">
-          </pre-installation-update>
+        </pre-installation-update>
         }
         @case (view.ConfigurationSystem) {
-          <configuration-system [ibn]="ibn" [edge]="edge" (previousViewEvent)="displayPreviousView()"
+        <configuration-system [ibn]="ibn" [edge]="edge" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-system>
+        </configuration-system>
         }
         @case (view.ConfigurationSubSystem) {
-          <configuration-sub-system [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-sub-system [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-sub-system>
+        </configuration-sub-system>
         }
         @case (view.ConfigurationSystemVariant) {
-          <configuration-system-variant [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-system-variant [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-system-variant>
+        </configuration-system-variant>
         }
         @case (view.ProtocolInstaller) {
-          <protocol-installer [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <protocol-installer [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </protocol-installer>
+        </protocol-installer>
         }
         @case (view.ProtocolCustomer) {
-          <protocol-customer [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <protocol-customer [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </protocol-customer>
+        </protocol-customer>
         }
         @case (view.ProtocolAvuBox) {
-          <protocol-avu-box [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <protocol-avu-box [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </protocol-avu-box>
+        </protocol-avu-box>
         }
         @case (view.ProtocolSystem) {
-          <protocol-system [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <protocol-system [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </protocol-system>
+        </protocol-system>
         }
         @case (view.ProtocolSystemLocation) {
-          <protocol-system-location [ibn]="ibn" [edge]="edge" (previousViewEvent)="displayPreviousView()"
+        <protocol-system-location [ibn]="ibn" [edge]="edge" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </protocol-system-location>
+        </protocol-system-location>
         }
         @case (view.ConfigurationEssLimiter14aComponent) {
-          <configuration-ess-limiter-14a [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-ess-limiter-14a [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-ess-limiter-14a>
+        </configuration-ess-limiter-14a>
         }
         @case (view.ConfigurationEmergencyReserve) {
-          <configuration-emergency-reserve [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-emergency-reserve [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-emergency-reserve>
+        </configuration-emergency-reserve>
         }
         @case (view.ConfigurationEnergyFlowMeter) {
-          <configuration-energy-flow-direction-meter [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-energy-flow-direction-meter [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-energy-flow-direction-meter>
+        </configuration-energy-flow-direction-meter>
         }
         @case (view.ConfigurationLineSideMeterFuse) {
-          <configuration-line-side-meter-fuse [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-line-side-meter-fuse [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-line-side-meter-fuse>
+        </configuration-line-side-meter-fuse>
         }
         @case (view.ConfigurationCommercialModbuBridge) {
-          <configuration-commercial-modbusbridge [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-commercial-modbusbridge [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-commercial-modbusbridge>
+        </configuration-commercial-modbusbridge>
         }
         @case (view.ConfigurationMpptSelection) {
-          <configuration-mppt-selection [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-mppt-selection [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-mppt-selection>
+        </configuration-mppt-selection>
         }
         @case (view.ProtocolPv) {
-          <protocol-pv [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
-            (nextViewEvent)="displayNextView($event)">
-          </protocol-pv>
+        <protocol-pv [ibn]="ibn" (previousViewEvent)="displayPreviousView()" (nextViewEvent)="displayNextView($event)">
+        </protocol-pv>
         }
         @case (view.ProtocolFeedInLimitation) {
-          <protocol-feed-in-limitation [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <protocol-feed-in-limitation [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </protocol-feed-in-limitation>
+        </protocol-feed-in-limitation>
         }
         @case (view.ConfigurationGridSetting) {
-          <configuration-grid-setting [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-grid-setting [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-grid-setting>
+        </configuration-grid-setting>
         }
         @case (view.ProtocolCommercialClusterSlaveCount) {
-          <protocol-commercial-slave-count [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <protocol-commercial-slave-count [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </protocol-commercial-slave-count>
+        </protocol-commercial-slave-count>
         }
         <!-- Configuration and Protocol -->
         @case (view.ConfigurationSummary) {
-          <configuration-summary [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-summary [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView()">
-          </configuration-summary>
+        </configuration-summary>
         }
         @case (view.ConfigurationExecute) {
-          <configuration-execute [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-execute [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView()">
-          </configuration-execute>
+        </configuration-execute>
         }
         @case (view.ProtocolCommercialClusterSlaveInstallation) {
-          <protocol-commercial-slave-installation [ibn]="ibn" [edge]="edge" (previousViewEvent)="displayPreviousView()"
+        <protocol-commercial-slave-installation [ibn]="ibn" [edge]="edge" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </protocol-commercial-slave-installation>
+        </protocol-commercial-slave-installation>
         }
         @case (view.ProtocolChecklist) {
-          <protocol-checklist [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <protocol-checklist [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </protocol-checklist>
+        </protocol-checklist>
         }
         @case (view.ProtocolSerialNumbers) {
-          <protocol-serial-numbers [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <protocol-serial-numbers [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </protocol-serial-numbers>
+        </protocol-serial-numbers>
         }
         @case (view.ConfigurationStsBox) {
-          <configuration-sts-box [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <configuration-sts-box [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
-          </configuration-sts-box>
+        </configuration-sts-box>
         }
         @case (view.Completion) {
-          <completion [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+        <completion [edge]="edge" [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView()">
-          </completion>
+        </completion>
         }
-      }
-    } @else {
-      <ngx-spinner [name]="spinnerId"></ngx-spinner>
-    }
+        }
 
 
-  </ion-grid>
+    </ion-grid>
 </ion-content>

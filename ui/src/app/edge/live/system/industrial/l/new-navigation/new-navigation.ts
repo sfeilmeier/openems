@@ -152,6 +152,7 @@ export class SystemIndustrialLHomeComponent extends AbstractFormlyComponent {
             }
         };
     }
+
     protected bmsHardReset(self: SystemIndustrialLHomeComponent): () => void {
         return () => {
             const edge = self.service.currentEdge();
@@ -163,6 +164,5 @@ export class SystemIndustrialLHomeComponent extends AbstractFormlyComponent {
                 new ComponentJsonApiRequest({ componentId: this.component?.id, payload: new BmsHardResetRequest() }),
             );
         };
-
     }
 }

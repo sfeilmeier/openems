@@ -103,7 +103,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
             logMessage: this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.STARTING_AUTHENTICATION"),
         });
         const state = this.slaveStates[index];
-        this.websocket.sendRequest(new AddEdgeToUserRequest({ setupPassword: state.setupKey }))
+        this.websocket.sendStateFullRequest(new AddEdgeToUserRequest({ setupPassword: state.setupKey }))
             .then((response: AddEdgeToUserResponse) => this.handleSuccessfulInstallation(index, response))
             .catch((error) => this.handleInstallationFailure(index, error));
     }
@@ -112,7 +112,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
         this.slaveStates.forEach((state, index) => {
             const bridgeId = `bridge${index + 1}`;
 
-            this.edge.sendRequest(
+            this.edge.sendStateFullRequest(
                 this.websocket,
                 new ComponentJsonApiRequest({
                     componentId: bridgeId,
@@ -179,7 +179,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
             validKey: true,
         });
 
-        await this.websocket.sendRequest(new SubscribeEdgesRequest({ edges: [edge.id] }));
+        await this.websocket.sendStateFullRequest(new SubscribeEdgesRequest({ edges: [edge.id] }));
         await this.executeSystemUpdate(index);
         await this.authenticateBridge(index);
         await this.configureApp(index);
@@ -236,7 +236,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
 
     private async authenticateBridge(index: number): Promise<void> {
         const state = this.slaveStates[index];
-        return this.edge.sendRequest(
+        return this.edge.sendStateFullRequest(
             this.websocket,
             new ComponentJsonApiRequest({
                 componentId: `bridge${index + 1}`,

@@ -1,9 +1,10 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE": "Beta AC-Ladestation testen",
-            "TEXT": "Entdecke jetzt die neue Beta-Funktion der FEMS App AC-Ladestation! Teste damit neue Features wie die manuelle Phasenumschaltung und das zeitbasierte Laden des E-Autos aus. Die Beta-Funktion kann im App Center bei der App AC-Ladestation direkt per Klick aktiviert werden.",
-            "LINK_TEXT": "zum App Center"
+            "TITLE": "Webinar: Neuer Commercial 100",
+            "TEXT": "Im kommenden Webinar am 17.03. stellen wir den neuen Commercial 100 vor: Systemkonzept, technische Merkmale, typische Anwendungen in Industrie und Landwirtschaft sowie Ausbaustufen, Verfügbarkeit und die nächsten Schritte im Vertriebsprozess.",
+            "LINK_TEXT": "Zur Anmeldung",
+            "LINK": "https://fenecon-gmbh.webinargeek.com/markteinfuehrung-commercial-100-der-neue-massstab-im-gewerbesegment?cst=fems-widget"
         }
     }
 }

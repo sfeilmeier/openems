@@ -222,7 +222,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         }
 
         return new Promise((resolve, reject) => {
-            websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
+            websocket.sendStateFullRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
                 resolve(response.result["setupProtocolId"]);
             }).catch((reason) => {
                 reject(reason);

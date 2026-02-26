@@ -36,11 +36,12 @@ export class EdgeComponent implements OnDestroy, ViewWillLeave, OnInit {
         effect(async () => {
             const edge = this.service.currentEdge();
             const edgeId = this.routeService.getRouteParam<string>("edgeId");
-            if (!edgeId || !edge) {
+            if (!edgeId || !edge || edge.id == this.edge?.id) {
                 return;
             }
+            this.edge = edge;
 
-            pagination.subscribeEdge(edge);
+            pagination.getAndSubscribeEdge(edge.id);
             this.handlePrivacyPopover(edge);
             this.handleAnnualReviewPopover(edge);
         });
@@ -78,6 +79,10 @@ export class EdgeComponent implements OnDestroy, ViewWillLeave, OnInit {
     public async ngOnInit() {
         const edgeId = this.routeService.getRouteParam<string>("edgeId");
         await this.service.updateCurrentEdge(edgeId);
+    }
+
+    ionViewWillEnter() {
+        this.ngOnInit();
     }
 
     public ionViewWillLeave() {

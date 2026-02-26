@@ -89,7 +89,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         });
 
         // Send request and process components
-        const estimatedConfig: GetEstimatedConfigResponse = await edge.sendRequest(
+        const estimatedConfig: GetEstimatedConfigResponse = await edge.sendStateFullRequest(
             websocket,
             new ComponentJsonApiRequest({
                 componentId: "_appManager",
@@ -160,7 +160,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             const channelAddresses = this.getChannelAddresses(towerNr, numberOfModulesPerTower, slaveNr);
 
             // Edge-subscribe
-            edge.subscribeChannels(websocket, subscriptionId, Object.values(channelAddresses));
+            edge.subscribeChannelsWithState(websocket, subscriptionId, Object.values(channelAddresses));
 
             // Subject to stop the subscription to currentData
             const stopOnRequest: Subject<void> = new Subject<void>();
@@ -226,7 +226,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             let isResolved = false;
 
             // Edge-subscribe
-            edge.subscribeChannels(websocket, "commercial", channelAddresses);
+            edge.subscribeChannelsWithState(websocket, "commercial", channelAddresses);
 
             // Subject to stop the subscription to currentData
             const stopOnRequest: Subject<void> = new Subject<void>();

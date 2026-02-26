@@ -1,9 +1,10 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE": "Test Beta features now",
-            "TEXT": "Discover the new Beta feature in the FEMS AC Charging Station app! Try functions like manual phase switching and scheduled EV charging. Activate the Beta directly in the App Center under the AC Charging Station app with a single click.",
-            "LINK_TEXT": "to App Center"
+            "TITLE": "Webinar: New Commercial 100",
+            "TEXT": "In the upcoming webinar on March 17th, we will present the new Commercial 100, covering its system concept, technical features, typical applications in industry and agriculture, as well as expansion stages, availability, and the next steps in the sales process.",
+            "LINK_TEXT": "Sign up here",
+            "LINK": "https://fenecon-gmbh.webinargeek.com/markteinfuehrung-commercial-100-der-neue-massstab-im-gewerbesegment?cst=fems-widget"
         }
     }
 }

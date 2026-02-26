@@ -187,7 +187,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
 
             // Edge-subscribe.
             // TODO for method in edge to read channels once.
-            edge.subscribeChannels(websocket, subscriptionId, Object.values(channelAddresses));
+            edge.subscribeChannelsWithState(websocket, subscriptionId, Object.values(channelAddresses));
 
             setTimeout(() => {
                 // If data isn't available after the timeout, the
@@ -268,7 +268,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             let isResolved = false;
 
             // Edge-subscribe
-            edge.subscribeChannels(websocket, "commercial", channelAddresses);
+            edge.subscribeChannelsWithState(websocket, "commercial", channelAddresses);
 
             // Subject to stop the subscription to currentData
             const stopOnRequest: Subject<void> = new Subject<void>();
@@ -313,7 +313,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
 
         return new Promise((resolve, reject) => {
-            websocket.sendRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
+            websocket.sendStateFullRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
                 resolve(response.result["setupProtocolId"]);
             }).catch((reason) => {
                 reject(reason);
