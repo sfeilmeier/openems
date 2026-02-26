@@ -9,7 +9,7 @@
     <ion-row class="full_width ion-justify-content-center ion-padding-top">
       <ion-col sizeLg="6" sizeMd="10" sizeSm="12">
         <oe-flat-widget [title]="chartTitle">
-          <gridBuyChart [fromDate]="fromDate" [toDate]="toDate" [xAxisScalingType]="XAxisType.NUMBER"
+          <gridBuyChart customChartHeightPercentage="50" [fromDate]="fromDate" [toDate]="toDate" [xAxisScalingType]="XAxisType.NUMBER"
             [simulatedData]="simulatedData">
           </gridBuyChart>
         </oe-flat-widget>
