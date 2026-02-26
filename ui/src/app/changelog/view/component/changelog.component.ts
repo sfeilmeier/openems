@@ -25,6 +25,13 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2026.2.4",
+                changes: [
+                    Changelog.UI,
+                    "Behebung für Fehler \"disk is full\"",
+                ],
+            },
+            {
                 version: "2026.2.3",
                 changes: [
                     Changelog.product(Product.INDUSTRIAL_XL) + "Verbesserung der UI-Darstellung",
