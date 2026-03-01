@@ -108,6 +108,7 @@ export const OemMeta: BaseMeta = {
             RUNDSTEUER: {
                 HOME: "https://fenecon.de/wp-content/uploads/2022/06/20220523_Anleitung-Rundsteuerempfaenger.pdf",
                 HOME_GEN_2: "https://docs.fenecon.de/de/home/home_6-10-15/betrieb_und_serviceanleitung/Betriebsanleitung_Home_6-10-15.html#_rundsteuerempf%C3%A4nger",
+                HOME_6_10_15: "https://docs.fenecon.de/de/home/home_6-10-15/betrieb_und_serviceanleitung/Betriebsanleitung_Home_6-10-15.html#_rundsteuerempf%C3%A4nger",
                 HOME_20_30: "https://docs.fenecon.de/de/home/home_20-30/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Home_20-30.html#_rundsteuerempf%C3%A4nger_auf_netzanschlusspunkt",
                 COMMERCIAL_50_GEN_3: "https://docs.fenecon.de/de/commercial/commercial_50-3/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Commercial_50-3.html#_rundsteuerempf%C3%A4nger_auf_netzanschlusspunkt",
             },

@@ -176,6 +176,7 @@ export interface Environment {
                 readonly HOME: string,
                 readonly HOME_GEN_2: string,
                 readonly HOME_20_30: string,
+                readonly HOME_6_10_15: string,
                 readonly COMMERCIAL_50_GEN_3: string,
             },
 
