@@ -12,6 +12,7 @@ import { CommonConsumption } from "./common/consumption/common-consumption";
 import { Common_Grid } from "./common/grid/Common_Grid";
 import { Common_Production } from "./common/production/Common_Production";
 import { CommonSelfconsumption } from "./common/selfconsumption/common-selfconsumption";
+import { SohStatusBannerComponent } from "./common/soh/components/soh-status-banner/soh-status-banner";
 import { StorageLiveModule } from "./common/storage/storage.module";
 import { WeatherModule } from "./common/weather/weather.module";
 import { Controller_ChannelthresholdComponent } from "./Controller/Channelthreshold/Channelthreshold";
@@ -79,6 +80,7 @@ import { SystemModule } from "./system/system.module";
         WeatherModule,
         ModalModule,
         SharedModule,
+        SohStatusBannerComponent,
         SystemModule,
         PullToRefreshComponent,
         HelpButtonComponent,
