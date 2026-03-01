@@ -167,7 +167,7 @@ export class AppComponent implements OnInit, OnDestroy {
     * Triggers a delayed window resize so chart components recalculate their
     * dimensions (WCAG 1.4.4 compliance).
     */
-    public onActivate(_event: any): void {
+    private onActivate(_event: any): void {
         this.layoutRefresh.request(300);
     }
 }
