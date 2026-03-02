@@ -44,7 +44,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: "tools/\nui/\n.gitea/\n.gradle-wrapper"
+          sparse-checkout: |
+            tools/
+            ui/
+            gradle/
+            .gitea/
 
       - name: Download artifact
         uses: ./.gitea/actions/artifact-download
