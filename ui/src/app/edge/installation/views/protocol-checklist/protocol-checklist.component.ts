@@ -150,7 +150,7 @@ export class ProtocolChecklistComponent implements OnInit {
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.CONNECT_INVERTER"),
-                url: "assets/img/commercial-checklist/connect_network_cable.png",
+                url: "assets/img/ibn/commercial-checklist/connect_network_cable.png",
             },
             wrappers: ["formly-field-checkbox-with-image"],
         });
@@ -167,16 +167,16 @@ export class ProtocolChecklistComponent implements OnInit {
                 steps: [
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 1, totalStep: 3, description: "Ethernet-Einstellungen öffnen" }),
-                        url: ["assets/img/commercial-checklist/ip_addr_step_1.png"],
+                        url: ["assets/img/ibn/commercial-checklist/ip_addr_step_1.png"],
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 2, totalStep: 3, description: "Ethernet-Einstellungen bearbeiten" }),
-                        url: ["assets/img/commercial-checklist/ip_addr_step_2.png"],
+                        url: ["assets/img/ibn/commercial-checklist/ip_addr_step_2.png"],
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 3, totalStep: 3, description: "IP-Adresse speichern" }),
                         description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.NETWORK_SETTINGS"),
-                        url: ["assets/img/commercial-checklist/ip_addr_step_3.png"],
+                        url: ["assets/img/ibn/commercial-checklist/ip_addr_step_3.png"],
                     },
                 ],
             },
@@ -187,7 +187,7 @@ export class ProtocolChecklistComponent implements OnInit {
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.IP_ADDRESS"),
-                url: "assets/img/commercial-checklist/ip_address.png",
+                url: "assets/img/ibn/commercial-checklist/ip_address.png",
                 description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.IP_ADDRESS_DESCRIPTION"),
             },
             wrappers: ["formly-field-checkbox-with-image"],
@@ -198,7 +198,7 @@ export class ProtocolChecklistComponent implements OnInit {
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.ENTER_PASSWORD"),
-                url: "assets/img/commercial-checklist/enter_password.png",
+                url: "assets/img/ibn/commercial-checklist/enter_password.png",
                 description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.PASSWORD_DESCRIPTION"),
             },
             wrappers: ["formly-field-checkbox-with-image"],
@@ -209,7 +209,7 @@ export class ProtocolChecklistComponent implements OnInit {
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.START_CONFIGURATION"),
-                url: "assets/img/commercial-checklist/start_configuration.png",
+                url: "assets/img/ibn/commercial-checklist/start_configuration.png",
             },
             wrappers: ["formly-field-checkbox-with-image"],
         });
@@ -217,12 +217,12 @@ export class ProtocolChecklistComponent implements OnInit {
         // Default VDE-AR-N 4105
         let gridSetting: GridSetting = GridSetting.VDE_4105;
         let voltageLimit: string = "600.0";
-        let url: string[] = ["assets/img/commercial-checklist/step2.1.png", "assets/img/commercial-checklist/step2.2.png"];
+        let url: string[] = ["assets/img/ibn/commercial-checklist/step2.1.png", "assets/img/ibn/commercial-checklist/step2.2.png"];
 
         if (this.ibn.gridSetting && this.ibn.gridSetting === GridSetting.VDE_4110) { // Undefined for other countries
             gridSetting = GridSetting.VDE_4110;
             voltageLimit = "650.0";
-            url = ["assets/img/commercial-checklist/step2_4110.png"];
+            url = ["assets/img/ibn/commercial-checklist/step2_4110.png"];
         }
 
         fields.push({
@@ -233,7 +233,7 @@ export class ProtocolChecklistComponent implements OnInit {
                 steps: [
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 1, totalStep: 8, description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_1") }),
-                        url: ["assets/img/commercial-checklist/step1.png"],
+                        url: ["assets/img/ibn/commercial-checklist/step1.png"],
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 2, totalStep: 8, description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_2") }),
@@ -242,31 +242,31 @@ export class ProtocolChecklistComponent implements OnInit {
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 3, totalStep: 8, description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_3") }),
-                        url: ["assets/img/commercial-checklist/step3.png"],
+                        url: ["assets/img/ibn/commercial-checklist/step3.png"],
                         description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_3_DESCRIPTION"),
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 4, totalStep: 8, description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_4") }),
-                        url: ["assets/img/commercial-checklist/step4.1.png", "assets/img/commercial-checklist/step4.2.png"],
+                        url: ["assets/img/ibn/commercial-checklist/step4.1.png", "assets/img/ibn/commercial-checklist/step4.2.png"],
                         description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_4_DESCRIPTION"),
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 5, totalStep: 8, description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_5") }),
-                        url: ["assets/img/commercial-checklist/step5.png"],
+                        url: ["assets/img/ibn/commercial-checklist/step5.png"],
                         description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_5_DESCRIPTION"),
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 6, totalStep: 8, description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_6") }),
-                        url: ["assets/img/commercial-checklist/step6.png"],
+                        url: ["assets/img/ibn/commercial-checklist/step6.png"],
                         description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_6_DESCRIPTION"),
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 7, totalStep: 8, description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_7") }),
-                        url: ["assets/img/commercial-checklist/step7.png"],
+                        url: ["assets/img/ibn/commercial-checklist/step7.png"],
                     },
                     {
                         label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP", { currStep: 8, totalStep: 8, description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_8") }),
-                        url: ["assets/img/commercial-checklist/step8.1.png", "assets/img/commercial-checklist/step8.2.png"],
+                        url: ["assets/img/ibn/commercial-checklist/step8.1.png", "assets/img/ibn/commercial-checklist/step8.2.png"],
                         description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.STEP_8_DESCRIPTION"),
                     },
                 ],
@@ -278,7 +278,7 @@ export class ProtocolChecklistComponent implements OnInit {
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.MIN_VOLTAGE"),
-                url: "assets/img/commercial-checklist/min_voltage.png",
+                url: "assets/img/ibn/commercial-checklist/min_voltage.png",
                 description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.MIN_VOLTAGE_DESCRIPTION", { voltageLimit: voltageLimit, gridSetting: gridSetting }),
             },
             wrappers: ["formly-field-checkbox-with-image"],
@@ -289,7 +289,7 @@ export class ProtocolChecklistComponent implements OnInit {
             type: "checkbox",
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.POWER_CONTROL"),
-                url: "assets/img/commercial-checklist/power_control.png",
+                url: "assets/img/ibn/commercial-checklist/power_control.png",
                 description: this.translate.instant("INSTALLATION.PROTOCOL_CHECKLIST.POWER_CONTROL_DESCRIPTION"),
             },
             wrappers: ["formly-field-checkbox-with-image"],

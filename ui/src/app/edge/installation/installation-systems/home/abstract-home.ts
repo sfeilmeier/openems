@@ -47,7 +47,7 @@ export type HomeCommonApp = {
 };
 
 export abstract class AbstractHomeIbn extends AbstractIbn {
-    public static BASE_IMAGE_PATH = "assets/img/home-mppt/";
+    public static BASE_IMAGE_PATH = "assets/img/ibn/mppt/home-mppt/";
     private static readonly SELECTOR = "Home";
     private static readonly MODULE_DATA_TIMEOUT = 2_000; // two seconds
     private static readonly TOWER_DATA_TIMEOUT = 5_000; // five seconds

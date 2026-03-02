@@ -1,0 +1,19 @@
+import { TranslateService } from "@ngx-translate/core";
+
+import { SystemId } from "../../../shared/system";
+import { AbstractCommercialGen3 } from "../abstract-commercial-gen3";
+
+export class Commercial100Ibn extends AbstractCommercialGen3 {
+
+    private static readonly MAX_MPPT = 8;
+
+    public override readonly systemId: SystemId = SystemId.COMMERCIAL_100;
+    public override appId: string = "App.FENECON.Commercial.100";
+    public override appAlias: string = "FENECON Commercial 100";
+
+    protected override readonly baseImagePath = "assets/img/ibn/mppt/c-100-mppt/";
+
+    constructor(translate: TranslateService) {
+        super(AbstractCommercialGen3.VIEWS, Commercial100Ibn.MAX_MPPT, translate);
+    }
+}

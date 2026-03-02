@@ -58,6 +58,7 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
 
     public onNextClicked() {
         if (this.form.invalid || this.form.controls["isManualProperlyFollowedAndRead"]?.value == false) {
+            this.form.markAllAsTouched();
             return;
         }
 

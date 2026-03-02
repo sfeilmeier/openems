@@ -1121,7 +1121,7 @@
       "INSTALLED_POWER": "Installed power [Wₚ]",
       "INSTALLED_POWER_PER_STRING": "Installed power per string [Wₚ]",
       "MARKED_AS": " MPPT {{ mppt }} (marked as \"PV{{ mppt }}\")",
-      "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (marked as \"PV{{ pv1 }}\" & \"PV{{ pv2 }}\")",
+      "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (marked as \"{{ pv1 }}\" & \"{{ pv2 }}\")",
       "MODULE_TYPE": "Type of modules",
       "MODULE_TYPE_DESCRIPTION": "e.g. Manufuturer and Power",
       "MODULE_TYPE_WITH_LABEL": "Type of modules {{ label }}{{ number }}",
