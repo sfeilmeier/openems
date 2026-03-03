@@ -25,6 +25,15 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2026.3.1",
+                changes: [
+                    Changelog.openems("2026.3.0"),
+                    "FENECON Home 6, 10 & 15: Funktion \"Dynamischer Rundsteuerempfänger\" über die FEMS-Anschlussbox",
+                    "FENECON Commercial 100: Kompatibilität mit Inbetriebnahmeassistent",
+                    "FENECON Home: Fehlerbehebung bei Anlagen ohne Netzeinspeisung (ab Version 2026.2.4)",
+                ],
+            },
+            {
                 version: "2026.2.4",
                 changes: [
                     Changelog.UI,
