@@ -28,8 +28,13 @@ export class ConfigurationSubSystemComponent implements OnInit {
     constructor(private translate: TranslateService) { }
 
     protected get showNote(): boolean {
-        const subSystemType = this.form.controls.subType?.value as SubSystemType;
-        return subSystemType && subSystemType === SubSystemType.COMMERCIAL_92;
+        const subSystemType = this.form.controls.subType?.value as SubSystemType | null | undefined;;
+        return subSystemType != null && subSystemType === SubSystemType.COMMERCIAL_92;
+    }
+
+    protected get showManualLink(): boolean {
+        const subSystemType = this.form.controls.subType?.value as SubSystemType | null | undefined;
+        return subSystemType != null && subSystemType !== SubSystemType.COMMERCIAL_100;
     }
 
     public ngOnInit() {

@@ -115,11 +115,6 @@ export const OemMeta: BaseMeta = {
             },
         },
 
-        GTC: {
-            EN: "#",
-            DE: "#",
-        },
-
         METER: {
             SOCOMEC: "#",
             KDK: "#",
@@ -150,6 +145,7 @@ export const OemMeta: BaseMeta = {
             RUNDSTEUER: {
                 HOME: "#",
                 HOME_GEN_2: "#",
+                HOME_6_10_15: "#",
                 HOME_20_30: "#",
                 COMMERCIAL_50_GEN_3: "#",
             },

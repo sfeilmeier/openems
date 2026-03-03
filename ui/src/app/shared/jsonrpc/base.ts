@@ -89,3 +89,7 @@ export class JsonrpcResponseError extends JsonrpcResponse {
         super(id);
     }
 }
+
+export interface SetupProtocolResponse {
+    setupProtocolId: string;
+}

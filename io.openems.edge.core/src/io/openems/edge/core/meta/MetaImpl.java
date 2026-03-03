@@ -3,10 +3,12 @@ package io.openems.edge.core.meta;
 import static io.openems.common.utils.StringUtils.emptyToNull;
 import static io.openems.common.utils.ThreadPoolUtils.shutdownAndAwaitTermination;
 import static io.openems.edge.common.channel.ChannelUtils.setValue;
+import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE;
 import static io.openems.edge.common.jsonapi.EdgeGuards.roleIsAtleast;
 
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +20,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
+import org.osgi.service.event.propertytypes.EventTopics;
 import org.osgi.service.metatype.annotations.Designate;
 
 import io.openems.common.OpenemsConstants;
@@ -55,8 +60,11 @@ import io.openems.edge.core.meta.geocoding.OpenCageGeocodingService;
 		property = { //
 				"enabled=true" //
 		})
+@EventTopics({ //
+		TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
+})
 public class MetaImpl extends AbstractOpenemsComponent
-		implements Meta, OpenemsComponent, ModbusSlave, ComponentJsonApi {
+		implements Meta, OpenemsComponent, ModbusSlave, ComponentJsonApi, EventHandler {
 
 	private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
@@ -128,13 +136,33 @@ public class MetaImpl extends AbstractOpenemsComponent
 		this.config = config;
 		setValue(this, Meta.ChannelId.CURRENCY, Currency.fromCurrencyConfig(config.currency()));
 		setValue(this, Meta.ChannelId.IS_ESS_CHARGE_FROM_GRID_ALLOWED, config.isEssChargeFromGridAllowed());
-		setValue(this, Meta.ChannelId.MAXIMUM_GRID_FEED_IN_LIMIT, config.maximumGridFeedInLimit() > 0 //
-				? config.maximumGridFeedInLimit() //
-				: null);
 		setValue(this, Meta.ChannelId.GRID_FEED_IN_LIMITATION_TYPE,
 				config.gridFeedInLimitationType().getGridFeedInLimitationType());
-		this.gridBuySoftLimit = JSCalendar.Tasks.fromStringOrEmpty(this.componentManager.getClock(),
-				config.gridBuySoftLimit(), GridBuySoftLimit.serializer());
+
+		{
+			// Post-Process Grid-Buy-Soft-Limit
+			final var gridBuyHardLimit = this.getGridBuyHardLimit();
+			final var raw = JSCalendar.Tasks.fromStringOrEmpty(this.componentManager.getClock(),
+					config.gridBuySoftLimit(), GridBuySoftLimit.serializer());
+			final var result = JSCalendar.Tasks.<GridBuySoftLimit>create() //
+					.setClock(raw.clock);
+			// Make sure each value is <= getGridBuyHardLimit()
+			raw.tasks.stream() //
+					.map(t -> {
+						if (t.payload().power() > gridBuyHardLimit) {
+							return JSCalendar.Task.createFrom(t) //
+									.setPayload(new GridBuySoftLimit(gridBuyHardLimit)) //
+									.build();
+						} else {
+							return t;
+						}
+					}) //
+					.forEach(result::add);
+			// Add fallback of getGridBuyHardLimit() to make sure each timestamp has a value
+			result.add(t -> t //
+					.setPayload(new GridBuySoftLimit(gridBuyHardLimit))); //
+			this.gridBuySoftLimit = result.build();
+		}
 	}
 
 	@Override
@@ -193,14 +221,20 @@ public class MetaImpl extends AbstractOpenemsComponent
 
 	@Override
 	public int getGridSellHardLimit() {
-		return this.getGridConnectionPointFuseLimitInWatt();
+		final var powerFromMaximumGridFeedInLimit = switch (this.config.gridFeedInLimitationType()) {
+		case DYNAMIC_LIMITATION -> this.config.maximumGridFeedInLimit() >= 0 //
+				? this.config.maximumGridFeedInLimit() //
+				: null;
+		case NO_LIMITATION -> null;
+		};
+		final var powerFromFuseLimit = this.getGridConnectionPointFuseLimitInWatt();
+		return TypeUtils.min(powerFromMaximumGridFeedInLimit, powerFromFuseLimit);
 	}
 
 	@Override
 	public int getGridBuyHardLimit() {
 		final var powerFromFuseLimit = this.getGridConnectionPointFuseLimitInWatt();
-		final var powerFromMaximumGridFeedInLimit = this.getMaximumGridFeedInLimitValue().orElse(null);
-		return TypeUtils.min(powerFromFuseLimit, powerFromMaximumGridFeedInLimit);
+		return powerFromFuseLimit;
 	}
 
 	@Override
@@ -226,5 +260,18 @@ public class MetaImpl extends AbstractOpenemsComponent
 	@Override
 	public ThirdPartyUsageAcceptance getThirdPartyUsageAcceptance() {
 		return this.config.thirdPartyUsageAcceptance();
+	}
+
+	@Override
+	public void handleEvent(Event event) {
+		switch (event.getTopic()) {
+		case TOPIC_CYCLE_BEFORE_PROCESS_IMAGE -> {
+			final Integer gridBuySoftLimit = Optional.ofNullable(this.gridBuySoftLimit.getActiveOneTask())
+					.map(JSCalendar.Tasks.OneTask::payload) //
+					.map(GridBuySoftLimit::power) //
+					.orElse(null);
+			setValue(this, Meta.ChannelId.GRID_BUY_SOFT_LIMIT, gridBuySoftLimit);
+		}
+		}
 	}
 }

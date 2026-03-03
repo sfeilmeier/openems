@@ -62,17 +62,6 @@ export class ConfigurationSummaryComponent implements OnInit {
     public getFields(): FormlyFieldConfig[] {
 
         const fields: FormlyFieldConfig[] = [];
-        fields.push({
-            key: "isAgbAccepted",
-            type: "checkbox",
-            props: {
-                label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.GTC_ACCEPT"),
-                required: true,
-                description: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT"),
-                url: WebLinkUtils.getLink(this.ibn.gtcAndWarrantyLinks.gtcLink),
-            },
-            wrappers: ["form-field-checkbox-hyperlink"],
-        });
 
         fields.push({
             key: "isGuaranteeConditionsAccepted",
@@ -82,7 +71,7 @@ export class ConfigurationSummaryComponent implements OnInit {
                 required: true,
                 defaultValue: false,
                 description: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT"),
-                url: WebLinkUtils.getLink(this.ibn.gtcAndWarrantyLinks.warrantyLink),
+                url: WebLinkUtils.getLink(this.ibn.warrantyLink),
             },
             wrappers: ["form-field-checkbox-hyperlink"],
         });

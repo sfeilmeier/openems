@@ -1,4 +1,7 @@
+import { environment } from "src/environments";
+import { ComponentData } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
+import { EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES } from "../../shared/options";
 import { AbstractHomeIbn } from "./abstract-home";
 
 export abstract class AbstractHomeGen2Ibn extends AbstractHomeIbn {
@@ -23,6 +26,11 @@ export abstract class AbstractHomeGen2Ibn extends AbstractHomeIbn {
         ];
 
         return options;
+    }
+
+    public override getExternalLimitationTypeOptions(): ComponentData[] {
+        const docLink = environment.links.MANUALS.RUNDSTEUER.HOME_6_10_15;
+        return EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES(this.translate, docLink);
     }
 
 }

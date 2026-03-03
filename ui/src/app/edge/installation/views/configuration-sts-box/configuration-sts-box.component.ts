@@ -56,7 +56,7 @@ export class ConfigurationStsBoxComponent implements OnInit {
             type: "checkbox",
             props: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_FIELD_LABEL"),
-                url: "assets/img/commercial/sts-box.png",
+                url: "assets/img/ibn/sts-box.png",
                 imagePositionToLeft: true,
 
                 // Configuration for the nested serial number input

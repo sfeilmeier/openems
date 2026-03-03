@@ -13,7 +13,7 @@ import { Country } from "src/app/shared/type/country";
 import { NumberUtils } from "src/app/shared/utils/number/number-utils";
 import { AppCenterUtil } from "../../shared/appcenterutil";
 import { Category } from "../../shared/category";
-import { ExternalLimitationType, FeedInSetting, GridFeedInLimitationType, View, WebLinks } from "../../shared/enums";
+import { ExternalLimitationType, FeedInSetting, GridFeedInLimitationType, View } from "../../shared/enums";
 import { FeedInSettingUtils } from "../../shared/feedinsetting.utils";
 import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, DcPv, EmsType, ExtensionBoxPrefix } from "../../shared/ibndatatypes";
@@ -21,6 +21,7 @@ import { Meter } from "../../shared/meter";
 import { FEED_IN_POWER_FACTOR_OPTIONS } from "../../shared/options";
 import { SystemId, SystemType } from "../../shared/system";
 import { ViewUtils } from "../../shared/view.utils";
+import { WebLinks } from "../../shared/weblink.utils";
 import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../views/configuration-execute/component-configurator";
 import { GetEstimatedConfigRequest } from "../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
@@ -47,12 +48,13 @@ export type HomeCommonApp = {
 };
 
 export abstract class AbstractHomeIbn extends AbstractIbn {
-    public static BASE_IMAGE_PATH = "assets/img/home-mppt/";
+    public static BASE_IMAGE_PATH = "assets/img/ibn/mppt/home-mppt/";
     private static readonly SELECTOR = "Home";
     private static readonly MODULE_DATA_TIMEOUT = 2_000; // two seconds
     private static readonly TOWER_DATA_TIMEOUT = 5_000; // five seconds
 
     public override readonly systemType: SystemType = SystemType.FENECON_HOME;
+    public override readonly warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_HOME;
 
     // configuration-emergency-reserve
     public override emergencyReserve? = {
@@ -95,15 +97,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         otherValue?: number;
     } = {
         category: Category.LINE_SIDE_METER_FUSE_HOME,
-    };
-
-    //Configuration Summary
-    public override gtcAndWarrantyLinks: {
-        gtcLink: WebLinks;
-        warrantyLink: WebLinks;
-    } = {
-        gtcLink: WebLinks.GTC_LINK,
-        warrantyLink: WebLinks.WARRANTY_LINK_HOME,
     };
 
     // protocol avu box

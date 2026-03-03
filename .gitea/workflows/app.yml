@@ -51,8 +51,9 @@ jobs:
           sparse-checkout: |
             tools/
             ui/
+            gradle/
             .gitea/
-            .gradle-wrapper/
+            
 
       - name: Download artifact
         uses: ./.gitea/actions/artifact-download

@@ -4,6 +4,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Language } from "src/app/shared/type/language";
 import { environment } from "src/environments";
 import { AbstractIbn } from "../installation-systems/abstract-ibn";
+import { Commercial100Ibn } from "../installation-systems/commercial/commercial-100/commercial-100";
 import { Commercial30AnschlussIbn } from "../installation-systems/commercial/commercial-30/commercial30-anschluss";
 import { Commercial30NetztrennIbn } from "../installation-systems/commercial/commercial-30/commercial30-netztrenn";
 import { Commercial50Gen1Ibn } from "../installation-systems/commercial/commercial-50/commercial-50-gen1";
@@ -30,6 +31,7 @@ export enum SubSystemType {
     COMMERCIAL_30 = "FENECON Commercial 30",
     COMMERCIAL_50 = "FENECON Commercial 50",
     COMMERCIAL_92 = "FENECON Commercial 92",
+    COMMERCIAL_100 = "FENECON Commercial 100",
 }
 
 export enum SystemId {
@@ -49,6 +51,7 @@ export enum SystemId {
     COMMERCIAL_50_GEN_3 = "Commercial 50 (Gen 3)",
     COMMERCIAL_92_WITHOUT_CLUSTER = "FENECON Commercial 92",
     COMMERCIAL_92_CLUSTER = "FENECON Commercial 92 Cluster",
+    COMMERCIAL_100 = "Fenecon Commercial 100",
 }
 
 export type HomeSystemId =
@@ -107,6 +110,9 @@ export namespace System {
                     case "feh013":
                         return new Commercial92Ibn(translate);
                 }
+                break;
+            case SubSystemType.COMMERCIAL_100:
+                return new Commercial100Ibn(translate);
         }
     }
 
@@ -148,6 +154,8 @@ export namespace System {
                 return new Commercial92ClusterIbn(translate);
             case SystemId.COMMERCIAL_50_GEN_3:
                 return new Commercial50Gen3Ibn(translate);
+            case SystemId.COMMERCIAL_100:
+                return new Commercial100Ibn(translate);
         }
     }
 
@@ -255,6 +263,7 @@ export namespace System {
                 componentLabel.push(
                     { value: SubSystemType.COMMERCIAL_92, label: SubSystemType.COMMERCIAL_92 },
                     { value: SubSystemType.COMMERCIAL_50, label: SubSystemType.COMMERCIAL_50 },
+                    { value: SubSystemType.COMMERCIAL_100, label: SubSystemType.COMMERCIAL_100 },
                 );
                 break;
             case "fec013":

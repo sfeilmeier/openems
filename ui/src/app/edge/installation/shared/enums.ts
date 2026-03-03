@@ -62,12 +62,6 @@ export enum GridFeedInLimitationType {
     NO_LIMITATION = "NO_LIMITATION",
 }
 
-export enum WebLinks {
-    GTC_LINK,
-    WARRANTY_LINK_HOME,
-    WARRANTY_LINK_COMMERCIAL,
-}
-
 // Specific for Configuration-commercial-modbusbridge
 export enum ModbusBridgeType {
     TCP_IP,
