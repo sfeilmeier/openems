@@ -136,11 +136,6 @@ export interface Environment {
             },
         }
 
-        readonly GTC: {
-            readonly EN: string,
-            readonly DE: string
-        },
-
         readonly METER: {
             readonly SOCOMEC: string,
             readonly KDK: string

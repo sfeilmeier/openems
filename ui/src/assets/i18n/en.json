@@ -949,7 +949,6 @@
         "LABEL": "Grid"
       },
       "GENERAL": "General",
-      "GTC_ACCEPT": "GTC",
       "INSTALLER": "Installer",
       "INVERTER": "Inverter",
       "MODULE_TYPE_WITH_LABEL_HOME_DC": "Type of modules MPPT{{ mppt }}",

@@ -117,11 +117,6 @@ export const OemMeta: BaseMeta = {
             },
         },
 
-        GTC: {
-            EN: "#",
-            DE: "#",
-        },
-
         METER: {
             SOCOMEC: "#",
             KDK: "#",

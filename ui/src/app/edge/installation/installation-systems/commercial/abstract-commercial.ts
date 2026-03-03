@@ -7,17 +7,19 @@ import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrp
 import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared";
 
 import { Category } from "../../shared/category";
-import { ExternalLimitationType, GridFeedInLimitationType, ModbusBridgeType, WebLinks } from "../../shared/enums";
+import { ExternalLimitationType, GridFeedInLimitationType, ModbusBridgeType } from "../../shared/enums";
 import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, EmsType } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
 import { System, SystemId, SystemType } from "../../shared/system";
+import { WebLinks } from "../../shared/weblink.utils";
 import { ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../views/configuration-execute/component-configurator";
 import { AbstractIbn } from "../abstract-ibn";
 
 export abstract class AbstractCommercialIbn extends AbstractIbn {
     private static readonly SELECTOR = "Commercial";
 
+    public override readonly warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_COMMERCIAL;
     public override readonly systemType: SystemType = SystemType.COMMERCIAL;
     public override readonly showRundSteuerManual: boolean = false;
     public readonly minNumberOfTowers: number = 1;
@@ -36,15 +38,6 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         feedInType: ExternalLimitationType.NO_LIMITATION,
         dynamicLimitationType: GridFeedInLimitationType.NO_LIMITATION,
         maximumFeedInPower: 0,
-    };
-
-    //Configuration Summary
-    public override gtcAndWarrantyLinks: {
-        gtcLink: WebLinks;
-        warrantyLink: WebLinks;
-    } = {
-        gtcLink: WebLinks.GTC_LINK,
-        warrantyLink: WebLinks.WARRANTY_LINK_COMMERCIAL,
     };
 
     // Protocol line side meter fuse

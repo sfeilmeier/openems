@@ -8,13 +8,14 @@ import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { DetailedAlertingSetting } from "../../settings/alerting/component/alerting.component";
 import { Category } from "../shared/category";
-import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View, WebLinks } from "../shared/enums";
+import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View } from "../shared/enums";
 import { GridSettingUtils } from "../shared/gridsetting.utils";
 import { ComponentData, EmsType, TableData } from "../shared/ibndatatypes";
 import { Meter } from "../shared/meter";
 import { EXTERNAL_LIMITATION_OPTIONS_WITHOUT_DYNAMIC_EXTERNAL_CONTROLLER } from "../shared/options";
 import { System, SystemId, SystemType } from "../shared/system";
 import { ViewUtils } from "../shared/view.utils";
+import { WebLinks } from "../shared/weblink.utils";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
 
 export type SerialNumberData = {
@@ -125,12 +126,6 @@ export abstract class AbstractIbn {
         formModels?: any[],
     };
 
-    // Configuration summary
-    public gtcAndWarrantyLinks: {
-        gtcLink: WebLinks;
-        warrantyLink: WebLinks;
-    };
-
     // configuration Energy Flow Meter
     public energyFlowMeter: {
         meter: Meter.GridMeterCategory;
@@ -176,6 +171,8 @@ export abstract class AbstractIbn {
     public readonly isDoubleSocketValid: boolean = false;
 
     public currentUserAlertingSettings: DetailedAlertingSetting | null = null;
+
+    public abstract readonly warrantyLink: WebLinks | null;
 
     constructor(public views: View[], public translate: TranslateService) { }
 

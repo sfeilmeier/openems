@@ -954,7 +954,6 @@
         "LABEL": "Netz"
       },
       "GENERAL": "Allgemein",
-      "GTC_ACCEPT": "AGB",
       "INSTALLER": "Installateur",
       "INVERTER": "Wechselrichter",
       "MODULE_TYPE_WITH_LABEL_HOME_DC": "Modultyp MPPT{{ mppt }}",

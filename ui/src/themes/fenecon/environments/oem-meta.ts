@@ -72,11 +72,6 @@ export const OemMeta: BaseMeta = {
             },
         },
 
-        GTC: {
-            EN: "https://fenecon.de/page/gtc/",
-            DE: "https://fenecon.de/allgemeine-lieferungs-und-zahlungsbedingungen/",
-        },
-
         // Currently the links are different with different prefixes. so adding whole url for meters.
         METER: {
             SOCOMEC: "https://docs.fenecon.de/de/Installationsanleitungen/FEMS_Socomec_Countis_E23_Installationsanleitung.pdf",

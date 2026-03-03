@@ -5,12 +5,15 @@ import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { View } from "../shared/enums";
 import { TableData } from "../shared/ibndatatypes";
 import { SystemId } from "../shared/system";
+import { WebLinks } from "../shared/weblink.utils";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
 import { AbstractIbn } from "./abstract-ibn";
 
 export class GeneralIbn extends AbstractIbn {
 
     public override readonly systemId = SystemId.GENERAL;
+
+    public override readonly warrantyLink: WebLinks | null = null;
 
     constructor(translate: TranslateService) {
         super([
