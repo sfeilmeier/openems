@@ -345,7 +345,7 @@ public class HostImpl extends AbstractOpenemsComponent implements Host, OpenemsC
 			return new OperatingSystemMac();
 		}
 
-		return new OperatingSystemDebianSystemd();
+		return new OperatingSystemDebianSystemd(this);
 	}
 
 }

@@ -336,7 +336,6 @@ export enum Producttype {
     COMMERCIAL_40_45 = "COMMERCIAL 40-45",
     COMMERCIAL_92 = "commercial-92",
     COMMERCIAL_92_CLUSTER = "commercial-92-cluster",
-    COMMERCIAL_100 = "commercial-100",
     INDUSTRIAL_S = "Industrial S",
     INDUSTRIAL_M = "Industrial M",
     INDUSTRIAL_L = "Industrial L",

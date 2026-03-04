@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import io.openems.edge.app.integratedsystem.FeneconProHybrid910;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 
@@ -326,16 +325,6 @@ public final class Apps {
 	 */
 	public static final FeneconProHybridGw feneconProHybridGW(AppManagerTestBundle t) {
 		return app(t, FeneconProHybridGw::new, "App.FENECON.ProHybrid.GW");
-	}
-
-	/**
-	 * Test method for creating a {@link FeneconProHybrid910}.
-	 *
-	 * @param t the {@link AppManagerTestBundle}
-	 * @return the {@link OpenemsApp} instance
-	 */
-	public static final FeneconProHybrid910 feneconProHybrid910(AppManagerTestBundle t) {
-		return app(t, FeneconProHybrid910::new, "App.FENECON.ProHybrid.9.10");
 	}
 
 	// TimeOfUseTariff
