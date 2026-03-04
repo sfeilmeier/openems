@@ -160,6 +160,7 @@ export interface Environment {
                     readonly COMMERCIAL_50_GEN_3: string,
                     readonly COMMERCIAL_92: string,
                     readonly COMMERCIAL_92_CLUSTER: string,
+                    readonly COMMERCIAL_100: string,
                 },
                 readonly INDUSTRIAL?: {
                     S: string,
