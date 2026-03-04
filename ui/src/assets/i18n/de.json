@@ -940,7 +940,7 @@
     "CONFIGURATION_SYSTEM_VARIANT": "Auswahl der verbauten Komponente",
     "CONFIGURATION_SUMMARY": {
       "ACCEPT": "akzeptieren",
-      "ACCEPT_TERMS": "Akzeptieren Sie die AGB und Garantiebedingungen um fortzufahren.",
+      "ACCEPT_TERMS": "Akzeptieren Sie die Garantiebedingungen um fortzufahren.",
       "ALIAS_WITH_LABEL_HOME_DC": "Alias MPPT{{mppt}}",
       "BATTERY": "Batterie",
       "BATTERY_LOCATION": "Standort",

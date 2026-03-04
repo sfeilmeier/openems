@@ -48,7 +48,7 @@ export class ConfigurationSummaryComponent implements OnInit {
     }
 
     public onNextClicked() {
-        if (!this.model.isAgbAccepted || !this.model.isGuaranteeConditionsAccepted) {
+        if (!this.model.isGuaranteeConditionsAccepted) {
             this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT_TERMS"), "warning");
             return;
         }

@@ -958,7 +958,7 @@
       "PRODUCER": "Generator",
       "SUMMARY": "Summary",
       "TIME_OF_INSTALLATION": "Time of the installation",
-      "ACCEPT_TERMS": "Accept the GTC and Warranty Terms to proceed.",
+      "ACCEPT_TERMS": "Accept the Warranty Terms to proceed.",
       "VALUE_WITH_LABEL_HOME_DC": "Value MPPT{{ mppt }} {{ symbol }}",
       "WARRANTY_TERMS": "Warranty terms"
     },
