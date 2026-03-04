@@ -3,9 +3,15 @@ package io.openems.edge.core.host;
 import static io.openems.common.jsonrpc.serialization.JsonSerializerUtil.jsonObjectSerializer;
 import static io.openems.common.utils.FunctionUtils.doNothing;
 import static io.openems.common.utils.InetAddressUtils.parseOrNull;
+import static java.lang.Runtime.getRuntime;
+import static java.util.concurrent.CompletableFuture.runAsync;
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -22,10 +28,16 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -37,10 +49,10 @@ import io.openems.common.jsonrpc.serialization.JsonSerializer;
 import io.openems.common.types.ConfigurationProperty;
 import io.openems.common.utils.InetAddressUtils;
 import io.openems.common.utils.JsonUtils;
+import io.openems.common.utils.StringUtils;
 import io.openems.edge.common.type.TypeUtils;
 import io.openems.edge.common.update.Updateable;
 import io.openems.edge.common.user.User;
-import io.openems.edge.core.host.Bash.Command;
 import io.openems.edge.core.host.NetworkInterface.IpMasqueradeSetting;
 import io.openems.edge.core.host.jsonrpc.ExecuteSystemCommandRequest;
 import io.openems.edge.core.host.jsonrpc.ExecuteSystemCommandRequest.SystemCommand;
@@ -69,11 +81,14 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 	private static final String ADDRESS_SECTION = "[Address]";
 	private static final String EMPTY_SECTION = "";
 
-	private enum Block {
+	private static enum Block {
 		UNDEFINED, MATCH, NETWORK, ADDRESS, ROUTE, DHCP
 	}
 
-	protected OperatingSystemDebianSystemd() {
+	private final HostImpl parent;
+
+	protected OperatingSystemDebianSystemd(HostImpl parent) {
+		this.parent = parent;
 	}
 
 	@Override
@@ -135,7 +150,7 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 		// write configuration files
 		IOException writeException = null;
 		for (Entry<String, NetworkInterface<?>> entry : oldNetworkConfiguration.getInterfaces().entrySet()) {
-			if (request.networkInterfaces().stream().noneMatch(i -> i.getName().equals(entry.getKey()))) {
+			if (!request.networkInterfaces().stream().anyMatch(i -> i.getName().equals(entry.getKey()))) {
 				continue;
 			}
 			NetworkInterface<?> iface = entry.getValue();
@@ -185,7 +200,9 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 	 */
 	private static void onMatchInet4Address(Pattern pattern, String line,
 			ThrowingConsumer<Inet4Address, OpenemsNamedException> callback) throws OpenemsNamedException {
-		onMatchString(pattern, line, property -> callback.accept(InetAddressUtils.parseOrError(property)));
+		onMatchString(pattern, line, property -> {
+			callback.accept(InetAddressUtils.parseOrError(property));
+		});
 	}
 
 	/**
@@ -196,7 +213,7 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 	 * @return a list of strings for writing it to a file
 	 * @throws OpenemsNamedException on error
 	 */
-	private List<String> toFileFormat(User user, NetworkInterface<?> iface) {
+	private List<String> toFileFormat(User user, NetworkInterface<?> iface) throws OpenemsNamedException {
 		List<String> result = new ArrayList<>();
 		result.add("# changedBy: " //
 				+ user.getName());
@@ -232,7 +249,7 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 		}
 
 		if (iface.getDhcp().isSetAndNotNull()) {
-			final boolean dhcp = iface.getDhcp().getValue();
+			var dhcp = iface.getDhcp().getValue();
 			result.add(EMPTY_SECTION);
 			if (dhcp) { // dhcp == yes
 				result.add(DHCP_SECTION);
@@ -262,15 +279,17 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 	@Override
 	public CompletableFuture<ExecuteSystemCommandResponse> handleExecuteSystemCommandRequest(
 			ExecuteSystemCommandRequest request) {
-		return execute(request.systemCommand).thenApply(cmd -> { //
-			final var scr = new SystemCommandResponse(cmd.stdout(), cmd.stderr(), cmd.exitCode());
-			return new ExecuteSystemCommandResponse(request.id, scr);
-		});
+		var result = new CompletableFuture<ExecuteSystemCommandResponse>();
+		this.execute(request.systemCommand, //
+				scr -> result.complete(new ExecuteSystemCommandResponse(request.id, scr)),
+				e -> result.completeExceptionally(e));
+		return result;
 	}
 
 	@Override
 	public CompletableFuture<ExecuteSystemRestartResponse> handleExecuteSystemRestartRequest(
 			ExecuteSystemRestartRequest request) {
+		final var result = new CompletableFuture<ExecuteSystemRestartResponse>();
 		var sc = new SystemCommand(//
 				switch (request.type) { // actual command string
 				case HARD -> "/usr/bin/systemctl reboot -i"; // "-i" is for "ignore inhibitors and users"
@@ -280,18 +299,119 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 				5, // timeoutSeconds
 				Optional.empty(), // username
 				Optional.empty()); // password
-		return execute(sc).thenApply(cmd -> { //
-			final var scr = new SystemCommandResponse(cmd.stdout(), cmd.stderr(), cmd.exitCode());
-			return new ExecuteSystemRestartResponse(request.id, scr);
-		});
+		this.execute(sc, //
+				scr -> result.complete(new ExecuteSystemRestartResponse(request.id, scr)),
+				e -> result.completeExceptionally(e));
+		return result;
 	}
 
-	private static CompletableFuture<Command> execute(SystemCommand sc) {
-		return new Bash(sc.command()) //
-				.withTimeout(sc.timeoutSeconds()) //
-				.withSudo(sc.username().orElse(null), sc.password().orElse(null)) //
-				.runInBackground(sc.runInBackground()) //
-				.execute();
+	private void execute(SystemCommand sc, Consumer<SystemCommandResponse> scr, Consumer<Throwable> error) {
+		try {
+			final Process proc;
+			if (sc.username().isPresent() && sc.password().isPresent()) {
+				// Authenticate with user and password
+				proc = getRuntime().exec(new String[] { //
+						"/bin/bash", "-c", "--", //
+						"echo " + sc.password().get() + " | " //
+								+ " /usr/bin/sudo -Sk -p '' -u \"" + sc.username().get() + "\" -- " //
+								+ sc.command() });
+			} else if (sc.password().isPresent()) {
+				// Authenticate with password (user must have 'sudo' permissions)
+				proc = getRuntime().exec(new String[] { //
+						"/bin/bash", "-c", "--", //
+						"echo " + sc.password().get() + " | " //
+								+ " /usr/bin/sudo -Sk -p '' -- " //
+								+ sc.command() });
+			} else {
+				// No authentication: run as current user
+				proc = getRuntime().exec(new String[] { //
+						"/bin/bash", "-c", "--", sc.command() });
+			}
+
+			// get stdout and stderr
+			var stdoutFuture = supplyAsync(new InputStreamToString(this.parent, sc.command(), proc.getInputStream()));
+			var stderrFuture = supplyAsync(new InputStreamToString(this.parent, sc.command(), proc.getErrorStream()));
+
+			if (sc.runInBackground()) {
+				/*
+				 * run in background
+				 */
+				var stdout = new String[] { //
+						"Command [" + sc.command() + "] executed in background...", //
+						"Check system logs for more information." };
+				scr.accept(new SystemCommandResponse(stdout, new String[0], 0));
+
+			} else {
+				/*
+				 * run in foreground with timeout
+				 */
+				runAsync(() -> {
+					var stderr = new ArrayList<>();
+					try {
+						// apply command timeout
+						if (!proc.waitFor(sc.timeoutSeconds(), TimeUnit.SECONDS)) {
+							stderr.add("Command [" + sc.command() + "] timed out.");
+							proc.destroy();
+						}
+
+						var stdout = stdoutFuture.get(1, TimeUnit.SECONDS);
+						stderr.addAll(stderrFuture.get(1, TimeUnit.SECONDS));
+						scr.accept(new SystemCommandResponse(//
+								stdout.toArray(new String[stdout.size()]), //
+								stderr.toArray(new String[stderr.size()]), //
+								proc.exitValue() //
+						));
+
+					} catch (Throwable e) {
+						error.accept(e);
+					}
+				});
+			}
+		} catch (IOException e) {
+			error.accept(e);
+		}
+	}
+
+	/**
+	 * Asynchronously converts a InputStream to a String.
+	 */
+	private static class InputStreamToString implements Supplier<List<String>> {
+		private final Logger log = LoggerFactory.getLogger(InputStreamToString.class);
+
+		private final HostImpl parent;
+		private final String command;
+		private final InputStream stream;
+
+		public InputStreamToString(HostImpl parent, String command, InputStream stream) {
+			this.parent = parent;
+			this.command = StringUtils.toShortString(command, 20);
+			this.stream = stream;
+		}
+
+		@Override
+		public List<String> get() {
+			List<String> result = new ArrayList<>();
+			BufferedReader reader = null;
+			String line = null;
+			try {
+				reader = new BufferedReader(new InputStreamReader(this.stream));
+				while ((line = reader.readLine()) != null) {
+					result.add(line);
+					this.parent.logInfo(this.log, "[" + this.command + "] " + line);
+				}
+			} catch (Throwable e) {
+				result.add(e.getClass().getSimpleName() + ": " + line);
+			} finally {
+				if (reader != null) {
+					try {
+						reader.close();
+					} catch (IOException e) {
+						/* ignore */
+					}
+				}
+			}
+			return result;
+		}
 	}
 
 	@Override
@@ -326,9 +446,9 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 	private static final Pattern NETWORK_IP_MASQUERADE = Pattern //
 			.compile("^IPMasquerade=(\\w+)$");
 	private static final Pattern GATEWAY_METRIC = Pattern //
-			.compile("^Metric=([\\d]+)$");
+			.compile("^Metric=([0-9]+)$");
 	private static final Pattern ROUTE_METRIC = Pattern //
-			.compile("^RouteMetric=([\\d]+)$");
+			.compile("^RouteMetric=([0-9]+)$");
 
 	/**
 	 * Parses a Systemd-Networkd configuration file.
@@ -402,13 +522,17 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 			 * Parse Block
 			 */
 			switch (currentBlock) {
-			case MATCH -> onMatchString(MATCH_NAME, line, name::set);
+			case MATCH -> {
+				onMatchString(MATCH_NAME, line, property -> {
+					name.set(property);
+				});
+			}
 			case NETWORK -> {
 				onMatchString(NETWORK_DHCP, line, property -> {
-					dhcp.set(ConfigurationProperty.of(property.equalsIgnoreCase("yes")));
+					dhcp.set(ConfigurationProperty.of(property.toLowerCase().equals("yes")));
 				});
 				onMatchString(NETWORK_LINK_LOCAL_ADDRESSING, line, property -> {
-					linkLocalAddressing.set(ConfigurationProperty.of(property.equalsIgnoreCase("yes")));
+					linkLocalAddressing.set(ConfigurationProperty.of(property.toLowerCase().equals("yes")));
 				});
 				onMatchInet4Address(NETWORK_GATEWAY, line, property -> {
 					gateway.set(ConfigurationProperty.of(property));
@@ -425,7 +549,7 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 					addresses.set(ConfigurationProperty.of(addressDetails));
 				});
 				onMatchString(NETWORK_IPV4_FORWARDING, line, property -> {
-					ipv4Forwarding.set(ConfigurationProperty.of(property.equalsIgnoreCase("yes")));
+					ipv4Forwarding.set(ConfigurationProperty.of(property.toLowerCase().equals("yes")));
 				});
 				onMatchString(NETWORK_IP_MASQUERADE, line, property -> {
 					ipMasquerade.set(ConfigurationProperty.of(IpMasqueradeSetting.findBySettingValue(property)));
@@ -491,10 +615,7 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 					.flatMap(t -> t.ips().stream() //
 							.map(d -> d.ip().getInet4Address())) //
 					.toList();
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-			return Collections.emptyList();
-		} catch (ExecutionException e) {
+		} catch (InterruptedException | ExecutionException e) {
 			return Collections.emptyList();
 		}
 
@@ -508,10 +629,7 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 			var resultIpShow = this.handleExecuteSystemCommandRequest(reqIpShow).get().getResult().toString();
 			var resultIpRoute = this.handleExecuteSystemCommandRequest(reqIpRoute).get().getResult().toString();
 			return new GetNetworkInfo.Response(parseShowJson(resultIpShow), parseRouteJson(resultIpRoute));
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-			return new GetNetworkInfo.Response(Collections.emptyList(), Collections.emptyList());
-		} catch (ExecutionException e) {
+		} catch (InterruptedException | ExecutionException e) {
 			return new GetNetworkInfo.Response(Collections.emptyList(), Collections.emptyList());
 		}
 
@@ -561,12 +679,16 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 
 		return networkInterfaces.stream() //
 				.map(SystemdInterface.serializer()::deserialize) //
-				.map(t -> new NetworkInfoWrapper(t.ifname(), t.addressInfos.stream() //
-						.map(address -> new NetworkInfoAddress(//
-								new Inet4AddressWithSubnetmask(address.label(), parseOrNull(address.local()),
-										address.prefixlen),
-								address.dynamic)) //
-						.toList())) //
+				.map(t -> {
+					return new NetworkInfoWrapper(t.ifname(), t.addressInfos.stream() //
+							.map(address -> {
+								return new NetworkInfoAddress(//
+										new Inet4AddressWithSubnetmask(address.label(), parseOrNull(address.local()),
+												address.prefixlen),
+										address.dynamic);
+							}) //
+							.toList());
+				}) //
 				.toList();
 	}
 
@@ -578,16 +700,18 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 		 * @return the created {@link JsonSerializer}
 		 */
 		public static JsonSerializer<SystemdInterface> serializer() {
-			return jsonObjectSerializer(SystemdInterface.class, //
-					json -> new SystemdInterface(//
-							json.getString("ifname"), //
-							json.getList("addr_info", SystemdAddressInfo.serializer())),
-					obj -> JsonUtils.buildJsonObject() //
-							.addProperty("ifname", obj.ifname()) //
-							.add("addr_info", SystemdAddressInfo.serializer().toListSerializer() //
-									.serialize(obj.addressInfos())) //
-							.build() //
-			);
+			return jsonObjectSerializer(SystemdInterface.class, json -> {
+				return new SystemdInterface(//
+						json.getString("ifname"), //
+						json.getList("addr_info", SystemdAddressInfo.serializer()) //
+				);
+			}, obj -> {
+				return JsonUtils.buildJsonObject() //
+						.addProperty("ifname", obj.ifname()) //
+						.add("addr_info", SystemdAddressInfo.serializer().toListSerializer() //
+								.serialize(obj.addressInfos())) //
+						.build();
+			});
 		}
 
 	}
@@ -600,21 +724,24 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 		 * @return the created {@link JsonSerializer}
 		 */
 		public static JsonSerializer<SystemdAddressInfo> serializer() {
-			return jsonObjectSerializer(SystemdAddressInfo.class, //
-					json -> new SystemdAddressInfo(//
-							json.getString("family"), //
-							json.getString("local"), //
-							json.getInt("prefixlen"), //
-							json.getStringOrNull("label"), //
-							json.getOptionalBoolean("dynamic").orElse(false)), //
-					obj -> JsonUtils.buildJsonObject() //
-							.addProperty("family", obj.family()) //
-							.addProperty("local", obj.local()) //
-							.addProperty("prefixlen", obj.prefixlen()) //
-							.addProperty("label", obj.label()) //
-							.onlyIf(obj.dynamic(), b -> b//
-									.addProperty("dynamic", obj.dynamic()))
-							.build());
+			return jsonObjectSerializer(SystemdAddressInfo.class, json -> {
+				return new SystemdAddressInfo(//
+						json.getString("family"), //
+						json.getString("local"), //
+						json.getInt("prefixlen"), //
+						json.getStringOrNull("label"), //
+						json.getOptionalBoolean("dynamic").orElse(false) //
+				);
+			}, obj -> {
+				return JsonUtils.buildJsonObject() //
+						.addProperty("family", obj.family()) //
+						.addProperty("local", obj.local()) //
+						.addProperty("prefixlen", obj.prefixlen()) //
+						.addProperty("label", obj.label()) //
+						.onlyIf(obj.dynamic(), b -> b//
+								.addProperty("dynamic", obj.dynamic()))
+						.build();
+			});
 		}
 
 	}
@@ -628,8 +755,9 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 				Optional.empty(), // username
 				Optional.empty()); // password
 
-		return execute(sc).thenApply(success -> {
-			final var osVersionName = success.stdout().stream() //
+		final var versionFuture = new CompletableFuture<String>();
+		this.execute(sc, success -> {
+			final var osVersionName = Stream.of(success.stdout()) //
 					.map(t -> t.split("=", 2)) //
 					.filter(t -> t.length == 2) //
 					.filter(t -> t[0].equals("PRETTY_NAME")) //
@@ -642,9 +770,10 @@ public class OperatingSystemDebianSystemd implements OperatingSystem {
 					}) //
 					.findAny();
 
-			return osVersionName.orElseThrow(() -> new CompletionException(
-					new OpenemsException("OS-Version name not found in /etc/os-release")));
-		});
+			osVersionName.ifPresentOrElse(versionFuture::complete, () -> versionFuture
+					.completeExceptionally(new OpenemsException("OS-Version name not found in /etc/os-release")));
+		}, versionFuture::completeExceptionally);
+		return versionFuture;
 	}
 
 	@Override

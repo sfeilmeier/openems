@@ -73,10 +73,6 @@ export const theme = {
                     option: { value: "commercial-92-cluster-slave" },
                 },
                 {
-                    name: "Commercial 100",
-                    option: { value: "commercial-100" },
-                },
-                {
                     name: "Industrial S",
                     option: { value: "Industrial S" },
                 },
