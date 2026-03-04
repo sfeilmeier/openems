@@ -125,6 +125,7 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.FENECON.Industrial.S.ISK011", "https://fenecon.de/fenecon-industrial-s") //
 			.put("App.FENECON.ProHybrid.10", "https://docs.fenecon.de/de/legacy.html#_2018") //
 			.put("App.FENECON.ProHybrid.GW", "https://docs.fenecon.de/de/legacy.html#_2018") //
+			.put("App.FENECON.ProHybrid.9.10", "https://docs.fenecon.de/de/legacy.html#_2018") //
 
 			// Basis-Apps
 			.put("App.PvSelfConsumption.SelfConsumptionOptimization",
