@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.cluster.parallel;
 import java.util.List;
 import java.util.function.BiFunction;
 
+import io.openems.common.utils.IntUtils;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.BatteryFeneconF2bCluster;
@@ -13,9 +14,9 @@ import io.openems.edge.common.type.TypeUtils;
 public class ParallelChannelManager extends ChannelManager {
 
 	private final BatteryFeneconF2bClusterParallelImpl parent;
-	private static final BiFunction<Integer, Integer, Integer> INTEGER_SUM = TypeUtils::sum;
-	private static final BiFunction<Integer, Integer, Integer> INTEGER_MIN = TypeUtils::min;
-	private static final BiFunction<Integer, Integer, Integer> INTEGER_MAX = TypeUtils::max;
+	private static final BiFunction<Integer, Integer, Integer> INTEGER_SUM = IntUtils::sumInteger;
+	private static final BiFunction<Integer, Integer, Integer> INTEGER_MIN = IntUtils::minInteger;
+	private static final BiFunction<Integer, Integer, Integer> INTEGER_MAX = IntUtils::maxInteger;
 	private static final BiFunction<Integer, Integer, Integer> INTEGER_AVG = TypeUtils::averageInt;
 
 	public ParallelChannelManager(BatteryFeneconF2bClusterParallelImpl parent) {
@@ -29,14 +30,14 @@ public class ParallelChannelManager extends ChannelManager {
 		this.setBatteryLimits(batteries, //
 				Battery.ChannelId.CHARGE_MAX_CURRENT, //
 				Battery.ChannelId.CURRENT, //
-				TypeUtils::sum, //
+				IntUtils::sumInteger, //
 				TypeUtils::subtract, //
 				this.parent::_setChargeMaxCurrent);
 		this.setBatteryLimits(batteries, //
 				Battery.ChannelId.DISCHARGE_MAX_CURRENT, //
 				Battery.ChannelId.CURRENT, //
 				TypeUtils::subtract, //
-				TypeUtils::sum, //
+				IntUtils::sumInteger, //
 				this.parent::_setDischargeMaxCurrent);
 		this.calculate(INTEGER_AVG, batteries, Battery.ChannelId.VOLTAGE);
 		this.calculate(INTEGER_SUM, batteries, Battery.ChannelId.CURRENT);

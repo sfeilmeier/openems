@@ -9,13 +9,13 @@ import java.util.stream.Stream;
 import io.openems.common.channel.Unit;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.function.ThrowingConsumer;
+import io.openems.common.utils.IntUtils;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.DeviceSpecificOnSetNextValueHandler;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.BatteryFeneconF2bCluster;
 import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.channel.value.Value;
-import io.openems.edge.common.type.TypeUtils;
 
 public class BmwOnSetNextValueHandler implements DeviceSpecificOnSetNextValueHandler<BatteryFeneconF2bBmw> {
 
@@ -122,7 +122,7 @@ public class BmwOnSetNextValueHandler implements DeviceSpecificOnSetNextValueHan
 		});
 	}
 
-	private static final BiFunction<Integer, Integer, Integer> INTEGER_MIN = TypeUtils::min;
+	private static final BiFunction<Integer, Integer, Integer> INTEGER_MIN = IntUtils::minInteger;
 
 	/**
 	 * Aggregate Channels .

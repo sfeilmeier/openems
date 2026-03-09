@@ -1,9 +1,12 @@
 package io.openems.edge.battery.fenecon.f2b.cluster.serial;
 
+import static io.openems.common.utils.IntUtils.sumInteger;
+
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+import io.openems.common.utils.IntUtils;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.bmw.BatteryFeneconF2bBmw;
@@ -17,8 +20,8 @@ public class SerialChannelManager extends ChannelManager {
 
 	private final BatteryFeneconF2bClusterSerialImpl parent;
 
-	private static final BiFunction<Integer, Integer, Integer> INTEGER_MIN = TypeUtils::min;
-	private static final BiFunction<Integer, Integer, Integer> INTEGER_SUM = TypeUtils::sum;
+	private static final BiFunction<Integer, Integer, Integer> INTEGER_MIN = IntUtils::minInteger;
+	private static final BiFunction<Integer, Integer, Integer> INTEGER_SUM = IntUtils::sumInteger;
 	private static final BiFunction<Integer, Integer, Integer> INTEGER_AVG = TypeUtils::averageInt;
 
 	public SerialChannelManager(BatteryFeneconF2bClusterSerialImpl parent) {
@@ -33,7 +36,7 @@ public class SerialChannelManager extends ChannelManager {
 				Battery.ChannelId.CHARGE_MAX_VOLTAGE, //
 				Battery.ChannelId.VOLTAGE, //
 				TypeUtils::subtract, //
-				TypeUtils::sum, //
+				IntUtils::sumInteger, //
 				this.parent::_setChargeMaxVoltage);
 		this.setBatteryLimits(batteries, //
 				Battery.ChannelId.DISCHARGE_MIN_VOLTAGE, //
@@ -74,7 +77,7 @@ public class SerialChannelManager extends ChannelManager {
 				if (!battery.getInternalVoltage().isDefined()) {
 					return;
 				}
-				batteryVoltage = TypeUtils.sum(batteryVoltage, battery.getInternalVoltage().get());
+				batteryVoltage = sumInteger(batteryVoltage, battery.getInternalVoltage().get());
 			}
 			cluster._setInternalVoltage(TypeUtils.divide(batteryVoltage, 10));
 		};
