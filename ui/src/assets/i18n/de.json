@@ -763,6 +763,9 @@
     "NAVIGATION_INFO": "Wir arbeiten aktuell daran, unser Monitoring sowie die App neu zu gestalten. Dies betrifft die Navigation und Funktionen.",
     "NAVIGATION_DETAILS": " In diesem Hilfe-Chip findest du jederzeit Unterstützung. Hier gibt es Infos zu den Änderungen, Erklärungen oder Hilfestellungen – inklusive der erweiterten Möglichkeiten deiner Ladestation.",
     "LINK": "Details findest du unter folgendem Link:",
+    "LINK_TEXT": "Changelog zum Beta-Test ansehen",
+    "SURVEY": "Hier können Sie uns Ihr Feedback zum Beta-Test mitteilen:",
+    "SURVEY_LINK": "An der Beta-Test-Umfrage teilnehmen",
     "HELP": "Hilfe"
   },
   "GRID_STATES": {

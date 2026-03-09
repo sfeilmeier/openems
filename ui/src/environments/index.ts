@@ -79,6 +79,7 @@ export interface Environment {
     readonly links: {
         readonly REDIRECT: {
             readonly BETA_CHANGE_LOG: string | null,
+            readonly BETA_SURVEY: string | null,
             readonly COMMON_STORAGE: string | null,
             readonly COMMON_AUTARCHY: string | null,
             readonly COMMON_CONSUMPTION: string | null,
