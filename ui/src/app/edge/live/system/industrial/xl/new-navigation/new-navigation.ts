@@ -6,10 +6,10 @@ import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { CommonUiModule } from "src/app/shared/common-ui.module";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { AbstractFormlyComponent, OeFormlyField, OeFormlyView } from "src/app/shared/components/shared/oe-formly-component";
-import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { ChannelAddress, Edge, EdgeConfig, EdgePermission, Websocket } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
+import { SystemIndustrialJsonRpcHelper } from "../../../system-industrial-json-rpc-helper";
 import { ClearErrorRequest } from "../../jsonrpc/clearErrorRequest";
 import { SystemErrorAcknowledge } from "../../jsonrpc/systemErrorAcknowledge";
 
@@ -130,26 +130,24 @@ export class SystemIndustrialXlHomeComponent extends AbstractFormlyComponent {
     }
 
     protected clearErrorRequest(self: SystemIndustrialXlHomeComponent): () => void {
-        return () => {
-            const edge = self.service.currentEdge();
-            if (edge && self.component) {
-                edge.sendRequest(
-                    this.websocket,
-                    new ComponentJsonApiRequest({ componentId: self.component?.id, payload: new ClearErrorRequest() }),
-                );
-            }
-        };
+        return SystemIndustrialJsonRpcHelper.createRpcCallback(
+            self.service,
+            self.translate,
+            self.websocket,
+            self.service.currentEdge(),
+            self.component,
+            new ClearErrorRequest()
+        );
     }
 
     protected systemErrorAcknowledge(self: SystemIndustrialXlHomeComponent): () => void {
-        return () => {
-            const edge = self.service.currentEdge();
-            if (edge && self.component) {
-                edge.sendRequest(
-                    this.websocket,
-                    new ComponentJsonApiRequest({ componentId: self.component?.id, payload: new SystemErrorAcknowledge() }),
-                );
-            }
-        };
+        return SystemIndustrialJsonRpcHelper.createRpcCallback(
+            self.service,
+            self.translate,
+            self.websocket,
+            self.service.currentEdge(),
+            self.component,
+            new SystemErrorAcknowledge()
+        );
     }
 }

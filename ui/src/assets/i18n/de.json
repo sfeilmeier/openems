@@ -530,6 +530,8 @@
             "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Klimaanlagen reset:",
             "CLEAR_COOLING_UNIT_ERRORS_TEXT": "notwendig für Klimaanlagen Fehler"
           },
+          "RPC_SUCCESS": "Befehl erfolgreich ausgeführt",
+          "RPC_FAILED": "Befehl ausführen fehlgeschlagen",
           "OVERALL_SYSTEM": "Gesamtsystem"
         },
         "TIME_OF_USE_TARIFF": {

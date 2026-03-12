@@ -531,6 +531,8 @@
             "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Cooling unit reset:",
             "CLEAR_COOLING_UNIT_ERRORS_TEXT": "necessary for cooling unit errors"
           },
+          "RPC_SUCCESS": "Command execution successfully",
+          "RPC_FAILED": "Command execution failed",
           "OVERALL_SYSTEM": "Overall system"
         },
         "TIME_OF_USE_TARIFF": {
