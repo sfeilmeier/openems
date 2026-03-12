@@ -2,7 +2,7 @@ package io.openems.edge.battery.wuerthbms.enums;
 
 import io.openems.common.types.OptionsEnum;
 
-public enum StartUpPathTestFail implements OptionsEnum {
+public enum StartUpPathTestFailedAt implements OptionsEnum {
 	UNDEFINED(-1, "Undefined"), //
 	HV_PLUS(0, "HV plus"), //
 	HV_MINUS(1, "HV minus"), //
@@ -12,7 +12,7 @@ public enum StartUpPathTestFail implements OptionsEnum {
 	private final int value;
 	private final String name;
 
-	StartUpPathTestFail(int value, String name) {
+	StartUpPathTestFailedAt(int value, String name) {
 		this.value = value;
 		this.name = name;
 	}

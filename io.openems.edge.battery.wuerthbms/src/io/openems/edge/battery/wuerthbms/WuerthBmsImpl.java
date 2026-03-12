@@ -229,7 +229,7 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 						m(Battery.ChannelId.CURRENT, new SignedWordElement(30008)),
 						m(WuerthBms.ChannelId.PACK_SHUNT_TEMPERATURE, new UnsignedWordElement(30009), //
 								SCALE_FACTOR_MINUS_1), //
-						m(Battery.ChannelId.VOLTAGE, new UnsignedWordElement(30010)), //
+						m(Battery.ChannelId.VOLTAGE, new UnsignedWordElement(30010), SCALE_FACTOR_MINUS_1), //
 						m(WuerthBms.ChannelId.PACK_LIMIT_MAX_BATTERY_VOLTAGE, new UnsignedWordElement(30011)), //
 						m(BatteryProtection.ChannelId.BP_CHARGE_BMS, new UnsignedWordElement(30012)),
 						m(WuerthBms.ChannelId.CELL_VOLT_PLAUSIBILITY, new UnsignedWordElement(30013)),
@@ -245,7 +245,7 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 						m(WuerthBms.ChannelId.PACK_VOLTAGE, new UnsignedWordElement(30020), SCALE_FACTOR_MINUS_1), //
 						m(WuerthBms.ChannelId.PACK_HIGH_VOLTAGE_PLUS, new UnsignedWordElement(30021), //
 								SCALE_FACTOR_MINUS_1), //
-						m(WuerthBms.ChannelId.PACK_HIGH_VOLTAGE_MINUS, new UnsignedWordElement(30022)), //
+						new DummyRegisterElement(30022), // not implemented by Würth
 						m(WuerthBms.ChannelId.SW_VERSION_MAJOR, new UnsignedWordElement(30023)), //
 						m(WuerthBms.ChannelId.SW_VERSION_MINOR, new UnsignedWordElement(30024)), //
 						m(WuerthBms.ChannelId.SW_VERSION_PATCH, new UnsignedWordElement(30025)), //
@@ -261,7 +261,7 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 						m(WuerthBms.ChannelId.DIAG_LAST_FAILED_CSC, new UnsignedWordElement(30035)), //
 						m(WuerthBms.ChannelId.LATENT_LAST_FAILED_CSC, new UnsignedWordElement(30036)), //
 						m(WuerthBms.ChannelId.SHUTDOWN_PATH_CAUSE, new UnsignedWordElement(30037)), //
-						m(WuerthBms.ChannelId.START_UP_PATH_TEST_FAIL, new UnsignedWordElement(30038)), //
+						m(WuerthBms.ChannelId.START_UP_PATH_FAILED_AT, new UnsignedWordElement(30038)), //
 						m(WuerthBms.ChannelId.PACK_CURRENT_MA, new SignedWordElement(30039)), //
 						m(WuerthBms.ChannelId.AVG_CELL_VOLTAGE_STRING, new UnsignedWordElement(30040)), //
 						m(Battery.ChannelId.MAX_CELL_VOLTAGE, new UnsignedWordElement(30041)), //
@@ -308,7 +308,7 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 
 						m(new BitsWordElement(30049, this) //
 								.bit(0, WuerthBms.ChannelId.KL_30_C_FAULT) //
-								.bit(1, WuerthBms.ChannelId.CALIBRATION_PASSED) //
+								.bit(1, WuerthBms.ChannelId.SHUNT_CALIBRATION_ERROR) //
 								.bit(2, WuerthBms.ChannelId.SET_IP_FAIL) //
 								.bit(3, WuerthBms.ChannelId.FEEDBACK_BROKEN) //
 								.bit(4, WuerthBms.ChannelId.PRECHARGE_ENERGY_MAX) //
@@ -350,7 +350,12 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 						m(WuerthBms.ChannelId.CFG_BATT_CELL_SAFE_TEMPERATURE_FTTI_MS, new UnsignedWordElement(33031)), //
 						m(WuerthBms.ChannelId.CFG_BATT_STRING_MIN_V, new UnsignedWordElement(33032)), //
 						m(WuerthBms.ChannelId.CFG_BATT_STRING_MAX_V, new UnsignedWordElement(33033)), //
-						new DummyRegisterElement(33034, 33039), // not implemented by Würth
+						m(WuerthBms.ChannelId.CONTACTOR_SOH_MIN_WARNING, new UnsignedWordElement(33034)), //
+						m(WuerthBms.ChannelId.SOC_MIN_WARNING, new UnsignedWordElement(33035)), //
+						m(WuerthBms.ChannelId.CONTACTOR_FEEDBACK_VOLTAGE_TOLERANCE, new UnsignedWordElement(33036)), //
+						new DummyRegisterElement(33037), // not implemented by Würth
+						m(WuerthBms.ChannelId.PRECHARGE_MAX_POWER_DISSIPATION_J, new UnsignedWordElement(33038)), //
+						new DummyRegisterElement(33039), // not implemented by Würth
 						m(WuerthBms.ChannelId.CFG_CHARGE_CURRENT_LIMIT_TOLERANCE_A, new UnsignedWordElement(33040)), //
 						m(WuerthBms.ChannelId.CFG_SHUNT_TEMPERATURE_HIGH, new UnsignedWordElement(33041)), //
 						m(WuerthBms.ChannelId.CFG_BALANCE_ACTIVATE, new UnsignedWordElement(33042)), //
@@ -363,7 +368,9 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 						m(WuerthBms.ChannelId.CFG_BMS_IDLE_CURRENT_ABS_MA, new UnsignedWordElement(33049)), //
 						m(WuerthBms.ChannelId.CFG_BMS_MAXIMUM_SOC, new UnsignedWordElement(33050)), //
 						m(WuerthBms.ChannelId.CFG_BMS_MINIMUM_SOC, new UnsignedWordElement(33051)), //
-						new DummyRegisterElement(33052, 33058), // not implemented by Würth
+						m(WuerthBms.ChannelId.CFG_PRECHARGE_ACTIVE_CURRENT_MA, new UnsignedWordElement(33052)), //
+						m(WuerthBms.ChannelId.CFG_PRECHARGE_RESISTOR_OHMS, new UnsignedWordElement(33053)), //
+						new DummyRegisterElement(33054, 33058), // not implemented by Würth
 						m(WuerthBms.ChannelId.CFG_PRECHARGE_THRESHOLD, new UnsignedWordElement(33059)), //
 						new DummyRegisterElement(33060), // not implemented by Würth
 						m(WuerthBms.ChannelId.CFG_PRECHARGE_TIMEOUT, new UnsignedWordElement(33061)), //
