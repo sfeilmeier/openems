@@ -211,24 +211,28 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                 break;
         }
 
+        const templateOptions: any = {
+            label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BMS_BOX"),
+            required: true,
+            placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
+        };
+
+        if (this.isDoubleSocketValid) {
+            templateOptions.checkbox = {
+                value: this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]?.[towerNr] ?? false,
+                label: this.serialNumbers?.doubleSocket?.label,
+                onValueChanged: (checked: boolean) => {
+                    if (this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]) {
+                        this.serialNumbers.doubleSocket.isEnabled[slaveIndex][towerNr] = checked;
+                    }
+                },
+            };
+        }
+
         fields.push({
             key: "bmsBox",
             type: "input",
-            templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BMS_BOX"),
-                required: true,
-                placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
-                checkbox: {
-                    value: this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]?.[towerNr] ?? false,
-                    label: this.serialNumbers?.doubleSocket?.label,
-
-                    updateFn: (checked: boolean) => {
-                        if (this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]) {
-                            this.serialNumbers.doubleSocket.isEnabled[slaveIndex][towerNr] = checked;
-                        }
-                    },
-                },
-            },
+            templateOptions,
             validators: {
                 validation: ["batteryAndBmsBoxSerialNumber"],
             },

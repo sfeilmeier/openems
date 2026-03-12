@@ -111,6 +111,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     public override readonly defaultNumberOfModules: number = 5;
     public readonly parallelBoxPrefix: string = ExtensionBoxPrefix.FHP;
     public readonly emsBoxPrefix: string | null = null;
+    public override isDoubleSocketValid: boolean = true;
 
     private numberOfModulesPerTower: number;
     public abstract mppt: any;
@@ -170,103 +171,56 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         return fields;
     }
 
-    public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, batteryIndex: number) {
-        const fields: FormlyFieldConfig[] = [];
-        const emsBoxSerialNumber: string | null = sessionStorage.getItem("emsBoxSerialNumber")?.slice(this.emsBoxPrefix?.length) ?? null;
+    public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, slaveIndex?: number): FormlyFieldConfig[] {
 
-        switch (towerNr) {
-            case 0:
-                fields.push({
-                    key: "batteryInverter",
-                    type: "input",
-                    templateOptions: {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER"),
-                        required: true,
-                        placeholder: "xxxxxxxxxxxxxxxx",
-                    },
-                    validators: {
-                        validation: ["batteryInverterSerialNumber"],
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                fields.push({
-                    key: "emsBox",
-                    type: "input",
-                    templateOptions: {
-                        label: Category.toTranslatedString(this.emsBoxLabel, this.translate),
-                        required: true,
-                        prefix: this.emsBoxPrefix,
-                        placeholder: "xxxxxxxxxx",
-                    },
-                    defaultValue: emsBoxSerialNumber,
-                    validators: {
-                        validation: ["emsBoxSerialNumber"],
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                break;
-            case 1:
-                fields.push({
-                    key: "parallelBox",
-                    type: "input",
-                    templateOptions: {
-                        label: "Parallel Box",
-                        required: true,
-                        prefix: this.parallelBoxPrefix,
-                        placeholder: "xxxxxxxxx",
-                    },
-                    validators: {
-                        validation: ["boxSerialNumber"],
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                break;
-            default: // usually 2,3,4,5
-                fields.push({
-                    key: "extensionBox",
-                    type: "input",
-                    templateOptions: {
-                        label: "Extension Box",
-                        required: true,
-                        prefix: ExtensionBoxPrefix.FHE,
-                        placeholder: "xxxxxxxxx",
-                    },
-                    validators: {
-                        validation: ["boxSerialNumber"],
-                    },
-                    wrappers: ["input-serial-number"],
-                });
-                break;
+        // head fields (Inverter, EMS, etc.) which vary by system type
+        const headFields = this.getTowerHeadFields(towerNr);
+
+        const checkboxValue =
+            slaveIndex !== undefined &&
+                this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]?.[towerNr]
+                ? true
+                : false;
+
+        const onValueChanged = (checked: boolean) => {
+            if (
+                slaveIndex !== undefined &&
+                this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]
+            ) {
+                this.serialNumbers.doubleSocket.isEnabled[slaveIndex][towerNr] = checked;
+            }
+        };
+
+        // shared BMS logic (Now fully supports double socket for all)
+        const templateOptions: any = {
+            label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BMS_BOX"),
+            required: true,
+            placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
+        };
+
+        if (this.isDoubleSocketValid) {
+            templateOptions.checkbox = {
+                value: checkboxValue,
+                label: this.serialNumbers?.doubleSocket?.label,
+                onValueChanged,
+            };
         }
 
-        fields.push({
+        const bmsField: FormlyFieldConfig = {
             key: "bmsBox",
             type: "input",
-            templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BMS_BOX"),
-                required: true,
-                placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
-                ...(this.isDoubleSocketValid && {
-                    checkbox: {
-                        value: this.serialNumbers?.doubleSocket?.isEnabled?.[batteryIndex]?.[towerNr] ?? false,
-                        label: this.serialNumbers?.doubleSocket?.label,
-
-                        updateFn: (checked: boolean) => {
-                            if (this.serialNumbers?.doubleSocket?.isEnabled?.[batteryIndex]) {
-                                this.serialNumbers.doubleSocket.isEnabled[batteryIndex][towerNr] = checked;
-                            }
-                        },
-                    },
-                }),
-            },
+            templateOptions,
             validators: {
                 validation: ["batteryAndBmsBoxSerialNumber"],
             },
             wrappers: ["input-serial-number"],
-        });
+        };
 
-        for (let moduleNr = 0; moduleNr < numberOfModulesPerTower; moduleNr++) {
-            fields.push({
+
+        // shared Module logic
+        const moduleFields: FormlyFieldConfig[] = Array.from(
+            { length: numberOfModulesPerTower },
+            (_, moduleNr) => ({
                 key: "module" + moduleNr,
                 type: "input",
                 templateOptions: {
@@ -274,14 +228,12 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
                     required: true,
                     placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
                 },
-                validators: {
-                    validation: ["batteryAndBmsBoxSerialNumber"],
-                },
+                validators: { validation: ["batteryAndBmsBoxSerialNumber"] },
                 wrappers: ["input-serial-number"],
-            });
-        }
+            })
+        );
 
-        return fields;
+        return [...headFields, bmsField, ...moduleFields];
     }
 
     public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower: number) {
@@ -620,20 +572,6 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
                 value: this.avu.serialNumber,
             });
         }
-
-        // Speichersystemkomponenten
-        protocol.lots = [];
-
-        this.serialNumbers.batteriesData.forEach((batteryData) => {
-            batteryData.modules.forEach((module) => {
-                // Push the data to protocol.lots
-                protocol.lots.push({
-                    category: batteryData.label,
-                    name: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", { label: module.label }),
-                    serialNumber: module.value,
-                });
-            });
-        });
 
         return new Promise((resolve, reject) => {
             websocket
@@ -1100,6 +1038,74 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
 
         // maximum limit for feed in power is 25000.
         return Math.min(totalPvPower, this.maxFeedInLimit);
+    }
+
+    protected getTowerHeadFields(towerNr: number): FormlyFieldConfig[] {
+        const emsBoxSerialNumber: string | null =
+            sessionStorage.getItem("emsBoxSerialNumber")?.slice(this.emsBoxPrefix?.length) ?? null;
+
+        switch (towerNr) {
+
+            case 0:
+                return [
+                    {
+                        key: "batteryInverter",
+                        type: "input",
+                        templateOptions: {
+                            label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER"),
+                            required: true,
+                            placeholder: "xxxxxxxxxxxxxxxx",
+                        },
+                        validators: { validation: ["batteryInverterSerialNumber"] },
+                        wrappers: ["input-serial-number"],
+                    },
+                    {
+                        key: "emsBox",
+                        type: "input",
+                        templateOptions: {
+                            label: Category.toTranslatedString(this.emsBoxLabel, this.translate),
+                            required: true,
+                            prefix: this.emsBoxPrefix,
+                            placeholder: "xxxxxxxxxx",
+                        },
+                        defaultValue: emsBoxSerialNumber,
+                        validators: { validation: ["emsBoxSerialNumber"] },
+                        wrappers: ["input-serial-number"],
+                    },
+                ];
+
+            case 1:
+                return [
+                    {
+                        key: "parallelBox",
+                        type: "input",
+                        templateOptions: {
+                            label: "Parallel Box",
+                            required: true,
+                            prefix: this.parallelBoxPrefix,
+                            placeholder: "xxxxxxxxx",
+                        },
+                        validators: { validation: ["boxSerialNumber"] },
+                        wrappers: ["input-serial-number"],
+                    },
+                ];
+
+            default:
+                return [
+                    {
+                        key: "extensionBox",
+                        type: "input",
+                        templateOptions: {
+                            label: "Extension Box",
+                            required: true,
+                            prefix: ExtensionBoxPrefix.FHE,
+                            placeholder: "xxxxxxxxx",
+                        },
+                        validators: { validation: ["boxSerialNumber"] },
+                        wrappers: ["input-serial-number"],
+                    },
+                ];
+        }
     }
 
     /**
