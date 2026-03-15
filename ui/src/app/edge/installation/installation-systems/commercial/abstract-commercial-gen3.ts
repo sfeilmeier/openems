@@ -22,6 +22,17 @@ export type MpptConfig = {
     [K in `ALIAS_MPPT_${number}`]?: string;
 };
 
+export type GensetProperties = {
+    IS_GENSET_INSTALLED: boolean;
+    RATED_POWER: number | null;
+    PREHEATING_TIME: number | null;
+    RUN_TIME: number | null;
+    ENABLE_CHARGE: boolean;
+    MAX_POWER: number | null;
+    CHARGE_SOC_START: number | null;
+    CHARGE_SOC_END: number | null;
+};
+
 export type CommercialGen3App = {
     SAFETY_COUNTRY: SafetyCountry,
     GRID_CODE: string,
@@ -82,20 +93,52 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
 
     public override energyFlowMeter: {
         meter: Meter.GridMeterCategory;
-        value?: number;
-    } = {
-        meter: Meter.GridMeterCategory.COMMERCIAL_METER,
-    };
+        value?: number
+    } =
+        {
+            meter: Meter.GridMeterCategory.COMMERCIAL_METER,
+        };
 
     // configuration-emergency-reserve
-    public override emergencyReserve = {
-        isStsBoxAvailable: false,
-        isEnabled: false,
-        minValue: 5,
-        value: 20,
-        isReserveSocEnabled: false,
-        stsBoxSerialNumber: null as string | null,
-    };
+    public override emergencyReserve: {
+        isStsBoxAvailable: boolean;
+        isEnabled: boolean;
+        minValue: number;
+        value: number;
+        isReserveSocEnabled: boolean;
+        stsBoxSerialNumber: string | null;
+        genset?: {
+            isEnabled: boolean;
+            isConnected: boolean;
+            ratedPower: number;
+            preheatingTime: number;
+            runTime: number;
+            enableCharge: boolean;
+            maxPower: number;
+            chargeSocStart: number;
+            chargeSocEnd: number;
+        };
+    } =
+        {
+            isStsBoxAvailable: false,
+            isEnabled: false,
+            minValue: 5,
+            value: 20,
+            isReserveSocEnabled: false,
+            stsBoxSerialNumber: null as string | null,
+            // Defaults based on Edge implementation
+            genset: {
+                isEnabled: false,
+                isConnected: false,
+                ratedPower: 0,
+                preheatingTime: 10,
+                runTime: 0,
+                enableCharge: false,
+                maxPower: 0,
+                chargeSocStart: 20,
+                chargeSocEnd: 40,
+            },
+        };
 
     protected abstract readonly baseImagePath: string;
 
@@ -227,13 +270,56 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
             value: this.emergencyReserve.isStsBoxAvailable ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
         });
 
-        if (this.emergencyReserve.isStsBoxAvailable) {
-            batteryInverterData.push({
-                label: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
-                value: this.emergencyReserve.stsBoxSerialNumber,
-            });
-        }
+        if (this.emergencyReserve) {
+            if (this.emergencyReserve.isStsBoxAvailable) {
+                batteryInverterData.push({
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
+                    value: this.emergencyReserve.stsBoxSerialNumber,
+                });
+            }
 
+            if (this.emergencyReserve.genset != null) {
+                batteryInverterData.push({
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CONNECTED"),
+                    value: this.emergencyReserve.genset.isConnected ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
+                });
+
+                if (this.emergencyReserve.genset.isEnabled) {
+                    batteryInverterData.push({
+                        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.POWER"),
+                        value: `${this.emergencyReserve.genset.ratedPower} kW`,
+                    });
+
+                    batteryInverterData.push({
+                        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.PREHEAT_TIME"),
+                        value: `${this.emergencyReserve.genset.preheatingTime} Sec`,
+                    });
+
+                    batteryInverterData.push({
+                        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.RUN_TIME"),
+                        value: `${this.emergencyReserve.genset.runTime} min`,
+                    });
+                }
+
+                if (this.emergencyReserve.genset.enableCharge) {
+
+                    batteryInverterData.push({
+                        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_START"),
+                        value: `${this.emergencyReserve.genset.chargeSocStart} %`,
+                    });
+
+                    batteryInverterData.push({
+                        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END"),
+                        value: `${this.emergencyReserve.genset.chargeSocEnd} %`,
+                    });
+
+                    batteryInverterData.push({
+                        label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER"),
+                        value: `${this.emergencyReserve.genset.maxPower} kW`,
+                    });
+                }
+            }
+        }
         return batteryInverterData;
     }
 
@@ -241,6 +327,77 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
         const emsType: EmsType = this.getEmsType();
 
         return System.getSubSystemFields(emsType, this.translate);
+    }
+
+    public override addProtocolItems(protocol: SetupProtocol) {
+        super.addProtocolItems(protocol);
+
+        const emergencyReserve = this.emergencyReserve;
+        protocol.items ??= [];
+
+        protocol.items.push({
+            category: Category.STS_BOX,
+            name: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE"),
+            value: emergencyReserve.isStsBoxAvailable ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
+        });
+
+        if (emergencyReserve.isStsBoxAvailable) {
+
+            protocol.items.push({
+                category: Category.STS_BOX,
+                name: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
+                value: emergencyReserve.stsBoxSerialNumber ?? "",
+            });
+        }
+
+        if (emergencyReserve.genset != null) {
+            if (emergencyReserve.genset.isEnabled) {
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CONNECTED"),
+                    value: emergencyReserve.genset.isConnected ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
+                });
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.POWER"),
+                    value: `${emergencyReserve.genset.ratedPower} kW`,
+                });
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.PREHEAT_TIME"),
+                    value: `${emergencyReserve.genset.preheatingTime} Sec`,
+                });
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.RUN_TIME"),
+                    value: `${emergencyReserve.genset.runTime} min`,
+                });
+            }
+
+            if (emergencyReserve.genset.enableCharge) {
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_START"),
+                    value: `${emergencyReserve.genset.chargeSocStart} %`,
+                });
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END"),
+                    value: `${emergencyReserve.genset.chargeSocEnd} %`,
+                });
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER"),
+                    value: `${emergencyReserve.genset.maxPower} kW`,
+                });
+            }
+        }
     }
 
     public override getGridSettingOptions() {

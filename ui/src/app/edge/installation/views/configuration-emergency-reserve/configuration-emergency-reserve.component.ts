@@ -2,7 +2,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
-import { TranslateService } from "@ngx-translate/core";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 
 @Component({
@@ -18,21 +17,13 @@ export class ConfigurationEmergencyReserveComponent implements OnInit {
     @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
     @Output() public nextViewEvent = new EventEmitter<any>();
 
-    public form: FormGroup;
-    public fields: FormlyFieldConfig[];
+    public form: FormGroup = new FormGroup({});
+    public fields: FormlyFieldConfig[] = [];
     public model;
 
-    constructor(private translate: TranslateService) { }
-
     public ngOnInit() {
-
-        this.form = new FormGroup({});
         this.fields = this.ibn.getEmergencyReserveFields();
-        this.model = this.ibn.emergencyReserve ?? {
-            isEnabled: true,
-            value: 20,
-            isReserveSocEnabled: false,
-        };
+        this.model = this.ibn.emergencyReserve;
     }
 
     public onPreviousClicked() {
@@ -42,14 +33,11 @@ export class ConfigurationEmergencyReserveComponent implements OnInit {
     public onNextClicked() {
 
         if (this.form.invalid) {
+            this.form.markAllAsTouched();
             return;
         }
 
         this.ibn.emergencyReserve = this.model;
         this.nextViewEvent.emit(this.ibn);
-    }
-
-    public setEmergencyReserve(model: any) {
-        this.ibn.emergencyReserve = model;
     }
 }

@@ -266,15 +266,6 @@ export abstract class AbstractIbn {
     }
 
     /**
-     * Adds the emergency reserve model to the IBN.
-     *
-     * @param model The model.
-     */
-    public setEmergencyReserve(model: any) {
-        this.emergencyReserve = model;
-    }
-
-    /**
      * Returns the External Feed in limit fields for all systems in Feed in limitation view.
      *
      * @returns common fields for feed in limits fields.

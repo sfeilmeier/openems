@@ -10,6 +10,16 @@ import { Commercial50Gen3Ibn } from "../../installation-systems/commercial/comme
     selector: ConfigurationStsBoxComponent.SELECTOR,
     templateUrl: "./configuration-sts-box.component.html",
     standalone: false,
+    styles: [`
+            ::ng-deep .generator-settings-toggle ion-item {
+                margin-top: var(--ion-margin-top, 1rem);
+                font-weight: bold;
+            }
+
+            ::ng-deep .generator-nested-field ion-grid {
+                padding-left: var(--ion-padding, 1rem);
+            }
+        `],
 })
 export class ConfigurationStsBoxComponent implements OnInit {
     private static readonly SELECTOR = "configuration-sts-box";

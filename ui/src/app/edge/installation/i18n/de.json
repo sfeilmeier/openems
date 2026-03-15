@@ -2,6 +2,22 @@
   "INSTALLATION": {
     "ALERTING_INFO": "Richte dir als Installateur E-Mail-Benachrichtigungen ein, wenn das FEMS für eine bestimmte Zeit offline ist oder einen Fehler meldet. Versendet wird die Nachricht an die bei der Inbetriebnahme angegebene E-Mail-Adresse.",
     "OFFLINE": "Offline",
-    "ENABLE_MPPT": "MPPT {{ mpptNumber }} aktiv"
+    "ENABLE_MPPT": "MPPT {{ mpptNumber }} aktiv",
+    "CONFIGURATION_EMERGENCY_RESERVE": {
+      "GENSET": {
+        "CONNECTED": "Generator angeschlossen?",
+        "POWER": "Nennleistung",
+        "PREHEAT_TIME": "Vorheizzeit",
+        "RUN_TIME": "Laufzeit",
+        "EMERGENCY_POWER_FUNCTION": "Soll die Notstrom-Generatorfunktion aktiviert werden?",
+        "BATTERY_CHARGING": "Batteriebeladung aus dem Generator aktivieren?",
+        "MAX_POWER": "Maximale prozentuale Ladeleistung",
+        "MAX_POWER_DESCRIPTION": "Prozentualer Anteil der verfügbaren Generatorleistung mit dem die Batterie beladen werden soll.",
+        "CHARGE_SOC_START": "Ladezustand Batterie für Start des Generators",
+        "CHARGE_SOC_START_DESCRIPTION": "Ladezustand der Batterie, bei dem der Generator gestartet wird.",
+        "CHARGE_SOC_END": "Ladezustand Batterie für Stopp des Generators",
+        "CHARGE_SOC_END_DESCRIPTION": "Ladezustand der Batterie, bei dem der Generator gestoppt wird."
+      }
+    }
   }
 }
