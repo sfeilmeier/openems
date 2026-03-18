@@ -54,9 +54,9 @@ export class LiveComponent implements OnDestroy {
 
             this.isModbusTcpWidgetAllowed = EdgePermission.isModbusTcpApiWidgetAllowed(edge);
 
-            this.service.getConfig().then(config => {
+            edge?.getFirstValidConfig(websocket)?.then(async config => {
                 this.config = config;
-                this.widgets = navigationService.getWidgets(config.widgets, userService.currentUser(), edge);
+                this.widgets = await navigationService.getWidgets(config.widgets, userService.currentUser(), edge);
                 this.advertWidgets = this.service.getAvailableAdvertWidgets(config.advertWidgets);
             });
             this.checkIfRefreshNeeded();

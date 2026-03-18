@@ -12,6 +12,10 @@ import { EvseScheduleComponent } from "src/app/edge/live/Controller/Evse/pages/s
 import { EvseAddTaskComponent } from "src/app/edge/live/Controller/Evse/pages/schedule/task/add/add";
 import { EvseEditTaskComponent } from "src/app/edge/live/Controller/Evse/pages/schedule/task/edit/edit";
 import { NavigationInfoComponent } from "src/app/edge/live/navigation-info/navigation-info";
+import { SchedulerJsCalendarComponent } from "src/app/edge/live/scheduler/js-calendar/new-navigation";
+import { ScheduleJsCalendarComponent } from "src/app/edge/live/scheduler/js-calendar/schedule/schedule.component";
+import { SchedulerJsCalendarAddTaskComponent } from "src/app/edge/live/scheduler/js-calendar/schedule/task/add/add";
+import { SchedulerJsCalendarEditTaskComponent } from "src/app/edge/live/scheduler/js-calendar/schedule/task/edit/edit";
 import { SystemIndustrialLHomeComponent } from "src/app/edge/live/system/industrial/l/new-navigation/new-navigation";
 import { IndustrialLScheduleComponent as SystemIndustrialLScheduleComponent } from "src/app/edge/live/system/industrial/l/schedule/schedule.component";
 import { SystemIndustrialLAddTaskComponent } from "src/app/edge/live/system/industrial/l/schedule/task/add/add";
@@ -73,6 +77,10 @@ export const newNavigationRoutes: Routes = [
     { path: "common/production/history", component: CommonAutarchyHistoryComponent },
     { path: "common/selfconsumption", component: CommonSelfConsumptionHomeComponent },
     { path: "common/selfconsumption/history", component: CommonSelfConsumptionHistoryComponent },
+    { path: ":componentId/scheduler-js-calendar", component: SchedulerJsCalendarComponent },
+    { path: ":componentId/scheduler-js-calendar/schedule", component: ScheduleJsCalendarComponent },
+    { path: ":componentId/scheduler-js-calendar/schedule/add-task", component: SchedulerJsCalendarAddTaskComponent },
+    { path: ":componentId/scheduler-js-calendar/schedule/task/:taskId", component: SchedulerJsCalendarEditTaskComponent },
     { path: ":componentId/industrial-l", component: SystemIndustrialLHomeComponent },
     { path: ":componentId/industrial-l/schedule", component: SystemIndustrialLScheduleComponent },
     { path: ":componentId/industrial-l/schedule/add-task", component: SystemIndustrialLAddTaskComponent, canActivate: [hasEdgeRole(Role.ADMIN), hasUserSettings(UserSettings.IS_DEVELOPER)] },
