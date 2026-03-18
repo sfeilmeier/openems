@@ -52,6 +52,7 @@ import { ChartComponent as EvcsClusterApiChartComponent } from "./Multiple/evcs-
 import { ModalComponent as EvcsClusterApiModalComponent } from "./Multiple/evcs-api-cluster/modal/modal";
 import { NavigationInfoComponent } from "./navigation-info/navigation-info";
 import { SystemModule } from "./system/system.module";
+import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage-info";
 
 @NgModule({
     imports: [
@@ -81,6 +82,7 @@ import { SystemModule } from "./system/system.module";
         ModalModule,
         SharedModule,
         SohStatusBannerComponent,
+        SystemOutageInfoComponent,
         SystemModule,
         PullToRefreshComponent,
         HelpButtonComponent,

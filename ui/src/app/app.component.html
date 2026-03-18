@@ -1,6 +1,10 @@
 <ion-app>
     <app-header></app-header>
-
+      @if(service.isSmartphoneResolution){        
+        <ion-header>
+          <oe-system-outage-info></oe-system-outage-info>
+        </ion-header>
+       }
     @if (navigationService.position() !== null) {
     <ion-content>
         @if (navigationService.position() === 'disabled') {
@@ -134,19 +138,9 @@
 </ng-template>
 
 <ng-template #footer>
-    @if (isSystemOutage) {
+  @if (!service.isSmartphoneResolution) {
     <ion-footer>
-        <ion-toolbar color="warning">
-            <ion-grid>
-                <ion-row class="ion-justify-content-center">
-                    <ion-col size="12" size-md="6">
-                        <span translate>GENERAL.SYSTEM_OUTAGE</span>
-                        <span>&nbsp;</span>
-                        <a href="https://status.fenecon.de/" target="_blank">status.fenecon.de</a>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-toolbar>
+      <oe-system-outage-info></oe-system-outage-info>
     </ion-footer>
     }
     @if (isUserAllowedToSeeFooter && !isHistoryDetailView) {
