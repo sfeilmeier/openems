@@ -1,0 +1,8 @@
+::ng-deep .genset-settings-toggle ion-item {
+    margin-top: var(--ion-margin-top, 1rem);
+    font-weight: bold;
+}
+
+::ng-deep .genset-nested-field ion-grid {
+    padding-left: var(--ion-padding, 1rem);
+}

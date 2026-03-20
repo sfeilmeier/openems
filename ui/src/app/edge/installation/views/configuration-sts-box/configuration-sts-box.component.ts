@@ -1,37 +1,28 @@
-// @ts-strict-ignore
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Edge } from "src/app/shared/shared";
-import { Commercial50Gen3Ibn } from "../../installation-systems/commercial/commercial-50/commercial-50-gen3";
+import { EmergencyReserve } from "../../installation-systems/abstract-ibn";
+import { AbstractCommercialGen3, StsBox } from "../../installation-systems/commercial/abstract-commercial-gen3";
+import { TypedFormlyFieldConfig } from "../../shared/ibndatatypes";
 
 @Component({
     selector: ConfigurationStsBoxComponent.SELECTOR,
     templateUrl: "./configuration-sts-box.component.html",
     standalone: false,
-    styles: [`
-            ::ng-deep .generator-settings-toggle ion-item {
-                margin-top: var(--ion-margin-top, 1rem);
-                font-weight: bold;
-            }
-
-            ::ng-deep .generator-nested-field ion-grid {
-                padding-left: var(--ion-padding, 1rem);
-            }
-        `],
+    styleUrl: "../../installation.component.scss",
 })
 export class ConfigurationStsBoxComponent implements OnInit {
-    private static readonly SELECTOR = "configuration-sts-box";
+    public static readonly SELECTOR = "configuration-sts-box";
 
-    @Input() public ibn: Commercial50Gen3Ibn;
-    @Input() public edge: Edge;
-    @Output() public nextViewEvent = new EventEmitter();
-    @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
+    @Input() public ibn!: AbstractCommercialGen3;
+    @Input() public edge!: Edge;
+    @Output() public nextViewEvent = new EventEmitter<AbstractCommercialGen3>();
+    @Output() public previousViewEvent = new EventEmitter<void>(); // Eradicated <any>
 
-    protected form: FormGroup;
-    protected fields: FormlyFieldConfig[];
-    protected model;
+    protected form: FormGroup = new FormGroup({});
+    protected fields: TypedFormlyFieldConfig<EmergencyReserve & StsBox>[] = [];
+    protected model!: EmergencyReserve & StsBox;
 
     constructor(private translate: TranslateService) { }
 
@@ -41,7 +32,7 @@ export class ConfigurationStsBoxComponent implements OnInit {
         this.model = this.ibn.emergencyReserve;
     }
 
-    public onNextClicked() {
+    public onNextClicked(): void {
         if (this.form.invalid) {
             return;
         }
@@ -54,12 +45,12 @@ export class ConfigurationStsBoxComponent implements OnInit {
         this.nextViewEvent.emit(this.ibn);
     }
 
-    public onPreviousClicked() {
+    public onPreviousClicked(): void {
         this.previousViewEvent.emit();
     }
 
-    public getStsBoxFields() {
-        const fields: FormlyFieldConfig[] = [];
+    public getStsBoxFields(): TypedFormlyFieldConfig<EmergencyReserve & StsBox>[] {
+        const fields: TypedFormlyFieldConfig<EmergencyReserve & StsBox>[] = [];
 
         fields.push({
             key: "isStsBoxAvailable",
@@ -69,7 +60,6 @@ export class ConfigurationStsBoxComponent implements OnInit {
                 url: "assets/img/ibn/sts-box.png",
                 imagePositionToLeft: true,
 
-                // Configuration for the nested serial number input
                 serialNumberField: {
                     key: "stsBoxSerialNumber",
                     label: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
@@ -84,8 +74,8 @@ export class ConfigurationStsBoxComponent implements OnInit {
             },
         });
 
-        fields.push(...this.ibn.getEmergencyReserveFields());
+        fields.push(...(this.ibn.getEmergencyReserveFields() as TypedFormlyFieldConfig<EmergencyReserve & StsBox>[]));
+
         return fields;
     }
-
 }

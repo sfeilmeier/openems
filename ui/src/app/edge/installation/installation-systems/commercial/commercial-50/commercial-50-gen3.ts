@@ -1,10 +1,36 @@
+import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-
-import { FormlyFieldConfig } from "node_modules/@ngx-formly/core/lib/models/fieldconfig";
+import { SetupProtocol } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
+import { Category } from "../../../shared/category";
 import { ExternalLimitationType, FeedInSetting } from "../../../shared/enums";
+import { ComponentData } from "../../../shared/ibndatatypes";
 import { SystemId } from "../../../shared/system";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
-import { AbstractCommercialGen3, CommercialGen3App, GensetProperties } from "../abstract-commercial-gen3";
+import { EmergencyReserve } from "../../abstract-ibn";
+import { AbstractCommercialGen3, CommercialGen3App, StsBox } from "../abstract-commercial-gen3";
+
+export interface Genset {
+    isEnabled: boolean;
+    isConnected: boolean;
+    ratedPower: number;
+    preheatingTime: number;
+    runTime: number;
+    enableCharge: boolean;
+    maxPower: number;
+    chargeSocStart: number;
+    chargeSocEnd: number;
+}
+
+export type GensetProperties = {
+    IS_GENSET_INSTALLED: boolean;
+    RATED_POWER: number | null;
+    PREHEATING_TIME: number | null;
+    RUN_TIME: number | null;
+    ENABLE_CHARGE: boolean;
+    MAX_POWER: number | null;
+    CHARGE_SOC_START: number | null;
+    CHARGE_SOC_END: number | null;
+};
 
 export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
     private static readonly MAX_MPPT = 4;
@@ -12,6 +38,26 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_50_GEN_3;
     public override appId: string = "App.FENECON.Commercial.50.Gen3";
     public override appAlias: string = "FENECON Commercial 50";
+
+    public override emergencyReserve: EmergencyReserve & StsBox & { genset: Genset } = {
+        isEnabled: false,
+        minValue: 5,
+        value: 20,
+        isReserveSocEnabled: false,
+        isStsBoxAvailable: false,
+        stsBoxSerialNumber: null,
+        genset: {
+            isEnabled: false,
+            isConnected: false,
+            ratedPower: 0,
+            preheatingTime: 10,
+            runTime: 0,
+            enableCharge: false,
+            maxPower: 0,
+            chargeSocStart: 20,
+            chargeSocEnd: 40,
+        },
+    };
 
     protected override readonly baseImagePath = "assets/img/ibn/mppt/c-50-mppt/";
 
@@ -22,25 +68,24 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
     public override getEmergencyReserveFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = super.getEmergencyReserveFields();
 
+        // Helper updated to accept FormlyFieldConfig instead of 'any'
+        const getModel = (field: FormlyFieldConfig): EmergencyReserve & StsBox & { genset: Genset } =>
+            field.model as EmergencyReserve & StsBox & { genset: Genset };
+
         fields.push({
             key: "genset.isEnabled",
             type: "checkbox",
-
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.EMERGENCY_POWER_FUNCTION"),
             },
             expressions: {
-                "templateOptions.disabled": (field) => {
-                    return !(field.model?.isStsBoxAvailable ?? true);
-                },
-                "hide": (field) => {
-                    return !(field.model?.isEnabled ?? false);
-                },
+                "templateOptions.disabled": (field) => !getModel(field).isStsBoxAvailable,
+                "hide": (field) => !getModel(field).isEnabled,
             },
             hooks: {
                 onInit: (field) => {
-                    field.formControl?.valueChanges.subscribe((isChecked: boolean) => {
-                        field.model.generator.isGeneratorConnected = isChecked;
+                    field.formControl!.valueChanges.subscribe((isChecked: boolean) => {
+                        getModel(field).genset.isConnected = isChecked;
                     });
                 },
             },
@@ -55,19 +100,16 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
                 required: true,
             },
             expressions: {
-                hide: (field) => {
-                    return !(field.model?.genset?.isEnabled ?? false);
-                },
+                hide: (field) => !getModel(field).genset.isEnabled,
             },
             hooks: {
                 onInit: (field) => {
-                    field.formControl?.valueChanges.subscribe((isChecked: boolean) => {
+                    field.formControl!.valueChanges.subscribe((isChecked: boolean) => {
+                        const model = getModel(field);
+                        model.genset.isEnabled = isChecked;
 
-                        if (field.model != null) {
-                            field.model.genset.isEnabled = isChecked;
-                        }
-                        // Just updataing the model value does not disable the checkbox. so no need to disable it.
-                        field.form?.get("genset.isEnabled")?.setValue(isChecked);
+                        const control = field.form!.get("genset.isEnabled")!;
+                        control.setValue(isChecked);
                     });
                 },
             },
@@ -87,8 +129,8 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
                 required: true,
             },
             expressions: {
-                "hide": (field) => !(field.model?.genset?.isEnabled ?? false),
-                "props.disabled": (field) => !(field.model?.genset?.isGensetConnected ?? false),
+                "hide": (field) => !getModel(field).genset.isEnabled,
+                "props.disabled": (field) => !getModel(field).genset.isConnected,
             },
             wrappers: ["input-with-unit"],
         });
@@ -108,8 +150,8 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
                 required: true,
             },
             expressions: {
-                "hide": (field) => !(field.model?.genset?.isEnabled ?? false),
-                "props.disabled": (field) => !(field.model?.genset?.isConnected ?? false),
+                "hide": (field) => !getModel(field).genset.isEnabled,
+                "props.disabled": (field) => !getModel(field).genset.isConnected,
             },
             wrappers: ["input-with-unit"],
         });
@@ -129,8 +171,8 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
                 required: true,
             },
             expressions: {
-                "hide": (field) => !(field.model?.genset?.isEnabled ?? false),
-                "props.disabled": (field) => !(field.model?.genset?.isConnected ?? false),
+                "hide": (field) => !getModel(field).genset.isEnabled,
+                "props.disabled": (field) => !getModel(field).genset.isConnected,
             },
             wrappers: ["input-with-unit"],
         });
@@ -144,7 +186,7 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.BATTERY_CHARGING"),
             },
             expressions: {
-                hide: (field) => !(field.model?.genset?.isEnabled ?? false),
+                hide: (field) => !getModel(field).genset.isEnabled,
             },
         });
 
@@ -163,8 +205,8 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
                 required: true,
             },
             expressions: {
-                "hide": (field) => !(field.model?.genset?.isConnected ?? false),
-                "props.disabled": (field) => !(field.model?.genset?.enableCharge ?? false),
+                "hide": (field) => !getModel(field).genset.isConnected,
+                "props.disabled": (field) => !getModel(field).genset.enableCharge,
             },
             wrappers: ["input-with-unit"],
         });
@@ -184,8 +226,8 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
                 required: true,
             },
             expressions: {
-                "hide": (field) => !(field.model?.genset?.isConnected ?? false),
-                "props.disabled": (field) => !(field.model?.genset?.enableCharge ?? false),
+                "hide": (field) => !getModel(field).genset.isConnected,
+                "props.disabled": (field) => !getModel(field).genset.enableCharge,
             },
             wrappers: ["input-with-unit"],
         });
@@ -205,13 +247,114 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
                 required: true,
             },
             expressions: {
-                "hide": (field) => !(field.model?.genset?.isConnected ?? false),
-                "props.disabled": (field) => !(field.model?.genset?.enableCharge ?? false),
+                "hide": (field) => !getModel(field).genset.isConnected,
+                "props.disabled": (field) => !getModel(field).genset.enableCharge,
             },
             wrappers: ["input-with-unit"],
         });
 
         return fields;
+    }
+
+    public override addCustomBatteryInverterData(): ComponentData[] {
+        const batteryInverterData: ComponentData[] = super.addCustomBatteryInverterData();
+
+        if (this.emergencyReserve.genset != null) {
+            batteryInverterData.push({
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CONNECTED"),
+                value: this.emergencyReserve.genset.isConnected ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
+            });
+
+            if (this.emergencyReserve.genset.isEnabled) {
+                batteryInverterData.push({
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.POWER"),
+                    value: `${this.emergencyReserve.genset.ratedPower} kW`,
+                });
+
+                batteryInverterData.push({
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.PREHEAT_TIME"),
+                    value: `${this.emergencyReserve.genset.preheatingTime} Sec`,
+                });
+
+                batteryInverterData.push({
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.RUN_TIME"),
+                    value: `${this.emergencyReserve.genset.runTime} min`,
+                });
+            }
+
+            if (this.emergencyReserve.genset.enableCharge) {
+                batteryInverterData.push({
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_START"),
+                    value: `${this.emergencyReserve.genset.chargeSocStart} %`,
+                });
+
+                batteryInverterData.push({
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END"),
+                    value: `${this.emergencyReserve.genset.chargeSocEnd} %`,
+                });
+
+                batteryInverterData.push({
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER"),
+                    value: `${this.emergencyReserve.genset.maxPower} kW`,
+                });
+            }
+        }
+        return batteryInverterData;
+    }
+
+    public override addProtocolItems(protocol: SetupProtocol) {
+        super.addProtocolItems(protocol);
+
+        const emergencyReserve = this.emergencyReserve;
+        protocol.items ??= [];
+
+        if (emergencyReserve.genset != null) {
+            if (emergencyReserve.genset.isEnabled) {
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CONNECTED"),
+                    value: emergencyReserve.genset.isConnected ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
+                });
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.POWER"),
+                    value: `${emergencyReserve.genset.ratedPower} kW`,
+                });
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.PREHEAT_TIME"),
+                    value: `${emergencyReserve.genset.preheatingTime} Sec`,
+                });
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.RUN_TIME"),
+                    value: `${emergencyReserve.genset.runTime} min`,
+                });
+            }
+
+            if (emergencyReserve.genset.enableCharge) {
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_START"),
+                    value: `${emergencyReserve.genset.chargeSocStart} %`,
+                });
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END"),
+                    value: `${emergencyReserve.genset.chargeSocEnd} %`,
+                });
+
+                protocol.items.push({
+                    category: Category.EMERGENCY_RESERVE,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER"),
+                    value: `${emergencyReserve.genset.maxPower} kW`,
+                });
+            }
+        }
     }
 
     public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): CommercialGen3App & GensetProperties {

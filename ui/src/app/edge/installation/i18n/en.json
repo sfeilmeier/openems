@@ -12,7 +12,7 @@
         "EMERGENCY_POWER_FUNCTION": "Should the emergency power Genset function be activated?",
         "BATTERY_CHARGING": "Enable battery charging from the Genset?",
         "MAX_POWER": "Maximum percentage charging power",
-        "MAX_POWER_DESCRIPTION": "Percentage of the available Genset power with which the battery is to be charged.",
+        "MAX_POWER_DESCRIPTION": "Percentage of the above-mentioned available generator rated power with which the battery is to be charged.",
         "CHARGE_SOC_START": "Battery charge level for starting the Genset",
         "CHARGE_SOC_START_DESCRIPTION": "State of charge of the battery at which the Genset is started.",
         "CHARGE_SOC_END": "Battery charge level for stopping the Genset",

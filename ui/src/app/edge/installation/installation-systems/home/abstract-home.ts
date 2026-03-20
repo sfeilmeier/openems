@@ -26,7 +26,7 @@ import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject
 import { GetEstimatedConfigRequest } from "../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
-import { AbstractIbn, SchedulerIdBehaviour } from "../abstract-ibn";
+import { AbstractIbn, EmergencyReserve, SchedulerIdBehaviour } from "../abstract-ibn";
 
 
 export type HomeAdditionalApp = {
@@ -57,7 +57,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     public override readonly warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_HOME;
 
     // configuration-emergency-reserve
-    public override emergencyReserve? = {
+    public override emergencyReserve?: EmergencyReserve = {
         isEnabled: true,
         minValue: 5,
         value: 20,
