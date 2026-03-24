@@ -150,6 +150,7 @@ export const OemMeta: BaseMeta = {
         COMMON: {
             CONSUMPTION: "icons/common/consumption.svg",
             SELFCONSUMPTION: "icons/common/selfconsumption.svg",
+            GENERATOR: "assets/img/icon/generator.svg",
             GRID: "icons/common/grid.svg",
             GRID_STORAGE: "icons/common/gridStorage.svg",
             GRID_RESTRICTION: "icons/common/gridRestriction.svg",

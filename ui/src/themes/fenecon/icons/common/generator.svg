@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  xml:space="preserve"  id="root">
+    <g fill="currentColort">
+        <path d="M2,4v12h12v2.24l1.76,1.76h2.48l1.76-1.76v-2.24h2V4H2ZM19,17.83l-1.17,1.17h-1.66l-1.17-1.17v-1.66l1.17-1.17h1.66l1.17,1.17v1.66ZM21,14.5c0,.28-.22.5-.5.5h-1.26l-1-1h-2.48l-1,1H3.5c-.28,0-.5-.22-.5-.5V5.5c0-.28.22-.5.5-.5h17c.28,0,.5.22.5.5v9Z"/>
+        <rect x="4" y="17" width="1" height="3" rx=".2" ry=".2"/>
+        <rect x="5" y="7" width="2" height="2" rx=".2" ry=".2"/>
+        <rect x="8" y="7" width="2" height="2" rx=".2" ry=".2"/>
+        <rect x="14" y="7" width="1" height="5" rx=".2" ry=".2"/>
+        <rect x="16" y="7" width="1" height="5" rx=".2" ry=".2"/>
+        <rect x="18" y="7" width="1" height="5" rx=".2" ry=".2"/>
+    </g>
+</svg>
