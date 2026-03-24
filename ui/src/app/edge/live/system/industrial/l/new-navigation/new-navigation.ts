@@ -6,11 +6,11 @@ import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { CommonUiModule } from "src/app/shared/common-ui.module";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { AbstractFormlyComponent, OeFormlyField, OeFormlyView } from "src/app/shared/components/shared/oe-formly-component";
-import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { ChannelAddress, Edge, EdgeConfig, EdgePermission, Websocket } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
 import { Role } from "src/app/shared/type/role";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
+import { SystemIndustrialJsonRpcHelper } from "../../../system-industrial-json-rpc-helper";
 import { BmsHardResetRequest } from "../../jsonrpc/bmsHardReset";
 import { SystemErrorAcknowledge } from "../../jsonrpc/systemErrorAcknowledge";
 import de from "../i18n/de.json";
@@ -142,27 +142,24 @@ export class SystemIndustrialLHomeComponent extends AbstractFormlyComponent {
     }
 
     protected systemErrorAcknowledge(self: SystemIndustrialLHomeComponent): () => void {
-        return () => {
-            const edge = self.service.currentEdge();
-            if (edge && self.component) {
-                edge.sendRequest(
-                    this.websocket,
-                    new ComponentJsonApiRequest({ componentId: self.component?.id, payload: new SystemErrorAcknowledge() }),
-                );
-            }
-        };
+        return SystemIndustrialJsonRpcHelper.createRpcCallback(
+            self.service,
+            self.translate,
+            self.websocket,
+            self.service.currentEdge(),
+            self.component,
+            new SystemErrorAcknowledge()
+        );
     }
 
     protected bmsHardReset(self: SystemIndustrialLHomeComponent): () => void {
-        return () => {
-            const edge = self.service.currentEdge();
-            if (edge == null || this.websocket == null || this.component == null) {
-                return;
-            }
-            edge.sendRequest(
-                this.websocket,
-                new ComponentJsonApiRequest({ componentId: this.component?.id, payload: new BmsHardResetRequest() }),
-            );
-        };
+        return SystemIndustrialJsonRpcHelper.createRpcCallback(
+            self.service,
+            self.translate,
+            self.websocket,
+            self.service.currentEdge(),
+            self.component,
+            new BmsHardResetRequest()
+        );
     }
 }

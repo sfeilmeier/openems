@@ -10,7 +10,7 @@ import { AdvertisementModule } from "./advertisement/advertisement.module";
 import { Common_Autarchy } from "./common/autarchy/Common_Autarchy";
 import { CommonConsumption } from "./common/consumption/common-consumption";
 import { Common_Grid } from "./common/grid/Common_Grid";
-import { Common_Production } from "./common/production/Common_Production";
+import { CommonProduction } from "./common/production/common-production";
 import { CommonSelfconsumption } from "./common/selfconsumption/common-selfconsumption";
 import { SohStatusBannerComponent } from "./common/soh/components/soh-status-banner/soh-status-banner";
 import { StorageLiveModule } from "./common/storage/storage.module";
@@ -52,6 +52,7 @@ import { ChartComponent as EvcsClusterApiChartComponent } from "./Multiple/evcs-
 import { ModalComponent as EvcsClusterApiModalComponent } from "./Multiple/evcs-api-cluster/modal/modal";
 import { NavigationInfoComponent } from "./navigation-info/navigation-info";
 import { SystemModule } from "./system/system.module";
+import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage-info";
 
 @NgModule({
     imports: [
@@ -62,7 +63,7 @@ import { SystemModule } from "./system/system.module";
         Common_Autarchy,
         CommonConsumption,
         Common_Grid,
-        Common_Production,
+        CommonProduction,
         CommonSelfconsumption,
         Controller_Api_ModbusTcp,
         Controller_EnerixControl,
@@ -81,6 +82,7 @@ import { SystemModule } from "./system/system.module";
         ModalModule,
         SharedModule,
         SohStatusBannerComponent,
+        SystemOutageInfoComponent,
         SystemModule,
         PullToRefreshComponent,
         HelpButtonComponent,

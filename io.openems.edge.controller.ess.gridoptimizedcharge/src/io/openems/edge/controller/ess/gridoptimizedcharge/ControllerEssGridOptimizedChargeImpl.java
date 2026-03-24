@@ -1,5 +1,7 @@
 package io.openems.edge.controller.ess.gridoptimizedcharge;
 
+import static io.openems.common.utils.IntUtils.minInt;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,7 +38,6 @@ import io.openems.edge.common.filter.RampFilter;
 import io.openems.edge.common.meta.GridFeedInLimitationType;
 import io.openems.edge.common.meta.Meta;
 import io.openems.edge.common.sum.Sum;
-import io.openems.edge.common.type.TypeUtils;
 import io.openems.edge.controller.api.Controller;
 import io.openems.edge.controller.ess.ripplecontrolreceiver.ControllerEssRippleControlReceiver;
 import io.openems.edge.energy.api.EnergySchedulable;
@@ -191,18 +192,8 @@ public class ControllerEssGridOptimizedChargeImpl extends AbstractOpenemsCompone
 		// Updates the time channels.
 		this.calculateTime();
 
-		/*
-		 * Check that we are On-Grid (and warn on undefined Grid-Mode)
-		 */
-		var gridMode = this.ess.getGridMode();
-		if (gridMode.isUndefined()) {
-			this.logWarn(this.log, "Grid-Mode is [UNDEFINED]");
-		}
-		switch (gridMode) {
-		case ON_GRID:
-		case UNDEFINED:
-			break;
-		case OFF_GRID:
+		// Check that we are On-Grid (and warn on undefined Grid-Mode)
+		if (!this.ess.isOnGridOrUndefined(m -> this.logWarn(this.log, m))) {
 			this._setSellToGridLimitState(SellToGridLimitState.UNDEFINED);
 			this._setDelayChargeState(DelayChargeState.UNDEFINED);
 			return;
@@ -297,7 +288,7 @@ public class ControllerEssGridOptimizedChargeImpl extends AbstractOpenemsCompone
 		if (sellToGridLimitIsDefined && delayChargeIsDefined) {
 			if (sellToGridLimitMinChargePower <= delayChargeMaxChargePower) {
 
-				this.ess.setActivePowerEquals(sellToGridLimitMinChargePower);
+				this.ess.setActivePowerEqualsWithFilter(sellToGridLimitMinChargePower);
 				this.sellToGridLimit.setSellToGridLimitChannelsAndLastLimit(SellToGridLimitState.ACTIVE_LIMIT_FIXED,
 						sellToGridLimitMinChargePower);
 				this.logDebug("Applying both constraints not possible - Set active power according to SellToGridLimit: "
@@ -486,7 +477,7 @@ public class ControllerEssGridOptimizedChargeImpl extends AbstractOpenemsCompone
 		} else {
 			dynamicGridFeedInLimit = null;
 		}
-		this.maximumSellToGridPower = TypeUtils.min(gridSellHardLimit, dynamicGridFeedInLimit);
+		this.maximumSellToGridPower = minInt(gridSellHardLimit, dynamicGridFeedInLimit);
 	}
 
 	/**

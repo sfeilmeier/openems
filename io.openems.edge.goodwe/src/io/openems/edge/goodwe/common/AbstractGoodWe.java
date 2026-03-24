@@ -1,5 +1,9 @@
 package io.openems.edge.goodwe.common;
 
+import static io.openems.common.utils.IntUtils.maxInt;
+import static io.openems.common.utils.IntUtils.minInteger;
+import static io.openems.common.utils.IntUtils.sumInt;
+import static io.openems.common.utils.IntUtils.sumInteger;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.INVERT;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_2;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
@@ -10,6 +14,7 @@ import static io.openems.edge.bridge.modbus.api.ModbusUtils.readElementOnce;
 import static io.openems.edge.bridge.modbus.api.ModbusUtils.readElementsOnce;
 import static io.openems.edge.bridge.modbus.api.ModbusUtils.FunctionCode.FC3;
 import static io.openems.edge.common.type.TypeUtils.fitWithin;
+import static java.lang.Math.min;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -70,6 +75,7 @@ import io.openems.edge.goodwe.common.GoodWeStateDefinitions.GwStateTask;
 import io.openems.edge.goodwe.common.enums.BatteryMode;
 import io.openems.edge.goodwe.common.enums.EmsPowerMode;
 import io.openems.edge.goodwe.common.enums.GoodWeType;
+import io.openems.edge.goodwe.genset.GoodWeStsBoxGensetMeter;
 import io.openems.edge.timedata.api.TimedataProvider;
 import io.openems.edge.timedata.api.utils.CalculateEnergyFromPower;
 
@@ -97,6 +103,8 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 	private final CalculateEnergyFromPower calculateDcDischargeEnergy;
 
 	protected final Set<GoodWeCharger> chargers = new HashSet<>();
+
+	protected final ApplyPowerHandler applyPowerHandler = new ApplyPowerHandler(this);
 
 	protected AbstractGoodWe(//
 			io.openems.edge.common.channel.ChannelId activePowerChannelId, //
@@ -158,8 +166,10 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 								new ElementToChannelConverter(value -> {
 									Integer intValue = TypeUtils.<Integer>getAsType(OpenemsType.INTEGER, value);
 									final var goodWeType = this.getGoodweType();
+									final var isGensetActive = this.getGensetOperatingMode().isDefined()
+											&& this.getGensetOperatingMode().get();
 
-									return mapGridMode(goodWeType, intValue);
+									return mapGridMode(goodWeType, intValue, isGensetActive);
 								}))), //
 
 				new FC3ReadRegistersTask(35137, Priority.LOW, //
@@ -619,8 +629,7 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 						m(GoodWe.ChannelId.BMS_AVG_CHG_HOURS, new UnsignedWordElement(47508)), //
 						m(GoodWe.ChannelId.FEED_POWER_ENABLE, new UnsignedWordElement(47509)), //
 						m(GoodWe.ChannelId.FEED_POWER_PARA_SET, new UnsignedWordElement(47510)), //
-						m(GoodWe.ChannelId.EMS_POWER_MODE, new UnsignedWordElement(47511)), //
-						m(GoodWe.ChannelId.EMS_POWER_SET, new UnsignedWordElement(47512)), //
+						new DummyRegisterElement(47511, 47512), //
 						m(GoodWe.ChannelId.BMS_CURR_LMT_COFF, new UnsignedWordElement(47513)), //
 						m(GoodWe.ChannelId.BATTERY_PROTOCOL_ARM, new UnsignedWordElement(47514)), //
 
@@ -771,10 +780,10 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 						m(GoodWe.ChannelId.MANUFACTURE_CODE, new UnsignedWordElement(47505)), //
 						new DummyRegisterElement(47506, 47508), //
 						m(GoodWe.ChannelId.FEED_POWER_ENABLE, new UnsignedWordElement(47509)), //
-						m(GoodWe.ChannelId.FEED_POWER_PARA_SET, new SignedWordElement(47510)), //
-						m(GoodWe.ChannelId.EMS_POWER_MODE, new UnsignedWordElement(47511)), //
-						m(GoodWe.ChannelId.EMS_POWER_SET, new UnsignedWordElement(47512)), //
-						new DummyRegisterElement(47513), //
+						m(GoodWe.ChannelId.FEED_POWER_PARA_SET, new SignedWordElement(47510)) //
+				), //
+
+				new FC16WriteRegistersTask(47514, //
 						m(GoodWe.ChannelId.BATTERY_PROTOCOL_ARM, new UnsignedWordElement(47514)), //
 						m(GoodWe.ChannelId.WORK_WEEK_1_START_TIME, new UnsignedWordElement(47515)), //
 						m(GoodWe.ChannelId.WORK_WEEK_1_END_TIME, new UnsignedWordElement(47516)), //
@@ -950,7 +959,7 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 						 * ET-Plus
 						 */
 						this.logInfo(this.log, "Identified " + resultFromString.getName());
-						this._setGoodweType(resultFromString);
+						this.updateGoodWeType(resultFromString, protocol);
 
 						// Handles different ET-Plus DSP versions
 						ModbusUtils
@@ -979,37 +988,57 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 					 */
 					readElementOnce(FC3, protocol, ModbusUtils::retryOnNull, new StringWordElement(35003, 8)) //
 							.thenAccept(serialNr -> {
-
-								final var hardwareType = getGoodWeTypeFromSerialNr(serialNr);
 								try {
-									this._setGoodweType(hardwareType);
 									this.handleDspVersion5(protocol);
 									this.handleDspVersion6(protocol);
 									this.handleDspVersion7(protocol);
-
-									switch (hardwareType) {
-									case UNDEFINED, GOODWE_10K_BT, GOODWE_8K_BT, GOODWE_5K_BT, GOODWE_10K_ET,
-											GOODWE_8K_ET, GOODWE_5K_ET, FENECON_FHI_10_DAH, FENECON_GEN2_6K,
-											FENECON_GEN2_10K, FENECON_GEN2_15K ->
-										FunctionUtils.doNothing();
-									case FENECON_50K -> {
-										this.handleMultipleStringChargers(protocol);
-										this.handleStsBox(protocol);
-										this.handleExtendedFeedPower(protocol);
-										this.handleNewFixPfRegisters(protocol);
-										this.handleEnablePfCurve(protocol);
-									}
-									case FENECON_FHI_20_DAH, FENECON_FHI_29_9_DAH -> {
-										this.handleMultipleStringChargers(protocol);
-									}
-									}
 								} catch (OpenemsException e) {
 									this.logError(this.log, "Unable to add charger tasks for modbus protocol");
 								}
+
+								final var hardwareType = getGoodWeTypeFromSerialNr(serialNr);
+								this.updateGoodWeType(hardwareType, protocol);
 							});
 				});
 
 		return protocol;
+	}
+
+	private void updateGoodWeType(GoodWeType goodWeType, ModbusProtocol protocol) {
+		try {
+			this._setGoodweType(goodWeType);
+
+			switch (goodWeType) {
+			case UNDEFINED, GOODWE_10K_BT, GOODWE_8K_BT, GOODWE_5K_BT, GOODWE_10K_ET, GOODWE_8K_ET, GOODWE_5K_ET,
+					FENECON_FHI_10_DAH, FENECON_GEN2_6K, FENECON_GEN2_10K, FENECON_GEN2_15K -> {
+				this.handleDefaultEmsPower(protocol);
+			}
+
+			case FENECON_50K -> {
+				this.handleDefaultEmsPower(protocol);
+				this.handleMultipleStringChargers(protocol);
+				this.handleExtendedFeedPower(protocol);
+				this.handleNewFixPfRegisters(protocol);
+				this.handleEnablePfCurve(protocol);
+				this.handleGensetOperatingMode(protocol);
+			}
+
+			case FENECON_100K -> {
+				this.handleMultipleStringChargers(protocol);
+				this.handleExtendedFeedPower(protocol);
+				this.handleNewFixPfRegisters(protocol);
+				this.handleNewEmsPower(protocol);
+				this.handleGensetOperatingMode(protocol);
+			}
+
+			case FENECON_FHI_20_DAH, FENECON_FHI_29_9_DAH -> {
+				this.handleMultipleStringChargers(protocol);
+				this.handleDefaultEmsPower(protocol);
+			}
+			}
+		} catch (OpenemsException e) {
+			this.logError(this.log, "Unable to add charger tasks for modbus protocol");
+		}
 	}
 
 	@Override
@@ -1107,6 +1136,32 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 		);
 	}
 
+	private void handleDefaultEmsPower(ModbusProtocol protocol) {
+		protocol.addTasks(//
+				new FC3ReadRegistersTask(47511, Priority.LOW, //
+						m(GoodWe.ChannelId.EMS_POWER_MODE, new UnsignedWordElement(47511)), //
+						m(GoodWe.ChannelId.EMS_POWER_SET, new UnsignedWordElement(47512)) //
+				), //
+				new FC16WriteRegistersTask(47511, //
+						m(GoodWe.ChannelId.EMS_POWER_MODE, new UnsignedWordElement(47511)), //
+						m(GoodWe.ChannelId.EMS_POWER_SET, new UnsignedWordElement(47512)) //
+				) //
+		);
+	}
+
+	private void handleNewEmsPower(ModbusProtocol protocol) {
+		protocol.addTasks(//
+				new FC3ReadRegistersTask(42000, Priority.LOW, //
+						m(GoodWe.ChannelId.EMS_POWER_MODE, new UnsignedWordElement(42000)), //
+						m(GoodWe.ChannelId.EMS_POWER_SET, new UnsignedDoublewordElement(42001)) //
+				), //
+				new FC16WriteRegistersTask(42000, //
+						m(GoodWe.ChannelId.EMS_POWER_MODE, new UnsignedWordElement(42000)), //
+						m(GoodWe.ChannelId.EMS_POWER_SET, new UnsignedDoublewordElement(42001)) //
+				) //
+		);
+	}
+
 	private void handleEnablePfCurve(ModbusProtocol protocol) {
 		protocol.addTasks(//
 				new FC3ReadRegistersTask(45751, Priority.LOW,
@@ -1120,6 +1175,12 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 								new UnsignedWordElement(45751))),
 				new FC16WriteRegistersTask(45776, m(GoodWePowerSetting.ChannelId.V2_APM_ENABLE_PF_UNDERFREQUENZY_CURVE,
 						new UnsignedWordElement(45776))));
+	}
+
+	private void handleGensetOperatingMode(ModbusProtocol protocol) {
+		protocol.addTask(//
+				new FC3ReadRegistersTask(36197, Priority.HIGH,
+						m(GoodWeStsBoxGensetMeter.ChannelId.GENSET_OPERATING_MODE, new UnsignedWordElement(36197))));
 	}
 
 	/**
@@ -1281,25 +1342,6 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 					charger._setCurrent(stringCurrentChannel.getNextValue().get());
 					charger._setVoltage(stringVoltageChannel.getNextValue().get());
 				});
-	}
-
-	/**
-	 * Handle STS-Box registers.
-	 *
-	 * <p>
-	 * GoodWe Versions >50kW have a separate box for off-grid and other
-	 * functionalities
-	 * </p>
-	 * 
-	 * @param protocol current protocol
-	 */
-	private void handleStsBox(ModbusProtocol protocol) {
-
-		protocol.addTask(//
-				new FC3ReadRegistersTask(35039, Priority.LOW, //
-						m(GoodWe.ChannelId.STS_VERSION, new UnsignedWordElement(35039)), //
-						m(GoodWe.ChannelId.STS_SUB_VERSION, new UnsignedWordElement(35040))) //
-		);
 	}
 
 	private void handleDspVersion7(ModbusProtocol protocol) throws OpenemsException {
@@ -1829,7 +1871,7 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 	protected final Integer calculatePvProduction() {
 		Integer productionPower = null;
 		for (GoodWeCharger charger : this.chargers) {
-			productionPower = TypeUtils.sum(productionPower, charger.getActualPower().get());
+			productionPower = sumInteger(productionPower, charger.getActualPower().get());
 		}
 		return productionPower;
 	}
@@ -1850,9 +1892,9 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 
 		dcDischargePower = ignoreImpossibleMinPower(dcDischargePower, soc, batteryCurrent,
 				((EnumReadChannel) this.channel(GoodWe.ChannelId.EMS_POWER_MODE)).getNextValue().asEnum(),
-				((IntegerReadChannel) this.channel(GoodWe.ChannelId.EMS_POWER_SET)).getNextValue().get());
+				this.getEmsPowerSetChannel().getNextValue().get());
 
-		var acActivePower = TypeUtils.sum(productionPower, dcDischargePower);
+		var acActivePower = sumInteger(productionPower, dcDischargePower);
 
 		/*
 		 * Update AC Active Power
@@ -1956,7 +1998,7 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 	 * @return possible battery power
 	 */
 	protected static Integer ignoreImpossibleMinPower(Integer goodweDcPower, Integer soc, Integer cBattery,
-			EmsPowerMode powerMode, Integer powerSet) {
+			EmsPowerMode powerMode, Long powerSet) {
 		if (cBattery == null || soc == null || goodweDcPower == null || cBattery != 0 || powerMode == null
 				|| powerSet == null) {
 			return goodweDcPower;
@@ -1973,7 +2015,7 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 		return goodweDcPower;
 	}
 
-	public record MaxAcPower(Integer maxAcImport, Integer maxAcExport) {
+	public record MaxAcPower(int maxAcImport, int maxAcExport) {
 	}
 
 	/**
@@ -2032,33 +2074,36 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 	 * @param batVoltage             the voltage of the battery
 	 * @param maxInvDcChargeP        the maximum inverter DC charge power
 	 * @param maxInvDcDischargeP     the maximum inverter DC discharge power
-	 * @param pvProduction           the DC production power
+	 * @param pvProductionInteger    the DC production power; or null
 	 * @return MaxAcPower with maxAcImport and maxAcExport
 	 */
 	protected static MaxAcPower calculateMaxAcPower(int maxApparentPower, Integer batChargeMaxCurrent,
 			Integer batDischargeMaxCurrent, Integer batVoltage, Integer maxInvDcChargeP, Integer maxInvDcDischargeP,
-			Integer pvProduction) {
-		pvProduction = TypeUtils.max(0, pvProduction);
+			Integer pvProductionInteger) {
+		final var pvProduction = maxInt(0, pvProductionInteger);
 
 		/*
 		 * Calculate Max-Ac-Import
 		 */
 		final var maxDcChargePower = calculateDcLimitation(batChargeMaxCurrent, batVoltage, maxInvDcChargeP);
 
-		var maxAcImport = TypeUtils.subtract(maxDcChargePower, TypeUtils
-				.min(TypeUtils.max(0, maxDcChargePower) /* avoid negative number for `subtract` */, pvProduction));
+		var maxAcImport = maxDcChargePower //
+				- min(//
+						maxInt(0, maxDcChargePower) /* avoid negative number for `subtract` */, //
+						pvProduction);
 
 		/*
 		 * Calculate Max-Ac-Export
 		 */
 		final var maxDcDischargePower = calculateDcLimitation(batDischargeMaxCurrent, batVoltage, maxInvDcDischargeP);
-		var maxAcExport = TypeUtils.sum(maxDcDischargePower, pvProduction);
+		var maxAcExport = sumInt(pvProduction, maxDcDischargePower);
 
 		// Limit Max-AC-Power to inverter specific limit
-		maxAcImport = TypeUtils.min(maxAcImport, maxApparentPower);
-		maxAcExport = TypeUtils.min(maxAcExport, maxApparentPower);
+		maxAcImport = min(maxApparentPower, maxAcImport);
+		maxAcExport = min(maxApparentPower, maxAcExport);
 
-		return new MaxAcPower(TypeUtils.multiply(maxAcImport, /* negate */ -1), // Max-Ac-Import is negative
+		return new MaxAcPower(//
+				-maxAcImport /* negate */, // Max-Ac-Import is negative
 				maxAcExport);
 	}
 
@@ -2076,11 +2121,12 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 	 * @param inverterLimit hard limit for DC power in W
 	 * @return the maximum DC power in W
 	 */
-	protected static Integer calculateDcLimitation(Integer bmsMaxCurrent, Integer voltage, Integer inverterLimit) {
-		return TypeUtils.min(//
-				bmsMaxCurrent == null || voltage == null ? 0 : bmsMaxCurrent * voltage, //
-				inverterLimit //
-		);
+	protected static int calculateDcLimitation(Integer bmsMaxCurrent, Integer voltage, Integer inverterLimit) {
+		final var bmsLimit = bmsMaxCurrent == null || voltage == null //
+				? 0 //
+				: bmsMaxCurrent * voltage;
+
+		return minInteger(bmsLimit, inverterLimit);
 	}
 
 	/**
@@ -2092,23 +2138,6 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 	protected static Map<GoodWe.ChannelId, Boolean> detectDiagStatesH(Long value) {
 		return DIAG_STATUS_H_STATES.entrySet().stream().collect(
 				Collectors.toMap(Map.Entry::getValue, e -> !(Objects.isNull(value) || (value & e.getKey()) == 0)));
-	}
-
-	/**
-	 * Update STS-Box enabled information.
-	 *
-	 * <p>
-	 * STS-Box is enabled if the versions are not 0.
-	 * </p>
-	 * 
-	 * @param openemsComponent OpenEMS component
-	 */
-	public static void updateStsBoxEnabled(OpenemsComponent openemsComponent) {
-		IntegerReadChannel version = openemsComponent.channel(GoodWe.ChannelId.STS_VERSION);
-		IntegerReadChannel subVersion = openemsComponent.channel(GoodWe.ChannelId.STS_SUB_VERSION);
-
-		openemsComponent.channel(GoodWe.ChannelId.STS_BOX_ENABLE)
-				.setNextValue(version.getNextValue().orElse(0) + subVersion.getNextValue().orElse(0) > 0);
 	}
 
 	/**
@@ -2158,7 +2187,7 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 	}
 
 	@VisibleForTesting
-	static GridMode mapGridMode(GoodWeType goodWeType, Integer value) {
+	static GridMode mapGridMode(GoodWeType goodWeType, Integer value, boolean isGensetActive) {
 		if (value == null) {
 			return GridMode.UNDEFINED;
 		}
@@ -2168,7 +2197,10 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 				FENECON_GEN2_15K -> {
 			yield defaultMapGridMode(value);
 		}
-		case FENECON_50K -> {
+		case FENECON_50K, FENECON_100K -> {
+			if (isGensetActive) {
+				yield GridMode.OFF_GRID_GENSET;
+			}
 			yield switch (value) {
 			case 0 -> GridMode.OFF_GRID;
 			case 1 -> GridMode.ON_GRID;

@@ -9,7 +9,7 @@ import { FieldWrapper } from "@ngx-formly/core";
             <ion-col>
                 <ng-template #fieldComponent></ng-template>
             </ion-col>
-            <ion-col size="auto">
+            <ion-col size="auto" class="ion-padding-top">
                  {{props.unit}}
             </ion-col>
         </ion-row>

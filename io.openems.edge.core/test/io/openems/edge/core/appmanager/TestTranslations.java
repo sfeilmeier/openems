@@ -190,10 +190,16 @@ public class TestTranslations {
 			this.apps.add(new TestTranslation(Apps.thresholdControl(t), true, JsonUtils.buildJsonObject() //
 					.add("OUTPUT_CHANNELS", JsonUtils.buildJsonArray().add("io0/Relay1").build()) //
 					.build()));
-			this.apps.add(new TestTranslation(Apps.shellyMeter(t), true, JsonUtils.buildJsonObject() //
+			this.apps.add(new TestTranslation(Apps.shellyMeterDiy(t), true, JsonUtils.buildJsonObject() //
 					.add("DEVICE", JsonUtils.buildJsonObject() //
 							.addProperty("name", "dummyName") //
 							.addProperty("type", "PLUS_PLUG_S") //
+							.build()) //
+					.build()));
+			this.apps.add(new TestTranslation(Apps.shellyMeterPaid(t), true, JsonUtils.buildJsonObject() //
+					.add("DEVICE", JsonUtils.buildJsonObject() //
+							.addProperty("name", "dummyNamePro") //
+							.addProperty("type", "PRO_3EM") //
 							.build()) //
 					.build()));
 			this.apps.add(new TestTranslation(Apps.discovergyMeter(t), false, JsonUtils.buildJsonObject() //
@@ -279,6 +285,12 @@ public class TestTranslations {
 			this.apps.add(new TestTranslation(Apps.predictionUnmanagedConsumption(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.appSohCycle(t), true, JsonUtils.buildJsonObject() //
 					.addProperty("ESS_ID", "ess0") //
+					.build()));
+			this.apps.add(new TestTranslation(Apps.feneconProHybrid910(t), true, JsonUtils.buildJsonObject() //
+					.addProperty("HAS_DC_PV1", "true") //
+					.addProperty("DC_PV1_ALIAS", "charger0") //
+					.addProperty("HAS_DC_PV1", "false") //
+					.addProperty("DC_PV1_ALIAS", "charger1") //
 					.build()));
 			return this.apps.stream().map(TestTranslation::app).toList();
 		}, null, new AppManagerTestBundle.PseudoComponentManagerFactory());

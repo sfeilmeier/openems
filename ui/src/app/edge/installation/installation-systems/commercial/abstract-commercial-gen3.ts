@@ -14,7 +14,13 @@ import { EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES } from "../../shared/options";
 import { System, SystemType } from "../../shared/system";
 import { ViewUtils } from "../../shared/view.utils";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
+import { EmergencyReserve } from "../abstract-ibn";
 import { AbstractHomeIbn } from "../home/abstract-home";
+
+export interface StsBox {
+    isStsBoxAvailable: boolean;
+    stsBoxSerialNumber: string | null;
+}
 
 export type MpptConfig = {
     [K in `HAS_MPPT_${number}`]: boolean;
@@ -82,20 +88,21 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
 
     public override energyFlowMeter: {
         meter: Meter.GridMeterCategory;
-        value?: number;
-    } = {
-        meter: Meter.GridMeterCategory.COMMERCIAL_METER,
-    };
+        value?: number
+    } =
+        {
+            meter: Meter.GridMeterCategory.COMMERCIAL_METER,
+        };
 
-    // configuration-emergency-reserve
-    public override emergencyReserve = {
-        isStsBoxAvailable: false,
-        isEnabled: false,
-        minValue: 5,
-        value: 20,
-        isReserveSocEnabled: false,
-        stsBoxSerialNumber: null as string | null,
-    };
+    public override emergencyReserve: EmergencyReserve & StsBox =
+        {
+            isEnabled: false,
+            minValue: 5,
+            value: 20,
+            isReserveSocEnabled: false,
+            isStsBoxAvailable: false,
+            stsBoxSerialNumber: null as string | null,
+        };
 
     protected abstract readonly baseImagePath: string;
 
@@ -109,116 +116,12 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
         return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: towerNr });
     }
 
-    public override getSerialNumberFields(towerNr: number, numberOfModulesPerTower: number, slaveIndex?: number): FormlyFieldConfig[] {
-
-        const checkboxValue =
-            slaveIndex !== undefined &&
-                this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]?.[towerNr]
-                ? true
-                : false;
-
-        const updateFn = (checked: boolean) => {
-            if (
-                slaveIndex !== undefined &&
-                this.serialNumbers?.doubleSocket?.isEnabled?.[slaveIndex]
-            ) {
-                this.serialNumbers.doubleSocket.isEnabled[slaveIndex][towerNr] = checked;
-            }
-        };
-        const headFields: FormlyFieldConfig[] = towerNr === 0
-            ? [
-                {
-                    key: "batteryInverter",
-                    type: "input",
-                    templateOptions: {
-                        label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER"),
-                        required: true,
-                        placeholder: "xxxxxxxxxxxxxxxx",
-                    },
-                    wrappers: ["input-serial-number"],
-                },
-                {
-                    key: "parallelBox",
-                    type: "input",
-                    templateOptions: {
-                        label: "Parallel Box",
-                        required: true,
-                        prefix: this.parallelBoxPrefix,
-                        placeholder: "xxxxxxxxx",
-                    },
-                    validators: { validation: ["boxSerialNumber"] },
-                    wrappers: ["input-serial-number"],
-                },
-                {
-                    key: "emsBox",
-                    type: "input",
-                    templateOptions: {
-                        label: Category.toTranslatedString(Category.EMS_BOX_LABEL_HOME, this.translate),
-                        required: true,
-                        placeholder: "FEFxxxxxxx",
-                    },
-                    validators: { validation: ["emsBoxSerialNumber"] },
-                    wrappers: ["input-serial-number"],
-                },
-            ]
-            : [
-                {
-                    key: "extensionBox",
-                    type: "input",
-                    templateOptions: {
-                        label: "Extension Box",
-                        required: true,
-                        prefix: ExtensionBoxPrefix.FEE,
-                        placeholder: "xxxxxxxxx",
-                    },
-                    validators: { validation: ["boxSerialNumber"] },
-                    wrappers: ["input-serial-number"],
-                },
-            ];
-
-        const bmsField: FormlyFieldConfig = {
-            key: "bmsBox",
-            type: "input",
-            templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BMS_BOX"),
-                required: true,
-                placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
-                checkbox: {
-                    value: checkboxValue,
-                    label: this.serialNumbers?.doubleSocket?.label,
-                    updateFn,
-                },
-            },
-            validators: { validation: ["batteryAndBmsBoxSerialNumber"] },
-            wrappers: ["input-serial-number"],
-        };
-
-        const moduleFields: FormlyFieldConfig[] = Array.from(
-            { length: numberOfModulesPerTower },
-            (_, moduleNr) => ({
-                key: "module" + moduleNr,
-                type: "input",
-                templateOptions: {
-                    label:
-                        this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") +
-                        (moduleNr + 1),
-                    required: true,
-                    placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
-                },
-                validators: { validation: ["batteryAndBmsBoxSerialNumber"] },
-                wrappers: ["input-serial-number"],
-            })
-        );
-
-        return [...headFields, bmsField, ...moduleFields];
-    }
-
     public override getEnergyFlowMeterFields() {
         const type: string = this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.STANDARD");
 
         return [
             {
-                value: Meter.GridMeterCategory.COMMERCIAL_METER, //
+                value: Meter.GridMeterCategory.COMMERCIAL_METER,
                 label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.COMMERCIAL_METER, this.translate, type),
             },
         ];
@@ -237,7 +140,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
     }
 
     public override populateFromData(ibnString: any) {
-
         super.populateFromData(ibnString);
 
         this.isController14aActivated = ibnString.isController14aActivated;
@@ -253,7 +155,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
         const location: Country = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
 
         super.removeOrAddView(edge);
-        // Limiter 14a view
+
         ViewUtils.handleViewPresence({
             location,
             targetCountry: Country.GERMANY,
@@ -268,7 +170,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
             },
         });
 
-        // Grid setting view
         ViewUtils.handleViewPresence({
             location,
             targetCountry: Country.GERMANY,
@@ -284,6 +185,23 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
     public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
         const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
         this.addProtocolItems(protocol);
+
+        const emergencyReserve = this.emergencyReserve;
+        protocol.items ??= [];
+
+        protocol.items.push({
+            category: Category.STS_BOX,
+            name: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE"),
+            value: emergencyReserve.isStsBoxAvailable ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
+        });
+
+        if (emergencyReserve.isStsBoxAvailable) {
+            protocol.items.push({
+                category: Category.STS_BOX,
+                name: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
+                value: emergencyReserve.stsBoxSerialNumber ?? "",
+            });
+        }
 
         return new Promise((resolve, reject) => {
             websocket
@@ -325,7 +243,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
 
     public override getSubSystemFields(): FormlyFieldConfig[] {
         const emsType: EmsType = this.getEmsType();
-
         return System.getSubSystemFields(emsType, this.translate);
     }
 
@@ -342,7 +259,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
         });
 
         if (emergencyReserve.isStsBoxAvailable) {
-
             protocol.items.push({
                 category: Category.STS_BOX,
                 name: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
@@ -388,10 +304,8 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
             }
             const mpptIndex = i + 1;
 
-            // Sets HAS_MPPT_X
             mpptProps[`HAS_MPPT_${mpptIndex}`] = dc.isSelected;
 
-            // Conditionally sets ALIAS_MPPT_X
             if (dc.isSelected) {
                 mpptProps[`ALIAS_MPPT_${mpptIndex}`] = dc.alias;
             }
@@ -408,4 +322,59 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
         return model;
     }
 
+    protected override getTowerHeadFields(towerNr: number): FormlyFieldConfig[] {
+
+        if (towerNr === 0) {
+            return [
+                {
+                    key: "batteryInverter",
+                    type: "input",
+                    templateOptions: {
+                        label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER"),
+                        required: true,
+                        placeholder: "xxxxxxxxxxxxxxxx",
+                    },
+                    wrappers: ["input-serial-number"],
+                },
+                {
+                    key: "parallelBox",
+                    type: "input",
+                    templateOptions: {
+                        label: "Parallel Box",
+                        required: true,
+                        prefix: this.parallelBoxPrefix,
+                        placeholder: "xxxxxxxxx",
+                    },
+                    validators: { validation: ["boxSerialNumber"] },
+                    wrappers: ["input-serial-number"],
+                },
+                {
+                    key: "emsBox",
+                    type: "input",
+                    templateOptions: {
+                        label: Category.toTranslatedString(Category.EMS_BOX_LABEL_HOME, this.translate),
+                        required: true,
+                        placeholder: "FEFxxxxxxx",
+                    },
+                    validators: { validation: ["emsBoxSerialNumber"] },
+                    wrappers: ["input-serial-number"],
+                },
+            ];
+        }
+
+        return [
+            {
+                key: "extensionBox",
+                type: "input",
+                templateOptions: {
+                    label: "Extension Box",
+                    required: true,
+                    prefix: ExtensionBoxPrefix.FEE,
+                    placeholder: "xxxxxxxxx",
+                },
+                validators: { validation: ["boxSerialNumber"] },
+                wrappers: ["input-serial-number"],
+            },
+        ];
+    }
 }

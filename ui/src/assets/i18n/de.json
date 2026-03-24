@@ -530,6 +530,8 @@
             "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Klimaanlagen reset:",
             "CLEAR_COOLING_UNIT_ERRORS_TEXT": "notwendig für Klimaanlagen Fehler"
           },
+          "RPC_SUCCESS": "Befehl erfolgreich ausgeführt",
+          "RPC_FAILED": "Befehl ausführen fehlgeschlagen",
           "OVERALL_SYSTEM": "Gesamtsystem"
         },
         "TIME_OF_USE_TARIFF": {
@@ -692,6 +694,8 @@
     "NUMBER_OF_COMPONENTS": "Anzahl der Komponenten",
     "OFF": "Aus",
     "OFF_GRID": "Keine Netzverbindung!",
+    "GENERATOR_SUPPLY": "Generatorversorgung",
+    "GENERATOR_ON": "Generator aktiv",
     "OK": "ok",
     "ON": "An",
     "OPEN": "Öffnen",
@@ -763,6 +767,9 @@
     "NAVIGATION_INFO": "Wir arbeiten aktuell daran, unser Monitoring sowie die App neu zu gestalten. Dies betrifft die Navigation und Funktionen.",
     "NAVIGATION_DETAILS": " In diesem Hilfe-Chip findest du jederzeit Unterstützung. Hier gibt es Infos zu den Änderungen, Erklärungen oder Hilfestellungen – inklusive der erweiterten Möglichkeiten deiner Ladestation.",
     "LINK": "Details findest du unter folgendem Link:",
+    "LINK_TEXT": "Changelog zum Beta-Test ansehen",
+    "SURVEY": "Hier können Sie uns Ihr Feedback zum Beta-Test mitteilen:",
+    "SURVEY_LINK": "An der Beta-Test-Umfrage teilnehmen",
     "HELP": "Hilfe"
   },
   "GRID_STATES": {

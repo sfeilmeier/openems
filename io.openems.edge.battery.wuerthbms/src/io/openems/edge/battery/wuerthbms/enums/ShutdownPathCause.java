@@ -25,6 +25,8 @@ public enum ShutdownPathCause implements OptionsEnum {
 	BCM_NOT_READY(17, "Not possible to start BCM module (TPL fault, CSC fault...)"), //
 	SHUNT_CALIBRATION_FAIL(18, "Shunt calibration stored value fault or not stored"), //
 	OVERCURRENT_SAFESTATE(19, "Check CR_Contactor_Opening_during_overcurrent document"), //
+	ADC_SAFETY_FAIL(20, "Fail in ADC calculation"), //
+	PRECHARGE_ENERGY_FAILED(21, "Fail in precharge energy calculation"), //
 	;
 
 	private final int value;

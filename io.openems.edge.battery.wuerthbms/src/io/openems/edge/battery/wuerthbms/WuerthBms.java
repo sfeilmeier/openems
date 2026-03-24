@@ -30,8 +30,9 @@ import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.api.BatteryErrorAcknowledge;
 import io.openems.edge.battery.protection.BatteryVoltageProtection;
 import io.openems.edge.battery.wuerthbms.enums.CommandStateRequest;
+import io.openems.edge.battery.wuerthbms.enums.CvcmFaultCause;
 import io.openems.edge.battery.wuerthbms.enums.ShutdownPathCause;
-import io.openems.edge.battery.wuerthbms.enums.StartUpPathTestFail;
+import io.openems.edge.battery.wuerthbms.enums.StartUpPathTestFailedAt;
 import io.openems.edge.battery.wuerthbms.enums.SystemBalancingState;
 import io.openems.edge.battery.wuerthbms.enums.SystemContactorState;
 import io.openems.edge.battery.wuerthbms.enums.SystemGlobalState;
@@ -66,7 +67,8 @@ public interface WuerthBms
 		SYSTEM_GLOBAL_STATE(Doc.of(SystemGlobalState.values())),
 
 		PRECHARGE_ENERGY(Doc.of(INTEGER)//
-				.unit(KILOJOULE)),
+				.unit(KILOJOULE)//
+				.text("Energy Accumulated over last precharge period")),
 
 		SYSTEM_CONTACTOR_STATE(Doc.of(SystemContactorState.values())),
 
@@ -97,7 +99,7 @@ public interface WuerthBms
 
 		CONTACTOR_SOH(Doc.of(INTEGER)//
 				.unit(PERCENT)//
-				.text("Contactor state of health")), //
+				.text("State of Health of the Contactors. Check bms_configurator excel file")), //
 
 		PACK_SHUNT_TEMPERATURE(Doc.of(DOUBLE)//
 				.unit(DEGREE_CELSIUS)//
@@ -115,10 +117,6 @@ public interface WuerthBms
 				.unit(VOLT)//
 				.text("Plus side voltage after contactor is closed")),
 
-		PACK_HIGH_VOLTAGE_MINUS(Doc.of(INTEGER)//
-				.unit(VOLT)//
-				.text("Minus side voltage after contactor is closed")),
-
 		SW_VERSION_MAJOR(Doc.of(INTEGER)//
 				.text("SW Version Major Value (Vx.0.0)")),
 
@@ -130,7 +128,6 @@ public interface WuerthBms
 
 		CELL_OT_CUTOFF(Doc.of(FAULT)//
 				.text("Temperature bigger than Cutoff threshold")), //
-		// Not implemented by Würth yet
 		CELL_OT_MAX(Doc.of(FAULT)//
 				.text("Temperature bigger than maximum threshold")), //
 		CELL_OT_WARN(Doc.of(WARNING)//
@@ -143,7 +140,6 @@ public interface WuerthBms
 				.text("Voltage bigger than warning threshold")), //
 		CELL_UT_CUTOFF(Doc.of(FAULT)//
 				.text("Voltage smaller than warning threshold")), //
-		// Not implemented by Würth yet
 		CELL_UT_MAX(Doc.of(FAULT)//
 				.text("Temperature smaller than maximum threshold")), //
 		CELL_UT_WARN(Doc.of(WARNING)//
@@ -158,10 +154,8 @@ public interface WuerthBms
 		COMMUNICATION_ERROR(Doc.of(FAULT)//
 				.text("Fail in CSC communication")), //
 
-		// Not implemented by Würth yet
 		CONT_NEGATIVE_ERR(Doc.of(WARNING)//
 				.text("String event negative error")), //
-		// Not implemented by Würth yet
 		CONT_POSITIVE_ERR(Doc.of(WARNING)//
 				.text("String event positive error")), //
 
@@ -171,7 +165,6 @@ public interface WuerthBms
 		CURRENT_OC_DISCHARGE(Doc.of(FAULT)//
 				.text("Overcurrent for discharge state")), //
 
-		// Not implemented by Würth yet
 		CURRENT_MEASURE_ERROR(Doc.of(WARNING)//
 				.text("String event current measure error")),
 
@@ -181,23 +174,18 @@ public interface WuerthBms
 		VOLT_PLAUSIBILITY_ERROR(Doc.of(FAULT)//
 				.text("Sum of cell voltages or sum of the CSC voltages do not match total voltage")),
 
-		// Not implemented by Würth yet
 		SOC_ERROR(Doc.of(INFO)//
 				.text("SoC lower than threshold")), //
 
-		// Not implemented by Würth yet
 		SOH_ERROR(Doc.of(WARNING)//
 				.text("String event soh error")),
 
-		// Not implemented by Würth yet
 		STRING_CONNECTED(Doc.of(WARNING)//
 				.text("String connected")), //
 
-		// Not implemented by Würth yet
 		TEMP_DIFFERENCE_ERROR(Doc.of(WARNING)//
 				.text("String event temperature difference error")),
 
-		// Not implemented by Würth yet
 		BALANCING_ERROR(Doc.of(WARNING)//
 				.text("Balancing error")), //
 
@@ -225,8 +213,8 @@ public interface WuerthBms
 		KL_30_C_FAULT(Doc.of(FAULT)//
 				.text("KL30C measurement threshold failed")),
 
-		CALIBRATION_PASSED(Doc.of(WARNING)//
-				.text("Shunt calibration and its 2's complement correct")),
+		SHUNT_CALIBRATION_ERROR(Doc.of(FAULT)//
+				.text("Shunt calibration procedure is not correct or value is out of range")),
 
 		SET_IP_FAIL(Doc.of(WARNING)//
 				.text("Set IP fail")),
@@ -400,9 +388,12 @@ public interface WuerthBms
 				.unit(VOLT)), //
 		KL_30C(Doc.of(INTEGER)//
 				.unit(VOLT)), //
-		CELL_OPEN_WIRE_DETECTION(Doc.of(INTEGER)), //
-		CSC_OPEN_WIRE_DETECTION(Doc.of(INTEGER)), //
-		CVCM_FAULT_CASE(Doc.of(INTEGER)), //
+		CELL_OPEN_WIRE_DETECTION(Doc.of(INTEGER) //
+				.text("Cell number where open wire was detected")), //
+		CSC_OPEN_WIRE_DETECTION(Doc.of(INTEGER) //
+				.text("CSC number where open wire was detected")), //
+		CVCM_FAULT_CASE(Doc.of(CvcmFaultCause.values())//
+				.text("Internal faults related to current measurement chip")), //
 		DIAG_LAST_FAILED_CSC(Doc.of(INTEGER)//
 				.text("Shows the CSC number where some initialization tests failed or where the CSC could not be initialized.")), //
 		LATENT_LAST_FAILED_CSC(Doc.of(INTEGER)//
@@ -419,7 +410,8 @@ public interface WuerthBms
 				.text("Average Temperature on String")), //
 
 		SHUTDOWN_PATH_CAUSE(Doc.of(ShutdownPathCause.values())), //
-		START_UP_PATH_TEST_FAIL(Doc.of(StartUpPathTestFail.values())), //
+		START_UP_PATH_FAILED_AT(Doc.of(StartUpPathTestFailedAt.values()) //
+				.text("Shows at what moment the startup test has failed. Need to run regular test to identify if the contactors are working properly")), //
 
 		CFG_MODULE_CNT(Doc.of(INTEGER)//
 				.accessMode(READ_ONLY)//
@@ -493,6 +485,17 @@ public interface WuerthBms
 				.unit(VOLT)), //
 		CFG_BATT_STRING_MAX_V(Doc.of(INTEGER)//
 				.unit(VOLT)), //
+		CONTACTOR_SOH_MIN_WARNING(Doc.of(INTEGER) //
+				.unit(PERCENT) //
+				.text("Configuration Warning Limit for Contactor SOH")), //
+		SOC_MIN_WARNING(Doc.of(INTEGER) //
+				.unit(PERCENT) //
+				.text("Configuration Warning Limit for SOC")), //
+		CONTACTOR_FEEDBACK_VOLTAGE_TOLERANCE(Doc.of(INTEGER) //
+				.unit(MILLIVOLT) //
+				.text("Internal parameter in BMS -> Voltage tolerance used for contactor feedbacks")), //
+		PRECHARGE_MAX_POWER_DISSIPATION_J(Doc.of(INTEGER) //
+				.text("Actual energy flowing through the prePrecharge Resistor")), //
 		CFG_CHARGE_CURRENT_LIMIT_TOLERANCE_A(Doc.of(INTEGER)//
 				.unit(AMPERE)//
 				.text("Tolerance for the Current when system is in Charge State")), //
@@ -513,6 +516,12 @@ public interface WuerthBms
 				.unit(PERCENT)), //
 		CFG_BMS_MINIMUM_SOC(Doc.of(INTEGER)//
 				.unit(PERCENT)), //
+		CFG_PRECHARGE_ACTIVE_CURRENT_MA(Doc.of(INTEGER)//
+				.unit(MILLIAMPERE) //
+				.text("Internal parameter in BMS to define minimum current that can be measured for precharge calculations (currently set to 0)")), //
+		CFG_PRECHARGE_RESISTOR_OHMS(Doc.of(INTEGER)//
+				.unit(OHM) //
+				.text("Configuration of Precharge Resistor value used ")), //
 		CFG_PRECHARGE_THRESHOLD(Doc.of(INTEGER)//
 				.unit(PERCENT)), //
 		CFG_PRECHARGE_TIMEOUT(Doc.of(INTEGER)//

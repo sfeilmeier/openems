@@ -2,6 +2,22 @@
   "INSTALLATION": {
     "ALERTING_INFO": "Set up email notifications as an installer when the FEMS is offline for a certain period of time or reports an error. The message is sent to the email address provided during commissioning.",
     "OFFLINE": "Offline",
-    "ENABLE_MPPT": "MPPT {{ mpptNumber }} active"
+    "ENABLE_MPPT": "MPPT {{ mpptNumber }} active",
+    "CONFIGURATION_EMERGENCY_RESERVE": {
+      "GENSET": {
+        "CONNECTED": "Genset connected?",
+        "POWER": "Rated power",
+        "PREHEAT_TIME": "Preheat time",
+        "RUN_TIME": "Run time",
+        "EMERGENCY_POWER_FUNCTION": "Should the emergency power Genset function be activated?",
+        "BATTERY_CHARGING": "Enable battery charging from the Genset?",
+        "MAX_POWER": "Maximum percentage charging power",
+        "MAX_POWER_DESCRIPTION": "Percentage of the above-mentioned available generator rated power with which the battery is to be charged.",
+        "CHARGE_SOC_START": "Battery charge level for starting the Genset",
+        "CHARGE_SOC_START_DESCRIPTION": "State of charge of the battery at which the Genset is started.",
+        "CHARGE_SOC_END": "Battery charge level for stopping the Genset",
+        "CHARGE_SOC_END_DESCRIPTION": "State of charge of the battery at which the Genset is stopped."
+      }
+    }
   }
 }

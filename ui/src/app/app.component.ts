@@ -6,8 +6,8 @@ import { NavigationEnd, Router } from "@angular/router";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { MenuController, ModalController, NavController, Platform, ToastController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
-import { Subject, Subscription, timer } from "rxjs";
-import { filter, retry, switchMap, takeUntil } from "rxjs/operators";
+import { Subject, Subscription } from "rxjs";
+import { filter, takeUntil } from "rxjs/operators";
 import { environment } from "../environments";
 import { PlatFormService } from "./platform.service";
 import { NavigationService } from "./shared/components/navigation/service/navigation.service";
@@ -15,6 +15,7 @@ import { AppStateTracker } from "./shared/ngrx-store/app-state-tracker";
 import { GlobalRouteChangeHandler } from "./shared/service/globalRouteChangeHandler";
 import { LayoutRefreshService } from "./shared/service/layoutRefreshService";
 import { RouteService } from "./shared/service/route.service";
+import { SystemStateService } from "./shared/service/systemStateService";
 import { UserService } from "./shared/service/user.service";
 import { Service, UserPermission, Websocket } from "./shared/shared";
 import { Language } from "./shared/type/language";
@@ -37,7 +38,6 @@ export class AppComponent implements OnInit, OnDestroy {
     public enableSideMenu: boolean;
     public isSystemLogEnabled: boolean = false;
 
-    protected isSystemOutage = false;
     protected isUserAllowedToSeeOverview: boolean = false;
     protected isUserAllowedToSeeFooter: boolean = false;
     protected isHistoryDetailView: boolean = false;
@@ -66,6 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private translate: TranslateService,
         private routeService: RouteService,
         private layoutRefresh: LayoutRefreshService,
+        private systemState: SystemStateService,
     ) {
         service.setLang(Language.getCurrentLanguage());
 
@@ -102,7 +103,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.pollSystemStatus();
+        this.systemState.pollSystemStatus();
 
         // Checks if sessionStorage is not null, undefined or empty string
         if (localStorage.getItem("DEBUGMODE")) {
@@ -136,30 +137,6 @@ export class AppComponent implements OnInit, OnDestroy {
         });
 
         this.title.setTitle(environment.edgeShortName);
-    }
-
-    /**
-     * Get system status from https://status.fenecon.de
-     */
-    private pollSystemStatus(): void {
-        timer(1 /* immediately */, 5 * 60 * 1000 /* and then every 5 minutes */)
-            .pipe(
-                switchMap(() => this.http.get<CachetComponentStatus>("https://status.fenecon.de/api/v1/components/3")),
-                retry(
-                    { count: 5, delay: 5000 }
-                ))
-            .subscribe((data) => {
-                switch (data.data.status) {
-                    case 2:
-                    case 3:
-                    case 4:
-                        this.isSystemOutage = true;
-                        break;
-                    case 1:
-                        this.isSystemOutage = false;
-                        break;
-                }
-            });
     }
 
     /**

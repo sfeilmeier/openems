@@ -40,6 +40,7 @@ public class UpdateProducttypeHandler implements EventHandler, DebugLoggable {
 			.put("App.FENECON.Commercial.92.ClusterMaster", "commercial-92-cluster") //
 			.put("App.FENECON.Commercial.92.ClusterSlave", "commercial-92-cluster-slave") //
 			.put("App.FENECON.Commercial.50.Gen3", "Commercial-50-gen-3") //
+			.put("App.FENECON.Commercial.100", "commercial-100") //
 			.put("App.FENECON.Industrial.S.ISK110", "Industrial S") //
 			.put("App.FENECON.Industrial.S.ISK011", "Industrial S") //
 			.put("App.FENECON.Industrial.S.ISK010", "Industrial S") //

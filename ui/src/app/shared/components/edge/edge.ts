@@ -59,7 +59,7 @@ export class Edge {
 
     // holds config
     private config: BehaviorSubject<EdgeConfig> = new BehaviorSubject<EdgeConfig>(null);
-    private _config = signal<EdgeConfig>(null);
+    private _config = signal<EdgeConfig | null>(null);
 
     // holds currently subscribed channels, identified by source id
     private subscribedChannels: { [sourceId: string]: ChannelAddress[] } = {};
@@ -110,7 +110,7 @@ export class Edge {
     }
 
     /**
-     * Gets the Config. If not available yet, it requests it via Websocket.
+     * Gets the Config.
      *
      * @param websocket the Websocket connection
      */
@@ -363,7 +363,7 @@ export class Edge {
      */
     public handleEdgeConfigNotification(message: EdgeConfigNotification): void {
         this.config.next(new EdgeConfig(this, message.params));
-        this._config.update(() => new EdgeConfig(this, message.params));
+        this._config.set(new EdgeConfig(this, message.params));
     }
 
     /**
@@ -718,6 +718,7 @@ export class Edge {
         }).catch(reason => {
             console.warn("Unable to refresh config", reason);
             this.config.next(new EdgeConfig(this));
+            this._config.set(new EdgeConfig(this));
         });
     }
 

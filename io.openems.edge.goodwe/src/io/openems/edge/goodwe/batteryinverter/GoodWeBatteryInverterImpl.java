@@ -79,7 +79,6 @@ import io.openems.edge.goodwe.batteryinverter.statemachine.Context;
 import io.openems.edge.goodwe.batteryinverter.statemachine.StateMachine;
 import io.openems.edge.goodwe.batteryinverter.statemachine.StateMachine.State;
 import io.openems.edge.goodwe.common.AbstractGoodWe;
-import io.openems.edge.goodwe.common.ApplyPowerHandler;
 import io.openems.edge.goodwe.common.GoodWe;
 import io.openems.edge.goodwe.common.GoodWePowerSetting;
 import io.openems.edge.goodwe.common.enums.AppModeIndex;
@@ -419,7 +418,7 @@ public class GoodWeBatteryInverterImpl extends AbstractGoodWe implements GoodWeB
 
 		// TODO: Add individual handling related to each GoodWeType
 		switch (goodweType) {
-		case FENECON_50K -> {
+		case FENECON_50K, FENECON_100K -> {
 			setWriteValueIfNotRead(this.channel(GoodWe.ChannelId.ENABLE_FIXED_POWER_FACTOR_V2), fixedPowerFactorEnable);
 			setWriteValueIfNotRead(this.channel(GoodWe.ChannelId.FIXED_POWER_FACTOR_V2), fixedPowerFactor);
 		}
@@ -446,7 +445,7 @@ public class GoodWeBatteryInverterImpl extends AbstractGoodWe implements GoodWeB
 
 		// TODO: Add individual handling related to each GoodWeType
 		switch (goodweType) {
-		case FENECON_50K -> {
+		case FENECON_50K, FENECON_100K -> {
 			// Feed-in limitation on / off
 			setWriteValueIfNotRead(this.channel(GoodWe.ChannelId.EXTENDED_FEED_POWER_ENABLE), feedPowerEnable);
 			setWriteValueIfNotRead(this.channel(GoodWe.ChannelId.FEED_POWER_ENABLE), feedPowerEnable);
@@ -729,8 +728,8 @@ public class GoodWeBatteryInverterImpl extends AbstractGoodWe implements GoodWeB
 		this.latestBatteryData = new BatteryData(battery.getChargeMaxCurrent().get(), battery.getVoltage().get());
 
 		// Apply Power Set-Point
-		ApplyPowerHandler.apply(this, setActivePower, this.config.controlMode(), this.sum.getGridActivePower(),
-				this.getActivePower(), this.getMaxAcImport(), this.getMaxAcExport(), this.power.isPidEnabled());
+		this.applyPowerHandler.apply(setActivePower, this.config.controlMode(), this.sum.getGridActivePower(),
+				this.getActivePower(), this.getMaxAcImport(), this.getMaxAcExport(), this.power.isFilterEnabled());
 
 		// Set Battery Limits
 		this.setBatteryLimits(battery);

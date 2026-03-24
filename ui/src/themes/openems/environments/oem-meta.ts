@@ -2,10 +2,14 @@ import { alertCircleOutline, checkmarkDoneCircleOutline, flame, informationCircl
 import { BaseMeta } from "src/environments";
 
 export const OemMeta: BaseMeta = {
+    api: {
+        SYSTEM_OUTAGE: null,
+    },
     icons: {
         COMMON: {
             CONSUMPTION: "assets/img/icon/consumption.svg",
             SELFCONSUMPTION: "assets/img/icon/selfconsumption.svg",
+            GENERATOR: "assets/img/icon/generator.svg",
             GRID: "assets/img/icon/grid.svg",
             GRID_STORAGE: "assets/img/icon/gridStorage.svg",
             GRID_RESTRICTION: "assets/img/icon/gridRestriction.svg",
@@ -57,6 +61,7 @@ export const OemMeta: BaseMeta = {
     links: {
         DATA_PROTECTION: null,
         REDIRECT: {
+            BETA_SURVEY: null,
             BETA_CHANGE_LOG: null,
             COMMON_STORAGE: null,
             COMMON_AUTARCHY: null,
@@ -139,6 +144,7 @@ export const OemMeta: BaseMeta = {
                     COMMERCIAL_50_GEN_3: "#",
                     COMMERCIAL_92: "#",
                     COMMERCIAL_92_CLUSTER: "#",
+                    COMMERCIAL_100: "#",
                 },
             },
 

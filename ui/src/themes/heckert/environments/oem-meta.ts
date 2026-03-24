@@ -2,10 +2,14 @@ import { alertCircleOutline, checkmarkDoneCircleOutline, flame, informationCircl
 import { BaseMeta } from "src/environments";
 
 export const OemMeta: BaseMeta = {
+    api: {
+        SYSTEM_OUTAGE: "https://status.fenecon.de/",
+    },
     icons: {
         COMMON: {
             CONSUMPTION: "assets/img/icon/consumption.svg",
             SELFCONSUMPTION: "assets/img/icon/selfconsumption.svg",
+            GENERATOR: "assets/img/icon/generator.svg",
             GRID: "assets/img/icon/grid.svg",
             GRID_STORAGE: "assets/img/icon/gridStorage.svg",
             GRID_RESTRICTION: "assets/img/icon/gridRestriction.svg",
@@ -57,6 +61,7 @@ export const OemMeta: BaseMeta = {
     links: {
         DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
         REDIRECT: {
+            BETA_SURVEY: "https://erp.fenecon.de/survey/start/d123c5ff-72e1-4fdf-bbc8-867d5a75c51c",
             BETA_CHANGE_LOG: "https://docs.fenecon.de/redirect/fenecon/de/beta_change_log",
             COMMON_STORAGE: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_storage",
             COMMON_AUTARCHY: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_autarchy",
@@ -141,6 +146,7 @@ export const OemMeta: BaseMeta = {
                     COMMERCIAL_50_GEN_3: "#",
                     COMMERCIAL_92: "#",
                     COMMERCIAL_92_CLUSTER: "#",
+                    COMMERCIAL_100: "#",
                 },
             },
 

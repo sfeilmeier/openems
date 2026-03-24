@@ -4,7 +4,7 @@ import { DefaultTypes } from "src/app/shared/type/defaulttypes";
 export { environment } from "./dummy";
 
 export type Theme = "OpenEMS" | "FENECON" | "FENECONBeta" | "Heckert";
-export type BaseMeta = Pick<Environment, "icons" | "links" | "images">;
+export type BaseMeta = Pick<Environment, "icons" | "api" | "links" | "images">;
 
 export interface Environment {
     readonly theme: Theme;
@@ -23,10 +23,14 @@ export interface Environment {
 
 
     readonly docsUrlPrefix: string;
+    readonly api: {
+        readonly SYSTEM_OUTAGE: string | null,
+    },
     readonly icons: {
         readonly "COMMON": {
             readonly "CONSUMPTION": string,
             readonly "SELFCONSUMPTION": string,
+            readonly "GENERATOR": string,
             readonly "GRID": string,
             readonly "GRID_STORAGE": string,
             readonly "GRID_RESTRICTION": string,
@@ -79,6 +83,7 @@ export interface Environment {
     readonly links: {
         readonly REDIRECT: {
             readonly BETA_CHANGE_LOG: string | null,
+            readonly BETA_SURVEY: string | null,
             readonly COMMON_STORAGE: string | null,
             readonly COMMON_AUTARCHY: string | null,
             readonly COMMON_CONSUMPTION: string | null,
@@ -160,6 +165,7 @@ export interface Environment {
                     readonly COMMERCIAL_50_GEN_3: string,
                     readonly COMMERCIAL_92: string,
                     readonly COMMERCIAL_92_CLUSTER: string,
+                    readonly COMMERCIAL_100: string,
                 },
                 readonly INDUSTRIAL?: {
                     S: string,

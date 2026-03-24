@@ -14,7 +14,7 @@ WORKDIR /src
 ENV OEMS_BACKEND_EDGE_OUTPUT=/opt/openems-backend-edge.jar
 RUN --mount=type=bind,target=.,readwrite \
     --mount=type=cache,target=/root/.gradle \
-    ./gradlew --no-daemon --no-build-cache buildBackendEdge
+    ./gradlew --no-build-cache buildBackendEdge
 
 ### Build jar container base
 FROM ghcr.io/linuxserver/baseimage-alpine:edge AS base_container
@@ -40,4 +40,4 @@ RUN find /etc/s6-overlay/ -type f -name 'run' -exec chmod +x {} \;
 VOLUME /var/opt/openems/config
 VOLUME /var/opt/openems/data
 
-EXPOSE 8082
+EXPOSE 8078 8081

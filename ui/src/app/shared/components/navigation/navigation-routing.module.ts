@@ -5,6 +5,10 @@ import { CommonConsumptionDetailsComponent } from "src/app/edge/live/common/cons
 import { CommonConsumptionHistoryComponent } from "src/app/edge/live/common/consumption/history/new-navigation/new-navigation";
 import { CommonConsumptionSingleHistoryOverviewComponent } from "src/app/edge/live/common/consumption/history/phase-accurate/new-navigation/phase-accurate";
 import { CommonConsumptionHomeComponent } from "src/app/edge/live/common/consumption/new-navigation/new-navigation";
+import { CommonProductionDetailsComponent } from "src/app/edge/live/common/production/details/details";
+import { CommonProductionHistoryComponent } from "src/app/edge/live/common/production/history/new-navigation/new-navigation";
+import { CommonProductionSingleHistoryOverviewComponent } from "src/app/edge/live/common/production/history/phase-accurate/new-navigation/phase-accurate";
+import { CommonProductionHomeComponent } from "src/app/edge/live/common/production/new-navigation/new-navigation";
 import { ChargeModeComponent } from "src/app/edge/live/Controller/Evse/pages/chargemode/chargemode";
 import { EvseEnergyLimitComponent } from "src/app/edge/live/Controller/Evse/pages/energy-limit/energy-limit";
 import { EvsePhaseSwitchingComponent } from "src/app/edge/live/Controller/Evse/pages/phase-switching/phase-switching";
@@ -12,6 +16,10 @@ import { EvseScheduleComponent } from "src/app/edge/live/Controller/Evse/pages/s
 import { EvseAddTaskComponent } from "src/app/edge/live/Controller/Evse/pages/schedule/task/add/add";
 import { EvseEditTaskComponent } from "src/app/edge/live/Controller/Evse/pages/schedule/task/edit/edit";
 import { NavigationInfoComponent } from "src/app/edge/live/navigation-info/navigation-info";
+import { SchedulerJsCalendarComponent } from "src/app/edge/live/scheduler/js-calendar/new-navigation";
+import { ScheduleJsCalendarComponent } from "src/app/edge/live/scheduler/js-calendar/schedule/schedule.component";
+import { SchedulerJsCalendarAddTaskComponent } from "src/app/edge/live/scheduler/js-calendar/schedule/task/add/add";
+import { SchedulerJsCalendarEditTaskComponent } from "src/app/edge/live/scheduler/js-calendar/schedule/task/edit/edit";
 import { SystemIndustrialLHomeComponent } from "src/app/edge/live/system/industrial/l/new-navigation/new-navigation";
 import { IndustrialLScheduleComponent as SystemIndustrialLScheduleComponent } from "src/app/edge/live/system/industrial/l/schedule/schedule.component";
 import { SystemIndustrialLAddTaskComponent } from "src/app/edge/live/system/industrial/l/schedule/task/add/add";
@@ -69,10 +77,19 @@ export const newNavigationRoutes: Routes = [
     { path: "common/grid/history/:componentId/phase-accurate", component: CommonGridPhaseAccurateOverviewComponent },
     { path: "common/grid/history/:componentId/phase-accurate/current-voltage", component: CurrentVoltageOverviewComponent },
 
-    { path: "common/production", component: CommonAutarchyHomeComponent },
-    { path: "common/production/history", component: CommonAutarchyHistoryComponent },
+    { path: "common/production", component: CommonProductionHomeComponent },
+    { path: "common/production/details", component: CommonProductionDetailsComponent },
+    { path: "common/production/history", component: CommonProductionHistoryComponent },
+    { path: "common/production/history/phase-accurate", component: CommonProductionDetailsComponent },
+    { path: "common/production/history/:componentId/phase-accurate", component: CommonProductionSingleHistoryOverviewComponent },
+    { path: "common/production/history/:componentId/phase-accurate/current-voltage", component: CurrentVoltageOverviewComponent },
+
     { path: "common/selfconsumption", component: CommonSelfConsumptionHomeComponent },
     { path: "common/selfconsumption/history", component: CommonSelfConsumptionHistoryComponent },
+    { path: ":componentId/scheduler-js-calendar", component: SchedulerJsCalendarComponent },
+    { path: ":componentId/scheduler-js-calendar/schedule", component: ScheduleJsCalendarComponent },
+    { path: ":componentId/scheduler-js-calendar/schedule/add-task", component: SchedulerJsCalendarAddTaskComponent },
+    { path: ":componentId/scheduler-js-calendar/schedule/task/:taskId", component: SchedulerJsCalendarEditTaskComponent },
     { path: ":componentId/industrial-l", component: SystemIndustrialLHomeComponent },
     { path: ":componentId/industrial-l/schedule", component: SystemIndustrialLScheduleComponent },
     { path: ":componentId/industrial-l/schedule/add-task", component: SystemIndustrialLAddTaskComponent, canActivate: [hasEdgeRole(Role.ADMIN), hasUserSettings(UserSettings.IS_DEVELOPER)] },

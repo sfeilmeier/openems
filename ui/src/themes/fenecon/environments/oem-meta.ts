@@ -1,6 +1,9 @@
 import { BaseMeta } from "src/environments";
 
 export const OemMeta: BaseMeta = {
+    api: {
+        SYSTEM_OUTAGE: "https://status.fenecon.de/",
+    },
     images: {
         EVSE: {
             KEBA_P30: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Keba.P30.png",
@@ -13,6 +16,7 @@ export const OemMeta: BaseMeta = {
         FORGET_PASSWORD: "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
         REDIRECT: {
+            BETA_SURVEY: "https://erp.fenecon.de/survey/start/d123c5ff-72e1-4fdf-bbc8-867d5a75c51c",
             BETA_CHANGE_LOG: "https://docs.fenecon.de/redirect/fenecon/de/beta_change_log",
             COMMON_STORAGE: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_storage",
             COMMON_AUTARCHY: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_autarchy",
@@ -97,6 +101,7 @@ export const OemMeta: BaseMeta = {
                     COMMERCIAL_50_GEN_3: "https://docs.fenecon.de/de/commercial/commercial_50-3/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Commercial_50-3.html",
                     COMMERCIAL_92: "https://docs.fenecon.de/de/commercial/commercial_92/betrieb_und_serviceanleitung/Betriebsanleitung_Commercial_92.html",
                     COMMERCIAL_92_CLUSTER: "https://docs.fenecon.de/de/commercial/commercial_92_cluster/betrieb_und_serviceanleitung/Betriebsanleitung_Commercial_92_Cluster.html",
+                    COMMERCIAL_100: "https://docs.fenecon.de/de/commercial/commercial_100/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Commercial_100.html",
                 },
             },
 
@@ -145,6 +150,7 @@ export const OemMeta: BaseMeta = {
         COMMON: {
             CONSUMPTION: "icons/common/consumption.svg",
             SELFCONSUMPTION: "icons/common/selfconsumption.svg",
+            GENERATOR: "assets/img/icon/generator.svg",
             GRID: "icons/common/grid.svg",
             GRID_STORAGE: "icons/common/gridStorage.svg",
             GRID_RESTRICTION: "icons/common/gridRestriction.svg",

@@ -69,6 +69,7 @@ import io.openems.edge.app.integratedsystem.FeneconHome20;
 import io.openems.edge.app.integratedsystem.FeneconHome30;
 import io.openems.edge.app.integratedsystem.FeneconHome6;
 import io.openems.edge.app.integratedsystem.FeneconProHybrid10;
+import io.openems.edge.app.integratedsystem.FeneconProHybrid910;
 import io.openems.edge.app.integratedsystem.FeneconProHybridGw;
 import io.openems.edge.app.integratedsystem.SystemFeneconHome;
 import io.openems.edge.app.integratedsystem.TestFeneconHome10;
@@ -97,7 +98,8 @@ import io.openems.edge.app.meter.SocomecMeter;
 import io.openems.edge.app.meter.gridmeter.GridMeterGoodWe;
 import io.openems.edge.app.meter.gridmeter.GridMeterJanitza;
 import io.openems.edge.app.meter.gridmeter.GridMeterKdk;
-import io.openems.edge.app.meter.shelly.AppShellyMeter;
+import io.openems.edge.app.meter.shelly.diy.AppShellyMeterDiy;
+import io.openems.edge.app.meter.shelly.meter.AppShellyMeter;
 import io.openems.edge.app.openemshardware.BeagleBoneBlack;
 import io.openems.edge.app.openemshardware.Compulab;
 import io.openems.edge.app.openemshardware.TechbaseCm3;
@@ -325,6 +327,16 @@ public final class Apps {
 	 */
 	public static final FeneconProHybridGw feneconProHybridGW(AppManagerTestBundle t) {
 		return app(t, FeneconProHybridGw::new, "App.FENECON.ProHybrid.GW");
+	}
+
+	/**
+	 * Test method for creating a {@link FeneconProHybrid910}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final FeneconProHybrid910 feneconProHybrid910(AppManagerTestBundle t) {
+		return app(t, FeneconProHybrid910::new, "App.FENECON.ProHybrid.9.10");
 	}
 
 	// TimeOfUseTariff
@@ -1024,13 +1036,23 @@ public final class Apps {
 	// Meter
 
 	/**
+	 * Test method for creating a {@link AppShellyMeterDiy}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final AppShellyMeterDiy shellyMeterDiy(AppManagerTestBundle t) {
+		return app(t, AppShellyMeterDiy::new, "App.Meter.Shelly");
+	}
+
+	/**
 	 * Test method for creating a {@link AppShellyMeter}.
 	 *
 	 * @param t the {@link AppManagerTestBundle}
 	 * @return the {@link OpenemsApp} instance
 	 */
-	public static final AppShellyMeter shellyMeter(AppManagerTestBundle t) {
-		return app(t, AppShellyMeter::new, "App.Meter.Shelly");
+	public static final AppShellyMeter shellyMeterPaid(AppManagerTestBundle t) {
+		return app(t, AppShellyMeter::new, "App.Meter.Shelly.Meter");
 	}
 
 	/**

@@ -45,6 +45,7 @@ addIcons({
     "oe-offline": environment.icons.COMMON.OFFLINE.CLOUD_OFFLINE_OUTLINE,
     "oe-time-of-use": environment.icons.COMMON.TIME_OF_USE.TIME_OF_USE,
     "oe-time-of-use-thin": environment.icons.COMMON.TIME_OF_USE.TIME_OF_USE_THIN,
+    "oe-generator": environment.icons.COMMON.GENERATOR,
 });
 
 export class Permission {
@@ -336,6 +337,7 @@ export enum Producttype {
     COMMERCIAL_40_45 = "COMMERCIAL 40-45",
     COMMERCIAL_92 = "commercial-92",
     COMMERCIAL_92_CLUSTER = "commercial-92-cluster",
+    COMMERCIAL_100 = "commercial-100",
     INDUSTRIAL_S = "Industrial S",
     INDUSTRIAL_M = "Industrial M",
     INDUSTRIAL_L = "Industrial L",

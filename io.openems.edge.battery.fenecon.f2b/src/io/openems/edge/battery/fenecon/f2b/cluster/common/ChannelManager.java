@@ -1,11 +1,14 @@
 package io.openems.edge.battery.fenecon.f2b.cluster.common;
 
+import static io.openems.common.utils.IntUtils.sumInteger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+import io.openems.common.utils.IntUtils;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.DeviceSpecificOnSetNextValueHandler.OnSetNextValueCallback;
@@ -21,9 +24,9 @@ public class ChannelManager extends AbstractChannelListenerManager {
 
 	private final Battery parent;
 
-	private static final BiFunction<Integer, Integer, Integer> INTEGER_MIN = TypeUtils::min;
-	private static final BiFunction<Integer, Integer, Integer> INTEGER_MAX = TypeUtils::max;
-	private static final BiFunction<Integer, Integer, Integer> INTEGER_SUM = TypeUtils::sum;
+	private static final BiFunction<Integer, Integer, Integer> INTEGER_MIN = IntUtils::minInteger;
+	private static final BiFunction<Integer, Integer, Integer> INTEGER_MAX = IntUtils::maxInteger;
+	private static final BiFunction<Integer, Integer, Integer> INTEGER_SUM = IntUtils::sumInteger;
 	private static final BiFunction<Integer, Integer, Integer> INTEGER_AVG = TypeUtils::averageInt;
 
 	public ChannelManager(Battery parent) {
@@ -153,7 +156,7 @@ public class ChannelManager extends AbstractChannelListenerManager {
 					differences.add(deltaMin);
 				}
 
-				sumOfSecondChannelValues = TypeUtils.sum(//
+				sumOfSecondChannelValues = sumInteger(//
 						sumOfSecondChannelValues, //
 						secondChannelValue.get());
 			}

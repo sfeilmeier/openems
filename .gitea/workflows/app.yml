@@ -1,6 +1,7 @@
 name: App-Build
 run-name: App Build for FEMS
 on:
+  workflow_dispatch:
   push:
     branches: [ main, develop, main-ui ]
 

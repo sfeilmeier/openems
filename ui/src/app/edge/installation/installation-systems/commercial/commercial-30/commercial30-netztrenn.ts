@@ -11,7 +11,7 @@ import { GridFeedInLimitationType, ModbusBridgeType, View } from "../../../share
 import { IbnUtils } from "../../../shared/ibn.utils";
 import { SystemId } from "../../../shared/system";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
-import { SchedulerIdBehaviour } from "../../abstract-ibn";
+import { EmergencyReserve, SchedulerIdBehaviour } from "../../abstract-ibn";
 import { AbstractCommercial30Ibn } from "./abstract-commercial-30";
 
 export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
@@ -20,13 +20,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
     public override readonly emergencyPower = "ENABLE";
 
     // configuration-emergency-reserve
-    public override emergencyReserve?: {
-        isEnabled: boolean;
-        isReserveSocEnabled: boolean;
-        minValue: number;
-        value: number;
-        coupler: Coupler
-    } = {
+    public override emergencyReserve?: EmergencyReserve & { coupler: Coupler } = {
         isEnabled: true,
         minValue: 15,
         value: 20,

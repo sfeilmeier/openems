@@ -531,6 +531,8 @@
             "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Cooling unit reset:",
             "CLEAR_COOLING_UNIT_ERRORS_TEXT": "necessary for cooling unit errors"
           },
+          "RPC_SUCCESS": "Command execution successfully",
+          "RPC_FAILED": "Command execution failed",
           "OVERALL_SYSTEM": "Overall system"
         },
         "TIME_OF_USE_TARIFF": {
@@ -690,6 +692,8 @@
     "NUMBER_OF_COMPONENTS": "Number of Components",
     "OFF": "Off",
     "OFF_GRID": "No Grid Connection!",
+    "GENERATOR_SUPPLY": "Generator supply",
+    "GENERATOR_ON": "Generator active",
     "OK": "ok",
     "ON": "On",
     "OPEN": "Open",
@@ -759,6 +763,9 @@
     "NAVIGATION_INFO": "We are currently redesigning our monitoring and app, optimizing their navigation and functionality.",
     "NAVIGATION_DETAILS": "This Help-Chip provides you with assistance. Read more about changes, get explanations and info, including the extended functionalities of your KEBA P40 charging station.",
     "LINK": "Read more by following this link (German):",
+    "LINK_TEXT": "View the changelog for the beta test",
+    "SURVEY": "You can share your feedback on the beta test with us here:",
+    "SURVEY_LINK": "Take part in the beta test survey",
     "HELP": "Help"
   },
   "GRID_STATES": {

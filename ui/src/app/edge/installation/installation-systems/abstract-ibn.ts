@@ -35,6 +35,13 @@ export enum SchedulerIdBehaviour {
     ALWAYS_INCLUDE,
 }
 
+export interface EmergencyReserve {
+    isEnabled: boolean;
+    minValue: number;
+    value: number | null;
+    isReserveSocEnabled: boolean;
+}
+
 export abstract class AbstractIbn {
     //Regex code for validating Countries.
     public static readonly COUNTRY_PARTNER_ZIP_CODE_REGEX: RegExp = /^((\d{5}(-\d{4})?)|([1-9]\d{3}\s?[A-Z]{2})|(\d{3}\s?\d{2})|(\d{4}))$/;
@@ -104,12 +111,7 @@ export abstract class AbstractIbn {
     };
 
     // configuration-emergency-reserve
-    public emergencyReserve?: {
-        isEnabled: boolean;
-        isReserveSocEnabled: boolean;
-        minValue: number;
-        value: number;
-    };
+    public emergencyReserve?: EmergencyReserve;
 
     // Protocol Serial Numbers.
     public serialNumbers: {
@@ -263,15 +265,6 @@ export abstract class AbstractIbn {
         });
 
         return fields;
-    }
-
-    /**
-     * Adds the emergency reserve model to the IBN.
-     *
-     * @param model The model.
-     */
-    public setEmergencyReserve(model: any) {
-        this.emergencyReserve = model;
     }
 
     /**
