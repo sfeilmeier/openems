@@ -171,18 +171,19 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Heat.MyPv.ReadOnly", "https://fenecon.de/fems-power-to-heat-lesend") //
 
 			// E-Mobilität
-			.put("App.Evcs.Keba", "https://fenecon.de/fems-ac-ladestation") //
-			.put("App.Evse.ChargePoint.Keba", "https://fenecon.de/fems-ac-ladestation") //
-			.put("App.Evcs.HardyBarth", "https://fenecon.de/fems-ac-ladestation") //
 			.put("App.Evcs.Abl.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
-			.put("App.Evcs.HardyBarth.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
-			.put("App.Evcs.Keba.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
-			.put("App.Evcs.Goe.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
-			.put("App.Evcs.Heidelberg.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
-			.put("App.Evcs.Mennekes.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
 			.put("App.Evcs.Alpitronic", "https://fenecon.de/fems-dc-ladestation") //
-			.put("App.Evcs.IesKeywatt", "https://fenecon.de/fems-dc-ladestation") //
 			.put("App.Evcs.Cluster", "https://fenecon.de/fems-multiladepunkt-management") //
+			.put("App.Evcs.Goe.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evcs.HardyBarth", "https://fenecon.de/fems-ac-ladestation") //
+			.put("App.Evcs.HardyBarth.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evcs.Heidelberg.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evcs.IesKeywatt", "https://fenecon.de/fems-dc-ladestation") //
+			.put("App.Evcs.Keba", "https://fenecon.de/fems-ac-ladestation") //
+			.put("App.Evcs.Keba.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evcs.Mennekes.ReadOnly", "https://fenecon.de/fems-ac-ladestation-lesend") //
+			.put("App.Evse.ChargePoint.Keba", "https://fenecon.de/fems-ac-ladestation") //
+			.put("App.Evse.ChargePoint.Mennekes", "https://fenecon.de/fems-ac-ladestation") //
 
 			// Lastspitzenkappung und atypische Netznutzung
 			.put("App.PeakShaving.PeakShaving", "https://fenecon.de/fems-lastspitzenkappung") //
