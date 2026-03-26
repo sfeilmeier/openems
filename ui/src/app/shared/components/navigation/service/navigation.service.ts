@@ -75,8 +75,12 @@ export class NavigationService {
          * @returns a update navigation tree
          */
         function buildAbsoluteLink(node: NavigationTree): NavigationTree {
+
             const segments: (string | null)[] = [];
             const current: NavigationTree | null = node;
+            if (ArrayUtils.containsStrings(node.routerLink.baseString.split("/"), current?.parent?.routerLink?.baseString?.split("/") ?? [])) {
+                return node;
+            }
 
             segments.unshift(current.routerLink.baseString);
             segments.unshift(current?.parent?.routerLink.baseString ?? null);
@@ -97,7 +101,7 @@ export class NavigationService {
                 return;
             }
             const _node = structuredClone(node);
-            node.routerLink = buildAbsoluteLink(_node).routerLink;
+            node.routerLink.baseString = buildAbsoluteLink(_node).routerLink.baseString;
 
             if (node.children) {
                 for (const child of node.children) {
@@ -159,9 +163,11 @@ export class NavigationService {
      * @param currentUrl the current url
      */
     public async updateNavigationNodes(currentUrl: string | null, edge: Edge, translate: TranslateService) {
-        const navigationTree = await NavigationService.createNavigationTree(edge, translate);
-        this.navigationTree.set(navigationTree);
-        this.initNavigation(currentUrl, navigationTree);
+        if (untracked(() => this.navigationTree() == null)) {
+            const navigationTree = await NavigationService.createNavigationTree(edge, translate);
+            this.navigationTree.set(navigationTree);
+        }
+        this.initNavigation(currentUrl, untracked(() => this.navigationTree()));
     }
 
     /**
@@ -196,7 +202,7 @@ export class NavigationService {
     }
 
     /**
-     * Navigates to passed link
+     * Navigates to passed link absolutely.
      *
      * @param link the link segment to navigate to
      * @returns
@@ -274,30 +280,31 @@ export class NavigationService {
      * @param childNavigationTree the child navigation tree
      */
     public setChildToCurrentNavigation(childNavigationTree: NavigationTree | null) {
-        const currentNode = this.currentNode();
-        if (currentNode == null || childNavigationTree == null) {
-            return;
-        }
         this.navigationTree.update(tree => {
             if (tree == null) {
                 return null;
             }
-            tree.updateNavigationTreeByAbsolutePath(this.navigationTree(), currentNode.routerLink.baseString, node => {
-                childNavigationTree.parent = node;
-                node.children.push(childNavigationTree);
-            });
-            return tree;
-        });
 
+            const parentNode = tree?.findParentByUrl(this.routeService.currentUrl()?.split("?")[0] ?? null);
+            if (parentNode == null || childNavigationTree == null) {
+                return null;
+            }
+
+            tree.updateNavigationTreeByAbsolutePath(tree, parentNode.routerLink.baseString, node => {
+                childNavigationTree.parent = node;
+                node.setChild(node.id, childNavigationTree);
+            });
+            return structuredClone(tree);
+        });
         this.initNavigation(this.routeService.currentUrl(), this.navigationTree());
     }
 
     /**
-     * Sets child navigation to currently active navigation node.
-     *
-     * @param newNavigationTree the new navigation tree to insert
-     * @returns
-     */
+ * Sets child navigation to currently active navigation node.
+ *
+ * @param newNavigationTree the new navigation tree to insert
+ * @returns
+ */
     public setChildNavigationToCurrentNavigation(newNavigationTree: NavigationTree) {
         const currentNavigationTree = this.navigationTree();
         if (currentNavigationTree == null) {
@@ -369,9 +376,10 @@ export class NavigationService {
      */
     private findActiveNode(nodes: NavigationTree | null, currentUrl: string | null): NavigationTree | null {
 
+        const cleanedCurrentUrl = currentUrl?.split("?")?.[0] ?? null;
         const _nodes = structuredClone(nodes);
         const flattenedNavigationTree: NavigationTree | null = NavigationService.convertRelativeToAbsoluteLink(_nodes);
-        const currentNavigationNode = NavigationService.getNavigationIds(flattenedNavigationTree, currentUrl);
+        const currentNavigationNode = NavigationService.getNavigationIds(flattenedNavigationTree, cleanedCurrentUrl);
 
         if (!currentNavigationNode) {
             return null;

@@ -4,6 +4,7 @@ import { SharedConsumption } from "src/app/edge/live/common/consumption/shared/s
 import { SharedGrid } from "src/app/edge/live/common/grid/shared/shared";
 import { SharedProduction } from "src/app/edge/live/common/production/shared/shared";
 import { SharedSelfConsumption } from "src/app/edge/live/common/selfconsumption/shared/shared";
+import { ControllerEvseSingleShared } from "src/app/edge/live/Controller/Evse/shared/shared";
 import { SharedSchedulerJsCalendar } from "src/app/edge/live/scheduler/js-calendar/shared-scheduler-js-calendar";
 import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/shared-system-industrial-l";
 import { SharedSystemIndustrialXl } from "src/app/edge/live/system/industrial/xl/shared-system-industrial-xl";
@@ -67,6 +68,8 @@ export class Widgets {
                 return SharedSystemIndustrialXl.getNavigationTree(translate, widget.componentId);
             case "Scheduler.JSCalendar":
                 return SharedSchedulerJsCalendar.getNavigationTree(translate, widget.componentId);
+            case "Evse.Controller.Single":
+                return ControllerEvseSingleShared.getNavigationTree(edge, translate, widget.componentId, config);
             default:
                 return null;
         }
