@@ -418,7 +418,11 @@ export namespace NavigationConstants {
     /**
      * The widget factories to show in new navigation
      */
-    export const newWidgets: Widget["name"][] = ["System.Fenecon.Industrial.L", "System.Fenecon.Industrial.Xl"];
+    export const newWidgets: Widget["name"][] = [
+        "System.Fenecon.Industrial.L",
+        "System.Fenecon.Industrial.Xl",
+        "Controller.Io.HeatPump.SgReady",
+    ];
 
     export namespace CommonNodes {
         export function PHASE_ACCURATE(translate: TranslateService, id: NavigationTree["id"], iconColor: NavigationTree["icon"]["color"], children: NavigationTree["children"] = []) { return new NavigationTree(id, { baseString: id }, { name: "list-outline", color: iconColor }, translate.instant("EDGE.HISTORY.PHASE_ACCURATE"), "label", children, null); };
