@@ -90,11 +90,20 @@ export class AdvertWidgets {
 
         let list: AdvertWidget[] = [];
 
-        if (edge.roleIsAtLeast(Role.INSTALLER)) {
+        if (edge.role == Role.OWNER) {
             list.push(
                 {
                     name: "advert-1",
                     title: { languageKey: "ADVERT.1.TITLE" },
+                }
+            );
+        };
+
+        if (edge.roleIsAtLeast(Role.INSTALLER)) {
+            list.push(
+                {
+                    name: "advert-2",
+                    title: { languageKey: "ADVERT.2.TITLE" },
                 }
             );
         };
