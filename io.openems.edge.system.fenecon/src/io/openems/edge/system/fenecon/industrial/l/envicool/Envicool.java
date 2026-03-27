@@ -1,5 +1,7 @@
 package io.openems.edge.system.fenecon.industrial.l.envicool;
 
+import static io.openems.common.utils.IntUtils.fitWithin;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.OptionalInt;
@@ -12,7 +14,6 @@ import io.openems.common.types.OptionsEnum;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.common.channel.EnumWriteChannel;
 import io.openems.edge.common.channel.IntegerWriteChannel;
-import io.openems.edge.common.type.TypeUtils;
 import io.openems.edge.system.fenecon.industrial.l.Config;
 import io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL;
 
@@ -58,7 +59,7 @@ public class Envicool {
 				LOG.warn("The cooling setpoint temperature [" //
 						+ config.coolingUnitCoolingSetPoint() //
 						+ "] should be between [" + MINIMUM_TEMP + " °C] and [" + MAXIMUM_TEMP + " °C]");
-				coolingSetPoint = TypeUtils.fitWithin(MINIMUM_TEMP, MAXIMUM_TEMP, coolingSetPoint);
+				coolingSetPoint = fitWithin(MINIMUM_TEMP, MAXIMUM_TEMP, coolingSetPoint);
 			}
 
 			int heatingSetPoint = config.coolingUnitHeatingSetPoint();
@@ -66,7 +67,7 @@ public class Envicool {
 				LOG.warn("The heating setpoint temperature [" //
 						+ config.coolingUnitCoolingSetPoint() //
 						+ "] should be between [" + MINIMUM_TEMP + " °C] and [" + MAXIMUM_TEMP + " °C]");
-				heatingSetPoint = TypeUtils.fitWithin(MINIMUM_TEMP, MAXIMUM_TEMP, heatingSetPoint);
+				heatingSetPoint = fitWithin(MINIMUM_TEMP, MAXIMUM_TEMP, heatingSetPoint);
 			}
 
 			if (coolingSetPoint <= heatingSetPoint) {
