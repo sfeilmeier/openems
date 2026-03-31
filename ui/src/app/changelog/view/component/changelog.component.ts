@@ -25,13 +25,22 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                version: "2026.3.3",
+                changes: [
+                    Changelog.UI + "(Verbesserung der Englischen Übersetzung)",
+                    "FENECON Commercial 92: Wechsel zwischen Eigenverbrauchsoptimierung und Lastspitzenkappung im App Center",
+                    "FENECON Commercial 50 und 100: Verbesserungen am Generatoreingang",
+                    "<a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>BETA Feldtest (E-Mobility)</a>: Verbesserungen an der Baum-Navigation, Migration der Widgets für FEMS App SG-Ready Wärmepumpe",
+                ],
+            },
+            {
                 version: "2026.3.2",
                 changes: [
                     Changelog.UI,
                     "FENECON Commercial 50 und 100: Verbesserungen am Inbetriebnahmeassistent (Konfiguration des Generatoreingangs der STS-Box)",
                     "FENECON Home: Verbesserungen am Inbetriebnahmeassistent (Splitsockel)",
                     "FENECON Industrial: Verbesserungen am Online-Monitoring (Konfiguration von Multi-Use-Anwendungen)",
-                    Changelog.app(App.METER, App.SHELLY) + "Neue App mit Unterstützung für Shelly Pro 1PM, 2PM, 4PM, 3EM-400, 3EM 3CT 63, 3EM-63W Gen3 und 3EM-63T Gen3 (<a href='https://docs.fenecon.de/de/fems/fems-app/konfigurationsanleitungen/App_Shelly_Meter.html' target='_blank'>→ FENECON Docs</a>)",
+                    Changelog.app(App.METER, App.SHELLY) + "Neue App mit Unterstützung für Shelly Pro 1PM, 2PM, 4PM, 3EM-400, 3EM 3CT 63, 3EM-63W Gen3 und 3EM-63T Gen3 im Feldtest (<a href='https://docs.fenecon.de/de/fems/fems-app/konfigurationsanleitungen/App_Shelly_Meter.html' target='_blank'>→ FENECON Docs</a>)",
                     Changelog.app(App.TIME_OF_USE, App.ENTSO_E) + "Stabilitätsverbesserungen beim Abruf von Börsenstrompreisen",
                     "<a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>BETA Feldtest (E-Mobility)</a>: Konfigurierbare E-Auto Batteriekapazität, 'Erzeugung' in der Baum/Chip-Navigation",
                 ],
