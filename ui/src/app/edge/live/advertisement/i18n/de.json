@@ -1,10 +1,16 @@
 {
-    "ADVERT": {
-        "1": {
-            "TITLE": "Webinar: Potentiale und Einsparungen für Gewerbe und Industrie",
-            "TEXT": "Erfahren Sie im Webinar am 26.03. wie Gewerbe- und Industrieunternehmen mithilfe intelligenter Stromspeicherlösungen und ganzheitlichem Energiemanagementsystem Energiekosten senken und ihre Energieversorgung strategisch optimieren können.",
-            "LINK_TEXT": "Zur Anmeldung",
-            "LINK": "https://fenecon-gmbh.webinargeek.com/einsparungen-fuer-gewerbe-und-industrie-mithilfe-intelligenter-stromspeicherloesungen?cst=fems-widget"
-        }
+  "ADVERT": {
+    "1": {
+      "TITLE": "Immer auf dem neuesten Stand sein",
+      "TEXT": "Kennen Sie schon unseren Newsletter? Erhalten Sie spannende Einblicke in aktuelle Termine und Veranstaltungen, Produktneuheiten sowie Unternehmensentwicklungen. Ob Updates zu FEMS-Apps, Sonderaktionen oder branchenpolitische Neuerungen - mit der FENpost sind Sie immer up to date!",
+      "LINK_TEXT": "Jetzt abonnieren!",
+      "LINK": "https://erp.fenecon.de/fenpost"
+    },
+    "2": {
+      "TITLE": "Geben Sie dem Home 6, 10 & 15 Ihre Stimme!",
+      "TEXT": "Bis Anfang Mai können Sie für unseren Home 6, 10 & 15 abstimmen: Bei der diesjährigen Leserwahl des Gebäudetechnik-Branchenportals haustec.de. 37 Produkte und 34 Marken kämpfen in 9 Kategorien um die Auszeichnung als bestes Produkt des Jahres 2026.",
+      "LINK_TEXT": "Jetzt abstimmen!",
+      "LINK": "https://www.haustec.de/award/award-2026"
     }
+  }
 }

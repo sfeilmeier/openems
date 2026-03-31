@@ -5,6 +5,7 @@ import en from "src/app/edge/live/advertisement/i18n/en.json";
 import { SharedModule } from "src/app/shared/shared.module";
 import { Language } from "src/app/shared/type/language";
 import { Advert1Component } from "./1/1";
+import { Advert2Component } from "./2/2";
 import { AdvertisementComponent } from "./advertisement.component";
 
 @NgModule({
@@ -14,6 +15,7 @@ import { AdvertisementComponent } from "./advertisement.component";
     declarations: [
         AdvertisementComponent,
         Advert1Component,
+        Advert2Component,
     ],
     exports: [
         AdvertisementComponent,

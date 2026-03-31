@@ -23,7 +23,7 @@ import { ButtonLabel } from "./components/modal/modal-button/modal-button";
 import { User } from "./jsonrpc/shared";
 import { DefaultTypes } from "./type/defaulttypes";
 import { Role } from "./type/role";
-import { ObjectUtils } from "./utils/object/object.utils";
+import { ObjectUtils } from "./utils/object/object-utils";
 import { StringUtils } from "./utils/string/string.utils";
 
 addIcons({

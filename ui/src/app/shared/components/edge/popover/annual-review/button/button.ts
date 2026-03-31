@@ -5,7 +5,7 @@ import { TranslateModule } from "@ngx-translate/core";
 import { FlatWidgetButtonComponent } from "src/app/shared/components/flat/flat-widget-button/flat-widget-button";
 import { ModalComponentsModule } from "src/app/shared/components/modal/modal.module";
 import { Edge, Service } from "src/app/shared/shared";
-import { ObjectUtils } from "src/app/shared/utils/object/object.utils";
+import { ObjectUtils } from "src/app/shared/utils/object/object-utils";
 import { EdgeSettings } from "../../../edge";
 
 @Component({

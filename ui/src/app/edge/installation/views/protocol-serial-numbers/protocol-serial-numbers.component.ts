@@ -5,7 +5,7 @@ import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { ArrayUtils } from "src/app/shared/utils/array/array.utils";
-import { ObjectUtils } from "src/app/shared/utils/object/object.utils";
+import { ObjectUtils } from "src/app/shared/utils/object/object-utils";
 import { environment } from "src/environments";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { Commercial92Ibn } from "../../installation-systems/commercial/commercial-92/commercial92";

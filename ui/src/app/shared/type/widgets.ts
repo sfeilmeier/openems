@@ -4,6 +4,8 @@ import { SharedConsumption } from "src/app/edge/live/common/consumption/shared/s
 import { SharedGrid } from "src/app/edge/live/common/grid/shared/shared";
 import { SharedProduction } from "src/app/edge/live/common/production/shared/shared";
 import { SharedSelfConsumption } from "src/app/edge/live/common/selfconsumption/shared/shared";
+import { ControllerEvseSingleShared } from "src/app/edge/live/Controller/Evse/shared/shared";
+import { SharedControllerIoHeatpump } from "src/app/edge/live/Controller/Io/Heatpump/shared/shared";
 import { SharedSchedulerJsCalendar } from "src/app/edge/live/scheduler/js-calendar/shared-scheduler-js-calendar";
 import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/shared-system-industrial-l";
 import { SharedSystemIndustrialXl } from "src/app/edge/live/system/industrial/xl/shared-system-industrial-xl";
@@ -60,13 +62,22 @@ export class Widgets {
     }
 
     public static getControllerNavigationTree(edge: Edge, widget: Widget, translate: TranslateService, config: EdgeConfig): ConstructorParameters<typeof NavigationTree> | null {
+        const component = config.getComponentSafely(widget.componentId);
+        if (component === null) {
+            return null;
+        }
+
         switch (widget.name) {
             case "System.Fenecon.Industrial.L":
                 return SharedSystemIndustrialL.getNavigationTree(translate, widget.componentId);
+            case "Controller.Io.HeatPump.SgReady":
+                return SharedControllerIoHeatpump.getNavigationTree(translate, component);
             case "System.Fenecon.Industrial.Xl":
                 return SharedSystemIndustrialXl.getNavigationTree(translate, widget.componentId);
             case "Scheduler.JSCalendar":
                 return SharedSchedulerJsCalendar.getNavigationTree(translate, widget.componentId);
+            case "Evse.Controller.Single":
+                return ControllerEvseSingleShared.getNavigationTree(edge, translate, widget.componentId, config);
             default:
                 return null;
         }

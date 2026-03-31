@@ -7,9 +7,9 @@ import { ModalModule } from "src/app/shared/components/modal/modal.module";
 import { PullToRefreshComponent } from "src/app/shared/components/pull-to-refresh/pull-to-refresh";
 import { SharedModule } from "./../../shared/shared.module";
 import { AdvertisementModule } from "./advertisement/advertisement.module";
-import { Common_Autarchy } from "./common/autarchy/Common_Autarchy";
+import { CommonAutarchy } from "./common/autarchy/Common_Autarchy";
 import { CommonConsumption } from "./common/consumption/common-consumption";
-import { Common_Grid } from "./common/grid/Common_Grid";
+import { CommonGrid } from "./common/grid/Common_Grid";
 import { CommonProduction } from "./common/production/common-production";
 import { CommonSelfconsumption } from "./common/selfconsumption/common-selfconsumption";
 import { SohStatusBannerComponent } from "./common/soh/components/soh-status-banner/soh-status-banner";
@@ -31,8 +31,7 @@ import { Controller_Io_ChannelSingleThresholdModalComponent } from "./Controller
 import { ControllerIoFixDigitalOutput } from "./Controller/Io/FixDigitalOutput/fix-digital-output.module";
 import { Controller_Io_HeatingElement } from "./Controller/Io/HeatingElement/Io_HeatingElement";
 import { Controller_Io_HeatingRoom } from "./Controller/Io/HeatingRoom/Io_HeatingRoom";
-import { Controller_Io_HeatpumpComponent } from "./Controller/Io/Heatpump/Io_Heatpump";
-import { Controller_Io_HeatpumpModalComponent } from "./Controller/Io/Heatpump/modal/modal.component";
+import { ControllerIoHeatpumpModule } from "./Controller/Io/Heatpump/controller-io-heatpump";
 import { Controller_Api_ModbusTcp } from "./Controller/ModbusTcpApi/modbusTcpApi.module";
 import { Controller_Asymmetric_PeakShavingComponent } from "./Controller/PeakShaving/Asymmetric/Asymmetric";
 import { Controller_Asymmetric_PeakShavingModalComponent } from "./Controller/PeakShaving/Asymmetric/modal/modal.component";
@@ -56,15 +55,15 @@ import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage
 
 @NgModule({
     imports: [
-        StorageLiveModule,
         AdvertisementModule,
         BrowserAnimationsModule,
         BrowserModule,
-        Common_Autarchy,
+        CommonAutarchy,
         CommonConsumption,
-        Common_Grid,
+        CommonGrid,
         CommonProduction,
         CommonSelfconsumption,
+        StorageLiveModule,
         Controller_Api_ModbusTcp,
         Controller_EnerixControl,
         Controller_Ess_FixActivePower,
@@ -76,6 +75,7 @@ import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage
         Controller_Io_HeatingElement,
         Controller_Io_HeatingRoom,
         ControllerIoFixDigitalOutput,
+        ControllerIoHeatpumpModule,
         EdgeOfflineModule,
         EnergymonitorModule,
         WeatherModule,
@@ -90,7 +90,6 @@ import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage
     ],
     declarations: [
         AdministrationComponent,
-        NavigationInfoComponent,
         Controller_Asymmetric_PeakShavingComponent,
         Controller_Asymmetric_PeakShavingModalComponent,
         Controller_ChannelthresholdComponent,
@@ -98,8 +97,6 @@ import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage
         Controller_ChpSocModalComponent,
         Controller_Io_ChannelSingleThresholdComponent,
         Controller_Io_ChannelSingleThresholdModalComponent,
-        Controller_Io_HeatpumpComponent,
-        Controller_Io_HeatpumpModalComponent,
         Controller_Symmetric_PeakShavingComponent,
         Controller_Symmetric_PeakShavingModalComponent,
         Controller_Symmetric_TimeSlot_PeakShavingComponent,
@@ -112,6 +109,7 @@ import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage
         Io_Api_DigitalInput_ModalComponent,
         Io_Api_DigitalInputComponent,
         LiveComponent,
+        NavigationInfoComponent,
     ],
 })
 export class LiveModule { }
