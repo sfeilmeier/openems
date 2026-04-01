@@ -25,6 +25,12 @@ export class ChangelogComponent {
     }[] =
         [
             {
+                title: "Online-Monitoring (31.03.2026)",
+                changes: [
+                    Changelog.UI,
+                ],
+            },
+            {
                 version: "2026.3.3",
                 changes: [
                     Changelog.UI + "(Verbesserung der Englischen Übersetzung)",
