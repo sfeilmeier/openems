@@ -35,7 +35,7 @@ export class NavigationService {
 
         effect(async () => {
             const _currentUrl = this.routeService.currentUrl();
-            const currentEdge = await this.service.getCurrentEdge();
+            const currentEdge = await this.service.currentEdge();
             currentEdge?.getFirstValidConfig(service.websocket).then(async (config: EdgeConfig) => {
                 this.updateNavigationNodes(_currentUrl, currentEdge, translate);
             });
@@ -163,10 +163,8 @@ export class NavigationService {
      * @param currentUrl the current url
      */
     public async updateNavigationNodes(currentUrl: string | null, edge: Edge, translate: TranslateService) {
-        if (untracked(() => this.navigationTree() == null)) {
-            const navigationTree = await NavigationService.createNavigationTree(edge, translate);
-            this.navigationTree.set(navigationTree);
-        }
+        const navigationTree = await NavigationService.createNavigationTree(edge, translate);
+        this.navigationTree.set(navigationTree);
         this.initNavigation(currentUrl, untracked(() => this.navigationTree()));
     }
 
