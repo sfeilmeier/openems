@@ -9,7 +9,7 @@ import static java.time.temporal.ChronoUnit.MILLIS;
 import java.time.Clock;
 import java.util.function.Consumer;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.utils.FunctionUtils;

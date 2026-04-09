@@ -19,14 +19,14 @@ import static io.openems.edge.battery.enfasbms.EnfasBms.ChannelId.STRING_MODULE_
 import static io.openems.edge.battery.enfasbms.enums.FirmwareVersion.WUERTH_VERSION_1_0_20;
 import static io.openems.edge.common.startstop.StartStopConfig.START;
 import static java.time.temporal.ChronoUnit.MILLIS;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.function.Supplier;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.test.TimeLeapClock;
