@@ -264,7 +264,7 @@ export class UserPermission {
                     return false;
             }
         })();
-        return Role.isAtLeast(user.globalRole, Role.ADMIN) && isProductTypeAllowed;
+        return Role.isAtLeast(edge.role, Role.ADMIN) && isProductTypeAllowed;
     }
 
     /**
@@ -285,7 +285,7 @@ export class UserPermission {
                     return false;
             }
         })();
-        return Role.isAtLeast(user.globalRole, Role.ADMIN) && isProductTypeAllowed;
+        return Role.isAtLeast(edge.role, Role.ADMIN) && isProductTypeAllowed;
     }
 
     public static isUserAllowedToSeeIndustrialAssistant(user: User, edge: Edge): boolean {
@@ -297,7 +297,7 @@ export class UserPermission {
                     return false;
             }
         })();
-        return Role.isAtLeast(user.globalRole, Role.ADMIN) && isProductTypeAllowed;
+        return Role.isAtLeast(edge.role, Role.ADMIN) && isProductTypeAllowed;
     }
 
     /**
