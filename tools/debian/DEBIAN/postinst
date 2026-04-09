@@ -1,7 +1,7 @@
 #!/bin/bash
 # postinst script for openems-edge
 #
-# Copyright (C) 2014-2023 Stefan Feilmeier <stefan.feilmeier@fenecon.de>
+# Copyright (C) 2014-2026 Stefan Feilmeier <stefan.feilmeier@fenecon.de>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -98,23 +98,25 @@ case "$1" in
 		stop_service fems-pagekite
 
 		# Setup firewall
-		/usr/sbin/ufw status \
+		/usr/sbin/ufw status verbose \
 			| tr '\n' ' ' \
 			| tr -s ' ' ' ' \
 			| grep 'Status: active' \
-			| grep 'Anywhere ALLOW 10.0.0.0/8' \
-			| grep 'Anywhere ALLOW 172.16.0.0/12' \
-			| grep 'Anywhere ALLOW 192.168.0.0/16' \
-			| grep 'Anywhere ALLOW 169.254.0.0/16' \
+			| grep 'Logging: off' \
+			| grep 'Anywhere ALLOW IN 10.0.0.0/8' \
+			| grep 'Anywhere ALLOW IN 172.16.0.0/12' \
+			| grep 'Anywhere ALLOW IN 192.168.0.0/16' \
+			| grep 'Anywhere ALLOW IN 169.254.0.0/16' \
 			| grep 'Anywhere on eth0 ALLOW FWD 10.5.0.0/16 on eth1'> /dev/null || {
 				echo "Setup firewall"
-				/usr/sbin/ufw default allow outgoing || true
-				/usr/sbin/ufw default deny incoming || true
 				/usr/sbin/ufw allow from 10.0.0.0/8 || true
 				/usr/sbin/ufw allow from 172.16.0.0/12 || true
 				/usr/sbin/ufw allow from 192.168.0.0/16 || true
 				/usr/sbin/ufw allow from 169.254.0.0/16 || true
 				/usr/sbin/ufw route allow in on eth1 out on eth0 from 10.5.0.0/16 to any || true
+				/usr/sbin/ufw default allow outgoing || true
+				/usr/sbin/ufw default deny incoming || true
+				/usr/sbin/ufw logging off || true
 				/usr/bin/yes | /usr/sbin/ufw enable || true
 				/bin/systemctl enable ufw.service || true
 				/bin/systemctl restart --no-block ufw.service || true
