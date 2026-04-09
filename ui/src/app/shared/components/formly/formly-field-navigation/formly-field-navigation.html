@@ -153,7 +153,13 @@
                     <oe-flat-widget-percentagebar [value]="form.controls[line.controlName].value">
                     </oe-flat-widget-percentagebar>
                   }
+                  <!-- OeFormlyField.ComponentLine -->
+                  @case ('component-line') {
+                    <ng-container
+                      *ngComponentOutlet="line.component; inputs: line.inputs">
+                    </ng-container>
                 }
+                }                 
               }
 
             }

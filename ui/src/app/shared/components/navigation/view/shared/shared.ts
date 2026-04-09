@@ -89,6 +89,9 @@ export namespace ViewUtils {
     * @returns the available height
     */
     export function getChartContentHeightInVh(windowHeight: number, position: TSignalValue<NavigationService["position"]> | null, customChartHeightPercentage?: number | null): number | null {
+        if (customChartHeightPercentage != null) {
+            return NumberUtils.multiplySafely(NumberUtils.multiplySafely(NumberUtils.divideSafely(ViewUtils.getViewHeightInPx(position), getWindowVisualViewPort()), 100), (customChartHeightPercentage / 100));
+        }
         return NumberUtils.multiplySafely(NumberUtils.divideSafely(ViewUtils.getViewHeightInPx(position), getWindowVisualViewPort()), 100);
     }
 }
