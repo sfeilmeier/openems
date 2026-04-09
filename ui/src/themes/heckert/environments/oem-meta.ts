@@ -4,6 +4,10 @@ import { BaseMeta } from "src/environments";
 export const OemMeta: BaseMeta = {
     api: {
         SYSTEM_OUTAGE: "https://status.fenecon.de/",
+        CHANGELOG: {
+            REMOTE: "https://fenecon.de/fems-changelog",
+            LOCAL: "assets/json/changelog.json",
+        },
     },
     icons: {
         COMMON: {
