@@ -1,10 +1,15 @@
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { SetupProtocol } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
+import { Edge } from "src/app/shared/shared";
+import { StringUtils } from "src/app/shared/utils/string/string.utils";
 import { Category } from "../../../shared/category";
-import { ExternalLimitationType, FeedInSetting } from "../../../shared/enums";
+import { ExternalLimitationType, FeedInSetting, GridSetting, View } from "../../../shared/enums";
+import { GridSettingUtils } from "../../../shared/gridsetting.utils";
 import { ComponentData } from "../../../shared/ibndatatypes";
 import { SystemId } from "../../../shared/system";
+import { ViewUtils } from "../../../shared/view.utils";
+import { AdvancedGridSettingsModel, getDefaultAdvancedGridSettings } from "../../../views/configuration-advanced-grid-settings/advanced-grid-settings.model";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
 import { EmergencyReserve } from "../../abstract-ibn";
 import { AbstractCommercialGen3, CommercialGen3App, StsBox } from "../abstract-commercial-gen3";
@@ -39,6 +44,8 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
     public override appId: string = "App.FENECON.Commercial.50.Gen3";
     public override appAlias: string = "FENECON Commercial 50";
 
+    public advancedGridSettings: AdvancedGridSettingsModel = getDefaultAdvancedGridSettings();
+
     public override emergencyReserve: EmergencyReserve & StsBox & { genset: Genset } = {
         isEnabled: false,
         minValue: 5,
@@ -65,10 +72,19 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
         super(AbstractCommercialGen3.VIEWS, Commercial50Gen3Ibn.MAX_MPPT, translate);
     }
 
+    public override getGridSettingOptions() {
+        const options = [{ label: GridSettingUtils.getDisplayName(GridSetting.VDE_4105), value: GridSetting.VDE_4105 }];
+
+        if (this.emergencyReserve != null && !this.emergencyReserve.isStsBoxAvailable) {
+            options.push({ label: GridSettingUtils.getDisplayName(GridSetting.VDE_4110), value: GridSetting.VDE_4110 });
+        }
+
+        return options;
+    }
+
     public override getEmergencyReserveFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = super.getEmergencyReserveFields();
 
-        // Helper updated to accept FormlyFieldConfig instead of 'any'
         const getModel = (field: FormlyFieldConfig): EmergencyReserve & StsBox & { genset: Genset } =>
             field.model as EmergencyReserve & StsBox & { genset: Genset };
 
@@ -357,8 +373,21 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
         }
     }
 
-    public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): CommercialGen3App & GensetProperties {
+    public override removeOrAddView(edge: Edge): void {
 
+        super.removeOrAddView(edge);
+
+        const gridSettingIndex = this.views.indexOf(View.ConfigurationGridSetting);
+        const advancedSettingsIndex = gridSettingIndex !== -1 ? gridSettingIndex + 1 : 10;
+
+        if (this.gridSetting !== null && this.gridSetting === GridSetting.VDE_4110 && !this.emergencyReserve.isStsBoxAvailable) {
+            ViewUtils.add(this.views, View.ConfigurationAdvancedGridSettings, advancedSettingsIndex);
+        } else {
+            ViewUtils.remove(this.views, View.ConfigurationAdvancedGridSettings);
+        }
+    }
+
+    public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): CommercialGen3App & GensetProperties {
         return {
             ...this.commonProperties(safetyCountry, feedInSetting),
             FEED_IN_TYPE: this.feedInLimitation?.feedInType ?? ExternalLimitationType.NO_LIMITATION,
@@ -366,7 +395,35 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
             CT_RATIO_FIRST: this.energyFlowMeter.value,
             ...this.generateMpptProperties(),
             ...this.getGensetProperties(),
+            ...this.getAdvancedGridProperties(),
         } as CommercialGen3App & GensetProperties;
+    }
+
+    private getAdvancedGridProperties(): Record<string, string | number | boolean | null> {
+        const payload: Record<string, string | number | boolean | null> = {};
+        const model = this.advancedGridSettings;
+
+        // Custom overrides for keys that don't perfectly translate via Regex
+        const keyOverrides: Record<string, string> = {
+            "vpp10MinOvTripThreshold": "VPP_10MIN_OV_TRIP_THRESHOLD",
+            "vpp10MinOvTripTime": "VPP_10MIN_OV_TRIP_TIME",
+        };
+
+        Object.entries(model).forEach(([key, value]) => {
+            if (value != null) {
+                //Check if it's in the override dictionary
+                let backendKey = keyOverrides[key] ?? null;
+
+                // If not, generate it using the Regex!
+                if (backendKey == null) {
+                    backendKey = StringUtils.toScreamingSnakeCase(key);
+                }
+
+                payload[backendKey] = value;
+            }
+        });
+
+        return payload;
     }
 
     private getGensetProperties(): Record<string, boolean | number | null> {

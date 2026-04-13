@@ -27,7 +27,10 @@ export const DIRECTIONS_OPTIONS = (translate: TranslateService) => {
 export const FEED_IN_POWER_FACTOR_OPTIONS = (translate: TranslateService) => {
     const inductive = translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.INDUCTIVE");
     const capacitive = translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.CAPACITIVE");
+    const fixedCosPhi = translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.FIXED_COS_PHI");
+
     return [
+        { label: fixedCosPhi, value: FeedInSetting.Leading_1_OR_NONE },
         // Leading
         { label: "1", value: FeedInSetting.Leading_1 },
         { label: "0.90 (" + inductive + ")", value: FeedInSetting.Leading_0_90 },

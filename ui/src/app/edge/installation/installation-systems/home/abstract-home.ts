@@ -787,12 +787,17 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
     }
 
     public commonProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): HomeCommonApp {
+        const { isEnabled, isReserveSocEnabled, value } = this.emergencyReserve;
         const commonHomeAppProperties: HomeCommonApp = {
             SAFETY_COUNTRY: safetyCountry,
             FEED_IN_SETTING: feedInSetting,
             HAS_EMERGENCY_RESERVE: this.emergencyReserve.isEnabled,
-            ...(this.emergencyReserve.isEnabled && { EMERGENCY_RESERVE_ENABLED: this.emergencyReserve.isReserveSocEnabled }),
-            ...(this.emergencyReserve.isReserveSocEnabled && { EMERGENCY_RESERVE_SOC: this.emergencyReserve.value }),
+            ...(isEnabled && {
+                EMERGENCY_RESERVE_ENABLED: isReserveSocEnabled,
+                ...(isReserveSocEnabled && {
+                    EMERGENCY_RESERVE_SOC: value,
+                }),
+            }),
             SHADOW_MANAGEMENT_DISABLED: true, // It's always set to true.
             HAS_ESS_LIMITER_14A: this.isController14aActivated,
             NA_PROTECTION_ENABLED: this.feedInLimitation.naProtection,

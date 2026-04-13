@@ -40,16 +40,6 @@ export type DcForm = {
 
 export type EmsType = "feh013" | "fho011" | "fec011" | "fec013" | null;
 
-export type TypedFormlyFieldConfig<T> = Omit<FormlyFieldConfig, "model" | "expressions" | "hooks"> & {
-    model?: T;
-    expressions?: {
-        [property: string]: string | ((field: TypedFormlyFieldConfig<T>) => any);
-    };
-    hooks?: {
-        onInit?: (field: TypedFormlyFieldConfig<T>) => void;
-    };
-};
-
 export enum ExtensionBoxPrefix {
     FHP = "FHP",
     FCP = "FCP",

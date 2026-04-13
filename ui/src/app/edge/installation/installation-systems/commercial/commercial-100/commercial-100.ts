@@ -1,9 +1,9 @@
 import { TranslateService } from "@ngx-translate/core";
 
-import { ExternalLimitationType, FeedInSetting } from "../../../shared/enums";
+import { GridSetting } from "../../../shared/enums";
+import { GridSettingUtils } from "../../../shared/gridsetting.utils";
 import { SystemId } from "../../../shared/system";
-import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
-import { AbstractCommercialGen3, CommercialGen3App } from "../abstract-commercial-gen3";
+import { AbstractCommercialGen3 } from "../abstract-commercial-gen3";
 
 export class Commercial100Ibn extends AbstractCommercialGen3 {
 
@@ -19,14 +19,9 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
         super(AbstractCommercialGen3.VIEWS, Commercial100Ibn.MAX_MPPT, translate);
     }
 
-    public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): CommercialGen3App {
-
-        return {
-            ...this.commonProperties(safetyCountry, feedInSetting),
-            FEED_IN_TYPE: this.feedInLimitation?.feedInType ?? ExternalLimitationType.NO_LIMITATION,
-            GRID_CODE: this.gridSetting,
-            CT_RATIO_FIRST: this.energyFlowMeter.value,
-            ...this.generateMpptProperties(),
-        } as CommercialGen3App;
+    public override getGridSettingOptions() {
+        return [
+            { label: GridSettingUtils.getDisplayName(GridSetting.VDE_4105), value: GridSetting.VDE_4105 },
+        ];
     }
 }

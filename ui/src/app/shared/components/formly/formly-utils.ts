@@ -1,6 +1,17 @@
 import { AbstractControl } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 
+export type TypedFormlyFieldConfig<T> = Omit<FormlyFieldConfig, "model" | "expressions" | "hooks" | "fieldGroup"> & {
+    model?: T;
+    fieldGroup?: TypedFormlyFieldConfig<T>[];
+    expressions?: {
+        [property: string]: string | ((field: TypedFormlyFieldConfig<T>) => any);
+    };
+    hooks?: {
+        onInit?: (field: TypedFormlyFieldConfig<T>) => void;
+    };
+};
+
 export namespace FormlyUtils {
 
     /**
@@ -49,5 +60,89 @@ export namespace FormlyUtils {
         }
         field.props = callback(field.props);
         return fields;
+    }
+
+    /**
+     * Evaluates to TRUE if the boolean property is TRUE.
+     */
+    export function propIsTrue<T, K extends keyof T = keyof T>(propName: K, defaultWhenMissing: boolean = false) {
+        return (field: TypedFormlyFieldConfig<T>): boolean => {
+            if (!field.model) {
+                return defaultWhenMissing;
+            }
+            return field.model[propName] === true;
+        };
+    }
+
+    /**
+     * Evaluates to TRUE if the boolean property is FALSE.
+     */
+    export function propIsFalse<T, K extends keyof T = keyof T>(propName: K, defaultWhenMissing: boolean = true) {
+        return (field: TypedFormlyFieldConfig<T>): boolean => {
+            if (!field.model) {
+                return defaultWhenMissing;
+            }
+            return field.model[propName] === false;
+        };
+    }
+
+    /**
+     * Combines multiple Formly expression functions with a logical OR.
+     * Returns true if ANY of the provided functions evaluate to true.
+     */
+    export function combineOr<T>(...conditions: ((field: TypedFormlyFieldConfig<T>) => boolean)[]) {
+        return (field: TypedFormlyFieldConfig<T>): boolean => {
+            return conditions.some(condition => condition(field));
+        };
+    }
+
+    /**
+     * Combines multiple Formly expression functions with a logical AND.
+     * Returns true ONLY if ALL of the provided functions evaluate to true.
+     */
+    export function combineAnd<T>(...conditions: ((field: TypedFormlyFieldConfig<T>) => boolean)[]) {
+        return (field: TypedFormlyFieldConfig<T>): boolean => {
+            return conditions.every(condition => condition(field));
+        };
+    }
+
+    /**
+     * Evaluates to TRUE (hides) if ANY of the provided boolean properties are FALSE.
+     */
+    export function anyPropIsFalse<T, K extends keyof T = keyof T>(...propNames: K[]) {
+        return (field: TypedFormlyFieldConfig<T>): boolean => {
+            if (!field.model) {
+                return true;
+            } // Default to hide if no model
+
+            // Returns true if some property in the array is exactly false
+            return propNames.some(prop => field.model![prop] === false);
+        };
+    }
+
+    /**
+     * Evaluates to TRUE if the property EQUALS the expected value.
+     * @param defaultWhenMissing What to return if the model hasn't loaded yet (default: false)
+     */
+    export function propEquals<T, K extends keyof T = keyof T>(propName: K, expectedValue: T[K], defaultWhenMissing: boolean = false) {
+        return (field: TypedFormlyFieldConfig<T>): boolean => {
+            if (!field.model) {
+                return defaultWhenMissing;
+            }
+            return field.model[propName] === expectedValue;
+        };
+    }
+
+    /**
+     * Evaluates to TRUE if the property does NOT EQUAL the expected value.
+     * @param defaultWhenMissing What to return if the model hasn't loaded yet (default: true)
+     */
+    export function propNotEquals<T, K extends keyof T = keyof T>(propName: K, expectedValue: T[K], defaultWhenMissing: boolean = true) {
+        return (field: TypedFormlyFieldConfig<T>): boolean => {
+            if (!field.model) {
+                return defaultWhenMissing;
+            }
+            return field.model[propName] !== expectedValue;
+        };
     }
 }

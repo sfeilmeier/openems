@@ -3,6 +3,186 @@
     "ALERTING_INFO": "Richte dir als Installateur E-Mail-Benachrichtigungen ein, wenn das FEMS für eine bestimmte Zeit offline ist oder einen Fehler meldet. Versendet wird die Nachricht an die bei der Inbetriebnahme angegebene E-Mail-Adresse.",
     "OFFLINE": "Offline",
     "ENABLE_MPPT": "MPPT {{ mpptNumber }} aktiv",
+    "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
+      "MODE": "Modus",
+      "RANGE": "Reichweite [{{min}},{{max}}] {{unit}}",
+      "TITLE": "VDE 4110 Einstellungen",
+      "POWER": "{{value}} Leistung",
+      "REACTIVE_POWER": "{{value}} Blindleistung",
+      "GROUPS": {
+        "ACTIVE_POWER_MODE": "Einstellungen für den aktiven Leistungsmodus",
+        "REACTIVE_POWER_MODE": "Einstellungen für den Blindleistungsmodus",
+        "PROTECTION": "Schutzparameter",
+        "CONNECTION": "Verbindungsparameter",
+        "VOLTAGE_RIDE_THROUGH": "Spannungs Ride-Through",
+        "FREQUENCY_RIDE_THROUGH": "Frequenz Ride-Through"
+      },
+      "ACTIVE_POWER_MODE": {
+        "OUTPUT_ACTIVE_POWER": "Ausgangswirkleistung",
+        "POWER_GRADIENT": "Leistungsgradient",
+        "PF_OVER_FREQUENCY": {
+          "ENABLE": "P(F) Kurve (Frequenzleistung) für die Überfrequenzentladung",
+          "ENABLE_DESC": "Aktiviert/Deaktiviert die P(F) Kurve",
+          "START_POINT": "Überfrequenz-Startpunkt",
+          "SLOPE": "Überfrequenz-Leistungsreduzierungssteigung",
+          "DELAY_TIME": "Reaktionsverzögerungszeit",
+          "DEACTIVATION_THRESHOLD_FSTOP": "Deaktivierungsschwelle Fstop",
+          "HYSTERESIS_POINT": "Frequenzhysteresepunkt",
+          "DELAY_WAITING_TIME": "Wartezeit verzögern",
+          "HYSTERESIS_SLOPE": "Steigung der Hysterese-Energierückgewinnung"
+        },
+        "PF_UNDER_FREQUENCY": {
+          "ENABLE": "P(F) Kurve (Frequenzleistung) für die Unterfrequenzbelastung",
+          "ENABLE_DESC": "Aktiviert/Deaktiviert die P(F) Kurve",
+          "THRESHOLD": "Unterfrequenzschwelle",
+          "SLOPE": "Leistungsantwort auf Unterfrequenzgradient",
+          "DELAY_TIME": "Reaktionsverzögerungszeit",
+          "DEACTIVATION_THRESHOLD_FSTOP": "Deaktivierungsschwelle Fstop",
+          "DEACTIVATION_THRESHOLD_FSTOP_DESC": "Aktiviert/Deaktiviert die Deaktivierungsschwelle",
+          "HYSTERESIS_POINT": "Frequenzhysteresepunkt",
+          "DELAY_WAITING_TIME": "Wartezeit verzögern",
+          "HYSTERESIS_SLOPE": "Steigung der Hysterese-Energierückgewinnung"
+        },
+        "PU_CURVE": {
+          "ENABLE": "P(U) Kurve (Spannungsleistungskurve)",
+          "ENABLE_DESC": "Aktiviert/Deaktiviert die P(U) Kurve",
+          "RESPONSE_MODE": "Ausgabe-Antwortmodus",
+          "PT1_TIME_CONSTANT": "PT-1 Tiefpassfilter Zeitkonstante",
+          "PT1_POWER_GRADIENT": "Leistungsgradient"
+        }
+      },
+      "REACTIVE_POWER_MODE": {
+        "MODE": "Blindleistungsmodus",
+        "MODE_DESC": "Auswahl des Blindleistungsmodus",
+        "OPTIONS": {
+          "NONE": "Nicht selektiert",
+          "FIX_PF": "Fix Pf",
+          "FIX_Q": "Fix Q",
+          "QU_CURVE": "Q(U) Kurve",
+          "COSPHIP_CURVE": "CosPhi(P) Kurve",
+          "QP_CURVE": "Q(P) Kurve"
+        },
+        "FIX_PF": {
+          "POWER_FACTOR": "Leistungsfaktor",
+          "POWER_FACTOR_DESC": "Bereich [0.8,1]"
+        },
+        "FIX_Q": {
+          "REACTIVE_POWER": "Blindleistung"
+        },
+        "QU_CURVE": {
+          "VOLTAGE_DEAD_BAND": "Spannungstotband",
+          "OVEREXCITED_SLOPE": "Überregungssteigung",
+          "UNDEREXCITED_SLOPE": "Unterregungssteigung",
+          "TIME_CONSTANT": "Zeitkonstante",
+          "EXTENDED_FUNCTIONS": "Erweiterte Funktionen",
+          "LOCK_IN_POWER": "Lock-In Leistung",
+          "LOCK_OUT_POWER": "Lock-Out Leistung",
+          "VOLTAGE": "V{{number}} Spannung",
+          "ACTIVE_POWER": "V{{number}} Aktive Leistung",
+          "MODE": {
+            "STANDARD_MODE": "Standard-Modus",
+            "SLOPE_MODE": "Steigungsmodus"
+          }
+        },
+        "COSPHIP_CURVE": {
+          "OVEREXCITED_SLOPE": "Überregungsanstieg",
+          "UNDEREXCITED_SLOPE": "Unterregungsanstieg",
+          "COS_PHI": "{{value}} cos φ",
+          "POWER": "{{value}} Leistung",
+          "COS_PHI_DESC": "Reichweite [-1000, -800] und [800, 1000]",
+          "TIME_CONSTANT": "Zeitkonstante",
+          "EXTENDED_FUNCTIONS": "Erweiterte Funktionen",
+          "EXTENDED_FUNCTIONS_DESC": "Aktiviert/Deaktiviert erweiterte Funktionen",
+          "LOCK_IN_VOLT": "Lock-In Spannung",
+          "LOCK_OUT_VOLT": "Lock-Out Spannung",
+          "INVALID_RANGE": "Der Wert sollte im Bereich [-1,000, -800] und [800, 1,000] sein"
+        },
+        "QP_CURVE": {
+          "OVEREXCITED_SLOPE": "Überregungssteigung",
+          "UNDEREXCITED_SLOPE": "Unterregungssteigung",
+          "TIME_CONSTANT": "Zeitkonstante"
+        }
+      },
+      "PROTECTION": {
+        "OVERVOLTAGE_TRIGGER": "Auslöseschwelle bei Überspannung ({{stage}}. Stufe)",
+        "OVERVOLTAGE_TRIP_TIME": "Abschaltzeit bei Überspannung ({{stage}}. Stufe)",
+        "UNDERVOLTAGE_TRIP_VALUE": "Auslösewert der Unterspannung ({{stage}}. Stufe)",
+        "UNDERVOLTAGE_TRIP_TIME": "Auslösezeit der Unterspannung ({{stage}}. Stufe)",
+        "TEN_MIN_OVERVOLTAGE_THRESHOLD": "10-minütige Überspannungsabschaltgrenze",
+        "TEN_MIN_OVERVOLTAGE_TIME": "10-minütige Überspannungsabschaltzeit",
+        "OVERFREQUENCY_TRIGGER": "Auslöseschwelle bei Überfrequenz ({{stage}}. Stufe)",
+        "OVERFREQUENCY_TRIP_TIME": "Abschaltzeit bei Überfrequenz ({{stage}}. Stufe)",
+        "UNDERFREQUENCY_TRIP_VALUE": "Auslöseschwelle bei Unterfrequenz ({{stage}}. Stufe)",
+        "UNDERFREQUENCY_TRIP_TIME": "Abschaltzeit bei Unterfrequenz ({{stage}}. Stufe)"
+      },
+      "CONNECTION": {
+        "RAMP_UP_UPPER_VOLTAGE": "Hochlaufbedingungen: Obere Spannung",
+        "RAMP_UP_LOWER_VOLTAGE": "Hochlaufbedingungen: Untere Spannung",
+        "RAMP_UP_UPPER_FREQUENCY": "Hochlaufbedingungen: Obere Frequenz zu den Hochlaufbedingungen",
+        "RAMP_UP_LOWER_FREQUENCY": "Hochlaufbedingungen: Untere Frequenz",
+        "RAMP_UP_OBSERVATION_TIME": "Hochlaufbedingungen: Beobachtungszeit",
+        "SOFT_RAMP_UP_GRADIENT_ENABLE": "Sanfter Anstiegsverlauf",
+        "SOFT_RAMP_UP_GRADIENT_ENABLE_DESC": "Aktiviert/Deaktiviert den sanften Anstiegsverlauf",
+        "SOFT_RAMP_UP_GRADIENT_VALUE": "Sanfter Anstiegsverlaufswert",
+        "RECONNECTION_UPPER_VOLTAGE": "Wiederzuschaltbedingungen: Obere Spannung",
+        "RECONNECTION_LOWER_VOLTAGE": "Wiederzuschaltbedingungen: Untere Spannung",
+        "RECONNECTION_UPPER_FREQUENCY": "Wiederzuschaltbedingungen: Obere Frequenz",
+        "RECONNECTION_LOWER_FREQUENCY": "Wiederzuschaltbedingungen: Untere Frequenz",
+        "RECONNECTION_OBSERVATION_TIME": "Wiederzuschaltbedingungen: Beobachtungszeit",
+        "RECONNECTION_GRADIENT_ENABLE": "Wiederzuschaltbedingungsgradient",
+        "RECONNECTION_GRADIENT_ENABLE_DESC": "Aktiviert/Deaktiviert den Wiederzuschaltbedingungsgradienten",
+        "RECONNECTION_GRADIENT_VALUE": "Wiederzuschaltbedingungsgradientenwert"
+      },
+      "VOLTAGE_RIDE_THROUGH": {
+        "LVRT": {
+          "ENABLE": "LVRT aktivieren",
+          "ENABLE_DESC": "Aktiviert/Deaktiviert Low Voltage Ride Through",
+          "UV_VOLTAGE": "Unterspannung {{stage}} Spannung",
+          "UV_TIME": "Unterspannung {{stage}} Zeit",
+          "ENTER_THRESHOLD": "Eintrittsschwelle LVRT",
+          "EXIT_ENDPOINT": "Austrittsschwelle LVRT",
+          "K1_SLOPE": "K1 Steigung",
+          "ZERO_CURRENT_ENABLE": "Nullstrommodus aktivieren",
+          "ZERO_CURRENT_ENABLE_DESC": "Aktiviert/Deaktiviert Nullstrommodus",
+          "ZERO_CURRENT_THRESHOLD": "Eintrittsschwelle"
+        },
+        "HVRT": {
+          "ENABLE": "HVRT aktivieren",
+          "ENABLE_DESC": "Aktiviert/Deaktiviert High Voltage Ride Through",
+          "OV_VOLTAGE": "Überspannung {{stage}} Spannung",
+          "OV_TIME": "Überspannung {{stage}} Zeit",
+          "ENTER_THRESHOLD": "Eintrittsschwelle HVRT",
+          "EXIT_ENDPOINT": "Austrittsschwelle HVRT",
+          "K2_SLOPE": "K2 Steigung",
+          "ZERO_CURRENT_ENABLE": "Nullstrommodus aktivieren",
+          "ZERO_CURRENT_ENABLE_DESC": "Aktiviert/Deaktiviert Nullstrommodus",
+          "ZERO_CURRENT_THRESHOLD": "Eintrittsschwelle"
+        },
+        "CURRENT_DISTRIBUTION_MODE": "Aktueller Verteilungsmodus",
+        "OPTIONS": {
+          "REACTIVE_PRIORITY": "Blindstromprioritätsmodus",
+          "ACTIVE_PRIORITY": "Wirkstromprioritätsmodus",
+          "CONSTANT_CURRENT": "Konstantstrommodus",
+          "DEACTIVATE": "Deaktivieren",
+          "ACTIVATE": "Aktivieren",
+          "TRACKING_CONTROL": "Verlaufskontroller",
+          "PT1_BEHAVIOR": "PT-1 Verhalten"
+        },
+        "POWER_GRADIENT": "Leistungsgradient",
+        "PT1_TIME_CONSTANT": "PT-1 Tiefpassfilter Zeitkonstante",
+        "ACTIVE_RECOVERY_MODE": "Wirkleistungs-Wiederherstellungsmodus nach dem Überschreiten",
+        "REACTIVE_RECOVERY_MODE": "Übergang aus dem Blindleistungsregelbetrieb"
+      },
+      "FREQUENCY_RIDE_THROUGH": {
+        "ENABLE": "Frequenz Ride-Through",
+        "ENABLE_DESC": "Aktiviert/Deaktiviert Frequenz Ride-Through",
+        "UF_FREQUENCY": "Unterfrequenz {{stage}} Frequenz",
+        "UF_TIME": "Unterfrequenz {{stage}} Zeit",
+        "OF_FREQUENCY": "Überfrequenz {{stage}} Frequenz",
+        "OF_TIME": "Überfrequenz {{stage}} Zeit"
+      },
+      "SLOPE_RANGE": "Multiplikationsfaktor [{{min}}, {{max}}]"
+    },
     "CONFIGURATION_EMERGENCY_RESERVE": {
       "GENSET": {
         "CONNECTED": "Generator angeschlossen?",
@@ -18,6 +198,9 @@
         "CHARGE_SOC_END": "Ladezustand Batterie für Stopp des Generators",
         "CHARGE_SOC_END_DESCRIPTION": "Ladezustand der Batterie, bei dem der Generator gestoppt wird."
       }
+    },
+    "PROTOCOL_FEED_IN_MANAGEMENT": {
+      "FIXED_COS_PHI": "Fester Wert: Cos Phi 1"
     }
   }
 }

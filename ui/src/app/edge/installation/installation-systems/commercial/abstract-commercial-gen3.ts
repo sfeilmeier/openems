@@ -7,7 +7,6 @@ import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { Category } from "../../shared/category";
 import { ExternalLimitationType, FeedInSetting, GridSetting, View } from "../../shared/enums";
-import { GridSettingUtils } from "../../shared/gridsetting.utils";
 import { ComponentData, EmsType, ExtensionBoxPrefix } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
 import { EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES } from "../../shared/options";
@@ -58,9 +57,9 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
         View.ConfigurationEnergyFlowMeter,
         View.ConfigurationMpptSelection,
         View.ProtocolPv,
+        View.ConfigurationStsBox,
         View.ConfigurationGridSetting,
         View.ProtocolFeedInLimitation,
-        View.ConfigurationStsBox,
         View.ConfigurationSummary,
         View.ConfigurationExecute,
         View.ProtocolSerialNumbers,
@@ -186,23 +185,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
         const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
         this.addProtocolItems(protocol);
 
-        const emergencyReserve = this.emergencyReserve;
-        protocol.items ??= [];
-
-        protocol.items.push({
-            category: Category.STS_BOX,
-            name: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE"),
-            value: emergencyReserve.isStsBoxAvailable ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
-        });
-
-        if (emergencyReserve.isStsBoxAvailable) {
-            protocol.items.push({
-                category: Category.STS_BOX,
-                name: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
-                value: emergencyReserve.stsBoxSerialNumber ?? "",
-            });
-        }
-
         return new Promise((resolve, reject) => {
             websocket
                 .sendStateFullRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate))
@@ -249,9 +231,20 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
     public override addProtocolItems(protocol: SetupProtocol) {
         super.addProtocolItems(protocol);
 
-        const emergencyReserve = this.emergencyReserve;
         protocol.items ??= [];
 
+        if (this.location && this.customer) {
+            const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
+            if (safetyCountry === Country.GERMANY) {
+                protocol.items.push({
+                    category: Category.GRID,
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_GRID_SETTING.TITLE"),
+                    value: this.gridSetting as string,
+                });
+            }
+        }
+
+        const emergencyReserve = this.emergencyReserve;
         protocol.items.push({
             category: Category.STS_BOX,
             name: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE"),
@@ -265,12 +258,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn {
                 value: emergencyReserve.stsBoxSerialNumber ?? "",
             });
         }
-    }
-
-    public override getGridSettingOptions() {
-        return [
-            { label: GridSettingUtils.getDisplayName(GridSetting.VDE_4105), value: GridSetting.VDE_4105 },
-        ];
     }
 
     public override getExternalLimitationTypeOptions(): ComponentData[] {

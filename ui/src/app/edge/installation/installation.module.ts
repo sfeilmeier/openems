@@ -17,6 +17,7 @@ import { InstallationViewComponent } from "./installation-view/installation-view
 import { InstallationComponent } from "./installation.component";
 import { ExtensionBoxPrefix } from "./shared/ibndatatypes";
 import { CompletionComponent } from "./views/completion/completion.component";
+import { ConfigurationAdvancedSettingsComponent } from "./views/configuration-advanced-grid-settings/configuration-advanced-grid-settings.component";
 import { ConfigurationCommercialModbuBridgeComponent } from "./views/configuration-commercial-modbusbridge/configuration-commercial-modbusbridge";
 import { ConfigurationEmergencyReserveComponent } from "./views/configuration-emergency-reserve/configuration-emergency-reserve.component";
 import { ConfigurationEnergyFlowMeterComponent } from "./views/configuration-energy-flow-direction-meter/configuration-energy-flow-direction-meter.component";
@@ -166,6 +167,34 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
     return control.value >= field.defaultValue ? null : { "defaultAsMinimumValue": true };
 }
 
+export function SplitRangeValidator(control: FormControl, field: FormlyFieldConfig): ValidationErrors | null {
+    const val = control.value;
+
+    // empty cases
+    if (val === null || val === undefined || val === "") {
+        return null;
+    }
+
+    const num = Number(val);
+    if (Number.isNaN(num)) {
+        return { "splitRange": true };
+    }
+
+    // custom ranges defined in the component
+    const ranges = field.props?.["splitRanges"] as Array<{ min: number, max: number }> ?? null;
+
+    // If no ranges are defined, we cannot validate, so we log a warning and bypass validation
+    if (ranges == null || ranges.length === 0) {
+        console.warn(`Empty 'splitRanges' array on field '${field.key}'. Validation has been bypassed.`);
+        return null;
+    }
+
+    // Check if the number falls into ANY of the provided ranges
+    const isValid = ranges.some(range => num >= range.min && num <= range.max);
+
+    return isValid ? null : { "splitRange": true };
+}
+
 @NgModule({
     imports: [
         FormlyModule.forRoot({
@@ -184,6 +213,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
                 { name: "defaultAsMinimumValue", validation: DefaultAsMinValueValidator },
                 { name: "zip", validation: ZipCodeValidator },
                 { name: "serialNumberRequiredWhenChecked", validation: serialNumberRequiredWhenCheckedValidator },
+                { name: "splitRange", validation: SplitRangeValidator },
             ],
         }),
         SharedModule,
@@ -223,6 +253,7 @@ export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFi
         ProtocolCommercialClusterSlaveInstallationComponent,
         ConfigurationStsBoxComponent,
         ProtocolSystemLocationValidationComponent,
+        ConfigurationAdvancedSettingsComponent,
     ],
 })
 export class InstallationModule {

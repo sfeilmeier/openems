@@ -110,4 +110,18 @@ export namespace StringUtils {
 
         return null;
     }
+
+    /**
+     * Converts a camelCase string to SCREAMING_SNAKE_CASE.
+     * Example: "apmOutputActivePower" -> "APM_OUTPUT_ACTIVE_POWER"
+     */
+    export function toScreamingSnakeCase(str: string): string {
+        if (str == null || !isValidString(str)) {
+            return str;
+        }
+
+        return str
+            .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+            .toUpperCase();
+    }
 }

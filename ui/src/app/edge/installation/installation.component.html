@@ -118,6 +118,11 @@
             (nextViewEvent)="displayNextView($event)">
         </configuration-grid-setting>
         }
+        @case (view.ConfigurationAdvancedGridSettings) {
+        <configuration-advanced-grid-settings [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
+            (nextViewEvent)="displayNextView($event)">
+        </configuration-advanced-grid-settings>
+        }
         @case (view.ProtocolCommercialClusterSlaveCount) {
         <protocol-commercial-slave-count [ibn]="ibn" (previousViewEvent)="displayPreviousView()"
             (nextViewEvent)="displayNextView($event)">
