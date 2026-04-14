@@ -1,12 +1,47 @@
 [
   {
+    "version": "2026.4.1",
+    "entries": {
+      "de": [
+        "Online-Monitoring/FENECON App: Fehlerbehebung bei Anzeige von Werten in der Historie; Changelog in Deutsch und Englisch",
+        {
+          "roleIsAtLeast": "INSTALLER",
+          "text": "FENECON Home und Commercial: Automatischer Referenzierungszyklus bei Batterieerweiterung"
+        },
+        "FENECON Commercial 92 Cluster: Verbesserungen in der Leistungsverteilung und Regelgeschwindigkeit",
+        {
+          "roleIsAtLeast": "INSTALLER",
+          "text": "FENECON Commercial 50 und 100: Inbetriebnahmeassistent unterstützt die Eingabe der für VDE4110 erforderlichen Parameter"
+        },
+        "FEMS App Netzdienliche Beladung: Optimiertes Verhalten bei Einspeisebegrenzung von 0 W (z.B. bei Nulleinspeiseanlagen oder Rundsteuersignal 0 %)",
+        "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/fems-app/konfigurationsanleitungen/App_Shelly_Meter.html\">FEMS App Shelly Zähler:</a> Neue App mit Unterstützung für Shelly Pro 1PM, Pro 2PM, Pro 4PM, Pro 3EM-400, Pro 3EM 3CT 63, 3EM-63W Gen3 und 3EM-63T Gen3",
+        "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest (E-Mobility)</a>: Visualisierung der Erzeugungsprognose, Migration der Widgets für ASKOMA und MyPV Heizstäbe, Fehlerbehebung bei Bearbeitung von Zeitplänen"
+      ],
+      "en": [
+        "Online-Monitoring/FENECON App: Bug fix for display of values in history; Changelog in German and English",
+        {
+          "roleIsAtLeast": "INSTALLER",
+          "text": "FENECON Home and Commercial: Automatic referencing cycle during battery expansion"
+        },
+        "FENECON Commercial 92 Cluster: Improvements in power distribution and control speed",
+        {
+          "roleIsAtLeast": "INSTALLER",
+          "text": "FENECON Commercial 50 and 100: Commissioning wizard supports entry of parameters required for VDE4110"
+        },
+        "FEMS App Grid-Optimized Charging: Optimized behavior with feed-in limitation of 0 W (e.g. for zero feed-in systems or control signal 0%)",
+        "<a class='ion-link' target='_blank' href='https://docs.fenecon.de/en/fems/fems-app/konfigurationsanleitungen/App_Shelly_Meter.html'>FEMS App Shelly Meter</a>: New app with support for Shelly Pro 1PM, Pro 2PM, Pro 4PM, Pro 3EM-400, Pro 3EM 3CT 63, 3EM-63W Gen3 and 3EM-63T Gen3",
+        "<a class='ion-link' target='_blank' href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html'>BETA Field Test (E-Mobility)</a>: Visualization of production forecast, migration of widgets for ASKOMA and MyPV heating elements, bug fix in schedule editing"
+      ]
+    }
+  },
+  {
     "version": "2026.3.3",
     "entries": {
       "de": [
         "Optimierungen und Fehlerbehebungen am Online-Monitoring. (Verbesserung der Englischen Übersetzung)",
         "FENECON Commercial 92: Wechsel zwischen Eigenverbrauchsoptimierung und Lastspitzenkappung im App Center",
         "FENECON Commercial 50 und 100: Verbesserungen am Generatoreingang",
-        "<a class='ion-link' target=\"_blank\" href=\"https://fenecon.de/fems-erzeugungs-und-verbrauchszahler\">BETA Feldtest (E-Mobility)</a>: Verbesserungen an der Baum-Navigation, Migration der Widgets für FEMS App SG-Ready Wärmepumpe"
+        "<a class='ion-link' target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest (E-Mobility)</a>: Verbesserungen an der Baum-Navigation, Migration der Widgets für FEMS App SG-Ready Wärmepumpe"
       ],
       "en": [
         "Optimizations and bug fixes for online monitoring. (Improved English translation)",
@@ -24,7 +59,6 @@
         "FENECON Commercial 50 und 100: Verbesserungen am Inbetriebnahmeassistent (Konfiguration des Generatoreingangs der STS-Box)",
         "FENECON Home: Verbesserungen am Inbetriebnahmeassistent (Splitsockel)",
         "FENECON Industrial: Verbesserungen am Online-Monitoring (Konfiguration von Multi-Use-Anwendungen)",
-        "<a class='ion-link' target=\"_blank\" href=\"https://fenecon.de/fems-erzeugungs-und-verbrauchszahler\">FEMS App Erzeugungs- und Verbrauchszähler</a> (Shelly Zähler): Neue App mit Unterstützung für Shelly Pro 1PM, 2PM, 4PM, 3EM-400, 3EM 3CT 63, 3EM-63W Gen3 und 3EM-63T Gen3 (<a href='https://docs.fenecon.de/de/fems/fems-app/konfigurationsanleitungen/App_Shelly_Meter.html' target='_blank'>→ FENECON Docs</a>)",
         "<a class='ion-link' target=\"_blank\" href=\"https://fenecon.de/fems-dynamischer-stromtarif\">FEMS App Dynamischer Stromtarif</a> (ENTSO-E): Stabilitätsverbesserungen beim Abruf von Börsenstrompreisen",
         "<a href='https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html' target='_blank'>BETA Feldtest (E-Mobility)</a>: Konfigurierbare E-Auto Batteriekapazität, 'Erzeugung' in der Baum/Chip-Navigation"
       ],
