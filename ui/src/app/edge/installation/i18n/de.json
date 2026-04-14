@@ -164,9 +164,8 @@
           "ACTIVE_PRIORITY": "Wirkstromprioritätsmodus",
           "CONSTANT_CURRENT": "Konstantstrommodus",
           "DEACTIVATE": "Deaktivieren",
-          "ACTIVATE": "Aktivieren",
-          "TRACKING_CONTROL": "Verlaufskontroller",
-          "PT1_BEHAVIOR": "PT-1 Verhalten"
+          "GRADIENT_CONTROL": "Verlaufskontroller",
+          "PT_1_BEHAVIOUR": "PT-1 Verhalten"
         },
         "POWER_GRADIENT": "Leistungsgradient",
         "PT1_TIME_CONSTANT": "PT-1 Tiefpassfilter Zeitkonstante",

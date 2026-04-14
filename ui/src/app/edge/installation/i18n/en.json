@@ -164,9 +164,8 @@
           "ACTIVE_PRIORITY": "Active current priority mode",
           "CONSTANT_CURRENT": "Constant current mode",
           "DEACTIVATE": "Deactivate",
-          "ACTIVATE": "Activate",
-          "TRACKING_CONTROL": "Gradient Control",
-          "PT1_BEHAVIOR": "PT-1 Behaviour"
+          "GRADIENT_CONTROL": "Gradient Control",
+          "PT_1_BEHAVIOUR": "PT-1 Behaviour"
         },
         "ACTIVE_RECOVERY_MODE": "Active Power Recovery Mode After Crossing",
         "REACTIVE_RECOVERY_MODE": "Traversing the End of Reactive Power Recovery Mode",

@@ -41,10 +41,9 @@ export enum CurrentDistributionMode {
 }
 
 export enum RecoveryMode {
-    DEACTIVATE = "DEACTIVATE",
-    ACTIVATE = "ACTIVATE",
-    TRACKING_CONTROL = "TRACKING_CONTROL",
-    PT1_BEHAVIOUR = "PT1_BEHAVIOR",
+    DISABLE = "DISABLE",
+    GRADIENT_CONTROL = "GRADIENT_CONTROL",
+    PT_1_BEHAVIOUR = "PT_1_BEHAVIOUR",
 }
 
 export const GRID_SETTING_RANGES = {
@@ -393,7 +392,7 @@ export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
         apmPuV3ActivePower: 1000,
         apmPuV4Voltage: 1150,
         apmPuV4ActivePower: null,
-        apmPuOutputResponseMode: RecoveryMode.PT1_BEHAVIOUR,
+        apmPuOutputResponseMode: RecoveryMode.PT_1_BEHAVIOUR,
         apmPuPt1LowPassFilterTimeConstant: 100,
         apmPuPt1LowPassFilterConstantGradientMode: null,
 
@@ -507,10 +506,10 @@ export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
         vrtHvrtZeroCurrentModeEntryThreshold: null,
 
         vrtCurrentDistributionMode: CurrentDistributionMode.REACTIVE_PRIORITY,
-        vrtActivePowerRecoveryMode: RecoveryMode.DEACTIVATE,
+        vrtActivePowerRecoveryMode: RecoveryMode.DISABLE,
         vrtActivePowerRecoverySpeed: null,
         vrtActivePowerRecoverySlope: null,
-        vrtReactivePowerRecoveryModeEnd: RecoveryMode.DEACTIVATE,
+        vrtReactivePowerRecoveryModeEnd: RecoveryMode.DISABLE,
         vrtReactivePowerRecoverySpeed: null,
         vrtReactivePowerRecoverySlope: null,
 

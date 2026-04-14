@@ -534,9 +534,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.ACTIVE_POWER_MODE.PU_CURVE.RESPONSE_MODE"),
                 options: [
-                    { value: RecoveryMode.DEACTIVATE, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.DEACTIVATE") },
-                    { value: RecoveryMode.TRACKING_CONTROL, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.TRACKING_CONTROL") },
-                    { value: RecoveryMode.PT1_BEHAVIOUR, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.PT1_BEHAVIOR") },
+                    { value: RecoveryMode.DISABLE, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.DEACTIVATE") },
+                    { value: RecoveryMode.GRADIENT_CONTROL, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.GRADIENT_CONTROL") },
+                    { value: RecoveryMode.PT_1_BEHAVIOUR, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.PT_1_BEHAVIOUR") },
                 ],
             },
             expressions: {
@@ -559,7 +559,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
             expressions: {
                 "hide": FormlyUtils.combineOr<ActivePowerModeModel>(
                     FormlyUtils.propIsFalse("puCurveEnable"),
-                    FormlyUtils.propNotEquals("apmPuOutputResponseMode", RecoveryMode.PT1_BEHAVIOUR)
+                    FormlyUtils.propNotEquals("apmPuOutputResponseMode", RecoveryMode.PT_1_BEHAVIOUR)
                 ),
                 "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("puCurveEnable", false),
             },
@@ -579,11 +579,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
             expressions: {
                 "hide": FormlyUtils.combineOr<ActivePowerModeModel>(
                     FormlyUtils.propIsFalse("puCurveEnable"),
-                    FormlyUtils.propNotEquals("apmPuOutputResponseMode", RecoveryMode.TRACKING_CONTROL)
+                    FormlyUtils.propNotEquals("apmPuOutputResponseMode", RecoveryMode.GRADIENT_CONTROL)
                 ),
                 "templateOptions.required": FormlyUtils.combineOr<ActivePowerModeModel>(
                     FormlyUtils.propIsTrue("puCurveEnable"),
-                    FormlyUtils.propEquals("apmPuOutputResponseMode", RecoveryMode.TRACKING_CONTROL)
+                    FormlyUtils.propEquals("apmPuOutputResponseMode", RecoveryMode.GRADIENT_CONTROL)
                 ),
             },
         }];
@@ -1769,9 +1769,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.ACTIVE_RECOVERY_MODE"),
                     required: true,
                     options: [
-                        { value: RecoveryMode.DEACTIVATE, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.DEACTIVATE") },
-                        { value: RecoveryMode.TRACKING_CONTROL, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.TRACKING_CONTROL") },
-                        { value: RecoveryMode.PT1_BEHAVIOUR, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.PT1_BEHAVIOR") },
+                        { value: RecoveryMode.DISABLE, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.DEACTIVATE") },
+                        { value: RecoveryMode.GRADIENT_CONTROL, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.GRADIENT_CONTROL") },
+                        { value: RecoveryMode.PT_1_BEHAVIOUR, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.PT_1_BEHAVIOUR") },
                     ],
                 },
             },
@@ -1788,11 +1788,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 expressions: {
                     "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
                         "vrtActivePowerRecoveryMode",
-                        RecoveryMode.TRACKING_CONTROL,
+                        RecoveryMode.GRADIENT_CONTROL,
                     ),
                     "templateOptions.required": FormlyUtils.propEquals<VoltageRideThroughModel>(
                         "vrtActivePowerRecoveryMode",
-                        RecoveryMode.TRACKING_CONTROL,
+                        RecoveryMode.GRADIENT_CONTROL,
                         false
                     ),
                 },
@@ -1811,11 +1811,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 expressions: {
                     "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
                         "vrtActivePowerRecoveryMode",
-                        RecoveryMode.PT1_BEHAVIOUR,
+                        RecoveryMode.PT_1_BEHAVIOUR,
                     ),
                     "templateOptions.required": FormlyUtils.propEquals<VoltageRideThroughModel>(
                         "vrtActivePowerRecoveryMode",
-                        RecoveryMode.PT1_BEHAVIOUR,
+                        RecoveryMode.PT_1_BEHAVIOUR,
                         false
                     ),
                 },
@@ -1826,9 +1826,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.REACTIVE_RECOVERY_MODE"),
                     required: true,
                     options: [
-                        { value: RecoveryMode.DEACTIVATE, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.DEACTIVATE") },
-                        { value: RecoveryMode.TRACKING_CONTROL, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.TRACKING_CONTROL") },
-                        { value: RecoveryMode.PT1_BEHAVIOUR, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.PT1_BEHAVIOR") },
+                        { value: RecoveryMode.DISABLE, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.DEACTIVATE") },
+                        { value: RecoveryMode.GRADIENT_CONTROL, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.GRADIENT_CONTROL") },
+                        { value: RecoveryMode.PT_1_BEHAVIOUR, label: this.translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.PT_1_BEHAVIOUR") },
                     ],
                 },
             },
@@ -1847,11 +1847,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 expressions: {
                     "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
                         "vrtReactivePowerRecoveryModeEnd",
-                        RecoveryMode.TRACKING_CONTROL,
+                        RecoveryMode.GRADIENT_CONTROL,
                     ),
                     "templateOptions.required": FormlyUtils.propEquals<VoltageRideThroughModel>(
                         "vrtReactivePowerRecoveryModeEnd",
-                        RecoveryMode.TRACKING_CONTROL,
+                        RecoveryMode.GRADIENT_CONTROL,
                         false
                     ),
                 },
@@ -1871,11 +1871,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 expressions: {
                     "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
                         "vrtReactivePowerRecoveryModeEnd",
-                        RecoveryMode.PT1_BEHAVIOUR,
+                        RecoveryMode.PT_1_BEHAVIOUR,
                     ),
                     "templateOptions.required": FormlyUtils.propEquals<VoltageRideThroughModel>(
                         "vrtReactivePowerRecoveryModeEnd",
-                        RecoveryMode.PT1_BEHAVIOUR,
+                        RecoveryMode.PT_1_BEHAVIOUR,
                         false
                     ),
                 },
