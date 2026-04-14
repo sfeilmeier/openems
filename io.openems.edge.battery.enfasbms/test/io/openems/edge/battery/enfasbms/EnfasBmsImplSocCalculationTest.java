@@ -5,7 +5,7 @@ import static io.openems.edge.battery.enfasbms.EnfasBms.ChannelId.BATTERY_SOC;
 import static io.openems.edge.battery.enfasbms.enums.FirmwareVersion.WUERTH_VERSION_1_0_20;
 import static io.openems.edge.common.startstop.StartStopConfig.START;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;

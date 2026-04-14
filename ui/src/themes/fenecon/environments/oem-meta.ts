@@ -3,6 +3,10 @@ import { BaseMeta } from "src/environments";
 export const OemMeta: BaseMeta = {
     api: {
         SYSTEM_OUTAGE: "https://status.fenecon.de/",
+        CHANGELOG: {
+            REMOTE: "https://fenecon.de/fems-changelog",
+            LOCAL: "assets/json/changelog.json",
+        },
     },
     images: {
         EVSE: {
@@ -12,6 +16,7 @@ export const OemMeta: BaseMeta = {
             ALPITRONIC: null,
         },
     },
+    /** Maps to file-proxy for fenecon docs */
     links: {
         FORGET_PASSWORD: "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",

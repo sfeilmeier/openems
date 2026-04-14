@@ -1,0 +1,16 @@
+<installation-view iconName="grid-outline" 
+  header="{{ 'INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.TITLE' | translate }}"
+  (previousClicked)="onPreviousClicked()" 
+  (nextClicked)="onNextClicked()">
+
+  <form novalidate class="ion-padding">
+    <div>
+      <formly-form 
+          [form]="form" 
+          [fields]="fields" 
+          [model]="model">
+      </formly-form>
+    </div>
+  </form>
+
+</installation-view>

@@ -1,6 +1,6 @@
 package io.openems.edge.system.fenecon.industrial.m.external.coolingunit;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.types.ChannelAddress;

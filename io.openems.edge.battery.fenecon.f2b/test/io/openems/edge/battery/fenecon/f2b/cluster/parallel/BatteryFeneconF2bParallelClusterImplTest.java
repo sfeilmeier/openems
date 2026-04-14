@@ -2,7 +2,7 @@ package io.openems.edge.battery.fenecon.f2b.cluster.parallel;
 
 import static io.openems.common.test.TestUtils.createDummyClock;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.StateMachine;

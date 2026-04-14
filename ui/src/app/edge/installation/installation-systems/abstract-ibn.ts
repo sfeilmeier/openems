@@ -223,6 +223,7 @@ export abstract class AbstractIbn {
      */
     public getEmergencyReserveFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
+        const defaultReserveSocValue = 20;
 
         fields.push({
             key: "isEnabled",
@@ -252,13 +253,44 @@ export abstract class AbstractIbn {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.VALUE"),
                 note: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_NOTE"),
-                description: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT") + " 20%",
+                description: `${this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT")} ${defaultReserveSocValue}%`,
                 required: true,
                 min: this.emergencyReserve.minValue,
                 max: 100,
                 pin: true,
                 unit: "%",
-                change: (field) => { field.props.description = this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT") + " " + field.formControl.value + "%"; },
+                defaultValue: this.emergencyReserve.value ?? defaultReserveSocValue,
+            },
+            hooks: {
+                onInit: (field) => {
+                    const fallback = defaultReserveSocValue;
+
+                    const initialVal = field.formControl?.value;
+                    if (initialVal == null || initialVal === "" || Number.isNaN(initialVal)) {
+                        field.formControl?.patchValue(fallback, { emitEvent: false });
+                    }
+
+                    field.formControl?.valueChanges.subscribe((newVal) => {
+                        if (newVal == null || newVal === "" || Number.isNaN(newVal)) {
+                            field.formControl?.patchValue(fallback, { emitEvent: false });
+                        }
+                    });
+                },
+            },
+            expressions: {
+                "templateOptions.description": (field) => {
+                    let val = defaultReserveSocValue; // Default
+
+                    if (field != null && field.formControl != null) {
+                        const controlValue = field.formControl.value;
+
+                        if (controlValue != null && controlValue !== "" && !Number.isNaN(controlValue)) {
+                            val = controlValue;
+                        }
+                    }
+
+                    return `${this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT")} ${val}%`;
+                },
             },
             parsers: [Number],
             hideExpression: model => !model.isEnabled || !model.isReserveSocEnabled,

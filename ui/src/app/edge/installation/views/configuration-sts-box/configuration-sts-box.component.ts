@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
+import { TypedFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
 import { Edge } from "src/app/shared/shared";
 import { EmergencyReserve } from "../../installation-systems/abstract-ibn";
 import { AbstractCommercialGen3, StsBox } from "../../installation-systems/commercial/abstract-commercial-gen3";
-import { TypedFormlyFieldConfig } from "../../shared/ibndatatypes";
 
 @Component({
     selector: ConfigurationStsBoxComponent.SELECTOR,

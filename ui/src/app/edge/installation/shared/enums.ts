@@ -47,6 +47,7 @@ export enum FeedInSetting {
     Leading_0_98 = "LEADING_0_98",
     Leading_0_99 = "LEADING_0_99",
     Leading_1 = "LEADING_1",
+    Leading_1_OR_NONE = "LEADING_1_OR_NONE",
     Undefined = "UNDEFINED",
 }
 
@@ -97,6 +98,7 @@ export enum View {
     ConfigurationStsBox,
     ProtocolSystemLocation,
     Alerting,
+    ConfigurationAdvancedGridSettings,
 }
 
 export enum CommercialCluster {

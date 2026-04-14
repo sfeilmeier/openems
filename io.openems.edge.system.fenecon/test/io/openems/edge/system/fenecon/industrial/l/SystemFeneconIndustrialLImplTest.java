@@ -2,12 +2,12 @@ package io.openems.edge.system.fenecon.industrial.l;
 
 import static io.openems.common.test.TestUtils.createDummyClock;
 import static java.time.temporal.ChronoUnit.MINUTES;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.ZonedDateTime;
 import java.util.function.Consumer;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;

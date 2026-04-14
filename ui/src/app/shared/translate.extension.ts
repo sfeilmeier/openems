@@ -121,6 +121,10 @@ export function registerTranslateExtension(translate: TranslateService) {
                 name: "serialNumberRequired",
                 message: translate.stream("INSTALLATION.FORM.STS_SERIAL_NUMBER_REQUIREMENT"),
             },
+            {
+                name: "splitRange",
+                message: translate.stream("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.COSPHIP_CURVE.INVALID_RANGE"),
+            },
         ],
         extensions: [
             {

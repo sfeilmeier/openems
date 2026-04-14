@@ -421,6 +421,8 @@ export namespace NavigationConstants {
     export const newWidgets: Widget["name"][] = [
         "System.Fenecon.Industrial.L",
         "System.Fenecon.Industrial.Xl",
+        "Heat.Askoma",
+        "Heat.MyPv.AcThor9s",
         "Controller.Io.HeatPump.SgReady",
     ];
 

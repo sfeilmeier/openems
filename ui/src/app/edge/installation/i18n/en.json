@@ -3,6 +3,185 @@
     "ALERTING_INFO": "Set up email notifications as an installer when the FEMS is offline for a certain period of time or reports an error. The message is sent to the email address provided during commissioning.",
     "OFFLINE": "Offline",
     "ENABLE_MPPT": "MPPT {{ mpptNumber }} active",
+    "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
+      "MODE": "Mode",
+      "RANGE": "Range [{{min}},{{max}}] {{unit}}",
+      "TITLE": "VDE 4110 Settings",
+      "POWER": "{{value}} Power",
+      "REACTIVE_POWER": "{{value}} Reactive Power",
+      "GROUPS": {
+        "ACTIVE_POWER_MODE": "Active Power Mode Settings",
+        "REACTIVE_POWER_MODE": "Reactive Power Mode Settings",
+        "PROTECTION": "Protection Parameter",
+        "CONNECTION": "Connection Parameter",
+        "VOLTAGE_RIDE_THROUGH": "Voltage Ride Through",
+        "FREQUENCY_RIDE_THROUGH": "Frequency Ride Through"
+      },
+      "ACTIVE_POWER_MODE": {
+        "OUTPUT_ACTIVE_POWER": "Output Active Power",
+        "POWER_GRADIENT": "Power Gradient",
+        "PF_OVER_FREQUENCY": {
+          "ENABLE": "P(F) Curve (Frequency Curve) for the overfrequency discharge",
+          "ENABLE_DESC": "Activate/Deactivate the P(F) Curve",
+          "START_POINT": "Over Frequency Start Point",
+          "SLOPE": "Over Frequency Power Reduction Slope",
+          "DELAY_TIME": "Response Delay Time",
+          "DEACTIVATION_THRESHOLD_FSTOP": "Deactivation Threshold Fstop",
+          "HYSTERESIS_POINT": "Frequency Hysteresis Time",
+          "DELAY_WAITING_TIME": "Delay Waiting Time",
+          "HYSTERESIS_SLOPE": "Hysteresis Power Recovery Slope"
+        },
+        "PF_UNDER_FREQUENCY": {
+          "ENABLE": "P(F) Curve (Frequency Power Curve) for the underfrequency load",
+          "ENABLE_DESC": "Activate/Deactivate the P(F) Curve",
+          "THRESHOLD": "Underfrequency Threshold",
+          "SLOPE": "Power Response To Underfrequency Gradient",
+          "DELAY_TIME": "Response Delay Time",
+          "DEACTIVATION_THRESHOLD_FSTOP": "Deactivation Threshold Fstop",
+          "DEACTIVATION_THRESHOLD_FSTOP_DESC": "Activate/Deactivate the Deactivation Threshold",
+          "HYSTERESIS_POINT": "Frequency Hysteresis Time",
+          "DELAY_WAITING_TIME": "Delay Waiting Time",
+          "HYSTERESIS_SLOPE": "Hysteresis Power Recovery Slope"
+        },
+        "PU_CURVE": {
+          "ENABLE": "P(U) Curve (Voltage Power Curve)",
+          "ENABLE_DESC": "Activate/Deactivate the P(U) Curve",
+          "RESPONSE_MODE": "Output Response Mode",
+          "PT1_TIME_CONSTANT": "PT-1 Low-pass Filter Time Constant",
+          "PT1_POWER_GRADIENT": "Power Gradient"
+        }
+      },
+      "REACTIVE_POWER_MODE": {
+        "MODE": "Reactive Power Mode",
+        "MODE_DESC": "Selection of the Reactive Power Mode",
+        "OPTIONS": {
+          "NONE": "Not selected",
+          "FIX_PF": "Fix Pf",
+          "FIX_Q": "Fix Q",
+          "QU_CURVE": "Q(U) Curve",
+          "COSPHIP_CURVE": "CosPhi(P) Curve",
+          "QP_CURVE": "Q(P) Curve"
+        },
+        "FIX_PF": {
+          "POWER_FACTOR": "Power Factor",
+          "POWER_FACTOR_DESC": "Range [0.8,1]"
+        },
+        "FIX_Q": {
+          "REACTIVE_POWER": "Reactive Power"
+        },
+        "QU_CURVE": {
+          "VOLTAGE_DEAD_BAND": "Voltage Dead Band",
+          "OVEREXCITED_SLOPE": "Overexcited Slope",
+          "UNDEREXCITED_SLOPE": "Underexcited Slope",
+          "TIME_CONSTANT": "Time Constant",
+          "EXTENDED_FUNCTIONS": "Extended Functions",
+          "LOCK_IN_POWER": "Lock-in Voltage",
+          "LOCK_OUT_POWER": "Lock out Voltage",
+          "VOLTAGE": "V{{number}} Voltage",
+          "ACTIVE_POWER": "V{{number}} Active Power",
+          "MODE": {
+            "STANDARD_MODE": "Basic mode",
+            "SLOPE_MODE": "Slope mode"
+          }
+        },
+        "COSPHIP_CURVE": {
+          "OVEREXCITED_SLOPE": "Overexcited Slope",
+          "UNDEREXCITED_SLOPE": "Underexcited Slope",
+          "COS_PHI": "{{value}} cos φ",
+          "POWER": "{{value}} Power",
+          "COS_PHI_DESC": "Range [-1000, -800] and [800, 1000]",
+          "TIME_CONSTANT": "Time Constant",
+          "EXTENDED_FUNCTIONS": "Extended Functions",
+          "EXTENDED_FUNCTIONS_DESC": "Activate/Deactivate Extended Functions",
+          "LOCK_IN_VOLT": "Lock-in Voltage",
+          "LOCK_OUT_VOLT": "Lock-out Voltage",
+          "INVALID_RANGE": "The value should be in the range [-1,000, -800] and [800, 1,000]"
+        },
+        "QP_CURVE": {
+          "OVEREXCITED_SLOPE": "Overexcited Slope",
+          "UNDEREXCITED_SLOPE": "Underexcited Slope",
+          "TIME_CONSTANT": "Time Constant"
+        }
+      },
+      "PROTECTION": {
+        "OVERVOLTAGE_TRIGGER": "Overvoltage Trigger Value (Stage {{stage}})",
+        "OVERVOLTAGE_TRIP_TIME": "Overvoltage Trip Time (Stage {{stage}})",
+        "UNDERVOLTAGE_TRIP_VALUE": "Undervoltage Trip Value (Stage {{stage}})",
+        "UNDERVOLTAGE_TRIP_TIME": "Undervoltage Trip Time (Stage {{stage}})",
+        "TEN_MIN_OVERVOLTAGE_THRESHOLD": "10-minute Overvoltage Trip Threshold",
+        "TEN_MIN_OVERVOLTAGE_TIME": "10-minute Overvoltage Trip Time",
+        "OVERFREQUENCY_TRIGGER": "Overfrequency Trigger Value (Stage {{stage}})",
+        "OVERFREQUENCY_TRIP_TIME": "Overfrequency Trip Time (Stage {{stage}})",
+        "UNDERFREQUENCY_TRIP_VALUE": "Underfrequency Trip Value (Stage {{stage}})",
+        "UNDERFREQUENCY_TRIP_TIME": "Underfrequency Trip Time (Stage {{stage}})"
+      },
+      "CONNECTION": {
+        "RAMP_UP_UPPER_VOLTAGE": "Ramp up: Upper Voltage",
+        "RAMP_UP_LOWER_VOLTAGE": "Ramp up: Lower Voltage",
+        "RAMP_UP_UPPER_FREQUENCY": "Ramp up: Upper Frequency",
+        "RAMP_UP_LOWER_FREQUENCY": "Ramp up: Lower Frequency",
+        "RAMP_UP_OBSERVATION_TIME": "Ramp up: Observation Time",
+        "SOFT_RAMP_UP_GRADIENT_ENABLE": "Soft Ramp Up Gradient",
+        "SOFT_RAMP_UP_GRADIENT_ENABLE_DESC": "Activate/Deactivate the Soft Ramp Up Gradient",
+        "SOFT_RAMP_UP_GRADIENT_VALUE": "Soft Ramp Up Gradient Value",
+        "RECONNECTION_UPPER_VOLTAGE": "Reconnection: Upper Voltage",
+        "RECONNECTION_LOWER_VOLTAGE": "Reconnection: Lower Voltage",
+        "RECONNECTION_UPPER_FREQUENCY": "Reconnection: Upper Frequency",
+        "RECONNECTION_LOWER_FREQUENCY": "Reconnection: Lower Frequency",
+        "RECONNECTION_OBSERVATION_TIME": "Reconnection: Observation Time",
+        "RECONNECTION_GRADIENT_ENABLE": "Reconnection Gradient",
+        "RECONNECTION_GRADIENT_ENABLE_DESC": "Activate/Deactivate the Reconnection Gradient",
+        "RECONNECTION_GRADIENT_VALUE": "Reconnection Gradient Value"
+      },
+      "VOLTAGE_RIDE_THROUGH": {
+        "LVRT": {
+          "ENABLE": "LVRT",
+          "ENABLE_DESC": "Activate/Deactivate Low Voltage Ride Through",
+          "UV_VOLTAGE": "Undervoltage {{stage}} Voltage",
+          "UV_TIME": "Undervoltage {{stage}} Time",
+          "ENTER_THRESHOLD": "Enter Into LVRT Threshold",
+          "EXIT_ENDPOINT": "Exit LVRT Endpoint",
+          "K1_SLOPE": "K1 Slope",
+          "ZERO_CURRENT_ENABLE": "Zero Current Mode",
+          "ZERO_CURRENT_ENABLE_DESC": "Activate/Deactivate Zero Current Mode",
+          "ZERO_CURRENT_THRESHOLD": "Entry Threshold"
+        },
+        "HVRT": {
+          "ENABLE": "HVRT",
+          "ENABLE_DESC": "Activate/Deactivate High Voltage Ride Through",
+          "OV_VOLTAGE": "Over Voltage {{stage}} Voltage",
+          "OV_TIME": "Over Voltage {{stage}} Time",
+          "ENTER_THRESHOLD": "Enter High Crossing Threshold",
+          "EXIT_ENDPOINT": "Exit High Crossing Endpoint",
+          "K2_SLOPE": "K2 Slope",
+          "ZERO_CURRENT_ENABLE": "Zero Current Mode",
+          "ZERO_CURRENT_ENABLE_DESC": "Activate/Deactivate Zero Current Mode",
+          "ZERO_CURRENT_THRESHOLD": "Entry Threshold"
+        },
+        "CURRENT_DISTRIBUTION_MODE": "Current Distribution Mode",
+        "OPTIONS": {
+          "REACTIVE_PRIORITY": "Reactive current priority mode",
+          "ACTIVE_PRIORITY": "Active current priority mode",
+          "CONSTANT_CURRENT": "Constant current mode",
+          "DEACTIVATE": "Deactivate",
+          "GRADIENT_CONTROL": "Gradient Control",
+          "PT_1_BEHAVIOUR": "PT-1 Behaviour"
+        },
+        "ACTIVE_RECOVERY_MODE": "Active Power Recovery Mode After Crossing",
+        "REACTIVE_RECOVERY_MODE": "Traversing the End of Reactive Power Recovery Mode",
+        "POWER_GRADIENT": "Power Gradient",
+        "PT1_TIME_CONSTANT": "PT-1 Low-pass Filter Time Constant"
+      },
+      "FREQUENCY_RIDE_THROUGH": {
+        "ENABLE": "Frequency Ride Through",
+        "ENABLE_DESC": "Activates/Deactivates Frequency Ride Through",
+        "UF_FREQUENCY": "Underfrequency {{stage}} Frequency",
+        "UF_TIME": "Underfrequency {{stage}} Time",
+        "OF_FREQUENCY": "Overfrequency {{stage}} Frequency",
+        "OF_TIME": "Overfrequency {{stage}} Time"
+      },
+      "SLOPE_RANGE": "Multiplication factor [{{min}}, {{max}}]"
+    },
     "CONFIGURATION_EMERGENCY_RESERVE": {
       "GENSET": {
         "CONNECTED": "Genset connected?",
@@ -18,6 +197,9 @@
         "CHARGE_SOC_END": "Battery charge level for stopping the Genset",
         "CHARGE_SOC_END_DESCRIPTION": "State of charge of the battery at which the Genset is stopped."
       }
+    },
+    "PROTOCOL_FEED_IN_MANAGEMENT": {
+      "FIXED_COS_PHI": "Fixed Value: Cos Phi"
     }
   }
 }

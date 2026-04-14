@@ -5,7 +5,7 @@ import static io.openems.edge.battery.fenecon.f2b.dummy.BatteryFeneconF2bDummy.C
 import java.time.Instant;
 import java.time.ZoneOffset;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.TimeLeapClock;
 import io.openems.edge.battery.fenecon.f2b.dummy.statemachine.StateMachine;
