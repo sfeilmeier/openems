@@ -276,6 +276,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Heat.HeatingElement", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat")) //
+			.put("App.Heat.Askoma", AppLink.create() //
+					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat")
+					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat")) //
 			.put("App.Heat.Askoma.ReadOnly", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat-lesend")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat-reading")) //
