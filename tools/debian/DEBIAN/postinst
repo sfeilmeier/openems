@@ -69,6 +69,9 @@ case "$1" in
 		chown -R fems:fems /usr/lib/openems
 		mkdir -p /etc/openems.d
 		chown -R fems:fems /etc/openems.d
+		mkdir -p /var/log/openems
+		chown -R fems:fems /var/log/openems
+		chown root:root /etc/logrotate.d/openems
 		
 		# Disable source packages
 		sed --in-place "s/^deb-src /#deb-src /" /etc/apt/sources.list
