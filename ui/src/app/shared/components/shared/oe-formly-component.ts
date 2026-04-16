@@ -300,9 +300,13 @@ export type OeFormlyField<T = unknown> =
     (| OeFormlyField.ImageLine
         | OeFormlyField.InfoLine
         | OeFormlyField.Item
+        | OeFormlyField.InputLine
+        | OeFormlyField.SelectLine
+        | OeFormlyField.ToggleLine
         | OeFormlyField.ChildrenLine
         | OeFormlyField.NameLine
         | OeFormlyField.ChannelLine
+        | OeFormlyField.DateTimeLine
         | OeFormlyField.HorizontalLine
         | OeFormlyField.ComponentLine
         | OeFormlyField.ValueFromChannelsLine
@@ -337,7 +341,7 @@ export namespace OeFormlyField {
 
     export type InfoLine = {
         type: "info-line",
-        name: string,
+        name: string | { text: string, lineStyle?: string }[],
         icon?: Icon,
         style?: string
     };
@@ -392,6 +396,7 @@ export namespace OeFormlyField {
         channelsToSubscribe: ChannelAddress[],
         indentation?: TextIndentation,
         filter?: (currentData: CurrentData) => boolean,
+        singleLine?: boolean,
     };
 
     export type ButtonsFromFormControlLine = {
@@ -424,7 +429,7 @@ export namespace OeFormlyField {
         type: "value-from-form-control-line",
         controlName: string,
         name: string,
-        converter: Converter,
+        converter?: Converter,
     };
 
     export type HorizontalLine = {
@@ -456,5 +461,11 @@ export namespace OeFormlyField {
         name: string,
         controlName: string,
         options: { value: string, name: string }[],
+    };
+
+    export type DateTimeLine = {
+        type: "time-line",
+        name: string,
+        controlName: string,
     };
 }
