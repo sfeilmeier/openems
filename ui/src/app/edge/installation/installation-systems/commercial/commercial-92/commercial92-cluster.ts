@@ -245,8 +245,8 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                         const numberOfModulesPerTower = currentData.channel[`battery${i}/NumberOfModulesPerTower`];
 
                         result.push({
-                            numberOfTowers: parseInt(numberOfTowers, 10),
-                            numberOfModulesPerTower: parseInt(numberOfModulesPerTower, 10),
+                            numberOfTowers: Number.parseInt(numberOfTowers, 10),
+                            numberOfModulesPerTower: Number.parseInt(numberOfModulesPerTower, 10),
                         });
                     }
 

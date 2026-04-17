@@ -44,7 +44,7 @@ export class InstallationComponent implements OnInit {
         if (sessionStorage?.viewIndex) {
             // 10 is given as radix parameter.
             // 2 = binary, 8 = octal, 10 = decimal, 16 = hexadecimal.
-            viewIndex = parseInt(sessionStorage.viewIndex, 10);
+            viewIndex = Number.parseInt(sessionStorage.viewIndex, 10);
         } else {
             viewIndex = 0;
         }
