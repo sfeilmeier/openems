@@ -22,14 +22,14 @@
 	<dependencies>
 		<!-- biz -->
 		<dependency>
-            <!--
+			<!--
             The Bnd Gradle plugins: A Swiss Army Knife for OSGi
             Changelog: https://github.com/bndtools/bnd/releases
             Keep in sync with bnd_version in gradle.properties
             -->
-            <groupId>biz.aQute.bnd</groupId>
-            <artifactId>biz.aQute.bnd.gradle</artifactId>
-            <version>7.2.3</version>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.bnd.gradle</artifactId>
+			<version>7.2.3</version>
 		</dependency>
 		<!-- com -->
 		<dependency>
@@ -223,7 +223,7 @@
             -->
 			<groupId>io.openems</groupId>
 			<artifactId>j2mod</artifactId>
-			<version>3.3.0-openems.1</version>
+			<version>3.3.0-openems.2</version>
 		</dependency>
 		<dependency>
 			<groupId>io.reactivex.rxjava3</groupId>
@@ -767,7 +767,7 @@
             -->
 			<groupId>com.auth0</groupId>
 			<artifactId>auth0</artifactId>
-			<version>3.3.0</version>
+			<version>3.4.0</version>
 		</dependency>
 		<dependency>
 			<!--
