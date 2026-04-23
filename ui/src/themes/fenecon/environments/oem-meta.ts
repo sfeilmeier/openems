@@ -46,6 +46,26 @@ export const OemMeta: BaseMeta = {
                 INDUSTRIAL_L_OVERVIEW: "https://docs.fenecon.de/redirect/fenecon/de/industrial_l_overview",
                 INDUSTRIAL_XL_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_xl_manual",
             },
+            WARRANTY: {
+                //  Home 6,10,15, 10 Gen 1 und Home 20/30
+                HOME_GUARANTEE_CONDITIONS: {
+                    DE: "https://docs.fenecon.de/download/fenecon/de/home_guarantee_conditions.pdf",
+                    EN: "https://docs.fenecon.de/download/fenecon/en/home_guarantee_conditions.pdf",
+                },
+                COMMERCIAL_C50_GEN3_GUARANTEE_CONDITIONS: {
+                    DE: "https://docs.fenecon.de/redirect/fenecon/de/commercial_c50_gen3_guarantee_conditions",
+                    EN: "https://docs.fenecon.de/redirect/fenecon/en/commercial_c50_gen3_guarantee_conditions",
+                },
+                // Commercial 92 & 92 Cluster
+                COMMERCIAL_C92_GUARANTEE_CONDITIONS: {
+                    DE: "https://docs.fenecon.de/redirect/fenecon/de/commercial_c92_guarantee_conditions",
+                    EN: "https://docs.fenecon.de/download/fenecon/en/commercial_c92_guarantee_conditions.pdf",
+                },
+                COMMERCIAL_100_GUARANTEE_CONDITIONS: {
+                    DE: "https://docs.fenecon.de/redirect/fenecon/de/commercial_c100_guarantee_conditions",
+                    EN: "https://docs.fenecon.de/redirect/fenecon/de/guarantee_conditions_c100_2026-04",
+                },
+            },
         },
 
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
@@ -68,17 +88,6 @@ export const OemMeta: BaseMeta = {
         SYSTEM: {
             INDUSTRIAL_S: "https://docs.fenecon.de/de/industrial/industrial_s/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Industrial_S.html",
             INDUSTRIAL_L: "#",
-        },
-
-        WARRANTY: {
-            HOME: {
-                EN: "https://fenecon.de/wp-content/uploads/2022/06/V2021.11_EN_Warranty_conditions_FENECON_Home.pdf",
-                DE: "https://fenecon.de/wp-content/uploads/2023/11/V2023.10_DE_Garantiebedingungen_FENECON_Home_Serie.pdf",
-            },
-            COMMERCIAL: {
-                EN: "https://fenecon.de/wp-content/uploads/2022/08/V2022.03_EN_Warranty_conditions_for-FENECON-Commercial_30_50.pdf",
-                DE: "https://fenecon.de/wp-content/uploads/2022/07/V2022.03_DE_Garantiebedingungen_FENECON_Commercial_30_50.pdf",
-            },
         },
 
         // Currently the links are different with different prefixes. so adding whole url for meters.

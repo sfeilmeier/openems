@@ -9,6 +9,7 @@ import { GridSettingUtils } from "../../../shared/gridsetting.utils";
 import { ComponentData } from "../../../shared/ibndatatypes";
 import { SystemId } from "../../../shared/system";
 import { ViewUtils } from "../../../shared/view.utils";
+import { WebLinks } from "../../../shared/weblink.utils";
 import { AdvancedGridSettingsModel, getDefaultAdvancedGridSettings } from "../../../views/configuration-advanced-grid-settings/advanced-grid-settings.model";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
 import { EmergencyReserve } from "../../abstract-ibn";
@@ -40,6 +41,7 @@ export type GensetProperties = {
 export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
     private static readonly MAX_MPPT = 4;
 
+    public override warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_COMMERCIAL_50_GEN3;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_50_GEN_3;
     public override appId: string = "App.FENECON.Commercial.50.Gen3";
     public override appAlias: string = "FENECON Commercial 50";

@@ -7,12 +7,14 @@ import { environment } from "src/environments";
 import { GridFeedInLimitationType, View } from "../../../shared/enums";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
+import { WebLinks } from "../../../shared/weblink.utils";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
 import { SchedulerIdBehaviour } from "../../abstract-ibn";
 import { AbstractCommercialIbn } from "../abstract-commercial";
 
 export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
 
+    public override warrantyLink = WebLinks.WARRANTY_LINK_COMMERCIAL_50_GEN3;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_50_GEN_1;
     public override readonly defaultNumberOfModules: number = 20;
 

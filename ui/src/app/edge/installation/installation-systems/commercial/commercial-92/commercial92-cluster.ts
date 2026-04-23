@@ -8,6 +8,7 @@ import { Role } from "src/app/shared/type/role";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { CommercialCluster, View } from "../../../shared/enums";
 import { SystemId } from "../../../shared/system";
+import { WebLinks } from "../../../shared/weblink.utils";
 import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
 import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
@@ -16,6 +17,7 @@ import { AbstractCommercial92Ibn } from "./abstract-commercial92";
 
 export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
 
+    public override warrantyLink = WebLinks.WARRANTY_LINK_COMMERCIAL_92;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_92_CLUSTER;
     public override isClusterConfiguration: boolean = true;
     public slaveEdges = [];

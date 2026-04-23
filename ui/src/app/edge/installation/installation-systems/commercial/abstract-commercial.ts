@@ -19,7 +19,7 @@ import { AbstractIbn } from "../abstract-ibn";
 export abstract class AbstractCommercialIbn extends AbstractIbn {
     private static readonly SELECTOR = "Commercial";
 
-    public override readonly warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_COMMERCIAL;
+    public override readonly warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_COMMERCIAL_50_GEN3;
     public override readonly systemType: SystemType = SystemType.COMMERCIAL;
     public override readonly showRundSteuerManual: boolean = false;
     public readonly minNumberOfTowers: number = 1;

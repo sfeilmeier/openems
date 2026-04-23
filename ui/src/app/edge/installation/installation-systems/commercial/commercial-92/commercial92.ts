@@ -5,11 +5,13 @@ import { Country } from "src/app/shared/type/country";
 import { Category } from "../../../shared/category";
 import { View } from "../../../shared/enums";
 import { ComponentData } from "../../../shared/ibndatatypes";
+import { WebLinks } from "../../../shared/weblink.utils";
 import { SchedulerIdBehaviour } from "../../abstract-ibn";
 import { AbstractCommercial92Ibn } from "./abstract-commercial92";
 
 export class Commercial92Ibn extends AbstractCommercial92Ibn {
 
+    public override readonly warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_COMMERCIAL_92;
     public override isClusterConfiguration: boolean = false;
     public override readonly isDoubleSocketValid: boolean = true;
 
