@@ -1005,7 +1005,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         );
 
         batteryInverterData.push({
-            label: this.translate.instant("Index.TYPE"),
+            label: this.translate.instant("INDEX.TYPE"),
             value: FeedInSettingUtils.getFeedInSettingLabel(this.feedInLimitation.feedInSetting, this.translate) ?? FeedInSetting.Undefined,
         });
 

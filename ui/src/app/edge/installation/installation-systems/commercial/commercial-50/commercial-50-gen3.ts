@@ -11,6 +11,7 @@ import { SystemId } from "../../../shared/system";
 import { ViewUtils } from "../../../shared/view.utils";
 import { WebLinks } from "../../../shared/weblink.utils";
 import { AdvancedGridSettingsModel, getDefaultAdvancedGridSettings } from "../../../views/configuration-advanced-grid-settings/advanced-grid-settings.model";
+import { ConfigurationAdvancedSettingsComponent } from "../../../views/configuration-advanced-grid-settings/configuration-advanced-grid-settings.component";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
 import { EmergencyReserve } from "../../abstract-ibn";
 import { AbstractCommercialGen3, CommercialGen3App, StsBox } from "../abstract-commercial-gen3";
@@ -372,6 +373,8 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
                     value: `${emergencyReserve.genset.maxPower} kW`,
                 });
             }
+
+            protocol.items.push(...ConfigurationAdvancedSettingsComponent.getAdvancedGridSettingsFieldsProtocolItems(this.translate, this.advancedGridSettings));
         }
     }
 

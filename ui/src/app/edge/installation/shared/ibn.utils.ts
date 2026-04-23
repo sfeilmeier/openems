@@ -172,4 +172,23 @@ export class IbnUtils {
     public static removePrefix(serialNumber: string, prefix: string): string {
         return serialNumber.startsWith(prefix) ? serialNumber.slice(prefix.length) : serialNumber;
     }
+
+    /**
+     * Groups the table data by its header.
+     *
+     * @param tableData the table data
+     * @returns
+     */
+    public static groupDatasetsByHeader(tableData: { header: string; rows: ComponentData[] }[]) {
+        return tableData.reduce((arr: typeof tableData, item) => {
+            const { header, rows } = item;
+            const existingElementIndex = arr.findIndex(el => el.header === header);
+            if (existingElementIndex >= 0) {
+                arr[existingElementIndex] = { header: header, rows: [...arr[existingElementIndex].rows, ...rows] };
+            }
+
+            arr.push(item);
+            return arr;
+        }, []);
+    }
 }
