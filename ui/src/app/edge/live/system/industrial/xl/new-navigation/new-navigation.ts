@@ -11,6 +11,7 @@ import { Role } from "src/app/shared/type/role";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { SystemIndustrialJsonRpcHelper } from "../../../system-industrial-json-rpc-helper";
 import { ClearErrorRequest } from "../../jsonrpc/clearErrorRequest";
+import { F2BUpdate } from "../../jsonrpc/f2bUpdate";
 import { SystemErrorAcknowledge } from "../../jsonrpc/systemErrorAcknowledge";
 
 @Component({
@@ -95,6 +96,21 @@ export class SystemIndustrialXlHomeComponent extends AbstractFormlyComponent {
                 });
         }
 
+        if (edge.roleIsAtLeast(Role.ADMIN)) {
+            lines.push(
+                { type: "horizontal-line" },
+                {
+                    type: "button-from-form-control-line",
+                    button: {
+                        icon: { name: "send-outline", color: "primary", size: "small" },
+                        name: translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.EXECUTE"),
+                        value: true,
+                        callback: self.f2bUpdate(self),
+                    },
+                    name: translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.F2B_UPDATE_HEADER"),
+                });
+        }
+
         return {
             title: "FENECON Industrial XL",
             helpKey: "REDIRECT.SYSTEM.INDUSTRIAL_XL_MANUAL",
@@ -148,6 +164,17 @@ export class SystemIndustrialXlHomeComponent extends AbstractFormlyComponent {
             self.service.currentEdge(),
             self.component,
             new SystemErrorAcknowledge()
+        );
+    }
+
+    protected f2bUpdate(self: SystemIndustrialXlHomeComponent): () => void {
+        return SystemIndustrialJsonRpcHelper.createRpcCallback(
+            self.service,
+            self.translate,
+            self.websocket,
+            self.service.currentEdge(),
+            self.component,
+            new F2BUpdate()
         );
     }
 }

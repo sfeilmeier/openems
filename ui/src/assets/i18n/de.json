@@ -531,10 +531,12 @@
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "beinhaltet System Komponente, Batterien, Wechselrichter, ESS",
                         "MAINTENANCE_WINDOW": "Wartungsfenster",
                         "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Klimaanlagen reset:",
-                        "CLEAR_COOLING_UNIT_ERRORS_TEXT": "notwendig für Klimaanlagen Fehler"
+                        "CLEAR_COOLING_UNIT_ERRORS_TEXT": "notwendig für Klimaanlagen Fehler",
+                        "F2B_UPDATE_HEADER": "F2B Update"
                     },
                     "RPC_SUCCESS": "Befehl erfolgreich ausgeführt",
                     "RPC_FAILED": "Befehl ausführen fehlgeschlagen",
+                    "EXECUTE": "Ausführen",
                     "OVERALL_SYSTEM": "Gesamtsystem"
                 },
                 "TIME_OF_USE_TARIFF": {
