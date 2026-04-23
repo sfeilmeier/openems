@@ -93,11 +93,11 @@ export const OemMeta: BaseMeta = {
                     EN: "#",
                     DE: "#",
                 },
-                COMMERCIAL_C50_GEN3_GUARANTEE_CONDITIONS: {
+                COMMERCIAL_50_GEN3_GUARANTEE_CONDITIONS: {
                     EN: "#",
                     DE: "#",
                 },
-                COMMERCIAL_C92_GUARANTEE_CONDITIONS: {
+                COMMERCIAL_92_GUARANTEE_CONDITIONS: {
                     EN: "#",
                     DE: "#",
                 },

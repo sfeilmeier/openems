@@ -52,12 +52,12 @@ export const OemMeta: BaseMeta = {
                     DE: "https://docs.fenecon.de/download/fenecon/de/home_guarantee_conditions.pdf",
                     EN: "https://docs.fenecon.de/download/fenecon/en/home_guarantee_conditions.pdf",
                 },
-                COMMERCIAL_C50_GEN3_GUARANTEE_CONDITIONS: {
+                COMMERCIAL_50_GEN3_GUARANTEE_CONDITIONS: {
                     DE: "https://docs.fenecon.de/redirect/fenecon/de/commercial_c50_gen3_guarantee_conditions",
                     EN: "https://docs.fenecon.de/redirect/fenecon/en/commercial_c50_gen3_guarantee_conditions",
                 },
                 // Commercial 92 & 92 Cluster
-                COMMERCIAL_C92_GUARANTEE_CONDITIONS: {
+                COMMERCIAL_92_GUARANTEE_CONDITIONS: {
                     DE: "https://docs.fenecon.de/redirect/fenecon/de/commercial_c92_guarantee_conditions",
                     EN: "https://docs.fenecon.de/download/fenecon/en/commercial_c92_guarantee_conditions.pdf",
                 },

@@ -24,18 +24,18 @@ export namespace WebLinkUtils {
             case WebLinks.WARRANTY_LINK_COMMERCIAL_50_GEN3:
                 switch (lang) {
                     case "en":
-                        return environment.links.REDIRECT.WARRANTY.COMMERCIAL_C50_GEN3_GUARANTEE_CONDITIONS.EN;
+                        return environment.links.REDIRECT.WARRANTY.COMMERCIAL_50_GEN3_GUARANTEE_CONDITIONS.EN;
                     case "de":
                     default:
-                        return environment.links.REDIRECT.WARRANTY.COMMERCIAL_C50_GEN3_GUARANTEE_CONDITIONS.DE;
+                        return environment.links.REDIRECT.WARRANTY.COMMERCIAL_50_GEN3_GUARANTEE_CONDITIONS.DE;
                 }
             case WebLinks.WARRANTY_LINK_COMMERCIAL_92:
                 switch (lang) {
                     case "en":
-                        return environment.links.REDIRECT.WARRANTY.COMMERCIAL_C92_GUARANTEE_CONDITIONS.EN;
+                        return environment.links.REDIRECT.WARRANTY.COMMERCIAL_92_GUARANTEE_CONDITIONS.EN;
                     case "de":
                     default:
-                        return environment.links.REDIRECT.WARRANTY.COMMERCIAL_C92_GUARANTEE_CONDITIONS.DE;
+                        return environment.links.REDIRECT.WARRANTY.COMMERCIAL_92_GUARANTEE_CONDITIONS.DE;
                 }
             case WebLinks.WARRANTY_LINK_COMMERCIAL_100:
                 switch (lang) {

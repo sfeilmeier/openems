@@ -116,11 +116,11 @@ export interface Environment {
                     readonly EN: string,
                     readonly DE: string,
                 },
-                readonly COMMERCIAL_C50_GEN3_GUARANTEE_CONDITIONS: {
+                readonly COMMERCIAL_50_GEN3_GUARANTEE_CONDITIONS: {
                     readonly EN: string,
                     readonly DE: string,
                 },
-                readonly COMMERCIAL_C92_GUARANTEE_CONDITIONS: {
+                readonly COMMERCIAL_92_GUARANTEE_CONDITIONS: {
                     readonly EN: string,
                     readonly DE: string,
                 },
