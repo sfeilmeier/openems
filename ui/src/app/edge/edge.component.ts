@@ -114,7 +114,7 @@ export class EdgeComponent implements OnDestroy, ViewWillLeave {
      * @param edge the edge
      */
     private async handleAnnualReviewPopover(edge: Edge): Promise<void> {
-        const showPopover = await MarketingAnnualReviewComponent.shouldShowPopover(edge, this.userService);
+        const showPopover = MarketingAnnualReviewComponent.shouldShowPopover(edge, this.userService);
 
         if (showPopover == false) {
             return;

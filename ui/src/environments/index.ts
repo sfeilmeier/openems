@@ -82,6 +82,7 @@ export interface Environment {
             readonly KEBA_P40: string | null,
             readonly HARDY_BARTH: string | null,
             readonly ALPITRONIC: string | null,
+            readonly MENNEKES: string | null,
         },
     },
     readonly links: {
@@ -111,9 +112,25 @@ export interface Environment {
                 readonly INDUSTRIAL_L_OVERVIEW: string | null,
                 readonly INDUSTRIAL_XL_MANUAL: string | null,
             }
+            readonly WARRANTY: {
+                readonly HOME_GUARANTEE_CONDITIONS: {
+                    readonly EN: string,
+                    readonly DE: string,
+                },
+                readonly COMMERCIAL_50_GEN3_GUARANTEE_CONDITIONS: {
+                    readonly EN: string,
+                    readonly DE: string,
+                },
+                readonly COMMERCIAL_92_GUARANTEE_CONDITIONS: {
+                    readonly EN: string,
+                    readonly DE: string,
+                },
+                readonly COMMERCIAL_100_GUARANTEE_CONDITIONS: {
+                    readonly EN: string,
+                    readonly DE: string,
+                },
+            }
         }
-
-
         readonly DATA_PROTECTION: string | null,
         readonly FORGET_PASSWORD: string,
         readonly EVCS: string | null,
@@ -133,17 +150,6 @@ export interface Environment {
         readonly CONTROLLER_API_REST_READWRITE: string,
 
         readonly EVCS_CLUSTER: string,
-
-        readonly WARRANTY: {
-            readonly HOME: {
-                readonly EN: string,
-                readonly DE: string,
-            },
-            readonly COMMERCIAL: {
-                readonly EN: string,
-                readonly DE: string,
-            },
-        }
 
         readonly METER: {
             readonly SOCOMEC: string,

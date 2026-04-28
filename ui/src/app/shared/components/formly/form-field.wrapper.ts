@@ -10,13 +10,11 @@ import { FieldWrapper } from "@ngx-formly/core";
         formly-input-serial-number, formly-custom-select {
             width: 100%;
         }
-
         formly-field-ion-toggle, ion-toggle  {
             padding: 0 !important;
             margin: 0 !important;
             transform: none !important;
         }
-
         ion-toggle::part(label),
         ion-checkbox::part(label),
         ion-radio::part(label) {

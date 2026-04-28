@@ -22,8 +22,24 @@
     padding-right: 0;
 }
 
+.ion-padding-top-double {
+    padding-top: calc(var(--ion-padding) * 2);
+}
+
 .ion-padding-top-triple {
     padding-top: calc(var(--ion-padding) * 3);
+}
+
+.ion-padding-left-double {
+    padding-left: calc(var(--ion-padding) * 2);
+}
+
+.ion-padding-right-double {
+    padding-right: calc(var(--ion-padding) * 2);
+}
+
+.ion-padding-bottom-double {
+    padding-bottom: calc(var(--ion-padding) * 2);
 }
 
 .ion-padding-bottom-triple {

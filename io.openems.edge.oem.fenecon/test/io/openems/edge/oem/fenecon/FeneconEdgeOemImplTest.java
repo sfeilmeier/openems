@@ -1,10 +1,10 @@
 package io.openems.edge.oem.fenecon;
 
 import static io.openems.edge.oem.fenecon.FeneconEdgeOemImpl.getSystemUpdateParams;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.oem.DummyOpenemsEdgeOem;

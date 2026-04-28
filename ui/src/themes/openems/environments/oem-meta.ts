@@ -60,6 +60,7 @@ export const OemMeta: BaseMeta = {
             KEBA_P40: null,
             HARDY_BARTH: null,
             ALPITRONIC: null,
+            MENNEKES: null,
         },
     },
     links: {
@@ -88,6 +89,24 @@ export const OemMeta: BaseMeta = {
                 INDUSTRIAL_L_OVERVIEW: null,
                 INDUSTRIAL_XL_MANUAL: null,
             },
+            WARRANTY: {
+                HOME_GUARANTEE_CONDITIONS: {
+                    EN: "#",
+                    DE: "#",
+                },
+                COMMERCIAL_50_GEN3_GUARANTEE_CONDITIONS: {
+                    EN: "#",
+                    DE: "#",
+                },
+                COMMERCIAL_92_GUARANTEE_CONDITIONS: {
+                    EN: "#",
+                    DE: "#",
+                },
+                COMMERCIAL_100_GUARANTEE_CONDITIONS: {
+                    EN: "#",
+                    DE: "#",
+                },
+            },
             OFFLINE_INSTRUCTIONS: null,
         },
         FORGET_PASSWORD: "#",
@@ -111,17 +130,6 @@ export const OemMeta: BaseMeta = {
         SYSTEM: {
             INDUSTRIAL_S: "#",
             INDUSTRIAL_L: "#",
-        },
-
-        WARRANTY: {
-            HOME: {
-                EN: "#",
-                DE: "#",
-            },
-            COMMERCIAL: {
-                EN: "#",
-                DE: "#",
-            },
         },
 
         METER: {

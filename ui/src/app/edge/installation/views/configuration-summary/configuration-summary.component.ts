@@ -11,6 +11,7 @@ import { Category } from "../../shared/category";
 import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, TableData } from "../../shared/ibndatatypes";
 import { WebLinkUtils } from "../../shared/weblink.utils";
+import { ConfigurationAdvancedSettingsComponent } from "../configuration-advanced-grid-settings/configuration-advanced-grid-settings.component";
 
 @Component({
     selector: ConfigurationSummaryComponent.SELECTOR,
@@ -36,7 +37,7 @@ export class ConfigurationSummaryComponent implements OnInit {
         private translate: TranslateService,
     ) { }
 
-    public ngOnInit(): void {
+    public async ngOnInit(): Promise<void> {
         this.form = new FormGroup({});
         this.fields = this.getFields();
         this.model = {};
@@ -146,6 +147,8 @@ export class ConfigurationSummaryComponent implements OnInit {
                 rows: element.rows,
             };
         });
-    }
 
+        this.tableData.push(...ConfigurationAdvancedSettingsComponent.getCompletionSummaryFromAdvancedGridSettings(this.translate, this.ibn["advancedGridSettings"] ?? {}));
+        this.tableData = IbnUtils.groupDatasetsByHeader(this.tableData);
+    }
 }

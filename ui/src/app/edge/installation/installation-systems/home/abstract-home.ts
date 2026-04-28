@@ -327,7 +327,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
                     isResolved = true;
                     // 10 is given as radix parameter.
                     // 2 = binary, 8 = octal, 10 = decimal, 16 = hexadecimal.
-                    resolve([{ numberOfTowers: parseInt(numberOfTowers, 10), numberOfModulesPerTower: parseInt(numberOfModulesPerTower, 10) }]);
+                    resolve([{ numberOfTowers: Number.parseInt(numberOfTowers, 10), numberOfModulesPerTower: Number.parseInt(numberOfModulesPerTower, 10) }]);
                 }
             });
 
@@ -1005,7 +1005,7 @@ export abstract class AbstractHomeIbn extends AbstractIbn {
         );
 
         batteryInverterData.push({
-            label: this.translate.instant("Index.TYPE"),
+            label: this.translate.instant("INDEX.TYPE"),
             value: FeedInSettingUtils.getFeedInSettingLabel(this.feedInLimitation.feedInSetting, this.translate) ?? FeedInSetting.Undefined,
         });
 

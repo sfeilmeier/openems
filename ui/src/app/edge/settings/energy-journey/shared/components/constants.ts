@@ -59,7 +59,7 @@ export class EnergyJourneyConstantsComponent implements OnChanges {
             return Converter.IF_NUMBER_OR_STRING(raw, value => {
                 let _value: number | null = null;
                 if (typeof value === "string") {
-                    _value = parseInt(value);
+                    _value = Number.parseInt(value);
                 }
 
                 if (!_value) {

@@ -183,7 +183,9 @@ export abstract class AbstractIbn {
    *
    * @param model the model containing the user input for the Dynamic-Feed-In-Limit fields.
    */
-    public setFeedInLimitFields(model: any) { }
+    public setFeedInLimitFields(model: any) {
+        return;
+    }
 
     /**
      * Returns the fields that has sub systems specific to the 'System Type' selected in previous step.

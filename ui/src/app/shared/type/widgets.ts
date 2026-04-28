@@ -4,6 +4,9 @@ import { SharedConsumption } from "src/app/edge/live/common/consumption/shared/s
 import { SharedGrid } from "src/app/edge/live/common/grid/shared/shared";
 import { SharedProduction } from "src/app/edge/live/common/production/shared/shared";
 import { SharedSelfConsumption } from "src/app/edge/live/common/selfconsumption/shared/shared";
+import { SharedEssFixDigitalPowerControl } from "src/app/edge/live/Controller/Ess/FixActivePower/shared/shared";
+import { SharedGridOptimizedCharge } from "src/app/edge/live/Controller/Ess/GridOptimizedCharge/shared/shared";
+import { SharedControllerEssTimeOfUseTariff } from "src/app/edge/live/Controller/Ess/TimeOfUseTariff/shared/shared";
 import { ControllerEvseSingleShared } from "src/app/edge/live/Controller/Evse/shared/shared";
 import { SharedControllerHeat } from "src/app/edge/live/Controller/Heat/shared/shared";
 import { SharedControllerIoHeatpump } from "src/app/edge/live/Controller/Io/Heatpump/shared/shared";
@@ -69,12 +72,18 @@ export class Widgets {
         }
 
         switch (widget.name) {
+            case "Controller.Ess.FixActivePower":
+                return SharedEssFixDigitalPowerControl.getNavigationTree(translate, component);
+            case "Controller.Ess.GridOptimizedCharge":
+                return SharedGridOptimizedCharge.getNavigationTree(translate, component);
             case "System.Fenecon.Industrial.L":
                 return SharedSystemIndustrialL.getNavigationTree(translate, widget.componentId);
             case "Controller.Io.HeatPump.SgReady":
                 return SharedControllerIoHeatpump.getNavigationTree(translate, component);
             case "System.Fenecon.Industrial.Xl":
                 return SharedSystemIndustrialXl.getNavigationTree(translate, widget.componentId);
+            case "Controller.Ess.Time-Of-Use-Tariff":
+                return SharedControllerEssTimeOfUseTariff.getNavigationTree(translate, component);
             case "Heat.Askoma":
                 return SharedControllerHeat.getNavigationTree(translate, component);
             case "Heat.MyPv.AcThor9s":

@@ -1,7 +1,8 @@
 // @ts-strict-ignore
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
-import { EdgePermission, Utils } from "../shared";
+import { EdgePermission } from "../shared";
+import { ArrayUtils } from "../utils/array/array.utils";
 import { Role } from "./role";
 import { TEnumKeys } from "./utility";
 
@@ -109,7 +110,7 @@ export class AdvertWidgets {
                 }
             );
         };
-        list = Utils.shuffleArray(list);
+        list = ArrayUtils.shuffleArray(list);
         return new AdvertWidgets(list);
     }
 }

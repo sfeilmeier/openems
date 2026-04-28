@@ -166,6 +166,12 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.FENECON.ProHybrid.9.10", AppLink.create() //
 					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018").emptyLink(Language.EN) //
 			) //
+			.put("App.FENECON.Mini.ES.3.3", AppLink.create() //
+					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018").emptyLink(Language.EN) //
+			) //
+			.put("App.FENECON.Mini.ES.3.6", AppLink.create() //
+					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018").emptyLink(Language.EN) //
+			) //
 
 			// Basis-Apps
 			.put("App.PvSelfConsumption.SelfConsumptionOptimization", AppLink.create() //
@@ -187,7 +193,8 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 					.addLink(Language.EN, "https://www.fenecon.com/fems-time-of-use-tariff")) //
 			.put("App.TimeOfUseTariff.AncillaryCosts", AppLink.create() //
 					.addLink(Language.DE, "https://docs.fenecon.de/de/fems/fems-app/App_Zeitvariable_Netzentgelte.html")
-					.addLink(Language.EN, "https://docs.fenecon.de/en/fems/fems-app/App_Zeitvariable_Netzentgelte.html")) //
+					.addLink(Language.EN,
+							"https://docs.fenecon.de/en/fems/fems-app/App_Zeitvariable_Netzentgelte.html")) //
 			.put("App.TimeOfUseTariff.Awattar", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-dynamischer-stromtarif")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-time-of-use-tariff")) //
@@ -244,8 +251,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 					.addLink(Language.DE, "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-production-and-consumption-meter")) //
 			.put("App.Meter.Shelly", AppLink.create() //
-					.addLink(Language.DE, "https://www.fenecon.de/fems-shelly-diy")
-					.addLink(Language.EN, "https://docs.fenecon.de/en/fems/fems-app/konfigurationsanleitungen/App_Shelly_Plug_S_Gen3.html")) //
+					.addLink(Language.DE, "https://www.fenecon.de/fems-shelly-diy") //
+					.addLink(Language.EN,
+							"https://docs.fenecon.de/en/fems/fems-app/konfigurationsanleitungen/App_Shelly_Plug_S_Gen3.html")) //
 			.put("App.Meter.Shelly.Meter", AppLink.create() //
 					.emptyLink(Language.DE) //
 					.emptyLink(Language.EN) //
@@ -274,6 +282,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat")) //
 			.put("App.Heat.HeatingElement", AppLink.create() //
+					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat")
+					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat")) //
+			.put("App.Heat.Askoma", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat")) //
 			.put("App.Heat.Askoma.ReadOnly", AppLink.create() //

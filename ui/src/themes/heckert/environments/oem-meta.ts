@@ -60,6 +60,7 @@ export const OemMeta: BaseMeta = {
             KEBA_P40: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Keba.P40.png",
             HARDY_BARTH: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.HardyBarth.cPu2.png",
             ALPITRONIC: null,
+            MENNEKES: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Mennekes.4You.png",
         },
     },
     links: {
@@ -89,6 +90,24 @@ export const OemMeta: BaseMeta = {
                 INDUSTRIAL_L_OVERVIEW: null,
                 INDUSTRIAL_XL_MANUAL: null,
             },
+            WARRANTY: {
+                HOME_GUARANTEE_CONDITIONS: {
+                    EN: "#",
+                    DE: "#",
+                },
+                COMMERCIAL_50_GEN3_GUARANTEE_CONDITIONS: {
+                    EN: "#",
+                    DE: "#",
+                },
+                COMMERCIAL_92_GUARANTEE_CONDITIONS: {
+                    EN: "#",
+                    DE: "#",
+                },
+                COMMERCIAL_100_GUARANTEE_CONDITIONS: {
+                    EN: "#",
+                    DE: "#",
+                },
+            },
             OFFLINE_INSTRUCTIONS: null,
         },
         FORGET_PASSWORD: "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
@@ -113,17 +132,6 @@ export const OemMeta: BaseMeta = {
         SYSTEM: {
             INDUSTRIAL_S: "#",
             INDUSTRIAL_L: "#",
-        },
-
-        WARRANTY: {
-            HOME: {
-                EN: "#",
-                DE: "#",
-            },
-            COMMERCIAL: {
-                EN: "#",
-                DE: "#",
-            },
         },
 
         METER: {

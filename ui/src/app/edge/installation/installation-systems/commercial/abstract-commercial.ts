@@ -19,7 +19,7 @@ import { AbstractIbn } from "../abstract-ibn";
 export abstract class AbstractCommercialIbn extends AbstractIbn {
     private static readonly SELECTOR = "Commercial";
 
-    public override readonly warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_COMMERCIAL;
+    public override readonly warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_COMMERCIAL_50_GEN3;
     public override readonly systemType: SystemType = SystemType.COMMERCIAL;
     public override readonly showRundSteuerManual: boolean = false;
     public readonly minNumberOfTowers: number = 1;
@@ -281,8 +281,8 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
                         resolve([{
                             // 10 is given as radix parameter.
                             // 2 = binary, 8 = octal, 10 = decimal, 16 = hexadecimal.
-                            numberOfTowers: parseInt(numberOfTowers, 10),
-                            numberOfModulesPerTower: parseInt(numberOfModulesPerTower, 10),
+                            numberOfTowers: Number.parseInt(numberOfTowers, 10),
+                            numberOfModulesPerTower: Number.parseInt(numberOfModulesPerTower, 10),
                         }]);
                     }
                 });

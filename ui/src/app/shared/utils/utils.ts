@@ -319,7 +319,11 @@ export class Utils {
    * @param value the value from passed value in html
    * @returns converted value
    */
-    public static CONVERT_TO_WATTHOURS = (value: number): string => {
+    public static CONVERT_TO_WATTHOURS = (value: number | null): string => {
+        if (value == null) {
+            return "";
+        }
+
         const locale: string = (Language.getByKey(localStorage.LANGUAGE) ?? Language.DEFAULT).i18nLocaleKey;
         return formatNumber(value, locale, "1.0-1") + " Wh";
     };
@@ -547,16 +551,6 @@ export class Utils {
    */
     public static roundSlightlyNegativeValues(value: number | null): number | null {
         return (value > -0.49 && value < 0) ? 0 : value;
-    }
-
-    /**
-   * Shuffles an array
-   *
-   * @param array the array to be shuffled
-   * @returns the shuffled array
-   */
-    public static shuffleArray<T>(array: T[]): T[] {
-        return array.sort(() => Math.random() - 0.5);
     }
 
     /**
