@@ -1,5 +1,28 @@
 [
   {
+    "version": "2026.4.2",
+    "entries": {
+      "de": [
+        "Online-Monitoring/FENECON App: Allgemeine Verbesserungen",
+        {
+          "roleIsAtLeast": "INSTALLER",
+          "text": "FENECON Commercial 50 und 100: VDE4110 Parameter werden in das Inbetriebnahmeprotokoll übernommen"
+        },
+        "FENECON Home & Commercial: Fehlerbehebung bei Batterieerhaltungsladung (seit Version 2026.3.2)",
+        "FENECON Commercial 92: Verbesserung der Neustart-Logik nach Netzausfall"
+      ],
+      "en": [
+        "Online-Monitoring/FENECON App: General improvements",
+        {
+          "roleIsAtLeast": "INSTALLER",
+          "text": "FENECON Commercial 50 and 100: VDE4110 parameters are transferred to the commissioning protocol"
+        },
+        "FENECON Home & Commercial: Bug fix for battery maintenance charging (since version 2026.3.2)",
+        "FENECON Commercial 92: Improvement of restart logic after power failure"
+      ]
+    }
+  },
+  {
     "version": "2026.4.1",
     "entries": {
       "de": [
