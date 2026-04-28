@@ -1,0 +1,34 @@
+name: Gitea PR Comment
+description: Create or update a pull request comment in Gitea
+
+inputs:
+  gitea_token:
+    required: true
+    description: Gitea API token with permissions to read and write PR comments
+  pr_number:
+    required: true
+    description: The pull request number to comment on
+  body:
+    required: true
+    description: The content of the comment to create or update
+  marker:
+    required: false
+    default: sonar-quality-gate
+    description: A unique marker to identify the comment for updates
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Python dependencies
+      shell: bash
+      run: |
+        apt-get -qq update >/dev/null
+        apt-get -qq install -y python3-requests >/dev/null
+
+    - name: Run Gitea PR comment action
+      shell: bash
+      env:
+        GITEA_REPOSITORY: ${{ github.repository }}
+        GITEA_SERVER_URL: ${{ github.server_url }}
+      run: |
+        python .gitea/actions/gitea-pr-comment/comment.py
