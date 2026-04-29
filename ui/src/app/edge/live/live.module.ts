@@ -29,7 +29,7 @@ import { ControllerHeatModule } from "./Controller/Heat/HeatMyPv";
 import { Controller_Io_ChannelSingleThresholdComponent } from "./Controller/Io/ChannelSingleThreshold/flat/flat";
 import { Controller_Io_ChannelSingleThresholdModalComponent } from "./Controller/Io/ChannelSingleThreshold/modal/modal.component";
 import { ControllerIoFixDigitalOutput } from "./Controller/Io/FixDigitalOutput/fix-digital-output.module";
-import { Controller_Io_HeatingElement } from "./Controller/Io/HeatingElement/Io_HeatingElement";
+import { ControllerIoHeatingElement } from "./Controller/Io/HeatingElement/Io_HeatingElement";
 import { Controller_Io_HeatingRoom } from "./Controller/Io/HeatingRoom/Io_HeatingRoom";
 import { ControllerIoHeatpumpModule } from "./Controller/Io/Heatpump/controller-io-heatpump";
 import { Controller_Api_ModbusTcp } from "./Controller/ModbusTcpApi/modbusTcpApi.module";
@@ -72,7 +72,7 @@ import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage
         Controller_Evcs,
         ControllerEvseSingle,
         ControllerHeatModule,
-        Controller_Io_HeatingElement,
+        ControllerIoHeatingElement,
         Controller_Io_HeatingRoom,
         ControllerIoFixDigitalOutput,
         ControllerIoHeatpumpModule,
