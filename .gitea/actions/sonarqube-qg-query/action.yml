@@ -1,0 +1,39 @@
+name: SonarQube Quality Gate Query
+description: Query SonarQube Quality Gate results and generate PR comment body
+
+inputs:
+  sonar_host_url:
+    required: true
+    description: SonarQube server URL
+  sonar_token:
+    required: true
+    description: SonarQube authentication token
+  project_keys:
+    required: true
+    description: Comma-separated SonarQube project keys
+
+outputs:
+  overall_status:
+    description: Overall Quality Gate status (OK/ERROR)
+    value: ${{ steps.qg.outputs.overall_status }}
+  comment_body:
+    description: Markdown PR comment
+    value: ${{ steps.qg.outputs.comment_body }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Python dependencies
+      shell: bash
+      run: |
+        apt-get -qq update >/dev/null
+        apt-get -qq install -y python3-requests >/dev/null
+
+    - name: Run SonarQube QG query
+      id: qg
+      env:
+        PR_NUMBER: ${{ gitea.event.pull_request.number }}
+        GITHUB_OUTPUT: ${{ github.output }}
+      shell: bash
+      run: |
+        python .gitea/actions/sonarqube-qg-query/qg.py

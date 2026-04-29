@@ -19,7 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: "tools/\nui/\nio.openems.common/\n.gitea/"
+          sparse-checkout: |
+            tools/
+            ui/
+            io.openems.common/
+            .gitea/
       - name: Environment
         id: env
         run: |
@@ -40,7 +44,7 @@ jobs:
           source: /env/
           verbose: "true"
 
-  build-jars:
+  build-edge:
     runs-on: ubuntu-latest
     needs: setup
     steps:
@@ -61,12 +65,79 @@ jobs:
           java-version: '21'
           cache: gradle
 
-      - name: Restore build cache
-        uses: actions/cache/restore@v3
+      - name: Gradle Wrapper
+        run: |
+          ./gradlew wrapper
+
+      - name: Checkstyle
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_checkstyle_edge --console=plain --warn --parallel --max-workers=4
+
+      - name: Test
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_test_edge --console=plain --warn --parallel --max-workers=4
+
+      - name: Build
+        env:
+          OEMS_EDGE_OUTPUT: "build/target/edge.jar"
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          common_update_version_in_code
+          echo "Build Version $VERSION"
+          common_build_edge --console=plain --warn --parallel --max-workers=2
+          common_check_file "$OEMS_EDGE_OUTPUT" "OpenEMS Edge JAR missing!"
+
+      - name: Upload artifact
+        uses: ./.gitea/actions/artifact-upload
         with:
-          key: fems_cache_gradle
-          path: |
-            ~/.gradle/wrapper
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: jars
+          source: build/target/
+          verbose: "true"
+
+      - name: Sonarqube Scan
+        continue-on-error: true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN_EDGE }}
+          SONAR_PROJECT_KEY: ${{ vars.SONARQUBE_PROJECT_KEY_EDGE }}
+          SONAR_HOST_URL: ${{ vars.SONARQUBE_HOST_URL }}
+        run: |
+          ./gradlew jacocoEdgeReport sonar \
+            -Psonar.scope=edge \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.projectName='OpenEMS Edge' \
+            -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ env.SONAR_TOKEN }}
+
+  build-backend:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          verbose: "true"
+      
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: gradle
 
       - name: Gradle Wrapper
         run: |
@@ -86,9 +157,8 @@ jobs:
           source openems.env
           common_test --console=plain --warn --parallel --max-workers=4
 
-      - name: Build Edge & Backend
+      - name: Build
         env:
-          OEMS_EDGE_OUTPUT: "build/target/edge.jar"
           OEMS_BACKEND_OUTPUT: "build/target/backend.jar"
         run: |
           source tools/common.sh
@@ -96,8 +166,6 @@ jobs:
           source openems.env
           common_update_version_in_code
           echo "Build Version $VERSION"
-          common_build_edge --console=plain --warn --parallel --max-workers=2
-          common_check_file "$OEMS_EDGE_OUTPUT" "OpenEMS Edge JAR missing!"
           common_build_backend --console=plain --warn --parallel --max-workers=2
           common_check_file "$OEMS_BACKEND_OUTPUT" "OpenEMS Backend JAR missing!"
 
@@ -110,12 +178,19 @@ jobs:
           source: build/target/
           verbose: "true"
 
-      - name: Save build cache
-        uses: actions/cache/save@v3
-        with:
-          path: |
-            ~/.gradle/wrapper
-          key: fems_cache_gradle
+      - name: Sonarqube Scan
+        continue-on-error: true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN_BACKEND }}
+          SONAR_PROJECT_KEY: ${{ vars.SONARQUBE_PROJECT_KEY_BACKEND }}
+          SONAR_HOST_URL: ${{ vars.SONARQUBE_HOST_URL }}
+        run: |
+          ./gradlew jacocoBackendReport sonar \
+            -Psonar.scope=backend \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.projectName='OpenEMS Backend' \
+            -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ env.SONAR_TOKEN }}
 
   build-ui:
     runs-on: ubuntu-latest-ui
@@ -160,7 +235,7 @@ jobs:
           node_modules/.bin/tsc
           node_modules/.bin/tsc-strict
           node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-prod,prod"
-          npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          npm run test -- --code-coverage --no-watch --no-progress --browsers=ChromeHeadlessCI
           echo "Bundle fems-ui-backend.tar.gz"
           tar -C target/ -czf fems-ui-backend.tar.gz .
           rm -r target/
@@ -189,9 +264,26 @@ jobs:
             ui/fems-ui-edge.tar.gz
             ui/fems-ui-backend.tar.gz
 
+      - name: Sonarqube Scan
+        continue-on-error: true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN_UI }}
+          SONAR_PROJECT_KEY: ${{ vars.SONARQUBE_PROJECT_KEY_UI }}
+          SONAR_HOST_URL: ${{ vars.SONARQUBE_HOST_URL }}
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.projectName='OpenEMS UI' \
+            -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ env.SONAR_TOKEN }} \
+            -Dsonar.sources=ui/src \
+            -Dsonar.tests=ui/src \
+            -Dsonar.test.inclusions=**/*.spec.ts \
+            -Dsonar.typescript.lcov.reportPaths=ui/coverage/ngv/lcov.info
+
   build-debian:
     runs-on: ubuntu-latest
-    needs: [setup, build-jars, build-ui]
+    needs: [setup, build-edge, build-backend, build-ui]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -248,7 +340,7 @@ jobs:
           verbose: "true"
 
   upload:
-    needs: [setup, build-jars, build-ui, build-debian]
+    needs: [setup, build-edge, build-backend, build-ui, build-debian]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -290,7 +382,7 @@ jobs:
 
   cleanup:
     runs-on: ubuntu-latest
-    needs: [build-jars, build-ui, build-debian, upload]
+    needs: [build-edge, build-backend, build-ui, build-debian, upload]
     if: always()
     continue-on-error: true
     steps:
