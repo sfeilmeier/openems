@@ -1,5 +1,9 @@
 package io.openems.edge.battery.fenecon.f2b.cluster.serial;
 
+import static io.openems.edge.battery.fenecon.f2b.cluster.common.BatteryFeneconF2bCluster.ChannelId.F2B_UPDATE_STATE_MACHINE;
+
+import java.util.List;
+
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -26,6 +30,7 @@ import io.openems.edge.battery.fenecon.f2b.cluster.common.AbstractBatteryFenecon
 import io.openems.edge.battery.fenecon.f2b.cluster.common.BatteryFeneconF2bCluster;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.ChannelManager;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.Context;
+import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.F2bUpdateSubState;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.StateMachine;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.StateMachine.State;
 import io.openems.edge.battery.protection.BatteryProtection;
@@ -171,4 +176,21 @@ public class BatteryFeneconF2bClusterSerialImpl extends AbstractBatteryFeneconF2
 	public DeviceSpecificOnSetNextValueHandler<? extends BatteryFeneconF2b> getDeviceSpecificOnSetNextValueHandler() {
 		return null;
 	}
+
+	@Override
+	public List<BatteryFeneconF2b> getBatteries() {
+		return this.batteries;
+	}
+
+	@Override
+	public void _startF2bUpdate() {
+		this.stateMachine.forceNextState(State.F2B_UPDATE);
+	}
+
+	@Override
+	public boolean isF2bUpdateFinished() {
+		var subState = this.channel(F2B_UPDATE_STATE_MACHINE).value().asEnum();
+		return subState == F2bUpdateSubState.FINISHED;
+	}
+
 }

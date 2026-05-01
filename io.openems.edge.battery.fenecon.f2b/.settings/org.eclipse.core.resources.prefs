@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/io/openems/edge/battery/fenecon/f2b/fisker=UTF-8
+encoding//src/io/openems/edge/battery/fenecon/f2b/fisker/translation_de.properties=UTF-8
+encoding//src/io/openems/edge/battery/fenecon/f2b/fisker/translation_en.properties=UTF-8
 encoding/<project>=UTF-8

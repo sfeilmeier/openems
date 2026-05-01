@@ -8,6 +8,7 @@ import io.openems.common.types.OpenemsType;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.api.BatteryErrorAcknowledge;
 import io.openems.edge.battery.fenecon.f2b.common.enums.F2bCanCommunication;
+import io.openems.edge.battery.fenecon.f2b.common.enums.F2bHardwareType;
 import io.openems.edge.battery.fenecon.f2b.common.enums.F2bState;
 import io.openems.edge.battery.fenecon.f2b.common.enums.F2bTerminal15Sw;
 import io.openems.edge.battery.fenecon.f2b.common.enums.F2bWatchdogState;
@@ -24,83 +25,105 @@ public interface BatteryFeneconF2b extends Battery, BatteryErrorAcknowledge {
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 
 		// Write Channels
-		F2B_CAN_COMMUNICATION(Doc.of(F2bCanCommunication.values()) //
+		F2B_CAN_COMMUNICATION(Doc.of(F2bCanCommunication.values())//
 				.accessMode(AccessMode.READ_WRITE)), //
 		F2B_ERROR_RESET_REQUEST(Doc.of(OpenemsType.BOOLEAN)//
 				.accessMode(AccessMode.READ_WRITE)), //
-
 		F2B_TERMINAL_15_HW(Doc.of(OpenemsType.BOOLEAN)//
 				.accessMode(AccessMode.READ_WRITE)//
 				.text("Switch on and off terminal 15 HW ignition of the battery")), //
-
 		F2B_TERMINAL_30C(Doc.of(OpenemsType.BOOLEAN)//
 				.accessMode(AccessMode.READ_WRITE)//
 				.text("Switch on and off terminal 30C (crash / emergency stop) of the battery")), //
-
 		// ST_KL, The value for this signal should match the terminal 15 (S_KL15_WUP)
 		F2B_TERMINAL_15_SW(Doc.of(F2bTerminal15Sw.values())//
 				.accessMode(AccessMode.READ_WRITE)), //
-
 		// F2B_T15_TOGGLE_REQUEST
 		F2B_TERMINAL_15_TOGGLE_REQUEST(Doc.of(OpenemsType.BOOLEAN)//
 				.accessMode(AccessMode.READ_WRITE)), //
-
 		F2B_RESET(Doc.of(OpenemsType.BOOLEAN)//
-				.accessMode(AccessMode.READ_WRITE)), //
-
+				.accessMode(AccessMode.WRITE_ONLY)), //
 		// Actual state of the F2B internal state machine
 		F2B_STATE(Doc.of(F2bState.values())//
 				.accessMode(AccessMode.READ_ONLY)), //
-
 		// If its in running state, cat failure occurs
 		F2B_T30C_NO_INPUT_VOLTAGE(Doc.of(Level.INFO)//
-				.text("F2B Terminal 30 C no input voltage") //
+				.text("F2B Terminal 30 C no input voltage")//
 				.accessMode(AccessMode.READ_ONLY)), //
-
 		F2B_T30C_OUTPUT_ERROR(Doc.of(Level.WARNING)//
-				.text("F2B Terminal 30 C output warning") //
+				.text("F2B Terminal 30 C output warning")//
 				.accessMode(AccessMode.READ_ONLY)), //
-
 		// F2B_T15_HARDWARE_ERROR, Hardware error of T15 output (to battery)
 		F2B_TERMINAL_15_HW_ERROR(Doc.of(Level.WARNING)//
-				.text("F2B Terminal 15 HW error") //
+				.text("F2B Terminal 15 HW error")//
 				.accessMode(AccessMode.READ_ONLY)), //
-
 		// Error of HV Power Supply → T15, CAN, … not working
 		F2B_POWER_SUPPLY_ERROR_HV_SIDE(Doc.of(Level.WARNING)//
-				.text("F2B power supply error HV side") //
+				.text("F2B power supply error HV side")//
 				.accessMode(AccessMode.READ_ONLY)), //
-
 		// F2B_T30F_INPUT_VOLTAGE, Voltage measurement of T30F input
 		F2B_TERMINAL_30F_INPUT_VOLTAGE(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.MILLIVOLT)//
 				.accessMode(AccessMode.READ_ONLY)), // [0 ...30 V]
-
 		// F2B_T30C_INPUT_VOLTAGE, Voltage measurement of T30C input
 		F2B_TERMINAL_30C_INPUT_VOLTAGE(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.MILLIVOLT)//
 				.accessMode(AccessMode.READ_ONLY)), //
-
 		// Time in seconds since 1.1.2016 [0:00:00]
 		F2B_TIMESTAMP(Doc.of(OpenemsType.LONG)//
 				.unit(Unit.CUMULATED_SECONDS)//
 				.accessMode(AccessMode.READ_ONLY)), //
-
 		// F2B_FEMS_WATCHDOG_STATE
 		F2B_WATCHDOG_STATE(Doc.of(F2bWatchdogState.values())//
 				.accessMode(AccessMode.READ_ONLY)), //
-
 		// T_SEC_COU_REL
 		F2B_WATCHDOG_TIMER_VALUE(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.SECONDS)//
 				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_HARDWARE_TYPE(Doc.of(F2bHardwareType.values())//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_HARDWARE_SERIAL_NUMBER(Doc.of(OpenemsType.STRING)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_HARDWARE_PO_NUMBER(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_BOOTLOADER_MAIN_VERSION(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_BOOTLOADER_SUB_VERSION(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_BOOTLOADER_BUILD_DATE(Doc.of(OpenemsType.STRING)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_BOOTLOADER_BUILD_TIMESTAMP(Doc.of(OpenemsType.STRING)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_BOOTLOADER_FLASH_DATE(Doc.of(OpenemsType.STRING)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_BOOTLOADER_FLASH_TIMESTAMP(Doc.of(OpenemsType.STRING)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_APPLICATION_MAIN_VERSION(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_APPLICATION_SUB_VERSION(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_APPLICATION_BUILD_DATE(Doc.of(OpenemsType.STRING)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_APPLICATION_BUILD_TIMESTAMP(Doc.of(OpenemsType.STRING)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_APPLICATION_FLASH_DATE(Doc.of(OpenemsType.STRING)//
+				.accessMode(AccessMode.READ_ONLY)), //
+		F2B_APPLICATION_FLASH_TIMESTAMP(Doc.of(OpenemsType.STRING)//
+				.accessMode(AccessMode.READ_ONLY)), //
+
+		F2B_SOFTWARE_VERSION_OUTDATED(Doc.of(Level.WARNING)//
+				.accessMode(AccessMode.READ_ONLY)//
+				.text("Attention: F2B Update required. Please contact service.industrial@fenecon.de")), //
+		F2B_HARDWARE_VERSION_WRONG(Doc.of(Level.WARNING)//
+				.accessMode(AccessMode.READ_ONLY)//
+				.text("Attention: Wrong hardware version installed. Please contact service.industrial@fenecon.de")), //
+
 		COOLING_VALVE_STATE(Doc.of(OpenemsType.BOOLEAN)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		AVG_CELL_TEMPERATURE(Doc.of(OpenemsType.INTEGER) //
+		AVG_CELL_TEMPERATURE(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.DEGREE_CELSIUS)), //
 		EMERGENCY_ACKNOWLEDGE(Doc.of(Level.WARNING)//
 				.text("Waiting for acknowledge to exit the emergency state!")), //
-
 		// Internal Voltage of the battery.This value is more accurate than
 		// LINK_VOLTAGE in case the contactors are closed
 		INTERNAL_VOLTAGE(Doc.of(OpenemsType.INTEGER)//
@@ -337,7 +360,7 @@ public interface BatteryFeneconF2b extends Battery, BatteryErrorAcknowledge {
 		return this.getF2bT30cNoInputVoltageChannel().value();
 	}
 
-	/*
+	/**
 	 * Gets the Channel for {@link ChannelId#EMERGENCY_ACKNOWLEDGE}.
 	 * 
 	 * @return the Channel {@link Channel}
@@ -356,7 +379,7 @@ public interface BatteryFeneconF2b extends Battery, BatteryErrorAcknowledge {
 		this.getEmergencyAcknowledgeChannel().setNextValue(value);
 	}
 
-	/*
+	/**
 	 * Gets the Channel for {@link ChannelId#INTERNAL_VOLTAGE}.
 	 *
 	 * @return the Channel
@@ -366,7 +389,7 @@ public interface BatteryFeneconF2b extends Battery, BatteryErrorAcknowledge {
 	}
 
 	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#SET_INTERNAL_VOLTAGE}.
+	 * Gets the {@link StateChannel} for {@link ChannelId#INTERNAL_VOLTAGE}.
 	 *
 	 * @return the Channel {@link Value}
 	 */
@@ -375,8 +398,8 @@ public interface BatteryFeneconF2b extends Battery, BatteryErrorAcknowledge {
 	}
 
 	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#SET_INTERNAL_VOLTAGE} Channel.
+	 * Internal method to set the 'nextValue' on {@link ChannelId#INTERNAL_VOLTAGE}
+	 * Channel.
 	 *
 	 * @param value the next value
 	 */
@@ -413,6 +436,126 @@ public interface BatteryFeneconF2b extends Battery, BatteryErrorAcknowledge {
 	}
 
 	/**
+	 * Gets the {@link BatteryFeneconF2b.ChannelId#F2B_APPLICATION_MAIN_VERSION} and
+	 * {@link BatteryFeneconF2b.ChannelId#F2B_APPLICATION_SUB_VERSION} as String.
+	 *
+	 * @return full battery version in format "mainVersion.subVersion", e.g. "1.0"
+	 */
+	public default String getF2bApplicationVersion() {
+		return this.getF2bApplicationMainVersion().asString() + "." + this.getF2bApplicationSubVersion().asString();
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#F2B_APPLICATION_MAIN_VERSION}.
+	 *
+	 * @return the Channel {@link Channel}
+	 */
+	public default Channel<Integer> getF2bApplicationMainVersionChannel() {
+		return this.channel(ChannelId.F2B_APPLICATION_MAIN_VERSION);
+	}
+
+	/**
+	 * Gets the {@link Value} of {@link ChannelId#F2B_APPLICATION_MAIN_VERSION}.
+	 *
+	 * @return the {@link Value} of {@link ChannelId#F2B_APPLICATION_MAIN_VERSION}
+	 */
+	public default Value<Integer> getF2bApplicationMainVersion() {
+		return this.getF2bApplicationMainVersionChannel().value();
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#F2B_APPLICATION_SUB_VERSION}.
+	 *
+	 * @return the Channel {@link Channel}
+	 */
+	public default Channel<Integer> getF2bApplicationSubVersionChannel() {
+		return this.channel(ChannelId.F2B_APPLICATION_SUB_VERSION);
+	}
+
+	/**
+	 * Gets the {@link Value} of {@link ChannelId#F2B_APPLICATION_SUB_VERSION}.
+	 *
+	 * @return the {@link Value} of {@link ChannelId#F2B_APPLICATION_SUB_VERSION}
+	 */
+	public default Value<Integer> getF2bApplicationSubVersion() {
+		return this.getF2bApplicationSubVersionChannel().value();
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#F2B_SOFTWARE_VERSION_OUTDATED}.
+	 *
+	 * @return the Channel {@link Channel}
+	 */
+	public default Channel<Boolean> getF2bSoftwareVersionOutdatedChannel() {
+		return this.channel(ChannelId.F2B_SOFTWARE_VERSION_OUTDATED);
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#F2B_SOFTWARE_VERSION_OUTDATED}.
+	 *
+	 * @return the Channel {@link Channel}
+	 */
+	public default Value<Boolean> getF2bSoftwareVersionOutdated() {
+		return this.getF2bSoftwareVersionOutdatedChannel().value();
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#F2B_HARDWARE_VERSION_WRONG}.
+	 *
+	 * @return the Channel {@link Channel}
+	 */
+	public default Channel<Boolean> getF2bHardwareVersionWrongChannel() {
+		return this.channel(ChannelId.F2B_HARDWARE_VERSION_WRONG);
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#F2B_HARDWARE_VERSION_WRONG}.
+	 *
+	 * @return the Channel {@link Channel}
+	 */
+	public default Value<Boolean> getF2bHardwareVersionWrong() {
+		return this.getF2bHardwareVersionWrongChannel().value();
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#F2B_HARDWARE_TYPE}.
+	 *
+	 * @return the Channel {@link Channel}
+	 */
+	public default Channel<F2bHardwareType> getF2bHardwareTypeChannel() {
+		return this.channel(ChannelId.F2B_HARDWARE_TYPE);
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#F2B_HARDWARE_TYPE}.
+	 *
+	 * @return the Channel {@link Channel}
+	 */
+	public default Value<F2bHardwareType> getF2bHardwareType() {
+		return this.getF2bHardwareTypeChannel().value();
+	}
+
+	/**
+	 * Internal method to set the 'nextValue' on
+	 * {@link ChannelId#F2B_SOFTWARE_VERSION_OUTDATED} Channel.
+	 *
+	 * @param value the next value
+	 */
+	public default void _setF2bSoftwareVersionOutdated(boolean value) {
+		this.getF2bSoftwareVersionOutdatedChannel().setNextValue(value);
+	}
+
+	/**
+	 * Internal method to set the 'nextValue' on
+	 * {@link ChannelId#F2B_SOFTWARE_VERSION_OUTDATED} Channel.
+	 *
+	 * @param value the next value
+	 */
+	public default void _setF2bHardwareVersionWrong(boolean value) {
+		this.getF2bHardwareVersionWrongChannel().setNextValue(value);
+	}
+
+	/**
 	 * Sets the High Voltage Contactor to an unlocked state. This method is used to
 	 * indicate whether the HV Contactor switch can be unlocked or not.
 	 * 
@@ -434,7 +577,7 @@ public interface BatteryFeneconF2b extends Battery, BatteryErrorAcknowledge {
 
 	/**
 	 * Gets the device specific implemented applications as callback functions with
-	 * their {@link ChannelIds}. Callback functions will be triggered once the given
+	 * their {@link ChannelId}s. Callback functions will be triggered once the given
 	 * Channel values changed.
 	 * 
 	 * <p>

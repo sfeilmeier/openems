@@ -6,6 +6,8 @@ import io.openems.common.channel.Level;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
+import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.F2bUpdateSubState;
+import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.StateMachine.State;
 import io.openems.edge.battery.fenecon.f2b.cluster.parallel.BatteryFeneconF2bClusterParallel;
 import io.openems.edge.battery.fenecon.f2b.cluster.parallel.BatteryFeneconF2bClusterParallelImpl;
 import io.openems.edge.battery.fenecon.f2b.cluster.serial.BatteryFeneconF2bClusterSerial;
@@ -20,20 +22,24 @@ import io.openems.edge.common.startstop.StartStoppable;
 public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, OpenemsComponent, StartStoppable {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-		TIMEOUT_WAIT_FOR_BATTERIES_STATUS(Doc.of(Level.FAULT) //
+		TIMEOUT_WAIT_FOR_BATTERIES_STATUS(Doc.of(Level.FAULT)//
 				.text("Waiting for batteries status!")), //
-		ONE_BATTERY_NOT_RUNNING(Doc.of(Level.WARNING) //
-				.text("One battery is not running!")),
-		ONE_BATTERY_NOT_STOPPED(Doc.of(Level.FAULT) //
+		ONE_BATTERY_NOT_RUNNING(Doc.of(Level.WARNING)//
+				.text("One battery is not running!")), //
+		ONE_BATTERY_NOT_STOPPED(Doc.of(Level.FAULT)//
 				.text("One battery is not stopped!")), //
-		ONE_BATTERY_STOPPED(Doc.of(Level.WARNING) //
+		ONE_BATTERY_STOPPED(Doc.of(Level.WARNING)//
 				.text("One battery is stopped!")), //
-		ONE_BATTERY_HAS_ERROR(Doc.of(Level.WARNING) //
+		ONE_BATTERY_HAS_ERROR(Doc.of(Level.WARNING)//
 				.text("One battery has error!")), //
-		AT_LEAST_ONE_BATTERY_IN_ERROR(Doc.of(Level.WARNING) //
+		AT_LEAST_ONE_BATTERY_IN_ERROR(Doc.of(Level.FAULT)//
 				.text("At least one battery is in error!")), //
-		ALL_BATTERIES_ARE_IN_FAULT(Doc.of(Level.FAULT) //
+		ALL_BATTERIES_ARE_IN_FAULT(Doc.of(Level.FAULT)//
 				.text("All batteries are in error!")), //
+		FW_UPDATE_ERROR(Doc.of(Level.FAULT)//
+				.text("Firmware update error!")), //
+		F2B_UPDATE_STATE_MACHINE(Doc.of(F2bUpdateSubState.values())//
+				.text("Current State of F2BUpdate State-Machine")), //
 		;
 
 		private final Doc doc;
@@ -50,7 +56,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the Channel for {@link ChannelId#TIMEOUT_WAIT_FOR_BATTERIES_STATUS}.
-	 * 
+	 *
 	 * @return the Channel
 	 */
 	public default StateChannel getTimeoutWaitForBatteriesStatusChannel() {
@@ -60,7 +66,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	/**
 	 * Gets the {@link StateChannel} for
 	 * {@link ChannelId#TIMEOUT_WAIT_FOR_BATTERIES_STATUS}.
-	 * 
+	 *
 	 * @return the Channel {@link Value}
 	 */
 	public default Value<Boolean> getTimeoutWaitForBatteriesStatus() {
@@ -70,7 +76,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	/**
 	 * Internal method to set the 'nextValue' on
 	 * {@link ChannelId#TIMEOUT_WAIT_FOR_BATTERIES_STATUS} Channel.
-	 * 
+	 *
 	 * @param value the next value
 	 */
 	public default void _setTimeoutWaitForBatteriesStatus(Boolean value) {
@@ -79,7 +85,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the Channel for {@link ChannelId#ONE_BATTERY_NOT_RUNNING}.
-	 * 
+	 *
 	 * @return the Channel
 	 */
 	public default StateChannel getOneBatteryNotRunningChannel() {
@@ -88,7 +94,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the {@link StateChannel} for {@link ChannelId#ONE_BATTERY_NOT_RUNNING}.
-	 * 
+	 *
 	 * @return the Channel {@link Value}
 	 */
 	public default Value<Boolean> getOneBatteryNotRunning() {
@@ -98,7 +104,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	/**
 	 * Internal method to set the 'nextValue' on
 	 * {@link ChannelId#ONE_BATTERY_NOT_RUNNING} Channel.
-	 * 
+	 *
 	 * @param value the next value
 	 */
 	public default void _setOneBatteryNotRunning(boolean value) {
@@ -107,7 +113,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the Channel for {@link ChannelId#ONE_BATTERY_NOT_STOPPED}.
-	 * 
+	 *
 	 * @return the Channel
 	 */
 	public default StateChannel getOneBatteryNotStoppedChannel() {
@@ -116,7 +122,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the {@link StateChannel} for {@link ChannelId#ONE_BATTERY_NOT_STOPPED}.
-	 * 
+	 *
 	 * @return the Channel {@link Value}
 	 */
 	public default Value<Boolean> getOneBatteryNotStopped() {
@@ -126,7 +132,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	/**
 	 * Internal method to set the 'nextValue' on
 	 * {@link ChannelId#ONE_BATTERY_NOT_STOPPED} Channel.
-	 * 
+	 *
 	 * @param value the next value
 	 */
 	public default void _setOneBatteryNotStopped(boolean value) {
@@ -135,7 +141,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the Channel for {@link ChannelId#ONE_BATTERY_STOPPED}.
-	 * 
+	 *
 	 * @return the Channel
 	 */
 	public default StateChannel getOneBatteryStoppedChannel() {
@@ -144,7 +150,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the {@link StateChannel} for {@link ChannelId#ONE_BATTERY_STOPPED}.
-	 * 
+	 *
 	 * @return the Channel {@link Value}
 	 */
 	public default Value<Boolean> getOneBatteryStopped() {
@@ -154,7 +160,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	/**
 	 * Internal method to set the 'nextValue' on
 	 * {@link ChannelId#ONE_BATTERY_STOPPED} Channel.
-	 * 
+	 *
 	 * @param value the next value
 	 */
 	public default void _setOneBatteryStopped(boolean value) {
@@ -163,7 +169,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the Channel for {@link ChannelId#ONE_BATTERY_HAS_ERROR}.
-	 * 
+	 *
 	 * @return the Channel
 	 */
 	public default StateChannel getOneBatteryHasErrorChannel() {
@@ -172,7 +178,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the {@link StateChannel} for {@link ChannelId#ONE_BATTERY_HAS_ERROR}.
-	 * 
+	 *
 	 * @return the Channel {@link Value}
 	 */
 	public default Value<Boolean> getOneBatteryHasError() {
@@ -182,7 +188,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	/**
 	 * Internal method to set the 'nextValue' on
 	 * {@link ChannelId#ONE_BATTERY_HAS_ERROR} Channel.
-	 * 
+	 *
 	 * @param value the next value
 	 */
 	public default void _setOneBatteryHasError(boolean value) {
@@ -191,7 +197,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the Channel for {@link ChannelId#AT_LEAST_ONE_BATTERY_IN_ERROR}.
-	 * 
+	 *
 	 * @return the Channel
 	 */
 	public default StateChannel getAtLeastOneBatteryInErrorChannel() {
@@ -201,7 +207,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	/**
 	 * Gets the {@link StateChannel} for
 	 * {@link ChannelId#AT_LEAST_ONE_BATTERY_IN_ERROR}.
-	 * 
+	 *
 	 * @return the Channel {@link Value}
 	 */
 	public default Value<Boolean> getAtLeastOneBatteryInError() {
@@ -211,7 +217,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	/**
 	 * Internal method to set the 'nextValue' on
 	 * {@link ChannelId#AT_LEAST_ONE_BATTERY_IN_ERROR} Channel.
-	 * 
+	 *
 	 * @param value the next value
 	 */
 	public default void _setAtLeastOneBatteryInError(boolean value) {
@@ -220,7 +226,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 
 	/**
 	 * Gets the Channel for {@link ChannelId#ALL_BATTERIES_ARE_IN_FAULT}.
-	 * 
+	 *
 	 * @return the Channel
 	 */
 	public default StateChannel getAllBatteriesAreInFaultChannel() {
@@ -230,7 +236,7 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	/**
 	 * Gets the {@link StateChannel} for
 	 * {@link ChannelId#ALL_BATTERIES_ARE_IN_FAULT}.
-	 * 
+	 *
 	 * @return the Channel {@link Value}
 	 */
 	public default Value<Boolean> getAllBatteriesAreInFault() {
@@ -240,11 +246,30 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	/**
 	 * Internal method to set the 'nextValue' on
 	 * {@link ChannelId#ALL_BATTERIES_ARE_IN_FAULT} Channel.
-	 * 
+	 *
 	 * @param value the next value
 	 */
 	public default void _setAllBatteriesAreInFault(boolean value) {
 		this.getAllBatteriesAreInFaultChannel().setNextValue(value);
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#FW_UPDATE_ERROR}.
+	 *
+	 * @return the Channel
+	 */
+	public default StateChannel getFwUpdateErrorChannel() {
+		return this.channel(ChannelId.FW_UPDATE_ERROR);
+	}
+
+	/**
+	 * Internal method to set the 'nextValue' on {@link ChannelId#FW_UPDATE_ERROR}
+	 * Channel.
+	 *
+	 * @param value the next value
+	 */
+	public default void setFwUpdateError(boolean value) {
+		this.getFwUpdateErrorChannel().setNextValue(value);
 	}
 
 	/**
@@ -302,23 +327,25 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	public List<BatteryFeneconF2b> getNotStoppedBatteries();
 
 	/**
-	 * Are there any faults reported by any battery components?.
-	 *
+	 * Checks if there are any faults reported by any battery components.
+	 * 
 	 * <p>
 	 * Evaluates all Batteries {@link StateChannel}s and returns true if any Channel
 	 * with {@link Level#FAULT} is set.
-	 *
+	 * </p>
+	 * 
 	 * @return true if there is a Fault.
 	 */
 	public boolean getAndUpdateHasAnyBatteryFault();
 
 	/**
-	 * Are there any faults reported by all battery components?.
+	 * Check if any faults reported by all battery components.
 	 *
 	 * <p>
 	 * Evaluates all Batteries {@link StateChannel}s and returns true if any Channel
 	 * with {@link Level#FAULT} is set for all batteries.
-	 *
+	 * </p>
+	 * 
 	 * @return true all batteries are in Fault.
 	 */
 	public boolean getAndUpdateHasAllBatteriesFault();
@@ -355,5 +382,28 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	 * @return true is cluster is {@link BatteryFeneconF2bClusterParallel}
 	 */
 	public boolean isParallelCluster();
+
+	/**
+	 * Internal method to set the {@link ChannelId#STATE_MACHINE} to
+	 * {@link State#F2B_UPDATE}.
+	 */
+	public void _startF2bUpdate();
+
+	/**
+	 * Internal method to check if the F2B update is finished. It checks the
+	 * {@link ChannelId#F2B_UPDATE_STATE_MACHINE} Channel for the StateMachine state
+	 * and returns true if the StateMachine is in State {@link State#F2B_UPDATE} and
+	 * SubState {@link F2bUpdateSubState#FINISHED}.
+	 * 
+	 * @return true if F2B update is finished.
+	 */
+	public boolean isF2bUpdateFinished();
+
+	/**
+	 * Gets the list of batteries which are part of the cluster.
+	 * 
+	 * @return {@link List} of {@link BatteryFeneconF2b}
+	 */
+	public List<BatteryFeneconF2b> getBatteries();
 
 }

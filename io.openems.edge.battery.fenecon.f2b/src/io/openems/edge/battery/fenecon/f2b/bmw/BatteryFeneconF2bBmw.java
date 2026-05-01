@@ -253,8 +253,8 @@ public interface BatteryFeneconF2bBmw
 				.accessMode(AccessMode.READ_ONLY)), //
 
 		// CHGCOND_HVSTO
-		BATTERY_SOC(new DoubleDoc() //
-				.accessMode(AccessMode.READ_ONLY) //
+		BATTERY_SOC(new DoubleDoc()//
+				.accessMode(AccessMode.READ_ONLY)//
 				.<BatteryFeneconF2bBmwImpl>onChannelChange(//
 						BatteryFeneconF2bBmwImpl::updateSoc)), //
 
@@ -311,22 +311,22 @@ public interface BatteryFeneconF2bBmw
 				.accessMode(AccessMode.READ_ONLY)), //
 		CAN_SIGNAL_INVALID_AVL_U_HVSTO(Doc.of(OpenemsType.BOOLEAN)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		GO_RUNNING_STATE_MACHINE(Doc.of(GoRunningSubState.values()) //
+		GO_RUNNING_STATE_MACHINE(Doc.of(GoRunningSubState.values())//
 				.text("Current State of GoRunning State-Machine")), //
-		GO_STOPPED_STATE_MACHINE(Doc.of(OpenemsType.INTEGER) //
+		GO_STOPPED_STATE_MACHINE(Doc.of(OpenemsType.INTEGER)//
 				.text("Current State of GoStopped State-Machine")), //
 		HV_CONTACTORS_STUCK(Doc.of(OpenemsType.BOOLEAN)//
 				.text("Hv Contactors no battery reaction for open/close request")//
 				.persistencePriority(PersistencePriority.HIGH)), //
 		HV_CONTACTORS_OPENED_IN_RUNNING(Doc.of(Level.FAULT)//
 				.text("Hv Contactors opened while battery is in Running State")), //
-		STATE_MACHINE(Doc.of(State.values()) //
+		STATE_MACHINE(Doc.of(State.values())//
 				.text("Current state of State-Machine")), //
-		RUN_FAILED(Doc.of(Level.FAULT) //
+		RUN_FAILED(Doc.of(Level.FAULT)//
 				.text("Running the logic failed")), //
 
 		// BMW specific Balancing
-		SET_BALANCING_TARGET_VOLTAGE(Doc.of(OpenemsType.INTEGER) //
+		SET_BALANCING_TARGET_VOLTAGE(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.MILLIVOLT)//
 				.persistencePriority(PersistencePriority.HIGH)//
 				.accessMode(AccessMode.READ_WRITE)), //
