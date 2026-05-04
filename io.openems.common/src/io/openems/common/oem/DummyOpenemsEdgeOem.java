@@ -141,6 +141,10 @@ public class DummyOpenemsEdgeOem implements OpenemsEdgeOem {
 					.addLink(Language.DE, "https://fenecon.de/fenecon-commercial-92/")
 					.addLink(Language.EN, "https://www.fenecon.com/fenecon-commercial-92/") //
 			) //
+			.put("App.SystemBase.Industrial.Xl.IXL010", AppLink.create() //
+					.addLink(Language.DE, "https://fenecon.de/fenecon-industrial-xl/")
+					.addLink(Language.EN, "https://www.fenecon.com/fenecon-industrial-xl/") //
+			) //
 			.put("App.FENECON.Industrial.L.ILK710", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fenecon-industrial-l/")
 					.addLink(Language.EN, "https://www.fenecon.com/fenecon-industrial-l/") //

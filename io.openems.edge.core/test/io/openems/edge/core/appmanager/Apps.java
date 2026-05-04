@@ -123,6 +123,7 @@ import io.openems.edge.app.pvinverter.SmaPvInverter;
 import io.openems.edge.app.pvinverter.SolarEdgePvInverter;
 import io.openems.edge.app.pvselfconsumption.GridOptimizedCharge;
 import io.openems.edge.app.pvselfconsumption.SelfConsumptionOptimization;
+import io.openems.edge.app.systembase.Ixl010Network;
 import io.openems.edge.app.timeofusetariff.AncillaryCosts;
 import io.openems.edge.app.timeofusetariff.AppLuoxEnergy;
 import io.openems.edge.app.timeofusetariff.AwattarHourly;
@@ -159,6 +160,18 @@ public final class Apps {
 		return Arrays.stream(appFunctions) //
 				.map(f -> f.apply(t)) //
 				.collect(Collectors.toUnmodifiableList());
+	}
+
+	// Integrated Systems
+
+	/**
+	 * Test method for creating a {@link Ixl010Network}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final Ixl010Network feneconIndustrialXlNetwork(AppManagerTestBundle t) {
+		return app(t, Ixl010Network::new, "App.SystemBase.Industrial.Xl.IXL010");
 	}
 
 	// Integrated Systems

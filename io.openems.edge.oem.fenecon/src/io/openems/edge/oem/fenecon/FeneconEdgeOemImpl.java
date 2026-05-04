@@ -366,6 +366,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 					.addLink(Language.EN, "https://www.fenecon.com/fems-relay-board-8-channel-tcp")) //
 
 			// Andere
+			.put("App.SystemBase.Industrial.Xl.IXL010", AppLink.create() //
+					.addLink(Language.DE, "https://fenecon.de/fenecon-industrial-xl/")
+					.addLink(Language.EN, "https://www.fenecon.com/fenecon-industrial-xl/")) //
 			.put("App.System.Fenecon.Home", AppLink.create() //
 					.emptyLink(Language.DE) //
 					.emptyLink(Language.EN) //
