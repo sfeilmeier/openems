@@ -74,4 +74,14 @@ public class EnfasBatteryProtectionDefinition implements BatteryProtectionDefini
 				.addPoint(5, 0.0) //
 				.build();
 	}
+
+	@Override
+	public boolean isChargeAllowed() {
+		return true;
+	}
+
+	@Override
+	public boolean isDischargeAllowed() {
+		return true;
+	}
 }

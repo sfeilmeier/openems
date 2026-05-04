@@ -298,7 +298,7 @@ public interface OpenemsComponent {
 	}
 
 	/**
-	 * Does this OpenEMS Component report any Warnings?
+	 * Does this OpenEMS Component report any Warnings?.
 	 *
 	 * <p>
 	 * Evaluates all {@link StateChannel}s and returns true if any Channel with

@@ -93,4 +93,14 @@ public class BatteryProtectionDefinitionRestricted implements BatteryProtectionD
 	public PolyLine getDischargeSocToPercent() {
 		return PolyLine.empty();
 	}
+
+	@Override
+	public boolean isChargeAllowed() {
+		return true;
+	}
+
+	@Override
+	public boolean isDischargeAllowed() {
+		return true;
+	}
 }

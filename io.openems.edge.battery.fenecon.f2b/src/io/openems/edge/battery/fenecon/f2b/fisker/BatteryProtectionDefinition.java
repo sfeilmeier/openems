@@ -84,4 +84,14 @@ public class BatteryProtectionDefinition implements io.openems.edge.battery.prot
 				.build();
 	}
 
+	@Override
+	public boolean isChargeAllowed() {
+		return true;
+	}
+
+	@Override
+	public boolean isDischargeAllowed() {
+		return true;
+	}
+
 }
