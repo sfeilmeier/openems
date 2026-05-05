@@ -23,10 +23,6 @@ The battery is equipped with an insulation monitoring system. In operational con
 `Contactor Diagnosis`::
 It is integrated to check whether the switching of the `High Voltage Contactor (Main Contactor)` is blocked when the battery is started and stopped.
 
-
---
-
-
 = Battery Cluster
 
 Its aim is to designate a group of batteries or clusters, as well as the battery limitations and regulate the start/stop operation for each group. It is made up of two clusters: `Battery Serial Cluster` and `Battery Parallel Cluster`.
