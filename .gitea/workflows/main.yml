@@ -106,6 +106,15 @@ jobs:
           source: build/target/
           verbose: "true"
 
+      - name: Save build cache
+        if: github.ref == 'refs/heads/develop'
+        uses: actions/cache/save@v5
+        with:
+          key: ${{ runner.os }}-edge-cache_gradle
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+
       - name: Sonarqube Scan
         continue-on-error: true
         env:
@@ -181,6 +190,15 @@ jobs:
           name: jars
           source: build/target/
           verbose: "true"
+
+      - name: Save build cache
+        if: github.ref == 'refs/heads/develop'
+        uses: actions/cache/save@v5
+        with:
+          key: ${{ runner.os }}-backend-cache_gradle
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
 
       - name: Sonarqube Scan
         continue-on-error: true

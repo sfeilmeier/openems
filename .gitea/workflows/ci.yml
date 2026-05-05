@@ -91,10 +91,11 @@ jobs:
           cache: gradle
 
       - name: Restore build cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v5
         with:
-          key: fems_cache_gradle
+          key: ${{ runner.os }}-edge-cache_gradle
           path: |
+            ~/.gradle/caches
             ~/.gradle/wrapper
 
       - name: Gradle Wrapper
@@ -178,10 +179,11 @@ jobs:
           cache: gradle
 
       - name: Restore build cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v5
         with:
-          key: fems_cache_gradle
+          key: ${{ runner.os }}-backend-cache_gradle
           path: |
+            ~/.gradle/caches
             ~/.gradle/wrapper
 
       - name: Gradle Wrapper

@@ -22,9 +22,17 @@ jobs:
           java-version: '21'
           cache: gradle
 
+      - name: Restore build cache
+        uses: actions/cache/restore@v5
+        with:
+          key: ${{ runner.os }}-edge-cache_gradle
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+
       - name: Jacoco Report
         run: |
-          ./gradlew clean testEdge jacocoEdgeReport
+          ./gradlew testEdge jacocoEdgeReport
 
       - name: Scan
         env:
@@ -53,9 +61,17 @@ jobs:
           java-version: '21'
           cache: gradle
 
+      - name: Restore build cache
+        uses: actions/cache/restore@v5
+        with:
+          key: ${{ runner.os }}-backend-cache_gradle
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+
       - name: Jacoco Report
         run: |
-          ./gradlew clean testBackend jacocoBackendReport
+          ./gradlew testBackend jacocoBackendReport
 
       - name: Scan
         env:
