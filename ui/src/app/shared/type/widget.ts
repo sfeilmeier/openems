@@ -93,7 +93,7 @@ export class AdvertWidgets {
 
         let list: AdvertWidget[] = [];
 
-        if (edge.role == Role.OWNER) {
+        if (edge.roleIsAtLeast(Role.INSTALLER)) {
             list.push(
                 {
                     name: "advert-1",
@@ -102,14 +102,6 @@ export class AdvertWidgets {
             );
         };
 
-        if (edge.roleIsAtLeast(Role.INSTALLER)) {
-            list.push(
-                {
-                    name: "advert-2",
-                    title: { languageKey: "ADVERT.2.TITLE" },
-                }
-            );
-        };
         list = ArrayUtils.shuffleArray(list);
         return new AdvertWidgets(list);
     }
