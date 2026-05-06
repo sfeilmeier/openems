@@ -1,0 +1,22 @@
+package io.openems.edge.system.fenecon.industrial.xl.statemachine;
+
+import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
+import io.openems.edge.common.startstop.StartStoppable;
+import io.openems.edge.common.statemachine.StateHandler;
+import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
+
+public class GoStoppedHandler extends StateHandler<State, Context> {
+
+	@Override
+	public State runAndGetNextState(Context context) throws OpenemsNamedException {
+		final var ess = context.ess;
+		if (ess instanceof StartStoppable e) {
+			e.stop();
+			if (context.isStopped()) {
+				return State.STOPPED;
+			}
+		}
+
+		return State.GO_STOPPED;
+	}
+}
