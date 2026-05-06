@@ -16,7 +16,11 @@ import static io.openems.edge.app.integratedsystem.fenecon.industrial.l.FeneconI
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.l.FeneconIndustrialLComponents.modbusToBatteryInverter;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.l.FeneconIndustrialLComponents.power;
 import static io.openems.edge.app.integratedsystem.fenecon.industrial.l.FeneconIndustrialLComponents.system;
+import static java.time.temporal.TemporalAdjusters.firstInMonth;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -32,7 +36,9 @@ import com.google.gson.JsonElement;
 
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.function.ThrowingTriFunction;
+import io.openems.common.jscalendar.JSCalendar;
 import io.openems.common.session.Language;
+import io.openems.common.session.Role;
 import io.openems.edge.app.enums.OptionsFactory;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.l.Ilk710.Property;
 import io.openems.edge.common.component.ComponentManager;
@@ -50,6 +56,7 @@ import io.openems.edge.core.appmanager.OpenemsAppCategory;
 import io.openems.edge.core.appmanager.Type;
 import io.openems.edge.core.appmanager.Type.Parameter.BundleParameter;
 import io.openems.edge.core.appmanager.dependency.Tasks;
+import io.openems.edge.core.appmanager.formly.Exp;
 import io.openems.edge.core.appmanager.formly.JsonFormlyUtil;
 
 @Component(name = "App.FENECON.Industrial.L.ILK710")
@@ -64,21 +71,30 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 		BATTERY_FIRMWARE_VERSION(AppDef.copyOfGeneric(defaultDef(), def -> def //
 				.setTranslatedLabelWithAppPrefix(".batteryFirmwareVersion.label") //
 				.setDefaultValue(BatteryFirmwareVersion.ENFAS_VERSION_1_0_17) //
-				.setField(JsonFormlyUtil::buildSelectFromNameable, (app, property, l, parameter, field) -> {
-					field.setOptions(OptionsFactory.of(BatteryFirmwareVersion.class), l);
-				}))), //
+				.setField(JsonFormlyUtil::buildSelectFromNameable,
+						(app, property, l, parameter, field) -> field
+								.setOptions(OptionsFactory.of(BatteryFirmwareVersion.class), l)))), //
 		IS_SMOKE_DETECTION_INSTALLED(AppDef.copyOfGeneric(defaultDef(), def -> def //
 				.setTranslatedLabelWithAppPrefix(".isSmokeDetectionInstalled.label") //
 				.setDefaultValue(false) //
 				.setField(JsonFormlyUtil::buildCheckbox) //
 				.appendIsAllowedToSee(
-						(app, property, lang, param, user) -> isOpenemsHardwareCM4Max(app.appManagerUtil))))//
-		;
+						(app, property, lang, param, user) -> isOpenemsHardwareCM4Max(app.appManagerUtil)))), //
+		// If new Würth BMS, BMS has to be restarted once a month. By default, it is the
+		// first Sunday of the month at 23:00.
+		HAS_DEFAULT_BMS_RESTART_DATE(AppDef.copyOfGeneric(defaultDef(), def -> def //
+				.setTranslatedLabelWithAppPrefix(".hasDefaultBmsRestartDate.label") //
+				.setDefaultValue(true) //
+				.setField(JsonFormlyUtil::buildCheckbox) //
+				.wrapField((app, property, l, parameter,
+						field) -> field.onlyShowIf((Exp.currentModelValue(BATTERY_FIRMWARE_VERSION)
+								.equal(Exp.staticValue(BatteryFirmwareVersion.WUERTH_VERSION_CURRENT)))))
+				.appendIsAllowedToSee(AppDef.ofLeastRole(Role.ADMIN)))),;
 
-		private final AppDef<? super Ilk710, ? super Property, ? super BundleParameter> def;
+		private final AppDef<? super Ilk710, ? super Property, ? super BundleParameter> appDef;
 
 		Property(AppDef<? super Ilk710, ? super Property, ? super BundleParameter> def) {
-			this.def = def;
+			this.appDef = def;
 		}
 
 		@Override
@@ -88,7 +104,7 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 
 		@Override
 		public AppDef<? super Ilk710, ? super Property, ? super BundleParameter> def() {
-			return this.def;
+			return this.appDef;
 		}
 
 		@Override
@@ -143,10 +159,12 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 			final var batteryFirmwareVersion = this.getEnum(p, BatteryFirmwareVersion.class,
 					Property.BATTERY_FIRMWARE_VERSION);
 			final var isSmokeDetectionInstalled = this.getBoolean(p, Property.IS_SMOKE_DETECTION_INSTALLED);
+			final var hasDefaultBmsRestartDate = this.getBoolean(p, Property.HAS_DEFAULT_BMS_RESTART_DATE);
 
 			final var components = Lists.newArrayList(//
 					power(), //
-					system(t, essClusterId, modbusIdToCoolingUnit, isSmokeDetectionInstalled, NUMBER_OF_BATTERIES), //
+					system(t, essClusterId, modbusIdToCoolingUnit, isSmokeDetectionInstalled, hasDefaultBmsRestartDate,
+							NUMBER_OF_BATTERIES, this::createDefaultRestartTask), //
 					modbusInternal(bundle, t, modbusIdToCoolingUnit), //
 					essCluster(bundle, essClusterId, NUMBER_OF_BATTERIES), //
 					io(ioId, bundle, isNewHardware));
@@ -199,6 +217,34 @@ public class Ilk710 extends AbstractOpenemsAppWithProps<Ilk710, Property, Bundle
 	@Override
 	public AppManagerUtil getAppManagerUtil() {
 		return this.appManagerUtil;
+	}
+
+	/**
+	 * Creates a default restart task for the BMS. By default, it is the first
+	 * Sunday of the month at 23:00. This is necessary for the Würth BMS, which
+	 * needs to be restarted once a month.
+	 *
+	 * @return the JSON representation of the restart task
+	 */
+	public String createDefaultRestartTask() {
+		var clock = componentManager.getClock();
+
+		var startDateTime = LocalDateTime.now(clock) //
+				.with(firstInMonth(java.time.DayOfWeek.SUNDAY)) //
+				.withHour(23) //
+				.truncatedTo(ChronoUnit.HOURS);
+
+		var tasks = JSCalendar.Tasks.<Void>create(clock) //
+				.add(task -> task //
+						.setStart(startDateTime) //
+						.addRecurrenceRule(rr -> rr //
+								.setFrequency(JSCalendar.RecurrenceFrequency.MONTHLY) //
+								.addByDay(new JSCalendar.NDay(DayOfWeek.SUNDAY, 1)) //
+						) //
+				) //
+				.build();
+
+		return tasks.toJson(JSCalendar.VOID_SERIALIZER).toString();
 	}
 
 }
