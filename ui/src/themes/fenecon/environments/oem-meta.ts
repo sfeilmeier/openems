@@ -16,6 +16,11 @@ export const OemMeta: BaseMeta = {
             ALPITRONIC: null,
             MENNEKES: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Mennekes.4You.png",
         },
+        HEAT: {
+            ASKOMA: {
+                HEATING_ELEMENT: "https://docs.fenecon.de/de/_images/other/zz/fems/heizstab/askoma/heat-element-askoma.png",
+            },
+        },
     },
     /** Maps to file-proxy for fenecon docs */
     links: {
