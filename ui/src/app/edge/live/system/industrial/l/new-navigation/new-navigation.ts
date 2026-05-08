@@ -5,7 +5,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { CommonUiModule } from "src/app/shared/common-ui.module";
 import { DataService } from "src/app/shared/components/shared/dataservice";
-import { AbstractFormlyComponent, OeFormlyField, OeFormlyView } from "src/app/shared/components/shared/oe-formly-component";
+import { AbstractFormlyComponent, OeFormlyField, OeFormlyView, ViewContext } from "src/app/shared/components/shared/oe-formly-component";
 import { ChannelAddress, Edge, EdgeConfig, EdgePermission, Websocket } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
 import { Role } from "src/app/shared/type/role";
@@ -56,7 +56,7 @@ export class SystemIndustrialLHomeComponent extends AbstractFormlyComponent {
                 type: "info-line",
                 name: translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.NOTE"),
                 icon: { name: "information-outline", color: "primary", size: "small" },
-                style: "font-size: small",
+                style: { name: { fontSize: "small" } },
             },
             {
                 type: "buttons-from-form-control-line",
@@ -124,11 +124,10 @@ export class SystemIndustrialLHomeComponent extends AbstractFormlyComponent {
         return Promise.resolve([this.startStopChannel]);
     }
 
-    protected override generateView(config: EdgeConfig, role: Role, translate: TranslateService): OeFormlyView {
-        AssertionUtils.assertIsDefined(config);
-        const edge = this.service.currentEdge();
-        this.component = config.getFirstComponentByFactoryId(SystemIndustrialLHomeComponent.FACTORY_ID);
-        return SystemIndustrialLHomeComponent.getFormlyGeneralView(this.translate, edge, this);
+    protected override generateView(viewContext: ViewContext): OeFormlyView {
+        AssertionUtils.assertIsDefined(viewContext.config);
+        this.component = viewContext.config.getFirstComponentByFactoryId(SystemIndustrialLHomeComponent.FACTORY_ID);
+        return SystemIndustrialLHomeComponent.getFormlyGeneralView(this.translate, viewContext.edge, this);
     }
 
     protected override getFormGroup(): FormGroup {
