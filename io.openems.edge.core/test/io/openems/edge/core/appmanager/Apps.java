@@ -89,6 +89,7 @@ import io.openems.edge.app.integratedsystem.fenecon.industrial.l.Ilk710;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk010;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk011;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk110;
+import io.openems.edge.app.integratedsystem.fenecon.industrial.xl.Ixl010;
 import io.openems.edge.app.loadcontrol.ManualRelayControl;
 import io.openems.edge.app.loadcontrol.ThresholdControl;
 import io.openems.edge.app.meter.CarloGavazziMeter;
@@ -163,6 +164,16 @@ public final class Apps {
 	}
 
 	// Integrated Systems
+
+	/**
+	 * Test method for creating a {@link Ixl010}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final Ixl010 feneconIndustrialXl(AppManagerTestBundle t) {
+		return app(t, Ixl010::new, "App.FENECON.Industrial.Xl.IXL010");
+	}
 
 	/**
 	 * Test method for creating a {@link Ixl010Network}.
@@ -284,6 +295,16 @@ public final class Apps {
 	 */
 	public static final FeneconCommercial92ClusterSlave feneconCommercial92ClusterSlave(AppManagerTestBundle t) {
 		return app(t, FeneconCommercial92ClusterSlave::new, "App.FENECON.Commercial.92.ClusterSlave");
+	}
+
+	/**
+	 * Test method for creating a {@link IXL010}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final Ixl010 feneconIndustrialXlIxl010(AppManagerTestBundle t) {
+		return app(t, Ixl010::new, "App.FENECON.Industrial.Xl.IXL010");
 	}
 
 	/**
