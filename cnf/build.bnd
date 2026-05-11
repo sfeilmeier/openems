@@ -1,7 +1,7 @@
 # Configure Repositories
 -plugin.6.Central: \
 	aQute.bnd.repository.maven.pom.provider.BndPomRepository; \
-		releaseUrls=https://repo.maven.apache.org/maven2/; \
+		releaseUrl=https://maven.istein.dev/maven2/; \
 		snapshotUrl=https://central.sonatype.com/repository/maven-snapshots/; \
 		pom=${build}/pom.xml; \
 		readOnly=true; \
