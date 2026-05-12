@@ -83,6 +83,8 @@ fun Project.registerAppJarBuildTask(
 val javaSource = providers.gradleProperty("java_source").get().toInt()
 val javaTarget = providers.gradleProperty("java_target").get().toInt()
 val isCI = providers.environmentVariable("CI").isPresent
+val maxConcurrentBuilds = providers.environmentVariable("CI_MAX_CONCURRENT_BUILDS").orNull?.toIntOrNull() ?: 1
+val cores = Runtime.getRuntime().availableProcessors()
 
 java {
 	toolchain {
@@ -91,7 +93,7 @@ java {
 }
 
 if (isCI) {
-	println("CI environment detected - suppressing all compiler warnings")
+	println("CI environment detected - suppressing all compiler warnings. Max concurrent builds: $maxConcurrentBuilds")
 }
 
 /*
@@ -126,7 +128,7 @@ subprojects {
 
 	tasks.withType<Test>().configureEach {
 		useJUnitPlatform()
-		maxParallelForks = (Runtime.getRuntime().availableProcessors() * 0.66).toInt().coerceAtLeast(1)
+		maxParallelForks = (cores / maxConcurrentBuilds * 0.8).toInt().coerceAtLeast(1)
 		reports {
 			html.required.set(false)
 			junitXml.required.set(false)

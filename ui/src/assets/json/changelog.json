@@ -1,5 +1,18 @@
 [
   {
+    "version": "2026.5.1",
+    "entries": {
+      "de": [
+        "Allgemeine technische Verbesserungen",
+        "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest (E-Mobility)</a>: Migration der Widgets für Stromspeichersystem, Heizstab und Schwellwertsteuerung; Fehlerbehebung bei der Verarbeitung negativer Strompreise"
+      ],
+      "en": [
+        "General technical improvements",
+        "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest (E-Mobility)</a>: Migration of widgets for energy storage system, heating rod and threshold control; bug fix for processing negative electricity prices"
+      ]
+    }
+  },
+  {
     "version": "2026.4.3",
     "entries": {
       "de": [

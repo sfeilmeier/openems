@@ -13,6 +13,7 @@ env:
   MAVEN_OPTS: -Dmaven.repo.local=/cache/maven
   CI_COMMIT_BRANCH: ${{ github.head_ref || github.ref_name }}
   CI_GROUP: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  CI_MAX_CONCURRENT_BUILDS: ${{ vars.CI_MAX_CONCURRENT_BUILDS }}
 
 jobs:
   setup:
