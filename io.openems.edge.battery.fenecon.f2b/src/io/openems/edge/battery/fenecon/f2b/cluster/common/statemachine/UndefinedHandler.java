@@ -14,8 +14,8 @@ public class UndefinedHandler extends StateHandler<State, Context> {
 	public State runAndGetNextState(Context context) {
 		final var cluster = context.getParent();
 		if (context.batteries.isEmpty()) {
-			context.logInfo(this.log, "Battery list is empty, not found any battery to start");
-			return State.ERROR;
+			context.logInfo(this.log, "Battery list is empty; no battery found to start or stop");
+			return State.UNDEFINED;
 		}
 
 		if (cluster.getAndUpdateHasAnyBatteryFault() && cluster.isSerialCluster()) {

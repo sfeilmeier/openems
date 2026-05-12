@@ -30,7 +30,7 @@ public class ErrorHandler extends StateHandler<State, Context> {
 			return State.ERROR;
 		}
 
-		if (!cluster.hasFaults() && !cluster.getAndUpdateHasAnyBatteryFault()) {
+		if (!cluster.getAndUpdateHasAnyBatteryFault()) {
 			cluster._setOneBatteryNotRunning(false);
 			return State.GO_STOPPED;
 		}

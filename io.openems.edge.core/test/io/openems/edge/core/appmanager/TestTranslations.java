@@ -62,6 +62,8 @@ public class TestTranslations {
 					.addProperty("GRID_CODE", "VDE_4105") //
 					.build()));
 			this.apps.add(new TestTranslation(Apps.feneconCommercial92ClusterMaster(t), true, new JsonObject()));
+			this.apps.add(new TestTranslation(Apps.feneconIndustrialXl(t), true, new JsonObject()));
+			this.apps.add(new TestTranslation(Apps.feneconIndustrialXlNetwork(t), true, new JsonObject()));
 			this.apps.add(new TestTranslation(Apps.feneconCommercial92ClusterSlave(t), true, JsonUtils.buildJsonObject() //
 					.addProperty("SAFETY_COUNTRY", "GERMANY") //
 					.addProperty("GRID_CODE", "VDE_4105") //

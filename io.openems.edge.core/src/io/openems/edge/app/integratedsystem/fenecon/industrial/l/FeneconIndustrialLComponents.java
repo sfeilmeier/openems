@@ -4,6 +4,7 @@ import static io.openems.common.utils.JsonUtils.toJsonArray;
 import static io.openems.edge.core.appmanager.TranslationUtil.translate;
 
 import java.util.ResourceBundle;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import com.google.gson.JsonPrimitive;
@@ -290,7 +291,10 @@ public final class FeneconIndustrialLComponents {
 	 * @param essClusterId              the ess cluster id
 	 * @param coolingUnitModbusId       the modbus id of the cooling unit
 	 * @param isSmokeDetectionInstalled boolean whether smoke detection is installed
+	 * @param hasDefaultBmsRestartDate  has default bms restart date?
 	 * @param numberOfBatteries         the number of batteries
+	 * @param createDefaultRestartTask  supplier for the default restart task for
+	 *                                  the BMS
 	 * @return the {@link Component}
 	 */
 	public static Component system(//
@@ -298,7 +302,9 @@ public final class FeneconIndustrialLComponents {
 			final String essClusterId, //
 			final String coolingUnitModbusId, //
 			final boolean isSmokeDetectionInstalled, //
-			final int numberOfBatteries) {
+			final boolean hasDefaultBmsRestartDate, //
+			final int numberOfBatteries, //
+			final Supplier<String> createDefaultRestartTask) {
 		return new Component("system0", "System Industrial L (ILK710)", "System.Fenecon.Industrial.L", //
 				JsonUtils.buildJsonObject() //
 						.addProperty("enabled", true) //
@@ -309,6 +315,8 @@ public final class FeneconIndustrialLComponents {
 						.addProperty("coolingUnitModbusUnitId", 1) //
 						.addProperty("coolingUnitMode", "ENABLED") //
 						.addProperty("isSmokeDetectionInstalled", isSmokeDetectionInstalled) //
+						.onlyIf(t != ConfigurationTarget.VALIDATE && hasDefaultBmsRestartDate,
+								b -> b.addProperty("restartTasks", createDefaultRestartTask.get())) //
 						.onlyIf(t == ConfigurationTarget.ADD, b -> b.addProperty("startStop", "STOP")) //
 						.add("battery.ids", IntStream.range(0, numberOfBatteries) //
 								.mapToObj(i -> new JsonPrimitive("battery" + (i + 1))) //

@@ -20,11 +20,11 @@ import io.openems.edge.common.startstop.StartStoppable;
 public interface BatteryFeneconF2bClusterParallel
 		extends BatteryFeneconF2bCluster, BatteryFeneconF2b, Battery, OpenemsComponent, EventHandler, StartStoppable {
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-		STATE_MACHINE(Doc.of(State.values()) //
+		STATE_MACHINE(Doc.of(State.values())//
 				.text("Current State of State-Machine")), //
-		RUN_FAILED(Doc.of(Level.FAULT) //
+		RUN_FAILED(Doc.of(Level.FAULT)//
 				.text("Running the Logic failed")), //
-		VOLTAGE_DIFFERENCE_HIGH(Doc.of(Level.WARNING) //
+		VOLTAGE_DIFFERENCE_HIGH(Doc.of(Level.WARNING)//
 				.text("Voltage difference between cluster strings higher than 4V!")), //
 		;
 
@@ -47,6 +47,15 @@ public interface BatteryFeneconF2bClusterParallel
 	 */
 	public default Channel<State> getStateMachineChannel() {
 		return this.channel(ChannelId.STATE_MACHINE);
+	}
+
+	/**
+	 * Gets the value for {@link ChannelId#STATE_MACHINE}.
+	 *
+	 * @return the value
+	 */
+	public default Value<State> getStateMachine() {
+		return this.getStateMachineChannel().value();
 	}
 
 	/**

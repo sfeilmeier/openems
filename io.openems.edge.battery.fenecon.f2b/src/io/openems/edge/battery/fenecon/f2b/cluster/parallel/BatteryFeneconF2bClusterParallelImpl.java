@@ -334,4 +334,18 @@ public class BatteryFeneconF2bClusterParallelImpl extends AbstractBatteryFenecon
 		return this.batteries;
 	}
 
+	@Override
+	public List<BatteryFeneconF2b> getBatteries() {
+		return this.batteries;
+	}
+
+	@Override
+	public void _startF2bUpdate() {
+		this._setStateMachine(State.F2B_UPDATE);
+	}
+
+	@Override
+	public boolean isF2bUpdateFinished() {
+		return this.getStateMachine().get() == State.STOPPED;
+	}
 }
