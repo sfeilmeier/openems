@@ -441,7 +441,5 @@ export namespace NavigationConstants {
                 : [];
         }
         export function HISTORY(translate: TranslateService, children: NavigationTree[] = []) { return new NavigationTree("history", { baseString: "history" }, { name: "stats-chart-outline", color: "warning" }, translate.instant("GENERAL.HISTORY"), "label", children, null); };
-
-
     }
 }
