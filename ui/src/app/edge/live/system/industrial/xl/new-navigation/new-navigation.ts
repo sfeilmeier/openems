@@ -116,6 +116,7 @@ export class SystemIndustrialXlHomeComponent extends AbstractFormlyComponent {
             helpKey: "REDIRECT.SYSTEM.INDUSTRIAL_XL_MANUAL",
             lines: lines,
             component: self.component!,
+            edge,
         };
     }
 
