@@ -52,8 +52,8 @@ export namespace SharedControllerHeat {
     ...(isAskoma ? [{
         type: "channel-line" as const,
         name: translate.instant("HEAT.HOME.CHOSEN_MODE"),
-        channel: component.id + "/_PropertyMode",
-        converter: (value: number | null) => convertAskomaMode(translate, value),
+        channel: component.id + "/Mode",
+        converter: (value: number | null) => CONVERT_CHANNEL_MODE_TO_LABEL(translate)(value),
     }] : [])]);
 
     export const getMyPVInfoLine = (translate: TranslateService): OeFormlyView["lines"] => ([{
@@ -86,19 +86,19 @@ export namespace SharedControllerHeat {
 
     export const getHeatModeButtons = (translate: TranslateService): ButtonLabel[] => [
         {
-            value: Mode.FAST_HEAT,
+            value: PropertyMode.FAST_HEAT,
             name: translate.instant("HEAT.SETTINGS.MODE.FAST_HEAT.TITLE"),
             description: translate.instant("HEAT.SETTINGS.MODE.FAST_HEAT.DESCRIPTION"),
             icon: { color: "success", name: "oe-consumption", size: "medium" },
         },
         {
-            value: Mode.SURPLUS,
+            value: PropertyMode.SURPLUS,
             name: translate.instant("HEAT.SETTINGS.MODE.SURPLUS.TITLE"),
             description: translate.instant("HEAT.SETTINGS.MODE.SURPLUS.DESCRIPTION"),
             icon: { color: "primary", name: "oe-production", size: "medium" },
         },
         {
-            value: Mode.OFF,
+            value: PropertyMode.OFF,
             name: translate.instant("HEAT.SETTINGS.MODE.OFF.TITLE"),
         },
     ];
@@ -114,7 +114,11 @@ export namespace SharedControllerHeat {
             new ChannelAddress(component.id, "Status"),
             new ChannelAddress(component.id, "ActivePower"),
             new ChannelAddress(component.id, "Temperature"),
-            ...(component.factoryId === "Heat.Askoma" ? [new ChannelAddress(component.id, "_PropertyMode")] : []),
+            ...(component.factoryId === "Heat.Askoma" ? [
+                new ChannelAddress(component.id, "Mode"),
+                new ChannelAddress(component.id, "_PropertyMode"),
+            ]
+                : []),
         ];
     }
 
@@ -176,11 +180,29 @@ export const CONVERT_TO_MODE_LABEL = (translate: TranslateService) => {
     };
 };
 
-function convertAskomaMode(translate: TranslateService, value: number | null): string {
-    return CONVERT_TO_MODE_LABEL(translate)(value as unknown as string | null);
+export const CONVERT_CHANNEL_MODE_TO_LABEL = (translate: TranslateService) => {
+    return (value: number | null): string => {
+        switch (value) {
+            case ChannelMode.FAST_HEAT:
+                return translate.instant("HEAT.SETTINGS.MODE.FAST_HEAT.TITLE");
+            case ChannelMode.SURPLUS:
+                return translate.instant("HEAT.SETTINGS.MODE.SURPLUS.TITLE");
+            case ChannelMode.OFF:
+                return translate.instant("HEAT.SETTINGS.MODE.OFF.TITLE");
+            default:
+                return Converter.HIDE_VALUE(value);
+        }
+    };
+};
+
+export enum ChannelMode {
+    UNDEFINED = -1, //
+    OFF = 1, //
+    FAST_HEAT = 2, //
+    SURPLUS = 3, //
 }
 
-export enum Mode {
+export enum PropertyMode {
     OFF = "OFF", //
     FAST_HEAT = "FAST_HEAT", //
     SURPLUS = "SURPLUS", //

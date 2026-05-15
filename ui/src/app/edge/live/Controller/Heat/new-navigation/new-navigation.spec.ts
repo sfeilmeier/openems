@@ -99,6 +99,7 @@ describe("ControllerHeatHomeComponent", () => {
             new ChannelAddress("heat0", "Status"),
             new ChannelAddress("heat0", "ActivePower"),
             new ChannelAddress("heat0", "Temperature"),
+            new ChannelAddress("heat0", "Mode"),
             new ChannelAddress("heat0", "_PropertyMode"),
         ]);
     });

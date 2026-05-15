@@ -5,7 +5,7 @@ import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { AbstractFormlyComponent, OeFormlyView } from "src/app/shared/components/shared/oe-formly-component";
 import { ChannelAddress, CurrentData, Edge, EdgeConfig } from "src/app/shared/shared";
-import { Mode, SharedControllerHeat } from "../shared/shared";
+import { PropertyMode, SharedControllerHeat } from "../shared/shared";
 
 @Component({
     selector: "heat-modal",
@@ -46,7 +46,7 @@ export class ControllerHeatModalComponent extends AbstractFormlyComponent {
     }
 
     protected override onCurrentData(currentData: CurrentData): void {
-        this.setFormControlSafelyWithChannel<Mode>(
+        this.setFormControlSafelyWithChannel<PropertyMode>(
             this.form,
             ControllerHeatModalComponent.formControlName,
             currentData,

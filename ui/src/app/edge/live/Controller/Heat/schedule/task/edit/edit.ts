@@ -1,5 +1,4 @@
 import { Component, model } from "@angular/core";
-import { Mode } from "src/app/edge/live/Controller/Heat/settings/settings";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { CommonUiModule } from "src/app/shared/common-ui.module";
 import { ComponentsBaseModule } from "src/app/shared/components/components.module";
@@ -8,7 +7,7 @@ import { TaskFormComponent } from "src/app/shared/components/schedule/form/task-
 import { JsCalendarEditTaskComponent } from "src/app/shared/components/schedule/js-calendar-edit-task";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { TSignalValue } from "src/app/shared/type/utility";
-import { CONVERT_TO_MODE_LABEL } from "../../../shared/shared";
+import {CONVERT_TO_MODE_LABEL, PropertyMode} from "../../../shared/shared";
 import { HeatManualPayload } from "../../js-calendar-utils";
 
 @Component({
@@ -32,7 +31,7 @@ export class HeatEditTaskComponent extends JsCalendarEditTaskComponent {
 
     public allowedPeriods = model<TSignalValue<TaskFormComponent["allowedPeriods"]>>(["daily", "weekly", "monthly"]);
     public payload = model<HeatManualPayload>(new HeatManualPayload());
-    protected modeOptions: { value: Mode, label: string }[] = Object.values(Mode).map(mode => ({
+    protected modeOptions: { value: PropertyMode, label: string }[] = Object.values(PropertyMode).map(mode => ({
         value: mode,
         label: CONVERT_TO_MODE_LABEL(this.translate)(mode),
     }));

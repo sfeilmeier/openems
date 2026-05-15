@@ -11,7 +11,7 @@ import { AbstractFormlyComponent, OeFormlyView, ViewContext } from "src/app/shar
 import { ChannelAddress, CurrentData, Edge, EdgeConfig } from "src/app/shared/shared";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { RouteService } from "../../../../../shared/service/route.service";
-import { SharedControllerHeat } from "../shared/shared";
+import {PropertyMode, SharedControllerHeat} from "../shared/shared";
 
 @Component({
     templateUrl: "../../../../../shared/components/formly/formly-field-modal/template.html",
@@ -64,7 +64,7 @@ export class ControllerHeatSettingsComponent extends AbstractFormlyComponent {
             return;
         }
 
-        this.setFormControlSafelyWithChannel<Mode>(this.form, ControllerHeatSettingsComponent.FORM_CONTROL_NAME, currentData,
+        this.setFormControlSafelyWithChannel<PropertyMode>(this.form, ControllerHeatSettingsComponent.FORM_CONTROL_NAME, currentData,
             new ChannelAddress(this.component.id, "_PropertyMode")
         );
     }
@@ -93,10 +93,4 @@ export class ControllerHeatSettingsComponent extends AbstractFormlyComponent {
     protected isAskomaReadOnly(): boolean {
         return this.component?.factoryId === "Heat.Askoma" && this.component.properties?.readOnly === true;
     }
-}
-
-export enum Mode {
-    OFF = "OFF",
-    FAST_HEAT = "FAST_HEAT",
-    SURPLUS = "SURPLUS",
 }
