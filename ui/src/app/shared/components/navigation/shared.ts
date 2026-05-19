@@ -430,6 +430,7 @@ export namespace NavigationConstants {
         "Heat.Askoma",
         "Heat.MyPv.AcThor9s",
         "Controller.Io.HeatPump.SgReady",
+        "Weather.OpenMeteo",
     ];
 
     export namespace CommonNodes {

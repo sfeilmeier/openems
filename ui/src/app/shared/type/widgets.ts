@@ -5,6 +5,7 @@ import { SharedGrid } from "src/app/edge/live/common/grid/shared/shared";
 import { SharedProduction } from "src/app/edge/live/common/production/shared/shared";
 import { SharedSelfConsumption } from "src/app/edge/live/common/selfconsumption/shared/shared";
 import { SharedStorage } from "src/app/edge/live/common/storage/shared/shared";
+import { SharedWeather } from "src/app/edge/live/common/weather/shared/shared";
 import { SharedControllerChannelThreshold } from "src/app/edge/live/Controller/Channelthreshold/shared/shared";
 import { ControllerEvseSingleShared } from "src/app/edge/live/Controller/Evse/shared/shared";
 import { SharedControllerHeat } from "src/app/edge/live/Controller/Heat/shared/shared";
@@ -49,6 +50,7 @@ export class Widgets {
     }
 
     public static getCommonNavigationTree(edge: Edge, clazz: TEnumKeys<typeof WidgetClass>, translate: TranslateService, config: EdgeConfig): ConstructorParameters<typeof NavigationTree> | null {
+
         switch (clazz) {
             case "Common_Autarchy":
                 return SharedAutarchy.getNavigationTree(translate);
@@ -74,6 +76,8 @@ export class Widgets {
         }
 
         switch (widget.name) {
+            case "Weather.OpenMeteo":
+                return SharedWeather.getNavigationTree(translate, component);
             case "Controller.IO.HeatingElement":
                 return SharedControllerIoHeatingElement.getNavigationTree(translate, component);
             case "System.Fenecon.Industrial.L":
