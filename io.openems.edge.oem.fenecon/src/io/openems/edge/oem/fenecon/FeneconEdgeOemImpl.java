@@ -426,6 +426,10 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 					.emptyLink(Language.DE) //
 					.emptyLink(Language.EN) //
 			) //
+			.put("App.Hardware.MasterBox2v0", AppLink.create() //
+					.emptyLink(Language.DE) //
+					.emptyLink(Language.EN) //
+			) //
 			.put("App.Evse.ElectricVehicle.Generic", AppLink.create() //
 					.emptyLink(Language.DE) //
 					.emptyLink(Language.EN) //
@@ -493,6 +497,10 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 					.emptyLink(Language.EN) //
 			) //
 			.put("App.OpenemsHardware.CM4S.Gen2", AppLink.create() //
+					.emptyLink(Language.DE) //
+					.emptyLink(Language.EN) //
+			) //
+			.put("App.OpenemsHardware.CM4S.Gen3", AppLink.create() //
 					.emptyLink(Language.DE) //
 					.emptyLink(Language.EN) //
 			) //
