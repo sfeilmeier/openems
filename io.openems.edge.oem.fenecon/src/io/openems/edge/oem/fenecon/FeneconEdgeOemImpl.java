@@ -22,6 +22,9 @@ import io.openems.common.utils.StringUtils;
 @Component
 public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 
+	public static final String HTTPS_WWW_FENECON_COM_FEMS_POWER_TO_HEAT = "https://www.fenecon.com/fems-power-to-heat";
+	public static final String HTTPS_FENECON_DE_FEMS_POWER_TO_HEAT = "https://fenecon.de/fems-power-to-heat";
+
 	private static final Logger LOG = LoggerFactory.getLogger(FeneconEdgeOemImpl.class);
 
 	private final String manufacturerEmsSerialNumber;
@@ -279,20 +282,23 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 
 			// Wärmemanagement
 			.put("App.Heat.HeatPump", AppLink.create() //
-					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat")
-					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat")) //
+					.addLink(Language.DE, HTTPS_FENECON_DE_FEMS_POWER_TO_HEAT)
+					.addLink(Language.EN, HTTPS_WWW_FENECON_COM_FEMS_POWER_TO_HEAT)) //
 			.put("App.Heat.CHP", AppLink.create() //
-					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat")
-					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat")) //
+					.addLink(Language.DE, HTTPS_FENECON_DE_FEMS_POWER_TO_HEAT)
+					.addLink(Language.EN, HTTPS_WWW_FENECON_COM_FEMS_POWER_TO_HEAT)) //
 			.put("App.Heat.HeatingElement", AppLink.create() //
-					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat")
-					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat")) //
+					.addLink(Language.DE, HTTPS_FENECON_DE_FEMS_POWER_TO_HEAT)
+					.addLink(Language.EN, HTTPS_WWW_FENECON_COM_FEMS_POWER_TO_HEAT)) //
 			.put("App.Heat.Askoma", AppLink.create() //
-					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat")
-					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat")) //
+					.addLink(Language.DE, HTTPS_FENECON_DE_FEMS_POWER_TO_HEAT)
+					.addLink(Language.EN, HTTPS_WWW_FENECON_COM_FEMS_POWER_TO_HEAT)) //
 			.put("App.Heat.Askoma.ReadOnly", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat-lesend")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat-reading")) //
+			.put("App.Heat.MyPv", AppLink.create() //
+					.addLink(Language.DE, HTTPS_FENECON_DE_FEMS_POWER_TO_HEAT)
+					.addLink(Language.EN, HTTPS_WWW_FENECON_COM_FEMS_POWER_TO_HEAT)) //
 			.put("App.Heat.MyPv.ReadOnly", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-power-to-heat-lesend")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-power-to-heat-reading")) //
