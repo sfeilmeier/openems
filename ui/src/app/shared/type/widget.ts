@@ -50,6 +50,7 @@ export enum WidgetFactory {
     "Evcs.Cluster.PeakShaving",
     "Evcs.Cluster.SelfConsumption",
     "Heat.Askoma",
+    "Heat.MyPv",
     "Heat.MyPv.AcThor9s",
     "System.Fenecon.Industrial.S",
     "System.Fenecon.Industrial.L",

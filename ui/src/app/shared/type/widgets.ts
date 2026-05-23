@@ -88,6 +88,8 @@ export class Widgets {
                 return SharedSystemIndustrialXl.getNavigationTree(translate, widget.componentId);
             case "Heat.Askoma":
                 return SharedControllerHeat.getNavigationTree(translate, component);
+            case "Heat.MyPv":
+                return SharedControllerHeat.getNavigationTree(translate, component);
             case "Heat.MyPv.AcThor9s":
                 return SharedControllerHeat.getNavigationTree(translate, component);
             case "Scheduler.JSCalendar":

@@ -20,6 +20,9 @@ export const OemMeta: BaseMeta = {
             ASKOMA: {
                 HEATING_ELEMENT: "https://docs.fenecon.de/de/_images/other/zz/fems/heizstab/askoma/heat-element-askoma.png",
             },
+            MYPV: {
+                HEATING_ELEMENT: "https://docs.fenecon.de/de/_images/other/zz/fems/heizstab/mypv/Heizstab_MyPV.png",
+            },
         },
     },
     /** Maps to file-proxy for fenecon docs */
