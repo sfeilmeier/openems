@@ -62,7 +62,7 @@ export class MarketingAnnualReviewComponent implements OnInit {
         }
         this.img = {
             url: "assets/img/annual-review.svg",
-            width: this.service.isSmartphoneResolution ? 70 : 40,
+            width: this.service.getIsSmartphoneResolution() ? 70 : 40,
         };
     }
 

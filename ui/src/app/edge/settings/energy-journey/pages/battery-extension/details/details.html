@@ -1,7 +1,7 @@
 @if (tableData) {
   <ion-card>
     <ion-card-content>
-      @if (!isSmartPhoneResolution) {
+      @if (!isSmartphoneResolution) {
         <ion-grid class="desktop-view">
           <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5); color: var(--ion-color-text)">
             <ion-col>
@@ -62,7 +62,7 @@
             </ion-row>
           </ion-grid>
         } @else {
-          <ion-grid class="smartPhone-view">
+          <ion-grid class="smartphone-view">
             <ion-row style="background-color: rgba(var(--ion-color-primary-rgb), 0.5)">
               <ion-col>
                 {{"SETTINGS.ENERGY_JOURNEY.SAVINGS_LABEL" | translate}}

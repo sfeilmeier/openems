@@ -7,6 +7,7 @@ import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
 import { NgxSpinnerService, Spinner } from "ngx-spinner";
 import { BehaviorSubject, Subject } from "rxjs";
 import { take } from "rxjs/operators";
+import { PlatFormService } from "src/app/platform.service";
 import { environment } from "src/environments";
 import { ChartConstants } from "../components/chart/chart.constants";
 import { Edge } from "../components/edge/edge";
@@ -55,13 +56,11 @@ export class Service extends AbstractService {
      */
     public deviceHeight: number = 0;
     public deviceWidth: number = 0;
-    public isSmartphoneResolution: boolean = false;
-    public isSmartphoneResolutionSubject: Subject<boolean> = new Subject<boolean>();
     public activeQueryData: string;
 
     /**
      * Holds the currenty selected Page Title.
-     */
+    */
     public currentPageTitle: string;
 
     /**
@@ -70,19 +69,19 @@ export class Service extends AbstractService {
     public websocket: Websocket = null;
     /**
      * Holds the currently selected Edge.
-     */
+    */
     public readonly currentEdge: WritableSignal<Edge> = signal(null);
 
     /**
      * Holds references of Edge-IDs (=key) to Edge objects (=value)
-     */
+    */
     public readonly metadata: BehaviorSubject<{
         user: User, edges: { [edgeId: string]: Edge }
     }> = new BehaviorSubject(null);
 
     /**
      * Holds the current Activated Route
-     */
+    */
     private currentActivatedRoute: ActivatedRoute | null = null;
 
     private queryEnergyQueue: {
@@ -90,6 +89,9 @@ export class Service extends AbstractService {
     }[] = [];
     private queryEnergyTimeout: any = null;
     private injector = inject(Injector);
+
+    /** @deprecated */
+    private isSmartphoneResolution = signal<boolean>(this.computeIsSmartphoneResolution());
 
     constructor(
         private router: Router,
@@ -114,6 +116,10 @@ export class Service extends AbstractService {
         translate.onLangChange.subscribe((event: LangChangeEvent) => {
             registerLocaleData(Language.getLocale(Language.getByKey(event.lang)?.key ?? Language.DEFAULT.key));
         });
+    }
+
+    public getIsSmartphoneResolution() {
+        return this.isSmartphoneResolution();
     }
 
     public setLang(language: Language) {
@@ -468,5 +474,10 @@ export class Service extends AbstractService {
         }
 
         return advertWidgets.list;
+    }
+    private computeIsSmartphoneResolution() {
+        const platFormService = this.injector.get(PlatFormService);
+        const device = platFormService.getDevice();
+        return device.isSmartphone();
     }
 }

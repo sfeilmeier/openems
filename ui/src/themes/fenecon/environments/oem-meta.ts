@@ -16,6 +16,10 @@ export const OemMeta: BaseMeta = {
             ALPITRONIC: null,
             MENNEKES: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Mennekes.4You.png",
         },
+        LOGO: {
+            DARK: "assets/img/fenecon-logo-white.svg",
+            LIGHT: "assets/img/fenecon-logo-darkblue.svg",
+        },
         HEAT: {
             ASKOMA: {
                 HEATING_ELEMENT: "https://docs.fenecon.de/de/_images/other/zz/fems/heizstab/askoma/heat-element-askoma.png",
@@ -214,5 +218,8 @@ export const OemMeta: BaseMeta = {
             WARNING: "icons/status/warning.svg",
             INFO: "icons/status/info.svg",
         },
+        BATTERY_EXTENSION: "icons/battery-extension.svg",
+        ENERGY_JOURNEY: "icons/energy-journey.svg",
+        WRAP_UP: "icons/wrap-up.svg",
     },
 };

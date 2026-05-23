@@ -1,9 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
-import { SharedAutarchy } from "src/app/edge/live/common/autarchy/shared/shared";
 import { SharedConsumption } from "src/app/edge/live/common/consumption/shared/shared";
 import { SharedGrid } from "src/app/edge/live/common/grid/shared/shared";
 import { SharedProduction } from "src/app/edge/live/common/production/shared/shared";
-import { SharedSelfConsumption } from "src/app/edge/live/common/selfconsumption/shared/shared";
 import { SharedStorage } from "src/app/edge/live/common/storage/shared/shared";
 import { SharedWeather } from "src/app/edge/live/common/weather/shared/shared";
 import { SharedControllerChannelThreshold } from "src/app/edge/live/Controller/Channelthreshold/shared/shared";
@@ -14,6 +12,7 @@ import { SharedControllerIoHeatpump } from "src/app/edge/live/Controller/Io/Heat
 import { SharedSchedulerJsCalendar } from "src/app/edge/live/scheduler/js-calendar/shared-scheduler-js-calendar";
 import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/shared-system-industrial-l";
 import { SharedSystemIndustrialXl } from "src/app/edge/live/system/industrial/xl/shared-system-industrial-xl";
+import { SharedControllerIoHeatingRoom } from "../../edge/live/Controller/Io/HeatingRoom/shared/shared";
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { NavigationTree } from "../components/navigation/shared";
@@ -22,6 +21,11 @@ import { TEnumKeys } from "./utility";
 import { Widget, WidgetClass, WidgetFactory, WidgetNature } from "./widget";
 
 export class Widgets {
+
+    private static readonly GROUPED_FACTORIES: Partial<Record<Widget["name"], (translate: TranslateService, componentIds: Widget["componentId"][], config: EdgeConfig) => ConstructorParameters<typeof NavigationTree> | null>> = {
+        "Controller.IO.Heating.Room": SharedControllerIoHeatingRoom.getGroupedNavigationTree,
+    };
+
     /**
      * Names of Widgets.
      */
@@ -52,12 +56,8 @@ export class Widgets {
     public static getCommonNavigationTree(edge: Edge, clazz: TEnumKeys<typeof WidgetClass>, translate: TranslateService, config: EdgeConfig): ConstructorParameters<typeof NavigationTree> | null {
 
         switch (clazz) {
-            case "Common_Autarchy":
-                return SharedAutarchy.getNavigationTree(translate);
             case "Grid":
                 return SharedGrid.getNavigationTree(edge, config, translate);
-            case "Common_Selfconsumption":
-                return SharedSelfConsumption.getNavigationTree(translate);
             case "Consumption":
                 return SharedConsumption.getNavigationTree(edge, config, translate);
             case "Common_Production":
@@ -101,6 +101,16 @@ export class Widgets {
             default:
                 return null;
         }
+    }
+
+    public static getGroupedControllerNavigationTree(widgetName: Widget["name"], translate: TranslateService, componentIds: Widget["componentId"][], config: EdgeConfig,
+    ): ConstructorParameters<typeof NavigationTree> | null {
+        const groupedFactory = Widgets.GROUPED_FACTORIES[widgetName];
+        if (groupedFactory == null) {
+            return null;
+        }
+
+        return groupedFactory(translate, componentIds, config);
     }
 
     public static parseWidgets(edge: Edge, config: EdgeConfig): Widgets {
@@ -182,5 +192,42 @@ export class Widgets {
             return w1.componentId.localeCompare(w1.componentId);
         });
         return new Widgets(list, classes);
+    }
+
+    public static getControllerNavigationTrees(edge: Edge, translate: TranslateService, config: EdgeConfig): ConstructorParameters<typeof NavigationTree>[] {
+        const widgets = Widgets.parseWidgets(edge, config).list ?? [];
+        const navigationTrees: ConstructorParameters<typeof NavigationTree>[] = [];
+        const groupedComponentIdsByWidgetName: Partial<Record<Widget["name"], Widget["componentId"][]>> = {};
+
+        for (const widget of widgets) {
+            const groupedFactory = Widgets.GROUPED_FACTORIES[widget.name];
+            if (groupedFactory != null) {
+                groupedComponentIdsByWidgetName[widget.name] ??= [];
+                const groupedComponentIds = groupedComponentIdsByWidgetName[widget.name];
+                if (groupedComponentIds != null) {
+                    groupedComponentIds.push(widget.componentId);
+                }
+                continue;
+            }
+
+            const navigationTree = Widgets.getControllerNavigationTree(edge, widget, translate, config);
+            if (navigationTree != null) {
+                navigationTrees.push(navigationTree);
+            }
+        }
+
+        for (const [groupedWidgetName, componentIds] of Object.entries(groupedComponentIdsByWidgetName) as [Widget["name"], Widget["componentId"][]][]) {
+            const groupedNavigationTree = Widgets.getGroupedControllerNavigationTree(
+                groupedWidgetName,
+                translate,
+                componentIds,
+                config,
+            );
+            if (groupedNavigationTree != null) {
+                navigationTrees.push(groupedNavigationTree);
+            }
+        }
+
+        return navigationTrees;
     }
 }

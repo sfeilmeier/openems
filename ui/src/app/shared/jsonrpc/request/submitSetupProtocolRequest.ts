@@ -2,6 +2,7 @@
 import { TranslateService } from "@ngx-translate/core";
 import { Category } from "src/app/edge/installation/shared/category";
 
+import { States } from "../../ngrx-store/states";
 import { Utils } from "../../shared";
 import { JsonrpcRequest } from "../base";
 
@@ -116,6 +117,7 @@ export type SetupProtocol = {
 export class SubmitSetupProtocolRequest extends JsonrpcRequest {
 
     private static METHOD: string = "submitSetupProtocol";
+    protected override requiredState: States = States.EDGE_SELECTED;
 
     private constructor(
         public override readonly params: {
