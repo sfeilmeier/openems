@@ -4,6 +4,7 @@ import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Commercial50Gen3Ibn } from "../../installation-systems/commercial/commercial-50/commercial-50-gen3";
+import { Home10FeneconIbn } from "../../installation-systems/home/home-10";
 import { Home10Gen2FeneconIbn } from "../../installation-systems/home/home-10-gen2";
 import { Home15Gen2FeneconIbn } from "../../installation-systems/home/home-15-gen2";
 import { Home20FeneconIbn } from "../../installation-systems/home/home-20";
@@ -17,7 +18,7 @@ import { Home30FeneconIbn } from "../../installation-systems/home/home-30";
 export class ConfigurationMpptSelectionComponent implements OnInit {
     private static readonly SELECTOR = "configuration-mppt-selection";
 
-    @Input() public ibn: Home20FeneconIbn | Home30FeneconIbn | Home10Gen2FeneconIbn | Home15Gen2FeneconIbn | Commercial50Gen3Ibn;
+    @Input() public ibn: Home20FeneconIbn | Home30FeneconIbn | Home10Gen2FeneconIbn | Home10FeneconIbn | Home15Gen2FeneconIbn | Commercial50Gen3Ibn;
     @Output() public nextViewEvent = new EventEmitter();
     @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
 
