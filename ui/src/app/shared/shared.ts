@@ -356,12 +356,13 @@ export namespace Currency {
      * @param currency The currency enum.
      * @returns the Currencylabel
      */
-    export function getCurrencyLabelByCurrency(currency: string): Label {
+    export function getCurrencyLabelByCurrency(currency: string | null): Label {
         switch (currency) {
             case "SEK":
                 return Label.OERE_PER_KWH;
             case "CHF":
                 return Label.RAPPEN_PER_KWH;
+            case null:
             default:
                 return Label.CENT_PER_KWH;
         }

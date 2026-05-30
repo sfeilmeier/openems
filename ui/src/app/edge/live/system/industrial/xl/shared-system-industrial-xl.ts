@@ -5,7 +5,7 @@ import { NavigationConstants, NavigationTree } from "../../../../../shared/compo
 export namespace SharedSystemIndustrialXl {
 
     export function getNavigationTree(translate: TranslateService, componentId: EdgeConfig.Component["id"]): ConstructorParameters<typeof NavigationTree> | null {
-        return new NavigationTree(componentId + "/industrial-xl", { baseString: componentId + "/industrial-xl" }, { name: "battery-full-outline", color: "medium" }, "FENECON Industrial Xl", "label", [
+        return new NavigationTree(componentId + "/industrial-xl", { baseString: componentId + "/industrial-xl" }, { name: "battery-full-outline", color: "medium" }, "FENECON Industrial XL", "label", [
             NavigationConstants.CommonNodes.INFO(translate, { source: componentId }),
         ], null).toConstructorParams();
     }

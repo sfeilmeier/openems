@@ -42,6 +42,7 @@ import { Controller_Symmetric_TimeSlot_PeakShavingComponent } from "./Controller
 import { DelayedSellToGridComponent } from "./delayedselltogrid/delayedselltogrid.component";
 import { DelayedSellToGridModalComponent } from "./delayedselltogrid/modal/modal.component";
 import { EnergymonitorModule } from "./energymonitor/energymonitor.module";
+import { FenaComponent } from "./fena/fena.component";
 import { InfoComponent } from "./info/info.component";
 import { Io_Api_DigitalInputComponent } from "./Io/Api_DigitalInput/Io_Api_DigitalInput";
 import { Io_Api_DigitalInput_ModalComponent } from "./Io/Api_DigitalInput/modal/modal.component";
@@ -51,6 +52,7 @@ import { ChartComponent as EvcsClusterApiChartComponent } from "./Multiple/evcs-
 import { ModalComponent as EvcsClusterApiModalComponent } from "./Multiple/evcs-api-cluster/modal/modal";
 import { NavigationInfoComponent } from "./navigation-info/navigation-info";
 import { SystemModule } from "./system/system.module";
+
 import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage-info";
 
 @NgModule({
@@ -78,6 +80,7 @@ import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage
         ControllerIoHeatpumpModule,
         EdgeOfflineModule,
         EnergymonitorModule,
+        FenaComponent,
         WeatherModule,
         ModalModule,
         SharedModule,

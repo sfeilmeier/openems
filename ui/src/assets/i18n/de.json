@@ -649,6 +649,7 @@
         "CURRENT_VALUE": "Aktueller Wert",
         "DARK": "Dunkel",
         "DATE_FORMAT": "dd.MM.yyyy",
+        "DETAILS": "Details",
         "DIGITAL_INPUTS": "Digitaleingänge",
         "DIRECT_CONSUMPTION": "Direktverbrauch",
         "DISCHARGE": "Entladung",
@@ -669,6 +670,7 @@
         "GRID": "Netz",
         "GRID_BUY": "Netzbezug",
         "GRID_BUY_ADVANCED": "Bezug",
+        "GRID_BUY_PRICE": "Strompreis",
         "GRID_SELL": "Netzeinspeisung",
         "GRID_SELL_ADVANCED": "Einspeisung",
         "HEAT_PUMP": "Wärmepumpe",
@@ -1256,6 +1258,7 @@
         "FENECON_ENERGY_MANAGEMENT_SYSTEM": "FENECON Energiemanagementsystem",
         "GENERAL_SETTINGS": "Allgemeine Einstellungen",
         "GROUPS": {
+            "FIX_DIGITAL_OUTPUT": "Manuelle Relaissteuerung",
             "HEATING_ROOM": "Heizung"
         },
         "HECKERT_ENERGY_MANAGEMENT_SYSTEM": "Heckert Solar Symphon-E Energiemanagementsystem",
