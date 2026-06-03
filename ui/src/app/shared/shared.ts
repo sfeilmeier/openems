@@ -134,7 +134,7 @@ export class EdgePermission {
             { name: translate.instant("SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS"), callback: () => router.navigate(["batteryExtension", "electricityPriceChoice"], { relativeTo: route }) },
             "assets/img/icon/energy-journey-batteryExtension.webp",
         ),
-        ...(ObjectUtils.getKeySafely(edge?.settings, EdgeSettings.ANNUAL_REVIEW_2025) !== null
+        ...(ObjectUtils.getValueByKeySafely(edge?.settings, EdgeSettings.ANNUAL_REVIEW_2025) !== null
             ? [new EnergyJourneyWidget(
                 translate.instant("POPOVER.ANNUAL_REVIEW.HEADER_TEXT"),
                 translate.instant("POPOVER.ANNUAL_REVIEW.TITLE"),
