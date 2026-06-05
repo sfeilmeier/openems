@@ -1,16 +1,16 @@
 {
-  "ADVERT": {
-    "1": {
-      "TITLE": "Ihr stabiler Partner in dynamischen Zeiten",
-      "TEXT": "Partner of your Energy Journey: Unter diesem Motto präsentiert sich FENECON auch in diesem Jahr wieder auf der The smarter E Europe in München, Europas größter Messeallianz für die Energiewirtschaft. Einen ersten Ausblick auf unsere Neuheiten und wie Sie einen Termin mit uns am Stand vereinbaren können, finden Sie hier:",
-      "LINK_TEXT": "Termin & Ticket sichern",
-      "LINK": "https://www.fenecon.de/ees26"
-    },
-    "2": {
-      "TITLE": "Geben Sie dem Home 6, 10 & 15 Ihre Stimme!",
-      "TEXT": "Bis Anfang Mai können Sie für unseren Home 6, 10 & 15 abstimmen: Bei der diesjährigen Leserwahl des Gebäudetechnik-Branchenportals haustec.de. 37 Produkte und 34 Marken kämpfen in 9 Kategorien um die Auszeichnung als bestes Produkt des Jahres 2026.",
-      "LINK_TEXT": "Jetzt abstimmen!",
-      "LINK": "https://www.haustec.de/award/award-2026"
+    "ADVERT": {
+        "1": {
+            "TITLE": "Dein stabiler Partner in dynamischen Zeiten",
+            "TEXT": "Partner of your Energy Journey: Unter diesem Motto präsentiert sich FENECON auch in diesem Jahr wieder auf der The smarter E Europe in München, Europas größter Messeallianz für die Energiewirtschaft. Einen ersten Ausblick auf unsere Neuheiten und wie du einen Termin mit uns am Stand vereinbaren kannst, findest du hier:",
+            "LINK_TEXT": "Termin & Ticket sichern",
+            "LINK": "https://www.fenecon.de/ees26"
+        },
+        "2": {
+            "TITLE": "Gib dem Home 6, 10 & 15 deine Stimme!",
+            "TEXT": "Bis Anfang Mai kannst du für unseren Home 6, 10 & 15 abstimmen: Bei der diesjährigen Leserwahl des Gebäudetechnik-Branchenportals haustec.de. 37 Produkte und 34 Marken kämpfen in 9 Kategorien um die Auszeichnung als bestes Produkt des Jahres 2026.",
+            "LINK_TEXT": "Jetzt abstimmen!",
+            "LINK": "https://www.haustec.de/award/award-2026"
+        }
     }
-  }
 }
