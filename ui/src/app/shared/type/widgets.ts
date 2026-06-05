@@ -5,7 +5,6 @@ import { SharedProduction } from "src/app/edge/live/common/production/shared/sha
 import { SharedStorage } from "src/app/edge/live/common/storage/shared/shared";
 import { SharedWeather } from "src/app/edge/live/common/weather/shared/shared";
 import { SharedControllerChannelThreshold } from "src/app/edge/live/Controller/Channelthreshold/shared/shared";
-import { SharedControllerEssTimeOfUseTariff } from "src/app/edge/live/Controller/Ess/TimeOfUseTariff/shared/shared";
 import { ControllerEvseSingleShared } from "src/app/edge/live/Controller/Evse/shared/shared";
 import { SharedControllerHeat } from "src/app/edge/live/Controller/Heat/shared/shared";
 import { SharedControllerIoFixDigitalOutput } from "src/app/edge/live/Controller/Io/FixDigitalOutput/shared/shared";
@@ -145,11 +144,6 @@ export class Widgets {
                 return SharedSystemIndustrialXl.getNavigationTree(
                     translate,
                     widget.componentId,
-                );
-            case "Controller.Ess.Time-Of-Use-Tariff":
-                return SharedControllerEssTimeOfUseTariff.getNavigationTree(
-                    translate,
-                    component,
                 );
             case "Heat.Askoma":
                 return SharedControllerHeat.getNavigationTree(
