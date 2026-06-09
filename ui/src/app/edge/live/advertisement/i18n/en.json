@@ -1,16 +1,16 @@
 {
-  "ADVERT": {
-    "1": {
-      "TITLE": "Your reliable partner in dynamic times",
-      "TEXT": "Partner of your energy journey: Under this motto, FENECON will once again be exhibiting at The smarter E Europe in Munich – Europe’s largest trade fair alliance for the energy industry. Discover a first preview of our latest innovations and find out how to book a meeting with us at our booth here:",
-      "LINK_TEXT": "Secure appointment & ticket",
-      "LINK": "https://www.fenecon.com/ees26"
-    },
-    "2": {
-      "TITLE": "Vote for the FENECON Home 6, 10 & 15!",
-      "TEXT": "You can vote for our Home 6, 10 & 15 until early May in this year’s reader poll hosted by the building technology industry portal haustec.de. 37 products and 34 brands are competing in 9 categories for the title of Best Product of 2026.",
-      "LINK_TEXT": "Vote now!",
-      "LINK": "https://www.haustec.de/award/award-2026"
+    "ADVERT": {
+        "1": {
+            "TITLE": "Exclusive information for FENECON partners",
+            "TEXT": "Subscribe to the partner newsletter and receive exclusive updates about FENECON: upcoming dates, events, technical innovations, new products, special promotions, and important company news—delivered directly to your inbox.",
+            "LINK_TEXT": "Subscribe to newsletter",
+            "LINK": "https://www.fenecon.de/newsletter-partner-news"
+        },
+        "2": {
+            "TITLE": "High fuel prices are a thing of the past",
+            "TEXT": "Rising petrol and diesel prices have become a major cost factor in everyday life. Our latest practical tip shows how you can use e-mobility together with your FENECON system to gain greater independence and significantly reduce your mobility costs.",
+            "LINK_TEXT": "Read practical tip",
+            "LINK": "https://www.fenecon.de/blog/praxistipps-9/e-mobilitat-mit-fenecon-333"
+        }
     }
-  }
 }

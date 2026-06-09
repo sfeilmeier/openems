@@ -103,6 +103,15 @@ export class AdvertWidgets {
             );
         };
 
+        if (edge.roleIsAtLeast(Role.OWNER)) {
+            list.push(
+                {
+                    name: "advert-2",
+                    title: { languageKey: "ADVERT.2.TITLE" },
+                }
+            );
+        };
+
         list = ArrayUtils.shuffleArray(list);
         return new AdvertWidgets(list);
     }
