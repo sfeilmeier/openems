@@ -31,9 +31,7 @@ interface FenaMessage {
     providers: [{ provide: DataService, useClass: LiveDataService }],
 })
 export class FenaComponent {
-    /**
-     * Tracks both the selected edge and its config.
-     */
+    /** Tracks both the selected edge and its config. */
     protected readonly edgeAndConfig = computed(() => {
         const edge = this.service.currentEdge();
 
@@ -56,7 +54,10 @@ export class FenaComponent {
 
                 return from(this.fetchSchedulerMessages(edge, config)).pipe(
                     catchError((error) => {
-                        console.warn("Error fetching scheduler messages:", error);
+                        console.warn(
+                            "Error fetching scheduler messages:",
+                            error,
+                        );
                         return of<FenaMessage[]>([]);
                     }),
                 );
@@ -74,14 +75,23 @@ export class FenaComponent {
     private readonly route = inject(ActivatedRoute);
 
     constructor() {
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
-            for (const { lang, translation, shouldMerge } of translations) {
-                this.translate.setTranslation(lang, translation, shouldMerge);
-            }
-        });
+        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then(
+            (translations) => {
+                for (const { lang, translation, shouldMerge } of translations) {
+                    this.translate.setTranslation(
+                        lang,
+                        translation,
+                        shouldMerge,
+                    );
+                }
+            },
+        );
     }
 
-    private async fetchSchedulerMessages(edge: Edge, config: EdgeConfig): Promise<FenaMessage[]> {
+    private async fetchSchedulerMessages(
+        edge: Edge,
+        config: EdgeConfig,
+    ): Promise<FenaMessage[]> {
         const messages: (FenaMessage | null)[] = [];
 
         const energyScheduler = new EnergySchedulerV2(config);
@@ -92,6 +102,8 @@ export class FenaComponent {
 
         if (predictionData.length !== 0) {
             messages.push(
+                this.getAutarchyMessage(), //
+                this.getEvseSmartEventMessage(),
                 this.getMinMaxGridPriceMessage(edge, config, predictionData),
             );
         }
@@ -99,7 +111,51 @@ export class FenaComponent {
         return messages.filter((e) => e !== null);
     }
 
-    private getMinMaxGridPriceMessage(edge: Edge, config: EdgeConfig, predictionData: GetSchedule.Response["result"]["data"]): FenaMessage | null {
+    private getAutarchyMessage(): FenaMessage | null {
+        return {
+            text: "Heute bist du autark - nur mit Sonne und Stromspeicher!",
+        };
+    }
+
+    private getEvseSmartEventMessage(): FenaMessage | null {
+        const locale = Language.getCurrentLanguage().dateFnsLocale;
+        const baseDate = new Date();
+        const date = new Date();
+        date.setHours(7, 0, 0, 0);
+        if (date <= baseDate) {
+            date.setDate(date.getDate() + 1);
+        }
+        const formattedTime = formatRelative(date, baseDate, { locale });
+
+        return {
+            text:
+                "Dein E-Auto wird jetzt so günstig wie möglich beladen, damit Du " +
+                formattedTime +
+                " Uhr losfahren kannst",
+            actions: [
+                {
+                    title: "Smart Event anpassen",
+                    callback: () =>
+                        this.router.navigate(["evse", "ctrlEvseSingle0"], {
+                            relativeTo: this.route,
+                        }),
+                },
+                {
+                    title: "Heute nicht laden",
+                    callback: () =>
+                        this.router.navigate(["evse", "ctrlEvseSingle0"], {
+                            relativeTo: this.route,
+                        }),
+                },
+            ],
+        };
+    }
+
+    private getMinMaxGridPriceMessage(
+        edge: Edge,
+        config: EdgeConfig,
+        predictionData: GetSchedule.Response["result"]["data"],
+    ): FenaMessage | null {
         let min: { timestamp: string; value: number } | null = null;
         let max: { timestamp: string; value: number } | null = null;
         for (const d of predictionData) {
@@ -120,27 +176,39 @@ export class FenaComponent {
 
         const locale = Language.getCurrentLanguage().dateFnsLocale;
         const meta = config.getComponentSafely("_meta");
-        const currency = config.getPropertyFromComponent<string>(meta, "currency");
-        const currencyLabel: Currency.Label = Currency.getCurrencyLabelByCurrency(currency);
+        const currency = config.getPropertyFromComponent<string>(
+            meta,
+            "currency",
+        );
+        const currencyLabel: Currency.Label =
+            Currency.getCurrencyLabelByCurrency(currency);
         const converter = Converter.CURRENCY_PER_KWH(currencyLabel);
 
         const baseDate = new Date();
-        const formattedMaxTime = formatRelative(max.timestamp, baseDate, { locale });
-        const formattedMinTime = formatRelative(min.timestamp, baseDate, { locale });
+        const formattedMaxTime = formatRelative(max.timestamp, baseDate, {
+            locale,
+        });
+        const formattedMinTime = formatRelative(min.timestamp, baseDate, {
+            locale,
+        });
         const messageText =
             this.translate.instant("FENA.ELECTRICITY_PRICES_SUMMARY", {
                 maxPrice: converter(max.value),
                 maxTime: formattedMaxTime,
                 minPrice: converter(min.value),
                 minTime: formattedMinTime,
-            }) ?? `Deine Strompreise:<br/>Der höchste ist <strong>${converter(max.value)}</strong> ${formattedMaxTime} Uhr.<br/>Der niedrigste ist <strong>${converter(min.value)}</strong> ${formattedMinTime} Uhr.`;
+            }) ??
+            `Deine Strompreise:<br/>Der höchste ist <strong>${converter(max.value)}</strong> ${formattedMaxTime} Uhr.<br/>Der niedrigste ist <strong>${converter(min.value)}</strong> ${formattedMinTime} Uhr.`;
 
         return {
             text: messageText,
             actions: [
                 {
                     title: this.translate.instant("GENERAL.DETAILS"),
-                    callback: () => this.router.navigate(["common", "grid"], { relativeTo: this.route }),
+                    callback: () =>
+                        this.router.navigate(["common", "grid"], {
+                            relativeTo: this.route,
+                        }),
                 },
             ],
         };
