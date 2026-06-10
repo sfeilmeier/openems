@@ -4,6 +4,8 @@ import { environment } from "src/environments";
 
 import { NavigationId, NavigationTree } from "../components/navigation/shared";
 import { EdgeConfig } from "../shared";
+import { Language } from "../type/language";
+
 import { Role } from "../type/role";
 import { AuthenticateResponse } from "./response/authenticateResponse";
 
@@ -38,6 +40,11 @@ export class User {
         public settings: Partial<{ [k in UserSettings]: number | boolean | string | string[] }>,
     ) { }
 
+    // TODO this should eventually replace `language: string | null`
+    get asLanguage(): Language | null {
+        return Language.getByKey(this.language);
+    }
+
     /**
      * Converts the authenticate response user to a real user
      *
@@ -57,7 +64,6 @@ export class User {
      * @returns the theme if existing, else null
      */
     public getThemeFromSettings(): Theme | null {
-
         if (environment.backend === "OpenEMS Edge") {
             return localStorage.getItem("THEME") as Theme ?? null;
         }

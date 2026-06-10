@@ -3,28 +3,18 @@
     <ion-grid>
       <ion-row class="full_width ion-justify-content-center ion-padding-top">
         <ion-col sizeLg="6" sizeMd="10" sizeSm="12">
-          <oe-flat-widget [formGroup]="formGroup"
-            [title]="'SETTINGS.ENERGY_JOURNEY.ELECTRICITY_PRICE_SELECTION_TITLE' | translate"
-            [icon]="{name: 'analytics'}" style="cursor: none;">
-            <oe-flat-widget-line leftColumnWidth="100"
-              [name]="'SETTINGS.ENERGY_JOURNEY.ELECTRICITY_PRICE_TEXT' | translate">
-            </oe-flat-widget-line>
+          <oe-flat-widget [formGroup]="formGroup" [title]="'SETTINGS.ENERGY_JOURNEY.ELECTRICITY_PRICE_SELECTION_TITLE' | translate" [icon]="{ name: 'analytics' }" style="cursor: none">
+            <oe-flat-widget-line leftColumnWidth="100" [name]="'SETTINGS.ENERGY_JOURNEY.DESCRIPTION' | translate"></oe-flat-widget-line>
             <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
-            <oe-flat-widget-line style="font-weight: bolder;" leftColumnWidth="100"
-              [name]="'SETTINGS.ENERGY_JOURNEY.ELECTRICITY_PRICE_VALUE_TEXT' | translate">
-            </oe-flat-widget-line>
+            <oe-flat-widget-line style="font-weight: bolder" leftColumnWidth="100" [name]="'SETTINGS.ENERGY_JOURNEY.ELECTRICITY_PRICE_VALUE_TEXT' | translate"></oe-flat-widget-line>
             <oe-flat-widget-line-divider></oe-flat-widget-line-divider>
             <form [formGroup]="formGroup">
               <ion-item class="ion-no-padding" lines="inset">
                 <ion-label>Cent/kWh</ion-label>
-                <ion-input [placeholder]="DEFAULT_ELECTRICITY_PRICE" type="number" formControlName="electricityPrice"
-                  value="{{formGroup.controls['electricityPrice'].value}}" style="text-align: end;">
-                </ion-input>
+                <ion-input [placeholder]="DEFAULT_ELECTRICITY_PRICE" type="number" formControlName="electricityPrice" value="{{ formGroup.controls['electricityPrice'].value }}" style="text-align: end"></ion-input>
               </ion-item>
               <ion-item [disabled]="!formGroup.controls['electricityPrice'].dirty" class="ion-float-right" lines="none">
-                <oe-flat-button
-                  [link]="{routeRelative: route, text: '../', queryParams: {electricityPrice: this.formGroup?.controls['electricityPrice'].value}}"
-                  color="primary">
+                <oe-flat-button [link]="{ routeRelative: route, text: '../', queryParams: { electricityPrice: this.formGroup?.controls['electricityPrice'].value } }" color="primary">
                   <span translate>SETTINGS.ENERGY_JOURNEY.START_ANALYSIS</span>
                 </oe-flat-button>
               </ion-item>
@@ -34,5 +24,4 @@
       </ion-row>
     </ion-grid>
   }
-
 </ion-content>

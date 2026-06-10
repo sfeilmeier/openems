@@ -13,6 +13,7 @@ env:
   MAVEN_OPTS: -Dmaven.repo.local=/cache/maven
   CI_COMMIT_BRANCH: ${{ github.head_ref || github.ref_name }}
   CI_GROUP: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  CI_MAX_CONCURRENT_BUILDS: ${{ vars.CI_MAX_CONCURRENT_BUILDS }}
 
 jobs:
   setup:
@@ -346,6 +347,7 @@ jobs:
     env:
       DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
       DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
+      DEPLOY_SCRIPTS: "${{ vars.DEV_SERVER_SCRIPTS }}/fems-ui"
     steps:
       - uses: actions/checkout@v6
         with:
@@ -408,12 +410,12 @@ jobs:
             echo "Deploying to ${{ env.DEPLOY_DIR }}/fems-ui-backend.tar.gz"
             rsync --mkpath /artifacts/fems-ui-edge.tar.gz ${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_DIR }}/fems-ui-edge.tar.gz
             rsync --mkpath /artifacts/fems-ui-backend.tar.gz ${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_DIR }}/fems-ui-backend.tar.gz
-            ssh ${{ env.DEPLOY_HOST }} "/opt/gitea/develop/fems-ui/update-nginx.sh ${{ env.CI_COMMIT_BRANCH }}"
+            ssh ${{ env.DEPLOY_HOST }} "${{ env.DEPLOY_SCRIPTS }}/update-nginx.sh ${{ env.CI_COMMIT_BRANCH }}"
           else
             echo "Delete from ${{ env.DEPLOY_DIR }}/fems-ui-edge.tar.gz"
             echo "Delete from ${{ env.DEPLOY_DIR }}/fems-ui-backend.tar.gz"
             ssh ${{ env.DEPLOY_HOST }} "rm ${{ env.DEPLOY_DIR }}/fems-ui-*.tar.gz || true"
-            ssh ${{ env.DEPLOY_HOST }} "/opt/gitea/develop/fems-ui/update-nginx.sh ${{ env.CI_COMMIT_BRANCH }} --cleanup || true"
+            ssh ${{ env.DEPLOY_HOST }} "${{ env.DEPLOY_SCRIPTS }}/update-nginx.sh ${{ env.CI_COMMIT_BRANCH }} --cleanup || true"
           fi
 
       - name: Update Environment

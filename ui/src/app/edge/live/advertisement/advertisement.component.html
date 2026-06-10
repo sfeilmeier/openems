@@ -1,10 +1,9 @@
 <ion-card>
-  <ion-item lines="full" color="light" style="--background: var(--ion-background-color-card-header)"
-    class="ion-text-center">
+  <ion-item lines="full" color="light" style="--background: var(--ion-background-color-card-header)" class="ion-text-center">
     <ion-icon name="oe-megafon" size="normal"></ion-icon>
     @if (title) {
       <ion-label class="white-space-initial" style="text-align: center">
-        {{title.rawTitle ?? (title.languageKey | translate)}}
+        {{ title.rawTitle ?? (title.languageKey | translate) }}
       </ion-label>
     }
     @if (enableBtn) {
@@ -22,13 +21,18 @@
       </ion-buttons>
     }
   </ion-item>
-  <ion-card-content style="color: var(--ion-card-content);" class="ion-no-padding">
+  <ion-card-content style="color: var(--ion-card-content)" class="ion-no-padding">
     <swiper-container autoplay="true" speed="5000" #swiper (swiperslidechange)="setSlideConfig()">
       @for (widget of advertWidgets; track widget) {
         @switch (widget.name) {
-          @case ('advert-1') {
+          @case ("advert-1") {
             <swiper-slide>
               <advert-1></advert-1>
+            </swiper-slide>
+          }
+          @case ("advert-2") {
+            <swiper-slide>
+              <advert-2></advert-2>
             </swiper-slide>
           }
         }

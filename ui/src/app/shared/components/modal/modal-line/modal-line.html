@@ -9,8 +9,8 @@
           }
         </td>
         <!-- Value of Parameter on the right side -->
-        @if (displayValue) {
-          <td [style.width]="(leftColumnWidth ?? 50)  + '%'" class="align_right">
+        @if (displayValue && !hideValue) {
+          <td [style.width]="(leftColumnWidth ?? 50)  + '%'" class="align_right"  [style]="lineStyle?.value ?? {}">
             <!-- 'Normal' line, name and value  -->
             <ng-container>{{ displayValue }}</ng-container>
           </td>
@@ -38,7 +38,7 @@
           }
           <!-- 'TOGGLE' Line, provides toggle option -->
           @if (control.type === 'TOGGLE') {
-            <td [formGroup]="formGroup" [style]="this.service.isSmartphoneResolution ? 'transform: scale(0.7)': ''"
+            <td [formGroup]="formGroup" [style]="this.service.getIsSmartphoneResolution() ? 'transform: scale(0.7)': ''"
               class="align_right">
               <ion-toggle (keydown.enter)="toggleOnEnter($event, controlName)" button tabindex="0" mode="md"
                 [formControlName]="controlName">

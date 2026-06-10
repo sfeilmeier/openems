@@ -58,7 +58,9 @@ import io.openems.edge.app.evse.vehicle.AppGenericVehicle;
 import io.openems.edge.app.hardware.GpioHardwareType;
 import io.openems.edge.app.hardware.IoGpio;
 import io.openems.edge.app.hardware.KMtronic8Channel;
+import io.openems.edge.app.hardware.MasterBox2v0;
 import io.openems.edge.app.heat.AppHeatAskoma;
+import io.openems.edge.app.heat.AppHeatMyPv;
 import io.openems.edge.app.heat.CombinedHeatAndPower;
 import io.openems.edge.app.heat.HeatAskomaReadOnly;
 import io.openems.edge.app.heat.HeatMyPvReadOnly;
@@ -112,6 +114,7 @@ import io.openems.edge.app.openemshardware.TechbaseCm4;
 import io.openems.edge.app.openemshardware.TechbaseCm4Max;
 import io.openems.edge.app.openemshardware.TechbaseCm4s;
 import io.openems.edge.app.openemshardware.TechbaseCm4sGen2;
+import io.openems.edge.app.openemshardware.TechbaseCm4sGen3;
 import io.openems.edge.app.peakshaving.PeakShaving;
 import io.openems.edge.app.peakshaving.PhaseAccuratePeakShaving;
 import io.openems.edge.app.peakshaving.TimeSlotPeakShaving;
@@ -600,6 +603,16 @@ public final class Apps {
 	}
 
 	/**
+	 * Test method for creating a {@link TechbaseCm4sGen3}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final TechbaseCm4sGen3 techbaseCm4sGen3(AppManagerTestBundle t) {
+		return app(t, TechbaseCm4sGen3::new, "App.OpenemsHardware.CM4S.Gen3");
+	}
+
+	/**
 	 * Test method for creating a {@link TestPermissions}.
 	 * 
 	 * @param t the {@link AppManagerTestBundle}
@@ -1005,6 +1018,16 @@ public final class Apps {
 		return app(t, IoGpio::new, "App.Hardware.IoGpio");
 	}
 
+	/**
+	 * Test method for creating a {@link MasterBox2v0}.
+	 * 
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final MasterBox2v0 masterBox2v0(AppManagerTestBundle t) {
+		return app(t, MasterBox2v0::new, "App.Hardware.MasterBox2v0");
+	}
+
 	// Heat
 
 	/**
@@ -1377,6 +1400,16 @@ public final class Apps {
 	 */
 	public static final HeatMyPvReadOnly heatMyPvReadOnly(AppManagerTestBundle t) {
 		return app(t, HeatMyPvReadOnly::new, "App.Heat.MyPv.ReadOnly");
+	}
+
+	/**
+	 * Test method for creating a {@link AppHeatMyPv}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final AppHeatMyPv heatMyPv(AppManagerTestBundle t) {
+		return app(t, AppHeatMyPv::new, "App.Heat.MyPv");
 	}
 
 	/**

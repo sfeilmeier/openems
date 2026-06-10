@@ -8,7 +8,7 @@ import { OeFormlyView } from "src/app/shared/components/shared/oe-formly-compone
 import { RouteService } from "src/app/shared/service/route.service";
 import { ChannelAddress, Edge, EdgeConfig, Service } from "src/app/shared/shared";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
-import {environment} from "../../../../../../environments";
+import { environment } from "../../../../../../environments";
 
 export namespace SharedControllerHeat {
 
@@ -17,7 +17,9 @@ export namespace SharedControllerHeat {
         AssertionUtils.assertIsDefined(edge);
 
         const isAskoma = component.factoryId === "Heat.Askoma";
-        const isMyPv = component.factoryId === "Heat.MyPv.AcThor9s";
+        const isMyPv =
+            component.factoryId === "Heat.MyPv.AcThor9s" ||
+          component.factoryId === "Heat.MyPv";
 
         return {
             title: Name.METER_ALIAS_OR_ID(component),
@@ -27,6 +29,7 @@ export namespace SharedControllerHeat {
                 ...getFormlySharedLines(translate, component, isAskoma),
                 ...(isMyPv ? getMyPVInfoLine(translate) : []),
                 ...(isAskoma ? getAskomaIcon() : []),
+                ...(isMyPv ? getMyPvIcon() : []),
             ],
             component,
             edge,
@@ -49,12 +52,13 @@ export namespace SharedControllerHeat {
         channel: component.id + "/Temperature",
         converter: Converter.DEZIDEGREE_CELSIUS_TO_DEGREE_CELSIUS,
     },
-    ...(isAskoma ? [{
+    {
         type: "channel-line" as const,
         name: translate.instant("HEAT.HOME.CHOSEN_MODE"),
-        channel: component.id + "/_PropertyMode",
-        converter: (value: number | null) => convertAskomaMode(translate, value),
-    }] : [])]);
+        channel: component.id + "/Mode",
+        converter: (value: number | null) => CONVERT_CHANNEL_MODE_TO_LABEL(translate)(value),
+        filter: (value: number | null) => value != null,
+    }]);
 
     export const getMyPVInfoLine = (translate: TranslateService): OeFormlyView["lines"] => ([{
         type: "info-line",
@@ -76,29 +80,43 @@ export namespace SharedControllerHeat {
             },
         }]);
 
-    export const getFormlySettingsLines = (translate: TranslateService, isAskoma: boolean): OeFormlyView["lines"] => isAskoma ? [
+    export const getMyPvIcon = (): OeFormlyView["lines"] => ([
+        {
+            type: "image-line",
+            img: {
+                url: environment.images.HEAT.MYPV.HEATING_ELEMENT,
+                width: 50,
+                style: {
+                    maxWidth: "30rem",
+                    justifySelf: "center",
+                    paddingBottom: "var(--ion-padding)",
+                },
+            },
+        }]);
+
+    export const getFormlySettingsLines = (translate: TranslateService): OeFormlyView["lines"] => [
         {
             type: "radio-buttons-from-form-control-line",
             name: "select-mode",
             controlName: "mode",
             buttons: getHeatModeButtons(translate),
-        }] : [];
+        }];
 
     export const getHeatModeButtons = (translate: TranslateService): ButtonLabel[] => [
         {
-            value: Mode.FAST_HEAT,
+            value: PropertyMode.FAST_HEAT,
             name: translate.instant("HEAT.SETTINGS.MODE.FAST_HEAT.TITLE"),
             description: translate.instant("HEAT.SETTINGS.MODE.FAST_HEAT.DESCRIPTION"),
             icon: { color: "success", name: "oe-consumption", size: "medium" },
         },
         {
-            value: Mode.SURPLUS,
+            value: PropertyMode.SURPLUS,
             name: translate.instant("HEAT.SETTINGS.MODE.SURPLUS.TITLE"),
             description: translate.instant("HEAT.SETTINGS.MODE.SURPLUS.DESCRIPTION"),
             icon: { color: "primary", name: "oe-production", size: "medium" },
         },
         {
-            value: Mode.OFF,
+            value: PropertyMode.OFF,
             name: translate.instant("HEAT.SETTINGS.MODE.OFF.TITLE"),
         },
     ];
@@ -114,7 +132,8 @@ export namespace SharedControllerHeat {
             new ChannelAddress(component.id, "Status"),
             new ChannelAddress(component.id, "ActivePower"),
             new ChannelAddress(component.id, "Temperature"),
-            ...(component.factoryId === "Heat.Askoma" ? [new ChannelAddress(component.id, "_PropertyMode")] : []),
+            new ChannelAddress(component.id, "Mode"),
+            new ChannelAddress(component.id, "_PropertyMode"),
         ];
     }
 
@@ -131,30 +150,29 @@ export namespace SharedControllerHeat {
     }
 
     export function getNavigationTree(translate: TranslateService, component: EdgeConfig.Component): ConstructorParameters<typeof NavigationTree> {
-        const isAskoma = component.factoryId === "Heat.Askoma";
-        const isAskomaWritable = isAskoma && component.properties?.readOnly !== true;
+        const isWritable = component.properties?.readOnly !== true;
 
         const children = [
-            new NavigationTree("history", {baseString: "history"}, {
+            new NavigationTree("history", { baseString: "history" }, {
                 name: "stats-chart-outline",
                 color: "warning",
             }, translate.instant("GENERAL.HISTORY"), "label", [], null),
         ];
 
-        if (isAskomaWritable) {
+        if (isWritable) {
             children.push(
-                new NavigationTree("schedule", {baseString: "schedule"}, {
+                new NavigationTree("schedule", { baseString: "schedule" }, {
                     name: "calendar-outline",
                     color: "warning",
                 }, translate.instant("HEAT.SCHEDULE.SCHEDULE"), "label", [
-                    new NavigationTree("edit-task", {baseString: "edit-task"}, {name: "create-outline"}, translate.instant("JS_SCHEDULE.EDIT_TASK"), "label", [], null, "HIDE"),
-                    new NavigationTree("add-task", {baseString: "add-task"}, {name: "add-outline"}, translate.instant("JS_SCHEDULE.ADD_TASK"), "label", [], null, "HIDE"),
+                    new NavigationTree("edit-task", { baseString: "edit-task" }, { name: "create-outline" }, translate.instant("JS_SCHEDULE.EDIT_TASK"), "label", [], null, { showOrder: "HIDE" }),
+                    new NavigationTree("add-task", { baseString: "add-task" }, { name: "add-outline" }, translate.instant("JS_SCHEDULE.ADD_TASK"), "label", [], null, { showOrder: "HIDE" }),
                 ], null),
-                new NavigationTree("settings", {baseString: "settings"}, {name: "cog-outline"}, translate.instant("MENU.SETTINGS"), "label", [], null),
+                new NavigationTree("settings", { baseString: "settings" }, { name: "cog-outline" }, translate.instant("MENU.SETTINGS"), "label", [], null),
             );
         }
 
-        return new NavigationTree(component.id, {baseString: "controller/heat/" + component.id}, {
+        return new NavigationTree(component.id, { baseString: "controller/heat/" + component.id }, {
             name: "flame",
             color: "normal",
         }, Name.METER_ALIAS_OR_ID(component), "label", children, null).toConstructorParams();
@@ -176,11 +194,29 @@ export const CONVERT_TO_MODE_LABEL = (translate: TranslateService) => {
     };
 };
 
-function convertAskomaMode(translate: TranslateService, value: number | null): string {
-    return CONVERT_TO_MODE_LABEL(translate)(value as unknown as string | null);
+export const CONVERT_CHANNEL_MODE_TO_LABEL = (translate: TranslateService) => {
+    return (value: number | null): string => {
+        switch (value) {
+            case ChannelMode.FAST_HEAT:
+                return translate.instant("HEAT.SETTINGS.MODE.FAST_HEAT.TITLE");
+            case ChannelMode.SURPLUS:
+                return translate.instant("HEAT.SETTINGS.MODE.SURPLUS.TITLE");
+            case ChannelMode.OFF:
+                return translate.instant("HEAT.SETTINGS.MODE.OFF.TITLE");
+            default:
+                return Converter.HIDE_VALUE(value);
+        }
+    };
+};
+
+export enum ChannelMode {
+    UNDEFINED = -1, //
+    OFF = 1, //
+    FAST_HEAT = 2, //
+    SURPLUS = 3, //
 }
 
-export enum Mode {
+export enum PropertyMode {
     OFF = "OFF", //
     FAST_HEAT = "FAST_HEAT", //
     SURPLUS = "SURPLUS", //

@@ -3,9 +3,10 @@ import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
-import { filter, take, takeUntil } from "rxjs/operators";
+import { filter, finalize, take, takeUntil } from "rxjs/operators";
 import { ChannelAddress, CurrentData, Edge, EdgeConfig, Service, Websocket } from "../../shared";
 import { SharedModule } from "../../shared.module";
+import { MultiLengthArray, TIntRange } from "../../type/utility";
 import { Icon } from "../../type/widget";
 import { AssertionUtils } from "../../utils/assertions/assertions.utils";
 import { FormUtils } from "../../utils/form/form.utils";
@@ -14,6 +15,7 @@ import { ButtonLabel } from "../modal/modal-button/modal-button";
 import { ModalLineComponent, TextIndentation } from "../modal/modal-line/modal-line";
 import { NavigationService } from "../navigation/service/navigation.service";
 import { OeImageComponent } from "../oe-img/oe-img";
+import { Stat } from "../stats/stats";
 import { Converter } from "./converter";
 import { DataService } from "./dataservice";
 
@@ -35,6 +37,7 @@ export abstract class AbstractFormlyComponent<T = unknown> implements OnDestroy 
     protected skipCurrentData: boolean = false;
     private injector: Injector = inject(Injector);
     private subscription: EffectRef | null = null;
+    private view: OeFormlyView<T> | null = null;
 
     constructor() {
         this.translate = SharedModule.injector.get<TranslateService>(TranslateService);
@@ -50,13 +53,35 @@ export abstract class AbstractFormlyComponent<T = unknown> implements OnDestroy 
                 .subscribe(() => this.subscribeChannels(this.service));
 
             edge.getConfig(this.service.websocket)
-                .pipe(filter(config => !!config), takeUntil(this.stopOnDestroy))
+                .pipe(
+                    filter(config => !!config),
+                    takeUntil(this.stopOnDestroy),
+                    finalize(() => {
+                        this.navigationService.headerTitle.set(null);
+                    }))
                 .subscribe(async (config) => {
                     const view = await this.generateView({ edge: edge, config: config, translate: this.translate });
+                    this.view = view;
                     this.form = this.getFormGroup();
                     this.setFields(view, this.form, websocket);
                 });
         });
+
+        effect(() => {
+            const isNavigationInitialized = this.navigationService.getIsInitialized();
+            if (!isNavigationInitialized) {
+                return;
+            }
+            this.ionViewWillEnter();
+        });
+    }
+
+    ionViewWillEnter() {
+        this.navigationService.headerTitle.set(this.view?.isCommonWidget ? this.view.title : null);
+    }
+
+    ionViewWillLeave() {
+        this.ngOnDestroy();
     }
 
     public async ngOnDestroy() {
@@ -104,7 +129,6 @@ export abstract class AbstractFormlyComponent<T = unknown> implements OnDestroy 
 
         }, { injector: this.injector });
     }
-
 
     /**
      * Called on every new data - executed on every currentData notification.
@@ -195,16 +219,22 @@ export abstract class AbstractFormlyComponent<T = unknown> implements OnDestroy 
      * @returns the new formGroup
      */
     protected setFormControlSafelyWithChannel<T>(fg: FormGroup, formControlName: string, currentData: CurrentData, channel: ChannelAddress | null) {
-        if (this.skipCurrentData || fg.dirty || fg.touched || !channel || currentData.allComponents[channel.toString()] == null) {
+        if (channel === null) {
+            return;
+        }
+
+        const channelValue = currentData.allComponents[channel.toString()];
+        const control = fg.controls[formControlName];
+        if (this.skipCurrentData || fg.dirty || fg.touched || !channel || channelValue == null || control == null) {
             return;
         }
 
         const prevFormControlValue: T | null = FormUtils.findFormControlsValueSafely(fg, formControlName);
-        const currFormControlValue: T | null = currentData.allComponents[channel.toString()];
+        const currFormControlValue: T | null = channelValue;
 
         if (currFormControlValue != null && (prevFormControlValue !== currFormControlValue)) {
-            fg.controls[formControlName].setValue(currFormControlValue);
-            fg.controls[formControlName].markAsPristine();
+            control.setValue(currFormControlValue);
+            control.markAsPristine();
             this.form = fg;
         }
     }
@@ -219,17 +249,23 @@ export abstract class AbstractFormlyComponent<T = unknown> implements OnDestroy 
      * @returns the new formGroup
      */
     protected setFormControlSafelyWithValue<T>(fg: FormGroup, formControlName: string, value: T | null) {
+        const control = fg.controls[formControlName];
+        if (control == null) {
+            return;
+        }
+
         const prevFormControlValue: T | null = FormUtils.findFormControlsValueSafely(fg, formControlName);
         const currFormControlValue: T | null = value;
 
         if (currFormControlValue != null && (prevFormControlValue !== currFormControlValue)) {
-            fg.controls[formControlName].setValue(currFormControlValue);
-            fg.controls[formControlName].markAsPristine();
+            control.setValue(currFormControlValue);
+            control.markAsPristine();
             this.form = fg;
         }
     }
 
     private setFields(view: OeFormlyView<T>, fg: FormGroup, websocket: Websocket) {
+        this.ionViewWillEnter();
         this.fields = [{
             fieldGroup: view.lines.map((el, index) => {
                 return {
@@ -290,7 +326,7 @@ export abstract class AbstractFormlyComponent<T = unknown> implements OnDestroy 
       * @param role  the Role of the User for this Edge
       * @param translate the Translate-Service
       */
-    protected abstract generateView(viewContext: ViewContext): OeFormlyView<T>;
+    protected abstract generateView(viewContext: ViewContext): Promise<OeFormlyView<T>> | OeFormlyView<T>;
 }
 
 export type ViewContext = Readonly<{
@@ -337,12 +373,15 @@ export type OeFormlyField<T = any> =
         | OeFormlyField.SelectLine
         | OeFormlyField.PercentageBarFromFormControlLine
         | OeFormlyField.Advanced.ElectricityMeter
-        | OeFormlyField.Advanced.EssChargerLine)
+        | OeFormlyField.Advanced.EssChargerLine
+        | OeFormlyField.Advanced.AdvancedStatsLine)
     & {
         hide?: (field: T) => boolean;
         /** Executes a  applyable if according name field exists for this line type */
         nameCallback?: (field: T) => string;
         style?: AbstractModalLine["lineStyle"];
+        cssClass?: "ion-padding-top" | "ion-padding-bottom" | "ion-padding-left" | "ion-padding-right";
+        leftColumnWidth?: TIntRange<0, 101>;
     };
 
 export namespace OeFormlyField {
@@ -355,6 +394,11 @@ export namespace OeFormlyField {
         export type EssChargerLine = {
             type: "advanced-ess-charger-line",
             component: EdgeConfig.Component,
+        };
+
+        export type AdvancedStatsLine = {
+            type: "stats-line",
+            stats: MultiLengthArray<Stat, 1 | 2 | 3 | 4 | 6>;
         };
     }
 
@@ -398,7 +442,7 @@ export namespace OeFormlyField {
         name: /* actual name string */ string | /* name string derived from channel value */ Converter,
         channel: string,
         filter?: (value: number | null) => boolean,
-        converter?: (value: number | null) => string
+        converter?: (value: number | null) => string,
         indentation?: TextIndentation,
     };
 

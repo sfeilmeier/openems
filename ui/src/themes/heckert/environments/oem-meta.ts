@@ -53,6 +53,9 @@ export const OemMeta: BaseMeta = {
             WARNING: warningOutline,
             INFO: informationCircleOutline,
         },
+        BATTERY_EXTENSION: null,
+        ENERGY_JOURNEY: null,
+        WRAP_UP: null,
     },
     images: {
         EVSE: {
@@ -62,8 +65,15 @@ export const OemMeta: BaseMeta = {
             ALPITRONIC: null,
             MENNEKES: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Mennekes.4You.png",
         },
+        LOGO: {
+            DARK: null,
+            LIGHT: null,
+        },
         HEAT: {
             ASKOMA: {
+                HEATING_ELEMENT: null,
+            },
+            MYPV: {
                 HEATING_ELEMENT: null,
             },
         },

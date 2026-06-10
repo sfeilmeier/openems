@@ -7,8 +7,8 @@
                     <ion-item lines="none" class="ion-text-center">
                         <ion-grid class="ion-justify-content-center">
                             <ion-row class="ion-justify-content-center ion-no-padding">
-                                <ion-img style="height: 10vh;"
-                                    [src]="currentThemeMode === 'dark' ? 'assets/img/fenecon-logo-dark.png' : 'assets/img/fenecon-logo-light.png'" />
+                                <ion-img class="ion-padding" style="height: 10vh;"
+                                    [src]="currentThemeMode === 'dark' ? environment.images.LOGO.DARK : environment.images.LOGO.LIGHT" />
                             </ion-row>
                             <ion-row class="ion-justify-content-center">
                                 <ion-label>

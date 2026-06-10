@@ -1,7 +1,8 @@
 import { formatNumber } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
 import { Meter } from "src/app/edge/installation/shared/meter";
-import { BatteryInverterState, BatteryMode, BatteryStateMachine, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, Limiter14aRestriction, RippleControlReceiverRestrictionLevel, SafetyCountryCode, Utils } from "../../shared";
+import { BatteryInverterState, BatteryMode, BatteryStateMachine, Currency, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, Limiter14aRestriction, RippleControlReceiverRestrictionLevel, SafetyCountryCode, Utils } from "../../shared";
+
 import { BackupEnable, DredCmd, EnabledDisabledState } from "../../type/general";
 import { Language } from "../../type/language";
 import { NumberUtils } from "../../utils/number/number-utils";
@@ -277,6 +278,24 @@ export namespace Converter {
     export const CURRENT_TO_AMPERE: Converter = (raw) => {
         return IF_NUMBER(raw, value =>
             Formatter.FORMAT_AMPERE(value));
+    };
+
+    /**
+     * Formats a monetary value (e.g. price or cost in currency per MWh) as currency per kWh.
+     *
+     * @param value the power value
+     * @returns formatted value; '-' for null
+     */
+    export const CURRENCY_PER_KWH = (currency: Currency.Label): Converter => {
+        return (raw): string => {
+            return IF_NUMBER(raw, value => {
+                if (value == null) {
+                    return "-";
+                }
+                const locale: string = Language.getCurrentLanguage().i18nLocaleKey;
+                return formatNumber(value / 10, locale, "1.0-2") + " " + Currency.getCurrencyLabelByCurrency(currency);
+            });
+        };
     };
 
     export const CONVERT_TO_ESS_STATE: Converter = (raw) => {
@@ -562,10 +581,12 @@ export namespace Converter {
         return (value: any): string => {
             switch (value) {
                 case 0:
-                    return translate.instant("EDGE.INDEX.WIDGETS.HEAT.HEATING");
+                    return translate.instant("EDGE.INDEX.WIDGETS.HEAT.NO_HEATING");
                 case 1:
-                    return translate.instant("EDGE.INDEX.WIDGETS.HEAT.TARGET_TEMPERATURE_REACHED");
+                    return translate.instant("EDGE.INDEX.WIDGETS.HEAT.HEATING");
                 case 2:
+                    return translate.instant("EDGE.INDEX.WIDGETS.HEAT.TARGET_TEMPERATURE_REACHED");
+                case 3:
                     return translate.instant("EDGE.INDEX.WIDGETS.HEAT.NO_HEATING");
                 case -1:
                 default:

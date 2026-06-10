@@ -3,6 +3,7 @@ import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { EdgePermission } from "../shared";
 import { ArrayUtils } from "../utils/array/array.utils";
+import { Language } from "./language";
 import { Role } from "./role";
 import { TEnumKeys } from "./utility";
 
@@ -50,6 +51,7 @@ export enum WidgetFactory {
     "Evcs.Cluster.PeakShaving",
     "Evcs.Cluster.SelfConsumption",
     "Heat.Askoma",
+    "Heat.MyPv",
     "Heat.MyPv.AcThor9s",
     "System.Fenecon.Industrial.S",
     "System.Fenecon.Industrial.L",
@@ -98,6 +100,15 @@ export class AdvertWidgets {
                 {
                     name: "advert-1",
                     title: { languageKey: "ADVERT.1.TITLE" },
+                }
+            );
+        };
+
+        if (edge.roleIsAtLeast(Role.OWNER) && Language.getCurrentLanguage() === Language.DE) {
+            list.push(
+                {
+                    name: "advert-2",
+                    title: { languageKey: "ADVERT.2.TITLE" },
                 }
             );
         };

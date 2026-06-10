@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, OnInit, Output, } from "@angular/core";
 import { FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 import { FormlyFieldConfig, FormlyModule } from "@ngx-formly/core";
@@ -26,25 +26,25 @@ export interface LocationModel {
 }
 
 export type GeoResult = {
-    country: string,
-    countryCode: string,
-    currency: string,
-    houseNumber: string,
-    latitude: string,
-    longitude: string,
-    openStreetMapUrl: string,
-    placeName: string,
-    postcode: string,
-    road: string,
-    subdivision: string,
-    subdivisionCode: string,
-    timezone: string,
+    country: string;
+    countryCode: string;
+    currency: string;
+    houseNumber: string;
+    latitude: string;
+    longitude: string;
+    openStreetMapUrl: string;
+    placeName: string;
+    postcode: string;
+    road: string;
+    subdivision: string;
+    subdivisionCode: string;
+    timezone: string;
 };
 
 export type ValidatorContext = "INSTALLATION" | "PROFILE";
 
 export type SaveResult =
-    | { status: "SUCCESS", geoResult: GeoResult }
+    | { status: "SUCCESS"; geoResult: GeoResult }
     | { status: "UNKNOWN_ADDRESS_SELECTED" }
     | { status: "INVALID" };
 
@@ -52,12 +52,7 @@ export type SaveResult =
     selector: "system-location-validator",
     templateUrl: "./system-location-validator.component.html",
     standalone: true,
-    imports: [
-        IonicModule,
-        ReactiveFormsModule,
-        FormlyModule,
-        TranslateModule,
-    ],
+    imports: [IonicModule, ReactiveFormsModule, FormlyModule, TranslateModule],
 })
 export class SystemLocationValidatorComponent implements OnInit {
     @Input() public ibn!: AbstractIbn;
@@ -70,7 +65,12 @@ export class SystemLocationValidatorComponent implements OnInit {
 
     protected form: FormGroup = new FormGroup({});
     protected fields: FormlyFieldConfig[] = [];
-    protected model: LocationModel = { street: "", zip: "", city: "", country: "" };
+    protected model: LocationModel = {
+        street: "",
+        zip: "",
+        city: "",
+        country: "",
+    };
 
     protected geoCodeForm: FormGroup = new FormGroup({});
     protected geoCodeFields: FormlyFieldConfig[] = [];
@@ -89,10 +89,9 @@ export class SystemLocationValidatorComponent implements OnInit {
 
     private geoResults: GeoResult[] = [];
 
-    constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) {}
 
     public async ngOnInit() {
-
         this.edge ??= await this.service.getCurrentEdge();
         const config = await this.service.getConfig();
 
@@ -102,7 +101,10 @@ export class SystemLocationValidatorComponent implements OnInit {
 
         const metaProperties = config.getComponentProperties("_meta");
         // const location = ProtocolSystemLocationValidationComponent.getLocation(this.ibn);
-        const location = (this.ibn?.location?.isEqualToCustomerData ? this.ibn?.customer : this.ibn?.location) ?? null;
+        const location =
+            (this.ibn?.location?.isEqualToCustomerData
+                ? this.ibn?.customer
+                : this.ibn?.location) ?? null;
 
         this.initialModel = {
             street: location?.street ?? "",
@@ -138,7 +140,7 @@ export class SystemLocationValidatorComponent implements OnInit {
         });
 
         const [error, response] = await PromiseUtils.Functions.handle(
-            this.edge.sendStateFullRequest(this.websocket, request)
+            this.edge.sendStateFullRequest(this.websocket, request),
         );
 
         if (error) {
@@ -146,10 +148,12 @@ export class SystemLocationValidatorComponent implements OnInit {
         }
 
         if (response) {
-            const result = (response as GeoCodeJsonRpc.Response).result.geocodingResults;
+            const result = (response as GeoCodeJsonRpc.Response).result
+                .geocodingResults;
             this.geoResults = result ?? [];
             this.fillGeoCodeFields(this.geoResults);
-            this.addressesAvailable = Array.isArray(this.geoResults) && this.geoResults.length > 0;
+            this.addressesAvailable =
+                Array.isArray(this.geoResults) && this.geoResults.length > 0;
         }
 
         this.isValidating = false;
@@ -158,7 +162,11 @@ export class SystemLocationValidatorComponent implements OnInit {
 
     public async save(): Promise<SaveResult> {
         // Validation Check
-        if (this.form.invalid || this.geoCodeForm.invalid || this.edge == null) {
+        if (
+            this.form.invalid ||
+            this.geoCodeForm.invalid ||
+            this.edge == null
+        ) {
             return { status: "INVALID" };
         }
 
@@ -170,7 +178,11 @@ export class SystemLocationValidatorComponent implements OnInit {
         }
 
         // specific index validation
-        if (typeof selectedIndex !== "number" || selectedIndex < 0 || selectedIndex >= this.geoResults.length) {
+        if (
+            typeof selectedIndex !== "number" ||
+            selectedIndex < 0 ||
+            selectedIndex >= this.geoResults.length
+        ) {
             console.error("Invalid GeoResult index selected.");
             return { status: "INVALID" };
         }
@@ -184,14 +196,19 @@ export class SystemLocationValidatorComponent implements OnInit {
             { name: "latitude", value: selectedGeo.latitude ?? -999.0 },
             { name: "longitude", value: selectedGeo.longitude ?? -999.0 },
             { name: "timezone", value: selectedGeo.timezone ?? "" },
-            { name: "subdivisionCode", value: selectedGeo.subdivisionCode?.replace("-", "_") ?? "UNDEFINED" },
+            {
+                name: "subdivisionCode",
+                value:
+                    selectedGeo.subdivisionCode?.replace("-", "_") ??
+                    "UNDEFINED",
+            },
         ];
 
         this.isSaving = true;
         this.isBusyChange.emit(true);
 
         const [error] = await PromiseUtils.Functions.handle(
-            this.edge.updateAppConfig(this.websocket, "_meta", properties)
+            this.edge.updateAppConfig(this.websocket, "_meta", properties),
         );
 
         this.isSaving = false;
@@ -216,7 +233,7 @@ export class SystemLocationValidatorComponent implements OnInit {
 
     private async initTranslationsAndFields() {
         const [error, translations] = await PromiseUtils.Functions.handle(
-            Language.normalizeAdditionalTranslationFiles({ de: de, en: en })
+            Language.normalizeAdditionalTranslationFiles({ de: de, en: en }),
         );
 
         if (error) {
@@ -244,7 +261,9 @@ export class SystemLocationValidatorComponent implements OnInit {
                 type: "radio",
                 props: {
                     radioSlot: "start",
-                    label: this.translate.instant("SYSTEM_LOCATION_VALIDATOR.GEO_CODE_RESULT_LABEL"),
+                    label: this.translate.instant(
+                        "SYSTEM_LOCATION_VALIDATOR.GEO_CODE_RESULT_LABEL",
+                    ),
                     options: [],
                 },
             },
@@ -256,11 +275,19 @@ export class SystemLocationValidatorComponent implements OnInit {
         let defaultIndex = 0;
 
         results.forEach((geoCode, index) => {
-            const hasNotMinRequirements = Object.values(ObjectUtils.pickProperties(geoCode, ["country", "postcode", "placeName"])).some((el) => el === null);
+            const pickedProperties = ObjectUtils.pickProperties(geoCode, [
+                "country",
+                "postcode",
+                "placeName",
+            ]);
+            const hasNotMinRequirements =
+                pickedProperties == null ||
+                Object.values(pickedProperties).some((el) => el === null);
 
-            const street = geoCode.road && geoCode.houseNumber
-                ? `${geoCode.road} ${geoCode.houseNumber}, `
-                : "";
+            const street =
+                geoCode.road && geoCode.houseNumber
+                    ? `${geoCode.road} ${geoCode.houseNumber}, `
+                    : "";
 
             const label = `${street}${geoCode.postcode ?? ""}, ${geoCode.placeName ?? ""}, ${geoCode.country ?? ""}`;
 
@@ -276,12 +303,17 @@ export class SystemLocationValidatorComponent implements OnInit {
         });
 
         // Add "Unknown" option
-        if (this.context === "INSTALLATION" && (!this.hasMatchingAddress(results) || options.length === 0)) {
+        if (
+            this.context === "INSTALLATION" &&
+            (!this.hasMatchingAddress(results) || options.length === 0)
+        ) {
             this.unknownAddressOptionIndex = options.length;
 
             options.push({
                 value: options.length,
-                label: this.translate.instant("SYSTEM_LOCATION_VALIDATOR.UNKNOWN_ADDRESS"),
+                label: this.translate.instant(
+                    "SYSTEM_LOCATION_VALIDATOR.UNKNOWN_ADDRESS",
+                ),
                 default: options.length === 0,
             });
         } else {
@@ -289,12 +321,16 @@ export class SystemLocationValidatorComponent implements OnInit {
         }
 
         // Update Formly Options safely
-        this.geoCodeFields = FormlyUtils.changeFormlyFieldProps("index", this.geoCodeFields, (props) => {
-            if (props) {
-                props.options = options;
-            }
-            return props;
-        });
+        this.geoCodeFields = FormlyUtils.changeFormlyFieldProps(
+            "index",
+            this.geoCodeFields,
+            (props) => {
+                if (props) {
+                    props.options = options;
+                }
+                return props;
+            },
+        );
 
         this.isGeoFormVisible = options.length > 0;
 
@@ -309,7 +345,9 @@ export class SystemLocationValidatorComponent implements OnInit {
                 key: "street",
                 type: "input",
                 templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS"),
+                    label: this.translate.instant(
+                        "INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS",
+                    ),
                     required: true,
                 },
             },
@@ -317,7 +355,9 @@ export class SystemLocationValidatorComponent implements OnInit {
                 key: "zip",
                 type: "input",
                 templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP"),
+                    label: this.translate.instant(
+                        "INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP",
+                    ),
                     required: true,
                 },
                 validators: { validation: ["zip"] },
@@ -326,7 +366,9 @@ export class SystemLocationValidatorComponent implements OnInit {
                 key: "city",
                 type: "input",
                 templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY"),
+                    label: this.translate.instant(
+                        "INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY",
+                    ),
                     required: true,
                 },
             },
@@ -334,7 +376,9 @@ export class SystemLocationValidatorComponent implements OnInit {
                 key: "country",
                 type: "select",
                 templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY"),
+                    label: this.translate.instant(
+                        "INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY",
+                    ),
                     required: true,
                     options: COUNTRY_OPTIONS(this.translate),
                 },
@@ -343,14 +387,18 @@ export class SystemLocationValidatorComponent implements OnInit {
     }
 
     private hasMatchingAddress(results?: GeoResult[]): boolean {
-        return results ? results.some(r => this.isMatchingAddress(r)) : false;
+        return results ? results.some((r) => this.isMatchingAddress(r)) : false;
     }
 
     private isMatchingAddress(geo: GeoResult): boolean {
-        const street = geo.road && geo.houseNumber ? `${geo.road} ${geo.houseNumber}` : "";
-        return street === (this.model.street).replaceAll(",", "") &&
+        const street =
+            geo.road && geo.houseNumber ? `${geo.road} ${geo.houseNumber}` : "";
+        return (
+            street === this.model.street.replaceAll(",", "") &&
             geo.postcode === this.model.zip &&
             geo.placeName === this.model.city &&
-            CountryUtils.fromCountryCode(geo.country ?? "") === this.model.country;
+            CountryUtils.fromCountryCode(geo.country ?? "") ===
+                this.model.country
+        );
     }
 }

@@ -186,7 +186,7 @@
       "GENSET": {
         "CONNECTED": "Genset connected?",
         "POWER": "Rated power",
-        "PREHEAT_TIME": "Preheat time",
+        "PREHEAT_TIME": "Lead time",
         "RUN_TIME": "Run time",
         "EMERGENCY_POWER_FUNCTION": "Should the emergency power Genset function be activated?",
         "BATTERY_CHARGING": "Enable battery charging from the Genset?",

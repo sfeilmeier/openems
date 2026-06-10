@@ -15,6 +15,7 @@ import { F2BUpdate } from "../../jsonrpc/f2bUpdate";
 import { SystemErrorAcknowledge } from "../../jsonrpc/systemErrorAcknowledge";
 
 @Component({
+    selector: "oe-system-industrial-xl-home",
     templateUrl: "../../../../../../shared/components/formly/formly-field-modal/template.html",
     providers: [
         { provide: DataService, useClass: LiveDataService },
@@ -116,6 +117,7 @@ export class SystemIndustrialXlHomeComponent extends AbstractFormlyComponent {
             helpKey: "REDIRECT.SYSTEM.INDUSTRIAL_XL_MANUAL",
             lines: lines,
             component: self.component!,
+            edge,
         };
     }
 
@@ -128,7 +130,7 @@ export class SystemIndustrialXlHomeComponent extends AbstractFormlyComponent {
         return Promise.resolve([this.startStopChannel]);
     }
 
-    protected override generateView(viewContext: ViewContext): OeFormlyView {
+    protected override async generateView(viewContext: ViewContext): Promise<OeFormlyView> {
         AssertionUtils.assertIsDefined(viewContext.config);
         this.component = viewContext.config.getFirstComponentByFactoryId(SystemIndustrialXlHomeComponent.FACTORY_ID);
         return SystemIndustrialXlHomeComponent.getFormlyGeneralView(this.translate, viewContext.edge, this);

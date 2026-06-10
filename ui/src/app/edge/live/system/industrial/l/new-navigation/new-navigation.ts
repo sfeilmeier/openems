@@ -17,6 +17,7 @@ import de from "../i18n/de.json";
 import en from "../i18n/en.json";
 
 @Component({
+    selector: "oe-system-industrial-lhome",
     templateUrl: "../../../../../../shared/components/formly/formly-field-modal/template.html",
     providers: [
         { provide: DataService, useClass: LiveDataService },
@@ -112,6 +113,7 @@ export class SystemIndustrialLHomeComponent extends AbstractFormlyComponent {
             helpKey: "REDIRECT.SYSTEM.INDUSTRIAL_L_MANUAL",
             lines: lines,
             component: self.component!,
+            edge,
         };
     }
 

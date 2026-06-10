@@ -1,7 +1,11 @@
 // @ts-strict-ignore
+import { computed } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import * as d3 from "d3";
 import { v4 as uuidv4 } from "uuid";
+
+import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
 import { GridMode, Service } from "src/app/shared/shared";
 import { DefaultTypes } from "../../../../../shared/type/defaulttypes";
 
@@ -22,7 +26,6 @@ export class SvgSquarePosition {
 export class SvgSquare {
     constructor(
         public length: number,
-        public valueRatio: SvgTextPosition,
         public valueText: SvgTextPosition,
         public image: SvgImagePosition,
     ) { }
@@ -32,7 +35,6 @@ export class SvgTextPosition {
     constructor(
         public x: number,
         public y: number,
-        public anchor: "start" | "middle" | "end",
         public fontsize: number,
     ) { }
 }
@@ -55,6 +57,12 @@ export interface SvgEnergyFlow {
     middleRight?: { x: number, y: number },
     topRight: { x: number, y: number },
     middleTop?: { x: number, y: number }
+}
+
+export interface SubValueProperties {
+    value: number | string,
+    fontsize: number,
+    yPosition: number,
 }
 
 export class EnergyFlow {
@@ -117,16 +125,20 @@ export class EnergyFlow {
 }
 
 export abstract class AbstractSection {
-
     public fillRef: string = "";
     public valuePath: string = "";
     public outlinePath: string = "";
     public energyFlow: EnergyFlow | null = null;
-    public square: SvgSquare;
-    public squarePosition: SvgSquarePosition;
+
     public name: string = "";
     public sectionId: string = "";
     public isEnabled: boolean = false;
+
+    // square describes positions for text, number and image of one section
+    protected square: SvgSquare;
+
+    // squarePosition describes the position of the square
+    protected squarePosition: SvgSquarePosition;
 
     protected valueText: string = "";
     protected innerRadius: number = 0;
@@ -136,6 +148,15 @@ export abstract class AbstractSection {
     protected gridMode: GridMode;
     protected restrictionMode: number;
 
+    protected readonly targetRoute = computed<string[] | null>(() => {
+        const navigationPosition = this.navigationService.position();
+        if (navigationPosition == null || navigationPosition === "disabled") {
+            return null;
+        }
+
+        return this.newNavigationRoute;
+    });
+
     private lastCurrentData: DefaultTypes.Summary | null = null;
 
     constructor(
@@ -144,18 +165,33 @@ export abstract class AbstractSection {
         public color: string,
         protected translate: TranslateService,
         protected service: Service,
+        private readonly navigationService: NavigationService,
+        private readonly router: Router,
+        private readonly route: ActivatedRoute,
         widgetClass: string,
+        private readonly newNavigationRoute: string[],
     ) {
         this.sectionId = translateName + "-" + uuidv4();
         this.name = translate.instant(translateName);
         this.energyFlow = this.initEnergyFlow(0);
-        service.getConfig().then(config => {
-            config.widgets.classes.forEach(clazz => {
+        service.getConfig().then((config) => {
+            config.widgets.classes.forEach((clazz) => {
                 if (clazz.toString() === widgetClass) {
                     this.isEnabled = true;
                 }
             });
         });
+    }
+
+    public onIconClick(event: MouseEvent): void {
+        event.stopPropagation();
+
+        const targetRoute = this.targetRoute();
+        if (!this.isEnabled || !targetRoute) {
+            return;
+        }
+
+        this.router.navigate(targetRoute, { relativeTo: this.route });
     }
 
     /**
@@ -208,8 +244,7 @@ export abstract class AbstractSection {
     protected adjustFillRefbyBrowser(): void {
         if (navigator.vendor.match(/apple/i)) {
             this.fillRef = "url(" + window.location.origin + window.location.pathname + "#" + this.sectionId + ")";
-        }
-        else {
+        } else {
             this.fillRef = "url(#" + this.sectionId + ")";
         }
     }
@@ -278,31 +313,43 @@ export abstract class AbstractSection {
     }
 
     /**
+     * Calculates sub-value properties - for storage SoC and grid buy price.
+     */
+    protected calculateSubValueProperties(value: number | string | null): SubValueProperties | null {
+        if (!this.square || value === null) {
+            return null;
+        }
+        const maxFontsize = 14;
+        const minFontsize = 6;
+        const lineDistance = Math.min(this.square.valueText.fontsize, maxFontsize + 5);
+        return {
+            value: value,
+            fontsize: Math.min(maxFontsize, Math.max(minFontsize, this.square.valueText.fontsize)),
+            yPosition: this.square.valueText.y + lineDistance,
+        };
+    }
+
+    /**
      * calculate...
      * ...length of square and image;
      * ...x and y of text and image;
      * ...fontsize of text;
      */
     private getSquare(innerRadius: number): SvgSquare {
-        const width = innerRadius / 2.5;
+        const imageSize = Math.max(0, innerRadius / 2.5);
+        const yText = imageSize / 4;
 
-        const textSize = width / 4;
-        const yText = textSize;
+        const fontsize = Math.max(0, yText - 3);
+        const yNumber = yText + 5 + fontsize;
 
-        const numberSize = textSize - 3;
-        const yNumber = yText + 5 + numberSize;
-
-        const imageSize = width;
         const yImage = yNumber + 5;
-
         const length = yImage + imageSize;
 
         const xText = length / 2;
 
         return new SvgSquare(
             length,
-            new SvgTextPosition(xText, yText, "middle", textSize),
-            new SvgTextPosition(xText, yNumber, "middle", numberSize),
+            new SvgTextPosition(xText, yNumber, fontsize),
             new SvgImagePosition(this.getImagePath(), (length / 2) - (imageSize / 2), yImage, imageSize),
         );
     }
@@ -349,5 +396,4 @@ export abstract class AbstractSection {
     protected abstract getValueText(value: number): string;
     protected abstract initEnergyFlow(radius: number): EnergyFlow;
     protected abstract setElementHeight();
-
 }

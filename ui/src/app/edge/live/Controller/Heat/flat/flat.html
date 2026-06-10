@@ -13,8 +13,8 @@
     </oe-flat-widget-line>
     @if (component.factoryId === "Heat.Askoma") {
       <oe-flat-widget-line [name]="'HEAT.HOME.CHOSEN_MODE' | translate"
-        [channelAddress]="component.id + '/_PropertyMode'"
-        [converter]="CONVERT_TO_MODE_LABEL">
+        [channelAddress]="component.id + '/Mode'"
+        [converter]="CONVERT_CHANNEL_MODE_TO_LABEL">
       </oe-flat-widget-line>
     }
   </oe-flat-widget>

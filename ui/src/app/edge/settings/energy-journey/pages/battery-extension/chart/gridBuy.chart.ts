@@ -2,6 +2,7 @@
 import { Component, Input, OnChanges } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
+import { ChartTypes } from "src/app/shared/components/chart/chart.types";
 import { ChannelAddress, ChartConstants } from "src/app/shared/shared";
 import { TPropType } from "src/app/shared/type/utility";
 import { ChartAxis, HistoryUtils, Utils, YAxisType } from "src/app/shared/utils/utils";
@@ -41,21 +42,21 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
                         : []),
                 ];
                 return [
-          <HistoryUtils.DisplayValue<HistoryUtils.DataLabelsCustomOptions>>{
-              name: translate.instant("SETTINGS.ENERGY_JOURNEY.BATTERY_MODULE_EXTENSION"),
-              converter: () => {
-                  return displayData
-                      .map((el) => Utils.subtractSafely(displayData[0], Utils.divideSafely(el, 1)))
-                      .filter((_el, i) => i !== 0);
-              },
-              color: ChartConstants.Colors.BLUE,
-              custom: {
-                  pluginType: "datalabels",
-                  datalabels: {
-                      displayUnit: "kWh",
-                  },
-              },
-          },
+                    <HistoryUtils.DisplayValue<HistoryUtils.DataLabelsCustomOptions>>{
+                        name: translate.instant("SETTINGS.ENERGY_JOURNEY.BATTERY_MODULE_EXTENSION"),
+                        converter: () => {
+                            return displayData
+                                .map((el) => Utils.subtractSafely(displayData[0], Utils.divideSafely(el, 1)))
+                                .filter((_el, i) => i !== 0);
+                        },
+                        color: ChartConstants.Colors.BLUE,
+                        custom: {
+                            pluginType: "datalabels",
+                            datalabels: {
+                                displayUnit: "kWh",
+                            },
+                        },
+                    },
                 ];
             },
             tooltip: {
@@ -70,8 +71,8 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
         };
     }
 
-    private static getLabels(simulationData: TPropType<SimulationResult, "simulationData">, translate: TranslateService): string[] {
-        return simulationData.reduce((arr: string[], el, index) => {
+    private static getLabels(simulationData: TPropType<SimulationResult, "simulationData">, translate: TranslateService): ChartTypes.Label[] {
+        return simulationData.reduce((arr: ChartTypes.Label[], el, index) => {
             if (index === 0) {
                 return arr;
             }

@@ -43,6 +43,8 @@ export class AppComponent implements OnInit, OnDestroy {
     protected isHistoryDetailView: boolean = false;
     protected latestIncident: { message: string | null, id: string } | null = null;
 
+    protected isSmartphone: boolean = false;
+
     private ngUnsubscribe: Subject<void> = new Subject<void>();
     private subscription: Subscription = new Subscription();
 
@@ -69,6 +71,8 @@ export class AppComponent implements OnInit, OnDestroy {
         private systemState: SystemStateService,
     ) {
         service.setLang(Language.getCurrentLanguage());
+
+        this.isSmartphone = this.service.getIsSmartphoneResolution();
 
         this.subscription.add(
             this.service.metadata.pipe(filter(metadata => !!metadata)).subscribe(metadata => {

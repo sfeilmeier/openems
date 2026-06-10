@@ -1,0 +1,46 @@
+@if (edge) {
+  <oe-navigation-view>
+    <ion-content>
+      <ion-grid>
+        <ion-row class="ion-justify-content-center ion-padding-top">
+          @for (widget of allowedWidgets; track widget; let first = $first) {
+            <ion-col size-lg="5" size-md="6" size-sm="12" class="ion-padding">
+              @if(widget.headerText){
+                <ion-text style="color: var(--ion-card-content);" [innerHTML]="widget.headerText">
+                </ion-text>
+              }
+            </ion-col>
+          }
+        </ion-row>
+        <ion-row class="ion-justify-content-center ion-padding">
+          @for (widget of allowedWidgets; track widget; let first = $first) {
+            <ion-col size-lg="5" size-md="6" size-sm="12">
+              <ion-card style="border-radius: 1em;opacity: 0.9;">
+                <img [src]="widget.imgSrc" width="100%" alt="battery extension"/>
+                <ion-card-content>
+                  <ion-text style="font-size: larger; font-weight: bold; color: var(--ion-card-content)">
+                    {{widget.slogan}}
+                  </ion-text>
+                  <div class="ion-padding" style="color: var(--ion-card-content)">
+                    {{widget.description}}
+                    <ion-row class="full_width align_right">
+                      <ion-col class="align_right full_width">
+                        <ion-item lines="none" class="ion-float-right" (click)="widget.button.callback()" (keydown.enter)="widget.button.callback()">
+                          <ion-button fill="solid">
+                            {{widget.button.name}}
+                          </ion-button>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                  </div>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          }
+        </ion-row>
+      </ion-grid>
+      <ng-container>
+      </ng-container>
+    </ion-content>
+  </oe-navigation-view>
+}

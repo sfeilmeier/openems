@@ -10,9 +10,8 @@ import static io.openems.edge.battery.nuvationbms.NuvationSunSpecModel.S803.B_TO
 
 import java.util.stream.IntStream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
@@ -25,7 +24,6 @@ public class NuvationBmsImplTest {
 	public void setUp() throws Exception {
 		var sut = new NuvationBmsImpl();
 		new ComponentTest(sut)//
-				.addReference("cm", new DummyConfigurationAdmin())
 				.addReference("componentManager", new DummyComponentManager(createDummyClock()))
 				.addReference("setModbus", new DummyModbusBridge("modbus0") //
 						.withRegisters(40_000, 0x5375, 0x6e53) // isSunSpec

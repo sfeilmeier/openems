@@ -19,7 +19,6 @@ import { ConfigurationAdvancedSettingsComponent } from "../configuration-advance
     standalone: false,
 })
 export class ConfigurationSummaryComponent implements OnInit {
-
     private static readonly SELECTOR = "configuration-summary";
 
     @Input() public ibn: AbstractIbn;
@@ -35,7 +34,7 @@ export class ConfigurationSummaryComponent implements OnInit {
     constructor(
         private service: Service,
         private translate: TranslateService,
-    ) { }
+    ) {}
 
     public async ngOnInit(): Promise<void> {
         this.form = new FormGroup({});
@@ -50,28 +49,41 @@ export class ConfigurationSummaryComponent implements OnInit {
 
     public onNextClicked() {
         if (!this.model.isGuaranteeConditionsAccepted) {
-            this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT_TERMS"), "warning");
+            this.service.toast(
+                this.translate.instant(
+                    "INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT_TERMS",
+                ),
+                "warning",
+            );
             return;
         }
         if (!this.model.isDevicesActiveChecked) {
-            this.service.toast("Prüfen Sie, ob Batterie und Wechselrichter eingeschaltet sind und bestätigen Sie dies.", "warning");
+            this.service.toast(
+                this.translate.instant(
+                    "INSTALLATION.CONFIGURATION_SUMMARY.IS_DEVICE_ACTIVE_CHECKED",
+                ),
+                "warning",
+            );
             return;
         }
         this.nextViewEvent.emit();
     }
 
     public getFields(): FormlyFieldConfig[] {
-
         const fields: FormlyFieldConfig[] = [];
 
         fields.push({
             key: "isGuaranteeConditionsAccepted",
             type: "checkbox",
             props: {
-                label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.WARRANTY_TERMS"),
+                label: this.translate.instant(
+                    "INSTALLATION.CONFIGURATION_SUMMARY.WARRANTY_TERMS",
+                ),
                 required: true,
                 defaultValue: false,
-                description: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT"),
+                description: this.translate.instant(
+                    "INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT",
+                ),
                 url: WebLinkUtils.getLink(this.ibn.warrantyLink),
             },
             wrappers: ["form-field-checkbox-hyperlink"],
@@ -90,30 +102,53 @@ export class ConfigurationSummaryComponent implements OnInit {
     }
 
     /**
- * Returns the country label selected.
- *
- * @param countryValue the country value.
- * @returns country label.
- */
+     * Returns the country label selected.
+     *
+     * @param countryValue The country value.
+     * @returns Country label.
+     */
     public getCountryLabel(countryValue: string) {
-        return COUNTRY_OPTIONS(this.translate).find((country) => country.value === countryValue)?.label ?? "";
+        return (
+            COUNTRY_OPTIONS(this.translate).find(
+                (country) => country.value === countryValue,
+            )?.label ?? ""
+        );
     }
 
-    /**
-   * Collect all the data for summary.
-   */
+    /** Collect all the data for summary. */
     public generateTableData() {
         const tableData: TableData[] = [];
         const edgeData = this.edge.id;
         const generalData: ComponentData[] = [
-            { label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.TIME_OF_INSTALLATION"), value: (new Date()).toLocaleString() },
-            { label: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.EDGE_NUMBER", { edgeShortName: environment.edgeShortName }), value: edgeData },
+            {
+                label: this.translate.instant(
+                    "INSTALLATION.CONFIGURATION_SUMMARY.TIME_OF_INSTALLATION",
+                ),
+                value: new Date().toLocaleString(),
+            },
+            {
+                label: this.translate.instant(
+                    "INSTALLATION.CONFIGURATION_SUMMARY.EDGE_NUMBER",
+                    { edgeShortName: environment.edgeShortName },
+                ),
+                value: edgeData,
+            },
         ];
 
-        const lineSideMeterFuseTitle: string = Category.toTranslatedString(this.ibn.lineSideMeterFuse.category, this.translate);
-        const lineSideMeterFuseValue: number | null = this.ibn.lineSideMeterFuse.otherValue ?? this.ibn.lineSideMeterFuse.fixedValue;
+        const lineSideMeterFuseTitle: string = Category.toTranslatedString(
+            this.ibn.lineSideMeterFuse.category,
+            this.translate,
+        );
+        const lineSideMeterFuseValue: number | null =
+            this.ibn.lineSideMeterFuse.otherValue ??
+            this.ibn.lineSideMeterFuse.fixedValue;
         if (lineSideMeterFuseValue != null) {
-            generalData.push({ label: lineSideMeterFuseTitle, value: this.ibn.lineSideMeterFuse.otherValue ?? this.ibn.lineSideMeterFuse.fixedValue });
+            generalData.push({
+                label: lineSideMeterFuseTitle,
+                value:
+                    this.ibn.lineSideMeterFuse.otherValue ??
+                    this.ibn.lineSideMeterFuse.fixedValue,
+            });
         }
 
         tableData.push({
@@ -123,18 +158,30 @@ export class ConfigurationSummaryComponent implements OnInit {
 
         tableData.push({
             header: Category.INSTALLER,
-            rows: IbnUtils.fillData(this.ibn.installer, Category.INSTALLER, this.translate),
+            rows: IbnUtils.fillData(
+                this.ibn.installer,
+                Category.INSTALLER,
+                this.translate,
+            ),
         });
 
         tableData.push({
             header: Category.CUSTOMER,
-            rows: IbnUtils.fillData(this.ibn.customer, Category.CUSTOMER, this.translate),
+            rows: IbnUtils.fillData(
+                this.ibn.customer,
+                Category.CUSTOMER,
+                this.translate,
+            ),
         });
 
         if (!this.ibn.location.isEqualToCustomerData) {
             tableData.push({
                 header: Category.BATTERY_LOCATION,
-                rows: IbnUtils.fillData(this.ibn.location, Category.BATTERY_LOCATION, this.translate),
+                rows: IbnUtils.fillData(
+                    this.ibn.location,
+                    Category.BATTERY_LOCATION,
+                    this.translate,
+                ),
             });
         }
 
@@ -143,12 +190,20 @@ export class ConfigurationSummaryComponent implements OnInit {
         // Deepcopy to local tableData to the this.tabledata by repalcing category with translated string.
         this.tableData = tableData.map((element) => {
             return {
-                header: Category.toTranslatedString(element.header, this.translate),
+                header: Category.toTranslatedString(
+                    element.header,
+                    this.translate,
+                ),
                 rows: element.rows,
             };
         });
 
-        this.tableData.push(...ConfigurationAdvancedSettingsComponent.getCompletionSummaryFromAdvancedGridSettings(this.translate, this.ibn["advancedGridSettings"] ?? {}));
+        this.tableData.push(
+            ...ConfigurationAdvancedSettingsComponent.getCompletionSummaryFromAdvancedGridSettings(
+                this.translate,
+                this.ibn["advancedGridSettings"] ?? {},
+            ),
+        );
         this.tableData = IbnUtils.groupDatasetsByHeader(this.tableData);
     }
 }

@@ -186,7 +186,7 @@
       "GENSET": {
         "CONNECTED": "Generator angeschlossen?",
         "POWER": "Nennleistung",
-        "PREHEAT_TIME": "Vorheizzeit",
+        "PREHEAT_TIME": "Vorlaufzeit",
         "RUN_TIME": "Laufzeit",
         "EMERGENCY_POWER_FUNCTION": "Soll die Notstrom-Generatorfunktion aktiviert werden?",
         "BATTERY_CHARGING": "Batteriebeladung aus dem Generator aktivieren?",

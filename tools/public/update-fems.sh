@@ -128,6 +128,32 @@ function install_freexian_apt_key {
     fi
 }
 
+# Make sure Java uses the correct TLS certificates
+function update_java_ca_certificates {
+    /usr/sbin/update-ca-certificates || true
+
+    local shared_cacerts="/etc/ssl/certs/adoptium/cacerts"
+    if [ ! -s "$shared_cacerts" ]; then
+        dpkg-reconfigure adoptium-ca-certificates || true
+        if [ ! -s "$shared_cacerts" ]; then
+            echo "# Shared 'cacerts' are missing at $shared_cacerts"
+            return
+        fi
+    fi
+
+    local java_home="$(java -XshowSettings:properties -version 2>&1 | grep "java.home" | awk '{print $3}')"
+    if [ -z "$java_home" ]; then
+        echo "# Unable to determine JAVA_HOME"
+        return
+    fi
+
+    local local_cacerts="$java_home/lib/security/cacerts"
+    if [ ! -L "$local_cacerts" ]; then
+        echo "# Correcting cacerts symlink ..."
+        ln -fs "$shared_cacerts" "$local_cacerts"
+    fi
+}
+
 function vacuum {
     apt-get clean || true
     journalctl --rotate --vacuum-files=1 || true
@@ -296,9 +322,7 @@ apt_remove temurin-17-jre
 apt_remove adoptopenjdk-16-hotspot-jre
 apt_remove openjdk-8-jre-headless
 
-if [ ! -s /etc/ssl/certs/adoptium/cacerts ]; then
-    dpkg-reconfigure adoptium-ca-certificates
-fi
+update_java_ca_certificates
 
 apt-get install --fix-broken --assume-yes || true
 

@@ -11,10 +11,12 @@ import { EdgeSettings } from "../../../edge";
 @Component({
     selector: "oe-marketing-annual-review-button",
     template: `
-      <ion-button class="ion-white-space-nowrap ion-custom-padding ion-text-bold" (click)="navigateTo()"
-          color="primary">
-          {{'POPOVER.ANNUAL_REVIEW.BUTTON_TEXT' | translate}}
-        </ion-button>
+        <ion-button
+            class="ion-white-space-nowrap ion-custom-padding ion-text-bold"
+            (click)="navigateTo()"
+            color="primary"
+            >{{ "POPOVER.ANNUAL_REVIEW.BUTTON_TEXT" | translate }}</ion-button
+        >
     `,
     imports: [
         CommonModule,
@@ -23,7 +25,6 @@ import { EdgeSettings } from "../../../edge";
         TranslateModule,
     ],
 })
-
 export class MarketingAnnualReviewButtonComponent {
     @Output() public modalDismiss: EventEmitter<void> = new EventEmitter();
     protected link: FlatWidgetButtonComponent["link"] | null = null;
@@ -40,8 +41,13 @@ export class MarketingAnnualReviewButtonComponent {
         });
     }
 
-    public static buildLink(edge: Edge): FlatWidgetButtonComponent["link"] | null {
-        const uuid = ObjectUtils.getKeySafely(edge.settings, EdgeSettings.ANNUAL_REVIEW_2025);
+    public static buildLink(
+        edge: Edge,
+    ): FlatWidgetButtonComponent["link"] | null {
+        const uuid = ObjectUtils.getValueByKeySafely(
+            edge.settings,
+            EdgeSettings.ANNUAL_REVIEW_2025,
+        );
 
         if (uuid == null) {
             return null;

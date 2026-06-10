@@ -167,8 +167,7 @@ public abstract class AbstractBatteryFeneconF2bCluster extends AbstractOpenemsCo
 	}
 
 	/**
-	 * This method returns a list of batteries where batteries matched with required
-	 * conditions.
+	 * Returns a list of batteries where batteries matched with required conditions.
 	 * 
 	 * @param method asked battery condition,e.g. {@link #isStarted()}
 	 * @return List of {@link Battery}.

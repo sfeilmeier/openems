@@ -1,16 +1,13 @@
-import { CapacitorConfig } from '@capacitor/cli';
-import { Theme } from 'src/environments';
+import { CapacitorConfig } from "@capacitor/cli";
+import { Theme } from "src/environments";
 
 let config: CapacitorConfig;
 
 const baseConfig: CapacitorConfig = {
-    webDir: 'target',
+    webDir: "target",
     server: {
-        androidScheme: 'https',
-        iosScheme: 'https',
-    },
-    android: {
-        adjustMarginsForEdgeToEdge: 'auto',
+        androidScheme: "https",
+        iosScheme: "https",
     },
     // loggingBehavior: "production",
     plugins: {

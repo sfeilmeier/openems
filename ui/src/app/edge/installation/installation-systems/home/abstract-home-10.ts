@@ -21,7 +21,7 @@ export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
     public override readonly appId: string = "App.FENECON.Home";
     public override readonly maxNumberOfModulesPerTower: number = 10;
     public override readonly maxNumberOfPvStrings: number = 2;
-    public override readonly maxNumberOfMppt: number = 0;
+    public override readonly maxNumberOfMppt: number = 2;
     public override readonly maxNumberOfTowers: number = 3;
     public override readonly minNumberOfModulesPerTower: number = 4;
     public override readonly defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.SMART_METER;

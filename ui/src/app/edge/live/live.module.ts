@@ -33,15 +33,16 @@ import { ControllerIoHeatingElement } from "./Controller/Io/HeatingElement/Io_He
 import { Controller_Io_HeatingRoom } from "./Controller/Io/HeatingRoom/Io_HeatingRoom";
 import { ControllerIoHeatpumpModule } from "./Controller/Io/Heatpump/controller-io-heatpump";
 import { Controller_Api_ModbusTcp } from "./Controller/ModbusTcpApi/modbusTcpApi.module";
-import { Controller_Asymmetric_PeakShavingComponent } from "./Controller/PeakShaving/Asymmetric/Asymmetric";
-import { Controller_Asymmetric_PeakShavingModalComponent } from "./Controller/PeakShaving/Asymmetric/modal/modal.component";
-import { Controller_Symmetric_PeakShavingModalComponent } from "./Controller/PeakShaving/Symmetric/modal/modal.component";
-import { Controller_Symmetric_PeakShavingComponent } from "./Controller/PeakShaving/Symmetric/Symmetric";
-import { Controller_Symmetric_TimeSlot_PeakShavingModalComponent } from "./Controller/PeakShaving/Symmetric_TimeSlot/modal/modal.component";
-import { Controller_Symmetric_TimeSlot_PeakShavingComponent } from "./Controller/PeakShaving/Symmetric_TimeSlot/Symmetric_TimeSlot";
+import { Controller_Asymmetric_PeakShavingComponent } from "./Controller/peak-shaving/Asymmetric/Asymmetric";
+import { Controller_Asymmetric_PeakShavingModalComponent } from "./Controller/peak-shaving/Asymmetric/modal/modal.component";
+import { Controller_Symmetric_PeakShavingModalComponent } from "./Controller/peak-shaving/symmetric/modal/modal.component";
+import { Controller_Symmetric_PeakShavingComponent } from "./Controller/peak-shaving/symmetric/Symmetric";
+import { Controller_Symmetric_TimeSlot_PeakShavingModalComponent } from "./Controller/peak-shaving/Symmetric_TimeSlot/modal/modal.component";
+import { Controller_Symmetric_TimeSlot_PeakShavingComponent } from "./Controller/peak-shaving/Symmetric_TimeSlot/Symmetric_TimeSlot";
 import { DelayedSellToGridComponent } from "./delayedselltogrid/delayedselltogrid.component";
 import { DelayedSellToGridModalComponent } from "./delayedselltogrid/modal/modal.component";
 import { EnergymonitorModule } from "./energymonitor/energymonitor.module";
+import { FenaComponent } from "./fena/fena.component";
 import { InfoComponent } from "./info/info.component";
 import { Io_Api_DigitalInputComponent } from "./Io/Api_DigitalInput/Io_Api_DigitalInput";
 import { Io_Api_DigitalInput_ModalComponent } from "./Io/Api_DigitalInput/modal/modal.component";
@@ -51,6 +52,7 @@ import { ChartComponent as EvcsClusterApiChartComponent } from "./Multiple/evcs-
 import { ModalComponent as EvcsClusterApiModalComponent } from "./Multiple/evcs-api-cluster/modal/modal";
 import { NavigationInfoComponent } from "./navigation-info/navigation-info";
 import { SystemModule } from "./system/system.module";
+
 import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage-info";
 
 @NgModule({
@@ -78,6 +80,7 @@ import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage
         ControllerIoHeatpumpModule,
         EdgeOfflineModule,
         EnergymonitorModule,
+        FenaComponent,
         WeatherModule,
         ModalModule,
         SharedModule,
@@ -112,4 +115,4 @@ import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage
         NavigationInfoComponent,
     ],
 })
-export class LiveModule { }
+export class LiveModule {}

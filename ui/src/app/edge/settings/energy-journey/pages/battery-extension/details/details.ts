@@ -49,7 +49,7 @@ type TableData = {
       }
     }
 
-    .smartPhone-view {
+    .smartphone-view {
       ion-row:not(:first-child):nth-child(odd) {
         background-color: rgba(var(--ion-color-light-rgb), 1);
       }
@@ -72,7 +72,7 @@ export class DetailComponent implements OnInit, OnChanges {
         simulationData: [],
     };
     protected tableData: TableData | null = null;
-    protected isSmartPhoneResolution: boolean = false;
+    protected isSmartphoneResolution: boolean = false;
     protected product: Product | null = null;
 
     private locale: string = "de";
@@ -113,7 +113,7 @@ export class DetailComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit() {
-        this.isSmartPhoneResolution = this.service.isSmartphoneResolution;
+        this.isSmartphoneResolution = this.service.getIsSmartphoneResolution();
         this.locale = this.service.translate.currentLang;
     }
 
