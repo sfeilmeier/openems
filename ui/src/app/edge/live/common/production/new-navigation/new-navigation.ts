@@ -31,27 +31,8 @@ export class CommonProductionHomeComponent extends AbstractFormlyComponent {
 
     public static async getFormlyGeneralView(translate: TranslateService, service: Service, edge: Edge, energyScheduler: EnergySchedulerV2, queryResponse: QueryHistoricTimeseriesEnergyResponse, productionMeterComponents: EdgeConfig.Component[], chargerComponents: EdgeConfig.Component[]): Promise<OeFormlyView> {
         await energyScheduler?.updateSchedule(edge, service.websocket);
-        const futureData = energyScheduler?.getFutureEnergyTillEndOfDayByChannel("ProductionActivePower");
-        const historyData = queryResponse?.result.data["_sum/ProductionActiveEnergy"];
 
         const lines: OeFormlyField[] = [];
-
-        if (edge.id == "fems888") {
-            // TODO use real values
-            lines.push({
-                type: "stats-line",
-                stats: [
-                    // { name: "Beladung", value: "22 kw", description: futureData.toString() },
-                    { name: "Energie Heute", futureValue: futureData, description: "kWh", unit: "kWh", historyValue: historyData },
-                    {
-                        channelsToSubscribe: [new ChannelAddress("_sum", "GridActivePower")], name: "Energie Heute", value: (data) => {
-                            const channelData = data.allComponents[new ChannelAddress("_sum", "GridActivePower").toString()];
-                            return Converter.POWER_IN_KILO_WATT(channelData);
-                        },
-                    },
-                ],
-            });
-        }
 
         lines.push({
             type: "component-line",

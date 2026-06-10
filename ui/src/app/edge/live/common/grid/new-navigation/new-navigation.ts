@@ -9,7 +9,6 @@ import { ChannelAddress, Currency, Edge, EdgeConfig, Service } from "src/app/sha
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { LiveDataService } from "../../../livedataservice";
 import { SharedGrid } from "../shared/shared";
-import { GridBuySellChartComponent } from "./chart/buy-sell-chart";
 import { GridBuyPriceChartComponent } from "./chart/price-buy-price-chart";
 
 @Component({
@@ -36,26 +35,6 @@ export class CommonGridHomeComponent extends AbstractFormlyComponent {
             type: "component-line",
             component: SingleXAxisComponent,
             inputs: {
-                data: energyScheduler.schedule,
-            },
-        }, {
-            type: "horizontal-line",
-        }, {
-            type: "channel-line",
-            name: translate.instant("GENERAL.POWER"),
-            channel: new ChannelAddress("_sum", "GridActivePower").toString(),
-            converter: GRID_BUY_OR_SELL(translate),
-            style: {
-                name: { fontSize: "large" },
-                value: { fontSize: "large" },
-            },
-            cssClass: "ion-padding-top",
-        }, {
-            type: "component-line",
-            component: GridBuySellChartComponent,
-            inputs: {
-                edge: edge,
-                refresh: false,
                 data: energyScheduler.schedule,
             },
         }, {

@@ -92,44 +92,11 @@ export class FenaComponent {
 
         if (predictionData.length !== 0) {
             messages.push(
-                this.getAutarchyMessage(), //
-                this.getEvseSmartEventMessage(),
                 this.getMinMaxGridPriceMessage(edge, config, predictionData),
             );
         }
 
         return messages.filter((e) => e !== null);
-    }
-
-    private getAutarchyMessage(): FenaMessage | null {
-        return {
-            text: "Heute bist du autark - nur mit Sonne und Stromspeicher!",
-        };
-    }
-
-    private getEvseSmartEventMessage(): FenaMessage | null {
-        const locale = Language.getCurrentLanguage().dateFnsLocale;
-        const baseDate = new Date();
-        const date = new Date();
-        date.setHours(7, 0, 0, 0);
-        if (date <= baseDate) {
-            date.setDate(date.getDate() + 1);
-        }
-        const formattedTime = formatRelative(date, baseDate, { locale });
-
-        return {
-            text: "Dein E-Auto wird jetzt so günstig wie möglich beladen, damit Du " + formattedTime + " Uhr losfahren kannst",
-            actions: [
-                {
-                    title: "Smart Event anpassen",
-                    callback: () => this.router.navigate(["evse", "ctrlEvseSingle0"], { relativeTo: this.route }),
-                },
-                {
-                    title: "Heute nicht laden",
-                    callback: () => this.router.navigate(["evse", "ctrlEvseSingle0"], { relativeTo: this.route }),
-                },
-            ],
-        };
     }
 
     private getMinMaxGridPriceMessage(edge: Edge, config: EdgeConfig, predictionData: GetSchedule.Response["result"]["data"]): FenaMessage | null {

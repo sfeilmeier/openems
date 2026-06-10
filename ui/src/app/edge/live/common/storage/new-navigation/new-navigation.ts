@@ -5,7 +5,6 @@ import { IonicModule } from "@ionic/angular";
 import { FormlyModule } from "@ngx-formly/core";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { endOfToday, startOfToday } from "date-fns";
-import { SingleXAxisComponent } from "src/app/shared/components/chart/single-xaxis/single-xaxis";
 import { EnergySchedulerV2 } from "src/app/shared/components/edge/config-components/energy/energy";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { DataService } from "src/app/shared/components/shared/dataservice";
@@ -15,11 +14,8 @@ import { QueryHistoricTimeseriesEnergyRequest } from "src/app/shared/jsonrpc/req
 import { QueryHistoricTimeseriesEnergyResponse } from "src/app/shared/jsonrpc/response/queryHistoricTimeseriesEnergyResponse";
 import { ChannelAddress, CurrentData, Edge, EdgeConfig, Service } from "src/app/shared/shared";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
-import { NumberUtils } from "src/app/shared/utils/number/number-utils";
 import { LiveDataService } from "../../../livedataservice";
 import { SharedStorage } from "../shared/shared";
-import { ChargeDischargeChartComponent } from "./chart/charge-discharge-chart";
-import { SocChartComponent } from "./chart/soc-chart";
 import { CommonStoragePercentagebarComponent } from "./percentagebar/percentagebar";
 
 @Component({
@@ -53,8 +49,6 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
 
     private static async getLines(translate: TranslateService, service: Service, edge: Edge, config: EdgeConfig, energyScheduler: EnergySchedulerV2, energyDate: QueryHistoricTimeseriesEnergyResponse): Promise<OeFormlyField[]> {
         await energyScheduler?.updateSchedule(edge, service.websocket);
-        const chargeFutureEnergy = Math.max(energyScheduler.getFutureEnergyTillEndOfDayByChannelWithConverter("EssDischargePower", value => value != null && value > 0 ? value : null) ?? 0, 0);
-        const dischargeFutureEnergy = Math.max(energyScheduler.getFutureEnergyTillEndOfDayByChannelWithConverter("EssDischargePower", value => value != null && value <= 0 ? value : null) ?? 0, 0);
         const essComponents: EdgeConfig.Component[] = SharedStorage.getEssComponents(config);
         const emergencyReserveComponents: { [essId: string]: EdgeConfig.Component } = config
             .getComponentsByFactory("Controller.Ess.EmergencyCapacityReserve")
@@ -127,75 +121,6 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
         }, []);
 
         const lines: OeFormlyField[] = [];
-
-        if (edge.id == "fems888") {
-            // TODO finalize stats
-            lines.push({
-                type: "stats-line",
-                stats: [
-                    { name: "Beladung heute", futureValue: chargeFutureEnergy, description: "kWh", unit: "kWh", historyValue: NumberUtils.divideSafely(energyDate.result.data["_sum/EssDcChargeEnergy"], 1000) },
-                    { name: "Entladung heute", futureValue: dischargeFutureEnergy, description: "kWh", unit: "kWh", historyValue: NumberUtils.divideSafely(energyDate.result.data["_sum/EssDcDischargeEnergy"], 1000) },
-                ],
-            });
-        }
-
-        lines.push({
-            type: "component-line",
-            component: SingleXAxisComponent,
-            inputs: {
-                data: energyScheduler.schedule,
-            },
-        }, {
-            type: "horizontal-line",
-        }, {
-            type: "channel-line",
-            name: translate.instant("GENERAL.POWER"),
-            channel: new ChannelAddress("_sum", "EssDischargePower").toString(),
-            converter: ESS_CHARGE_OR_DISCHARGE(translate),
-            style: {
-                name: { fontSize: "large" },
-                value: { fontSize: "large" },
-            },
-            cssClass: "ion-padding-top",
-        }, {
-            type: "component-line",
-            component: ChargeDischargeChartComponent,
-            inputs: {
-                edge: edge,
-                refresh: false,
-                data: energyScheduler.schedule,
-            },
-        }, {
-            type: "horizontal-line",
-        }, {
-            type: "channel-line",
-            name: "Ladezustand",
-            channel: new ChannelAddress("_sum", "EssSoc").toString(),
-            converter: Converter.STATE_IN_PERCENT,
-            style: {
-                name: { fontSize: "large" },
-                value: { fontSize: "large", textAlign: "right" },
-            },
-            cssClass: "ion-padding-top",
-        }, {
-            type: "component-line",
-            component: SocChartComponent,
-            inputs: {
-                edge: edge,
-                refresh: false,
-                data: energyScheduler.schedule,
-            },
-        }, {
-            type: "horizontal-line",
-        }, {
-            type: "name-line",
-            name: translate.instant("GENERAL.DETAILS"),
-            style: {
-                name: { fontSize: "large" },
-            },
-            cssClass: "ion-padding-top",
-        });
-
         lines.push(...controllerLines);
         return lines;
     }
