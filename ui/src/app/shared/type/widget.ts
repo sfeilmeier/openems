@@ -3,6 +3,7 @@ import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { EdgePermission } from "../shared";
 import { ArrayUtils } from "../utils/array/array.utils";
+import { Language } from "./language";
 import { Role } from "./role";
 import { TEnumKeys } from "./utility";
 
@@ -103,7 +104,7 @@ export class AdvertWidgets {
             );
         };
 
-        if (edge.roleIsAtLeast(Role.OWNER)) {
+        if (edge.roleIsAtLeast(Role.OWNER) && Language.getCurrentLanguage() === Language.DE) {
             list.push(
                 {
                     name: "advert-2",

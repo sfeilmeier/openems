@@ -1,9 +1,9 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, } from "@angular/core";
 import { ModalController } from "@ionic/angular";
+import { register } from "swiper/element/bundle";
 import { Role } from "src/app/shared/type/role";
 import { AdvertWidget } from "src/app/shared/type/widget";
 import { environment } from "src/environments";
-import { register } from "swiper/element/bundle";
 import { Service } from "../../../shared/shared";
 register();
 
