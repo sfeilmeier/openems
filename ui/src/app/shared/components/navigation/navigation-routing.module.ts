@@ -82,6 +82,7 @@ import { ModalComponent as EvseForecastComponent } from "../../../edge/live/Cont
 import { ModalComponent as EvseHistoryComponent } from "../../../edge/live/Controller/Evse/pages/history/history";
 import { ModalComponent as EvseSingleComponent } from "../../../edge/live/Controller/Evse/pages/home";
 import { UpdateAppConfigComponent } from "../../../edge/live/Controller/Evse/pages/update-app-config/update-app-config";
+import { HeatForecastComponent } from "../../../edge/live/Controller/Heat/forecast/forecast";
 import { ControllerFixDigitalOutputGroupComponent } from "../../../edge/live/Controller/Io/FixDigitalOutput/pages/group/group";
 import { ModalComponent as IoHeatingRoomModalComponent } from "../../../edge/live/Controller/Io/HeatingRoom/modal/modal";
 import { IoHeatingRoomGroupComponent } from "../../../edge/live/Controller/Io/HeatingRoom/pages/group/group";
@@ -353,6 +354,10 @@ export const newNavigationRoutes: Routes = [
     {
         path: "controller/heat/:componentId",
         component: ControllerHeatHomeComponent,
+    },
+    {
+        path: "controller/heat/:componentId/forecast",
+        component: HeatForecastComponent,
     },
     {
         path: "controller/heat/:componentId/history",

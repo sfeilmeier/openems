@@ -1,5 +1,7 @@
 package io.openems.edge.controller.evse.cluster.jsonrpc;
 
+// TODO replace with io.openems.edge.energy/src/io/openems/edge/energy/GetSchedule.java
+
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static io.openems.common.jsonrpc.serialization.JsonSerializerUtil.jsonObjectSerializer;
 import static io.openems.common.utils.JsonUtils.buildJsonObject;
