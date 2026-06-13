@@ -16,6 +16,8 @@ import { SharedControllerPeakShavingSymmetric } from "src/app/edge/live/Controll
 import { SharedControllerTimeslotPeakshaving } from "src/app/edge/live/Controller/peak-shaving/Symmetric_TimeSlot/shared/shared";
 import { SharedSchedulerJsCalendar } from "src/app/edge/live/scheduler/js-calendar/shared-scheduler-js-calendar";
 import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/shared-system-industrial-l";
+import { SharedSystemIndustrialM } from "src/app/edge/live/system/industrial/m/shared-system-industrial-m";
+import { SharedSystemIndustrialS } from "src/app/edge/live/system/industrial/s/shared-system-industrial-s";
 import { SharedSystemIndustrialXl } from "src/app/edge/live/system/industrial/xl/shared-system-industrial-xl";
 import { SharedControllerIoHeatingRoom } from "../../edge/live/Controller/Io/HeatingRoom/shared/shared";
 import { Edge } from "../components/edge/edge";
@@ -147,13 +149,23 @@ export class Widgets {
                     translate,
                     component,
                 );
+            case "System.Fenecon.Industrial.Xl":
+                return SharedSystemIndustrialXl.getNavigationTree(
+                    translate,
+                    widget.componentId,
+                );
             case "System.Fenecon.Industrial.L":
                 return SharedSystemIndustrialL.getNavigationTree(
                     translate,
                     widget.componentId,
                 );
-            case "System.Fenecon.Industrial.Xl":
-                return SharedSystemIndustrialXl.getNavigationTree(
+            case "System.Fenecon.Industrial.M":
+                return SharedSystemIndustrialM.getNavigationTree(
+                    translate,
+                    widget.componentId,
+                );
+            case "System.Fenecon.Industrial.S":
+                return SharedSystemIndustrialS.getNavigationTree(
                     translate,
                     widget.componentId,
                 );

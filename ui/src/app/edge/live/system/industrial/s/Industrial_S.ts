@@ -4,20 +4,16 @@ import { ModalModule } from "src/app/shared/components/modal/modal.module";
 import { SharedModule } from "src/app/shared/shared.module";
 import { FlatComponent } from "./flat/flat";
 import { ModalComponent } from "./modal/modal";
+import { SystemIndustrialSComponent } from "./new-navigation/new-navigation";
 
 @NgModule({
     imports: [
         BrowserModule,
         SharedModule,
         ModalModule,
+        SystemIndustrialSComponent,
     ],
-    declarations: [
-        FlatComponent,
-        ModalComponent,
-    ],
-    exports: [
-        FlatComponent,
-        ModalComponent,
-    ],
+    declarations: [FlatComponent, ModalComponent],
+    exports: [FlatComponent, ModalComponent],
 })
-export class Industrial_S { }
+export class Industrial_S {}

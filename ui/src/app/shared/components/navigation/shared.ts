@@ -589,9 +589,11 @@ export namespace NavigationConstants {
 
     /** The widget factories to show in new navigation */
     export const newWidgets: Widget["name"][] = [
-        "System.Fenecon.Industrial.L",
-        "System.Fenecon.Industrial.Xl",
         "Controller.Io.FixDigitalOutput",
+        "System.Fenecon.Industrial.Xl",
+        "System.Fenecon.Industrial.L",
+        "System.Fenecon.Industrial.M",
+        "System.Fenecon.Industrial.S",
         "Controller.ChannelThreshold",
         "Controller.IO.HeatingElement",
         "Controller.Ess.FixActivePower",

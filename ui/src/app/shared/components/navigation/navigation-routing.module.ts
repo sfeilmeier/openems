@@ -64,11 +64,13 @@ import { SchedulerJsCalendarComponent } from "src/app/edge/live/scheduler/js-cal
 import { ScheduleJsCalendarComponent } from "src/app/edge/live/scheduler/js-calendar/schedule/schedule.component";
 import { SchedulerJsCalendarAddTaskComponent } from "src/app/edge/live/scheduler/js-calendar/schedule/task/add/add";
 import { SchedulerJsCalendarEditTaskComponent } from "src/app/edge/live/scheduler/js-calendar/schedule/task/edit/edit";
-import { SystemIndustrialLHomeComponent } from "src/app/edge/live/system/industrial/l/new-navigation/new-navigation";
+import { SystemIndustrialLComponent } from "src/app/edge/live/system/industrial/l/new-navigation/new-navigation";
 import { IndustrialLScheduleComponent as SystemIndustrialLScheduleComponent } from "src/app/edge/live/system/industrial/l/schedule/schedule.component";
 import { SystemIndustrialLAddTaskComponent } from "src/app/edge/live/system/industrial/l/schedule/task/add/add";
 import { SystemIndustrialLEditTaskComponent } from "src/app/edge/live/system/industrial/l/schedule/task/edit/edit";
-import { SystemIndustrialXlHomeComponent } from "src/app/edge/live/system/industrial/xl/new-navigation/new-navigation";
+import { SystemIndustrialMComponent } from "src/app/edge/live/system/industrial/m/new-navigation/new-navigation";
+import { SystemIndustrialSComponent } from "src/app/edge/live/system/industrial/s/new-navigation/new-navigation";
+import { SystemIndustrialXlComponent } from "src/app/edge/live/system/industrial/xl/new-navigation/new-navigation";
 import { CurrentVoltageOverviewComponent } from "src/app/shared/components/edge/meter/currentVoltage/new-navigation/new-navigation";
 import { hasEdgeRole, hasUserSettings, } from "src/app/shared/guards/functional-guards";
 import { Role } from "src/app/shared/type/role";
@@ -425,7 +427,7 @@ export const newNavigationRoutes: Routes = [
     },
     {
         path: ":componentId/industrial-l",
-        component: SystemIndustrialLHomeComponent,
+        component: SystemIndustrialLComponent,
     },
     {
         path: ":componentId/industrial-l/schedule",
@@ -449,7 +451,15 @@ export const newNavigationRoutes: Routes = [
     },
     {
         path: ":componentId/industrial-xl",
-        component: SystemIndustrialXlHomeComponent,
+        component: SystemIndustrialXlComponent,
+    },
+    {
+        path: ":componentId/industrial-m",
+        component: SystemIndustrialMComponent,
+    },
+    {
+        path: ":componentId/industrial-s",
+        component: SystemIndustrialSComponent,
     },
     ...history(true),
 ];
