@@ -7,14 +7,10 @@ import { SharedWeather } from "src/app/edge/live/common/weather/shared/shared";
 import { SharedControllerChannelThreshold } from "src/app/edge/live/Controller/Channelthreshold/shared/shared";
 import { ControllerEvseSingleShared } from "src/app/edge/live/Controller/Evse/shared/shared";
 import { SharedControllerHeat } from "src/app/edge/live/Controller/Heat/shared/shared";
+import { SharedControllerBraiins } from "src/app/edge/live/Controller/Io/Braiins/shared/shared";
 import { SharedControllerIoFixDigitalOutput } from "src/app/edge/live/Controller/Io/FixDigitalOutput/shared/shared";
 import { SharedControllerIoHeatingElement } from "src/app/edge/live/Controller/Io/HeatingElement/shared/shared";
 import { SharedControllerIoHeatpump } from "src/app/edge/live/Controller/Io/Heatpump/shared/shared";
-import { SharedControllerModbusTcpApiReadWrite } from "src/app/edge/live/Controller/ModbusTcpApi/shared/shared";
-import { SharedControllerPeakShavingAsymmetric } from "src/app/edge/live/Controller/peak-shaving/Asymmetric/shared/shared";
-import { SharedControllerPeakShavingSymmetric } from "src/app/edge/live/Controller/peak-shaving/symmetric/shared/shared";
-import { SharedControllerTimeslotPeakshaving } from "src/app/edge/live/Controller/peak-shaving/Symmetric_TimeSlot/shared/shared";
-import { SharedSchedulerJsCalendar } from "src/app/edge/live/scheduler/js-calendar/shared-scheduler-js-calendar";
 import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/shared-system-industrial-l";
 import { SharedSystemIndustrialM } from "src/app/edge/live/system/industrial/m/shared-system-industrial-m";
 import { SharedSystemIndustrialS } from "src/app/edge/live/system/industrial/s/shared-system-industrial-s";
@@ -53,6 +49,10 @@ export class Widgets {
             grouped:
                 SharedControllerIoFixDigitalOutput.getGroupedNavigationTree,
             single: SharedControllerIoFixDigitalOutput.getNavigationTree,
+        },
+        "Controller.BraiinsOS.Single": {
+            grouped: SharedControllerBraiins.getGroupedNavigationTree,
+            single: SharedControllerBraiins.getNavigationTree,
         },
     };
 
@@ -117,18 +117,8 @@ export class Widgets {
         }
 
         switch (widget.name) {
-            case "Controller.Api.ModbusTcp.ReadWrite":
-                return SharedControllerModbusTcpApiReadWrite.getNavigationTree(
-                    translate,
-                    component,
-                );
             case "Weather.OpenMeteo":
                 return SharedWeather.getNavigationTree(translate, component);
-            case "Controller.TimeslotPeakshaving":
-                return SharedControllerTimeslotPeakshaving.getNavigationTree(
-                    translate,
-                    component,
-                );
             case "Controller.IO.HeatingElement":
                 return SharedControllerIoHeatingElement.getNavigationTree(
                     translate,
@@ -136,16 +126,6 @@ export class Widgets {
                 );
             case "Controller.Io.HeatPump.SgReady":
                 return SharedControllerIoHeatpump.getNavigationTree(
-                    translate,
-                    component,
-                );
-            case "Controller.Symmetric.PeakShaving":
-                return SharedControllerPeakShavingSymmetric.getNavigationTree(
-                    translate,
-                    component,
-                );
-            case "Controller.Asymmetric.PeakShaving":
-                return SharedControllerPeakShavingAsymmetric.getNavigationTree(
                     translate,
                     component,
                 );
@@ -187,11 +167,6 @@ export class Widgets {
                     component,
                     false,
                 );
-            case "Scheduler.JSCalendar":
-                return SharedSchedulerJsCalendar.getNavigationTree(
-                    translate,
-                    widget.componentId,
-                );
             case "Evse.Controller.Single":
                 return ControllerEvseSingleShared.getNavigationTree(
                     edge,
@@ -207,20 +182,6 @@ export class Widgets {
             default:
                 return null;
         }
-    }
-
-    public static getGroupedControllerNavigationTree(
-        widgetName: Widget["name"],
-        translate: TranslateService,
-        componentIds: Widget["componentId"][],
-        config: EdgeConfig,
-    ): ConstructorParameters<typeof NavigationTree> | null {
-        const groupedFactory = Widgets.GROUPED_FACTORIES[widgetName];
-        if (groupedFactory == null) {
-            return null;
-        }
-
-        return groupedFactory.grouped(translate, componentIds, config);
     }
 
     public static parseWidgets(edge: Edge, config: EdgeConfig): Widgets {

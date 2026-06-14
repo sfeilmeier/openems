@@ -4,22 +4,19 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 import { FormlyModule } from "@ngx-formly/core";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
-import { endOfToday, startOfToday } from "date-fns";
 import { SingleXAxisComponent } from "src/app/shared/components/chart/single-xaxis/single-xaxis";
 import { EnergySchedulerV2 } from "src/app/shared/components/edge/config-components/energy/energy";
+import { GetSchedule } from "src/app/shared/components/edge/config-components/energy/getSchedule";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Name } from "src/app/shared/components/shared/name";
 import { AbstractFormlyComponent, OeFormlyField, OeFormlyView, } from "src/app/shared/components/shared/oe-formly-component";
-import { QueryHistoricTimeseriesEnergyRequest } from "src/app/shared/jsonrpc/request/queryHistoricTimeseriesEnergyRequest";
-import { QueryHistoricTimeseriesEnergyResponse } from "src/app/shared/jsonrpc/response/queryHistoricTimeseriesEnergyResponse";
 import { ChannelAddress, CurrentData, Edge, EdgeConfig, Service, } from "src/app/shared/shared";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
-import { NumberUtils } from "src/app/shared/utils/number/number-utils";
-import { PromiseUtils } from "src/app/shared/utils/promise/promise.utils";
 import { LiveDataService } from "../../../livedataservice";
 import { SharedStorage } from "../shared/shared";
 import { ChargeDischargeChartComponent } from "./chart/charge-discharge-chart";
+import { ModeChartComponent } from "./chart/mode-chart";
 import { SocChartComponent } from "./chart/soc-chart";
 import { CommonStoragePercentagebarComponent } from "./percentagebar/percentagebar";
 
@@ -47,7 +44,6 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
         edge: Edge,
         config: EdgeConfig,
         energyScheduler: EnergySchedulerV2,
-        energyDate: QueryHistoricTimeseriesEnergyResponse,
     ): Promise<OeFormlyView> {
         return {
             title: translate.instant("GENERAL.STORAGE_SYSTEM"),
@@ -58,7 +54,6 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
                 edge,
                 config,
                 energyScheduler,
-                energyDate,
             ),
             component: new EdgeConfig.Component(),
             useDefaultPrefix: false,
@@ -72,23 +67,8 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
         edge: Edge,
         config: EdgeConfig,
         energyScheduler: EnergySchedulerV2,
-        energyDate: QueryHistoricTimeseriesEnergyResponse,
     ): Promise<OeFormlyField[]> {
         await energyScheduler?.updateSchedule(edge, service.websocket);
-        const chargeFutureEnergy = Math.max(
-            energyScheduler.getFutureEnergyTillEndOfDayByChannelWithConverter(
-                "EssDischargePower",
-                (value) => (value != null && value > 0 ? value : null),
-            ) ?? 0,
-            0,
-        );
-        const dischargeFutureEnergy = Math.max(
-            energyScheduler.getFutureEnergyTillEndOfDayByChannelWithConverter(
-                "EssDischargePower",
-                (value) => (value != null && value <= 0 ? value : null),
-            ) ?? 0,
-            0,
-        );
         const essComponents: EdgeConfig.Component[] =
             SharedStorage.getEssComponents(config);
         const emergencyReserveComponents: {
@@ -210,104 +190,126 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
 
         const lines: OeFormlyField[] = [];
 
-        if (edge.id == "fems888") {
-            // TODO finalize stats
-            lines.push({
-                type: "stats-line",
-                stats: [
-                    {
-                        name: "Beladung heute",
-                        futureValue: chargeFutureEnergy,
-                        description: "kWh",
-                        unit: "kWh",
-                        historyValue: NumberUtils.divideSafely(
-                            energyDate.result.data["_sum/EssDcChargeEnergy"],
-                            1000,
-                        ),
-                    },
-                    {
-                        name: "Entladung heute",
-                        futureValue: dischargeFutureEnergy,
-                        description: "kWh",
-                        unit: "kWh",
-                        historyValue: NumberUtils.divideSafely(
-                            energyDate.result.data["_sum/EssDcDischargeEnergy"],
-                            1000,
-                        ),
-                    },
-                ],
-            });
-        }
+        // if (edge.id == "fems888") {
+        //     // TODO finalize stats
+        //     lines.push({
+        //         type: "stats-line",
+        //         stats: [
+        //             {
+        //                 name: "Beladung heute",
+        //                 futureValue: chargeFutureEnergy,
+        //                 description: "kWh",
+        //                 unit: "kWh",
+        //                 historyValue: NumberUtils.divideSafely(
+        //                     energyDate.result.data["_sum/EssDcChargeEnergy"],
+        //                     1000,
+        //                 ),
+        //             },
+        //             {
+        //                 name: "Entladung heute",
+        //                 futureValue: dischargeFutureEnergy,
+        //                 description: "kWh",
+        //                 unit: "kWh",
+        //                 historyValue: NumberUtils.divideSafely(
+        //                     energyDate.result.data["_sum/EssDcDischargeEnergy"],
+        //                     1000,
+        //                 ),
+        //             },
+        //         ],
+        //     });
+        // }
 
-        lines.push(
-            {
-                type: "component-line",
-                component: SingleXAxisComponent,
-                inputs: {
-                    data: energyScheduler.schedule,
+        if (energyScheduler.schedule !== GetSchedule.Response.empty) {
+            lines.push(
+                {
+                    type: "component-line",
+                    component: SingleXAxisComponent,
+                    inputs: {
+                        data: energyScheduler.schedule,
+                    },
                 },
-            },
-            {
-                type: "horizontal-line",
-            },
-            {
-                type: "channel-line",
-                name: translate.instant("GENERAL.POWER"),
-                channel: new ChannelAddress(
-                    "_sum",
-                    "EssDischargePower",
-                ).toString(),
-                converter: ESS_CHARGE_OR_DISCHARGE(translate),
-                style: {
-                    name: { fontSize: "large" },
-                    value: { fontSize: "large" },
+                {
+                    type: "horizontal-line",
                 },
-                cssClass: "ion-padding-top",
-            },
-            {
-                type: "component-line",
-                component: ChargeDischargeChartComponent,
-                inputs: {
-                    edge: edge,
-                    refresh: false,
-                    data: energyScheduler.schedule,
+                {
+                    type: "channel-line",
+                    name: translate.instant("GENERAL.POWER"),
+                    channel: new ChannelAddress(
+                        "_sum",
+                        "EssDischargePower",
+                    ).toString(),
+                    converter: ESS_CHARGE_OR_DISCHARGE(translate),
+                    style: {
+                        name: { fontSize: "large" },
+                        value: { fontSize: "large" },
+                    },
+                    cssClass: "ion-padding-top",
                 },
-            },
-            {
-                type: "horizontal-line",
-            },
-            {
-                type: "channel-line",
-                name: "Ladezustand",
-                channel: new ChannelAddress("_sum", "EssSoc").toString(),
-                converter: Converter.STATE_IN_PERCENT,
-                style: {
-                    name: { fontSize: "large" },
-                    value: { fontSize: "large", textAlign: "right" },
+                {
+                    type: "component-line",
+                    component: ChargeDischargeChartComponent,
+                    inputs: {
+                        edge: edge,
+                        refresh: false,
+                        data: energyScheduler.schedule,
+                    },
                 },
-                cssClass: "ion-padding-top",
-            },
-            {
-                type: "component-line",
-                component: SocChartComponent,
-                inputs: {
-                    edge: edge,
-                    refresh: false,
-                    data: energyScheduler.schedule,
+                {
+                    type: "horizontal-line",
                 },
-            },
-            {
-                type: "horizontal-line",
-            },
-            {
-                type: "name-line",
-                name: translate.instant("GENERAL.DETAILS"),
-                style: {
-                    name: { fontSize: "large" },
+                {
+                    type: "channel-line",
+                    name: "Ladezustand",
+                    channel: new ChannelAddress("_sum", "EssSoc").toString(),
+                    converter: Converter.STATE_IN_PERCENT,
+                    style: {
+                        name: { fontSize: "large" },
+                        value: { fontSize: "large", textAlign: "right" },
+                    },
+                    cssClass: "ion-padding-top",
                 },
-                cssClass: "ion-padding-top",
-            },
-        );
+                {
+                    type: "component-line",
+                    component: SocChartComponent,
+                    inputs: {
+                        edge: edge,
+                        refresh: false,
+                        data: energyScheduler.schedule,
+                    },
+                },
+                {
+                    type: "horizontal-line",
+                },
+                {
+                    type: "name-line",
+                    name: translate.instant("GENERAL.MODE"),
+                    style: {
+                        name: { fontSize: "large" },
+                    },
+                    cssClass: "ion-padding-top",
+                },
+                {
+                    type: "component-line",
+                    component: ModeChartComponent,
+                    inputs: {
+                        edge: edge,
+                        refresh: false,
+                        data: energyScheduler.schedule,
+                    },
+                },
+                {
+                    type: "horizontal-line",
+                },
+                {
+                    type: "name-line",
+                    name: translate.instant("GENERAL.DETAILS"),
+                    style: {
+                        name: { fontSize: "large" },
+                    },
+                    cssClass: "ion-padding-top",
+                },
+            );
+        }
 
         lines.push(...controllerLines);
         return lines;
@@ -326,40 +328,6 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
         const config = edge.getCurrentConfig();
         AssertionUtils.assertIsDefined(config);
 
-        const request = new QueryHistoricTimeseriesEnergyRequest(
-            startOfToday(),
-            endOfToday(),
-            [
-                new ChannelAddress("_sum", "EssDcChargeEnergy"),
-                new ChannelAddress("_sum", "EssDcDischargeEnergy"),
-            ],
-        );
-
-        // In case the request fails (e.g. because the system is new and doesn't have historical data yet), we return a fallback response with 0 values to still be able to show the rest of the view.
-        const fallbackResponse = new QueryHistoricTimeseriesEnergyResponse(
-            "fallback-id",
-            {
-                data: {
-                    "_sum/EssDcChargeEnergy": 0,
-                    "_sum/EssDcDischargeEnergy": 0,
-                },
-            },
-        );
-
-        const [error, historyData] = await PromiseUtils.Functions.handleOrElse(
-            edge.sendRequest<QueryHistoricTimeseriesEnergyResponse>(
-                this.service.websocket,
-                request,
-            ),
-            fallbackResponse,
-        );
-
-        if (error) {
-            console.warn(
-                "Historic energy data unavailable (system might be new).",
-                error,
-            );
-        }
         const energy = new EnergySchedulerV2(config);
 
         return await CommonStorageHomeComponent.getFormlyGeneralView(
@@ -368,7 +336,6 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
             edge,
             config,
             energy,
-            historyData,
         );
     }
 
