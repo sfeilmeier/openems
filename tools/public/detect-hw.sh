@@ -25,6 +25,8 @@
 # CONFIG_BOARD_CODE=6e7d2a69949265af810fbd2209fb862f62d5
 # PCB_ID_LENGTH=20
 # PCB_ID=0425X5HFV1.0.0P62549
+# // Optional
+# FIONA_DETECTED_HW=techbase-cm4s-gen3
 
 set -e
 
@@ -34,6 +36,13 @@ HW_REVISION="/etc/hardware_revision"
 function read_hardware {
   HARDWARE=$(grep "^NPE_HARDWARE=" "$HW_REVISION" | cut -d'=' -f2)
   CONFIGURATION=$(grep "^CONFIGURATION_DEVICE=" "$HW_REVISION" | cut -d'=' -f2)
+  FIONA_DETECTED_HW=$(grep "^FIONA_DETECTED_HW=" "$HW_REVISION" | cut -d'=' -f2)
+
+  case "$FIONA_DETECTED_HW" in
+    "techbase-cm4s-gen3") echo "App.OpenemsHardware.CM4S.Gen3"; return;;
+    "techbase-cm3") echo "App.OpenemsHardware.CM3"; return;;
+    "techbase-cm4-max") echo "App.OpenemsHardware.CM4Max"; return;;
+  esac
 
   case "$HARDWARE" in
     "NPE-X500-M3"*) 
