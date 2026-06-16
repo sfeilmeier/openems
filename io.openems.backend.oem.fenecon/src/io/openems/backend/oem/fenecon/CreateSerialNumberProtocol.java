@@ -4,9 +4,11 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -36,14 +38,20 @@ import io.openems.common.types.EdgeConfig;
 })
 public class CreateSerialNumberProtocol implements EventHandler, DebugLoggable {
 
+	private static final Set<String> TEST_EDGES = Set.of("fems54312", "fems92637", "fems85861", "fems85862",
+			"fems38000", "fems66271", "fems82667", "fems83403", "fems79891", "fems38532");
+
 	private final Logger log = LoggerFactory.getLogger(CreateSerialNumberProtocol.class);
 
 	private final LatestTaskPerKeyExecutor<String> executor = new LatestTaskPerKeyExecutor<>(
 			(ThreadPoolExecutor) Executors.newFixedThreadPool(1, Thread.ofVirtual().factory()));
 	private final AtomicInteger createdProtocolsCounter = new AtomicInteger();
 
+	private final Metadata metadata;
+
 	@Activate
 	public CreateSerialNumberProtocol(@Reference Metadata metadata) {
+		this.metadata = metadata;
 	}
 
 	@Override
@@ -94,10 +102,11 @@ public class CreateSerialNumberProtocol implements EventHandler, DebugLoggable {
 							toMap(t -> "Batteriemodul " + (t.getKey().module()) + " Seriennummer", Entry::getValue)));
 
 			// TODO enable once live validated
-			// this.metadata.createSerialNumberExtensionProtocol(edge.getId(),
-			// protocolValues, List.of(//
-			// new SetupProtocolItem("FEMS", "FEMS Nummer", edge.getId()) //
-			// ));
+			if (TEST_EDGES.contains(edgeId)) {
+				this.metadata.createSerialNumberExtensionProtocol(edgeId, protocolValues, List.of(//
+						new Metadata.SetupProtocolItem("FEMS", "FEMS Nummer", edgeId) //
+				));
+			}
 			this.log.info("Created serial number protocol for {}, entries={}", edgeId, protocolValues);
 			this.createdProtocolsCounter.incrementAndGet();
 		});
