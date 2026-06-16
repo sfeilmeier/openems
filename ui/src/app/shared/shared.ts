@@ -432,6 +432,15 @@ export class UserPermission {
             edge.isVersionAtLeast("2025.5.4") && edge.roleIsAtLeast(Role.ADMIN)
         );
     }
+
+    public static isUserAllowedToSeeMyPortal(user: User): boolean {
+        // TODO INTERSOLAR
+        if (user?.id === "intersolar@fenecon.de") {
+            return true;
+        }
+
+        return user.settings?.["hasPortalAccess"] ?? false;
+    }
 }
 
 export enum Producttype {

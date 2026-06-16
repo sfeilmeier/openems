@@ -1,18 +1,17 @@
 @if (isInitialized) {
-  <oe-navigation-view [title]="Help">
-
+  <oe-navigation-view>
     <div class="ion-padding ion-text-wrap ion-font">
-
       <!-- Icon -->
-      <ion-icon name="information-outline" class="ion-margin-bottom ion-color-primary"
-        style="font-size: 2rem;"></ion-icon>
+      @if (isGlobalInfo()) {
+        <ion-icon name="information-outline" class="ion-color-primary" style="font-size: 2rem"></ion-icon>
+      }
 
-      @if (docs !== null){
+      @if (docs !== null) {
         <ion-grid class="ion-no-padding-left-right">
           <ion-row class="ion-no-padding-left-right">
             <ion-col class="ion-no-padding-left-right">
               <ion-button [href]="docs.link" target="_blank" fill="outline">
-                @if (docs.icon !== null){
+                @if (docs.icon !== null) {
                   <ion-icon slot="start" [name]="docs.icon.name"></ion-icon>
                 }
                 <ion-label>{{ docs.displayName }}</ion-label>
@@ -20,33 +19,47 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-
-
         <oe-flat-widget-horizontal-line></oe-flat-widget-horizontal-line>
       }
-      <!-- Text -->
-      <p class="ion-margin-bottom" translate>
-        GENERAL.NAVIGATION_INFO
-      </p>
-
-      <p class="ion-margin-bottom" translate>
-        GENERAL.NAVIGATION_DETAILS
-      </p>
-
-      <p>
-        <strong translate>GENERAL.LINK</strong><br>
-        <a href="{{link}}" translate>
-          GENERAL.LINK_TEXT
-        </a>
-      </p>
-
-      <p>
-        <strong translate>GENERAL.SURVEY</strong><br>
-        <a href="{{linkSurvey}}" translate>
-          GENERAL.SURVEY_LINK
-        </a>
-      </p>
-
     </div>
+
+    <ion-grid>
+      <ion-row class="ion-padding-left ion-padding-right">
+        @for (card of cards(); track card.buttonText) {
+          <ion-col size-lg="5" size-md="6" size-sm="12">
+            <p style="margin-left: 1em; margin-top: 0; min-height: 3em">
+              {{ card.infoText }}
+            </p>
+            <ion-card style="border-radius: 1em; opacity: 0.9">
+              <ion-icon [name]="card.iconName" style="font-size: 8rem; display: block; margin: 2% auto 0; color: var(--ion-color-primary)"></ion-icon>
+              <ion-card-content>
+                <div style="color: var(--ion-card-content)">
+                  {{ card.contentText }}
+                  <ion-row class="full_width align_right">
+                    <ion-col class="align_right full_width">
+                      <ion-item lines="none" class="ion-float-right">
+                        <ion-button fill="solid" style="text-transform: none" [href]="card.buttonHref" target="_blank">
+                          @if (card.buttonIconName) {
+                            <ion-icon [name]="card.buttonIconName"></ion-icon>
+                          }
+                          <ion-label style="margin-left: 1em">{{ card.buttonText }}</ion-label>
+                        </ion-button>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </div>
+              </ion-card-content>
+            </ion-card>
+
+            @if (card.footer) {
+              <p style="margin-left: 1em">
+                {{ card.footer.text }}<br />
+                <a [href]="card.footer.link" target="_blank">{{ card.footer.linkText }}</a>
+              </p>
+            }
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
   </oe-navigation-view>
 }

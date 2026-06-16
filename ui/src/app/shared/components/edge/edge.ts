@@ -926,7 +926,10 @@ export class Edge {
             NavigationId.LIVE,
             new NavigationTree(
                 "navigation-info",
-                { baseString: "navigation-info" },
+                {
+                    baseString: "navigation-info",
+                    queryParams: { source: "global" },
+                },
                 { name: "information-outline" },
                 translate.instant("GENERAL.HELP"),
                 "label",
