@@ -1,6 +1,19 @@
 [
     {
-        "version": "2026.5.1",
+        "version": "2026.6.2",
+        "entries": {
+            "de": [
+                "Online-Monitoring/FENECON App: Allgemeine Verbesserungen",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest (E-Mobility)</a>: Migration der Widgets für Hochlastzeitfenster, Modbus/TCP Schreibzugriff, Enerix Control; Visualisierung des Energiefahrplans"
+            ],
+            "en": [
+                "Online-Monitoring/FENECON App: General improvements",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Field Test (E-Mobility)</a>: Migration of widgets for peak-load-time-window, Modbus/TCP write access, Enerix Control; visualization of the energy schedule"
+            ]
+        }
+    },
+    {
+        "version": "2026.6.1",
         "entries": {
             "de": [
                 "Allgemeine technische Verbesserungen",
