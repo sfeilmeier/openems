@@ -7,6 +7,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { AbstractHistoryChartOverview } from "src/app/shared/components/chart/abstractHistoryChartOverview";
 import { ChartComponentsModule } from "src/app/shared/components/chart/chart.module";
 import { HistoryDataErrorModule } from "src/app/shared/components/history-data-error/history-data-error.module";
+import { SingleChartComponent } from "../chart/singlechart.component";
 
 @Component({
     selector: "oe-controller-channelthreshold-overview",
@@ -20,7 +21,7 @@ import { HistoryDataErrorModule } from "src/app/shared/components/history-data-e
         ChartComponentsModule,
         HistoryDataErrorModule,
         NgxSpinnerModule,
+        SingleChartComponent,
     ],
 })
-export class ControllerChannelthresholdHistoryComponent extends AbstractHistoryChartOverview {
-}
+export class ControllerChannelthresholdHistoryComponent extends AbstractHistoryChartOverview {}

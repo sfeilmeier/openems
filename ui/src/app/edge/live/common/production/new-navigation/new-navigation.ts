@@ -2,72 +2,128 @@ import { Component } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { endOfToday, startOfToday } from "date-fns";
 import { SingleXAxisComponent } from "src/app/shared/components/chart/single-xaxis/single-xaxis";
-import { EnergySchedulerV2 as EnergyScheduler, EnergySchedulerV2 } from "src/app/shared/components/edge/config-components/energy/energy";
+import { EnergySchedulerV2 as EnergyScheduler, EnergySchedulerV2, } from "src/app/shared/components/edge/config-components/energy/energy";
+import { GetSchedule } from "src/app/shared/components/edge/config-components/energy/getSchedule";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Name } from "src/app/shared/components/shared/name";
-import { AbstractFormlyComponent, OeFormlyField, OeFormlyView } from "src/app/shared/components/shared/oe-formly-component";
+import { AbstractFormlyComponent, OeFormlyField, OeFormlyView, } from "src/app/shared/components/shared/oe-formly-component";
 import { QueryHistoricTimeseriesEnergyRequest } from "src/app/shared/jsonrpc/request/queryHistoricTimeseriesEnergyRequest";
 import { QueryHistoricTimeseriesEnergyResponse } from "src/app/shared/jsonrpc/response/queryHistoricTimeseriesEnergyResponse";
-import { ChannelAddress, Edge, EdgeConfig, Service } from "src/app/shared/shared";
+import { ChannelAddress, Edge, EdgeConfig, Service, } from "src/app/shared/shared";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { LiveDataService } from "../../../livedataservice";
 import { ProductionChartComponent } from "./chart/production-chart-component";
 
 @Component({
     selector: "oe-common-production-new-navigation",
-    templateUrl: "../../../../../shared/components/formly/formly-field-modal/template.html",
+    templateUrl:
+        "../../../../../shared/components/formly/formly-field-modal/template.html",
     standalone: false,
-    providers: [
-        { provide: DataService, useClass: LiveDataService },
-    ],
+    providers: [{ provide: DataService, useClass: LiveDataService }],
 })
 export class CommonProductionHomeComponent extends AbstractFormlyComponent {
-
-    protected override formlyWrapper: "formly-field-modal" | "formly-field-navigation" = "formly-field-navigation";
+    protected override formlyWrapper:
+        | "formly-field-modal"
+        | "formly-field-navigation" = "formly-field-navigation";
 
     protected productionMeterComponents: EdgeConfig.Component[] = [];
     protected chargerComponents: EdgeConfig.Component[] = [];
 
-    public static async getFormlyGeneralView(translate: TranslateService, service: Service, edge: Edge, energyScheduler: EnergySchedulerV2, queryResponse: QueryHistoricTimeseriesEnergyResponse, productionMeterComponents: EdgeConfig.Component[], chargerComponents: EdgeConfig.Component[]): Promise<OeFormlyView> {
+    public static async getFormlyGeneralView(
+        translate: TranslateService,
+        service: Service,
+        edge: Edge,
+        energyScheduler: EnergySchedulerV2,
+        queryResponse: QueryHistoricTimeseriesEnergyResponse,
+        productionMeterComponents: EdgeConfig.Component[],
+        chargerComponents: EdgeConfig.Component[],
+    ): Promise<OeFormlyView> {
         await energyScheduler?.updateSchedule(edge, service.websocket);
 
         const lines: OeFormlyField[] = [];
 
-        lines.push({
-            type: "component-line",
-            component: SingleXAxisComponent,
-            inputs: {
-                data: energyScheduler?.schedule,
-            },
-        }, {
-            type: "channel-line",
-            name: translate.instant("GENERAL.POWER"),
-            channel: new ChannelAddress("_sum", "ProductionActivePower").toString(),
-            converter: Converter.POWER_IN_KILO_WATT,
-            style: {
-                name: { fontSize: "large" },
-                value: { fontSize: "large" },
-            },
-            cssClass: "ion-padding-top",
-        }, {
-            type: "component-line",
-            component: ProductionChartComponent,
-            inputs: {
-                edge: edge,
-                refresh: false,
-                data: energyScheduler?.schedule,
-            },
-        }, {
-            type: "horizontal-line",
-        }, {
-            type: "name-line",
-            name: translate.instant("GENERAL.DETAILS"),
-            style: {
-                name: { fontSize: "large" },
-            },
-            cssClass: "ion-padding-top",
-        });
+        // if (edge.id == "fems888") {
+        //     // TODO use real values
+        //     lines.push({
+        //         type: "stats-line",
+        //         stats: [
+        //             // { name: "Beladung", value: "22 kw", description: futureData.toString() },
+        //             {
+        //                 name: "Energie Heute",
+        //                 futureValue: futureData,
+        //                 description: "kWh",
+        //                 unit: "kWh",
+        //                 historyValue: historyData,
+        //             },
+        //             {
+        //                 channelsToSubscribe: [
+        //                     new ChannelAddress("_sum", "GridActivePower"),
+        //                 ],
+        //                 name: "Energie Heute",
+        //                 value: (data) => {
+        //                     const channelData =
+        //                         data.allComponents[
+        //                             new ChannelAddress(
+        //                                 "_sum",
+        //                                 "GridActivePower",
+        //                             ).toString()
+        //                         ];
+        //                     return Converter.POWER_IN_KILO_WATT(channelData);
+        //                 },
+        //             },
+        //         ],
+        //     });
+        // }
+
+        if (energyScheduler.schedule !== GetSchedule.Response.empty) {
+            lines.push(
+                {
+                    type: "component-line",
+                    component: SingleXAxisComponent,
+                    inputs: {
+                        data: energyScheduler?.schedule,
+                    },
+                },
+                {
+                    type: "horizontal-line",
+                },
+                {
+                    type: "channel-line",
+                    name: translate.instant("GENERAL.POWER"),
+                    channel: new ChannelAddress(
+                        "_sum",
+                        "ProductionActivePower",
+                    ).toString(),
+                    converter: Converter.POWER_IN_KILO_WATT,
+                    style: {
+                        name: { fontSize: "large" },
+                        value: { fontSize: "large" },
+                    },
+                    cssClass: "ion-padding-top",
+                },
+                {
+                    type: "component-line",
+                    component: ProductionChartComponent,
+                    inputs: {
+                        edge: edge,
+                        refresh: false,
+                        data: energyScheduler?.schedule,
+                    },
+                },
+                {
+                    type: "horizontal-line",
+                },
+                {
+                    type: "name-line",
+                    name: translate.instant("GENERAL.DETAILS"),
+                    style: {
+                        name: { fontSize: "large" },
+                    },
+                    cssClass: "ion-padding-top",
+                },
+            );
+        }
 
         for (const meter of productionMeterComponents) {
             lines.push({
@@ -81,7 +137,10 @@ export class CommonProductionHomeComponent extends AbstractFormlyComponent {
             lines.push({
                 type: "channel-line",
                 name: Name.METER_ALIAS_OR_ID(charger),
-                channel: new ChannelAddress(charger.id, "ActualPower").toString(),
+                channel: new ChannelAddress(
+                    charger.id,
+                    "ActualPower",
+                ).toString(),
                 converter: Converter.POWER_IN_KILO_WATT,
             });
         }
@@ -102,14 +161,21 @@ export class CommonProductionHomeComponent extends AbstractFormlyComponent {
         AssertionUtils.assertIsDefined(config);
 
         // Get Chargers
-        this.chargerComponents =
-            config.getComponentsImplementingNature("io.openems.edge.ess.dccharger.api.EssDcCharger")
-                .filter(component => component.isEnabled);
+        this.chargerComponents = config
+            .getComponentsImplementingNature(
+                "io.openems.edge.ess.dccharger.api.EssDcCharger",
+            )
+            .filter((component) => component.isEnabled);
 
         // Get productionMeters
-        this.productionMeterComponents =
-            config.getComponentsImplementingNature("io.openems.edge.meter.api.ElectricityMeter")
-                .filter(component => component.isEnabled && config.isProducer(component));
+        this.productionMeterComponents = config
+            .getComponentsImplementingNature(
+                "io.openems.edge.meter.api.ElectricityMeter",
+            )
+            .filter(
+                (component) =>
+                    component.isEnabled && config.isProducer(component),
+            );
 
         const energy = new EnergyScheduler(config);
         const request = new QueryHistoricTimeseriesEnergyRequest(
@@ -117,8 +183,20 @@ export class CommonProductionHomeComponent extends AbstractFormlyComponent {
             endOfToday(),
             [new ChannelAddress("_sum", "ProductionActiveEnergy")],
         );
-        const historyData = await edge.sendRequest<QueryHistoricTimeseriesEnergyResponse>(this.service.websocket, request);
+        const historyData =
+            await edge.sendRequest<QueryHistoricTimeseriesEnergyResponse>(
+                this.service.websocket,
+                request,
+            );
 
-        return CommonProductionHomeComponent.getFormlyGeneralView(this.translate, this.service, edge, energy, historyData, this.productionMeterComponents, this.chargerComponents);
+        return CommonProductionHomeComponent.getFormlyGeneralView(
+            this.translate,
+            this.service,
+            edge,
+            energy,
+            historyData,
+            this.productionMeterComponents,
+            this.chargerComponents,
+        );
     }
 }

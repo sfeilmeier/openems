@@ -6,9 +6,9 @@ import static io.openems.common.utils.DateUtils.roundDownToQuarter;
 import static io.openems.common.utils.ReflectionUtils.getValueViaReflection;
 import static io.openems.edge.energy.EnergySchedulerTestUtils.dummyEssEmergencyCapacityReserve;
 import static io.openems.edge.energy.EnergySchedulerTestUtils.dummyEssFixActivePower;
-import static io.openems.edge.energy.EnergySchedulerTestUtils.dummyEssGridOptimizedCharge;
 import static io.openems.edge.energy.EnergySchedulerTestUtils.dummyEssLimitTotalDischarge;
 import static io.openems.edge.energy.EnergySchedulerTestUtils.dummyEssTimeOfUseTariff;
+import static io.openems.edge.energy.EnergySchedulerTestUtils.dummyEvseCluster;
 import static io.openems.edge.energy.api.EnergyConstants.SUM_PRODUCTION;
 import static io.openems.edge.energy.api.EnergyConstants.SUM_UNMANAGED_CONSUMPTION;
 import static io.openems.edge.energy.api.Environment.PRODUCTION;
@@ -23,9 +23,10 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.ImmutableMap;
 
 import io.openems.common.jscalendar.JSCalendar;
 import io.openems.common.test.DummyConfigurationAdmin;
@@ -36,7 +37,13 @@ import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
 import io.openems.edge.common.test.DummyMeta;
 import io.openems.edge.controller.ess.timeofusetariff.ControlMode;
+import io.openems.edge.controller.evse.cluster.DistributionStrategy;
+import io.openems.edge.controller.evse.single.CombinedAbilities;
+import io.openems.edge.controller.evse.single.Params;
+import io.openems.edge.controller.evse.single.Types.Hysteresis;
 import io.openems.edge.energy.optimizer.Optimizer;
+import io.openems.edge.evse.api.chargepoint.Profile.ChargePointAbilities;
+import io.openems.edge.evse.api.electricvehicle.Profile.ElectricVehicleAbilities;
 import io.openems.edge.predictor.api.prediction.Prediction;
 import io.openems.edge.predictor.api.test.DummyPredictor;
 import io.openems.edge.predictor.api.test.DummyPredictorManager;
@@ -49,7 +56,7 @@ import io.openems.edge.timeofusetariff.test.DummyTimeOfUseTariffProvider;
 public class EnergySchedulerImplTest {
 
 	@Test
-	public void test() throws Exception {
+	void test() throws Exception {
 		create(createDummyClock());
 	}
 
@@ -100,9 +107,30 @@ public class EnergySchedulerImplTest {
 				.addReference("addSchedulable", dummyEssLimitTotalDischarge("ctrlLimitTotalDischarge0", 0)) //
 				.addReference("addSchedulable", dummyEssFixActivePower("ctrlFixActivePower0", -1000, GREATER_OR_EQUALS)) //
 				.addReference("addSchedulable",
-						dummyEssGridOptimizedCharge("ctrlGridOptimizedCharge0", LocalTime.of(10, 00))) //
+						dummyEssTimeOfUseTariff("ctrlEssTimeOfUseTariff0", ControlMode.CHARGE_CONSUMPTION.modes, null,
+								null)) //
 				.addReference("addSchedulable",
-						dummyEssTimeOfUseTariff("ctrlEssTimeOfUseTariff0", ControlMode.CHARGE_CONSUMPTION)) //
+						dummyEvseCluster("ctrlEvseCluster0", DistributionStrategy.EQUAL_POWER,
+								ImmutableMap.<String, Params>builder() //
+										.put("ctrlEvseSingle0", new Params("ctrlEvseSingle0", "evse0",
+												io.openems.edge.controller.evse.single.Mode.FORCE, null, 0, null,
+												new io.openems.edge.controller.evse.single.Types.History(),
+												Hysteresis.INACTIVE, null, false, //
+												CombinedAbilities.createFrom(//
+														ChargePointAbilities.create().build(),
+														ElectricVehicleAbilities.create().build()) //
+														.build(),
+												JSCalendar.Tasks.empty()))
+										.put("ctrlEvseSingle1", new Params("ctrlEvseSingle1", "evse1",
+												io.openems.edge.controller.evse.single.Mode.FORCE, null, 0, null,
+												new io.openems.edge.controller.evse.single.Types.History(),
+												Hysteresis.INACTIVE, null, false, //
+												CombinedAbilities.createFrom(//
+														ChargePointAbilities.create().build(),
+														ElectricVehicleAbilities.create().build()) //
+														.build(),
+												JSCalendar.Tasks.empty()))
+										.build())) //
 				.addReference("sum", sum) //
 				.activate(MyConfig.create() //
 						.setId("_energy") //

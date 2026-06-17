@@ -1,5 +1,10 @@
 package io.openems.edge.timedata.api.utils;
 
+import java.time.Clock;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.openems.common.types.ChannelAddress;
 import io.openems.common.types.OpenemsType;
 import io.openems.edge.common.channel.ChannelId;
@@ -7,6 +12,8 @@ import io.openems.edge.common.type.TypeUtils;
 import io.openems.edge.timedata.api.TimedataProvider;
 
 public class CalculateStateCounter {
+
+	private static final Logger LOG = LoggerFactory.getLogger(CalculateStateCounter.class);
 
 	private static enum State {
 		TIMEDATA_QUERY_NOT_STARTED, TIMEDATA_QUERY_IS_RUNNING, CALCULATE_STATE_COLLECTOR;
@@ -23,6 +30,7 @@ public class CalculateStateCounter {
 	private final ChannelId channelId;
 
 	private final TimedataProvider timedataProvider;
+	private final TimedataQueryRetryHandler retryHandler;
 
 	/**
 	 * Last stored active counter value.
@@ -30,8 +38,13 @@ public class CalculateStateCounter {
 	private Integer lastStoredCounterValue;
 
 	public CalculateStateCounter(TimedataProvider timedataProvider, ChannelId channelId) {
+		this(timedataProvider, channelId, Clock.systemDefaultZone());
+	}
+
+	CalculateStateCounter(TimedataProvider timedataProvider, ChannelId channelId, Clock clock) {
 		this.timedataProvider = timedataProvider;
 		this.channelId = channelId;
+		this.retryHandler = new TimedataQueryRetryHandler(LOG, clock, timedataProvider.id(), channelId.id());
 	}
 
 	/**
@@ -77,8 +90,22 @@ public class CalculateStateCounter {
 			this.state = State.TIMEDATA_QUERY_IS_RUNNING;
 
 			timedata.getLatestValue(new ChannelAddress(this.timedataProvider.id(), this.channelId.id()))
-					.thenAccept(activeTimeOpt -> {
+					.whenComplete((activeTimeOpt, throwable) -> {
+						if (throwable != null) {
+							if (this.retryHandler.onFailure(throwable) == TimedataQueryRetryHandler.Decision.RETRY) {
+								this.state = State.TIMEDATA_QUERY_NOT_STARTED;
+								return;
+							}
+
+							this.lastStoredCounterValue = 0;
+							this.state = State.CALCULATE_STATE_COLLECTOR;
+							this.timedataProvider.channel(this.channelId).setNextValue(this.lastStoredCounterValue);
+							return;
+						}
+
+						this.retryHandler.reset();
 						this.state = State.CALCULATE_STATE_COLLECTOR;
+
 						if (activeTimeOpt.isPresent()) {
 							try {
 								this.lastStoredCounterValue = TypeUtils.getAsType(OpenemsType.INTEGER,

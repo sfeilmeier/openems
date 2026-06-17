@@ -683,8 +683,9 @@ export class Edge {
     }
 
     /**
-     * Determines if the version of the edge is a SNAPSHOT.<p>
-     * Version strings are built like `major.minor.patch-branch.date.hash`. So any version string that contains a hyphen is a SNAPSHOT.
+     * Determines if the version of the edge is a SNAPSHOT. Version strings are
+     * built like `major.minor.patch-branch.date.hash`. So any version string
+     * that contains a hyphen is a SNAPSHOT.
      *
      * @returns True if the version of the edge is a SNAPSHOT
      */
@@ -912,7 +913,7 @@ export class Edge {
                 [],
                 null,
                 {
-                    availableScope: AvailableScope.GLOBAL,
+                    availableScope: AvailableScope.LOCAL,
                     pageFilter: settingsFilter,
                 },
             ),
@@ -925,13 +926,16 @@ export class Edge {
             NavigationId.LIVE,
             new NavigationTree(
                 "navigation-info",
-                { baseString: "navigation-info" },
+                {
+                    baseString: "navigation-info",
+                    queryParams: { source: "global" },
+                },
                 { name: "information-outline" },
                 translate.instant("GENERAL.HELP"),
                 "label",
                 [],
                 null,
-                { availableScope: AvailableScope.GLOBAL },
+                { availableScope: AvailableScope.LOCAL },
             ),
         );
 

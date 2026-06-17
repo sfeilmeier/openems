@@ -11,6 +11,7 @@ import { EnergySchedulerV2 } from "src/app/shared/components/edge/config-compone
 import { GetSchedule } from "src/app/shared/components/edge/config-components/energy/getSchedule";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { DataService } from "src/app/shared/components/shared/dataservice";
+import { UserService } from "src/app/shared/service/user.service";
 import { Currency, Edge, EdgeConfig, Service } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
 import { LiveDataService } from "../livedataservice";
@@ -31,35 +32,164 @@ interface FenaMessage {
     providers: [{ provide: DataService, useClass: LiveDataService }],
 })
 export class FenaComponent {
-    /**
-     * Tracks both the selected edge and its config.
-     */
-    protected readonly edgeAndConfig = computed(() => {
+    /** Tracks both the selected edge and its config. */
+    protected readonly userEdgeAndConfig = computed(() => {
+        const user = this.userService.currentUser();
         const edge = this.service.currentEdge();
 
         return {
+            user,
             edge,
             config: edge?.getConfigSignal()() ?? null,
         };
     });
 
     protected readonly messages: Signal<FenaMessage[]> = toSignal(
-        toObservable(this.edgeAndConfig).pipe(
-            switchMap(({ edge, config }) => {
+        toObservable(this.userEdgeAndConfig).pipe(
+            switchMap(({ user, edge, config }) => {
                 if (edge == null || config == null) {
                     return of<FenaMessage[]>([]);
                 }
 
-                if (edge.id !== "fems888") {
-                    return of<FenaMessage[]>([]);
+                // TODO INTERSOLAR
+                if (user?.id === "intersolar@fenecon.de") {
+                    switch (edge.id) {
+                        case "fems31372":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Auch wenn deine <strong>Einspeisung aktuell auf 30 % begrenzt</strong> ist, geht kein Solarstrom für deinen Haushalt verloren. FEMS sorgt dafür, dass deine PV-Energie optimal genutzt wird und dein Verbrauch vollständig aus der eigenen Erzeugung gedeckt werden kann.",
+                                },
+                                {
+                                    text: "Ein sonniger Tag für deine PV-Anlage: Voraussichtlich erzeugst du heute <strong>1.200 kWh</strong> Strom. Rund <strong>40 %</strong> davon decken direkt deinen eigenen Energiebedarf, während der restliche Solarstrom gewinnbringend ins Netz eingespeist wird.",
+                                },
+                            ]);
+                        case "fems888":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Dein E-Auto wird jetzt so günstig wie möglich beladen, damit Du morgen <strong>um 7 Uhr losfahren</strong> kannst.",
+                                },
+                                {
+                                    text: "Dein Strompreis-Update: Dein dynamischer Strompreis schwankt zwischen <strong>minus 20 Cent und plus 19 Cent/kWh</cent>",
+                                },
+                            ]);
+                        case "fems4":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Ab <strong>11 Uhr werden negative Strompreise</strong> erwartet. Deshalb schafft dein Speicher rechtzeitig Platz für neuen Solarstrom: Er versorgt deinen Haushalt verstärkt aus dem Speicher, damit überschüssige Energie später gespeichert statt zu negativen Preisen ins Netz eingespeist wird.",
+                                },
+                                {
+                                    text: "Dein Speicher wird heute <strong>vorraussichtlich um 15:30 Uhr voll geladen</strong> sein.",
+                                },
+                            ]);
+                        case "fems82085":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: 'Ab <strong>11 Uhr gibt es negative Börsenpreise</strong>. Dein Speicher versucht durch "Entladung in den Verbrauch" genug freie Kapazität im Speicher zu schaffen, damit Du in der Zeit nicht einspeisen musst.',
+                                },
+                                {
+                                    text: "Dein Speicher wird heute <strong>vorraussichtlich um 14:00 Uhr voll geladen</strong> sein.",
+                                },
+                            ]);
+                        case "fems666":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Dein E-Auto wird jetzt so günstig wie möglich beladen, damit Du <strong>morgen um 7 Uhr</strong> losfahren kannst.",
+                                },
+                                {
+                                    text: "<strong>Heute bist du autark</strong> - nur mit Sonne und Stromspeicher!",
+                                },
+                            ]);
+                        case "fems10303":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Dein E-Auto wird jetzt so günstig wie möglich beladen, damit Du <strong>morgen um 9 Uhr</strong losfahren kannst.",
+                                },
+                                {
+                                    text: "Dein Pufferspeicher hat aktuell eine Temperatur von 55 °C erreicht. Dein Heizstab läuft heute dank PV-Überschuss und negativen Börsenstrompreisen kostenlos.",
+                                },
+                            ]);
+                        case "fems72127":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Dank der intelligenten Speichersteuerung von FEMS wirkt sich die 60 %-Einspeisebegrenzung nicht negativ auf deinen PV-Ertrag aus. So erzielst du trotz Limitierung mehr Einspeisevergütung, speist überschüssige Energie gewinnbringend ein und deckst deinen eigenen Strombedarf optimal.",
+                                },
+                                {
+                                    text: "<strong>Heute bist du autark</strong> - nur mit Sonne und Stromspeicher!",
+                                },
+                            ]);
+                        case "fems17289":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "To reduce peak loads, your battery is discharging. This reduces the amount of power drawn from the grid.",
+                                },
+                                {
+                                    text: "Your system will produce about 30 kWh today.",
+                                },
+                            ]);
+                        case "fems33006":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Durch die Vorgaben der FEMS App Schreibzugriff hat dein System heute bereits 1.825 kWh entladen und 300 kWh beladen. Das entspricht 0,5 Vollzyklen.",
+                                },
+                                {
+                                    text: "Dein Vermarkter gibt gerade Leistungsvorgaben ans System.",
+                                },
+                            ]);
+                        case "fems31113":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Das Speichersystem wird durch deine PV Anlage vollgeladen, bereit für deine E-LKW Ladung heute Abend.",
+                                },
+                                {
+                                    text: "Unsere Prognose erwartet heute einen sonnigen Tag mit viel PV-Energie.",
+                                },
+                            ]);
+                        case "fems30776":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Heute Mittag wird sich das System kostenoptimiert aus deiner PV Anlage und günstigem Netzstrom beladen.",
+                                },
+                                {
+                                    text: "Unsere Prognose erwartet heute einen sonnigen Tag mit viel PV-Energie.",
+                                },
+                            ]);
+                        case "fems3625":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Bis Freitag läuft dein Multi-Use Speichersystem im Modus Lastspitzenkappung. Anschließend wird der Modus auf Eigenverbrauchsoptimierung automatisch am Samstag um 13:00 Uhr wechseln",
+                                    actions: [
+                                        {
+                                            title: "Einstellungen ändern",
+                                            callback: () =>
+                                                this.router.navigate(
+                                                    ["common", "storage"],
+                                                    {
+                                                        relativeTo: this.route,
+                                                    },
+                                                ),
+                                        },
+                                    ],
+                                },
+                                {
+                                    text: "Unsere Prognose erwartet heute einen sonnigen Tag mit viel PV-Energie.",
+                                },
+                            ]);
+                    }
                 }
 
-                return from(this.fetchSchedulerMessages(edge, config)).pipe(
-                    catchError((error) => {
-                        console.warn("Error fetching scheduler messages:", error);
-                        return of<FenaMessage[]>([]);
-                    }),
-                );
+                if (edge.id === "fems888") {
+                    return from(this.fetchSchedulerMessages(edge, config)).pipe(
+                        catchError((error) => {
+                            console.warn(
+                                "Error fetching scheduler messages:",
+                                error,
+                            );
+                            return of<FenaMessage[]>([]);
+                        }),
+                    );
+                }
+
+                return of<FenaMessage[]>([]);
             }),
         ),
         {
@@ -68,20 +198,30 @@ export class FenaComponent {
     );
 
     private readonly dataService = inject(DataService);
+    private readonly userService = inject(UserService);
     private readonly service = inject(Service);
     private readonly translate = inject(TranslateService);
     private readonly router = inject(Router);
     private readonly route = inject(ActivatedRoute);
 
     constructor() {
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
-            for (const { lang, translation, shouldMerge } of translations) {
-                this.translate.setTranslation(lang, translation, shouldMerge);
-            }
-        });
+        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then(
+            (translations) => {
+                for (const { lang, translation, shouldMerge } of translations) {
+                    this.translate.setTranslation(
+                        lang,
+                        translation,
+                        shouldMerge,
+                    );
+                }
+            },
+        );
     }
 
-    private async fetchSchedulerMessages(edge: Edge, config: EdgeConfig): Promise<FenaMessage[]> {
+    private async fetchSchedulerMessages(
+        edge: Edge,
+        config: EdgeConfig,
+    ): Promise<FenaMessage[]> {
         const messages: (FenaMessage | null)[] = [];
 
         const energyScheduler = new EnergySchedulerV2(config);
@@ -92,6 +232,7 @@ export class FenaComponent {
 
         if (predictionData.length !== 0) {
             messages.push(
+                this.getEvseSmartEventMessage(),
                 this.getMinMaxGridPriceMessage(edge, config, predictionData),
             );
         }
@@ -99,7 +240,45 @@ export class FenaComponent {
         return messages.filter((e) => e !== null);
     }
 
-    private getMinMaxGridPriceMessage(edge: Edge, config: EdgeConfig, predictionData: GetSchedule.Response["result"]["data"]): FenaMessage | null {
+    private getEvseSmartEventMessage(): FenaMessage | null {
+        const locale = Language.getCurrentLanguage().dateFnsLocale;
+        const baseDate = new Date();
+        const date = new Date();
+        date.setHours(7, 0, 0, 0);
+        if (date <= baseDate) {
+            date.setDate(date.getDate() + 1);
+        }
+        const formattedTime = formatRelative(date, baseDate, { locale });
+
+        return {
+            text:
+                "Dein E-Auto wird jetzt so günstig wie möglich beladen, damit Du " +
+                formattedTime +
+                " Uhr losfahren kannst",
+            actions: [
+                {
+                    title: "Smart Event anpassen",
+                    callback: () =>
+                        this.router.navigate(["evse", "ctrlEvseSingle0"], {
+                            relativeTo: this.route,
+                        }),
+                },
+                {
+                    title: "Heute nicht laden",
+                    callback: () =>
+                        this.router.navigate(["evse", "ctrlEvseSingle0"], {
+                            relativeTo: this.route,
+                        }),
+                },
+            ],
+        };
+    }
+
+    private getMinMaxGridPriceMessage(
+        edge: Edge,
+        config: EdgeConfig,
+        predictionData: GetSchedule.Response["result"]["data"],
+    ): FenaMessage | null {
         let min: { timestamp: string; value: number } | null = null;
         let max: { timestamp: string; value: number } | null = null;
         for (const d of predictionData) {
@@ -120,27 +299,39 @@ export class FenaComponent {
 
         const locale = Language.getCurrentLanguage().dateFnsLocale;
         const meta = config.getComponentSafely("_meta");
-        const currency = config.getPropertyFromComponent<string>(meta, "currency");
-        const currencyLabel: Currency.Label = Currency.getCurrencyLabelByCurrency(currency);
+        const currency = config.getPropertyFromComponent<string>(
+            meta,
+            "currency",
+        );
+        const currencyLabel: Currency.Label =
+            Currency.getCurrencyLabelByCurrency(currency);
         const converter = Converter.CURRENCY_PER_KWH(currencyLabel);
 
         const baseDate = new Date();
-        const formattedMaxTime = formatRelative(max.timestamp, baseDate, { locale });
-        const formattedMinTime = formatRelative(min.timestamp, baseDate, { locale });
+        const formattedMaxTime = formatRelative(max.timestamp, baseDate, {
+            locale,
+        });
+        const formattedMinTime = formatRelative(min.timestamp, baseDate, {
+            locale,
+        });
         const messageText =
             this.translate.instant("FENA.ELECTRICITY_PRICES_SUMMARY", {
                 maxPrice: converter(max.value),
                 maxTime: formattedMaxTime,
                 minPrice: converter(min.value),
                 minTime: formattedMinTime,
-            }) ?? `Deine Strompreise:<br/>Der höchste ist <strong>${converter(max.value)}</strong> ${formattedMaxTime} Uhr.<br/>Der niedrigste ist <strong>${converter(min.value)}</strong> ${formattedMinTime} Uhr.`;
+            }) ??
+            `Deine Strompreise:<br/>Der höchste ist <strong>${converter(max.value)}</strong> ${formattedMaxTime} Uhr.<br/>Der niedrigste ist <strong>${converter(min.value)}</strong> ${formattedMinTime} Uhr.`;
 
         return {
             text: messageText,
             actions: [
                 {
                     title: this.translate.instant("GENERAL.DETAILS"),
-                    callback: () => this.router.navigate(["common", "grid"], { relativeTo: this.route }),
+                    callback: () =>
+                        this.router.navigate(["common", "grid"], {
+                            relativeTo: this.route,
+                        }),
                 },
             ],
         };

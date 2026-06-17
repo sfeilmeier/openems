@@ -1,3 +1,14 @@
 {
+    "BETA_TEST": {
+        "NEW_UI_INFO": "Unser Monitoring wird neu gestaltet. Neue Navigation und Funktionen werden Einzug finden.",
+        "BUTTON": "Zum Beta-Test Changelog",
+        "FEEDBACK": "Dein Feedback zählt, lass uns wissen was du zum BETA Test sagen möchtest:",
+        "CHANGELOG": "Hier gibt es Infos zu den Änderungen, Erklärungen oder Hilfestellungen. Bleib durch unseren Changelog immer am neuesten Stand der Entwicklungen."
+    },
+    "MY_PORTAL": {
+        "INFO": "Hier kannst du dir als Installateur im myFENECON Portal komfortablen Support holen.",
+        "BUTTON": "Zum myFENECON Portal",
+        "TICKET": "Schau ins myFENECON Portal und informiere dich über den Status deiner Tickets."
+    },
     "NAVIGATION_INFO_MANUAL": "Handbuch {{source}}"
 }

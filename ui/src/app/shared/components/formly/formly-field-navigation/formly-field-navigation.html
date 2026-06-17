@@ -70,15 +70,13 @@
                       <oe-img [img]="line.img"> </oe-img>
                     }
 
+                    @case ("button-line") {
+                      <oe-modal-line [name]="line.name" [component]="component" [control]="{ type: 'BUTTON', button: line.button }"> </oe-modal-line>
+                    }
+
                     <!-- OeFormlyField.InfoLine -->
                     @case ("info-line") {
-                      @if (line.html !== undefined) {
-                        <ng-container style="font-size: smaller">
-                          <span [innerHtml]="line.html"></span>
-                        </ng-container>
-                      } @else {
-                        <oe-modal-info-line [info]="line.name" [icon]="line.icon"> </oe-modal-info-line>
-                      }
+                      <oe-modal-info-line [info]="line.name" [icon]="line.icon" [html]="line.html"> </oe-modal-info-line>
                     }
 
                     <!-- OeFormlyField.HorizontalLine -->
@@ -118,7 +116,7 @@
 
                     <!-- OeFormlyField.ToggleLine -->
                     @case ("toggle-line") {
-                      <oe-modal-line [lineStyle]="line.style" [name]="line.name" [controlName]="line.controlName" [control]="{ type: 'TOGGLE' }" [formGroup]="form" leftColumnWidth="100"> </oe-modal-line>
+                      <oe-modal-line [name]="line.name" [controlName]="line.controlName" [control]="{ type: 'TOGGLE' }" [formGroup]="form" leftColumnWidth="100"> </oe-modal-line>
                     }
 
                     @case ("toggle-line-with-formcontrol-value") {
@@ -133,6 +131,13 @@
                       <oe-modal-line [lineStyle]="line.style" [name]="line.name" [controlName]="line.controlName" [control]="{ type: 'SELECT', options: line.options }" [formGroup]="form" leftColumnWidth="50"> </oe-modal-line>
                     }
 
+                    @case ("weekday-checkbox-line") {
+                      <oe-weekday-checkbox [formGroup]="form"> </oe-weekday-checkbox>
+                    }
+
+                    @case ("name-line") {
+                      <oe-modal-line [lineStyle]="line.style" [name]="line.name"></oe-modal-line>
+                    }
                     @case ("time-line") {
                       <oe-time-line [name]="line.name" [controlName]="line.controlName" [formGroup]="form"> </oe-time-line>
                     }

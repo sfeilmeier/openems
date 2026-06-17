@@ -28,55 +28,56 @@ const baseConfig: CapacitorConfig = {
     },
 };
 
-switch (process.env.NODE_ENV as (Theme | "FENECONBetaIos")) {
-    case 'FENECON':
+switch (process.env.NODE_ENV as Theme | "FENECONBetaIos") {
+    case "FENECON":
         config = {
             ...baseConfig,
-            appId: 'de.fenecon.fems',
-            appName: 'FENECON',
+            appId: "de.fenecon.fems",
+            appName: "FENECON",
             server: {
                 ...baseConfig.server,
-                hostname: 'portal.fenecon.de',
+                hostname: "portal.fenecon.de",
             },
         };
         break;
-    case 'FENECONBeta':
+    case "FENECONBeta":
         config = {
             ...baseConfig,
-            appId: 'io.fenecon.ui',
-            appName: 'FENECON BETA App',
+            appId: "io.fenecon.ui",
+            appName: "FENECON BETA App",
             server: {
                 ...baseConfig.server,
-                hostname: 'portal.fenecon.de',
+                hostname: "portal.fenecon.de",
             },
         };
         break;
 
     // Failed to create android and ios app with same package id
-    case 'FENECONBetaIos':
+    case "FENECONBetaIos":
         config = {
             ...baseConfig,
-            appId: 'io.fenecon.ios',
-            appName: 'FENECON BETA App',
+            appId: "io.fenecon.ios",
+            appName: "FENECON BETA App",
             server: {
                 ...baseConfig.server,
-                hostname: 'portal.fenecon.de',
+                hostname: "portal.fenecon.de",
             },
         };
         break;
-    case 'Heckert':
+    case "Heckert":
         config = {
             ...baseConfig,
-            appId: 'com.heckertsolar.ems',
-            appName: 'Heckert',
+            appId: "com.heckertsolar.ems",
+            appName: "Heckert",
             server: {
                 ...baseConfig.server,
-                hostname: 'symphon-e.heckert-solar.com',
+                hostname: "symphon-e.heckert-solar.com",
             },
         };
         break;
     default:
-        throw new Error(`Capacitor config for theme ${process.env.NODE_ENV} not implemented.`);
-
+        throw new Error(
+            `Capacitor config for theme ${process.env.NODE_ENV} not implemented.`,
+        );
 }
 export default config;

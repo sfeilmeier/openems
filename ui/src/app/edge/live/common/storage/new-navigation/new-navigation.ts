@@ -4,26 +4,27 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 import { FormlyModule } from "@ngx-formly/core";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
-import { endOfToday, startOfToday } from "date-fns";
+import { SingleXAxisComponent } from "src/app/shared/components/chart/single-xaxis/single-xaxis";
 import { EnergySchedulerV2 } from "src/app/shared/components/edge/config-components/energy/energy";
+import { GetSchedule } from "src/app/shared/components/edge/config-components/energy/getSchedule";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Name } from "src/app/shared/components/shared/name";
-import { AbstractFormlyComponent, OeFormlyField, OeFormlyView } from "src/app/shared/components/shared/oe-formly-component";
-import { QueryHistoricTimeseriesEnergyRequest } from "src/app/shared/jsonrpc/request/queryHistoricTimeseriesEnergyRequest";
-import { QueryHistoricTimeseriesEnergyResponse } from "src/app/shared/jsonrpc/response/queryHistoricTimeseriesEnergyResponse";
-import { ChannelAddress, CurrentData, Edge, EdgeConfig, Service } from "src/app/shared/shared";
+import { AbstractFormlyComponent, OeFormlyField, OeFormlyView, } from "src/app/shared/components/shared/oe-formly-component";
+import { ChannelAddress, CurrentData, Edge, EdgeConfig, Service, Utils, } from "src/app/shared/shared";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { LiveDataService } from "../../../livedataservice";
 import { SharedStorage } from "../shared/shared";
+import { ChargeDischargeChartComponent } from "./chart/charge-discharge-chart";
+import { ModeChartComponent } from "./chart/mode-chart";
+import { SocChartComponent } from "./chart/soc-chart";
 import { CommonStoragePercentagebarComponent } from "./percentagebar/percentagebar";
 
 @Component({
     selector: "oe-common-storage",
-    templateUrl: "../../../../../shared/components/formly/formly-field-modal/template.html",
-    providers: [
-        { provide: DataService, useClass: LiveDataService },
-    ],
+    templateUrl:
+        "../../../../../shared/components/formly/formly-field-modal/template.html",
+    providers: [{ provide: DataService, useClass: LiveDataService }],
     imports: [
         CommonModule,
         IonicModule,
@@ -33,34 +34,59 @@ import { CommonStoragePercentagebarComponent } from "./percentagebar/percentageb
     ],
 })
 export class CommonStorageHomeComponent extends AbstractFormlyComponent {
+    protected override formlyWrapper:
+        | "formly-field-modal"
+        | "formly-field-navigation" = "formly-field-navigation";
 
-    protected override formlyWrapper: "formly-field-modal" | "formly-field-navigation" = "formly-field-navigation";
-
-    public static async getFormlyGeneralView(translate: TranslateService, service: Service, edge: Edge, config: EdgeConfig, energyScheduler: EnergySchedulerV2, energyDate: QueryHistoricTimeseriesEnergyResponse): Promise<OeFormlyView> {
+    public static async getFormlyGeneralView(
+        translate: TranslateService,
+        service: Service,
+        edge: Edge,
+        config: EdgeConfig,
+        energyScheduler: EnergySchedulerV2,
+    ): Promise<OeFormlyView> {
         return {
             title: translate.instant("GENERAL.STORAGE_SYSTEM"),
             helpKey: "REDIRECT.COMMON_STORAGE",
-            lines: await CommonStorageHomeComponent.getLines(translate, service, edge, config, energyScheduler, energyDate),
+            lines: await CommonStorageHomeComponent.getLines(
+                translate,
+                service,
+                edge,
+                config,
+                energyScheduler,
+            ),
             component: new EdgeConfig.Component(),
             useDefaultPrefix: false,
             isCommonWidget: true,
         };
     }
 
-    private static async getLines(translate: TranslateService, service: Service, edge: Edge, config: EdgeConfig, energyScheduler: EnergySchedulerV2, energyDate: QueryHistoricTimeseriesEnergyResponse): Promise<OeFormlyField[]> {
+    private static async getLines(
+        translate: TranslateService,
+        service: Service,
+        edge: Edge,
+        config: EdgeConfig,
+        energyScheduler: EnergySchedulerV2,
+    ): Promise<OeFormlyField[]> {
         await energyScheduler?.updateSchedule(edge, service.websocket);
-        const essComponents: EdgeConfig.Component[] = SharedStorage.getEssComponents(config);
-        const emergencyReserveComponents: { [essId: string]: EdgeConfig.Component } = config
+        const essComponents: EdgeConfig.Component[] =
+            SharedStorage.getEssComponents(config);
+        const emergencyReserveComponents: {
+            [essId: string]: EdgeConfig.Component;
+        } = config
             .getComponentsByFactory("Controller.Ess.EmergencyCapacityReserve")
-            .filter(component => component.isEnabled)
+            .filter((component) => component.isEnabled)
             .reduce((result, component) => {
                 return {
                     ...result,
                     [component.properties["ess.id"]]: component,
                 };
             }, {});
-        const prepareBatteryExtensionCtrl: { [essId: string]: EdgeConfig.Component } = config.getComponentsByFactory("Controller.Ess.PrepareBatteryExtension")
-            .filter(component => component.isEnabled)
+        const prepareBatteryExtensionCtrl: {
+            [essId: string]: EdgeConfig.Component;
+        } = config
+            .getComponentsByFactory("Controller.Ess.PrepareBatteryExtension")
+            .filter((component) => component.isEnabled)
             .reduce((result, component) => {
                 return {
                     ...result,
@@ -68,59 +94,231 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
                 };
             }, {});
 
-        const controllerLines = essComponents.reduce((arr: OeFormlyField[] = [], ess, i) => {
-            if (essComponents.length > 1) {
-                arr.push({
-                    type: "name-line",
-                    name: Name.METER_ALIAS_OR_ID(ess),
-                });
-            }
+        const controllerLines = essComponents.reduce(
+            (arr: OeFormlyField[] = [], ess, i) => {
+                if (essComponents.length > 1) {
+                    arr.push({
+                        type: "name-line",
+                        name: Name.METER_ALIAS_OR_ID(ess),
+                    });
+                }
 
-            const emergencyReserveCtrl = emergencyReserveComponents[ess.id];
-            arr.push(
+                const emergencyReserveCtrl = emergencyReserveComponents[ess.id];
+                arr.push(
+                    {
+                        type: "component-line",
+                        component: CommonStoragePercentagebarComponent,
+                        inputs: {
+                            essComponentId: ess.id,
+                            emergencyReserveController: emergencyReserveCtrl,
+                        },
+                    },
+                    ...SharedStorage.getChargeDischargeLinesInKw(
+                        ess,
+                        config,
+                        translate,
+                    ),
+                );
+
+                const prepareBatteryExtensionCtrlForEss =
+                    ess.id in prepareBatteryExtensionCtrl
+                        ? prepareBatteryExtensionCtrl[ess.id]
+                        : null;
+
+                if (prepareBatteryExtensionCtrlForEss !== null) {
+                    arr.push(
+                        { type: "horizontal-line" },
+                        {
+                            type: "value-from-channels-line",
+                            channelsToSubscribe: [
+                                ChannelAddress.fromString(
+                                    prepareBatteryExtensionCtrlForEss.id +
+                                        "/_PropertyIsRunning",
+                                ),
+                                ChannelAddress.fromString(
+                                    prepareBatteryExtensionCtrlForEss.id +
+                                        "/CtrlIsBlockingEss",
+                                ),
+                                ChannelAddress.fromString(
+                                    prepareBatteryExtensionCtrlForEss.id +
+                                        "/CtrlIsChargingEss",
+                                ),
+                                ChannelAddress.fromString(
+                                    prepareBatteryExtensionCtrlForEss.id +
+                                        "/CtrlIsDischargingEss",
+                                ),
+                                ChannelAddress.fromString(
+                                    prepareBatteryExtensionCtrlForEss.id +
+                                        "/CtrlIsInReferenceCycle",
+                                ),
+                                ChannelAddress.fromString(
+                                    prepareBatteryExtensionCtrlForEss.id +
+                                        "/_PropertyTargetTimeSpecified",
+                                ),
+                                ChannelAddress.fromString(
+                                    prepareBatteryExtensionCtrlForEss.id +
+                                        "/_PropertyTargetTime",
+                                ),
+                            ],
+                            singleLine: true,
+                            value: (currentData: CurrentData) =>
+                                SharedStorage.getBatteryCapacityExtensionStatus(
+                                    translate,
+                                    currentData,
+                                    prepareBatteryExtensionCtrlForEss.id,
+                                )?.text ?? null,
+                            filter: (currentData: CurrentData) =>
+                                SharedStorage.getBatteryCapacityExtensionStatus(
+                                    translate,
+                                    currentData,
+                                    prepareBatteryExtensionCtrlForEss.id,
+                                )?.text != null,
+                        },
+                    );
+                }
+
+                if (i < essComponents.length - 1) {
+                    arr.push({
+                        type: "horizontal-line",
+                    });
+                }
+
+                return arr;
+            },
+            [],
+        );
+
+        const lines: OeFormlyField[] = [];
+
+        // if (edge.id == "fems888") {
+        //     // TODO finalize stats
+        //     lines.push({
+        //         type: "stats-line",
+        //         stats: [
+        //             {
+        //                 name: "Beladung heute",
+        //                 futureValue: chargeFutureEnergy,
+        //                 description: "kWh",
+        //                 unit: "kWh",
+        //                 historyValue: NumberUtils.divideSafely(
+        //                     energyDate.result.data["_sum/EssDcChargeEnergy"],
+        //                     1000,
+        //                 ),
+        //             },
+        //             {
+        //                 name: "Entladung heute",
+        //                 futureValue: dischargeFutureEnergy,
+        //                 description: "kWh",
+        //                 unit: "kWh",
+        //                 historyValue: NumberUtils.divideSafely(
+        //                     energyDate.result.data["_sum/EssDcDischargeEnergy"],
+        //                     1000,
+        //                 ),
+        //             },
+        //         ],
+        //     });
+        // }
+
+        if (energyScheduler.schedule !== GetSchedule.Response.empty) {
+            lines.push(
                 {
                     type: "component-line",
-                    component: CommonStoragePercentagebarComponent,
+                    component: SingleXAxisComponent,
                     inputs: {
-                        essComponentId: ess.id,
-                        emergencyReserveController: emergencyReserveCtrl,
+                        data: energyScheduler.schedule,
                     },
                 },
-                ...SharedStorage.getChargeDischargeLinesInKw(ess, config, translate)
+                {
+                    type: "horizontal-line",
+                },
+                {
+                    type: "channel-line",
+                    name: translate.instant("GENERAL.POWER"),
+                    channel: new ChannelAddress(
+                        "_sum",
+                        "EssDischargePower",
+                    ).toString(),
+                    converter: ESS_CHARGE_OR_DISCHARGE(translate),
+                    style: {
+                        name: { fontSize: "large" },
+                        value: { fontSize: "large" },
+                    },
+                    cssClass: "ion-padding-top",
+                },
+                {
+                    type: "component-line",
+                    component: ChargeDischargeChartComponent,
+                    inputs: {
+                        edge: edge,
+                        refresh: false,
+                        data: energyScheduler.schedule,
+                    },
+                },
+                {
+                    type: "channel-line",
+                    name: "Ladezustand",
+                    channel: new ChannelAddress("_sum", "EssSoc").toString(),
+                    converter: Converter.STATE_IN_PERCENT,
+                    style: {
+                        name: { fontSize: "large" },
+                        value: { fontSize: "large", textAlign: "right" },
+                    },
+                    cssClass: "ion-padding-top",
+                },
+                {
+                    type: "component-line",
+                    component: SocChartComponent,
+                    inputs: {
+                        edge: edge,
+                        refresh: false,
+                        data: energyScheduler.schedule,
+                    },
+                },
             );
 
-            const prepareBatteryExtensionCtrlForEss = ess.id in prepareBatteryExtensionCtrl ? prepareBatteryExtensionCtrl[ess.id] : null;
-
-            if (prepareBatteryExtensionCtrlForEss !== null) {
-                arr.push(
-                    { type: "horizontal-line" },
+            if (config.getComponentSafely("ctrlEssTimeOfUseTariff0") !== null) {
+                lines.push(
                     {
-                        type: "value-from-channels-line",
-                        channelsToSubscribe: [
-                            ChannelAddress.fromString(prepareBatteryExtensionCtrlForEss.id + "/_PropertyIsRunning"),
-                            ChannelAddress.fromString(prepareBatteryExtensionCtrlForEss.id + "/CtrlIsBlockingEss"),
-                            ChannelAddress.fromString(prepareBatteryExtensionCtrlForEss.id + "/CtrlIsChargingEss"),
-                            ChannelAddress.fromString(prepareBatteryExtensionCtrlForEss.id + "/CtrlIsDischargingEss"),
-                            ChannelAddress.fromString(prepareBatteryExtensionCtrlForEss.id + "/CtrlIsInReferenceCycle"),
-                            ChannelAddress.fromString(prepareBatteryExtensionCtrlForEss.id + "/_PropertyTargetTimeSpecified"),
-                            ChannelAddress.fromString(prepareBatteryExtensionCtrlForEss.id + "/_PropertyTargetTime"),
-                        ],
-                        singleLine: true,
-                        value: (currentData: CurrentData) => SharedStorage.getBatteryCapacityExtensionStatus(translate, currentData, prepareBatteryExtensionCtrlForEss.id)?.text ?? null,
-                        filter: (currentData: CurrentData) => SharedStorage.getBatteryCapacityExtensionStatus(translate, currentData, prepareBatteryExtensionCtrlForEss.id)?.text != null,
-                    });
-            }
+                        type: "channel-line",
+                        name: translate.instant("GENERAL.MODE"),
+                        channel: new ChannelAddress(
+                            "ctrlEssTimeOfUseTariff0",
+                            "StateMachine",
+                        ).toString(),
+                        converter:
+                            Utils.CONVERT_TIME_OF_USE_TARIFF_STATE(translate),
+                        style: {
+                            name: { fontSize: "large" },
+                            value: { fontSize: "large" },
+                        },
+                        cssClass: "ion-padding-top",
+                    },
+                    {
+                        type: "component-line",
+                        component: ModeChartComponent,
+                        inputs: {
+                            edge: edge,
+                            refresh: false,
+                            data: energyScheduler.schedule,
+                        },
+                    },
+                );
 
-            if (i < (essComponents.length - 1)) {
-                arr.push({
+                lines.push({
                     type: "horizontal-line",
                 });
             }
 
-            return arr;
-        }, []);
+            lines.push({
+                type: "name-line",
+                name: translate.instant("GENERAL.DETAILS"),
+                style: {
+                    name: { fontSize: "large" },
+                },
+                cssClass: "ion-padding-top",
+            });
+        }
 
-        const lines: OeFormlyField[] = [];
         lines.push(...controllerLines);
         return lines;
     }
@@ -133,38 +331,51 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
 
     protected override async generateView(): Promise<OeFormlyView> {
         const edge = this.service.currentEdge();
+        AssertionUtils.assertIsDefined(edge);
+
         const config = edge.getCurrentConfig();
         AssertionUtils.assertIsDefined(config);
 
-        const request = new QueryHistoricTimeseriesEnergyRequest(
-            startOfToday(),
-            endOfToday(),
-            [new ChannelAddress("_sum", "EssDcChargeEnergy"), new ChannelAddress("_sum", "EssDcDischargeEnergy")],
-        );
-        const historyData = await edge.sendRequest<QueryHistoricTimeseriesEnergyResponse>(this.service.websocket, request);
         const energy = new EnergySchedulerV2(config);
 
-        return await CommonStorageHomeComponent.getFormlyGeneralView(this.translate, this.service, edge, config, energy, historyData);
+        return await CommonStorageHomeComponent.getFormlyGeneralView(
+            this.translate,
+            this.service,
+            edge,
+            config,
+            energy,
+        );
     }
 
-
     protected override onCurrentData(currentData: CurrentData): void {
-        this.setFormControlSafelyWithValue(this.form, "soc", currentData.allComponents["_sum/EssSoc"]);
+        this.setFormControlSafelyWithValue(
+            this.form,
+            "soc",
+            currentData.allComponents["_sum/EssSoc"],
+        );
     }
 
     protected override getChannelAddresses(): Promise<ChannelAddress[]> {
         return Promise.resolve([new ChannelAddress("_sum", "EssSoc")]);
     }
-
 }
 
-export const ESS_CHARGE_OR_DISCHARGE = (translate: TranslateService): Converter =>
+export const ESS_CHARGE_OR_DISCHARGE =
+    (translate: TranslateService): Converter =>
     (raw): string =>
         Converter.IF_NUMBER(raw, (value) => {
             if (value > 0) {
-                return Converter.POWER_IN_KILO_WATT(value) + " " + translate.instant("GENERAL.DISCHARGE");
+                return (
+                    Converter.POWER_IN_KILO_WATT(value) +
+                    " " +
+                    translate.instant("GENERAL.DISCHARGE")
+                );
             } else if (value < 0) {
-                return Converter.POWER_IN_KILO_WATT(Math.abs(value)) + " " + translate.instant("GENERAL.CHARGE");
+                return (
+                    Converter.POWER_IN_KILO_WATT(Math.abs(value)) +
+                    " " +
+                    translate.instant("GENERAL.CHARGE")
+                );
             } else {
                 return Converter.POWER_IN_KILO_WATT(value);
             }

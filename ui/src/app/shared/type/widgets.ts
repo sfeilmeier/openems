@@ -5,15 +5,16 @@ import { SharedProduction } from "src/app/edge/live/common/production/shared/sha
 import { SharedStorage } from "src/app/edge/live/common/storage/shared/shared";
 import { SharedWeather } from "src/app/edge/live/common/weather/shared/shared";
 import { SharedControllerChannelThreshold } from "src/app/edge/live/Controller/Channelthreshold/shared/shared";
+import { SharedControllerEnerixControl } from "src/app/edge/live/Controller/EnerixControl/shared/shared";
 import { ControllerEvseSingleShared } from "src/app/edge/live/Controller/Evse/shared/shared";
 import { SharedControllerHeat } from "src/app/edge/live/Controller/Heat/shared/shared";
+import { SharedControllerBraiins } from "src/app/edge/live/Controller/Io/Braiins/shared/shared";
 import { SharedControllerIoFixDigitalOutput } from "src/app/edge/live/Controller/Io/FixDigitalOutput/shared/shared";
 import { SharedControllerIoHeatingElement } from "src/app/edge/live/Controller/Io/HeatingElement/shared/shared";
 import { SharedControllerIoHeatpump } from "src/app/edge/live/Controller/Io/Heatpump/shared/shared";
-import { SharedControllerPeakShavingAsymmetric } from "src/app/edge/live/Controller/peak-shaving/Asymmetric/shared/shared";
-import { SharedControllerPeakShavingSymmetric } from "src/app/edge/live/Controller/peak-shaving/symmetric/shared/shared";
-import { SharedSchedulerJsCalendar } from "src/app/edge/live/scheduler/js-calendar/shared-scheduler-js-calendar";
 import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/shared-system-industrial-l";
+import { SharedSystemIndustrialM } from "src/app/edge/live/system/industrial/m/shared-system-industrial-m";
+import { SharedSystemIndustrialS } from "src/app/edge/live/system/industrial/s/shared-system-industrial-s";
 import { SharedSystemIndustrialXl } from "src/app/edge/live/system/industrial/xl/shared-system-industrial-xl";
 import { SharedControllerIoHeatingRoom } from "../../edge/live/Controller/Io/HeatingRoom/shared/shared";
 import { Edge } from "../components/edge/edge";
@@ -49,6 +50,10 @@ export class Widgets {
             grouped:
                 SharedControllerIoFixDigitalOutput.getGroupedNavigationTree,
             single: SharedControllerIoFixDigitalOutput.getNavigationTree,
+        },
+        "Controller.BraiinsOS.Single": {
+            grouped: SharedControllerBraiins.getGroupedNavigationTree,
+            single: SharedControllerBraiins.getNavigationTree,
         },
     };
 
@@ -113,6 +118,11 @@ export class Widgets {
         }
 
         switch (widget.name) {
+            case "Controller.Clever-PV":
+                return SharedControllerEnerixControl.getNavigationTree(
+                    translate,
+                    component,
+                );
             case "Weather.OpenMeteo":
                 return SharedWeather.getNavigationTree(translate, component);
             case "Controller.IO.HeatingElement":
@@ -125,23 +135,23 @@ export class Widgets {
                     translate,
                     component,
                 );
-            case "Controller.Symmetric.PeakShaving":
-                return SharedControllerPeakShavingSymmetric.getNavigationTree(
+            case "System.Fenecon.Industrial.Xl":
+                return SharedSystemIndustrialXl.getNavigationTree(
                     translate,
-                    component,
-                );
-            case "Controller.Asymmetric.PeakShaving":
-                return SharedControllerPeakShavingAsymmetric.getNavigationTree(
-                    translate,
-                    component,
+                    widget.componentId,
                 );
             case "System.Fenecon.Industrial.L":
                 return SharedSystemIndustrialL.getNavigationTree(
                     translate,
                     widget.componentId,
                 );
-            case "System.Fenecon.Industrial.Xl":
-                return SharedSystemIndustrialXl.getNavigationTree(
+            case "System.Fenecon.Industrial.M":
+                return SharedSystemIndustrialM.getNavigationTree(
+                    translate,
+                    widget.componentId,
+                );
+            case "System.Fenecon.Industrial.S":
+                return SharedSystemIndustrialS.getNavigationTree(
                     translate,
                     widget.componentId,
                 );
@@ -149,21 +159,19 @@ export class Widgets {
                 return SharedControllerHeat.getNavigationTree(
                     translate,
                     component,
+                    true,
                 );
             case "Heat.MyPv":
                 return SharedControllerHeat.getNavigationTree(
                     translate,
                     component,
+                    false,
                 );
             case "Heat.MyPv.AcThor9s":
                 return SharedControllerHeat.getNavigationTree(
                     translate,
                     component,
-                );
-            case "Scheduler.JSCalendar":
-                return SharedSchedulerJsCalendar.getNavigationTree(
-                    translate,
-                    widget.componentId,
+                    false,
                 );
             case "Evse.Controller.Single":
                 return ControllerEvseSingleShared.getNavigationTree(
@@ -180,20 +188,6 @@ export class Widgets {
             default:
                 return null;
         }
-    }
-
-    public static getGroupedControllerNavigationTree(
-        widgetName: Widget["name"],
-        translate: TranslateService,
-        componentIds: Widget["componentId"][],
-        config: EdgeConfig,
-    ): ConstructorParameters<typeof NavigationTree> | null {
-        const groupedFactory = Widgets.GROUPED_FACTORIES[widgetName];
-        if (groupedFactory == null) {
-            return null;
-        }
-
-        return groupedFactory.grouped(translate, componentIds, config);
     }
 
     public static parseWidgets(edge: Edge, config: EdgeConfig): Widgets {
