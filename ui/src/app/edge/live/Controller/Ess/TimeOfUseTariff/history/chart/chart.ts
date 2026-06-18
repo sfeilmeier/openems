@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { ChangeDetectorRef, Component, effect } from "@angular/core";
+import { ChangeDetectorRef, Component, effect, inject } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import * as Chart from "chart.js";
@@ -7,6 +7,7 @@ import { calculateResolution, ChronoUnit, Resolution, } from "src/app/edge/histo
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
 import { ChartConstants } from "src/app/shared/components/chart/chart.constants";
 import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
+import { UserService } from "src/app/shared/service/user.service";
 import { ChannelAddress, Currency, EdgeConfig, Logger, Service, Websocket, } from "src/app/shared/shared";
 import { ColorUtils } from "src/app/shared/utils/color/color.utils";
 import { ChartAxis, HistoryUtils, TimeOfUseTariffUtils, Utils, YAxisType, } from "src/app/shared/utils/utils";
@@ -20,6 +21,10 @@ import { ChartAxis, HistoryUtils, TimeOfUseTariffUtils, Utils, YAxisType, } from
 export class ChartComponent extends AbstractHistoryChart {
     private currencyUnit: Currency.Unit | null = null;
     private currencyLabel: Currency.Label; // Default
+
+
+    // TODO INTERSOLAR
+    private userService: UserService = inject(UserService);
 
     constructor(
         private websocket: Websocket,
@@ -64,6 +69,10 @@ export class ChartComponent extends AbstractHistoryChart {
         this.currencyLabel = Currency.getCurrencyLabelByCurrency(currency);
         this.chartType = "bar";
 
+        // TODO INTERSOLAR
+        const edgeId: string | null = this.edge?.id ?? null;
+        const userId: string | null = this.userService.currentUser()?.id ?? null;
+
         return {
             input: [
                 {
@@ -100,6 +109,8 @@ export class ChartComponent extends AbstractHistoryChart {
                             this.getDataset(
                                 data,
                                 TimeOfUseTariffUtils.State.Balancing,
+                                edgeId,
+                                userId,
                             ),
                         color: "rgb(18, 184, 224)",
                         stack: 1,
@@ -116,6 +127,8 @@ export class ChartComponent extends AbstractHistoryChart {
                             this.getDataset(
                                 data,
                                 TimeOfUseTariffUtils.State.ChargeGrid,
+                                edgeId,
+                                userId,
                             ),
                         color: "rgb(0, 107, 82)",
                         stack: 1,
@@ -129,6 +142,8 @@ export class ChartComponent extends AbstractHistoryChart {
                             this.getDataset(
                                 data,
                                 TimeOfUseTariffUtils.State.DelayDischarge,
+                                edgeId,
+                                userId,
                             ),
                         color: "rgb(168, 50, 71)",
                         stack: 1,
@@ -142,6 +157,8 @@ export class ChartComponent extends AbstractHistoryChart {
                             this.getDataset(
                                 data,
                                 TimeOfUseTariffUtils.State.PeakShaving,
+                                edgeId,
+                                userId,
                             ),
                         color: "rgb(233, 120, 47)",
                         stack: 1,
@@ -155,6 +172,8 @@ export class ChartComponent extends AbstractHistoryChart {
                             this.getDataset(
                                 data,
                                 TimeOfUseTariffUtils.State.DelayCharge,
+                                edgeId,
+                                userId,
                             ),
                         color: "rgb(73, 194, 168)",
                         stack: 1,
@@ -168,6 +187,8 @@ export class ChartComponent extends AbstractHistoryChart {
                             this.getDataset(
                                 data,
                                 TimeOfUseTariffUtils.State.LimitCharge,
+                                edgeId,
+                                userId,
                             ),
                         color: "rgb(0, 153, 120)",
                         stack: 1,
@@ -181,6 +202,8 @@ export class ChartComponent extends AbstractHistoryChart {
                             this.getDataset(
                                 data,
                                 TimeOfUseTariffUtils.State.AvoidGridSellLimit,
+                                edgeId,
+                                userId,
                             ),
                         color: "rgb(107, 77, 255)",
                         stack: 1,
@@ -194,6 +217,8 @@ export class ChartComponent extends AbstractHistoryChart {
                             this.getDataset(
                                 data,
                                 TimeOfUseTariffUtils.State.DischargeConsumption,
+                                edgeId,
+                                userId,
                             ),
                         color: "rgb(230, 69, 107)",
                         stack: 1,
@@ -387,7 +412,7 @@ export class ChartComponent extends AbstractHistoryChart {
      * @param desiredState The desired state data from the whole dataset.
      * @returns The desired state array data.
      */
-    private getDataset(data: HistoryUtils.ChannelData, desiredState): any[] {
+    private getDataset(data: HistoryUtils.ChannelData, desiredState, edgeId: string | null, userId: string | null): any[] {
         const prices = data["QuarterlyPrice"].map((val) =>
             TimeOfUseTariffUtils.formatPrice(Utils.multiplySafely(val, 1000)),
         );
@@ -407,6 +432,14 @@ export class ChartComponent extends AbstractHistoryChart {
                 } else if (val > 5.5) {
                     return 6; // DelayCharge
                 } else if (val > 4.5) {
+                    // TODO INTERSOLAR
+                    if (userId === "intersolar@fenecon.de") {
+                        if(edgeId === "fems17289") {
+                            return 5; // PeakShaving
+                        } else {
+                            return 1; // Balancing
+                        }
+                    }
                     return 5; // PeakShaving
                 } else if (val > 2.5) {
                     return 3; // ChargeGrid

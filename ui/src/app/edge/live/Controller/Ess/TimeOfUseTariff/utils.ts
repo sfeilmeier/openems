@@ -37,6 +37,8 @@ export namespace Controller_Ess_TimeOfUseTariffUtils {
         socArray: number[],
         translate: TranslateService,
         controlMode: Controller_Ess_TimeOfUseTariffUtils.ControlMode,
+        edgeId: string | null,
+        userId: string | null,
     ): Controller_Ess_TimeOfUseTariffUtils.ScheduleChartData {
         const datasets: ChartDataset[] = [];
         const colors: any[] = [];
@@ -71,6 +73,15 @@ export namespace Controller_Ess_TimeOfUseTariffUtils {
                         barChargeGrid[index] = quarterlyPrice;
                         break;
                     case TimeOfUseTariffUtils.State.PeakShaving:
+                        // TODO INTERSOLAR
+                        if (userId === "intersolar@fenecon.de") {
+                            if(edgeId === "fems17289") {
+                                barPeakShaving[index] = quarterlyPrice;
+                            } else {
+                                barBalancing[index] = quarterlyPrice;
+                            }
+                            break;
+                        }
                         barPeakShaving[index] = quarterlyPrice;
                         break;
                     case TimeOfUseTariffUtils.State.DelayCharge:
