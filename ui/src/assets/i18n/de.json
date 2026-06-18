@@ -569,7 +569,8 @@
                         "DELAY_CHARGE": "Beladung verzögern",
                         "LIMIT_CHARGE": "Beladung limitieren",
                         "AVOID_GRID_SELL_LIMIT": "Einspeiselimitierung vermeiden",
-                        "DISCHARGE_CONSUMPTION": "Entladung in den Verbrauch"
+                        "DISCHARGE_CONSUMPTION": "Entladung in den Verbrauch",
+                        "DISCHARGE_GRID": "Entladung ins Netz"
                     }
                 },
                 "TWO_WAY_INFO_GRID": "Negative Werte entsprechen Netzeinspeisung, Positive Werte entsprechen Netzbezug",
@@ -1397,7 +1398,8 @@
         "Z_TO_A": "Bezeichnung Z - A"
     },
     "PAGE_HEADERS": {
-        "ENERGY_JOURNEY": "Analyse Batterieerweiterung"
+        "ENERGY_JOURNEY": "Analyse Batterieerweiterung",
+        "WRAP_UP_2025": "Dein Wrap up 2025"
     },
     "REGISTER": {
         "BUTTON": "Anlegen",

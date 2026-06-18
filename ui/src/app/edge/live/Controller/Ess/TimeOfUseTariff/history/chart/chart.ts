@@ -22,7 +22,6 @@ export class ChartComponent extends AbstractHistoryChart {
     private currencyUnit: Currency.Unit | null = null;
     private currencyLabel: Currency.Label; // Default
 
-
     // TODO INTERSOLAR
     private userService: UserService = inject(UserService);
 
@@ -71,7 +70,8 @@ export class ChartComponent extends AbstractHistoryChart {
 
         // TODO INTERSOLAR
         const edgeId: string | null = this.edge?.id ?? null;
-        const userId: string | null = this.userService.currentUser()?.id ?? null;
+        const userId: string | null =
+            this.userService.currentUser()?.id ?? null;
 
         return {
             input: [
@@ -112,7 +112,7 @@ export class ChartComponent extends AbstractHistoryChart {
                                 edgeId,
                                 userId,
                             ),
-                        color: "rgb(18, 184, 224)",
+                        color: ChartConstants.Colors.ESS_MODE_BALANCING,
                         stack: 1,
                         custom: {
                             formatNumber: ChartConstants.NumberFormat.TWO,
@@ -130,7 +130,7 @@ export class ChartComponent extends AbstractHistoryChart {
                                 edgeId,
                                 userId,
                             ),
-                        color: "rgb(0, 107, 82)",
+                        color: ChartConstants.Colors.ESS_MODE_CHARGE_GRID,
                         stack: 1,
                         order: 2,
                     },
@@ -145,7 +145,7 @@ export class ChartComponent extends AbstractHistoryChart {
                                 edgeId,
                                 userId,
                             ),
-                        color: "rgb(168, 50, 71)",
+                        color: ChartConstants.Colors.ESS_MODE_DELAY_DISCHARGE,
                         stack: 1,
                         order: 2,
                     },
@@ -160,7 +160,7 @@ export class ChartComponent extends AbstractHistoryChart {
                                 edgeId,
                                 userId,
                             ),
-                        color: "rgb(233, 120, 47)",
+                        color: ChartConstants.Colors.ESS_MODE_PEAK_SHAVING,
                         stack: 1,
                         order: 2,
                     },
@@ -175,7 +175,7 @@ export class ChartComponent extends AbstractHistoryChart {
                                 edgeId,
                                 userId,
                             ),
-                        color: "rgb(73, 194, 168)",
+                        color: ChartConstants.Colors.ESS_MODE_DELAY_CHARGE,
                         stack: 1,
                         order: 2,
                     },
@@ -190,7 +190,7 @@ export class ChartComponent extends AbstractHistoryChart {
                                 edgeId,
                                 userId,
                             ),
-                        color: "rgb(0, 153, 120)",
+                        color: ChartConstants.Colors.ESS_MODE_LIMIT_CHARGE,
                         stack: 1,
                         order: 2,
                     },
@@ -205,7 +205,8 @@ export class ChartComponent extends AbstractHistoryChart {
                                 edgeId,
                                 userId,
                             ),
-                        color: "rgb(107, 77, 255)",
+                        color: ChartConstants.Colors
+                            .ESS_MODE_AVOID_FEED_IN_LIMIT,
                         stack: 1,
                         order: 2,
                     },
@@ -220,7 +221,8 @@ export class ChartComponent extends AbstractHistoryChart {
                                 edgeId,
                                 userId,
                             ),
-                        color: "rgb(230, 69, 107)",
+                        color: ChartConstants.Colors
+                            .ESS_MODE_DISCHARGE_CONSUMPTION,
                         stack: 1,
                         order: 2,
                     },
@@ -412,7 +414,12 @@ export class ChartComponent extends AbstractHistoryChart {
      * @param desiredState The desired state data from the whole dataset.
      * @returns The desired state array data.
      */
-    private getDataset(data: HistoryUtils.ChannelData, desiredState, edgeId: string | null, userId: string | null): any[] {
+    private getDataset(
+        data: HistoryUtils.ChannelData,
+        desiredState,
+        edgeId: string | null,
+        userId: string | null,
+    ): any[] {
         const prices = data["QuarterlyPrice"].map((val) =>
             TimeOfUseTariffUtils.formatPrice(Utils.multiplySafely(val, 1000)),
         );
@@ -434,7 +441,7 @@ export class ChartComponent extends AbstractHistoryChart {
                 } else if (val > 4.5) {
                     // TODO INTERSOLAR
                     if (userId === "intersolar@fenecon.de") {
-                        if(edgeId === "fems17289") {
+                        if (edgeId === "fems17289") {
                             return 5; // PeakShaving
                         } else {
                             return 1; // Balancing
