@@ -174,6 +174,12 @@ export class FenaComponent {
                                     text: "Unsere Prognose erwartet heute einen sonnigen Tag mit viel PV-Energie.",
                                 },
                             ]);
+                        case "fems65456":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Dein Speicher belädt sich heute während des Tages voll und entlädt sich am Abend, wenn der Strompreis am höchsten ist ins Netz und wird planmäßig 25 kWh zu 18 Cent einspeisen.",
+                                },
+                            ]);
                     }
                 }
 

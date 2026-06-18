@@ -559,7 +559,7 @@
                     "CONTROL_MODE_DESCRIPTION": {
                         "CHARGE_CONSUMPTION": "Durch die aktive Beladung der Batterie aus dem Netz in Zeiten mit niedrigen Strompreisen kann Netzbezug zu teuren Zeiten vermieden werden.<br/><br/>ACHTUNG: Die aktive Beladung der Batterie aus dem Netz über die technisch notwendige Erhaltungsladung hinaus erfordert eine entsprechende Anmeldung des Speichersystems. Im Zweifel wende dich hierzu bitte an deinen Installateur. Mit Betätigung des blauen \"Speichern\"-Buttons bestätigst du, dass diese Prüfung durchgeführt wurde.<br/><br/>Beachte: Voraussetzung für die Inanspruchnahme einer Förderung nach dem Gesetz für den Ausbau erneuerbarer Energien (EEG 2023) ist, dass im Speicher ausschließlich Strom zwischengespeichert wird, der aus erneuerbaren Energien und/oder Grubengas stammt. Bei Aktivierung dieser Funktion wird der Speicher mit Netzstrom geladen. Dieser Netzstrom wird, je nach Stromlieferungsvertrag, ggf. auch aus fossilen Energieträgern und/oder Atomkraft gewonnen. Daher können wir nicht gewährleisten, dass der Speicher ausschließlich mit Strom aus erneuerbaren Energien und/oder Grubengas geladen wird."
                     },
-                    "POWER_SOC_CHART_TITLE": "Vorhersagen (Nur für Admins)",
+                    "POWER_SOC_CHART_TITLE": "Vorhersagen",
                     "PRICE": "Aktueller Bezugsstrompreis",
                     "STATE": {
                         "BALANCING": "Eigenverbrauchsoptimierung",
@@ -690,6 +690,7 @@
         "GRID_BUY_PRICE": "Strompreis",
         "GRID_SELL": "Netzeinspeisung",
         "GRID_SELL_ADVANCED": "Einspeisung",
+        "GRID_SELL_PRICE": "Einspeisevergütung",
         "HEAT_PUMP": "Wärmepumpe",
         "HISTORY": "Historie",
         "INACTIVE": "Inaktiv",
