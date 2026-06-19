@@ -1,5 +1,5 @@
 @if (isInitialized) {
-  <oe-components-scheduler (schedule)="(schedule)" (tasks)="updateSmartEvents($event)" [(payload)]="payload" [sectionTitle]="isIntersolarSmartEventVisible ? ('EVSE_SINGLE.SCHEDULE.MANUAL_EVENTS' | translate) : null" [taskFilter]="manualTaskFilter">
+  <oe-components-scheduler (schedule)="(schedule)" (tasks)="updateSmartEvents($event)" [(payload)]="payload" [sectionTitle]="isIntersolarSmartEventVisible ? ('JS_SCHEDULE.MANUAL_EVENTS' | translate) : null" [taskFilter]="manualTaskFilter">
     <ng-template let-task="task">
       {{ ("EVSE_SINGLE.SCHEDULE.MODE" | translate) + " " + task.payloadText }}
     </ng-template>
@@ -9,7 +9,7 @@
         <ion-row>
           <ion-col>
             <h2 class="ion-margin-bottom">
-              {{ "EVSE_SINGLE.SCHEDULE.SMART_EVENTS" | translate }}
+              {{ "JS_SCHEDULE.SMART_EVENTS" | translate }}
             </h2>
           </ion-col>
         </ion-row>

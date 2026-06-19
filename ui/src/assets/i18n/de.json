@@ -1250,8 +1250,13 @@
         "VALUE_WITH_LABEL": "Wert {{ label }}{{ number }} {{ symbol }}"
     },
     "JS_SCHEDULE": {
+        "ADD_EVENT": "Event hinzufügen",
+        "ADD_TASK": "Aufgabe hinzufügen",
+        "EDIT_EVENT": "Event bearbeiten",
         "EDIT_TASK": "Aufgabe bearbeiten",
-        "ADD_TASK": "Aufgabe hinzufügen"
+        "NEXT_EVENTS": "Nächste Events",
+        "MANUAL_EVENTS": "Manuelle Events",
+        "SMART_EVENTS": "Smart Events"
     },
     "LIVE": {
         "PULL_TO_REFRESH": "Hier ziehen, um zu aktualisieren"

@@ -45,11 +45,8 @@ export class EvseScheduleComponent extends AbstractModal {
     protected schedule = model<JsCalendar.ScheduleVM[]>([]);
     protected payload = model(new EvseManualPayload());
     protected smartEvents: SmartEventViewModel[] = [];
+    protected canWrite: boolean = this.payload().canWrite(this.edge);
     private readonly userService: UserService = inject(UserService);
-
-    protected get canWrite(): boolean {
-        return this.payload().canWrite(this.edge);
-    }
 
     protected get isIntersolarSmartEventVisible(): boolean {
         const user = this.userService.currentUser();
