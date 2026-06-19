@@ -243,7 +243,7 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
                         value: { fontSize: "large" },
                     },
                     cssClass: "ion-padding-top",
-                    converter: ESS_CHARGE_OR_DISCHARGE_DISPLAY_VALUE(translate),
+                    converter: ESS_CHARGE_OR_DISCHARGE(translate),
                 },
                 {
                     type: "component-line",
@@ -360,15 +360,16 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
     }
 }
 
-export const ESS_CHARGE_OR_DISCHARGE_DISPLAY_VALUE =
+export const ESS_CHARGE_OR_DISCHARGE =
     (translate: TranslateService): Converter =>
     (raw): string => {
         const displayText = (
             power: string,
             color: "danger" | "success" | "inherit",
             text: string,
-        ): string =>
-            `<span>${power}&nbsp;<ion-label color="${color}">${text}</ion-label></span>`;
+        ): string => {
+            return `<span>${power}&nbsp;<ion-label color="${color}">${text}</ion-label></span>`;
+        };
 
         return Converter.IF_NUMBER(raw, (value) => {
             if (value > 0) {

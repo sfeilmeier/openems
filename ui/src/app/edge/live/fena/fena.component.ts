@@ -67,6 +67,32 @@ export class FenaComponent {
                             return of<FenaMessage[]>([
                                 {
                                     text: "Dein E-Auto wird jetzt so günstig wie möglich beladen, damit Du morgen <strong>um 7 Uhr losfahren</strong> kannst.",
+                                    actions: [
+                                        {
+                                            title: "Smart Event anpassen",
+                                            callback: () =>
+                                                this.router.navigate(
+                                                    ["evse", "ctrlEvseSingle0"],
+                                                    {
+                                                        relativeTo: this.route,
+                                                    },
+                                                ),
+                                        },
+                                        {
+                                            title: "Heute nicht laden",
+                                            callback: () =>
+                                                this.router.navigate(
+                                                    [
+                                                        "evse",
+                                                        "ctrlEvseSingle0",
+                                                        "charge-mode",
+                                                    ],
+                                                    {
+                                                        relativeTo: this.route,
+                                                    },
+                                                ),
+                                        },
+                                    ],
                                 },
                                 {
                                     text: "Dein Strompreis-Update: Dein dynamischer Strompreis schwankt zwischen <strong>minus 20 Cent und plus 19 Cent/kWh</cent>",
@@ -75,25 +101,51 @@ export class FenaComponent {
                         case "fems4":
                             return of<FenaMessage[]>([
                                 {
-                                    text: "Ab <strong>11 Uhr werden negative Strompreise</strong> erwartet. Deshalb schafft dein Speicher rechtzeitig Platz für neuen Solarstrom: Er versorgt deinen Haushalt verstärkt aus dem Speicher, damit überschüssige Energie später gespeichert statt zu negativen Preisen ins Netz eingespeist wird.",
+                                    text: "Dein Speicher wird heute vorraussichtlich <strong>um 15:30 Uhr voll geladen</strong> sein.",
                                 },
                                 {
-                                    text: "Dein Speicher wird heute <strong>vorraussichtlich um 15:30 Uhr voll geladen</strong> sein.",
+                                    text: 'Dein Speicher wird heute morgen durch "Entladung in den Verbrauch" genug freie Kapazität schaffen, damit du trotz Leistungsbegrenzung des Netzanschlusses keine Energie verschenkst.',
                                 },
                             ]);
                         case "fems82085":
                             return of<FenaMessage[]>([
                                 {
-                                    text: 'Ab <strong>11 Uhr gibt es negative Börsenpreise</strong>. Dein Speicher versucht durch "Entladung in den Verbrauch" genug freie Kapazität im Speicher zu schaffen, damit Du in der Zeit nicht einspeisen musst.',
+                                    text: 'Ab <strong>11 Uhr gibt es negative Börsenpreise</strong>. Dein Speicher versucht durch "Entladung in den Verbrauch" genug freie Kapazität im Speicher zu schaffen, damit Du in dieser Zeit nicht einspeisen wirst.',
                                 },
                                 {
-                                    text: "Dein Speicher wird heute <strong>vorraussichtlich um 14:00 Uhr voll geladen</strong> sein.",
+                                    text: "Wenn du dein E-Auto ansteckst kann ich es heute mit kostenlosem PV Strom beladen.",
                                 },
                             ]);
                         case "fems666":
                             return of<FenaMessage[]>([
                                 {
                                     text: "Dein E-Auto wird jetzt so günstig wie möglich beladen, damit Du <strong>morgen um 7 Uhr</strong> losfahren kannst.",
+                                    actions: [
+                                        {
+                                            title: "Smart Event anpassen",
+                                            callback: () =>
+                                                this.router.navigate(
+                                                    ["evse", "ctrlEvseSingle0"],
+                                                    {
+                                                        relativeTo: this.route,
+                                                    },
+                                                ),
+                                        },
+                                        {
+                                            title: "Heute nicht laden",
+                                            callback: () =>
+                                                this.router.navigate(
+                                                    [
+                                                        "evse",
+                                                        "ctrlEvseSingle0",
+                                                        "charge-mode",
+                                                    ],
+                                                    {
+                                                        relativeTo: this.route,
+                                                    },
+                                                ),
+                                        },
+                                    ],
                                 },
                                 {
                                     text: "<strong>Heute bist du autark</strong> - nur mit Sonne und Stromspeicher!",
@@ -103,18 +155,44 @@ export class FenaComponent {
                             return of<FenaMessage[]>([
                                 {
                                     text: "Dein E-Auto wird jetzt so günstig wie möglich beladen, damit Du <strong>morgen um 9 Uhr</strong losfahren kannst.",
+                                    actions: [
+                                        {
+                                            title: "Smart Event anpassen",
+                                            callback: () =>
+                                                this.router.navigate(
+                                                    ["evse", "ctrlEvseSingle0"],
+                                                    {
+                                                        relativeTo: this.route,
+                                                    },
+                                                ),
+                                        },
+                                        {
+                                            title: "Heute nicht laden",
+                                            callback: () =>
+                                                this.router.navigate(
+                                                    [
+                                                        "evse",
+                                                        "ctrlEvseSingle0",
+                                                        "charge-mode",
+                                                    ],
+                                                    {
+                                                        relativeTo: this.route,
+                                                    },
+                                                ),
+                                        },
+                                    ],
                                 },
                                 {
-                                    text: "Dein Pufferspeicher hat aktuell eine Temperatur von 55 °C erreicht. Dein Heizstab läuft heute dank PV-Überschuss und negativen Börsenstrompreisen kostenlos.",
+                                    text: "Dein Pufferspeicher hat aktuell eine <strong>Temperatur von 55 °C</strong> erreicht. Dein Heizstab läuft heute dank PV-Überschuss und negativen Börsenstrompreisen kostenlos.",
                                 },
                             ]);
                         case "fems72127":
                             return of<FenaMessage[]>([
                                 {
-                                    text: "Dank der intelligenten Speichersteuerung von FEMS wirkt sich die 60 %-Einspeisebegrenzung nicht negativ auf deinen PV-Ertrag aus. So erzielst du trotz Limitierung mehr Einspeisevergütung, speist überschüssige Energie gewinnbringend ein und deckst deinen eigenen Strombedarf optimal.",
+                                    text: "<strong>Heute bist du autark</strong> - nur mit Sonne und Stromspeicher!",
                                 },
                                 {
-                                    text: "<strong>Heute bist du autark</strong> - nur mit Sonne und Stromspeicher!",
+                                    text: "Dank der intelligenten Speichersteuerung von FEMS wirkt sich die 60 %-Einspeisebegrenzung nicht negativ auf deinen PV-Ertrag aus. So erzielst du trotz Limitierung mehr Einspeisevergütung, speist überschüssige Energie gewinnbringend ein und deckst deinen eigenen Strombedarf optimal.",
                                 },
                             ]);
                         case "fems17289":
@@ -124,6 +202,15 @@ export class FenaComponent {
                                 },
                                 {
                                     text: "Your system will produce about 30 kWh today.",
+                                },
+                            ]);
+                        case "fems65456":
+                            return of<FenaMessage[]>([
+                                {
+                                    text: "Dein Speicher belädt sich heute während des Tages voll und entlädt sich am Abend - wenn der Strompreis am höchsten ist - ins Netz. Dabei werden planmäßig 25 kWh zu 18 Cent eingespeist.",
+                                },
+                                {
+                                    text: "Du wirst heute durch die Direktvermarktung deiner Anlage 10,80 € verdienen",
                                 },
                             ]);
                         case "fems33006":
@@ -156,7 +243,7 @@ export class FenaComponent {
                         case "fems3625":
                             return of<FenaMessage[]>([
                                 {
-                                    text: "Bis Freitag läuft dein Multi-Use Speichersystem im Modus Lastspitzenkappung. Anschließend wird der Modus auf Eigenverbrauchsoptimierung automatisch am Samstag um 13:00 Uhr wechseln",
+                                    text: "Bis Freitagabend läuft dein Multi-Use Speichersystem im Modus Lastspitzenkappung. Anschließend wird der Modus auf Eigenverbrauchsoptimierung wechseln",
                                     actions: [
                                         {
                                             title: "Einstellungen ändern",
@@ -172,12 +259,6 @@ export class FenaComponent {
                                 },
                                 {
                                     text: "Unsere Prognose erwartet heute einen sonnigen Tag mit viel PV-Energie.",
-                                },
-                            ]);
-                        case "fems65456":
-                            return of<FenaMessage[]>([
-                                {
-                                    text: "Dein Speicher belädt sich heute während des Tages voll und entlädt sich am Abend, wenn der Strompreis am höchsten ist ins Netz und wird planmäßig 25 kWh zu 18 Cent einspeisen.",
                                 },
                             ]);
                     }
