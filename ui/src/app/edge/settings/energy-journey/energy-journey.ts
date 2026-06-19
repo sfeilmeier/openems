@@ -4,6 +4,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { NavigationTree } from "src/app/shared/components/navigation/shared";
 import { PipeComponentsModule } from "src/app/shared/pipe/pipe.module";
 import { Edge, EdgeConfig, EdgePermission, EnergyJourneyWidget, Service, } from "src/app/shared/shared";
+import { Role } from "src/app/shared/type/role";
 import { CommonUiModule } from "../../../shared/common-ui.module";
 import { SharedAutarchy } from "../../live/common/autarchy/shared/shared";
 import { SharedSelfConsumption } from "../../live/common/selfconsumption/shared/shared";
@@ -30,17 +31,21 @@ export class EnergyJourneyComponent implements OnInit {
         config: EdgeConfig,
         translate: TranslateService,
     ): NavigationTree {
-        const children: NavigationTree[] = [
-            new NavigationTree(
-                "appcenter",
-                { baseString: "appcenter" },
-                { name: "add-outline" },
-                "AppCenter",
-                "label",
-                [],
-                null,
-            ),
-        ];
+        const children: NavigationTree[] = [];
+
+        if (edge.roleIsAtLeast(Role.OWNER)) {
+            children.push(
+                new NavigationTree(
+                    "appcenter",
+                    { baseString: "appcenter" },
+                    { name: "add-outline" },
+                    "AppCenter",
+                    "label",
+                    [],
+                    null,
+                ),
+            );
+        }
 
         // Show Autarchy and Self-Consumption only for systems with Producers
         if (config.hasProducer()) {

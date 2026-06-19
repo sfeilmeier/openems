@@ -767,10 +767,16 @@ export class Edge {
                 { showOrder: "LOW" },
             ),
         );
-        navigationTree.setChild(
-            NavigationId.LIVE,
-            EnergyJourneyComponent.getNavigationTree(edge, config, translate),
-        );
+        const energyJourneyNavigationTree =
+            EnergyJourneyComponent.getNavigationTree(edge, config, translate);
+
+        // only add energy journey if it has content
+        if (energyJourneyNavigationTree.children.length !== 0) {
+            navigationTree.setChild(
+                NavigationId.LIVE,
+                energyJourneyNavigationTree,
+            );
+        }
         this.addGlobalNavigation(service, navigationTree, translate);
         navigationTree.setChild(
             NavigationId.LIVE,
