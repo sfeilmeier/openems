@@ -190,35 +190,6 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
 
         const lines: OeFormlyField[] = [];
 
-        // if (edge.id == "fems888") {
-        //     // TODO finalize stats
-        //     lines.push({
-        //         type: "stats-line",
-        //         stats: [
-        //             {
-        //                 name: "Beladung heute",
-        //                 futureValue: chargeFutureEnergy,
-        //                 description: "kWh",
-        //                 unit: "kWh",
-        //                 historyValue: NumberUtils.divideSafely(
-        //                     energyDate.result.data["_sum/EssDcChargeEnergy"],
-        //                     1000,
-        //                 ),
-        //             },
-        //             {
-        //                 name: "Entladung heute",
-        //                 futureValue: dischargeFutureEnergy,
-        //                 description: "kWh",
-        //                 unit: "kWh",
-        //                 historyValue: NumberUtils.divideSafely(
-        //                     energyDate.result.data["_sum/EssDcDischargeEnergy"],
-        //                     1000,
-        //                 ),
-        //             },
-        //         ],
-        //     });
-        // }
-
         if (energyScheduler.schedule !== GetSchedule.Response.empty) {
             lines.push(
                 {

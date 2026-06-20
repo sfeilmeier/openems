@@ -1,6 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { endOfToday, startOfToday } from "date-fns";
 import { SingleXAxisComponent } from "src/app/shared/components/chart/single-xaxis/single-xaxis";
 import { EnergySchedulerV2 as EnergyScheduler, EnergySchedulerV2, } from "src/app/shared/components/edge/config-components/energy/energy";
 import { GetSchedule } from "src/app/shared/components/edge/config-components/energy/getSchedule";
@@ -8,8 +7,8 @@ import { Converter } from "src/app/shared/components/shared/converter";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { Name } from "src/app/shared/components/shared/name";
 import { AbstractFormlyComponent, OeFormlyField, OeFormlyView, } from "src/app/shared/components/shared/oe-formly-component";
-import { QueryHistoricTimeseriesEnergyRequest } from "src/app/shared/jsonrpc/request/queryHistoricTimeseriesEnergyRequest";
-import { QueryHistoricTimeseriesEnergyResponse } from "src/app/shared/jsonrpc/response/queryHistoricTimeseriesEnergyResponse";
+import { User } from "src/app/shared/jsonrpc/shared";
+import { UserService } from "src/app/shared/service/user.service";
 import { ChannelAddress, Edge, EdgeConfig, Service, } from "src/app/shared/shared";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { LiveDataService } from "../../../livedataservice";
@@ -30,53 +29,51 @@ export class CommonProductionHomeComponent extends AbstractFormlyComponent {
     protected productionMeterComponents: EdgeConfig.Component[] = [];
     protected chargerComponents: EdgeConfig.Component[] = [];
 
+    private readonly userService = inject(UserService);
+
     public static async getFormlyGeneralView(
         translate: TranslateService,
         service: Service,
+        user: User | null,
         edge: Edge,
         energyScheduler: EnergySchedulerV2,
-        queryResponse: QueryHistoricTimeseriesEnergyResponse,
         productionMeterComponents: EdgeConfig.Component[],
         chargerComponents: EdgeConfig.Component[],
     ): Promise<OeFormlyView> {
         await energyScheduler?.updateSchedule(edge, service.websocket);
-
         const lines: OeFormlyField[] = [];
 
-        // if (edge.id == "fems888") {
-        //     // TODO use real values
-        //     lines.push({
-        //         type: "stats-line",
-        //         stats: [
-        //             // { name: "Beladung", value: "22 kw", description: futureData.toString() },
-        //             {
-        //                 name: "Energie Heute",
-        //                 futureValue: futureData,
-        //                 description: "kWh",
-        //                 unit: "kWh",
-        //                 historyValue: historyData,
-        //             },
-        //             {
-        //                 channelsToSubscribe: [
-        //                     new ChannelAddress("_sum", "GridActivePower"),
-        //                 ],
-        //                 name: "Energie Heute",
-        //                 value: (data) => {
-        //                     const channelData =
-        //                         data.allComponents[
-        //                             new ChannelAddress(
-        //                                 "_sum",
-        //                                 "GridActivePower",
-        //                             ).toString()
-        //                         ];
-        //                     return Converter.POWER_IN_KILO_WATT(channelData);
-        //                 },
-        //             },
-        //         ],
-        //     });
-        // }
-
         if (energyScheduler.schedule !== GetSchedule.Response.empty) {
+            // TODO INTERSOLAR
+            if (user?.id == "intersolar@fenecon.de" || edge.id == "fems888") {
+                const energyToday =
+                    energyScheduler.schedule.calculateEnergyFromPower(
+                        "today",
+                        "ProductionActivePower",
+                    );
+                const energyTomorrow =
+                    energyScheduler.schedule.calculateEnergyFromPower(
+                        "tomorrow",
+                        "ProductionActivePower",
+                    );
+                lines.push({
+                    type: "stats-line",
+                    stats: [
+                        {
+                            name: translate.instant("EDGE.HISTORY.TODAY"),
+                            value: energyToday.history,
+                            unit: "kWh",
+                            predictionValue: energyToday.prediction,
+                        },
+                        {
+                            name: translate.instant("EDGE.HISTORY.TOMORROW"),
+                            value: energyTomorrow.prediction,
+                            unit: "kWh",
+                        },
+                    ],
+                });
+            }
+
             lines.push(
                 {
                     type: "component-line",
@@ -159,6 +156,7 @@ export class CommonProductionHomeComponent extends AbstractFormlyComponent {
         const edge = this.service.currentEdge();
         const config = edge.getCurrentConfig();
         AssertionUtils.assertIsDefined(config);
+        const user = this.userService.currentUser();
 
         // Get Chargers
         this.chargerComponents = config
@@ -178,23 +176,13 @@ export class CommonProductionHomeComponent extends AbstractFormlyComponent {
             );
 
         const energy = new EnergyScheduler(config);
-        const request = new QueryHistoricTimeseriesEnergyRequest(
-            startOfToday(),
-            endOfToday(),
-            [new ChannelAddress("_sum", "ProductionActiveEnergy")],
-        );
-        const historyData =
-            await edge.sendRequest<QueryHistoricTimeseriesEnergyResponse>(
-                this.service.websocket,
-                request,
-            );
 
         return CommonProductionHomeComponent.getFormlyGeneralView(
             this.translate,
             this.service,
+            user,
             edge,
             energy,
-            historyData,
             this.productionMeterComponents,
             this.chargerComponents,
         );
