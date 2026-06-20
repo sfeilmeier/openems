@@ -392,7 +392,7 @@ export class FenaComponent {
         );
         const currencyLabel: Currency.Label =
             Currency.getCurrencyLabelByCurrency(currency);
-        const converter = Converter.CURRENCY_PER_KWH(currencyLabel);
+        const converter = Converter.CURRENCY_PER_MWH_TO_KWH(currencyLabel);
 
         const baseDate = new Date();
         const formattedMaxTime = formatRelative(max.timestamp, baseDate, {
