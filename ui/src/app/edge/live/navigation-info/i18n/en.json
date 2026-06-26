@@ -6,9 +6,9 @@
         "FEEDBACK": "Your feedback counts, let us know what you want to say about the BETA test:"
     },
     "MY_PORTAL": {
-        "INFO": "Here you can get comfortable support as an installer in the myFENECON Portal.",
-        "BUTTON": "To the myFENECON Portal",
-        "TICKET": "Check out the myFENECON Portal and find out about the status of your service tickets."
+        "INFO": "Click here to access the beta version of our exclusive portal, \"myFENECON\".",
+        "BUTTON": "Go to myFENECON",
+        "TICKET": "You can currently download marketing materials here. More content will be available soon."
     },
     "NAVIGATION_INFO_MANUAL": "{{source}} manual"
 }
