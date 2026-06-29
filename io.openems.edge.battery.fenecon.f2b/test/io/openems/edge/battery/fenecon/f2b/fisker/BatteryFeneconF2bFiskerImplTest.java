@@ -1,16 +1,20 @@
 package io.openems.edge.battery.fenecon.f2b.fisker;
 
+import static io.openems.common.test.TestUtils.createDummyClock;
+import static io.openems.edge.common.startstop.StartStoppable.ChannelId.START_STOP;
 import static org.junit.Assert.assertThrows;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
+import java.time.Clock;
+import java.util.function.Consumer;
 
 import org.junit.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
-import io.openems.common.test.TimeLeapClock;
 import io.openems.common.types.ChannelAddress;
+import io.openems.common.utils.FunctionUtils;
+import io.openems.edge.battery.api.Battery;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
+import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
@@ -18,23 +22,53 @@ import io.openems.edge.common.test.DummyComponentManager;
 
 public class BatteryFeneconF2bFiskerImplTest {
 
-	private static final String COMPONENT_ID = "battery0";
-	private static final String MODBUS_ID = "modbus0";
-	private static final int MODBUS_UNIT_ID = 1;
-	private static final ChannelAddress DTC_1 = new ChannelAddress(COMPONENT_ID, "Dtc1");
-	private static final ChannelAddress DTC_1_WARNING = new ChannelAddress(COMPONENT_ID, "Dtc1Warning");
+	private static final ChannelAddress DTC_1 = new ChannelAddress("battery0", "Dtc1");
+	private static final ChannelAddress DTC_1_WARNING = new ChannelAddress("battery0", "Dtc1Warning");
 
 	@Test
-	public void test() throws Exception {
-		final var clock = new TimeLeapClock(Instant.parse("2020-01-01T01:00:00.00Z"), ZoneOffset.UTC);
-		final var component = new ComponentTest(new BatteryFeneconF2bFiskerImpl())//
+	public void dtc1WarningTest() throws Exception {
+		assertThrows(//
+				IllegalArgumentException.class,
+				() -> createComponentTest().getSut().channel(DTC_1_WARNING.getChannelId())//
+		);
+	}
+
+	@Test
+	public void capacityCalculationTest() throws Exception {
+		createComponentTest() //
+				.next(new TestCase() //
+						.input(START_STOP, StartStop.START))//
+				.next(new TestCase() //
+						.output(Battery.ChannelId.CAPACITY, 100_659))//
+				.next(new TestCase() //
+						.input(START_STOP, StartStop.STOP))//
+				.next(new TestCase() //
+						.output(Battery.ChannelId.CAPACITY, 0))//
+		;
+	}
+
+	protected static ComponentTest createComponentTest() throws Exception {
+		return createComponentTest(createDummyClock(), FunctionUtils::doNothing);
+	}
+
+	protected static ComponentTest createComponentTest(Consumer<DummyModbusBridge> modbus) throws Exception {
+		return createComponentTest(createDummyClock(), modbus);
+	}
+
+	protected static ComponentTest createComponentTest(Clock clock) throws Exception {
+		return createComponentTest(clock, FunctionUtils::doNothing);
+	}
+
+	protected static ComponentTest createComponentTest(Clock clock, Consumer<DummyModbusBridge> modbus)
+			throws Exception {
+		return new ComponentTest(new BatteryFeneconF2bFiskerImpl())//
 				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("componentManager", new DummyComponentManager(clock)) //
-				.addReference("setModbus", new DummyModbusBridge(MODBUS_ID)) //
+				.addReference("setModbus", new DummyModbusBridge("modbus0")) //
 				.activate(MyConfig.create() //
-						.setId(COMPONENT_ID) //
-						.setModbusId(MODBUS_ID) //
-						.setModbusUnitId(MODBUS_UNIT_ID) //
+						.setId("battery0") //
+						.setModbusId("modbus0") //
+						.setModbusUnitId(1) //
 						.setStartStop(StartStopConfig.STOP)//
 						.setBatteryId(BatteryId.F2B_BATTERY_1)//
 						.build())
@@ -47,6 +81,5 @@ public class BatteryFeneconF2bFiskerImplTest {
 				.next(new TestCase()//
 						.input(DTC_1, 0))//
 		;
-		assertThrows(IllegalArgumentException.class, () -> component.getSut().channel(DTC_1_WARNING.getChannelId()));
 	}
 }

@@ -4,6 +4,7 @@ import static io.openems.common.types.OpenemsType.BOOLEAN;
 import static io.openems.common.types.OpenemsType.INTEGER;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.DIRECT_1_TO_1;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
+import static io.openems.edge.common.channel.ChannelUtils.setValueIfNotRead;
 import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE;
 import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE;
 import static org.osgi.service.component.annotations.ConfigurationPolicy.REQUIRE;
@@ -77,7 +78,8 @@ import io.openems.edge.common.taskmanager.Priority;
 		configurationPolicy = REQUIRE)
 @EventTopics({ //
 		TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
-		TOPIC_CYCLE_AFTER_PROCESS_IMAGE })
+		TOPIC_CYCLE_AFTER_PROCESS_IMAGE //
+})
 public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		implements WuerthBms, ModbusComponent, OpenemsComponent, Battery, BatteryErrorAcknowledge,
 		BatteryVoltageProtection, EventHandler, ModbusSlave, StartStoppable {
@@ -132,7 +134,6 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		this.getModbusCommunicationFailedChannel()
 				.onChange((ignore, value) -> this.setModbusCommunicationToFemsFailed(value.orElse(false)));
 		this.registerResetBatteryListeners();
-		this._setCapacity(CAPACITY);
 		this._setInnerResistance(INNER_RESISTANCE);
 	}
 
@@ -194,9 +195,14 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		case TOPIC_CYCLE_BEFORE_PROCESS_IMAGE -> {
 			this.batteryProtection.apply();
 			this.updateVoltageProtectionLimits();
+			this.handleCapacity();
 		}
 		case TOPIC_CYCLE_AFTER_PROCESS_IMAGE -> this.handleStateMachine();
 		}
+	}
+
+	private void handleCapacity() {
+		setValueIfNotRead(this, Battery.ChannelId.CAPACITY, this.isStarted() ? CAPACITY : 0);
 	}
 
 	private void handleStateMachine() {
