@@ -129,6 +129,8 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 				BatteryVoltageProtection.ChannelId.values(), //
 				WuerthBms.ChannelId.values() //
 		);
+		this.getModbusCommunicationFailedChannel()
+				.onChange((ignore, value) -> this.setModbusCommunicationToFemsFailed(value.orElse(false)));
 		this.registerResetBatteryListeners();
 		this._setCapacity(CAPACITY);
 		this._setInnerResistance(INNER_RESISTANCE);
@@ -813,7 +815,6 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 	public List<Channel<?>> defineBatteryErrorAcknowledgeChannels() {
 		return List.of(//
 				this.getModbusCommunicationFailedChannel(), //
-				this.getTimeoutStartBatteryChannel(), this.getTimeoutStopBatteryChannel(),
-				this.getBmsCommunicationFailedChannel(), this.getNotStableCommunicationChannel());
+				this.getTimeoutStartBatteryChannel(), this.getTimeoutStopBatteryChannel());
 	}
 }

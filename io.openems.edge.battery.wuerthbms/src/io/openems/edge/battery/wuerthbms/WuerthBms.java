@@ -42,7 +42,6 @@ import io.openems.edge.common.channel.Doc;
 import io.openems.edge.common.channel.EnumReadChannel;
 import io.openems.edge.common.channel.IntegerDoc;
 import io.openems.edge.common.channel.IntegerWriteChannel;
-import io.openems.edge.common.channel.StateChannel;
 import io.openems.edge.common.channel.WriteChannel;
 import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.component.OpenemsComponent;
@@ -388,9 +387,9 @@ public interface WuerthBms
 				.unit(VOLT)), //
 		KL_30C(Doc.of(INTEGER)//
 				.unit(VOLT)), //
-		CELL_OPEN_WIRE_DETECTION(Doc.of(INTEGER) //
+		CELL_OPEN_WIRE_DETECTION(Doc.of(INTEGER)//
 				.text("Cell number where open wire was detected")), //
-		CSC_OPEN_WIRE_DETECTION(Doc.of(INTEGER) //
+		CSC_OPEN_WIRE_DETECTION(Doc.of(INTEGER)//
 				.text("CSC number where open wire was detected")), //
 		CVCM_FAULT_CASE(Doc.of(CvcmFaultCause.values())//
 				.text("Internal faults related to current measurement chip")), //
@@ -410,7 +409,7 @@ public interface WuerthBms
 				.text("Average Temperature on String")), //
 
 		SHUTDOWN_PATH_CAUSE(Doc.of(ShutdownPathCause.values())), //
-		START_UP_PATH_FAILED_AT(Doc.of(StartUpPathTestFailedAt.values()) //
+		START_UP_PATH_FAILED_AT(Doc.of(StartUpPathTestFailedAt.values())//
 				.text("Shows at what moment the startup test has failed. Need to run regular test to identify if the contactors are working properly")), //
 
 		CFG_MODULE_CNT(Doc.of(INTEGER)//
@@ -485,16 +484,16 @@ public interface WuerthBms
 				.unit(VOLT)), //
 		CFG_BATT_STRING_MAX_V(Doc.of(INTEGER)//
 				.unit(VOLT)), //
-		CONTACTOR_SOH_MIN_WARNING(Doc.of(INTEGER) //
-				.unit(PERCENT) //
+		CONTACTOR_SOH_MIN_WARNING(Doc.of(INTEGER)//
+				.unit(PERCENT)//
 				.text("Configuration Warning Limit for Contactor SOH")), //
-		SOC_MIN_WARNING(Doc.of(INTEGER) //
-				.unit(PERCENT) //
+		SOC_MIN_WARNING(Doc.of(INTEGER)//
+				.unit(PERCENT)//
 				.text("Configuration Warning Limit for SOC")), //
-		CONTACTOR_FEEDBACK_VOLTAGE_TOLERANCE(Doc.of(INTEGER) //
-				.unit(MILLIVOLT) //
+		CONTACTOR_FEEDBACK_VOLTAGE_TOLERANCE(Doc.of(INTEGER)//
+				.unit(MILLIVOLT)//
 				.text("Internal parameter in BMS -> Voltage tolerance used for contactor feedbacks")), //
-		PRECHARGE_MAX_POWER_DISSIPATION_J(Doc.of(INTEGER) //
+		PRECHARGE_MAX_POWER_DISSIPATION_J(Doc.of(INTEGER)//
 				.text("Actual energy flowing through the prePrecharge Resistor")), //
 		CFG_CHARGE_CURRENT_LIMIT_TOLERANCE_A(Doc.of(INTEGER)//
 				.unit(AMPERE)//
@@ -517,10 +516,10 @@ public interface WuerthBms
 		CFG_BMS_MINIMUM_SOC(Doc.of(INTEGER)//
 				.unit(PERCENT)), //
 		CFG_PRECHARGE_ACTIVE_CURRENT_MA(Doc.of(INTEGER)//
-				.unit(MILLIAMPERE) //
+				.unit(MILLIAMPERE)//
 				.text("Internal parameter in BMS to define minimum current that can be measured for precharge calculations (currently set to 0)")), //
 		CFG_PRECHARGE_RESISTOR_OHMS(Doc.of(INTEGER)//
-				.unit(OHM) //
+				.unit(OHM)//
 				.text("Configuration of Precharge Resistor value used ")), //
 		CFG_PRECHARGE_THRESHOLD(Doc.of(INTEGER)//
 				.unit(PERCENT)), //
@@ -630,11 +629,8 @@ public interface WuerthBms
 		LOCK_STATUS_CRC_MSB(Doc.of(INTEGER)//
 				.text("CRC value for Lock Status")), //
 		LOCK_STATUS_CRC_LSB(Doc.of(INTEGER)), //
-
-		NOT_STABLE_COMMUNICATION(Doc.of(FAULT)//
-				.accessMode(READ_ONLY)), //
-		BMS_COMMUNICATION_FAILED(Doc.of(FAULT)//
-				.accessMode(READ_ONLY)), //
+		MODBUS_COMMUNICATION_TO_FEMS_FAILED(Doc.of(FAULT)//
+				.text("Modbus Communication to FEMS failed")) //
 		; //
 
 		private final Doc doc;
@@ -879,50 +875,22 @@ public interface WuerthBms
 	}
 
 	/**
-	 * Gets the Channel for {@link ChannelId#BMS_COMMUNICATION_FAILED}.
+	 * Gets the Channel for {@link ChannelId#MODBUS_COMMUNICATION_TO_FEMS_FAILED}.
 	 *
 	 * @return the Channel
 	 */
-	default StateChannel getBmsCommunicationFailedChannel() {
-		return this.channel(ChannelId.BMS_COMMUNICATION_FAILED);
+	default WriteChannel<Boolean> getModbusCommunicationToFemsFailedChannel() {
+		return this.channel(ChannelId.MODBUS_COMMUNICATION_TO_FEMS_FAILED);
 	}
 
 	/**
-	 * Gets the BmsCommunicationFailed, see
-	 * {@link ChannelId#BMS_COMMUNICATION_FAILED}.
+	 * Writes the value to the
+	 * {@link ChannelId#MODBUS_COMMUNICATION_TO_FEMS_FAILED}.
 	 *
-	 * @return the Channel {@link Value}
+	 * @param value the value.
 	 */
-	default Value<Boolean> getBmsCommunicationFailed() {
-		return this.getBmsCommunicationFailedChannel().value();
+	default void setModbusCommunicationToFemsFailed(boolean value) {
+		this.getModbusCommunicationToFemsFailedChannel().setNextValue(value);
 	}
 
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#BMS_COMMUNICATION_FAILED} Channel.
-	 *
-	 * @param value the next value
-	 */
-	default void _setBmsCommunicationFailed(boolean value) {
-		this.getBmsCommunicationFailedChannel().setNextValue(value);
-	}
-
-	/**
-	 * Gets the Channel for {@link ChannelId#NOT_STABLE_COMMUNICATION}.
-	 *
-	 * @return the Channel
-	 */
-	default StateChannel getNotStableCommunicationChannel() {
-		return this.channel(ChannelId.NOT_STABLE_COMMUNICATION);
-	}
-
-	/**
-	 * Internal method to set the 'nextValue' on
-	 * {@link ChannelId#NOT_STABLE_COMMUNICATION} Channel.
-	 *
-	 * @param value the next value
-	 */
-	default void _setNotStableCommunication(boolean value) {
-		this.getNotStableCommunicationChannel().setNextValue(value);
-	}
 }

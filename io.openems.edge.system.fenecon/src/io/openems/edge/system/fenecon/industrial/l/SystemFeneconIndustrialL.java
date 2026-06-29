@@ -1,5 +1,6 @@
 package io.openems.edge.system.fenecon.industrial.l;
 
+import static io.openems.common.channel.Level.FAULT;
 import static io.openems.common.channel.PersistencePriority.HIGH;
 
 import org.osgi.service.event.EventHandler;
@@ -26,122 +27,121 @@ import io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine.Sta
 public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsComponent, StartStoppable, EventHandler {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-		STATE_MACHINE(Doc.of(State.values()) //
+		STATE_MACHINE(Doc.of(State.values())//
 				.text("Current State of State-Machine")), //
-		RUN_FAILED(Doc.of(Level.FAULT) //
+		RUN_FAILED(Doc.of(FAULT)//
 				.text("Running the Logic failed")), //
 		/*
 		 * Envicool CoolingUnit.
 		 */
-		PUMP_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN) //
-				.accessMode(AccessMode.READ_ONLY) //
+		PUMP_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN)//
+				.accessMode(AccessMode.READ_ONLY)//
 				.persistencePriority(HIGH)), //
-		COMPRESSOR_1_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN) //
-				.accessMode(AccessMode.READ_ONLY) //
+		COMPRESSOR_1_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN)//
+				.accessMode(AccessMode.READ_ONLY)//
 				.persistencePriority(HIGH)), //
-		COMPRESSOR_2_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN) //
-				.accessMode(AccessMode.READ_ONLY) //
+		COMPRESSOR_2_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN)//
+				.accessMode(AccessMode.READ_ONLY)//
 				.persistencePriority(HIGH)), //
-		WATER_OUTLET_TEMP(Doc.of(OpenemsType.INTEGER) //
-				.accessMode(AccessMode.READ_ONLY) //
+		WATER_OUTLET_TEMP(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_ONLY)//
 				.unit(Unit.DEGREE_CELSIUS)), //
-		WATER_INLET_TEMP(Doc.of(OpenemsType.INTEGER) //
-				.accessMode(AccessMode.READ_ONLY) //
+		WATER_INLET_TEMP(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_ONLY)//
 				.unit(Unit.DEGREE_CELSIUS)), //
-		WATER_OUTLET_PRESSURE(Doc.of(OpenemsType.DOUBLE) //
-				.accessMode(AccessMode.READ_ONLY) //
+		WATER_OUTLET_PRESSURE(Doc.of(OpenemsType.DOUBLE)//
+				.accessMode(AccessMode.READ_ONLY)//
 				.unit(Unit.MILLIBAR)), //
-		WATER_INLET_PRESSURE(Doc.of(OpenemsType.DOUBLE) //
-				.accessMode(AccessMode.READ_ONLY) //
+		WATER_INLET_PRESSURE(Doc.of(OpenemsType.DOUBLE)//
+				.accessMode(AccessMode.READ_ONLY)//
 				.unit(Unit.MILLIBAR)), //
-		HEATER_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN) //
-				.accessMode(AccessMode.READ_ONLY) //
+		HEATER_RUNNING_STATE(Doc.of(OpenemsType.BOOLEAN)//
+				.accessMode(AccessMode.READ_ONLY)//
 				.persistencePriority(HIGH)), //
-		SET_WATER_OUTLET_PRESSURE(Doc.of(OpenemsType.DOUBLE) //
-				.accessMode(AccessMode.READ_WRITE) //
+		SET_WATER_OUTLET_PRESSURE(Doc.of(OpenemsType.DOUBLE)//
+				.accessMode(AccessMode.READ_WRITE)//
 				.unit(Unit.MILLIBAR)),
-		SET_WATER_INLET_PRESSURE(Doc.of(OpenemsType.DOUBLE) //
-				.accessMode(AccessMode.READ_WRITE) //
+		SET_WATER_INLET_PRESSURE(Doc.of(OpenemsType.DOUBLE)//
+				.accessMode(AccessMode.READ_WRITE)//
 				.unit(Unit.MILLIBAR)),
-		COMPRESSOR_1_SYSTEM_WARNING(Doc.of(Level.WARNING) //
+		COMPRESSOR_1_SYSTEM_WARNING(Doc.of(Level.WARNING)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		COMPRESSOR_1_GENERAL_ALARM(Doc.of(Level.WARNING) //
+		COMPRESSOR_1_GENERAL_ALARM(Doc.of(Level.WARNING)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		SYSTEM_WATER_SHORTAGE_ALARM(Doc.of(Level.WARNING) //
+		SYSTEM_WATER_SHORTAGE_ALARM(Doc.of(Level.WARNING)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		COMPRESSOR_1_CONDENSING_PRESSURE_TOO_HIGH_ALARM(Doc.of(Level.WARNING) //
+		COMPRESSOR_1_CONDENSING_PRESSURE_TOO_HIGH_ALARM(Doc.of(Level.WARNING)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		COMPRESSOR_2_CONDENSING_PRESSURE_TOO_HIGH_ALARM(Doc.of(Level.WARNING) //
+		COMPRESSOR_2_CONDENSING_PRESSURE_TOO_HIGH_ALARM(Doc.of(Level.WARNING)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		WATER_OUTLET_PRESSURE_HIGH_ALARM(Doc.of(Level.WARNING) //
+		WATER_OUTLET_PRESSURE_HIGH_ALARM(Doc.of(Level.WARNING)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		WATER_INLET_PRESSURE_WARNING(Doc.of(Level.WARNING) //
+		WATER_INLET_PRESSURE_WARNING(Doc.of(Level.WARNING)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		POWER_FAILURE_WARNING(Doc.of(Level.WARNING) //
+		POWER_FAILURE_WARNING(Doc.of(Level.WARNING)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		COMPRESSOR_2_SYSTEM_WARNING(Doc.of(Level.WARNING) //
+		COMPRESSOR_2_SYSTEM_WARNING(Doc.of(Level.WARNING)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		COMPRESSOR_2_GENERAL_ALARM(Doc.of(Level.WARNING) //
+		COMPRESSOR_2_GENERAL_ALARM(Doc.of(Level.WARNING)//
 				.accessMode(AccessMode.READ_ONLY)), //
-		SET_COOLING_POINT(Doc.of(OpenemsType.INTEGER) //
-				.accessMode(AccessMode.READ_WRITE) //
+		SET_COOLING_POINT(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_WRITE)//
 				.unit(Unit.DEGREE_CELSIUS)), //
-		SET_MONITOR_SWITCH(Doc.of(OpenemsType.BOOLEAN) //
+		SET_MONITOR_SWITCH(Doc.of(OpenemsType.BOOLEAN)//
 				.accessMode(AccessMode.READ_WRITE)), //
-		SET_PUMP_MANUAL_DEMAND_ENABLE(Doc.of(OpenemsType.BOOLEAN) //
+		SET_PUMP_MANUAL_DEMAND_ENABLE(Doc.of(OpenemsType.BOOLEAN)//
 				.accessMode(AccessMode.READ_WRITE)), //
-		SET_RUNTIME_CONTROL_MODE(Doc.of(RuntimeControlMode.values()) //
+		SET_RUNTIME_CONTROL_MODE(Doc.of(RuntimeControlMode.values())//
 				.accessMode(AccessMode.READ_WRITE)),
-		SET_ELECTRIC_HEATING_WORKING(Doc.of(OpenemsType.BOOLEAN) //
+		SET_ELECTRIC_HEATING_WORKING(Doc.of(OpenemsType.BOOLEAN)//
 				.accessMode(AccessMode.READ_WRITE)), //
-		SET_HEATING_POINT(Doc.of(OpenemsType.INTEGER) //
-				.accessMode(AccessMode.READ_WRITE) //
+		SET_HEATING_POINT(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_WRITE)//
 				.unit(Unit.DEGREE_CELSIUS)),
-		SET_PUMP_ROTATING_SPEED(Doc.of(OpenemsType.INTEGER) //
-				.accessMode(AccessMode.READ_WRITE) //
+		SET_PUMP_ROTATING_SPEED(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_WRITE)//
 				.unit(Unit.NONE)), //
-		SET_BMS_MODE_CONTROL(Doc.of(BmsModeControl.values()) //
+		SET_BMS_MODE_CONTROL(Doc.of(BmsModeControl.values())//
 				.accessMode(AccessMode.READ_WRITE)), //
-		SET_MONITOR_AND_ISSUE_MAX_TEMP(Doc.of(OpenemsType.INTEGER) //
-				.accessMode(AccessMode.READ_WRITE) //
+		SET_MONITOR_AND_ISSUE_MAX_TEMP(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_WRITE)//
 				.unit(Unit.DEGREE_CELSIUS)), //
-		SET_MONITOR_AND_ISSUE_MIN_TEMP(Doc.of(OpenemsType.INTEGER) //
-				.accessMode(AccessMode.READ_WRITE) //
+		SET_MONITOR_AND_ISSUE_MIN_TEMP(Doc.of(OpenemsType.INTEGER)//
+				.accessMode(AccessMode.READ_WRITE)//
 				.unit(Unit.DEGREE_CELSIUS)), //
-		EMERGENCY_STOP_STATE(Doc.of(Level.WARNING) //
+		EMERGENCY_STOP_STATE(Doc.of(Level.WARNING)//
 				.text("Emergency Stop State is active")), //
-		SPD_TRIPPED(Doc.of(Level.WARNING) //
+		SPD_TRIPPED(Doc.of(Level.WARNING)//
 				.text("SPD Tripped: Possible SPD damage")), //
 		FUSE_TRIPPED(Doc.of(Level.WARNING)//
 				.text("Fuse Tripped: At least one 24V fuse is off")), //
-		PSU_TRIGGERED(Doc.of(Level.FAULT)//
+		PSU_TRIGGERED(Doc.of(FAULT)//
 				.text("PSU Triggered: Power supply unit DC fault")), //
-		SMOKE_DETECTION(Doc.of(Level.FAULT)//
+		SMOKE_DETECTION(Doc.of(FAULT)//
 				.text("Smoke Detected!")),
 		SMOKE_DETECTION_FAILURE(Doc.of(Level.WARNING)//
 				.text("Failure in the Smoke detection system!")), //
 		BMS_HARD_RESET(Doc.of(OpenemsType.BOOLEAN)), //
-		CUMULATED_TIME_PUMP_RUNNING_STATE(Doc.of(OpenemsType.INTEGER) //
-				.unit(Unit.CUMULATED_SECONDS) //
-				.text("Accumulated runtime of cooling unit with pump active, measured in seconds.") //
+		CUMULATED_TIME_PUMP_RUNNING_STATE(Doc.of(OpenemsType.INTEGER)//
+				.unit(Unit.CUMULATED_SECONDS)//
+				.text("Accumulated runtime of cooling unit with pump active, measured in seconds.")//
 				.persistencePriority(HIGH)), //
-		CUMULATED_TIME_COMPRESSOR_1_RUNNING_STATE(Doc.of(OpenemsType.INTEGER) //
-				.unit(Unit.CUMULATED_SECONDS) //
-				.text("Accumulated runtime of cooling unit with compressor 1 active, measured in seconds.") //
+		CUMULATED_TIME_COMPRESSOR_1_RUNNING_STATE(Doc.of(OpenemsType.INTEGER)//
+				.unit(Unit.CUMULATED_SECONDS)//
+				.text("Accumulated runtime of cooling unit with compressor 1 active, measured in seconds.")//
 				.persistencePriority(HIGH)), //
-		CUMULATED_TIME_COMPRESSOR_2_RUNNING_STATE(Doc.of(OpenemsType.INTEGER) //
-				.unit(Unit.CUMULATED_SECONDS) //
-				.text("Accumulated runtime of cooling unit with compressor 2 active, measured in seconds.") //
+		CUMULATED_TIME_COMPRESSOR_2_RUNNING_STATE(Doc.of(OpenemsType.INTEGER)//
+				.unit(Unit.CUMULATED_SECONDS)//
+				.text("Accumulated runtime of cooling unit with compressor 2 active, measured in seconds.")//
 				.persistencePriority(HIGH)), //
-		CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE(Doc.of(OpenemsType.INTEGER) //
-				.unit(Unit.CUMULATED_SECONDS) //
-				.text("Accumulated runtime of cooling unit with compressor 1 & 2 active, measured in seconds.") //
+		CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE(Doc.of(OpenemsType.INTEGER)//
+				.unit(Unit.CUMULATED_SECONDS)//
+				.text("Accumulated runtime of cooling unit with compressor 1 & 2 active, measured in seconds.")//
 				.persistencePriority(HIGH)), //
-		CUMULATED_TIME_HEATER_RUNNING_STATE(Doc.of(OpenemsType.INTEGER) //
-				.unit(Unit.CUMULATED_SECONDS) //
-				.text("Accumulated runtime of cooling unit with heater active, measured in seconds.") //
-				.persistencePriority(HIGH)), //
-		;
+		CUMULATED_TIME_HEATER_RUNNING_STATE(Doc.of(OpenemsType.INTEGER)//
+				.unit(Unit.CUMULATED_SECONDS)//
+				.text("Accumulated runtime of cooling unit with heater active, measured in seconds.")//
+				.persistencePriority(HIGH)); //
 
 		private final Doc doc;
 
@@ -346,5 +346,4 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 	public default Value<Boolean> getCompressor2RunningState() {
 		return this.getCompressor2RunningStateChannel().value();
 	}
-
 }
