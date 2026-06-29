@@ -868,6 +868,7 @@
             "EMERGENCY_RESERVE_LABEL": "Notstrom{{ symbol }}",
             "EMERGENCY_RESERVE_NOTE": "Wenn diese Funktion aktiviert ist, kann der Ladezustand der Batterie nicht unter den eingestellten Wert fallen.",
             "EMERGENCY_RESERVE_VALUE": "Notstromwert",
+            "INFO": "Beachten Sie bei Verwendung des Generators: der Ladezustand der Notstromreserve muss größer (oder genauso groß) sein, wie die Angaben zum Ladezustand für den Start des Generators (siehe Angaben unten)",
             "IS_ACTIVATED": "Notstromreserve aktiv?",
             "IS_ENABLED": "Soll die Notstromfunktion aktiviert werden?",
             "RECENT": "Aktuell:",
@@ -1029,7 +1030,7 @@
             "MAX": "Bitte gib einen Wert kleiner als {{ max }} ein.",
             "MIN": "Bitte gib einen Wert größer als {{ min }} ein.",
             "POSITIVE_INTEGER": "Nur positive Ganzzahlen erlaubt.",
-            "STS_SERIAL_NUMBER_REQUIREMENT": "Die Seriennummer wird benötigt, wenn eine STS-Box vorhanden ist."
+            "STS_SERIAL_NUMBER_REQUIREMENT": "Die Seriennummer besteht aus maximal 16 Ziffern."
         },
         "FORWARD": "weiter",
         "LOAD": "laden...",

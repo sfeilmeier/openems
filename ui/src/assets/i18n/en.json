@@ -863,6 +863,7 @@
             "EMERGENCY_RESERVE_LABEL": "Emergency power{{ symbol }}",
             "EMERGENCY_RESERVE_NOTE": "If this function is activated, the battery charge level cannot fall below the set value.",
             "EMERGENCY_RESERVE_VALUE": "Emergency reserve value",
+            "INFO": "When using the generator, please note: the charge level of the emergency power reserve must be greater than (or equal to) the specified charge level required to start the generator (see details below).",
             "IS_ACTIVATED": "Emergency power reserve active?",
             "IS_ENABLED": "Should the Emergency power function be activated?",
             "RECENT": "Current:",
@@ -1024,7 +1025,7 @@
             "MAX": "Please enter a value less than {{ max }}.",
             "MIN": "Please enter a value greater than {{ min }}",
             "POSITIVE_INTEGER": "Only positive integer numbers are allowed.",
-            "STS_SERIAL_NUMBER_REQUIREMENT": "The serial number is required if an STS box is present."
+            "STS_SERIAL_NUMBER_REQUIREMENT": "The serial number consists of a maximum of 16 digits."
         },
         "FORWARD": "continue",
         "LOAD": "load",

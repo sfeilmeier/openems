@@ -30,8 +30,10 @@ import { ConfigurationStsBoxComponent } from "./views/configuration-sts-box/conf
 import { ConfigurationSubSystemComponent } from "./views/configuration-sub-system/configuration-sub-system";
 import { ConfigurationSummaryComponent } from "./views/configuration-summary/configuration-summary.component";
 import { ConfigurationSystemComponent } from "./views/configuration-system/configuration-system.component";
+
 import { ConfigurationSystemVariantComponent } from "./views/configuration-system-variant/configuration-system-variant";
 import { PreInstallationComponent } from "./views/pre-installation/pre-installation.component";
+
 import { PreInstallationUpdateComponent } from "./views/pre-installation-update/pre-installation-update.component";
 import { ProtocolAvuBoxComponent } from "./views/protocol-avu-box/protocol-avu-box";
 import { ProtocolChecklistComponent } from "./views/protocol-checklist/protocol-checklist.component";
@@ -43,29 +45,40 @@ import { ProtocolInstallerComponent } from "./views/protocol-installer/protocol-
 import { ProtocolPvComponent } from "./views/protocol-pv/protocol-pv.component";
 import { ProtocolSerialNumbersComponent } from "./views/protocol-serial-numbers/protocol-serial-numbers.component";
 import { ProtocolSystemComponent } from "./views/protocol-system/protocol-system.component";
+
 import { ProtocolSystemLocationValidationComponent } from "./views/protocol-system-location/protocol-system-location.component";
 
 //#region Validators
 export function EmailMatchValidator(control: FormControl): ValidationErrors {
-
     const { email, emailConfirm } = control.value;
     if (email === emailConfirm) {
         return null;
     }
 
-    return { "emailMatch": true };
+    return { emailMatch: true };
 }
 
-export function OnlyPositiveIntegerValidator(control: FormControl): ValidationErrors {
-    return /^[0-9]+$/.test(control.value) ? null : { "onlyPositiveInteger": true };
+export function OnlyPositiveIntegerValidator(
+    control: FormControl,
+): ValidationErrors {
+    return /^[0-9]+$/.test(control.value)
+        ? null
+        : { onlyPositiveInteger: true };
 }
 
-export function BatteryInverterSerialNumberValidator(control: FormControl): ValidationErrors {
+export function BatteryInverterSerialNumberValidator(
+    control: FormControl,
+): ValidationErrors {
     // This validator checks the length of the value
-    return /^.{16}$/.test(control.value) ? null : { "batteryInverterSerialNumber": true };
+    return /^.{16}$/.test(control.value)
+        ? null
+        : { batteryInverterSerialNumber: true };
 }
 
-export function EmsBoxSerialNumberValidator(control: FormControl, field: FormlyFieldConfig): ValidationErrors {
+export function EmsBoxSerialNumberValidator(
+    control: FormControl,
+    field: FormlyFieldConfig,
+): ValidationErrors {
     // This validator only checks the value after the prefix, Applies for Home and Commercial but not Netztrenstelle.
     const value: string = control.value ?? "";
     const prefix: string | null = field?.props?.prefix ?? null;
@@ -75,18 +88,27 @@ export function EmsBoxSerialNumberValidator(control: FormControl, field: FormlyF
 
     if (prefix !== null) {
         // When a prefix is already given, we only validate the number part
-        return DIGITS_ONLY_REGEX.test(value) ? null : { emsBoxSerialNumber: true };
+        return DIGITS_ONLY_REGEX.test(value)
+            ? null
+            : { emsBoxSerialNumber: true };
     }
 
     // When no prefix is given, expect the full serial format
     return FULL_SERIAL_REGEX.test(value) ? null : { emsBoxSerialNumber: true };
 }
 
-export function EmsBoxNetztrennstelleSerialNumberValidator(control: FormControl): ValidationErrors {
-    return /^\d{4}$/.test(control.value) ? null : { "emsBoxNetztrennstelleSerialNumber": true };
+export function EmsBoxNetztrennstelleSerialNumberValidator(
+    control: FormControl,
+): ValidationErrors {
+    return /^\d{4}$/.test(control.value)
+        ? null
+        : { emsBoxNetztrennstelleSerialNumber: true };
 }
 
-export function BoxSerialNumberValidator(control: FormControl, field: FormlyFieldConfig): ValidationErrors {
+export function BoxSerialNumberValidator(
+    control: FormControl,
+    field: FormlyFieldConfig,
+): ValidationErrors {
     // This validator only checks the value after the prefix
     const BoxSerialNumberRules: Record<string, RegExp> = {
         [ExtensionBoxPrefix.FHP]: /^\d{9}$/,
@@ -107,36 +129,61 @@ export function BoxSerialNumberValidator(control: FormControl, field: FormlyFiel
     return { boxSerialNumber: true };
 }
 
-export function BatteryAndBmsBoxSerialNumberValidator(control: FormControl): ValidationErrors {
+export function BatteryAndBmsBoxSerialNumberValidator(
+    control: FormControl,
+): ValidationErrors {
     // This validator only checks the value after the prefix
-    return /^[a-zA-Z0-9]{24}$/.test(control.value) ? null : { "batteryAndBmsBoxSerialNumber": true };
+    return /^[a-zA-Z0-9]{24}$/.test(control.value)
+        ? null
+        : { batteryAndBmsBoxSerialNumber: true };
 }
 
-export function CommercialBmsBoxSerialNumberValidator(control: FormControl): ValidationErrors {
-    return /^\d{10}$/.test(control.value) ? null : { "commercialBmsBoxSerialNumber": true };
+export function CommercialBmsBoxSerialNumberValidator(
+    control: FormControl,
+): ValidationErrors {
+    return /^\d{10}$/.test(control.value)
+        ? null
+        : { commercialBmsBoxSerialNumber: true };
 }
 
-export function CommercialBatteryModuleSerialNumberValidator(control: FormControl): ValidationErrors {
+export function CommercialBatteryModuleSerialNumberValidator(
+    control: FormControl,
+): ValidationErrors {
     // This validator only checks the value after the prefix
-    return /^\d{8}$/.test(control.value) ? null : { "commercialBatteryModuleSerialNumber": true };
+    return /^\d{8}$/.test(control.value)
+        ? null
+        : { commercialBatteryModuleSerialNumber: true };
 }
 
-export function Commercial30BatteryInverterSerialNumberValidator(control: FormControl): ValidationErrors {
+export function Commercial30BatteryInverterSerialNumberValidator(
+    control: FormControl,
+): ValidationErrors {
     // This validator checks the length of the value
-    return /^.{10}$/.test(control.value) ? null : { "commercialBatteryInverterSerialNumber": true };
+    return /^.{10}$/.test(control.value)
+        ? null
+        : { commercialBatteryInverterSerialNumber: true };
 }
 
-export function Commercial50BatteryInverterSerialNumberValidator(control: FormControl): ValidationErrors {
+export function Commercial50BatteryInverterSerialNumberValidator(
+    control: FormControl,
+): ValidationErrors {
     // This validator checks the length of the value
-    return /^.{6}$/.test(control.value) ? null : { "commercialBatteryInverterSerialNumber": true };
+    return /^.{6}$/.test(control.value)
+        ? null
+        : { commercialBatteryInverterSerialNumber: true };
 }
 
 export function ZipCodeValidator(control: FormControl): ValidationErrors {
     // This validator checks the zip code pattern
-    return AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX.test(control.value) ? null : { "zip": true };
+    return AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX.test(control.value)
+        ? null
+        : { zip: true };
 }
 
-export function serialNumberRequiredWhenCheckedValidator(control: AbstractControl, field: FormlyFieldConfig): ValidationErrors {
+export function serialNumberRequiredWhenCheckedValidator(
+    control: AbstractControl,
+    field: FormlyFieldConfig,
+): ValidationErrors {
     if (control.value == null || !control.value) {
         return null;
     }
@@ -146,28 +193,42 @@ export function serialNumberRequiredWhenCheckedValidator(control: AbstractContro
         return null;
     }
 
-    const serialValue = field.model[snKey] as string;
-    if (serialValue != null && !serialValue) {
-        return { "serialNumberRequired": true };
+    const serialValue = field.model[snKey] as string | null | undefined;
+    if (
+        serialValue != null &&
+        typeof serialValue === "string" &&
+        serialValue.trim().length === 16
+    ) {
+        return null;
     }
 
-    return null;
+    return { serialNumberRequired: true };
 }
 
 /**
- * This validator checks if the value entered is greater than minimum (default) value.
- * Workaround for default min prop in formly field.
- * User has trouble entering value in a field which is initialized with min prop. especially if a minimum value specified is more than one digit.
+ * This validator checks if the value entered is greater than minimum (default)
+ * value. Workaround for default min prop in formly field. User has trouble
+ * entering value in a field which is initialized with min prop. especially if a
+ * minimum value specified is more than one digit.
  *
- * @param control the form control containing the value that needs to be validated.
- * @param field the specific field of the form.
- * @returns sets the validation to true if the condition is met.
+ * @param control The form control containing the value that needs to be
+ *   validated.
+ * @param field The specific field of the form.
+ * @returns Sets the validation to true if the condition is met.
  */
-export function DefaultAsMinValueValidator(control: FormControl, field: FormlyFieldConfig): ValidationErrors {
-    return control.value >= field.defaultValue ? null : { "defaultAsMinimumValue": true };
+export function DefaultAsMinValueValidator(
+    control: FormControl,
+    field: FormlyFieldConfig,
+): ValidationErrors {
+    return control.value >= field.defaultValue
+        ? null
+        : { defaultAsMinimumValue: true };
 }
 
-export function SplitRangeValidator(control: FormControl, field: FormlyFieldConfig): ValidationErrors | null {
+export function SplitRangeValidator(
+    control: FormControl,
+    field: FormlyFieldConfig,
+): ValidationErrors | null {
     const val = control.value;
 
     // empty cases
@@ -177,22 +238,28 @@ export function SplitRangeValidator(control: FormControl, field: FormlyFieldConf
 
     const num = Number(val);
     if (Number.isNaN(num)) {
-        return { "splitRange": true };
+        return { splitRange: true };
     }
 
     // custom ranges defined in the component
-    const ranges = field.props?.["splitRanges"] as Array<{ min: number, max: number }> ?? null;
+    const ranges =
+        (field.props?.["splitRanges"] as Array<{ min: number; max: number }>) ??
+        null;
 
     // If no ranges are defined, we cannot validate, so we log a warning and bypass validation
     if (ranges == null || ranges.length === 0) {
-        console.warn(`Empty 'splitRanges' array on field '${field.key}'. Validation has been bypassed.`);
+        console.warn(
+            `Empty 'splitRanges' array on field '${field.key}'. Validation has been bypassed.`,
+        );
         return null;
     }
 
     // Check if the number falls into ANY of the provided ranges
-    const isValid = ranges.some(range => num >= range.min && num <= range.max);
+    const isValid = ranges.some(
+        (range) => num >= range.min && num <= range.max,
+    );
 
-    return isValid ? null : { "splitRange": true };
+    return isValid ? null : { splitRange: true };
 }
 
 @NgModule({
@@ -200,19 +267,57 @@ export function SplitRangeValidator(control: FormControl, field: FormlyFieldConf
         FormlyModule.forRoot({
             validators: [
                 { name: "emailMatch", validation: EmailMatchValidator },
-                { name: "batteryInverterSerialNumber", validation: BatteryInverterSerialNumberValidator },
-                { name: "emsBoxSerialNumber", validation: EmsBoxSerialNumberValidator },
-                { name: "emsBoxNetztrennstelleSerialNumber", validation: EmsBoxNetztrennstelleSerialNumberValidator },
-                { name: "boxSerialNumber", validation: BoxSerialNumberValidator },
-                { name: "batteryAndBmsBoxSerialNumber", validation: BatteryAndBmsBoxSerialNumberValidator },
-                { name: "onlyPositiveInteger", validation: OnlyPositiveIntegerValidator },
-                { name: "commercialBmsBoxSerialNumber", validation: CommercialBmsBoxSerialNumberValidator },
-                { name: "commercialBatteryModuleSerialNumber", validation: CommercialBatteryModuleSerialNumberValidator },
-                { name: "commercial30BatteryInverterSerialNumber", validation: Commercial30BatteryInverterSerialNumberValidator },
-                { name: "commercial50BatteryInverterSerialNumber", validation: Commercial50BatteryInverterSerialNumberValidator },
-                { name: "defaultAsMinimumValue", validation: DefaultAsMinValueValidator },
+                {
+                    name: "batteryInverterSerialNumber",
+                    validation: BatteryInverterSerialNumberValidator,
+                },
+                {
+                    name: "emsBoxSerialNumber",
+                    validation: EmsBoxSerialNumberValidator,
+                },
+                {
+                    name: "emsBoxNetztrennstelleSerialNumber",
+                    validation: EmsBoxNetztrennstelleSerialNumberValidator,
+                },
+                {
+                    name: "boxSerialNumber",
+                    validation: BoxSerialNumberValidator,
+                },
+                {
+                    name: "batteryAndBmsBoxSerialNumber",
+                    validation: BatteryAndBmsBoxSerialNumberValidator,
+                },
+                {
+                    name: "onlyPositiveInteger",
+                    validation: OnlyPositiveIntegerValidator,
+                },
+                {
+                    name: "commercialBmsBoxSerialNumber",
+                    validation: CommercialBmsBoxSerialNumberValidator,
+                },
+                {
+                    name: "commercialBatteryModuleSerialNumber",
+                    validation: CommercialBatteryModuleSerialNumberValidator,
+                },
+                {
+                    name: "commercial30BatteryInverterSerialNumber",
+                    validation:
+                        Commercial30BatteryInverterSerialNumberValidator,
+                },
+                {
+                    name: "commercial50BatteryInverterSerialNumber",
+                    validation:
+                        Commercial50BatteryInverterSerialNumberValidator,
+                },
+                {
+                    name: "defaultAsMinimumValue",
+                    validation: DefaultAsMinValueValidator,
+                },
                 { name: "zip", validation: ZipCodeValidator },
-                { name: "serialNumberRequiredWhenChecked", validation: serialNumberRequiredWhenCheckedValidator },
+                {
+                    name: "serialNumberRequiredWhenChecked",
+                    validation: serialNumberRequiredWhenCheckedValidator,
+                },
                 { name: "splitRange", validation: SplitRangeValidator },
             ],
         }),
@@ -257,13 +362,14 @@ export function SplitRangeValidator(control: FormControl, field: FormlyFieldConf
     ],
 })
 export class InstallationModule {
-
     constructor(translate: TranslateService) {
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
-            for (const { lang, translation, shouldMerge } of translations) {
-                translate.setTranslation(lang, translation, shouldMerge);
-            }
-        });
+        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then(
+            (translations) => {
+                for (const { lang, translation, shouldMerge } of translations) {
+                    translate.setTranslation(lang, translation, shouldMerge);
+                }
+            },
+        );
     }
 }
 
