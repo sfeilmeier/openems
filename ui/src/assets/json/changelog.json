@@ -1,5 +1,24 @@
 [
     {
+        "version": "2026.6.3",
+        "entries": {
+            "de": [
+                "FENECON - Partner of your Energy Journey: Ende Juni waren wir auf unserer Branchen-Leitmesse, der EES Europe 2026 in München. Eindrücke und Neuigkeiten gibt es <a class='ion-link' target=\"_blank\" href=\"https://www.fenecon.de/ees26\">→ hier</a>",
+                "<a class='ion-link' target=\"_blank\" href=\"https://www.fenecon.de/fenecon-commercial-100\">FENECON Commercial 100</a>: Verbesserung des Inbetriebnahmeassistenten für den Generatoreingang",
+                "<a class='ion-link' target=\"_blank\" href=\"https://www.fenecon.de/fems-schreibzugriff-industriespeicher\">FEMS App Modbus/TCP Schreibzugriff</a>: Neue Register für verfügbare Be- und Entladeenergie. (<a class='ion-link' target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/fems-app/App_ModbusTCP_Schreibzugriff.html#_fems_app_modbustcp_schreibend\">→ FENECON Docs</a>",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html#weather-peak-shaving-relais\">FEMS App EEG 2025</a>: Optimierung der FEMS App Netzdienliche Beladung für das Erneuerbare Energien Gesetz von 2025 (EEG 2025) für negative Börsenstrompreise. (Die App erscheint im App Center, ist aber vorerst nur durch unseren Kundenservice und im Rahmen des BETA-Tests installierbar)",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest (E-Mobility)</a>: zahlreiche Verbesserungen an der neuen Desktop-Ansicht"
+            ],
+            "en": [
+                "FENECON - Partner of your Energy Journey: end of June, we were at our industry flagship event, the EES Europe 2026 in Munich. Impressions and news can be found <a class='ion-link' target=\"_blank\" href=\"https://www.fenecon.de/ees26\">→ here (German only)</a>",
+                "<a class='ion-link' target=\"_blank\" href=\"https://www.fenecon.com/fenecon-commercial-100\">FENECON Commercial 100</a>: Improvements to the commissioning assistant for the generator",
+                "<a class='ion-link' target=\"_blank\" href=\"https://www.fenecon.com/fems-write-access-industrial\">FEMS App Modbus/TCP Write Access</a>: New registers for available charge and discharge energy. (<a class='ion-link' target=\"_blank\" href=\"https://docs.fenecon.de/en/fems/fems-app/App_ModbusTCP_Schreibzugriff.html\">→ FENECON Docs</a>",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html#weather-peak-shaving-relais\">FEMS App EEG 2025 (German only)</a>: Optimization of FEMS App grid-serving charging for the Renewable Energy Act 2025 (German EEG 2025) for negative electricity spot prices. (The app appears in the App Center, but can currently only be installed through our customer service and as part of the BETA test)",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Field Test (E-Mobility, German only)</a>: numerous improvements to the new desktop view"
+            ]
+        }
+    },
+    {
         "version": "2026.6.2",
         "entries": {
             "de": [
