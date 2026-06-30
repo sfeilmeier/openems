@@ -83,6 +83,7 @@ export class NavigationService {
             "System.Fenecon.Industrial.L",
             "System.Fenecon.Industrial.M",
             "System.Fenecon.Industrial.S",
+            "System.Fenecon.Industrial.Tokai2",
             "Scheduler.JSCalendar",
         ]);
     }

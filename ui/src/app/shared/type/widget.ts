@@ -58,6 +58,7 @@ export enum WidgetFactory {
     "System.Fenecon.Industrial.L",
     "System.Fenecon.Industrial.M",
     "System.Fenecon.Industrial.S",
+    "System.Fenecon.Industrial.Tokai2",
     "Weather.OpenMeteo",
     "Scheduler.JSCalendar",
 }

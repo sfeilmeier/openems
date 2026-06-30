@@ -15,6 +15,7 @@ import { SharedControllerIoHeatpump } from "src/app/edge/live/Controller/Io/Heat
 import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/shared-system-industrial-l";
 import { SharedSystemIndustrialM } from "src/app/edge/live/system/industrial/m/shared-system-industrial-m";
 import { SharedSystemIndustrialS } from "src/app/edge/live/system/industrial/s/shared-system-industrial-s";
+import { SharedSystemIndustrialTokai2 } from "src/app/edge/live/system/industrial/tokai2/shared-system-industrial-tokai2";
 import { SharedSystemIndustrialXl } from "src/app/edge/live/system/industrial/xl/shared-system-industrial-xl";
 import { SharedControllerIoHeatingRoom } from "../../edge/live/Controller/Io/HeatingRoom/shared/shared";
 import { Edge } from "../components/edge/edge";
@@ -152,6 +153,11 @@ export class Widgets {
                 );
             case "System.Fenecon.Industrial.S":
                 return SharedSystemIndustrialS.getNavigationTree(
+                    translate,
+                    widget.componentId,
+                );
+            case "System.Fenecon.Industrial.Tokai2":
+                return SharedSystemIndustrialTokai2.getNavigationTree(
                     translate,
                     widget.componentId,
                 );

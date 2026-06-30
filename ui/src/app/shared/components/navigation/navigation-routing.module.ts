@@ -79,6 +79,7 @@ import { SystemIndustrialLAddTaskComponent } from "src/app/edge/live/system/indu
 import { SystemIndustrialLEditTaskComponent } from "src/app/edge/live/system/industrial/l/schedule/task/edit/edit";
 import { SystemIndustrialMComponent } from "src/app/edge/live/system/industrial/m/new-navigation/new-navigation";
 import { SystemIndustrialSComponent } from "src/app/edge/live/system/industrial/s/new-navigation/new-navigation";
+import { SystemIndustrialTokai2Component } from "src/app/edge/live/system/industrial/tokai2/new-navigation/new-navigation";
 import { SystemIndustrialXlComponent } from "src/app/edge/live/system/industrial/xl/new-navigation/new-navigation";
 import { CurrentVoltageOverviewComponent } from "src/app/shared/components/edge/meter/currentVoltage/new-navigation/new-navigation";
 import { hasEdgeRole, hasUserSettings, } from "src/app/shared/guards/functional-guards";
@@ -481,6 +482,10 @@ export const newNavigationRoutes: Routes = [
     {
         path: ":componentId/industrial-xl",
         component: SystemIndustrialXlComponent,
+    },
+    {
+        path: ":componentId/industrial-tokai2",
+        component: SystemIndustrialTokai2Component,
     },
     {
         path: "history",
