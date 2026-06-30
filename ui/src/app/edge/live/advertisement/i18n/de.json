@@ -1,16 +1,10 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE": "Exklusive Infos für FENECON Partner",
-            "TEXT": "Sichere Dir mit dem Partner Newsletter exklusive Informationen rund um FENECON: aktuelle Termine, Events, technische Neuerungen, Produktneuheiten, Sonderaktionen und wichtige Unternehmensnews – direkt in Dein Postfach.",
-            "LINK_TEXT": "Newsletter abonnieren",
-            "LINK": "https://www.fenecon.de/newsletter-partner-news"
-        },
-        "2": {
-            "TITLE": "Teuer tanken war gestern",
-            "TEXT": "Die steigenden Kosten für Benzin und Diesel sind ein hoher Kostenfaktor im Alltag. Unser aktueller Praxistipp zeigt, wie Du mit E-Mobilität und Deinem FENECON System unabhängiger werden und Deine Mobilitätskosten senken kannst.",
-            "LINK_TEXT": "Praxistipp lesen",
-            "LINK": "https://www.fenecon.de/blog/praxistipps-9/e-mobilitat-mit-fenecon-333"
+            "TITLE": "Erfolgreich elektrifizieren in der Logistik",
+            "TEXT": "Erfahren Sie im gemeinsamen Webinar von FENECON, KUEHNE+NAGEL, The Mobility House Solutions am 10.07. mehr zu den Anforderungen aus der Branche und wie Unternehmen die Wirtschaftlichkeit für E-Nutzfahrzeuge mit intelligenten Stromspeicherlösungen, smarter Ladeinfrastruktur und effizientem Lastmanagement erhöhen können.",
+            "LINK_TEXT": "Zur Anmeldung",
+            "LINK": "https://fenecon-gmbh.webinargeek.com/erfolgreich-elektrifizieren-in-der-logistik-wirtschaftlichkeit-fuer-e-nutzfahrzeuge-erhoehen-durch-stromspeicher-und-ladeinfrastruktur?cst=fems-widget"
         }
     }
 }

@@ -167,6 +167,18 @@ export namespace Converter {
     };
 
     /**
+     * Formats a Power value as Kilowatt [kW].
+     *
+     * Value 1 -> "1 kW". Value null -> "-".
+     *
+     * @param value The power value
+     * @returns Formatted value; '-' for null
+     */
+    export const POWER_IN_KILO_WATT_AS_KW: Converter = (raw) => {
+        return IF_NUMBER(raw, (value) => Formatter.FORMAT_KILO_WATT(value));
+    };
+
+    /**
      * Formats a Energy value as Kilo watt hours [kWh].
      *
      * Value 1000 -> "1,00 kWh". Value null -> "-".
@@ -291,7 +303,9 @@ export namespace Converter {
      * @param value The power value
      * @returns Formatted value; '-' for null
      */
-    export const CURRENCY_PER_KWH = (currency: Currency.Label): Converter => {
+    export const CURRENCY_PER_MWH_TO_KWH = (
+        currency: Currency.Label,
+    ): Converter => {
         return (raw): string => {
             return IF_NUMBER(raw, (value) => {
                 if (value == null) {
@@ -301,6 +315,32 @@ export namespace Converter {
                     Language.getCurrentLanguage().i18nLocaleKey;
                 return (
                     formatNumber(value / 10, locale, "1.0-2") +
+                    " " +
+                    Currency.getCurrencyLabelByCurrency(currency)
+                );
+            });
+        };
+    };
+
+    /**
+     * Formats a monetary value (e.g. price or cost in currency per kWh) as
+     * currency per kWh.
+     *
+     * @param value The power value
+     * @returns Formatted value; '-' for null
+     */
+    export const CURRENCY_PER_KWH_TO_KWH = (
+        currency: Currency.Label,
+    ): Converter => {
+        return (raw): string => {
+            return IF_NUMBER(raw, (value) => {
+                if (value == null) {
+                    return "-";
+                }
+                const locale: string =
+                    Language.getCurrentLanguage().i18nLocaleKey;
+                return (
+                    formatNumber(value, locale, "1.0-2") +
                     " " +
                     Currency.getCurrencyLabelByCurrency(currency)
                 );

@@ -206,6 +206,7 @@
             "SUN": "So",
             "THU": "Do",
             "TODAY": "Heute",
+            "TOMORROW": "Morgen",
             "TOTAL": "Gesamt",
             "TRY_AGAIN": "versuche es später noch einmal...",
             "TUE": "Di",
@@ -559,7 +560,7 @@
                     "CONTROL_MODE_DESCRIPTION": {
                         "CHARGE_CONSUMPTION": "Durch die aktive Beladung der Batterie aus dem Netz in Zeiten mit niedrigen Strompreisen kann Netzbezug zu teuren Zeiten vermieden werden.<br/><br/>ACHTUNG: Die aktive Beladung der Batterie aus dem Netz über die technisch notwendige Erhaltungsladung hinaus erfordert eine entsprechende Anmeldung des Speichersystems. Im Zweifel wende dich hierzu bitte an deinen Installateur. Mit Betätigung des blauen \"Speichern\"-Buttons bestätigst du, dass diese Prüfung durchgeführt wurde.<br/><br/>Beachte: Voraussetzung für die Inanspruchnahme einer Förderung nach dem Gesetz für den Ausbau erneuerbarer Energien (EEG 2023) ist, dass im Speicher ausschließlich Strom zwischengespeichert wird, der aus erneuerbaren Energien und/oder Grubengas stammt. Bei Aktivierung dieser Funktion wird der Speicher mit Netzstrom geladen. Dieser Netzstrom wird, je nach Stromlieferungsvertrag, ggf. auch aus fossilen Energieträgern und/oder Atomkraft gewonnen. Daher können wir nicht gewährleisten, dass der Speicher ausschließlich mit Strom aus erneuerbaren Energien und/oder Grubengas geladen wird."
                     },
-                    "POWER_SOC_CHART_TITLE": "Vorhersagen (Nur für Admins)",
+                    "POWER_SOC_CHART_TITLE": "Vorhersagen",
                     "PRICE": "Aktueller Bezugsstrompreis",
                     "STATE": {
                         "BALANCING": "Eigenverbrauchsoptimierung",
@@ -569,8 +570,11 @@
                         "DELAY_CHARGE": "Beladung verzögern",
                         "LIMIT_CHARGE": "Beladung limitieren",
                         "AVOID_GRID_SELL_LIMIT": "Einspeiselimitierung vermeiden",
-                        "DISCHARGE_CONSUMPTION": "Entladung in den Verbrauch"
-                    }
+                        "DISCHARGE_CONSUMPTION": "Entladung in den Verbrauch",
+                        "DISCHARGE_GRID": "Entladung ins Netz"
+                    },
+                    "EEG_2025_HEADER": "EEG 2025 Prognose",
+                    "EEG_2025_DESCRIPTION": "Die Grafik zeigt die zukünftig erwartete Netzeinspeisung sowie die voraussichtliche Einspeisevergütung gemäß EEG 2025. Diese wird bei der Berechnung der optimalen Betriebsweise berücksichtigt. Es wird versucht, die Netzeinspeisung zu Zeiten ohne Vergütung möglichst gering zu halten. Bitte beachte, dass die Prognose kontinuierlich neu berechnet wird und sich somit im Tagesverlauf ändern kann."
                 },
                 "TWO_WAY_INFO_GRID": "Negative Werte entsprechen Netzeinspeisung, Positive Werte entsprechen Netzbezug",
                 "EVSE": {
@@ -690,6 +694,7 @@
         "GRID_BUY_PRICE": "Strompreis",
         "GRID_SELL": "Netzeinspeisung",
         "GRID_SELL_ADVANCED": "Einspeisung",
+        "GRID_SELL_PRICE": "Einspeisevergütung",
         "HEAT_PUMP": "Wärmepumpe",
         "HISTORY": "Historie",
         "INACTIVE": "Inaktiv",
@@ -863,6 +868,7 @@
             "EMERGENCY_RESERVE_LABEL": "Notstrom{{ symbol }}",
             "EMERGENCY_RESERVE_NOTE": "Wenn diese Funktion aktiviert ist, kann der Ladezustand der Batterie nicht unter den eingestellten Wert fallen.",
             "EMERGENCY_RESERVE_VALUE": "Notstromwert",
+            "INFO": "Beachten Sie bei Verwendung des Generators: der Ladezustand der Notstromreserve muss größer (oder genauso groß) sein, wie die Angaben zum Ladezustand für den Start des Generators (siehe Angaben unten)",
             "IS_ACTIVATED": "Notstromreserve aktiv?",
             "IS_ENABLED": "Soll die Notstromfunktion aktiviert werden?",
             "RECENT": "Aktuell:",
@@ -1024,7 +1030,7 @@
             "MAX": "Bitte gib einen Wert kleiner als {{ max }} ein.",
             "MIN": "Bitte gib einen Wert größer als {{ min }} ein.",
             "POSITIVE_INTEGER": "Nur positive Ganzzahlen erlaubt.",
-            "STS_SERIAL_NUMBER_REQUIREMENT": "Die Seriennummer wird benötigt, wenn eine STS-Box vorhanden ist."
+            "STS_SERIAL_NUMBER_REQUIREMENT": "Die Seriennummer besteht aus maximal 16 Ziffern."
         },
         "FORWARD": "weiter",
         "LOAD": "laden...",
@@ -1248,8 +1254,13 @@
         "VALUE_WITH_LABEL": "Wert {{ label }}{{ number }} {{ symbol }}"
     },
     "JS_SCHEDULE": {
+        "ADD_EVENT": "Event hinzufügen",
+        "ADD_TASK": "Aufgabe hinzufügen",
+        "EDIT_EVENT": "Event bearbeiten",
         "EDIT_TASK": "Aufgabe bearbeiten",
-        "ADD_TASK": "Aufgabe hinzufügen"
+        "NEXT_EVENTS": "Nächste Events",
+        "MANUAL_EVENTS": "Manuelle Events",
+        "SMART_EVENTS": "Smart Events"
     },
     "LIVE": {
         "PULL_TO_REFRESH": "Hier ziehen, um zu aktualisieren"
@@ -1396,11 +1407,13 @@
         "Z_TO_A": "Bezeichnung Z - A"
     },
     "PAGE_HEADERS": {
-        "ENERGY_JOURNEY": "Analyse Batterieerweiterung"
+        "ENERGY_JOURNEY": "Analyse Batterieerweiterung",
+        "WRAP_UP_2025": "Dein Wrap up 2025"
     },
     "REGISTER": {
         "BUTTON": "Anlegen",
         "CREATE_USER": "Account anlegen",
+        "CREATING_USER": "Account wird angelegt...",
         "ERRORS": {
             "EMAIL_NOT_EQUAL": "E-Mails stimmen nicht überein",
             "PASSWORD_NOT_EQUAL": "Passwörter sind nicht gleich",

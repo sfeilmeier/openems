@@ -58,6 +58,7 @@ export enum WidgetFactory {
     "System.Fenecon.Industrial.L",
     "System.Fenecon.Industrial.M",
     "System.Fenecon.Industrial.S",
+    "System.Fenecon.Industrial.Tokai2",
     "Weather.OpenMeteo",
     "Scheduler.JSCalendar",
 }
@@ -93,20 +94,13 @@ export class AdvertWidgets {
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
         let list: AdvertWidget[] = [];
 
-        if (edge.roleIsAtLeast(Role.INSTALLER)) {
-            list.push({
-                name: "advert-1",
-                title: { languageKey: "ADVERT.1.TITLE" },
-            });
-        }
-
         if (
-            edge.roleIsAtLeast(Role.OWNER) &&
+            edge.roleIsAtLeast(Role.INSTALLER) &&
             Language.getCurrentLanguage() === Language.DE
         ) {
             list.push({
-                name: "advert-2",
-                title: { languageKey: "ADVERT.2.TITLE" },
+                name: "advert-1",
+                title: { languageKey: "ADVERT.1.TITLE" },
             });
         }
 

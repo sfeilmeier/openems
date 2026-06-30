@@ -2,7 +2,7 @@ import { TypedFormlyFieldConfig } from "src/app/shared/components/formly/formly-
 import { FeedInSetting } from "../../shared/enums";
 
 export const COS_PHI_CURVE_POINTS = ["A", "B", "C", "D", "E"] as const;
-export type CurvePoint = typeof COS_PHI_CURVE_POINTS[number];
+export type CurvePoint = (typeof COS_PHI_CURVE_POINTS)[number];
 
 export enum GridUnit {
     PER_MILLE = "‰",
@@ -171,7 +171,6 @@ export const GRID_SETTING_RANGES = {
         max: 65000,
         unit: GridUnit.PERMILLE_IN_PER_SEC,
     },
-
 } as const;
 
 export interface ActivePowerModeModel {
@@ -270,17 +269,42 @@ export interface ReactivePowerModeModel {
 }
 
 export interface ProtectionParametersModel {
-    vppOvStage1TriggerValue: number; vppOvStage1TripTime: number; vppUvStage1TripValue: number; vppUvStage1TripTime: number;
-    vppOvStage2TriggerValue: number; vppOvStage2TripTime: number; vppUvStage2TripValue: number; vppUvStage2TripTime: number;
-    vppOvStage3TriggerValue: number | null; vppOvStage3TripTime: number | null; vppUvStage3TripValue: number | null; vppUvStage3TripTime: number | null;
-    vppOvStage4TriggerValue: number | null; vppOvStage4TripTime: number | null; vppUvStage4TripValue: number | null; vppUvStage4TripTime: number | null;
+    vppOvStage1TriggerValue: number;
+    vppOvStage1TripTime: number;
+    vppUvStage1TripValue: number;
+    vppUvStage1TripTime: number;
+    vppOvStage2TriggerValue: number;
+    vppOvStage2TripTime: number;
+    vppUvStage2TripValue: number;
+    vppUvStage2TripTime: number;
+    vppOvStage3TriggerValue: number | null;
+    vppOvStage3TripTime: number | null;
+    vppUvStage3TripValue: number | null;
+    vppUvStage3TripTime: number | null;
+    vppOvStage4TriggerValue: number | null;
+    vppOvStage4TripTime: number | null;
+    vppUvStage4TripValue: number | null;
+    vppUvStage4TripTime: number | null;
 
-    vpp10MinOvTripThreshold: number; vpp10MinOvTripTime: number | null;
+    VPP_10MIN_OV_TRIP_THRESHOLD: number;
+    VPP_10MIN_OV_TRIP_TIME: number | null;
 
-    fppOfStage1TriggerValue: number; fppOfStage1TripTime: number; fppUfStage1TripValue: number; fppUfStage1TripTime: number;
-    fppOfStage2TriggerValue: number; fppOfStage2TripTime: number; fppUfStage2TripValue: number | null; fppUfStage2TripTime: number | null;
-    fppOfStage3TriggerValue: number | null; fppOfStage3TripTime: number | null; fppUfStage3TripValue: number | null; fppUfStage3TripTime: number | null;
-    fppOfStage4TriggerValue: number | null; fppOfStage4TripTime: number | null; fppUfStage4TripValue: number | null; fppUfStage4TripTime: number | null;
+    fppOfStage1TriggerValue: number;
+    fppOfStage1TripTime: number;
+    fppUfStage1TripValue: number;
+    fppUfStage1TripTime: number;
+    fppOfStage2TriggerValue: number;
+    fppOfStage2TripTime: number;
+    fppUfStage2TripValue: number | null;
+    fppUfStage2TripTime: number | null;
+    fppOfStage3TriggerValue: number | null;
+    fppOfStage3TripTime: number | null;
+    fppUfStage3TripValue: number | null;
+    fppUfStage3TripTime: number | null;
+    fppOfStage4TriggerValue: number | null;
+    fppOfStage4TripTime: number | null;
+    fppUfStage4TripValue: number | null;
+    fppUfStage4TripTime: number | null;
 }
 
 export interface ConnectionParametersModel {
@@ -303,13 +327,20 @@ export interface ConnectionParametersModel {
 
 export interface VoltageRideThroughModel {
     vrtLvrtEnable: boolean;
-    vrtUv1Voltage: number; vrtUv1Time: number | null;
-    vrtUv2Voltage: number; vrtUv2Time: number;
-    vrtUv3Voltage: number; vrtUv3Time: number;
-    vrtUv4Voltage: number; vrtUv4Time: number;
-    vrtUv5Voltage: number; vrtUv5Time: number;
-    vrtUv6Voltage: number; vrtUv6Time: number;
-    vrtUv7Voltage: number; vrtUv7Time: number;
+    vrtUv1Voltage: number;
+    vrtUv1Time: number | null;
+    vrtUv2Voltage: number;
+    vrtUv2Time: number;
+    vrtUv3Voltage: number;
+    vrtUv3Time: number;
+    vrtUv4Voltage: number;
+    vrtUv4Time: number;
+    vrtUv5Voltage: number;
+    vrtUv5Time: number;
+    vrtUv6Voltage: number;
+    vrtUv6Time: number;
+    vrtUv7Voltage: number;
+    vrtUv7Time: number;
     vrtEnterLvrtThreshold: number;
     vrtExitLvrtEndpoint: number;
     vrtK1Slope: number;
@@ -317,13 +348,20 @@ export interface VoltageRideThroughModel {
     vrtLvrtZeroCurrentModeEntryThreshold: number | null;
 
     vrtHvrtEnable: boolean;
-    vrtOv1Voltage: number; vrtOv1Time: number;
-    vrtOv2Voltage: number; vrtOv2Time: number;
-    vrtOv3Voltage: number; vrtOv3Time: number;
-    vrtOv4Voltage: number; vrtOv4Time: number;
-    vrtOv5Voltage: number; vrtOv5Time: number;
-    vrtOv6Voltage: number; vrtOv6Time: number;
-    vrtOv7Voltage: number; vrtOv7Time: number;
+    vrtOv1Voltage: number;
+    vrtOv1Time: number;
+    vrtOv2Voltage: number;
+    vrtOv2Time: number;
+    vrtOv3Voltage: number;
+    vrtOv3Time: number;
+    vrtOv4Voltage: number;
+    vrtOv4Time: number;
+    vrtOv5Voltage: number;
+    vrtOv5Time: number;
+    vrtOv6Voltage: number;
+    vrtOv6Time: number;
+    vrtOv7Voltage: number;
+    vrtOv7Time: number;
     vrtEnterHighCrossingThreshold: number;
     hvrtExitHighCrossingThreshold: number;
     hvrtK2Slope: number;
@@ -341,21 +379,28 @@ export interface VoltageRideThroughModel {
 
 export interface FrequencyRideThroughModel {
     frtEnable: boolean;
-    frtUf1Frequency: number | null; frtUf1Time: number | null;
-    frtUf2Frequency: number | null; frtUf2Time: number | null;
-    frtUf3Frequency: number | null; frtUf3Time: number | null;
-    frtOf1Frequency: number | null; frtOf1Time: number | null;
-    frtOf2Frequency: number | null; frtOf2Time: number | null;
-    frtOf3Frequency: number | null; frtOf3Time: number | null;
+    frtUf1Frequency: number | null;
+    frtUf1Time: number | null;
+    frtUf2Frequency: number | null;
+    frtUf2Time: number | null;
+    frtUf3Frequency: number | null;
+    frtUf3Time: number | null;
+    frtOf1Frequency: number | null;
+    frtOf1Time: number | null;
+    frtOf2Frequency: number | null;
+    frtOf2Time: number | null;
+    frtOf3Frequency: number | null;
+    frtOf3Time: number | null;
 }
 
-export interface AdvancedGridSettingsModel extends
-    ActivePowerModeModel,
-    ReactivePowerModeModel,
-    ProtectionParametersModel,
-    ConnectionParametersModel,
-    VoltageRideThroughModel,
-    FrequencyRideThroughModel { }
+export interface AdvancedGridSettingsModel
+    extends
+        ActivePowerModeModel,
+        ReactivePowerModeModel,
+        ProtectionParametersModel,
+        ConnectionParametersModel,
+        VoltageRideThroughModel,
+        FrequencyRideThroughModel {}
 
 export interface GridSettingsSection {
     id: string;
@@ -452,15 +497,40 @@ export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
         rpmQpReactivePowerP6: -330,
         rpmQpTimeConstant: null,
 
-        vppOvStage1TriggerValue: 1250, vppOvStage1TripTime: 80, vppUvStage1TripValue: 800, vppUvStage1TripTime: 2000,
-        vppOvStage2TriggerValue: 1250, vppOvStage2TripTime: 80, vppUvStage2TripValue: 300, vppUvStage2TripTime: 700,
-        vppOvStage3TriggerValue: null, vppOvStage3TripTime: null, vppUvStage3TripValue: null, vppUvStage3TripTime: null,
-        vppOvStage4TriggerValue: null, vppOvStage4TripTime: null, vppUvStage4TripValue: null, vppUvStage4TripTime: null,
-        vpp10MinOvTripThreshold: 1100, vpp10MinOvTripTime: null,
-        fppOfStage1TriggerValue: 51500, fppOfStage1TripTime: 4800, fppUfStage1TripValue: 47500, fppUfStage1TripTime: 80,
-        fppOfStage2TriggerValue: 52500, fppOfStage2TripTime: 80, fppUfStage2TripValue: null, fppUfStage2TripTime: null,
-        fppOfStage3TriggerValue: null, fppOfStage3TripTime: null, fppUfStage3TripValue: null, fppUfStage3TripTime: null,
-        fppOfStage4TriggerValue: null, fppOfStage4TripTime: null, fppUfStage4TripValue: null, fppUfStage4TripTime: null,
+        vppOvStage1TriggerValue: 1250,
+        vppOvStage1TripTime: 80,
+        vppUvStage1TripValue: 800,
+        vppUvStage1TripTime: 2000,
+        vppOvStage2TriggerValue: 1250,
+        vppOvStage2TripTime: 80,
+        vppUvStage2TripValue: 300,
+        vppUvStage2TripTime: 700,
+        vppOvStage3TriggerValue: null,
+        vppOvStage3TripTime: null,
+        vppUvStage3TripValue: null,
+        vppUvStage3TripTime: null,
+        vppOvStage4TriggerValue: null,
+        vppOvStage4TripTime: null,
+        vppUvStage4TripValue: null,
+        vppUvStage4TripTime: null,
+        VPP_10MIN_OV_TRIP_THRESHOLD: 1100,
+        VPP_10MIN_OV_TRIP_TIME: null,
+        fppOfStage1TriggerValue: 51500,
+        fppOfStage1TripTime: 4800,
+        fppUfStage1TripValue: 47500,
+        fppUfStage1TripTime: 80,
+        fppOfStage2TriggerValue: 52500,
+        fppOfStage2TripTime: 80,
+        fppUfStage2TripValue: null,
+        fppUfStage2TripTime: null,
+        fppOfStage3TriggerValue: null,
+        fppOfStage3TripTime: null,
+        fppUfStage3TripValue: null,
+        fppUfStage3TripTime: null,
+        fppOfStage4TriggerValue: null,
+        fppOfStage4TripTime: null,
+        fppUfStage4TripValue: null,
+        fppUfStage4TripTime: null,
 
         cpRampUpUpperVoltage: 1100,
         cpRampUpLowerVoltage: 900,
@@ -478,13 +548,20 @@ export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
         cpReconnectionGradient: 600,
 
         vrtLvrtEnable: true,
-        vrtUv1Voltage: 150, vrtUv1Time: null,
-        vrtUv2Voltage: 150, vrtUv2Time: 2200,
-        vrtUv3Voltage: 750, vrtUv3Time: 30000,
-        vrtUv4Voltage: 850, vrtUv4Time: 600000,
-        vrtUv5Voltage: 900, vrtUv5Time: 600000,
-        vrtUv6Voltage: 900, vrtUv6Time: 600000,
-        vrtUv7Voltage: 900, vrtUv7Time: 600000,
+        vrtUv1Voltage: 150,
+        vrtUv1Time: null,
+        vrtUv2Voltage: 150,
+        vrtUv2Time: 2200,
+        vrtUv3Voltage: 750,
+        vrtUv3Time: 30000,
+        vrtUv4Voltage: 850,
+        vrtUv4Time: 600000,
+        vrtUv5Voltage: 900,
+        vrtUv5Time: 600000,
+        vrtUv6Voltage: 900,
+        vrtUv6Time: 600000,
+        vrtUv7Voltage: 900,
+        vrtUv7Time: 600000,
         vrtEnterLvrtThreshold: 900,
         vrtExitLvrtEndpoint: 920,
         vrtK1Slope: 20,
@@ -492,13 +569,20 @@ export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
         vrtLvrtZeroCurrentModeEntryThreshold: null,
 
         vrtHvrtEnable: true,
-        vrtOv1Voltage: 1250, vrtOv1Time: 1000,
-        vrtOv2Voltage: 1200, vrtOv2Time: 1000,
-        vrtOv3Voltage: 1200, vrtOv3Time: 50000,
-        vrtOv4Voltage: 1150, vrtOv4Time: 50000,
-        vrtOv5Voltage: 1150, vrtOv5Time: 60000,
-        vrtOv6Voltage: 1150, vrtOv6Time: 60000,
-        vrtOv7Voltage: 1150, vrtOv7Time: 60000,
+        vrtOv1Voltage: 1250,
+        vrtOv1Time: 1000,
+        vrtOv2Voltage: 1200,
+        vrtOv2Time: 1000,
+        vrtOv3Voltage: 1200,
+        vrtOv3Time: 50000,
+        vrtOv4Voltage: 1150,
+        vrtOv4Time: 50000,
+        vrtOv5Voltage: 1150,
+        vrtOv5Time: 60000,
+        vrtOv6Voltage: 1150,
+        vrtOv6Time: 60000,
+        vrtOv7Voltage: 1150,
+        vrtOv7Time: 60000,
         vrtEnterHighCrossingThreshold: 1100,
         hvrtExitHighCrossingThreshold: 1080,
         hvrtK2Slope: 20,
@@ -514,11 +598,17 @@ export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
         vrtReactivePowerRecoverySlope: null,
 
         frtEnable: false,
-        frtUf1Frequency: null, frtUf1Time: null,
-        frtUf2Frequency: null, frtUf2Time: null,
-        frtUf3Frequency: null, frtUf3Time: null,
-        frtOf1Frequency: null, frtOf1Time: null,
-        frtOf2Frequency: null, frtOf2Time: null,
-        frtOf3Frequency: null, frtOf3Time: null,
+        frtUf1Frequency: null,
+        frtUf1Time: null,
+        frtUf2Frequency: null,
+        frtUf2Time: null,
+        frtUf3Frequency: null,
+        frtUf3Time: null,
+        frtOf1Frequency: null,
+        frtOf1Time: null,
+        frtOf2Frequency: null,
+        frtOf2Time: null,
+        frtOf3Frequency: null,
+        frtOf3Time: null,
     };
 }

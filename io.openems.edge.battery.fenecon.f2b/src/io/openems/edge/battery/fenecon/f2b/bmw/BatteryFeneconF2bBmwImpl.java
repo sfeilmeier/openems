@@ -12,6 +12,8 @@ import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SET_NULL_FOR_DEFAULT;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SUBTRACT;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.chain;
+import static io.openems.edge.common.channel.ChannelUtils.setValueIfNotRead;
+import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -68,7 +70,6 @@ import io.openems.edge.common.channel.Doc;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.cycle.Cycle;
-import io.openems.edge.common.event.EdgeEventConstants;
 import io.openems.edge.common.modbusslave.ModbusSlave;
 import io.openems.edge.common.modbusslave.ModbusSlaveNatureTable;
 import io.openems.edge.common.modbusslave.ModbusSlaveTable;
@@ -84,7 +85,7 @@ import io.openems.edge.common.type.TypeUtils;
 		configurationPolicy = ConfigurationPolicy.REQUIRE //
 )
 @EventTopics({ //
-		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE //
+		TOPIC_CYCLE_BEFORE_PROCESS_IMAGE //
 })
 // TODO Extract AbstractBatteryFeneconF2b
 public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
@@ -133,7 +134,6 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 				BatteryFeneconF2b.ChannelId.values(), //
 				BatteryFeneconF2bBmw.ChannelId.values() //
 		);
-		this._setCapacity(CAPACITY);
 	}
 
 	@Override
@@ -454,12 +454,17 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 			return;
 		}
 		switch (event.getTopic()) {
-		case EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE:
+		case TOPIC_CYCLE_BEFORE_PROCESS_IMAGE -> {
 			this.batteryProtection.apply();
 			this.heatingManagement();
 			this.handleStateMachine();
-			break;
+			this.handleCapacity();
 		}
+		}
+	}
+
+	private void handleCapacity() {
+		setValueIfNotRead(this, Battery.ChannelId.CAPACITY, this.isStarted() ? CAPACITY : 0);
 	}
 
 	/**

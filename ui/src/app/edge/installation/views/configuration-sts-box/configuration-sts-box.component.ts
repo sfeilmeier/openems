@@ -3,8 +3,7 @@ import { FormGroup } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { TypedFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
 import { Edge } from "src/app/shared/shared";
-import { EmergencyReserve } from "../../installation-systems/abstract-ibn";
-import { AbstractCommercialGen3, StsBox } from "../../installation-systems/commercial/abstract-commercial-gen3";
+import { AbstractCommercialGen3, EmergencyModel, } from "../../installation-systems/commercial/abstract-commercial-gen3";
 
 @Component({
     selector: ConfigurationStsBoxComponent.SELECTOR,
@@ -18,13 +17,13 @@ export class ConfigurationStsBoxComponent implements OnInit {
     @Input() public ibn!: AbstractCommercialGen3;
     @Input() public edge!: Edge;
     @Output() public nextViewEvent = new EventEmitter<AbstractCommercialGen3>();
-    @Output() public previousViewEvent = new EventEmitter<void>(); // Eradicated <any>
+    @Output() public previousViewEvent = new EventEmitter<void>();
 
     protected form: FormGroup = new FormGroup({});
-    protected fields: TypedFormlyFieldConfig<EmergencyReserve & StsBox>[] = [];
-    protected model!: EmergencyReserve & StsBox;
+    protected fields: TypedFormlyFieldConfig<EmergencyModel>[] = [];
+    protected model!: EmergencyModel;
 
-    constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) {}
 
     ngOnInit(): void {
         this.form = new FormGroup({});
@@ -49,23 +48,29 @@ export class ConfigurationStsBoxComponent implements OnInit {
         this.previousViewEvent.emit();
     }
 
-    public getStsBoxFields(): TypedFormlyFieldConfig<EmergencyReserve & StsBox>[] {
-        const fields: TypedFormlyFieldConfig<EmergencyReserve & StsBox>[] = [];
+    public getStsBoxFields(): TypedFormlyFieldConfig<EmergencyModel>[] {
+        const fields: TypedFormlyFieldConfig<EmergencyModel>[] = [];
 
         fields.push({
             key: "isStsBoxAvailable",
             type: "checkbox",
             props: {
-                label: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_FIELD_LABEL"),
+                label: this.translate.instant(
+                    "INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_FIELD_LABEL",
+                ),
                 url: "assets/img/ibn/sts-box.png",
                 imagePositionToLeft: true,
 
                 serialNumberField: {
                     key: "stsBoxSerialNumber",
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
-                    placeholder: "xxxxxxxxxx",
+                    label: this.translate.instant(
+                        "INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER",
+                    ),
+                    placeholder: "xxxxxxxxxxxxxxxx",
                     required: true,
-                    helpText: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.HELP_TEXT"),
+                    helpText: this.translate.instant(
+                        "INSTALLATION.CONFIGURATION_STS_BOX.HELP_TEXT",
+                    ),
                 },
             },
             wrappers: ["formly-field-checkbox-with-image"],
@@ -74,7 +79,7 @@ export class ConfigurationStsBoxComponent implements OnInit {
             },
         });
 
-        fields.push(...(this.ibn.getEmergencyReserveFields() as TypedFormlyFieldConfig<EmergencyReserve & StsBox>[]));
+        fields.push(...this.ibn.getEmergencyReserveFields());
 
         return fields;
     }

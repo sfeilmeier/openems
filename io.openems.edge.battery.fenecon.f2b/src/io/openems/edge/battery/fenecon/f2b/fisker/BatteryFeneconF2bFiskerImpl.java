@@ -11,8 +11,13 @@ import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SET_NULL_FOR_DEFAULT;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SUBTRACT;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.chain;
+import static io.openems.edge.common.channel.ChannelUtils.setValueIfNotRead;
+import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE;
+import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE;
+import static org.osgi.service.component.annotations.ReferenceCardinality.MANDATORY;
 import static org.osgi.service.component.annotations.ReferenceCardinality.OPTIONAL;
 import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
+import static org.osgi.service.component.annotations.ReferencePolicy.STATIC;
 import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
 import java.time.Duration;
@@ -31,9 +36,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 import org.osgi.service.event.propertytypes.EventTopics;
@@ -82,7 +84,6 @@ import io.openems.edge.common.channel.ChannelId.ChannelIdImpl;
 import io.openems.edge.common.channel.Doc;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
-import io.openems.edge.common.event.EdgeEventConstants;
 import io.openems.edge.common.jsonapi.ComponentJsonApi;
 import io.openems.edge.common.jsonapi.EdgeGuards;
 import io.openems.edge.common.jsonapi.JsonApiBuilder;
@@ -104,8 +105,8 @@ import io.openems.edge.timedata.api.utils.CalculateStateCounter;
 		configurationPolicy = ConfigurationPolicy.REQUIRE //
 )
 @EventTopics({ //
-		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
-		EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE //
+		TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
+		TOPIC_CYCLE_AFTER_PROCESS_IMAGE //
 })
 public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent implements BatteryFeneconF2bFisker,
 		BatteryFeneconF2b, ModbusComponent, OpenemsComponent, Battery, ModbusSlave, StartStoppable, EventHandler,
@@ -123,7 +124,7 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_FF = SET_NULL_FOR_DEFAULT(0xFF);
 	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_FFFF = SET_NULL_FOR_DEFAULT(0xFFFF);
 
-	private static final int CAPACITY = 113_100; // [Wh]
+	private static final int CAPACITY = 100_659; // [Wh] (113_100 * 89 %)
 	private static final int CELL_VOLTAGE_REGISTER_OFFSET = 80;
 	private static final int CELL_TEMPERATURE_REGISTER_OFFSET = 102;
 	private static final int NUMBER_OF_VOLTAGE_CELLS = 102;
@@ -171,7 +172,7 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 	private volatile Timedata timedata = null;
 
 	@Override
-	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(policy = STATIC, policyOption = GREEDY, cardinality = MANDATORY)
 	protected void setModbus(BridgeModbus modbus) {
 		super.setModbus(modbus);
 	}
@@ -188,7 +189,6 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 				BatteryErrorAcknowledge.ChannelId.values(), //
 				BatteryFeneconF2bFisker.ChannelId.values() //
 		);
-		this._setCapacity(CAPACITY);
 		this._setInnerResistance(INNER_RESISTANCE);
 	}
 
@@ -520,14 +520,19 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 			return;
 		}
 		switch (event.getTopic()) {
-		case EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE:
+		case TOPIC_CYCLE_BEFORE_PROCESS_IMAGE -> {
 			this.batteryProtection.apply();
 			this.handleStateMachine();
 			this.handleErrorCounting();
 			this._setModbusCommunicationToFemsFailed(this.getModbusCommunicationFailed());
 			this.handleRestartTasks();
-			break;
+			this.handleCapacity();
 		}
+		}
+	}
+
+	private void handleCapacity() {
+		setValueIfNotRead(this, Battery.ChannelId.CAPACITY, this.isStarted() ? CAPACITY : 0);
 	}
 
 	@Override

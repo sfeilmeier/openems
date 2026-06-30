@@ -751,9 +751,9 @@ export class Edge {
             return navigationTree;
         }
 
-        const conf = this.config.getValue();
-        this.addCommonWidgetNavigation(edge, conf, navigationTree, translate);
-        this.addControllerNavigation(edge, conf, navigationTree, translate);
+        const config = this.config.getValue();
+        this.addCommonWidgetNavigation(edge, config, navigationTree, translate);
+        this.addControllerNavigation(edge, config, navigationTree, translate);
         navigationTree.setChild(
             NavigationId.LIVE,
             new NavigationTree(
@@ -767,10 +767,16 @@ export class Edge {
                 { showOrder: "LOW" },
             ),
         );
-        navigationTree.setChild(
-            NavigationId.LIVE,
-            EnergyJourneyComponent.getNavigationTree(translate),
-        );
+        const energyJourneyNavigationTree =
+            EnergyJourneyComponent.getNavigationTree(edge, config, translate);
+
+        // only add energy journey if it has content
+        if (energyJourneyNavigationTree.children.length !== 0) {
+            navigationTree.setChild(
+                NavigationId.LIVE,
+                energyJourneyNavigationTree,
+            );
+        }
         this.addGlobalNavigation(service, navigationTree, translate);
         navigationTree.setChild(
             NavigationId.LIVE,
@@ -840,11 +846,11 @@ export class Edge {
 
     private addCommonWidgetNavigation(
         edge: Edge,
-        conf: EdgeConfig,
+        config: EdgeConfig,
         currentNavigationTree: NavigationTree,
         translate: TranslateService,
     ): void {
-        const classes = Widgets.parseWidgets(edge, conf).classes;
+        const classes = Widgets.parseWidgets(edge, config).classes;
 
         for (const clazz of classes) {
             const navigationTree: ConstructorParameters<
@@ -853,7 +859,7 @@ export class Edge {
                 edge,
                 clazz,
                 translate,
-                conf,
+                config,
             );
 
             if (navigationTree == null) {
@@ -868,14 +874,14 @@ export class Edge {
 
     private addControllerNavigation(
         edge: Edge,
-        conf: EdgeConfig,
+        config: EdgeConfig,
         currentNavigationTree: NavigationTree,
         translate: TranslateService,
     ): void {
         const controllerNavigationTrees = Widgets.getControllerNavigationTrees(
             edge,
             translate,
-            conf,
+            config,
         );
 
         for (const navigationTree of controllerNavigationTrees) {

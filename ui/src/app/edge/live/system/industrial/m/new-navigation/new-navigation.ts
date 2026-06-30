@@ -8,6 +8,7 @@ import { OeFormlyField, OeFormlyView, ViewContext, } from "src/app/shared/compon
 import { Edge, EdgePermission } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { AbstractIndustrialComponent } from "../../AbstractIndustrialComponent";
+
 @Component({
     selector: "oe-system-industrial-m",
     templateUrl:
@@ -29,10 +30,10 @@ export class SystemIndustrialMComponent extends AbstractIndustrialComponent {
             EdgePermission.hasSystemErrorAcknowledge(edge) &&
             edge.roleIsAtLeast(Role.INSTALLER)
         ) {
-            self.addActionButton(
+            self.addResetButton(
                 lines,
                 translate,
-                self.systemErrorAcknowledge(self),
+                self.systemErrorAcknowledge(),
                 translate.instant(
                     "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER",
                 ) +

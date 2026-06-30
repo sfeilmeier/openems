@@ -206,6 +206,7 @@
             "SUN": "Sun",
             "THU": "Thu",
             "TODAY": "Today",
+            "TOMORROW": "Tomorrow",
             "TOTAL": "Total",
             "TRY_AGAIN": "try again later...",
             "TUE": "Tue",
@@ -559,7 +560,7 @@
                     "CONTROL_MODE_DESCRIPTION": {
                         "CHARGE_CONSUMPTION": "By actively charging the battery from grid in periods of low electricity prices, buying energy in periods with high price can be avoided.<br/><br/>ATTENTION: Actively charging the battery from grid beyond the technically necessary maintenance charging, requires an appropriate registration of the storage system. If in doubt, please verify with your installer. By pressing the blue \"Save\" button you confirm that this verification has been done.<br/><br/>Be aware: Precondition for the German Renewable Energy Sources Act (EEG 2023) grant is that only energy from renewable sources and/or pit gas is stored in the battery. By activating this function the battery is charged with energy from the grid. This energy is, depending on the individual power-supply contract, probably generated from fossil and/or nuclear power sources. Thus we cannot guarantee that the battery is exclusively charged with energy gained from renewable sources and/or pit gas."
                     },
-                    "POWER_SOC_CHART_TITLE": "Forecasts (Only for Admins)",
+                    "POWER_SOC_CHART_TITLE": "Forecasts",
                     "PRICE": "Current price",
                     "STATE": {
                         "BALANCING": "Self-consumption optimization",
@@ -569,8 +570,11 @@
                         "DELAY_CHARGE": "Delay charge",
                         "LIMIT_CHARGE": "Limit charge",
                         "AVOID_GRID_SELL_LIMIT": "Avoid feed-in limit",
-                        "DISCHARGE_CONSUMPTION": "Discharge to consumption"
-                    }
+                        "DISCHARGE_CONSUMPTION": "Discharge to consumption",
+                        "DISCHARGE_GRID": "Discharge to grid"
+                    },
+                    "EEG_2025_HEADER": "EEG 2025 Forecast",
+                    "EEG_2025_DESCRIPTION": "The graph shows the expected future grid feed-in and the projected feed-in tariff under the EEG 2025. This is taken into account when calculating the optimal operating mode. The system attempts to keep grid feed-in as low as possible during periods when no tariff is paid. Please note that the forecast is continuously recalculated and may therefore change throughout the day."
                 },
                 "TWO_WAY_INFO_GRID": "Negative values correspond to grid feed-in, Positive values correspond to mains supply",
                 "EVSE": {
@@ -687,6 +691,7 @@
         "GRID_BUY_PRICE": "Electricity price",
         "GRID_SELL": "Sell to grid",
         "GRID_SELL_ADVANCED": "Sell",
+        "GRID_SELL_PRICE": "Feed-in compensation",
         "HEAT_PUMP": "Heat pump",
         "HISTORY": "History",
         "INACTIVE": "Inactive",
@@ -858,6 +863,7 @@
             "EMERGENCY_RESERVE_LABEL": "Emergency power{{ symbol }}",
             "EMERGENCY_RESERVE_NOTE": "If this function is activated, the battery charge level cannot fall below the set value.",
             "EMERGENCY_RESERVE_VALUE": "Emergency reserve value",
+            "INFO": "When using the generator, please note: the charge level of the emergency power reserve must be greater than (or equal to) the specified charge level required to start the generator (see details below).",
             "IS_ACTIVATED": "Emergency power reserve active?",
             "IS_ENABLED": "Should the Emergency power function be activated?",
             "RECENT": "Current:",
@@ -1019,7 +1025,7 @@
             "MAX": "Please enter a value less than {{ max }}.",
             "MIN": "Please enter a value greater than {{ min }}",
             "POSITIVE_INTEGER": "Only positive integer numbers are allowed.",
-            "STS_SERIAL_NUMBER_REQUIREMENT": "The serial number is required if an STS box is present."
+            "STS_SERIAL_NUMBER_REQUIREMENT": "The serial number consists of a maximum of 16 digits."
         },
         "FORWARD": "continue",
         "LOAD": "load",
@@ -1243,8 +1249,13 @@
         "VALUE_WITH_LABEL": "Value {{ label }}{{ number }} {{ symbol }}"
     },
     "JS_SCHEDULE": {
+        "ADD_EVENT": "Add Event",
+        "ADD_TASK": "Add Task",
+        "EDIT_EVENT": "Edit Event",
         "EDIT_TASK": "Edit task",
-        "ADD_TASK": "Add Task"
+        "NEXT_EVENTS": "Next Events",
+        "MANUAL_EVENTS": "Manual Events",
+        "SMART_EVENTS": "Smart Events"
     },
     "LIVE": {
         "PULL_TO_REFRESH": "Pull this banner to refresh"
@@ -1393,11 +1404,13 @@
         "Z_TO_A": "Designation Z - A"
     },
     "PAGE_HEADERS": {
-        "ENERGY_JOURNEY": "Analyse Battery extension"
+        "ENERGY_JOURNEY": "Analyse Battery extension",
+        "WRAP_UP_2025": "Your Wrap up 2025"
     },
     "REGISTER": {
         "BUTTON": "Create",
         "CREATE_USER": "Create account",
+        "CREATING_USER": "Creating account...",
         "ERRORS": {
             "EMAIL_NOT_EQUAL": "E-Mails are not equal",
             "PASSWORD_NOT_EQUAL": "Passwords are not equal",

@@ -590,6 +590,7 @@ export namespace NavigationConstants {
         "System.Fenecon.Industrial.L",
         "System.Fenecon.Industrial.M",
         "System.Fenecon.Industrial.S",
+        "System.Fenecon.Industrial.Tokai2",
         "Controller.ChannelThreshold",
         "Controller.IO.HeatingElement",
         "Controller.Ess.FixActivePower",

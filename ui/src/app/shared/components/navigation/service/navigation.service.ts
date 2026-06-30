@@ -37,7 +37,7 @@ export class NavigationService {
         private routeService: RouteService,
         private router: Router,
         private location: Location,
-        private translate: TranslateService,
+        translate: TranslateService,
     ) {
         this.setPosition();
 
@@ -83,6 +83,7 @@ export class NavigationService {
             "System.Fenecon.Industrial.L",
             "System.Fenecon.Industrial.M",
             "System.Fenecon.Industrial.S",
+            "System.Fenecon.Industrial.Tokai2",
             "Scheduler.JSCalendar",
         ]);
     }

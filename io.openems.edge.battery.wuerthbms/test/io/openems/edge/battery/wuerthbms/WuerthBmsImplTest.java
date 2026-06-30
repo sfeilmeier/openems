@@ -4,6 +4,7 @@ import static io.openems.common.test.TestUtils.createDummyClock;
 import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.RESET_BATTERY_COMMAND;
 import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.STRING_MODULE_COUNT;
 import static io.openems.edge.common.startstop.StartStopConfig.START;
+import static io.openems.edge.common.startstop.StartStoppable.ChannelId.START_STOP;
 import static java.time.temporal.ChronoUnit.MILLIS;
 
 import java.time.Clock;
@@ -13,7 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.utils.FunctionUtils;
+import io.openems.edge.battery.api.Battery;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
+import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
@@ -54,6 +57,20 @@ public class WuerthBmsImplTest {
 				.next(new TestCase("1") //
 						.input(STRING_MODULE_COUNT, numberOfModules));
 
+	}
+
+	@Test
+	public void capacityCalculationTest() throws Exception {
+		createComponentTest() //
+				.next(new TestCase() //
+						.input(START_STOP, StartStop.START))//
+				.next(new TestCase() //
+						.output(Battery.ChannelId.CAPACITY, 161_100))//
+				.next(new TestCase() //
+						.input(START_STOP, StartStop.STOP))//
+				.next(new TestCase() //
+						.output(Battery.ChannelId.CAPACITY, 0))//
+		;
 	}
 
 	protected static ComponentTest createComponentTest() throws Exception {

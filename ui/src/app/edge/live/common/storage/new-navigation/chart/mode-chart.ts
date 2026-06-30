@@ -3,11 +3,13 @@ import { Component } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 import { TranslateModule } from "@ngx-translate/core";
+import { Chart, ChartDataset, LegendItem, TooltipItem } from "chart.js";
 import { BaseChartDirective } from "ng2-charts";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ChartComponentsModule } from "src/app/shared/components/chart/chart.module";
 import { ScheduleChartComponent } from "src/app/shared/components/chart/schedule-chart/schedule-chart";
 import { HistoryDataErrorModule } from "src/app/shared/components/history-data-error/history-data-error.module";
+import { ChartConstants } from "src/app/shared/shared";
 import { TimeOfUseTariffUtils } from "src/app/shared/utils/utils";
 
 @Component({
@@ -26,56 +28,55 @@ import { TimeOfUseTariffUtils } from "src/app/shared/utils/utils";
 })
 export class ModeChartComponent extends ScheduleChartComponent {
     protected override buildDatasets(): ScheduleChartComponent.Dataset[] {
-        const data = this.data.data24h.map((e, index) => {
+        // Parse a number value to a Mode object
+        const valueToModes = (v: number | null) => {
+            return {
+                DelayDischarge:
+                    v === TimeOfUseTariffUtils.State.DelayDischarge
+                        ? true
+                        : null,
+                Balancing:
+                    v === TimeOfUseTariffUtils.State.Balancing ? true : null,
+                ChargeGrid:
+                    v === TimeOfUseTariffUtils.State.ChargeGrid ? true : null,
+                DischargeGrid:
+                    v === TimeOfUseTariffUtils.State.DischargeGrid
+                        ? true
+                        : null,
+                PeakShaving:
+                    v === TimeOfUseTariffUtils.State.PeakShaving ? true : null,
+                DelayCharge:
+                    v === TimeOfUseTariffUtils.State.DelayCharge ? true : null,
+                LimitCharge:
+                    v === TimeOfUseTariffUtils.State.LimitCharge ? true : null,
+                AvoidGridSellLimit:
+                    v === TimeOfUseTariffUtils.State.AvoidGridSellLimit
+                        ? true
+                        : null,
+                DischargeConsumption:
+                    v === TimeOfUseTariffUtils.State.DischargeConsumption
+                        ? true
+                        : null,
+            };
+        };
+        // Convert data to array of Mode objects
+        const modes = this.data.data24h.map((e) => {
+            return valueToModes(
+                e.eshs.find((esh) => esh.id === "ctrlEssTimeOfUseTariff0")
+                    ?.mode ?? null,
+            );
+        });
+        // Postprocess data to fill gaps
+        ScheduleChartComponent.normalizeBooleanLines(modes);
+
+        // Separate History and Prediction data
+        const emptyMode = valueToModes(null);
+        const data = modes.map((mode, index) => {
             const isHistory = index <= this.data.data24hLastHistoryIndex;
             const isPrediction = index >= this.data.data24hLastHistoryIndex;
-
-            const value =
-                e.eshs.find((esh) => esh.id === "ctrlEssTimeOfUseTariff0")
-                    ?.mode ?? null;
-            const isDelayDischarge =
-                value === TimeOfUseTariffUtils.State.DelayCharge;
-            const isBalancing = value === TimeOfUseTariffUtils.State.Balancing;
-            const isChargeGrid =
-                value === TimeOfUseTariffUtils.State.ChargeGrid;
-            const isDelayCharge =
-                value === TimeOfUseTariffUtils.State.DelayCharge;
-            const isLimitCharge =
-                value === TimeOfUseTariffUtils.State.LimitCharge;
-            const isAvoidGridSellLimit =
-                value === TimeOfUseTariffUtils.State.AvoidGridSellLimit;
-            const isDischargeConsumption =
-                value === TimeOfUseTariffUtils.State.DischargeConsumption;
-            const isDischargeGrid =
-                value === TimeOfUseTariffUtils.State.DischargeGrid;
-
             return {
-                history: {
-                    DelayDischarge: isHistory && isDelayDischarge ? true : null,
-                    Balancing: isHistory && isBalancing ? true : null,
-                    ChargeGrid: isHistory && isChargeGrid ? true : null,
-                    DelayCharge: isHistory && isDelayCharge ? true : null,
-                    LimitCharge: isHistory && isLimitCharge ? true : null,
-                    AvoidGridSellLimit:
-                        isHistory && isAvoidGridSellLimit ? true : null,
-                    DischargeConsumption:
-                        isHistory && isDischargeConsumption ? true : null,
-                    DischargeGrid: isHistory && isDischargeGrid ? true : null,
-                },
-                prediction: {
-                    DelayDischarge:
-                        isPrediction && isDelayDischarge ? true : null,
-                    Balancing: isPrediction && isBalancing ? true : null,
-                    ChargeGrid: isPrediction && isChargeGrid ? true : null,
-                    DelayCharge: isPrediction && isDelayCharge ? true : null,
-                    LimitCharge: isPrediction && isLimitCharge ? true : null,
-                    AvoidGridSellLimit:
-                        isPrediction && isAvoidGridSellLimit ? true : null,
-                    DischargeConsumption:
-                        isPrediction && isDischargeConsumption ? true : null,
-                    DischargeGrid:
-                        isPrediction && isDischargeGrid ? true : null,
-                },
+                history: isHistory ? mode : emptyMode,
+                prediction: isPrediction ? mode : emptyMode,
             };
         });
 
@@ -100,18 +101,23 @@ export class ModeChartComponent extends ScheduleChartComponent {
                     data: historyData,
                     label: label,
                     stepped: true,
+                    opacity: ScheduleChartComponent.OPACITY_NONE,
+                    borderWidth: 0,
                 },
                 {
                     color,
+                    label: label,
                     data: predictionData,
-                    borderDash: [5, 5],
                     stepped: true,
+                    opacity: ScheduleChartComponent.OPACITY_NONE,
+                    pattern: "plus",
+                    borderWidth: 0,
                 },
             );
         };
 
         addDatasetPair(
-            "rgb(168, 50, 71)",
+            ChartConstants.Colors.ESS_MODE_DELAY_DISCHARGE,
             this.translate.instant(
                 "EDGE.INDEX.WIDGETS.TIME_OF_USE_TARIFF.STATE.DELAY_DISCHARGE",
             ),
@@ -119,7 +125,7 @@ export class ModeChartComponent extends ScheduleChartComponent {
             data.map((d) => d.prediction.DelayDischarge),
         );
         addDatasetPair(
-            "rgb(18, 184, 224)",
+            ChartConstants.Colors.ESS_MODE_BALANCING,
             this.translate.instant(
                 "EDGE.INDEX.WIDGETS.TIME_OF_USE_TARIFF.STATE.BALANCING",
             ),
@@ -127,7 +133,7 @@ export class ModeChartComponent extends ScheduleChartComponent {
             data.map((d) => d.prediction.Balancing),
         );
         addDatasetPair(
-            "rgb(0, 107, 82)",
+            ChartConstants.Colors.ESS_MODE_CHARGE_GRID,
             this.translate.instant(
                 "EDGE.INDEX.WIDGETS.TIME_OF_USE_TARIFF.STATE.CHARGE_GRID",
             ),
@@ -135,7 +141,23 @@ export class ModeChartComponent extends ScheduleChartComponent {
             data.map((d) => d.prediction.ChargeGrid),
         );
         addDatasetPair(
-            "rgb(73, 194, 168)",
+            ChartConstants.Colors.ESS_MODE_DISCHARGE_GRID,
+            this.translate.instant(
+                "EDGE.INDEX.WIDGETS.TIME_OF_USE_TARIFF.STATE.DISCHARGE_GRID",
+            ),
+            data.map((d) => d.history.DischargeGrid),
+            data.map((d) => d.prediction.DischargeGrid),
+        );
+        addDatasetPair(
+            ChartConstants.Colors.ESS_MODE_PEAK_SHAVING,
+            this.translate.instant(
+                "EDGE.INDEX.WIDGETS.TIME_OF_USE_TARIFF.STATE.PEAK_SHAVING",
+            ),
+            data.map((d) => d.history.PeakShaving),
+            data.map((d) => d.prediction.PeakShaving),
+        );
+        addDatasetPair(
+            ChartConstants.Colors.ESS_MODE_DELAY_CHARGE,
             this.translate.instant(
                 "EDGE.INDEX.WIDGETS.TIME_OF_USE_TARIFF.STATE.DELAY_CHARGE",
             ),
@@ -143,7 +165,7 @@ export class ModeChartComponent extends ScheduleChartComponent {
             data.map((d) => d.prediction.DelayCharge),
         );
         addDatasetPair(
-            "rgb(0, 153, 120)",
+            ChartConstants.Colors.ESS_MODE_LIMIT_CHARGE,
             this.translate.instant(
                 "EDGE.INDEX.WIDGETS.TIME_OF_USE_TARIFF.STATE.LIMIT_CHARGE",
             ),
@@ -151,7 +173,7 @@ export class ModeChartComponent extends ScheduleChartComponent {
             data.map((d) => d.prediction.LimitCharge),
         );
         addDatasetPair(
-            "rgb(107, 77, 255)",
+            ChartConstants.Colors.ESS_MODE_AVOID_FEED_IN_LIMIT,
             this.translate.instant(
                 "EDGE.INDEX.WIDGETS.TIME_OF_USE_TARIFF.STATE.AVOID_GRID_SELL_LIMIT",
             ),
@@ -159,23 +181,55 @@ export class ModeChartComponent extends ScheduleChartComponent {
             data.map((d) => d.prediction.AvoidGridSellLimit),
         );
         addDatasetPair(
-            "rgb(230, 69, 107)",
+            ChartConstants.Colors.ESS_MODE_DISCHARGE_CONSUMPTION,
             this.translate.instant(
                 "EDGE.INDEX.WIDGETS.TIME_OF_USE_TARIFF.STATE.DISCHARGE_CONSUMPTION",
             ),
             data.map((d) => d.history.DischargeConsumption),
             data.map((d) => d.prediction.DischargeConsumption),
         );
-        // TODO
-        addDatasetPair(
-            "rgb(0, 0, 0)",
-            this.translate.instant(
-                "EDGE.INDEX.WIDGETS.TIME_OF_USE_TARIFF.STATE.DISCHARGE_GRID",
-            ),
-            data.map((d) => d.history.DischargeGrid),
-            data.map((d) => d.prediction.DischargeGrid),
-        );
 
         return datasets;
+    }
+
+    protected override generateLegendLabels(chart: Chart): LegendItem[] {
+        const chartLegendLabelItems: LegendItem[] = [];
+        chart.data.datasets.forEach((dataset: ChartDataset, index) => {
+            // Remove duplicates like from legend
+            if (
+                chartLegendLabelItems.some(
+                    (element) => element["text"] === (dataset.label ?? ""),
+                )
+            ) {
+                return;
+            }
+
+            const backgroundColor = Array.isArray(dataset.backgroundColor)
+                ? dataset.backgroundColor[0]
+                : dataset.backgroundColor;
+
+            chartLegendLabelItems.push({
+                text: dataset.label ?? "",
+                datasetIndex: index,
+                fillStyle: backgroundColor?.toString() ?? "transparent",
+                strokeStyle: backgroundColor?.toString() ?? "transparent",
+                lineWidth: 0,
+            });
+        });
+
+        setTimeout(() => {
+            if (!(chart as any)._updated) {
+                (chart as any)._updated = true;
+                chart.update();
+            }
+        }, 0);
+
+        return chartLegendLabelItems;
+    }
+
+    protected override getTooltipLabelCallback(): (
+        item: TooltipItem<any>,
+    ) => string {
+        return (item: TooltipItem<any>) => item.dataset.label ?? "";
     }
 }

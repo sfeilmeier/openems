@@ -44,6 +44,10 @@ import { HeatEditTaskComponent } from "src/app/edge/live/Controller/Heat/schedul
 import { ControllerHeatSettingsComponent } from "src/app/edge/live/Controller/Heat/settings/settings";
 import { ControllerBraiinsHomeComponent } from "src/app/edge/live/Controller/Io/Braiins/new-navigation/new-navigation";
 import { ControllerBraiinsGroupComponent } from "src/app/edge/live/Controller/Io/Braiins/pages/group/group";
+import { ControllerBraiinsModeComponent } from "src/app/edge/live/Controller/Io/Braiins/pages/mode/mode";
+import { ControllerBraiinsScheduleComponent } from "src/app/edge/live/Controller/Io/Braiins/pages/schedule/schedule.component";
+import { ControllerBraiinsAddTaskComponent } from "src/app/edge/live/Controller/Io/Braiins/pages/schedule/task/add/add";
+import { ControllerBraiinsEditTaskComponent } from "src/app/edge/live/Controller/Io/Braiins/pages/schedule/task/edit/edit";
 import { FixDigitalDetailsComponent } from "src/app/edge/live/Controller/Io/FixDigitalOutput/history/details/new-navigation/details";
 import { ControllerFixDigitalOutputHomeComponent } from "src/app/edge/live/Controller/Io/FixDigitalOutput/new-navigation/new-navigation";
 import { ControllerHeatingElementHistoryComponent } from "src/app/edge/live/Controller/Io/HeatingElement/history/new-navigation/new-navigation";
@@ -75,6 +79,7 @@ import { SystemIndustrialLAddTaskComponent } from "src/app/edge/live/system/indu
 import { SystemIndustrialLEditTaskComponent } from "src/app/edge/live/system/industrial/l/schedule/task/edit/edit";
 import { SystemIndustrialMComponent } from "src/app/edge/live/system/industrial/m/new-navigation/new-navigation";
 import { SystemIndustrialSComponent } from "src/app/edge/live/system/industrial/s/new-navigation/new-navigation";
+import { SystemIndustrialTokai2Component } from "src/app/edge/live/system/industrial/tokai2/new-navigation/new-navigation";
 import { SystemIndustrialXlComponent } from "src/app/edge/live/system/industrial/xl/new-navigation/new-navigation";
 import { CurrentVoltageOverviewComponent } from "src/app/shared/components/edge/meter/currentVoltage/new-navigation/new-navigation";
 import { hasEdgeRole, hasUserSettings, } from "src/app/shared/guards/functional-guards";
@@ -303,6 +308,22 @@ export const newNavigationRoutes: Routes = [
         component: ControllerBraiinsHomeComponent,
     },
     {
+        path: "controller/braiins/:componentId/mode",
+        component: ControllerBraiinsModeComponent,
+    },
+    {
+        path: "controller/braiins/:componentId/schedule",
+        component: ControllerBraiinsScheduleComponent,
+    },
+    {
+        path: "controller/braiins/:componentId/schedule/add-task",
+        component: ControllerBraiinsAddTaskComponent,
+    },
+    {
+        path: "controller/braiins/:componentId/schedule/edit-task",
+        component: ControllerBraiinsEditTaskComponent,
+    },
+    {
         path: "controller/heatpump/:componentId",
         component: ControllerIoHeatpumpHomeComponent,
     },
@@ -461,6 +482,10 @@ export const newNavigationRoutes: Routes = [
     {
         path: ":componentId/industrial-xl",
         component: SystemIndustrialXlComponent,
+    },
+    {
+        path: ":componentId/industrial-tokai2",
+        component: SystemIndustrialTokai2Component,
     },
     {
         path: "history",

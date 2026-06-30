@@ -76,8 +76,9 @@ public class TestConfig {
 				.addProperty("factoryPid", EnergySchedulerTestUtils.Controller.ESS_FIX_ACTIVE_POWER.factoryPid) //
 				.addProperty("id", "ctrlFixActivePower0") //
 				.add("source", buildJsonObject() //
+						.addProperty("mode", "DISCHARGE_ONCE") //
 						.addProperty("power", 1000) //
-						.addProperty("relationship", "EQUALS") //
+						.addProperty("targetSoc", 5) //
 						.build()) //
 				.build();
 
@@ -251,6 +252,31 @@ public class TestConfig {
 						.add("tasks", buildJsonArray() //
 								.add(createTask("10:00:00", "PT2H", Mode.SURPLUS.name())) //
 								.add(createTask("13:00:00", "PT2H", Mode.FAST_HEAT.name())) //
+								.build()) //
+						.build()) //
+				.build();
+
+		protected static final JsonObject BRAIINS_SINGLE = buildJsonObject() //
+				.addProperty("factoryPid", EnergySchedulerTestUtils.Controller.BRAIINS_SINGLE.factoryPid) //
+				.addProperty("id", "ctrlBraiinsSingle0") //
+				.add("source", buildJsonObject() //
+						.addProperty("defaultMode", "OFF") //
+						.addProperty("consumptionW", 3000) //
+						.add("tasks", buildJsonArray() //
+								.add(buildJsonObject() //
+										.addProperty("@type", "Task") //
+										.addProperty("start", "13:00:00") //
+										.addProperty("duration", "PT2H") //
+										.add("recurrenceRules", buildJsonArray() //
+												.add(buildJsonObject() //
+														.addProperty("frequency", "daily") //
+														.build()) //
+												.build()) //
+										.add("openems.io:payload", buildJsonObject() //
+												.addProperty("class", "Manual") //
+												.addProperty("mode", "ON") //
+												.build()) //
+										.build()) //
 								.build()) //
 						.build()) //
 				.build();

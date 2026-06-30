@@ -45,10 +45,10 @@ export class SystemIndustrialLComponent extends AbstractIndustrialComponent {
         const lines: OeFormlyField[] = self.createDefaultStartStop(translate);
 
         if (edge.roleIsAtLeast(Role.INSTALLER)) {
-            self.addActionButton(
+            self.addResetButton(
                 lines,
                 translate,
-                self.bmsHardReset(self),
+                self.bmsHardReset(),
                 translate.instant(
                     "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.BMS_HARD_RESET",
                 ),
@@ -59,10 +59,10 @@ export class SystemIndustrialLComponent extends AbstractIndustrialComponent {
             EdgePermission.hasSystemErrorAcknowledge(edge) &&
             edge.roleIsAtLeast(Role.INSTALLER)
         ) {
-            self.addActionButton(
+            self.addResetButton(
                 lines,
                 translate,
-                self.systemErrorAcknowledge(self),
+                self.systemErrorAcknowledge(),
                 translate.instant(
                     "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER",
                 ) +

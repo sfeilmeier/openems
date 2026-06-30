@@ -235,6 +235,10 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Meter.Socomec", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-production-and-consumption-meter")) //
+			.put("App.Meter.Siemens", AppLink.create() //
+					.emptyLink(Language.DE) //
+					.emptyLink(Language.EN) //
+			) //
 			.put("App.Meter.CarloGavazzi", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-production-and-consumption-meter")) //

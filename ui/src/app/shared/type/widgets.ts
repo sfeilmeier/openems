@@ -8,13 +8,14 @@ import { SharedControllerChannelThreshold } from "src/app/edge/live/Controller/C
 import { SharedControllerEnerixControl } from "src/app/edge/live/Controller/EnerixControl/shared/shared";
 import { ControllerEvseSingleShared } from "src/app/edge/live/Controller/Evse/shared/shared";
 import { SharedControllerHeat } from "src/app/edge/live/Controller/Heat/shared/shared";
-import { SharedControllerBraiins } from "src/app/edge/live/Controller/Io/Braiins/shared/shared";
+import { ControllerBraiinsShared } from "src/app/edge/live/Controller/Io/Braiins/shared/shared";
 import { SharedControllerIoFixDigitalOutput } from "src/app/edge/live/Controller/Io/FixDigitalOutput/shared/shared";
 import { SharedControllerIoHeatingElement } from "src/app/edge/live/Controller/Io/HeatingElement/shared/shared";
 import { SharedControllerIoHeatpump } from "src/app/edge/live/Controller/Io/Heatpump/shared/shared";
 import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/shared-system-industrial-l";
 import { SharedSystemIndustrialM } from "src/app/edge/live/system/industrial/m/shared-system-industrial-m";
 import { SharedSystemIndustrialS } from "src/app/edge/live/system/industrial/s/shared-system-industrial-s";
+import { SharedSystemIndustrialTokai2 } from "src/app/edge/live/system/industrial/tokai2/shared-system-industrial-tokai2";
 import { SharedSystemIndustrialXl } from "src/app/edge/live/system/industrial/xl/shared-system-industrial-xl";
 import { SharedControllerIoHeatingRoom } from "../../edge/live/Controller/Io/HeatingRoom/shared/shared";
 import { Edge } from "../components/edge/edge";
@@ -52,8 +53,8 @@ export class Widgets {
             single: SharedControllerIoFixDigitalOutput.getNavigationTree,
         },
         "Controller.BraiinsOS.Single": {
-            grouped: SharedControllerBraiins.getGroupedNavigationTree,
-            single: SharedControllerBraiins.getNavigationTree,
+            grouped: ControllerBraiinsShared.getGroupedNavigationTree,
+            single: ControllerBraiinsShared.getNavigationTree,
         },
     };
 
@@ -152,6 +153,11 @@ export class Widgets {
                 );
             case "System.Fenecon.Industrial.S":
                 return SharedSystemIndustrialS.getNavigationTree(
+                    translate,
+                    widget.componentId,
+                );
+            case "System.Fenecon.Industrial.Tokai2":
+                return SharedSystemIndustrialTokai2.getNavigationTree(
                     translate,
                     widget.componentId,
                 );

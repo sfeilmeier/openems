@@ -33,10 +33,27 @@ set -e
 HW_CONF="/etc/openems.d/hardware.conf"
 HW_REVISION="/etc/hardware_revision"
 
+function get_last_value {
+  local key="$1"
+  awk -v key="$key" -F'=' '
+    {
+      field = $1
+      gsub(/^[ \t]+/, "", field)
+      gsub(/[ \t]+$/, "", field)
+    }
+    field == key {
+      value = substr($0, index($0, "=") + 1)
+    }
+    END {
+      print value
+    }
+  ' "$HW_REVISION"
+}
+
 function read_hardware {
-  HARDWARE=$(grep "^NPE_HARDWARE=" "$HW_REVISION" | cut -d'=' -f2)
-  CONFIGURATION=$(grep "^CONFIGURATION_DEVICE=" "$HW_REVISION" | cut -d'=' -f2)
-  FIONA_DETECTED_HW=$(grep "^FIONA_DETECTED_HW=" "$HW_REVISION" | cut -d'=' -f2)
+  HARDWARE="$(get_last_value "NPE_HARDWARE")"
+  CONFIGURATION="$(get_last_value "CONFIGURATION_DEVICE")"
+  FIONA_DETECTED_HW="$(get_last_value "FIONA_DETECTED_HW")"
 
   case "$FIONA_DETECTED_HW" in
     "techbase-cm4s-gen3") echo "App.OpenemsHardware.CM4S.Gen3"; return;;

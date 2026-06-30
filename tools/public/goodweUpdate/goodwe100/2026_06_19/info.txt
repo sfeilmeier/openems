@@ -1,0 +1,16 @@
+Version 19.06.2026
+ARM: ? (410-02189-02(184)OL-R(2).bin)
+DSP: ? (410-04086-02(212,212)OL-R(2).bin)
+STS: ? (410-04100-02(212)OL-R(4).bin)
+
+First major update from GoodWe.
+
+"1. The attached file covers the ET100K shipped by your side (separate excel file in attatched in the mail). 
+Please make sure to upgrade their DSP, ARM and STS firmware to Version 02 provided in the attachment. 
+Version 01 contains severe deviations in load calculation logic, which have been optimized in Version 02."
+
+Known issues with previous versions:
+- Generator not working properly
+- 4110 not working properly
+- 500W permanent gridBuy in SelfConsumption/Auto mode of GoodWe
+- Warning "No GridMode" without a proper description (mostly caused by wrong installations)

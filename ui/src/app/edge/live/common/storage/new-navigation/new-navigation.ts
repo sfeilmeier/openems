@@ -190,35 +190,6 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
 
         const lines: OeFormlyField[] = [];
 
-        // if (edge.id == "fems888") {
-        //     // TODO finalize stats
-        //     lines.push({
-        //         type: "stats-line",
-        //         stats: [
-        //             {
-        //                 name: "Beladung heute",
-        //                 futureValue: chargeFutureEnergy,
-        //                 description: "kWh",
-        //                 unit: "kWh",
-        //                 historyValue: NumberUtils.divideSafely(
-        //                     energyDate.result.data["_sum/EssDcChargeEnergy"],
-        //                     1000,
-        //                 ),
-        //             },
-        //             {
-        //                 name: "Entladung heute",
-        //                 futureValue: dischargeFutureEnergy,
-        //                 description: "kWh",
-        //                 unit: "kWh",
-        //                 historyValue: NumberUtils.divideSafely(
-        //                     energyDate.result.data["_sum/EssDcDischargeEnergy"],
-        //                     1000,
-        //                 ),
-        //             },
-        //         ],
-        //     });
-        // }
-
         if (energyScheduler.schedule !== GetSchedule.Response.empty) {
             lines.push(
                 {
@@ -238,12 +209,12 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
                         "_sum",
                         "EssDischargePower",
                     ).toString(),
-                    converter: ESS_CHARGE_OR_DISCHARGE(translate),
                     style: {
                         name: { fontSize: "large" },
                         value: { fontSize: "large" },
                     },
                     cssClass: "ion-padding-top",
+                    converter: ESS_CHARGE_OR_DISCHARGE(translate),
                 },
                 {
                     type: "component-line",
@@ -256,7 +227,7 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
                 },
                 {
                     type: "channel-line",
-                    name: "Ladezustand",
+                    name: translate.instant("GENERAL.SOC"),
                     channel: new ChannelAddress("_sum", "EssSoc").toString(),
                     converter: Converter.STATE_IN_PERCENT,
                     style: {
@@ -276,7 +247,7 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
                 },
             );
 
-            if (config.getComponentSafely("ctrlEssTimeOfUseTariff0") !== null) {
+            if (config.hasFactories(["Controller.Ess.Time-Of-Use-Tariff"])) {
                 lines.push(
                     {
                         type: "channel-line",
@@ -362,21 +333,30 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
 
 export const ESS_CHARGE_OR_DISCHARGE =
     (translate: TranslateService): Converter =>
-    (raw): string =>
-        Converter.IF_NUMBER(raw, (value) => {
+    (raw): string => {
+        const displayText = (
+            power: string,
+            color: "danger" | "success" | "inherit",
+            text: string,
+        ): string => {
+            return `<span>${power}&nbsp;<ion-label color="${color}">${text}</ion-label></span>`;
+        };
+
+        return Converter.IF_NUMBER(raw, (value) => {
             if (value > 0) {
-                return (
-                    Converter.POWER_IN_KILO_WATT(value) +
-                    " " +
-                    translate.instant("GENERAL.DISCHARGE")
+                return displayText(
+                    Converter.POWER_IN_KILO_WATT(value),
+                    "danger",
+                    translate.instant("GENERAL.DISCHARGE"),
                 );
             } else if (value < 0) {
-                return (
-                    Converter.POWER_IN_KILO_WATT(Math.abs(value)) +
-                    " " +
-                    translate.instant("GENERAL.CHARGE")
+                return displayText(
+                    Converter.POWER_IN_KILO_WATT(Math.abs(value)),
+                    "success",
+                    translate.instant("GENERAL.CHARGE"),
                 );
             } else {
                 return Converter.POWER_IN_KILO_WATT(value);
             }
         });
+    };

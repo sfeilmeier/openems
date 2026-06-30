@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges, inject } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import * as Chart from "chart.js";
@@ -9,6 +9,7 @@ import { NavigationService } from "src/app/shared/components/navigation/service/
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { GetScheduleRequest } from "src/app/shared/jsonrpc/request/getScheduleRequest";
 import { GetScheduleResponse } from "src/app/shared/jsonrpc/response/getScheduleResponse";
+import { UserService } from "src/app/shared/service/user.service";
 import { Currency, Edge, EdgeConfig, Logger, Service, Websocket } from "src/app/shared/shared";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { ColorUtils } from "src/app/shared/utils/color/color.utils";
@@ -29,6 +30,9 @@ export class ScheduleStateAndPriceChartComponent extends AbstractHistoryChart im
 
     private currencyLabel: Currency.Label | undefined = undefined;
     private currencyUnit: Currency.Unit | undefined = undefined;
+
+    // TODO INTERSOLAR
+    private userService: UserService = inject(UserService);
 
     constructor(
         public override service: Service,
@@ -128,6 +132,10 @@ export class ScheduleStateAndPriceChartComponent extends AbstractHistoryChart im
             const gridBuyArray = schedule.map(entry => HistoryUtils.ValueConverter.NEGATIVE_AS_ZERO(entry.grid));
             const socArray = schedule.map(entry => entry.soc);
 
+            // TODO INTERSOLAR
+            const edgeId: string | null = this.edge?.id ?? null;
+            const userId: string | null = this.userService.currentUser()?.id ?? null;
+
             const scheduleChartData = Controller_Ess_TimeOfUseTariffUtils.getScheduleChartData(
                 schedule.length,
                 priceArray,
@@ -137,6 +145,8 @@ export class ScheduleStateAndPriceChartComponent extends AbstractHistoryChart im
                 socArray,
                 this.translate,
                 this.component.properties.controlMode,
+                edgeId,
+                userId,
             );
 
             this.labels = scheduleChartData.labels;
