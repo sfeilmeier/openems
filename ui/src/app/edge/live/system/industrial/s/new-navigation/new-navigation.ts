@@ -30,10 +30,10 @@ export class SystemIndustrialSComponent extends AbstractIndustrialComponent {
             EdgePermission.hasSystemErrorAcknowledge(edge) &&
             edge.roleIsAtLeast(Role.INSTALLER)
         ) {
-            self.addActionButton(
+            self.addResetButton(
                 lines,
                 translate,
-                self.systemErrorAcknowledge(self),
+                self.systemErrorAcknowledge(),
                 translate.instant(
                     "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER",
                 ) +

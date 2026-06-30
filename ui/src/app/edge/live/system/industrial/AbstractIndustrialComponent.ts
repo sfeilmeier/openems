@@ -10,6 +10,8 @@ import { BmsHardResetRequest } from "./jsonrpc/bmsHardReset";
 import { ClearErrorRequest } from "./jsonrpc/clearErrorRequest";
 import { F2BUpdate } from "./jsonrpc/f2bUpdate";
 import { SystemErrorAcknowledge } from "./jsonrpc/systemErrorAcknowledge";
+import { TestMode } from "./jsonrpc/testMode";
+import { TestModeType } from "./jsonrpc/testModeType";
 
 export abstract class AbstractIndustrialComponent extends AbstractFormlyComponent {
     protected override formlyWrapper:
@@ -116,49 +118,79 @@ export abstract class AbstractIndustrialComponent extends AbstractFormlyComponen
     }
 
     protected systemErrorAcknowledge(
-        self: AbstractIndustrialComponent,
+        this: AbstractIndustrialComponent,
     ): () => void {
         return SystemIndustrialJsonRpcHelper.createRpcCallback(
-            self.service,
-            self.translate,
-            self.websocket,
-            self.service.currentEdge(),
-            self.component,
+            this.service,
+            this.translate,
+            this.websocket,
+            this.service.currentEdge(),
+            this.component,
             new SystemErrorAcknowledge(),
         );
     }
 
-    protected bmsHardReset(self: AbstractIndustrialComponent): () => void {
+    protected bmsHardReset(this: AbstractIndustrialComponent): () => void {
         return SystemIndustrialJsonRpcHelper.createRpcCallback(
-            self.service,
-            self.translate,
-            self.websocket,
-            self.service.currentEdge(),
-            self.component,
+            this.service,
+            this.translate,
+            this.websocket,
+            this.service.currentEdge(),
+            this.component,
             new BmsHardResetRequest(),
         );
     }
 
-    protected clearErrorRequest(self: AbstractIndustrialComponent): () => void {
+    protected clearErrorRequest(this: AbstractIndustrialComponent): () => void {
         return SystemIndustrialJsonRpcHelper.createRpcCallback(
-            self.service,
-            self.translate,
-            self.websocket,
-            self.service.currentEdge(),
-            self.component,
+            this.service,
+            this.translate,
+            this.websocket,
+            this.service.currentEdge(),
+            this.component,
             new ClearErrorRequest(),
         );
     }
 
-    protected f2bUpdate(self: AbstractIndustrialComponent): () => void {
+    protected f2bUpdate(this: AbstractIndustrialComponent): () => void {
         return SystemIndustrialJsonRpcHelper.createRpcCallback(
-            self.service,
-            self.translate,
-            self.websocket,
-            self.service.currentEdge(),
-            self.component,
+            this.service,
+            this.translate,
+            this.websocket,
+            this.service.currentEdge(),
+            this.component,
             new F2BUpdate(),
         );
+    }
+
+    protected testMode(
+        this: AbstractIndustrialComponent,
+        testMode: TestModeType,
+    ): () => void {
+        return SystemIndustrialJsonRpcHelper.createRpcCallback(
+            this.service,
+            this.translate,
+            this.websocket,
+            this.service.currentEdge(),
+            this.component,
+            new TestMode(testMode),
+        );
+    }
+
+    protected testModeExit(): () => void {
+        return this.testMode(TestModeType.EXIT);
+    }
+
+    protected testModeManualBatteryStart(): () => void {
+        return this.testMode(TestModeType.MANUAL_BATTERY_START);
+    }
+
+    protected testModeEssTest(): () => void {
+        return this.testMode(TestModeType.ESS_TEST);
+    }
+
+    protected testModeLampTest(): () => void {
+        return this.testMode(TestModeType.LAMP_TEST);
     }
 
     protected addActionButton(
@@ -166,6 +198,7 @@ export abstract class AbstractIndustrialComponent extends AbstractFormlyComponen
         translate: TranslateService,
         callback: () => void,
         name: string,
+        translationKey: string,
     ): void {
         lines.push(
             {
@@ -179,12 +212,36 @@ export abstract class AbstractIndustrialComponent extends AbstractFormlyComponen
                         color: "primary",
                         size: "small",
                     },
-                    name: translate.instant("GENERAL.RESET"),
+                    name: translate.instant(translationKey),
                     value: true,
                     callback,
                 },
                 name,
             },
+        );
+    }
+
+    protected addResetButton(
+        lines: OeFormlyField[],
+        translate: TranslateService,
+        callback: () => void,
+        name: string,
+    ): void {
+        this.addActionButton(lines, translate, callback, name, "GENERAL.RESET");
+    }
+
+    protected addExecuteButton(
+        lines: OeFormlyField[],
+        translate: TranslateService,
+        callback: () => void,
+        name: string,
+    ): void {
+        this.addActionButton(
+            lines,
+            translate,
+            callback,
+            name,
+            "EDGE.INDEX.WIDGETS.SYSTEM.EXECUTE",
         );
     }
 }

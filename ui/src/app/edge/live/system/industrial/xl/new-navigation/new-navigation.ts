@@ -6,8 +6,11 @@ import { CommonUiModule } from "src/app/shared/common-ui.module";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { OeFormlyField, OeFormlyView, ViewContext, } from "src/app/shared/components/shared/oe-formly-component";
 import { Edge, EdgePermission } from "src/app/shared/shared";
+import { Language } from "src/app/shared/type/language";
 import { Role } from "src/app/shared/type/role";
 import { AbstractIndustrialComponent } from "../../AbstractIndustrialComponent";
+import de from "../i18n/de.json";
+import en from "../i18n/en.json";
 
 @Component({
     selector: "oe-system-industrial-xl",
@@ -19,6 +22,21 @@ import { AbstractIndustrialComponent } from "../../AbstractIndustrialComponent";
 export class SystemIndustrialXlComponent extends AbstractIndustrialComponent {
     protected override readonly factoryId = "System.Fenecon.Industrial.Xl";
 
+    constructor() {
+        super();
+        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then(
+            (translations) => {
+                for (const { lang, translation, shouldMerge } of translations) {
+                    this.translate.setTranslation(
+                        lang,
+                        translation,
+                        shouldMerge,
+                    );
+                }
+            },
+        );
+    }
+
     public static getFormlyGeneralView(
         translate: TranslateService,
         edge: Edge,
@@ -27,10 +45,10 @@ export class SystemIndustrialXlComponent extends AbstractIndustrialComponent {
         const lines: OeFormlyField[] = self.createDefaultStartStop(translate);
 
         if (edge.roleIsAtLeast(Role.INSTALLER)) {
-            self.addActionButton(
+            self.addResetButton(
                 lines,
                 translate,
-                self.clearErrorRequest(self),
+                self.clearErrorRequest(),
                 translate.instant(
                     "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.CLEAR_COOLING_UNIT_ERRORS_HEADER",
                 ) +
@@ -45,10 +63,10 @@ export class SystemIndustrialXlComponent extends AbstractIndustrialComponent {
             EdgePermission.hasSystemErrorAcknowledge(edge) &&
             edge.roleIsAtLeast(Role.INSTALLER)
         ) {
-            self.addActionButton(
+            self.addResetButton(
                 lines,
                 translate,
-                self.systemErrorAcknowledge(self),
+                self.systemErrorAcknowledge(),
                 translate.instant(
                     "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER",
                 ) +
@@ -60,27 +78,46 @@ export class SystemIndustrialXlComponent extends AbstractIndustrialComponent {
         }
 
         if (edge.roleIsAtLeast(Role.ADMIN)) {
-            lines.push(
-                { type: "horizontal-line" },
-                {
-                    type: "button-from-form-control-line",
-                    button: {
-                        icon: {
-                            name: "send-outline",
-                            color: "primary",
-                            size: "small",
-                        },
-                        name: translate.instant(
-                            "EDGE.INDEX.WIDGETS.SYSTEM.EXECUTE",
-                        ),
-                        value: true,
-                        callback: self.f2bUpdate(self),
-                    },
-                    name: translate.instant(
+            if (edge.roleIsAtLeast(Role.ADMIN)) {
+                self.addExecuteButton(
+                    lines,
+                    translate,
+                    self.f2bUpdate(),
+                    translate.instant(
                         "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.F2B_UPDATE_HEADER",
                     ),
-                },
-            );
+                );
+
+                self.addExecuteButton(
+                    lines,
+                    translate,
+                    self.testModeEssTest(),
+                    translate.instant("INDUSTRIAL_XL.TEST_MODE_ESS_TEST"),
+                );
+
+                self.addExecuteButton(
+                    lines,
+                    translate,
+                    self.testModeManualBatteryStart(),
+                    translate.instant(
+                        "INDUSTRIAL_XL.TEST_MODE_MANUAL_BATTERY_START",
+                    ),
+                );
+
+                self.addExecuteButton(
+                    lines,
+                    translate,
+                    self.testModeLampTest(),
+                    translate.instant("INDUSTRIAL_XL.TEST_MODE_LAMP_TEST"),
+                );
+
+                self.addExecuteButton(
+                    lines,
+                    translate,
+                    self.testModeExit(),
+                    translate.instant("INDUSTRIAL_XL.TEST_MODE_EXIT"),
+                );
+            }
         }
 
         return {
