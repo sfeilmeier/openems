@@ -1,5 +1,5 @@
 import { inject, NgModule } from "@angular/core";
-import { NoPreloading, RedirectFunction, RouterModule, Routes, } from "@angular/router";
+import { NoPreloading, RedirectFunction, RouterModule, Routes } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { environment } from "src/environments";
 import { EdgeComponent } from "./edge/edge.component";
@@ -38,9 +38,9 @@ import { suffixMatcher } from "./shared/guards/url-matcher";
 import { OAuthCallBackComponent } from "./shared/service/auth/oauthcallback.component";
 import { UserComponent } from "./user/user.component";
 
-export const history: (
-    /** Determines if titles in headers can be set */ customHeaders: boolean,
-) => Routes = (customHeaders) => [
+export const history: (/** Determines if titles in headers can be set */ customHeaders: boolean) => Routes = (
+    customHeaders,
+) => [
     {
         path: "history",
         providers: [
@@ -55,9 +55,7 @@ export const history: (
                 path: "",
                 component: EdgeHistoryComponent,
                 data: {
-                    ...(customHeaders
-                        ? { navbarTitleToBeTranslated: "GENERAL.HISTORY" }
-                        : {}),
+                    ...(customHeaders ? { navbarTitleToBeTranslated: "GENERAL.HISTORY" } : {}),
                 },
             },
             // History Chart Pages
@@ -219,9 +217,7 @@ export const routes: Routes = [
             {
                 path: "settings",
                 loadChildren: () =>
-                    import("./edge/settings/settings-routing.module").then(
-                        (m) => m.SettingsRoutingModule,
-                    ),
+                    import("./edge/settings/settings-routing.module").then((m) => m.SettingsRoutingModule),
             },
         ],
     },
@@ -234,10 +230,7 @@ export const routes: Routes = [
     },
     {
         matcher: suffixMatcher("changelog"),
-        loadChildren: () =>
-            import("./changelog/changelog.module").then(
-                (m) => m.ChangelogModule,
-            ),
+        loadChildren: () => import("./changelog/changelog.module").then((m) => m.ChangelogModule),
         data: { navbarTitleToBeTranslated: "MENU.CHANGELOG" },
     },
     // Fallback
@@ -258,12 +251,10 @@ export const appRoutingProviders: any[] = [];
 export class AppRoutingModule {}
 
 /**
- * Creates a RedirectFunction, which checks for a state parameter in the query
- * parameters and also the active oauth state if both are present navigates to
- * the active oauth state.
+ * Creates a RedirectFunction, which checks for a state parameter in the query parameters and also the active oauth
+ * state if both are present navigates to the active oauth state.
  *
- * @param defaultRoute The default route to navigate to if no oauth state is
- *   present
+ * @param defaultRoute The default route to navigate to if no oauth state is present
  * @returns The created RedirectFunction
  */
 function oauthRedirectFunction(defaultRoute: string): RedirectFunction {

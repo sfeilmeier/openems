@@ -82,7 +82,7 @@ import { SystemIndustrialSComponent } from "src/app/edge/live/system/industrial/
 import { SystemIndustrialTokai2Component } from "src/app/edge/live/system/industrial/tokai2/new-navigation/new-navigation";
 import { SystemIndustrialXlComponent } from "src/app/edge/live/system/industrial/xl/new-navigation/new-navigation";
 import { CurrentVoltageOverviewComponent } from "src/app/shared/components/edge/meter/currentVoltage/new-navigation/new-navigation";
-import { hasEdgeRole, hasUserSettings, } from "src/app/shared/guards/functional-guards";
+import { hasEdgeRole, hasUserSettings } from "src/app/shared/guards/functional-guards";
 import { Role } from "src/app/shared/type/role";
 import { CommonAutarchyHistoryComponent } from "../../../edge/live/common/autarchy/history/new-navigation/new-navigation";
 import { CommonAutarchyHomeComponent } from "../../../edge/live/common/autarchy/new-navigation/new-navigation";
@@ -203,9 +203,7 @@ export const newNavigationRoutes: Routes = [
     {
         path: "settings",
         loadChildren: () =>
-            import("src/app/edge/settings/settings-routing.module").then(
-                (m) => m.SettingsRoutingModule,
-            ),
+            import("src/app/edge/settings/settings-routing.module").then((m) => m.SettingsRoutingModule),
     },
     {
         path: "energy-journey",
@@ -466,18 +464,12 @@ export const newNavigationRoutes: Routes = [
     {
         path: ":componentId/industrial-l/schedule/add-task",
         component: SystemIndustrialLAddTaskComponent,
-        canActivate: [
-            hasEdgeRole(Role.ADMIN),
-            hasUserSettings(UserSettings.IS_DEVELOPER),
-        ],
+        canActivate: [hasEdgeRole(Role.ADMIN), hasUserSettings(UserSettings.IS_DEVELOPER)],
     },
     {
         path: ":componentId/industrial-l/schedule/edit-task",
         component: SystemIndustrialLEditTaskComponent,
-        canActivate: [
-            hasEdgeRole(Role.ADMIN),
-            hasUserSettings(UserSettings.IS_DEVELOPER),
-        ],
+        canActivate: [hasEdgeRole(Role.ADMIN), hasUserSettings(UserSettings.IS_DEVELOPER)],
     },
     {
         path: ":componentId/industrial-xl",
