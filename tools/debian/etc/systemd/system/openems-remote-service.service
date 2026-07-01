@@ -10,7 +10,8 @@ WorkingDirectory=/home/fems
 ExecStart=/bin/sh -ce "/usr/bin/python /usr/bin/pagekite.py --clean --logfile=stdio --frontend=remote-service.fenecon.de:443 --service_on=raw:$(/bin/hostname).remote-service.fenecon.de:localhost:22:$(grep 'apikey=' /etc/fems | cut -d'=' -f2)"
 RuntimeMaxSec=48h
 Restart=on-abort
-RestartSec=10
+RestartSec=5s
+StartLimitIntervalSec=0
 
 [Install]
 WantedBy=multi-user.target

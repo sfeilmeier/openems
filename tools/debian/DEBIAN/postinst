@@ -87,6 +87,7 @@ case "$1" in
 		# Make sure systemd resolved is properly activated
 		ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
 		start_service systemd-resolved
+		start_service systemd-networkd-wait-online
 		
 		# Always restart openems
 		/bin/systemctl stop openems
