@@ -893,4 +893,98 @@ public interface WuerthBms
 		this.getModbusCommunicationToFemsFailedChannel().setNextValue(value);
 	}
 
+	/**
+	 * Gets the Channel for {@link ChannelId#SW_VERSION_MAJOR}.
+	 *
+	 * @return the Channel
+	 */
+	default Channel<Integer> getSwVersionMajorChannel() {
+		return this.channel(ChannelId.SW_VERSION_MAJOR);
+	}
+
+	/**
+	 * Gets the Software major version, see {@link ChannelId#SW_VERSION_MAJOR}.
+	 *
+	 * @return the Channel value {@link ChannelId#SW_VERSION_MAJOR}.
+	 */
+	default Value<Integer> getSwVersionMajor() {
+		return this.getSwVersionMajorChannel().value();
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#SW_VERSION_MINOR}.
+	 *
+	 * @return the Channel
+	 */
+	default Channel<Integer> getSwVersionMinorChannel() {
+		return this.channel(ChannelId.SW_VERSION_MINOR);
+	}
+
+	/**
+	 * Gets the Software major version, see {@link ChannelId#SW_VERSION_MINOR}.
+	 *
+	 * @return the Channel value {@link ChannelId#SW_VERSION_MINOR}.
+	 */
+	default Value<Integer> getSwVersionMinor() {
+		return this.getSwVersionMinorChannel().value();
+	}
+
+	/**
+	 * Gets the Channel for {@link ChannelId#SW_VERSION_PATCH}.
+	 *
+	 * @return the Channel
+	 */
+	default Channel<Integer> getSwVersionPatchChannel() {
+		return this.channel(ChannelId.SW_VERSION_PATCH);
+	}
+
+	/**
+	 * Gets the Software major version, see {@link ChannelId#SW_VERSION_PATCH}.
+	 *
+	 * @return the Channel value {@link ChannelId#SW_VERSION_PATCH}.
+	 */
+	default Value<Integer> getSwVersionPatch() {
+		return this.getSwVersionPatchChannel().value();
+	}
+
+	/**
+	 * Gets the Pack Limit Max battery voltage, see
+	 * {@link ChannelId#PACK_LIMIT_MAX_BATTERY_VOLTAGE}.
+	 *
+	 * @return the Channel {@link ChannelId#PACK_LIMIT_MAX_BATTERY_VOLTAGE}.
+	 */
+	default Channel<Integer> getPackLimitMaxBatteryVoltageChannel() {
+		return this.channel(ChannelId.PACK_LIMIT_MAX_BATTERY_VOLTAGE);
+	}
+
+	/**
+	 * Gets the Pack Limit Max battery voltage value, see
+	 * {@link ChannelId#PACK_LIMIT_MAX_BATTERY_VOLTAGE}.
+	 *
+	 * @return the Channel value {@link ChannelId#PACK_LIMIT_MAX_BATTERY_VOLTAGE}.
+	 */
+	default Value<Integer> getPackLimitMaxBatteryVoltage() {
+		return this.getPackLimitMaxBatteryVoltageChannel().value();
+	}
+
+	/**
+	 * Gets the Pack Limit Min battery voltage, see
+	 * {@link ChannelId#PACK_LIMIT_MIN_BATTERY_VOLTAGE}.
+	 *
+	 * @return the Channel {@link ChannelId#PACK_LIMIT_MIN_BATTERY_VOLTAGE}.
+	 */
+	default Channel<Integer> getPackLimitMinBatteryVoltageChannel() {
+		return this.channel(ChannelId.PACK_LIMIT_MIN_BATTERY_VOLTAGE);
+	}
+
+	/**
+	 * Gets the Pack Limit Min battery voltage value, see
+	 * {@link ChannelId#PACK_LIMIT_MIN_BATTERY_VOLTAGE}.
+	 *
+	 * @return the Channel value {@link ChannelId#PACK_LIMIT_MIN_BATTERY_VOLTAGE}.
+	 */
+	default Value<Integer> getPackLimitMinBatteryVoltage() {
+		return this.getPackLimitMinBatteryVoltageChannel().value();
+	}
+
 }
