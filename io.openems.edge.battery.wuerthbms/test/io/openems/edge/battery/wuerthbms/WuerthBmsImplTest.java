@@ -1,19 +1,15 @@
 package io.openems.edge.battery.wuerthbms;
 
 import static io.openems.common.test.TestUtils.createDummyClock;
+import static io.openems.edge.battery.protection.BatteryVoltageProtection.ChannelId.BVP_CHARGE_BMS;
+import static io.openems.edge.battery.protection.BatteryVoltageProtection.ChannelId.BVP_DISCHARGE_BMS;
+import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.PACK_LIMIT_MAX_BATTERY_VOLTAGE;
+import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.PACK_LIMIT_MIN_BATTERY_VOLTAGE;
 import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.RESET_BATTERY_COMMAND;
 import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.STRING_MODULE_COUNT;
-
 import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.SW_VERSION_MAJOR;
 import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.SW_VERSION_MINOR;
 import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.SW_VERSION_PATCH;
-
-import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.PACK_LIMIT_MAX_BATTERY_VOLTAGE;
-import static io.openems.edge.battery.wuerthbms.WuerthBms.ChannelId.PACK_LIMIT_MIN_BATTERY_VOLTAGE;
-
-import static io.openems.edge.battery.protection.BatteryVoltageProtection.ChannelId.BVP_CHARGE_BMS;
-import static io.openems.edge.battery.protection.BatteryVoltageProtection.ChannelId.BVP_DISCHARGE_BMS;
-
 import static io.openems.edge.common.startstop.StartStopConfig.START;
 import static io.openems.edge.common.startstop.StartStoppable.ChannelId.START_STOP;
 import static java.time.temporal.ChronoUnit.MILLIS;
@@ -27,7 +23,6 @@ import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.utils.FunctionUtils;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
-import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
