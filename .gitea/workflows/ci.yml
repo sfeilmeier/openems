@@ -10,7 +10,6 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MAVEN_OPTS: -Dmaven.repo.local=/cache/maven
   CI_COMMIT_BRANCH: ${{ github.head_ref || github.ref_name }}
   CI_GROUP: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   CI_MAX_CONCURRENT_BUILDS: ${{ vars.CI_MAX_CONCURRENT_BUILDS }}
@@ -90,9 +89,15 @@ jobs:
           distribution: "temurin"
           java-version: "21"
           cache: gradle
+      
+      - name: Restore Maven cache
+        uses: actions/cache/restore@v6
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-${{ hashFiles('cnf/pom.xml') }}-mvn-edge
 
       - name: Restore build cache
-        uses: actions/cache/restore@v5
+        uses: actions/cache/restore@v6
         with:
           key: ${{ runner.os }}-edge-cache_gradle
           path: |
@@ -179,8 +184,14 @@ jobs:
           java-version: "21"
           cache: gradle
 
+      - name: Restore Maven cache
+        uses: actions/cache/restore@v6
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-${{ hashFiles('cnf/pom.xml') }}-mvn-backend
+
       - name: Restore build cache
-        uses: actions/cache/restore@v5
+        uses: actions/cache/restore@v6
         with:
           key: ${{ runner.os }}-backend-cache_gradle
           path: |
