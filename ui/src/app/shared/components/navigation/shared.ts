@@ -593,6 +593,7 @@ export namespace NavigationConstants {
         "System.Fenecon.Industrial.Tokai2",
         "Controller.ChannelThreshold",
         "Controller.IO.HeatingElement",
+        "Controller.IO.ChannelSingleThreshold",
         "Controller.Ess.FixActivePower",
         "Controller.Ess.Time-Of-Use-Tariff",
         "Controller.Ess.GridOptimizedCharge",
