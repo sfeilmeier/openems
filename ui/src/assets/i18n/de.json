@@ -916,7 +916,7 @@
             "EMERGENCY_POWER_CONSUMER": "Notstrombraucher",
             "ERROR": "Fehler",
             "ESS_LIMITER_ALIAS": "ESS Limiter für §14a",
-            "EXISTING_CONFIGURATION": "Es wurden eine bestehende Konfiguration gefunden. Diese kann überschreiben, indem du den Konfigurationsvorgang manuell startest.",
+            "EXISTING_CONFIGURATION": "Es wurden eine bestehende Konfiguration gefunden. Diese kann überschrieben werden, indem du den Konfigurationsvorgang manuell startest.",
             "FIELD_BUS_COUPLER": "Feldbuskoppler",
             "FINISH_FUNCTION_TEST": "Funktionstests für die verbauten Komponenten abgeschlossen",
             "FUNCTION_TEST": "Funktionstest",
