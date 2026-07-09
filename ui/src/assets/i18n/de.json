@@ -1354,7 +1354,7 @@
                 "HEADER": "Portfreigabe/Firewall prüfen"
             },
             "STEP_SERVICE": {
-                "DESCRIPTION": "Sofern alle vorhergehenden Punkte bereits überprüft wurden, und das Online-Monitoring weiterhin keine Daten anzeigt, wende dich an unseren Service: <br> Per Mail: <a href=\"mailto:service@fenecon.de\">service@fenecon.de</a> oder telefonisch unter: +49 9903 6280-0 (Mo. bis Do.: 08:00 bis 12:00 Uhr | 13:00 – 17:00 Uhr | Fr.: 08:00 bis 12:00 Uhr | 13:00 – 15:00 Uhr)",
+                "DESCRIPTION": "Sofern alle vorhergehenden Punkte bereits überprüft wurden, und das Online-Monitoring weiterhin keine Daten anzeigt, wende dich an unseren Service: <br> Per Mail: <a href=\"mailto:service@fenecon.de\">service@fenecon.de</a> oder telefonisch unter: +49 9903 6280-0 (Mo. – Do.: 08:00 – 12:00 Uhr | 13:00 – 17:00 Uhr | Fr.: 08:00 – 12:00 Uhr | 13:00 – 15:00 Uhr)",
                 "HEADER": "FENECON-Service"
             },
             "STEP_TEST_WIFI_CONNECTION": {

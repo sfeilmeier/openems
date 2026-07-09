@@ -1351,7 +1351,7 @@
                 "HEADER": "Check port forwarding/firewall settings"
             },
             "STEP_SERVICE": {
-                "DESCRIPTION": "If you have already checked all previous steps and the Online Monitoring still does not display any data, please contact our service department:<br>By e-mail: <a href=\"mailto:service@fenecon.de\">service@fenecon.de</a> or via phone: +49 9903 6280-0 (Mon. through Thurs.: 08:00 to 12:00 h | 13:00 to 17:00 h | Fri.: 08:00 to 12:00 h | 13:00 to 17:00 h)",
+                "DESCRIPTION": "If you have already checked all previous steps and the Online Monitoring still does not display any data, please contact our service department:<br>By e-mail: <a href=\"mailto:service@fenecon.de\">service@fenecon.de</a> or via phone: +49 9903 6280-0 (Mon. – Thurs.: 08:00 – 12:00 h | 13:00 – 17:00 h | Fri.: 08:00 – 12:00 h | 13:00 – 15:00 h)",
                 "HEADER": "Contact FENECON Service"
             },
             "STEP_TEST_WIFI_CONNECTION": {
