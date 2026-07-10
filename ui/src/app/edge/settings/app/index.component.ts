@@ -1,12 +1,14 @@
 // @ts-strict-ignore
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, NavigationEnd, NavigationExtras, Router, RouterModule, } from "@angular/router";
+import { Component, inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute, NavigationEnd, NavigationExtras, Router, RouterModule } from "@angular/router";
 import { IonPopover, ModalController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { NgxSpinnerComponent } from "ngx-spinner";
 import { Subject } from "rxjs";
 import { filter, switchMap, takeUntil } from "rxjs/operators";
-import { ChosenFilter, Filter, FilterComponent, FilterOption, } from "src/app/index/filter/filter.component";
+import { ChosenFilter, Filter, FilterComponent, FilterOption } from "src/app/index/filter/filter.component";
+import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
+import { NavigationTree } from "src/app/shared/components/navigation/shared";
 import { DomChangeDirective } from "src/app/shared/directive/oe-dom-change";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { PipeComponentsModule } from "src/app/shared/pipe/pipe.module";
@@ -26,7 +28,7 @@ import { AppCenter } from "./keypopup/appCenter";
 import { AppCenterGetPossibleApps } from "./keypopup/appCenterGetPossibleApps";
 import { AppCenterGetRegisteredKeys } from "./keypopup/appCenterGetRegisteredKeys";
 import { Key } from "./keypopup/key";
-import { KeyModalComponent, KeyValidationBehaviour, } from "./keypopup/modal.component";
+import { KeyModalComponent, KeyValidationBehaviour } from "./keypopup/modal.component";
 import { canEnterKey } from "./permissions";
 
 @Component({
@@ -45,10 +47,7 @@ import { canEnterKey } from "./permissions";
 })
 export class IndexComponent implements OnInit, OnDestroy {
     private static readonly SELECTOR = "app-index";
-    /**
-     * E. g. if more than 4 apps are in a list the apps are displayed in their
-     * categories
-     */
+    /** E. g. if more than 4 apps are in a list the apps are displayed in their categories */
     private static readonly MAX_APPS_IN_LIST: number = 4;
     @ViewChild("hasKeyPopover") private hasKeyPopover: IonPopover;
     public readonly spinnerId: string = IndexComponent.SELECTOR;
@@ -71,11 +70,7 @@ export class IndexComponent implements OnInit, OnDestroy {
         shouldBeShown: () => this.edge.roleIsAtLeast(Role.ADMIN), // only show incompatible apps for admins
     };
 
-    public appLists: AppList[] = [
-        this.installedApps,
-        this.availableApps,
-        this.incompatibleApps,
-    ];
+    public appLists: AppList[] = [this.installedApps, this.availableApps, this.incompatibleApps];
     public categories: { val: GetApps.Category; isChecked: boolean }[] = [];
 
     protected readonly environment: Environment = environment;
@@ -93,6 +88,8 @@ export class IndexComponent implements OnInit, OnDestroy {
     private hasSeenPopover: boolean = false;
     private stopOnDestroy: Subject<void> = new Subject<void>();
     private inputValue: string;
+
+    private navigationService: NavigationService = inject(NavigationService);
 
     public constructor(
         private route: ActivatedRoute,
@@ -112,10 +109,8 @@ export class IndexComponent implements OnInit, OnDestroy {
                 takeUntil(this.stopOnDestroy),
             )
             .subscribe(() => {
-                const navigationExtras = this.router.currentNavigation()
-                    ?.extras as NavigationExtras;
-                const appInstanceChange =
-                    navigationExtras?.state?.appInstanceChange;
+                const navigationExtras = this.router.currentNavigation()?.extras as NavigationExtras;
+                const appInstanceChange = navigationExtras?.state?.appInstanceChange;
                 if (appInstanceChange != null && appInstanceChange) {
                     this.init();
                 }
@@ -127,9 +122,7 @@ export class IndexComponent implements OnInit, OnDestroy {
         this.stopOnDestroy.complete();
     }
 
-    public searchOnChange(
-        event: InstanceType<typeof FilterComponent>["searchParams"],
-    ): void {
+    public searchOnChange(event: InstanceType<typeof FilterComponent>["searchParams"]): void {
         this.searchParams = event;
         this.updateSelection();
     }
@@ -140,19 +133,11 @@ export class IndexComponent implements OnInit, OnDestroy {
 
     protected onDomChange(mutation: MutationRecord, appId: string) {
         mutation.addedNodes.forEach((node) => {
-            if (
-                !(
-                    node instanceof HTMLElement &&
-                    node.classList.contains("open-modal-thirdpartyaccess")
-                )
-            ) {
+            if (!(node instanceof HTMLElement && node.classList.contains("open-modal-thirdpartyaccess"))) {
                 return;
             }
             node.addEventListener("click", async () => {
-                const popoverEvent =
-                    await EdgeComponent.showPrivacyPolicyPopover(
-                        this.modalController,
-                    );
+                const popoverEvent = await EdgeComponent.showPrivacyPolicyPopover(this.modalController);
                 const acceptance = popoverEvent.data?.thirdPartyUsageAcceptance;
                 if (acceptance != null) {
                     // update app status
@@ -165,18 +150,14 @@ export class IndexComponent implements OnInit, OnDestroy {
                             }),
                         )
                         .then((response) => {
-                            const app = (response as GetApp.Response).result
-                                .app;
-                            app.imageUrl =
-                                environment.links.APP_CENTER.APP_IMAGE(
-                                    this.translate.currentLang,
-                                    app.appId,
-                                );
+                            const app = (response as GetApp.Response).result.app;
+                            app.imageUrl = environment.links.APP_CENTER.APP_IMAGE(
+                                this.translate.currentLang,
+                                app.appId,
+                            );
 
                             this.apps.splice(
-                                this.apps.findIndex(
-                                    (a) => a.appId === app.appId,
-                                ),
+                                this.apps.findIndex((a) => a.appId === app.appId),
                                 1,
                                 app,
                             );
@@ -184,10 +165,7 @@ export class IndexComponent implements OnInit, OnDestroy {
                         })
                         .catch((reason) => {
                             this.service.toast(
-                                "Error while receiving App[" +
-                                    appId +
-                                    "]: " +
-                                    reason.error.message,
+                                "Error while receiving App[" + appId + "]: " + reason.error.message,
                                 "danger",
                             );
                         });
@@ -199,8 +177,7 @@ export class IndexComponent implements OnInit, OnDestroy {
     /**
      * Updates the selected categories.
      *
-     * @param event The event of a click on a 'ion-fab-list' to stop it from
-     *   closing
+     * @param event The event of a click on a 'ion-fab-list' to stop it from closing
      */
     protected updateSelection(event?: PointerEvent) {
         this.installedApps.appCategories = [];
@@ -211,51 +188,34 @@ export class IndexComponent implements OnInit, OnDestroy {
         this.apps.forEach((app) => {
             app.categorys.forEach((category) => {
                 if (this.selectedBundle >= 0 && this.key) {
-                    if (
-                        !this.key.bundles[this.selectedBundle].some(
-                            (a) => app.appId === a.appId,
-                        )
-                    ) {
+                    if (!this.key.bundles[this.selectedBundle].some((a) => app.appId === a.appId)) {
                         return false;
                     }
                 } else {
                     if (
-                        Flags.getByType(
-                            app.flags,
-                            Flags.SHOW_AFTER_KEY_REDEEM,
-                        ) &&
+                        Flags.getByType(app.flags, Flags.SHOW_AFTER_KEY_REDEEM) &&
                         environment.production &&
                         app.instanceIds.length === 0
                     ) {
                         return false;
                     }
                 }
-                const cat = this.categories.find(
-                    (c) => c.val.name === category.name,
-                );
+                const cat = this.categories.find((c) => c.val.name === category.name);
                 if (cat?.isChecked == false) {
                     return false;
                 }
                 if (
                     this.inputValue &&
                     !(
-                        app.name
-                            .toLowerCase()
-                            .includes(this.inputValue.toLowerCase()) ||
-                        category.readableName
-                            .toLowerCase()
-                            .includes(this.inputValue.toLowerCase())
+                        app.name.toLowerCase().includes(this.inputValue.toLowerCase()) ||
+                        category.readableName.toLowerCase().includes(this.inputValue.toLowerCase())
                     )
                 ) {
                     return false;
                 }
                 const selectedCategories =
-                    this.searchParams.get("categories") ??
-                    this.categoryFilter().options.map((el) => el.option.value);
-                if (
-                    selectedCategories != null &&
-                    selectedCategories != undefined
-                ) {
+                    this.searchParams.get("categories") ?? this.categoryFilter().options.map((el) => el.option.value);
+                if (selectedCategories != null && selectedCategories != undefined) {
                     if (Array.isArray(selectedCategories)) {
                         if (!selectedCategories.includes(category.name)) {
                             return false;
@@ -270,10 +230,7 @@ export class IndexComponent implements OnInit, OnDestroy {
         sortedApps.forEach((a) => {
             if (a.instanceIds.length > 0) {
                 this.pushIntoCategory(a, this.installedApps);
-                if (
-                    a.cardinality === "MULTIPLE" &&
-                    a.status.name !== AppStatusName.INCOMPATIBLE
-                ) {
+                if (a.cardinality === "MULTIPLE" && a.status.name !== AppStatusName.INCOMPATIBLE) {
                     this.pushIntoCategory(a, this.availableApps);
                 }
             } else {
@@ -287,33 +244,19 @@ export class IndexComponent implements OnInit, OnDestroy {
 
         this.appLists = [];
         const selectedStatuses =
-            this.searchParams.get("appStatus") ??
-            this.statusFilter().options.map((el) => el.option.value);
+            this.searchParams.get("appStatus") ?? this.statusFilter().options.map((el) => el.option.value);
         if (Array.isArray(selectedStatuses)) {
-            if (
-                StringUtils.isInArr(AppStatusName.INSTALLABLE, selectedStatuses)
-            ) {
+            if (StringUtils.isInArr(AppStatusName.INSTALLABLE, selectedStatuses)) {
                 this.appLists.push(this.installedApps);
             }
-            if (
-                StringUtils.isInArr(AppStatusName.COMPATIBLE, selectedStatuses)
-            ) {
+            if (StringUtils.isInArr(AppStatusName.COMPATIBLE, selectedStatuses)) {
                 this.appLists.push(this.availableApps);
             }
-            if (
-                StringUtils.isInArr(
-                    AppStatusName.INCOMPATIBLE,
-                    selectedStatuses,
-                )
-            ) {
+            if (StringUtils.isInArr(AppStatusName.INCOMPATIBLE, selectedStatuses)) {
                 this.appLists.push(this.incompatibleApps);
             }
         } else {
-            this.appLists = [
-                this.installedApps,
-                this.availableApps,
-                this.incompatibleApps,
-            ];
+            this.appLists = [this.installedApps, this.availableApps, this.incompatibleApps];
         }
     }
 
@@ -333,6 +276,7 @@ export class IndexComponent implements OnInit, OnDestroy {
                 edge: this.edge,
                 behaviour: KeyValidationBehaviour.SELECT,
                 knownApps: this.apps,
+                route: this.route,
             },
             cssClass: "auto-height",
         });
@@ -350,13 +294,7 @@ export class IndexComponent implements OnInit, OnDestroy {
                     keyId: null,
                     bundles: [
                         this.apps
-                            .filter(
-                                (e) =>
-                                    !Flags.getByType(
-                                        e.flags,
-                                        Flags.SHOW_AFTER_KEY_REDEEM,
-                                    ),
-                            )
+                            .filter((e) => !Flags.getByType(e.flags, Flags.SHOW_AFTER_KEY_REDEEM))
                             .map<App>((d) => {
                                 return { id: 0, appId: d.appId };
                             }),
@@ -380,9 +318,7 @@ export class IndexComponent implements OnInit, OnDestroy {
                         }),
                     )
                     .then((response) => {
-                        const result = (
-                            response as AppCenterGetPossibleApps.Response
-                        ).result;
+                        const result = (response as AppCenterGetPossibleApps.Response).result;
                         this.key.bundles = result.bundles;
                         this.selectedBundle = 0;
                         this.updateSelection();
@@ -397,33 +333,34 @@ export class IndexComponent implements OnInit, OnDestroy {
 
     protected onAppClicked(app: GetApps.App): void {
         // navigate
+        this.navigationService.setChildToCurrentNavigation(
+            new NavigationTree(
+                "single",
+                { baseString: "single", queryParams: { appId: app.appId } },
+                { name: "add-outline" },
+                "AppCenter",
+                "label",
+                [],
+                null,
+            ),
+        );
+
         if (this.key != null || this.useMasterKey) {
-            this.router.navigate(
-                [
-                    "device/" +
-                        this.edge.id +
-                        "/settings/app/single/" +
-                        app.appId,
-                ],
-                {
-                    queryParams: { name: app.name },
-                    state: {
-                        app: app,
-                        appKey: this.key.keyId,
-                        useMasterKey: this.useMasterKey,
-                    },
+            this.router.navigate(["single"], {
+                queryParams: { name: app.name, appId: app.appId },
+                state: {
+                    app: app,
+                    appKey: this.key.keyId,
+                    useMasterKey: this.useMasterKey,
                 },
-            );
+                relativeTo: this.route,
+            });
         } else {
-            this.router.navigate(
-                [
-                    "device/" +
-                        this.edge.id +
-                        "/settings/app/single/" +
-                        app.appId,
-                ],
-                { queryParams: { name: app.name }, state: app },
-            );
+            this.router.navigate(["single"], {
+                queryParams: { name: app.name, appId: app.appId },
+                state: app,
+                relativeTo: this.route,
+            });
         }
         // reset keys
         this.key = null;
@@ -437,6 +374,7 @@ export class IndexComponent implements OnInit, OnDestroy {
             componentProps: {
                 edge: this.edge,
                 behaviour: KeyValidationBehaviour.REGISTER,
+                route: this.route,
             },
             cssClass: "auto-height",
         });
@@ -466,9 +404,7 @@ export class IndexComponent implements OnInit, OnDestroy {
 
     private pushIntoCategory(app: GetApps.App, list: AppList): void {
         app.categorys.forEach((category) => {
-            let catList = list.appCategories.find(
-                (l) => l.category.name === category.name,
-            );
+            let catList = list.appCategories.find((l) => l.category.name === category.name);
             if (catList === undefined) {
                 catList = { category: category, apps: [] };
                 list.appCategories.push(catList);
@@ -480,32 +416,24 @@ export class IndexComponent implements OnInit, OnDestroy {
     private statusFilter(): Filter {
         const filterOptions: FilterOption<string>[] = [
             {
-                name: this.translate.instant(
-                    "EDGE.CONFIG.APP.STATUS_INSTALLED",
-                ),
+                name: this.translate.instant("EDGE.CONFIG.APP.STATUS_INSTALLED"),
                 option: { value: AppStatusName.INSTALLABLE, default: true },
             },
             {
-                name: this.translate.instant(
-                    "EDGE.CONFIG.APP.STATUS_AVAILABLE",
-                ),
+                name: this.translate.instant("EDGE.CONFIG.APP.STATUS_AVAILABLE"),
                 option: { value: AppStatusName.COMPATIBLE, default: true },
             },
             ...(this.edge.roleIsAtLeast(Role.ADMIN)
                 ? [
                       {
-                          name: this.translate.instant(
-                              "EDGE.CONFIG.APP.STATUS_INCOMPATIBLE",
-                          ),
+                          name: this.translate.instant("EDGE.CONFIG.APP.STATUS_INCOMPATIBLE"),
                           option: { value: AppStatusName.INCOMPATIBLE },
                       },
                   ]
                 : []),
         ];
         return {
-            placeholder: this.translate.instant(
-                "EDGE.CONFIG.APP.STATUS_FILTER",
-            ),
+            placeholder: this.translate.instant("EDGE.CONFIG.APP.STATUS_FILTER"),
             category: "appStatus",
             multiple: true,
             options: filterOptions,
@@ -513,9 +441,7 @@ export class IndexComponent implements OnInit, OnDestroy {
     }
     private categoryFilter(): Filter {
         return {
-            placeholder: this.translate.instant(
-                "EDGE.CONFIG.APP.CATEGORY_FILTER",
-            ),
+            placeholder: this.translate.instant("EDGE.CONFIG.APP.CATEGORY_FILTER"),
             category: "categories",
             multiple: true,
             options: this.categories.map((t) => ({
@@ -551,12 +477,10 @@ export class IndexComponent implements OnInit, OnDestroy {
             .then((edge) => {
                 this.edge = edge;
 
-                this.service.metadata
-                    .pipe(takeUntil(this.stopOnDestroy))
-                    .subscribe((entry) => {
-                        this.canEnterKey = canEnterKey(edge, entry.user);
-                        this.updateHasUnusedKeysPopover();
-                    });
+                this.service.metadata.pipe(takeUntil(this.stopOnDestroy)).subscribe((entry) => {
+                    this.canEnterKey = canEnterKey(edge, entry.user);
+                    this.updateHasUnusedKeysPopover();
+                });
                 edge.sendRequest(
                     this.websocket,
                     new ComponentJsonApiRequest({
@@ -567,14 +491,11 @@ export class IndexComponent implements OnInit, OnDestroy {
                     .then((response) => {
                         this.service.stopSpinner(this.spinnerId);
 
-                        this.apps = (
-                            response as GetApps.Response
-                        ).result.apps.map((app) => {
-                            app.imageUrl =
-                                environment.links.APP_CENTER.APP_IMAGE(
-                                    this.translate.getCurrentLang(),
-                                    app.appId,
-                                );
+                        this.apps = (response as GetApps.Response).result.apps.map((app) => {
+                            app.imageUrl = environment.links.APP_CENTER.APP_IMAGE(
+                                this.translate.getCurrentLang(),
+                                app.appId,
+                            );
                             return app;
                         });
 
@@ -583,19 +504,12 @@ export class IndexComponent implements OnInit, OnDestroy {
                         this.apps.forEach((a) => {
                             a.categorys.forEach((category) => {
                                 const isCategoryAlreadyExisting =
-                                    this.categories.filter(
-                                        (c) => c.val.name === category.name,
-                                    )?.length > 0;
+                                    this.categories.filter((c) => c.val.name === category.name)?.length > 0;
                                 const isCategoryAllowed = StringUtils.isInArr(
                                     a.status.name,
-                                    statusFilter.options.map(
-                                        (el) => el.option.value,
-                                    ),
+                                    statusFilter.options.map((el) => el.option.value),
                                 );
-                                if (
-                                    !isCategoryAlreadyExisting &&
-                                    isCategoryAllowed
-                                ) {
+                                if (!isCategoryAlreadyExisting && isCategoryAllowed) {
                                     this.categories.push({
                                         val: category,
                                         isChecked: true,
@@ -604,26 +518,18 @@ export class IndexComponent implements OnInit, OnDestroy {
                             });
                         });
 
-                        this.filters = [
-                            this.categoryFilter(),
-                            this.statusFilter(),
-                        ];
+                        this.filters = [this.categoryFilter(), this.statusFilter()];
                         this.updateSelection();
 
                         edge.sendRequest(
                             this.websocket,
                             new AppCenter.Request({
-                                payload: new AppCenterGetRegisteredKeys.Request(
-                                    {},
-                                ),
+                                payload: new AppCenterGetRegisteredKeys.Request({}),
                             }),
                         )
                             .then((response) => {
-                                const result = (
-                                    response as AppCenterGetRegisteredKeys.Response
-                                ).result;
-                                this.numberOfUnusedRegisteredKeys =
-                                    result.keys.length;
+                                const result = (response as AppCenterGetRegisteredKeys.Response).result;
+                                this.numberOfUnusedRegisteredKeys = result.keys.length;
                                 this.updateHasUnusedKeysPopover();
                             })
                             .catch(this.service.handleError);
@@ -631,16 +537,11 @@ export class IndexComponent implements OnInit, OnDestroy {
                     .catch(
                         InstallAppComponent.errorToast(
                             this.service,
-                            (error) =>
-                                "Error while receiving available apps: " +
-                                error,
+                            (error) => "Error while receiving available apps: " + error,
                         ),
                     );
 
-                const systemUpdate = new ExecuteSystemUpdate(
-                    edge,
-                    this.websocket,
-                );
+                const systemUpdate = new ExecuteSystemUpdate(edge, this.websocket);
                 systemUpdate.systemUpdateStateChange = (updateState) => {
                     if (updateState.available) {
                         this.isUpdateAvailable = true;

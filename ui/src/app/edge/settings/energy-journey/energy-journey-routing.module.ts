@@ -37,58 +37,43 @@ export const energyJourneyRoutes: Routes = [
         path: "extension/batteryExtension",
         component: BatteryExtensionComponent,
         data: {
-            navbarTitleToBeTranslated:
-                "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
+            navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
         },
     },
     {
         path: "extension/batteryExtension/electricityPriceChoice",
         component: ElectricityPriceSelectionComponent,
         data: {
-            navbarTitleToBeTranslated:
-                "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
+            navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
         },
     },
     {
         path: "appcenter",
-        loadComponent: () =>
-            import("src/app/edge/settings/app/index.component").then(
-                (m) => m.IndexComponent,
-            ),
+        loadComponent: () => import("src/app/edge/settings/app/index.component").then((m) => m.IndexComponent),
         canActivate: [hasEdgeRole(Role.OWNER)],
         data: { navbarTitle: environment.edgeShortName + " Apps" },
     },
     {
-        path: "appcenter/install/:appId",
-        loadComponent: () =>
-            import("src/app/edge/settings/app/install.component").then(
-                (m) => m.InstallAppComponent,
-            ),
+        path: "appcenter/single/install",
+        loadComponent: () => import("src/app/edge/settings/app/install.component").then((m) => m.InstallAppComponent),
         canActivate: [hasEdgeRole(Role.OWNER)],
     },
     {
-        path: "appcenter/update/:appId",
-        loadComponent: () =>
-            import("src/app/edge/settings/app/update.component").then(
-                (m) => m.UpdateAppComponent,
-            ),
+        path: "appcenter/single/update",
+        loadComponent: () => import("src/app/edge/settings/app/update.component").then((m) => m.UpdateAppComponent),
+        runGuardsAndResolvers: "always",
         canActivate: [hasEdgeRole(Role.OWNER)],
     },
     {
-        path: "appcenter/single/:appId",
-        loadComponent: () =>
-            import("src/app/edge/settings/app/single.component").then(
-                (m) => m.SingleAppComponent,
-            ),
+        path: "appcenter/single",
+        loadComponent: () => import("src/app/edge/settings/app/single.component").then((m) => m.SingleAppComponent),
         canActivate: [hasEdgeRole(Role.OWNER)],
     },
     {
         path: "appcenter/oauth",
         data: { navbarTitle: "OAuth" },
         loadComponent: () =>
-            import("src/app/edge/settings/app/oauth/oauth.component").then(
-                (m) => m.OAuthIndexComponent,
-            ),
+            import("src/app/edge/settings/app/oauth/oauth.component").then((m) => m.OAuthIndexComponent),
         canActivate: [hasEdgeRole(Role.ADMIN)],
     },
     { path: "wrap-up", component: WrapUpComponent },

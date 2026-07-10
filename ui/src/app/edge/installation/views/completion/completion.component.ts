@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { format } from "date-fns";
 import { saveAs } from "file-saver-es";
@@ -17,39 +17,52 @@ import { SystemId } from "../../shared/system";
     standalone: false,
 })
 export class CompletionComponent implements OnInit {
-
     private static readonly SELECTOR = "completion";
 
     @Input() public ibn: AbstractIbn;
     @Input() public edge: Edge;
     @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
     @Output() public nextViewEvent: EventEmitter<any> = new EventEmitter();
+
     public system: SystemId | null = null;
     public isWaiting = false;
+
     protected readonly showHeckertNote: boolean = environment.theme === "Heckert";
+
     private readonly MAX_RETRIES = 3; // Number of retry attempts
     private readonly RETRY_DELAY = 3000; // Delay between retries (in milliseconds)
+    private readonly route = inject(ActivatedRoute); // Delay between retries (in milliseconds)
 
     constructor(
         private service: Service,
         private websocket: Websocket,
         private translate: TranslateService,
         private router: Router,
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         this.system = this.ibn.systemId;
         this.isWaiting = true;
 
-        this.ibn.getProtocol(this.edge, this.websocket).then((protocolId) => {
-            this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SENT_SUCCESSFULLY"), "success");
-            this.ibn.setupProtocolId = protocolId;
-        }).catch((reason) => {
-            this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ERROR_SENDING"), "danger");
-            console.warn(reason);
-        }).finally(() => {
-            this.isWaiting = false;
-        });
+        this.ibn
+            .getProtocol(this.edge, this.websocket)
+            .then((protocolId) => {
+                this.service.toast(
+                    this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SENT_SUCCESSFULLY"),
+                    "success",
+                );
+                this.ibn.setupProtocolId = protocolId;
+            })
+            .catch((reason) => {
+                this.service.toast(
+                    this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ERROR_SENDING"),
+                    "danger",
+                );
+                console.warn(reason);
+            })
+            .finally(() => {
+                this.isWaiting = false;
+            });
     }
 
     public onPreviousClicked() {
@@ -61,17 +74,25 @@ export class CompletionComponent implements OnInit {
     }
 
     public async downloadProtocol(): Promise<void> {
-        const request = new GetSetupProtocolRequest({ setupProtocolId: this.ibn.setupProtocolId });
+        const request = new GetSetupProtocolRequest({
+            setupProtocolId: this.ibn.setupProtocolId,
+        });
         this.isWaiting = true;
 
         let attempt = 0;
 
         while (attempt < this.MAX_RETRIES) {
             try {
-                const response: Base64PayloadResponse = await this.websocket.sendStateFullRequest(request) as Base64PayloadResponse;
+                const response: Base64PayloadResponse = (await this.websocket.sendStateFullRequest(
+                    request,
+                )) as Base64PayloadResponse;
 
                 if (!response?.result?.payload) {
-                    this.service.toast(this.translate.instant("INSTALLATION.COMPLETION.INVALID_PAYLOAD"), "danger", 3000);
+                    this.service.toast(
+                        this.translate.instant("INSTALLATION.COMPLETION.INVALID_PAYLOAD"),
+                        "danger",
+                        3000,
+                    );
                     return; // Exit on invalid payload
                 }
 
@@ -111,7 +132,7 @@ export class CompletionComponent implements OnInit {
     }
 
     protected navigate() {
-        this.router.navigate(["device/" + (this.edge.id) + "/settings/app"]);
+        this.router.navigate(["../"], { relativeTo: this.route });
     }
 
     /** Utility function to introduce delay */
