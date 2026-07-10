@@ -1,4 +1,4 @@
-import { alertCircleOutline, checkmarkDoneCircleOutline, flame, informationCircleOutline, warningOutline } from "ionicons/icons";
+import { alertCircleOutline, checkmarkDoneCircleOutline, flame, informationCircleOutline, warningOutline, } from "ionicons/icons";
 import { BaseMeta } from "src/environments";
 
 export const OemMeta: BaseMeta = {
@@ -46,6 +46,7 @@ export const OemMeta: BaseMeta = {
         COMPONENT: {
             HEATPUMP: flame,
             EVCS: "assets/img/icon/evcs.svg",
+            HEATING_ELEMENT: flame,
         },
         STATUS: {
             CHECKMARK: checkmarkDoneCircleOutline,
@@ -61,7 +62,8 @@ export const OemMeta: BaseMeta = {
         EVSE: {
             KEBA_P30: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Keba.P30.png",
             KEBA_P40: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Keba.P40.png",
-            HARDY_BARTH: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.HardyBarth.cPu2.png",
+            HARDY_BARTH:
+                "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.HardyBarth.cPu2.png",
             ALPITRONIC: null,
             MENNEKES: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Mennekes.4You.png",
         },
@@ -130,7 +132,8 @@ export const OemMeta: BaseMeta = {
             },
             OFFLINE_INSTRUCTIONS: null,
         },
-        FORGET_PASSWORD: "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
+        FORGET_PASSWORD:
+            "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
 
         CONTROLLER_CHP_SOC: "io.openems.edge.controller.chp.soc/readme.adoc",
