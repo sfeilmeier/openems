@@ -66,6 +66,7 @@ export const OemMeta: BaseMeta = {
                 "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.HardyBarth.cPu2.png",
             ALPITRONIC: null,
             MENNEKES: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Mennekes.4You.png",
+            SIMULATOR: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Simulator.png",
         },
         LOGO: {
             DARK: null,
