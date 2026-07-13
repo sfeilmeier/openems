@@ -270,6 +270,10 @@ public class DummyOpenemsEdgeOem implements OpenemsEdgeOem {
 					.emptyLink(Language.DE) //
 					.emptyLink(Language.EN) //
 			) //
+			.put("App.Core.Meta", AppLink.create() //
+					.emptyLink(Language.DE) //
+					.emptyLink(Language.EN) //
+			) //
 			.put("App.Timedata.InfluxDb", AppLink.create() //
 					.emptyLink(Language.DE) //
 					.emptyLink(Language.EN) //
