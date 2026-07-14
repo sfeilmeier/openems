@@ -71,26 +71,16 @@ export class FenaComponent {
                                         {
                                             title: "Smart Event anpassen",
                                             callback: () =>
-                                                this.router.navigate(
-                                                    ["evse", "ctrlEvseSingle0"],
-                                                    {
-                                                        relativeTo: this.route,
-                                                    },
-                                                ),
+                                                this.router.navigate(["evse", "ctrlEvseSingle0"], {
+                                                    relativeTo: this.route,
+                                                }),
                                         },
                                         {
                                             title: "Heute nicht laden",
                                             callback: () =>
-                                                this.router.navigate(
-                                                    [
-                                                        "evse",
-                                                        "ctrlEvseSingle0",
-                                                        "charge-mode",
-                                                    ],
-                                                    {
-                                                        relativeTo: this.route,
-                                                    },
-                                                ),
+                                                this.router.navigate(["evse", "ctrlEvseSingle0", "charge-mode"], {
+                                                    relativeTo: this.route,
+                                                }),
                                         },
                                     ],
                                 },
@@ -124,26 +114,16 @@ export class FenaComponent {
                                         {
                                             title: "Smart Event anpassen",
                                             callback: () =>
-                                                this.router.navigate(
-                                                    ["evse", "ctrlEvseSingle0"],
-                                                    {
-                                                        relativeTo: this.route,
-                                                    },
-                                                ),
+                                                this.router.navigate(["evse", "ctrlEvseSingle0"], {
+                                                    relativeTo: this.route,
+                                                }),
                                         },
                                         {
                                             title: "Heute nicht laden",
                                             callback: () =>
-                                                this.router.navigate(
-                                                    [
-                                                        "evse",
-                                                        "ctrlEvseSingle0",
-                                                        "charge-mode",
-                                                    ],
-                                                    {
-                                                        relativeTo: this.route,
-                                                    },
-                                                ),
+                                                this.router.navigate(["evse", "ctrlEvseSingle0", "charge-mode"], {
+                                                    relativeTo: this.route,
+                                                }),
                                         },
                                     ],
                                 },
@@ -159,26 +139,16 @@ export class FenaComponent {
                                         {
                                             title: "Smart Event anpassen",
                                             callback: () =>
-                                                this.router.navigate(
-                                                    ["evse", "ctrlEvseSingle0"],
-                                                    {
-                                                        relativeTo: this.route,
-                                                    },
-                                                ),
+                                                this.router.navigate(["evse", "ctrlEvseSingle0"], {
+                                                    relativeTo: this.route,
+                                                }),
                                         },
                                         {
                                             title: "Heute nicht laden",
                                             callback: () =>
-                                                this.router.navigate(
-                                                    [
-                                                        "evse",
-                                                        "ctrlEvseSingle0",
-                                                        "charge-mode",
-                                                    ],
-                                                    {
-                                                        relativeTo: this.route,
-                                                    },
-                                                ),
+                                                this.router.navigate(["evse", "ctrlEvseSingle0", "charge-mode"], {
+                                                    relativeTo: this.route,
+                                                }),
                                         },
                                     ],
                                 },
@@ -248,12 +218,9 @@ export class FenaComponent {
                                         {
                                             title: "Einstellungen ändern",
                                             callback: () =>
-                                                this.router.navigate(
-                                                    ["common", "storage"],
-                                                    {
-                                                        relativeTo: this.route,
-                                                    },
-                                                ),
+                                                this.router.navigate(["common", "storage"], {
+                                                    relativeTo: this.route,
+                                                }),
                                         },
                                     ],
                                 },
@@ -267,10 +234,7 @@ export class FenaComponent {
                 if (edge.id === "fems888") {
                     return from(this.fetchSchedulerMessages(edge, config)).pipe(
                         catchError((error) => {
-                            console.warn(
-                                "Error fetching scheduler messages:",
-                                error,
-                            );
+                            console.warn("Error fetching scheduler messages:", error);
                             return of<FenaMessage[]>([]);
                         }),
                     );
@@ -292,23 +256,14 @@ export class FenaComponent {
     private readonly route = inject(ActivatedRoute);
 
     constructor() {
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then(
-            (translations) => {
-                for (const { lang, translation, shouldMerge } of translations) {
-                    this.translate.setTranslation(
-                        lang,
-                        translation,
-                        shouldMerge,
-                    );
-                }
-            },
-        );
+        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+            for (const { lang, translation, shouldMerge } of translations) {
+                this.translate.setTranslation(lang, translation, shouldMerge);
+            }
+        });
     }
 
-    private async fetchSchedulerMessages(
-        edge: Edge,
-        config: EdgeConfig,
-    ): Promise<FenaMessage[]> {
+    private async fetchSchedulerMessages(edge: Edge, config: EdgeConfig): Promise<FenaMessage[]> {
         const messages: (FenaMessage | null)[] = [];
 
         const energyScheduler = new EnergySchedulerV2(config);
@@ -318,47 +273,10 @@ export class FenaComponent {
         const predictionData = data.filter((e) => e.type === "PREDICTION");
 
         if (predictionData.length !== 0) {
-            messages.push(
-                this.getEvseSmartEventMessage(),
-                this.getMinMaxGridPriceMessage(edge, config, predictionData),
-            );
+            messages.push(this.getMinMaxGridPriceMessage(edge, config, predictionData));
         }
 
         return messages.filter((e) => e !== null);
-    }
-
-    private getEvseSmartEventMessage(): FenaMessage | null {
-        const locale = Language.getCurrentLanguage().dateFnsLocale;
-        const baseDate = new Date();
-        const date = new Date();
-        date.setHours(7, 0, 0, 0);
-        if (date <= baseDate) {
-            date.setDate(date.getDate() + 1);
-        }
-        const formattedTime = formatRelative(date, baseDate, { locale });
-
-        return {
-            text:
-                "Dein E-Auto wird jetzt so günstig wie möglich beladen, damit Du " +
-                formattedTime +
-                " Uhr losfahren kannst",
-            actions: [
-                {
-                    title: "Smart Event anpassen",
-                    callback: () =>
-                        this.router.navigate(["evse", "ctrlEvseSingle0"], {
-                            relativeTo: this.route,
-                        }),
-                },
-                {
-                    title: "Heute nicht laden",
-                    callback: () =>
-                        this.router.navigate(["evse", "ctrlEvseSingle0"], {
-                            relativeTo: this.route,
-                        }),
-                },
-            ],
-        };
     }
 
     private getMinMaxGridPriceMessage(
@@ -386,12 +304,8 @@ export class FenaComponent {
 
         const locale = Language.getCurrentLanguage().dateFnsLocale;
         const meta = config.getComponentSafely("_meta");
-        const currency = config.getPropertyFromComponent<string>(
-            meta,
-            "currency",
-        );
-        const currencyLabel: Currency.Label =
-            Currency.getCurrencyLabelByCurrency(currency);
+        const currency = config.getPropertyFromComponent<string>(meta, "currency");
+        const currencyLabel: Currency.Label = Currency.getCurrencyLabelByCurrency(currency);
         const converter = Converter.CURRENCY_PER_MWH_TO_KWH(currencyLabel);
 
         const baseDate = new Date();

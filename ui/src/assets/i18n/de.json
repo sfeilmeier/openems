@@ -8,6 +8,8 @@
         "ENERGY_MANAGEMENT": "Energiemanagementsystem",
         "FAQ": "Häufig gestellte Fragen (FAQ)",
         "LANGUAGE": "Sprache wählen:",
+        "THEME": "Theme",
+        "NEW_UI": "Neues UI",
         "OPEN_EMS": "Mehr zu OpenEMS",
         "PATCHNOTES": "Änderungen im Monitoring zu diesem Build"
     },
@@ -40,6 +42,7 @@
                 "WARNING": "Warnungs Benachrichtigung"
             },
             "APP": {
+                "APP_DETAILS": "App-Details",
                 "AVAILABLE": "Verfügbar",
                 "BUY_APP": "Lizenzschlüssel kaufen",
                 "CARDINALITY": "Kardinalität",
@@ -525,7 +528,9 @@
                     "SWITCH_ON_ABOVE": "Einschalten über",
                     "SWITCH_ON_BELOW": "Einschalten unter",
                     "SWITCHED_LOAD_POWER": "Geschaltete Last",
-                    "THRESHOLD": "Schwellenwert"
+                    "THRESHOLD": "Schwellenwert",
+                    "SWITCH_ON_ABOVE_THRESHOLD": "Switch on above threshold",
+                    "SWITCH_ON_BELOW_THRESHOLD": "Switch on below threshold"
                 },
                 "STORAGE": {
                     "AMBIENT_TEMPERATURE": "Umgebungstemperatur",
@@ -912,7 +917,7 @@
             "EMERGENCY_POWER_CONSUMER": "Notstrombraucher",
             "ERROR": "Fehler",
             "ESS_LIMITER_ALIAS": "ESS Limiter für §14a",
-            "EXISTING_CONFIGURATION": "Es wurden eine bestehende Konfiguration gefunden. Diese kann überschreiben, indem du den Konfigurationsvorgang manuell startest.",
+            "EXISTING_CONFIGURATION": "Es wurden eine bestehende Konfiguration gefunden. Diese kann überschrieben werden, indem du den Konfigurationsvorgang manuell startest.",
             "FIELD_BUS_COUPLER": "Feldbuskoppler",
             "FINISH_FUNCTION_TEST": "Funktionstests für die verbauten Komponenten abgeschlossen",
             "FUNCTION_TEST": "Funktionstest",
@@ -1296,6 +1301,7 @@
         "GENERAL_SETTINGS": "Allgemeine Einstellungen",
         "GROUPS": {
             "FIX_DIGITAL_OUTPUT": "Manuelle Relaissteuerung",
+            "CHANNEL_SINGLE_THRESHOLD": "Schwellwertsteuerung",
             "HEATING_ROOM": "Heizung",
             "BRAIINS": "Bitcoin Miner"
         },
@@ -1350,7 +1356,7 @@
                 "HEADER": "Portfreigabe/Firewall prüfen"
             },
             "STEP_SERVICE": {
-                "DESCRIPTION": "Sofern alle vorhergehenden Punkte bereits überprüft wurden, und das Online-Monitoring weiterhin keine Daten anzeigt, wende dich an unseren Service: <br> Per Mail: <a href=\"mailto:service@fenecon.de\">service@fenecon.de</a> oder telefonisch unter: +49 9903 6280-0 (Mo. bis Do.: 08:00 bis 12:00 Uhr | 13:00 – 17:00 Uhr | Fr.: 08:00 bis 12:00 Uhr | 13:00 – 15:00 Uhr)",
+                "DESCRIPTION": "Sofern alle vorhergehenden Punkte bereits überprüft wurden, und das Online-Monitoring weiterhin keine Daten anzeigt, wende dich an unseren Service: <br> Per Mail: <a href=\"mailto:service@fenecon.de\">service@fenecon.de</a> oder telefonisch unter: +49 9903 6280-0 (Mo. – Do.: 08:00 – 12:00 Uhr | 13:00 – 17:00 Uhr | Fr.: 08:00 – 12:00 Uhr | 13:00 – 15:00 Uhr)",
                 "HEADER": "FENECON-Service"
             },
             "STEP_TEST_WIFI_CONNECTION": {

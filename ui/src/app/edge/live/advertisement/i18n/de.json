@@ -1,10 +1,14 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE": "Erfolgreich elektrifizieren in der Logistik",
-            "TEXT": "Erfahren Sie im gemeinsamen Webinar von FENECON, KUEHNE+NAGEL, The Mobility House Solutions am 10.07. mehr zu den Anforderungen aus der Branche und wie Unternehmen die Wirtschaftlichkeit für E-Nutzfahrzeuge mit intelligenten Stromspeicherlösungen, smarter Ladeinfrastruktur und effizientem Lastmanagement erhöhen können.",
-            "LINK_TEXT": "Zur Anmeldung",
-            "LINK": "https://fenecon-gmbh.webinargeek.com/erfolgreich-elektrifizieren-in-der-logistik-wirtschaftlichkeit-fuer-e-nutzfahrzeuge-erhoehen-durch-stromspeicher-und-ladeinfrastruktur?cst=fems-widget"
+            "TITLE_INSTALLER": "Rückblick & Highlights: The smarter E Europe",
+            "TEXT_INSTALLER": "Messe verpasst? Kein Problem! Ende Juni erlebten wir drei Messetage voller Energie, spannender Gespräche und innovativer Lösungen. Wer nicht persönlich dabei sein konnte, bekommt nun trotzdem die geballte Ladung aller neuesten Entwicklungen und Messe-Impressionen von FENECON, kompakt zusammengefasst.",
+            "LINK_TEXT_INSTALLER": "Zu den Highlights von FENECON",
+            "LINK_INSTALLER": "https://www.fenecon.de/ees26",
+            "TITLE_OWNER": "FENECON im Podcast „Geladen“",
+            "TEXT_OWNER": "Die Brüder und FENECON-Gründer Franz-Josef und Stefan Feilmeier waren zu Gast im beliebten Format „Geladen - der Batteriepodcast zur Energiewende“. Die zentrale Frage der Podcast-Episode: Verschläft die deutsche Industrie den Speicher-Boom - oder erwacht gerade ein schlafender Riese mit irrem Wachstumspotenzial?",
+            "LINK_TEXT_OWNER": "Gleich reinhören!",
+            "LINK_OWNER": "https://www.youtube.com/watch?v=d_OMPpKgR_I"
         }
     }
 }

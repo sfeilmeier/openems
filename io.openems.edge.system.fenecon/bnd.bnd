@@ -10,7 +10,7 @@ Bundle-Version: 1.0.0.${tstamp}
 	io.openems.edge.battery.bmw,\
 	io.openems.edge.battery.fenecon.f2b,\
 	io.openems.edge.batteryinverter.api,\
-	io.openems.edge.batteryinverter.refu88k,\
+	io.openems.edge.batteryinverter.refu,\
 	io.openems.edge.bridge.modbus,\
 	io.openems.edge.common,\
 	io.openems.edge.controller.api,\

@@ -10,15 +10,13 @@ export const OemMeta: BaseMeta = {
     },
     images: {
         EVSE: {
-            KEBA_P30:
-                "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Keba.P30.png",
-            KEBA_P40:
-                "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Keba.P40.png",
+            KEBA_P30: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Keba.P30.png",
+            KEBA_P40: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Keba.P40.png",
             HARDY_BARTH:
                 "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.HardyBarth.cPu2.png",
             ALPITRONIC: null,
-            MENNEKES:
-                "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Mennekes.4You.png",
+            MENNEKES: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Mennekes.4You.png",
+            SIMULATOR: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Simulator.png",
         },
         LOGO: {
             DARK: "assets/img/fenecon-logo-white.svg",
@@ -30,8 +28,7 @@ export const OemMeta: BaseMeta = {
                     "https://docs.fenecon.de/de/_images/other/zz/fems/heizstab/askoma/heat-element-askoma.png",
             },
             MYPV: {
-                HEATING_ELEMENT:
-                    "https://docs.fenecon.de/de/_images/other/zz/fems/heizstab/mypv/Heizstab_MyPV.png",
+                HEATING_ELEMENT: "https://docs.fenecon.de/de/_images/other/zz/fems/heizstab/mypv/Heizstab_MyPV.png",
             },
         },
     },
@@ -39,60 +36,38 @@ export const OemMeta: BaseMeta = {
     links: {
         FORGET_PASSWORD:
             "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
-        DATA_PROTECTION:
-            "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
+        DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
         REDIRECT: {
-            BETA_SURVEY:
-                "https://erp.fenecon.de/survey/start/d123c5ff-72e1-4fdf-bbc8-867d5a75c51c",
-            BETA_CHANGE_LOG:
-                "https://docs.fenecon.de/redirect/fenecon/de/beta_change_log",
-            COMMON_STORAGE:
-                "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_storage",
-            COMMON_AUTARCHY:
-                "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_autarchy",
-            COMMON_CONSUMPTION:
-                "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_consumption",
-            COMMON_GRID:
-                "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_grid",
-            COMMON_PRODUCTION:
-                "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_production",
-            COMMON_SELFCONSUMPTION:
-                "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_selfconsumption",
+            BETA_SURVEY: "https://erp.fenecon.de/survey/start/d123c5ff-72e1-4fdf-bbc8-867d5a75c51c",
+            BETA_CHANGE_LOG: "https://docs.fenecon.de/redirect/fenecon/de/beta_change_log",
+            COMMON_STORAGE: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_storage",
+            COMMON_AUTARCHY: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_autarchy",
+            COMMON_CONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_consumption",
+            COMMON_GRID: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_grid",
+            COMMON_PRODUCTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_production",
+            COMMON_SELFCONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_selfconsumption",
             OFFLINE_INSTRUCTIONS:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/installation_firewall_target_address",
 
-            CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE:
-                "fems-app/includes/FEMS_App_Netzdienliche_Beladung.html",
-            CONTROLLER_IO_HEAT_PUMP_SG_READY:
-                "fems-app/includes/FEMS_App_Waermepumpe_SG-Ready.html",
-            CONTROLLER_IO_HEATING_ELEMENT:
-                "fems-app/includes/FEMS_App_Heizstab.html",
+            CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE: "fems-app/includes/FEMS_App_Netzdienliche_Beladung.html",
+            CONTROLLER_IO_HEAT_PUMP_SG_READY: "fems-app/includes/FEMS_App_Waermepumpe_SG-Ready.html",
+            CONTROLLER_IO_HEATING_ELEMENT: "fems-app/includes/FEMS_App_Heizstab.html",
             CONTROLLER_ESS_TIME_OF_USE_TARIFF: "fems-app/OEM_App_TOU.html",
 
             EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/de/evcs_keba",
-            EVCS_HARDY_BARTH:
-                "https://docs.fenecon.de/redirect/fenecon/de/evcs_hardybarth",
-            EVCS_MENNEKES:
-                "https://docs.fenecon.de/redirect/fenecon/de/evcs_mennekes",
+            EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/de/evcs_hardybarth",
+            EVCS_MENNEKES: "https://docs.fenecon.de/redirect/fenecon/de/evcs_mennekes",
             EVCS_GO_E: "https://docs.fenecon.de/redirect/fenecon/de/evcs_goe",
             EVCS_IES: "https://docs.fenecon.de/redirect/fenecon/de/evcs_ies",
-            EVCS_ALPITRONIC_HYPER:
-                "https://docs.fenecon.de/redirect/fenecon/de/evcs_alpitronichyper",
-            SETTINGS_NETWORK_CONFIGURATION:
-                "https://docs.fenecon.de/redirect/fenecon/de/technical_documentation",
-            SETTINGS_ALERTING:
-                "https://docs.fenecon.de/redirect/fenecon/de/alerting",
-            WEATHER_WIDGET:
-                "https://docs.fenecon.de/redirect/fenecon/de/weather",
+            EVCS_ALPITRONIC_HYPER: "https://docs.fenecon.de/redirect/fenecon/de/evcs_alpitronichyper",
+            SETTINGS_NETWORK_CONFIGURATION: "https://docs.fenecon.de/redirect/fenecon/de/technical_documentation",
+            SETTINGS_ALERTING: "https://docs.fenecon.de/redirect/fenecon/de/alerting",
+            WEATHER_WIDGET: "https://docs.fenecon.de/redirect/fenecon/de/weather",
             SYSTEM: {
-                INDUSTRIAL_S_MANUAL:
-                    "https://docs.fenecon.de/redirect/fenecon/de/industrial_s_manual",
-                INDUSTRIAL_M_MANUAL:
-                    "https://docs.fenecon.de/redirect/fenecon/de/industrial_m_manual",
-                INDUSTRIAL_L_OVERVIEW:
-                    "https://docs.fenecon.de/redirect/fenecon/de/industrial_l_overview",
-                INDUSTRIAL_XL_MANUAL:
-                    "https://docs.fenecon.de/redirect/fenecon/de/industrial_xl_manual",
+                INDUSTRIAL_S_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_s_manual",
+                INDUSTRIAL_M_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_m_manual",
+                INDUSTRIAL_L_OVERVIEW: "https://docs.fenecon.de/redirect/fenecon/de/industrial_l_overview",
+                INDUSTRIAL_XL_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_xl_manual",
             },
             WARRANTY: {
                 //  Home 6,10,15, 10 Gen 1 und Home 20/30
@@ -118,23 +93,16 @@ export const OemMeta: BaseMeta = {
 
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
         CONTROLLER_CHP_SOC: "fems-app/bhkw.html",
-        CONTROLLER_IO_CHANNEL_SINGLE_THRESHOLD:
-            "fems-app/includes/FEMS_App_Schwellwertsteuerung.html",
-        CONTROLLER_IO_FIX_DIGITAL_OUTPUT:
-            "fems-app/includes/FEMS_App_Manuelle_Relaissteuerung.html",
+        CONTROLLER_IO_CHANNEL_SINGLE_THRESHOLD: "fems-app/includes/FEMS_App_Schwellwertsteuerung.html",
+        CONTROLLER_IO_FIX_DIGITAL_OUTPUT: "fems-app/includes/FEMS_App_Manuelle_Relaissteuerung.html",
 
-        CONTROLLER_API_MODBUSTCP_READ:
-            "fems-app/FEMS_App_Modbus_TCP.html#_lesezugriff",
-        CONTROLLER_API_MODBUSTCP_READWRITE:
-            "fems-app/FEMS_App_Modbus_TCP.html#_schreibzugriff",
+        CONTROLLER_API_MODBUSTCP_READ: "fems-app/FEMS_App_Modbus_TCP.html#_lesezugriff",
+        CONTROLLER_API_MODBUSTCP_READWRITE: "fems-app/FEMS_App_Modbus_TCP.html#_schreibzugriff",
 
-        CONTROLLER_API_REST_READ:
-            "fems-app/FEMS_App_REST_JSON.html#_lesezugriff",
-        CONTROLLER_API_REST_READWRITE:
-            "fems-app/FEMS_App_REST_JSON.html#_schreibzugriff",
+        CONTROLLER_API_REST_READ: "fems-app/FEMS_App_REST_JSON.html#_lesezugriff",
+        CONTROLLER_API_REST_READWRITE: "fems-app/FEMS_App_REST_JSON.html#_schreibzugriff",
 
-        EVCS_CLUSTER:
-            "fems-app/includes/FEMS_App_Multi-Ladepunkt-Management.html",
+        EVCS_CLUSTER: "fems-app/includes/FEMS_App_Multi-Ladepunkt-Management.html",
 
         SYSTEM: {
             INDUSTRIAL_S:
@@ -205,18 +173,11 @@ export const OemMeta: BaseMeta = {
                             return "en";
                     }
                 })();
-                return (
-                    "https://docs.fenecon.de/_/" +
-                    languageKey +
-                    "/_images/fenecon/apps/" +
-                    appId +
-                    ".png"
-                );
+                return "https://docs.fenecon.de/_/" + languageKey + "/_images/fenecon/apps/" + appId + ".png";
             },
         },
         APP: {
-            ANDROID:
-                "https://play.google.com/store/apps/details?id=de.fenecon.fems&gl=DE",
+            ANDROID: "https://play.google.com/store/apps/details?id=de.fenecon.fems&gl=DE",
             IOS: "https://apps.apple.com/de/app/fenecon/id6476198535",
         },
         ENERGY_JOURNEY: {
@@ -250,8 +211,7 @@ export const OemMeta: BaseMeta = {
                 CLEAR_DAY: "icons/common/weather/clear_day.svg",
                 CLEAR_NIGHT: "icons/common/weather/clear_night.svg",
                 PARTLY_CLOUDY_DAY: "icons/common/weather/partly_cloudy_day.svg",
-                PARTLY_CLOUDY_NIGHT:
-                    "icons/common/weather/partly_cloudy_night.svg",
+                PARTLY_CLOUDY_NIGHT: "icons/common/weather/partly_cloudy_night.svg",
                 THUNDERSTORM: "icons/common/weather/thunderstorm.svg",
                 WEATHER_CLOUDY: "icons/common/weather/weather_cloudy.svg",
                 WEATHER_FOGGY: "icons/common/weather/weather_foggy.svg",
@@ -262,18 +222,17 @@ export const OemMeta: BaseMeta = {
                 HELP: "assets/img/icon/help.svg",
             },
             OFFLINE: {
-                CLOUD_OFFLINE_OUTLINE:
-                    "icons/common/offline/cloud_offline_outline.svg",
+                CLOUD_OFFLINE_OUTLINE: "icons/common/offline/cloud_offline_outline.svg",
             },
             TIME_OF_USE: {
                 TIME_OF_USE: "icons/common/time_of_use/time_of_use.svg",
-                TIME_OF_USE_THIN:
-                    "icons/common/time_of_use/time_of_use-thin.svg",
+                TIME_OF_USE_THIN: "icons/common/time_of_use/time_of_use-thin.svg",
             },
         },
         COMPONENT: {
             EVCS: "icons/component/evcs.svg",
             HEATPUMP: "icons/component/heatpump.svg",
+            HEATING_ELEMENT: "icons/component/heating-element.svg",
         },
         STATUS: {
             CHECKMARK: "icons/status/checkmark.svg",

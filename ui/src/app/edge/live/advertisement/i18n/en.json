@@ -1,16 +1,14 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE": "Exclusive information for FENECON partners",
-            "TEXT": "Subscribe to the partner newsletter and receive exclusive updates about FENECON: upcoming dates, events, technical innovations, new products, special promotions, and important company news—delivered directly to your inbox.",
-            "LINK_TEXT": "Subscribe to newsletter",
-            "LINK": "https://www.fenecon.com/newsletter-fenmail"
-        },
-        "2": {
-            "TITLE": "High fuel prices are a thing of the past",
-            "TEXT": "Rising petrol and diesel prices have become a major cost factor in everyday life. Our latest practical tip shows how you can use e-mobility together with your FENECON system to gain greater independence and significantly reduce your mobility costs.",
-            "LINK_TEXT": "Read practical tip",
-            "LINK": "https://www.fenecon.de/blog/praxistipps-9/e-mobilitat-mit-fenecon-333"
+            "TITLE_INSTALLER": "Review & Highlights: The smarter E Europe",
+            "TEXT_INSTALLER": "Missed the trade fair? No problem! At the end of June, we enjoyed three days of the trade fair filled with energy, exciting conversations, and innovative solutions. For those who couldn't attend in person, here's a concise summary of all the latest developments and impressions from FENECON:",
+            "LINK_TEXT_INSTALLER": "See FENECON's highlights",
+            "LINK_INSTALLER": "https://www.fenecon.com/ees26",
+            "TITLE_OWNER": "Review & Highlights: The smarter E Europe",
+            "TEXT_OWNER": "Missed the trade fair? No problem! At the end of June, we enjoyed three days of the trade fair filled with energy, exciting conversations, and innovative solutions. For those who couldn't attend in person, here's a concise summary of all the latest developments and impressions from FENECON:",
+            "LINK_TEXT_OWNER": "See FENECON's highlights",
+            "LINK_OWNER": "https://www.fenecon.com/ees26"
         }
     }
 }

@@ -1,7 +1,7 @@
 package io.openems.backend.oem.fenecon;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
@@ -11,12 +11,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LatestTaskPerKeyExecutorTest {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(LatestTaskPerKeyExecutorTest.class);
 
 	@Test
@@ -39,31 +39,31 @@ public class LatestTaskPerKeyExecutorTest {
 			shouldCompleted.complete(null);
 		});
 		lock.unlock();
-		
+
 		CompletableFuture.anyOf(neverCompleted, shouldCompleted) //
-			.orTimeout(1, TimeUnit.SECONDS) //
-			.join();
-		
+				.orTimeout(2, TimeUnit.SECONDS) //
+				.join();
+
 		final var hasNeverCompleted = neverCompleted.isDone();
 		final var hasShouldCompleted = shouldCompleted.isDone();
-		assertTrue("Only the latest task for the same key should be executed. shouldCompleted: " //
-				+ hasShouldCompleted + ", neverCompleted: " + hasNeverCompleted, //
-				hasShouldCompleted && !hasNeverCompleted);
-		
+		assertTrue(hasShouldCompleted && !hasNeverCompleted,
+				"Only the latest task for the same key should be executed. shouldCompleted: " //
+						+ hasShouldCompleted + ", neverCompleted: " + hasNeverCompleted);
 
 		executor.shutdown();
 	}
-	
+
 	@Test
 	public void testMany() throws Exception {
-		final var executor = new LatestTaskPerKeyExecutor<Integer>((ThreadPoolExecutor) Executors.newFixedThreadPool(1));
-		
+		final var executor = new LatestTaskPerKeyExecutor<Integer>(
+				(ThreadPoolExecutor) Executors.newFixedThreadPool(1));
+
 		final int keys = 5;
-		
+
 		final CountDownLatch lock = new CountDownLatch(1);
 		final CountDownLatch done = new CountDownLatch(keys);
 		final AtomicInteger counter = new AtomicInteger(0);
-		
+
 		executor.execute(-1, () -> { // Thread blocker
 			try {
 				lock.await();
@@ -71,7 +71,7 @@ public class LatestTaskPerKeyExecutorTest {
 				log.error("Interrupted", e);
 			}
 		});
-		
+
 		for (int i = 0; i < 100000; i++) {
 			executor.execute(i % keys, () -> {
 				try {

@@ -8,7 +8,7 @@ on:
       - main
     tags:
       - "*.*.*"
-    
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -28,19 +28,19 @@ jobs:
           - image: backend-edge
             dockerfile: tools/docker/backend-edge/Dockerfile
     permissions:
-        packages: write
-        contents: read
+      packages: write
+      contents: read
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
-        
+        uses: actions/checkout@v7
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
-        
+
       - name: Get cleaned branch name
         id: clean_name
         run: |

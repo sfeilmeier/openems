@@ -192,6 +192,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Api.RestJson.ReadOnly", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-rest-json-lesend")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-rest-json-reading/")) //
+			.put("App.Core.Meta", AppLink.create() //
+					.emptyLink(Language.DE) //
+					.emptyLink(Language.EN)) //
 
 			// Allgemein
 			.put("App.TimeOfUseTariff.LuoxEnergy", AppLink.create() //
@@ -443,6 +446,10 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 					.emptyLink(Language.EN) //
 			) //
 			.put("App.Ess.FixActivePower", AppLink.create() //
+					.emptyLink(Language.DE) //
+					.emptyLink(Language.EN) //
+			) //
+			.put("App.Ess.FixReactivePower", AppLink.create() //
 					.emptyLink(Language.DE) //
 					.emptyLink(Language.EN) //
 			) //

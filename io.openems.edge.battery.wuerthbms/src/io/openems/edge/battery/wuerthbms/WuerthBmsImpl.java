@@ -36,6 +36,7 @@ import io.openems.common.channel.Unit;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.types.OpenemsType;
+import io.openems.common.types.SemanticVersion;
 import io.openems.common.utils.FunctionUtils;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.api.BatteryErrorAcknowledge;
@@ -84,11 +85,10 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		implements WuerthBms, ModbusComponent, OpenemsComponent, Battery, BatteryErrorAcknowledge,
 		BatteryVoltageProtection, EventHandler, ModbusSlave, StartStoppable {
 
-	public record BatteryValues(int soc, int voltage, int chargeMaxVoltage, int dischargeMinVoltage) {
-	}
-
 	private static final int INNER_RESISTANCE = 150; // [mOhm]
 	private static final int CAPACITY = 161_100; // [Wh]
+	// from this version onwards, bvp is mapped directly in Würth protocol
+	private static final SemanticVersion VOLTAGE_MAPPING_VERSION = new SemanticVersion(2, 0, 15); //
 
 	private final Logger log = LoggerFactory.getLogger(WuerthBmsImpl.class);
 	private final AtomicReference<StartStop> startStopTarget = new AtomicReference<>(StartStop.UNDEFINED);
@@ -815,6 +815,11 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		if (this.voltageProtectionLimits != null) {
 			this.voltageProtectionLimits.updateLimits();
 		}
+		// From SW version 2.0.15, BMS provides BVP setpoints directly
+		if (this.hasVoltageProtectionMapping()) {
+			this._setBvpChargeBms(this.getPackLimitMaxBatteryVoltage().get());
+			this._setBvpDischargeBms(this.getPackLimitMinBatteryVoltage().get());
+		}
 	}
 
 	@Override
@@ -822,5 +827,13 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		return List.of(//
 				this.getModbusCommunicationFailedChannel(), //
 				this.getTimeoutStartBatteryChannel(), this.getTimeoutStopBatteryChannel());
+	}
+
+	private boolean hasVoltageProtectionMapping() {
+		var maj = this.getSwVersionMajor().orElse(0);
+		var min = this.getSwVersionMinor().orElse(0);
+		var pat = this.getSwVersionPatch().orElse(0);
+		var currentVersion = new SemanticVersion(maj, min, pat);
+		return currentVersion.isAtLeast(WuerthBmsImpl.VOLTAGE_MAPPING_VERSION);
 	}
 }

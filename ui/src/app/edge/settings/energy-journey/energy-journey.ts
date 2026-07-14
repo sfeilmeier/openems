@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { NavigationTree } from "src/app/shared/components/navigation/shared";
 import { PipeComponentsModule } from "src/app/shared/pipe/pipe.module";
-import { Edge, EdgeConfig, EdgePermission, EnergyJourneyWidget, Service, } from "src/app/shared/shared";
+import { Edge, EdgeConfig, EdgePermission, EnergyJourneyWidget, Service } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { CommonUiModule } from "../../../shared/common-ui.module";
 import { SharedAutarchy } from "../../live/common/autarchy/shared/shared";
@@ -26,11 +26,7 @@ export class EnergyJourneyComponent implements OnInit {
         private route: ActivatedRoute,
     ) {}
 
-    public static getNavigationTree(
-        edge: Edge,
-        config: EdgeConfig,
-        translate: TranslateService,
-    ): NavigationTree {
+    public static getNavigationTree(edge: Edge, config: EdgeConfig, translate: TranslateService): NavigationTree {
         const children: NavigationTree[] = [];
 
         if (edge.roleIsAtLeast(Role.OWNER)) {
@@ -41,7 +37,39 @@ export class EnergyJourneyComponent implements OnInit {
                     { name: "add-outline" },
                     "AppCenter",
                     "label",
-                    [],
+                    [
+                        new NavigationTree(
+                            "single",
+                            { baseString: "single" },
+                            { name: "add-outline" },
+                            translate.instant("EDGE.CONFIG.APP.APP_DETAILS"),
+                            "label",
+                            [
+                                new NavigationTree(
+                                    "install",
+                                    { baseString: "install" },
+                                    { name: "add-outline" },
+                                    translate.instant("EDGE.CONFIG.APP.CREATE_APP"),
+                                    "label",
+                                    [],
+                                    null,
+                                    { showOrder: "HIDE" },
+                                ),
+                                new NavigationTree(
+                                    "update",
+                                    { baseString: "update" },
+                                    { name: "add-outline" },
+                                    translate.instant("EDGE.CONFIG.APP.MODIFY_APP"),
+                                    "label",
+                                    [],
+                                    null,
+                                    { showOrder: "HIDE" },
+                                ),
+                            ],
+                            null,
+                            { showOrder: "HIDE" },
+                        ),
+                    ],
                     null,
                 ),
             );
@@ -50,12 +78,8 @@ export class EnergyJourneyComponent implements OnInit {
         // Show Autarchy and Self-Consumption only for systems with Producers
         if (config.hasProducer()) {
             children.push(
-                new NavigationTree(
-                    ...SharedAutarchy.getNavigationTree(translate),
-                ),
-                new NavigationTree(
-                    ...SharedSelfConsumption.getNavigationTree(translate),
-                ),
+                new NavigationTree(...SharedAutarchy.getNavigationTree(translate)),
+                new NavigationTree(...SharedSelfConsumption.getNavigationTree(translate)),
             );
         }
 

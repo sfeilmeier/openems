@@ -26,6 +26,7 @@ export class ConfigurationExecuteComponent implements OnInit {
     protected configurationObjectsToBeConfigured: ConfigurationObject[];
     protected showConfigurationExecuteBatteryNote: boolean = false;
     protected goNextPage: boolean = true;
+    protected isNextDisabled: boolean = true;
     private componentConfigurator: Promise<ComponentConfigurator>;
     private isAnyConfigurationObjectPreConfigured: boolean;
 
@@ -123,6 +124,7 @@ export class ConfigurationExecuteComponent implements OnInit {
             resolvedConfigurator.startFunctionTest(this.ibn, this.ibn.WAIT_FOR_BATTERY_SERIAL_NUMBERS).then(() => {
                 this.service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.FINISH_FUNCTION_TEST"), "success");
                 this.isWaiting = false;
+                this.isNextDisabled = false;
             });
         });
     }

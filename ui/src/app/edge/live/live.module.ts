@@ -19,7 +19,7 @@ import { Controller_ChannelthresholdComponent } from "./Controller/Channelthresh
 import { Controller_ChpSocComponent } from "./Controller/ChpSoc/ChpSoc";
 import { Controller_ChpSocModalComponent } from "./Controller/ChpSoc/modal/modal.component";
 import { Controller_EnerixControl } from "./Controller/EnerixControl/EnerixControl";
-import { ControllerEssFixActivePower } from "./Controller/Ess/FixActivePower/Ess_FixActivePower";
+import { ControllerEssFixActivePower } from "./Controller/Ess/FixActivePower/fix-active-power";
 import { ControllerEssGridOptimizedChargeModule } from "./Controller/Ess/GridOptimizedCharge/Ess_GridOptimizedCharge";
 import { ControllerEssTimeOfUseTariff } from "./Controller/Ess/TimeOfUseTariff/Ess_TimeOfUseTariff";
 import { AdministrationComponent } from "./Controller/Evcs/administration/administration.component";
@@ -53,6 +53,7 @@ import { ChartComponent as EvcsClusterApiChartComponent } from "./Multiple/evcs-
 import { ModalComponent as EvcsClusterApiModalComponent } from "./Multiple/evcs-api-cluster/modal/modal";
 import { NavigationInfoComponent } from "./navigation-info/navigation-info";
 import { SystemModule } from "./system/system.module";
+
 import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage-info";
 
 @NgModule({

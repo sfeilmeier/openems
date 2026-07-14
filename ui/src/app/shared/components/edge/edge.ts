@@ -26,10 +26,10 @@ import { SubscribeSystemLogRequest } from "../../jsonrpc/request/subscribeSystem
 import { UpdateAppConfigRequest } from "../../jsonrpc/request/updateAppConfigRequest";
 import { UpdateComponentConfigRequest } from "../../jsonrpc/request/updateComponentConfigRequest";
 import { GetChannelResponse } from "../../jsonrpc/response/getChannelResponse";
-import { Channel, GetChannelsOfComponentResponse, } from "../../jsonrpc/response/getChannelsOfComponentResponse";
+import { Channel, GetChannelsOfComponentResponse } from "../../jsonrpc/response/getChannelsOfComponentResponse";
 import { GetEdgeConfigResponse } from "../../jsonrpc/response/getEdgeConfigResponse";
 import { GetPropertiesOfFactoryResponse } from "../../jsonrpc/response/getPropertiesOfFactoryResponse";
-import { ChannelAddress, EdgePermission, Service, SystemLog, Websocket, } from "../../shared";
+import { ChannelAddress, EdgePermission, Service, SystemLog, Websocket } from "../../shared";
 import { Role } from "../../type/role";
 import { Widgets } from "../../type/widgets";
 import { ArrayUtils } from "../../utils/array/array.utils";
@@ -47,8 +47,7 @@ export enum EdgeSettings {
 
 export class Edge {
     // holds current data
-    public currentData: BehaviorSubject<CurrentData> =
-        new BehaviorSubject<CurrentData>(new CurrentData({}));
+    public currentData: BehaviorSubject<CurrentData> = new BehaviorSubject<CurrentData>(new CurrentData({}));
 
     // holds system log
     public systemLog: Subject<SystemLog> = new Subject<SystemLog>();
@@ -59,8 +58,7 @@ export class Edge {
     public isSubscribed: boolean = false;
 
     // holds config
-    private config: BehaviorSubject<EdgeConfig> =
-        new BehaviorSubject<EdgeConfig>(null);
+    private config: BehaviorSubject<EdgeConfig> = new BehaviorSubject<EdgeConfig>(null);
     private _config = signal<EdgeConfig | null>(null);
 
     // holds currently subscribed channels, identified by source id
@@ -128,8 +126,7 @@ export class Edge {
     }
 
     /**
-     * Gets the first valid Config. If not available yet, it requests it via
-     * Websocket.
+     * Gets the first valid Config. If not available yet, it requests it via Websocket.
      *
      * @param websocket The Websocket connection
      */
@@ -143,18 +140,13 @@ export class Edge {
     }
 
     /**
-     * Gets a channel either from {@link EdgeConfig edgeconfig} or requests it
-     * from the edge.
+     * Gets a channel either from {@link EdgeConfig edgeconfig} or requests it from the edge.
      *
-     * @param websocket The websocket to send a request if the channel is not
-     *   included in the edgeconfig
+     * @param websocket The websocket to send a request if the channel is not included in the edgeconfig
      * @param channel The address of the channel to get
      * @returns A promise of the found channel
      */
-    public async getChannel(
-        websocket: Websocket,
-        channel: ChannelAddress,
-    ): Promise<Channel> {
+    public async getChannel(websocket: Websocket, channel: ChannelAddress): Promise<Channel> {
         if (EdgePermission.hasChannelsInEdgeConfig(this)) {
             const config = await this.getFirstValidConfig(websocket);
             const foundChannel = config.getChannel(channel);
@@ -181,15 +173,11 @@ export class Edge {
     /**
      * Gets all channels of the component with the provided component id.
      *
-     * @param websocket The websocket to send a request if the channels are not
-     *   included in the edgeconfig
+     * @param websocket The websocket to send a request if the channels are not included in the edgeconfig
      * @param componentId The id of the component
      * @returns A promise with the reuslt channels
      */
-    public async getChannels(
-        websocket: Websocket,
-        componentId: string,
-    ): Promise<Channel[]> {
+    public async getChannels(websocket: Websocket, componentId: string): Promise<Channel[]> {
         if (EdgePermission.hasChannelsInEdgeConfig(this)) {
             const config = await this.getFirstValidConfig(websocket);
             const component = config.components[componentId];
@@ -219,22 +207,19 @@ export class Edge {
         factoryId: string,
     ): Promise<[EdgeConfig.Factory, EdgeConfig.FactoryProperty[]]> {
         if (EdgePermission.hasReducedFactories(this)) {
-            const response =
-                await this.sendRequest<GetPropertiesOfFactoryResponse>(
-                    websocket,
-                    new ComponentJsonApiRequest({
-                        componentId: "_componentManager",
-                        payload: new GetPropertiesOfFactoryRequest({
-                            factoryId,
-                        }),
+            const response = await this.sendRequest<GetPropertiesOfFactoryResponse>(
+                websocket,
+                new ComponentJsonApiRequest({
+                    componentId: "_componentManager",
+                    payload: new GetPropertiesOfFactoryRequest({
+                        factoryId,
                     }),
-                );
+                }),
+            );
             return [response.result.factory, response.result.properties];
         }
 
-        const factory = (await this.getFirstValidConfig(websocket)).factories[
-            factoryId
-        ];
+        const factory = (await this.getFirstValidConfig(websocket)).factories[factoryId];
         return [factory, factory.properties];
     }
 
@@ -250,19 +235,13 @@ export class Edge {
      * @param id A unique ID for this subscription (e.g. the component selector)
      * @param channels The subscribed Channel-Addresses
      */
-    public subscribeChannelsWithState(
-        websocket: Websocket,
-        id: string,
-        channels: ChannelAddress[],
-    ): void {
+    public subscribeChannelsWithState(websocket: Websocket, id: string, channels: ChannelAddress[]): void {
         const previousChannels = Object.values(this.subscribedChannels)
             .flat()
             .map((channel) => channel.toString());
         this.subscribedChannels[id] = channels;
 
-        const channelsToSubscribe = channels.map((channel) =>
-            channel.toString(),
-        );
+        const channelsToSubscribe = channels.map((channel) => channel.toString());
 
         if (
             previousChannels.length > 0 &&
@@ -284,19 +263,13 @@ export class Edge {
      * @param id A unique ID for this subscription (e.g. the component selector)
      * @param channels The subscribed Channel-Addresses
      */
-    public subscribeChannels(
-        websocket: Websocket,
-        id: string,
-        channels: ChannelAddress[],
-    ): void {
+    public subscribeChannels(websocket: Websocket, id: string, channels: ChannelAddress[]): void {
         const previousChannels = Object.values(this.subscribedChannels)
             .flat()
             .map((channel) => channel.toString());
         this.subscribedChannels[id] = channels;
 
-        const channelsToSubscribe = channels.map((channel) =>
-            channel.toString(),
-        );
+        const channelsToSubscribe = channels.map((channel) => channel.toString());
 
         if (
             previousChannels.length > 0 &&
@@ -368,30 +341,19 @@ export class Edge {
      *
      * @param websocket The Websocket
      * @param channels The channels
-     * @todo Should be renamed to `unsubscribeChannels` after
-     *   unsubscribeChannels is removed
+     * @todo Should be renamed to `unsubscribeChannels` after unsubscribeChannels is removed
      */
-    public unsubscribeFromChannels(
-        subscribeId: string,
-        websocket: Websocket,
-        channels: ChannelAddress[],
-    ) {
-        const subscribedChannels = Object.entries(
-            this.subscribedChannels,
-        ).reduce((arr, [id, subscribedChannels]) => {
+    public unsubscribeFromChannels(subscribeId: string, websocket: Websocket, channels: ChannelAddress[]) {
+        const subscribedChannels = Object.entries(this.subscribedChannels).reduce((arr, [id, subscribedChannels]) => {
             const areChannelsEqual = ArrayUtils.equalsCheck(
                 channels.map((channel) => channel.toString()),
                 subscribedChannels.map((channel) => channel.toString()),
             );
-            const channelsUsedByOtherSubscriptions = Object.entries(
-                this.subscribedChannels,
-            )
+            const channelsUsedByOtherSubscriptions = Object.entries(this.subscribedChannels)
                 .filter(([otherId, _]) => otherId !== id)
                 .some(([_, otherSubscribedChannels]) => {
                     return channels.some((channel) =>
-                        otherSubscribedChannels.some(
-                            (osc) => osc.toString() === channel.toString(),
-                        ),
+                        otherSubscribedChannels.some((osc) => osc.toString() === channel.toString()),
                     );
                 });
 
@@ -404,9 +366,7 @@ export class Edge {
             return arr;
         }, {});
 
-        const previousChannels = Object.values(this.subscribedChannels).map(
-            (channel) => channel.toString(),
-        );
+        const previousChannels = Object.values(this.subscribedChannels).map((channel) => channel.toString());
         const newChannels = Object.entries(subscribedChannels)
             .filter(([otherId, _]) => otherId !== subscribeId)
             .map(([_, channel]) => channel.toString());
@@ -431,13 +391,8 @@ export class Edge {
      *
      * @param websocket The Websocket
      */
-    public subscribeSystemLog(
-        websocket: Websocket,
-    ): Promise<JsonrpcResponseSuccess> {
-        return this.sendRequest(
-            websocket,
-            new SubscribeSystemLogRequest({ subscribe: true }),
-        );
+    public subscribeSystemLog(websocket: Websocket): Promise<JsonrpcResponseSuccess> {
+        return this.sendRequest(websocket, new SubscribeSystemLogRequest({ subscribe: true }));
     }
 
     /**
@@ -445,13 +400,8 @@ export class Edge {
      *
      * @param websocket The Websocket
      */
-    public unsubscribeSystemLog(
-        websocket: Websocket,
-    ): Promise<JsonrpcResponseSuccess> {
-        return this.sendRequest(
-            websocket,
-            new SubscribeSystemLogRequest({ subscribe: false }),
-        );
+    public unsubscribeSystemLog(websocket: Websocket): Promise<JsonrpcResponseSuccess> {
+        return this.sendRequest(websocket, new SubscribeSystemLogRequest({ subscribe: false }));
     }
 
     /** Handles a EdgeConfigNotification */
@@ -461,9 +411,7 @@ export class Edge {
     }
 
     /** Handles a CurrentDataNotification */
-    public handleCurrentDataNotification(
-        message: CurrentDataNotification,
-    ): void {
+    public handleCurrentDataNotification(message: CurrentDataNotification): void {
         this.currentData.next(new CurrentData(message.params));
     }
 
@@ -554,10 +502,7 @@ export class Edge {
      * @param ws The Websocket
      * @param componentId The OpenEMS Edge Component-ID
      */
-    public deleteComponentConfig(
-        ws: Websocket,
-        componentId: string,
-    ): Promise<JsonrpcResponseSuccess> {
+    public deleteComponentConfig(ws: Websocket, componentId: string): Promise<JsonrpcResponseSuccess> {
         const request = new DeleteComponentConfigRequest({
             componentId: componentId,
         });
@@ -570,10 +515,7 @@ export class Edge {
      * @param ws The Websocket
      * @param componentId The OpenEMS Edge Component-ID
      */
-    public deleteComponentConfigWithState(
-        ws: Websocket,
-        componentId: string,
-    ): Promise<JsonrpcResponseSuccess> {
+    public deleteComponentConfigWithState(ws: Websocket, componentId: string): Promise<JsonrpcResponseSuccess> {
         const request = new DeleteComponentConfigRequest({
             componentId: componentId,
         });
@@ -587,10 +529,7 @@ export class Edge {
      * @param request The JSON-RPC Request
      * @param responseCallback The JSON-RPC Response callback
      */
-    public sendRequest<T = JsonrpcResponseSuccess>(
-        ws: Websocket,
-        request: JsonrpcRequest,
-    ): Promise<T> {
+    public sendRequest<T = JsonrpcResponseSuccess>(ws: Websocket, request: JsonrpcRequest): Promise<T> {
         const wrap = new EdgeRpcRequest({ edgeId: this.id, payload: request });
         return new Promise((resolve, reject) => {
             ws.sendRequest(wrap)
@@ -610,10 +549,7 @@ export class Edge {
      * @param request The JSON-RPC Request
      * @param responseCallback The JSON-RPC Response callback
      */
-    public sendStateFullRequest<T = JsonrpcResponseSuccess>(
-        ws: Websocket,
-        request: JsonrpcRequest,
-    ): Promise<T> {
+    public sendStateFullRequest<T = JsonrpcResponseSuccess>(ws: Websocket, request: JsonrpcRequest): Promise<T> {
         const wrap = new EdgeRpcRequest({ edgeId: this.id, payload: request });
         return new Promise((resolve, reject) => {
             ws.sendStateFullRequest(wrap)
@@ -630,8 +566,7 @@ export class Edge {
      * Updates the configuration of a OpenEMS Edge App.
      *
      * @param ws The Websocket
-     * @param componentId The OpenEMS Edge Component-ID that the app is searched
-     *   by
+     * @param componentId The OpenEMS Edge Component-ID that the app is searched by
      * @param properties The properties to be updated.
      */
     public updateAppConfig(
@@ -683,9 +618,8 @@ export class Edge {
     }
 
     /**
-     * Determines if the version of the edge is a SNAPSHOT. Version strings are
-     * built like `major.minor.patch-branch.date.hash`. So any version string
-     * that contains a hyphen is a SNAPSHOT.
+     * Determines if the version of the edge is a SNAPSHOT. Version strings are built like
+     * `major.minor.patch-branch.date.hash`. So any version string that contains a hyphen is a SNAPSHOT.
      *
      * @returns True if the version of the edge is a SNAPSHOT
      */
@@ -694,12 +628,10 @@ export class Edge {
     }
 
     /**
-     * Evaluates whether the current Role is equal or more privileged than the
-     * given Role.
+     * Evaluates whether the current Role is equal or more privileged than the given Role.
      *
      * @param role The compared Role
-     * @returns True if the current Role is equal or more privileged than the
-     *   given Role
+     * @returns True if the current Role is equal or more privileged than the given Role
      */
     public roleIsAtLeast(role: Role | string): boolean {
         return Role.isAtLeast(this.role, role);
@@ -726,9 +658,9 @@ export class Edge {
         edge: Edge,
         service: Service,
     ): Promise<NavigationTree> {
-        const baseNavigationTree: (
-            translate: TranslateService,
-        ) => ConstructorParameters<typeof NavigationTree> = (translate) => [
+        const baseNavigationTree: (translate: TranslateService) => ConstructorParameters<typeof NavigationTree> = (
+            translate,
+        ) => [
             NavigationId.LIVE,
             { baseString: "device/" + edge.id + "/live" },
             { name: "home-outline" },
@@ -738,11 +670,9 @@ export class Edge {
             null,
         ];
 
-        const _baseNavigationTree: ConstructorParameters<
-            typeof NavigationTree
-        > = baseNavigationTree(translate).slice() as ConstructorParameters<
-            typeof NavigationTree
-        >;
+        const _baseNavigationTree: ConstructorParameters<typeof NavigationTree> = baseNavigationTree(
+            translate,
+        ).slice() as ConstructorParameters<typeof NavigationTree>;
         const navigationTree = new NavigationTree(..._baseNavigationTree);
 
         // TODO find automated way to create reference for parents
@@ -767,21 +697,14 @@ export class Edge {
                 { showOrder: "LOW" },
             ),
         );
-        const energyJourneyNavigationTree =
-            EnergyJourneyComponent.getNavigationTree(edge, config, translate);
+        const energyJourneyNavigationTree = EnergyJourneyComponent.getNavigationTree(edge, config, translate);
 
         // only add energy journey if it has content
         if (energyJourneyNavigationTree.children.length !== 0) {
-            navigationTree.setChild(
-                NavigationId.LIVE,
-                energyJourneyNavigationTree,
-            );
+            navigationTree.setChild(NavigationId.LIVE, energyJourneyNavigationTree);
         }
         this.addGlobalNavigation(service, navigationTree, translate);
-        navigationTree.setChild(
-            NavigationId.LIVE,
-            UserComponent.getNavigationTree(service, translate),
-        );
+        navigationTree.setChild(NavigationId.LIVE, UserComponent.getNavigationTree(service, translate));
         navigationTree.reorderByShowOrder(navigationTree);
         return navigationTree;
     }
@@ -789,10 +712,7 @@ export class Edge {
     public shouldShowAnnualReviewPopover(): boolean {
         return (
             this.role === Role.OWNER &&
-            ObjectUtils.getValueByKeySafely(
-                this.settings,
-                EdgeSettings.ANNUAL_REVIEW_2025,
-            ) != null
+            ObjectUtils.getValueByKeySafely(this.settings, EdgeSettings.ANNUAL_REVIEW_2025) != null
         );
     }
 
@@ -802,16 +722,12 @@ export class Edge {
      * @param websocket The websocket
      * @returns
      */
-    public async shouldShowPrivacyPolicyPopover(
-        websocket: Websocket,
-    ): Promise<boolean> {
+    public async shouldShowPrivacyPolicyPopover(websocket: Websocket): Promise<boolean> {
         if (environment.theme !== "FENECON") {
             return false;
         }
 
-        const [_err, config] = await PromiseUtils.Functions.handle(
-            this.getFirstValidConfig(websocket),
-        );
+        const [_err, config] = await PromiseUtils.Functions.handle(this.getFirstValidConfig(websocket));
 
         if (_err) {
             return false;
@@ -827,12 +743,8 @@ export class Edge {
                 "thirdPartyUsageAcceptance",
                 ThirdPartyUsageAcceptance.UNDECIDED,
             );
-        const latitude = config
-            .getComponent("_meta")
-            .getPropertyFromComponent<number>("latitude");
-        const longitude = config
-            .getComponent("_meta")
-            .getPropertyFromComponent<number>("longitude");
+        const latitude = config.getComponent("_meta").getPropertyFromComponent<number>("latitude");
+        const longitude = config.getComponent("_meta").getPropertyFromComponent<number>("longitude");
         const hasValidCoordinates =
             latitude != null &&
             longitude != null &&
@@ -853,9 +765,7 @@ export class Edge {
         const classes = Widgets.parseWidgets(edge, config).classes;
 
         for (const clazz of classes) {
-            const navigationTree: ConstructorParameters<
-                typeof NavigationTree
-            > | null = Widgets.getCommonNavigationTree(
+            const navigationTree: ConstructorParameters<typeof NavigationTree> | null = Widgets.getCommonNavigationTree(
                 edge,
                 clazz,
                 translate,
@@ -865,10 +775,7 @@ export class Edge {
             if (navigationTree == null) {
                 continue;
             }
-            currentNavigationTree.setChild(
-                NavigationId.LIVE,
-                new NavigationTree(...navigationTree),
-            );
+            currentNavigationTree.setChild(NavigationId.LIVE, new NavigationTree(...navigationTree));
         }
     }
 
@@ -878,21 +785,14 @@ export class Edge {
         currentNavigationTree: NavigationTree,
         translate: TranslateService,
     ): void {
-        const controllerNavigationTrees = Widgets.getControllerNavigationTrees(
-            edge,
-            translate,
-            config,
-        );
+        const controllerNavigationTrees = Widgets.getControllerNavigationTrees(edge, translate, config);
 
         for (const navigationTree of controllerNavigationTrees) {
             if (navigationTree == null) {
                 continue;
             }
 
-            currentNavigationTree.setChild(
-                NavigationId.LIVE,
-                new NavigationTree(...navigationTree),
-            );
+            currentNavigationTree.setChild(NavigationId.LIVE, new NavigationTree(...navigationTree));
         }
     }
 
@@ -903,9 +803,7 @@ export class Edge {
     ): void {
         const settingsFilter: PageFilterSet = {
             combine: PageFilterCombineMode.ANY,
-            rules: [
-                { navigationId: "system-overview", mode: PageFilterMode.HIDE },
-            ],
+            rules: [{ navigationId: "system-overview", mode: PageFilterMode.HIDE }],
         };
 
         currentNavigationTree.setChild(
@@ -924,10 +822,7 @@ export class Edge {
                 },
             ),
         );
-        currentNavigationTree.setChild(
-            NavigationId.LIVE,
-            UserComponent.getNavigationTree(service, translate),
-        );
+        currentNavigationTree.setChild(NavigationId.LIVE, UserComponent.getNavigationTree(service, translate));
         currentNavigationTree.setChild(
             NavigationId.LIVE,
             new NavigationTree(
@@ -989,12 +884,8 @@ export class Edge {
         this.sendRequest(websocket, request)
             .then((response) => {
                 const edgeConfigResponse = response as GetEdgeConfigResponse;
-                this.config.next(
-                    new EdgeConfig(this, edgeConfigResponse.result),
-                );
-                this._config.set(
-                    new EdgeConfig(this, edgeConfigResponse.result),
-                );
+                this.config.next(new EdgeConfig(this, edgeConfigResponse.result));
+                this._config.set(new EdgeConfig(this, edgeConfigResponse.result));
             })
             .catch((reason) => {
                 console.warn("Unable to refresh config", reason);
@@ -1004,8 +895,7 @@ export class Edge {
     }
 
     /**
-     * Sends a SubscribeChannelsRequest for all Channels in
-     * 'this.subscribedChannels'
+     * Sends a SubscribeChannelsRequest for all Channels in 'this.subscribedChannels'
      *
      * @param websocket The Websocket
      */
@@ -1034,8 +924,7 @@ export class Edge {
         }
     }
     /**
-     * Sends a SubscribeChannelsRequest for all Channels in
-     * 'this.subscribedChannels'
+     * Sends a SubscribeChannelsRequest for all Channels in 'this.subscribedChannels'
      *
      * @param websocket The Websocket
      */

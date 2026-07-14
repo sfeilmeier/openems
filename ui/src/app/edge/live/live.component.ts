@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, inject, OnDestroy, ViewChild, } from "@angular/core";
+import { Component, effect, ElementRef, inject, OnDestroy, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RefresherCustomEvent } from "@ionic/angular";
 import { Subject } from "rxjs";
@@ -7,7 +7,7 @@ import { NavigationService } from "src/app/shared/components/navigation/service/
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { LayoutRefreshService } from "src/app/shared/service/layoutRefreshService";
 import { UserService } from "src/app/shared/service/user.service";
-import { Edge, EdgeConfig, EdgePermission, Service, Utils, Websocket, } from "src/app/shared/shared";
+import { Edge, EdgeConfig, EdgePermission, Service, Utils, Websocket } from "src/app/shared/shared";
 import { AdvertWidget } from "src/app/shared/type/widget";
 import { Widgets } from "src/app/shared/type/widgets";
 import { DateTimeUtils } from "src/app/shared/utils/datetime/datetime-utils";
@@ -62,19 +62,12 @@ export class LiveComponent implements OnDestroy {
                 return;
             }
 
-            this.isModbusTcpWidgetAllowed =
-                EdgePermission.isModbusTcpApiWidgetAllowed(edge);
+            this.isModbusTcpWidgetAllowed = EdgePermission.isModbusTcpApiWidgetAllowed(edge);
 
             edge?.getFirstValidConfig(websocket)?.then(async (config) => {
                 this.config = config;
-                this.widgets = await navigationService.getWidgets(
-                    config.widgets,
-                    userService.currentUser(),
-                    edge,
-                );
-                this.advertWidgets = this.service.getAvailableAdvertWidgets(
-                    config.advertWidgets,
-                );
+                this.widgets = await navigationService.getWidgets(config.widgets, userService.currentUser(), edge);
+                this.advertWidgets = this.service.getAvailableAdvertWidgets(config.advertWidgets);
             });
             this.checkIfRefreshNeeded();
         });
@@ -84,9 +77,7 @@ export class LiveComponent implements OnDestroy {
         if (this.widgets?.list) {
             this.showNewFooter =
                 this.widgets?.list.filter(
-                    (item) =>
-                        item.name == "Evse.Controller.Single" ||
-                        item.name == "Controller.IO.Heating.Room",
+                    (item) => item.name == "Evse.Controller.Single" || item.name == "Controller.IO.Heating.Room",
                 )?.length > 0;
         }
         this.layoutRefresh.request(300);
@@ -102,9 +93,8 @@ export class LiveComponent implements OnDestroy {
         this.stopOnDestroy.complete();
     }
 
-    protected handleRefresh: (ev: RefresherCustomEvent) => void = (
-        ev: RefresherCustomEvent,
-    ) => this.dataService.refresh(ev);
+    protected handleRefresh: (ev: RefresherCustomEvent) => void = (ev: RefresherCustomEvent) =>
+        this.dataService.refresh(ev);
 
     protected checkIfRefreshNeeded() {
         this.interval = setInterval(async () => {
@@ -118,12 +108,7 @@ export class LiveComponent implements OnDestroy {
                 this.showRefreshDragDown = true;
                 return;
             }
-            this.showRefreshDragDown =
-                DateTimeUtils.isDifferenceInSecondsGreaterThan(
-                    20,
-                    new Date(),
-                    lastUpdate,
-                );
+            this.showRefreshDragDown = DateTimeUtils.isDifferenceInSecondsGreaterThan(20, new Date(), lastUpdate);
         }, 5000);
     }
 }

@@ -1,5 +1,18 @@
 [
     {
+        "version": "2026.7.1",
+        "entries": {
+            "de": [
+                "Verbesserungen am Inbetriebnahmeassistent: Mehr Überprüfungen, Konfiguration der AVU mit FENECON Home 15",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest (E-Mobility)</a>: Verbesserungen an der mobilen Ansicht, Anzeige Excel-Export in der Historie und FEMS App Schwellwertsteuerung"
+            ],
+            "en": [
+                "Improvements to the commissioning assistant: More checks, AVU configuration with FENECON Home 15",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Field Test (E-Mobility)</a>: Improvements to the mobile view, Excel export display in history and FEMS App Threshold Control"
+            ]
+        }
+    },
+    {
         "version": "2026.6.3",
         "entries": {
             "de": [
