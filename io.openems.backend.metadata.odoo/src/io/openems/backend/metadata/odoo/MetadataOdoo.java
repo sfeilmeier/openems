@@ -18,6 +18,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -707,21 +708,21 @@ public class MetadataOdoo extends AbstractMetadata implements AppCenterMetadata,
 		});
 	}
 
+	private static final Set<String> freeApps = Set.of(
+			"App.Hardware.KMtronic8Channel", //
+			"App.Cloud.Clever-PV", //
+			"App.Prediction.Weather", //
+			"App.Meter.Shelly", //
+			"App.Evse.ElectricVehicle.Generic", //
+			"App.Tariff.Manual.EEG2025.GridSell" //
+	);
+
 	@Override
 	public CompletableFuture<Boolean> isAppFree(//
 			final User user, //
 			final String appId //
 	) {
-		return this.requestExecutor.submit("isAppFree", () -> {
-			return Sets.newHashSet(//
-					"App.Hardware.KMtronic8Channel", //
-					"App.Cloud.Clever-PV", //
-					"App.Prediction.Weather", //
-					"App.Meter.Shelly", //
-					"App.Evse.ElectricVehicle.Generic", //
-					"App.Tariff.Manual.EEG2025.GridSell" //
-			).contains(appId);
-		});
+		return this.requestExecutor.submit("isAppFree", () -> freeApps.contains(appId));
 	}
 
 	@Override
