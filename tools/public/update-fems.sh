@@ -281,6 +281,7 @@ apt-get install --fix-broken --assume-yes || true
 
 apt_install dirmngr
 apt_install gnupg
+apt_install tftp-hpa
 
 apt-get autoremove --assume-yes || true
 apt-get --fix-broken install --assume-yes || true
