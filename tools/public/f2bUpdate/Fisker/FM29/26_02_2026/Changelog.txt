@@ -1,0 +1,5 @@
+0V1 | 04.08.2025 14:20:12 | initial release
+0V2 | 05.11.2025 16:32:53 | added hardware F2B_FM29_1V2 to compatibility list
+1V0 | 03.02.2026 09:55:08 | deleted --> version is not working
+1V1 | 17.02.2026 17:29:26 | bugfix CAN sample point and bugfix bmsChargeMaxCurrent delay
+1V2 | 26.02.2026 11:26:03 | hotfix CAN switch back to old parameters
