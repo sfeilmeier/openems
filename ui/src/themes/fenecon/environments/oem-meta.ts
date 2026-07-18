@@ -159,7 +159,12 @@ export const OemMeta: BaseMeta = {
                     "https://docs.fenecon.de/de/commercial/commercial_50-3/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Commercial_50-3.html#_rundsteuerempf%C3%A4nger_auf_netzanschlusspunkt",
             },
 
-            AVU: "https://docs.fenecon.de/de/avu/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_AVU.html",
+            AVU: {
+                STANDARD:
+                    "https://docs.fenecon.de/de/home/avu/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_AVU.html",
+                EXTENDED:
+                    "https://docs.fenecon.de/de/home/avu/betrieb_und_serviceanleitung/extended-compatibility/Betrieb_und_Serviceanleitung_AVU-extended.html",
+            },
         },
         APP_CENTER: {
             APP_IMAGE: (language: string, appId: string): string | null => {

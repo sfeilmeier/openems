@@ -207,7 +207,10 @@ export interface Environment {
                 readonly COMMERCIAL_50_GEN_3: string;
             };
 
-            readonly AVU: string;
+            readonly AVU: {
+                readonly STANDARD: string;
+                readonly EXTENDED: string;
+            };
         };
 
         APP_CENTER: {

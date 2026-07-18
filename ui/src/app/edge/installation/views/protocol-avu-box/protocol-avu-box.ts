@@ -7,31 +7,33 @@ import { Language } from "src/app/shared/type/language";
 import { environment } from "src/environments";
 import { AbstractHomeIbn } from "../../installation-systems/home/abstract-home";
 import { IbnUtils } from "../../shared/ibn.utils";
+import { SystemId } from "../../shared/system";
 
 @Component({
     selector: ProtocolAvuBoxComponent.SELECTOR,
     templateUrl: "./protocol-avu-box.html",
     standalone: false,
-    styles: [`
-        .image-column {
-            text-align: center; /* Center-align the image */
-            padding: 1rem; /* Add padding for better spacing */
-        }
-
-        .responsive-image {
-            max-width: 100%; /* Ensure the image scales proportionally */
-            height: auto; /* Maintain aspect ratio */
-        }
-
-        @media (max-width: 768px) {
+    styles: [
+        `
             .image-column {
-                margin-top: 1rem; /* Add spacing between the form and image */
+                text-align: center; /* Center-align the image */
+                padding: 1rem; /* Add padding for better spacing */
             }
-        }
-    `],
+
+            .responsive-image {
+                max-width: 100%; /* Ensure the image scales proportionally */
+                height: auto; /* Maintain aspect ratio */
+            }
+
+            @media (max-width: 768px) {
+                .image-column {
+                    margin-top: 1rem; /* Add spacing between the form and image */
+                }
+            }
+        `,
+    ],
 })
 export class ProtocolAvuBoxComponent implements OnInit {
-
     private static SELECTOR: string = "protocol-avu-box";
     private static AVU_SERIAL_NUMBER_PREFIX: string = "FHA";
 
@@ -45,10 +47,9 @@ export class ProtocolAvuBoxComponent implements OnInit {
     protected isNextDisabled: boolean;
     protected imageLink: string | null = null;
 
-    constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) {}
 
     public ngOnInit() {
-
         this.form = new FormGroup({});
         this.initializeModel();
         this.isNextDisabled = !(this.model.yes || this.model.no);
@@ -75,15 +76,15 @@ export class ProtocolAvuBoxComponent implements OnInit {
         const isIncluded = this.model.yes;
         this.ibn.avu = isIncluded
             ? {
-                isIncluded,
-                serialNumber: ProtocolAvuBoxComponent.AVU_SERIAL_NUMBER_PREFIX + this.model.serialNumber,
-            }
+                  isIncluded,
+                  serialNumber: ProtocolAvuBoxComponent.AVU_SERIAL_NUMBER_PREFIX + this.model.serialNumber,
+              }
             : {
-                isIncluded,
-            };
+                  isIncluded,
+              };
 
         this.nextViewEvent.emit(this.ibn);
-    };
+    }
 
     protected onPreviousClicked() {
         this.previousViewEvent.emit();
@@ -110,8 +111,19 @@ export class ProtocolAvuBoxComponent implements OnInit {
         }
     }
 
-    private getFields() {
+    /**
+     * Gets the AVU manual link depending on the system's power class. FENECON Home 15 (Gen 2) uses the
+     * extended-compatibility manual, all other systems (Home 6/10 (Gen 2), Home 10) use the standard manual.
+     *
+     * @returns The AVU manual url
+     */
+    private getAvuManualLink(): string {
+        return this.ibn.systemId === SystemId.FENECON_HOME_15
+            ? environment.links.MANUALS.AVU.EXTENDED
+            : environment.links.MANUALS.AVU.STANDARD;
+    }
 
+    private getFields() {
         const fields: FormlyFieldConfig[] = [
             {
                 key: "yes",
@@ -121,7 +133,7 @@ export class ProtocolAvuBoxComponent implements OnInit {
                     buttonAvailable: true,
                     buttonText: this.translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.OPEN_INSTRUCTIONS"),
                     onButtonClick: () => {
-                        window.open(environment.links.MANUALS.AVU);
+                        window.open(this.getAvuManualLink());
                     },
                     required: true,
                 },

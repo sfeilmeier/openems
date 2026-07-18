@@ -190,7 +190,10 @@ export const OemMeta: BaseMeta = {
                 COMMERCIAL_50_GEN_3: "#",
             },
 
-            AVU: "#",
+            AVU: {
+                STANDARD: "#",
+                EXTENDED: "#",
+            },
         },
         APP_CENTER: {
             APP_IMAGE: (language: string, appId: string): string | null => {
