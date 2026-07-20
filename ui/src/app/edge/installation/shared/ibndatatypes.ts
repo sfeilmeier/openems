@@ -19,17 +19,17 @@ export type SerialNumberFormData = {
 
 export type TableData = {
     header: Category;
-    rows: ComponentData[]
+    rows: ComponentData[];
 };
 
 export type DcPv = {
-    isSelected: boolean,
-    alias?: string,
-    value?: number,
-    orientation?: string,
-    moduleType?: string,
-    modulesPerString?: number,
-    portsConnected?: boolean,
+    isSelected: boolean;
+    alias?: string;
+    value?: number;
+    orientation?: string;
+    moduleType?: string;
+    modulesPerString?: number;
+    portsConnected?: boolean;
 };
 
 export type DcForm = {
@@ -47,4 +47,5 @@ export enum ExtensionBoxPrefix {
     FHA = "FHA",
     FCP1 = "FCP1",
     FHE = "FHE",
+    FCC = "FCC",
 }

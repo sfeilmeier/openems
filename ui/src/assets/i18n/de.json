@@ -1199,7 +1199,7 @@
             "BATTERY_MODULE_DESCRIPTION": "Bitte gib nur die letzten 8 Ziffern der Seriennummer ein.",
             "BATTERY_STRING": "Batterie String {{ stringNumber }}",
             "BATTERY_TOWER": "Batterie Turm {{ number }}",
-            "BATTERY_TOWER_CLUSTER": "Batterie {{ batteryNumber }} turm {{towerNumber}}",
+            "BATTERY_TOWER_CLUSTER": "Batterie {{ batteryNumber }} Turm {{towerNumber}}",
             "BESS_COMPONENTS": "Speichersystemkomponenten",
             "BMS_BOX": "BMS Box & Sockel",
             "CONFIRM": "speichern",

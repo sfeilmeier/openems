@@ -31,6 +31,12 @@ export type SchedulerId = {
     behaviour: SchedulerIdBehaviour;
 };
 
+/** The battery/tower settings used by `batterySettingsForms` and by `expandBatteryFormModels`/`collapseToFormSettings`. */
+export type BatteryTowerSettings = {
+    numberOfTowers: number;
+    numberOfModulesPerTower: number;
+};
+
 export enum SchedulerIdBehaviour {
     MANAGED_BY_APP_MANAGER,
     ALWAYS_INCLUDE,
@@ -43,9 +49,7 @@ export interface EmergencyReserve {
     isReserveSocEnabled: boolean;
 }
 
-export abstract class AbstractIbn<
-    T extends EmergencyReserve = EmergencyReserve,
-> {
+export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve> {
     //Regex code for validating Countries.
     public static readonly COUNTRY_PARTNER_ZIP_CODE_REGEX: RegExp =
         /^((\d{5}(-\d{4})?)|([1-9]\d{3}\s?[A-Z]{2})|(\d{3}\s?\d{2})|(\d{4}))$/;
@@ -157,10 +161,9 @@ export abstract class AbstractIbn<
     public readonly defaultNumberOfModules: number;
 
     // Label used for device check in configuration summary. It is different for Industrial systems.
-    public readonly isDevicesActiveCheckedLabel: string =
-        this.translate.instant(
-            "INSTALLATION.CONFIGURATION_SUMMARY.DEVICE_ACTIVE_CHECKED",
-        );
+    public readonly isDevicesActiveCheckedLabel: string = this.translate.instant(
+        "INSTALLATION.CONFIGURATION_SUMMARY.DEVICE_ACTIVE_CHECKED",
+    );
 
     // Limit value changes for home and commercial.
     public readonly maxFeedInLimit: number = 29999;
@@ -191,32 +194,23 @@ export abstract class AbstractIbn<
     /**
      * Sets the Feed-In-Limit fields from the model.
      *
-     * @param model The model containing the user input for the
-     *   Dynamic-Feed-In-Limit fields.
+     * @param model The model containing the user input for the Dynamic-Feed-In-Limit fields.
      */
     public setFeedInLimitFields(model: any) {
         return;
     }
 
-    /**
-     * Returns the fields that has sub systems specific to the 'System Type'
-     * selected in previous step.
-     */
+    /** Returns the fields that has sub systems specific to the 'System Type' selected in previous step. */
     public getSubSystemFields(): FormlyFieldConfig[] {
         return [];
     }
 
-    /**
-     * View Emergency-reserve Adds and returns the specific battery information
-     * based on Ibn to view in summary.
-     */
+    /** View Emergency-reserve Adds and returns the specific battery information based on Ibn to view in summary. */
     public addCustomBatteryData(): ComponentData[] {
         const batteryData: ComponentData[] = [];
         if (this.emergencyReserve) {
             batteryData.push({
-                label: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ACTIVATED",
-                ),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ACTIVATED"),
                 value: this.emergencyReserve.isEnabled
                     ? this.translate.instant("GENERAL.YES")
                     : this.translate.instant("GENERAL.NO"),
@@ -251,9 +245,7 @@ export abstract class AbstractIbn<
             key: "isEnabled",
             type: "checkbox",
             templateOptions: {
-                label: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ENABLED",
-                ),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ENABLED"),
             },
             expressions: {
                 "props.disabled": (field) => {
@@ -269,9 +261,7 @@ export abstract class AbstractIbn<
             key: "isReserveSocEnabled",
             type: "toggle",
             templateOptions: {
-                label: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ACTIVATED",
-                ),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.IS_ACTIVATED"),
             },
             hideExpression: (model) => !model.isEnabled,
         });
@@ -280,42 +270,29 @@ export abstract class AbstractIbn<
             key: "value",
             type: "range",
             props: {
-                label: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.VALUE",
-                ),
-                note: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_NOTE",
-                ),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.VALUE"),
+                note: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_NOTE"),
                 description: `${this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT")} ${defaultReserveSocValue}%`,
                 required: true,
                 min: this.emergencyReserve.minValue,
                 max: 100,
                 pin: true,
                 unit: "%",
-                defaultValue:
-                    this.emergencyReserve.value ?? defaultReserveSocValue,
+                defaultValue: this.emergencyReserve.value ?? defaultReserveSocValue,
             },
             hooks: {
                 onInit: (field) => {
                     const fallback = defaultReserveSocValue;
 
                     const initialVal = field.formControl?.value;
-                    if (
-                        initialVal == null ||
-                        initialVal === "" ||
-                        Number.isNaN(initialVal)
-                    ) {
+                    if (initialVal == null || initialVal === "" || Number.isNaN(initialVal)) {
                         field.formControl?.patchValue(fallback, {
                             emitEvent: false,
                         });
                     }
 
                     field.formControl?.valueChanges.subscribe((newVal) => {
-                        if (
-                            newVal == null ||
-                            newVal === "" ||
-                            Number.isNaN(newVal)
-                        ) {
+                        if (newVal == null || newVal === "" || Number.isNaN(newVal)) {
                             field.formControl?.patchValue(fallback, {
                                 emitEvent: false,
                             });
@@ -330,11 +307,7 @@ export abstract class AbstractIbn<
                     if (field != null && field.formControl != null) {
                         const controlValue = field.formControl.value;
 
-                        if (
-                            controlValue != null &&
-                            controlValue !== "" &&
-                            !Number.isNaN(controlValue)
-                        ) {
+                        if (controlValue != null && controlValue !== "" && !Number.isNaN(controlValue)) {
                             val = controlValue;
                         }
                     }
@@ -343,16 +316,14 @@ export abstract class AbstractIbn<
                 },
             },
             parsers: [Number],
-            hideExpression: (model) =>
-                !model.isEnabled || !model.isReserveSocEnabled,
+            hideExpression: (model) => !model.isEnabled || !model.isReserveSocEnabled,
         });
 
         return fields;
     }
 
     /**
-     * Returns the External Feed in limit fields for all systems in Feed in
-     * limitation view.
+     * Returns the External Feed in limit fields for all systems in Feed in limitation view.
      *
      * @returns Common fields for feed in limits fields.
      */
@@ -364,12 +335,8 @@ export abstract class AbstractIbn<
             type: "select",
             className: "white-space-initial",
             templateOptions: {
-                label: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE",
-                ),
-                placeholder: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER",
-                ),
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE"),
+                placeholder: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER"),
                 options: this.getExternalLimitationTypeOptions(),
                 required: true,
             },
@@ -391,12 +358,8 @@ export abstract class AbstractIbn<
             type: "select",
             className: "white-space-initial",
             templateOptions: {
-                label: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_TYPE",
-                ),
-                placeholder: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER",
-                ),
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_TYPE"),
+                placeholder: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.PLACE_HOLDER"),
                 options: this.dynamicFeedInLimitationOptions(),
                 required: true,
             },
@@ -407,9 +370,7 @@ export abstract class AbstractIbn<
             type: "input",
             templateOptions: {
                 type: "number",
-                label: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE",
-                ),
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
                 description: this.translate.instant(
                     "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_VALUE_DESCRIPTION",
                 ),
@@ -418,25 +379,18 @@ export abstract class AbstractIbn<
             },
             parsers: [Number],
             defaultValue: this.getTotalPvPower(),
-            hideExpression: (model) =>
-                model.dynamicLimitationType !==
-                GridFeedInLimitationType.DYNAMIC_LIMITATION,
+            hideExpression: (model) => model.dynamicLimitationType !== GridFeedInLimitationType.DYNAMIC_LIMITATION,
 
             expressionProperties: {
                 "templateOptions.label": () =>
-                    this.translate.instant(
-                        "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE",
-                    ),
+                    this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
             },
         });
 
         return fields;
     }
 
-    /**
-     * Retrieves the fields for View Line side meter Fuse, which are different
-     * for Home and Commercial systems.
-     */
+    /** Retrieves the fields for View Line side meter Fuse, which are different for Home and Commercial systems. */
     public getLineSideMeterFuseFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
 
@@ -444,9 +398,7 @@ export abstract class AbstractIbn<
             key: "fixedValue",
             type: "select",
             templateOptions: {
-                label: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE",
-                ),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
                 description: this.translate.instant(
                     "INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.FIXED_VALUE_DESCRIPTION",
                 ),
@@ -461,9 +413,7 @@ export abstract class AbstractIbn<
                     { label: "100 A", value: 100 },
                     { label: "120 A", value: 120 },
                     {
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.OTHER",
-                        ),
+                        label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.OTHER"),
                         value: -1,
                     },
                 ],
@@ -477,9 +427,7 @@ export abstract class AbstractIbn<
             type: "input",
             templateOptions: {
                 type: "number",
-                label: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.OTHER_VALUE",
-                ),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.OTHER_VALUE"),
                 min: 0,
                 required: true,
             },
@@ -560,65 +508,43 @@ export abstract class AbstractIbn<
         protocol.items = [];
 
         const feedInLimitation = this.feedInLimitation;
-        const isExternalLimitation =
-            feedInLimitation.feedInType ==
-            ExternalLimitationType.EXTERNAL_LIMITATION;
+        const isExternalLimitation = feedInLimitation.feedInType == ExternalLimitationType.EXTERNAL_LIMITATION;
         const isDynamicFeedInLimitation =
-            this.feedInLimitation.dynamicLimitationType ===
-            GridFeedInLimitationType.DYNAMIC_LIMITATION;
+            this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION;
         const isDynamicExternalLimitation =
-            this.feedInLimitation.feedInType ===
-            ExternalLimitationType.DYNAMIC_EXTERNAL_LIMITATION;
+            this.feedInLimitation.feedInType === ExternalLimitationType.DYNAMIC_EXTERNAL_LIMITATION;
 
         const fields = this.getFeedInLimitFields();
 
         // check if any field has a key containing "feedInType"
-        const hasFeedInTypeField = fields.some(
-            (f) => typeof f.key === "string" && f.key.includes("feedInType"),
-        );
+        const hasFeedInTypeField = fields.some((f) => typeof f.key === "string" && f.key.includes("feedInType"));
 
         if (hasFeedInTypeField) {
             const ExternalLimitationValue = isExternalLimitation
-                ? this.translate.instant(
-                      "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION",
-                  )
+                ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION")
                 : isDynamicExternalLimitation
-                  ? this.translate.instant(
-                        "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_EXTERNAL_LIMITATION",
-                    )
-                  : this.translate.instant(
-                        "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION",
-                    );
+                  ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_EXTERNAL_LIMITATION")
+                  : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION");
 
             protocol.items.push({
                 category: Category.FEED_IN_MANAGEMENT,
-                name: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE",
-                ),
+                name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION_TYPE"),
                 value: ExternalLimitationValue,
             });
         }
 
         protocol.items.push({
             category: Category.FEED_IN_MANAGEMENT,
-            name: this.translate.instant(
-                "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_TYPE",
-            ),
+            name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION_TYPE"),
             value: isDynamicFeedInLimitation
-                ? this.translate.instant(
-                      "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION",
-                  )
-                : this.translate.instant(
-                      "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION",
-                  ),
+                ? this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION")
+                : this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
         });
 
         if (isDynamicFeedInLimitation) {
             protocol.items.push({
                 category: Category.FEED_IN_MANAGEMENT,
-                name: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE",
-                ),
+                name: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.MAXIMUM_FEED_IN_VALUE"),
                 value: feedInLimitation.maximumFeedInPower
                     ? feedInLimitation.maximumFeedInPower.toString()
                     : (0).toString(),
@@ -626,77 +552,56 @@ export abstract class AbstractIbn<
         }
 
         if (lineSideMeterFuse) {
-            if (
-                lineSideMeterFuse.category !==
-                    Category.LINE_SIDE_METER_FUSE_HOME &&
-                lineSideMeterFuse.meterType
-            ) {
+            if (lineSideMeterFuse.category !== Category.LINE_SIDE_METER_FUSE_HOME && lineSideMeterFuse.meterType) {
                 protocol.items.push({
                     category: lineSideMeterFuse.category,
-                    name: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER",
-                    ),
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER"),
                     value: lineSideMeterFuse.meterType,
                 });
             }
 
-            const lineSideMeterFuseValue =
-                lineSideMeterFuse.otherValue ?? lineSideMeterFuse.fixedValue;
+            const lineSideMeterFuseValue = lineSideMeterFuse.otherValue ?? lineSideMeterFuse.fixedValue;
 
             if (lineSideMeterFuseValue != null) {
                 protocol.items.push({
                     category: this.lineSideMeterFuse.category,
-                    name: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE",
-                    ),
-                    value: lineSideMeterFuseValue
-                        ? lineSideMeterFuseValue.toString()
-                        : "",
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
+                    value: lineSideMeterFuseValue ? lineSideMeterFuseValue.toString() : "",
                 });
             }
         }
 
         protocol.items.push({
             category: Category.EMS_DETAILS,
-            name: this.translate.instant(
-                "INSTALLATION.CONFIGURATION_SUMMARY.EDGE_NUMBER",
-                { edgeShortName: environment.edgeShortName },
-            ),
+            name: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.EDGE_NUMBER", {
+                edgeShortName: environment.edgeShortName,
+            }),
             value: edge.id,
         });
 
         // Speichersystemkomponenten
-        const doubleSocketLabel: string = this.translate.instant(
-            "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.DOUBLE_SOCKET",
-        );
+        const doubleSocketLabel: string = this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.DOUBLE_SOCKET");
 
-        protocol.lots = this.serialNumbers.batteriesData.flatMap(
-            (batteryData) =>
-                batteryData.modules.map((module) => {
-                    // Default name and value
-                    let name = this.translate.instant(
-                        "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER",
-                        { label: module.label },
-                    );
-                    let value = module.value;
+        protocol.lots = this.serialNumbers.batteriesData.flatMap((batteryData) =>
+            batteryData.modules.map((module) => {
+                // Default name and value
+                let name = this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SINGLE_SERIAL_NUMBER", {
+                    label: module.label,
+                });
+                let value = module.value;
 
-                    // Special condition for the double socket
-                    if (
-                        this.isDoubleSocketValid &&
-                        module.label === doubleSocketLabel
-                    ) {
-                        name = doubleSocketLabel;
-                        value = module.value
-                            ? this.translate.instant("GENERAL.YES")
-                            : this.translate.instant("GENERAL.NO");
-                    }
+                // Special condition for the double socket
+                if (this.isDoubleSocketValid && module.label === doubleSocketLabel) {
+                    name = doubleSocketLabel;
+                    value = module.value ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO");
+                }
 
-                    return {
-                        category: batteryData.label,
-                        name: name,
-                        serialNumber: value,
-                    };
-                }),
+                return {
+                    category: batteryData.label,
+                    name: name,
+                    serialNumber: value,
+                };
+            }),
         );
 
         protocol.items.push(
@@ -704,18 +609,14 @@ export abstract class AbstractIbn<
                 category: Category.ALERTING,
                 name: this.translate.instant("GENERAL.FAULT"),
                 value: this.translate.instant(
-                    this.currentUserAlertingSettings.isFaultActive
-                        ? "GENERAL.YES"
-                        : "GENERAL.NO",
+                    this.currentUserAlertingSettings.isFaultActive ? "GENERAL.YES" : "GENERAL.NO",
                 ),
             },
             {
                 category: Category.ALERTING,
                 name: this.translate.instant("INSTALLATION.OFFLINE"),
                 value: this.translate.instant(
-                    this.currentUserAlertingSettings.isOfflineActive
-                        ? "GENERAL.YES"
-                        : "GENERAL.NO",
+                    this.currentUserAlertingSettings.isOfflineActive ? "GENERAL.YES" : "GENERAL.NO",
                 ),
             },
         );
@@ -744,12 +645,10 @@ export abstract class AbstractIbn<
     /**
      * Updates the `views` array by removing or adding specific views.
      *
-     * Manages the presense of the `PreInstallationUpdate` based on the Edge
-     * version for all systems. Manages the presence of the
-     * `ConfigurationEssLimiter14aComponent` view based on country location, for
-     * both Home and Commercial systems. Manages the presence of the
-     * `ConfigurationGridSettingComponent` view based on country location, for
-     * Commercial systems.
+     * Manages the presense of the `PreInstallationUpdate` based on the Edge version for all systems. Manages the
+     * presence of the `ConfigurationEssLimiter14aComponent` view based on country location, for both Home and
+     * Commercial systems. Manages the presence of the `ConfigurationGridSettingComponent` view based on country
+     * location, for Commercial systems.
      *
      * @param edge The current edge.
      */
@@ -767,29 +666,19 @@ export abstract class AbstractIbn<
     ): Promise<{}>[] {
         const result: Promise<{}>[] = [];
         for (let tower = 0; tower < numberOfTowers; tower++) {
-            result.push(
-                this.getSerialNumbersFromEdge(
-                    tower,
-                    edge,
-                    websocket,
-                    numberOfModulesPerTower,
-                ),
-            );
+            result.push(this.getSerialNumbersFromEdge(tower, edge, websocket, numberOfModulesPerTower, index));
         }
 
         return result;
     }
 
     /**
-     * Gets the list of options that should be displayed in feedInLimitation
-     * view.
+     * Gets the list of options that should be displayed in feedInLimitation view.
      *
      * @returns The options.
      */
     public getExternalLimitationTypeOptions(): ComponentData[] {
-        return EXTERNAL_LIMITATION_OPTIONS_WITHOUT_DYNAMIC_EXTERNAL_CONTROLLER(
-            this.translate,
-        );
+        return EXTERNAL_LIMITATION_OPTIONS_WITHOUT_DYNAMIC_EXTERNAL_CONTROLLER(this.translate);
     }
 
     public getGridSettingOptions() {
@@ -806,23 +695,18 @@ export abstract class AbstractIbn<
     }
 
     /**
-     * Gets the list of options that should be displayed in
-     * dynamicFeedInLimitation view.
+     * Gets the list of options that should be displayed in dynamicFeedInLimitation view.
      *
      * @returns The options.
      */
     public dynamicFeedInLimitationOptions(): ComponentData[] {
         return [
             {
-                label: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION",
-                ),
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_LIMITATION"),
                 value: GridFeedInLimitationType.DYNAMIC_LIMITATION,
             },
             {
-                label: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION",
-                ),
+                label: this.translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.NO_LIMITATION"),
                 value: GridFeedInLimitationType.NO_LIMITATION,
             },
         ];
@@ -837,18 +721,52 @@ export abstract class AbstractIbn<
         return 0;
     }
 
-    public setCurrentUserAlertingSettings(
-        detailedAlertingSetting: DetailedAlertingSetting,
-    ) {
+    public setCurrentUserAlertingSettings(detailedAlertingSetting: DetailedAlertingSetting) {
         this.currentUserAlertingSettings = detailedAlertingSetting;
     }
 
     /**
-     * Adds all fields which are System specific to be displayed in
-     * Configuration-Summary View.
+     * Expands form model entries into the full battery/tower settings array.
      *
-     * @param tableData The table data whose fields are displayed in
-     *   Configuration-Summary.
+     * Default: maps each form model 1:1. Systems with multiple battery inputs (e.g. Commercial 100) override this to
+     * replicate one form's settings across all active battery inputs.
+     *
+     * @param formModels The models from `batterySettingsForms`.
+     * @returns The expanded list of `{ numberOfTowers, numberOfModulesPerTower }` entries.
+     */
+    public expandBatteryFormModels(formModels: BatteryTowerSettings[]): BatteryTowerSettings[] {
+        return formModels.map((m) => ({
+            numberOfTowers: m.numberOfTowers,
+            numberOfModulesPerTower: m.numberOfModulesPerTower,
+        }));
+    }
+
+    /**
+     * Collapses the full expanded tower-settings array back to the set of form cards to display.
+     *
+     * Default: returns the array unchanged (one form card per battery). Systems where multiple batteries share the same
+     * settings (e.g. Commercial 100) override this to return a single card.
+     *
+     * @param settings The full expanded list.
+     * @returns The collapsed list used to build `batterySettingsForms`.
+     */
+    public collapseToFormSettings(settings: BatteryTowerSettings[]): BatteryTowerSettings[] {
+        return settings;
+    }
+
+    /**
+     * Returns the list of battery ids that are used in pre-settings view.
+     *
+     * @returns The list of battery ids.
+     */
+    public getPreSettingBatteryIds(): string[] {
+        return ["battery0"];
+    }
+
+    /**
+     * Adds all fields which are System specific to be displayed in Configuration-Summary View.
+     *
+     * @param tableData The table data whose fields are displayed in Configuration-Summary.
      */
     public abstract addSystemSpecificFields(tableData: TableData[]): void;
 
@@ -861,18 +779,15 @@ export abstract class AbstractIbn<
     public abstract getPreSettingInformationFromEdge(
         edge: Edge,
         websocket: Websocket,
-    ): Promise<
-        Array<{ numberOfTowers: number; numberOfModulesPerTower: number }>
-    >;
+    ): Promise<Array<{ numberOfTowers: number; numberOfModulesPerTower: number }>>;
 
     /**
-     * Returns the component fields for serial numbers based on system being
-     * installed.
+     * Returns the component fields for serial numbers based on system being installed.
      *
      * @param towerNr Number of towers.
      * @param numberOfModulesPerTower Number of modules per tower.
-     * @param batteryIndex Index of the battery/slave from the list of batteries
-     *   (Comemrcial cluster). usually '0' for Home.
+     * @param batteryIndex Index of the battery/slave from the list of batteries (Comemrcial cluster). usually '0' for
+     *   Home.
      */
     public abstract getSerialNumberFields(
         towerNr: number,
@@ -886,10 +801,7 @@ export abstract class AbstractIbn<
      * @param numberOfModulesPerTower Number of modules per tower.
      * @param numberOfTowers Number of towers.
      */
-    public abstract getPreSettingsFields(
-        numberOfModulesPerTower: number,
-        numberOfTowers: number,
-    ): FormlyFieldConfig[];
+    public abstract getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number): FormlyFieldConfig[];
 
     /**
      * Returns the appropriate header for serial number category for the system.
@@ -897,10 +809,7 @@ export abstract class AbstractIbn<
      * @param towerIndex The index of the towers.
      * @param batteryIndex The index of the batteries. usually '0' for Home.
      */
-    public abstract getSerialNumberCategoryHeader(
-        towerIndex: number,
-        batteryIndex?: number,
-    ): string;
+    public abstract getSerialNumberCategoryHeader(towerIndex: number, batteryIndex?: number): string;
 
     /**
      * Retrieves the Serial numbers of the battery modules and components.
@@ -919,15 +828,11 @@ export abstract class AbstractIbn<
         slaveNr?: number,
     ): Promise<{}>;
 
-    /**
-     * View Configuration Dynamic Feed-In limitation. Returns the fields for the
-     * views based on the system.
-     */
+    /** View Configuration Dynamic Feed-In limitation. Returns the fields for the views based on the system. */
     public abstract getFeedInLimitFields(): FormlyFieldConfig[];
 
     /**
-     * View Configuration-execute. Returns the required configuration object
-     * with components specific to the system.
+     * View Configuration-execute. Returns the required configuration object with components specific to the system.
      *
      * @param edge The current edge.
      * @param config The EdgeConfig.
@@ -943,40 +848,28 @@ export abstract class AbstractIbn<
     ): Promise<ComponentConfigurator>;
 
     /**
-     * View Protocol-serial-numbers. Returns the Protocol information of the
-     * system.
+     * View Protocol-serial-numbers. Returns the Protocol information of the system.
      *
      * @param edge The current edge.
      * @param websocket The Websocket connection.
      */
-    public abstract getProtocol(
-        edge: Edge,
-        websocket: Websocket,
-    ): Promise<string>;
+    public abstract getProtocol(edge: Edge, websocket: Websocket): Promise<string>;
 
-    /**
-     * Returns the set of controller for updateScheduler in component
-     * configurator.
-     */
+    /** Returns the set of controller for updateScheduler in component configurator. */
     public abstract setRequiredControllers();
 
-    /**
-     * Returns the fields that has system variants specific to the 'System Type'
-     * selected in previous step.
-     */
+    /** Returns the fields that has system variants specific to the 'System Type' selected in previous step. */
     public abstract getSystemVariantFields(): FormlyFieldConfig[];
 
     /**
      * Populates the properties of this IBN instance from a plain data object.
      *
      * @remarks
-     *   This is typically used to restore the state of the object after it has
-     *   been deserialized from JSON stored in `sessionStorage`.
+     *   This is typically used to restore the state of the object after it has been deserialized from JSON stored in
+     *   `sessionStorage`.
      *
-     *   This function copies the data from that plain object onto a new,
-     *   fully-functional class instance, ensuring all implementation-specific
-     *   properties like `gridSetting` or `emergencyReserve` are correctly
-     *   populated.
+     *   This function copies the data from that plain object onto a new, fully-functional class instance, ensuring all
+     *   implementation-specific properties like `gridSetting` or `emergencyReserve` are correctly populated.
      * @param source The plain data object containing the state to restore.
      */
     public abstract populateFromData(source: any);

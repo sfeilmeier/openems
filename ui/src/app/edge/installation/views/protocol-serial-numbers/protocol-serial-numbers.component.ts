@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -7,7 +7,7 @@ import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { ArrayUtils } from "src/app/shared/utils/array/array.utils";
 import { ObjectUtils } from "src/app/shared/utils/object/object-utils";
 import { environment } from "src/environments";
-import { AbstractIbn } from "../../installation-systems/abstract-ibn";
+import { AbstractIbn, BatteryTowerSettings } from "../../installation-systems/abstract-ibn";
 import { Commercial92Ibn } from "../../installation-systems/commercial/commercial-92/commercial92";
 import { ComponentData, SerialNumberFormData } from "../../shared/ibndatatypes";
 
@@ -28,7 +28,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
     protected batterySettingsForms: {
         formGroup: FormGroup;
         fields: FormlyFieldConfig[];
-        model: any;
+        model: BatteryTowerSettings;
     }[] = [];
 
     protected forms: SerialNumberFormData[] = [];
@@ -152,17 +152,17 @@ export class ProtocolSerialNumbersComponent implements OnInit {
             return;
         }
 
+        // Expand form-model entries via the ibn (Commercial100 replicates for each battery input)
+        const expanded = this.ibn.expandBatteryFormModels(this.batterySettingsForms.map((f) => f.model));
+        this.numberOfTowersPerBattery = expanded.map((s) => s.numberOfTowers);
+        this.numberOfModulesPerTowerPerBattery = expanded.map((s) => s.numberOfModulesPerTower);
+
         // Update stored configuration
         this.ibn.serialNumbers.numberOfTowers = this.numberOfTowersPerBattery;
         this.ibn.serialNumbers.numberOfModulesPerTower = this.numberOfModulesPerTowerPerBattery;
 
         // Clear outdated models
         this.ibn.serialNumbers = ObjectUtils.excludeProperties(this.ibn.serialNumbers, ["formModels"]);
-
-        this.batterySettingsForms.forEach((form, index) => {
-            this.numberOfTowersPerBattery[index] = form.model.numberOfTowers;
-            this.numberOfModulesPerTowerPerBattery[index] = form.model.numberOfModulesPerTower;
-        });
 
         this.setIsWaiting(true);
         this.initializeAllFields().then(() => {
@@ -349,7 +349,6 @@ export class ProtocolSerialNumbersComponent implements OnInit {
     /** Fetches settings and initializes the component's forms and fields. */
     private async initializeComponentSettings(): Promise<void> {
         const { numberOfTowers, numberOfModulesPerTower } = this.ibn.serialNumbers || {};
-        let towerSettings: { numberOfTowers: number; numberOfModulesPerTower: number }[];
 
         const hasStoredSettings =
             Array.isArray(this.ibn.serialNumbers?.numberOfTowers) &&
@@ -357,29 +356,46 @@ export class ProtocolSerialNumbersComponent implements OnInit {
             numberOfTowers.length === numberOfModulesPerTower.length;
 
         if (hasStoredSettings) {
-            // If data is already present, transform it.
-            towerSettings = numberOfTowers.map((towers, index) => ({
+            // Restore the full expanded arrays from stored data
+            numberOfTowers.forEach((towers, index) => {
+                this.numberOfTowersPerBattery[index] = towers;
+                this.numberOfModulesPerTowerPerBattery[index] = numberOfModulesPerTower[index];
+            });
+
+            // Build form cards from the collapsed view (e.g. 1 card for Commercial100
+            // even when multiple battery inputs expand the stored arrays)
+            const expandedSettings = numberOfTowers.map((towers, index) => ({
                 numberOfTowers: towers,
                 numberOfModulesPerTower: numberOfModulesPerTower[index],
             }));
+            // No-op for most systems, but Commercial100 overrides this to merge multiple
+            // battery inputs back into a single form card.
+            this.ibn.collapseToFormSettings(expandedSettings).forEach((setting) => {
+                this.createBatterySettingForms(setting);
+            });
         } else {
             // Fetch data and handle the potential error with .catch().
             // The 'await' here will either resolve with the settings or reject with default values.
-            towerSettings = await this.ibn.getPreSettingInformationFromEdge(this.edge, this.websocket);
-        }
+            const towerSettings = await this.ibn.getPreSettingInformationFromEdge(this.edge, this.websocket);
 
-        // Now that we have towerSettings from one of the two sources, process it.
-        towerSettings.forEach((setting, index) => {
-            this.numberOfTowersPerBattery[index] = setting.numberOfTowers;
-            this.numberOfModulesPerTowerPerBattery[index] = setting.numberOfModulesPerTower;
-            this.createBatterySettingForms(setting);
-        });
+            // Build the settings-form cards from the collapsed view (e.g. 1 card for Commercial100
+            // even when multiple battery inputs share the same tower/module configuration)
+            towerSettings.forEach((setting) => this.createBatterySettingForms(setting));
+
+            // Expand to one entry per actual battery input, so the serial-number forms below are
+            // generated per battery input (e.g. Commercial100 replicates across battery1, battery2, ...)
+            const expandedSettings = this.ibn.expandBatteryFormModels(towerSettings);
+            expandedSettings.forEach((setting, index) => {
+                this.numberOfTowersPerBattery[index] = setting.numberOfTowers;
+                this.numberOfModulesPerTowerPerBattery[index] = setting.numberOfModulesPerTower;
+            });
+        }
 
         // Initialize all form fields based on the settings
         await this.initializeAllFields();
     }
 
-    private createBatterySettingForms(towerSetting: { numberOfTowers: number; numberOfModulesPerTower: number }) {
+    private createBatterySettingForms(towerSetting: BatteryTowerSettings) {
         const formGroup = new FormGroup({});
         const fields = this.ibn.getPreSettingsFields(towerSetting.numberOfModulesPerTower, towerSetting.numberOfTowers);
         const model = { ...towerSetting };

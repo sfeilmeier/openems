@@ -62,29 +62,6 @@ export type CommercialGen3App = {
 } & MpptConfig;
 
 export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyModel> {
-    protected static readonly VIEWS = [
-        View.PreInstallation,
-        View.PreInstallationUpdate,
-        View.ConfigurationSystem,
-        View.ConfigurationSubSystem,
-        View.ProtocolInstaller,
-        View.ProtocolCustomer,
-        View.ProtocolSystem,
-        View.ProtocolSystemLocation,
-        View.ConfigurationEssLimiter14aComponent,
-        View.ConfigurationEnergyFlowMeter,
-        View.ConfigurationMpptSelection,
-        View.ProtocolPv,
-        View.ConfigurationStsBox,
-        View.ConfigurationGridSetting,
-        View.ProtocolFeedInLimitation,
-        View.ConfigurationSummary,
-        View.ConfigurationExecute,
-        View.ProtocolSerialNumbers,
-        View.Alerting,
-        View.Completion,
-    ];
-
     public override readonly systemType: SystemType = SystemType.COMMERCIAL;
     public override readonly defaultNumberOfModules: number = 2;
     public override readonly minNumberOfTowers: number = 2;
@@ -216,7 +193,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
                 },
                 expressions: {
                     "templateOptions.disabled": (field) => !field.model?.isStsBoxAvailable,
-                    "hide": (field) => !field.model?.isEnabled,
+                    hide: (field) => !field.model?.isEnabled,
                 },
                 hooks: {
                     onInit: (field) => {
@@ -266,7 +243,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
                     required: true,
                 },
                 expressions: {
-                    "hide": (field) => !field.model?.genset.isEnabled,
+                    hide: (field) => !field.model?.genset.isEnabled,
                     "props.disabled": (field) => !field.model?.genset.IS_GENSET_INSTALLED,
                 },
                 wrappers: ["input-with-unit"],
@@ -286,7 +263,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
                     required: true,
                 },
                 expressions: {
-                    "hide": (field) => !field.model?.genset.isEnabled,
+                    hide: (field) => !field.model?.genset.isEnabled,
                     "props.disabled": (field) => !field.model?.genset.IS_GENSET_INSTALLED,
                 },
                 wrappers: ["input-with-unit"],
@@ -306,7 +283,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
                     required: true,
                 },
                 expressions: {
-                    "hide": (field) => !field.model?.genset.isEnabled,
+                    hide: (field) => !field.model?.genset.isEnabled,
                     "props.disabled": (field) => !field.model?.genset.IS_GENSET_INSTALLED,
                 },
                 wrappers: ["input-with-unit"],
@@ -343,7 +320,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
                     required: true,
                 },
                 expressions: {
-                    "hide": (field) => !field.model?.genset.IS_GENSET_INSTALLED,
+                    hide: (field) => !field.model?.genset.IS_GENSET_INSTALLED,
                     "props.disabled": (field) => !field.model?.genset.GENSET_ENABLE_CHARGE,
                 },
                 wrappers: ["input-with-unit"],
@@ -363,7 +340,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
                     required: true,
                 },
                 expressions: {
-                    "hide": (field) => !field.model?.genset.IS_GENSET_INSTALLED,
+                    hide: (field) => !field.model?.genset.IS_GENSET_INSTALLED,
                     "props.description": (field) =>
                         `${this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_START_DESCRIPTION")} [${field.model?.value ?? 20},90] %`,
                     "props.disabled": (field) => !field.model?.genset.GENSET_ENABLE_CHARGE,
@@ -389,7 +366,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
                     required: true,
                 },
                 expressions: {
-                    "hide": (field) => !field.model?.genset.IS_GENSET_INSTALLED,
+                    hide: (field) => !field.model?.genset.IS_GENSET_INSTALLED,
                     "props.disabled": (field) => !field.model?.genset.GENSET_ENABLE_CHARGE,
                 },
                 wrappers: ["input-with-unit"],
@@ -729,7 +706,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         return model;
     }
 
-    protected override getTowerHeadFields(towerNr: number): FormlyFieldConfig[] {
+    protected override getTowerHeadFields(towerNr: number, batteryIndex?: number): FormlyFieldConfig[] {
         if (towerNr === 0) {
             return [
                 {

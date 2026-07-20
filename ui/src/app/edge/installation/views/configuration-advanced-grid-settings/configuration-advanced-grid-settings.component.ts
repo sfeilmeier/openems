@@ -295,7 +295,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("apmPfOverFrequencyCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("apmPfOverFrequencyCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>(
                         "apmPfOverFrequencyCurveEnable",
                         false,
@@ -319,7 +319,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("apmPfOverFrequencyCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("apmPfOverFrequencyCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>(
                         "apmPfOverFrequencyCurveEnable",
                         false,
@@ -467,7 +467,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("apmPfUnderFrequencyCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("apmPfUnderFrequencyCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>(
                         "apmPfUnderFrequencyCurveEnable",
                         false,
@@ -491,7 +491,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("apmPfUnderFrequencyCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("apmPfUnderFrequencyCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>(
                         "apmPfUnderFrequencyCurveEnable",
                         false,
@@ -642,7 +642,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("puCurveEnable", false),
                 },
             },
@@ -664,7 +664,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("puCurveEnable", false),
                 },
             },
@@ -686,7 +686,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("puCurveEnable", false),
                 },
             },
@@ -708,7 +708,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("puCurveEnable", false),
                 },
             },
@@ -730,7 +730,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("puCurveEnable", false),
                 },
             },
@@ -752,7 +752,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("puCurveEnable", false),
                 },
             },
@@ -774,7 +774,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("puCurveEnable", false),
                 },
             },
@@ -829,7 +829,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ],
                 },
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("puCurveEnable", true),
                     "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("puCurveEnable", false),
                 },
             },
@@ -850,7 +850,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.combineOr<ActivePowerModeModel>(
+                    hide: FormlyUtils.combineOr<ActivePowerModeModel>(
                         FormlyUtils.propIsFalse("puCurveEnable"),
                         FormlyUtils.propNotEquals("apmPuOutputResponseMode", RecoveryMode.PT_1_BEHAVIOUR),
                     ),
@@ -878,7 +878,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.combineOr<ActivePowerModeModel>(
+                    hide: FormlyUtils.combineOr<ActivePowerModeModel>(
                         FormlyUtils.propIsFalse("puCurveEnable"),
                         FormlyUtils.propNotEquals("apmPuOutputResponseMode", RecoveryMode.GRADIENT_CONTROL),
                     ),
@@ -1074,7 +1074,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQuCurveMode", CurveMode.SLOPE, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQuCurveMode", CurveMode.SLOPE, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmQuCurveMode",
                         CurveMode.SLOPE,
@@ -1102,7 +1102,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQuCurveMode", CurveMode.SLOPE, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQuCurveMode", CurveMode.SLOPE, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmQuCurveMode",
                         CurveMode.SLOPE,
@@ -1126,7 +1126,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQuCurveMode", CurveMode.SLOPE, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQuCurveMode", CurveMode.SLOPE, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmQuCurveMode",
                         CurveMode.SLOPE,
@@ -1157,7 +1157,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
+                        hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
                             "rpmQuCurveMode",
                             CurveMode.SLOPE,
                             true,
@@ -1242,7 +1242,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ReactivePowerModeModel>("rpmQuExtendedFunctions"),
+                    hide: FormlyUtils.propIsFalse<ReactivePowerModeModel>("rpmQuExtendedFunctions"),
                     "templateOptions.required":
                         FormlyUtils.propIsTrue<ReactivePowerModeModel>("rpmQuExtendedFunctions"),
                 },
@@ -1263,7 +1263,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ReactivePowerModeModel>("rpmQuExtendedFunctions"),
+                    hide: FormlyUtils.propIsFalse<ReactivePowerModeModel>("rpmQuExtendedFunctions"),
                     "templateOptions.required":
                         FormlyUtils.propIsTrue<ReactivePowerModeModel>("rpmQuExtendedFunctions"),
                 },
@@ -1324,7 +1324,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmCosPhiMode", CurveMode.SLOPE, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmCosPhiMode", CurveMode.SLOPE, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmCosPhiMode",
                         CurveMode.SLOPE,
@@ -1348,7 +1348,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmCosPhiMode", CurveMode.SLOPE, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmCosPhiMode", CurveMode.SLOPE, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmCosPhiMode",
                         CurveMode.SLOPE,
@@ -1387,7 +1387,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
             if (hidePow) {
                 powField.expressions = {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmCosPhiMode", CurveMode.SLOPE, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmCosPhiMode", CurveMode.SLOPE, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmCosPhiMode",
                         CurveMode.SLOPE,
@@ -1424,7 +1424,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
             if (hideCos) {
                 cosField.expressions = {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmCosPhiMode", CurveMode.SLOPE, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmCosPhiMode", CurveMode.SLOPE, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmCosPhiMode",
                         CurveMode.SLOPE,
@@ -1570,7 +1570,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQpCurveMode", CurveMode.SLOPE, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQpCurveMode", CurveMode.SLOPE, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmQpCurveMode",
                         CurveMode.SLOPE,
@@ -1594,7 +1594,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQpCurveMode", CurveMode.SLOPE, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQpCurveMode", CurveMode.SLOPE, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmQpCurveMode",
                         CurveMode.SLOPE,
@@ -1631,7 +1631,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
             if (isDynamicPow) {
                 powField.expressions = {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQpCurveMode", CurveMode.STANDARD, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQpCurveMode", CurveMode.STANDARD, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmQpCurveMode",
                         CurveMode.STANDARD,
@@ -1660,7 +1660,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
             if (isDynamicReact) {
                 reactField.expressions = {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQpCurveMode", CurveMode.STANDARD, true),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("rpmQpCurveMode", CurveMode.STANDARD, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "rpmQpCurveMode",
                         CurveMode.STANDARD,
@@ -2026,7 +2026,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsTrue<ConnectionParametersModel>("cpSoftRampUpGradientEnable"),
+                    hide: FormlyUtils.propIsTrue<ConnectionParametersModel>("cpSoftRampUpGradientEnable"),
                     "templateOptions.required":
                         FormlyUtils.propIsTrue<ConnectionParametersModel>("cpSoftRampUpGradientEnable"),
                 },
@@ -2152,7 +2152,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsTrue<ConnectionParametersModel>("cpReconnectionGradientEnable"),
+                    hide: FormlyUtils.propIsTrue<ConnectionParametersModel>("cpReconnectionGradientEnable"),
                     "templateOptions.required":
                         FormlyUtils.propIsTrue<ConnectionParametersModel>("cpReconnectionGradientEnable"),
                 },
@@ -2202,7 +2202,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtLvrtEnable"),
+                        hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtLvrtEnable"),
                         "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("vrtLvrtEnable"),
                     },
                 },
@@ -2224,7 +2224,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtLvrtEnable"),
+                        hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtLvrtEnable"),
                         "templateOptions.required": (field) => {
                             if (field.model && i !== 1) {
                                 return field.model.vrtLvrtEnable === true;
@@ -2254,7 +2254,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtLvrtEnable"),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtLvrtEnable"),
                     "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("vrtLvrtEnable"),
                 },
             },
@@ -2275,7 +2275,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtLvrtEnable"),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtLvrtEnable"),
                     "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("vrtLvrtEnable"),
                 },
             },
@@ -2296,7 +2296,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtLvrtEnable"),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtLvrtEnable"),
                     "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("vrtLvrtEnable"),
                 },
             },
@@ -2380,7 +2380,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtHvrtEnable"),
+                        hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtHvrtEnable"),
                         "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("vrtHvrtEnable"),
                     },
                 },
@@ -2402,7 +2402,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtHvrtEnable"),
+                        hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtHvrtEnable"),
                         "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("vrtHvrtEnable"),
                     },
                 },
@@ -2427,7 +2427,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtHvrtEnable"),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtHvrtEnable"),
                     "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("vrtHvrtEnable"),
                 },
             },
@@ -2448,7 +2448,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtHvrtEnable"),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtHvrtEnable"),
                     "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("vrtHvrtEnable"),
                 },
             },
@@ -2469,7 +2469,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtHvrtEnable"),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("vrtHvrtEnable"),
                     "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("vrtHvrtEnable"),
                 },
             },
@@ -2591,7 +2591,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
+                    hide: FormlyUtils.propNotEquals<VoltageRideThroughModel>(
                         "vrtActivePowerRecoveryMode",
                         RecoveryMode.GRADIENT_CONTROL,
                     ),
@@ -2618,7 +2618,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
+                    hide: FormlyUtils.propNotEquals<VoltageRideThroughModel>(
                         "vrtActivePowerRecoveryMode",
                         RecoveryMode.PT_1_BEHAVIOUR,
                     ),
@@ -2676,7 +2676,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
+                    hide: FormlyUtils.propNotEquals<VoltageRideThroughModel>(
                         "vrtReactivePowerRecoveryModeEnd",
                         RecoveryMode.GRADIENT_CONTROL,
                     ),
@@ -2704,7 +2704,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
+                    hide: FormlyUtils.propNotEquals<VoltageRideThroughModel>(
                         "vrtReactivePowerRecoveryModeEnd",
                         RecoveryMode.PT_1_BEHAVIOUR,
                     ),
@@ -2763,7 +2763,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<FrequencyRideThroughModel>("frtEnable"),
+                        hide: FormlyUtils.propIsFalse<FrequencyRideThroughModel>("frtEnable"),
                         "templateOptions.required": FormlyUtils.propIsTrue<FrequencyRideThroughModel>("frtEnable"),
                     },
                 },
@@ -2784,7 +2784,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<FrequencyRideThroughModel>("frtEnable"),
+                        hide: FormlyUtils.propIsFalse<FrequencyRideThroughModel>("frtEnable"),
                         "templateOptions.required": FormlyUtils.propIsTrue<FrequencyRideThroughModel>("frtEnable"),
                     },
                 },
@@ -2810,7 +2810,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<FrequencyRideThroughModel>("frtEnable"),
+                        hide: FormlyUtils.propIsFalse<FrequencyRideThroughModel>("frtEnable"),
                         "templateOptions.required": FormlyUtils.propIsTrue<FrequencyRideThroughModel>("frtEnable"),
                     },
                 },

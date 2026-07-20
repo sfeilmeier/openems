@@ -31,6 +31,16 @@ export const OemMeta: BaseMeta = {
                 HEATING_ELEMENT: "https://docs.fenecon.de/de/_images/other/zz/fems/heizstab/mypv/Heizstab_MyPV.png",
             },
         },
+        INSTALLATION: {
+            COMMERCIAL: {
+                COMMERCIAL_100: {
+                    BATTERY_INPUT_1:
+                        "https://docs.fenecon.de/image/fenecon/de/installation/systems/commercial/commercial_100/battery_inputs/Battery_Input_1.png",
+                    BATTERY_INPUT_2:
+                        "https://docs.fenecon.de/image/fenecon/de/installation/systems/commercial/commercial_100/battery_inputs/Battery_Input_2.png",
+                },
+            },
+        },
     },
     /** Maps to file-proxy for fenecon docs */
     links: {

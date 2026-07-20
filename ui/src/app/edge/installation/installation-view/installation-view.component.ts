@@ -1,13 +1,15 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnChanges, Output, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from "@angular/core";
+import { IonicModule } from "@ionic/angular";
 import { FormlyFieldConfig } from "@ngx-formly/core";
-import { TranslateService } from "@ngx-translate/core";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: InstallationViewComponent.SELECTOR,
     templateUrl: "./installation-view.component.html",
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false,
+    standalone: true,
+    imports: [IonicModule, TranslateModule],
 })
 export class InstallationViewComponent implements OnChanges {
     private static readonly SELECTOR = "installation-view";

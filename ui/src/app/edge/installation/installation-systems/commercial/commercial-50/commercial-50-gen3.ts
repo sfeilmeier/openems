@@ -1,10 +1,33 @@
 import { TranslateService } from "@ngx-translate/core";
+import { View } from "../../../shared/enums";
 import { SystemId } from "../../../shared/system";
 import { WebLinks } from "../../../shared/weblink.utils";
 import { AbstractCommercialGen3 } from "../abstract-commercial-gen3";
 
 export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
     private static readonly MAX_MPPT = 4;
+    private static readonly VIEWS = [
+        View.PreInstallation,
+        View.PreInstallationUpdate,
+        View.ConfigurationSystem,
+        View.ConfigurationSubSystem,
+        View.ProtocolInstaller,
+        View.ProtocolCustomer,
+        View.ProtocolSystem,
+        View.ProtocolSystemLocation,
+        View.ConfigurationEssLimiter14aComponent,
+        View.ConfigurationEnergyFlowMeter,
+        View.ConfigurationMpptSelection,
+        View.ProtocolPv,
+        View.ConfigurationStsBox,
+        View.ConfigurationGridSetting,
+        View.ProtocolFeedInLimitation,
+        View.ConfigurationSummary,
+        View.ConfigurationExecute,
+        View.ProtocolSerialNumbers,
+        View.Alerting,
+        View.Completion,
+    ];
 
     public override warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_COMMERCIAL_50_GEN3;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_50_GEN_3;
@@ -14,7 +37,6 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
     protected override readonly baseImagePath = "assets/img/ibn/mppt/c-50-mppt/";
 
     constructor(translate: TranslateService) {
-        super(AbstractCommercialGen3.VIEWS, Commercial50Gen3Ibn.MAX_MPPT, translate);
+        super(Commercial50Gen3Ibn.VIEWS, Commercial50Gen3Ibn.MAX_MPPT, translate);
     }
-
 }

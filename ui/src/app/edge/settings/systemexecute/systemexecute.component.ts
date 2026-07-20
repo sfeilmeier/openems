@@ -12,8 +12,8 @@ import { Service, Utils, Websocket } from "../../../shared/shared";
 type CommandFunction = (...args: (string | boolean | number)[]) => string;
 
 const COMMANDS: { [key: string]: CommandFunction } = {
-    "ping": (ip: string) => `ping -c4 ${ip}`,
-    "branch": (branch: string, force: boolean) =>
+    ping: (ip: string) => `ping -c4 ${ip}`,
+    branch: (branch: string, force: boolean) =>
         `echo "wget https://fenecon.de/fems-tools/update-fems.sh -O /tmp/update-fems.sh && bash -x /tmp/update-fems.sh ${force ? "-f" : ""} ${branch ? "-b" : " "} ${branch ? branch : ""} > /tmp/log 2>& 1" | at now`,
     "query-status": () => "ps ax | grep /tmp/update-fems.sh; tail /tmp/log",
     "openems-restart": () =>
