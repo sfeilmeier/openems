@@ -8,13 +8,13 @@ import io.openems.common.session.Role;
 import io.openems.edge.battery.fenecon.home.BatteryFeneconHomeHardwareType;
 import io.openems.edge.battery.fenecon.home.TwoPartVersion;
 import io.openems.edge.battery.fenecon.home.update.BatteryFeneconHomeUpdateParams;
-import io.openems.edge.common.update.Updateable;
 
 @Component
 public class FeneconHomeBatteryUpdateParams implements BatteryFeneconHomeUpdateParams {
+
 	@Override
-	public Updateable.UpdateableMetaInfo getMetaInfo() {
-		return new Updateable.UpdateableMetaInfo("Fenecon Home Battery", "Update for Fenecon Home Battery", Role.ADMIN);
+	public UpdateInfo getMetaInfo() {
+		return new UpdateInfo("Fenecon Home Battery", Role.ADMIN);
 	}
 
 	@Override
@@ -31,4 +31,5 @@ public class FeneconHomeBatteryUpdateParams implements BatteryFeneconHomeUpdateP
 				HashCode.fromString("66b79c57566b57243ebcc62e67a8349288a7656e6f6d33739b548e75caef3e9e"));
 		};
 	}
+
 }
