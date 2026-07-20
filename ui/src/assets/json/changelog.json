@@ -1,5 +1,22 @@
 [
     {
+        "version": "2026.7.2",
+        "entries": {
+            "de": [
+                "Online-Monitoring/FENECON App: Korrektur bei Hilfe-Seiten",
+                "Lokales Monitoring: dauerhaftes Speichern der eingestellten Sprache",
+                "<a class='ion-link' target=\"_blank\" href=\"https://fenecon.de/fems-erzeugungs-und-verbrauchszahler\">FEMS App Erzeugungs- und Verbrauchszähler</a>: Kompatibilität mit SOCOMEC COUNTIS E47 und E48 via Modbus/TCP",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest</a>: Verbesserte Fahrplanvisualisierung für Askoma und my-PV Heizstäbe"
+            ],
+            "en": [
+                "Online monitoring/FENECON App: Correction for help pages",
+                "Local monitoring: persistently save the selected language",
+                "<a class='ion-link' target=\"_blank\" href=\"https://www.fenecon.com/fems-production-and-consumption-meter\">FEMS App Production and Consumption Meter</a>: Compatibility with SOCOMEC COUNTIS E47 and E48 via Modbus/TCP",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Field Test</a>: Improved schedule visualization for Askoma and my-PV power-to-heat"
+            ]
+        }
+    },
+    {
         "version": "2026.7.1",
         "entries": {
             "de": [
