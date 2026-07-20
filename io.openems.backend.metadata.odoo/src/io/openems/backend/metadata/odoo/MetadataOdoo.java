@@ -42,7 +42,6 @@ import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -708,7 +707,7 @@ public class MetadataOdoo extends AbstractMetadata implements AppCenterMetadata,
 		});
 	}
 
-	private static final Set<String> freeApps = Set.of(
+	private static final Set<String> freeApps = Set.of(//
 			"App.Hardware.KMtronic8Channel", //
 			"App.Cloud.Clever-PV", //
 			"App.Prediction.Weather", //
