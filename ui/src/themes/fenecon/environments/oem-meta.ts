@@ -39,30 +39,49 @@ export const OemMeta: BaseMeta = {
         DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
         REDIRECT: {
             BETA_SURVEY: "https://erp.fenecon.de/survey/start/d123c5ff-72e1-4fdf-bbc8-867d5a75c51c",
-            BETA_CHANGE_LOG: "https://docs.fenecon.de/redirect/fenecon/de/beta_change_log",
-            COMMON_STORAGE: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_storage",
-            COMMON_AUTARCHY: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_autarchy",
-            COMMON_CONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_consumption",
-            COMMON_GRID: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_grid",
-            COMMON_PRODUCTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_production",
-            COMMON_SELFCONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_selfconsumption",
+            BETA_CHANGE_LOG: "https://docs.fenecon.de/redirect/fenecon/de/beta_change_log", // only available in german
+            COMMON_STORAGE: "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_storage",
+            COMMON_AUTARCHY: "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_autarchy",
+            COMMON_CONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_consumption",
+            COMMON_GRID: "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_grid",
+            COMMON_PRODUCTION: "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_production",
+            COMMON_SELFCONSUMPTION:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_selfconsumption",
             OFFLINE_INSTRUCTIONS:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/installation_firewall_target_address",
 
-            CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE: "fems-app/includes/FEMS_App_Netzdienliche_Beladung.html",
-            CONTROLLER_IO_HEAT_PUMP_SG_READY: "fems-app/includes/FEMS_App_Waermepumpe_SG-Ready.html",
-            CONTROLLER_IO_HEATING_ELEMENT: "fems-app/includes/FEMS_App_Heizstab.html",
-            CONTROLLER_ESS_TIME_OF_USE_TARIFF: "fems-app/OEM_App_TOU.html",
+            CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_ess_grid_optimized_charge",
+            CONTROLLER_IO_HEAT_PUMP_SG_READY:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_io_heat_pump_sg_ready",
+            CONTROLLER_IO_HEATING_ELEMENT:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_io_heating_element",
+            CONTROLLER_ESS_TIME_OF_USE_TARIFF:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_ess_time_of_use",
+            CONTROLLER_CHP_SOC: "https://docs.fenecon.de/redirect/fenecon/{language}/controller_chp_soc",
+            CONTROLLER_IO_CHANNEL_SINGLE_THRESHOLD:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_io_channel_single_threshold",
+            CONTROLLER_IO_FIX_DIGITAL_OUTPUT:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_io_fix_digital_output",
 
-            EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/de/evcs_keba",
-            EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/de/evcs_hardybarth",
-            EVCS_MENNEKES: "https://docs.fenecon.de/redirect/fenecon/de/evcs_mennekes",
-            EVCS_GO_E: "https://docs.fenecon.de/redirect/fenecon/de/evcs_goe",
-            EVCS_IES: "https://docs.fenecon.de/redirect/fenecon/de/evcs_ies",
-            EVCS_ALPITRONIC_HYPER: "https://docs.fenecon.de/redirect/fenecon/de/evcs_alpitronichyper",
+            CONTROLLER_API_MODBUSTCP_READ:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_api_modbustcp_read",
+            CONTROLLER_API_MODBUSTCP_READWRITE:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_api_modbustcp_readwrite",
+
+            CONTROLLER_API_REST_READ: "https://docs.fenecon.de/redirect/fenecon/{language}/controller_api_rest_read",
+            CONTROLLER_API_REST_READWRITE:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_api_rest_readwrite",
+
+            EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_keba",
+            EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_hardybarth",
+            EVCS_MENNEKES: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_mennekes",
+            EVCS_GO_E: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_goe",
+            EVCS_IES: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_ies",
+            EVCS_ALPITRONIC_HYPER: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_alpitronichyper",
             SETTINGS_NETWORK_CONFIGURATION: "https://docs.fenecon.de/redirect/fenecon/de/technical_documentation",
-            SETTINGS_ALERTING: "https://docs.fenecon.de/redirect/fenecon/de/alerting",
-            WEATHER_WIDGET: "https://docs.fenecon.de/redirect/fenecon/de/weather",
+            SETTINGS_ALERTING: "https://docs.fenecon.de/redirect/fenecon/{language}/alerting",
+            WEATHER_WIDGET: "https://docs.fenecon.de/redirect/fenecon/{language}/weather",
             SYSTEM: {
                 INDUSTRIAL_S_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_s_manual",
                 INDUSTRIAL_M_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_m_manual",
@@ -92,15 +111,6 @@ export const OemMeta: BaseMeta = {
         },
 
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
-        CONTROLLER_CHP_SOC: "fems-app/bhkw.html",
-        CONTROLLER_IO_CHANNEL_SINGLE_THRESHOLD: "fems-app/includes/FEMS_App_Schwellwertsteuerung.html",
-        CONTROLLER_IO_FIX_DIGITAL_OUTPUT: "fems-app/includes/FEMS_App_Manuelle_Relaissteuerung.html",
-
-        CONTROLLER_API_MODBUSTCP_READ: "fems-app/FEMS_App_Modbus_TCP.html#_lesezugriff",
-        CONTROLLER_API_MODBUSTCP_READWRITE: "fems-app/FEMS_App_Modbus_TCP.html#_schreibzugriff",
-
-        CONTROLLER_API_REST_READ: "fems-app/FEMS_App_REST_JSON.html#_lesezugriff",
-        CONTROLLER_API_REST_READWRITE: "fems-app/FEMS_App_REST_JSON.html#_schreibzugriff",
 
         EVCS_CLUSTER: "fems-app/includes/FEMS_App_Multi-Ladepunkt-Management.html",
 

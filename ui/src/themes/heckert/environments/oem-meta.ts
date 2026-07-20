@@ -93,10 +93,24 @@ export const OemMeta: BaseMeta = {
             COMMON_PRODUCTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_production",
             COMMON_SELFCONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_selfconsumption",
 
-            CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE: "io.openems.edge.controller.ess.gridoptimizedcharge/readme.adoc",
-            CONTROLLER_IO_HEAT_PUMP_SG_READY: "io.openems.edge.controller.io.heatpump.sgready/readme.adoc",
-            CONTROLLER_IO_HEATING_ELEMENT: "io.openems.edge.controller.io.heatingelement/readme.adoc",
-            CONTROLLER_ESS_TIME_OF_USE_TARIFF: "io.openems.edge.controller.ess.timeofusetariff/readme.adoc",
+            CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE:
+                "https://docs.fenecon.de/redirect/fenecon/de/controller_ess_grid_optimized_charge",
+            CONTROLLER_IO_HEAT_PUMP_SG_READY:
+                "https://docs.fenecon.de/redirect/fenecon/de/controller_io_heat_pump_sg_ready",
+            CONTROLLER_IO_HEATING_ELEMENT: "https://docs.fenecon.de/redirect/fenecon/de/controller_io_heating_element",
+            CONTROLLER_ESS_TIME_OF_USE_TARIFF: "https://docs.fenecon.de/redirect/fenecon/de/controller_ess_time_of_use",
+            CONTROLLER_CHP_SOC: "https://docs.fenecon.de/redirect/fenecon/de/controller_chp_soc",
+            CONTROLLER_IO_CHANNEL_SINGLE_THRESHOLD:
+                "https://docs.fenecon.de/redirect/fenecon/de/controller_io_channel_single_threshold",
+            CONTROLLER_IO_FIX_DIGITAL_OUTPUT:
+                "https://docs.fenecon.de/redirect/fenecon/de/controller_io_fix_digital_output",
+
+            CONTROLLER_API_MODBUSTCP_READ: "https://docs.fenecon.de/redirect/fenecon/de/controller_api_modbustcp_read",
+            CONTROLLER_API_MODBUSTCP_READWRITE:
+                "https://docs.fenecon.de/redirect/fenecon/de/controller_api_modbustcp_readwrite",
+
+            CONTROLLER_API_REST_READ: "https://docs.fenecon.de/redirect/fenecon/de/controller_api_rest_read",
+            CONTROLLER_API_REST_READWRITE: "https://docs.fenecon.de/redirect/fenecon/de/controller_api_rest_readwrite",
 
             EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/de/evcs_keba",
             EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/de/evcs_hardybarth",
@@ -136,16 +150,6 @@ export const OemMeta: BaseMeta = {
         FORGET_PASSWORD:
             "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
-
-        CONTROLLER_CHP_SOC: "io.openems.edge.controller.chp.soc/readme.adoc",
-        CONTROLLER_IO_CHANNEL_SINGLE_THRESHOLD: "io.openems.edge.controller.io.channelsinglethreshold/readme.adoc",
-        CONTROLLER_IO_FIX_DIGITAL_OUTPUT: "io.openems.edge.controller.io.fixdigitaloutput/readme.adoc",
-
-        CONTROLLER_API_MODBUSTCP_READ: "io.openems.edge.controller.api.modbus/readme.adoc",
-        CONTROLLER_API_MODBUSTCP_READWRITE: "io.openems.edge.controller.api.modbus/readme.adoc",
-
-        CONTROLLER_API_REST_READ: "io.openems.edge.controller.api.rest/readme.adoc",
-        CONTROLLER_API_REST_READWRITE: "io.openems.edge.controller.api.rest/readme.adoc",
 
         EVCS_CLUSTER: "io.openems.edge.evcs.cluster/readme.adoc",
 
