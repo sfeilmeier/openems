@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { formatNumber } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { SystemErrorAcknowledge } from "src/app/edge/live/system/industrial/jsonrpc/systemErrorAcknowledge";
@@ -20,6 +20,7 @@ import { ChartComponent } from "./chart/chart";
     selector: IndustrialServiceAssistantComponent.SELECTOR,
     templateUrl: "./industrial.html",
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         CommonUiModule,
         ChartComponent,
@@ -31,7 +32,6 @@ import { ChartComponent } from "./chart/chart";
     ],
 })
 export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
-
     private static readonly SELECTOR = "industrialserviceassistant";
 
     protected convertToGridMeterCategory: Converter;
@@ -56,7 +56,10 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
             return "HEATING";
         }
 
-        if (currentData.allComponents["system0/Compressor1RunningState"] == 0 || currentData.allComponents["system0/Compressor2RunningState"] == 0) {
+        if (
+            currentData.allComponents["system0/Compressor1RunningState"] == 0 ||
+            currentData.allComponents["system0/Compressor2RunningState"] == 0
+        ) {
             return "COOLING";
         }
         return Converter.HIDE_VALUE(null);
@@ -69,7 +72,6 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
             currentData.allComponents[batteryId + "/" + patchKey],
         ].join(".");
     }
-
 
     protected override getChannelAddresses(): ChannelAddress[] {
         const channels: ChannelAddress[] = [
@@ -95,19 +97,18 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     protected override async afterIsInitialized(): Promise<void> {
         this.currentEdge = await this.service.getCurrentEdge();
         if (this.config?.components) {
-            this.chargerComponents = Object.values(this.config.components)
-                .filter(component =>
-                    component.factoryId === "GoodWe.Charger-PV1" ||
-                    component.factoryId === "GoodWe.Charger-PV2",
-                );
+            this.chargerComponents = Object.values(this.config.components).filter(
+                (component) =>
+                    component.factoryId === "GoodWe.Charger-PV1" || component.factoryId === "GoodWe.Charger-PV2",
+            );
         }
 
-        this.batteryInverters = this.config.getComponentsImplementingNature("io.openems.edge.batteryinverter.api.ManagedSymmetricBatteryInverter");
+        this.batteryInverters = this.config.getComponentsImplementingNature(
+            "io.openems.edge.batteryinverter.api.ManagedSymmetricBatteryInverter",
+        );
         this.selectedBattery = this.batteries[0];
 
-        const patchKey = this.currentEdge.isVersionAtLeast("2025.2.2")
-            ? "SoftwareVersionPatch"
-            : "SoftwareVersionPath";
+        const patchKey = this.currentEdge.isVersionAtLeast("2025.2.2") ? "SoftwareVersionPatch" : "SoftwareVersionPath";
 
         for (const battery of this.batteries) {
             const channelAddresses: ChannelAddress[] = [
@@ -116,15 +117,17 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
                 new ChannelAddress(battery.id, patchKey),
             ];
 
-            const data = await (this.dataService as LiveDataService).subscribeAndGetFirstValidValueForChannels(channelAddresses, this.componentId);
+            const data = await (this.dataService as LiveDataService).subscribeAndGetFirstValidValueForChannels(
+                channelAddresses,
+                this.componentId,
+            );
 
             this.tower[battery.id] = {
-                "Firmware": IndustrialServiceAssistantComponent.getBatteryFirmwareString(data, battery.id, patchKey),
+                Firmware: IndustrialServiceAssistantComponent.getBatteryFirmwareString(data, battery.id, patchKey),
             };
         }
         this.canSeeSystemErrorAcknowledge = EdgePermission.hasSystemErrorAcknowledge(this.currentEdge);
     }
-
 
     protected override onCurrentData(currentData: CurrentData): void {
         for (const battery of this.batteries) {
@@ -134,7 +137,8 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
                 currentData.allComponents[batteryId + "/MinCellVoltage"],
             );
         }
-        this.systemFeneconIndustrialL["HeatingState"] = IndustrialServiceAssistantComponent.getHeatingState(currentData);
+        this.systemFeneconIndustrialL["HeatingState"] =
+            IndustrialServiceAssistantComponent.getHeatingState(currentData);
 
         const selectedbatteryId = this.selectedBattery?.id;
         this.cellVoltageDifference = Utils.subtractSafely(
@@ -157,22 +161,18 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     }
 
     protected VOLTAGE_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-        return Converter.IF_NUMBER(raw, value => formatNumber(value, "de", "1.0-3") + " V");
+        return Converter.IF_NUMBER(raw, (value) => formatNumber(value, "de", "1.0-3") + " V");
     };
 
     protected VOLTAGE_IN_MILLI_VOLT_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-        return Converter.IF_NUMBER(raw, value =>
-            formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " V");
+        return Converter.IF_NUMBER(raw, (value) => formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " V");
     };
 
     protected VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-        return Converter.IF_NUMBER(raw, value =>
-            formatNumber(value, "de", "1.0-0") + " mV");
+        return Converter.IF_NUMBER(raw, (value) => formatNumber(value, "de", "1.0-0") + " mV");
     };
 
     protected AMPERE_IN_MILLI_AMPERE_TO_AMPERE_WITH_3_DECIMALS: Converter = (raw): string => {
-        return Converter.IF_NUMBER(raw, value =>
-            formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " A",
-        );
+        return Converter.IF_NUMBER(raw, (value) => formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " A");
     };
 }

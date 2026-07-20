@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, computed, inject, signal, } from "@angular/core";
+import { ChangeDetectorRef, Component, computed, inject, signal, ChangeDetectionStrategy } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { ModalController } from "@ionic/angular";
@@ -15,8 +15,7 @@ import { environment } from "src/environments";
 import de from "./i18n/de.json";
 import en from "./i18n/en.json";
 
-type IconWithRequiredName = Required<Pick<Icon, "name">> &
-    Partial<Omit<Icon, "name">>;
+type IconWithRequiredName = Required<Pick<Icon, "name">> & Partial<Omit<Icon, "name">>;
 
 type NavigationCardFooter = {
     text: string;
@@ -34,21 +33,18 @@ type NavigationCard = {
     footer?: NavigationCardFooter;
 };
 
-function initializeNavigationInfoTranslations(
-    translate: TranslateService,
-): void {
-    void Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then(
-        (translations) => {
-            for (const { lang, translation, shouldMerge } of translations) {
-                translate.setTranslation(lang, translation, shouldMerge);
-            }
-        },
-    );
+function initializeNavigationInfoTranslations(translate: TranslateService): void {
+    void Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+        for (const { lang, translation, shouldMerge } of translations) {
+            translate.setTranslation(lang, translation, shouldMerge);
+        }
+    });
 }
 
 @Component({
     templateUrl: "./navigation-info.html",
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [
         `
             ::ng-deep formly-form {
@@ -61,9 +57,7 @@ export class NavigationInfoComponent extends AbstractModal {
     protected readonly isUserAllowedToSeeMyPortal = signal(false);
     protected readonly isGlobalInfo = signal(false);
 
-    protected readonly showMyPortalCard = computed(
-        () => this.isUserAllowedToSeeMyPortal() && this.isGlobalInfo(),
-    );
+    protected readonly showMyPortalCard = computed(() => this.isUserAllowedToSeeMyPortal() && this.isGlobalInfo());
 
     protected readonly cards = computed<NavigationCard[]>(() => {
         const cards: NavigationCard[] = [
@@ -114,15 +108,7 @@ export class NavigationInfoComponent extends AbstractModal {
         public override formBuilder: FormBuilder,
         public override ref: ChangeDetectorRef,
     ) {
-        super(
-            websocket,
-            route,
-            service,
-            modalController,
-            translate,
-            formBuilder,
-            ref,
-        );
+        super(websocket, route, service, modalController, translate, formBuilder, ref);
 
         initializeNavigationInfoTranslations(translate);
     }
@@ -189,15 +175,9 @@ export class NavigationInfoComponent extends AbstractModal {
 
     protected override onIsInitialized(): void {
         this.subscription.add(
-            this.service.metadata
-                .pipe(filter((metadata) => !!metadata))
-                .subscribe((metadata) => {
-                    this.isUserAllowedToSeeMyPortal.set(
-                        UserPermission.isUserAllowedToSeeMyPortal(
-                            metadata.user,
-                        ),
-                    );
-                }),
+            this.service.metadata.pipe(filter((metadata) => !!metadata)).subscribe((metadata) => {
+                this.isUserAllowedToSeeMyPortal.set(UserPermission.isUserAllowedToSeeMyPortal(metadata.user));
+            }),
         );
 
         this.setHeaderTitle();
@@ -208,19 +188,12 @@ export class NavigationInfoComponent extends AbstractModal {
         this.isGlobalInfo.set(source === "global");
 
         if (source && source !== "global") {
-            const page = NavigationInfoComponent.DOCS_LINKS(this.translate).get(
-                source,
-            );
+            const page = NavigationInfoComponent.DOCS_LINKS(this.translate).get(source);
             if (page != null) {
                 this.docs = {
                     displayName: page.displayName,
                     icon: page.icon,
-                    link:
-                        HelpButtonComponent.getLink(
-                            page.link,
-                            this.service,
-                            false,
-                        ) ?? null,
+                    link: HelpButtonComponent.getLink(page.link, this.service, false) ?? null,
                 };
             }
         }
@@ -228,9 +201,7 @@ export class NavigationInfoComponent extends AbstractModal {
 
     private setHeaderTitle(): void {
         this.navigationService.headerTitle.set(
-            this.translate.instant(
-                this.isGlobalInfo() ? "GENERAL.HELP" : "GENERAL.INFO",
-            ),
+            this.translate.instant(this.isGlobalInfo() ? "GENERAL.HELP" : "GENERAL.INFO"),
         );
     }
 }

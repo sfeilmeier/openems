@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from "@angular/core";
+import { Component, Input, OnChanges, ChangeDetectionStrategy } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { FormlyModule } from "@ngx-formly/core";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
@@ -13,6 +13,7 @@ import { CommonUiModule } from "../../../../../shared/common-ui.module";
     selector: "industrial_chart",
     templateUrl: "../../../../../shared/components/chart/abstracthistorychart.html",
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         RouterModule,
         CommonUiModule,
@@ -32,67 +33,71 @@ export class ChartComponent extends AbstractHistoryChart implements OnChanges {
 
     protected override getChartData(): HistoryUtils.ChartData {
         return {
-            input:
-        [{
-            name: "MinCellVoltage",
-            powerChannel: ChannelAddress.fromString(`${this.selectedBattery.id}/MinCellVoltage`),
-        },
-        {
-            name: "MaxCellVoltage",
-            powerChannel: ChannelAddress.fromString(`${this.selectedBattery.id}/MaxCellVoltage`),
-        }],
+            input: [
+                {
+                    name: "MinCellVoltage",
+                    powerChannel: ChannelAddress.fromString(`${this.selectedBattery.id}/MinCellVoltage`),
+                },
+                {
+                    name: "MaxCellVoltage",
+                    powerChannel: ChannelAddress.fromString(`${this.selectedBattery.id}/MaxCellVoltage`),
+                },
+            ],
             output: (data: HistoryUtils.ChannelData) => {
-                return [{
-                    name: "Minimale Zellspannung",
-                    converter: () => {
-                        return data["MinCellVoltage"];
+                return [
+                    {
+                        name: "Minimale Zellspannung",
+                        converter: () => {
+                            return data["MinCellVoltage"];
+                        },
+                        color: "rgb(127,255,0)",
                     },
-                    color: "rgb(127,255,0)",
-                },
-                {
-                    name: "Maximale Zellspannung",
-                    converter: () => {
-                        return data["MaxCellVoltage"];
+                    {
+                        name: "Maximale Zellspannung",
+                        converter: () => {
+                            return data["MaxCellVoltage"];
+                        },
+                        color: "rgb(0,0,255)",
                     },
-                    color: "rgb(0,0,255)",
-                },
-                {
-                    name: "Spannungsdifferenz",
-                    converter: () => {
-                        const min = data["MinCellVoltage"];
-                        const max = data["MaxCellVoltage"];
-                        return max.map((el, i) => Utils.subtractSafely(el, min[i])) ?? null;
+                    {
+                        name: "Spannungsdifferenz",
+                        converter: () => {
+                            const min = data["MinCellVoltage"];
+                            const max = data["MaxCellVoltage"];
+                            return max.map((el, i) => Utils.subtractSafely(el, min[i])) ?? null;
+                        },
+                        color: "rgb(0,255,255)",
                     },
-                    color: "rgb(0,255,255)",
-                },
-                {
-                    name: "Obergrenze",
-                    converter: () => {
-                        return Array(288).fill(4.109);
+                    {
+                        name: "Obergrenze",
+                        converter: () => {
+                            return Array(288).fill(4.109);
+                        },
+                        color: "rgb(237, 28, 35)",
+                        borderDash: [10, 10],
+                        hideShadow: true,
                     },
-                    color: "rgb(237, 28, 35)",
-                    borderDash: [10, 10],
-                    hideShadow: true,
-                },
-                {
-                    name: "Untergrenze 1",
-                    converter: () => {
-                        return Array(288).fill(3.338);
+                    {
+                        name: "Untergrenze 1",
+                        converter: () => {
+                            return Array(288).fill(3.338);
+                        },
+                        color: "rgb(178, 27, 69)",
+                        borderDash: [10, 10],
+                        hideShadow: true,
                     },
-                    color: "rgb(178, 27, 69)",
-                    borderDash: [10, 10],
-                    hideShadow: true,
-                },
                 ];
             },
             tooltip: {
                 formatNumber: "1.0-2",
             },
-            yAxes: [{
-                unit: YAxisType.VOLTAGE,
-                position: "left",
-                yAxisId: ChartAxis.LEFT,
-            }],
+            yAxes: [
+                {
+                    unit: YAxisType.VOLTAGE,
+                    position: "left",
+                    yAxisId: ChartAxis.LEFT,
+                },
+            ],
         };
     }
 }

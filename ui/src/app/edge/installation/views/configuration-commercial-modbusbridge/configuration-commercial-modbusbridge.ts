@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -9,10 +9,10 @@ import { ModbusBridgeType } from "../../shared/enums";
 @Component({
     selector: ConfigurationCommercialModbuBridgeComponent.SELECTOR,
     templateUrl: "./configuration-commercial-modbusbridge.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ConfigurationCommercialModbuBridgeComponent implements OnInit {
-
     private static readonly SELECTOR = "configuration-commercial-modbusbridge";
 
     @Input() public ibn: AbstractCommercialIbn;
@@ -23,12 +23,12 @@ export class ConfigurationCommercialModbuBridgeComponent implements OnInit {
     public fields: FormlyFieldConfig[];
     public model;
 
-    constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) {}
 
     public ngOnInit() {
         this.form = new FormGroup({});
         this.fields = this.getFields();
-        this.model = { ...(this.ibn.modbusBridgeType && { "modbus": this.ibn.modbusBridgeType }) };
+        this.model = { ...(this.ibn.modbusBridgeType && { modbus: this.ibn.modbusBridgeType }) };
     }
 
     public onNextClicked() {
@@ -45,7 +45,7 @@ export class ConfigurationCommercialModbuBridgeComponent implements OnInit {
 
     public getFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
-        const modbusBridgeLabel = ([
+        const modbusBridgeLabel = [
             {
                 value: ModbusBridgeType.TCP_IP,
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT.TCP_IP_LABEL"),
@@ -56,7 +56,7 @@ export class ConfigurationCommercialModbuBridgeComponent implements OnInit {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT.RS485_LABEL"),
                 url: "assets/img/RTU-4-Ports.png",
             },
-        ]);
+        ];
 
         fields.push({
             key: "modbus",

@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { IonicModule, ModalController } from "@ionic/angular";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
@@ -27,14 +27,8 @@ import { ThirdPartyUsageAcceptance } from "../shared/third-party-usage-acceptanc
     selector: "oe-weather-forecast-approval-popover",
     templateUrl: "./popover.html",
     standalone: true,
-    imports: [
-        CommonModule,
-        IonicModule,
-        ModalComponentsModule,
-        TranslateModule,
-        OeCheckboxComponent,
-        NgxSpinnerModule,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [CommonModule, IonicModule, ModalComponentsModule, TranslateModule, OeCheckboxComponent, NgxSpinnerModule],
 })
 export class WeatherForecastApprovalComponent implements OnInit {
     protected formGroup: FormGroup | null = null;
@@ -60,9 +54,10 @@ export class WeatherForecastApprovalComponent implements OnInit {
 
     ngOnInit() {
         this.img = {
-            url: this.translate.getCurrentLang() === Language.DE.i18nLocaleKey
-                ? "assets/img/weather-popover-app-img-de.png"
-                : "assets/img/weather-popover-app-img-en.png",
+            url:
+                this.translate.getCurrentLang() === Language.DE.i18nLocaleKey
+                    ? "assets/img/weather-popover-app-img-de.png"
+                    : "assets/img/weather-popover-app-img-en.png",
             width: 90,
         };
         this.dataProtectionLink = DocsUtils.createDataProtectionLink(this.service);
@@ -106,12 +101,9 @@ export class WeatherForecastApprovalComponent implements OnInit {
         }
 
         if (installSuccess == true) {
-            this.service.toast(
-                this.translate.instant("EDGE.CONFIG.APP.SUCCESS_INSTALL"),
-                "success"
-            );
+            this.service.toast(this.translate.instant("EDGE.CONFIG.APP.SUCCESS_INSTALL"), "success");
 
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise((resolve) => setTimeout(resolve, 2000));
             window.location.reload();
         }
     }
@@ -145,21 +137,21 @@ export class WeatherForecastApprovalComponent implements OnInit {
     /**
      * Updates the meta app
      *
-     * @param edge the current edge
-     * @param thirdPartyUsageAcceptance third party usage acceptance state
-     * @returns success
+     * @param edge The current edge
+     * @param thirdPartyUsageAcceptance Third party usage acceptance state
+     * @returns Success
      */
     private async updateMetaApp(edge: Edge, thirdPartyUsageAcceptance: ThirdPartyUsageAcceptance): Promise<boolean> {
         const [err] = await PromiseUtils.Functions.handle(
             edge.updateAppConfig(this.service.websocket, "_meta", [
                 { name: "thirdPartyUsageAcceptance", value: thirdPartyUsageAcceptance },
-            ])
+            ]),
         );
 
         if (err) {
             this.service.toast(
                 this.translate.instant("EDGE.CONFIG.APP.FAIL_UPDATE", { error: err.message || err }),
-                "danger"
+                "danger",
             );
             return false;
         }
@@ -170,8 +162,8 @@ export class WeatherForecastApprovalComponent implements OnInit {
     /**
      * Installs the weather app
      *
-     * @param edge the current edge
-     * @returns success
+     * @param edge The current edge
+     * @returns Success
      */
     private async installWeatherApp(edge: Edge): Promise<boolean> {
         const request = new AppCenter.Request({
@@ -187,14 +179,12 @@ export class WeatherForecastApprovalComponent implements OnInit {
             }),
         });
 
-        const [err] = await PromiseUtils.Functions.handle(
-            edge.sendRequest(this.service.websocket, request)
-        );
+        const [err] = await PromiseUtils.Functions.handle(edge.sendRequest(this.service.websocket, request));
 
         if (err) {
             this.service.toast(
                 this.translate.instant("EDGE.CONFIG.APP.FAIL_INSTALL", { error: err.message || err }),
-                "danger"
+                "danger",
             );
             return false;
         }

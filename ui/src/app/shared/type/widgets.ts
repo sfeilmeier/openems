@@ -17,8 +17,8 @@ import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/s
 import { SharedSystemIndustrialM } from "src/app/edge/live/system/industrial/m/shared-system-industrial-m";
 import { SharedSystemIndustrialS } from "src/app/edge/live/system/industrial/s/shared-system-industrial-s";
 import { SharedSystemIndustrialTokai2 } from "src/app/edge/live/system/industrial/tokai2/shared-system-industrial-tokai2";
-import { SharedSystemIndustrialXl } from "src/app/edge/live/system/industrial/xl/shared-system-industrial-xl";
 import { SharedControllerIoHeatingRoom } from "../../edge/live/Controller/Io/HeatingRoom/shared/shared";
+import { SharedSystemIndustrialXl } from "../../edge/live/system/industrial/xl/shared-system-industrial-xl";
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { NavigationTree } from "../components/navigation/shared";

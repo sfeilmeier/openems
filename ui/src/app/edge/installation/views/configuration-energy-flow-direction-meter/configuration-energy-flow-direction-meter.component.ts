@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -10,10 +10,10 @@ import { Meter } from "../../shared/meter";
 @Component({
     selector: ConfigurationEnergyFlowMeterComponent.SELECTOR,
     templateUrl: "./configuration-energy-flow-direction-meter.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ConfigurationEnergyFlowMeterComponent implements OnInit {
-
     private static readonly SELECTOR = "configuration-energy-flow-direction-meter";
 
     @Input() public ibn: AbstractHomeIbn;
@@ -25,7 +25,7 @@ export class ConfigurationEnergyFlowMeterComponent implements OnInit {
     public fields: FormlyFieldConfig[];
     protected model;
 
-    constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) {}
 
     public ngOnInit(): void {
         this.form = new FormGroup({});

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -17,14 +17,16 @@ interface ProtocolForm extends DcForm {
     selector: "protocol-pv",
     templateUrl: "./protocol-pv.component.html",
     standalone: false,
-    styles: [`
-        .text-small {
-            font-size: 0.875rem;
-        }
-  `],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styles: [
+        `
+            .text-small {
+                font-size: 0.875rem;
+            }
+        `,
+    ],
 })
 export class ProtocolPvComponent implements OnInit {
-
     @Input() public ibn!: AbstractHomeIbn;
     @Output() public previousViewEvent = new EventEmitter<void>();
     @Output() public nextViewEvent = new EventEmitter<AbstractHomeIbn>();
@@ -33,17 +35,14 @@ export class ProtocolPvComponent implements OnInit {
     protected expandedAccordions: string[] = [];
     private maxStrings: number = 0;
 
-    public constructor(private translate: TranslateService) { }
+    public constructor(private translate: TranslateService) {}
 
     public ngOnInit() {
-
         // Initialize Data
         this.ibn.pv ??= {};
         this.ibn.pv.dc ??= [];
 
-        this.maxStrings = this.ibn.maxNumberOfMppt > 0
-            ? this.ibn.maxNumberOfMppt
-            : this.ibn.maxNumberOfPvStrings;
+        this.maxStrings = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
 
         for (let i = 0; i < this.maxStrings; i++) {
             const mpptNumber = i + 1;
@@ -70,7 +69,7 @@ export class ProtocolPvComponent implements OnInit {
             this.forms.push(form);
         }
 
-        const firstEnabledIndex = this.forms.findIndex(f => f.fields.length > 0);
+        const firstEnabledIndex = this.forms.findIndex((f) => f.fields.length > 0);
 
         if (firstEnabledIndex > -1) {
             // We use +1 because HTML uses (i + 1) for the ID.
@@ -104,7 +103,6 @@ export class ProtocolPvComponent implements OnInit {
         }
         this.ibn.pv!.dc = [];
 
-
         for (let formNr = 0; formNr < this.forms.length; formNr++) {
             if (this.isMpptEnabled(formNr)) {
                 this.ibn.pv!.dc.push(Utils.deepCopy(this.forms[formNr].model));
@@ -114,11 +112,9 @@ export class ProtocolPvComponent implements OnInit {
             }
         }
         this.nextViewEvent.emit(this.ibn);
-
     }
 
     private isMpptEnabled(index: number): boolean {
-
         // If no mppt config object exists (legacy systems), assume true
         if (!this.ibn.mppt) {
             return true;
@@ -144,7 +140,7 @@ export class ProtocolPvComponent implements OnInit {
                                 if (isSelected) {
                                     this.handleCopyLogic(index);
                                 }
-                            })
+                            }),
                         );
                     },
                 },
@@ -165,9 +161,10 @@ export class ProtocolPvComponent implements OnInit {
                 defaultValue: 1000,
                 templateOptions: {
                     type: "number",
-                    label: this.ibn.maxNumberOfMppt > 0
-                        ? this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER_PER_STRING")
-                        : this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER"),
+                    label:
+                        this.ibn.maxNumberOfMppt > 0
+                            ? this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER_PER_STRING")
+                            : this.translate.instant("INSTALLATION.PROTOCOL_PV.INSTALLED_POWER"),
                     required: true,
                 },
                 validators: {
@@ -198,9 +195,10 @@ export class ProtocolPvComponent implements OnInit {
                 type: "input",
                 templateOptions: {
                     type: "number",
-                    label: this.ibn.maxNumberOfMppt > 0
-                        ? this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES_PER_STRING")
-                        : this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES"),
+                    label:
+                        this.ibn.maxNumberOfMppt > 0
+                            ? this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES_PER_STRING")
+                            : this.translate.instant("INSTALLATION.PROTOCOL_PV.NUMBER_OF_MODULES"),
                 },
                 parsers: [Number],
                 hideExpression: (model) => !model.isSelected,

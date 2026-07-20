@@ -1,11 +1,12 @@
 // @ts-strict-ignore
-import { Environment, getWebsocketScheme } from "src/environments";
+import { Environment } from "src/environments";
 import { theme } from "./theme";
 
 export const environment: Environment = {
-    ...theme, ...{
+    ...theme,
+    ...{
         backend: "OpenEMS Backend",
-        url: `${getWebsocketScheme()}://${location.host}/openems-backend`,
+        url: "wss://portal.fenecon.de/openems-backend-ui2",
 
         production: true,
         debugMode: false,

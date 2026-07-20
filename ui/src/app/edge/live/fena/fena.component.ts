@@ -1,5 +1,4 @@
-import { CommonModule } from "@angular/common";
-import { Component, computed, inject, Signal } from "@angular/core";
+import { Component, computed, inject, Signal, ChangeDetectionStrategy } from "@angular/core";
 import { toObservable, toSignal } from "@angular/core/rxjs-interop";
 import { ActivatedRoute, Router } from "@angular/router";
 import { IonicModule } from "@ionic/angular";
@@ -27,8 +26,9 @@ interface FenaMessage {
     selector: "oe-fena",
     standalone: true,
     templateUrl: "./fena.component.html",
-    imports: [CommonModule, IonicModule, TranslateModule, FormlyModule],
+    imports: [IonicModule, TranslateModule, FormlyModule],
     styleUrl: "./fena.component.scss",
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [{ provide: DataService, useClass: LiveDataService }],
 })
 export class FenaComponent {

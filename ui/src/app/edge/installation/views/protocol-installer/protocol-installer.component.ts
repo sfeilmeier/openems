@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup, Validators } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -24,6 +24,7 @@ type UserInformation = {
 @Component({
     selector: ProtocolInstallerComponent.SELECTOR,
     templateUrl: "./protocol-installer.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ProtocolInstallerComponent implements OnInit {
@@ -41,7 +42,7 @@ export class ProtocolInstallerComponent implements OnInit {
     constructor(
         private service: Service,
         private translate: TranslateService,
-    ) { }
+    ) {}
 
     public ngOnInit() {
         this.spinnerId = ProtocolInstallerComponent.SELECTOR + "-spinner";
@@ -69,7 +70,6 @@ export class ProtocolInstallerComponent implements OnInit {
     }
 
     public getFields(): FormlyFieldConfig[] {
-
         return [
             {
                 fieldGroup: [
@@ -102,7 +102,9 @@ export class ProtocolInstallerComponent implements OnInit {
                         key: "street",
                         type: "input",
                         templateOptions: {
-                            label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS"),
+                            label: this.translate.instant(
+                                "INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS",
+                            ),
                             required: true,
                             disabled: true,
                         },

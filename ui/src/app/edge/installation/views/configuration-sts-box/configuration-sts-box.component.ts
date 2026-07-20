@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { TypedFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
 import { Edge } from "src/app/shared/shared";
-import { AbstractCommercialGen3, EmergencyModel, } from "../../installation-systems/commercial/abstract-commercial-gen3";
+import { AbstractCommercialGen3, EmergencyModel } from "../../installation-systems/commercial/abstract-commercial-gen3";
 
 @Component({
     selector: ConfigurationStsBoxComponent.SELECTOR,
     templateUrl: "./configuration-sts-box.component.html",
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: "../../installation.component.scss",
 })
 export class ConfigurationStsBoxComponent implements OnInit {
@@ -55,22 +56,16 @@ export class ConfigurationStsBoxComponent implements OnInit {
             key: "isStsBoxAvailable",
             type: "checkbox",
             props: {
-                label: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_FIELD_LABEL",
-                ),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_FIELD_LABEL"),
                 url: "assets/img/ibn/sts-box.png",
                 imagePositionToLeft: true,
 
                 serialNumberField: {
                     key: "stsBoxSerialNumber",
-                    label: this.translate.instant(
-                        "INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER",
-                    ),
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
                     placeholder: "xxxxxxxxxxxxxxxx",
                     required: true,
-                    helpText: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_STS_BOX.HELP_TEXT",
-                    ),
+                    helpText: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.HELP_TEXT"),
                 },
             },
             wrappers: ["formly-field-checkbox-with-image"],

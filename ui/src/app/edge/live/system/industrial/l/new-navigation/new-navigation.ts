@@ -1,10 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { FormlyModule } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { CommonUiModule } from "src/app/shared/common-ui.module";
 import { DataService } from "src/app/shared/components/shared/dataservice";
-import { OeFormlyField, OeFormlyView, ViewContext, } from "src/app/shared/components/shared/oe-formly-component";
+import { OeFormlyField, OeFormlyView, ViewContext } from "src/app/shared/components/shared/oe-formly-component";
 import { Edge, EdgePermission } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
 import { Role } from "src/app/shared/type/role";
@@ -14,9 +14,9 @@ import en from "../i18n/en.json";
 
 @Component({
     selector: "oe-system-industrial-l",
-    templateUrl:
-        "../../../../../../shared/components/formly/formly-field-modal/template.html",
+    templateUrl: "../../../../../../shared/components/formly/formly-field-modal/template.html",
     providers: [{ provide: DataService, useClass: LiveDataService }],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonUiModule, FormlyModule],
 })
 export class SystemIndustrialLComponent extends AbstractIndustrialComponent {
@@ -24,17 +24,11 @@ export class SystemIndustrialLComponent extends AbstractIndustrialComponent {
 
     constructor() {
         super();
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then(
-            (translations) => {
-                for (const { lang, translation, shouldMerge } of translations) {
-                    this.translate.setTranslation(
-                        lang,
-                        translation,
-                        shouldMerge,
-                    );
-                }
-            },
-        );
+        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+            for (const { lang, translation, shouldMerge } of translations) {
+                this.translate.setTranslation(lang, translation, shouldMerge);
+            }
+        });
     }
 
     public static getFormlyGeneralView(
@@ -49,27 +43,18 @@ export class SystemIndustrialLComponent extends AbstractIndustrialComponent {
                 lines,
                 translate,
                 self.bmsHardReset(),
-                translate.instant(
-                    "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.BMS_HARD_RESET",
-                ),
+                translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.BMS_HARD_RESET"),
             );
         }
 
-        if (
-            EdgePermission.hasSystemErrorAcknowledge(edge) &&
-            edge.roleIsAtLeast(Role.INSTALLER)
-        ) {
+        if (EdgePermission.hasSystemErrorAcknowledge(edge) && edge.roleIsAtLeast(Role.INSTALLER)) {
             self.addResetButton(
                 lines,
                 translate,
                 self.systemErrorAcknowledge(),
-                translate.instant(
-                    "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER",
-                ) +
+                translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER") +
                     " " +
-                    translate.instant(
-                        "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_TEXT",
-                    ),
+                    translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_TEXT"),
             );
         }
 
@@ -84,10 +69,6 @@ export class SystemIndustrialLComponent extends AbstractIndustrialComponent {
 
     protected override generateView(viewContext: ViewContext): OeFormlyView {
         this.loadComponentFromViewContext(viewContext);
-        return SystemIndustrialLComponent.getFormlyGeneralView(
-            this.translate,
-            viewContext.edge,
-            this,
-        );
+        return SystemIndustrialLComponent.getFormlyGeneralView(this.translate, viewContext.edge, this);
     }
 }

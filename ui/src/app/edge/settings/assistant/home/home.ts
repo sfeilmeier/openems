@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { formatNumber } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { SelectCustomEvent } from "@ionic/angular";
 import { ComponentsBaseModule } from "src/app/shared/components/components.module";
 import { AbstractFlatWidget } from "src/app/shared/components/flat/abstract-flat-widget";
@@ -21,6 +21,7 @@ import { ChartComponent as ReactiveChart } from "./chart/oe-reactive.chart";
     selector: HomeServiceAssistantComponent.SELECTOR,
     templateUrl: "./home.html",
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         CommonUiModule,
         CellVoltageChart,
@@ -32,7 +33,6 @@ import { ChartComponent as ReactiveChart } from "./chart/oe-reactive.chart";
     ],
 })
 export class HomeServiceAssistantComponent extends AbstractFlatWidget {
-
     private static readonly SELECTOR = "homeserviceassistant";
 
     public chargerComponents: EdgeConfig.Component[] = [];
@@ -46,26 +46,31 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
     protected readonly options: [];
     protected selectedTower: HomeCellVoltageOptions = null;
     protected selectedModule: HomeCellVoltageOptions = null;
-    protected towerOptions: HomeCellVoltageOptions[] = [{
-        key: "Gesamt",
-        value: null,
-    }];
-    protected moduleOptions: HomeCellVoltageOptions[] = [{
-        key: "Gesamt",
-        value: null,
-    }];
+    protected towerOptions: HomeCellVoltageOptions[] = [
+        {
+            key: "Gesamt",
+            value: null,
+        },
+    ];
+    protected moduleOptions: HomeCellVoltageOptions[] = [
+        {
+            key: "Gesamt",
+            value: null,
+        },
+    ];
 
     protected isReactiveChartAllowed: boolean = false;
 
     protected override afterIsInitialized() {
         if (this.config?.components) {
-            this.chargerComponents = Object.values(this.config.components)
-                .filter(component => [
+            this.chargerComponents = Object.values(this.config.components).filter((component) =>
+                [
                     "GoodWe.Charger-PV1",
                     "GoodWe.Charger-PV2",
                     "GoodWe.Charger.Two-String",
                     "GoodWe.Charger.Mppt.Two-String",
-                ].some(factoryId => factoryId === component.factoryId));
+                ].some((factoryId) => factoryId === component.factoryId),
+            );
 
             this.setTowerModuleOptions();
         }
@@ -85,28 +90,30 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
     }
 
     protected override onCurrentData(currentData: CurrentData): void {
-        this.cellVoltageDifference = Utils.subtractSafely(currentData.allComponents["battery0/MaxCellVoltage"], currentData.allComponents["battery0/MinCellVoltage"]);
-        this.cellTemperatureDifference = Utils.subtractSafely(currentData.allComponents["battery0/MaxCellTemperature"], currentData.allComponents["battery0/MinCellTemperature"]);
+        this.cellVoltageDifference = Utils.subtractSafely(
+            currentData.allComponents["battery0/MaxCellVoltage"],
+            currentData.allComponents["battery0/MinCellVoltage"],
+        );
+        this.cellTemperatureDifference = Utils.subtractSafely(
+            currentData.allComponents["battery0/MaxCellTemperature"],
+            currentData.allComponents["battery0/MinCellTemperature"],
+        );
     }
 
     protected VOLTAGE_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-        return Converter.IF_NUMBER(raw, value => formatNumber(value, "de", "1.0-3") + " V");
+        return Converter.IF_NUMBER(raw, (value) => formatNumber(value, "de", "1.0-3") + " V");
     };
 
     protected VOLTAGE_IN_MILLI_VOLT_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-        return Converter.IF_NUMBER(raw, value =>
-            formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " V");
+        return Converter.IF_NUMBER(raw, (value) => formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " V");
     };
 
     protected VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-        return Converter.IF_NUMBER(raw, value =>
-            formatNumber(value, "de", "1.0-0") + " mV");
+        return Converter.IF_NUMBER(raw, (value) => formatNumber(value, "de", "1.0-0") + " mV");
     };
 
     protected AMPERE_IN_MILLI_AMPERE_TO_AMPERE_WITH_3_DECIMALS: Converter = (raw): string => {
-        return Converter.IF_NUMBER(raw, value =>
-            formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " A",
-        );
+        return Converter.IF_NUMBER(raw, (value) => formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " A");
     };
 
     protected updateTowerNr(event: Event) {
@@ -125,18 +132,21 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
                 componentId: "batteryInverter0",
                 channelId: "FactorySetting",
                 value: 1,
-            }));
+            }),
+        );
     }
 
     private async addSerialNumbersToModules() {
-
         const moduleOptions = [];
         this.moduleOptions.forEach(({ key, value: moduleNr }) => {
             if (!moduleNr) {
                 return;
             }
 
-            const channel = new ChannelAddress("battery0", `Tower${this.selectedTower.value}Module${moduleNr}SerialNumber`);
+            const channel = new ChannelAddress(
+                "battery0",
+                `Tower${this.selectedTower.value}Module${moduleNr}SerialNumber`,
+            );
             this.subscribeAndGetFirstValidValueForChannel(channel).then((channelValue) => {
                 moduleOptions.push({
                     key: key + " - " + channelValue,
@@ -149,31 +159,38 @@ export class HomeServiceAssistantComponent extends AbstractFlatWidget {
     }
 
     private async setTowerModuleOptions() {
-        const battery = Object.values(this.config.components).find(el => el.factoryId === "Battery.Fenecon.Home");
+        const battery = Object.values(this.config.components).find((el) => el.factoryId === "Battery.Fenecon.Home");
         if (!battery) {
             return;
         }
 
-        const numberOfTowers = await this.getFirstValidValueForChannel(new ChannelAddress(battery.id, "NumberOfTowers"));
+        const numberOfTowers = await this.getFirstValidValueForChannel(
+            new ChannelAddress(battery.id, "NumberOfTowers"),
+        );
         this.towerOptions.push(
-            ...(numberOfTowers ? ArrayUtils.getArrayOfLength(numberOfTowers).map(el => ({
-                key: "Tower" + el,
-                value: el.toString(),
-            }))
-                : []));
+            ...(numberOfTowers
+                ? ArrayUtils.getArrayOfLength(numberOfTowers).map((el) => ({
+                      key: "Tower" + el,
+                      value: el.toString(),
+                  }))
+                : []),
+        );
         this.selectedTower = this.towerOptions[0];
 
-        const numberOfModules = await this.getFirstValidValueForChannel(new ChannelAddress(battery.id, "NumberOfModulesPerTower"));
+        const numberOfModules = await this.getFirstValidValueForChannel(
+            new ChannelAddress(battery.id, "NumberOfModulesPerTower"),
+        );
         this.moduleOptions.push(
-            ...(numberOfModules ? ArrayUtils.getArrayOfLength(numberOfModules).map(el => {
-                return {
-                    key: "Module" + el,
-                    value: el.toString(),
-                };
-            })
-                : []));
+            ...(numberOfModules
+                ? ArrayUtils.getArrayOfLength(numberOfModules).map((el) => {
+                      return {
+                          key: "Module" + el,
+                          value: el.toString(),
+                      };
+                  })
+                : []),
+        );
 
         this.selectedModule = this.moduleOptions[0];
     }
-
 }

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -13,6 +13,7 @@ import { SystemId } from "../../shared/system";
     selector: ProtocolAvuBoxComponent.SELECTOR,
     templateUrl: "./protocol-avu-box.html",
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [
         `
             .image-column {

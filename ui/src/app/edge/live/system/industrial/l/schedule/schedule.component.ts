@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, model } from "@angular/core";
+import { ChangeDetectorRef, Component, model, ChangeDetectionStrategy } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { ModalController } from "@ionic/angular";
@@ -20,28 +20,25 @@ import { SharedSystemIndustrialL } from "../shared-system-industrial-l";
 @Component({
     templateUrl: "./schedule.component.html",
     standalone: true,
-    providers: [
-        { provide: DataService, useClass: LiveDataService },
-    ],
-    imports: [
-        ScheduleComponent,
-        ComponentsBaseModule,
-        CommonUiModule,
-        HelpPopoverButtonComponent,
-    ],
+    providers: [{ provide: DataService, useClass: LiveDataService }],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [ScheduleComponent, ComponentsBaseModule, CommonUiModule, HelpPopoverButtonComponent],
 })
 export class IndustrialLScheduleComponent extends AbstractModal {
-
     protected schedule = model<JsCalendar.ScheduleVM[]>([]);
-    protected payload = model<SharedSystemIndustrialL.IndustrialLPayload>(new SharedSystemIndustrialL.IndustrialLPayload());
+    protected payload = model<SharedSystemIndustrialL.IndustrialLPayload>(
+        new SharedSystemIndustrialL.IndustrialLPayload(),
+    );
 
-    constructor(protected override websocket: Websocket,
+    constructor(
+        protected override websocket: Websocket,
         protected override route: ActivatedRoute,
         protected override service: Service,
         public override modalController: ModalController,
         protected override translate: TranslateService,
         public override formBuilder: FormBuilder,
-        public override ref: ChangeDetectorRef) {
+        public override ref: ChangeDetectorRef,
+    ) {
         super(websocket, route, service, modalController, translate, formBuilder, ref);
         Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {

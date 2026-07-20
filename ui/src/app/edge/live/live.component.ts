@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, inject, OnDestroy, ViewChild } from "@angular/core";
+import { Component, effect, ElementRef, inject, OnDestroy, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RefresherCustomEvent } from "@ionic/angular";
 import { Subject } from "rxjs";
@@ -16,6 +16,7 @@ import { DateTimeUtils } from "src/app/shared/utils/datetime/datetime-utils";
     selector: "live",
     templateUrl: "./live.component.html",
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: `
         @media (max-width: 576px) {
             .live-small-padding {

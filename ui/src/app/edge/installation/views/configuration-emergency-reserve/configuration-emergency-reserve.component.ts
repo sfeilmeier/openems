@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
@@ -7,10 +7,10 @@ import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 @Component({
     selector: ConfigurationEmergencyReserveComponent.SELECTOR,
     templateUrl: "./configuration-emergency-reserve.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ConfigurationEmergencyReserveComponent implements OnInit {
-
     private static readonly SELECTOR = "configuration-emergency-reserve";
 
     @Input() public ibn: AbstractIbn;
@@ -31,7 +31,6 @@ export class ConfigurationEmergencyReserveComponent implements OnInit {
     }
 
     public onNextClicked() {
-
         if (this.form.invalid) {
             this.form.markAllAsTouched();
             return;

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { Commercial50Gen3Ibn } from "../../installation-systems/commercial/commercial-50/commercial-50-gen3";
@@ -8,10 +8,10 @@ import { Commercial92Ibn } from "../../installation-systems/commercial/commercia
 @Component({
     selector: ConfigurationGridSettingComponent.SELECTOR,
     templateUrl: "./configuration-grid-setting.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ConfigurationGridSettingComponent implements OnInit {
-
     private static readonly SELECTOR = "configuration-grid-setting";
 
     @Input() public ibn: Commercial92Ibn | Commercial50Gen3Ibn;
@@ -23,7 +23,6 @@ export class ConfigurationGridSettingComponent implements OnInit {
     protected model;
 
     public ngOnInit(): void {
-
         this.form = new FormGroup({});
         this.model = { gridSetting: this.ibn.gridSetting ?? null }; // Initialize the model
         this.fields = this.getFields();

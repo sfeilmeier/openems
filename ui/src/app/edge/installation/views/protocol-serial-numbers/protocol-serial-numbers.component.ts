@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -14,6 +14,7 @@ import { ComponentData, SerialNumberFormData } from "../../shared/ibndatatypes";
 @Component({
     selector: ProtocolSerialNumbersComponent.SELECTOR,
     templateUrl: "./protocol-serial-numbers.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ProtocolSerialNumbersComponent implements OnInit {
@@ -25,9 +26,9 @@ export class ProtocolSerialNumbersComponent implements OnInit {
     @Output() public nextViewEvent = new EventEmitter<AbstractIbn>();
 
     protected batterySettingsForms: {
-        formGroup: FormGroup,
-        fields: FormlyFieldConfig[],
-        model: any
+        formGroup: FormGroup;
+        fields: FormlyFieldConfig[];
+        model: any;
     }[] = [];
 
     protected forms: SerialNumberFormData[] = [];
@@ -45,7 +46,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
         private service: Service,
         private websocket: Websocket,
         private translate: TranslateService,
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         this.spinnerId = "installation-serial-number-spinner";
@@ -53,7 +54,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
         this.setIsWaiting(true);
 
         this.initializeComponentSettings()
-            .catch(error => {
+            .catch((error) => {
                 console.error("A critical error occurred during component initialization:", error);
                 this.service.toast(this.translate.instant("GENERAL.FORMLY.INITIALIZING_ERROR"), "danger");
             })
@@ -67,15 +68,25 @@ export class ProtocolSerialNumbersComponent implements OnInit {
     }
 
     public onNextClicked() {
-        if (!this.batterySettingsForms.every(form => form.formGroup.valid)) {
-            this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.READ_DESCRIPTION"), "danger");
+        if (!this.batterySettingsForms.every((form) => form.formGroup.valid)) {
+            this.service.toast(
+                this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.READ_DESCRIPTION"),
+                "danger",
+            );
             return;
         }
 
         for (const form of this.forms) {
             for (const fieldSetting of form.fieldSettings) {
                 if (fieldSetting.form.invalid) {
-                    this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVALID_SERIALNUMBER_KEY", { key: fieldSetting.key, header: form.header }), "danger", 5000);
+                    this.service.toast(
+                        this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVALID_SERIALNUMBER_KEY", {
+                            key: fieldSetting.key,
+                            header: form.header,
+                        }),
+                        "danger",
+                        5000,
+                    );
                     return;
                 }
             }
@@ -101,12 +112,17 @@ export class ProtocolSerialNumbersComponent implements OnInit {
 
         // Duplicates check.
         if (this.duplicateSerialNumbers.length !== 0) {
-            this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SAME_SERIAL_NUMBERS", { serialNumbers: this.duplicateSerialNumbers }), "warning");
+            this.service.toast(
+                this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SAME_SERIAL_NUMBERS", {
+                    serialNumbers: this.duplicateSerialNumbers,
+                }),
+                "warning",
+            );
             return;
         }
 
         // Store form models
-        this.ibn.serialNumbers.formModels = this.forms.map(form => ({ ...form.model }));
+        this.ibn.serialNumbers.formModels = this.forms.map((form) => ({ ...form.model }));
 
         this.nextViewEvent.emit(this.ibn);
     }
@@ -122,14 +138,17 @@ export class ProtocolSerialNumbersComponent implements OnInit {
     }
 
     /**
-   * Updates the tower and module information based on manual update.
-   *
-   * @returns the updated number of towers and modules per tower.
-   */
+     * Updates the tower and module information based on manual update.
+     *
+     * @returns The updated number of towers and modules per tower.
+     */
     public async saveSettings() {
-        const allValid = this.batterySettingsForms.every(form => form.formGroup.valid);
+        const allValid = this.batterySettingsForms.every((form) => form.formGroup.valid);
         if (!allValid) {
-            this.service.toast(this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ENTER_VALID_ADDRESS"), "warning");
+            this.service.toast(
+                this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ENTER_VALID_ADDRESS"),
+                "warning",
+            );
             return;
         }
 
@@ -138,10 +157,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
         this.ibn.serialNumbers.numberOfModulesPerTower = this.numberOfModulesPerTowerPerBattery;
 
         // Clear outdated models
-        this.ibn.serialNumbers = ObjectUtils.excludeProperties(
-            this.ibn.serialNumbers,
-            ["formModels"]
-        );
+        this.ibn.serialNumbers = ObjectUtils.excludeProperties(this.ibn.serialNumbers, ["formModels"]);
 
         this.batterySettingsForms.forEach((form, index) => {
             this.numberOfTowersPerBattery[index] = form.model.numberOfTowers;
@@ -155,12 +171,11 @@ export class ProtocolSerialNumbersComponent implements OnInit {
     }
 
     /**
-   * Initializes all fields such as number of tower and modules per tower and
-   * also indiviaul components fo the system and modules.
-   * All the information that can be read directly are read directly from the registers.
-   *
-   * @returns The Settings fields for towers and also individual modules fields.
-   */
+     * Initializes all fields such as number of tower and modules per tower and also indiviaul components fo the system
+     * and modules. All the information that can be read directly are read directly from the registers.
+     *
+     * @returns The Settings fields for towers and also individual modules fields.
+     */
     public initializeAllFields(): Promise<void> {
         return new Promise((resolve) => {
             if (ObjectUtils.isObjectNullOrEmpty(this.ibn.serialNumbers)) {
@@ -175,9 +190,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
                     if (ObjectUtils.isObjectNullOrEmpty(this.ibn.serialNumbers.doubleSocket)) {
                         this.ibn.serialNumbers.doubleSocket = {
                             label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.DOUBLE_SOCKET_LABEL"),
-                            isEnabled: this.numberOfTowersPerBattery.map(
-                                towers => Array(towers).fill(false)
-                            ),
+                            isEnabled: this.numberOfTowersPerBattery.map((towers) => Array(towers).fill(false)),
                         };
                     }
                 }
@@ -185,9 +198,13 @@ export class ProtocolSerialNumbersComponent implements OnInit {
 
             // Check if we can reuse stored models
             const totalTowers = this.numberOfTowersPerBattery.reduce(ArrayUtils.ReducerFunctions.sum, 0);
-            const canReuseModels = this.ibn.serialNumbers?.formModels?.length === totalTowers &&
+            const canReuseModels =
+                this.ibn.serialNumbers?.formModels?.length === totalTowers &&
                 ArrayUtils.equalsCheck(this.numberOfTowersPerBattery, this.ibn.serialNumbers.numberOfTowers) &&
-                ArrayUtils.equalsCheck(this.numberOfModulesPerTowerPerBattery, this.ibn.serialNumbers.numberOfModulesPerTower);
+                ArrayUtils.equalsCheck(
+                    this.numberOfModulesPerTowerPerBattery,
+                    this.ibn.serialNumbers.numberOfModulesPerTower,
+                );
 
             if (canReuseModels) {
                 const forms: SerialNumberFormData[] = [];
@@ -198,7 +215,11 @@ export class ProtocolSerialNumbersComponent implements OnInit {
 
                     for (let towerIndex = 0; towerIndex < numberOfTowers; towerIndex++) {
                         forms.push({
-                            fieldSettings: this.ibn.getSerialNumberFields(towerIndex, numberOfModulesPerTower, batteryIndex),
+                            fieldSettings: this.ibn.getSerialNumberFields(
+                                towerIndex,
+                                numberOfModulesPerTower,
+                                batteryIndex,
+                            ),
                             model: { ...this.ibn.serialNumbers.formModels[modelIndex] },
                             formTower: new FormGroup({}),
                             header: this.ibn.getSerialNumberCategoryHeader(towerIndex, batteryIndex),
@@ -216,7 +237,11 @@ export class ProtocolSerialNumbersComponent implements OnInit {
             const batteryPromises: Promise<{}>[][] = this.numberOfTowersPerBattery.map((numberOfTowers, index) => {
                 const numberOfModulesPerTower = this.numberOfModulesPerTowerPerBattery[index];
                 return this.ibn.readSerialNumbersFromRegisters(
-                    this.edge, this.websocket, numberOfTowers, numberOfModulesPerTower, index
+                    this.edge,
+                    this.websocket,
+                    numberOfTowers,
+                    numberOfModulesPerTower,
+                    index,
                 );
             });
 
@@ -224,7 +249,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
             const flattenedPromises = batteryPromises.flat();
 
             Promise.all(flattenedPromises).then((modelsArray) => {
-                const dataFound = modelsArray.some(model => model && Object.keys(model).length > 0);
+                const dataFound = modelsArray.some((model) => model && Object.keys(model).length > 0);
 
                 if (!dataFound && !this.isManualEntryMode) {
                     this.showRetryScreen = true;
@@ -243,7 +268,11 @@ export class ProtocolSerialNumbersComponent implements OnInit {
                     for (let towerIndex = 0; towerIndex < numberOfTowers; towerIndex++) {
                         const model = modelsArray[modelIndex];
                         forms.push({
-                            fieldSettings: this.ibn.getSerialNumberFields(towerIndex, numberOfModulesPerTower, batteryIndex),
+                            fieldSettings: this.ibn.getSerialNumberFields(
+                                towerIndex,
+                                numberOfModulesPerTower,
+                                batteryIndex,
+                            ),
                             model: model,
                             formTower: new FormGroup({}),
                             header: this.ibn.getSerialNumberCategoryHeader(towerIndex, batteryIndex),
@@ -279,18 +308,18 @@ export class ProtocolSerialNumbersComponent implements OnInit {
                     label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.DOUBLE_SOCKET"),
                     value: value,
                 });
-
             }
         }
 
         // check if there are duplicates and add it to duplicates array to display later in alert.
         // Collect the duplicate values..
         const duplicateValues = serialNumbers
-            .map(v => v.value)
+            .map((v) => v.value)
             .filter((v, i, valueArray) => valueArray.indexOf(v) !== i);
 
         // Based on the Id's collect the Labels to display in the alert.
-        serialNumbers.filter(obj => duplicateValues.includes(obj.value))
+        serialNumbers
+            .filter((obj) => duplicateValues.includes(obj.value))
             .forEach((value) => this.duplicateSerialNumbers.push(value.label));
 
         return serialNumbers;
@@ -317,12 +346,10 @@ export class ProtocolSerialNumbersComponent implements OnInit {
         this.showRetryScreen = false;
     }
 
-    /**
-   * Fetches settings and initializes the component's forms and fields.
-   */
+    /** Fetches settings and initializes the component's forms and fields. */
     private async initializeComponentSettings(): Promise<void> {
         const { numberOfTowers, numberOfModulesPerTower } = this.ibn.serialNumbers || {};
-        let towerSettings: { numberOfTowers: number; numberOfModulesPerTower: number; }[];
+        let towerSettings: { numberOfTowers: number; numberOfModulesPerTower: number }[];
 
         const hasStoredSettings =
             Array.isArray(this.ibn.serialNumbers?.numberOfTowers) &&
@@ -352,15 +379,11 @@ export class ProtocolSerialNumbersComponent implements OnInit {
         await this.initializeAllFields();
     }
 
-    private createBatterySettingForms(towerSetting: {
-        numberOfTowers: number;
-        numberOfModulesPerTower: number;
-    }) {
+    private createBatterySettingForms(towerSetting: { numberOfTowers: number; numberOfModulesPerTower: number }) {
         const formGroup = new FormGroup({});
         const fields = this.ibn.getPreSettingsFields(towerSetting.numberOfModulesPerTower, towerSetting.numberOfTowers);
         const model = { ...towerSetting };
 
         this.batterySettingsForms.push({ formGroup, fields, model });
     }
-
 }

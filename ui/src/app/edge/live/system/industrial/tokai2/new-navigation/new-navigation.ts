@@ -1,19 +1,19 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { FormlyModule } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { CommonUiModule } from "src/app/shared/common-ui.module";
 import { DataService } from "src/app/shared/components/shared/dataservice";
-import { OeFormlyField, OeFormlyView, ViewContext, } from "src/app/shared/components/shared/oe-formly-component";
+import { OeFormlyField, OeFormlyView, ViewContext } from "src/app/shared/components/shared/oe-formly-component";
 import { Edge, EdgePermission } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { AbstractIndustrialComponent } from "../../AbstractIndustrialComponent";
 
 @Component({
     selector: "oe-system-industrial-tokai2",
-    templateUrl:
-        "../../../../../../shared/components/formly/formly-field-modal/template.html",
+    templateUrl: "../../../../../../shared/components/formly/formly-field-modal/template.html",
     providers: [{ provide: DataService, useClass: LiveDataService }],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonUiModule, FormlyModule],
 })
 export class SystemIndustrialTokai2Component extends AbstractIndustrialComponent {
@@ -26,21 +26,14 @@ export class SystemIndustrialTokai2Component extends AbstractIndustrialComponent
     ): OeFormlyView {
         const lines: OeFormlyField[] = self.createDefaultStartStop(translate);
 
-        if (
-            EdgePermission.hasSystemErrorAcknowledge(edge) &&
-            edge.roleIsAtLeast(Role.INSTALLER)
-        ) {
+        if (EdgePermission.hasSystemErrorAcknowledge(edge) && edge.roleIsAtLeast(Role.INSTALLER)) {
             self.addResetButton(
                 lines,
                 translate,
                 self.systemErrorAcknowledge(),
-                translate.instant(
-                    "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER",
-                ) +
+                translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER") +
                     " " +
-                    translate.instant(
-                        "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_TEXT",
-                    ),
+                    translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_TEXT"),
             );
         }
 
@@ -54,10 +47,6 @@ export class SystemIndustrialTokai2Component extends AbstractIndustrialComponent
 
     protected override generateView(viewContext: ViewContext): OeFormlyView {
         this.loadComponentFromViewContext(viewContext);
-        return SystemIndustrialTokai2Component.getFormlyGeneralView(
-            this.translate,
-            viewContext.edge,
-            this,
-        );
+        return SystemIndustrialTokai2Component.getFormlyGeneralView(this.translate, viewContext.edge, this);
     }
 }

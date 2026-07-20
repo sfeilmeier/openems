@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { GeoResult, LocationModel, SystemLocationValidatorComponent } from "src/app/shared/components/system-location-validator/system-location-validator.component";
+import { GeoResult, LocationModel, SystemLocationValidatorComponent, } from "src/app/shared/components/system-location-validator/system-location-validator.component";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { CountryUtils } from "src/app/shared/type/country";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
@@ -10,6 +10,7 @@ import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 @Component({
     selector: "protocol-system-location",
     templateUrl: "./protocol-system-location.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ProtocolSystemLocationValidationComponent implements OnInit {
@@ -29,7 +30,8 @@ export class ProtocolSystemLocationValidationComponent implements OnInit {
     constructor(
         protected websocket: Websocket,
         private translate: TranslateService,
-        private service: Service) { }
+        private service: Service,
+    ) {}
 
     public static getLocation(ibn: AbstractIbn | null) {
         if (ibn == null) {

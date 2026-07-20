@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
@@ -9,10 +9,10 @@ import { System } from "../../shared/system";
 @Component({
     selector: ProtocolFeedInLimitationComponent.SELECTOR,
     templateUrl: "./protocol-feed-in-limitation.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ProtocolFeedInLimitationComponent implements OnInit {
-
     private static readonly SELECTOR = "protocol-feed-in-limitation";
 
     @Input() public ibn: AbstractIbn;
@@ -49,7 +49,6 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
         } else {
             this.model.maximumFeedInPower = this.totalPvPower;
         }
-
     }
 
     public onPreviousClicked() {

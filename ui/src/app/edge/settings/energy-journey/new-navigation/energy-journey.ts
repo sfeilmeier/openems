@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { CommonUiModule } from "src/app/shared/common-ui.module";
@@ -10,15 +10,10 @@ import { Edge, EdgePermission, EnergyJourneyWidget, Service } from "src/app/shar
     selector: "oe-energy-journey",
     templateUrl: "./energy-journey.html",
     standalone: true,
-    imports: [
-        CommonUiModule,
-        PipeComponentsModule,
-        RouterModule,
-        ComponentsBaseModule,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [CommonUiModule, PipeComponentsModule, RouterModule, ComponentsBaseModule],
 })
 export class EnergyJourneyLiveComponent implements OnInit {
-
     protected edge: Edge | null = null;
     protected allowedWidgets: EnergyJourneyWidget[] = [];
 
@@ -27,12 +22,17 @@ export class EnergyJourneyLiveComponent implements OnInit {
         private readonly translate: TranslateService,
         private readonly router: Router,
         private readonly route: ActivatedRoute,
-    ) { }
+    ) {}
 
     ngOnInit() {
-        this.service.getCurrentEdge().then(edge => {
+        this.service.getCurrentEdge().then((edge) => {
             this.edge = edge;
-            this.allowedWidgets = EdgePermission.getAllowedEnergyJourneyWidgets(this.edge, this.translate, this.router, this.route); // TODO
+            this.allowedWidgets = EdgePermission.getAllowedEnergyJourneyWidgets(
+                this.edge,
+                this.translate,
+                this.router,
+                this.route,
+            ); // TODO
         });
     }
 }

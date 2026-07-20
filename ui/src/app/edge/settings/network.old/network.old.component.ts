@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { FormlyFieldConfig } from "@ngx-formly/core";
@@ -11,19 +11,19 @@ import { SetNetworkConfigRequest } from "./setNetworkConfigRequest";
 import { NetworkInterface } from "./shared";
 
 export interface InterfaceForm {
-    name: string,
-    form: FormGroup,
-    model: NetworkInterface,
-    fields: FormlyFieldConfig[]
+    name: string;
+    form: FormGroup;
+    model: NetworkInterface;
+    fields: FormlyFieldConfig[];
 }
 
 @Component({
     selector: NetworkOldComponent.SELECTOR,
     templateUrl: "./network.old.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class NetworkOldComponent implements OnInit {
-
     private static readonly SELECTOR = "networkOld";
 
     public edge: Edge = null;
@@ -33,22 +33,26 @@ export class NetworkOldComponent implements OnInit {
         private service: Service,
         private websocket: Websocket,
         private route: ActivatedRoute,
-    ) { }
+    ) {}
 
     ngOnInit() {
-        this.service.getCurrentEdge().then(edge => {
+        this.service.getCurrentEdge().then((edge) => {
             this.edge = edge;
 
-            edge.sendRequest(this.websocket,
-                new ComponentJsonApiRequest({ componentId: "_host", payload: new GetNetworkConfigRequest() })).then(response => {
-                const result = (response as GetNetworkConfigResponse).result;
-                for (const name of Object.keys(result.interfaces)) {
-                    const iface = result.interfaces[name];
-                    this.interfaces.push(this.generateInterface(name, iface));
-                }
-            }).catch(reason => {
-                this.service.toast("Error reading current network configuration:" + reason.error.message, "danger");
-            });
+            edge.sendRequest(
+                this.websocket,
+                new ComponentJsonApiRequest({ componentId: "_host", payload: new GetNetworkConfigRequest() }),
+            )
+                .then((response) => {
+                    const result = (response as GetNetworkConfigResponse).result;
+                    for (const name of Object.keys(result.interfaces)) {
+                        const iface = result.interfaces[name];
+                        this.interfaces.push(this.generateInterface(name, iface));
+                    }
+                })
+                .catch((reason) => {
+                    this.service.toast("Error reading current network configuration:" + reason.error.message, "danger");
+                });
         });
     }
 
@@ -64,14 +68,20 @@ export class NetworkOldComponent implements OnInit {
         };
         request.interfaces[iface.name] = iface.model;
 
-        this.edge.sendRequest(this.websocket,
-            new ComponentJsonApiRequest({
-                componentId: "_host", payload: new SetNetworkConfigRequest(request),
-            })).then(response => {
-            this.service.toast("Successfully updated network configuration for [" + iface.name + "].", "success");
-        }).catch(reason => {
-            this.service.toast("Error updating [" + iface.name + "]:" + reason.error.message, "danger");
-        });
+        this.edge
+            .sendRequest(
+                this.websocket,
+                new ComponentJsonApiRequest({
+                    componentId: "_host",
+                    payload: new SetNetworkConfigRequest(request),
+                }),
+            )
+            .then((response) => {
+                this.service.toast("Successfully updated network configuration for [" + iface.name + "].", "success");
+            })
+            .catch((reason) => {
+                this.service.toast("Error updating [" + iface.name + "]:" + reason.error.message, "danger");
+            });
     }
 
     private generateInterface(name: string, source: NetworkInterface) {
@@ -94,7 +104,7 @@ export class NetworkOldComponent implements OnInit {
                     type: "input",
                     templateOptions: {
                         label: "Gateway",
-                        placeholder: "z.B. \"192.168.0.1\"",
+                        placeholder: 'z.B. "192.168.0.1"',
                     },
                 },
                 {
@@ -103,14 +113,14 @@ export class NetworkOldComponent implements OnInit {
                     type: "input",
                     templateOptions: {
                         label: "DNS",
-                        input: "z.B. \"192.168.0.1\"",
+                        input: 'z.B. "192.168.0.1"',
                     },
                 },
                 {
                     key: "linkLocalAddressing",
                     type: "checkbox",
                     templateOptions: {
-                        label: "Link-Local Address (z. B. \"169.254.XXX.XXX\")",
+                        label: 'Link-Local Address (z. B. "169.254.XXX.XXX")',
                     },
                 },
                 {
