@@ -1,10 +1,9 @@
-import { Component, inject, model, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, model } from "@angular/core";
 import { TZDate } from "@date-fns/tz";
 import { filter, take } from "rxjs";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { CommonUiModule } from "src/app/shared/common-ui.module";
 import { ComponentsBaseModule } from "src/app/shared/components/components.module";
-import { FlatWidgetButtonComponent } from "src/app/shared/components/flat/flat-widget-button/flat-widget-button";
 import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
 import { JsCalendar } from "src/app/shared/components/schedule/js-calendar-task";
 import { ScheduleComponent } from "src/app/shared/components/schedule/schedule.component";
@@ -32,7 +31,7 @@ interface SmartEventViewModel {
     standalone: true,
     providers: [{ provide: DataService, useClass: LiveDataService }],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [ScheduleComponent, ComponentsBaseModule, CommonUiModule, FlatWidgetButtonComponent],
+    imports: [ScheduleComponent, ComponentsBaseModule, CommonUiModule],
 })
 export class EvseScheduleComponent extends AbstractModal {
     protected readonly CONVERT_TO_MODE_LABEL = ControllerEvseSingleShared.CONVERT_TO_MODE_LABEL(this.translate);

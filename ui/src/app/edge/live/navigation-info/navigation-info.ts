@@ -7,7 +7,6 @@ import { filter } from "rxjs";
 import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
 import { HelpButtonComponent } from "src/app/shared/components/modal/help-button/help-button";
 import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
-import { RouteService } from "src/app/shared/service/route.service";
 import { Service, UserPermission, Websocket } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
 import { Icon } from "src/app/shared/type/widget";
@@ -96,7 +95,6 @@ export class NavigationInfoComponent extends AbstractModal {
         icon: IconWithRequiredName;
     } | null = null;
 
-    private routeService = inject(RouteService);
     private navigationService = inject(NavigationService);
 
     constructor(
