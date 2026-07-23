@@ -300,21 +300,6 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
                     });
                 },
             },
-            expressions: {
-                "templateOptions.description": (field) => {
-                    let val = defaultReserveSocValue; // Default
-
-                    if (field != null && field.formControl != null) {
-                        const controlValue = field.formControl.value;
-
-                        if (controlValue != null && controlValue !== "" && !Number.isNaN(controlValue)) {
-                            val = controlValue;
-                        }
-                    }
-
-                    return `${this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT")} ${val}%`;
-                },
-            },
             parsers: [Number],
             hideExpression: (model) => !model.isEnabled || !model.isReserveSocEnabled,
         });

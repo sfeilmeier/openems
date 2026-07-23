@@ -5,7 +5,7 @@ import { JsonrpcResponseSuccess, SetupProtocolResponse } from "src/app/shared/js
 import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { Edge, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
-import { StringUtils } from "src/app/shared/utils/string/string.utils";
+import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { environment } from "src/environments";
 import { Category } from "../../shared/category";
 import { ExternalLimitationType, FeedInSetting, GridSetting, View } from "../../shared/enums";
@@ -59,7 +59,8 @@ export type CommercialGen3App = {
     HAS_ESS_LIMITER_14A: boolean;
     NA_PROTECTION_ENABLED: boolean;
     CT_RATIO_FIRST: number;
-} & MpptConfig;
+} & MpptConfig &
+    Partial<AdvancedGridSettingsModel>;
 
 export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyModel> {
     public override readonly systemType: SystemType = SystemType.COMMERCIAL;
@@ -643,7 +644,19 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         return EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES(this.translate, docLink);
     }
 
-    public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): CommercialGen3App {
+    public override getAppProperties(
+        safetyCountry: SafetyCountry,
+        feedInSetting: FeedInSetting,
+    ): CommercialGen3App & Omit<Genset, "isEnabled"> {
+        AssertionUtils.assertIsDefined(
+            this.gridSetting,
+            "Grid setting must be selected before generating app properties",
+        );
+        AssertionUtils.assertIsDefined(
+            this.energyFlowMeter.value,
+            "CT ratio must be set before generating app properties",
+        );
+
         return {
             ...this.commonProperties(safetyCountry, feedInSetting),
             FEED_IN_TYPE: this.feedInLimitation?.feedInType ?? ExternalLimitationType.NO_LIMITATION,
@@ -652,7 +665,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
             ...this.generateMpptProperties(),
             ...this.getGensetProperties(),
             ...this.getAdvancedGridProperties(),
-        } as CommercialGen3App & Genset;
+        };
     }
 
     public override getGridSettingOptions() {
@@ -761,26 +774,33 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         ];
     }
 
-    private getAdvancedGridProperties(): Record<string, string | number | boolean | null> {
-        const payload: Record<string, string | number | boolean | null> = {};
-        const model = this.advancedGridSettings;
-
+    private getAdvancedGridProperties(): Partial<AdvancedGridSettingsModel> {
+        const payload: Partial<AdvancedGridSettingsModel> = {};
         if (this.gridSetting !== GridSetting.VDE_4110) {
             return payload; // Advanced grid settings are only relevant for VDE 4110, so we return an empty object if it's not selected
         }
 
-        Object.entries(model).forEach(([key, value]) => {
+        (Object.keys(this.advancedGridSettings) as (keyof AdvancedGridSettingsModel)[]).forEach((key) => {
+            const value = this.advancedGridSettings[key];
             if (value != null) {
-                const backendKey = StringUtils.toScreamingSnakeCase(key);
-
-                if (backendKey == null) {
-                    return;
-                }
-                payload[backendKey] = value;
+                this.assignAdvancedGridProperty(payload, key, value);
             }
         });
 
         return payload;
+    }
+
+    /**
+     * Assigns a single advanced grid setting to the payload, keeping `key` and `value` correlated via the generic `K`
+     * so the compiler can verify the assignment (a plain indexed assignment on the union type would otherwise be
+     * rejected).
+     */
+    private assignAdvancedGridProperty<K extends keyof AdvancedGridSettingsModel>(
+        payload: Partial<AdvancedGridSettingsModel>,
+        key: K,
+        value: AdvancedGridSettingsModel[K],
+    ): void {
+        payload[key] = value;
     }
 
     private getGensetProperties(): Omit<Genset, "isEnabled"> {

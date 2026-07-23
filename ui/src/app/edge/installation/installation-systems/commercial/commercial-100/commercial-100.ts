@@ -6,18 +6,18 @@ import { v4 as uuidv4 } from "uuid";
 import { SetupProtocol } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, Websocket } from "src/app/shared/shared";
 import { Category } from "../../../shared/category";
-import { ConnectedBatterySystems, FeedInSetting, GridSetting, View } from "../../../shared/enums";
-import { GridSettingUtils } from "../../../shared/gridsetting.utils";
+import { ConnectedBatterySystems, FeedInSetting, View } from "../../../shared/enums";
 import { ComponentData, ExtensionBoxPrefix } from "../../../shared/ibndatatypes";
 import { SystemId } from "../../../shared/system";
 import { WebLinks } from "../../../shared/weblink.utils";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
 import { BatteryTowerSettings } from "../../abstract-ibn";
-import { AbstractCommercialGen3, CommercialGen3App } from "../abstract-commercial-gen3";
+import { AbstractCommercialGen3, CommercialGen3App, Genset } from "../abstract-commercial-gen3";
 
-type Commercial100AppProperties = CommercialGen3App & {
-    CONNECTED_BATTERY_SYSTEMS: ConnectedBatterySystems;
-};
+type Commercial100AppProperties = CommercialGen3App &
+    Omit<Genset, "isEnabled"> & {
+        CONNECTED_BATTERY_SYSTEMS: ConnectedBatterySystems;
+    };
 
 export class Commercial100Ibn extends AbstractCommercialGen3 {
     private static readonly VIEWS = [
@@ -66,16 +66,6 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
     public get numberOfBatteryInputs(): number {
         const count = (this.batteryInputs.hasBatteryInput1 ? 1 : 0) + (this.batteryInputs.hasBatteryInput2 ? 1 : 0);
         return Math.max(count, 1);
-    }
-
-    // TODO: This should be removed when VDE4110 settings implemented in APP.
-    public override getGridSettingOptions() {
-        return [
-            {
-                label: GridSettingUtils.getDisplayName(GridSetting.VDE_4105),
-                value: GridSetting.VDE_4105,
-            },
-        ];
     }
 
     /**
@@ -143,7 +133,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
         feedInSetting: FeedInSetting,
     ): Commercial100AppProperties {
         return {
-            ...(super.getAppProperties(safetyCountry, feedInSetting) as Commercial100AppProperties),
+            ...super.getAppProperties(safetyCountry, feedInSetting),
             CONNECTED_BATTERY_SYSTEMS:
                 this.numberOfBatteryInputs === 1 ? ConnectedBatterySystems.ONE : ConnectedBatterySystems.TWO,
         };

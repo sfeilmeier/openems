@@ -55,24 +55,22 @@ export enum SystemId {
 }
 
 export type HomeSystemId =
-    SystemId.FENECON_HOME_10 |
-    SystemId.FENECON_HOME_20 |
-    SystemId.FENECON_HOME_30 |
-    SystemId.FENECON_HOME_10_GEN_2 |
-    SystemId.FENECON_HOME_6 |
-    SystemId.FENECON_HOME_15;
+    | SystemId.FENECON_HOME_10
+    | SystemId.FENECON_HOME_20
+    | SystemId.FENECON_HOME_30
+    | SystemId.FENECON_HOME_10_GEN_2
+    | SystemId.FENECON_HOME_6
+    | SystemId.FENECON_HOME_15;
 
 export namespace System {
-
     /**
      * Returns the IBN Object from the System type.
      *
      * @param systemType Type of the System.
-     * @param translate the translate service
-     * @returns the System IBN Object.
+     * @param translate The translate service
+     * @returns The System IBN Object.
      */
     export function getSystemObjectFromSystemType(systemType: SystemType, translate: TranslateService): AbstractIbn {
-
         switch (systemType) {
             case SystemType.FENECON_HOME:
                 return new Home10FeneconIbn(translate);
@@ -87,12 +85,15 @@ export namespace System {
      * Returns the IBN Object from the System type.
      *
      * @param systemType Type of the System.
-     * @param translate the translate service
+     * @param translate The translate service
      * @param emsType The type of the EMS assigned in Odoo.
-     * @returns the System IBN Object.
+     * @returns The System IBN Object.
      */
-    export function getSystemObjectFromSubSystemType(subSystemType: SubSystemType, translate: TranslateService, emsType: EmsType): AbstractIbn {
-
+    export function getSystemObjectFromSubSystemType(
+        subSystemType: SubSystemType,
+        translate: TranslateService,
+        emsType: EmsType,
+    ): AbstractIbn {
         switch (subSystemType) {
             case SubSystemType.COMMERCIAL_30:
                 return new Commercial30AnschlussIbn(translate);
@@ -120,11 +121,10 @@ export namespace System {
      * Returns the IBN Object based on the System id.
      *
      * @param systemId Id of the System.
-     * @param translate the translate service.
-     * @returns the IBN object.
+     * @param translate The translate service.
+     * @returns The IBN object.
      */
     export function getSystemObjectFromSystemId(systemId: SystemId, translate: TranslateService): AbstractIbn {
-
         switch (systemId) {
             case SystemId.GENERAL:
                 return new GeneralIbn(translate);
@@ -164,7 +164,7 @@ export namespace System {
      *
      * @param systemType Type of the System.
      * @param emsType The type of the EMS assigned in Odoo.
-     * @returns the url.
+     * @returns The url.
      */
     export function getSubSystemTypeLink(subSystemType: SubSystemType, emsType: EmsType): string {
         switch (subSystemType) {
@@ -180,6 +180,8 @@ export namespace System {
                     return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92_CLUSTER;
                 }
                 return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92;
+            case SubSystemType.COMMERCIAL_100:
+                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_100;
         }
     }
 
@@ -187,7 +189,7 @@ export namespace System {
      * Returns the URL for the Home System type.
      *
      * @param systemType Type of the System.
-     * @returns the url.
+     * @returns The url.
      */
     export function getHomeSystemInstructionsLink(homeSystemId: HomeSystemId): string {
         const lang: string = Language.getByKey(localStorage.LANGUAGE)?.key ?? Language.DEFAULT.key;
@@ -218,7 +220,6 @@ export namespace System {
      * Checks if the currently selected system is one of the home systems.
      *
      * @returns {boolean} True if the selected system is a home system, false otherwise.
-     *
      */
     export function isHomeSystemSelected(selectedSystem: SystemId): boolean {
         const homeSystemIds: SystemId[] = [
@@ -237,7 +238,7 @@ export namespace System {
      * Rundsteuer manual is returned based on the system.
      *
      * @param system Id of the System.
-     * @returns the rundsteuer manual.
+     * @returns The rundsteuer manual.
      */
     export function getRundsteuerManual(system: SystemId): string {
         switch (system) {
@@ -254,8 +255,8 @@ export namespace System {
         const fields: FormlyFieldConfig[] = [];
 
         const componentLabel: {
-            value: SubSystemType,
-            label: SubSystemType,
+            value: SubSystemType;
+            label: SubSystemType;
         }[] = [];
 
         switch (emsType) {
@@ -267,9 +268,7 @@ export namespace System {
                 );
                 break;
             case "fec013":
-                componentLabel.push(
-                    { value: SubSystemType.COMMERCIAL_92, label: SubSystemType.COMMERCIAL_92 },
-                );
+                componentLabel.push({ value: SubSystemType.COMMERCIAL_92, label: SubSystemType.COMMERCIAL_92 });
                 break;
             case null:
                 componentLabel.push(

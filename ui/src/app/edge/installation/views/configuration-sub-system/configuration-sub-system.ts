@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -24,8 +24,7 @@ export class ConfigurationSubSystemComponent implements OnInit {
     public fields: FormlyFieldConfig[];
     public model;
     private emsType: EmsType = null;
-
-    constructor(private translate: TranslateService) {}
+    private translate: TranslateService = inject(TranslateService);
 
     protected get showNote(): boolean {
         const subSystemType = this.form.controls.subType?.value as SubSystemType | null | undefined;
@@ -34,7 +33,7 @@ export class ConfigurationSubSystemComponent implements OnInit {
 
     protected get showManualLink(): boolean {
         const subSystemType = this.form.controls.subType?.value as SubSystemType | null | undefined;
-        return subSystemType != null && subSystemType !== SubSystemType.COMMERCIAL_100;
+        return subSystemType != null;
     }
 
     public ngOnInit() {

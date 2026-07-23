@@ -163,7 +163,7 @@ export const OemMeta: BaseMeta = {
                     COMMERCIAL_92_CLUSTER:
                         "https://docs.fenecon.de/de/commercial/commercial_92_cluster/betrieb_und_serviceanleitung/Betriebsanleitung_Commercial_92_Cluster.html",
                     COMMERCIAL_100:
-                        "https://docs.fenecon.de/de/commercial/commercial_100/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Commercial_100.html",
+                        "https://docs.fenecon.de/de/commercial/commercial_100/betrieb_und_serviceanleitung/Commercial_100_instructions.html",
                 },
             },
 
