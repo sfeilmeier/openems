@@ -18,7 +18,7 @@ jobs:
       EDGE_JAR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/edge.jar"
       UI_BUNDLE: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/fems-ui-edge.tar.gz"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           sparse-checkout: |
             tools/
