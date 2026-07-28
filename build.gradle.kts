@@ -14,10 +14,11 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 plugins {
 	id("base")
 	id("java")
+	id("jacoco-report-aggregation")
 	id("com.github.node-gradle.node")
 	id("org.barfuin.gradle.jacocolog")
 	id("org.sonarqube")
-	id("openems.bundle-aggregates")
+	id("openems.bundle-aggregates")	
 }
 
 repositories {
@@ -28,6 +29,12 @@ repositories {
 
 dependencyLocking {
 	lockAllConfigurations()
+}
+
+dependencies {
+	subprojects
+		.filter { it.plugins.hasPlugin("biz.aQute.bnd") }
+		.forEach { jacocoAggregation(it) }
 }
 
 fun Project.isEdgeBundle(): Boolean =
@@ -232,6 +239,16 @@ subprojects {
 			exclude("**/com/dalsemi/onewire/*")
 		}
 	}
+}
+
+reporting {
+    reports {
+		// Choose a name like `jacocoXxxReport`, which will get you a `jacocoLogXxxCoverage` task:
+		// ./gradlew jacocoLogAggregatedCoverage
+        create<JacocoCoverageReport>("jacocoAggregatedReport") {
+            testSuiteName = "test"
+        }
+    }
 }
 
 tasks.register("buildComponents") {
