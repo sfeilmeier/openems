@@ -748,7 +748,7 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
         // TODO remove
         // system not updated => newest appManager not available
         const appProperties = this.getAppProperties(safetyCountry, feedInSetting);
-        const baseMode = AppCenterUtil.isAppManagerAvailable(edge) ? BaseMode.AppManager : BaseMode.UI;
+        const baseMode = BaseMode.AppManager;
 
         componentConfigurator.addInstallAppCallback(() => {
             return AppCenterUtil.updateMetaAndInstallApp(

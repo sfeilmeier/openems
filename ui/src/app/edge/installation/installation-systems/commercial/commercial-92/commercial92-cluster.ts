@@ -9,14 +9,13 @@ import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { CommercialCluster, View } from "../../../shared/enums";
 import { SystemId } from "../../../shared/system";
 import { WebLinks } from "../../../shared/weblink.utils";
-import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
+import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject, } from "../../../views/configuration-execute/component-configurator";
 import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
 import { AbstractCommercial92Ibn } from "./abstract-commercial92";
 
 export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
-
     public override warrantyLink = WebLinks.WARRANTY_LINK_COMMERCIAL_92;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_92_CLUSTER;
     public override isClusterConfiguration: boolean = true;
@@ -24,31 +23,39 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
     public emsBoxSerialNumbers: string[] = [];
 
     constructor(translate: TranslateService) {
-        super([
-            View.PreInstallation,
-            View.PreInstallationUpdate,
-            View.ConfigurationSystem,
-            View.ConfigurationSubSystem,
-            View.ProtocolInstaller,
-            View.ProtocolCustomer,
-            View.ProtocolSystem,
-            View.ProtocolSystemLocation,
-            View.ConfigurationLineSideMeterFuse,
-            View.ProtocolFeedInLimitation,
-            View.ProtocolCommercialClusterSlaveCount,
-            View.ConfigurationSummary,
-            View.ConfigurationExecute,
-            View.ProtocolCommercialClusterSlaveInstallation,
-            View.ProtocolChecklist,
-            View.ProtocolSerialNumbers,
-            View.Alerting,
-            View.Completion,
-        ], translate);
+        super(
+            [
+                View.PreInstallation,
+                View.PreInstallationUpdate,
+                View.ConfigurationSystem,
+                View.ConfigurationSubSystem,
+                View.ProtocolInstaller,
+                View.ProtocolCustomer,
+                View.ProtocolSystem,
+                View.ProtocolSystemLocation,
+                View.ConfigurationLineSideMeterFuse,
+                View.ProtocolFeedInLimitation,
+                View.ProtocolCommercialClusterSlaveCount,
+                View.ConfigurationSummary,
+                View.ConfigurationExecute,
+                View.ProtocolCommercialClusterSlaveInstallation,
+                View.ProtocolChecklist,
+                View.ProtocolSerialNumbers,
+                View.Alerting,
+                View.Completion,
+            ],
+            translate,
+        );
     }
 
-    public override async getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service, cluster?: CommercialCluster): Promise<ComponentConfigurator> {
-        const componentConfigurator: ComponentConfigurator =
-            new ComponentConfigurator(edge, config, websocket);
+    public override async getComponentConfigurator(
+        edge: Edge,
+        config: EdgeConfig,
+        websocket: Websocket,
+        service?: Service,
+        cluster?: CommercialCluster,
+    ): Promise<ComponentConfigurator> {
+        const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
 
         // Determine safety country
         const safetyCountry: SafetyCountry = this.location.isEqualToCustomerData
@@ -76,7 +83,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         }
 
         // system not updated => newest appManager not available
-        const baseMode = AppCenterUtil.isAppManagerAvailable(edge) ? BaseMode.AppManager : BaseMode.UI;
+        const baseMode = BaseMode.AppManager;
 
         componentConfigurator.addInstallAppCallback(() => {
             return AppCenterUtil.updateMetaAndInstallApp(
@@ -86,7 +93,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                 alias,
                 appProperties,
                 this.feedInLimitation.dynamicLimitationType,
-                this.feedInLimitation.maximumFeedInPower
+                this.feedInLimitation.maximumFeedInPower,
             );
         });
 
@@ -131,21 +138,36 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         const edge = this.slaveEdges[index];
 
         return new Edge(
-            edge.id, edge.comment, edge.producttype, edge.version,
-            Role.INSTALLER, edge.online, null, SumState.OK, null, null,
+            edge.id,
+            edge.comment,
+            edge.producttype,
+            edge.version,
+            Role.INSTALLER,
+            edge.online,
+            null,
+            SumState.OK,
+            null,
+            null,
         );
     }
 
-    public override getSerialNumberCategoryHeader(towerIndex: number, slaveIndex: number,): string {
+    public override getSerialNumberCategoryHeader(towerIndex: number, slaveIndex: number): string {
         const slaveNr: number = slaveIndex + 1;
         const towerNr: number = towerIndex + 1;
-        return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER_CLUSTER", { batteryNumber: slaveNr, towerNumber: towerNr });
+        return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER_CLUSTER", {
+            batteryNumber: slaveNr,
+            towerNumber: towerNr,
+        });
     }
 
-    /**
-     * Restricts the reading of serial numbers to specific towers configured.
-     */
-    public override readSerialNumbersFromRegisters(edge: Edge, websocket: Websocket, numberOfTowers: number, numberOfModulesPerTower: number, index: number): Promise<{}>[] {
+    /** Restricts the reading of serial numbers to specific towers configured. */
+    public override readSerialNumbersFromRegisters(
+        edge: Edge,
+        websocket: Websocket,
+        numberOfTowers: number,
+        numberOfModulesPerTower: number,
+        index: number,
+    ): Promise<{}>[] {
         const slaveNr = index + 1; // Convert 0-based index to 1-based slave number
         const result: Promise<{}>[] = [];
         // Only process towers for the given slaveNr
@@ -155,7 +177,13 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         return result;
     }
 
-    public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower: number, slaveNr: number) {
+    public override getSerialNumbersFromEdge(
+        towerNr: number,
+        edge: Edge,
+        websocket: Websocket,
+        numberOfModulesPerTower: number,
+        slaveNr: number,
+    ) {
         return new Promise((resolve) => {
             const subscriptionId = `Commercial-battery${slaveNr}-tower${towerNr}`;
             const serialNumbers: { [key: string]: string } = {};
@@ -168,19 +196,20 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             const stopOnRequest: Subject<void> = new Subject<void>();
 
             // Read data
-            edge.currentData.pipe(
-                takeUntil(stopOnRequest),
-                filter(currentData => currentData != null),
-            ).subscribe((currentData) => {
-                if (this.processCurrentData(currentData, channelAddresses, serialNumbers)) {
-
-                    // If all serial numbers are resolved
-                    stopOnRequest.next();
-                    stopOnRequest.complete();
-                    edge.unsubscribeFromChannels(subscriptionId, websocket, Object.values(channelAddresses));
-                    resolve(serialNumbers);
-                }
-            });
+            edge.currentData
+                .pipe(
+                    takeUntil(stopOnRequest),
+                    filter((currentData) => currentData != null),
+                )
+                .subscribe((currentData) => {
+                    if (this.processCurrentData(currentData, channelAddresses, serialNumbers)) {
+                        // If all serial numbers are resolved
+                        stopOnRequest.next();
+                        stopOnRequest.complete();
+                        edge.unsubscribeFromChannels(subscriptionId, websocket, Object.values(channelAddresses));
+                        resolve(serialNumbers);
+                    }
+                });
             setTimeout(() => {
                 stopOnRequest.next();
                 stopOnRequest.complete();
@@ -190,24 +219,28 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         });
     }
 
-    /**
-     * Helper function to gather channel addresses
-     */
-    public override getChannelAddresses(towerNr: number, numberOfModulesPerTower: number, slaveNr: number): { [key: string]: ChannelAddress } {
+    /** Helper function to gather channel addresses */
+    public override getChannelAddresses(
+        towerNr: number,
+        numberOfModulesPerTower: number,
+        slaveNr: number,
+    ): { [key: string]: ChannelAddress } {
         const channelAddresses: { [key: string]: ChannelAddress } = {};
 
         channelAddresses["batteryInverter"] = new ChannelAddress(`batteryInverter${slaveNr}`, "S1Sn");
         channelAddresses["bmsBox"] = new ChannelAddress(`battery${slaveNr}`, `Tower${towerNr}BmsSerialNumber`);
 
         for (let moduleNr = 0; moduleNr < numberOfModulesPerTower; moduleNr++) {
-            channelAddresses[`module${moduleNr}`] = new ChannelAddress(`battery${slaveNr}`, `Tower${towerNr}Module${moduleNr}SerialNumber`);
+            channelAddresses[`module${moduleNr}`] = new ChannelAddress(
+                `battery${slaveNr}`,
+                `Tower${towerNr}Module${moduleNr}SerialNumber`,
+            );
         }
 
         return channelAddresses;
     }
 
     public override populateFromData(ibnString: any) {
-
         super.populateFromData(ibnString);
 
         this.slaveEdges = ibnString.slaveEdges;
@@ -215,8 +248,10 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         this.emsBoxSerialNumbers = ibnString.emsBoxSerialNumbers;
     }
 
-    public override getPreSettingInformationFromEdge(edge: Edge, websocket: Websocket):
-    Promise<Array<{ numberOfTowers: number; numberOfModulesPerTower: number }>> {
+    public override getPreSettingInformationFromEdge(
+        edge: Edge,
+        websocket: Websocket,
+    ): Promise<Array<{ numberOfTowers: number; numberOfModulesPerTower: number }>> {
         return new Promise((resolve) => {
             const channelAddresses: ChannelAddress[] = [];
 
@@ -237,7 +272,8 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
             edge.currentData
                 .pipe(
                     takeUntil(stopOnRequest),
-                    filter(currentData => currentData != null))
+                    filter((currentData) => currentData != null),
+                )
                 .subscribe((currentData) => {
                     // Initialize result as empty array
                     const result: Array<{ numberOfTowers: number; numberOfModulesPerTower: number }> = [];
@@ -268,7 +304,10 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                     // Initialize result as empty array
                     const result: Array<{ numberOfTowers: number; numberOfModulesPerTower: number }> = [];
                     for (let i = 1; i <= this.numberOfSlaves; i++) {
-                        result.push({ numberOfTowers: this.minNumberOfTowers, numberOfModulesPerTower: this.defaultNumberOfModules });
+                        result.push({
+                            numberOfTowers: this.minNumberOfTowers,
+                            numberOfModulesPerTower: this.defaultNumberOfModules,
+                        });
                     }
                     resolve(result);
                 }

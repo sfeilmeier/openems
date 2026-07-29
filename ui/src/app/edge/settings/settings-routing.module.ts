@@ -14,7 +14,6 @@ import { JsonrpcTestComponent } from "./jsonrpctest/jsonrpctest";
 import { NetworkOldComponent as EdgeSettingsNetworkOldComponent } from "./network.old/network.old.component";
 import { SettingsComponent } from "./settings.component";
 import { SystemExecuteComponent as EdgeSettingsSystemExecuteComponent } from "./systemexecute/systemexecute.component";
-import { SystemUpdateOldComponent as EdgeSettingsSystemUpdateOldComponent } from "./systemupdate.old/systemupdate.old.component";
 
 export const settingsRoutes: Routes = [
     {
@@ -124,7 +123,6 @@ export const settingsRoutes: Routes = [
         canActivate: [hasEdgeRole(Role.OWNER)],
         data: { navbarTitleToBeTranslated: "EDGE.CONFIG.INDEX.SYSTEM" },
     },
-    { path: "system.old", component: EdgeSettingsSystemUpdateOldComponent },
     {
         path: "app",
         loadComponent: () => import("./app/index.component").then((m) => m.IndexComponent),

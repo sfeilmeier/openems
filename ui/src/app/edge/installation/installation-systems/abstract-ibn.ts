@@ -15,7 +15,6 @@ import { ComponentData, EmsType, TableData } from "../shared/ibndatatypes";
 import { Meter } from "../shared/meter";
 import { EXTERNAL_LIMITATION_OPTIONS_WITHOUT_DYNAMIC_EXTERNAL_CONTROLLER } from "../shared/options";
 import { System, SystemId, SystemType } from "../shared/system";
-import { ViewUtils } from "../shared/view.utils";
 import { WebLinks } from "../shared/weblink.utils";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
 
@@ -637,9 +636,7 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
      *
      * @param edge The current edge.
      */
-    public removeOrAddView(edge: Edge): void {
-        ViewUtils.handlePreinstallationUpdate(this.views, edge);
-    }
+    public removeOrAddView(edge: Edge): void {}
 
     /** Restricts the reading of serial numbers to specific towers configured. */
     public readSerialNumbersFromRegisters(

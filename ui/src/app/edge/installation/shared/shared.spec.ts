@@ -1,4 +1,3 @@
-import { DummyConfig } from "src/app/shared/components/edge/edgeconfig.spec";
 import { Country } from "src/app/shared/type/country";
 import { View } from "./enums";
 import { IbnUtils } from "./ibn.utils";
@@ -29,11 +28,7 @@ describe("#View-Utils", () => {
     let views: View[];
 
     beforeEach(() => {
-        views = [
-            View.Completion,
-            View.ConfigurationSystem,
-            View.PreInstallationUpdate,
-        ];
+        views = [View.Completion, View.ConfigurationSystem, View.PreInstallationUpdate];
     });
 
     describe("#remove", () => {
@@ -44,7 +39,9 @@ describe("#View-Utils", () => {
 
         it("should call action callback when removing", () => {
             let wasCalled = false;
-            ViewUtils.remove(views, View.PreInstallationUpdate, () => { wasCalled = true; });
+            ViewUtils.remove(views, View.PreInstallationUpdate, () => {
+                wasCalled = true;
+            });
             expect(wasCalled).toBeTrue();
         });
 
@@ -69,7 +66,9 @@ describe("#View-Utils", () => {
 
         it("should call action callback when adding", () => {
             let wasCalled = false;
-            ViewUtils.add(views, View.ProtocolCustomer, 2, () => { wasCalled = true; });
+            ViewUtils.add(views, View.ProtocolCustomer, 2, () => {
+                wasCalled = true;
+            });
             expect(wasCalled).toBeTrue();
         });
     });
@@ -152,26 +151,6 @@ describe("#View-Utils", () => {
 
             expect(views).toContain(viewToToggle);
             expect(wasCalled).toBeTrue();
-        });
-    });
-
-    describe("#handlePreinstallationUpdate", () => {
-        it("should remove PreInstallationUpdate if version is too old", () => {
-            const edge = DummyConfig.dummyEdge({ version: "2018.10.1" });
-            ViewUtils.handlePreinstallationUpdate(views, edge);
-            expect(views).not.toContain(View.PreInstallationUpdate);
-        });
-
-        it("should keep PreInstallationUpdate if version is sufficient", () => {
-            const edge = DummyConfig.dummyEdge({ version: "2024.10.1" });
-            ViewUtils.handlePreinstallationUpdate(views, edge);
-            expect(views).toContain(View.PreInstallationUpdate);
-        });
-
-        it("should do nothing if edge is null", () => {
-            const initial = views;
-            ViewUtils.handlePreinstallationUpdate(views, null);
-            expect(views).toEqual(initial);
         });
     });
 });

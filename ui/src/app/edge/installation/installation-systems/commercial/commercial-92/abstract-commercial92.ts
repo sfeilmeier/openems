@@ -9,23 +9,23 @@ import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/sh
 import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
-import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View } from "../../../shared/enums";
+import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View, } from "../../../shared/enums";
 import { ExtensionBoxPrefix } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
 import { ViewUtils } from "../../../shared/view.utils";
-import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject } from "../../../views/configuration-execute/component-configurator";
+import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject, } from "../../../views/configuration-execute/component-configurator";
 import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
 import { AbstractCommercialIbn } from "../abstract-commercial";
 
 export type Commercial92App = {
-    SAFETY_COUNTRY: SafetyCountry,
-    GRID_CODE: GridSetting | null,
-    FEED_IN_TYPE: ExternalLimitationType,
-    BATTERY_TARGET: BatteryTarget,
-    HAS_ESS_LIMITER_14A: boolean,
+    SAFETY_COUNTRY: SafetyCountry;
+    GRID_CODE: GridSetting | null;
+    FEED_IN_TYPE: ExternalLimitationType;
+    BATTERY_TARGET: BatteryTarget;
+    HAS_ESS_LIMITER_14A: boolean;
 };
 
 export enum BatteryTarget {
@@ -34,7 +34,6 @@ export enum BatteryTarget {
 }
 
 export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
-
     public override WAIT_FOR_BATTERY_SERIAL_NUMBERS = 8 * 60 * 1000;
 
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_92_WITHOUT_CLUSTER;
@@ -54,24 +53,26 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
     };
 
     public checklist: {
-        changeNetworkSettings: boolean,
-        connectInverter: boolean,
-        enterPassword: boolean,
-        ipAddress: [boolean, boolean, boolean],
-        minVoltage: boolean,
-        multiStepField: [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean],
-        powerControl: boolean,
-        startConfiguration: boolean,
-    }[] = [{
-        changeNetworkSettings: false,
-        connectInverter: false,
-        enterPassword: false,
-        ipAddress: [false, false, false],
-        minVoltage: false,
-        multiStepField: [false, false, false, false, false, false, false, false],
-        powerControl: false,
-        startConfiguration: false,
-    }];
+        changeNetworkSettings: boolean;
+        connectInverter: boolean;
+        enterPassword: boolean;
+        ipAddress: [boolean, boolean, boolean];
+        minVoltage: boolean;
+        multiStepField: [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean];
+        powerControl: boolean;
+        startConfiguration: boolean;
+    }[] = [
+        {
+            changeNetworkSettings: false,
+            connectInverter: false,
+            enterPassword: false,
+            ipAddress: [false, false, false],
+            minVoltage: false,
+            multiStepField: [false, false, false, false, false, false, false, false],
+            powerControl: false,
+            startConfiguration: false,
+        },
+    ];
 
     public abstract isClusterConfiguration: boolean;
 
@@ -84,7 +85,9 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
                 type: "number",
-                description: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.FIXED_VALUE_DESCRIPTION"),
+                description: this.translate.instant(
+                    "INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.FIXED_VALUE_DESCRIPTION",
+                ),
                 min: 0,
                 required: true,
             },
@@ -100,9 +103,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER_LABEL"),
                 required: true,
-                options: [
-                    { label: "KDK", value: Meter.GridMeter.KDK },
-                ],
+                options: [{ label: "KDK", value: Meter.GridMeter.KDK }],
             },
             defaultValue: Meter.GridMeter.KDK,
         });
@@ -244,7 +245,8 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                 key: "module" + moduleNr,
                 type: "input",
                 templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") + (moduleNr + 1),
+                    label:
+                        this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") + (moduleNr + 1),
                     required: true,
                     placeholder: "xxxxxxxxxxxxxxxxxxxxxxxx",
                 },
@@ -262,13 +264,17 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         return super.getDynamicLimitationFields();
     }
 
-    public override async getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service, cluster?: CommercialCluster): Promise<ComponentConfigurator> {
-
-        const componentConfigurator: ComponentConfigurator =
-            new ComponentConfigurator(edge, config, websocket);
+    public override async getComponentConfigurator(
+        edge: Edge,
+        config: EdgeConfig,
+        websocket: Websocket,
+        service?: Service,
+        cluster?: CommercialCluster,
+    ): Promise<ComponentConfigurator> {
+        const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
 
         // system not updated => newest appManager not available
-        const baseMode = AppCenterUtil.isAppManagerAvailable(edge) ? BaseMode.AppManager : BaseMode.UI;
+        const baseMode = BaseMode.AppManager;
         const appId: string = "App.FENECON.Commercial.92";
         const appAlias: string = "commercial-92";
 
@@ -293,7 +299,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                 appAlias,
                 appProperties,
                 this.feedInLimitation.dynamicLimitationType,
-                this.feedInLimitation.maximumFeedInPower
+                this.feedInLimitation.maximumFeedInPower,
             );
         });
 
@@ -342,7 +348,13 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         return [];
     }
 
-    public override getSerialNumbersFromEdge(towerNr: number, edge: Edge, websocket: Websocket, numberOfModulesPerTower: number, slaveNr?: number) {
+    public override getSerialNumbersFromEdge(
+        towerNr: number,
+        edge: Edge,
+        websocket: Websocket,
+        numberOfModulesPerTower: number,
+        slaveNr?: number,
+    ) {
         return new Promise((resolve) => {
             const subscriptionId = `Commercial-tower${towerNr}`;
             const serialNumbers: { [key: string]: string } = {};
@@ -355,19 +367,20 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             const stopOnRequest: Subject<void> = new Subject<void>();
 
             // Read data
-            edge.currentData.pipe(
-                takeUntil(stopOnRequest),
-                filter(currentData => currentData != null),
-            ).subscribe((currentData) => {
-                if (this.processCurrentData(currentData, channelAddresses, serialNumbers)) {
-
-                    // If all serial numbers are resolved
-                    stopOnRequest.next();
-                    stopOnRequest.complete();
-                    edge.unsubscribeFromChannels(subscriptionId, websocket, Object.values(channelAddresses));
-                    resolve(serialNumbers);
-                }
-            });
+            edge.currentData
+                .pipe(
+                    takeUntil(stopOnRequest),
+                    filter((currentData) => currentData != null),
+                )
+                .subscribe((currentData) => {
+                    if (this.processCurrentData(currentData, channelAddresses, serialNumbers)) {
+                        // If all serial numbers are resolved
+                        stopOnRequest.next();
+                        stopOnRequest.complete();
+                        edge.unsubscribeFromChannels(subscriptionId, websocket, Object.values(channelAddresses));
+                        resolve(serialNumbers);
+                    }
+                });
             setTimeout(() => {
                 stopOnRequest.next();
                 stopOnRequest.complete();
@@ -378,7 +391,6 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
     }
 
     public override populateFromData(ibnString: any) {
-
         super.populateFromData(ibnString);
 
         // limitController14a
@@ -390,10 +402,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         this.gridSetting = ibnString.gridSetting ?? null;
     }
 
-    /**
-     *
-     * Processes current data.
-     */
+    /** Processes current data. */
     public processCurrentData(
         currentData: any,
         channelAddresses: { [key: string]: ChannelAddress },
@@ -407,7 +416,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
 
             if (!serialNumber) {
                 allSerialNumbersResolved = false;
-                continue;  // Skip if serial number is not available
+                continue; // Skip if serial number is not available
             }
             serialNumbers[key] = serialNumber;
         }
@@ -415,16 +424,21 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         return allSerialNumbersResolved;
     }
 
-    /**
-     * Helper function to gather channel addresses
-     */
-    public getChannelAddresses(towerNr: number, numberOfModulesPerTower: number, slaveNr?: number): { [key: string]: ChannelAddress } {
+    /** Helper function to gather channel addresses */
+    public getChannelAddresses(
+        towerNr: number,
+        numberOfModulesPerTower: number,
+        slaveNr?: number,
+    ): { [key: string]: ChannelAddress } {
         const channelAddresses: { [key: string]: ChannelAddress } = {
             batteryInverter: new ChannelAddress("batteryInverter0", "S1Sn"),
             bmsBox: new ChannelAddress("battery0", `Tower${towerNr}BmsSerialNumber`),
         };
         for (let moduleNr = 0; moduleNr < numberOfModulesPerTower; moduleNr++) {
-            channelAddresses[`module${moduleNr}`] = new ChannelAddress("battery0", `Tower${towerNr}Module${moduleNr}SerialNumber`);
+            channelAddresses[`module${moduleNr}`] = new ChannelAddress(
+                "battery0",
+                `Tower${towerNr}Module${moduleNr}SerialNumber`,
+            );
         }
         return channelAddresses;
     }
@@ -444,15 +458,20 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         protocol.items.push({
             category: Category.GRID,
             name: this.translate.instant("INSTALLATION.CONFIGURATION_ESS_LIMITER.TITLE"),
-            value: this.isController14aActivated ? this.translate.instant("GENERAL.YES") : this.translate.instant("GENERAL.NO"),
+            value: this.isController14aActivated
+                ? this.translate.instant("GENERAL.YES")
+                : this.translate.instant("GENERAL.NO"),
         });
 
         return new Promise((resolve, reject) => {
-            websocket.sendStateFullRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate)).then((response: JsonrpcResponseSuccess) => {
-                resolve(response.result["setupProtocolId"]);
-            }).catch((reason) => {
-                reject(reason);
-            });
+            websocket
+                .sendStateFullRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate))
+                .then((response: JsonrpcResponseSuccess) => {
+                    resolve(response.result["setupProtocolId"]);
+                })
+                .catch((reason) => {
+                    reject(reason);
+                });
         });
     }
 

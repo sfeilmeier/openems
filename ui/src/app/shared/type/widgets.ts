@@ -22,7 +22,6 @@ import { SharedSystemIndustrialXl } from "../../edge/live/system/industrial/xl/s
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { NavigationTree } from "../components/navigation/shared";
-import { EdgePermission } from "../shared";
 import { TEnumKeys } from "./utility";
 import { Widget, WidgetClass, WidgetFactory, WidgetNature } from "./widget";
 
@@ -177,7 +176,7 @@ export class Widgets {
                         )?.length > 0
                     );
                 case "Controller.Api.ModbusTcp.ReadWrite":
-                    return EdgePermission.isModbusTcpApiWidgetAllowed(edge);
+                    return true;
                 default:
                     return false;
             }
