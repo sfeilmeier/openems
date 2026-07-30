@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ApplicationProperties</key>
+	<dict>
+		<key>ApplicationPath</key>
+		<string>Applications/FENECON.app</string>
+		<key>Architectures</key>
+		<array>
+			<string>arm64</string>
+		</array>
+		<key>CFBundleIdentifier</key>
+		<string>de.fenecon.fems</string>
+		<key>CFBundleShortVersionString</key>
+		<string>20250338</string>
+		<key>CFBundleVersion</key>
+		<string>65</string>
+		<key>SigningIdentity</key>
+		<string>Apple Development: Lukas Stephan Rieger (H4XHDK4VTV)</string>
+		<key>Team</key>
+		<string>MTTFSTTRR6</string>
+	</dict>
+	<key>ArchiveVersion</key>
+	<integer>2</integer>
+	<key>CreationDate</key>
+	<date>2025-04-01T14:31:23Z</date>
+	<key>Distributions</key>
+	<array>
+		<dict>
+			<key>adamId</key>
+			<string>6476198535</string>
+			<key>certificateSHA1</key>
+			<string>0271B0A9DEC1697627AB22995FFC02AFDA3B4CEB</string>
+			<key>destination</key>
+			<string>upload</string>
+			<key>identifier</key>
+			<string>f8b3a52a-7209-4ba5-8f8b-fed2c0499a62</string>
+			<key>preparationEvent</key>
+			<dict>
+				<key>date</key>
+				<string>2025-04-01T14:31:24Z</string>
+				<key>errors</key>
+				<array/>
+				<key>infoMessages</key>
+				<array/>
+				<key>shortTitle</key>
+				<string>Prepared</string>
+				<key>state</key>
+				<string>success</string>
+				<key>title</key>
+				<string>Prepared archive for uploading</string>
+				<key>warnings</key>
+				<array/>
+			</dict>
+			<key>providerId</key>
+			<string>ae8b4873-afc3-4f8b-96d1-31bdf21bf869</string>
+			<key>task</key>
+			<string>distribute</string>
+			<key>teamID</key>
+			<string>MTTFSTTRR6</string>
+			<key>uploadDestination</key>
+			<string>App Store</string>
+			<key>uploadEvent</key>
+			<dict>
+				<key>date</key>
+				<string>2025-04-01T14:33:54Z</string>
+				<key>errors</key>
+				<array>
+					<dict>
+						<key>code</key>
+						<integer>409</integer>
+						<key>description</key>
+						<string>Validation failed</string>
+						<key>domain</key>
+						<string>ContentDelivery</string>
+						<key>recoverySuggestion</key>
+						<string>Invalid Pre-Release Train. The train version &#39;20250302&#39; is closed for new build submissions (ID: 147045e3-f6f1-41e7-8ab2-7bc403ea9bdc)</string>
+					</dict>
+					<dict>
+						<key>code</key>
+						<integer>409</integer>
+						<key>description</key>
+						<string>Validation failed</string>
+						<key>domain</key>
+						<string>ContentDelivery</string>
+						<key>recoverySuggestion</key>
+						<string>This bundle is invalid. The value for key CFBundleShortVersionString [20250302] in the Info.plist file must contain a higher version than that of the previously approved version [20250302]. Please find more information about CFBundleShortVersionString at https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring (ID: f28cca22-71a3-46b5-8a0e-edab576dd81c)</string>
+					</dict>
+				</array>
+				<key>infoMessages</key>
+				<array/>
+				<key>shortTitle</key>
+				<string>Upload failed</string>
+				<key>state</key>
+				<string>errors</string>
+				<key>title</key>
+				<string>Upload failed</string>
+				<key>warnings</key>
+				<array/>
+			</dict>
+			<key>uploadedBuildNumber</key>
+			<string>66</string>
+		</dict>
+	</array>
+	<key>Name</key>
+	<string>App</string>
+	<key>SchemeName</key>
+	<string>App</string>
+</dict>
+</plist>

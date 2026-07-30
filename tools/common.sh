@@ -237,9 +237,25 @@ common_build_android_app() {
     cd ../..
 }
 
-common_build_ios_app() {
 
+# Builds, exports and uploads a ios app.
+common_build_ios_app() {
+    GIT_ROOT_DIR=$(git rev-parse --show-toplevel)
+    THEME=""
     CONFIGURATION="Release"
+
+    while getopts "t:" opt; do
+    case $opt in
+        t)
+        THEME="$OPTARG"
+        ;;
+        *)
+        echo "Usage: $0 -t theme"
+        exit 1
+        ;;
+    esac
+    done
+
     echo "Building ios app with $THEME and for $CONFIGURATION"
     cd ui
 
@@ -248,39 +264,84 @@ common_build_ios_app() {
 
     # Schemes respresent targets
     case "${THEME:u}" in
-    "FENECON") NODE_ENV="FENECON" SCHEME="App" ;;
-    "HECKERT") NODE_ENV="Heckert" SCHEME="Heckert" ;;
-    "FENECONBETA")
-
-        # Workaround: Beta app android and ios got different package ids
-        NODE_ENV="FENECONBetaIos"
-        SCHEME="FENECON-Beta"
-        ;;
+        "FENECON") NODE_ENV="FENECON" SCHEME="App" TARGET="FENECON" ;;
+        "HECKERT") NODE_ENV="Heckert" SCHEME="Heckert" TARGET="Heckert" ;;
     esac
 
     # Build app
-    NODE_ENV=${NODE_ENV} ./node_modules/.bin/ionic cap build ios -c "${THEME},${THEME}-backend-prod" --no-open
+    NODE_ENV=${NODE_ENV} ./node_modules/.bin/ionic cap build ios -c "${THEME},${THEME}-backend-prod,prod" --no-open
     cd ios/App
 
+    ARCHIVE_PATH="$(pwd)/output/$SCHEME.xcarchive"
+    WORKSPACE="App.xcworkspace"
+
     # Install capacitor deps
-    pod install
+    pod install 
 
     # Update marketing version
-    ruby ../../../tools/deploy/ios/update_marketing_version.rb $SCHEME
+    ruby $GIT_ROOT_DIR/tools/deploy/ios/update_marketing_version.rb --scheme $SCHEME --target-name $TARGET
 
     # Unlock security keychain to access signing certificates and provisioning profiles
     security unlock-keychain -p $KEYCHAIN_PASSWORD login.keychain
 
-    echo "\n======Building & Archiving=====\n"
-    xcodebuild -scheme $SCHEME -workspace App.xcworkspace -configuration $CONFIGURATION clean archive -archivePath App/output/$SCHEME.xcarchive -destination 'generic/platform=iOS' -allowProvisioningUpdates \
-        -authenticationKeyID $AUTHENTICATION_KEY_ID \
-        -authenticationKeyIssuerID $AUTHENTICATION_KEY_ISSUER_ID \
-        -authenticationKeyPath $AUTHENTICATION_KEY_PATH \
+    echo "\n====== Building & Archiving =====\n"
+    
+    xcodebuild \
+        -workspace "$WORKSPACE" \
+        -scheme "$SCHEME" \
+        -configuration Release \
+        -destination "generic/platform=iOS" \
+        -archivePath "$ARCHIVE_PATH" \
+        -allowProvisioningUpdates \
+        -authenticationKeyID "$AUTHENTICATION_KEY_ID" \
+        -authenticationKeyIssuerID "$AUTHENTICATION_KEY_ISSUER_ID" \
+        -authenticationKeyPath "$AUTHENTICATION_KEY_PATH" \
+        -quiet \
+        archive
+
+    ruby $GIT_ROOT_DIR/tools/deploy/ios/update_cf_bundle_version.rb --scheme $SCHEME --target-name $TARGET
+
+    echo "\n====== Uploading ios App =====\n"
+
+    xcodebuild -exportArchive \
+        -allowProvisioningUpdates \
+        -archivePath "$ARCHIVE_PATH" \
+        -exportOptionsPlist ExportOptions.plist \
+        -authenticationKeyID "$AUTHENTICATION_KEY_ID" \
+        -authenticationKeyIssuerID "$AUTHENTICATION_KEY_ISSUER_ID" \
+        -authenticationKeyPath "$AUTHENTICATION_KEY_PATH" \
         -quiet
 
-    echo "\n=====Exporting/Upload=====\n"
-    xcodebuild -exportArchive -archivePath App/output/$SCHEME.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $SCHEME.ipa -quiet
-    echo "\nVersion is ready to be used for a release\n"
+}
+
+create_ios_app_release(){
+    GIT_ROOT_DIR=$(git rev-parse --show-toplevel)
+    AUTHENTICATION_KEY_FILE=""
+    THEME=""
+    while getopts "t:a:" opt; do
+    case $opt in
+        t)
+        THEME="$OPTARG"
+        ;;
+        a)
+        AUTHENTICATION_KEY_FILE="$OPTARG"
+        ;;
+        *)
+        echo "Usage: $0 -t theme -a $1"
+        exit 1
+        ;;
+    esac
+    done
+
+    BUNDLE_ID=""
+    case "${THEME^^}" in
+    "FENECON") BUNDLE_ID="de.fenecon.fems" ;;
+    "HECKERT") BUNDLE_ID="com.heckertsolar.ems" ;;
+    esac
+
+    echo "$AUTHENTICATION_KEY_ID"
+
+    ruby $GIT_ROOT_DIR/tools/deploy/ios/create_release.rb --bundle-id "$BUNDLE_ID" --version "$VERSION_FULL" --authFile "$AUTHENTICATION_KEY_FILE"
 }
 
 common_save_environment() {
