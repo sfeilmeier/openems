@@ -144,7 +144,7 @@ export class NavigationInfoComponent extends AbstractModal {
                 "storage",
                 {
                     displayName: translate.instant("NAVIGATION_INFO_MANUAL", {
-                        source: translate.instant("GENERAL.STORAGE"),
+                        source: translate.instant("GENERAL.STORAGE_SYSTEM"),
                     }),
                     link: "REDIRECT.COMMON_STORAGE",
                     icon: { name: "oe-storage" },
@@ -158,6 +158,26 @@ export class NavigationInfoComponent extends AbstractModal {
                     }),
                     link: "REDIRECT.COMMON_CONSUMPTION",
                     icon: { name: "oe-consumption" },
+                },
+            ],
+            [
+                "autarchy",
+                {
+                    displayName: translate.instant("NAVIGATION_INFO_MANUAL", {
+                        source: translate.instant("GENERAL.AUTARCHY"),
+                    }),
+                    link: "REDIRECT.COMMON_AUTARCHY",
+                    icon: { name: "oe-grid" },
+                },
+            ],
+            [
+                "selfconsumption",
+                {
+                    displayName: translate.instant("NAVIGATION_INFO_MANUAL", {
+                        source: translate.instant("GENERAL.SELF_CONSUMPTION"),
+                    }),
+                    link: "REDIRECT.COMMON_SELFCONSUMPTION",
+                    icon: { name: "oe-selfconsumption" },
                 },
             ],
         ]);
@@ -191,7 +211,7 @@ export class NavigationInfoComponent extends AbstractModal {
                 this.docs = {
                     displayName: page.displayName,
                     icon: page.icon,
-                    link: HelpButtonComponent.getLink(page.link, this.service, false) ?? null,
+                    link: HelpButtonComponent.getLink(page.link, this.service) ?? null,
                 };
             }
         }

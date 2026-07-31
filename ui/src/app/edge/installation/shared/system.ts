@@ -176,10 +176,7 @@ export namespace System {
                 }
                 return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_50_GEN_1;
             case SubSystemType.COMMERCIAL_92:
-                if (emsType === "feh013") {
-                    return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92_CLUSTER;
-                }
-                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92;
+                return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_92_OVERVIEW;
             case SubSystemType.COMMERCIAL_100:
                 return environment.links.MANUALS.SYSTEM.COMMERCIAL.COMMERCIAL_100;
         }

@@ -57,6 +57,7 @@ export const OemMeta: BaseMeta = {
             COMMON_PRODUCTION: "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_production",
             COMMON_SELFCONSUMPTION:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_selfconsumption",
+            CONTROLLER_CLEVER_PV: "https://docs.fenecon.de/redirect/fenecon/de/controller_clever_pv",
             OFFLINE_INSTRUCTIONS:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/installation_firewall_target_address",
 
@@ -66,6 +67,8 @@ export const OemMeta: BaseMeta = {
                 "https://docs.fenecon.de/redirect/fenecon/{language}/controller_io_heat_pump_sg_ready",
             CONTROLLER_IO_HEATING_ELEMENT:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/controller_io_heating_element",
+            CONTROLLER_HEAT_ASKOMA: "https://docs.fenecon.de/redirect/fenecon/{language}/controller_heat_askoma",
+            CONTROLLER_HEAT_MYPV: "https://docs.fenecon.de/redirect/fenecon/{language}/controller_heat_mypv",
             CONTROLLER_ESS_TIME_OF_USE_TARIFF:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/controller_ess_time_of_use",
             CONTROLLER_CHP_SOC: "https://docs.fenecon.de/redirect/fenecon/{language}/controller_chp_soc",
@@ -83,6 +86,13 @@ export const OemMeta: BaseMeta = {
             CONTROLLER_API_REST_READWRITE:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/controller_api_rest_readwrite",
 
+            CONTROLLER_SYMMETRIC_PEAKSHAVING:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_symmetric_peakshaving",
+            CONTROLLER_ASYMMETRIC_PEAKSHAVING:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_asymmetric_peakshaving",
+            CONTROLLER_TIMESLOT_PEAKSHAVING:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_timeslot_peakshaving",
+
             EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_keba",
             EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_hardybarth",
             EVCS_MENNEKES: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_mennekes",
@@ -93,10 +103,10 @@ export const OemMeta: BaseMeta = {
             SETTINGS_ALERTING: "https://docs.fenecon.de/redirect/fenecon/{language}/alerting",
             WEATHER_WIDGET: "https://docs.fenecon.de/redirect/fenecon/{language}/weather",
             SYSTEM: {
-                INDUSTRIAL_S_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_s_manual",
-                INDUSTRIAL_M_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_m_manual",
-                INDUSTRIAL_L_OVERVIEW: "https://docs.fenecon.de/redirect/fenecon/de/industrial_l_overview",
-                INDUSTRIAL_XL_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_xl_manual",
+                INDUSTRIAL_S_MANUAL: "https://docs.fenecon.de/redirect/fenecon/{language}/industrial_s_manual",
+                INDUSTRIAL_M_MANUAL: "https://docs.fenecon.de/redirect/fenecon/{language}/industrial_m_manual",
+                INDUSTRIAL_L_OVERVIEW: "https://docs.fenecon.de/redirect/fenecon/{language}/industrial_l_overview",
+                INDUSTRIAL_XL_MANUAL: "https://docs.fenecon.de/redirect/fenecon/{language}/industrial_xl_manual",
             },
             WARRANTY: {
                 //  Home 6,10,15, 10 Gen 1 und Home 20/30
@@ -162,6 +172,7 @@ export const OemMeta: BaseMeta = {
                         "https://docs.fenecon.de/de/commercial/commercial_92/betrieb_und_serviceanleitung/Betriebsanleitung_Commercial_92.html",
                     COMMERCIAL_92_CLUSTER:
                         "https://docs.fenecon.de/de/commercial/commercial_92_cluster/betrieb_und_serviceanleitung/Betriebsanleitung_Commercial_92_Cluster.html",
+                    COMMERCIAL_92_OVERVIEW: "https://docs.fenecon.de/de/commercial/commercial_92_overview.html",
                     COMMERCIAL_100:
                         "https://docs.fenecon.de/de/commercial/commercial_100/betrieb_und_serviceanleitung/Commercial_100_instructions.html",
                 },

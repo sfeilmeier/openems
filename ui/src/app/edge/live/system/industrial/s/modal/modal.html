@@ -1,25 +1,29 @@
 @if (isInitialized) {
-  <oe-modal title="FENECON Industrial S" [component]="component" [formGroup]="formGroup"
-    helpKey="REDIRECT.SYSTEM.INDUSTRIAL_L_OVERVIEW" useDefaultPrefix="false">
-    <oe-modal-line [name]="'EDGE.INDEX.WIDGETS.SYSTEM.OVERALL_SYSTEM' | translate"
-      style="font-size: medium;"></oe-modal-line>
-    <oe-modal-info-line [info]="'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.NOTE' | translate" style="font-size: small"
-      icon="information-outline"></oe-modal-info-line>
-    <oe-modal-buttons [formGroup]="formGroup" controlName="startStop" [component]="component" [buttons]="[
-    { name: 'START', value: 'START', icon: {color:'success', name: 'play-outline'}},
-    { name: 'STOP', value: 'STOP', icon: {color:'danger', name: 'stop-outline'}}]">
+  <oe-modal title="FENECON Industrial S" [component]="component" [formGroup]="formGroup" helpKey="REDIRECT.SYSTEM.INDUSTRIAL_L_OVERVIEW">
+    <oe-modal-line [name]="'EDGE.INDEX.WIDGETS.SYSTEM.OVERALL_SYSTEM' | translate" style="font-size: medium"></oe-modal-line>
+    <oe-modal-info-line [info]="'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.NOTE' | translate" style="font-size: small" icon="information-outline"></oe-modal-info-line>
+    <oe-modal-buttons
+      [formGroup]="formGroup"
+      controlName="startStop"
+      [component]="component"
+      [buttons]="[
+        { name: 'START', value: 'START', icon: { color: 'success', name: 'play-outline' } },
+        { name: 'STOP', value: 'STOP', icon: { color: 'danger', name: 'stop-outline' } },
+      ]"
+    >
     </oe-modal-buttons>
     @if (isAtLeastInstaller && canSeeSystemErrorAcknowledge) {
       <oe-modal-horizontal-line></oe-modal-horizontal-line>
       <table class="full_width ion-margin-top ion-margin-bottom">
         <tr>
           <td>
-            {{'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER' | translate}}
-            <br> {{'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_TEXT' | translate}}
+            {{ "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_HEADER" | translate }}
+            <br />
+            {{ "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.SYSTEM_ERROR_ACKNOWLEDGE_TEXT" | translate }}
           </td>
           <td class="align_right">
-            <ion-button slot="end" button
-              (click)="systemErrorAcknowledge()">{{'EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.RESET' | translate}}
+            <ion-button slot="end" button (click)="systemErrorAcknowledge()"
+              >{{ "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.RESET" | translate }}
               <ion-icon slot="start" name="reload-outline"></ion-icon>
             </ion-button>
           </td>

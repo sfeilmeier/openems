@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { FormlyModule } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
@@ -60,7 +60,7 @@ export class SystemIndustrialLComponent extends AbstractIndustrialComponent {
 
         return {
             title: "FENECON Industrial L",
-            helpKey: "REDIRECT.SYSTEM.INDUSTRIAL_L_MANUAL",
+            helpKey: "REDIRECT.SYSTEM.INDUSTRIAL_L_OVERVIEW",
             lines: lines,
             component: self.component,
             edge,
