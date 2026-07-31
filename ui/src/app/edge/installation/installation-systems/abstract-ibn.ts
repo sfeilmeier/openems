@@ -271,7 +271,6 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
             props: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.VALUE"),
                 note: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE_NOTE"),
-                description: `${this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.RECENT")} ${defaultReserveSocValue}%`,
                 required: true,
                 min: this.emergencyReserve.minValue,
                 max: 100,
