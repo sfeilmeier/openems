@@ -1,5 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
 import { Language } from "src/app/shared/type/language";
+import { DocsUtils } from "src/app/shared/utils/docs/docs.utils";
+import { environment } from "src/environments";
 import { ExternalLimitationType, FeedInSetting } from "./enums";
 
 export const DIRECTIONS_OPTIONS = (translate: TranslateService) => {
@@ -22,7 +24,6 @@ export const DIRECTIONS_OPTIONS = (translate: TranslateService) => {
         { label: north, value: north },
     ];
 };
-
 
 export const FEED_IN_POWER_FACTOR_OPTIONS = (translate: TranslateService) => {
     const inductive = translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.INDUCTIVE");
@@ -58,13 +59,7 @@ export const FEED_IN_POWER_FACTOR_OPTIONS = (translate: TranslateService) => {
 };
 
 export const EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES = (translate: TranslateService, docLink: string) => {
-    const BASE_PATH: string = "assets/img/ibn/feed-in-limit/";
-    const supportedLangs = [Language.DE.key, Language.EN.key];
-    let lang: string = Language.getByKey(localStorage.LANGUAGE)?.key ?? Language.DEFAULT.key;
-
-    if (!supportedLangs.includes(lang)) {
-        lang = Language.EN.key;
-    }
+    const lang = Language.getDocsLang(translate.getCurrentLang());
 
     return [
         {
@@ -74,13 +69,21 @@ export const EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES = (translate: TranslateServ
         {
             label: translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.DYNAMIC_EXTERNAL_LIMITATION"),
             value: ExternalLimitationType.DYNAMIC_EXTERNAL_LIMITATION,
-            imageUrl: `${BASE_PATH}dynamicExternalControl-${lang}.png`,
+            imageUrl:
+                DocsUtils.replaceDocsLanguage(
+                    environment.links.DOWNLOAD.INSTALLATION.SHARED.FEED_IN_LIMITATION.DYN_EXTERNAL_LIMITATION,
+                    lang,
+                ) ?? "",
             docUrl: docLink,
         },
         {
             label: translate.instant("INSTALLATION.PROTOCOL_FEED_IN_MANAGEMENT.EXTERNAL_LIMITATION"),
             value: ExternalLimitationType.EXTERNAL_LIMITATION,
-            imageUrl: `${BASE_PATH}externalController-${lang}.png`,
+            imageUrl:
+                DocsUtils.replaceDocsLanguage(
+                    environment.links.DOWNLOAD.INSTALLATION.SHARED.FEED_IN_LIMITATION.EXTERNAL_LIMITATION,
+                    lang,
+                ) ?? "",
         },
     ];
 };

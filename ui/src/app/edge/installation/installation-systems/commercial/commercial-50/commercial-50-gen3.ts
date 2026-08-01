@@ -1,4 +1,5 @@
 import { TranslateService } from "@ngx-translate/core";
+import { environment } from "src/environments";
 import { View } from "../../../shared/enums";
 import { SystemId } from "../../../shared/system";
 import { WebLinks } from "../../../shared/weblink.utils";
@@ -34,7 +35,7 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
     public override appId: string = "App.FENECON.Commercial.50.Gen3";
     public override appAlias: string = "FENECON Commercial 50";
 
-    protected override readonly baseImagePath = "assets/img/ibn/mppt/c-50-mppt/";
+    protected override readonly mpptImagePaths = environment.links.DOWNLOAD.INSTALLATION.COMMERCIAL.COMMERCIAL_50.MPPT;
 
     constructor(translate: TranslateService) {
         super(Commercial50Gen3Ibn.VIEWS, Commercial50Gen3Ibn.MAX_MPPT, translate);

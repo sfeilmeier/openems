@@ -4,19 +4,19 @@ import { Meter } from "../../shared/meter";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
 import { AbstractHomeIbn, HomeCommonApp } from "./abstract-home";
 
-type Home10App = HomeCommonApp & Home10AppPv & {
-    RIPPLE_CONTROL_RECEIVER_ACTIV: boolean,
-};
+type Home10App = HomeCommonApp &
+    Home10AppPv & {
+        RIPPLE_CONTROL_RECEIVER_ACTIV: boolean;
+    };
 
 type Home10AppPv = {
-    HAS_DC_PV1: boolean,
-    DC_PV1_ALIAS?: string,
-    HAS_DC_PV2: boolean,
-    DC_PV2_ALIAS?: string,
+    HAS_DC_PV1: boolean;
+    DC_PV1_ALIAS?: string;
+    HAS_DC_PV2: boolean;
+    DC_PV2_ALIAS?: string;
 };
 
 export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
-
     public override readonly appAlias: string = "FENECON Home";
     public override readonly appId: string = "App.FENECON.Home";
     public override readonly maxNumberOfModulesPerTower: number = 10;
@@ -44,14 +44,17 @@ export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
     };
 
     public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): {} {
-
         const dc1 = this.pv.dc[0];
         const dc2 = this.pv.dc[1];
 
         const home10AppProperties: Home10App = {
             ...this.commonProperties(safetyCountry, feedInSetting),
-            ...(this.feedInLimitation.feedInType === ExternalLimitationType.EXTERNAL_LIMITATION && { RIPPLE_CONTROL_RECEIVER_ACTIV: true }),
-            ...(this.feedInLimitation.feedInType !== ExternalLimitationType.EXTERNAL_LIMITATION && { FEED_IN_TYPE: this.feedInLimitation.feedInType }),
+            ...(this.feedInLimitation.feedInType === ExternalLimitationType.EXTERNAL_LIMITATION && {
+                RIPPLE_CONTROL_RECEIVER_ACTIV: true,
+            }),
+            ...(this.feedInLimitation.feedInType !== ExternalLimitationType.EXTERNAL_LIMITATION && {
+                FEED_IN_TYPE: this.feedInLimitation.feedInType,
+            }),
             HAS_DC_PV1: dc1.isSelected,
             ...(dc1.isSelected && { DC_PV1_ALIAS: dc1.alias }),
             HAS_DC_PV2: dc2.isSelected,
@@ -64,5 +67,4 @@ export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
     public override getMpptLabel(mppt: number) {
         return this.translate.instant("INSTALLATION.PROTOCOL_PV.MARKED_AS", { mppt: mppt });
     }
-
 }

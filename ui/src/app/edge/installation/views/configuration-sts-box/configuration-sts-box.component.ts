@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { TypedFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
 import { Edge } from "src/app/shared/shared";
+import { environment } from "src/environments";
 import { AbstractCommercialGen3, EmergencyModel } from "../../installation-systems/commercial/abstract-commercial-gen3";
 
 @Component({
@@ -57,7 +58,7 @@ export class ConfigurationStsBoxComponent implements OnInit {
             type: "checkbox",
             props: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_FIELD_LABEL"),
-                url: "assets/img/ibn/sts-box.png",
+                url: environment.links.DOWNLOAD.INSTALLATION.COMMERCIAL.STS_BOX,
                 imagePositionToLeft: true,
 
                 serialNumberField: {

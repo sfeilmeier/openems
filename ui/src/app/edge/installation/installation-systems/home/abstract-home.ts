@@ -48,7 +48,6 @@ export type HomeCommonApp = {
 };
 
 export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyReserve> extends AbstractIbn<T> {
-    public static BASE_IMAGE_PATH = "assets/img/ibn/mppt/home-mppt/";
     private static readonly SELECTOR = "Home";
     private static readonly MODULE_DATA_TIMEOUT = 2_000; // two seconds
     private static readonly TOWER_DATA_TIMEOUT = 5_000; // five seconds
@@ -126,6 +125,7 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
     public abstract readonly minNumberOfModulesPerTower: number;
     public abstract readonly defaultEnergyFlowMeter: Meter.GridMeterCategory;
     public abstract readonly minNumberOfTowers: number;
+    protected abstract readonly mpptImagePaths: Record<number, string | null>;
 
     constructor(
         public override views: View[],
@@ -1164,6 +1164,10 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
         });
 
         return batteryInverterData;
+    }
+
+    public getImageUrl(mppt: number): string | null {
+        return this.mpptImagePaths[mppt] ?? null;
     }
 
     public getTwoStringMpptLabel(mppt: number): string {

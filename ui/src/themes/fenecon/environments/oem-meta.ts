@@ -31,19 +31,72 @@ export const OemMeta: BaseMeta = {
                 HEATING_ELEMENT: "https://docs.fenecon.de/de/_images/other/zz/fems/heizstab/mypv/Heizstab_MyPV.png",
             },
         },
-        INSTALLATION: {
-            COMMERCIAL: {
-                COMMERCIAL_100: {
-                    BATTERY_INPUT_1:
-                        "https://docs.fenecon.de/image/fenecon/de/installation/systems/commercial/commercial_100/battery_inputs/Battery_Input_1.png",
-                    BATTERY_INPUT_2:
-                        "https://docs.fenecon.de/image/fenecon/de/installation/systems/commercial/commercial_100/battery_inputs/Battery_Input_2.png",
-                },
-            },
-        },
     },
     /** Maps to file-proxy for fenecon docs */
     links: {
+        DOWNLOAD: {
+            INSTALLATION: {
+                HOME: {
+                    AVU_BOX:
+                        "https://docs.fenecon.de/download/fenecon/{language}/installation/systems/home/avu-box/home-avu-box.png",
+                    MPPT: {
+                        HOME_6_10: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-6-10-mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-6-10-mppt-2.png",
+                        },
+                        HOME_10_15: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-10-15-mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-10-15-mppt-2.png",
+                            3: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-10-15-mppt-3.png",
+                        },
+                        HOME_20: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-20-mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-20-mppt-2.png",
+                        },
+                        HOME_30: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-30-mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-30-mppt-2.png",
+                            3: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-30-mppt-3.png",
+                        },
+                    },
+                },
+                COMMERCIAL: {
+                    COMMERCIAL_50: {
+                        MPPT: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-50/mppt/mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-50/mppt/mppt-2.png",
+                            3: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-50/mppt/mppt-3.png",
+                            4: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-50/mppt/mppt-4.png",
+                        },
+                    },
+                    COMMERCIAL_100: {
+                        BATTERY_INPUT_1:
+                            "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/battery-inputs/battery-input-1.png",
+                        BATTERY_INPUT_2:
+                            "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/battery-inputs/battery-input-2.png",
+                        MPPT: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-2.png",
+                            3: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-3.png",
+                            4: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-4.png",
+                            5: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-5.png",
+                            6: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-6.png",
+                            7: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-7.png",
+                            8: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-8.png",
+                        },
+                    },
+                    STS_BOX: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/sts-box.png",
+                },
+                SHARED: {
+                    FEED_IN_LIMITATION: {
+                        DYN_EXTERNAL_LIMITATION:
+                            "https://docs.fenecon.de/download/fenecon/{language}/installation/systems/shared/feed-in-limitation/dyn-external-control.png",
+                        EXTERNAL_LIMITATION:
+                            "https://docs.fenecon.de/download/fenecon/{language}/installation/systems/shared/feed-in-limitation/external-control.png",
+                    },
+                },
+            },
+        },
         FORGET_PASSWORD:
             "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
@@ -131,7 +184,6 @@ export const OemMeta: BaseMeta = {
         },
 
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
-
         EVCS_CLUSTER: "fems-app/includes/FEMS_App_Multi-Ladepunkt-Management.html",
 
         SYSTEM: {

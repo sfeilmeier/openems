@@ -1,12 +1,11 @@
 // @ts-strict-ignore
 import { TranslateService } from "@ngx-translate/core";
-
+import { environment } from "src/environments";
 import { Category } from "../../shared/category";
 import { FeedInSetting } from "../../shared/enums";
 import { Meter } from "../../shared/meter";
 import { SystemId } from "../../shared/system";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
-import { AbstractHomeIbn } from "./abstract-home";
 import { AbstractHomeGen2Ibn } from "./abstract-home-gen2";
 
 export class Home10Gen2FeneconIbn extends AbstractHomeGen2Ibn {
@@ -33,6 +32,8 @@ export class Home10Gen2FeneconIbn extends AbstractHomeGen2Ibn {
         mppt3: false,
     };
 
+    protected override readonly mpptImagePaths = environment.links.DOWNLOAD.INSTALLATION.HOME.MPPT.HOME_10_15;
+
     constructor(public override translate: TranslateService) {
         super(AbstractHomeGen2Ibn.getGen2Views(), translate);
     }
@@ -50,9 +51,5 @@ export class Home10Gen2FeneconIbn extends AbstractHomeGen2Ibn {
             HAS_DC_PV3: dc3.isSelected,
             ...(dc3.isSelected && { DC_PV3_ALIAS: dc3.alias }),
         });
-    }
-
-    public getImageUrl(mppt: number): string {
-        return `${AbstractHomeIbn.BASE_IMAGE_PATH}Home_10_15_MPPT${mppt}.png`;
     }
 }

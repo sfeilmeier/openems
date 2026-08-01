@@ -33,7 +33,7 @@ export class ConfigurationBatteryInputsComponent implements OnInit {
             props: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_BATTERY_INPUTS.BATTERY_INPUT", { key: 1 }),
                 required: true,
-                url: environment.images.INSTALLATION.COMMERCIAL.COMMERCIAL_100.BATTERY_INPUT_1,
+                url: environment.links.DOWNLOAD.INSTALLATION.COMMERCIAL.COMMERCIAL_100.BATTERY_INPUT_1,
                 shouldSizeImageToMaxWidth: true,
             },
             hooks: {
@@ -54,7 +54,7 @@ export class ConfigurationBatteryInputsComponent implements OnInit {
             type: "checkbox",
             props: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_BATTERY_INPUTS.BATTERY_INPUT", { key: 2 }),
-                url: environment.images.INSTALLATION.COMMERCIAL.COMMERCIAL_100.BATTERY_INPUT_2,
+                url: environment.links.DOWNLOAD.INSTALLATION.COMMERCIAL.COMMERCIAL_100.BATTERY_INPUT_2,
                 shouldSizeImageToMaxWidth: true,
             },
             hooks: {

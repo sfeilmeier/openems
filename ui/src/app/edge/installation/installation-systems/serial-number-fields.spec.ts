@@ -26,6 +26,7 @@ export class DummyHomeIbn extends AbstractHomeIbn {
     public override maxNumberOfPvStrings = 10;
     public override maxNumberOfMppt = 5;
     public override defaultEnergyFlowMeter = "" as any;
+    protected override readonly mpptImagePaths: Record<number, string | null> = {};
 
     public override getAppProperties(): any {
         return null;
@@ -38,7 +39,7 @@ export class DummyHomeIbn extends AbstractHomeIbn {
 export class DummyCommercialGen3Ibn extends AbstractCommercialGen3 {
     public override appId: string = "commercial-gen3";
     public override appAlias: string = "Commercial Gen3";
-    public override baseImagePath: string = "";
+    public override mpptImagePaths: Record<number, string | null> = {};
     public override isDoubleSocketValid = true;
 }
 
@@ -69,7 +70,7 @@ describe("Serial Number Field Generation", () => {
             it(`should return [${expectedKeys.join(", ")}] for Home Tower ${towerNr}`, () => {
                 const fields = (homeIbn as any).getTowerHeadFields(towerNr) as FormlyFieldConfig[];
 
-                const keys = fields.map(f => f.key);
+                const keys = fields.map((f) => f.key);
                 expect(keys).toEqual(expectedKeys);
 
                 const lastField = fields[fields.length - 1];
@@ -89,7 +90,7 @@ describe("Serial Number Field Generation", () => {
         testCases.forEach(({ towerNr, expectedKeys }) => {
             it(`should return [${expectedKeys.join(", ")}] for Commercial Tower ${towerNr}`, () => {
                 const fields = (commercialIbn as any).getTowerHeadFields(towerNr) as FormlyFieldConfig[];
-                const keys = fields.map(f => f.key);
+                const keys = fields.map((f) => f.key);
                 expect(keys).toEqual(expectedKeys);
 
                 if (towerNr > 0) {
@@ -127,12 +128,12 @@ describe("Serial Number Field Generation", () => {
                 expect(fields.length).toEqual(expectedLength);
 
                 // Verify the BMS box exists
-                const bmsField = fields.find(f => f.key === "bmsBox");
+                const bmsField = fields.find((f) => f.key === "bmsBox");
                 expect(bmsField).toBeDefined();
                 expect(bmsField?.templateOptions?.checkbox).toBeDefined();
 
                 // Verify Modules are generated correctly
-                const moduleKeys = fields.filter(f => (f.key as string).startsWith("module")).map(f => f.key);
+                const moduleKeys = fields.filter((f) => (f.key as string).startsWith("module")).map((f) => f.key);
                 expect(moduleKeys).toEqual(expectedModuleKeys);
             });
         });

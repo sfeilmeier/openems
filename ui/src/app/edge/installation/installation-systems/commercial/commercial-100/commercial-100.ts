@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { SetupProtocol } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, Websocket } from "src/app/shared/shared";
+import { environment } from "src/environments";
 import { Category } from "../../../shared/category";
 import { ConnectedBatterySystems, FeedInSetting, View } from "../../../shared/enums";
 import { ComponentData, ExtensionBoxPrefix } from "../../../shared/ibndatatypes";
@@ -56,7 +57,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
         hasBatteryInput2: false,
     };
 
-    protected override readonly baseImagePath = "assets/img/ibn/mppt/c-100-mppt/";
+    protected override readonly mpptImagePaths = environment.links.DOWNLOAD.INSTALLATION.COMMERCIAL.COMMERCIAL_100.MPPT;
 
     constructor(translate: TranslateService) {
         super(Commercial100Ibn.VIEWS, Commercial100Ibn.MAX_MPPT, translate);

@@ -11,16 +11,15 @@ import { SafetyCountry } from "../../views/configuration-execute/safety-country"
 import { AbstractHomeIbn, HomeAdditionalApp, HomeCommonApp } from "./abstract-home";
 
 type Home30Mppt = {
-    HAS_MPPT_1: boolean,
-    ALIAS_MPPT_1?: string,
-    HAS_MPPT_2: boolean,
-    ALIAS_MPPT_2?: string,
-    HAS_MPPT_3: boolean,
-    ALIAS_MPPT_3?: string,
+    HAS_MPPT_1: boolean;
+    ALIAS_MPPT_1?: string;
+    HAS_MPPT_2: boolean;
+    ALIAS_MPPT_2?: string;
+    HAS_MPPT_3: boolean;
+    ALIAS_MPPT_3?: string;
 };
 
 export class Home30FeneconIbn extends AbstractHomeIbn {
-
     public override readonly systemId: SystemId = SystemId.FENECON_HOME_30;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
     public override readonly appAlias: string = "FENECON Home 30";
@@ -35,10 +34,10 @@ export class Home30FeneconIbn extends AbstractHomeIbn {
     public override readonly defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.SMART_METER;
 
     public override mppt: {
-        connectionCheck: boolean,
-        mppt1: boolean,
-        mppt2: boolean,
-        mppt3: boolean,
+        connectionCheck: boolean;
+        mppt1: boolean;
+        mppt2: boolean;
+        mppt3: boolean;
     } = {
         connectionCheck: false,
         mppt1: false,
@@ -46,33 +45,40 @@ export class Home30FeneconIbn extends AbstractHomeIbn {
         mppt3: false,
     };
 
+    protected override readonly mpptImagePaths = environment.links.DOWNLOAD.INSTALLATION.HOME.MPPT.HOME_30;
+
     constructor(public override translate: TranslateService) {
-        super([
-            View.PreInstallation,
-            View.PreInstallationUpdate,
-            View.ConfigurationSystem,
-            View.ConfigurationSystemVariant,
-            View.ProtocolInstaller,
-            View.ProtocolCustomer,
-            View.ProtocolSystem,
-            View.ProtocolSystemLocation,
-            View.ConfigurationEssLimiter14aComponent,
-            View.ConfigurationEmergencyReserve,
-            View.ConfigurationEnergyFlowMeter,
-            View.ConfigurationLineSideMeterFuse,
-            View.ConfigurationMpptSelection,
-            View.ProtocolPv,
-            View.ProtocolFeedInLimitation,
-            View.ConfigurationSummary,
-            View.ConfigurationExecute,
-            View.ProtocolSerialNumbers,
-            View.Alerting,
-            View.Completion,
-        ], translate);
+        super(
+            [
+                View.PreInstallation,
+                View.PreInstallationUpdate,
+                View.ConfigurationSystem,
+                View.ConfigurationSystemVariant,
+                View.ProtocolInstaller,
+                View.ProtocolCustomer,
+                View.ProtocolSystem,
+                View.ProtocolSystemLocation,
+                View.ConfigurationEssLimiter14aComponent,
+                View.ConfigurationEmergencyReserve,
+                View.ConfigurationEnergyFlowMeter,
+                View.ConfigurationLineSideMeterFuse,
+                View.ConfigurationMpptSelection,
+                View.ProtocolPv,
+                View.ProtocolFeedInLimitation,
+                View.ConfigurationSummary,
+                View.ConfigurationExecute,
+                View.ProtocolSerialNumbers,
+                View.Alerting,
+                View.Completion,
+            ],
+            translate,
+        );
     }
 
-    public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): HomeCommonApp & HomeAdditionalApp & Home30Mppt {
-
+    public override getAppProperties(
+        safetyCountry: SafetyCountry,
+        feedInSetting: FeedInSetting,
+    ): HomeCommonApp & HomeAdditionalApp & Home30Mppt {
         const dc1: DcPv = this.pv.dc[0];
         const dc2: DcPv = this.pv.dc[1];
         const dc3: DcPv = this.pv.dc[2];
@@ -89,10 +95,6 @@ export class Home30FeneconIbn extends AbstractHomeIbn {
         };
 
         return home30AppProperties;
-    }
-
-    public getImageUrl(mppt: number): string {
-        return `${AbstractHomeIbn.BASE_IMAGE_PATH}Home_30_MPPT${mppt}.png`;
     }
 
     public override getMpptLabel(mppt: number) {

@@ -109,8 +109,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         },
     };
 
-    protected abstract readonly baseImagePath: string;
-
     constructor(
         views: View[],
         public override readonly maxNumberOfMppt: number,
@@ -381,10 +379,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
     public getMpptLabel(mppt: number) {
         return this.getTwoStringMpptLabel(mppt);
-    }
-
-    public getImageUrl(mppt: number): string {
-        return `${this.baseImagePath}MPPT${mppt}.png`;
     }
 
     public override populateFromData(ibnString: any) {
