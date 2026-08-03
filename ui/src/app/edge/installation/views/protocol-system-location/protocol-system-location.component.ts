@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy, signal, } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { GeoResult, LocationModel, SystemLocationValidatorComponent, } from "src/app/shared/components/system-location-validator/system-location-validator.component";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
@@ -25,7 +25,7 @@ export class ProtocolSystemLocationValidationComponent implements OnInit {
     protected readonly environment: Environment = environment;
     protected locationModel: LocationModel | null = null;
     protected isNextDisabled: boolean = true;
-    protected isWaiting: boolean = false;
+    protected isWaiting = signal<boolean>(false);
 
     constructor(
         protected websocket: Websocket,
@@ -56,14 +56,14 @@ export class ProtocolSystemLocationValidationComponent implements OnInit {
 
     public async onNextClicked() {
         AssertionUtils.assertIsDefined(this.ibn);
-        this.isWaiting = true;
+        this.isWaiting.set(true);
 
         // Trigger the Save Logic in the Shared Component
         const result = await this.validator.save();
 
         // Handle the Result
         if (result.status === "INVALID") {
-            this.isWaiting = false;
+            this.isWaiting.set(false);
             return; // Stop navigation
         }
 
@@ -73,7 +73,7 @@ export class ProtocolSystemLocationValidationComponent implements OnInit {
         }
 
         // Proceed (covers both SUCCESS and UNKNOWN_ADDRESS_SELECTED)
-        this.isWaiting = false;
+        this.isWaiting.set(false);
         this.nextViewEvent.emit(this.ibn);
     }
 

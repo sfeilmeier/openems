@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { format } from "date-fns";
@@ -25,7 +25,7 @@ export class CompletionComponent implements OnInit {
     @Output() public nextViewEvent: EventEmitter<any> = new EventEmitter();
 
     public system: SystemId | null = null;
-    public isWaiting = false;
+    protected readonly isWaiting = signal<boolean>(false);
 
     protected readonly showHeckertNote: boolean = environment.theme === "Heckert";
 
@@ -42,7 +42,7 @@ export class CompletionComponent implements OnInit {
 
     public ngOnInit(): void {
         this.system = this.ibn.systemId;
-        this.isWaiting = true;
+        this.isWaiting.set(true);
 
         this.ibn
             .getProtocol(this.edge, this.websocket)
@@ -61,7 +61,7 @@ export class CompletionComponent implements OnInit {
                 console.warn(reason);
             })
             .finally(() => {
-                this.isWaiting = false;
+                this.isWaiting.set(false);
             });
     }
 
@@ -77,7 +77,7 @@ export class CompletionComponent implements OnInit {
         const request = new GetSetupProtocolRequest({
             setupProtocolId: this.ibn.setupProtocolId,
         });
-        this.isWaiting = true;
+        this.isWaiting.set(true);
 
         let attempt = 0;
 
@@ -126,7 +126,7 @@ export class CompletionComponent implements OnInit {
                     await this.delay(this.RETRY_DELAY);
                 }
             } finally {
-                this.isWaiting = false;
+                this.isWaiting.set(false);
             }
         }
     }

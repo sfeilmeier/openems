@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, signal } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -35,7 +35,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
     protected numberOfTowersPerBattery: number[] = [];
     protected numberOfModulesPerTowerPerBattery: number[] = [];
     protected spinnerId: string;
-    protected isWaiting = false;
+    protected readonly isWaiting = signal<boolean>(false);
     protected isCommercial92: boolean | null = null;
     protected readonly environment = environment;
     protected showRetryScreen: boolean = false;
@@ -128,7 +128,7 @@ export class ProtocolSerialNumbersComponent implements OnInit {
     }
 
     public setIsWaiting(isWaiting: boolean) {
-        this.isWaiting = isWaiting;
+        this.isWaiting.set(isWaiting);
 
         if (isWaiting) {
             this.service.startSpinner(this.spinnerId);

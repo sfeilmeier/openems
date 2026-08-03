@@ -1,13 +1,5 @@
-<installation-view iconName="clipboard-outline"
-    header="{{ 'INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.TITLE' | translate }}"
-    (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()"
-    [isNextDisabled]="isNextDisabled"
-    [isWaiting]="isWaiting">
-
-    @if (edge && locationModel) {
-    <system-location-validator [ibn]="ibn" [edge]="edge" context="INSTALLATION"
-        (isBusyChange)="onValidatorBusy($event)">
-    </system-location-validator>
-    }
-
+<installation-view iconName="clipboard-outline" header="{{ 'INSTALLATION.PROTOCOL_SYSTEM_LOCATION_VALIDATION.TITLE' | translate }}" (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isNextDisabled]="isNextDisabled" [isWaiting]="isWaiting()">
+  @if (edge && locationModel) {
+    <system-location-validator [ibn]="ibn" [edge]="edge" context="INSTALLATION" (isBusyChange)="onValidatorBusy($event)"> </system-location-validator>
+  }
 </installation-view>

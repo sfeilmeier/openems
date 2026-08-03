@@ -1,20 +1,16 @@
-<installation-view iconName="clipboard-outline"
-  header="{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SERIAL_NUMBER' | translate }}"
-  (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isWaiting]="isWaiting">
-
+<installation-view iconName="clipboard-outline" header="{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SERIAL_NUMBER' | translate }}" (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isWaiting]="isWaiting()">
   <ngx-spinner [name]="spinnerId"></ngx-spinner>
 
   @if (!edge.isOnline) {
     <ion-item lines="none" color="light">
-      <ion-label>{{ 'SETTINGS.SYSTEM_UPDATE.OFFLINE' | translate: { edgeShortName: environment.edgeShortName } }}</ion-label>
+      <ion-label>{{ "SETTINGS.SYSTEM_UPDATE.OFFLINE" | translate: { edgeShortName: environment.edgeShortName } }}</ion-label>
     </ion-item>
   } @else {
     <ion-card>
       <ion-card-header>
         <ion-item lines="full">
           <ion-label>
-            <ion-card-title>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SYSTEM_SETUP' | translate }}
-            </ion-card-title>
+            <ion-card-title>{{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SYSTEM_SETUP" | translate }} </ion-card-title>
           </ion-label>
         </ion-item>
       </ion-card-header>
@@ -22,58 +18,56 @@
         @if (batterySettingsForms.length > 1) {
           <ion-card-header>
             <ion-item lines="none">
-              <ion-card-subtitle>Slave {{ i + 1 }}
-              </ion-card-subtitle>
+              <ion-card-subtitle>Slave {{ i + 1 }} </ion-card-subtitle>
             </ion-item>
           </ion-card-header>
         }
         <ion-card-content>
-          <formly-form [form]=" batteryForm.formGroup" [fields]="batteryForm.fields"
-            [model]="batteryForm.model"></formly-form>
+          <formly-form [form]="batteryForm.formGroup" [fields]="batteryForm.fields" [model]="batteryForm.model"></formly-form>
         </ion-card-content>
       }
       <ion-item>
         <ion-button (click)="saveSettings()">
-          <ion-label>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.CONFIRM' | translate }}</ion-label>
+          <ion-label>{{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.CONFIRM" | translate }}</ion-label>
         </ion-button>
       </ion-item>
     </ion-card>
 
-    @if (!isWaiting) {
+    @if (!isWaiting()) {
       @if (showRetryScreen) {
         <ion-card>
           <ion-card-header>
             <ion-item lines="none">
               <ion-icon name="information-circle-outline" slot="start" size="large" color="success"></ion-icon>
               <ion-card-title>
-                {{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NO_DATA_FOUND' | translate }}
+                {{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NO_DATA_FOUND" | translate }}
               </ion-card-title>
             </ion-item>
           </ion-card-header>
 
           <ion-card-content>
             <ion-text color="dark" class="ion-padding-bottom">
-              {{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EDGE_TIMEOUT_DESC' | translate }}
+              {{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EDGE_TIMEOUT_DESC" | translate }}
             </ion-text>
 
             <ion-button expand="block" (click)="retryFetch()" class="ion-margin-bottom ion-margin-top">
               <ion-icon name="refresh-outline" slot="start"></ion-icon>
-              {{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.TRY_READING_AGAIN' | translate }}
+              {{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.TRY_READING_AGAIN" | translate }}
             </ion-button>
 
             <div class="ion-padding-top">
               <ion-text color="dark">
-                <strong>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.TROUBLESHOOTING.INTRO' | translate }}</strong>
+                <strong>{{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.TROUBLESHOOTING.INTRO" | translate }}</strong>
               </ion-text>
-              <ul class="ion-padding-start ion-margin-top" style="line-height: 1.5;">
+              <ul class="ion-padding-start ion-margin-top" style="line-height: 1.5">
                 <li>
-                  <ion-text>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.TROUBLESHOOTING.STEP_LAN' | translate }}</ion-text>
+                  <ion-text>{{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.TROUBLESHOOTING.STEP_LAN" | translate }}</ion-text>
                 </li>
                 <li class="ion-margin-top">
-                  <ion-text>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.TROUBLESHOOTING.STEP_BRIDGES' | translate }}</ion-text>
+                  <ion-text>{{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.TROUBLESHOOTING.STEP_BRIDGES" | translate }}</ion-text>
                 </li>
                 <li class="ion-margin-top">
-                  <ion-text>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.TROUBLESHOOTING.STEP_MANUAL' | translate }}</ion-text>
+                  <ion-text>{{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.TROUBLESHOOTING.STEP_MANUAL" | translate }}</ion-text>
                 </li>
               </ul>
             </div>
@@ -82,37 +76,34 @@
               <ion-row class="ion-justify-content-center">
                 <ion-col size="auto">
                   <ion-button (click)="enableManualEntry()">
-                    {{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ENTER_MANUALLY' | translate }}
+                    {{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.ENTER_MANUALLY" | translate }}
                   </ion-button>
                 </ion-col>
               </ion-row>
             </ion-grid>
-
           </ion-card-content>
         </ion-card>
       } @else {
         <ion-card>
           <ion-card-content>
-            <ion-text>{{'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SETUP_NOTE' | translate }}</ion-text>
+            <ion-text>{{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SETUP_NOTE" | translate }}</ion-text>
           </ion-card-content>
         </ion-card>
         @for (form of forms; track form; let i = $index) {
           <ion-card>
             <ion-card-header>
               <ion-item>
-                <ion-card-title>{{form.header}}</ion-card-title>
+                <ion-card-title>{{ form.header }}</ion-card-title>
               </ion-item>
             </ion-card-header>
             <ion-card-content>
-              <formly-form [form]="form.formGroup" [fields]="form.fieldSettings" [model]="form.model">
-              </formly-form>
+              <formly-form [form]="form.formGroup" [fields]="form.fieldSettings" [model]="form.model"> </formly-form>
             </ion-card-content>
           </ion-card>
         }
         @if (!isCommercial92) {
           <ion-card>
-            <ion-card-content>{{ 'INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NEXT_BUTTON_DESCRIPTION' | translate }}
-            </ion-card-content>
+            <ion-card-content>{{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NEXT_BUTTON_DESCRIPTION" | translate }} </ion-card-content>
           </ion-card>
         }
       }

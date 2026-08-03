@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, computed, EventEmitter, inject, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
+import { Component, computed, EventEmitter, inject, OnInit, Output, ChangeDetectionStrategy, signal, } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -30,7 +30,7 @@ export class PreInstallationComponent implements OnInit {
     public form: FormGroup;
     public fields: FormlyFieldConfig[];
     public model;
-    public isWaiting = false;
+    public isWaiting = signal<boolean>(false);
     public image: string;
     protected setupKey: string | null = null;
     protected validKey: boolean = true;
@@ -55,7 +55,7 @@ export class PreInstallationComponent implements OnInit {
     }
 
     public onNextClicked() {
-        this.isWaiting = true;
+        this.isWaiting.set(true);
 
         this.websocket
             .sendStateFullRequest(new AddEdgeToUserRequest({ setupPassword: this.setupKey }))
@@ -143,7 +143,7 @@ export class PreInstallationComponent implements OnInit {
                 console.log(reason);
             })
             .finally(() => {
-                this.isWaiting = false;
+                this.isWaiting.set(false);
             });
     }
 }
