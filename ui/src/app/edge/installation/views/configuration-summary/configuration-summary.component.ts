@@ -75,6 +75,10 @@ export class ConfigurationSummaryComponent implements OnInit {
                 description: this.translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.ACCEPT"),
                 url: WebLinkUtils.getLink(this.ibn.warrantyLink),
             },
+            // User must explicitly accept the warranty terms to continue
+            validators: {
+                validation: ["checkbox-required-checked"],
+            },
             wrappers: ["form-field-checkbox-hyperlink"],
         });
 
@@ -84,6 +88,10 @@ export class ConfigurationSummaryComponent implements OnInit {
             templateOptions: {
                 label: this.ibn.isDevicesActiveCheckedLabel,
                 required: true,
+            },
+            // User must explicitly confirm devices are active to continue
+            validators: {
+                validation: ["checkbox-required-checked"],
             },
         });
 

@@ -36,6 +36,10 @@ export class ConfigurationBatteryInputsComponent implements OnInit {
                 url: environment.links.DOWNLOAD.INSTALLATION.COMMERCIAL.COMMERCIAL_100.BATTERY_INPUT_1,
                 shouldSizeImageToMaxWidth: true,
             },
+            // At least battery input 1 must be selected to continue
+            validators: {
+                validation: ["checkbox-required-checked"],
+            },
             hooks: {
                 onInit: (field) => {
                     // Ensure that either battery 1 is selected or both battery 1 and battery 2 are selected. If battery 1 is deselected, then battery 2 must be deselected as well.
@@ -76,6 +80,10 @@ export class ConfigurationBatteryInputsComponent implements OnInit {
             props: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_BATTERY_INPUTS.INPUT_CONFIRMATION"),
                 required: true,
+            },
+            // User must explicitly confirm the selection to continue
+            validators: {
+                validation: ["checkbox-required-checked"],
             },
         },
     ];
