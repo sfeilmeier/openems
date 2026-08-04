@@ -638,6 +638,43 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         return EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES(this.translate, docLink);
     }
 
+    /**
+     * VDE_4110 does not use the manual feed-in-setting (Q(U)/P(U)/fixed power factor), so it is hidden whenever that
+     * grid setting is selected.
+     */
+    public override getFeedInLimitFields(): FormlyFieldConfig[] {
+        const fields = super.getFeedInLimitFields();
+
+        const feedInSettingField = fields.find((field) => field.key === "feedInSetting");
+        if (feedInSettingField) {
+            feedInSettingField.expressions = {
+                ...feedInSettingField.expressions,
+                hide: () => this.gridSetting === GridSetting.VDE_4110,
+            };
+        }
+
+        const fixedPowerFactorField = fields.find((field) => field.key === "fixedPowerFactor");
+        if (fixedPowerFactorField) {
+            const originalHide = fixedPowerFactorField.expressions?.hide;
+            fixedPowerFactorField.expressions = {
+                ...fixedPowerFactorField.expressions,
+                hide: (field) => {
+                    if (this.gridSetting === GridSetting.VDE_4110) {
+                        return true;
+                    }
+
+                    if (typeof originalHide !== "function") {
+                        return false;
+                    }
+
+                    return originalHide(field);
+                },
+            };
+        }
+
+        return fields;
+    }
+
     public override getAppProperties(
         safetyCountry: SafetyCountry,
         feedInSetting: FeedInSetting,
@@ -670,7 +707,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
             },
         ];
 
-        if (this.emergencyReserve != null && !this.emergencyReserve.isStsBoxAvailable) {
+        if (this.emergencyReserve != null) {
             options.push({
                 label: GridSettingUtils.getDisplayName(GridSetting.VDE_4110),
                 value: GridSetting.VDE_4110,

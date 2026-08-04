@@ -426,7 +426,9 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
                 required: true,
             },
             defaultValue: FeedInSetting.Leading_1,
-            hideExpression: (model) => model.feedInSetting !== FeedInSetting.FixedPowerFactor,
+            expressions: {
+                hide: (field) => field.model?.feedInSetting !== FeedInSetting.FixedPowerFactor,
+            },
         });
 
         fields.push({

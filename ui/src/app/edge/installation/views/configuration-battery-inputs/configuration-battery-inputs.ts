@@ -56,6 +56,9 @@ export class ConfigurationBatteryInputsComponent implements OnInit {
         {
             key: "hasBatteryInput2",
             type: "checkbox",
+            // The Edge does not yet support a second connected battery input; keep the field defined (for texts /
+            // future re-enablement) but never show it to the installer.
+            hide: !Commercial100Ibn.IS_SECOND_BATTERY_INPUT_SUPPORTED,
             props: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_BATTERY_INPUTS.BATTERY_INPUT", { key: 2 }),
                 url: environment.links.DOWNLOAD.INSTALLATION.COMMERCIAL.COMMERCIAL_100.BATTERY_INPUT_2,
@@ -121,10 +124,13 @@ export class ConfigurationBatteryInputsComponent implements OnInit {
             this.form.markAllAsTouched();
             return;
         }
-        // Persist the battery-input selection on the ibn so the serial-numbers view can use it
+        // Persist the battery-input selection on the ibn so the serial-numbers view can use it. The second battery
+        // input is not applied while the Edge doesn't support it (see Commercial100Ibn.IS_SECOND_BATTERY_INPUT_SUPPORTED).
         this.ibn.batteryInputs = {
             hasBatteryInput1: this.model?.hasBatteryInput1 ?? false,
-            hasBatteryInput2: this.model?.hasBatteryInput2 ?? false,
+            hasBatteryInput2: Commercial100Ibn.IS_SECOND_BATTERY_INPUT_SUPPORTED
+                ? this.model?.hasBatteryInput2 ?? false
+                : false,
         };
 
         this.nextViewEvent.emit(this.ibn);

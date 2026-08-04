@@ -21,6 +21,14 @@ type Commercial100AppProperties = CommercialGen3App &
     };
 
 export class Commercial100Ibn extends AbstractCommercialGen3 {
+    /**
+     * The GoodWe battery inverter currently only supports a single connected battery input on the Edge side (the
+     * second battery port is not yet functional there). The ConfigurationBatteryInputs view, its texts and the
+     * battery-input model are intentionally kept so the feature can be re-enabled by flipping this flag once the
+     * Edge supports it - until then the second-input option is neither displayed nor applied.
+     */
+    public static readonly IS_SECOND_BATTERY_INPUT_SUPPORTED: boolean = false;
+
     private static readonly VIEWS = [
         View.PreInstallation,
         View.PreInstallationUpdate,
@@ -65,6 +73,10 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
 
     /** Number of active battery inputs */
     public get numberOfBatteryInputs(): number {
+        if (!Commercial100Ibn.IS_SECOND_BATTERY_INPUT_SUPPORTED) {
+            return 1;
+        }
+
         const count = (this.batteryInputs.hasBatteryInput1 ? 1 : 0) + (this.batteryInputs.hasBatteryInput2 ? 1 : 0);
         return Math.max(count, 1);
     }
@@ -217,7 +229,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
     public override getPreSettingBatteryIds(): string[] {
         const batteryInputToId: [boolean, string][] = [
             [this.batteryInputs.hasBatteryInput1, "battery1"],
-            [this.batteryInputs.hasBatteryInput2, "battery2"],
+            [Commercial100Ibn.IS_SECOND_BATTERY_INPUT_SUPPORTED && this.batteryInputs.hasBatteryInput2, "battery2"],
         ];
 
         return batteryInputToId.filter(([isActive]) => isActive === true).map(([, batteryId]) => batteryId);
