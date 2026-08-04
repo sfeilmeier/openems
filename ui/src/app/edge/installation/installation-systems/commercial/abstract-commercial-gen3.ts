@@ -123,8 +123,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
         if (
             this.gridSetting !== null &&
-            this.gridSetting === GridSetting.VDE_4110 &&
-            !this.emergencyReserve.isStsBoxAvailable
+            this.gridSetting === GridSetting.VDE_4110
         ) {
             tableData.push(
                 ...ConfigurationAdvancedSettingsComponent.getCompletionSummaryFromAdvancedGridSettings(
@@ -428,8 +427,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
         if (
             this.gridSetting !== null &&
-            this.gridSetting === GridSetting.VDE_4110 &&
-            !this.emergencyReserve.isStsBoxAvailable
+            this.gridSetting === GridSetting.VDE_4110
         ) {
             ViewUtils.add(this.views, View.ConfigurationAdvancedGridSettings, advancedSettingsIndex);
         } else {
@@ -620,8 +618,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
             if (
                 this.gridSetting !== null &&
-                this.gridSetting === GridSetting.VDE_4110 &&
-                !emergencyReserve.isStsBoxAvailable
+                this.gridSetting === GridSetting.VDE_4110
             ) {
                 protocol.items.push(
                     ...ConfigurationAdvancedSettingsComponent.getAdvancedGridSettingsFieldsProtocolItems(

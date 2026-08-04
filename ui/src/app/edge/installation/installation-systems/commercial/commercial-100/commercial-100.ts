@@ -22,10 +22,10 @@ type Commercial100AppProperties = CommercialGen3App &
 
 export class Commercial100Ibn extends AbstractCommercialGen3 {
     /**
-     * The GoodWe battery inverter currently only supports a single connected battery input on the Edge side (the
-     * second battery port is not yet functional there). The ConfigurationBatteryInputs view, its texts and the
-     * battery-input model are intentionally kept so the feature can be re-enabled by flipping this flag once the
-     * Edge supports it - until then the second-input option is neither displayed nor applied.
+     * The GoodWe battery inverter currently only supports a single connected battery input on the Edge side (the second
+     * battery port is not yet functional there). The ConfigurationBatteryInputs view, its texts and the battery-input
+     * model are intentionally kept so the feature can be re-enabled by flipping this flag once the Edge supports it -
+     * until then the second-input option is neither displayed nor applied.
      */
     public static readonly IS_SECOND_BATTERY_INPUT_SUPPORTED: boolean = false;
 
@@ -166,7 +166,9 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
             const model: { [key: string]: string } = {};
 
             // Each battery input has its own component id (battery1, battery2, ...).
-            const batteryComponentId = "battery" + ((batteryIndex ?? 0) + 1);
+            const batteryComponentId = Commercial100Ibn.IS_SECOND_BATTERY_INPUT_SUPPORTED
+                ? "battery" + ((batteryIndex ?? 0) + 1)
+                : "battery0";
 
             // Gather channel addresses
             channelAddresses["batteryInverter"] = new ChannelAddress("batteryInverter0", "SerialNumber");

@@ -21,22 +21,22 @@ export enum GridUnit {
 }
 
 export enum ReactivePowerMode {
-    NONE = "NONE",
+    NONE = "UNSELECTED",
     FIX_PF = "FIX_PF",
     FIX_Q = "FIX_Q",
     QU_CURVE = "QU_CURVE",
-    COS_PHI_P_CURVE = "COSPHIP_CURVE",
+    COS_PHI_P_CURVE = "COS_PHI_P_CURVE",
     QP_CURVE = "QP_CURVE",
 }
 
 export enum CurveMode {
-    STANDARD = "STANDARD",
+    BASIC = "BASIC",
     SLOPE = "SLOPE",
 }
 
 export enum CurrentDistributionMode {
-    REACTIVE_PRIORITY = "REACTIVE_PRIORITY",
-    ACTIVE_PRIORITY = "ACTIVE_PRIORITY",
+    REACTIVE_POWER_PRIO = "REACTIVE_POWER_PRIO",
+    ACTIVE_POWER_PRIO = "ACTIVE_POWER_PRIO",
     CONSTANT_CURRENT = "CONSTANT_CURRENT",
 }
 
@@ -445,7 +445,7 @@ export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
         RPM_FIX_PF: FeedInSetting.Leading_1_OR_NONE,
         RPM_FIX_Q: null,
 
-        RPM_QU_CURVE_MODE: CurveMode.STANDARD,
+        RPM_QU_CURVE_MODE: CurveMode.BASIC,
         RPM_QU_VOLTAGE_DEAD_BAND: null,
         RPM_QU_OVEREXCITED_SLOPE: null,
         RPM_QU_UNDEREXCITED_SLOPE: null,
@@ -462,7 +462,7 @@ export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
         RPM_QU_LOCK_IN_POWER: null,
         RPM_QU_LOCK_OUT_POWER: null,
 
-        RPM_COS_PHI_MODE: CurveMode.STANDARD,
+        RPM_COS_PHI_MODE: CurveMode.BASIC,
         RPM_COS_PHI_OVEREXCITED_SLOPE: null,
         RPM_COS_PHI_UNDEREXCITED_SLOPE: null,
         RPM_COS_PHIP_POWER_A: 200,
@@ -480,7 +480,7 @@ export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
         RPM_COS_PHIP_LOCK_IN_VOLT: null,
         RPM_COS_PHIP_LOCK_OUT_VOLT: null,
 
-        RPM_QP_CURVE_MODE: CurveMode.STANDARD,
+        RPM_QP_CURVE_MODE: CurveMode.BASIC,
         RPM_QP_OVEREXCITED_SLOPE: null,
         RPM_QP_UNDEREXCITED_SLOPE: null,
         RPM_QP_POWER_P1: null,
@@ -589,7 +589,7 @@ export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
         VRT_HVRT_ZERO_CURRENT_MODE_ENABLE: false,
         VRT_HVRT_ZERO_CURRENT_MODE_ENTRY_THRESHOLD: null,
 
-        VRT_CURRENT_DISTRIBUTION_MODE: CurrentDistributionMode.REACTIVE_PRIORITY,
+        VRT_CURRENT_DISTRIBUTION_MODE: CurrentDistributionMode.REACTIVE_POWER_PRIO,
         VRT_ACTIVE_POWER_RECOVERY_MODE: RecoveryMode.DISABLE,
         VRT_ACTIVE_POWER_RECOVERY_SPEED: null,
         VRT_ACTIVE_POWER_RECOVERY_SLOPE: null,

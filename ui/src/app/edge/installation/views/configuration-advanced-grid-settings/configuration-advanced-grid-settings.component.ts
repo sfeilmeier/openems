@@ -1043,7 +1043,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     required: true,
                     options: [
                         {
-                            value: CurveMode.STANDARD,
+                            value: CurveMode.BASIC,
                             label: translate.instant(
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.QU_CURVE.MODE.STANDARD_MODE",
                             ),
@@ -1293,7 +1293,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     required: true,
                     options: [
                         {
-                            value: CurveMode.STANDARD,
+                            value: CurveMode.BASIC,
                             label: translate.instant(
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.QU_CURVE.MODE.STANDARD_MODE",
                             ),
@@ -1539,7 +1539,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     required: true,
                     options: [
                         {
-                            value: CurveMode.STANDARD,
+                            value: CurveMode.BASIC,
                             label: translate.instant(
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.QU_CURVE.MODE.STANDARD_MODE",
                             ),
@@ -1632,12 +1632,12 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 powField.expressions = {
                     hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
                         "RPM_QP_CURVE_MODE",
-                        CurveMode.STANDARD,
+                        CurveMode.BASIC,
                         true,
                     ),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "RPM_QP_CURVE_MODE",
-                        CurveMode.STANDARD,
+                        CurveMode.BASIC,
                         false,
                     ),
                 };
@@ -1665,12 +1665,12 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 reactField.expressions = {
                     hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
                         "RPM_QP_CURVE_MODE",
-                        CurveMode.STANDARD,
+                        CurveMode.BASIC,
                         true,
                     ),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "RPM_QP_CURVE_MODE",
-                        CurveMode.STANDARD,
+                        CurveMode.BASIC,
                         false,
                     ),
                 };
@@ -2533,13 +2533,13 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     required: true,
                     options: [
                         {
-                            value: CurrentDistributionMode.REACTIVE_PRIORITY,
+                            value: CurrentDistributionMode.REACTIVE_POWER_PRIO,
                             label: translate.instant(
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.REACTIVE_PRIORITY",
                             ),
                         },
                         {
-                            value: CurrentDistributionMode.ACTIVE_PRIORITY,
+                            value: CurrentDistributionMode.ACTIVE_POWER_PRIO,
                             label: translate.instant(
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.ACTIVE_PRIORITY",
                             ),
