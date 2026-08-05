@@ -11,23 +11,28 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LatestTaskPerKeyExecutorTest {
+class LatestTaskPerKeyExecutorTest {
 
 	private static final Logger log = LoggerFactory.getLogger(LatestTaskPerKeyExecutorTest.class);
 
-	@Test
-	public void testNotRunDuplicate() throws Exception {
-		final var executor = new LatestTaskPerKeyExecutor<String>((ThreadPoolExecutor) Executors.newFixedThreadPool(1));
+	@RepeatedTest(10)
+	void testNotRunDuplicate() throws Exception {
+		final var executor = new LatestTaskPerKeyExecutor<String>(
+				(ThreadPoolExecutor) Executors.newFixedThreadPool(1, Thread.ofVirtual().factory()));
 
+		final var waitForInitialBlock = new CompletableFuture<Void>();
 		final var lock = new ReentrantLock();
 		lock.lock();
 		executor.execute("key", () -> {
+			waitForInitialBlock.complete(null);
 			lock.lock();
 		});
+		waitForInitialBlock.get();
 
 		final var neverCompleted = new CompletableFuture<Void>();
 		executor.execute("key", () -> {
@@ -54,7 +59,7 @@ public class LatestTaskPerKeyExecutorTest {
 	}
 
 	@Test
-	public void testMany() throws Exception {
+	void testMany() throws Exception {
 		final var executor = new LatestTaskPerKeyExecutor<Integer>(
 				(ThreadPoolExecutor) Executors.newFixedThreadPool(1));
 
