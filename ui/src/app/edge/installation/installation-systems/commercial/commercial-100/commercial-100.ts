@@ -229,9 +229,13 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
     }
 
     public override getPreSettingBatteryIds(): string[] {
+        if (!Commercial100Ibn.IS_SECOND_BATTERY_INPUT_SUPPORTED) {
+            return ["battery0"];
+        }
+
         const batteryInputToId: [boolean, string][] = [
             [this.batteryInputs.hasBatteryInput1, "battery1"],
-            [Commercial100Ibn.IS_SECOND_BATTERY_INPUT_SUPPORTED && this.batteryInputs.hasBatteryInput2, "battery2"],
+            [this.batteryInputs.hasBatteryInput2, "battery2"],
         ];
 
         return batteryInputToId.filter(([isActive]) => isActive === true).map(([, batteryId]) => batteryId);
