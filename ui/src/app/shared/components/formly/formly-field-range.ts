@@ -32,6 +32,12 @@ import { AssertionUtils } from "../../utils/assertions/assertions.utils";
             {{ "GENERAL.CURRENT_VALUE" | translate }}: {{ getCurrentValueLabel() }}
         </ion-text>
 
+        @if (props.description) {
+            <p class="description-text">
+                {{ props.description }}
+            </p>
+        }
+
         @if (props.info) {
             <ion-grid>
                 <ion-row class="ion-justify-content-center">
