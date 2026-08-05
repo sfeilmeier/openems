@@ -1,5 +1,30 @@
 [
     {
+        "version": "2026.8.1",
+        "entries": {
+            "de": [
+                "Online-Monitoring/FENECON App: Korrektur bei Hilfe-Seiten, Plattform-Migration auf Angular 22",
+                "FENECON Home 6, 10 & 15: Verbesserungen am Inbetriebnahmeassistent",
+                "FENECON Commercial 50 und 100: Verbesserung der VDE4110-Konfiguration",
+                "FENECON Commercial 92 Cluster: Fehlerbehebung bei abweichenden Versionen zwischen Master und Slaves",
+                "FENECON Commercial 92, Industrial-Serien: Verbesserte Fehlerbehandlung des KACO Wechselrichters",
+                "FEMS App AC-Ladestation Hardy Barth: Verbessertes Verhalten bei Verbindungsproblemen zur Wallbox",
+                "FEMS App clever-PV / enerixControl: Verbesserung der Inbetriebnahme",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest</a>: Separate Seite für Excel-Export der Historie, Fehlerbehebung bei Installation der App 'Generisches Fahrzeug'"
+            ],
+            "en": [
+                "Online-Monitoring/FENECON App: Correction of help pages, platform migration to Angular 22",
+                "FENECON Home 6, 10 & 15: Improvements to the commissioning wizard",
+                "FENECON Commercial 50 and 100: Improvement of the VDE4110 configuration",
+                "FENECON Commercial 92 Cluster: Bug fix for differing versions between master and slaves",
+                "FENECON Commercial 92, Industrial series: Improved error handling of the KACO inverter",
+                "FEMS App AC Charging Station Hardy Barth: Improved behavior for connection issues to the wallbox",
+                "FEMS App clever-PV / enerixControl: Improvement of the commissioning",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Field Test</a>: Separate page for Excel export of history, bug fix for installation of the 'Generic Vehicle' app"
+            ]
+        }
+    },
+    {
         "version": "2026.7.2",
         "entries": {
             "de": [
