@@ -82,6 +82,64 @@ export const OemMeta: BaseMeta = {
         },
     },
     links: {
+        DOWNLOAD: {
+            INSTALLATION: {
+                HOME: {
+                    AVU_BOX: null,
+                    MPPT: {
+                        HOME_6_10: {
+                            1: null,
+                            2: null,
+                        },
+                        HOME_10_15: {
+                            1: null,
+                            2: null,
+                            3: null,
+                        },
+                        HOME_20: {
+                            1: null,
+                            2: null,
+                        },
+                        HOME_30: {
+                            1: null,
+                            2: null,
+                            3: null,
+                        },
+                    },
+                },
+                COMMERCIAL: {
+                    COMMERCIAL_50: {
+                        MPPT: {
+                            1: null,
+                            2: null,
+                            3: null,
+                            4: null,
+                        },
+                    },
+                    COMMERCIAL_100: {
+                        BATTERY_INPUT_1: null,
+                        BATTERY_INPUT_2: null,
+                        MPPT: {
+                            1: null,
+                            2: null,
+                            3: null,
+                            4: null,
+                            5: null,
+                            6: null,
+                            7: null,
+                            8: null,
+                        },
+                    },
+                    STS_BOX: null,
+                },
+                SHARED: {
+                    FEED_IN_LIMITATION: {
+                        DYN_EXTERNAL_LIMITATION: null,
+                        EXTERNAL_LIMITATION: null,
+                    },
+                },
+            },
+        },
         DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
         REDIRECT: {
             BETA_SURVEY: "https://erp.fenecon.de/survey/start/d123c5ff-72e1-4fdf-bbc8-867d5a75c51c",
@@ -92,12 +150,14 @@ export const OemMeta: BaseMeta = {
             COMMON_GRID: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_grid",
             COMMON_PRODUCTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_production",
             COMMON_SELFCONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/de/standardwidgets_selfconsumption",
-
+            CONTROLLER_CLEVER_PV: "https://docs.fenecon.de/redirect/fenecon/de/controller_clever_pv",
             CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE:
                 "https://docs.fenecon.de/redirect/fenecon/de/controller_ess_grid_optimized_charge",
             CONTROLLER_IO_HEAT_PUMP_SG_READY:
                 "https://docs.fenecon.de/redirect/fenecon/de/controller_io_heat_pump_sg_ready",
             CONTROLLER_IO_HEATING_ELEMENT: "https://docs.fenecon.de/redirect/fenecon/de/controller_io_heating_element",
+            CONTROLLER_HEAT_ASKOMA: "https://docs.fenecon.de/redirect/fenecon/{language}/App_Askoma_Heizstab",
+            CONTROLLER_HEAT_MYPV: "https://docs.fenecon.de/redirect/fenecon/{language}/controller_heat_mypv",
             CONTROLLER_ESS_TIME_OF_USE_TARIFF: "https://docs.fenecon.de/redirect/fenecon/de/controller_ess_time_of_use",
             CONTROLLER_CHP_SOC: "https://docs.fenecon.de/redirect/fenecon/de/controller_chp_soc",
             CONTROLLER_IO_CHANNEL_SINGLE_THRESHOLD:
@@ -111,6 +171,13 @@ export const OemMeta: BaseMeta = {
 
             CONTROLLER_API_REST_READ: "https://docs.fenecon.de/redirect/fenecon/de/controller_api_rest_read",
             CONTROLLER_API_REST_READWRITE: "https://docs.fenecon.de/redirect/fenecon/de/controller_api_rest_readwrite",
+
+            CONTROLLER_SYMMETRIC_PEAKSHAVING:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_symmetric_peakshaving",
+            CONTROLLER_ASYMMETRIC_PEAKSHAVING:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_asymmetric_peakshaving",
+            CONTROLLER_TIMESLOT_PEAKSHAVING:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_timeslot_peakshaving",
 
             EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/de/evcs_keba",
             EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/de/evcs_hardybarth",
@@ -182,6 +249,7 @@ export const OemMeta: BaseMeta = {
                     COMMERCIAL_50_GEN_3: "#",
                     COMMERCIAL_92: "#",
                     COMMERCIAL_92_CLUSTER: "#",
+                    COMMERCIAL_92_OVERVIEW: "#",
                     COMMERCIAL_100: "#",
                 },
             },

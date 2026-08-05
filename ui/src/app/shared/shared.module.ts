@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import { CommonModule } from "@angular/common";
 import { Injector, NgModule } from "@angular/core";
-import { FormControl, FormsModule, ReactiveFormsModule, ValidationErrors, } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule, ValidationErrors } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 import { IonicModule } from "@ionic/angular";
-import { FORMLY_CONFIG, FormlyFieldConfig, FormlyModule, } from "@ngx-formly/core";
+import { FORMLY_CONFIG, FormlyFieldConfig, FormlyModule } from "@ngx-formly/core";
 import { FormlyIonicModule } from "@ngx-formly/ionic";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { BaseChartDirective } from "ng2-charts";
@@ -73,15 +73,17 @@ export function registerTranslateExtension(translate: TranslateService) {
             {
                 name: "person-name-prohibited-characters",
                 message(err, field: FormlyFieldConfig) {
-                    const INVALID_CHARACTERS =
-                        '< > & " $ % ! # ? § ; * ~ / | ^ = [ ] { } ( )';
-                    return translate.stream(
-                        "SHARED_MODULE.PERSON_NAME_PROHIBITED_CHARACTERS",
-                        {
-                            invalidCharacters: INVALID_CHARACTERS,
-                            formControlValue: field.formControl.value,
-                        },
-                    );
+                    const INVALID_CHARACTERS = '< > & " $ % ! # ? § ; * ~ / | ^ = [ ] { } ( )';
+                    return translate.stream("SHARED_MODULE.PERSON_NAME_PROHIBITED_CHARACTERS", {
+                        invalidCharacters: INVALID_CHARACTERS,
+                        formControlValue: field.formControl.value,
+                    });
+                },
+            },
+            {
+                name: "checkbox-required-checked",
+                message() {
+                    return translate.stream("SHARED_MODULE.CHECKBOX_REQUIRED_TO_BE_CHECKED");
                 },
             },
         ],
@@ -112,9 +114,21 @@ export function SubnetmaskValidatorMessage(err, field: FormlyFieldConfig) {
     return `"${field.formControl.value}" is not a valid Subnetmask`;
 }
 
-export function PersonNameProhibitedCharactersValidator(
-    control: FormControl,
-): ValidationErrors {
+/**
+ * Angular's Validators.required treats `false` as a valid value, so a checkbox with `props.required: true` still passes
+ * validation while unchecked. This is the correct default for most boolean fields (e.g. "readOnly",
+ * "isElementMeasured"), where `false` is a legitimate, explicitly required value.
+ *
+ * Some checkboxes however represent an explicit consent/confirmation (e.g. "I confirm my selection") and must be
+ * checked to proceed. For those, opt in explicitly by adding `validators: { validation: ["checkbox-required-checked"]
+ * }` to the field config - do NOT apply this globally to the "checkbox" type, as that would incorrectly require every
+ * boolean field in the app to be `true`.
+ */
+export function checkboxRequiredValidator(control: FormControl): ValidationErrors {
+    return control.value === true ? null : { "checkbox-required-checked": true };
+}
+
+export function PersonNameProhibitedCharactersValidator(control: FormControl): ValidationErrors {
     // https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/userprofile/validator/PersonNameProhibitedCharactersValidator.java
     const INVALID_CHARACTERS: string[] = [
         // Control characters (ASCII 0–31)
@@ -181,9 +195,7 @@ export function PersonNameProhibitedCharactersValidator(
         "(",
         ")",
     ];
-    return [...(control.value ?? "")].some((ch) =>
-        INVALID_CHARACTERS.includes(ch),
-    )
+    return [...(control.value ?? "")].some((ch) => INVALID_CHARACTERS.includes(ch))
         ? { "person-name-prohibited-characters": true }
         : null;
 }
@@ -278,6 +290,10 @@ export function PersonNameProhibitedCharactersValidator(
                 {
                     name: "person-name-prohibited-characters",
                     validation: PersonNameProhibitedCharactersValidator,
+                },
+                {
+                    name: "checkbox-required-checked",
+                    validation: checkboxRequiredValidator,
                 },
             ],
             validationMessages: [
@@ -387,12 +403,10 @@ export class SharedModule {
     ) {
         SharedModule.injector = injector;
 
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then(
-            (translations) => {
-                for (const { lang, translation, shouldMerge } of translations) {
-                    translate.setTranslation(lang, translation, shouldMerge);
-                }
-            },
-        );
+        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+            for (const { lang, translation, shouldMerge } of translations) {
+                translate.setTranslation(lang, translation, shouldMerge);
+            }
+        });
     }
 }

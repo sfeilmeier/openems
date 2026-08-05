@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -10,10 +10,10 @@ import { SubSystemType, System } from "../../shared/system";
 @Component({
     selector: ConfigurationSubSystemComponent.SELECTOR,
     templateUrl: "./configuration-sub-system.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ConfigurationSubSystemComponent implements OnInit {
-
     private static readonly SELECTOR = "configuration-sub-system";
 
     @Input() public ibn: AbstractIbn;
@@ -24,17 +24,16 @@ export class ConfigurationSubSystemComponent implements OnInit {
     public fields: FormlyFieldConfig[];
     public model;
     private emsType: EmsType = null;
-
-    constructor(private translate: TranslateService) { }
+    private translate: TranslateService = inject(TranslateService);
 
     protected get showNote(): boolean {
-        const subSystemType = this.form.controls.subType?.value as SubSystemType | null | undefined;;
+        const subSystemType = this.form.controls.subType?.value as SubSystemType | null | undefined;
         return subSystemType != null && subSystemType === SubSystemType.COMMERCIAL_92;
     }
 
     protected get showManualLink(): boolean {
         const subSystemType = this.form.controls.subType?.value as SubSystemType | null | undefined;
-        return subSystemType != null && subSystemType !== SubSystemType.COMMERCIAL_100;
+        return subSystemType != null;
     }
 
     public ngOnInit() {
@@ -59,9 +58,7 @@ export class ConfigurationSubSystemComponent implements OnInit {
         this.previousViewEvent.emit();
     }
 
-    /**
-     * Redirects to the appropriate url for system manual.
-     */
+    /** Redirects to the appropriate url for system manual. */
     protected openManual(): void {
         const subSystem: SubSystemType = this.form.controls.subType.value;
         window.open(System.getSubSystemTypeLink(subSystem, this.emsType));

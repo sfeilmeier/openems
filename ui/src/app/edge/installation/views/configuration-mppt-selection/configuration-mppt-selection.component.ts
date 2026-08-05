@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -13,12 +13,19 @@ import { Home30FeneconIbn } from "../../installation-systems/home/home-30";
 @Component({
     selector: ConfigurationMpptSelectionComponent.SELECTOR,
     templateUrl: "./configuration-mppt-selection.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ConfigurationMpptSelectionComponent implements OnInit {
     private static readonly SELECTOR = "configuration-mppt-selection";
 
-    @Input() public ibn: Home20FeneconIbn | Home30FeneconIbn | Home10Gen2FeneconIbn | Home10FeneconIbn | Home15Gen2FeneconIbn | Commercial50Gen3Ibn;
+    @Input() public ibn:
+        | Home20FeneconIbn
+        | Home30FeneconIbn
+        | Home10Gen2FeneconIbn
+        | Home10FeneconIbn
+        | Home15Gen2FeneconIbn
+        | Commercial50Gen3Ibn;
     @Output() public nextViewEvent = new EventEmitter();
     @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
 
@@ -27,7 +34,7 @@ export class ConfigurationMpptSelectionComponent implements OnInit {
     protected model;
     protected isNextDisabled: boolean;
 
-    constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) {}
 
     public ngOnInit() {
         this.form = new FormGroup({});
@@ -46,10 +53,10 @@ export class ConfigurationMpptSelectionComponent implements OnInit {
 
     public getFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
-        const maxStrings: number = this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
+        const maxStrings: number =
+            this.ibn.maxNumberOfMppt > 0 ? this.ibn.maxNumberOfMppt : this.ibn.maxNumberOfPvStrings;
 
         for (let strings = 1; strings <= maxStrings; strings++) {
-
             const mppt = strings;
             const key: string = "mppt" + mppt;
             const label: string = this.ibn.getMpptLabel(mppt);
@@ -85,5 +92,4 @@ export class ConfigurationMpptSelectionComponent implements OnInit {
     public onPreviousClicked() {
         this.previousViewEvent.emit();
     }
-
 }

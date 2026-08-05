@@ -1,5 +1,5 @@
 import { formatNumber } from "@angular/common";
-import { Component, Input, OnChanges, OnInit } from "@angular/core";
+import { Component, Input, OnChanges, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { HistoryDataService } from "src/app/edge/history/historydataservice";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { DataService } from "src/app/shared/components/shared/dataservice";
@@ -8,66 +8,66 @@ import { Producttype, Service, Utils } from "src/app/shared/shared";
 import { environment } from "src/environments";
 import { SimulationResult } from "../battery-extension.module";
 
-
-type EnergyJourneyLinkKeys = keyof typeof environment.links.ENERGY_JOURNEY[keyof typeof environment.links.ENERGY_JOURNEY];
+type EnergyJourneyLinkKeys =
+    keyof (typeof environment.links.ENERGY_JOURNEY)[keyof typeof environment.links.ENERGY_JOURNEY];
 
 type TableData = {
-    gridSaving: string[],
-    maxChargeDischargePowerIncrease: (number | null)[],
-    totalChargeDischargePower: string[],
-    capacityIncrease: string[],
-    totalCapacity: string[],
-    numberOfModulesDiff: string[],
+    gridSaving: string[];
+    maxChargeDischargePowerIncrease: (number | null)[];
+    totalChargeDischargePower: string[];
+    capacityIncrease: string[];
+    totalCapacity: string[];
+    numberOfModulesDiff: string[];
 };
 
 @Component({
     selector: "battery-extension-detail",
     templateUrl: "./details.html",
-    providers: [
-        { provide: DataService, useClass: HistoryDataService },
-    ],
-    styles: [`
-    :host a {
-      display: inline;
-    }
-
-    .desktop-view {
-      :is(ion-row) {
-        ion-col:not(:first-child) {
-          align-self: center !important;
-          text-align: center !important;
-          :not(:first-child) {
-            :nth-child(odd) {
+    providers: [{ provide: DataService, useClass: HistoryDataService }],
+    styles: [
+        `
+            :host a {
+                display: inline;
             }
-          }
-        }
 
-        ion-col:first-child {
-          width: calc(var(width) +5%);
-          text-align: left !important;
-        }
-      }
-    }
+            .desktop-view {
+                :is(ion-row) {
+                    ion-col:not(:first-child) {
+                        align-self: center !important;
+                        text-align: center !important;
+                        :not(:first-child) {
+                            :nth-child(odd) {
+                            }
+                        }
+                    }
 
-    .smartphone-view {
-      ion-row:not(:first-child):nth-child(odd) {
-        background-color: rgba(var(--ion-color-light-rgb), 1);
-      }
+                    ion-col:first-child {
+                        width: calc(var(width) +5%);
+                        text-align: left !important;
+                    }
+                }
+            }
 
-      :is(ion-row) {
-        ion-col:not(:first-child) {
-          text-align: left;
-        }
-        ion-col:first-child {
-          align-self: center;
-        }
-      }
-    }
-    `],
+            .smartphone-view {
+                ion-row:not(:first-child):nth-child(odd) {
+                    background-color: rgba(var(--ion-color-light-rgb), 1);
+                }
+
+                :is(ion-row) {
+                    ion-col:not(:first-child) {
+                        text-align: left;
+                    }
+                    ion-col:first-child {
+                        align-self: center;
+                    }
+                }
+            }
+        `,
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class DetailComponent implements OnInit, OnChanges {
-
     @Input({ required: true }) public simulatedData: SimulationResult = {
         simulationData: [],
     };
@@ -77,9 +77,7 @@ export class DetailComponent implements OnInit, OnChanges {
 
     private locale: string = "de";
 
-    constructor(
-        private service: Service,
-    ) { }
+    constructor(private service: Service) {}
 
     private static FORMAT_TO_TOTAL(value: number, label: string, locale: string): string {
         const _value = Utils.divideSafely(value, 1000);
@@ -101,7 +99,7 @@ export class DetailComponent implements OnInit, OnChanges {
     private static FORMAT_TO_SIGNED_NUMBER(value: number | null, locale: string) {
         let prefix: string = "";
 
-        return Converter.IF_NUMBER(value, val => {
+        return Converter.IF_NUMBER(value, (val) => {
             if (val < 0) {
                 prefix = "-";
             } else {
@@ -118,27 +116,46 @@ export class DetailComponent implements OnInit, OnChanges {
     }
 
     public ngOnChanges() {
-        this.tableData = this.simulatedData?.simulationData.reduce((arr: TableData, el, index) => {
+        this.tableData = this.simulatedData?.simulationData.reduce(
+            (arr: TableData, el, index) => {
+                if (index === 0) {
+                    return arr;
+                }
 
-            if (index === 0) {
+                arr.capacityIncrease.push(
+                    this.FORMAT_TO_INCREASE(
+                        Utils.subtractSafely(el.capacity, this.simulatedData?.simulationData[0].capacity),
+                    ),
+                );
+                arr.totalCapacity.push(DetailComponent.FORMAT_TO_TOTAL(el.capacity, "kWh", this.locale));
+                arr.maxChargeDischargePowerIncrease.push(
+                    Utils.subtractSafely(el.kWPeak, this.simulatedData?.simulationData[0].kWPeak),
+                );
+                arr.totalChargeDischargePower.push(DetailComponent.FORMAT_TO_TOTAL(el.kWPeak, "kW", this.locale));
+                arr.gridSaving.push(
+                    DetailComponent.FORMAT_EUROS(
+                        Utils.divideSafely(
+                            Utils.subtractSafely(this.simulatedData.simulationData[0].gridBuyCosts, el.gridBuyCosts),
+                            100,
+                        ),
+                        this.locale,
+                    ),
+                );
+                arr.numberOfModulesDiff.push(
+                    "+ " +
+                        Utils.subtractSafely(el.numberOfModules, this.simulatedData?.simulationData[0].numberOfModules),
+                );
                 return arr;
-            }
-
-            arr.capacityIncrease.push(this.FORMAT_TO_INCREASE(Utils.subtractSafely(el.capacity, this.simulatedData?.simulationData[0].capacity)));
-            arr.totalCapacity.push(DetailComponent.FORMAT_TO_TOTAL(el.capacity, "kWh", this.locale));
-            arr.maxChargeDischargePowerIncrease.push(Utils.subtractSafely(el.kWPeak, this.simulatedData?.simulationData[0].kWPeak));
-            arr.totalChargeDischargePower.push(DetailComponent.FORMAT_TO_TOTAL(el.kWPeak, "kW", this.locale));
-            arr.gridSaving.push(DetailComponent.FORMAT_EUROS(Utils.divideSafely(Utils.subtractSafely(this.simulatedData.simulationData[0].gridBuyCosts, el.gridBuyCosts), 100), this.locale));
-            arr.numberOfModulesDiff.push("+ " + Utils.subtractSafely(el.numberOfModules, this.simulatedData?.simulationData[0].numberOfModules));
-            return arr;
-        }, {
-            capacityIncrease: [],
-            gridSaving: [],
-            maxChargeDischargePowerIncrease: [],
-            numberOfModulesDiff: [],
-            totalCapacity: [],
-            totalChargeDischargePower: [],
-        });
+            },
+            {
+                capacityIncrease: [],
+                gridSaving: [],
+                maxChargeDischargePowerIncrease: [],
+                numberOfModulesDiff: [],
+                totalCapacity: [],
+                totalChargeDischargePower: [],
+            },
+        );
 
         if (this.simulatedData.simulationData.length > 0) {
             this.getProduct().then((product: Product | null) => {
@@ -148,7 +165,7 @@ export class DetailComponent implements OnInit, OnChanges {
     }
 
     protected FORMAT_TO_INCREASE: Converter = (raw: number | string | null): string => {
-        return Converter.IF_NUMBER(raw, val => {
+        return Converter.IF_NUMBER(raw, (val) => {
             const _value = Utils.divideSafely(val, 1000);
             if (_value == null) {
                 return "";
@@ -157,12 +174,11 @@ export class DetailComponent implements OnInit, OnChanges {
         });
     };
 
-
     /**
-   * Gets the url for the product based on the language selecetd.
-   *
-   * @returns the product url.
-   */
+     * Gets the url for the product based on the language selecetd.
+     *
+     * @returns The product url.
+     */
     private async getProduct(): Promise<Product | null> {
         const edge = await this.service.getCurrentEdge();
 
@@ -171,7 +187,9 @@ export class DetailComponent implements OnInit, OnChanges {
         }
 
         const energyJourneyLinks: typeof environment.links.ENERGY_JOURNEY = environment.links.ENERGY_JOURNEY;
-        const key: EnergyJourneyLinkKeys = ((["DE", "EN"].includes(this.locale.toUpperCase())) ? this.locale.toUpperCase() : "EN") as EnergyJourneyLinkKeys;
+        const key: EnergyJourneyLinkKeys = (
+            ["DE", "EN"].includes(this.locale.toUpperCase()) ? this.locale.toUpperCase() : "EN"
+        ) as EnergyJourneyLinkKeys;
 
         switch (edge.producttype) {
             case Producttype.HOME:
@@ -196,5 +214,5 @@ export class Product {
     constructor(
         private link: string,
         private name: string,
-    ) { }
+    ) {}
 }

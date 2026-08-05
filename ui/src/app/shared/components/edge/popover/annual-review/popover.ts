@@ -1,5 +1,4 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { IonicModule, ModalController } from "@ionic/angular";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -22,8 +21,8 @@ import { MarketingAnnualReviewButtonComponent } from "./button/button";
     selector: "oe-weather-forecast-approval-popover",
     templateUrl: "./popover.html",
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
-        CommonModule,
         IonicModule,
         ModalComponentsModule,
         TranslateModule,
@@ -49,12 +48,15 @@ export class MarketingAnnualReviewComponent implements OnInit {
     }
 
     public static shouldShowPopover(edge: Edge, userService: UserService) {
-        return edge.shouldShowAnnualReviewPopover()
-            && StringUtils.isNotInArr(edge.id, userService.currentUser()?.getAnnualReviewFromSettings() ?? [])
-            && environment.theme === "FENECON";
+        return (
+            edge.shouldShowAnnualReviewPopover() &&
+            StringUtils.isNotInArr(edge.id, userService.currentUser()?.getAnnualReviewFromSettings() ?? []) &&
+            environment.theme === "FENECON"
+        );
     }
 
-    private static PREFIX: (edge: Edge | null) => string = (edge: Edge | null) => edge == null ? "" : "popover-annual-review-" + edge.id;
+    private static PREFIX: (edge: Edge | null) => string = (edge: Edge | null) =>
+        edge == null ? "" : "popover-annual-review-" + edge.id;
 
     ngOnInit() {
         if (environment.theme !== "FENECON") {
@@ -69,7 +71,10 @@ export class MarketingAnnualReviewComponent implements OnInit {
     protected async dismiss() {
         const edge = await this.service.getCurrentEdge();
         const user = this.userService.currentUser();
-        this.userService.updateUserSettingsWithProperty(UserSettings.ANNUAL_REVIEW, Array.from(new Set([...user?.getAnnualReviewFromSettings() ?? [], edge.id])));
+        this.userService.updateUserSettingsWithProperty(
+            UserSettings.ANNUAL_REVIEW,
+            Array.from(new Set([...(user?.getAnnualReviewFromSettings() ?? []), edge.id])),
+        );
         localStorage.setItem(MarketingAnnualReviewComponent.PREFIX(edge), "true");
         this.modalCtrl.dismiss();
     }

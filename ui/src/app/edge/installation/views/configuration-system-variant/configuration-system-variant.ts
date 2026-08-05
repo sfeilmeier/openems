@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
@@ -8,10 +8,10 @@ import { HomeSystemId, System, SystemId } from "../../shared/system";
 @Component({
     selector: ConfigurationSystemVariantComponent.SELECTOR,
     templateUrl: "./configuration-system-variant.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ConfigurationSystemVariantComponent implements OnInit {
-
     private static readonly SELECTOR = "configuration-system-variant";
 
     @Input() public ibn: AbstractIbn;
@@ -23,15 +23,13 @@ export class ConfigurationSystemVariantComponent implements OnInit {
     public model;
 
     /**
-    * Displays the button for home systems, otherwise false.
-    *
-    * @returns {boolean} True if the selected system is a home system, false otherwise.
-       *
-    * @remarks
-     * This getter is used to determine whether the system selected in the form is one of the predefined home systems.
-    * It checks if the selected system value exists and is included in the `homeSystemIds` array.
-    *
-    */
+     * Displays the button for home systems, otherwise false.
+     *
+     * @remarks
+     *   This getter is used to determine whether the system selected in the form is one of the predefined home systems.
+     *   It checks if the selected system value exists and is included in the `homeSystemIds` array.
+     * @returns {boolean} True if the selected system is a home system, false otherwise.
+     */
     protected get showManualButton(): boolean {
         const selectedSystem: SystemId = this.form.controls.system?.value;
         return System.isHomeSystemSelected(selectedSystem);
@@ -58,13 +56,9 @@ export class ConfigurationSystemVariantComponent implements OnInit {
         this.previousViewEvent.emit();
     }
 
-    /**
-     * Redirects to the appropriate url for system manual.
-     * Apples only to Home systems.
-     */
+    /** Redirects to the appropriate url for system manual. Apples only to Home systems. */
     protected openManual(): void {
         const homeSystemVariant = this.form.controls.system?.value as HomeSystemId;
         window.open(System.getHomeSystemInstructionsLink(homeSystemVariant));
     }
-
 }

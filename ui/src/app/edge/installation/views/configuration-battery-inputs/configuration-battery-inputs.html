@@ -1,0 +1,3 @@
+<installation-view iconName="settings-outline" header="{{ 'INSTALLATION.CONFIGURATION_BATTERY_INPUTS.TITLE' | translate }}" (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isNextDisabled]="disableNextView">
+  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+</installation-view>

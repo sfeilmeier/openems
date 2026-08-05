@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -8,10 +8,10 @@ import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 @Component({
     selector: ConfigurationEssLimiter14aComponent.SELECTOR,
     templateUrl: "./configuration-ess-limiter-14a.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ConfigurationEssLimiter14aComponent implements OnInit {
-
     private static readonly SELECTOR = "configuration-ess-limiter-14a";
 
     @Input() public ibn: AbstractIbn;
@@ -22,7 +22,7 @@ export class ConfigurationEssLimiter14aComponent implements OnInit {
     public fields: FormlyFieldConfig[];
     public model;
 
-    constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) {}
 
     public ngOnInit() {
         this.form = new FormGroup({});
@@ -59,5 +59,4 @@ export class ConfigurationEssLimiter14aComponent implements OnInit {
 
         return fields;
     }
-
 }

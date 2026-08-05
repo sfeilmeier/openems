@@ -81,6 +81,64 @@ export const OemMeta: BaseMeta = {
         },
     },
     links: {
+        DOWNLOAD: {
+            INSTALLATION: {
+                HOME: {
+                    AVU_BOX: null,
+                    MPPT: {
+                        HOME_6_10: {
+                            1: null,
+                            2: null,
+                        },
+                        HOME_10_15: {
+                            1: null,
+                            2: null,
+                            3: null,
+                        },
+                        HOME_20: {
+                            1: null,
+                            2: null,
+                        },
+                        HOME_30: {
+                            1: null,
+                            2: null,
+                            3: null,
+                        },
+                    },
+                },
+                COMMERCIAL: {
+                    COMMERCIAL_50: {
+                        MPPT: {
+                            1: null,
+                            2: null,
+                            3: null,
+                            4: null,
+                        },
+                    },
+                    COMMERCIAL_100: {
+                        BATTERY_INPUT_1: null,
+                        BATTERY_INPUT_2: null,
+                        MPPT: {
+                            1: null,
+                            2: null,
+                            3: null,
+                            4: null,
+                            5: null,
+                            6: null,
+                            7: null,
+                            8: null,
+                        },
+                    },
+                    STS_BOX: null,
+                },
+                SHARED: {
+                    FEED_IN_LIMITATION: {
+                        DYN_EXTERNAL_LIMITATION: null,
+                        EXTERNAL_LIMITATION: null,
+                    },
+                },
+            },
+        },
         DATA_PROTECTION: null,
         REDIRECT: {
             BETA_SURVEY: null,
@@ -91,9 +149,15 @@ export const OemMeta: BaseMeta = {
             COMMON_GRID: null,
             COMMON_PRODUCTION: null,
             COMMON_SELFCONSUMPTION: null,
+            CONTROLLER_CLEVER_PV: null,
             CONTROLLER_ESS_GRID_OPTIMIZED_CHARGE: "io.openems.edge.controller.ess.gridoptimizedcharge/readme.adoc",
             CONTROLLER_IO_HEAT_PUMP_SG_READY: "io.openems.edge.controller.io.heatpump.sgready/readme.adoc",
             CONTROLLER_IO_HEATING_ELEMENT: "io.openems.edge.controller.io.heatingelement/readme.adoc",
+            CONTROLLER_HEAT_ASKOMA: null,
+            CONTROLLER_HEAT_MYPV: null,
+            CONTROLLER_SYMMETRIC_PEAKSHAVING: null,
+            CONTROLLER_ASYMMETRIC_PEAKSHAVING: null,
+            CONTROLLER_TIMESLOT_PEAKSHAVING: null,
             CONTROLLER_ESS_TIME_OF_USE_TARIFF: "io.openems.edge.controller.ess.timeofusetariff/readme.adoc",
             CONTROLLER_CHP_SOC: "io.openems.edge.controller.chp.soc/readme.adoc",
             CONTROLLER_IO_CHANNEL_SINGLE_THRESHOLD: "io.openems.edge.controller.io.channelsinglethreshold/readme.adoc",
@@ -171,6 +235,7 @@ export const OemMeta: BaseMeta = {
                     COMMERCIAL_50_GEN_3: "#",
                     COMMERCIAL_92: "#",
                     COMMERCIAL_92_CLUSTER: "#",
+                    COMMERCIAL_92_OVERVIEW: "#",
                     COMMERCIAL_100: "#",
                 },
             },

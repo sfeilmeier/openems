@@ -1,17 +1,15 @@
-<installation-view iconName="checkmark-done-outline" header="{{ 'INSTALLATION.COMPLETION.TITLE' | translate }}"
-  (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" isLastView="true" [isWaiting]="isWaiting">
-
+<installation-view iconName="checkmark-done-outline" header="{{ 'INSTALLATION.COMPLETION.TITLE' | translate }}" (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" isLastView="true" [isWaiting]="isWaiting()">
   @if (system) {
     <p style="width: 100%" class="ion-padding">
-      {{'INSTALLATION.COMPLETION.SUB_TITLE' | translate: { value: system } }}
+      {{ "INSTALLATION.COMPLETION.SUB_TITLE" | translate: { value: system } }}
     </p>
   }
 
   <table class="full_width">
     <tr>
       <td style="width: 100%" class="ion-padding">
-        <ion-button size="small" (click)="downloadProtocol()" [disabled]="isWaiting">
-          <ion-label>{{ 'INSTALLATION.COMPLETION.DOWNLOAD' | translate}}</ion-label>
+        <ion-button size="small" (click)="downloadProtocol()" [disabled]="isWaiting()">
+          <ion-label>{{ "INSTALLATION.COMPLETION.DOWNLOAD" | translate }}</ion-label>
           <ion-icon name="download-outline" slot="end"></ion-icon>
         </ion-button>
       </td>
@@ -19,7 +17,7 @@
     <tr>
       <td style="width: 100%" class="ion-padding">
         <ion-text>
-          {{'INSTALLATION.COMPLETION.NOTE' | translate}}
+          {{ "INSTALLATION.COMPLETION.NOTE" | translate }}
         </ion-text>
       </td>
     </tr>
@@ -27,19 +25,18 @@
       <tr>
         <td style="width: 100%" class="ion-padding">
           <ion-text>
-            {{'INSTALLATION.COMPLETION.HECKERT_NOTE' | translate}}
+            {{ "INSTALLATION.COMPLETION.HECKERT_NOTE" | translate }}
           </ion-text>
         </td>
       </tr>
     }
     <tr>
       <td style="width: 100%" class="ion-padding">
-        <ion-button size="small" (click)="navigate()" [disabled]="isWaiting">
-          <ion-label>{{ 'INSTALLATION.COMPLETION.NAVIGATION_LABEL' | translate }}</ion-label>
+        <ion-button size="small" (click)="navigate()" [disabled]="isWaiting()">
+          <ion-label>{{ "INSTALLATION.COMPLETION.NAVIGATION_LABEL" | translate }}</ion-label>
           <ion-icon name="arrow-forward-outline" slot="start"></ion-icon>
         </ion-button>
       </td>
     </tr>
   </table>
-
 </installation-view>

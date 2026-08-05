@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, computed, EventEmitter, inject, OnInit, Output } from "@angular/core";
+import { Component, computed, EventEmitter, inject, OnInit, Output, ChangeDetectionStrategy, signal, } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -17,6 +17,7 @@ import { environment } from "src/environments";
 @Component({
     selector: PreInstallationComponent.SELECTOR,
     templateUrl: "./pre-installation.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class PreInstallationComponent implements OnInit {
@@ -29,7 +30,7 @@ export class PreInstallationComponent implements OnInit {
     public form: FormGroup;
     public fields: FormlyFieldConfig[];
     public model;
-    public isWaiting = false;
+    public isWaiting = signal<boolean>(false);
     public image: string;
     protected setupKey: string | null = null;
     protected validKey: boolean = true;
@@ -41,7 +42,7 @@ export class PreInstallationComponent implements OnInit {
         private service: Service,
         public websocket: Websocket,
         private translate: TranslateService,
-    ) { }
+    ) {}
 
     public ngOnInit() {
         this.form = new FormGroup({});
@@ -54,7 +55,7 @@ export class PreInstallationComponent implements OnInit {
     }
 
     public onNextClicked() {
-        this.isWaiting = true;
+        this.isWaiting.set(true);
 
         this.websocket
             .sendStateFullRequest(new AddEdgeToUserRequest({ setupPassword: this.setupKey }))
@@ -65,7 +66,10 @@ export class PreInstallationComponent implements OnInit {
                 // Test if edge is online
                 if (!edge.online) {
                     this.service.toast(
-                        this.translate.instant("INSTALLATION.PRE_INSTALLATION.EDGE_OFFLINE", { edgeShortName: environment.edgeShortName }), "danger",
+                        this.translate.instant("INSTALLATION.PRE_INSTALLATION.EDGE_OFFLINE", {
+                            edgeShortName: environment.edgeShortName,
+                        }),
+                        "danger",
                     );
                     return;
                 }
@@ -73,7 +77,15 @@ export class PreInstallationComponent implements OnInit {
                 // TODO either add lastmessage and role to response or call getEdgeRequest
                 this.edge = new Edge(
                     edge.id,
-                    edge.comment, edge.producttype, edge.version, Role.INSTALLER, edge.online, null, SumState.OK, null, null,
+                    edge.comment,
+                    edge.producttype,
+                    edge.version,
+                    Role.INSTALLER,
+                    edge.online,
+                    null,
+                    SumState.OK,
+                    null,
+                    null,
                 );
 
                 // Get metadata
@@ -95,12 +107,12 @@ export class PreInstallationComponent implements OnInit {
 
                 this.service.metadata
                     .pipe(
-                        filter(metadata => metadata != null),
-                        take(1))
-                    .subscribe(metadata => {
+                        filter((metadata) => metadata != null),
+                        take(1),
+                    )
+                    .subscribe((metadata) => {
                         this.edge = metadata.edges[edge.id];
                     });
-
 
                 // Add to session Storage.
                 sessionStorage.setItem("edge", JSON.stringify(edge));
@@ -112,7 +124,9 @@ export class PreInstallationComponent implements OnInit {
 
                 // Start installation process
                 this.service.toast(
-                    this.translate.instant("INSTALLATION.PRE_INSTALLATION.INSTALLATION_SUCCESS", { edgeId: this.edge.id }),
+                    this.translate.instant("INSTALLATION.PRE_INSTALLATION.INSTALLATION_SUCCESS", {
+                        edgeId: this.edge.id,
+                    }),
                     "success",
                 );
 
@@ -121,12 +135,15 @@ export class PreInstallationComponent implements OnInit {
                 this.websocket.sendStateFullRequest(new SubscribeEdgesRequest({ edges: [this.edge.id] }));
             })
             .catch((reason) => {
-                this.service.toast(this.translate.instant("INSTALLATION.PRE_INSTALLATION.AUTHENTICATION_FAILED"), "danger");
+                this.service.toast(
+                    this.translate.instant("INSTALLATION.PRE_INSTALLATION.AUTHENTICATION_FAILED"),
+                    "danger",
+                );
                 this.validKey = false;
                 console.log(reason);
             })
             .finally(() => {
-                this.isWaiting = false;
+                this.isWaiting.set(false);
             });
     }
 }

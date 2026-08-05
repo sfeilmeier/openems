@@ -1,4 +1,4 @@
-import { TypedFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
+import { StrictFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
 import { FeedInSetting } from "../../shared/enums";
 
 export const COS_PHI_CURVE_POINTS = ["A", "B", "C", "D", "E"] as const;
@@ -21,22 +21,22 @@ export enum GridUnit {
 }
 
 export enum ReactivePowerMode {
-    NONE = "NONE",
+    NONE = "UNSELECTED",
     FIX_PF = "FIX_PF",
     FIX_Q = "FIX_Q",
     QU_CURVE = "QU_CURVE",
-    COS_PHI_P_CURVE = "COSPHIP_CURVE",
+    COS_PHI_P_CURVE = "COS_PHI_P_CURVE",
     QP_CURVE = "QP_CURVE",
 }
 
 export enum CurveMode {
-    STANDARD = "STANDARD",
+    BASIC = "BASIC",
     SLOPE = "SLOPE",
 }
 
 export enum CurrentDistributionMode {
-    REACTIVE_PRIORITY = "REACTIVE_PRIORITY",
-    ACTIVE_PRIORITY = "ACTIVE_PRIORITY",
+    REACTIVE_POWER_PRIO = "REACTIVE_POWER_PRIO",
+    ACTIVE_POWER_PRIO = "ACTIVE_POWER_PRIO",
     CONSTANT_CURRENT = "CONSTANT_CURRENT",
 }
 
@@ -174,223 +174,223 @@ export const GRID_SETTING_RANGES = {
 } as const;
 
 export interface ActivePowerModeModel {
-    apmOutputActivePower: number;
-    apmPowerGradient: number;
+    APM_OUTPUT_ACTIVE_POWER: number;
+    APM_POWER_GRADIENT: number;
 
-    apmPfOverFrequencyCurveEnable: boolean;
-    apmPfOverFrequencyStartPoint: number | null;
-    apmPfOverFrequencySlope: number | null;
-    apmPfOverFrequencyDelayTime: number | null;
+    APM_PF_OVER_FREQUENCY_CURVE_ENABLE: boolean;
+    APM_PF_OVER_FREQUENCY_START_POINT: number | null;
+    APM_PF_OVER_FREQUENCY_SLOPE: number | null;
+    APM_PF_OVER_FREQUENCY_DELAY_TIME: number | null;
 
-    apmPfOverFrequencyDeactivationThresholdFstop: boolean;
-    apmPfOverFrequencyHysteresisPoint: number | null;
-    apmPfOverFrequencyDelayWaitingTime: number | null;
-    apmPfOverFrequencyHysteresisSlope: number | null;
-    apmPfUnderFrequencyCurveEnable: boolean;
-    apmPfUnderFrequencyThreshold: number | null;
-    apmPfUnderFrequencySlope: number | null;
-    apmPfUnderFrequencyDelayTime: number | null;
+    APM_PF_OVER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP: boolean;
+    APM_PF_OVER_FREQUENCY_HYSTERESIS_POINT: number | null;
+    APM_PF_OVER_FREQUENCY_DELAY_WAITING_TIME: number | null;
+    APM_PF_OVER_FREQUENCY_HYSTERESIS_SLOPE: number | null;
+    APM_PF_UNDER_FREQUENCY_CURVE_ENABLE: boolean;
+    APM_PF_UNDER_FREQUENCY_THRESHOLD: number | null;
+    APM_PF_UNDER_FREQUENCY_SLOPE: number | null;
+    APM_PF_UNDER_FREQUENCY_DELAY_TIME: number | null;
 
-    apmPfUnderFrequencyDeactivationThresholdFstop: boolean;
-    apmPfUnderFrequencyHysteresisPoint: number | null;
-    apmPfUnderFrequencyDelayWaitingTime: number | null;
-    apmPfUnderFrequencyHysteresisSlope: number | null;
+    APM_PF_UNDER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP: boolean;
+    APM_PF_UNDER_FREQUENCY_HYSTERESIS_POINT: number | null;
+    APM_PF_UNDER_FREQUENCY_DELAY_WAITING_TIME: number | null;
+    APM_PF_UNDER_FREQUENCY_HYSTERESIS_SLOPE: number | null;
 
-    puCurveEnable: boolean;
-    apmPuV1Voltage: number | null;
-    apmPuV1ActivePower: number | null;
-    apmPuV2Voltage: number | null;
-    apmPuV2ActivePower: number | null;
-    apmPuV3Voltage: number | null;
-    apmPuV3ActivePower: number | null;
-    apmPuV4Voltage: number | null;
-    apmPuV4ActivePower: number | null;
-    apmPuOutputResponseMode: RecoveryMode;
-    apmPuPt1LowPassFilterTimeConstant: number | null;
-    apmPuPt1LowPassFilterConstantGradientMode: number | null;
+    PU_CURVE_ENABLE: boolean;
+    APM_PU_V1_VOLTAGE: number | null;
+    APM_PU_V1_ACTIVE_POWER: number | null;
+    APM_PU_V2_VOLTAGE: number | null;
+    APM_PU_V2_ACTIVE_POWER: number | null;
+    APM_PU_V3_VOLTAGE: number | null;
+    APM_PU_V3_ACTIVE_POWER: number | null;
+    APM_PU_V4_VOLTAGE: number | null;
+    APM_PU_V4_ACTIVE_POWER: number | null;
+    APM_PU_OUTPUT_RESPONSE_MODE: RecoveryMode;
+    APM_PU_PT1_LOW_PASS_FILTER_TIME_CONSTANT: number | null;
+    APM_PU_PT1_LOW_PASS_FILTER_CONSTANT_GRADIENT_MODE: number | null;
 }
 
 export interface ReactivePowerModeModel {
-    rpmMode: ReactivePowerMode;
-    rpmFixPf: FeedInSetting;
-    rpmFixQ: number | null;
+    RPM_MODE: ReactivePowerMode;
+    RPM_FIX_PF: FeedInSetting;
+    RPM_FIX_Q: number | null;
 
-    rpmQuCurveMode: CurveMode;
-    rpmQuVoltageDeadBand: number | null;
-    rpmQuOverexcitedSlope: number | null;
-    rpmQuUnderexcitedSlope: number | null;
-    rpmQuV1Voltage: number;
-    rpmQuV1ReactivePower: number;
-    rpmQuV2Voltage: number;
-    rpmQuV2ReactivePower: number | null;
-    rpmQuV3Voltage: number;
-    rpmQuV3ReactivePower: number | null;
-    rpmQuV4Voltage: number;
-    rpmQuV4ReactivePower: number;
-    rpmQuTimeConstant: number;
-    rpmQuExtendedFunctions: boolean;
-    rpmQuLockInPower: number | null;
-    rpmQuLockOutPower: number | null;
+    RPM_QU_CURVE_MODE: CurveMode;
+    RPM_QU_VOLTAGE_DEAD_BAND: number | null;
+    RPM_QU_OVEREXCITED_SLOPE: number | null;
+    RPM_QU_UNDEREXCITED_SLOPE: number | null;
+    RPM_QU_V1_VOLTAGE: number;
+    RPM_QU_V1_REACTIVE_POWER: number;
+    RPM_QU_V2_VOLTAGE: number;
+    RPM_QU_V2_REACTIVE_POWER: number | null;
+    RPM_QU_V3_VOLTAGE: number;
+    RPM_QU_V3_REACTIVE_POWER: number | null;
+    RPM_QU_V4_VOLTAGE: number;
+    RPM_QU_V4_REACTIVE_POWER: number;
+    RPM_QU_TIME_CONSTANT: number;
+    RPM_QU_EXTENDED_FUNCTIONS: boolean;
+    RPM_QU_LOCK_IN_POWER: number | null;
+    RPM_QU_LOCK_OUT_POWER: number | null;
 
-    rpmCosPhiMode: CurveMode;
-    rpmCosPhiOverexcitedSlope: number | null;
-    rpmCosPhiUnderexcitedSlope: number | null;
-    rpmCosPhipPowerA: number;
-    rpmCosPhipCosPhiA: number;
-    rpmCosPhipPowerB: number;
-    rpmCosPhipCosPhiB: number;
-    rpmCosPhipPowerC: number;
-    rpmCosPhipCosPhiC: number;
-    rpmCosPhipPowerD: number;
-    rpmCosPhipCosPhiD: number;
-    rpmCosPhipPowerE: number;
-    rpmCosPhipCosPhiE: number;
-    rpmCosPhipTimeConstant: number;
-    rpmCosPhipExtendedFunctions: boolean;
-    rpmCosPhipLockInVolt: number | null;
-    rpmCosPhipLockOutVolt: number | null;
+    RPM_COS_PHI_MODE: CurveMode;
+    RPM_COS_PHI_OVEREXCITED_SLOPE: number | null;
+    RPM_COS_PHI_UNDEREXCITED_SLOPE: number | null;
+    RPM_COS_PHIP_POWER_A: number;
+    RPM_COS_PHIP_COS_PHI_A: number;
+    RPM_COS_PHIP_POWER_B: number;
+    RPM_COS_PHIP_COS_PHI_B: number;
+    RPM_COS_PHIP_POWER_C: number;
+    RPM_COS_PHIP_COS_PHI_C: number;
+    RPM_COS_PHIP_POWER_D: number;
+    RPM_COS_PHIP_COS_PHI_D: number;
+    RPM_COS_PHIP_POWER_E: number;
+    RPM_COS_PHIP_COS_PHI_E: number;
+    RPM_COS_PHIP_TIME_CONSTANT: number;
+    RPM_COS_PHIP_EXTENDED_FUNCTIONS: boolean;
+    RPM_COS_PHIP_LOCK_IN_VOLT: number | null;
+    RPM_COS_PHIP_LOCK_OUT_VOLT: number | null;
 
-    rpmQpCurveMode: CurveMode;
-    rpmQpOverexcitedSlope: number | null;
-    rpmQpUnderexcitedSlope: number | null;
-    rpmQpPowerP1: number | null;
-    rpmQpReactivePowerP1: number | null;
-    rpmQpPowerP2: number | null;
-    rpmQpReactivePowerP2: number | null;
-    rpmQpPowerP3: number | null;
-    rpmQpReactivePowerP3: number | null;
-    rpmQpPowerP4: number;
-    rpmQpReactivePowerP4: number | null;
-    rpmQpPowerP5: number;
-    rpmQpReactivePowerP5: number;
-    rpmQpPowerP6: number;
-    rpmQpReactivePowerP6: number;
-    rpmQpTimeConstant: number | null;
+    RPM_QP_CURVE_MODE: CurveMode;
+    RPM_QP_OVEREXCITED_SLOPE: number | null;
+    RPM_QP_UNDEREXCITED_SLOPE: number | null;
+    RPM_QP_POWER_P1: number | null;
+    RPM_QP_REACTIVE_POWER_P1: number | null;
+    RPM_QP_POWER_P2: number | null;
+    RPM_QP_REACTIVE_POWER_P2: number | null;
+    RPM_QP_POWER_P3: number | null;
+    RPM_QP_REACTIVE_POWER_P3: number | null;
+    RPM_QP_POWER_P4: number;
+    RPM_QP_REACTIVE_POWER_P4: number | null;
+    RPM_QP_POWER_P5: number;
+    RPM_QP_REACTIVE_POWER_P5: number;
+    RPM_QP_POWER_P6: number;
+    RPM_QP_REACTIVE_POWER_P6: number;
+    RPM_QP_TIME_CONSTANT: number | null;
 }
 
 export interface ProtectionParametersModel {
-    vppOvStage1TriggerValue: number;
-    vppOvStage1TripTime: number;
-    vppUvStage1TripValue: number;
-    vppUvStage1TripTime: number;
-    vppOvStage2TriggerValue: number;
-    vppOvStage2TripTime: number;
-    vppUvStage2TripValue: number;
-    vppUvStage2TripTime: number;
-    vppOvStage3TriggerValue: number | null;
-    vppOvStage3TripTime: number | null;
-    vppUvStage3TripValue: number | null;
-    vppUvStage3TripTime: number | null;
-    vppOvStage4TriggerValue: number | null;
-    vppOvStage4TripTime: number | null;
-    vppUvStage4TripValue: number | null;
-    vppUvStage4TripTime: number | null;
+    VPP_OV_STAGE1_TRIGGER_VALUE: number;
+    VPP_OV_STAGE1_TRIP_TIME: number;
+    VPP_UV_STAGE1_TRIP_VALUE: number;
+    VPP_UV_STAGE1_TRIP_TIME: number;
+    VPP_OV_STAGE2_TRIGGER_VALUE: number;
+    VPP_OV_STAGE2_TRIP_TIME: number;
+    VPP_UV_STAGE2_TRIP_VALUE: number;
+    VPP_UV_STAGE2_TRIP_TIME: number;
+    VPP_OV_STAGE3_TRIGGER_VALUE: number | null;
+    VPP_OV_STAGE3_TRIP_TIME: number | null;
+    VPP_UV_STAGE3_TRIP_VALUE: number | null;
+    VPP_UV_STAGE3_TRIP_TIME: number | null;
+    VPP_OV_STAGE4_TRIGGER_VALUE: number | null;
+    VPP_OV_STAGE4_TRIP_TIME: number | null;
+    VPP_UV_STAGE4_TRIP_VALUE: number | null;
+    VPP_UV_STAGE4_TRIP_TIME: number | null;
 
     VPP_10MIN_OV_TRIP_THRESHOLD: number;
     VPP_10MIN_OV_TRIP_TIME: number | null;
 
-    fppOfStage1TriggerValue: number;
-    fppOfStage1TripTime: number;
-    fppUfStage1TripValue: number;
-    fppUfStage1TripTime: number;
-    fppOfStage2TriggerValue: number;
-    fppOfStage2TripTime: number;
-    fppUfStage2TripValue: number | null;
-    fppUfStage2TripTime: number | null;
-    fppOfStage3TriggerValue: number | null;
-    fppOfStage3TripTime: number | null;
-    fppUfStage3TripValue: number | null;
-    fppUfStage3TripTime: number | null;
-    fppOfStage4TriggerValue: number | null;
-    fppOfStage4TripTime: number | null;
-    fppUfStage4TripValue: number | null;
-    fppUfStage4TripTime: number | null;
+    FPP_OF_STAGE1_TRIGGER_VALUE: number;
+    FPP_OF_STAGE1_TRIP_TIME: number;
+    FPP_UF_STAGE1_TRIP_VALUE: number;
+    FPP_UF_STAGE1_TRIP_TIME: number;
+    FPP_OF_STAGE2_TRIGGER_VALUE: number;
+    FPP_OF_STAGE2_TRIP_TIME: number;
+    FPP_UF_STAGE2_TRIP_VALUE: number | null;
+    FPP_UF_STAGE2_TRIP_TIME: number | null;
+    FPP_OF_STAGE3_TRIGGER_VALUE: number | null;
+    FPP_OF_STAGE3_TRIP_TIME: number | null;
+    FPP_UF_STAGE3_TRIP_VALUE: number | null;
+    FPP_UF_STAGE3_TRIP_TIME: number | null;
+    FPP_OF_STAGE4_TRIGGER_VALUE: number | null;
+    FPP_OF_STAGE4_TRIP_TIME: number | null;
+    FPP_UF_STAGE4_TRIP_VALUE: number | null;
+    FPP_UF_STAGE4_TRIP_TIME: number | null;
 }
 
 export interface ConnectionParametersModel {
-    cpRampUpUpperVoltage: number;
-    cpRampUpLowerVoltage: number;
-    cpRampUpUpperFrequency: number;
-    cpRampUpLowerFrequency: number;
-    cpRampUpObservationTime: number;
-    cpSoftRampUpGradientEnable: boolean;
-    cpSoftRampUpGradient: number;
+    CP_RAMP_UP_UPPER_VOLTAGE: number;
+    CP_RAMP_UP_LOWER_VOLTAGE: number;
+    CP_RAMP_UP_UPPER_FREQUENCY: number;
+    CP_RAMP_UP_LOWER_FREQUENCY: number;
+    CP_RAMP_UP_OBSERVATION_TIME: number;
+    CP_SOFT_RAMP_UP_GRADIENT_ENABLE: boolean;
+    CP_SOFT_RAMP_UP_GRADIENT: number;
 
-    cpReconnectionUpperVoltage: number;
-    cpReconnectionLowerVoltage: number;
-    cpReconnectionUpperFrequency: number;
-    cpReconnectionLowerFrequency: number;
-    cpReconnectionObservationTime: number;
-    cpReconnectionGradientEnable: boolean;
-    cpReconnectionGradient: number;
+    CP_RECONNECTION_UPPER_VOLTAGE: number;
+    CP_RECONNECTION_LOWER_VOLTAGE: number;
+    CP_RECONNECTION_UPPER_FREQUENCY: number;
+    CP_RECONNECTION_LOWER_FREQUENCY: number;
+    CP_RECONNECTION_OBSERVATION_TIME: number;
+    CP_RECONNECTION_GRADIENT_ENABLE: boolean;
+    CP_RECONNECTION_GRADIENT: number;
 }
 
 export interface VoltageRideThroughModel {
-    vrtLvrtEnable: boolean;
-    vrtUv1Voltage: number;
-    vrtUv1Time: number | null;
-    vrtUv2Voltage: number;
-    vrtUv2Time: number;
-    vrtUv3Voltage: number;
-    vrtUv3Time: number;
-    vrtUv4Voltage: number;
-    vrtUv4Time: number;
-    vrtUv5Voltage: number;
-    vrtUv5Time: number;
-    vrtUv6Voltage: number;
-    vrtUv6Time: number;
-    vrtUv7Voltage: number;
-    vrtUv7Time: number;
-    vrtEnterLvrtThreshold: number;
-    vrtExitLvrtEndpoint: number;
-    vrtK1Slope: number;
-    vrtLvrtZeroCurrentModeEnable: boolean;
-    vrtLvrtZeroCurrentModeEntryThreshold: number | null;
+    VRT_LVRT_ENABLE: boolean;
+    VRT_UV1_VOLTAGE: number;
+    VRT_UV1_TIME: number | null;
+    VRT_UV2_VOLTAGE: number;
+    VRT_UV2_TIME: number;
+    VRT_UV3_VOLTAGE: number;
+    VRT_UV3_TIME: number;
+    VRT_UV4_VOLTAGE: number;
+    VRT_UV4_TIME: number;
+    VRT_UV5_VOLTAGE: number;
+    VRT_UV5_TIME: number;
+    VRT_UV6_VOLTAGE: number;
+    VRT_UV6_TIME: number;
+    VRT_UV7_VOLTAGE: number;
+    VRT_UV7_TIME: number;
+    VRT_ENTER_LVRT_THRESHOLD: number;
+    VRT_EXIT_LVRT_ENDPOINT: number;
+    VRT_K1_SLOPE: number;
+    VRT_LVRT_ZERO_CURRENT_MODE_ENABLE: boolean;
+    VRT_LVRT_ZERO_CURRENT_MODE_ENTRY_THRESHOLD: number | null;
 
-    vrtHvrtEnable: boolean;
-    vrtOv1Voltage: number;
-    vrtOv1Time: number;
-    vrtOv2Voltage: number;
-    vrtOv2Time: number;
-    vrtOv3Voltage: number;
-    vrtOv3Time: number;
-    vrtOv4Voltage: number;
-    vrtOv4Time: number;
-    vrtOv5Voltage: number;
-    vrtOv5Time: number;
-    vrtOv6Voltage: number;
-    vrtOv6Time: number;
-    vrtOv7Voltage: number;
-    vrtOv7Time: number;
-    vrtEnterHighCrossingThreshold: number;
-    hvrtExitHighCrossingThreshold: number;
-    hvrtK2Slope: number;
-    vrtHvrtZeroCurrentModeEnable: boolean;
-    vrtHvrtZeroCurrentModeEntryThreshold: number | null;
+    VRT_HVRT_ENABLE: boolean;
+    VRT_OV1_VOLTAGE: number;
+    VRT_OV1_TIME: number;
+    VRT_OV2_VOLTAGE: number;
+    VRT_OV2_TIME: number;
+    VRT_OV3_VOLTAGE: number;
+    VRT_OV3_TIME: number;
+    VRT_OV4_VOLTAGE: number;
+    VRT_OV4_TIME: number;
+    VRT_OV5_VOLTAGE: number;
+    VRT_OV5_TIME: number;
+    VRT_OV6_VOLTAGE: number;
+    VRT_OV6_TIME: number;
+    VRT_OV7_VOLTAGE: number;
+    VRT_OV7_TIME: number;
+    VRT_ENTER_HIGH_CROSSING_THRESHOLD: number;
+    HVRT_EXIT_HIGH_CROSSING_THRESHOLD: number;
+    HVRT_K2_SLOPE: number;
+    VRT_HVRT_ZERO_CURRENT_MODE_ENABLE: boolean;
+    VRT_HVRT_ZERO_CURRENT_MODE_ENTRY_THRESHOLD: number | null;
 
-    vrtCurrentDistributionMode: CurrentDistributionMode;
-    vrtActivePowerRecoveryMode: RecoveryMode;
-    vrtActivePowerRecoverySpeed: number | null;
-    vrtActivePowerRecoverySlope: number | null;
-    vrtReactivePowerRecoveryModeEnd: RecoveryMode;
-    vrtReactivePowerRecoverySpeed: number | null;
-    vrtReactivePowerRecoverySlope: number | null;
+    VRT_CURRENT_DISTRIBUTION_MODE: CurrentDistributionMode;
+    VRT_ACTIVE_POWER_RECOVERY_MODE: RecoveryMode;
+    VRT_ACTIVE_POWER_RECOVERY_SPEED: number | null;
+    VRT_ACTIVE_POWER_RECOVERY_SLOPE: number | null;
+    VRT_REACTIVE_POWER_RECOVERY_MODE_END: RecoveryMode;
+    VRT_REACTIVE_POWER_RECOVERY_SPEED: number | null;
+    VRT_REACTIVE_POWER_RECOVERY_SLOPE: number | null;
 }
 
 export interface FrequencyRideThroughModel {
-    frtEnable: boolean;
-    frtUf1Frequency: number | null;
-    frtUf1Time: number | null;
-    frtUf2Frequency: number | null;
-    frtUf2Time: number | null;
-    frtUf3Frequency: number | null;
-    frtUf3Time: number | null;
-    frtOf1Frequency: number | null;
-    frtOf1Time: number | null;
-    frtOf2Frequency: number | null;
-    frtOf2Time: number | null;
-    frtOf3Frequency: number | null;
-    frtOf3Time: number | null;
+    FRT_ENABLE: boolean;
+    FRT_UF1_FREQUENCY: number | null;
+    FRT_UF1_TIME: number | null;
+    FRT_UF2_FREQUENCY: number | null;
+    FRT_UF2_TIME: number | null;
+    FRT_UF3_FREQUENCY: number | null;
+    FRT_UF3_TIME: number | null;
+    FRT_OF1_FREQUENCY: number | null;
+    FRT_OF1_TIME: number | null;
+    FRT_OF2_FREQUENCY: number | null;
+    FRT_OF2_TIME: number | null;
+    FRT_OF3_FREQUENCY: number | null;
+    FRT_OF3_TIME: number | null;
 }
 
 export interface AdvancedGridSettingsModel
@@ -405,210 +405,210 @@ export interface AdvancedGridSettingsModel
 export interface GridSettingsSection {
     id: string;
     uiLabel: string;
-    fields: TypedFormlyFieldConfig<AdvancedGridSettingsModel>[];
+    fields: StrictFormlyFieldConfig<AdvancedGridSettingsModel>[];
 }
 
 export function getDefaultAdvancedGridSettings(): AdvancedGridSettingsModel {
     return {
-        apmOutputActivePower: 1000,
-        apmPowerGradient: 100,
-        apmPfOverFrequencyCurveEnable: true,
-        apmPfOverFrequencyStartPoint: 50200,
-        apmPfOverFrequencySlope: 400,
-        apmPfOverFrequencyDelayTime: null,
-        apmPfOverFrequencyDeactivationThresholdFstop: false,
-        apmPfOverFrequencyHysteresisPoint: null,
-        apmPfOverFrequencyDelayWaitingTime: null,
-        apmPfOverFrequencyHysteresisSlope: null,
-        apmPfUnderFrequencyCurveEnable: true,
-        apmPfUnderFrequencyThreshold: 49800,
-        apmPfUnderFrequencySlope: 400,
-        apmPfUnderFrequencyDelayTime: null,
-        apmPfUnderFrequencyDeactivationThresholdFstop: false,
-        apmPfUnderFrequencyHysteresisPoint: null,
-        apmPfUnderFrequencyDelayWaitingTime: null,
-        apmPfUnderFrequencyHysteresisSlope: null,
-        puCurveEnable: false,
-        apmPuV1Voltage: 1100,
-        apmPuV1ActivePower: 1000,
-        apmPuV2Voltage: 1100,
-        apmPuV2ActivePower: 1000,
-        apmPuV3Voltage: 1100,
-        apmPuV3ActivePower: 1000,
-        apmPuV4Voltage: 1150,
-        apmPuV4ActivePower: null,
-        apmPuOutputResponseMode: RecoveryMode.PT_1_BEHAVIOUR,
-        apmPuPt1LowPassFilterTimeConstant: 100,
-        apmPuPt1LowPassFilterConstantGradientMode: null,
+        APM_OUTPUT_ACTIVE_POWER: 1000,
+        APM_POWER_GRADIENT: 100,
+        APM_PF_OVER_FREQUENCY_CURVE_ENABLE: true,
+        APM_PF_OVER_FREQUENCY_START_POINT: 50200,
+        APM_PF_OVER_FREQUENCY_SLOPE: 400,
+        APM_PF_OVER_FREQUENCY_DELAY_TIME: null,
+        APM_PF_OVER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP: false,
+        APM_PF_OVER_FREQUENCY_HYSTERESIS_POINT: null,
+        APM_PF_OVER_FREQUENCY_DELAY_WAITING_TIME: null,
+        APM_PF_OVER_FREQUENCY_HYSTERESIS_SLOPE: null,
+        APM_PF_UNDER_FREQUENCY_CURVE_ENABLE: true,
+        APM_PF_UNDER_FREQUENCY_THRESHOLD: 49800,
+        APM_PF_UNDER_FREQUENCY_SLOPE: 400,
+        APM_PF_UNDER_FREQUENCY_DELAY_TIME: null,
+        APM_PF_UNDER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP: false,
+        APM_PF_UNDER_FREQUENCY_HYSTERESIS_POINT: null,
+        APM_PF_UNDER_FREQUENCY_DELAY_WAITING_TIME: null,
+        APM_PF_UNDER_FREQUENCY_HYSTERESIS_SLOPE: null,
+        PU_CURVE_ENABLE: false,
+        APM_PU_V1_VOLTAGE: 1100,
+        APM_PU_V1_ACTIVE_POWER: 1000,
+        APM_PU_V2_VOLTAGE: 1100,
+        APM_PU_V2_ACTIVE_POWER: 1000,
+        APM_PU_V3_VOLTAGE: 1100,
+        APM_PU_V3_ACTIVE_POWER: 1000,
+        APM_PU_V4_VOLTAGE: 1150,
+        APM_PU_V4_ACTIVE_POWER: null,
+        APM_PU_OUTPUT_RESPONSE_MODE: RecoveryMode.PT_1_BEHAVIOUR,
+        APM_PU_PT1_LOW_PASS_FILTER_TIME_CONSTANT: 100,
+        APM_PU_PT1_LOW_PASS_FILTER_CONSTANT_GRADIENT_MODE: null,
 
-        rpmMode: ReactivePowerMode.NONE,
-        rpmFixPf: FeedInSetting.Leading_1_OR_NONE,
-        rpmFixQ: null,
+        RPM_MODE: ReactivePowerMode.NONE,
+        RPM_FIX_PF: FeedInSetting.Leading_1_OR_NONE,
+        RPM_FIX_Q: null,
 
-        rpmQuCurveMode: CurveMode.STANDARD,
-        rpmQuVoltageDeadBand: null,
-        rpmQuOverexcitedSlope: null,
-        rpmQuUnderexcitedSlope: null,
-        rpmQuV1Voltage: 960,
-        rpmQuV1ReactivePower: 485,
-        rpmQuV2Voltage: 1000,
-        rpmQuV2ReactivePower: null,
-        rpmQuV3Voltage: 1000,
-        rpmQuV3ReactivePower: null,
-        rpmQuV4Voltage: 1040,
-        rpmQuV4ReactivePower: -485,
-        rpmQuTimeConstant: 3300,
-        rpmQuExtendedFunctions: false,
-        rpmQuLockInPower: null,
-        rpmQuLockOutPower: null,
+        RPM_QU_CURVE_MODE: CurveMode.BASIC,
+        RPM_QU_VOLTAGE_DEAD_BAND: null,
+        RPM_QU_OVEREXCITED_SLOPE: null,
+        RPM_QU_UNDEREXCITED_SLOPE: null,
+        RPM_QU_V1_VOLTAGE: 960,
+        RPM_QU_V1_REACTIVE_POWER: 485,
+        RPM_QU_V2_VOLTAGE: 1000,
+        RPM_QU_V2_REACTIVE_POWER: null,
+        RPM_QU_V3_VOLTAGE: 1000,
+        RPM_QU_V3_REACTIVE_POWER: null,
+        RPM_QU_V4_VOLTAGE: 1040,
+        RPM_QU_V4_REACTIVE_POWER: -485,
+        RPM_QU_TIME_CONSTANT: 3300,
+        RPM_QU_EXTENDED_FUNCTIONS: false,
+        RPM_QU_LOCK_IN_POWER: null,
+        RPM_QU_LOCK_OUT_POWER: null,
 
-        rpmCosPhiMode: CurveMode.STANDARD,
-        rpmCosPhiOverexcitedSlope: null,
-        rpmCosPhiUnderexcitedSlope: null,
-        rpmCosPhipPowerA: 200,
-        rpmCosPhipCosPhiA: 1000,
-        rpmCosPhipPowerB: 500,
-        rpmCosPhipCosPhiB: 1000,
-        rpmCosPhipPowerC: 1000,
-        rpmCosPhipCosPhiC: -900,
-        rpmCosPhipPowerD: 1000,
-        rpmCosPhipCosPhiD: -900,
-        rpmCosPhipPowerE: 100,
-        rpmCosPhipCosPhiE: -900,
-        rpmCosPhipTimeConstant: 3300,
-        rpmCosPhipExtendedFunctions: false,
-        rpmCosPhipLockInVolt: null,
-        rpmCosPhipLockOutVolt: null,
+        RPM_COS_PHI_MODE: CurveMode.BASIC,
+        RPM_COS_PHI_OVEREXCITED_SLOPE: null,
+        RPM_COS_PHI_UNDEREXCITED_SLOPE: null,
+        RPM_COS_PHIP_POWER_A: 200,
+        RPM_COS_PHIP_COS_PHI_A: 1000,
+        RPM_COS_PHIP_POWER_B: 500,
+        RPM_COS_PHIP_COS_PHI_B: 1000,
+        RPM_COS_PHIP_POWER_C: 1000,
+        RPM_COS_PHIP_COS_PHI_C: -900,
+        RPM_COS_PHIP_POWER_D: 1000,
+        RPM_COS_PHIP_COS_PHI_D: -900,
+        RPM_COS_PHIP_POWER_E: 100,
+        RPM_COS_PHIP_COS_PHI_E: -900,
+        RPM_COS_PHIP_TIME_CONSTANT: 3300,
+        RPM_COS_PHIP_EXTENDED_FUNCTIONS: false,
+        RPM_COS_PHIP_LOCK_IN_VOLT: null,
+        RPM_COS_PHIP_LOCK_OUT_VOLT: null,
 
-        rpmQpCurveMode: CurveMode.STANDARD,
-        rpmQpOverexcitedSlope: null,
-        rpmQpUnderexcitedSlope: null,
-        rpmQpPowerP1: null,
-        rpmQpReactivePowerP1: null,
-        rpmQpPowerP2: null,
-        rpmQpReactivePowerP2: null,
-        rpmQpPowerP3: null,
-        rpmQpReactivePowerP3: null,
-        rpmQpPowerP4: 500,
-        rpmQpReactivePowerP4: null,
-        rpmQpPowerP5: 600,
-        rpmQpReactivePowerP5: -50,
-        rpmQpPowerP6: 900,
-        rpmQpReactivePowerP6: -330,
-        rpmQpTimeConstant: null,
+        RPM_QP_CURVE_MODE: CurveMode.BASIC,
+        RPM_QP_OVEREXCITED_SLOPE: null,
+        RPM_QP_UNDEREXCITED_SLOPE: null,
+        RPM_QP_POWER_P1: null,
+        RPM_QP_REACTIVE_POWER_P1: null,
+        RPM_QP_POWER_P2: null,
+        RPM_QP_REACTIVE_POWER_P2: null,
+        RPM_QP_POWER_P3: null,
+        RPM_QP_REACTIVE_POWER_P3: null,
+        RPM_QP_POWER_P4: 500,
+        RPM_QP_REACTIVE_POWER_P4: null,
+        RPM_QP_POWER_P5: 600,
+        RPM_QP_REACTIVE_POWER_P5: -50,
+        RPM_QP_POWER_P6: 900,
+        RPM_QP_REACTIVE_POWER_P6: -330,
+        RPM_QP_TIME_CONSTANT: null,
 
-        vppOvStage1TriggerValue: 1250,
-        vppOvStage1TripTime: 80,
-        vppUvStage1TripValue: 800,
-        vppUvStage1TripTime: 2000,
-        vppOvStage2TriggerValue: 1250,
-        vppOvStage2TripTime: 80,
-        vppUvStage2TripValue: 300,
-        vppUvStage2TripTime: 700,
-        vppOvStage3TriggerValue: null,
-        vppOvStage3TripTime: null,
-        vppUvStage3TripValue: null,
-        vppUvStage3TripTime: null,
-        vppOvStage4TriggerValue: null,
-        vppOvStage4TripTime: null,
-        vppUvStage4TripValue: null,
-        vppUvStage4TripTime: null,
+        VPP_OV_STAGE1_TRIGGER_VALUE: 1250,
+        VPP_OV_STAGE1_TRIP_TIME: 80,
+        VPP_UV_STAGE1_TRIP_VALUE: 800,
+        VPP_UV_STAGE1_TRIP_TIME: 2000,
+        VPP_OV_STAGE2_TRIGGER_VALUE: 1250,
+        VPP_OV_STAGE2_TRIP_TIME: 80,
+        VPP_UV_STAGE2_TRIP_VALUE: 300,
+        VPP_UV_STAGE2_TRIP_TIME: 700,
+        VPP_OV_STAGE3_TRIGGER_VALUE: null,
+        VPP_OV_STAGE3_TRIP_TIME: null,
+        VPP_UV_STAGE3_TRIP_VALUE: null,
+        VPP_UV_STAGE3_TRIP_TIME: null,
+        VPP_OV_STAGE4_TRIGGER_VALUE: null,
+        VPP_OV_STAGE4_TRIP_TIME: null,
+        VPP_UV_STAGE4_TRIP_VALUE: null,
+        VPP_UV_STAGE4_TRIP_TIME: null,
         VPP_10MIN_OV_TRIP_THRESHOLD: 1100,
         VPP_10MIN_OV_TRIP_TIME: null,
-        fppOfStage1TriggerValue: 51500,
-        fppOfStage1TripTime: 4800,
-        fppUfStage1TripValue: 47500,
-        fppUfStage1TripTime: 80,
-        fppOfStage2TriggerValue: 52500,
-        fppOfStage2TripTime: 80,
-        fppUfStage2TripValue: null,
-        fppUfStage2TripTime: null,
-        fppOfStage3TriggerValue: null,
-        fppOfStage3TripTime: null,
-        fppUfStage3TripValue: null,
-        fppUfStage3TripTime: null,
-        fppOfStage4TriggerValue: null,
-        fppOfStage4TripTime: null,
-        fppUfStage4TripValue: null,
-        fppUfStage4TripTime: null,
+        FPP_OF_STAGE1_TRIGGER_VALUE: 51500,
+        FPP_OF_STAGE1_TRIP_TIME: 4800,
+        FPP_UF_STAGE1_TRIP_VALUE: 47500,
+        FPP_UF_STAGE1_TRIP_TIME: 80,
+        FPP_OF_STAGE2_TRIGGER_VALUE: 52500,
+        FPP_OF_STAGE2_TRIP_TIME: 80,
+        FPP_UF_STAGE2_TRIP_VALUE: null,
+        FPP_UF_STAGE2_TRIP_TIME: null,
+        FPP_OF_STAGE3_TRIGGER_VALUE: null,
+        FPP_OF_STAGE3_TRIP_TIME: null,
+        FPP_UF_STAGE3_TRIP_VALUE: null,
+        FPP_UF_STAGE3_TRIP_TIME: null,
+        FPP_OF_STAGE4_TRIGGER_VALUE: null,
+        FPP_OF_STAGE4_TRIP_TIME: null,
+        FPP_UF_STAGE4_TRIP_VALUE: null,
+        FPP_UF_STAGE4_TRIP_TIME: null,
 
-        cpRampUpUpperVoltage: 1100,
-        cpRampUpLowerVoltage: 900,
-        cpRampUpUpperFrequency: 50200,
-        cpRampUpLowerFrequency: 47500,
-        cpRampUpObservationTime: 60,
-        cpSoftRampUpGradientEnable: false,
-        cpSoftRampUpGradient: 200,
-        cpReconnectionUpperVoltage: 1100,
-        cpReconnectionLowerVoltage: 950,
-        cpReconnectionUpperFrequency: 50100,
-        cpReconnectionLowerFrequency: 49900,
-        cpReconnectionObservationTime: 300,
-        cpReconnectionGradientEnable: false,
-        cpReconnectionGradient: 600,
+        CP_RAMP_UP_UPPER_VOLTAGE: 1100,
+        CP_RAMP_UP_LOWER_VOLTAGE: 900,
+        CP_RAMP_UP_UPPER_FREQUENCY: 50200,
+        CP_RAMP_UP_LOWER_FREQUENCY: 47500,
+        CP_RAMP_UP_OBSERVATION_TIME: 60,
+        CP_SOFT_RAMP_UP_GRADIENT_ENABLE: false,
+        CP_SOFT_RAMP_UP_GRADIENT: 200,
+        CP_RECONNECTION_UPPER_VOLTAGE: 1100,
+        CP_RECONNECTION_LOWER_VOLTAGE: 950,
+        CP_RECONNECTION_UPPER_FREQUENCY: 50100,
+        CP_RECONNECTION_LOWER_FREQUENCY: 49900,
+        CP_RECONNECTION_OBSERVATION_TIME: 300,
+        CP_RECONNECTION_GRADIENT_ENABLE: false,
+        CP_RECONNECTION_GRADIENT: 600,
 
-        vrtLvrtEnable: true,
-        vrtUv1Voltage: 150,
-        vrtUv1Time: null,
-        vrtUv2Voltage: 150,
-        vrtUv2Time: 2200,
-        vrtUv3Voltage: 750,
-        vrtUv3Time: 30000,
-        vrtUv4Voltage: 850,
-        vrtUv4Time: 600000,
-        vrtUv5Voltage: 900,
-        vrtUv5Time: 600000,
-        vrtUv6Voltage: 900,
-        vrtUv6Time: 600000,
-        vrtUv7Voltage: 900,
-        vrtUv7Time: 600000,
-        vrtEnterLvrtThreshold: 900,
-        vrtExitLvrtEndpoint: 920,
-        vrtK1Slope: 20,
-        vrtLvrtZeroCurrentModeEnable: false,
-        vrtLvrtZeroCurrentModeEntryThreshold: null,
+        VRT_LVRT_ENABLE: true,
+        VRT_UV1_VOLTAGE: 150,
+        VRT_UV1_TIME: null,
+        VRT_UV2_VOLTAGE: 150,
+        VRT_UV2_TIME: 2200,
+        VRT_UV3_VOLTAGE: 750,
+        VRT_UV3_TIME: 30000,
+        VRT_UV4_VOLTAGE: 850,
+        VRT_UV4_TIME: 600000,
+        VRT_UV5_VOLTAGE: 900,
+        VRT_UV5_TIME: 600000,
+        VRT_UV6_VOLTAGE: 900,
+        VRT_UV6_TIME: 600000,
+        VRT_UV7_VOLTAGE: 900,
+        VRT_UV7_TIME: 600000,
+        VRT_ENTER_LVRT_THRESHOLD: 900,
+        VRT_EXIT_LVRT_ENDPOINT: 920,
+        VRT_K1_SLOPE: 20,
+        VRT_LVRT_ZERO_CURRENT_MODE_ENABLE: false,
+        VRT_LVRT_ZERO_CURRENT_MODE_ENTRY_THRESHOLD: null,
 
-        vrtHvrtEnable: true,
-        vrtOv1Voltage: 1250,
-        vrtOv1Time: 1000,
-        vrtOv2Voltage: 1200,
-        vrtOv2Time: 1000,
-        vrtOv3Voltage: 1200,
-        vrtOv3Time: 50000,
-        vrtOv4Voltage: 1150,
-        vrtOv4Time: 50000,
-        vrtOv5Voltage: 1150,
-        vrtOv5Time: 60000,
-        vrtOv6Voltage: 1150,
-        vrtOv6Time: 60000,
-        vrtOv7Voltage: 1150,
-        vrtOv7Time: 60000,
-        vrtEnterHighCrossingThreshold: 1100,
-        hvrtExitHighCrossingThreshold: 1080,
-        hvrtK2Slope: 20,
-        vrtHvrtZeroCurrentModeEnable: false,
-        vrtHvrtZeroCurrentModeEntryThreshold: null,
+        VRT_HVRT_ENABLE: true,
+        VRT_OV1_VOLTAGE: 1250,
+        VRT_OV1_TIME: 1000,
+        VRT_OV2_VOLTAGE: 1200,
+        VRT_OV2_TIME: 1000,
+        VRT_OV3_VOLTAGE: 1200,
+        VRT_OV3_TIME: 50000,
+        VRT_OV4_VOLTAGE: 1150,
+        VRT_OV4_TIME: 50000,
+        VRT_OV5_VOLTAGE: 1150,
+        VRT_OV5_TIME: 60000,
+        VRT_OV6_VOLTAGE: 1150,
+        VRT_OV6_TIME: 60000,
+        VRT_OV7_VOLTAGE: 1150,
+        VRT_OV7_TIME: 60000,
+        VRT_ENTER_HIGH_CROSSING_THRESHOLD: 1100,
+        HVRT_EXIT_HIGH_CROSSING_THRESHOLD: 1080,
+        HVRT_K2_SLOPE: 20,
+        VRT_HVRT_ZERO_CURRENT_MODE_ENABLE: false,
+        VRT_HVRT_ZERO_CURRENT_MODE_ENTRY_THRESHOLD: null,
 
-        vrtCurrentDistributionMode: CurrentDistributionMode.REACTIVE_PRIORITY,
-        vrtActivePowerRecoveryMode: RecoveryMode.DISABLE,
-        vrtActivePowerRecoverySpeed: null,
-        vrtActivePowerRecoverySlope: null,
-        vrtReactivePowerRecoveryModeEnd: RecoveryMode.DISABLE,
-        vrtReactivePowerRecoverySpeed: null,
-        vrtReactivePowerRecoverySlope: null,
+        VRT_CURRENT_DISTRIBUTION_MODE: CurrentDistributionMode.REACTIVE_POWER_PRIO,
+        VRT_ACTIVE_POWER_RECOVERY_MODE: RecoveryMode.DISABLE,
+        VRT_ACTIVE_POWER_RECOVERY_SPEED: null,
+        VRT_ACTIVE_POWER_RECOVERY_SLOPE: null,
+        VRT_REACTIVE_POWER_RECOVERY_MODE_END: RecoveryMode.DISABLE,
+        VRT_REACTIVE_POWER_RECOVERY_SPEED: null,
+        VRT_REACTIVE_POWER_RECOVERY_SLOPE: null,
 
-        frtEnable: false,
-        frtUf1Frequency: null,
-        frtUf1Time: null,
-        frtUf2Frequency: null,
-        frtUf2Time: null,
-        frtUf3Frequency: null,
-        frtUf3Time: null,
-        frtOf1Frequency: null,
-        frtOf1Time: null,
-        frtOf2Frequency: null,
-        frtOf2Time: null,
-        frtOf3Frequency: null,
-        frtOf3Time: null,
+        FRT_ENABLE: false,
+        FRT_UF1_FREQUENCY: null,
+        FRT_UF1_TIME: null,
+        FRT_UF2_FREQUENCY: null,
+        FRT_UF2_TIME: null,
+        FRT_UF3_FREQUENCY: null,
+        FRT_UF3_TIME: null,
+        FRT_OF1_FREQUENCY: null,
+        FRT_OF1_TIME: null,
+        FRT_OF2_FREQUENCY: null,
+        FRT_OF2_TIME: null,
+        FRT_OF3_FREQUENCY: null,
+        FRT_OF3_TIME: null,
     };
 }

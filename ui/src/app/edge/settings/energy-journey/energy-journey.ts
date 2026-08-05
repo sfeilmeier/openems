@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { NavigationTree } from "src/app/shared/components/navigation/shared";
@@ -13,6 +13,7 @@ import { SharedSelfConsumption } from "../../live/common/selfconsumption/shared/
     selector: "energy-journey",
     templateUrl: "./energy-journey.html",
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [CommonUiModule, PipeComponentsModule, RouterModule],
 })
 export class EnergyJourneyComponent implements OnInit {

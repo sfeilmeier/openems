@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Edge, Logger, Service, Websocket } from "src/app/shared/shared";
@@ -12,6 +12,7 @@ import { System, SystemId } from "./shared/system";
 @Component({
     selector: InstallationComponent.SELECTOR,
     templateUrl: "./installation.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class InstallationComponent implements OnInit {
@@ -31,7 +32,7 @@ export class InstallationComponent implements OnInit {
         public websocket: Websocket,
         private translate: TranslateService,
         private logger: Logger,
-    ) { }
+    ) {}
 
     public ngOnInit() {
         this.service.currentPageTitle = "Installation";
@@ -86,51 +87,58 @@ export class InstallationComponent implements OnInit {
         // display view after loading edge
         // => update view needs to get removed if version is to low
         if (sessionStorage?.edge) {
-
             // The prototype can't be saved as JSON,
             // so it has to get instantiated here again)
             const edgeId = JSON.parse(sessionStorage.getItem("edge")).id;
-            this.service.updateCurrentEdge(edgeId).then((edge) => {
-                this.edge = edge;
-                this.displayViewAtIndex(viewIndex);
-            }).catch(() => {
-                // View with index 0 will always be the Pre-InstallationView,
-                // so if there is non subscribable edge due to being offline or not reachable, the IBN will be directed back to its initial page.
-                this.displayViewAtIndex(0);
-            });
+            this.service
+                .updateCurrentEdge(edgeId)
+                .then((edge) => {
+                    this.edge = edge;
+                    this.displayViewAtIndex(viewIndex);
+                })
+                .catch(() => {
+                    // View with index 0 will always be the Pre-InstallationView,
+                    // so if there is non subscribable edge due to being offline or not reachable, the IBN will be directed back to its initial page.
+                    this.displayViewAtIndex(0);
+                });
         } else {
             this.displayViewAtIndex(0);
         }
     }
 
     /**
-   * Retrieves the Ibn implementation specific to the system.
-   *
-   * @returns Specific Ibn object
-   */
+     * Retrieves the Ibn implementation specific to the system.
+     *
+     * @returns Specific Ibn object
+     */
     public getIbn(systemId: SystemId): AbstractIbn {
         return System.getSystemObjectFromSystemId(systemId, this.translate);
     }
 
     /**
-   * Determines the index of the current view in Ibn.
-   *
-   * @param view current view.
-   * @returns the index of the current view.
-   */
+     * Determines the index of the current view in Ibn.
+     *
+     * @param view Current view.
+     * @returns The index of the current view.
+     */
     public getViewIndex(view: View): number {
         return this.ibn.views.indexOf(view);
     }
 
     /**
-   * Displays the view based on the index.
-   *
-   * @param index index of the desired view.
-   */
+     * Displays the view based on the index.
+     *
+     * @param index Index of the desired view.
+     */
     public displayViewAtIndex(index: number) {
-        this.logger.debug("View: " + Object.keys(View)[Object.values(View).indexOf(this.ibn.views[index])]
-            + ", Edge: " + (this.edge?.id ?? "")
-            + ", SystemId: " + (this.ibn?.systemId ?? ""));
+        this.logger.debug(
+            "View: " +
+                Object.keys(View)[Object.values(View).indexOf(this.ibn.views[index])] +
+                ", Edge: " +
+                (this.edge?.id ?? "") +
+                ", SystemId: " +
+                (this.ibn?.systemId ?? ""),
+        );
 
         this.ibn.removeOrAddView(this.edge);
         const viewCount = this.ibn.views.length;
@@ -141,8 +149,8 @@ export class InstallationComponent implements OnInit {
             // Till the initial system and components are selected show only current page number.
             // The view count changes based on the components selected.
             this.progressText = this.ibn.showViewCount
-                ? this.translate.instant("INSTALLATION.STEP_FROM_TO", { from: (index + 1), to: viewCount })
-                : this.translate.instant("INSTALLATION.STEP_TO", { number: (index + 1) });
+                ? this.translate.instant("INSTALLATION.STEP_FROM_TO", { from: index + 1, to: viewCount })
+                : this.translate.instant("INSTALLATION.STEP_TO", { number: index + 1 });
 
             if (sessionStorage) {
                 sessionStorage.setItem("viewIndex", index.toString());
@@ -160,18 +168,13 @@ export class InstallationComponent implements OnInit {
         }
     }
 
-    /**
-   * Displays the previous view.
-   */
+    /** Displays the previous view. */
     public displayPreviousView() {
         this.displayViewAtIndex(this.getViewIndex(this.displayedView) - 1);
     }
 
-    /**
-   * Displays the Next view.
-   */
+    /** Displays the Next view. */
     public displayNextView(ibn?: AbstractIbn) {
-
         // Stores the Ibn locally
         if (ibn) {
             this.setIbn(ibn);

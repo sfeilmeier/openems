@@ -3,7 +3,7 @@ run-name: App Build for FEMS
 on:
   workflow_dispatch:
   push:
-    branches: [ main, develop, main-ui ]
+    branches: [main, develop, main-ui]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -17,7 +17,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Environment
         id: env
@@ -39,7 +39,7 @@ jobs:
           source: /env/
           verbose: "true"
 
-  build-app:
+  build-android-app:
     runs-on: ubuntu-latest-android
     needs: setup
     strategy:
@@ -47,14 +47,13 @@ jobs:
       matrix:
         theme: [fenecon, heckert]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           sparse-checkout: |
             tools/
             ui/
             gradle/
             .gitea/
-            
 
       - name: Download artifact
         uses: ./.gitea/actions/artifact-download
@@ -63,12 +62,12 @@ jobs:
           password: ${{ secrets.MINIO_ACCESS_KEY }}
           name: environment
           verbose: "true"
-      
+
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          node-version: '24'
-          cache: 'npm'
+          node-version: "24"
+          cache: "npm"
           cache-dependency-path: ui/package-lock.json
 
       - name: Build android app
@@ -87,11 +86,51 @@ jobs:
           name: ui
           source: ui/android/target/
 
+  build-ios-app:
+    runs-on: ubuntu-latest
+    needs: setup
+    strategy:
+      fail-fast: true
+      matrix:
+        theme: [fenecon]
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          sparse-checkout: |
+            tools/
+            ui/
+            gradle/
+            .gitea/
+
+      - name: Download artifact
+        uses: ./.gitea/actions/artifact-download
+        with:
+          user: fems
+          password: ${{ secrets.MINIO_ACCESS_KEY }}
+          name: environment
+          verbose: "true"
+
+      - name: Setup SSH
+        uses: ./.gitea/actions/setup-ssh
+        with:
+          ssh-key: ${{ secrets.MAC_SSH_KEY }}
+          host: ${{ vars.MAC_HOST }}
+
+      - name: Build and release iOS app
+        env:
+          MAC_HOST: ${{ vars.MAC_HOST }}
+          MAC_USER: fems
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          /usr/bin/ssh -o StrictHostKeyChecking=no ${MAC_USER}@${MAC_HOST} /Users/fems/process_ios_app.sh ${{ matrix.theme }} Release ${{ github.ref_name }}
+
   upload:
     runs-on: ubuntu-latest
-    needs: [build-app]
+    needs: [build-android-app]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           sparse-checkout: ".gitea/"
 
@@ -120,7 +159,7 @@ jobs:
           echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
           rsync --mkpath /artifacts/* ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/
 
-  release:
+  release-android-app:
     runs-on: ubuntu-latest-android
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/main-ui'
     needs: [upload]
@@ -129,7 +168,7 @@ jobs:
       matrix:
         theme: [fenecon, heckert]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           sparse-checkout: |
             tools/
@@ -152,14 +191,48 @@ jobs:
           echo -n "${{ secrets.DEVELOPER_API_SERVICE_ACCOUNT }}" | base64 -d > secret.json
           python3 tools/deploy/android/create_release.py "${{ matrix.theme }}" "$VERSION_FULL" secret.json ${CI_COMMIT_BRANCH}
 
+  release-ios-app:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/main-ui'
+    runs-on: ubuntu-latest-ios
+    needs: [build-ios-app]
+    strategy:
+      fail-fast: true
+      matrix:
+        theme: [fenecon]
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          sparse-checkout: |
+            tools/
+            ui/
+            .gitea/
+
+      - name: Create Ios Release
+        env:
+          AUTHENTICATION_KEY_ID: ${{ vars.IOS_AUTH_KEY_ID }}
+          AUTHENTICATION_KEY_ISSUER_ID: ${{ vars.IOS_AUTH_KEY_ISSUER_ID }}
+          AUTHENTICATION_KEY_PATH: ${{ vars.IOS_AUTH_KEY_PATH }}
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          echo -n "${{ secrets.IOS_AUTH_KEY }}" | base64 -d > secret.p8
+          create_ios_app_release -t "${{ matrix.theme }}" -a secret.p8
+
   cleanup:
     runs-on: ubuntu-latest
-    needs: [build-app, upload, release]
+    needs:
+      [
+        build-android-app,
+        upload,
+        release-android-app,
+        build-ios-app,
+        release-ios-app,
+      ]
     if: always()
     continue-on-error: true
     steps:
       - name: checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           sparse-checkout: .gitea/
 

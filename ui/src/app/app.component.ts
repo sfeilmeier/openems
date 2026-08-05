@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { HttpClient } from "@angular/common/http";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { Meta, Title } from "@angular/platform-browser";
 import { NavigationEnd, Router } from "@angular/router";
 import { SplashScreen } from "@capacitor/splash-screen";
@@ -22,17 +22,17 @@ import { Language } from "./shared/type/language";
 
 export interface CachetComponentStatus {
     data: {
-        status: 1 /* Operational */ | 2 /* Performance Issues */ | 3 /* Partial Outage */ | 4 /* Major Outage */
-    }
+        status: 1 /* Operational */ | 2 /* Performance Issues */ | 3 /* Partial Outage */ | 4; /* Major Outage */
+    };
 }
 
 @Component({
     selector: "app-root",
     templateUrl: "app.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {
-
     public environment = environment;
     public backUrl: string | boolean = "/";
     public enableSideMenu: boolean;
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
     protected isUserAllowedToSeeOverview: boolean = false;
     protected isUserAllowedToSeeFooter: boolean = false;
     protected isHistoryDetailView: boolean = false;
-    protected latestIncident: { message: string | null, id: string } | null = null;
+    protected latestIncident: { message: string | null; id: string } | null = null;
 
     protected isSmartphone: boolean = false;
 
@@ -75,17 +75,19 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isSmartphone = this.service.getIsSmartphoneResolution();
 
         this.subscription.add(
-            this.service.metadata.pipe(filter(metadata => !!metadata)).subscribe(metadata => {
+            this.service.metadata.pipe(filter((metadata) => !!metadata)).subscribe((metadata) => {
                 this.isUserAllowedToSeeOverview = UserPermission.isUserAllowedToSeeOverview(metadata.user);
                 this.isUserAllowedToSeeFooter = UserPermission.isUserAllowedToSeeFooter(metadata.user);
-            }));
+            }),
+        );
 
         this.subscription.add(
-            this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((e: NavigationEnd) => {
+            this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((e: NavigationEnd) => {
                 // Hide footer for history detail views
                 const segments = e.url.split("/");
                 this.isHistoryDetailView = segments.slice(0, -1).includes("history");
-            }));
+            }),
+        );
 
         this.appService.listen();
         SplashScreen.hide();
@@ -114,7 +116,7 @@ export class AppComponent implements OnInit, OnDestroy {
             this.environment.debugMode = JSON.parse(localStorage.getItem("DEBUGMODE"));
         }
 
-        this.service.notificationEvent.pipe(takeUntil(this.ngUnsubscribe)).subscribe(async notification => {
+        this.service.notificationEvent.pipe(takeUntil(this.ngUnsubscribe)).subscribe(async (notification) => {
             const toast = await this.toastController.create({
                 message: notification.message,
                 position: "top",
@@ -131,23 +133,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
         this.platform.ready().then(() => {
             // OEM colors exist only after ionic is initialized, so the notch color has to be set here
-            const notchColor = getComputedStyle(document.documentElement)
-                .getPropertyValue("--ion-color-background");
+            const notchColor = getComputedStyle(document.documentElement).getPropertyValue("--ion-color-background");
             this.meta.updateTag({ name: "theme-color", content: notchColor });
 
             this.appService.handleResize(this.platform, this.service, this.ngUnsubscribe);
-
-
         });
 
         this.title.setTitle(environment.edgeShortName);
     }
 
     /**
-    * Called by the router-outlet (activate) event on every route change.
-    * Triggers a delayed window resize so chart components recalculate their
-    * dimensions (WCAG 1.4.4 compliance).
-    */
+     * Called by the router-outlet (activate) event on every route change. Triggers a delayed window resize so chart
+     * components recalculate their dimensions (WCAG 1.4.4 compliance).
+     */
     private onActivate(_event: any): void {
         this.layoutRefresh.request(300);
     }

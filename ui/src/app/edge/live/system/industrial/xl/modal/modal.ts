@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
@@ -8,17 +8,16 @@ import { SystemErrorAcknowledge } from "../../jsonrpc/systemErrorAcknowledge";
 
 @Component({
     templateUrl: "./modal.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ModalComponent extends AbstractModal {
-
-
     protected isAtLeastInstaller: boolean = false;
     protected canSeeSystemErrorAcknowledge: boolean = false;
 
     public override ngOnInit() {
         super.ngOnInit();
-        this.service.getCurrentEdge().then(edge => {
+        this.service.getCurrentEdge().then((edge) => {
             this.isAtLeastInstaller = edge.roleIsAtLeast(this.Role.INSTALLER);
             this.canSeeSystemErrorAcknowledge = EdgePermission.hasSystemErrorAcknowledge(edge);
         });
@@ -49,5 +48,4 @@ export class ModalComponent extends AbstractModal {
             new ComponentJsonApiRequest({ componentId: this.component.id, payload: new ClearErrorRequest() }),
         );
     }
-
 }

@@ -1,13 +1,12 @@
-import { ChangeDetectorRef, Component, computed, inject, signal, } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, inject, signal } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
-import { ModalController } from "@ionic/angular";
+import { IonIcon, ModalController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { filter } from "rxjs";
 import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
 import { HelpButtonComponent } from "src/app/shared/components/modal/help-button/help-button";
 import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
-import { RouteService } from "src/app/shared/service/route.service";
 import { Service, UserPermission, Websocket } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
 import { Icon } from "src/app/shared/type/widget";
@@ -15,8 +14,7 @@ import { environment } from "src/environments";
 import de from "./i18n/de.json";
 import en from "./i18n/en.json";
 
-type IconWithRequiredName = Required<Pick<Icon, "name">> &
-    Partial<Omit<Icon, "name">>;
+type IconWithRequiredName = Required<Pick<Icon, "name">> & Partial<Omit<Icon, "name">>;
 
 type NavigationCardFooter = {
     text: string;
@@ -24,9 +22,9 @@ type NavigationCardFooter = {
     linkText: string;
 };
 
-type NavigationCard = {
+export type NavigationCard = {
     infoText: string;
-    iconName: string;
+    iconName: IonIcon["name"];
     contentText: string;
     buttonText: string;
     buttonHref: string;
@@ -34,21 +32,18 @@ type NavigationCard = {
     footer?: NavigationCardFooter;
 };
 
-function initializeNavigationInfoTranslations(
-    translate: TranslateService,
-): void {
-    void Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then(
-        (translations) => {
-            for (const { lang, translation, shouldMerge } of translations) {
-                translate.setTranslation(lang, translation, shouldMerge);
-            }
-        },
-    );
+function initializeNavigationInfoTranslations(translate: TranslateService): void {
+    void Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+        for (const { lang, translation, shouldMerge } of translations) {
+            translate.setTranslation(lang, translation, shouldMerge);
+        }
+    });
 }
 
 @Component({
     templateUrl: "./navigation-info.html",
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [
         `
             ::ng-deep formly-form {
@@ -61,9 +56,7 @@ export class NavigationInfoComponent extends AbstractModal {
     protected readonly isUserAllowedToSeeMyPortal = signal(false);
     protected readonly isGlobalInfo = signal(false);
 
-    protected readonly showMyPortalCard = computed(
-        () => this.isUserAllowedToSeeMyPortal() && this.isGlobalInfo(),
-    );
+    protected readonly showMyPortalCard = computed(() => this.isUserAllowedToSeeMyPortal() && this.isGlobalInfo());
 
     protected readonly cards = computed<NavigationCard[]>(() => {
         const cards: NavigationCard[] = [
@@ -102,7 +95,6 @@ export class NavigationInfoComponent extends AbstractModal {
         icon: IconWithRequiredName;
     } | null = null;
 
-    private routeService = inject(RouteService);
     private navigationService = inject(NavigationService);
 
     constructor(
@@ -114,15 +106,7 @@ export class NavigationInfoComponent extends AbstractModal {
         public override formBuilder: FormBuilder,
         public override ref: ChangeDetectorRef,
     ) {
-        super(
-            websocket,
-            route,
-            service,
-            modalController,
-            translate,
-            formBuilder,
-            ref,
-        );
+        super(websocket, route, service, modalController, translate, formBuilder, ref);
 
         initializeNavigationInfoTranslations(translate);
     }
@@ -160,7 +144,7 @@ export class NavigationInfoComponent extends AbstractModal {
                 "storage",
                 {
                     displayName: translate.instant("NAVIGATION_INFO_MANUAL", {
-                        source: translate.instant("GENERAL.STORAGE"),
+                        source: translate.instant("GENERAL.STORAGE_SYSTEM"),
                     }),
                     link: "REDIRECT.COMMON_STORAGE",
                     icon: { name: "oe-storage" },
@@ -176,6 +160,26 @@ export class NavigationInfoComponent extends AbstractModal {
                     icon: { name: "oe-consumption" },
                 },
             ],
+            [
+                "autarchy",
+                {
+                    displayName: translate.instant("NAVIGATION_INFO_MANUAL", {
+                        source: translate.instant("GENERAL.AUTARCHY"),
+                    }),
+                    link: "REDIRECT.COMMON_AUTARCHY",
+                    icon: { name: "oe-grid" },
+                },
+            ],
+            [
+                "selfconsumption",
+                {
+                    displayName: translate.instant("NAVIGATION_INFO_MANUAL", {
+                        source: translate.instant("GENERAL.SELF_CONSUMPTION"),
+                    }),
+                    link: "REDIRECT.COMMON_SELFCONSUMPTION",
+                    icon: { name: "oe-selfconsumption" },
+                },
+            ],
         ]);
 
     ionViewWillLeave() {
@@ -189,15 +193,9 @@ export class NavigationInfoComponent extends AbstractModal {
 
     protected override onIsInitialized(): void {
         this.subscription.add(
-            this.service.metadata
-                .pipe(filter((metadata) => !!metadata))
-                .subscribe((metadata) => {
-                    this.isUserAllowedToSeeMyPortal.set(
-                        UserPermission.isUserAllowedToSeeMyPortal(
-                            metadata.user,
-                        ),
-                    );
-                }),
+            this.service.metadata.pipe(filter((metadata) => !!metadata)).subscribe((metadata) => {
+                this.isUserAllowedToSeeMyPortal.set(UserPermission.isUserAllowedToSeeMyPortal(metadata.user));
+            }),
         );
 
         this.setHeaderTitle();
@@ -208,19 +206,12 @@ export class NavigationInfoComponent extends AbstractModal {
         this.isGlobalInfo.set(source === "global");
 
         if (source && source !== "global") {
-            const page = NavigationInfoComponent.DOCS_LINKS(this.translate).get(
-                source,
-            );
+            const page = NavigationInfoComponent.DOCS_LINKS(this.translate).get(source);
             if (page != null) {
                 this.docs = {
                     displayName: page.displayName,
                     icon: page.icon,
-                    link:
-                        HelpButtonComponent.getLink(
-                            page.link,
-                            this.service,
-                            false,
-                        ) ?? null,
+                    link: HelpButtonComponent.getLink(page.link, this.service) ?? null,
                 };
             }
         }
@@ -228,9 +219,7 @@ export class NavigationInfoComponent extends AbstractModal {
 
     private setHeaderTitle(): void {
         this.navigationService.headerTitle.set(
-            this.translate.instant(
-                this.isGlobalInfo() ? "GENERAL.HELP" : "GENERAL.INFO",
-            ),
+            this.translate.instant(this.isGlobalInfo() ? "GENERAL.HELP" : "GENERAL.INFO"),
         );
     }
 }

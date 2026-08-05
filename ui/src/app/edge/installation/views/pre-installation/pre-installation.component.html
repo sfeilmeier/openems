@@ -1,25 +1,20 @@
-<installation-view iconName="key-outline" header="{{ 'INSTALLATION.PRE_INSTALLATION.TITLE' | translate }}"
-    (nextClicked)="onNextClicked()" [isWaiting]="isWaiting" isFirstView="true">
+<installation-view iconName="key-outline" header="{{ 'INSTALLATION.PRE_INSTALLATION.TITLE' | translate }}" (nextClicked)="onNextClicked()" [isWaiting]="isWaiting()" isFirstView="true">
+  <oe-setup-key-input [placeholder]="'XXXX-XXXX-XXXX-XXXX'" (submitEvent)="setupKey = $event"> </oe-setup-key-input>
 
-    <oe-setup-key-input [placeholder]="'XXXX-XXXX-XXXX-XXXX'" (submitEvent)="setupKey = $event">
-    </oe-setup-key-input>
+  <ion-row class="ion-justify-content-center">
+    <ion-item lines="none" class="ion-padding-top">
+      <img [src]="image" />
+    </ion-item>
+  </ion-row>
 
-    <ion-row class="ion-justify-content-center">
-        <ion-item lines="none" class="ion-padding-top">
-            <img [src]="image" />
-        </ion-item>
-    </ion-row>
-
-    @if (!validKey) {
+  @if (!validKey) {
     <ion-card>
-        <ion-card-content>
-            <ion-card-subtitle style="color:orange" class="font-weight: bold">{{'INSTALLATION.PRE_INSTALLATION.NOTE'
-                | translate}}</ion-card-subtitle>
-            <ion-text color="dark">
-                {{ 'INSTALLATION.PRE_INSTALLATION.WRONG_KEY_NOTE' | translate }}
-            </ion-text>
-        </ion-card-content>
+      <ion-card-content>
+        <ion-card-subtitle style="color: orange" class="font-weight: bold">{{ "INSTALLATION.PRE_INSTALLATION.NOTE" | translate }}</ion-card-subtitle>
+        <ion-text color="dark">
+          {{ "INSTALLATION.PRE_INSTALLATION.WRONG_KEY_NOTE" | translate }}
+        </ion-text>
+      </ion-card-content>
     </ion-card>
-    }
-
+  }
 </installation-view>

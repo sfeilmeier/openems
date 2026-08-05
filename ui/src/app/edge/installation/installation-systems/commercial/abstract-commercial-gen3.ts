@@ -1,16 +1,16 @@
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-import { StrictFormlyFieldConfig, TypedFormlyFieldConfig, } from "src/app/shared/components/formly/formly-utils";
-import { JsonrpcResponseSuccess, SetupProtocolResponse, } from "src/app/shared/jsonrpc/base";
-import { SetupProtocol, SubmitSetupProtocolRequest, } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
+import { StrictFormlyFieldConfig, TypedFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
+import { JsonrpcResponseSuccess, SetupProtocolResponse } from "src/app/shared/jsonrpc/base";
+import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { Edge, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
-import { StringUtils } from "src/app/shared/utils/string/string.utils";
+import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { environment } from "src/environments";
 import { Category } from "../../shared/category";
-import { ExternalLimitationType, FeedInSetting, GridSetting, View, } from "../../shared/enums";
+import { ExternalLimitationType, FeedInSetting, GridSetting, View } from "../../shared/enums";
 import { GridSettingUtils } from "../../shared/gridsetting.utils";
-import { ComponentData, EmsType, ExtensionBoxPrefix, } from "../../shared/ibndatatypes";
+import { ComponentData, EmsType, ExtensionBoxPrefix } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
 import { EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES } from "../../shared/options";
 import { System, SystemType } from "../../shared/system";
@@ -59,32 +59,10 @@ export type CommercialGen3App = {
     HAS_ESS_LIMITER_14A: boolean;
     NA_PROTECTION_ENABLED: boolean;
     CT_RATIO_FIRST: number;
-} & MpptConfig;
+} & MpptConfig &
+    Partial<AdvancedGridSettingsModel>;
 
 export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyModel> {
-    protected static readonly VIEWS = [
-        View.PreInstallation,
-        View.PreInstallationUpdate,
-        View.ConfigurationSystem,
-        View.ConfigurationSubSystem,
-        View.ProtocolInstaller,
-        View.ProtocolCustomer,
-        View.ProtocolSystem,
-        View.ProtocolSystemLocation,
-        View.ConfigurationEssLimiter14aComponent,
-        View.ConfigurationEnergyFlowMeter,
-        View.ConfigurationMpptSelection,
-        View.ProtocolPv,
-        View.ConfigurationStsBox,
-        View.ConfigurationGridSetting,
-        View.ProtocolFeedInLimitation,
-        View.ConfigurationSummary,
-        View.ConfigurationExecute,
-        View.ProtocolSerialNumbers,
-        View.Alerting,
-        View.Completion,
-    ];
-
     public override readonly systemType: SystemType = SystemType.COMMERCIAL;
     public override readonly defaultNumberOfModules: number = 2;
     public override readonly minNumberOfTowers: number = 2;
@@ -95,12 +73,10 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
     public override readonly isDoubleSocketValid: boolean = true;
     public override readonly maxFeedInLimit: number = Number.MAX_VALUE;
     public gridSetting: GridSetting | null = null;
-    public advancedGridSettings: AdvancedGridSettingsModel =
-        getDefaultAdvancedGridSettings();
+    public advancedGridSettings: AdvancedGridSettingsModel = getDefaultAdvancedGridSettings();
 
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
-    public override defaultEnergyFlowMeter: Meter.GridMeterCategory =
-        Meter.GridMeterCategory.COMMERCIAL_METER;
+    public override defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.COMMERCIAL_METER;
     public override readonly parallelBoxPrefix: string = ExtensionBoxPrefix.FCP;
     public override readonly emsBoxPrefix: string | null = "FEF";
 
@@ -133,8 +109,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         },
     };
 
-    protected abstract readonly baseImagePath: string;
-
     constructor(
         views: View[],
         public override readonly maxNumberOfMppt: number,
@@ -149,8 +123,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
         if (
             this.gridSetting !== null &&
-            this.gridSetting === GridSetting.VDE_4110 &&
-            !this.emergencyReserve.isStsBoxAvailable
+            this.gridSetting === GridSetting.VDE_4110
         ) {
             tableData.push(
                 ...ConfigurationAdvancedSettingsComponent.getCompletionSummaryFromAdvancedGridSettings(
@@ -163,16 +136,11 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
     public override getSerialNumberCategoryHeader(towerIndex: number): string {
         const towerNr: number = towerIndex + 1;
-        return this.translate.instant(
-            "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER",
-            { number: towerNr },
-        );
+        return this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_TOWER", { number: towerNr });
     }
 
     public override getEnergyFlowMeterFields() {
-        const type: string = this.translate.instant(
-            "INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.STANDARD",
-        );
+        const type: string = this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.STANDARD");
 
         return [
             {
@@ -196,249 +164,212 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         const valueField = fields.find((field) => field.key === "value");
 
         if (valueField != null && valueField.props != null) {
-            valueField.props["info"] = this.translate.instant(
-                "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.INFO",
-            );
+            valueField.props["info"] = this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.INFO");
 
             valueField.hooks = valueField.hooks || {};
             valueField.hooks.onInit = (field) => {
-                field.formControl?.valueChanges.subscribe(
-                    (newReserveValue: number | null | undefined) => {
-                        const chargeStartCtrl = field.form?.get(
-                            "genset.CHARGE_SOC_START",
-                        );
-                        if (newReserveValue != null) {
-                            this.emergencyReserve.genset.GENSET_CHARGE_SOC_START =
-                                newReserveValue;
-                            chargeStartCtrl?.patchValue(newReserveValue, {
-                                emitEvent: false,
-                            });
-                        }
-                    },
-                );
+                field.formControl?.valueChanges.subscribe((newReserveValue: number | null | undefined) => {
+                    const chargeStartCtrl = field.form?.get("genset.CHARGE_SOC_START");
+                    if (newReserveValue != null) {
+                        this.emergencyReserve.genset.GENSET_CHARGE_SOC_START = newReserveValue;
+                        chargeStartCtrl?.patchValue(newReserveValue, {
+                            emitEvent: false,
+                        });
+                    }
+                });
             };
         }
 
-        const commercialGensetFields: StrictFormlyFieldConfig<EmergencyModel>[] =
-            [
-                {
-                    key: "genset.isEnabled",
-                    type: "checkbox",
-                    templateOptions: {
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.EMERGENCY_POWER_FUNCTION",
-                        ),
-                    },
-                    expressions: {
-                        "templateOptions.disabled": (field) =>
-                            !field.model?.isStsBoxAvailable,
-                        "hide": (field) => !field.model?.isEnabled,
-                    },
-                    hooks: {
-                        onInit: (field) => {
-                            field.formControl!.valueChanges.subscribe(
-                                (isChecked: boolean) => {
-                                    if (field.model) {
-                                        field.model.genset.IS_GENSET_INSTALLED =
-                                            isChecked;
-                                    }
-                                },
-                            );
-                        },
+        const commercialGensetFields: StrictFormlyFieldConfig<EmergencyModel>[] = [
+            {
+                key: "genset.isEnabled",
+                type: "checkbox",
+                templateOptions: {
+                    label: this.translate.instant(
+                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.EMERGENCY_POWER_FUNCTION",
+                    ),
+                },
+                expressions: {
+                    "templateOptions.disabled": (field) => !field.model?.isStsBoxAvailable,
+                    hide: (field) => !field.model?.isEnabled,
+                },
+                hooks: {
+                    onInit: (field) => {
+                        field.formControl!.valueChanges.subscribe((isChecked: boolean) => {
+                            if (field.model) {
+                                field.model.genset.IS_GENSET_INSTALLED = isChecked;
+                            }
+                        });
                     },
                 },
-                {
-                    key: "genset.IS_GENSET_INSTALLED",
-                    type: "toggle",
-                    className: "genset-settings-toggle",
-                    templateOptions: {
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CONNECTED",
-                        ),
-                        required: true,
-                    },
-                    expressions: {
-                        hide: (field) => !field.model?.genset.isEnabled,
-                    },
-                    hooks: {
-                        onInit: (field) => {
-                            field.formControl!.valueChanges.subscribe(
-                                (isChecked: boolean) => {
-                                    if (field.model) {
-                                        field.model.genset.isEnabled =
-                                            isChecked;
-                                    }
+            },
+            {
+                key: "genset.IS_GENSET_INSTALLED",
+                type: "toggle",
+                className: "genset-settings-toggle",
+                templateOptions: {
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CONNECTED"),
+                    required: true,
+                },
+                expressions: {
+                    hide: (field) => !field.model?.genset.isEnabled,
+                },
+                hooks: {
+                    onInit: (field) => {
+                        field.formControl!.valueChanges.subscribe((isChecked: boolean) => {
+                            if (field.model) {
+                                field.model.genset.isEnabled = isChecked;
+                            }
 
-                                    const control =
-                                        field.form!.get("genset.isEnabled")!;
-                                    control.setValue(isChecked);
-                                },
-                            );
-                        },
+                            const control = field.form!.get("genset.isEnabled")!;
+                            control.setValue(isChecked);
+                        });
                     },
                 },
-                {
-                    key: "genset.GENSET_RATED_POWER",
-                    type: "input",
-                    className: "genset-nested-field",
-                    templateOptions: {
-                        type: "number",
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.POWER",
-                        ),
-                        unit: "W",
-                        min: 0,
-                        max: 50000,
-                        description: "[0,50000] W",
-                        required: true,
-                    },
-                    expressions: {
-                        "hide": (field) => !field.model?.genset.isEnabled,
-                        "props.disabled": (field) =>
-                            !field.model?.genset.IS_GENSET_INSTALLED,
-                    },
-                    wrappers: ["input-with-unit"],
+            },
+            {
+                key: "genset.GENSET_RATED_POWER",
+                type: "input",
+                className: "genset-nested-field",
+                templateOptions: {
+                    type: "number",
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.POWER"),
+                    unit: "W",
+                    min: 0,
+                    max: 50000,
+                    description: "[0,50000] W",
+                    required: true,
                 },
-                {
-                    key: "genset.GENSET_PREHEATING_TIME",
-                    type: "input",
-                    className: "genset-nested-field",
-                    resetOnHide: true,
-                    templateOptions: {
-                        type: "number",
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.PREHEAT_TIME",
-                        ),
-                        unit: "Sec",
-                        min: 10,
-                        max: 300,
-                        description: "[10,300] sec",
-                        required: true,
-                    },
-                    expressions: {
-                        "hide": (field) => !field.model?.genset.isEnabled,
-                        "props.disabled": (field) =>
-                            !field.model?.genset.IS_GENSET_INSTALLED,
-                    },
-                    wrappers: ["input-with-unit"],
+                expressions: {
+                    hide: (field) => !field.model?.genset.isEnabled,
+                    "props.disabled": (field) => !field.model?.genset.IS_GENSET_INSTALLED,
                 },
-                {
-                    key: "genset.GENSET_RUN_TIME",
-                    type: "input",
-                    className: "genset-nested-field",
-                    resetOnHide: true,
-                    templateOptions: {
-                        type: "number",
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.RUN_TIME",
-                        ),
-                        unit: "min",
-                        min: 0,
-                        max: 1440,
-                        description: "[0,1440] min",
-                        required: true,
-                    },
-                    expressions: {
-                        "hide": (field) => !field.model?.genset.isEnabled,
-                        "props.disabled": (field) =>
-                            !field.model?.genset.IS_GENSET_INSTALLED,
-                    },
-                    wrappers: ["input-with-unit"],
+                wrappers: ["input-with-unit"],
+            },
+            {
+                key: "genset.GENSET_PREHEATING_TIME",
+                type: "input",
+                className: "genset-nested-field",
+                resetOnHide: true,
+                templateOptions: {
+                    type: "number",
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.PREHEAT_TIME"),
+                    unit: "Sec",
+                    min: 10,
+                    max: 300,
+                    description: "[10,300] sec",
+                    required: true,
                 },
-                {
-                    key: "genset.GENSET_ENABLE_CHARGE",
-                    type: "toggle",
-                    className: "genset-settings-toggle",
-                    resetOnHide: true,
-                    templateOptions: {
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.BATTERY_CHARGING",
-                        ),
-                    },
-                    expressions: {
-                        hide: (field) => !field.model?.genset.isEnabled,
-                    },
+                expressions: {
+                    hide: (field) => !field.model?.genset.isEnabled,
+                    "props.disabled": (field) => !field.model?.genset.IS_GENSET_INSTALLED,
                 },
-                {
-                    key: "genset.GENSET_MAX_POWER",
-                    type: "input",
-                    className: "genset-nested-field",
-                    resetOnHide: true,
-                    templateOptions: {
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER",
-                        ),
-                        type: "number",
-                        unit: "%",
-                        min: 1,
-                        max: 100,
-                        description: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER_DESCRIPTION",
-                            { min: 1, max: 100 },
-                        ),
-                        required: true,
-                    },
-                    expressions: {
-                        "hide": (field) =>
-                            !field.model?.genset.IS_GENSET_INSTALLED,
-                        "props.disabled": (field) =>
-                            !field.model?.genset.GENSET_ENABLE_CHARGE,
-                    },
-                    wrappers: ["input-with-unit"],
+                wrappers: ["input-with-unit"],
+            },
+            {
+                key: "genset.GENSET_RUN_TIME",
+                type: "input",
+                className: "genset-nested-field",
+                resetOnHide: true,
+                templateOptions: {
+                    type: "number",
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.RUN_TIME"),
+                    unit: "min",
+                    min: 0,
+                    max: 1440,
+                    description: "[0,1440] min",
+                    required: true,
                 },
-                {
-                    key: "genset.GENSET_CHARGE_SOC_START",
-                    type: "input",
-                    className: "genset-nested-field",
-                    resetOnHide: true,
-                    props: {
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_START",
-                        ),
-                        type: "number",
-                        unit: "%",
-                        max: 90,
-                        required: true,
-                    },
-                    expressions: {
-                        "hide": (field) =>
-                            !field.model?.genset.IS_GENSET_INSTALLED,
-                        "props.description": (field) =>
-                            `${this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_START_DESCRIPTION")} [${field.model?.value ?? 20},90] %`,
-                        "props.disabled": (field) =>
-                            !field.model?.genset.GENSET_ENABLE_CHARGE,
-                        "props.min": (field) => field.model?.value ?? 20,
-                    },
-                    wrappers: ["input-with-unit"],
+                expressions: {
+                    hide: (field) => !field.model?.genset.isEnabled,
+                    "props.disabled": (field) => !field.model?.genset.IS_GENSET_INSTALLED,
                 },
-                {
-                    key: "genset.GENSET_CHARGE_SOC_END",
-                    type: "input",
-                    className: "genset-nested-field",
-                    resetOnHide: true,
-                    templateOptions: {
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END",
-                        ),
-                        type: "number",
-                        unit: "%",
-                        min: 40,
-                        max: 95,
-                        description:
-                            this.translate.instant(
-                                "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END_DESCRIPTION",
-                            ) + " [40,95] %",
-                        required: true,
-                    },
-                    expressions: {
-                        "hide": (field) =>
-                            !field.model?.genset.IS_GENSET_INSTALLED,
-                        "props.disabled": (field) =>
-                            !field.model?.genset.GENSET_ENABLE_CHARGE,
-                    },
-                    wrappers: ["input-with-unit"],
+                wrappers: ["input-with-unit"],
+            },
+            {
+                key: "genset.GENSET_ENABLE_CHARGE",
+                type: "toggle",
+                className: "genset-settings-toggle",
+                resetOnHide: true,
+                templateOptions: {
+                    label: this.translate.instant(
+                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.BATTERY_CHARGING",
+                    ),
                 },
-            ];
+                expressions: {
+                    hide: (field) => !field.model?.genset.isEnabled,
+                },
+            },
+            {
+                key: "genset.GENSET_MAX_POWER",
+                type: "input",
+                className: "genset-nested-field",
+                resetOnHide: true,
+                templateOptions: {
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER"),
+                    type: "number",
+                    unit: "%",
+                    min: 1,
+                    max: 100,
+                    description: this.translate.instant(
+                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER_DESCRIPTION",
+                        { min: 1, max: 100 },
+                    ),
+                    required: true,
+                },
+                expressions: {
+                    hide: (field) => !field.model?.genset.IS_GENSET_INSTALLED,
+                    "props.disabled": (field) => !field.model?.genset.GENSET_ENABLE_CHARGE,
+                },
+                wrappers: ["input-with-unit"],
+            },
+            {
+                key: "genset.GENSET_CHARGE_SOC_START",
+                type: "input",
+                className: "genset-nested-field",
+                resetOnHide: true,
+                props: {
+                    label: this.translate.instant(
+                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_START",
+                    ),
+                    type: "number",
+                    unit: "%",
+                    max: 90,
+                    required: true,
+                },
+                expressions: {
+                    hide: (field) => !field.model?.genset.IS_GENSET_INSTALLED,
+                    "props.description": (field) =>
+                        `${this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_START_DESCRIPTION")} [${field.model?.value ?? 20},90] %`,
+                    "props.disabled": (field) => !field.model?.genset.GENSET_ENABLE_CHARGE,
+                    "props.min": (field) => field.model?.value ?? 20,
+                },
+                wrappers: ["input-with-unit"],
+            },
+            {
+                key: "genset.GENSET_CHARGE_SOC_END",
+                type: "input",
+                className: "genset-nested-field",
+                resetOnHide: true,
+                templateOptions: {
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END"),
+                    type: "number",
+                    unit: "%",
+                    min: 40,
+                    max: 95,
+                    description:
+                        this.translate.instant(
+                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END_DESCRIPTION",
+                        ) + " [40,95] %",
+                    required: true,
+                },
+                expressions: {
+                    hide: (field) => !field.model?.genset.IS_GENSET_INSTALLED,
+                    "props.disabled": (field) => !field.model?.genset.GENSET_ENABLE_CHARGE,
+                },
+                wrappers: ["input-with-unit"],
+            },
+        ];
 
         fields.push(...commercialGensetFields);
 
@@ -447,10 +378,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
     public getMpptLabel(mppt: number) {
         return this.getTwoStringMpptLabel(mppt);
-    }
-
-    public getImageUrl(mppt: number): string {
-        return `${this.baseImagePath}MPPT${mppt}.png`;
     }
 
     public override populateFromData(ibnString: any) {
@@ -466,9 +393,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
             return;
         }
 
-        const location: Country = this.location.isEqualToCustomerData
-            ? this.customer.country
-            : this.location.country;
+        const location: Country = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
 
         super.removeOrAddView(edge);
 
@@ -497,45 +422,26 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
             },
         });
 
-        const gridSettingIndex = this.views.indexOf(
-            View.ConfigurationGridSetting,
-        );
-        const advancedSettingsIndex =
-            gridSettingIndex !== -1 ? gridSettingIndex + 1 : 10;
+        const gridSettingIndex = this.views.indexOf(View.ConfigurationGridSetting);
+        const advancedSettingsIndex = gridSettingIndex !== -1 ? gridSettingIndex + 1 : 10;
 
         if (
             this.gridSetting !== null &&
-            this.gridSetting === GridSetting.VDE_4110 &&
-            !this.emergencyReserve.isStsBoxAvailable
+            this.gridSetting === GridSetting.VDE_4110
         ) {
-            ViewUtils.add(
-                this.views,
-                View.ConfigurationAdvancedGridSettings,
-                advancedSettingsIndex,
-            );
+            ViewUtils.add(this.views, View.ConfigurationAdvancedGridSettings, advancedSettingsIndex);
         } else {
-            ViewUtils.remove(
-                this.views,
-                View.ConfigurationAdvancedGridSettings,
-            );
+            ViewUtils.remove(this.views, View.ConfigurationAdvancedGridSettings);
         }
     }
 
-    public override getProtocol(
-        edge: Edge,
-        websocket: Websocket,
-    ): Promise<string> {
+    public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
         const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
         this.addProtocolItems(protocol);
 
         return new Promise((resolve, reject) => {
             websocket
-                .sendStateFullRequest(
-                    SubmitSetupProtocolRequest.translateFrom(
-                        protocol,
-                        this.translate,
-                    ),
-                )
+                .sendStateFullRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate))
                 .then((response: JsonrpcResponseSuccess) => {
                     const result = response.result as SetupProtocolResponse;
                     resolve(result.setupProtocolId);
@@ -547,27 +453,20 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
     }
 
     public override addCustomBatteryInverterData(): ComponentData[] {
-        const batteryInverterData: ComponentData[] =
-            super.addCustomBatteryInverterData();
+        const batteryInverterData: ComponentData[] = super.addCustomBatteryInverterData();
 
         if (this.location && this.customer) {
-            const safetyCountry = this.location.isEqualToCustomerData
-                ? this.customer.country
-                : this.location.country;
+            const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
             if (safetyCountry === Country.GERMANY) {
                 batteryInverterData.push({
-                    label: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_GRID_SETTING.TITLE",
-                    ),
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_GRID_SETTING.TITLE"),
                     value: this.gridSetting,
                 });
             }
         }
 
         batteryInverterData.push({
-            label: this.translate.instant(
-                "INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE",
-            ),
+            label: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE"),
             value: this.emergencyReserve.isStsBoxAvailable
                 ? this.translate.instant("GENERAL.YES")
                 : this.translate.instant("GENERAL.NO"),
@@ -575,18 +474,14 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
         if (this.emergencyReserve.isStsBoxAvailable) {
             batteryInverterData.push({
-                label: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER",
-                ),
+                label: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
                 value: this.emergencyReserve.stsBoxSerialNumber,
             });
         }
 
         if (this.emergencyReserve.genset != null) {
             batteryInverterData.push({
-                label: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CONNECTED",
-                ),
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CONNECTED"),
                 value: this.emergencyReserve.genset.IS_GENSET_INSTALLED
                     ? this.translate.instant("GENERAL.YES")
                     : this.translate.instant("GENERAL.NO"),
@@ -594,23 +489,17 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
             if (this.emergencyReserve.genset.isEnabled) {
                 batteryInverterData.push({
-                    label: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.POWER",
-                    ),
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.POWER"),
                     value: `${this.emergencyReserve.genset.GENSET_RATED_POWER} kW`,
                 });
 
                 batteryInverterData.push({
-                    label: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.PREHEAT_TIME",
-                    ),
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.PREHEAT_TIME"),
                     value: `${this.emergencyReserve.genset.GENSET_PREHEATING_TIME} Sec`,
                 });
 
                 batteryInverterData.push({
-                    label: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.RUN_TIME",
-                    ),
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.RUN_TIME"),
                     value: `${this.emergencyReserve.genset.GENSET_RUN_TIME} min`,
                 });
             }
@@ -624,16 +513,12 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
                 });
 
                 batteryInverterData.push({
-                    label: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END",
-                    ),
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END"),
                     value: `${this.emergencyReserve.genset.GENSET_CHARGE_SOC_END} %`,
                 });
 
                 batteryInverterData.push({
-                    label: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER",
-                    ),
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER"),
                     value: `${this.emergencyReserve.genset.GENSET_MAX_POWER} kW`,
                 });
             }
@@ -653,15 +538,11 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         protocol.items ??= [];
 
         if (this.location && this.customer) {
-            const safetyCountry = this.location.isEqualToCustomerData
-                ? this.customer.country
-                : this.location.country;
+            const safetyCountry = this.location.isEqualToCustomerData ? this.customer.country : this.location.country;
             if (safetyCountry === Country.GERMANY) {
                 protocol.items.push({
                     category: Category.GRID,
-                    name: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_GRID_SETTING.TITLE",
-                    ),
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_GRID_SETTING.TITLE"),
                     value: this.gridSetting as string,
                 });
             }
@@ -670,9 +551,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         const emergencyReserve = this.emergencyReserve;
         protocol.items.push({
             category: Category.STS_BOX,
-            name: this.translate.instant(
-                "INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE",
-            ),
+            name: this.translate.instant("INSTALLATION.CONFIGURATION_STS_BOX.STS_BOX_AVAILABLE"),
             value: emergencyReserve.isStsBoxAvailable
                 ? this.translate.instant("GENERAL.YES")
                 : this.translate.instant("GENERAL.NO"),
@@ -681,9 +560,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         if (emergencyReserve.isStsBoxAvailable) {
             protocol.items.push({
                 category: Category.STS_BOX,
-                name: this.translate.instant(
-                    "INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER",
-                ),
+                name: this.translate.instant("INSTALLATION.PROTOCOL_AVU_BOX.SERIAL_NUMBER"),
                 value: emergencyReserve.stsBoxSerialNumber ?? "",
             });
         }
@@ -692,9 +569,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
             if (emergencyReserve.genset.isEnabled) {
                 protocol.items.push({
                     category: Category.EMERGENCY_RESERVE,
-                    name: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CONNECTED",
-                    ),
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CONNECTED"),
                     value: emergencyReserve.genset.IS_GENSET_INSTALLED
                         ? this.translate.instant("GENERAL.YES")
                         : this.translate.instant("GENERAL.NO"),
@@ -702,25 +577,19 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
                 protocol.items.push({
                     category: Category.EMERGENCY_RESERVE,
-                    name: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.POWER",
-                    ),
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.POWER"),
                     value: `${emergencyReserve.genset.GENSET_RATED_POWER} kW`,
                 });
 
                 protocol.items.push({
                     category: Category.EMERGENCY_RESERVE,
-                    name: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.PREHEAT_TIME",
-                    ),
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.PREHEAT_TIME"),
                     value: `${emergencyReserve.genset.GENSET_PREHEATING_TIME} Sec`,
                 });
 
                 protocol.items.push({
                     category: Category.EMERGENCY_RESERVE,
-                    name: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.RUN_TIME",
-                    ),
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.RUN_TIME"),
                     value: `${emergencyReserve.genset.GENSET_RUN_TIME} min`,
                 });
             }
@@ -736,25 +605,20 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
 
                 protocol.items.push({
                     category: Category.EMERGENCY_RESERVE,
-                    name: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END",
-                    ),
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.CHARGE_SOC_END"),
                     value: `${emergencyReserve.genset.GENSET_CHARGE_SOC_END} %`,
                 });
 
                 protocol.items.push({
                     category: Category.EMERGENCY_RESERVE,
-                    name: this.translate.instant(
-                        "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER",
-                    ),
+                    name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.GENSET.MAX_POWER"),
                     value: `${emergencyReserve.genset.GENSET_MAX_POWER} kW`,
                 });
             }
 
             if (
                 this.gridSetting !== null &&
-                this.gridSetting === GridSetting.VDE_4110 &&
-                !emergencyReserve.isStsBoxAvailable
+                this.gridSetting === GridSetting.VDE_4110
             ) {
                 protocol.items.push(
                     ...ConfigurationAdvancedSettingsComponent.getAdvancedGridSettingsFieldsProtocolItems(
@@ -767,26 +631,69 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
     }
 
     public override getExternalLimitationTypeOptions(): ComponentData[] {
-        const docLink =
-            environment.links.MANUALS.RUNDSTEUER.COMMERCIAL_50_GEN_3;
+        const docLink = environment.links.MANUALS.RUNDSTEUER.COMMERCIAL_50_GEN_3;
         return EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES(this.translate, docLink);
+    }
+
+    /**
+     * VDE_4110 does not use the manual feed-in-setting (Q(U)/P(U)/fixed power factor), so it is hidden whenever that
+     * grid setting is selected.
+     */
+    public override getFeedInLimitFields(): FormlyFieldConfig[] {
+        const fields = super.getFeedInLimitFields();
+
+        const feedInSettingField = fields.find((field) => field.key === "feedInSetting");
+        if (feedInSettingField) {
+            feedInSettingField.expressions = {
+                ...feedInSettingField.expressions,
+                hide: () => this.gridSetting === GridSetting.VDE_4110,
+            };
+        }
+
+        const fixedPowerFactorField = fields.find((field) => field.key === "fixedPowerFactor");
+        if (fixedPowerFactorField) {
+            const originalHide = fixedPowerFactorField.expressions?.hide;
+            fixedPowerFactorField.expressions = {
+                ...fixedPowerFactorField.expressions,
+                hide: (field) => {
+                    if (this.gridSetting === GridSetting.VDE_4110) {
+                        return true;
+                    }
+
+                    if (typeof originalHide !== "function") {
+                        return false;
+                    }
+
+                    return originalHide(field);
+                },
+            };
+        }
+
+        return fields;
     }
 
     public override getAppProperties(
         safetyCountry: SafetyCountry,
         feedInSetting: FeedInSetting,
-    ): CommercialGen3App {
+    ): CommercialGen3App & Omit<Genset, "isEnabled"> {
+        AssertionUtils.assertIsDefined(
+            this.gridSetting,
+            "Grid setting must be selected before generating app properties",
+        );
+        AssertionUtils.assertIsDefined(
+            this.energyFlowMeter.value,
+            "CT ratio must be set before generating app properties",
+        );
+
         return {
             ...this.commonProperties(safetyCountry, feedInSetting),
-            FEED_IN_TYPE:
-                this.feedInLimitation?.feedInType ??
-                ExternalLimitationType.NO_LIMITATION,
+            FEED_IN_TYPE: this.feedInLimitation?.feedInType ?? ExternalLimitationType.NO_LIMITATION,
             GRID_CODE: this.gridSetting,
             CT_RATIO_FIRST: this.energyFlowMeter.value,
             ...this.generateMpptProperties(),
             ...this.getGensetProperties(),
             ...this.getAdvancedGridProperties(),
-        } as CommercialGen3App & Genset;
+        };
     }
 
     public override getGridSettingOptions() {
@@ -797,10 +704,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
             },
         ];
 
-        if (
-            this.emergencyReserve != null &&
-            !this.emergencyReserve.isStsBoxAvailable
-        ) {
+        if (this.emergencyReserve != null) {
             options.push({
                 label: GridSettingUtils.getDisplayName(GridSetting.VDE_4110),
                 value: GridSetting.VDE_4110,
@@ -843,18 +747,14 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         return model;
     }
 
-    protected override getTowerHeadFields(
-        towerNr: number,
-    ): FormlyFieldConfig[] {
+    protected override getTowerHeadFields(towerNr: number, batteryIndex?: number): FormlyFieldConfig[] {
         if (towerNr === 0) {
             return [
                 {
                     key: "batteryInverter",
                     type: "input",
                     templateOptions: {
-                        label: this.translate.instant(
-                            "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER",
-                        ),
+                        label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.INVERTER"),
                         required: true,
                         placeholder: "xxxxxxxxxxxxxxxx",
                     },
@@ -876,10 +776,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
                     key: "emsBox",
                     type: "input",
                     templateOptions: {
-                        label: Category.toTranslatedString(
-                            Category.EMS_BOX_LABEL_HOME,
-                            this.translate,
-                        ),
+                        label: Category.toTranslatedString(Category.EMS_BOX_LABEL_HOME, this.translate),
                         required: true,
                         placeholder: "FEFxxxxxxx",
                     },
@@ -905,25 +802,33 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         ];
     }
 
-    private getAdvancedGridProperties(): Record<
-        string,
-        string | number | boolean | null
-    > {
-        const payload: Record<string, string | number | boolean | null> = {};
-        const model = this.advancedGridSettings;
-
+    private getAdvancedGridProperties(): Partial<AdvancedGridSettingsModel> {
+        const payload: Partial<AdvancedGridSettingsModel> = {};
         if (this.gridSetting !== GridSetting.VDE_4110) {
             return payload; // Advanced grid settings are only relevant for VDE 4110, so we return an empty object if it's not selected
         }
 
-        Object.entries(model).forEach(([key, value]) => {
+        (Object.keys(this.advancedGridSettings) as (keyof AdvancedGridSettingsModel)[]).forEach((key) => {
+            const value = this.advancedGridSettings[key];
             if (value != null) {
-                const backendKey = StringUtils.toScreamingSnakeCase(key);
-                payload[backendKey] = value;
+                this.assignAdvancedGridProperty(payload, key, value);
             }
         });
 
         return payload;
+    }
+
+    /**
+     * Assigns a single advanced grid setting to the payload, keeping `key` and `value` correlated via the generic `K`
+     * so the compiler can verify the assignment (a plain indexed assignment on the union type would otherwise be
+     * rejected).
+     */
+    private assignAdvancedGridProperty<K extends keyof AdvancedGridSettingsModel>(
+        payload: Partial<AdvancedGridSettingsModel>,
+        key: K,
+        value: AdvancedGridSettingsModel[K],
+    ): void {
+        payload[key] = value;
     }
 
     private getGensetProperties(): Omit<Genset, "isEnabled"> {

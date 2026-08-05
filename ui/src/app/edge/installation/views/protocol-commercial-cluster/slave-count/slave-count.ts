@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -10,6 +10,7 @@ import { AbstractCommercial92Ibn } from "../../../installation-systems/commercia
 @Component({
     selector: ProtocolCommercialClusterSlaveCountComponent.SELECTOR,
     templateUrl: "./slave-count.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ProtocolCommercialClusterSlaveCountComponent implements OnInit {
@@ -24,7 +25,7 @@ export class ProtocolCommercialClusterSlaveCountComponent implements OnInit {
     public fields: FormlyFieldConfig[];
     public model;
 
-    constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) {}
 
     public ngOnInit() {
         this.form = new FormGroup({});
@@ -35,7 +36,6 @@ export class ProtocolCommercialClusterSlaveCountComponent implements OnInit {
     }
 
     public getFields(): FormlyFieldConfig[] {
-
         const fields: FormlyFieldConfig[] = [];
 
         fields.push({
@@ -58,7 +58,6 @@ export class ProtocolCommercialClusterSlaveCountComponent implements OnInit {
     }
 
     public onNextClicked() {
-
         if (this.form.invalid) {
             return;
         }
@@ -66,5 +65,4 @@ export class ProtocolCommercialClusterSlaveCountComponent implements OnInit {
         this.ibn.numberOfSlaves = this.model.numberOfSlaves;
         this.nextViewEvent.emit(this.ibn);
     }
-
 }

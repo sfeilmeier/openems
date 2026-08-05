@@ -34,6 +34,69 @@ export const OemMeta: BaseMeta = {
     },
     /** Maps to file-proxy for fenecon docs */
     links: {
+        DOWNLOAD: {
+            INSTALLATION: {
+                HOME: {
+                    AVU_BOX:
+                        "https://docs.fenecon.de/download/fenecon/{language}/installation/systems/home/avu-box/home-avu-box.png",
+                    MPPT: {
+                        HOME_6_10: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-6-10-mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-6-10-mppt-2.png",
+                        },
+                        HOME_10_15: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-10-15-mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-10-15-mppt-2.png",
+                            3: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-10-15-mppt-3.png",
+                        },
+                        HOME_20: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-20-mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-20-mppt-2.png",
+                        },
+                        HOME_30: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-30-mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-30-mppt-2.png",
+                            3: "https://docs.fenecon.de/download/fenecon/de/installation/systems/home/mppt/home-30-mppt-3.png",
+                        },
+                    },
+                },
+                COMMERCIAL: {
+                    COMMERCIAL_50: {
+                        MPPT: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-50/mppt/mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-50/mppt/mppt-2.png",
+                            3: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-50/mppt/mppt-3.png",
+                            4: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-50/mppt/mppt-4.png",
+                        },
+                    },
+                    COMMERCIAL_100: {
+                        BATTERY_INPUT_1:
+                            "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/battery-inputs/battery-input-1.png",
+                        BATTERY_INPUT_2:
+                            "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/battery-inputs/battery-input-2.png",
+                        MPPT: {
+                            1: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-1.png",
+                            2: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-2.png",
+                            3: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-3.png",
+                            4: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-4.png",
+                            5: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-5.png",
+                            6: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-6.png",
+                            7: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-7.png",
+                            8: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/commercial-100/mppt/mppt-8.png",
+                        },
+                    },
+                    STS_BOX: "https://docs.fenecon.de/download/fenecon/de/installation/systems/commercial/sts-box.png",
+                },
+                SHARED: {
+                    FEED_IN_LIMITATION: {
+                        DYN_EXTERNAL_LIMITATION:
+                            "https://docs.fenecon.de/download/fenecon/{language}/installation/systems/shared/feed-in-limitation/dyn-external-control.png",
+                        EXTERNAL_LIMITATION:
+                            "https://docs.fenecon.de/download/fenecon/{language}/installation/systems/shared/feed-in-limitation/external-control.png",
+                    },
+                },
+            },
+        },
         FORGET_PASSWORD:
             "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
@@ -47,6 +110,7 @@ export const OemMeta: BaseMeta = {
             COMMON_PRODUCTION: "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_production",
             COMMON_SELFCONSUMPTION:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_selfconsumption",
+            CONTROLLER_CLEVER_PV: "https://docs.fenecon.de/redirect/fenecon/de/controller_clever_pv",
             OFFLINE_INSTRUCTIONS:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/installation_firewall_target_address",
 
@@ -56,6 +120,8 @@ export const OemMeta: BaseMeta = {
                 "https://docs.fenecon.de/redirect/fenecon/{language}/controller_io_heat_pump_sg_ready",
             CONTROLLER_IO_HEATING_ELEMENT:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/controller_io_heating_element",
+            CONTROLLER_HEAT_ASKOMA: "https://docs.fenecon.de/redirect/fenecon/{language}/controller_heat_askoma",
+            CONTROLLER_HEAT_MYPV: "https://docs.fenecon.de/redirect/fenecon/{language}/controller_heat_mypv",
             CONTROLLER_ESS_TIME_OF_USE_TARIFF:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/controller_ess_time_of_use",
             CONTROLLER_CHP_SOC: "https://docs.fenecon.de/redirect/fenecon/{language}/controller_chp_soc",
@@ -73,6 +139,13 @@ export const OemMeta: BaseMeta = {
             CONTROLLER_API_REST_READWRITE:
                 "https://docs.fenecon.de/redirect/fenecon/{language}/controller_api_rest_readwrite",
 
+            CONTROLLER_SYMMETRIC_PEAKSHAVING:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_symmetric_peakshaving",
+            CONTROLLER_ASYMMETRIC_PEAKSHAVING:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_asymmetric_peakshaving",
+            CONTROLLER_TIMESLOT_PEAKSHAVING:
+                "https://docs.fenecon.de/redirect/fenecon/{language}/controller_timeslot_peakshaving",
+
             EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_keba",
             EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_hardybarth",
             EVCS_MENNEKES: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_mennekes",
@@ -83,10 +156,10 @@ export const OemMeta: BaseMeta = {
             SETTINGS_ALERTING: "https://docs.fenecon.de/redirect/fenecon/{language}/alerting",
             WEATHER_WIDGET: "https://docs.fenecon.de/redirect/fenecon/{language}/weather",
             SYSTEM: {
-                INDUSTRIAL_S_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_s_manual",
-                INDUSTRIAL_M_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_m_manual",
-                INDUSTRIAL_L_OVERVIEW: "https://docs.fenecon.de/redirect/fenecon/de/industrial_l_overview",
-                INDUSTRIAL_XL_MANUAL: "https://docs.fenecon.de/redirect/fenecon/de/industrial_xl_manual",
+                INDUSTRIAL_S_MANUAL: "https://docs.fenecon.de/redirect/fenecon/{language}/industrial_s_manual",
+                INDUSTRIAL_M_MANUAL: "https://docs.fenecon.de/redirect/fenecon/{language}/industrial_m_manual",
+                INDUSTRIAL_L_OVERVIEW: "https://docs.fenecon.de/redirect/fenecon/{language}/industrial_l_overview",
+                INDUSTRIAL_XL_MANUAL: "https://docs.fenecon.de/redirect/fenecon/{language}/industrial_xl_manual",
             },
             WARRANTY: {
                 //  Home 6,10,15, 10 Gen 1 und Home 20/30
@@ -111,7 +184,6 @@ export const OemMeta: BaseMeta = {
         },
 
         EVCS: "https://docs.fenecon.de/topics/emobility_overview.html",
-
         EVCS_CLUSTER: "fems-app/includes/FEMS_App_Multi-Ladepunkt-Management.html",
 
         SYSTEM: {
@@ -152,8 +224,9 @@ export const OemMeta: BaseMeta = {
                         "https://docs.fenecon.de/de/commercial/commercial_92/betrieb_und_serviceanleitung/Betriebsanleitung_Commercial_92.html",
                     COMMERCIAL_92_CLUSTER:
                         "https://docs.fenecon.de/de/commercial/commercial_92_cluster/betrieb_und_serviceanleitung/Betriebsanleitung_Commercial_92_Cluster.html",
+                    COMMERCIAL_92_OVERVIEW: "https://docs.fenecon.de/de/commercial/commercial_92_overview.html",
                     COMMERCIAL_100:
-                        "https://docs.fenecon.de/de/commercial/commercial_100/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Commercial_100.html",
+                        "https://docs.fenecon.de/de/commercial/commercial_100/betrieb_und_serviceanleitung/Commercial_100_instructions.html",
                 },
             },
 

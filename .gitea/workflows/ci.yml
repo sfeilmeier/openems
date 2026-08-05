@@ -35,7 +35,7 @@ jobs:
             exit 1
           fi
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           sparse-checkout: |
             tools/
@@ -71,7 +71,7 @@ jobs:
     if: |
       contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Edge') || (gitea.event_name == 'workflow_dispatch')
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
 
@@ -84,20 +84,20 @@ jobs:
           verbose: "true"
 
       - name: Setup Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5.5.0
         with:
           distribution: "temurin"
           java-version: "21"
           cache: gradle
-      
+
       - name: Restore Maven cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-${{ hashFiles('cnf/pom.xml') }}-mvn-edge
 
       - name: Restore build cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: ${{ runner.os }}-edge-cache_gradle
           path: |
@@ -165,7 +165,7 @@ jobs:
     if: |
       contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'Backend') || (gitea.event_name == 'workflow_dispatch')
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
 
@@ -178,20 +178,20 @@ jobs:
           verbose: "true"
 
       - name: Setup Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5.5.0
         with:
           distribution: "temurin"
           java-version: "21"
           cache: gradle
 
       - name: Restore Maven cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-${{ hashFiles('cnf/pom.xml') }}-mvn-backend
 
       - name: Restore build cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: ${{ runner.os }}-backend-cache_gradle
           path: |
@@ -259,7 +259,7 @@ jobs:
     if: |
       contains(join(fromJson(toJson(gitea.event.pull_request.labels)).*.name), 'UI') || (gitea.event_name == 'workflow_dispatch')
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
           sparse-checkout: |
@@ -276,7 +276,7 @@ jobs:
           verbose: "true"
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: "24"
           cache: "npm"
@@ -298,7 +298,7 @@ jobs:
           npm run lint
           node_modules/.bin/tsc
           node_modules/.bin/tsc-strict
-          node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-docker"
+          node_modules/.bin/ng build --base-href /${CI_COMMIT_BRANCH}/ -c "$OEM,$OEM-backend-docker,prod"
           npm run test -- --code-coverage --no-watch --no-progress --browsers=ChromeHeadlessCI
           echo "Bundle fems-ui-backend.tar.gz"
           tar -C target/ -czf fems-ui-backend.tar.gz .
@@ -360,7 +360,7 @@ jobs:
       DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
       DEPLOY_SCRIPTS: "${{ vars.DEV_SERVER_SCRIPTS }}/fems-ui"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           sparse-checkout: ".gitea/"
 
@@ -442,7 +442,7 @@ jobs:
     continue-on-error: true
     steps:
       - name: Checkout actions
-        uses: actions/checkout@v6
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           sparse-checkout: .gitea/
 
@@ -464,7 +464,6 @@ jobs:
           pr_number: ${{ gitea.event.pull_request.number }}
           body: ${{ steps.sonarqube.outputs.comment_body }}
 
-
   cleanup:
     runs-on: ubuntu-latest
     needs: [build-backend, build-edge, build-ui, upload]
@@ -472,7 +471,7 @@ jobs:
     continue-on-error: true
     steps:
       - name: checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           sparse-checkout: .gitea/
 

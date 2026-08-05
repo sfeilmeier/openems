@@ -99,11 +99,17 @@ export enum View {
     ProtocolSystemLocation,
     Alerting,
     ConfigurationAdvancedGridSettings,
+    ConfigurationBatteryInputs,
 }
 
 export enum CommercialCluster {
     MASTER,
     SLAVE,
+}
+
+export enum ConnectedBatterySystems {
+    ONE = "ONE",
+    TWO = "TWO",
 }
 
 export enum GridSetting {

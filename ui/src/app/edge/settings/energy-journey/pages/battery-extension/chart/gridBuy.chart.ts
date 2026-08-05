@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, Input, OnChanges } from "@angular/core";
+import { Component, Input, OnChanges, ChangeDetectionStrategy } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
 import { ChartTypes } from "src/app/shared/components/chart/chart.types";
@@ -12,17 +12,20 @@ import { PossibleBatteryExtensionResponse } from "../battery-extension.response"
 @Component({
     selector: "gridBuyChart",
     templateUrl: "../../../../../../shared/components/chart/abstracthistorychart.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class GridBuyChartComponent extends AbstractHistoryChart implements OnChanges {
-
     @Input({ required: true }) public simulatedData: SimulationResult = {
         simulationData: [],
     };
     @Input({ required: true }) public fromDate: Date;
     @Input({ required: true }) public toDate: Date;
 
-    public static getChartData(simulatedData: PossibleBatteryExtensionResponse["result"]["simulationData"], translate: TranslateService): HistoryUtils.ChartData {
+    public static getChartData(
+        simulatedData: PossibleBatteryExtensionResponse["result"]["simulationData"],
+        translate: TranslateService,
+    ): HistoryUtils.ChartData {
         return {
             input: [
                 {
@@ -34,11 +37,10 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
             output: () => {
                 const displayData = [
                     ...(simulatedData?.length > 0
-                        ? Object.entries(simulatedData)
-                            .reduce((arr: number[], [_name, _simulatedData], i) => {
-                                arr.push(_simulatedData.gridBuy);
-                                return arr;
-                            }, [])
+                        ? Object.entries(simulatedData).reduce((arr: number[], [_name, _simulatedData], i) => {
+                              arr.push(_simulatedData.gridBuy);
+                              return arr;
+                          }, [])
                         : []),
                 ];
                 return [
@@ -63,15 +65,20 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
                 formatNumber: "1.0-0",
                 enabled: false,
             },
-            yAxes: [{
-                unit: YAxisType.NONE,
-                position: "left",
-                yAxisId: ChartAxis.LEFT,
-            }],
+            yAxes: [
+                {
+                    unit: YAxisType.NONE,
+                    position: "left",
+                    yAxisId: ChartAxis.LEFT,
+                },
+            ],
         };
     }
 
-    private static getLabels(simulationData: TPropType<SimulationResult, "simulationData">, translate: TranslateService): ChartTypes.Label[] {
+    private static getLabels(
+        simulationData: TPropType<SimulationResult, "simulationData">,
+        translate: TranslateService,
+    ): ChartTypes.Label[] {
         return simulationData.reduce((arr: ChartTypes.Label[], el, index) => {
             if (index === 0) {
                 return arr;
@@ -81,7 +88,14 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
                 return arr;
             }
 
-            arr.push("+ " + diff + " " + (diff === 1 ? translate.instant("SETTINGS.ENERGY_JOURNEY.MODULE") : translate.instant("SETTINGS.ENERGY_JOURNEY.MODULES")));
+            arr.push(
+                "+ " +
+                    diff +
+                    " " +
+                    (diff === 1
+                        ? translate.instant("SETTINGS.ENERGY_JOURNEY.MODULE")
+                        : translate.instant("SETTINGS.ENERGY_JOURNEY.MODULES")),
+            );
             return arr;
         }, []);
     }
@@ -98,21 +112,23 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
         this.labels = GridBuyChartComponent.getLabels(this.simulatedData.simulationData, this.translate);
     }
 
-
     protected override async loadChart() {
         this.labels = [];
         this.errorResponse = null;
 
-        this.queryHistoricTimeseriesEnergyPerPeriod(this.fromDate, this.toDate)
-            .then((energyPeriodResponse) => {
-                this.chartType = "bar";
-                this.chartObject = this.getChartData();
-                const displayValues = AbstractHistoryChart.fillChart(this.chartType, this.chartObject, energyPeriodResponse);
-                this.datasets = displayValues.datasets;
-                this.legendOptions = displayValues.legendOptions;
-                this.labels = displayValues.labels;
-                this.beforeSetChartLabel();
-                this.setChartLabel();
-            });
+        this.queryHistoricTimeseriesEnergyPerPeriod(this.fromDate, this.toDate).then((energyPeriodResponse) => {
+            this.chartType = "bar";
+            this.chartObject = this.getChartData();
+            const displayValues = AbstractHistoryChart.fillChart(
+                this.chartType,
+                this.chartObject,
+                energyPeriodResponse,
+            );
+            this.datasets = displayValues.datasets;
+            this.legendOptions = displayValues.legendOptions;
+            this.labels = displayValues.labels;
+            this.beforeSetChartLabel();
+            this.setChartLabel();
+        });
     }
 }

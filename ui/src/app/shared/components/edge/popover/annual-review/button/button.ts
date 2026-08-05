@@ -1,5 +1,4 @@
-import { CommonModule } from "@angular/common";
-import { Component, effect, EventEmitter, Output } from "@angular/core";
+import { Component, effect, EventEmitter, Output, ChangeDetectionStrategy } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
 import { TranslateModule } from "@ngx-translate/core";
 import { FlatWidgetButtonComponent } from "src/app/shared/components/flat/flat-widget-button/flat-widget-button";
@@ -18,12 +17,8 @@ import { EdgeSettings } from "../../../edge";
             >{{ "POPOVER.ANNUAL_REVIEW.BUTTON_TEXT" | translate }}</ion-button
         >
     `,
-    imports: [
-        CommonModule,
-        IonicModule,
-        ModalComponentsModule,
-        TranslateModule,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonicModule, ModalComponentsModule, TranslateModule],
 })
 export class MarketingAnnualReviewButtonComponent {
     @Output() public modalDismiss: EventEmitter<void> = new EventEmitter();
@@ -41,13 +36,8 @@ export class MarketingAnnualReviewButtonComponent {
         });
     }
 
-    public static buildLink(
-        edge: Edge,
-    ): FlatWidgetButtonComponent["link"] | null {
-        const uuid = ObjectUtils.getValueByKeySafely(
-            edge.settings,
-            EdgeSettings.ANNUAL_REVIEW_2025,
-        );
+    public static buildLink(edge: Edge): FlatWidgetButtonComponent["link"] | null {
+        const uuid = ObjectUtils.getValueByKeySafely(edge.settings, EdgeSettings.ANNUAL_REVIEW_2025);
 
         if (uuid == null) {
             return null;

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { filter, firstValueFrom, take } from "rxjs";
 import { ExecuteSystemUpdate } from "src/app/edge/settings/system/executeSystemUpdate";
@@ -37,10 +37,10 @@ interface SlaveState {
 @Component({
     selector: ProtocolCommercialClusterSlaveInstallationComponent.SELECTOR,
     templateUrl: "./slave-installation.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ProtocolCommercialClusterSlaveInstallationComponent implements OnInit {
-
     private static readonly SELECTOR = "protocol-commercial-slave-installation";
     private static readonly TOAST_DURATION = 5_000;
 
@@ -55,13 +55,15 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
     constructor(
         private service: Service,
         private translate: TranslateService,
-        private websocket: Websocket
-    ) { }
+        private websocket: Websocket,
+    ) {}
 
     protected get isNextDisabled(): boolean {
-        const allConfigured = this.slaveStates.every(state =>
-            // null has different meaning (not started), "false" is set only after configuring/ updating slave.
-            state.configuring === false && state.configurationFailed === false);
+        const allConfigured = this.slaveStates.every(
+            (state) =>
+                // null has different meaning (not started), "false" is set only after configuring/ updating slave.
+                state.configuring === false && state.configurationFailed === false,
+        );
 
         return !allConfigured;
     }
@@ -80,7 +82,6 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
     }
 
     public onNextClicked() {
-
         this.slaveStates.forEach((slave) => {
             const edge: Edge = slave.edge;
             this.ibn.slaveEdges.push({
@@ -100,10 +101,13 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
         this.resetSlaveState(index);
         this.updateSlaveState(index, {
             configuring: true,
-            logMessage: this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.STARTING_AUTHENTICATION"),
+            logMessage: this.translate.instant(
+                "INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.STARTING_AUTHENTICATION",
+            ),
         });
         const state = this.slaveStates[index];
-        this.websocket.sendStateFullRequest(new AddEdgeToUserRequest({ setupPassword: state.setupKey }))
+        this.websocket
+            .sendStateFullRequest(new AddEdgeToUserRequest({ setupPassword: state.setupKey }))
             .then((response: AddEdgeToUserResponse) => this.handleSuccessfulInstallation(index, response))
             .catch((error) => this.handleInstallationFailure(index, error));
     }
@@ -112,17 +116,20 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
         this.slaveStates.forEach((state, index) => {
             const bridgeId = `bridge${index + 1}`;
 
-            this.edge.sendStateFullRequest(
-                this.websocket,
-                new ComponentJsonApiRequest({
-                    componentId: bridgeId,
-                    payload: new GetConnectionState.Request(),
+            this.edge
+                .sendStateFullRequest(
+                    this.websocket,
+                    new ComponentJsonApiRequest({
+                        componentId: bridgeId,
+                        payload: new GetConnectionState.Request(),
+                    }),
+                )
+                .then((response: GetConnectionState.Response) => {
+                    this.updateSlaveConnectionState(index, response);
                 })
-            ).then((response: GetConnectionState.Response) => {
-                this.updateSlaveConnectionState(index, response);
-            }).catch(error => {
-                this.handleStatusRequestError(index, error);
-            });
+                .catch((error) => {
+                    this.handleStatusRequestError(index, error);
+                });
         });
     }
 
@@ -139,13 +146,16 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
         this.handleErrorState(
             index,
             error,
-            this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.SLAVE_STATUS_ERROR", { slaveNr: index + 1 }),
+            this.translate.instant(
+                "INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.SLAVE_STATUS_ERROR",
+                { slaveNr: index + 1 },
+            ),
         );
         console.error(error);
         this.updateSlaveState(index, {
             connected: false,
             displayLabel: this.translate.instant(
-                "INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.CONNECTION_STATUS.NOT_FOUND"
+                "INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.CONNECTION_STATUS.NOT_FOUND",
             ),
         });
     }
@@ -164,18 +174,27 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
         }
 
         return this.processConnectedSlave(index, edge);
-
-    };
+    }
 
     private async processConnectedSlave(index: number, edge: AddEdgeToUserResponse["result"]["edge"]) {
         const newEdge = new Edge(
-            edge.id, edge.comment, edge.producttype, edge.version,
-            Role.INSTALLER, edge.online, null, SumState.OK, null, null
+            edge.id,
+            edge.comment,
+            edge.producttype,
+            edge.version,
+            Role.INSTALLER,
+            edge.online,
+            null,
+            SumState.OK,
+            null,
+            null,
         );
         this.updateMetadata(newEdge);
         this.updateSlaveState(index, {
             edge: newEdge,
-            logMessage: this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.AUTHENTICATION_SUCCESSFUL"),
+            logMessage: this.translate.instant(
+                "INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.AUTHENTICATION_SUCCESSFUL",
+            ),
             validKey: true,
         });
 
@@ -187,7 +206,9 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
 
     private updateMetadata(edge: Edge): void {
         const metadata = this.service.metadata?.getValue();
-        if (!metadata) { return; }
+        if (!metadata) {
+            return;
+        }
 
         metadata.edges[edge.id] = edge;
         this.service.metadata.next({
@@ -200,8 +221,8 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
         const state = this.slaveStates[index];
         state.executeSystemUpdate = new ExecuteSystemUpdate(state.edge, this.websocket);
 
-        return new Promise<void>(resolve => {
-            state.executeSystemUpdate.systemUpdateStateChange = systemUpdateState => {
+        return new Promise<void>((resolve) => {
+            state.executeSystemUpdate.systemUpdateStateChange = (systemUpdateState) => {
                 if (systemUpdateState.updated) {
                     state.updateFinished = true;
                     resolve();
@@ -226,7 +247,9 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
                     resolve(); // finish early if can't be updated
                 } else {
                     setTimeout(() => {
-                        state.logMessage = this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.UPDATE_COMPLETED");
+                        state.logMessage = this.translate.instant(
+                            "INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.UPDATE_COMPLETED",
+                        );
                         resolve();
                     }, 3000);
                 }
@@ -252,9 +275,9 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
         try {
             const config = await firstValueFrom(
                 state.edge.getConfig(this.websocket).pipe(
-                    filter(c => c !== null),
-                    take(1)
-                )
+                    filter((c) => c !== null),
+                    take(1),
+                ),
             );
 
             this.ibn.batteryStartStopTarget = BatteryTarget.START;
@@ -263,7 +286,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
                 config,
                 this.websocket,
                 this.service,
-                CommercialCluster.SLAVE
+                CommercialCluster.SLAVE,
             );
 
             const configurator = await this.componentConfigurator;
@@ -280,8 +303,10 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
             this.handleErrorState(
                 index,
                 error,
-                this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.CONFIGURATION_FAILED",
-                    { error: error?.error?.message || JSON.stringify(error) })
+                this.translate.instant(
+                    "INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.CONFIGURATION_FAILED",
+                    { error: error?.error?.message || JSON.stringify(error) },
+                ),
             );
         }
     }
@@ -289,17 +314,19 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
     private handleConfigurationSuccess(index: number): void {
         this.service.toast(
             `Slave${index}: ${this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.SUCCESSFULLY_CONFIGURED")}`,
-            "success"
+            "success",
         );
     }
 
     private handlePartialConfiguration(index: number): void {
         this.service.toast(
             this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.PARTIAL_CONFIGURATION"),
-            "danger"
+            "danger",
         );
         this.updateSlaveState(index, {
-            logMessage: this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.PARTIALLY_CONFIGURED"),
+            logMessage: this.translate.instant(
+                "INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.PARTIALLY_CONFIGURED",
+            ),
             configuring: false,
             configurationFailed: true,
         });
@@ -316,10 +343,12 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
             await configurator.startFunctionTest(this.ibn);
             this.service.toast(
                 this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.FINISH_FUNCTION_TEST"),
-                "success"
+                "success",
             );
             this.updateSlaveState(index, {
-                logMessage: this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.CONFIGURED_SUCCESSFULLY"),
+                logMessage: this.translate.instant(
+                    "INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.CONFIGURED_SUCCESSFULLY",
+                ),
                 configuring: false,
             });
         } catch (error) {
@@ -327,17 +356,16 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
             this.handleErrorState(
                 index,
                 error,
-                this.translate.instant("INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.FUNCTION_TESTS_FAILED",
-                    { error: error?.message || JSON.stringify(error) })
+                this.translate.instant(
+                    "INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.LOG_MESSAGE.FUNCTION_TESTS_FAILED",
+                    { error: error?.message || JSON.stringify(error) },
+                ),
             );
         }
     }
 
     private handleInstallationFailure(index: number, error: any): void {
-        this.service.toast(
-            this.translate.instant("INSTALLATION.PRE_INSTALLATION.AUTHENTICATION_FAILED"),
-            "danger"
-        );
+        this.service.toast(this.translate.instant("INSTALLATION.PRE_INSTALLATION.AUTHENTICATION_FAILED"), "danger");
 
         this.updateSlaveState(index, {
             logMessage: this.translate.instant("INSTALLATION.PRE_INSTALLATION.AUTHENTICATION_FAILED"),
@@ -353,7 +381,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
             this.translate.instant("INSTALLATION.PRE_INSTALLATION.EDGE_OFFLINE", {
                 edgeShortName: environment.edgeShortName,
             }),
-            "danger"
+            "danger",
         );
         state.logMessage = this.translate.instant("INSTALLATION.PRE_INSTALLATION.AUTHENTICATION_FAILED");
         state.configuring = false;
@@ -393,11 +421,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
     }
 
     // Unified error handler
-    private handleErrorState(
-        index: number,
-        error: any,
-        message: string,
-    ): void {
+    private handleErrorState(index: number, error: any, message: string): void {
         this.service.toast(message, "danger");
         this.updateSlaveState(index, {
             logMessage: message,
@@ -409,12 +433,15 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
 
     private getConnectionStatusLabel(connected: boolean, connectionState?: string): string {
         const validStates = ["CONNECTED", "AUTHENTICATING"];
-        const statusKey = connectionState && validStates.includes(connectionState)
-            ? connectionState
-            : connected ? "CONNECTED" : "NOT_YET_CONNECTED";
+        const statusKey =
+            connectionState && validStates.includes(connectionState)
+                ? connectionState
+                : connected
+                  ? "CONNECTED"
+                  : "NOT_YET_CONNECTED";
 
         return this.translate.instant(
-            `INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.CONNECTION_STATUS.${statusKey}`
+            `INSTALLATION.PROTOCOL_COMMERCIAL_CLUSTER.SLAVE_INSTALLATION.CONNECTION_STATUS.${statusKey}`,
         );
     }
 }

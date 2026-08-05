@@ -1,6 +1,5 @@
-import { CommonModule } from "@angular/common";
 import en from "@angular/common/locales/en";
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, inject, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { IonicModule, ModalController } from "@ionic/angular";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { de } from "date-fns/locale";
@@ -23,8 +22,8 @@ import { MarketingAnnualReviewButtonComponent } from "../button/button";
     selector: "oe-wrap-up",
     templateUrl: "./wrap-up.html",
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
-        CommonModule,
         IonicModule,
         ModalComponentsModule,
         TranslateModule,
@@ -44,12 +43,15 @@ export class WrapUpComponent implements OnInit {
     private readonly userService = inject(UserService);
 
     public static shouldShowPopover(edge: Edge, userService: UserService) {
-        return edge.shouldShowAnnualReviewPopover()
-            && StringUtils.isNotInArr(edge.id, userService.currentUser()?.getAnnualReviewFromSettings() ?? [])
-            && environment.theme === "FENECON";
+        return (
+            edge.shouldShowAnnualReviewPopover() &&
+            StringUtils.isNotInArr(edge.id, userService.currentUser()?.getAnnualReviewFromSettings() ?? []) &&
+            environment.theme === "FENECON"
+        );
     }
 
-    private static PREFIX: (edge: Edge | null) => string = (edge: Edge | null) => edge == null ? "" : "popover-annual-review-" + edge.id;
+    private static PREFIX: (edge: Edge | null) => string = (edge: Edge | null) =>
+        edge == null ? "" : "popover-annual-review-" + edge.id;
 
     ngOnInit() {
         this.initializeTranslations();
@@ -65,7 +67,10 @@ export class WrapUpComponent implements OnInit {
     protected async dismiss() {
         const edge = await this.service.getCurrentEdge();
         const user = this.userService.currentUser();
-        this.userService.updateUserSettingsWithProperty(UserSettings.ANNUAL_REVIEW, Array.from(new Set([...user?.getAnnualReviewFromSettings() ?? [], edge.id])));
+        this.userService.updateUserSettingsWithProperty(
+            UserSettings.ANNUAL_REVIEW,
+            Array.from(new Set([...(user?.getAnnualReviewFromSettings() ?? []), edge.id])),
+        );
         localStorage.setItem(WrapUpComponent.PREFIX(edge), "true");
         this.modalCtrl.dismiss();
     }

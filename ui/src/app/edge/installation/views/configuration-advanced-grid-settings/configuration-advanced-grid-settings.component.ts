@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
-import { FormlyUtils, TypedFormlyFieldConfig, } from "src/app/shared/components/formly/formly-utils";
+import { FormlyUtils, StrictFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
 import { SetupProtocol } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { Commercial50Gen3Ibn } from "../../installation-systems/commercial/commercial-50/commercial-50-gen3";
 import { Category } from "../../shared/category";
@@ -23,13 +23,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     protected form: FormGroup = new FormGroup({});
     protected model!: AdvancedGridSettingsModel;
 
-    protected fields: TypedFormlyFieldConfig<AdvancedGridSettingsModel>[] = [];
+    protected fields: StrictFormlyFieldConfig<AdvancedGridSettingsModel>[] = [];
 
     constructor(private translate: TranslateService) {}
 
-    public static buildFields(
-        translate: TranslateService,
-    ): TypedFormlyFieldConfig<AdvancedGridSettingsModel>[] {
+    public static buildFields(translate: TranslateService): StrictFormlyFieldConfig<AdvancedGridSettingsModel>[] {
         return [
             {
                 type: "accordion-group",
@@ -46,10 +44,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.GROUPS.ACTIVE_POWER_MODE",
                             ),
                         },
-                        fieldGroup:
-                            ConfigurationAdvancedSettingsComponent.getActivePowerFields(
-                                translate,
-                            ) as TypedFormlyFieldConfig<AdvancedGridSettingsModel>[],
+                        fieldGroup: ConfigurationAdvancedSettingsComponent.getActivePowerFields(
+                            translate,
+                        ) as StrictFormlyFieldConfig<AdvancedGridSettingsModel>[],
                     },
                     {
                         type: "accordion",
@@ -58,10 +55,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.GROUPS.REACTIVE_POWER_MODE",
                             ),
                         },
-                        fieldGroup:
-                            ConfigurationAdvancedSettingsComponent.getReactivePowerFields(
-                                translate,
-                            ) as TypedFormlyFieldConfig<AdvancedGridSettingsModel>[],
+                        fieldGroup: ConfigurationAdvancedSettingsComponent.getReactivePowerFields(
+                            translate,
+                        ) as StrictFormlyFieldConfig<AdvancedGridSettingsModel>[],
                     },
                     {
                         type: "accordion",
@@ -70,10 +66,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.GROUPS.PROTECTION",
                             ),
                         },
-                        fieldGroup:
-                            ConfigurationAdvancedSettingsComponent.getProtectionFields(
-                                translate,
-                            ) as TypedFormlyFieldConfig<AdvancedGridSettingsModel>[],
+                        fieldGroup: ConfigurationAdvancedSettingsComponent.getProtectionFields(
+                            translate,
+                        ) as StrictFormlyFieldConfig<AdvancedGridSettingsModel>[],
                     },
                     {
                         type: "accordion",
@@ -82,10 +77,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.GROUPS.CONNECTION",
                             ),
                         },
-                        fieldGroup:
-                            ConfigurationAdvancedSettingsComponent.getConnectionFields(
-                                translate,
-                            ) as TypedFormlyFieldConfig<AdvancedGridSettingsModel>[],
+                        fieldGroup: ConfigurationAdvancedSettingsComponent.getConnectionFields(
+                            translate,
+                        ) as StrictFormlyFieldConfig<AdvancedGridSettingsModel>[],
                     },
                     {
                         type: "accordion",
@@ -94,10 +88,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.GROUPS.VOLTAGE_RIDE_THROUGH",
                             ),
                         },
-                        fieldGroup:
-                            ConfigurationAdvancedSettingsComponent.getVoltageRtFields(
-                                translate,
-                            ) as TypedFormlyFieldConfig<AdvancedGridSettingsModel>[],
+                        fieldGroup: ConfigurationAdvancedSettingsComponent.getVoltageRtFields(
+                            translate,
+                        ) as StrictFormlyFieldConfig<AdvancedGridSettingsModel>[],
                     },
                     {
                         type: "accordion",
@@ -106,10 +99,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.GROUPS.FREQUENCY_RIDE_THROUGH",
                             ),
                         },
-                        fieldGroup:
-                            ConfigurationAdvancedSettingsComponent.getFrtFields(
-                                translate,
-                            ) as TypedFormlyFieldConfig<AdvancedGridSettingsModel>[],
+                        fieldGroup: ConfigurationAdvancedSettingsComponent.getFrtFields(
+                            translate,
+                        ) as StrictFormlyFieldConfig<AdvancedGridSettingsModel>[],
                     },
                 ],
             },
@@ -128,52 +120,41 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         advancedGridSettings: Commercial50Gen3Ibn["advancedGridSettings"],
     ) {
         const FIELD_SEPARATOR = " - ";
-        const advancedGridSettingsFields =
-            ConfigurationAdvancedSettingsComponent.buildFields(translate);
+        const advancedGridSettingsFields = ConfigurationAdvancedSettingsComponent.buildFields(translate);
         let advancedGridSettingsProtocolItems: SetupProtocol["items"] = [];
 
         function traverseFormlyFieldConfig(
-            fields: TypedFormlyFieldConfig<AdvancedGridSettingsModel>,
+            fields: StrictFormlyFieldConfig<AdvancedGridSettingsModel>,
             advancedGridSettings: AdvancedGridSettingsModel,
         ) {
             for (const field of fields.fieldGroup ?? []) {
                 for (const subField of field?.fieldGroup ?? []) {
-                    if (
-                        subField?.templateOptions?.label != null &&
-                        fields?.templateOptions?.label != null
-                    ) {
+                    if (subField?.templateOptions?.label != null && fields?.templateOptions?.label != null) {
                         subField.templateOptions.label ??= [
                             subField?.templateOptions?.label ?? "",
                             field?.templateOptions?.label ?? "",
                         ].join(FIELD_SEPARATOR);
                         subField.templateOptions.label ??=
-                            fields.templateOptions.label +
-                            FIELD_SEPARATOR +
-                            subField.templateOptions.label;
+                            fields.templateOptions.label + FIELD_SEPARATOR + subField.templateOptions.label;
                     }
                     traverseFormlyFieldConfig(subField, advancedGridSettings);
                 }
-                const key: keyof AdvancedGridSettingsModel =
-                    field.key as keyof AdvancedGridSettingsModel;
+                const key: keyof AdvancedGridSettingsModel = field.key as keyof AdvancedGridSettingsModel;
                 const value = advancedGridSettings[key];
 
                 if (value == null) {
                     continue;
                 }
 
-                if (
-                    advancedGridSettingsProtocolItems == null ||
-                    advancedGridSettingsProtocolItems.length === 0
-                ) {
+                if (advancedGridSettingsProtocolItems == null || advancedGridSettingsProtocolItems.length === 0) {
                     advancedGridSettingsProtocolItems = [];
                 }
 
                 advancedGridSettingsProtocolItems.push({
                     category: Category.GRID,
-                    name: [
-                        fields?.templateOptions?.label ?? "",
-                        field?.templateOptions?.label ?? "",
-                    ].join(FIELD_SEPARATOR),
+                    name: [fields?.templateOptions?.label ?? "", field?.templateOptions?.label ?? ""].join(
+                        FIELD_SEPARATOR,
+                    ),
                     value: value.toString(),
                 });
             }
@@ -201,11 +182,10 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         if (Object.keys(advancedGridSettings).length == 0) {
             return [];
         }
-        const protocolItems =
-            ConfigurationAdvancedSettingsComponent.getAdvancedGridSettingsFieldsProtocolItems(
-                translate,
-                advancedGridSettings,
-            );
+        const protocolItems = ConfigurationAdvancedSettingsComponent.getAdvancedGridSettingsFieldsProtocolItems(
+            translate,
+            advancedGridSettings,
+        );
         return [
             {
                 header: Category.toTranslatedString(Category.GRID, translate),
@@ -236,18 +216,14 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
             }
 
             const isActive = model[propertyName] === true;
-            return isActive
-                ? `active-group-checkbox${paddingClass}`
-                : baseClass;
+            return isActive ? `active-group-checkbox${paddingClass}` : baseClass;
         };
     }
 
-    private static getActivePowerFields(
-        translate: TranslateService,
-    ): TypedFormlyFieldConfig<ActivePowerModeModel>[] {
+    private static getActivePowerFields(translate: TranslateService): StrictFormlyFieldConfig<ActivePowerModeModel>[] {
         return [
             {
-                key: "apmOutputActivePower",
+                key: "APM_OUTPUT_ACTIVE_POWER",
                 type: "input",
                 className: "genset-nested-field",
                 templateOptions: {
@@ -258,16 +234,17 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     min: 0,
                     max: 1100,
                     unit: GridUnit.PER_MILLE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { min: 0, max: 1100, unit: GridUnit.PER_MILLE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        min: 0,
+                        max: 1100,
+                        unit: GridUnit.PER_MILLE,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "apmPowerGradient",
+                key: "APM_POWER_GRADIENT",
                 type: "input",
                 className: "genset-nested-field",
                 templateOptions: {
@@ -276,22 +253,20 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.GRADIENT_PER_SECONDS,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.GRADIENT_PER_SECONDS },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.GRADIENT_PER_SECONDS,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "apmPfOverFrequencyCurveEnable",
+                key: "APM_PF_OVER_FREQUENCY_CURVE_ENABLE",
                 type: "checkbox",
                 expressionProperties: {
-                    className:
-                        ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                            "apmPfOverFrequencyCurveEnable",
-                        ),
+                    className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
+                        "APM_PF_OVER_FREQUENCY_CURVE_ENABLE",
+                    ),
                 },
                 templateOptions: {
                     label: translate.instant(
@@ -303,7 +278,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "apmPfOverFrequencyStartPoint",
+                key: "APM_PF_OVER_FREQUENCY_START_POINT",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -313,26 +288,21 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.FREQUENCY,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.FREQUENCY },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.FREQUENCY,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "apmPfOverFrequencyCurveEnable",
-                        true,
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("APM_PF_OVER_FREQUENCY_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>(
+                        "APM_PF_OVER_FREQUENCY_CURVE_ENABLE",
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "apmPfOverFrequencyCurveEnable",
-                            false,
-                        ),
                 },
             },
             {
-                key: "apmPfOverFrequencySlope",
+                key: "APM_PF_OVER_FREQUENCY_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -342,26 +312,21 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.GRADIENT_PER_MILLE_PER_HZ,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.GRADIENT_PER_MILLE_PER_HZ },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.GRADIENT_PER_MILLE_PER_HZ,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "apmPfOverFrequencyCurveEnable",
-                        true,
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("APM_PF_OVER_FREQUENCY_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>(
+                        "APM_PF_OVER_FREQUENCY_CURVE_ENABLE",
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "apmPfOverFrequencyCurveEnable",
-                            false,
-                        ),
                 },
             },
             {
-                key: "apmPfOverFrequencyDelayTime",
+                key: "APM_PF_OVER_FREQUENCY_DELAY_TIME",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -371,28 +336,23 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.TIME_PER_MILLI_SECONDS,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.TIME_PER_MILLI_SECONDS },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.TIME_PER_MILLI_SECONDS,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "apmPfOverFrequencyCurveEnable",
-                        true,
-                    ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("APM_PF_OVER_FREQUENCY_CURVE_ENABLE", true),
                 },
             },
             {
-                key: "apmPfOverFrequencyDeactivationThresholdFstop",
+                key: "APM_PF_OVER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP",
                 type: "checkbox",
                 resetOnHide: false,
                 expressionProperties: {
-                    className:
-                        ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                            "apmPfOverFrequencyDeactivationThresholdFstop",
-                        ),
+                    className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
+                        "APM_PF_OVER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP",
+                    ),
                 },
                 templateOptions: {
                     label: translate.instant(
@@ -400,14 +360,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                 },
                 expressions: {
-                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "apmPfOverFrequencyCurveEnable",
-                        true,
-                    ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("APM_PF_OVER_FREQUENCY_CURVE_ENABLE", true),
                 },
             },
             {
-                key: "apmPfOverFrequencyHysteresisPoint",
+                key: "APM_PF_OVER_FREQUENCY_HYSTERESIS_POINT",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -417,23 +374,20 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.HYSTERISIS_TIME_PER_MILLIHERTZ,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        {
-                            ...GRID_SETTING_RANGES.HYSTERISIS_TIME_PER_MILLIHERTZ,
-                        },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.HYSTERISIS_TIME_PER_MILLIHERTZ,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
                     hide: FormlyUtils.anyPropIsFalse<ActivePowerModeModel>(
-                        "apmPfOverFrequencyCurveEnable",
-                        "apmPfOverFrequencyDeactivationThresholdFstop",
+                        "APM_PF_OVER_FREQUENCY_CURVE_ENABLE",
+                        "APM_PF_OVER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP",
                     ),
                 },
             },
             {
-                key: "apmPfOverFrequencyDelayWaitingTime",
+                key: "APM_PF_OVER_FREQUENCY_DELAY_WAITING_TIME",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -443,21 +397,20 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.TIME_PER_MILLI_SECONDS,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.TIME_PER_MILLI_SECONDS },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.TIME_PER_MILLI_SECONDS,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
                     hide: FormlyUtils.anyPropIsFalse<ActivePowerModeModel>(
-                        "apmPfOverFrequencyCurveEnable",
-                        "apmPfOverFrequencyDeactivationThresholdFstop",
+                        "APM_PF_OVER_FREQUENCY_CURVE_ENABLE",
+                        "APM_PF_OVER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP",
                     ),
                 },
             },
             {
-                key: "apmPfOverFrequencyHysteresisSlope",
+                key: "APM_PF_OVER_FREQUENCY_HYSTERESIS_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -467,27 +420,25 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.POWER_RECOVERY_SLOPE_PER_MIN,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.POWER_RECOVERY_SLOPE_PER_MIN },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.POWER_RECOVERY_SLOPE_PER_MIN,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
                     hide: FormlyUtils.anyPropIsFalse<ActivePowerModeModel>(
-                        "apmPfOverFrequencyCurveEnable",
-                        "apmPfOverFrequencyDeactivationThresholdFstop",
+                        "APM_PF_OVER_FREQUENCY_CURVE_ENABLE",
+                        "APM_PF_OVER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP",
                     ),
                 },
             },
             {
-                key: "apmPfUnderFrequencyCurveEnable",
+                key: "APM_PF_UNDER_FREQUENCY_CURVE_ENABLE",
                 type: "checkbox",
                 expressionProperties: {
-                    className:
-                        ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                            "apmPfUnderFrequencyCurveEnable",
-                        ),
+                    className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
+                        "APM_PF_UNDER_FREQUENCY_CURVE_ENABLE",
+                    ),
                 },
                 templateOptions: {
                     label: translate.instant(
@@ -499,7 +450,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "apmPfUnderFrequencyThreshold",
+                key: "APM_PF_UNDER_FREQUENCY_THRESHOLD",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -509,26 +460,21 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.FREQUENCY,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.FREQUENCY },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.FREQUENCY,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "apmPfUnderFrequencyCurveEnable",
-                        true,
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("APM_PF_UNDER_FREQUENCY_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>(
+                        "APM_PF_UNDER_FREQUENCY_CURVE_ENABLE",
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "apmPfUnderFrequencyCurveEnable",
-                            false,
-                        ),
                 },
             },
             {
-                key: "apmPfUnderFrequencySlope",
+                key: "APM_PF_UNDER_FREQUENCY_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -538,26 +484,21 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.GRADIENT_PER_MILLE_PER_HZ,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.GRADIENT_PER_MILLE_PER_HZ },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.GRADIENT_PER_MILLE_PER_HZ,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "apmPfUnderFrequencyCurveEnable",
-                        true,
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("APM_PF_UNDER_FREQUENCY_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>(
+                        "APM_PF_UNDER_FREQUENCY_CURVE_ENABLE",
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "apmPfUnderFrequencyCurveEnable",
-                            false,
-                        ),
                 },
             },
             {
-                key: "apmPfUnderFrequencyDelayTime",
+                key: "APM_PF_UNDER_FREQUENCY_DELAY_TIME",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -569,27 +510,24 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     min: 0,
                     max: 1000,
                     unit: GridUnit.SECONDS,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { min: 0, max: 1000, unit: GridUnit.SECONDS },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        min: 0,
+                        max: 1000,
+                        unit: GridUnit.SECONDS,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "apmPfUnderFrequencyCurveEnable",
-                        true,
-                    ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("APM_PF_UNDER_FREQUENCY_CURVE_ENABLE", true),
                 },
             },
             {
-                key: "apmPfUnderFrequencyDeactivationThresholdFstop",
+                key: "APM_PF_UNDER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP",
                 type: "checkbox",
                 expressionProperties: {
-                    className:
-                        ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                            "apmPfUnderFrequencyDeactivationThresholdFstop",
-                        ),
+                    className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
+                        "APM_PF_UNDER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP",
+                    ),
                 },
                 resetOnHide: false,
                 templateOptions: {
@@ -598,14 +536,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                 },
                 expressions: {
-                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "apmPfUnderFrequencyCurveEnable",
-                        true,
-                    ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("APM_PF_UNDER_FREQUENCY_CURVE_ENABLE", true),
                 },
             },
             {
-                key: "apmPfUnderFrequencyHysteresisPoint",
+                key: "APM_PF_UNDER_FREQUENCY_HYSTERESIS_POINT",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -615,23 +550,20 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.HYSTERISIS_TIME_PER_MILLIHERTZ,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        {
-                            ...GRID_SETTING_RANGES.HYSTERISIS_TIME_PER_MILLIHERTZ,
-                        },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.HYSTERISIS_TIME_PER_MILLIHERTZ,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
                     hide: FormlyUtils.anyPropIsFalse<ActivePowerModeModel>(
-                        "apmPfUnderFrequencyCurveEnable",
-                        "apmPfUnderFrequencyDeactivationThresholdFstop",
+                        "APM_PF_UNDER_FREQUENCY_CURVE_ENABLE",
+                        "APM_PF_UNDER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP",
                     ),
                 },
             },
             {
-                key: "apmPfUnderFrequencyDelayWaitingTime",
+                key: "APM_PF_UNDER_FREQUENCY_DELAY_WAITING_TIME",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -641,21 +573,20 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.TIME_PER_MILLI_SECONDS,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.TIME_PER_MILLI_SECONDS },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.TIME_PER_MILLI_SECONDS,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
                     hide: FormlyUtils.anyPropIsFalse<ActivePowerModeModel>(
-                        "apmPfUnderFrequencyCurveEnable",
-                        "apmPfUnderFrequencyDeactivationThresholdFstop",
+                        "APM_PF_UNDER_FREQUENCY_CURVE_ENABLE",
+                        "APM_PF_UNDER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP",
                     ),
                 },
             },
             {
-                key: "apmPfUnderFrequencyHysteresisSlope",
+                key: "APM_PF_UNDER_FREQUENCY_HYSTERESIS_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -665,27 +596,23 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.POWER_RECOVERY_SLOPE_PER_MIN,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.POWER_RECOVERY_SLOPE_PER_MIN },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.POWER_RECOVERY_SLOPE_PER_MIN,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
                     hide: FormlyUtils.anyPropIsFalse<ActivePowerModeModel>(
-                        "apmPfUnderFrequencyCurveEnable",
-                        "apmPfUnderFrequencyDeactivationThresholdFstop",
+                        "APM_PF_UNDER_FREQUENCY_CURVE_ENABLE",
+                        "APM_PF_UNDER_FREQUENCY_DEACTIVATION_THRESHOLD_FSTOP",
                     ),
                 },
             },
             {
-                key: "puCurveEnable",
+                key: "PU_CURVE_ENABLE",
                 type: "checkbox",
                 expressionProperties: {
-                    className:
-                        ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                            "puCurveEnable",
-                        ),
+                    className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression("PU_CURVE_ENABLE"),
                 },
                 templateOptions: {
                     label: translate.instant(
@@ -697,7 +624,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "apmPuV1Voltage",
+                key: "APM_PU_V1_VOLTAGE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -708,26 +635,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "puCurveEnable",
-                        true,
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "puCurveEnable",
-                            false,
-                        ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("PU_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("PU_CURVE_ENABLE", false),
                 },
             },
             {
-                key: "apmPuV1ActivePower",
+                key: "APM_PU_V1_ACTIVE_POWER",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -738,26 +657,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "puCurveEnable",
-                        true,
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "puCurveEnable",
-                            false,
-                        ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("PU_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("PU_CURVE_ENABLE", false),
                 },
             },
             {
-                key: "apmPuV2Voltage",
+                key: "APM_PU_V2_VOLTAGE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -768,26 +679,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "puCurveEnable",
-                        true,
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "puCurveEnable",
-                            false,
-                        ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("PU_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("PU_CURVE_ENABLE", false),
                 },
             },
             {
-                key: "apmPuV2ActivePower",
+                key: "APM_PU_V2_ACTIVE_POWER",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -798,26 +701,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "puCurveEnable",
-                        true,
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "puCurveEnable",
-                            false,
-                        ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("PU_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("PU_CURVE_ENABLE", false),
                 },
             },
             {
-                key: "apmPuV3Voltage",
+                key: "APM_PU_V3_VOLTAGE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -828,26 +723,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "puCurveEnable",
-                        true,
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "puCurveEnable",
-                            false,
-                        ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("PU_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("PU_CURVE_ENABLE", false),
                 },
             },
             {
-                key: "apmPuV3ActivePower",
+                key: "APM_PU_V3_ACTIVE_POWER",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -858,26 +745,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "puCurveEnable",
-                        true,
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "puCurveEnable",
-                            false,
-                        ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("PU_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("PU_CURVE_ENABLE", false),
                 },
             },
             {
-                key: "apmPuV4Voltage",
+                key: "APM_PU_V4_VOLTAGE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -888,26 +767,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "puCurveEnable",
-                        true,
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "puCurveEnable",
-                            false,
-                        ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("PU_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("PU_CURVE_ENABLE", false),
                 },
             },
             {
-                key: "apmPuV4ActivePower",
+                key: "APM_PU_V4_ACTIVE_POWER",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -918,21 +789,17 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "puCurveEnable",
-                        true,
-                    ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("PU_CURVE_ENABLE", true),
                 },
             },
             {
-                key: "apmPuOutputResponseMode",
+                key: "APM_PU_OUTPUT_RESPONSE_MODE",
                 type: "select",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -961,19 +828,12 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ],
                 },
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ActivePowerModeModel>(
-                        "puCurveEnable",
-                        true,
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "puCurveEnable",
-                            false,
-                        ),
+                    hide: FormlyUtils.propIsFalse<ActivePowerModeModel>("PU_CURVE_ENABLE", true),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("PU_CURVE_ENABLE", false),
                 },
             },
             {
-                key: "apmPuPt1LowPassFilterTimeConstant",
+                key: "APM_PU_PT1_LOW_PASS_FILTER_TIME_CONSTANT",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -983,29 +843,21 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.TIME_CONSTANT,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.TIME_CONSTANT },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.TIME_CONSTANT,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.combineOr<ActivePowerModeModel>(
-                        FormlyUtils.propIsFalse("puCurveEnable"),
-                        FormlyUtils.propNotEquals(
-                            "apmPuOutputResponseMode",
-                            RecoveryMode.PT_1_BEHAVIOUR,
-                        ),
+                    hide: FormlyUtils.combineOr<ActivePowerModeModel>(
+                        FormlyUtils.propIsFalse("PU_CURVE_ENABLE"),
+                        FormlyUtils.propNotEquals("APM_PU_OUTPUT_RESPONSE_MODE", RecoveryMode.PT_1_BEHAVIOUR),
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ActivePowerModeModel>(
-                            "puCurveEnable",
-                            false,
-                        ),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ActivePowerModeModel>("PU_CURVE_ENABLE", false),
                 },
             },
             {
-                key: "apmPuPt1LowPassFilterConstantGradientMode",
+                key: "APM_PU_PT1_LOW_PASS_FILTER_CONSTANT_GRADIENT_MODE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -1017,32 +869,22 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     min: 0,
                     max: 650000,
                     unit: GridUnit.PERMILLE_PN_PER_SEC,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        {
-                            min: 0,
-                            max: 650000,
-                            unit: GridUnit.PERMILLE_PN_PER_SEC,
-                        },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        min: 0,
+                        max: 650000,
+                        unit: GridUnit.PERMILLE_PN_PER_SEC,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.combineOr<ActivePowerModeModel>(
-                        FormlyUtils.propIsFalse("puCurveEnable"),
-                        FormlyUtils.propNotEquals(
-                            "apmPuOutputResponseMode",
-                            RecoveryMode.GRADIENT_CONTROL,
-                        ),
+                    hide: FormlyUtils.combineOr<ActivePowerModeModel>(
+                        FormlyUtils.propIsFalse("PU_CURVE_ENABLE"),
+                        FormlyUtils.propNotEquals("APM_PU_OUTPUT_RESPONSE_MODE", RecoveryMode.GRADIENT_CONTROL),
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.combineOr<ActivePowerModeModel>(
-                            FormlyUtils.propIsTrue("puCurveEnable"),
-                            FormlyUtils.propEquals(
-                                "apmPuOutputResponseMode",
-                                RecoveryMode.GRADIENT_CONTROL,
-                            ),
-                        ),
+                    "templateOptions.required": FormlyUtils.combineOr<ActivePowerModeModel>(
+                        FormlyUtils.propIsTrue("PU_CURVE_ENABLE"),
+                        FormlyUtils.propEquals("APM_PU_OUTPUT_RESPONSE_MODE", RecoveryMode.GRADIENT_CONTROL),
+                    ),
                 },
             },
         ];
@@ -1050,163 +892,158 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
     private static getReactivePowerFields(
         translate: TranslateService,
-    ): TypedFormlyFieldConfig<ReactivePowerModeModel>[] {
-        const reactivePowerFields: TypedFormlyFieldConfig<ReactivePowerModeModel>[] =
-            [
-                {
-                    key: "rpmMode",
-                    type: "select",
-                    resetOnHide: false,
-                    templateOptions: {
-                        label: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.MODE",
-                        ),
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.MODE_DESC",
-                        ),
-                        required: true,
-                        options: [
-                            {
-                                value: ReactivePowerMode.NONE,
-                                label: translate.instant(
-                                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.NONE",
-                                ),
-                            },
-                            {
-                                value: ReactivePowerMode.FIX_PF,
-                                label: translate.instant(
-                                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.FIX_PF",
-                                ),
-                            },
-                            {
-                                value: ReactivePowerMode.FIX_Q,
-                                label: translate.instant(
-                                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.FIX_Q",
-                                ),
-                            },
-                            {
-                                value: ReactivePowerMode.QU_CURVE,
-                                label: translate.instant(
-                                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.QU_CURVE",
-                                ),
-                            },
-                            {
-                                value: ReactivePowerMode.COS_PHI_P_CURVE,
-                                label: translate.instant(
-                                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.COSPHIP_CURVE",
-                                ),
-                            },
-                            {
-                                value: ReactivePowerMode.QP_CURVE,
-                                label: translate.instant(
-                                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.QP_CURVE",
-                                ),
-                            },
-                        ],
-                    },
-                },
-            ];
-
-        const nestedAccordionsGroup: TypedFormlyFieldConfig<ReactivePowerModeModel> =
+    ): StrictFormlyFieldConfig<ReactivePowerModeModel>[] {
+        const reactivePowerFields: StrictFormlyFieldConfig<ReactivePowerModeModel>[] = [
             {
-                type: "accordion-group",
-                templateOptions: {
-                    isMulti: true,
-                },
-                fieldGroup: [
-                    {
-                        type: "accordion",
-                        templateOptions: {
-                            label: translate.instant(
-                                "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.FIX_PF",
-                            ),
-                        },
-                        resetOnHide: false,
-                        expressions: {
-                            hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                                "rpmMode",
-                                ReactivePowerMode.FIX_PF,
-                                true,
-                            ),
-                        },
-                        fieldGroup: [
-                            {
-                                key: "rpmFixPf",
-                                type: "select",
-                                className: "ion-padding-start",
-                                resetOnHide: false,
-                                templateOptions: {
-                                    label: translate.instant(
-                                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.FIX_PF.POWER_FACTOR",
-                                    ),
-                                    description: translate.instant(
-                                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.FIX_PF.POWER_FACTOR_DESC",
-                                    ),
-                                    required: true,
-                                    options:
-                                        FEED_IN_POWER_FACTOR_OPTIONS(translate),
-                                },
-                            },
-                        ],
-                    },
-                    {
-                        type: "accordion",
-                        templateOptions: {
-                            label: translate.instant(
-                                "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.FIX_Q",
-                            ),
-                        },
-                        expressions: {
-                            hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                                "rpmMode",
-                                ReactivePowerMode.FIX_Q,
-                                true,
-                            ),
-                        },
-                        fieldGroup: [
-                            {
-                                key: "rpmFixQ",
-                                type: "input",
-                                className: "ion-padding-start",
-                                templateOptions: {
-                                    label: translate.instant(
-                                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.FIX_Q.REACTIVE_POWER",
-                                    ),
-                                    type: "number",
-                                    min: -600,
-                                    max: 600,
-                                    unit: GridUnit.PER_MILLE,
-                                    description: translate.instant(
-                                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                                        {
-                                            min: -600,
-                                            max: 600,
-                                            unit: GridUnit.PER_MILLE,
-                                        },
-                                    ),
-                                    required: true,
-                                },
-                                wrappers: ["input-with-unit", "form-field"],
-                            },
-                        ],
-                    },
-                ],
-            };
-
-        const quCurveGroup: TypedFormlyFieldConfig<ReactivePowerModeModel>[] = [
-            {
-                key: "rpmQuCurveMode",
+                key: "RPM_MODE",
                 type: "select",
-                className: "ion-padding-start",
                 resetOnHide: false,
                 templateOptions: {
                     label: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.MODE",
+                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.MODE",
+                    ),
+                    description: translate.instant(
+                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.MODE_DESC",
                     ),
                     required: true,
                     options: [
                         {
-                            value: CurveMode.STANDARD,
+                            value: ReactivePowerMode.NONE,
+                            label: translate.instant(
+                                "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.NONE",
+                            ),
+                        },
+                        {
+                            value: ReactivePowerMode.FIX_PF,
+                            label: translate.instant(
+                                "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.FIX_PF",
+                            ),
+                        },
+                        {
+                            value: ReactivePowerMode.FIX_Q,
+                            label: translate.instant(
+                                "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.FIX_Q",
+                            ),
+                        },
+                        {
+                            value: ReactivePowerMode.QU_CURVE,
+                            label: translate.instant(
+                                "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.QU_CURVE",
+                            ),
+                        },
+                        {
+                            value: ReactivePowerMode.COS_PHI_P_CURVE,
+                            label: translate.instant(
+                                "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.COSPHIP_CURVE",
+                            ),
+                        },
+                        {
+                            value: ReactivePowerMode.QP_CURVE,
+                            label: translate.instant(
+                                "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.QP_CURVE",
+                            ),
+                        },
+                    ],
+                },
+            },
+        ];
+
+        const nestedAccordionsGroup: StrictFormlyFieldConfig<ReactivePowerModeModel> = {
+            type: "accordion-group",
+            templateOptions: {
+                isMulti: true,
+            },
+            fieldGroup: [
+                {
+                    type: "accordion",
+                    templateOptions: {
+                        label: translate.instant(
+                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.FIX_PF",
+                        ),
+                    },
+                    resetOnHide: false,
+                    expressions: {
+                        hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
+                            "RPM_MODE",
+                            ReactivePowerMode.FIX_PF,
+                            true,
+                        ),
+                    },
+                    fieldGroup: [
+                        {
+                            key: "RPM_FIX_PF",
+                            type: "select",
+                            className: "ion-padding-start",
+                            resetOnHide: false,
+                            templateOptions: {
+                                label: translate.instant(
+                                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.FIX_PF.POWER_FACTOR",
+                                ),
+                                description: translate.instant(
+                                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.FIX_PF.POWER_FACTOR_DESC",
+                                ),
+                                required: true,
+                                options: FEED_IN_POWER_FACTOR_OPTIONS(translate),
+                            },
+                        },
+                    ],
+                },
+                {
+                    type: "accordion",
+                    templateOptions: {
+                        label: translate.instant(
+                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.OPTIONS.FIX_Q",
+                        ),
+                    },
+                    expressions: {
+                        hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
+                            "RPM_MODE",
+                            ReactivePowerMode.FIX_Q,
+                            true,
+                        ),
+                    },
+                    fieldGroup: [
+                        {
+                            key: "RPM_FIX_Q",
+                            type: "input",
+                            className: "ion-padding-start",
+                            templateOptions: {
+                                label: translate.instant(
+                                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.FIX_Q.REACTIVE_POWER",
+                                ),
+                                type: "number",
+                                min: -600,
+                                max: 600,
+                                unit: GridUnit.PER_MILLE,
+                                description: translate.instant(
+                                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
+                                    {
+                                        min: -600,
+                                        max: 600,
+                                        unit: GridUnit.PER_MILLE,
+                                    },
+                                ),
+                                required: true,
+                            },
+                            wrappers: ["input-with-unit", "form-field"],
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const quCurveGroup: StrictFormlyFieldConfig<ReactivePowerModeModel>[] = [
+            {
+                key: "RPM_QU_CURVE_MODE",
+                type: "select",
+                className: "ion-padding-start",
+                resetOnHide: false,
+                templateOptions: {
+                    label: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.MODE"),
+                    required: true,
+                    options: [
+                        {
+                            value: CurveMode.BASIC,
                             label: translate.instant(
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.QU_CURVE.MODE.STANDARD_MODE",
                             ),
@@ -1221,7 +1058,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "rpmQuVoltageDeadBand",
+                key: "RPM_QU_VOLTAGE_DEAD_BAND",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1230,28 +1067,22 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.QU_CURVE.VOLTAGE_DEAD_BAND",
                     ),
                     ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmQuCurveMode",
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_QU_CURVE_MODE", CurveMode.SLOPE, true),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_QU_CURVE_MODE",
                         CurveMode.SLOPE,
-                        true,
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmQuCurveMode",
-                            CurveMode.SLOPE,
-                            false,
-                        ),
                 },
             },
             {
-                key: "rpmQuOverexcitedSlope",
+                key: "RPM_QU_OVEREXCITED_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1262,32 +1093,24 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     min: -2000,
                     max: 2000,
                     unit: GridUnit.QMAX_PER_10_PERCENT_VN,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        {
-                            min: -2000,
-                            max: 2000,
-                            unit: GridUnit.QMAX_PER_10_PERCENT_VN,
-                        },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        min: -2000,
+                        max: 2000,
+                        unit: GridUnit.QMAX_PER_10_PERCENT_VN,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmQuCurveMode",
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_QU_CURVE_MODE", CurveMode.SLOPE, true),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_QU_CURVE_MODE",
                         CurveMode.SLOPE,
-                        true,
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmQuCurveMode",
-                            CurveMode.SLOPE,
-                            false,
-                        ),
                 },
             },
             {
-                key: "rpmQuUnderexcitedSlope",
+                key: "RPM_QU_UNDEREXCITED_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1296,24 +1119,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmQuCurveMode",
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_QU_CURVE_MODE", CurveMode.SLOPE, true),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_QU_CURVE_MODE",
                         CurveMode.SLOPE,
-                        true,
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmQuCurveMode",
-                            CurveMode.SLOPE,
-                            false,
-                        ),
                 },
             },
         ];
@@ -1321,7 +1138,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         for (let i = 1; i <= 4; i++) {
             quCurveGroup.push(
                 {
-                    key: `rpmQuV${i}Voltage` as keyof ReactivePowerModeModel,
+                    key: `RPM_QU_V${i}_VOLTAGE` as keyof ReactivePowerModeModel,
                     type: "input",
                     className: "ion-padding-start",
                     resetOnHide: false,
@@ -1332,29 +1149,27 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         ),
                         type: "number",
                         ...GRID_SETTING_RANGES.VOLTAGE,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.VOLTAGE },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.VOLTAGE,
+                        }),
                         required: true,
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                            "rpmQuCurveMode",
+                        hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
+                            "RPM_QU_CURVE_MODE",
                             CurveMode.SLOPE,
                             true,
                         ),
-                        "templateOptions.required":
-                            FormlyUtils.propEquals<ReactivePowerModeModel>(
-                                "rpmQuCurveMode",
-                                CurveMode.SLOPE,
-                                false,
-                            ),
+                        "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                            "RPM_QU_CURVE_MODE",
+                            CurveMode.SLOPE,
+                            false,
+                        ),
                     },
                 },
                 {
-                    key: `rpmQuV${i}ReactivePower` as keyof ReactivePowerModeModel,
+                    key: `RPM_QU_V${i}_REACTIVE_POWER` as keyof ReactivePowerModeModel,
                     type: "input",
                     className: "ion-padding-start",
                     resetOnHide: false,
@@ -1365,10 +1180,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         ),
                         type: "number",
                         ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
+                        }),
                         required: true,
                     },
                     wrappers: ["input-with-unit", "form-field"],
@@ -1378,7 +1192,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
         quCurveGroup.push(
             {
-                key: "rpmQuTimeConstant",
+                key: "RPM_QU_TIME_CONSTANT",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -1388,24 +1202,22 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.TIME_CONSTANT,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.TIME_CONSTANT },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.TIME_CONSTANT,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "rpmQuExtendedFunctions",
+                key: "RPM_QU_EXTENDED_FUNCTIONS",
                 type: "checkbox",
                 resetOnHide: false,
                 expressionProperties: {
-                    className:
-                        ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                            "rpmQuExtendedFunctions",
-                            true,
-                        ),
+                    className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
+                        "RPM_QU_EXTENDED_FUNCTIONS",
+                        true,
+                    ),
                 },
                 templateOptions: {
                     label: translate.instant(
@@ -1414,7 +1226,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "rpmQuLockInPower",
+                key: "RPM_QU_LOCK_IN_POWER",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1423,24 +1235,19 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ReactivePowerModeModel>(
-                        "rpmQuExtendedFunctions",
-                    ),
+                    hide: FormlyUtils.propIsFalse<ReactivePowerModeModel>("RPM_QU_EXTENDED_FUNCTIONS"),
                     "templateOptions.required":
-                        FormlyUtils.propIsTrue<ReactivePowerModeModel>(
-                            "rpmQuExtendedFunctions",
-                        ),
+                        FormlyUtils.propIsTrue<ReactivePowerModeModel>("RPM_QU_EXTENDED_FUNCTIONS"),
                 },
             },
             {
-                key: "rpmQuLockOutPower",
+                key: "RPM_QU_LOCK_OUT_POWER",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1449,20 +1256,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<ReactivePowerModeModel>(
-                        "rpmQuExtendedFunctions",
-                    ),
+                    hide: FormlyUtils.propIsFalse<ReactivePowerModeModel>("RPM_QU_EXTENDED_FUNCTIONS"),
                     "templateOptions.required":
-                        FormlyUtils.propIsTrue<ReactivePowerModeModel>(
-                            "rpmQuExtendedFunctions",
-                        ),
+                        FormlyUtils.propIsTrue<ReactivePowerModeModel>("RPM_QU_EXTENDED_FUNCTIONS"),
                 },
             },
         );
@@ -1475,29 +1277,23 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 ),
             },
             expressions: {
-                hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                    "rpmMode",
-                    ReactivePowerMode.QU_CURVE,
-                    true,
-                ),
+                hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_MODE", ReactivePowerMode.QU_CURVE, true),
             },
             fieldGroup: quCurveGroup,
         });
 
-        const cosPhiGroup: TypedFormlyFieldConfig<ReactivePowerModeModel>[] = [
+        const cosPhiGroup: StrictFormlyFieldConfig<ReactivePowerModeModel>[] = [
             {
-                key: "rpmCosPhiMode",
+                key: "RPM_COS_PHI_MODE",
                 type: "select",
                 className: "ion-padding-start",
                 resetOnHide: false,
                 templateOptions: {
-                    label: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.MODE",
-                    ),
+                    label: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.MODE"),
                     required: true,
                     options: [
                         {
-                            value: CurveMode.STANDARD,
+                            value: CurveMode.BASIC,
                             label: translate.instant(
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.QU_CURVE.MODE.STANDARD_MODE",
                             ),
@@ -1512,7 +1308,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "rpmCosPhiOverexcitedSlope",
+                key: "RPM_COS_PHI_OVEREXCITED_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1521,28 +1317,22 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmCosPhiMode",
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_COS_PHI_MODE", CurveMode.SLOPE, true),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_COS_PHI_MODE",
                         CurveMode.SLOPE,
-                        true,
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmCosPhiMode",
-                            CurveMode.SLOPE,
-                            false,
-                        ),
                 },
             },
             {
-                key: "rpmCosPhiUnderexcitedSlope",
+                key: "RPM_COS_PHI_UNDEREXCITED_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1551,24 +1341,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmCosPhiMode",
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_COS_PHI_MODE", CurveMode.SLOPE, true),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_COS_PHI_MODE",
                         CurveMode.SLOPE,
-                        true,
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmCosPhiMode",
-                            CurveMode.SLOPE,
-                            false,
-                        ),
                 },
             },
         ];
@@ -1580,8 +1364,8 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
             const hidePow = POINTS_WITH_FIXED_POWER.includes(pt);
             const hideCos = POINTS_WITH_FIXED_COS_PHI.includes(pt);
 
-            const powField: TypedFormlyFieldConfig<ReactivePowerModeModel> = {
-                key: `rpmCosPhipPower${pt}` as keyof ReactivePowerModeModel,
+            const powField: StrictFormlyFieldConfig<ReactivePowerModeModel> = {
+                key: `RPM_COS_PHIP_POWER_${pt}` as keyof ReactivePowerModeModel,
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -1592,10 +1376,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
+                    }),
                     required: !hidePow,
                 },
                 wrappers: ["input-with-unit", "form-field"],
@@ -1603,22 +1386,17 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
             if (hidePow) {
                 powField.expressions = {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmCosPhiMode",
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_COS_PHI_MODE", CurveMode.SLOPE, true),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_COS_PHI_MODE",
                         CurveMode.SLOPE,
-                        true,
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmCosPhiMode",
-                            CurveMode.SLOPE,
-                            false,
-                        ),
                 };
             }
 
-            const cosField: TypedFormlyFieldConfig<ReactivePowerModeModel> = {
-                key: `rpmCosPhipCosPhi${pt}` as keyof ReactivePowerModeModel,
+            const cosField: StrictFormlyFieldConfig<ReactivePowerModeModel> = {
+                key: `RPM_COS_PHIP_COS_PHI_${pt}` as keyof ReactivePowerModeModel,
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false, // Keep your data safe when toggling modes
@@ -1645,17 +1423,12 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
             if (hideCos) {
                 cosField.expressions = {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmCosPhiMode",
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_COS_PHI_MODE", CurveMode.SLOPE, true),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_COS_PHI_MODE",
                         CurveMode.SLOPE,
-                        true,
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmCosPhiMode",
-                            CurveMode.SLOPE,
-                            false,
-                        ),
                 };
             }
 
@@ -1664,7 +1437,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
         cosPhiGroup.push(
             {
-                key: "rpmCosPhipTimeConstant",
+                key: "RPM_COS_PHIP_TIME_CONSTANT",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1673,23 +1446,21 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.TIME_CONSTANT,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.TIME_CONSTANT },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.TIME_CONSTANT,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "rpmCosPhipExtendedFunctions",
+                key: "RPM_COS_PHIP_EXTENDED_FUNCTIONS",
                 type: "checkbox",
                 expressionProperties: {
-                    className:
-                        ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                            "rpmCosPhipExtendedFunctions",
-                            true,
-                        ),
+                    className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
+                        "RPM_COS_PHIP_EXTENDED_FUNCTIONS",
+                        true,
+                    ),
                 },
                 templateOptions: {
                     label: translate.instant(
@@ -1701,7 +1472,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "rpmCosPhipLockInVolt",
+                key: "RPM_COS_PHIP_LOCK_IN_VOLT",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1710,20 +1481,17 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    hide: FormlyUtils.propIsFalse<ReactivePowerModeModel>(
-                        "rpmCosPhipExtendedFunctions",
-                    ),
+                    hide: FormlyUtils.propIsFalse<ReactivePowerModeModel>("RPM_COS_PHIP_EXTENDED_FUNCTIONS"),
                 },
             },
             {
-                key: "rpmCosPhipLockOutVolt",
+                key: "RPM_COS_PHIP_LOCK_OUT_VOLT",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1732,16 +1500,13 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    hide: FormlyUtils.propIsFalse<ReactivePowerModeModel>(
-                        "rpmCosPhipExtendedFunctions",
-                    ),
+                    hide: FormlyUtils.propIsFalse<ReactivePowerModeModel>("RPM_COS_PHIP_EXTENDED_FUNCTIONS"),
                 },
             },
         );
@@ -1755,7 +1520,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
             },
             expressions: {
                 hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                    "rpmMode",
+                    "RPM_MODE",
                     ReactivePowerMode.COS_PHI_P_CURVE,
                     true,
                 ),
@@ -1763,20 +1528,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
             fieldGroup: cosPhiGroup,
         });
 
-        const qpCurveGroup: TypedFormlyFieldConfig<ReactivePowerModeModel>[] = [
+        const qpCurveGroup: StrictFormlyFieldConfig<ReactivePowerModeModel>[] = [
             {
-                key: "rpmQpCurveMode",
+                key: "RPM_QP_CURVE_MODE",
                 type: "select",
                 className: "ion-padding-start",
                 resetOnHide: false,
                 templateOptions: {
-                    label: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.MODE",
-                    ),
+                    label: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.MODE"),
                     required: true,
                     options: [
                         {
-                            value: CurveMode.STANDARD,
+                            value: CurveMode.BASIC,
                             label: translate.instant(
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER_MODE.QU_CURVE.MODE.STANDARD_MODE",
                             ),
@@ -1791,7 +1554,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "rpmQpOverexcitedSlope",
+                key: "RPM_QP_OVEREXCITED_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1800,28 +1563,22 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmQpCurveMode",
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_QP_CURVE_MODE", CurveMode.SLOPE, true),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_QP_CURVE_MODE",
                         CurveMode.SLOPE,
-                        true,
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmQpCurveMode",
-                            CurveMode.SLOPE,
-                            false,
-                        ),
                 },
             },
             {
-                key: "rpmQpUnderexcitedSlope",
+                key: "RPM_QP_UNDEREXCITED_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -1830,24 +1587,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.UNDER_OVER_EXCITED_SLOPE,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmQpCurveMode",
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_QP_CURVE_MODE", CurveMode.SLOPE, true),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_QP_CURVE_MODE",
                         CurveMode.SLOPE,
-                        true,
+                        false,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmQpCurveMode",
-                            CurveMode.SLOPE,
-                            false,
-                        ),
                 },
             },
         ];
@@ -1858,22 +1609,20 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
             const isDynamicPow = i >= 4;
             const isDynamicReact = i >= 5;
 
-            const powField: TypedFormlyFieldConfig<ReactivePowerModeModel> = {
-                key: `rpmQpPowerP${i}` as keyof ReactivePowerModeModel,
+            const powField: StrictFormlyFieldConfig<ReactivePowerModeModel> = {
+                key: `RPM_QP_POWER_P${i}` as keyof ReactivePowerModeModel,
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
                 templateOptions: {
-                    label: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.POWER",
-                        { value: `P${i}` },
-                    ),
+                    label: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.POWER", {
+                        value: `P${i}`,
+                    }),
                     type: "number",
                     ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
+                    }),
                     required: isDynamicPow,
                 },
                 wrappers: ["input-with-unit", "form-field"],
@@ -1881,35 +1630,32 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
             if (isDynamicPow) {
                 powField.expressions = {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmQpCurveMode",
-                        CurveMode.STANDARD,
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
+                        "RPM_QP_CURVE_MODE",
+                        CurveMode.BASIC,
                         true,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmQpCurveMode",
-                            CurveMode.STANDARD,
-                            false,
-                        ),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_QP_CURVE_MODE",
+                        CurveMode.BASIC,
+                        false,
+                    ),
                 };
             }
 
-            const reactField: TypedFormlyFieldConfig<ReactivePowerModeModel> = {
-                key: `rpmQpReactivePowerP${i}` as keyof ReactivePowerModeModel,
+            const reactField: StrictFormlyFieldConfig<ReactivePowerModeModel> = {
+                key: `RPM_QP_REACTIVE_POWER_P${i}` as keyof ReactivePowerModeModel,
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
-                    label: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER",
-                        { value: `P${i}` },
-                    ),
+                    label: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.REACTIVE_POWER", {
+                        value: `P${i}`,
+                    }),
                     type: "number",
                     ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.ACTIVE_POWER_PER_MILLE,
+                    }),
                     required: isDynamicReact,
                 },
                 wrappers: ["input-with-unit", "form-field"],
@@ -1917,17 +1663,16 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
             if (isDynamicReact) {
                 reactField.expressions = {
-                    "hide": FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "rpmQpCurveMode",
-                        CurveMode.STANDARD,
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
+                        "RPM_QP_CURVE_MODE",
+                        CurveMode.BASIC,
                         true,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<ReactivePowerModeModel>(
-                            "rpmQpCurveMode",
-                            CurveMode.STANDARD,
-                            false,
-                        ),
+                    "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
+                        "RPM_QP_CURVE_MODE",
+                        CurveMode.BASIC,
+                        false,
+                    ),
                 };
             }
 
@@ -1935,7 +1680,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         }
 
         qpCurveGroup.push({
-            key: "rpmQpTimeConstant",
+            key: "RPM_QP_TIME_CONSTANT",
             type: "input",
             className: "ion-padding-start",
             templateOptions: {
@@ -1944,10 +1689,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 ),
                 type: "number",
                 ...GRID_SETTING_RANGES.TIME_CONSTANT,
-                description: translate.instant(
-                    "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                    { ...GRID_SETTING_RANGES.TIME_CONSTANT },
-                ),
+                description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                    ...GRID_SETTING_RANGES.TIME_CONSTANT,
+                }),
             },
             wrappers: ["input-with-unit", "form-field"],
         });
@@ -1960,11 +1704,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 ),
             },
             expressions: {
-                hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                    "rpmMode",
-                    ReactivePowerMode.QP_CURVE,
-                    true,
-                ),
+                hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_MODE", ReactivePowerMode.QP_CURVE, true),
             },
             fieldGroup: qpCurveGroup,
         });
@@ -1976,16 +1716,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
     private static getProtectionFields(
         translate: TranslateService,
-    ): TypedFormlyFieldConfig<ProtectionParametersModel>[] {
-        const protectionFields: TypedFormlyFieldConfig<ProtectionParametersModel>[] =
-            [];
+    ): StrictFormlyFieldConfig<ProtectionParametersModel>[] {
+        const protectionFields: StrictFormlyFieldConfig<ProtectionParametersModel>[] = [];
 
         for (let i = 1; i <= 4; i++) {
             const uvMin = i <= 2 ? 0 : 150;
 
             protectionFields.push(
                 {
-                    key: `vppOvStage${i}TriggerValue` as keyof ProtectionParametersModel,
+                    key: `VPP_OV_STAGE${i}_TRIGGER_VALUE` as keyof ProtectionParametersModel,
                     type: "input",
                     templateOptions: {
                         label: translate.instant(
@@ -1995,15 +1734,14 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         type: "number",
                         ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD,
                         required: i < 3,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                 },
                 {
-                    key: `vppOvStage${i}TripTime` as keyof ProtectionParametersModel,
+                    key: `VPP_OV_STAGE${i}_TRIP_TIME` as keyof ProtectionParametersModel,
                     type: "input",
                     templateOptions: {
                         label: translate.instant(
@@ -2013,15 +1751,14 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         type: "number",
                         ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME,
                         required: i < 3,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                 },
                 {
-                    key: `vppUvStage${i}TripValue` as keyof ProtectionParametersModel,
+                    key: `VPP_UV_STAGE${i}_TRIP_VALUE` as keyof ProtectionParametersModel,
                     type: "input",
                     templateOptions: {
                         label: translate.instant(
@@ -2033,19 +1770,16 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         max: 1000,
                         unit: GridUnit.PERMILLE_VN,
                         required: i < 3,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            {
-                                min: uvMin,
-                                max: 1000,
-                                unit: GridUnit.PERMILLE_VN,
-                            },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            min: uvMin,
+                            max: 1000,
+                            unit: GridUnit.PERMILLE_VN,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                 },
                 {
-                    key: `vppUvStage${i}TripTime` as keyof ProtectionParametersModel,
+                    key: `VPP_UV_STAGE${i}_TRIP_TIME` as keyof ProtectionParametersModel,
                     type: "input",
                     templateOptions: {
                         label: translate.instant(
@@ -2055,10 +1789,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         type: "number",
                         ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME,
                         required: i < 3,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                 },
@@ -2076,10 +1809,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD,
                     required: true,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
@@ -2092,10 +1824,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
@@ -2104,7 +1835,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         for (let i = 1; i <= 4; i++) {
             protectionFields.push(
                 {
-                    key: `fppOfStage${i}TriggerValue` as keyof ProtectionParametersModel,
+                    key: `FPP_OF_STAGE${i}_TRIGGER_VALUE` as keyof ProtectionParametersModel,
                     type: "input",
                     templateOptions: {
                         label: translate.instant(
@@ -2114,15 +1845,14 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         type: "number",
                         ...GRID_SETTING_RANGES.FREQUENCY,
                         required: i < 3,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.FREQUENCY },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.FREQUENCY,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                 },
                 {
-                    key: `fppOfStage${i}TripTime` as keyof ProtectionParametersModel,
+                    key: `FPP_OF_STAGE${i}_TRIP_TIME` as keyof ProtectionParametersModel,
                     type: "input",
                     templateOptions: {
                         label: translate.instant(
@@ -2132,15 +1862,14 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         type: "number",
                         ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME,
                         required: i < 3,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                 },
                 {
-                    key: `fppUfStage${i}TripValue` as keyof ProtectionParametersModel,
+                    key: `FPP_UF_STAGE${i}_TRIP_VALUE` as keyof ProtectionParametersModel,
                     type: "input",
                     templateOptions: {
                         label: translate.instant(
@@ -2150,15 +1879,14 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         type: "number",
                         ...GRID_SETTING_RANGES.FREQUENCY,
                         required: i === 1,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.FREQUENCY },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.FREQUENCY,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                 },
                 {
-                    key: `fppUfStage${i}TripTime` as keyof ProtectionParametersModel,
+                    key: `FPP_UF_STAGE${i}_TRIP_TIME` as keyof ProtectionParametersModel,
                     type: "input",
                     templateOptions: {
                         label: translate.instant(
@@ -2168,10 +1896,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         type: "number",
                         ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME,
                         required: i === 1,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.VOLTAGE_TRIP_TIME,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                 },
@@ -2183,13 +1910,12 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
     private static getConnectionFields(
         translate: TranslateService,
-    ): TypedFormlyFieldConfig<ConnectionParametersModel>[] {
-        const connectionFields: TypedFormlyFieldConfig<ConnectionParametersModel>[] =
-            [];
+    ): StrictFormlyFieldConfig<ConnectionParametersModel>[] {
+        const connectionFields: StrictFormlyFieldConfig<ConnectionParametersModel>[] = [];
 
         connectionFields.push(
             {
-                key: "cpRampUpUpperVoltage",
+                key: "CP_RAMP_UP_UPPER_VOLTAGE",
                 type: "input",
                 resetOnHide: false,
                 templateOptions: {
@@ -2198,16 +1924,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "cpRampUpLowerVoltage",
+                key: "CP_RAMP_UP_LOWER_VOLTAGE",
                 type: "input",
                 resetOnHide: false,
                 templateOptions: {
@@ -2216,16 +1941,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE_LOWER,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE_LOWER },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE_LOWER,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "cpRampUpUpperFrequency",
+                key: "CP_RAMP_UP_UPPER_FREQUENCY",
                 type: "input",
                 resetOnHide: false,
                 templateOptions: {
@@ -2234,16 +1958,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.FREQUENCY,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.FREQUENCY },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.FREQUENCY,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "cpRampUpLowerFrequency",
+                key: "CP_RAMP_UP_LOWER_FREQUENCY",
                 type: "input",
                 resetOnHide: false,
                 templateOptions: {
@@ -2252,16 +1975,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.FREQUENCY,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.FREQUENCY },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.FREQUENCY,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "cpRampUpObservationTime",
+                key: "CP_RAMP_UP_OBSERVATION_TIME",
                 type: "input",
                 resetOnHide: false,
                 templateOptions: {
@@ -2270,23 +1992,21 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.OBSERVATION_TIME,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.OBSERVATION_TIME },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.OBSERVATION_TIME,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "cpSoftRampUpGradientEnable",
+                key: "CP_SOFT_RAMP_UP_GRADIENT_ENABLE",
                 type: "checkbox",
                 resetOnHide: false,
                 expressionProperties: {
-                    className:
-                        ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                            "cpSoftRampUpGradientEnable",
-                        ),
+                    className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
+                        "CP_SOFT_RAMP_UP_GRADIENT_ENABLE",
+                    ),
                 },
                 templateOptions: {
                     label: translate.instant(
@@ -2298,7 +2018,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "cpSoftRampUpGradient",
+                key: "CP_SOFT_RAMP_UP_GRADIENT",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2308,24 +2028,20 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.GRADIENT_PER_SECONDS,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.GRADIENT_PER_SECONDS },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.GRADIENT_PER_SECONDS,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsTrue<ConnectionParametersModel>(
-                        "cpSoftRampUpGradientEnable",
+                    hide: FormlyUtils.propIsTrue<ConnectionParametersModel>("CP_SOFT_RAMP_UP_GRADIENT_ENABLE"),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ConnectionParametersModel>(
+                        "CP_SOFT_RAMP_UP_GRADIENT_ENABLE",
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ConnectionParametersModel>(
-                            "cpSoftRampUpGradientEnable",
-                        ),
                 },
             },
             {
-                key: "cpReconnectionUpperVoltage",
+                key: "CP_RECONNECTION_UPPER_VOLTAGE",
                 type: "input",
                 resetOnHide: false,
                 templateOptions: {
@@ -2334,16 +2050,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE_THRESHOLD,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "cpReconnectionLowerVoltage",
+                key: "CP_RECONNECTION_LOWER_VOLTAGE",
                 type: "input",
                 resetOnHide: false,
                 templateOptions: {
@@ -2352,16 +2067,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE_LOWER,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE_LOWER },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE_LOWER,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "cpReconnectionUpperFrequency",
+                key: "CP_RECONNECTION_UPPER_FREQUENCY",
                 type: "input",
                 resetOnHide: false,
                 templateOptions: {
@@ -2370,16 +2084,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.FREQUENCY,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.FREQUENCY },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.FREQUENCY,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "cpReconnectionLowerFrequency",
+                key: "CP_RECONNECTION_LOWER_FREQUENCY",
                 type: "input",
                 resetOnHide: false,
                 templateOptions: {
@@ -2388,16 +2101,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.FREQUENCY,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.FREQUENCY },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.FREQUENCY,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "cpReconnectionObservationTime",
+                key: "CP_RECONNECTION_OBSERVATION_TIME",
                 type: "input",
                 resetOnHide: false,
                 templateOptions: {
@@ -2406,23 +2118,21 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.OBSERVATION_TIME,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.OBSERVATION_TIME },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.OBSERVATION_TIME,
+                    }),
                     required: true,
                 },
                 wrappers: ["input-with-unit", "form-field"],
             },
             {
-                key: "cpReconnectionGradientEnable",
+                key: "CP_RECONNECTION_GRADIENT_ENABLE",
                 type: "checkbox",
                 resetOnHide: false,
                 expressionProperties: {
-                    className:
-                        ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                            "cpReconnectionGradientEnable",
-                        ),
+                    className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
+                        "CP_RECONNECTION_GRADIENT_ENABLE",
+                    ),
                 },
                 templateOptions: {
                     label: translate.instant(
@@ -2434,7 +2144,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "cpReconnectionGradient",
+                key: "CP_RECONNECTION_GRADIENT",
                 type: "input",
                 resetOnHide: false,
                 className: "ion-padding-start",
@@ -2444,20 +2154,16 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.GRADIENT_PER_SECONDS,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.GRADIENT_PER_SECONDS },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.GRADIENT_PER_SECONDS,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsTrue<ConnectionParametersModel>(
-                        "cpReconnectionGradientEnable",
+                    hide: FormlyUtils.propIsTrue<ConnectionParametersModel>("CP_RECONNECTION_GRADIENT_ENABLE"),
+                    "templateOptions.required": FormlyUtils.propIsTrue<ConnectionParametersModel>(
+                        "CP_RECONNECTION_GRADIENT_ENABLE",
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<ConnectionParametersModel>(
-                            "cpReconnectionGradientEnable",
-                        ),
                 },
             },
         );
@@ -2465,19 +2171,14 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         return connectionFields;
     }
 
-    private static getVoltageRtFields(
-        translate: TranslateService,
-    ): TypedFormlyFieldConfig<VoltageRideThroughModel>[] {
-        const vrtFields: TypedFormlyFieldConfig<VoltageRideThroughModel>[] = [
+    private static getVoltageRtFields(translate: TranslateService): StrictFormlyFieldConfig<VoltageRideThroughModel>[] {
+        const vrtFields: StrictFormlyFieldConfig<VoltageRideThroughModel>[] = [
             {
-                key: "vrtLvrtEnable",
+                key: "VRT_LVRT_ENABLE",
                 type: "checkbox",
                 resetOnHide: false,
                 expressionProperties: {
-                    className:
-                        ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                            "vrtLvrtEnable",
-                        ),
+                    className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression("VRT_LVRT_ENABLE"),
                 },
                 templateOptions: {
                     label: translate.instant(
@@ -2493,7 +2194,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         for (let i = 1; i <= 7; i++) {
             vrtFields.push(
                 {
-                    key: `vrtUv${i}Voltage` as keyof VoltageRideThroughModel,
+                    key: `VRT_UV${i}_VOLTAGE` as keyof VoltageRideThroughModel,
                     type: "input",
                     resetOnHide: false,
                     className: "ion-padding-start",
@@ -2504,24 +2205,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         ),
                         type: "number",
                         ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                            "vrtLvrtEnable",
-                        ),
-                        "templateOptions.required":
-                            FormlyUtils.propIsTrue<VoltageRideThroughModel>(
-                                "vrtLvrtEnable",
-                            ),
+                        hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_LVRT_ENABLE"),
+                        "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("VRT_LVRT_ENABLE"),
                     },
                 },
                 {
-                    key: `vrtUv${i}Time` as keyof VoltageRideThroughModel,
+                    key: `VRT_UV${i}_TIME` as keyof VoltageRideThroughModel,
                     type: "input",
                     className: "ion-padding-start",
                     resetOnHide: false,
@@ -2532,19 +2227,16 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         ),
                         type: "number",
                         ...GRID_SETTING_RANGES.UNDERVOTAGE_TRIP_TIME,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.UNDERVOTAGE_TRIP_TIME },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.UNDERVOTAGE_TRIP_TIME,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                            "vrtLvrtEnable",
-                        ),
+                        hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_LVRT_ENABLE"),
                         "templateOptions.required": (field) => {
                             if (field.model && i !== 1) {
-                                return field.model.vrtLvrtEnable === true;
+                                return field.model.VRT_LVRT_ENABLE === true;
                             }
                             return false;
                         },
@@ -2555,7 +2247,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
         vrtFields.push(
             {
-                key: "vrtEnterLvrtThreshold",
+                key: "VRT_ENTER_LVRT_THRESHOLD",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2565,24 +2257,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                        "vrtLvrtEnable",
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<VoltageRideThroughModel>(
-                            "vrtLvrtEnable",
-                        ),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_LVRT_ENABLE"),
+                    "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("VRT_LVRT_ENABLE"),
                 },
             },
             {
-                key: "vrtExitLvrtEndpoint",
+                key: "VRT_EXIT_LVRT_ENDPOINT",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2592,24 +2278,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.VOLTAGE_DEAD_BAND,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                        "vrtLvrtEnable",
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<VoltageRideThroughModel>(
-                            "vrtLvrtEnable",
-                        ),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_LVRT_ENABLE"),
+                    "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("VRT_LVRT_ENABLE"),
                 },
             },
             {
-                key: "vrtK1Slope",
+                key: "VRT_K1_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2619,24 +2299,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.SLOPE_SECONDS,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.SLOPE_RANGE",
-                        { ...GRID_SETTING_RANGES.SLOPE_SECONDS },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.SLOPE_RANGE", {
+                        ...GRID_SETTING_RANGES.SLOPE_SECONDS,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                        "vrtLvrtEnable",
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<VoltageRideThroughModel>(
-                            "vrtLvrtEnable",
-                        ),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_LVRT_ENABLE"),
+                    "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("VRT_LVRT_ENABLE"),
                 },
             },
             {
-                key: "vrtLvrtZeroCurrentModeEnable",
+                key: "VRT_LVRT_ZERO_CURRENT_MODE_ENABLE",
                 type: "checkbox",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2646,13 +2320,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                 },
                 expressions: {
-                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                        "vrtLvrtEnable",
-                    ),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_LVRT_ENABLE"),
                 },
             },
             {
-                key: "vrtLvrtZeroCurrentModeEntryThreshold",
+                key: "VRT_LVRT_ZERO_CURRENT_MODE_ENTRY_THRESHOLD",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2664,30 +2336,28 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     min: 0,
                     max: 1000,
                     unit: GridUnit.PERCENT_VN,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { min: 0, max: 1000, unit: GridUnit.PERCENT_VN },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        min: 0,
+                        max: 1000,
+                        unit: GridUnit.PERCENT_VN,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
                     hide: FormlyUtils.anyPropIsFalse<VoltageRideThroughModel>(
-                        "vrtHvrtEnable",
-                        "vrtHvrtZeroCurrentModeEnable",
+                        "VRT_HVRT_ENABLE",
+                        "VRT_HVRT_ZERO_CURRENT_MODE_ENABLE",
                     ),
                 },
             },
         );
 
         vrtFields.push({
-            key: "vrtHvrtEnable",
+            key: "VRT_HVRT_ENABLE",
             type: "checkbox",
             resetOnHide: false,
             expressionProperties: {
-                className:
-                    ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                        "vrtHvrtEnable",
-                    ),
+                className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression("VRT_HVRT_ENABLE"),
             },
             templateOptions: {
                 label: translate.instant(
@@ -2702,7 +2372,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         for (let i = 1; i <= 5; i++) {
             vrtFields.push(
                 {
-                    key: `vrtOv${i}Voltage` as keyof VoltageRideThroughModel,
+                    key: `VRT_OV${i}_VOLTAGE` as keyof VoltageRideThroughModel,
                     type: "input",
                     className: "ion-padding-start",
                     resetOnHide: false,
@@ -2713,24 +2383,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         ),
                         type: "number",
                         ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                            "vrtHvrtEnable",
-                        ),
-                        "templateOptions.required":
-                            FormlyUtils.propIsTrue<VoltageRideThroughModel>(
-                                "vrtHvrtEnable",
-                            ),
+                        hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
+                        "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
                     },
                 },
                 {
-                    key: `vrtOv${i}Time` as keyof VoltageRideThroughModel,
+                    key: `VRT_OV${i}_TIME` as keyof VoltageRideThroughModel,
                     type: "input",
                     className: "ion-padding-start",
                     resetOnHide: false,
@@ -2741,20 +2405,14 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         ),
                         type: "number",
                         ...GRID_SETTING_RANGES.UNDERVOTAGE_TRIP_TIME,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            { ...GRID_SETTING_RANGES.UNDERVOTAGE_TRIP_TIME },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.UNDERVOTAGE_TRIP_TIME,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                            "vrtHvrtEnable",
-                        ),
-                        "templateOptions.required":
-                            FormlyUtils.propIsTrue<VoltageRideThroughModel>(
-                                "vrtHvrtEnable",
-                            ),
+                        hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
+                        "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
                     },
                 },
             );
@@ -2762,7 +2420,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
         vrtFields.push(
             {
-                key: "vrtEnterHighCrossingThreshold",
+                key: "VRT_ENTER_HIGH_CROSSING_THRESHOLD",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2772,24 +2430,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                        "vrtHvrtEnable",
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<VoltageRideThroughModel>(
-                            "vrtHvrtEnable",
-                        ),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
+                    "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
                 },
             },
             {
-                key: "hvrtExitHighCrossingThreshold",
+                key: "HVRT_EXIT_HIGH_CROSSING_THRESHOLD",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2799,24 +2451,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                        "vrtHvrtEnable",
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<VoltageRideThroughModel>(
-                            "vrtHvrtEnable",
-                        ),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
+                    "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
                 },
             },
             {
-                key: "hvrtK2Slope",
+                key: "HVRT_K2_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2826,24 +2472,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.SLOPE_SECONDS,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.SLOPE_RANGE",
-                        { ...GRID_SETTING_RANGES.SLOPE_SECONDS },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.SLOPE_RANGE", {
+                        ...GRID_SETTING_RANGES.SLOPE_SECONDS,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                        "vrtHvrtEnable",
-                    ),
-                    "templateOptions.required":
-                        FormlyUtils.propIsTrue<VoltageRideThroughModel>(
-                            "vrtHvrtEnable",
-                        ),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
+                    "templateOptions.required": FormlyUtils.propIsTrue<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
                 },
             },
             {
-                key: "vrtHvrtZeroCurrentModeEnable",
+                key: "VRT_HVRT_ZERO_CURRENT_MODE_ENABLE",
                 type: "checkbox",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2853,13 +2493,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                 },
                 expressions: {
-                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>(
-                        "vrtHvrtEnable",
-                    ),
+                    hide: FormlyUtils.propIsFalse<VoltageRideThroughModel>("VRT_HVRT_ENABLE"),
                 },
             },
             {
-                key: "vrtHvrtZeroCurrentModeEntryThreshold",
+                key: "VRT_HVRT_ZERO_CURRENT_MODE_ENTRY_THRESHOLD",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -2869,16 +2507,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.OVER_VOLTAGE_THRESHOLD,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
                     hide: FormlyUtils.anyPropIsFalse<VoltageRideThroughModel>(
-                        "vrtHvrtEnable",
-                        "vrtHvrtZeroCurrentModeEnable",
+                        "VRT_HVRT_ENABLE",
+                        "VRT_HVRT_ZERO_CURRENT_MODE_ENABLE",
                     ),
                 },
             },
@@ -2886,7 +2523,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
         vrtFields.push(
             {
-                key: "vrtCurrentDistributionMode",
+                key: "VRT_CURRENT_DISTRIBUTION_MODE",
                 type: "select",
                 resetOnHide: false,
                 templateOptions: {
@@ -2896,13 +2533,13 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     required: true,
                     options: [
                         {
-                            value: CurrentDistributionMode.REACTIVE_PRIORITY,
+                            value: CurrentDistributionMode.REACTIVE_POWER_PRIO,
                             label: translate.instant(
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.REACTIVE_PRIORITY",
                             ),
                         },
                         {
-                            value: CurrentDistributionMode.ACTIVE_PRIORITY,
+                            value: CurrentDistributionMode.ACTIVE_POWER_PRIO,
                             label: translate.instant(
                                 "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.VOLTAGE_RIDE_THROUGH.OPTIONS.ACTIVE_PRIORITY",
                             ),
@@ -2917,7 +2554,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "vrtActivePowerRecoveryMode",
+                key: "VRT_ACTIVE_POWER_RECOVERY_MODE",
                 type: "select",
                 resetOnHide: false,
                 templateOptions: {
@@ -2948,7 +2585,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "vrtActivePowerRecoverySpeed",
+                key: "VRT_ACTIVE_POWER_RECOVERY_SPEED",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -2957,27 +2594,25 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.POWER_GRADIENT,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.POWER_GRADIENT },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.POWER_GRADIENT,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
-                        "vrtActivePowerRecoveryMode",
+                    hide: FormlyUtils.propNotEquals<VoltageRideThroughModel>(
+                        "VRT_ACTIVE_POWER_RECOVERY_MODE",
                         RecoveryMode.GRADIENT_CONTROL,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<VoltageRideThroughModel>(
-                            "vrtActivePowerRecoveryMode",
-                            RecoveryMode.GRADIENT_CONTROL,
-                            false,
-                        ),
+                    "templateOptions.required": FormlyUtils.propEquals<VoltageRideThroughModel>(
+                        "VRT_ACTIVE_POWER_RECOVERY_MODE",
+                        RecoveryMode.GRADIENT_CONTROL,
+                        false,
+                    ),
                 },
             },
             {
-                key: "vrtActivePowerRecoverySlope",
+                key: "VRT_ACTIVE_POWER_RECOVERY_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 templateOptions: {
@@ -2986,29 +2621,25 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.LOW_PASS_FILTER_TIME_CONSTANT,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        {
-                            ...GRID_SETTING_RANGES.LOW_PASS_FILTER_TIME_CONSTANT,
-                        },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.LOW_PASS_FILTER_TIME_CONSTANT,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
-                        "vrtActivePowerRecoveryMode",
+                    hide: FormlyUtils.propNotEquals<VoltageRideThroughModel>(
+                        "VRT_ACTIVE_POWER_RECOVERY_MODE",
                         RecoveryMode.PT_1_BEHAVIOUR,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<VoltageRideThroughModel>(
-                            "vrtActivePowerRecoveryMode",
-                            RecoveryMode.PT_1_BEHAVIOUR,
-                            false,
-                        ),
+                    "templateOptions.required": FormlyUtils.propEquals<VoltageRideThroughModel>(
+                        "VRT_ACTIVE_POWER_RECOVERY_MODE",
+                        RecoveryMode.PT_1_BEHAVIOUR,
+                        false,
+                    ),
                 },
             },
             {
-                key: "vrtReactivePowerRecoveryModeEnd",
+                key: "VRT_REACTIVE_POWER_RECOVERY_MODE_END",
                 type: "select",
                 templateOptions: {
                     label: translate.instant(
@@ -3038,7 +2669,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                 },
             },
             {
-                key: "vrtReactivePowerRecoverySpeed",
+                key: "VRT_REACTIVE_POWER_RECOVERY_SPEED",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -3048,27 +2679,25 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.POWER_GRADIENT,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        { ...GRID_SETTING_RANGES.POWER_GRADIENT },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.POWER_GRADIENT,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
-                        "vrtReactivePowerRecoveryModeEnd",
+                    hide: FormlyUtils.propNotEquals<VoltageRideThroughModel>(
+                        "VRT_REACTIVE_POWER_RECOVERY_MODE_END",
                         RecoveryMode.GRADIENT_CONTROL,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<VoltageRideThroughModel>(
-                            "vrtReactivePowerRecoveryModeEnd",
-                            RecoveryMode.GRADIENT_CONTROL,
-                            false,
-                        ),
+                    "templateOptions.required": FormlyUtils.propEquals<VoltageRideThroughModel>(
+                        "VRT_REACTIVE_POWER_RECOVERY_MODE_END",
+                        RecoveryMode.GRADIENT_CONTROL,
+                        false,
+                    ),
                 },
             },
             {
-                key: "vrtReactivePowerRecoverySlope",
+                key: "VRT_REACTIVE_POWER_RECOVERY_SLOPE",
                 type: "input",
                 className: "ion-padding-start",
                 resetOnHide: false,
@@ -3078,25 +2707,21 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                     ),
                     type: "number",
                     ...GRID_SETTING_RANGES.LOW_PASS_FILTER_TIME_CONSTANT,
-                    description: translate.instant(
-                        "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                        {
-                            ...GRID_SETTING_RANGES.LOW_PASS_FILTER_TIME_CONSTANT,
-                        },
-                    ),
+                    description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                        ...GRID_SETTING_RANGES.LOW_PASS_FILTER_TIME_CONSTANT,
+                    }),
                 },
                 wrappers: ["input-with-unit", "form-field"],
                 expressions: {
-                    "hide": FormlyUtils.propNotEquals<VoltageRideThroughModel>(
-                        "vrtReactivePowerRecoveryModeEnd",
+                    hide: FormlyUtils.propNotEquals<VoltageRideThroughModel>(
+                        "VRT_REACTIVE_POWER_RECOVERY_MODE_END",
                         RecoveryMode.PT_1_BEHAVIOUR,
                     ),
-                    "templateOptions.required":
-                        FormlyUtils.propEquals<VoltageRideThroughModel>(
-                            "vrtReactivePowerRecoveryModeEnd",
-                            RecoveryMode.PT_1_BEHAVIOUR,
-                            false,
-                        ),
+                    "templateOptions.required": FormlyUtils.propEquals<VoltageRideThroughModel>(
+                        "VRT_REACTIVE_POWER_RECOVERY_MODE_END",
+                        RecoveryMode.PT_1_BEHAVIOUR,
+                        false,
+                    ),
                 },
             },
         );
@@ -3104,21 +2729,15 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         return vrtFields;
     }
 
-    private static getFrtFields(
-        translate: TranslateService,
-    ): TypedFormlyFieldConfig<FrequencyRideThroughModel>[] {
-        const frtFields: TypedFormlyFieldConfig<FrequencyRideThroughModel>[] =
-            [];
+    private static getFrtFields(translate: TranslateService): StrictFormlyFieldConfig<FrequencyRideThroughModel>[] {
+        const frtFields: StrictFormlyFieldConfig<FrequencyRideThroughModel>[] = [];
 
         frtFields.push({
-            key: "frtEnable",
+            key: "FRT_ENABLE",
             type: "checkbox",
             resetOnHide: false,
             expressionProperties: {
-                className:
-                    ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression(
-                        "frtEnable",
-                    ),
+                className: ConfigurationAdvancedSettingsComponent.getCheckboxClassExpression("FRT_ENABLE"),
             },
             templateOptions: {
                 label: translate.instant(
@@ -3133,7 +2752,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         for (let i = 1; i <= 3; i++) {
             frtFields.push(
                 {
-                    key: `frtUf${i}Frequency` as keyof FrequencyRideThroughModel,
+                    key: `FRT_UF${i}_FREQUENCY` as keyof FrequencyRideThroughModel,
                     type: "input",
                     className: "ion-padding-start",
                     templateOptions: {
@@ -3145,28 +2764,20 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         min: 45000,
                         max: 60000,
                         unit: GridUnit.MILLI_HERTZ,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            {
-                                min: 45000,
-                                max: 60000,
-                                unit: GridUnit.MILLI_HERTZ,
-                            },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            min: 45000,
+                            max: 60000,
+                            unit: GridUnit.MILLI_HERTZ,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<FrequencyRideThroughModel>(
-                            "frtEnable",
-                        ),
-                        "templateOptions.required":
-                            FormlyUtils.propIsTrue<FrequencyRideThroughModel>(
-                                "frtEnable",
-                            ),
+                        hide: FormlyUtils.propIsFalse<FrequencyRideThroughModel>("FRT_ENABLE"),
+                        "templateOptions.required": FormlyUtils.propIsTrue<FrequencyRideThroughModel>("FRT_ENABLE"),
                     },
                 },
                 {
-                    key: `frtUf${i}Time` as keyof FrequencyRideThroughModel,
+                    key: `FRT_UF${i}_TIME` as keyof FrequencyRideThroughModel,
                     type: "input",
                     className: "ion-padding-start",
                     templateOptions: {
@@ -3176,22 +2787,14 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         ),
                         type: "number",
                         ...GRID_SETTING_RANGES.FREQUENY_TIME_PER_MILLISECONDS,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            {
-                                ...GRID_SETTING_RANGES.FREQUENY_TIME_PER_MILLISECONDS,
-                            },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.FREQUENY_TIME_PER_MILLISECONDS,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<FrequencyRideThroughModel>(
-                            "frtEnable",
-                        ),
-                        "templateOptions.required":
-                            FormlyUtils.propIsTrue<FrequencyRideThroughModel>(
-                                "frtEnable",
-                            ),
+                        hide: FormlyUtils.propIsFalse<FrequencyRideThroughModel>("FRT_ENABLE"),
+                        "templateOptions.required": FormlyUtils.propIsTrue<FrequencyRideThroughModel>("FRT_ENABLE"),
                     },
                 },
             );
@@ -3200,7 +2803,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         for (let i = 1; i <= 3; i++) {
             frtFields.push(
                 {
-                    key: `frtOf${i}Frequency` as keyof FrequencyRideThroughModel,
+                    key: `FRT_OF${i}_FREQUENCY` as keyof FrequencyRideThroughModel,
                     type: "input",
                     className: "ion-padding-start",
                     templateOptions: {
@@ -3210,26 +2813,18 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         ),
                         type: "number",
                         ...GRID_SETTING_RANGES.HYSTERISIS_TIME_PER_MILLIHERTZ,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            {
-                                ...GRID_SETTING_RANGES.HYSTERISIS_TIME_PER_MILLIHERTZ,
-                            },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.HYSTERISIS_TIME_PER_MILLIHERTZ,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        "hide": FormlyUtils.propIsFalse<FrequencyRideThroughModel>(
-                            "frtEnable",
-                        ),
-                        "templateOptions.required":
-                            FormlyUtils.propIsTrue<FrequencyRideThroughModel>(
-                                "frtEnable",
-                            ),
+                        hide: FormlyUtils.propIsFalse<FrequencyRideThroughModel>("FRT_ENABLE"),
+                        "templateOptions.required": FormlyUtils.propIsTrue<FrequencyRideThroughModel>("FRT_ENABLE"),
                     },
                 },
                 {
-                    key: `frtOf${i}Time` as keyof FrequencyRideThroughModel,
+                    key: `FRT_OF${i}_TIME` as keyof FrequencyRideThroughModel,
                     type: "input",
                     className: "ion-padding-start",
                     templateOptions: {
@@ -3239,18 +2834,13 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
                         ),
                         type: "number",
                         ...GRID_SETTING_RANGES.FREQUENY_TIME_PER_MILLISECONDS,
-                        description: translate.instant(
-                            "INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE",
-                            {
-                                ...GRID_SETTING_RANGES.FREQUENY_TIME_PER_MILLISECONDS,
-                            },
-                        ),
+                        description: translate.instant("INSTALLATION.CONFIGURATION_ADVANCED_GRID_SETTINGS.RANGE", {
+                            ...GRID_SETTING_RANGES.FREQUENY_TIME_PER_MILLISECONDS,
+                        }),
                     },
                     wrappers: ["input-with-unit", "form-field"],
                     expressions: {
-                        hide: FormlyUtils.propIsFalse<FrequencyRideThroughModel>(
-                            "frtEnable",
-                        ),
+                        hide: FormlyUtils.propIsFalse<FrequencyRideThroughModel>("FRT_ENABLE"),
                     },
                 },
             );
@@ -3261,9 +2851,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
     public ngOnInit(): void {
         this.model = this.ibn.advancedGridSettings;
-        this.fields = ConfigurationAdvancedSettingsComponent.buildFields(
-            this.translate,
-        );
+        this.fields = ConfigurationAdvancedSettingsComponent.buildFields(this.translate);
     }
 
     public onPreviousClicked() {

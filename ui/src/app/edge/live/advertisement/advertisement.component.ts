@@ -1,4 +1,4 @@
-import { AfterContentChecked, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, } from "@angular/core";
+import { AfterContentChecked, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { register } from "swiper/element/bundle";
 
@@ -11,11 +11,10 @@ register();
 @Component({
     selector: "advertisement",
     templateUrl: "./advertisement.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
-export class AdvertisementComponent
-    implements OnInit, AfterContentChecked, OnDestroy
-{
+export class AdvertisementComponent implements OnInit, AfterContentChecked, OnDestroy {
     @Input() public advertWidgets: AdvertWidget[] = [];
 
     @ViewChild("swiper") public swiperRef: ElementRef | null = null;
@@ -63,11 +62,7 @@ export class AdvertisementComponent
             index = this.swiperRef?.nativeElement.swiper.activeIndex ?? 0;
         }
 
-        if (
-            Array.isArray(this.advertWidgets) &&
-            this.advertWidgets != null &&
-            index in this.advertWidgets
-        ) {
+        if (Array.isArray(this.advertWidgets) && this.advertWidgets != null && index in this.advertWidgets) {
             this.title = this.advertWidgets[index].title;
         } else {
             this.title = { rawTitle: environment.edgeShortName + " - App" };
@@ -100,8 +95,7 @@ export class AdvertisementComponent
 
         // If more than one slide
         if (this.enableBtn) {
-            const isBeginning =
-                this.swiperRef?.nativeElement.swiper.isBeginning || false;
+            const isBeginning = this.swiperRef?.nativeElement.swiper.isBeginning || false;
             const isEnd = this.swiperRef?.nativeElement.swiper.isEnd || false;
             this.disablePrevBtn = isBeginning;
             this.disableNextBtn = isEnd;

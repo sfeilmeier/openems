@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { HistoryDataService } from "src/app/edge/history/historydataservice";
 import { XAxisType } from "src/app/shared/components/chart/chart.constants";
@@ -8,13 +8,11 @@ import { DataService } from "src/app/shared/components/shared/dataservice";
 @Component({
     selector: "electricity-price-selection",
     templateUrl: "./electricity-price-selection.html",
-    providers: [
-        { provide: DataService, useClass: HistoryDataService },
-    ],
+    providers: [{ provide: DataService, useClass: HistoryDataService }],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ElectricityPriceSelectionComponent extends AbstractFlatWidget implements OnInit {
-
     protected readonly DEFAULT_ELECTRICITY_PRICE: number = 33;
     protected backUrl: string | null = null;
 
@@ -40,11 +38,9 @@ export class ElectricityPriceSelectionComponent extends AbstractFlatWidget imple
             return;
         }
 
-        this.router.navigate(
-            ["../"],
-            {
-                relativeTo: this.route,
-                queryParams: { electricityPrice: this.formGroup?.controls["electricityPrice"].value },
-            });
+        this.router.navigate(["../"], {
+            relativeTo: this.route,
+            queryParams: { electricityPrice: this.formGroup?.controls["electricityPrice"].value },
+        });
     }
 }

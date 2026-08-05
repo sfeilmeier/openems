@@ -38,7 +38,7 @@ jobs:
         run: git diff --exit-code io.openems.edge.application/EdgeApp.bndrun
 
       - name: Generate JaCoCo Code-coverage-report
-        run: ./gradlew jacocoTestReport jacocoAggregatedReport
+        run: ./gradlew jacocoLogAggregatedCoverage
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v7
@@ -52,7 +52,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "24"
 

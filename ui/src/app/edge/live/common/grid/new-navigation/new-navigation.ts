@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { EnergySchedulerV2 } from "src/app/shared/components/edge/config-components/energy/energy";
 import { GetSchedule } from "src/app/shared/components/edge/config-components/energy/getSchedule";
@@ -18,6 +18,7 @@ import { GridSellPriceChartComponent } from "./chart/price-sell-price-chart";
     selector: "oe-common-grid",
     templateUrl: "../../../../../shared/components/formly/formly-field-modal/template.html",
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [{ provide: DataService, useClass: LiveDataService }],
 })
 export class CommonGridHomeComponent extends AbstractFormlyComponent {

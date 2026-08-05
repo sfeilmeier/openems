@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
-import { EdgePermission } from "../shared";
 import { ArrayUtils } from "../utils/array/array.utils";
 import { Role } from "./role";
 import { TEnumKeys } from "./utility";
@@ -133,10 +132,6 @@ export class Widgets {
         const classes: string[] = Object.values(WidgetClass) //
             .filter((v) => typeof v === "string")
             .filter((clazz) => {
-                if (!edge.isVersionAtLeast("2018.8")) {
-                    // no filter for deprecated versions
-                    return true;
-                }
                 switch (clazz) {
                     case "Common_Autarchy":
                     case "Grid":
@@ -163,7 +158,7 @@ export class Widgets {
                             )?.length > 0
                         );
                     case "Controller.Api.ModbusTcp.ReadWrite":
-                        return EdgePermission.isModbusTcpApiWidgetAllowed(edge);
+                        return true;
                     default:
                         return false;
                 }

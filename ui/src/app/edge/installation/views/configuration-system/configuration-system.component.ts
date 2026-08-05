@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -14,6 +14,7 @@ import { System, SystemType } from "../../shared/system";
 @Component({
     selector: ConfigurationSystemComponent.SELECTOR,
     templateUrl: "./configuration-system.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ConfigurationSystemComponent implements OnInit {
@@ -31,7 +32,10 @@ export class ConfigurationSystemComponent implements OnInit {
 
     private emsType: EmsType = null;
 
-    constructor(private translate: TranslateService, private websocket: Websocket) { }
+    constructor(
+        private translate: TranslateService,
+        private websocket: Websocket,
+    ) {}
 
     protected get showManual(): boolean {
         return this.form.controls.type?.value && environment.theme === "Heckert";
@@ -39,15 +43,18 @@ export class ConfigurationSystemComponent implements OnInit {
 
     public ngOnInit() {
         this.form = new FormGroup({});
-        this.websocket.sendStateFullRequest(
-            new GetEmsTypeRequest({ edgeId: this.edge.id })).then((response: GetEmsTypeResponse) => {
-            this.emsType = response.result.emsType ?? null;
-            sessionStorage.setItem("emsType", this.emsType);
-        }).catch(error => {
-            console.log(error);
-        }).finally(() => {
-            this.fields = this.getFields();
-        });
+        this.websocket
+            .sendStateFullRequest(new GetEmsTypeRequest({ edgeId: this.edge.id }))
+            .then((response: GetEmsTypeResponse) => {
+                this.emsType = response.result.emsType ?? null;
+                sessionStorage.setItem("emsType", this.emsType);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                this.fields = this.getFields();
+            });
     }
 
     public onNextClicked() {
@@ -83,9 +90,7 @@ export class ConfigurationSystemComponent implements OnInit {
                         break;
                     case "fec011":
                     case "fec013":
-                        options.push(
-                            { value: SystemType.COMMERCIAL, label: SystemType.COMMERCIAL },
-                        );
+                        options.push({ value: SystemType.COMMERCIAL, label: SystemType.COMMERCIAL });
                         break;
                 }
                 break;
@@ -108,19 +113,14 @@ export class ConfigurationSystemComponent implements OnInit {
         this.previousViewEvent.emit();
     }
 
-    /**
-   * Redirects to the url for Heckert system manual.
-   */
+    /** Redirects to the url for Heckert system manual. */
     protected openManual(): void {
         window.open(environment.links.MANUALS.SYSTEM.HOME.HOME_10);
     }
 
-    /**
-   * Loads the appropriate Ibn object.
-   */
+    /** Loads the appropriate Ibn object. */
     private setIbn(): void {
         const system: SystemType = this.form.controls.type.value;
         this.ibn = System.getSystemObjectFromSystemType(system, this.translate);
     }
-
 }

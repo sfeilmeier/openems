@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup, Validators } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -10,10 +10,10 @@ import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 @Component({
     selector: ProtocolCustomerComponent.SELECTOR,
     templateUrl: "./protocol-customer.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ProtocolCustomerComponent implements OnInit {
-
     private static readonly SELECTOR = "protocol-customer";
 
     @Input() public ibn: AbstractIbn;
@@ -26,8 +26,8 @@ export class ProtocolCustomerComponent implements OnInit {
 
     constructor(
         private translate: TranslateService,
-        private service: Service) { }
-
+        private service: Service,
+    ) {}
 
     public ngOnInit() {
         this.form = new FormGroup({});
@@ -51,7 +51,6 @@ export class ProtocolCustomerComponent implements OnInit {
     }
 
     public getFields(): FormlyFieldConfig[] {
-
         const fields: FormlyFieldConfig[] = [];
         fields.push({
             key: "isCorporateClient",
@@ -68,7 +67,7 @@ export class ProtocolCustomerComponent implements OnInit {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COMPANY_NAME"),
                 required: true,
             },
-            hideExpression: model => !model.isCorporateClient,
+            hideExpression: (model) => !model.isCorporateClient,
         });
 
         fields.push({
@@ -143,7 +142,9 @@ export class ProtocolCustomerComponent implements OnInit {
                     templateOptions: {
                         type: "email",
                         label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL"),
-                        description: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL_DESCRIPTION"),
+                        description: this.translate.instant(
+                            "INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL_DESCRIPTION",
+                        ),
                         required: true,
                     },
                     validators: {
@@ -156,15 +157,15 @@ export class ProtocolCustomerComponent implements OnInit {
                     templateOptions: {
                         type: "email",
                         label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL"),
-                        description: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL_CONFIRMATION"),
+                        description: this.translate.instant(
+                            "INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.EMAIL_CONFIRMATION",
+                        ),
                         required: true,
                     },
                 },
             ],
             validators: {
-                validation: [
-                    { name: "emailMatch", options: { errorPath: "emailConfirm" } },
-                ],
+                validation: [{ name: "emailMatch", options: { errorPath: "emailConfirm" } }],
             },
         });
 

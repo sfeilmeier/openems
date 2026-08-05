@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Converter } from "src/app/shared/components/shared/converter";
@@ -10,17 +10,19 @@ import { SimulationResult } from "../../pages/battery-extension/battery-extensio
 @Component({
     selector: EnergyJourneyConstantsComponent.SELECTOR,
     templateUrl: "./constants.html",
-    styles: [`
-    :host{
-        ion-label{
-            font-family:  var(--ion-font-family) !important;
-        }
-    }
-        `],
+    styles: [
+        `
+            :host {
+                ion-label {
+                    font-family: var(--ion-font-family) !important;
+                }
+            }
+        `,
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class EnergyJourneyConstantsComponent implements OnChanges {
-
     private static readonly SELECTOR: string = "oe-energy-journey-constants";
 
     @Input() public simulatedData: SimulationResult | null = null;
@@ -32,14 +34,14 @@ export class EnergyJourneyConstantsComponent implements OnChanges {
     protected readonly environment = environment;
 
     protected spinnerId: string = EnergyJourneyConstantsComponent.SELECTOR;
-    protected displayData: { name: string, value: any, converter: Converter, editable?: boolean }[] = [];
+    protected displayData: { name: string; value: any; converter: Converter; editable?: boolean }[] = [];
 
     private constants: SimulationResult | null = null;
 
     constructor(
         private translate: TranslateService,
         private route: ActivatedRoute,
-    ) { }
+    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if ("simulatedData" in changes || "electricityPrice" in changes) {
@@ -56,7 +58,7 @@ export class EnergyJourneyConstantsComponent implements OnChanges {
 
     protected convertToPrice(currency: Currency.Unit) {
         return (raw: any): string => {
-            return Converter.IF_NUMBER_OR_STRING(raw, value => {
+            return Converter.IF_NUMBER_OR_STRING(raw, (value) => {
                 let _value: number | null = null;
                 if (typeof value === "string") {
                     _value = Number.parseInt(value);
@@ -75,15 +77,32 @@ export class EnergyJourneyConstantsComponent implements OnChanges {
     /**
      * Gets the data to be displayed
      *
-     * @param constants the simulation result constants
-     * @returns the data to display
+     * @param constants The simulation result constants
+     * @returns The data to display
      */
     private getDisplayData(constants: SimulationResult, electricityPrice: number): typeof this.displayData {
         return [
-            { name: this.translate.instant("SETTINGS.ENERGY_JOURNEY.CONSTANTS.BATTERY_MODULE"), value: constants?.simulationData[0]?.numberOfModules ?? null, converter: Converter.TO_STRING },
-            { name: this.translate.instant("SETTINGS.ENERGY_JOURNEY.CONSTANTS.CHARGE_DISCHARGE"), value: constants?.simulationData[0]?.kWPeak ?? null, converter: Converter.POWER_IN_KILO_WATT },
-            { name: this.translate.instant("SETTINGS.ENERGY_JOURNEY.CONSTANTS.GRID_SUPPLY"), value: constants?.simulationData[0]?.gridBuy ?? null, converter: Converter.TO_KILO_WATT_HOURS },
-            { name: this.translate.instant("SETTINGS.ENERGY_JOURNEY.CONSTANTS.ELECTRICITY_PRICE"), value: electricityPrice, converter: this.CONVERT_TO_PRICE, editable: true },
+            {
+                name: this.translate.instant("SETTINGS.ENERGY_JOURNEY.CONSTANTS.BATTERY_MODULE"),
+                value: constants?.simulationData[0]?.numberOfModules ?? null,
+                converter: Converter.TO_STRING,
+            },
+            {
+                name: this.translate.instant("SETTINGS.ENERGY_JOURNEY.CONSTANTS.CHARGE_DISCHARGE"),
+                value: constants?.simulationData[0]?.kWPeak ?? null,
+                converter: Converter.POWER_IN_KILO_WATT,
+            },
+            {
+                name: this.translate.instant("SETTINGS.ENERGY_JOURNEY.CONSTANTS.GRID_SUPPLY"),
+                value: constants?.simulationData[0]?.gridBuy ?? null,
+                converter: Converter.TO_KILO_WATT_HOURS,
+            },
+            {
+                name: this.translate.instant("SETTINGS.ENERGY_JOURNEY.CONSTANTS.ELECTRICITY_PRICE"),
+                value: electricityPrice,
+                converter: this.CONVERT_TO_PRICE,
+                editable: true,
+            },
         ];
     }
 }

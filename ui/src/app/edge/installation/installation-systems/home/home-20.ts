@@ -11,14 +11,13 @@ import { SafetyCountry } from "../../views/configuration-execute/safety-country"
 import { AbstractHomeIbn, HomeAdditionalApp, HomeCommonApp } from "./abstract-home";
 
 type Home20Mppt = {
-    HAS_MPPT_1: boolean,
-    ALIAS_MPPT_1?: string,
-    HAS_MPPT_2: boolean,
-    ALIAS_MPPT_2?: string,
+    HAS_MPPT_1: boolean;
+    ALIAS_MPPT_1?: string;
+    HAS_MPPT_2: boolean;
+    ALIAS_MPPT_2?: string;
 };
 
 export class Home20FeneconIbn extends AbstractHomeIbn {
-
     public override readonly systemId: SystemId = SystemId.FENECON_HOME_20;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
     public override readonly appAlias: string = "FENECON Home 20";
@@ -33,42 +32,49 @@ export class Home20FeneconIbn extends AbstractHomeIbn {
     public override readonly minNumberOfTowers: number = 1;
 
     public override mppt: {
-        connectionCheck: boolean,
-        mppt1: boolean,
-        mppt2: boolean,
+        connectionCheck: boolean;
+        mppt1: boolean;
+        mppt2: boolean;
     } = {
         connectionCheck: false,
         mppt1: false,
         mppt2: false,
     };
 
+    protected override readonly mpptImagePaths = environment.links.DOWNLOAD.INSTALLATION.HOME.MPPT.HOME_20;
+
     constructor(public override translate: TranslateService) {
-        super([
-            View.PreInstallation,
-            View.PreInstallationUpdate,
-            View.ConfigurationSystem,
-            View.ConfigurationSystemVariant,
-            View.ProtocolInstaller,
-            View.ProtocolCustomer,
-            View.ProtocolSystem,
-            View.ProtocolSystemLocation,
-            View.ConfigurationEssLimiter14aComponent,
-            View.ConfigurationEmergencyReserve,
-            View.ConfigurationEnergyFlowMeter,
-            View.ConfigurationLineSideMeterFuse,
-            View.ConfigurationMpptSelection,
-            View.ProtocolPv,
-            View.ProtocolFeedInLimitation,
-            View.ConfigurationSummary,
-            View.ConfigurationExecute,
-            View.ProtocolSerialNumbers,
-            View.Alerting,
-            View.Completion,
-        ], translate);
+        super(
+            [
+                View.PreInstallation,
+                View.PreInstallationUpdate,
+                View.ConfigurationSystem,
+                View.ConfigurationSystemVariant,
+                View.ProtocolInstaller,
+                View.ProtocolCustomer,
+                View.ProtocolSystem,
+                View.ProtocolSystemLocation,
+                View.ConfigurationEssLimiter14aComponent,
+                View.ConfigurationEmergencyReserve,
+                View.ConfigurationEnergyFlowMeter,
+                View.ConfigurationLineSideMeterFuse,
+                View.ConfigurationMpptSelection,
+                View.ProtocolPv,
+                View.ProtocolFeedInLimitation,
+                View.ConfigurationSummary,
+                View.ConfigurationExecute,
+                View.ProtocolSerialNumbers,
+                View.Alerting,
+                View.Completion,
+            ],
+            translate,
+        );
     }
 
-    public override getAppProperties(safetyCountry: SafetyCountry, feedInSetting: FeedInSetting): HomeCommonApp & HomeAdditionalApp & Home20Mppt {
-
+    public override getAppProperties(
+        safetyCountry: SafetyCountry,
+        feedInSetting: FeedInSetting,
+    ): HomeCommonApp & HomeAdditionalApp & Home20Mppt {
         const dc1: DcPv = this.pv.dc[0];
         const dc2: DcPv = this.pv.dc[1];
 
@@ -82,10 +88,6 @@ export class Home20FeneconIbn extends AbstractHomeIbn {
         };
 
         return home20AppProperties;
-    }
-
-    public getImageUrl(mppt: number): string {
-        return `${AbstractHomeIbn.BASE_IMAGE_PATH}Home_20_MPPT${mppt}.png`;
     }
 
     public override getMpptLabel(mppt: number) {

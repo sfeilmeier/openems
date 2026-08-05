@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { CommonModule } from "@angular/common";
-import { Component, ElementRef, inject, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, ElementRef, inject, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 import { TranslateModule } from "@ngx-translate/core";
@@ -28,6 +28,7 @@ Chart.register(ChartConstants.Plugins.SYNC_CHARTS());
 @Component({
     selector: "oe-schedule-chart",
     templateUrl: "../abstracthistorychart.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         BaseChartDirective,
         ReactiveFormsModule,
@@ -92,6 +93,9 @@ export abstract class ScheduleChartComponent extends AbstractHistoryChart implem
             ticks: {
                 ...this.options.scales.x.ticks,
                 display: false,
+                color: getComputedStyle(
+                    document.documentElement,
+                ).getPropertyValue("--ion-color-chart-xAxis-ticks"),
             },
             grid: {
                 display: false,
@@ -101,6 +105,11 @@ export abstract class ScheduleChartComponent extends AbstractHistoryChart implem
         this.options.scales[ChartAxis.LEFT] = {
             grid: {
                 display: false,
+            },
+            ticks: {
+                color: getComputedStyle(
+                    document.documentElement,
+                ).getPropertyValue("--ion-color-chart-xAxis-ticks"),
             },
         };
 

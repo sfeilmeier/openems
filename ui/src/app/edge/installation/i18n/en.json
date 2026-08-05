@@ -182,6 +182,12 @@
             },
             "SLOPE_RANGE": "Multiplication factor [{{min}}, {{max}}]"
         },
+        "CONFIGURATION_BATTERY_INPUTS": {
+            "TITLE": "Battery Inputs Configuration",
+            "BATTERY_INPUT": "Battery Input {{ key }}",
+            "INPUT_CONFIRMATION": "Confirmation: Inputs correctly connected",
+            "NUMBER_OF_BATTERY_INPUTS": "Number of battery inputs used"
+        },
         "CONFIGURATION_EMERGENCY_RESERVE": {
             "GENSET": {
                 "CONNECTED": "Genset connected?",
@@ -200,6 +206,10 @@
         },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
             "FIXED_COS_PHI": "Fixed Value: Cos Phi"
+        },
+        "PROTOCOL_SERIAL_NUMBER": {
+            "BATTERY_COMMUNICATION_BOX": "Battery Communication Box",
+            "BATTERY_INPUT_TOWER": "Battery Input {{ batteryInput }} Tower {{ towerNumber }}"
         }
     }
 }

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -9,10 +9,10 @@ import { Category } from "../../shared/category";
 @Component({
     selector: ConfigurationLineSideMeterFuseComponent.SELECTOR,
     templateUrl: "./configuration-line-side-meter-fuse.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class ConfigurationLineSideMeterFuseComponent implements OnInit {
-
     private static readonly SELECTOR = "configuration-line-side-meter-fuse";
 
     @Input() public ibn: AbstractIbn;
@@ -24,7 +24,7 @@ export class ConfigurationLineSideMeterFuseComponent implements OnInit {
     protected model;
     protected header: string;
 
-    constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) {}
 
     public ngOnInit() {
         this.header = Category.toTranslatedString(this.ibn.lineSideMeterFuse.category, this.translate);
@@ -38,7 +38,6 @@ export class ConfigurationLineSideMeterFuseComponent implements OnInit {
     }
 
     public onNextClicked() {
-
         if (this.form.invalid) {
             return;
         }

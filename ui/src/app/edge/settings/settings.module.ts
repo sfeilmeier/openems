@@ -20,7 +20,6 @@ import { JsonrpcTestModule } from "./jsonrpctest/jsonrpctest.module";
 import { NetworkOldComponent } from "./network.old/network.old.component";
 import { ServiceAssistantModule } from "./serviceassistant/serviceassistant.module";
 import { SystemExecuteComponent } from "./systemexecute/systemexecute.component";
-import { SystemUpdateOldComponent } from "./systemupdate.old/systemupdate.old.component";
 
 @NgModule({
     imports: [
@@ -43,14 +42,11 @@ import { SystemUpdateOldComponent } from "./systemupdate.old/systemupdate.old.co
         ComponentUpdateIndexComponent,
         NetworkOldComponent,
         SystemExecuteComponent,
-        SystemUpdateOldComponent,
     ],
-    exports: [
-    ],
+    exports: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SettingsModule {
-
     constructor(private translate: TranslateService) {
         Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {

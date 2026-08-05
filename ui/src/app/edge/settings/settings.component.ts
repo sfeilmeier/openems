@@ -1,6 +1,5 @@
-import { Component, OnInit, computed, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit, computed, signal } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { TranslateService } from "@ngx-translate/core";
 import { CommonUiModule } from "src/app/shared/common-ui.module";
 import { ComponentsBaseModule } from "src/app/shared/components/components.module";
 import { FlatWidgetButtonComponent } from "src/app/shared/components/flat/flat-widget-button/flat-widget-button";
@@ -8,19 +7,15 @@ import { NavigationService } from "src/app/shared/components/navigation/service/
 import { UserService } from "src/app/shared/service/user.service";
 import { Role } from "src/app/shared/type/role";
 import { environment } from "src/environments";
-import { Edge, EdgePermission, Service, UserPermission, Utils, } from "../../shared/shared";
+import { Edge, EdgePermission, Service, UserPermission, Utils } from "../../shared/shared";
 import { JsonrpcTestPermission } from "./jsonrpctest/jsonrpctest.permission";
 
 @Component({
     selector: "settings",
     templateUrl: "./settings.component.html",
     standalone: true,
-    imports: [
-        CommonUiModule,
-        RouterModule,
-        FlatWidgetButtonComponent,
-        ComponentsBaseModule,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [CommonUiModule, RouterModule, FlatWidgetButtonComponent, ComponentsBaseModule],
 })
 export class SettingsComponent implements OnInit {
     public edge: Edge | null = null;
@@ -38,17 +33,12 @@ export class SettingsComponent implements OnInit {
     protected canSeeCommercialAssistant: boolean = false;
     protected canSeeEnergyJourney = signal(false);
     protected showEnergyJourney = computed(
-        () =>
-            this.isAtLeastOwner() &&
-            this.canSeeEnergyJourney() &&
-            !this.isEdgeBackend() &&
-            !this.isNewNavigation(),
+        () => this.isAtLeastOwner() && this.canSeeEnergyJourney() && !this.isEdgeBackend() && !this.isNewNavigation(),
     );
 
     constructor(
         protected utils: Utils,
         private service: Service,
-        private translate: TranslateService,
         private readonly userService: UserService,
     ) {}
 
@@ -60,21 +50,11 @@ export class SettingsComponent implements OnInit {
             this.isAtLeastInstaller = edge.roleIsAtLeast(Role.INSTALLER);
             this.isAtLeastAdmin = edge.roleIsAtLeast(Role.ADMIN);
             this.canSeeJsonrpcTest = JsonrpcTestPermission.canSee(user, edge);
-            this.canSeeIndustrialLAssistant =
-                UserPermission.isUserAllowedToSeeIndustrialAssistant(
-                    user,
-                    edge,
-                );
-            this.canSeeHomeAssistant =
-                UserPermission.isUserAllowedToSeeHomeAssistant(user, edge);
-            this.canSeeCommercialAssistant =
-                UserPermission.isUserAllowedToSeeCommercialServiceAssistant(
-                    user,
-                    edge,
-                );
+            this.canSeeIndustrialLAssistant = UserPermission.isUserAllowedToSeeIndustrialAssistant(user, edge);
+            this.canSeeHomeAssistant = UserPermission.isUserAllowedToSeeHomeAssistant(user, edge);
+            this.canSeeCommercialAssistant = UserPermission.isUserAllowedToSeeCommercialServiceAssistant(user, edge);
             this.canSeeEnergyJourney.set(
-                EdgePermission.isEnergyJourneyAllowed(edge) &&
-                    UserPermission.isUserAllowedToSeeEnergyJourney(user),
+                EdgePermission.isEnergyJourneyAllowed(edge) && UserPermission.isUserAllowedToSeeEnergyJourney(user),
             );
             this.isNewNavigation.set(
                 NavigationService.isNewNavigation(

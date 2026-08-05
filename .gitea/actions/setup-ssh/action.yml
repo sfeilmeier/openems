@@ -17,7 +17,8 @@ runs:
         apt-get update -qq && apt-get install -y -qq rsync ssh || true
         rm -rf /var/lib/apt/lists/*
 
-    - name: Upload build artifact
+    - name: Setup SSH
+      id: setup-ssh
       shell: bash
       run: |
         mkdir -p ~/.ssh

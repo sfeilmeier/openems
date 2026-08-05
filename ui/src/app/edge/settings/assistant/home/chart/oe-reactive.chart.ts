@@ -1,5 +1,5 @@
 import { KeyValue } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { BaseChartDirective } from "ng2-charts";
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -15,6 +15,7 @@ export type HomeCellVoltageOptions = KeyValue<string, string | null> | null;
 @Component({
     selector: "oe-reactive-power-chart",
     templateUrl: "../../../../../shared/components/chart/abstracthistorychart.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         BaseChartDirective,
         ReactiveFormsModule,
@@ -44,33 +45,39 @@ export class ChartComponent extends AbstractHistoryChart {
                     powerChannel: new ChannelAddress(componentId, "ApparentPower"),
                 },
             ],
-            output: (data: HistoryUtils.ChannelData) => [{
-                name: "ReactivePower",
-                converter: () => data["ReactivePower"],
-                color: ChartConstants.Colors.RED,
-                yAxisId: ChartAxis.RIGHT,
-            }, {
-                name: "ActivePower",
-                converter: () => data["ActivePower"],
-                color: ChartConstants.Colors.BLUE,
-            }, {
-                name: "ApparentPower",
-                converter: () => data["ApparentPower"],
-                color: ChartConstants.Colors.PURPLE,
-            }],
+            output: (data: HistoryUtils.ChannelData) => [
+                {
+                    name: "ReactivePower",
+                    converter: () => data["ReactivePower"],
+                    color: ChartConstants.Colors.RED,
+                    yAxisId: ChartAxis.RIGHT,
+                },
+                {
+                    name: "ActivePower",
+                    converter: () => data["ActivePower"],
+                    color: ChartConstants.Colors.BLUE,
+                },
+                {
+                    name: "ApparentPower",
+                    converter: () => data["ApparentPower"],
+                    color: ChartConstants.Colors.PURPLE,
+                },
+            ],
             tooltip: {
                 formatNumber: ChartConstants.NumberFormat.ZERO_TO_TWO,
             },
-            yAxes: [{
-                unit: YAxisType.POWER,
-                position: "left",
-                yAxisId: ChartAxis.LEFT,
-            },
-            {
-                unit: YAxisType.REACTIVE,
-                position: "right",
-                yAxisId: ChartAxis.RIGHT,
-            }],
+            yAxes: [
+                {
+                    unit: YAxisType.POWER,
+                    position: "left",
+                    yAxisId: ChartAxis.LEFT,
+                },
+                {
+                    unit: YAxisType.REACTIVE,
+                    position: "right",
+                    yAxisId: ChartAxis.RIGHT,
+                },
+            ],
         };
     }
 

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { SystemUpdateState } from "src/app/edge/settings/system/getSystemUpdateStateResponse";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
@@ -7,6 +7,7 @@ import { Edge, Service, Websocket } from "src/app/shared/shared";
 @Component({
     selector: PreInstallationUpdateComponent.SELECTOR,
     templateUrl: "./pre-installation-update.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
 })
 export class PreInstallationUpdateComponent {
@@ -21,7 +22,11 @@ export class PreInstallationUpdateComponent {
     protected isWaiting: boolean;
     protected isUpdated: boolean;
 
-    constructor(private service: Service, public websocket: Websocket, private translate: TranslateService) { }
+    constructor(
+        private service: Service,
+        public websocket: Websocket,
+        private translate: TranslateService,
+    ) {}
 
     public onNextClicked() {
         if (!this.isUpdated) {
@@ -44,5 +49,4 @@ export class PreInstallationUpdateComponent {
     public onPreviousClicked() {
         this.previousViewEvent.emit();
     }
-
 }

@@ -7,22 +7,34 @@ import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.TestDescriptor
 import org.gradle.api.tasks.testing.TestListener
 import org.gradle.api.tasks.testing.TestResult
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.external.javadoc.StandardJavadocDocletOptions
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
 plugins {
 	id("base")
 	id("java")
+	id("jacoco-report-aggregation")
 	id("com.github.node-gradle.node")
 	id("org.barfuin.gradle.jacocolog")
 	id("org.sonarqube")
-	id("openems.bundle-aggregates")
+	id("openems.bundle-aggregates")	
 }
 
 repositories {
 	mavenLocal()
 	mavenCentral()
 	gradlePluginPortal()
+}
+
+dependencyLocking {
+	lockAllConfigurations()
+}
+
+dependencies {
+	subprojects
+		.filter { it.plugins.hasPlugin("biz.aQute.bnd") }
+		.forEach { jacocoAggregation(it) }
 }
 
 fun Project.isEdgeBundle(): Boolean =
@@ -150,7 +162,7 @@ subprojects {
 		if (isCI) {
 			testLogging {
 				events("failed")
-				exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+				exceptionFormat = TestExceptionFormat.FULL
 				showExceptions = true
 				showStackTraces = true
 				showCauses = true
@@ -229,10 +241,19 @@ subprojects {
 	}
 }
 
-/*
- * Build OpenEMS Edge and Backend Components
- */
+reporting {
+    reports {
+		// Choose a name like `jacocoXxxReport`, which will get you a `jacocoLogXxxCoverage` task:
+		// ./gradlew jacocoLogAggregatedCoverage
+        create<JacocoCoverageReport>("jacocoAggregatedReport") {
+            testSuiteName = "test"
+        }
+    }
+}
+
 tasks.register("buildComponents") {
+	group = "openems-build"
+	description = "Build OpenEMS Edge and Backend Components"
 	subprojects.forEach { proj ->
 		if (proj.tasks.names.contains("compileJava")) {
 			dependsOn(proj.tasks.named("compileJava"))
@@ -281,9 +302,6 @@ registerAppJarBuildTask(
 	defaultOutputFileName = "openems-backend-edge.jar"
 )
 
-/*
- * Javadoc
- */
 tasks.register<Javadoc>("buildAggregatedJavadocs") {
 	description = "Generate javadocs from all child projects as if it was a single project"
 	group = "Documentation"
@@ -302,10 +320,9 @@ tasks.register<Javadoc>("buildAggregatedJavadocs") {
 	}
 }
 
-/*
- * Copies Bundle readme.adoc files to doc.
- */
 tasks.register("copyBundleReadmes") {
+	group = "openems-cleanup"
+	description = "Copies all bundle readme.adoc files to doc/modules/ROOT/pages and generates _nav.adoc files for each target folder."
 	doLast {
 		// define target files
 		val targets = mapOf(
@@ -424,11 +441,9 @@ tasks.register("copyBundleReadmes") {
 	}
 }
 
-/*
- * Build Antora docs
- */
 tasks.register("buildAntoraDocs") {
 	group = "Documentation"
+	description = "Build Antora docs"
 	dependsOn(":doc:buildAntoraDocs")
 	dependsOn(":copyBundleReadmes")
 

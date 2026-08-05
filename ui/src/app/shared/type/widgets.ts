@@ -17,17 +17,16 @@ import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/s
 import { SharedSystemIndustrialM } from "src/app/edge/live/system/industrial/m/shared-system-industrial-m";
 import { SharedSystemIndustrialS } from "src/app/edge/live/system/industrial/s/shared-system-industrial-s";
 import { SharedSystemIndustrialTokai2 } from "src/app/edge/live/system/industrial/tokai2/shared-system-industrial-tokai2";
-import { SharedSystemIndustrialXl } from "src/app/edge/live/system/industrial/xl/shared-system-industrial-xl";
 import { SharedControllerIoHeatingRoom } from "../../edge/live/Controller/Io/HeatingRoom/shared/shared";
+import { SharedSystemIndustrialXl } from "../../edge/live/system/industrial/xl/shared-system-industrial-xl";
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { NavigationTree } from "../components/navigation/shared";
-import { EdgePermission } from "../shared";
 import { TEnumKeys } from "./utility";
 import { Widget, WidgetClass, WidgetFactory, WidgetNature } from "./widget";
 
 export class Widgets {
-    private static readonly GROUPED_FACTORIES: Partial<
+    public static readonly GROUPED_FACTORIES: Partial<
         Record<
             Widget["name"],
             {
@@ -35,7 +34,8 @@ export class Widgets {
                     translate: TranslateService,
                     componentIds: Widget["componentId"][],
                     config: EdgeConfig,
-                ) => ConstructorParameters<typeof NavigationTree> | null;
+                    factoryId: EdgeConfig.Factory["id"],
+                ) => NavigationTree | null;
                 single: (
                     translate: TranslateService,
                     componentId: Widget["componentId"],
@@ -176,7 +176,7 @@ export class Widgets {
                         )?.length > 0
                     );
                 case "Controller.Api.ModbusTcp.ReadWrite":
-                    return EdgePermission.isModbusTcpApiWidgetAllowed(edge);
+                    return true;
                 default:
                     return false;
             }
@@ -296,9 +296,9 @@ export class Widgets {
                 continue;
             }
 
-            const groupedNavigationTree = groupedFactory.grouped(translate, componentIds, config);
+            const groupedNavigationTree = groupedFactory.grouped(translate, componentIds, config, groupedWidgetName);
             if (groupedNavigationTree != null) {
-                navigationTrees.push(groupedNavigationTree);
+                navigationTrees.push(groupedNavigationTree.toConstructorParams());
             }
         }
 

@@ -123,13 +123,19 @@ for project in projects:
         results[project] = Result(Status.ERROR)
         overall = Status.ERROR
 
-def get_condition_printable(condition: Condition | None):
+def value_formatter_percentage(value: str) -> str:
+    try:
+        return f"{float(value):.2f}\\%"
+    except ValueError:
+        return value + "\\%"
+
+def get_condition_printable(condition: Condition | None, value_formatter: callable = lambda x: x) -> str:
     if not condition:
         return "-"
     if condition.ok:
-        return "$${" + condition.value + "}$$"
+        return "$${" + value_formatter(condition.value) + "}$$"
     else:
-        return "$${\\color{red}" + condition.value + "}$$"
+        return "$${\\color{red}" + value_formatter(condition.value) + "}$$"
 
 lines = [
     "## SonarQube Quality Gates",
@@ -142,8 +148,8 @@ for project, status in results.items():
     if status.status != Status.NA:
         icon = get_icon(status.status)
         link = get_link(project.strip(), pr_number, status.status)
-        coverage_value =    get_condition_printable(status.coverage)
-        duplications_value = get_condition_printable(status.duplications)
+        coverage_value =    get_condition_printable(status.coverage, value_formatter_percentage)
+        duplications_value = get_condition_printable(status.duplications, value_formatter_percentage)
         issues_value = get_condition_printable(status.issues)
 
         lines.append(f"| [{project.strip()}]({link}) | {coverage_value} | {duplications_value} | {issues_value} | {icon} |")

@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { EnergySchedulerV2 } from "src/app/shared/components/edge/config-components/energy/energy";
 
@@ -19,6 +19,7 @@ import { ConsumptionChartComponent } from "./chart/consumption-chart-component";
     selector: "oe-common-consumption",
     templateUrl: "../../../../../shared/components/formly/formly-field-modal/template.html",
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [{ provide: DataService, useClass: LiveDataService }],
 })
 export class CommonConsumptionHomeComponent extends AbstractFormlyComponent {
@@ -84,7 +85,7 @@ export class CommonConsumptionHomeComponent extends AbstractFormlyComponent {
                 {
                     type: "channel-line",
                     name: translate.instant("GENERAL.POWER"),
-                    channel: new ChannelAddress("_sum", "ProductionActivePower").toString(),
+                    channel: new ChannelAddress("_sum", "ConsumptionActivePower").toString(),
                     converter: Converter.POWER_IN_KILO_WATT,
                     style: {
                         name: { fontSize: "large" },
@@ -157,7 +158,6 @@ export class CommonConsumptionHomeComponent extends AbstractFormlyComponent {
         return {
             title: translate.instant("GENERAL.CONSUMPTION"),
             helpKey: "REDIRECT.COMMON_CONSUMPTION",
-            useDefaultPrefix: false,
             isCommonWidget: true,
             lines: lines,
             component: new EdgeConfig.Component(),

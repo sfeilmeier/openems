@@ -126,7 +126,7 @@ public class HeatingElement extends AbstractOpenemsAppWithProps<HeatingElement, 
 				.setTranslatedDescriptionWithAppPrefix(".powerPerPhase.description") //
 				.setDefaultValue(2000) //
 				.setRequired(true) //
-				.setField(JsonFormlyUtil::buildInput, (app, property, l, parameter, field) -> field //
+				.setField(JsonFormlyUtil::buildInput, (app, property, l, parameter, field) -> field//
 						.setInputType(NUMBER)//
 						.setUnit(WATT, l)//
 						.setMin(0)//
@@ -136,7 +136,7 @@ public class HeatingElement extends AbstractOpenemsAppWithProps<HeatingElement, 
 				.setTranslatedDescriptionWithAppPrefix(".hysteresis.description") //
 				.setDefaultValue(60) //
 				.setRequired(true) //
-				.setField(JsonFormlyUtil::buildInput, (app, property, l, parameter, field) -> field //
+				.setField(JsonFormlyUtil::buildInput, (app, property, l, parameter, field) -> field//
 						.setInputType(NUMBER)//
 						.setUnit(SECONDS, l)//
 						.setMin(0))//
@@ -147,7 +147,7 @@ public class HeatingElement extends AbstractOpenemsAppWithProps<HeatingElement, 
 				.setDefaultValue(false)//
 				.setField(JsonFormlyUtil::buildCheckboxFromNameable)//
 				.setRequired(true))), //
-		HOW_MEASURED(howMeasured(IS_ELEMENT_MEASURED) //
+		HOW_MEASURED(howMeasured(IS_ELEMENT_MEASURED)//
 				.setDefaultValue(MeterIntegration.EXTERN)), //
 		METER_ID(externMeterIdsForMeterIntegration(IS_ELEMENT_MEASURED, HOW_MEASURED)), //
 		;
@@ -172,12 +172,18 @@ public class HeatingElement extends AbstractOpenemsAppWithProps<HeatingElement, 
 		public Function<GetParameterValues<HeatingElement>, HeatingElementParameter> getParamter() {
 			return t -> {
 				final var isHomeInstalled = PropsUtil.isHomeInstalled(t.app.appManagerUtil);
+				final var deviceHardware = t.app.appManagerUtil //
+						.getFirstInstantiatedAppByCategories(OpenemsAppCategory.OPENEMS_DEVICE_HARDWARE);
 
 				return new HeatingElementParameter(//
 						createResourceBundle(t.language), //
 						createPhaseInformation(t.app.componentUtil, 3, //
-								List.of(RelayProps.feneconHomeFilter(t.language, isHomeInstalled, true),
-										RelayProps.gpioFilter(), RelayProps.shellyFilter()), //
+								List.of(//
+										RelayProps.feneconHomeFilter(t.language, isHomeInstalled, true, deviceHardware), //
+										RelayProps.techbaseCm4Gen3Filter(t.language, true, deviceHardware), //
+										RelayProps.gpioFilter(), //
+										RelayProps.shellyFilter() //
+				), //
 								List.of(RelayProps.feneconHome2030PreferredRelays(isHomeInstalled,
 										new int[] { 1, 2, 3 }), //
 										PreferredRelay.of(4, new int[] { 1, 2, 3 }), //
@@ -215,12 +221,15 @@ public class HeatingElement extends AbstractOpenemsAppWithProps<HeatingElement, 
 			final var howMeasured = this.getEnum(p, MeterIntegration.class, Property.HOW_MEASURED);
 			var meterId = "";
 
+			final var deviceHardware = this.appManagerUtil
+					.getFirstInstantiatedAppByCategories(OpenemsAppCategory.OPENEMS_DEVICE_HARDWARE);
+
 			final var dependencies = new ArrayList<DependencyDeclaration>();
 
 			if (isElementMeasured) {
 
 				if (howMeasured == MeterIntegration.INTERN) {
-					meterId = resolveInternMeterDependencyAndGetMeterId(this, l, t, dependencies);
+					meterId = resolveInternMeterDependencyAndGetMeterId(this, l, t, deviceHardware, dependencies);
 				} else {
 					meterId = this.getString(p, l, Property.METER_ID);
 					dependencies.add(retrieveExternMeterDependency(this, meterId));
@@ -276,9 +285,15 @@ public class HeatingElement extends AbstractOpenemsAppWithProps<HeatingElement, 
 
 	@Override
 	public ValidatorConfig.Builder getValidateBuilder() {
+		final var deviceHardware = this.appManagerUtil
+				.getFirstInstantiatedAppByCategories(OpenemsAppCategory.OPENEMS_DEVICE_HARDWARE);
 		return ValidatorConfig.create() //
-				.setInstallableCheckableConfigs(checkRelayCount(3, CheckRelayCountFilters.feneconHome(true),
-						CheckRelayCountFilters.deviceHardware()));
+				.setInstallableCheckableConfigs(//
+						checkRelayCount(3, //
+								CheckRelayCountFilters.feneconHome(true, deviceHardware), //
+								CheckRelayCountFilters.techbaseCm4sGen3(true, deviceHardware), //
+								CheckRelayCountFilters.gpio(), //
+								CheckRelayCountFilters.shelly()));
 	}
 
 	@Override
@@ -302,7 +317,7 @@ public class HeatingElement extends AbstractOpenemsAppWithProps<HeatingElement, 
 	}
 
 	private static <P extends BundleProvider & RelayContactInformationProvider> //
-	AppDef<OpenemsApp, Nameable, P> heatingElementRelayContactDef(int contactPosition) {
+			AppDef<OpenemsApp, Nameable, P> heatingElementRelayContactDef(int contactPosition) {
 		return AppDef.copyOfGeneric(relayContactDef(contactPosition, Nameable.of("OUTPUT_CHANNEL_PHASE_L1"), //
 				Nameable.of("OUTPUT_CHANNEL_PHASE_L2"), Nameable.of("OUTPUT_CHANNEL_PHASE_L3")),
 				b -> b //

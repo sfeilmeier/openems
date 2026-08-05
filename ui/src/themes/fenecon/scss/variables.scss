@@ -10,16 +10,16 @@ $font-family: var(--ion-font-family);
 
 /* Custom FeneconHeadline font */
 @font-face {
-    font-family: 'FeneconHeadline';
-    src: url('src/assets/font/FeneconHeadlineWeb-Regular.woff2') format('woff2'), ;
+    font-family: "FeneconHeadline";
+    src: url("./font/FeneconHeadlineWeb-Regular.woff2") format("woff2");
     font-weight: 300;
     font-style: normal;
 }
 
 /* Custom FeneconHeadline Bold font */
 @font-face {
-    font-family: 'FeneconHeadlineBold';
-    src: url('src/assets/font/FeneconHeadlineWeb-Bold.woff2') format('woff2'), ;
+    font-family: "FeneconHeadlineBold";
+    src: url("./font/FeneconHeadlineWeb-Bold.woff2") format("woff2");
     font-weight: 300;
     font-style: normal;
 }
@@ -36,7 +36,7 @@ $font-family: var(--ion-font-family);
     --ion-color-primary-footer: #f4f4f4;
 
     /** secondary **/
-    --ion-color-secondary: #0EB8DF;
+    --ion-color-secondary: #0eb8df;
     --ion-color-secondary-rgb: 50, 219, 100;
     --ion-color-secondary-contrast: #ffffff;
     --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -57,7 +57,7 @@ $font-family: var(--ion-font-family);
     /** primary **/
     --ion-color-primary: #0fcdf8; // Header Color and Active Bars.
     --ion-color-primary-rgb: 61, 92, 116;
-    --ion-color-primary-contrast: #00204E; // sets the color of Button segments
+    --ion-color-primary-contrast: #00204e; // sets the color of Button segments
     --ion-color-primary-contrast-rgb: 255, 255, 255;
     --ion-color-primary-shade: #55a2b9;
     --ion-color-primary-tint: #226f86ba;
@@ -81,15 +81,15 @@ $font-family: var(--ion-font-family);
 }
 
 .oe-ci-font-family {
-    font-family: 'FeneconHeadline' !important;
+    font-family: "FeneconHeadline" !important;
 }
 
 .oe-ci-font-family-bold {
-    font-family: 'FeneconHeadlineBold' !important;
+    font-family: "FeneconHeadlineBold" !important;
 }
 
 ion-content.background {
-    --background: url('../../../assets/img/fenecon-energy-journey.jpg') 40% 80% / cover no-repeat fixed;
+    --background: url("../../../assets/img/fenecon-energy-journey.jpg") 40% 80% / cover no-repeat fixed;
 
     ion-card {
         border-radius: 1em;

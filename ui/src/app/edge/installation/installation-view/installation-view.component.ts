@@ -1,15 +1,17 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnChanges, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from "@angular/core";
+import { IonicModule } from "@ionic/angular";
 import { FormlyFieldConfig } from "@ngx-formly/core";
-import { TranslateService } from "@ngx-translate/core";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: InstallationViewComponent.SELECTOR,
     templateUrl: "./installation-view.component.html",
-    standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: true,
+    imports: [IonicModule, TranslateModule],
 })
 export class InstallationViewComponent implements OnChanges {
-
     private static readonly SELECTOR = "installation-view";
 
     @Input() public iconName: string;
@@ -24,9 +26,9 @@ export class InstallationViewComponent implements OnChanges {
 
     @Output() public previousClicked: EventEmitter<any> = new EventEmitter();
     @Output() public nextClicked: EventEmitter<any> = new EventEmitter();
-    public labelToShow: { label: string, icon: string } | null = null;
+    public labelToShow: { label: string; icon: string } | null = null;
 
-    constructor(private translate: TranslateService) { }
+    constructor(private translate: TranslateService) {}
 
     // often 'isWaiting' changes its value after initialization and ngOnInit dose not record the changed values,
     // So using the ngOnChanges.
@@ -47,11 +49,11 @@ export class InstallationViewComponent implements OnChanges {
     }
 
     /**
-   * Sets the label and icons for the button.
-   *
-   * @param labelKey Translated labels.
-   * @param icon Icon to be displayed
-   */
+     * Sets the label and icons for the button.
+     *
+     * @param labelKey Translated labels.
+     * @param icon Icon to be displayed
+     */
     private setLabelAndIcon(labelKey: string, icon: string) {
         this.labelToShow = {
             label: labelKey,

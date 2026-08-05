@@ -73,14 +73,10 @@ describe("Edge", () => {
         })
             .compileComponents()
             .then(() => {
-                const translateService = TestBed.inject(TranslateService);
-                translateService.addLangs(["de"]);
-                translateService.use("de");
                 registerLocaleData(localDE, "de", localeDeExtra);
                 settingsComponent = new SettingsComponent(
                     Utils,
                     serviceSypObject,
-                    translateService,
                     userServiceSpyObj,
                 );
             });

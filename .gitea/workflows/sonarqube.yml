@@ -14,25 +14,25 @@ jobs:
   edge-scan:
     runs-on: ubuntu-sonarqube
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
       
       - name: Setup Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5.5.0
         with:
           distribution: 'temurin'
           java-version: '21'
           cache: gradle
 
       - name: Restore Maven cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-${{ hashFiles('cnf/pom.xml') }}-mvn-edge
 
       - name: Restore build cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: ${{ runner.os }}-edge-cache_gradle
           path: |
@@ -59,25 +59,25 @@ jobs:
   backend-scan:
     runs-on: ubuntu-sonarqube
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
       
       - name: Setup Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5.5.0
         with:
           distribution: 'temurin'
           java-version: '21'
           cache: gradle
 
       - name: Restore Maven cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-${{ hashFiles('cnf/pom.xml') }}-mvn-backend
 
       - name: Restore build cache
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           key: ${{ runner.os }}-backend-cache_gradle
           path: |
@@ -104,7 +104,7 @@ jobs:
   ui-scan:
     runs-on: ubuntu-sonarqube
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
           sparse-checkout: |
@@ -113,7 +113,7 @@ jobs:
             .gitea/
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: '24'
           cache: 'npm'

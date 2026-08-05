@@ -204,7 +204,7 @@ public final class FeneconHomeComponents {
 		return new EdgeConfig.Component(batteryInverterId,
 				TranslationUtil.getTranslation(bundle, "App.IntegratedSystem.batteryInverter0.alias"),
 				"GoodWe.BatteryInverter", getBatteryInverterConfig(hasEmergencyReserve, feedInType, modbusIdExternal,
-						shadowManagementDisabled, safetyCountry, feedInSetting, naProtectionEnabled, gridCode));
+						shadowManagementDisabled, safetyCountry, feedInSetting, naProtectionEnabled, gridCode).build());
 	}
 
 	/**
@@ -255,7 +255,7 @@ public final class FeneconHomeComponents {
 	/**
 	 * Creates a battery depending on the deviceHardware with different startup
 	 * relay and an io if the installed hardware isn't a TechbaseCm4sGen3.
-	 * 
+	 *
 	 * @param bundle           the translation bundle
 	 * @param deviceHardware   the device hardware; used to determine the correct
 	 *                         startup relay for the battery component and if the io
@@ -272,6 +272,34 @@ public final class FeneconHomeComponents {
 	) {
 		var result = new ArrayList<Component>();
 		result.add(battery(deviceHardware, bundle, batteryId, modbusIdInternal));
+		if (!isHardwareInstalledForMasterBox(deviceHardware)) {
+			result.add(io(bundle, modbusIdInternal));
+		}
+		return result;
+	}
+
+	/**
+	 * Creates a battery depending on the deviceHardware with different startup
+	 * relay and an io if the installed hardware isn't a TechbaseCm4sGen3.
+	 *
+	 * @param bundle           the translation bundle
+	 * @param deviceHardware   the device hardware; used to determine the correct
+	 *                         startup relay for the battery component and if the io
+	 *                         should be installed
+	 * @param batteryId        the battery id
+	 * @param modbusIdInternal the internal modbus id
+	 * @param batteryStartStop the startStop target of the bridge
+	 * @return a {@link List} of {@link Component}
+	 */
+	public static List<Component> batteryAndIo(//
+			final ResourceBundle bundle, //
+			final OpenemsAppInstance deviceHardware, //
+			final String batteryId, //
+			final String modbusIdInternal, //
+			final String batteryStartStop //
+	) {
+		var result = new ArrayList<Component>();
+		result.add(battery(deviceHardware, bundle, batteryId, modbusIdInternal, batteryStartStop));
 		if (!isHardwareInstalledForMasterBox(deviceHardware)) {
 			result.add(io(bundle, modbusIdInternal));
 		}
@@ -958,9 +986,9 @@ public final class FeneconHomeComponents {
 	 * @param feedInSetting            the feedInSetting
 	 * @param naProtectionEnabled      if NA-protection is enabled
 	 * @param gridCode                 the grid code
-	 * @return the {@link JsonObject}
+	 * @return the {@link JsonUtils.JsonObjectBuilder}
 	 */
-	public static JsonObject getBatteryInverterConfig(final boolean hasEmergencyReserve, //
+	public static JsonUtils.JsonObjectBuilder getBatteryInverterConfig(final boolean hasEmergencyReserve, //
 			final ExternalLimitationType feedInType, //
 			final String modbusIdExternal, //
 			final boolean shadowManagementDisabled, //
@@ -985,8 +1013,7 @@ public final class FeneconHomeComponents {
 								|| feedInType == ExternalLimitationType.DYNAMIC_AND_EXTERNAL_LIMITATION ? "ENABLE"
 										: "DISABLE") //
 				.addProperty("naProtectionEnable", naProtectionEnabled ? "ENABLE" : "DISABLE") //
-				.addPropertyIfNotNull("gridCode", gridCode) //
-				.build();
+				.addPropertyIfNotNull("gridCode", gridCode);
 	}
 
 	private FeneconHomeComponents() {
