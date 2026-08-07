@@ -3,7 +3,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Meter } from "src/app/edge/installation/shared/meter";
 import { BatteryInverterState, BatteryMode, BatteryStateMachine, Currency, CurrentData, EdgeConfig, EssStateMachine, GoodWe, GridMode, Limiter14aRestriction, RippleControlReceiverRestrictionLevel, SafetyCountryCode, Utils, } from "../../shared";
 
-import { BackupEnable, DredCmd, EnabledDisabledState } from "../../type/general";
+import { BackupEnable, DredCmd, EnabledDisabledState, Mode } from "../../type/general";
 import { Language } from "../../type/language";
 import { NumberUtils } from "../../utils/number/number-utils";
 import { TimeUtils } from "../../utils/time/timeutils";
@@ -634,19 +634,19 @@ export namespace Converter {
         return (raw): string => {
             return IF_STRING(raw, (value) => {
                 switch (value) {
-                    case "AUTOMATIC":
+                    case Mode.AUTOMATIC:
                         return translate.instant("GENERAL.AUTOMATIC");
-                    case "MANUAL":
+                    case Mode.MANUAL:
                         return translate.instant("GENERAL.MANUALLY");
-                    case "MANUAL_ON":
-                    case "ON":
+                    case Mode.MANUAL_ON:
+                    case Mode.ON:
                         return translate.instant("GENERAL.ON");
-                    case "MANUAL_OFF":
-                    case "OFF":
+                    case Mode.MANUAL_OFF:
+                    case Mode.OFF:
                         return translate.instant("GENERAL.OFF");
-                    case "CHARGE_ONCE":
+                    case Mode.CHARGE_ONCE:
                         return translate.instant("GENERAL.CHARGE_ONCE");
-                    case "DISCHARGE_ONCE":
+                    case Mode.DISCHARGE_ONCE:
                         return translate.instant("GENERAL.DISCHARGE_ONCE");
                 }
             });
