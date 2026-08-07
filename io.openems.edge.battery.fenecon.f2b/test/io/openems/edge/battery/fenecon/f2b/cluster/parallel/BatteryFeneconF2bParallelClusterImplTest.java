@@ -1,15 +1,24 @@
 package io.openems.edge.battery.fenecon.f2b.cluster.parallel;
 
 import static io.openems.common.test.TestUtils.createDummyClock;
+import static io.openems.edge.battery.api.Battery.ChannelId.CHARGE_MAX_VOLTAGE;
+import static io.openems.edge.battery.api.Battery.ChannelId.DISCHARGE_MIN_VOLTAGE;
+import static io.openems.edge.battery.api.Battery.ChannelId.SOC;
+import static io.openems.edge.battery.api.Battery.ChannelId.VOLTAGE;
+import static io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b.ChannelId.INTERNAL_VOLTAGE;
+import static io.openems.edge.battery.fenecon.f2b.dummy.BatteryFeneconF2bDummy.ChannelId.DUMMY_FAULT;
 
 import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
+import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.StateMachine;
 import io.openems.edge.battery.fenecon.f2b.dummy.BatteryFeneconF2bDummyImpl;
 import io.openems.edge.battery.fenecon.f2b.dummy.statemachine.StateMachine.State;
 import io.openems.edge.common.channel.ChannelId;
+import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStopConfig;
+import io.openems.edge.common.startstop.StartStoppable;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
@@ -47,80 +56,76 @@ public class BatteryFeneconF2bParallelClusterImplTest {
 						.setStartStop(StartStopConfig.START) //
 						.setBatteryIds("battery1", "battery2") //
 						.build())
-				.next(new TestCase()//
+				.next(new TestCase("one")//
 						.output("battery1", STATE, State.UNDEFINED)//
 						.output("battery2", STATE, State.UNDEFINED)//
 						.output("battery0", STATE, StateMachine.State.UNDEFINED))//
-				.next(new TestCase()//
+				.next(new TestCase("two")//
 						.output("battery1", STATE, State.GO_STOPPED)//
 						.output("battery2", STATE, State.GO_STOPPED)//
 						.output("battery0", STATE, StateMachine.State.UNDEFINED))//
-				.next(new TestCase()//
+				.next(new TestCase("three")//
 						.output("battery1", STATE, State.STOPPED)//
 						.output("battery2", STATE, State.STOPPED)//
 						.output("battery0", STATE, StateMachine.State.UNDEFINED))//
-				.next(new TestCase()//
+				.next(new TestCase("four")//
 						.output("battery1", STATE, State.STOPPED)//
 						.output("battery2", STATE, State.STOPPED)//
 						.output("battery0", STATE, StateMachine.State.UNDEFINED))//
-				.next(new TestCase()//
+				.next(new TestCase("five")//
 						.output("battery1", STATE, State.STOPPED)//
 						.output("battery2", STATE, State.STOPPED)//
-						.output("battery0", STATE, StateMachine.State.UNDEFINED))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.STOPPED)//
-		// .output("battery2", STATE, State.STOPPED)//
-		// .output("battery0", STATE, StateMachine.State.STOPPED))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.STOPPED)//
-		// .output("battery2", STATE, State.STOPPED)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .input("battery1", SOC, 50) //
-		// .input("battery2", SOC, 50) //
-		// .input("battery1", CHARGE_MAX_VOLTAGE, 403) //
-		// .input("battery2", CHARGE_MAX_VOLTAGE, 403) //
-		// .input("battery1", DISCHARGE_MIN_VOLTAGE, 259)//
-		// .input("battery2", DISCHARGE_MIN_VOLTAGE, 259)//
-		// .input("battery1", VOLTAGE, 400)//
-		// .input("battery2", VOLTAGE, 404)//
-		// .input("battery1", INTERNAL_VOLTAGE, 400)//
-		// .input("battery2", INTERNAL_VOLTAGE, 404)//
-		// .output("battery1", STATE, State.GO_RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.GO_RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.RUNNING))//
+						.output("battery0", STATE, StateMachine.State.STOPPED))//
+				.next(new TestCase("six")//
+						.output("battery1", STATE, State.STOPPED)//
+						.output("battery2", STATE, State.STOPPED)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase("seven")//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase("eight")//
+						.input("battery1", SOC, 50) //
+						.input("battery2", SOC, 50) //
+						.input("battery1", CHARGE_MAX_VOLTAGE, 403) //
+						.input("battery2", CHARGE_MAX_VOLTAGE, 403) //
+						.input("battery1", DISCHARGE_MIN_VOLTAGE, 259)//
+						.input("battery2", DISCHARGE_MIN_VOLTAGE, 259)//
+						.input("battery1", VOLTAGE, 400)//
+						.input("battery2", VOLTAGE, 404)//
+						.input("battery1", INTERNAL_VOLTAGE, 400)//
+						.input("battery2", INTERNAL_VOLTAGE, 404)//
+						.output("battery1", STATE, State.GO_RUNNING)//
+						.output("battery2", STATE, State.GO_RUNNING)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase("nine")//
+						.output("battery1", STATE, State.GO_RUNNING)//
+						.output("battery2", STATE, State.GO_RUNNING)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase("ten")//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.GO_RUNNING)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.GO_RUNNING)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase("eleven")//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase("12")//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.RUNNING)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase("13")//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.RUNNING)//
+						.output("battery0", STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase("14")//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.RUNNING)//
+						.output("battery0", STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase("15")//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.RUNNING)//
+						.output("battery0", STATE, StateMachine.State.RUNNING))//
 		;
 	}
 
@@ -171,49 +176,49 @@ public class BatteryFeneconF2bParallelClusterImplTest {
 				.next(new TestCase()//
 						.output("battery1", STATE, State.STOPPED)//
 						.output("battery2", STATE, State.STOPPED)//
-						.output("battery0", STATE, StateMachine.State.UNDEFINED))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.STOPPED)//
-		// .output("battery2", STATE, State.STOPPED)//
-		// .output("battery0", STATE, StateMachine.State.STOPPED))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.STOPPED)//
-		// .output("battery2", STATE, State.STOPPED)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .input("battery1", SOC, 50) //
-		// .input("battery2", SOC, 50) //
-		// .input("battery1", CHARGE_MAX_VOLTAGE, 403) //
-		// .input("battery2", CHARGE_MAX_VOLTAGE, 403) //
-		// .input("battery1", DISCHARGE_MIN_VOLTAGE, 259)//
-		// .input("battery2", DISCHARGE_MIN_VOLTAGE, 259)//
-		// .input("battery1", VOLTAGE, 400)//
-		// .input("battery2", VOLTAGE, 406)//
-		// .input("battery1", INTERNAL_VOLTAGE, 400)//
-		// .input("battery2", INTERNAL_VOLTAGE, 406)//
-		// .output("battery1", STATE, State.GO_RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.GO_RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.GO_STOPPED)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.STOPPED)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.STOPPED)//
-		// .output("battery0", STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.STOPPED)//
-		// .output("battery0", STATE, StateMachine.State.RUNNING))//
+						.output("battery0", STATE, StateMachine.State.STOPPED))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.STOPPED)//
+						.output("battery2", STATE, State.STOPPED)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						// .output("battery1", STATE, State.STOPPED)//
+						// .output("battery2", STATE, State.STOPPED)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.input("battery1", SOC, 50) //
+						.input("battery2", SOC, 50) //
+						.input("battery1", CHARGE_MAX_VOLTAGE, 403) //
+						.input("battery2", CHARGE_MAX_VOLTAGE, 403) //
+						.input("battery1", DISCHARGE_MIN_VOLTAGE, 259)//
+						.input("battery2", DISCHARGE_MIN_VOLTAGE, 259)//
+						.input("battery1", VOLTAGE, 400)//
+						.input("battery2", VOLTAGE, 406)//
+						.input("battery1", INTERNAL_VOLTAGE, 400)//
+						.input("battery2", INTERNAL_VOLTAGE, 406)//
+						.output("battery1", STATE, State.GO_RUNNING)//
+						.output("battery2", STATE, State.GO_RUNNING)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.GO_RUNNING)//
+						.output("battery2", STATE, State.GO_RUNNING)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.GO_STOPPED)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.STOPPED)//
+						.output("battery0", STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.STOPPED)//
+						.output("battery0", STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.STOPPED)//
+						.output("battery0", STATE, StateMachine.State.RUNNING))//
 		;
 	}
 
@@ -265,86 +270,135 @@ public class BatteryFeneconF2bParallelClusterImplTest {
 				.next(new TestCase()//
 						.output("battery1", STATE, State.STOPPED)//
 						.output("battery2", STATE, State.STOPPED)//
-						.output(STATE, StateMachine.State.UNDEFINED))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.STOPPED)//
-		// .output("battery2", STATE, State.STOPPED)//
-		// .output(STATE, StateMachine.State.STOPPED))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.STOPPED)//
-		// .output("battery2", STATE, State.STOPPED)//
-		// .output(STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .input("battery1", SOC, 50) //
-		// .input("battery2", SOC, 50) //
-		// .input("battery1", CHARGE_MAX_VOLTAGE, 403) //
-		// .input("battery2", CHARGE_MAX_VOLTAGE, 403) //
-		// .input("battery1", DISCHARGE_MIN_VOLTAGE, 259)//
-		// .input("battery2", DISCHARGE_MIN_VOLTAGE, 259)//
-		// .input("battery1", VOLTAGE, 400)//
-		// .input("battery2", VOLTAGE, 404)//
-		// .input("battery1", INTERNAL_VOLTAGE, 400)//
-		// .input("battery2", INTERNAL_VOLTAGE, 404)//
-		// .output("battery1", STATE, State.GO_RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output(STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.GO_RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output(STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output(STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output(STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.GO_RUNNING)//
-		// .output(STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.RUNNING)//
-		// .output(STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.RUNNING)//
-		// .output(STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.RUNNING)//
-		// .output(STATE, StateMachine.State.GO_RUNNING))//
-		// .next(new TestCase()//
-		// .output("battery1", STATE, State.RUNNING)//
-		// .output("battery2", STATE, State.RUNNING)//
-		// .output(STATE, StateMachine.State.RUNNING))//
-		// .next(new TestCase() //
-		// .output("battery2", DUMMY_FAULT, true) //
-		// .output("battery1", STATE, State.RUNNING) //
-		// .output("battery2", STATE, State.RUNNING) //
-		// .output(STATE, StateMachine.State.RUNNING))//
-		// .next(new TestCase() //
-		// .output("battery1", STATE, State.RUNNING) //
-		// .output("battery2", STATE, State.RUNNING) //
-		// .output(STATE, StateMachine.State.RUNNING))//
-		// .next(new TestCase() //
-		// .output("battery1", STATE, State.RUNNING) //
-		// .output("battery2", STATE, State.ERROR) //
-		// .output(STATE, StateMachine.State.RUNNING))//
-		// .next(new TestCase() //
-		// .output("battery1", STATE, State.RUNNING) //
-		// .output("battery2", STATE, State.ERROR) //
-		// .output(STATE, StateMachine.State.RUNNING))//
-		// .next(new TestCase() //
-		// .output("battery1", STATE, State.RUNNING) //
-		// .output("battery2", STATE, State.ERROR) //
-		// .output(STATE, StateMachine.State.RUNNING))//
-		// .next(new TestCase() //
-		// .output("battery1", STATE, State.RUNNING) //
-		// .output("battery2", STATE, State.ERROR) //
-		// .output(STATE, StateMachine.State.RUNNING))//
+						.output(STATE, StateMachine.State.STOPPED))//
+				.next(new TestCase()//
+						// .output("battery1", STATE, State.STOPPED)//
+						// .output("battery2", STATE, State.STOPPED)//
+						.output(STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						// .output("battery1", STATE, State.STOPPED)//
+						// .output("battery2", STATE, State.STOPPED)//
+						.output(STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase("8")//
+						.input("battery1", SOC, 50) //
+						.input("battery2", SOC, 50) //
+						.input("battery1", CHARGE_MAX_VOLTAGE, 403) //
+						.input("battery2", CHARGE_MAX_VOLTAGE, 403) //
+						.input("battery1", DISCHARGE_MIN_VOLTAGE, 259)//
+						.input("battery2", DISCHARGE_MIN_VOLTAGE, 259)//
+						.input("battery1", VOLTAGE, 400)//
+						.input("battery2", VOLTAGE, 404)//
+						.input("battery1", INTERNAL_VOLTAGE, 400)//
+						.input("battery2", INTERNAL_VOLTAGE, 404)//
+						.output("battery1", STATE, State.GO_RUNNING)//
+						.output("battery2", STATE, State.GO_RUNNING)//
+						.output(STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.GO_RUNNING)//
+						.output("battery2", STATE, State.GO_RUNNING)//
+						.output(STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.GO_RUNNING)//
+						.output(STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.GO_RUNNING)//
+						.output(STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase("12")//
+						// .output("battery1", STATE, State.RUNNING)//
+						// .output("battery2", STATE, State.GO_RUNNING)//
+						.output(STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.RUNNING)//
+						.output(STATE, StateMachine.State.GO_RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.RUNNING)//
+						.output(STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase("15")//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.RUNNING)//
+						.output(STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase()//
+						.output("battery1", STATE, State.RUNNING)//
+						.output("battery2", STATE, State.RUNNING)//
+						.output(STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase("17") //
+						.input("battery2", DUMMY_FAULT, true) //
+						.output("battery1", STATE, State.RUNNING) //
+						.output("battery2", STATE, State.RUNNING) //
+						.output(STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase() //
+						.output("battery1", STATE, State.RUNNING) //
+						.output("battery2", STATE, State.RUNNING) //
+						.output(STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase() //
+						.output("battery1", STATE, State.RUNNING) //
+						.output("battery2", STATE, State.ERROR) //
+						.output(STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase() //
+						.output("battery1", STATE, State.RUNNING) //
+						.output("battery2", STATE, State.ERROR) //
+						.output(STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase() //
+						.output("battery1", STATE, State.RUNNING) //
+						.output("battery2", STATE, State.ERROR) //
+						.output(STATE, StateMachine.State.RUNNING))//
+				.next(new TestCase() //
+						.output("battery1", STATE, State.RUNNING) //
+						.output("battery2", STATE, State.ERROR) //
+						.output(STATE, StateMachine.State.RUNNING))//
 		;
+	}
+
+	/**
+	 * Verifies that the parallel cluster correctly aggregates negative
+	 * CHARGE_MAX_CURRENT values (force-charge mode) from its sub-clusters.
+	 */
+	@Test
+	public void testForceChargeCurrentAggregation() throws Exception {
+		final var clock = createDummyClock();
+
+		var battery1 = new BatteryFeneconF2bDummyImpl();
+		new ComponentTest(battery1) //
+				.addReference("componentManager", new DummyComponentManager(clock)) //
+				.activate(io.openems.edge.battery.fenecon.f2b.dummy.MyConfig.create() //
+						.setId("battery1") //
+						.setStartStop(StartStopConfig.AUTO) //
+						.build());
+
+		var battery2 = new BatteryFeneconF2bDummyImpl();
+		new ComponentTest(battery2) //
+				.addReference("componentManager", new DummyComponentManager(clock)) //
+				.activate(io.openems.edge.battery.fenecon.f2b.dummy.MyConfig.create() //
+						.setId("battery2") //
+						.setStartStop(StartStopConfig.AUTO) //
+						.build());
+
+		var parallelCluster = new BatteryFeneconF2bClusterParallelImpl();
+		var sut = new ComponentTest(parallelCluster) //
+				.addReference("cm", new DummyConfigurationAdmin()) //
+				.addReference("componentManager", new DummyComponentManager(clock)) //
+				.activate(io.openems.edge.battery.fenecon.f2b.cluster.parallel.MyConfig.create() //
+						.setId("battery0") //
+						.setStartStop(StartStopConfig.START) //
+						.setBatteryIds("battery1", "battery2") //
+						.build()) //
+				.addReference("addBattery", battery1) //
+				.addReference("addBattery", battery2);
+
+		sut.next(new TestCase() //
+				.input("battery1", StartStoppable.ChannelId.START_STOP, StartStop.START) //
+				.input("battery2", StartStoppable.ChannelId.START_STOP, StartStop.START) //
+				.input(StartStoppable.ChannelId.START_STOP, StartStop.START) //
+				.onAfterProcessImage(() -> {
+					battery1.getCurrentChannel().setNextValue(0);
+					battery2.getCurrentChannel().setNextValue(0);
+					battery1.withChargeMaxCurrent(-6);
+					battery2.withChargeMaxCurrent(-6);
+				}) //
+				.output(Battery.ChannelId.CHARGE_MAX_CURRENT, -12));
 	}
 }

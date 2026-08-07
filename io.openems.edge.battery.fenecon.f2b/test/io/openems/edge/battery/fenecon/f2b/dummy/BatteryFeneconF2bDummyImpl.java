@@ -16,6 +16,7 @@ import io.openems.edge.battery.fenecon.f2b.dummy.statemachine.StateMachine;
 import io.openems.edge.battery.fenecon.f2b.dummy.statemachine.StateMachine.State;
 import io.openems.edge.battery.protection.BatteryProtection;
 import io.openems.edge.battery.protection.BatteryVoltageProtection;
+import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.component.AbstractOpenemsComponent;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
@@ -114,6 +115,18 @@ public class BatteryFeneconF2bDummyImpl extends AbstractOpenemsComponent
 	}
 
 	/**
+	 * Sets and applies the {@link Battery.ChannelId#CURRENT}.
+	 *
+	 * @param value the Current in [A]
+	 * @return myself
+	 */
+	public BatteryFeneconF2bDummyImpl withCurrent(int value) {
+		this._setCurrent(value);
+		this.getCurrentChannel().nextProcessImage();
+		return this;
+	}
+
+	/**
 	 * Sets and applies the {@link Battery.ChannelId#MIN_CELL_VOLTAGE}.
 	 *
 	 * @param value the Min-Cell-Voltage in [mV]
@@ -167,9 +180,8 @@ public class BatteryFeneconF2bDummyImpl extends AbstractOpenemsComponent
 			return;
 		}
 		switch (event.getTopic()) {
-		case EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE:
-			this.handleStateMachine();
-			break;
+		case EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE -> this.channels().forEach(Channel::nextProcessImage);
+		case EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE -> this.handleStateMachine();
 		}
 	}
 
