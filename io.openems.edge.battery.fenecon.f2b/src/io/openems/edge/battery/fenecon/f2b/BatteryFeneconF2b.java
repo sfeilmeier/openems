@@ -491,9 +491,9 @@ public interface BatteryFeneconF2b extends Battery, BatteryErrorAcknowledge {
 	}
 
 	/**
-	 * Gets the Channel for {@link ChannelId#F2B_SOFTWARE_VERSION_OUTDATED}.
+	 * Gets the {@link Value} for {@link ChannelId#F2B_SOFTWARE_VERSION_OUTDATED}.
 	 *
-	 * @return the Channel {@link Channel}
+	 * @return the {@link Value} of {@link ChannelId#F2B_SOFTWARE_VERSION_OUTDATED}
 	 */
 	public default Value<Boolean> getF2bSoftwareVersionOutdated() {
 		return this.getF2bSoftwareVersionOutdatedChannel().value();
@@ -509,7 +509,7 @@ public interface BatteryFeneconF2b extends Battery, BatteryErrorAcknowledge {
 	}
 
 	/**
-	 * Gets the Channel for {@link ChannelId#F2B_HARDWARE_VERSION_WRONG}.
+	 * Gets the {@link Value} for {@link ChannelId#F2B_HARDWARE_VERSION_WRONG}.
 	 *
 	 * @return the Channel {@link Channel}
 	 */
@@ -527,12 +527,21 @@ public interface BatteryFeneconF2b extends Battery, BatteryErrorAcknowledge {
 	}
 
 	/**
-	 * Gets the Channel for {@link ChannelId#F2B_HARDWARE_TYPE}.
+	 * Gets the {@link Value} for {@link ChannelId#F2B_HARDWARE_TYPE}.
 	 *
-	 * @return the Channel {@link Channel}
+	 * @return the {@link Value} of {@link ChannelId#F2B_HARDWARE_TYPE}
 	 */
 	public default Value<F2bHardwareType> getF2bHardwareType() {
 		return this.getF2bHardwareTypeChannel().value();
+	}
+
+	/**
+	 * Gets the {@link Value} for {@link ChannelId#F2B_HARDWARE_TYPE}.
+	 *
+	 * @return the {@link Value} of {@link ChannelId#F2B_HARDWARE_TYPE}
+	 */
+	public default F2bHardwareType getF2bHardwareTypeEnum() {
+		return this.getF2bHardwareTypeChannel().value().asEnum();
 	}
 
 	/**

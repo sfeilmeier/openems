@@ -23,6 +23,9 @@
         <Logger name="io.openems.edge.goodwe.update.GoodWeBatteryInverterUpdateable" level="info" additivity="true">
             <AppenderRef ref="FirmwareUpdateFile" />
         </Logger>
+        <Logger name="io.openems.edge.battery.fenecon.f2b.update.F2bUpdateable" level="info" additivity="true">
+            <AppenderRef ref="FirmwareUpdateFile" />
+        </Logger>
 
         <!-- Root Logger -->
         <Root level="info">

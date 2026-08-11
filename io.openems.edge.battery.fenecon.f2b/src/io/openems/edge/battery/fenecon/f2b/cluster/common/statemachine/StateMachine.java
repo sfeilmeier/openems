@@ -16,8 +16,6 @@ public class StateMachine extends AbstractStateMachine<StateMachine.State, Conte
 		STOPPED(21), //
 
 		ERROR(30), //
-
-		F2B_UPDATE(40), //
 		;
 
 		private final int value;
@@ -60,7 +58,6 @@ public class StateMachine extends AbstractStateMachine<StateMachine.State, Conte
 		case GO_STOPPED -> new GoStoppedHandler();
 		case STOPPED -> new StoppedHandler();
 		case ERROR -> new ErrorHandler();
-		case F2B_UPDATE -> new F2bUpdateHandler();
 		};
 	}
 }
