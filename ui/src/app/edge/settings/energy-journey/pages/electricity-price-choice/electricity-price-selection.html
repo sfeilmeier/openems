@@ -14,7 +14,7 @@
                 <ion-input [placeholder]="DEFAULT_ELECTRICITY_PRICE" type="number" formControlName="electricityPrice" value="{{ formGroup.controls['electricityPrice'].value }}" style="text-align: end"></ion-input>
               </ion-item>
               <ion-item [disabled]="!formGroup.controls['electricityPrice'].dirty" class="ion-float-right" lines="none">
-                <oe-flat-button [link]="{ routeRelative: route, text: '../', queryParams: { electricityPrice: this.formGroup?.controls['electricityPrice'].value } }" color="primary">
+                <oe-flat-button [link]="{ routeRelative: route, text: '../result', queryParams: { electricityPrice: this.formGroup?.controls['electricityPrice'].value } }" color="primary">
                   <span translate>SETTINGS.ENERGY_JOURNEY.START_ANALYSIS</span>
                 </oe-flat-button>
               </ion-item>

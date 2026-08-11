@@ -4,9 +4,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { compareVersions } from "compare-versions";
 import { BehaviorSubject, Subject } from "rxjs";
 import { filter, first } from "rxjs/operators";
-import { EnergyJourneyComponent } from "src/app/edge/settings/energy-journey/energy-journey";
 import { SumState } from "src/app/index/shared/sumState";
-import { UserComponent } from "src/app/user/user.component";
+import { PlatFormService } from "src/app/platform.service";
 import { environment } from "src/environments";
 import { JsonrpcRequest, JsonrpcResponseSuccess } from "../../jsonrpc/base";
 import { CurrentDataNotification } from "../../jsonrpc/notification/currentDataNotification";
@@ -28,6 +27,7 @@ import { GetChannelResponse } from "../../jsonrpc/response/getChannelResponse";
 import { Channel, GetChannelsOfComponentResponse } from "../../jsonrpc/response/getChannelsOfComponentResponse";
 import { GetEdgeConfigResponse } from "../../jsonrpc/response/getEdgeConfigResponse";
 import { GetPropertiesOfFactoryResponse } from "../../jsonrpc/response/getPropertiesOfFactoryResponse";
+import { User } from "../../jsonrpc/shared";
 import { ChannelAddress, Service, SystemLog, Websocket } from "../../shared";
 import { Role } from "../../type/role";
 import { Widgets } from "../../type/widgets";
@@ -35,7 +35,8 @@ import { ArrayUtils } from "../../utils/array/array.utils";
 import { ObjectUtils } from "../../utils/object/object-utils";
 import { PromiseUtils } from "../../utils/promise/promise.utils";
 import { StringUtils } from "../../utils/string/string.utils";
-import { AvailableScope, NavigationId, NavigationTree, PageFilterCombineMode, PageFilterMode, PageFilterSet, } from "../navigation/shared";
+import { SharedBottomNavigationBar } from "../navigation/bottom-bar/shared";
+import { NavigationId, NavigationTree } from "../navigation/shared";
 import { CurrentData } from "./currentdata";
 import { EdgeConfig } from "./edgeconfig";
 import { ThirdPartyUsageAcceptance } from "./popover/shared/third-party-usage-acceptance";
@@ -623,64 +624,27 @@ export class Edge {
         translate: TranslateService,
         edge: Edge,
         service: Service,
+        user: User,
+        platFormService: PlatFormService,
     ): Promise<NavigationTree> {
+        const config = this.getConfigSignal()();
         const baseNavigationTree: (translate: TranslateService) => ConstructorParameters<typeof NavigationTree> = (
             translate,
         ) => [
-            NavigationId.LIVE,
-            { baseString: "device/" + edge.id + "/live" },
+            NavigationId.ROOT,
+            { baseString: "device/" + edge.id },
             { name: "home-outline" },
-            "live",
+            "root",
             "icon",
-            [],
+            SharedBottomNavigationBar.getNavigationTree(edge, config, translate, service, user, platFormService),
             null,
         ];
 
         const _baseNavigationTree: ConstructorParameters<typeof NavigationTree> = baseNavigationTree(
             translate,
         ).slice() as ConstructorParameters<typeof NavigationTree>;
-        const navigationTree = new NavigationTree(..._baseNavigationTree);
-
-        // TODO find automated way to create reference for parents
-
-        if (edge.isOnline === false) {
-            return navigationTree;
-        }
-
-        const config = this.config.getValue();
-        this.addCommonWidgetNavigation(edge, config, navigationTree, translate);
-        this.addControllerNavigation(edge, config, navigationTree, translate);
-        navigationTree.setChild(
-            NavigationId.LIVE,
-            new NavigationTree(
-                NavigationId.HISTORY,
-                { baseString: "history" },
-                { name: "stats-chart-outline" },
-                translate.instant("GENERAL.HISTORY"),
-                "label",
-                [
-                    new NavigationTree(
-                        "export",
-                        { baseString: "export" },
-                        { name: "download-outline" },
-                        translate.instant("EDGE.CONFIG.INDEX.EXPORT"),
-                        "label",
-                        [],
-                        null,
-                    ),
-                ],
-                null,
-                { showOrder: "LOW" },
-            ),
-        );
-        const energyJourneyNavigationTree = EnergyJourneyComponent.getNavigationTree(edge, config, translate);
-
-        // only add energy journey if it has content
-        if (energyJourneyNavigationTree.children.length !== 0) {
-            navigationTree.setChild(NavigationId.LIVE, energyJourneyNavigationTree);
-        }
-        this.addGlobalNavigation(service, navigationTree, translate);
-        navigationTree.setChild(NavigationId.LIVE, UserComponent.getNavigationTree(service, translate));
+        let navigationTree = new NavigationTree(..._baseNavigationTree);
+        navigationTree = navigationTree.setParentRecursively();
         navigationTree.reorderByShowOrder(navigationTree);
         return navigationTree;
     }
@@ -732,7 +696,7 @@ export class Edge {
         return isUndecided && isOwner && hasValidCoordinates;
     }
 
-    private addCommonWidgetNavigation(
+    protected addCommonWidgetNavigation(
         edge: Edge,
         config: EdgeConfig,
         currentNavigationTree: NavigationTree,
@@ -753,94 +717,6 @@ export class Edge {
             }
             currentNavigationTree.setChild(NavigationId.LIVE, new NavigationTree(...navigationTree));
         }
-    }
-
-    private addControllerNavigation(
-        edge: Edge,
-        config: EdgeConfig,
-        currentNavigationTree: NavigationTree,
-        translate: TranslateService,
-    ): void {
-        const controllerNavigationTrees = Widgets.getControllerNavigationTrees(edge, translate, config);
-
-        for (const navigationTree of controllerNavigationTrees) {
-            if (navigationTree == null) {
-                continue;
-            }
-
-            currentNavigationTree.setChild(NavigationId.LIVE, new NavigationTree(...navigationTree));
-        }
-    }
-
-    private addGlobalNavigation(
-        service: Service,
-        currentNavigationTree: NavigationTree,
-        translate: TranslateService,
-    ): void {
-        const settingsFilter: PageFilterSet = {
-            combine: PageFilterCombineMode.ANY,
-            rules: [{ navigationId: "system-overview", mode: PageFilterMode.HIDE }],
-        };
-
-        currentNavigationTree.setChild(
-            NavigationId.LIVE,
-            new NavigationTree(
-                "settings",
-                { baseString: "settings" },
-                { name: "cog-outline" },
-                translate.instant("MENU.EDGE_SYSTEM_SETTINGS"),
-                "label",
-                [],
-                null,
-                {
-                    availableScope: AvailableScope.LOCAL,
-                    pageFilter: settingsFilter,
-                },
-            ),
-        );
-        currentNavigationTree.setChild(NavigationId.LIVE, UserComponent.getNavigationTree(service, translate));
-        currentNavigationTree.setChild(
-            NavigationId.LIVE,
-            new NavigationTree(
-                "navigation-info",
-                {
-                    baseString: "navigation-info",
-                    queryParams: { source: "global" },
-                },
-                { name: "information-outline" },
-                translate.instant("GENERAL.HELP"),
-                "label",
-                [],
-                null,
-                { availableScope: AvailableScope.LOCAL },
-            ),
-        );
-
-        const rootNavigationTree = new NavigationTree(
-            NavigationId.ROOT,
-            { baseString: "" },
-            { name: "menu-outline" },
-            "",
-            "hidden",
-            [],
-            null,
-            { availableScope: AvailableScope.LOCAL },
-        );
-        rootNavigationTree.setChild(
-            NavigationId.ROOT,
-            new NavigationTree(
-                "system-overview",
-                { baseString: "overview" },
-                { name: "menu-outline" },
-                translate.instant("MENU.OVERVIEW"),
-                "label",
-                [],
-                null,
-                { customLink: "/overview" },
-            ),
-        );
-
-        currentNavigationTree.parent = rootNavigationTree;
     }
 
     /** Refresh the config. */

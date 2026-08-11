@@ -58,6 +58,7 @@ addIcons({
     "oe-energy-journey": environment.icons.ENERGY_JOURNEY,
     "oe-battery-extension": environment.icons.BATTERY_EXTENSION,
     "oe-wrap-up": environment.icons.WRAP_UP,
+    "oe-favorites": environment.icons.COMMON.FAVORITES,
 });
 
 export class Permission {
@@ -150,7 +151,7 @@ export class EdgePermission {
                 {
                     name: translate.instant("SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS"),
                     callback: () =>
-                        router.navigate(["batteryExtension", "electricityPriceChoice"], { relativeTo: route }),
+                        router.navigate(["battery-extension/electricity-price-choice"], { relativeTo: route }),
                 },
                 "assets/img/icon/energy-journey-batteryExtension.webp",
             ),

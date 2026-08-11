@@ -75,7 +75,7 @@ export class BatteryExtensionComponent extends AbstractFlatWidget {
         this.electricityPrice = this.route?.snapshot?.queryParams["electricityPrice"] as number;
 
         if (!this.electricityPrice) {
-            this.router.navigate(["../electricityPriceChoice"], { relativeTo: this.route });
+            this.router.navigate(["../electricity-price-choice"], { relativeTo: this.route });
             return;
         }
         this.getSimulatedData(this.electricityPrice);

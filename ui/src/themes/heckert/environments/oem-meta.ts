@@ -1,4 +1,4 @@
-import { alertCircleOutline, checkmarkDoneCircleOutline, flame, informationCircleOutline, warningOutline, } from "ionicons/icons";
+import { alertCircleOutline, checkmarkDoneCircleOutline, flame, heart, informationCircleOutline, warningOutline, } from "ionicons/icons";
 import { BaseMeta } from "src/environments";
 
 export const OemMeta: BaseMeta = {
@@ -11,6 +11,7 @@ export const OemMeta: BaseMeta = {
     },
     icons: {
         COMMON: {
+            FAVORITES: heart,
             CONSUMPTION: "assets/img/icon/consumption.svg",
             SELFCONSUMPTION: "assets/img/icon/selfconsumption.svg",
             GENERATOR: "assets/img/icon/generator.svg",

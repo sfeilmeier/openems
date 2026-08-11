@@ -1,6 +1,7 @@
 import { inject, NgModule } from "@angular/core";
 import { NoPreloading, RedirectFunction, RouterModule, Routes } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
+import { EmptyPageComponent } from "src/app/shared/components/navigation/empty-page/empty-page";
 import { environment } from "src/environments";
 import { EdgeComponent } from "./edge/edge.component";
 import { DelayedSellToGridChartOverviewComponent } from "./edge/history/delayedselltogrid/symmetricpeakshavingchartoverview/delayedselltogridchartoverview.component";
@@ -32,6 +33,8 @@ import { ControllerPeakShavingAsymmetricOverviewComponent as AsymmetricPeakshavi
 import { ControllerPeakShavingSymmetricOverviewComponent as SymmetricPeakshavingChartOverviewComponent } from "./edge/live/Controller/peak-shaving/symmetric/history/overview/overview";
 import { ControllerPeakShavingTimeslotOverviewComponent as TimeslotPeakshavingChartOverviewComponent } from "./edge/live/Controller/peak-shaving/Symmetric_TimeSlot/history/overview/overview";
 import { LiveDataService } from "./edge/live/livedataservice";
+import { BatteryExtensionComponent } from "./edge/settings/energy-journey/pages/battery-extension/battery-extension";
+import { ElectricityPriceSelectionComponent } from "./edge/settings/energy-journey/pages/electricity-price-choice/electricity-price-selection";
 import { LoginComponent } from "./index/login.component";
 import { OverViewComponent } from "./index/overview/overview.component";
 import { CurrentAndVoltageOverviewComponent } from "./shared/components/edge/meter/currentVoltage/overview/currentVoltage.overview";
@@ -210,6 +213,13 @@ export const routes: Routes = [
         children: [
             { path: "", redirectTo: "live", pathMatch: "full" },
             {
+                path: "",
+                loadChildren: () =>
+                    import("./shared/components/navigation/navigation-routing.module").then(
+                        (m) => m.NavigationRoutingModule,
+                    ),
+            },
+            {
                 path: "live",
                 data: { navbarTitle: environment.uiTitle },
                 providers: [
@@ -228,6 +238,75 @@ export const routes: Routes = [
                 path: "settings",
                 loadChildren: () =>
                     import("./edge/settings/settings-routing.module").then((m) => m.SettingsRoutingModule),
+            },
+            {
+                path: "energy-journey",
+                loadChildren: () =>
+                    import("./edge/settings/energy-journey/energy-journey-routing.module").then(
+                        (m) => m.EnergyJourneyRoutingModule,
+                    ),
+            },
+            {
+                path: "energy-journey/index",
+                data: {
+                    navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
+                },
+                children: [
+                    {
+                        path: "",
+                        loadComponent: () =>
+                            import("src/app/edge/settings/energy-journey/new-navigation/energy-journey").then(
+                                (m) => m.EnergyJourneyLiveComponent,
+                            ),
+                    },
+                    {
+                        path: "battery-extension/electricity-price-choice",
+                        component: ElectricityPriceSelectionComponent,
+                        data: {
+                            navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
+                        },
+                    },
+                    {
+                        path: "battery-extension/result",
+                        component: BatteryExtensionComponent,
+                        data: {
+                            navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
+                        },
+                    },
+                ],
+            },
+            {
+                path: "favorites",
+                children: [
+                    { path: "", component: EmptyPageComponent, pathMatch: "full" },
+                    {
+                        path: "",
+                        loadChildren: () =>
+                            import("./shared/components/navigation/navigation-routing.module").then(
+                                (m) => m.NavigationRoutingModule,
+                            ),
+                    },
+                ],
+            },
+            {
+                path: "profile",
+                children: [
+                    { path: "", component: EmptyPageComponent, pathMatch: "full" },
+                    {
+                        path: "settings",
+                        loadChildren: () =>
+                            import("./edge/settings/settings-routing.module").then((m) => m.SettingsRoutingModule),
+                    },
+                    {
+                        path: "user",
+                        component: UserComponent,
+                        data: { navbarTitleToBeTranslated: "MENU.USER" },
+                    },
+                ],
+            },
+            {
+                path: "schedule",
+                children: [{ path: "", component: EmptyPageComponent, pathMatch: "full" }],
             },
         ],
     },
