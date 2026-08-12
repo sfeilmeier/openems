@@ -1,5 +1,6 @@
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { Edge, Websocket } from "src/app/shared/shared";
+import { ObjectUtils } from "src/app/shared/utils/object/object-utils";
 import { AddAppInstance } from "../../settings/app/jsonrpc/addAppInstance";
 import { DeleteAppInstance } from "../../settings/app/jsonrpc/deleteAppInstance";
 import { GetAppInstances } from "../../settings/app/jsonrpc/getAppInstances";
@@ -185,7 +186,7 @@ export class AppCenterUtil {
                     payload: new UpdateAppInstance.Request({
                         instanceId: instanceId,
                         alias: alias,
-                        properties: properties,
+                        properties: ObjectUtils.omitNullOrUndefinedValues(properties),
                     }),
                 }),
             )
@@ -221,7 +222,7 @@ export class AppCenterUtil {
                         key: key,
                         appId: appId,
                         alias: alias,
-                        properties: properties,
+                        properties: ObjectUtils.omitNullOrUndefinedValues(properties),
                     }),
                 }),
             )

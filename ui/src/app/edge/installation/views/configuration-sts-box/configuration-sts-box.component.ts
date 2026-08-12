@@ -73,6 +73,36 @@ export class ConfigurationStsBoxComponent implements OnInit {
             validators: {
                 validation: ["serialNumberRequiredWhenChecked"],
             },
+            hooks: {
+                onInit: (field) => {
+                    field.formControl?.valueChanges.subscribe((isAvailable: boolean) => {
+                        // The emergency-reserve / genset checkboxes below are only *disabled* (not hidden)
+                        // when the STS box is unavailable, and disabling a control doesn't clear its value.
+                        // Without this, a previously enabled state stays true in the model/request even
+                        // though the UI shows it as disabled.
+                        if (isAvailable || field.model == undefined) {
+                            return;
+                        }
+
+                        if (field.model == undefined) {
+                            return;
+                        }
+
+                        field.model.isEnabled = false;
+                        field.form?.get("isEnabled")?.setValue(false);
+
+                        if (field.model.genset == undefined) {
+                            return;
+                        }
+
+                        field.model.genset.isEnabled = false;
+                        field.form?.get("genset.isEnabled")?.setValue(false);
+
+                        field.model.genset.IS_GENSET_INSTALLED = false;
+                        field.form?.get("genset.IS_GENSET_INSTALLED")?.setValue(false);
+                    });
+                },
+            },
         });
 
         fields.push(...this.ibn.getEmergencyReserveFields());

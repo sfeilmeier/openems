@@ -1,5 +1,6 @@
 import { JsonrpcRequest } from "src/app/shared/jsonrpc/base";
 import { States } from "src/app/shared/ngrx-store/states";
+import { ObjectUtils } from "src/app/shared/utils/object/object-utils";
 
 /**
  * <pre>
@@ -20,13 +21,21 @@ import { States } from "src/app/shared/ngrx-store/states";
 export class GetEstimatedConfigRequest extends JsonrpcRequest {
 
     private static METHOD: string = "getEstimatedConfiguration";
+    public override readonly params: {};
     protected override requiredState: States = States.EDGE_SELECTED;
 
     public constructor(
-        public override readonly params: {
+        params: {
+            appId?: string,
+            alias?: string,
+            properties?: Record<string, any>,
         },
     ) {
-        super(GetEstimatedConfigRequest.METHOD, params);
+        const sanitizedParams = params.properties != null
+            ? { ...params, properties: ObjectUtils.omitNullOrUndefinedValues(params.properties) }
+            : params;
+        super(GetEstimatedConfigRequest.METHOD, sanitizedParams);
+        this.params = sanitizedParams;
     }
 
 }
