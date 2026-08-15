@@ -125,7 +125,7 @@ export class Widgets {
             case "Controller.IO.HeatingElement":
                 return SharedControllerIoHeatingElement.getNavigationTree(translate, component);
             case "Controller.Io.HeatPump.SgReady":
-                return SharedControllerIoHeatpump.getNavigationTree(translate, component);
+                return SharedControllerIoHeatpump.getNavigationTree(translate, component, edge);
             case "System.Fenecon.Industrial.Xl":
                 return SharedSystemIndustrialXl.getNavigationTree(translate, widget.componentId);
             case "System.Fenecon.Industrial.L":
