@@ -186,7 +186,7 @@ export class AppCenterUtil {
                     payload: new UpdateAppInstance.Request({
                         instanceId: instanceId,
                         alias: alias,
-                        properties: ObjectUtils.omitNullOrUndefinedValues(properties),
+                        properties: ObjectUtils.omitNullOrUndefinedValues(properties, (val) => !Number.isNaN(val)),
                     }),
                 }),
             )
@@ -222,7 +222,7 @@ export class AppCenterUtil {
                         key: key,
                         appId: appId,
                         alias: alias,
-                        properties: ObjectUtils.omitNullOrUndefinedValues(properties),
+                        properties: ObjectUtils.omitNullOrUndefinedValues(properties, (val) => !Number.isNaN(val)),
                     }),
                 }),
             )

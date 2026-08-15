@@ -13,10 +13,10 @@ import { SystemId } from "../../../shared/system";
 import { WebLinks } from "../../../shared/weblink.utils";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
 import { BatteryTowerSettings } from "../../abstract-ibn";
-import { AbstractCommercialGen3, CommercialGen3App, Genset } from "../abstract-commercial-gen3";
+import { AbstractCommercialGen3, CommercialGen3App, GensetProperties } from "../abstract-commercial-gen3";
 
 type Commercial100AppProperties = CommercialGen3App &
-    Omit<Genset, "isEnabled"> & {
+    GensetProperties & {
         CONNECTED_BATTERY_SYSTEMS: ConnectedBatterySystems;
     };
 

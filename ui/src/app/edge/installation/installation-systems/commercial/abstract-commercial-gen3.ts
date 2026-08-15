@@ -40,6 +40,16 @@ export interface Genset {
 
 export type EmergencyModel = EmergencyReserve & StsBox & { genset: Genset };
 
+/**
+ * Payload sent to the backend for the genset properties. Modeled as a discriminated union on `IS_GENSET_INSTALLED` so
+ * that the detail properties (e.g. `GENSET_CHARGE_SOC_START`) are only required - and therefore only ever sent - when a
+ * genset is actually installed. This avoids sending `null` values the backend cannot parse into its required numeric
+ * properties.
+ */
+export type GensetProperties =
+    | { IS_GENSET_INSTALLED: false }
+    | ({ IS_GENSET_INSTALLED: true } & Omit<Genset, "isEnabled" | "IS_GENSET_INSTALLED">);
+
 export type MpptConfig = {
     [K in `HAS_MPPT_${number}`]: boolean;
 } & {
@@ -121,10 +131,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
     public override addSystemSpecificFields(tableData: any): void {
         super.addSystemSpecificFields(tableData);
 
-        if (
-            this.gridSetting !== null &&
-            this.gridSetting === GridSetting.VDE_4110
-        ) {
+        if (this.gridSetting !== null && this.gridSetting === GridSetting.VDE_4110) {
             tableData.push(
                 ...ConfigurationAdvancedSettingsComponent.getCompletionSummaryFromAdvancedGridSettings(
                     this.translate,
@@ -167,15 +174,19 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
             valueField.props["info"] = this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.INFO");
 
             valueField.hooks = valueField.hooks || {};
+            // Call the base class' onInit first so its null/""/NaN guard for this field still applies.
+            const baseOnInit = valueField.hooks.onInit;
             valueField.hooks.onInit = (field) => {
+                baseOnInit?.(field);
                 field.formControl?.valueChanges.subscribe((newReserveValue: number | null | undefined) => {
-                    const chargeStartCtrl = field.form?.get("genset.CHARGE_SOC_START");
-                    if (newReserveValue != null) {
-                        this.emergencyReserve.genset.GENSET_CHARGE_SOC_START = newReserveValue;
-                        chargeStartCtrl?.patchValue(newReserveValue, {
-                            emitEvent: false,
-                        });
+                    if (newReserveValue == null || Number.isNaN(newReserveValue)) {
+                        return;
                     }
+                    const chargeStartCtrl = field.form?.get("genset.GENSET_CHARGE_SOC_START");
+                    this.emergencyReserve.genset.GENSET_CHARGE_SOC_START = newReserveValue;
+                    chargeStartCtrl?.patchValue(newReserveValue, {
+                        emitEvent: false,
+                    });
                 });
             };
         }
@@ -425,10 +436,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         const gridSettingIndex = this.views.indexOf(View.ConfigurationGridSetting);
         const advancedSettingsIndex = gridSettingIndex !== -1 ? gridSettingIndex + 1 : 10;
 
-        if (
-            this.gridSetting !== null &&
-            this.gridSetting === GridSetting.VDE_4110
-        ) {
+        if (this.gridSetting !== null && this.gridSetting === GridSetting.VDE_4110) {
             ViewUtils.add(this.views, View.ConfigurationAdvancedGridSettings, advancedSettingsIndex);
         } else {
             ViewUtils.remove(this.views, View.ConfigurationAdvancedGridSettings);
@@ -616,10 +624,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
                 });
             }
 
-            if (
-                this.gridSetting !== null &&
-                this.gridSetting === GridSetting.VDE_4110
-            ) {
+            if (this.gridSetting !== null && this.gridSetting === GridSetting.VDE_4110) {
                 protocol.items.push(
                     ...ConfigurationAdvancedSettingsComponent.getAdvancedGridSettingsFieldsProtocolItems(
                         this.translate,
@@ -675,7 +680,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
     public override getAppProperties(
         safetyCountry: SafetyCountry,
         feedInSetting: FeedInSetting,
-    ): CommercialGen3App & Omit<Genset, "isEnabled"> {
+    ): CommercialGen3App & GensetProperties {
         AssertionUtils.assertIsDefined(
             this.gridSetting,
             "Grid setting must be selected before generating app properties",
@@ -831,8 +836,11 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         payload[key] = value;
     }
 
-    private getGensetProperties(): Omit<Genset, "isEnabled"> {
-        const { isEnabled, ...payload } = this.emergencyReserve.genset;
-        return payload;
+    private getGensetProperties(): GensetProperties {
+        const { isEnabled, IS_GENSET_INSTALLED, ...detail } = this.emergencyReserve.genset;
+        if (!IS_GENSET_INSTALLED) {
+            return { IS_GENSET_INSTALLED: false };
+        }
+        return { IS_GENSET_INSTALLED: true, ...detail };
     }
 }

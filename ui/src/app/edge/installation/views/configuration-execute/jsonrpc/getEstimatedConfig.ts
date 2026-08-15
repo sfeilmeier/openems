@@ -10,32 +10,28 @@ import { ObjectUtils } from "src/app/shared/utils/object/object-utils";
  *   "method": "getEstimatedConfiguration",
  *   "params": {
  *      "alias": string ,
-        "appId": string ,
-        "properties": {
-        ...
-        } ,
+ *         "appId": string ,
+ *         "properties": {
+ *         ...
+ *         } ,
  *   }
  * }
  * </pre>
  */
 export class GetEstimatedConfigRequest extends JsonrpcRequest {
-
     private static METHOD: string = "getEstimatedConfiguration";
     public override readonly params: {};
     protected override requiredState: States = States.EDGE_SELECTED;
 
-    public constructor(
-        params: {
-            appId?: string,
-            alias?: string,
-            properties?: Record<string, any>,
-        },
-    ) {
-        const sanitizedParams = params.properties != null
-            ? { ...params, properties: ObjectUtils.omitNullOrUndefinedValues(params.properties) }
-            : params;
+    public constructor(params: { appId?: string; alias?: string; properties?: Record<string, any> }) {
+        const sanitizedParams =
+            params.properties != null
+                ? {
+                      ...params,
+                      properties: ObjectUtils.omitNullOrUndefinedValues(params.properties, (val) => !Number.isNaN(val)),
+                  }
+                : params;
         super(GetEstimatedConfigRequest.METHOD, sanitizedParams);
         this.params = sanitizedParams;
     }
-
 }
