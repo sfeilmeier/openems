@@ -247,7 +247,7 @@ public class DefaultConfigurationWorker extends ComponentManagerWorker {
 					.setMessage("Creating Component configuration [{}]: {}") //
 					.addArgument(factoryPid) //
 					.addArgument(() -> properties.stream() //
-							.map(p -> p.getName() + ":" + p.getValue().toString()) //
+							.map(p -> p.name() + ":" + p.value().toString()) //
 							.collect(Collectors.joining(", "))) //
 					.log();
 			this.parent.handleCreateComponentConfigRequest(null /* no user */,
@@ -274,7 +274,7 @@ public class DefaultConfigurationWorker extends ComponentManagerWorker {
 					.setMessage("Updating Component configuration [{}]: {}") //
 					.addArgument(componentId) //
 					.addArgument(() -> properties.stream() //
-							.map(p -> p.getName() + ":" + p.getValue().toString()) //
+							.map(p -> p.name() + ":" + p.value().toString()) //
 							.collect(Collectors.joining(", "))) //
 					.log();
 
