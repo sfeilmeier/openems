@@ -87,6 +87,7 @@ jobs:
           source: ui/android/target/
 
   build-ios-app:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/main-ui'
     runs-on: ubuntu-latest
     needs: setup
     strategy:

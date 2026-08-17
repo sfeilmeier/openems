@@ -1,0 +1,44 @@
+name: iOS App-Build
+run-name: App Build for iOS App
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI_COMMIT_BRANCH: ${{ github.ref_name }}
+  CI_GROUP: ${{ github.workflow }}-${{ github.ref_name }}
+
+jobs:
+  build-ios-app:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        theme: [fenecon]
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          sparse-checkout: |
+            tools/
+            ui/
+            gradle/
+            .gitea/
+
+      - name: Setup SSH
+        uses: ./.gitea/actions/setup-ssh
+        with:
+          ssh-key: ${{ secrets.MAC_SSH_KEY }}
+          host: ${{ vars.MAC_HOST }}
+
+      - name: Build and release iOS app
+        env:
+          MAC_HOST: ${{ vars.MAC_HOST }}
+          MAC_USER: fems
+        run: |
+          source tools/common.sh
+          common_initialize_environment
+          source openems.env
+          /usr/bin/ssh -o StrictHostKeyChecking=no ${MAC_USER}@${MAC_HOST} /Users/fems/process_ios_app.sh ${{ matrix.theme }} Release ${{ github.ref_name }}
