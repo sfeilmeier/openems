@@ -2,6 +2,7 @@
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { ArrayUtils } from "../utils/array/array.utils";
+import { Language } from "./language";
 import { Role } from "./role";
 import { TEnumKeys } from "./utility";
 
@@ -92,15 +93,10 @@ export class AdvertWidgets {
     public static parseAdvertWidgets(edge: Edge, config: EdgeConfig) {
         let list: AdvertWidget[] = [];
 
-        if (edge.roleIsAtLeast(Role.INSTALLER)) {
+        if (edge.roleIsAtLeast(Role.OWNER) && Language.getCurrentLanguage() === Language.DE) {
             list.push({
                 name: "advert-1",
-                title: { languageKey: "ADVERT.1.TITLE_INSTALLER" },
-            });
-        } else if (edge.roleIsAtLeast(Role.OWNER)) {
-            list.push({
-                name: "advert-1",
-                title: { languageKey: "ADVERT.1.TITLE_OWNER" },
+                title: { languageKey: "ADVERT.1.TITLE" },
             });
         }
 
