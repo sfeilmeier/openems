@@ -212,6 +212,7 @@ export const routes: Routes = [
         component: EdgeComponent,
         children: [
             { path: "", redirectTo: "live", pathMatch: "full" },
+            ...history(false), // Needs to be set here, because following path "is overwriting history routes"
             {
                 path: "",
                 loadChildren: () =>
@@ -233,7 +234,6 @@ export const routes: Routes = [
                         (m) => m.NavigationRoutingModule,
                     ),
             },
-            ...history(false),
             {
                 path: "settings",
                 loadChildren: () =>
