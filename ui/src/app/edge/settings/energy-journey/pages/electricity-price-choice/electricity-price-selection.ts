@@ -28,19 +28,7 @@ export class ElectricityPriceSelectionComponent extends AbstractFlatWidget imple
             formGroup.controls["electricityPrice"].markAsDirty();
         }
 
-        this.backUrl = `/device/${this.edge?.id}/settings/energyJourney`;
+        this.backUrl = `/device/${this.edge?.id}/settings/energyJourney/index`;
         return formGroup;
-    }
-
-    protected onNextClicked() {
-        if (this.formGroup?.invalid) {
-            this.service.toast(this.translate.instant("EDGE.NETWORK.MANDATORY_FIELDS"), "danger");
-            return;
-        }
-
-        this.router.navigate(["../"], {
-            relativeTo: this.route,
-            queryParams: { electricityPrice: this.formGroup?.controls["electricityPrice"].value },
-        });
     }
 }

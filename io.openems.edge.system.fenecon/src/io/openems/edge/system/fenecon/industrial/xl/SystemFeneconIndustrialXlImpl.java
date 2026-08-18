@@ -6,7 +6,7 @@ import static java.util.stream.Collectors.groupingBy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,12 +15,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -41,9 +43,9 @@ import io.openems.common.session.Role;
 import io.openems.common.timedata.Timeout;
 import io.openems.common.types.ChannelAddress;
 import io.openems.common.types.OpenemsType;
-import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.BatteryFeneconF2bCluster;
 import io.openems.edge.battery.fenecon.f2b.common.enums.F2bHardwareType;
+import io.openems.edge.battery.fenecon.f2b.update.F2bUpdateable;
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
 import io.openems.edge.common.channel.BooleanDoc;
 import io.openems.edge.common.channel.Channel;
@@ -60,6 +62,7 @@ import io.openems.edge.common.jsonapi.EdgeGuards;
 import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
+import io.openems.edge.common.update.Updateable;
 import io.openems.edge.ess.api.EssErrorAcknowledge;
 import io.openems.edge.ess.api.MetaEss;
 import io.openems.edge.ess.api.SymmetricEss;
@@ -70,7 +73,6 @@ import io.openems.edge.system.fenecon.industrial.xl.blueeplus.BlueEPlus;
 import io.openems.edge.system.fenecon.industrial.xl.firealarmsystem.HekatronB9X2;
 import io.openems.edge.system.fenecon.industrial.xl.hydac.Hydac;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.BmsHardwareReset;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.F2bUpdate;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.Context;
@@ -97,10 +99,8 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialXlImpl.class);
 	private final Timeout resetTimeout = Timeout.ofSeconds(5);
 	private final List<BatteryFeneconF2bCluster> batteries = new ArrayList<>();
-
-	private static final F2bSoftwareVersion LATEST_F2B_SOFTWARE_VERSION = new F2bSoftwareVersion(1, 2);
-	private static final int F2B_HARDWARE_VERSION_1V0 = 4;
-	private static final int F2B_HARDWARE_VERSION_1V2 = 5;
+	private ServiceRegistration<Updateable> serviceRegistration;
+	private static final F2bHardwareType F2B_HARDWARE_TYPE = F2bHardwareType.F2B_FM29_1V2;
 
 	private StartStop startStopTarget = StartStop.UNDEFINED;
 	private ChannelAddress outputDisable24vF2b = null;
@@ -128,7 +128,6 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 			target = "(enabled=true)")
 	protected synchronized void addBattery(BatteryFeneconF2bCluster battery) {
 		this.batteries.add(battery);
-		this.registerF2bVersionListeners(battery);
 	}
 
 	protected synchronized void removeBattery(BatteryFeneconF2bCluster battery) {
@@ -165,25 +164,17 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 		this.createInputChannels();
 	}
 
-	private static record F2bSoftwareVersion(int mainVersion, int subVersion) {
-
-		public boolean isOlderThan(F2bSoftwareVersion other) {
-			if (this.mainVersion != other.mainVersion) {
-				return this.mainVersion < other.mainVersion;
-			}
-			return this.subVersion < other.subVersion;
-		}
-	}
-
 	@Activate
 	private void activate(ComponentContext context, Config config) throws OpenemsNamedException {
 		super.activate(context, config.id(), config.alias(), config.enabled());
+		this.serviceRegistration = context.getBundleContext().registerService(Updateable.class,
+				new F2bUpdateable(this.batteries, F2B_HARDWARE_TYPE), new Hashtable<>());
 		if (!this.applyConfig(context, config)) {
 			return;
 		}
 	}
 
-	@Activate
+	@Modified
 	private void modified(ComponentContext context, Config config) throws OpenemsNamedException {
 		super.modified(context, config.id(), config.alias(), config.enabled());
 		if (!this.applyConfig(context, config)) {
@@ -210,6 +201,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	@Deactivate
 	protected void deactivate() {
 		super.deactivate();
+		this.serviceRegistration.unregister();
 	}
 
 	@Override
@@ -561,16 +553,6 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 			}
 		});
 
-		builder.handleRequest(new F2bUpdate(), endpoint -> endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.ADMIN)),
-				call -> {
-					if (!this.isStopped()) {
-						this.logWarn(this.log, "F2B Update can only be triggered if system is stopped.");
-						return EmptyObject.INSTANCE;
-					}
-					this.stateMachine.forceNextState(State.F2B_UPDATE);
-					return EmptyObject.INSTANCE;
-				});
-
 		builder.handleRequest(CLEAR_ERROR_REQUEST,
 				endpoint -> endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.INSTALLER)), //
 				call -> {
@@ -590,10 +572,6 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 
 	private boolean isIdle() {
 		return this.stateMachine.getCurrentState() == StateMachine.State.TEST_MODE_IDLE;
-	}
-
-	public TestMode.Request getTestRequestParams() {
-		return this.request;
 	}
 
 	public void setTestRequestParams(TestMode.Request testRequestParams) {
@@ -960,58 +938,5 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 					});
 					return EmptyObject.INSTANCE;
 				});
-	}
-
-	private void registerF2bVersionListeners(BatteryFeneconF2bCluster cluster) {
-		var battery = this.getFirstBattery(cluster);
-
-		battery.getF2bApplicationMainVersionChannel()//
-				.onChange((ignore, ignore2) -> this.updateF2bSoftwareVersionOutdated(cluster, battery));
-
-		battery.getF2bApplicationSubVersionChannel()//
-				.onChange((ignore, ignore2) -> this.updateF2bSoftwareVersionOutdated(cluster, battery));
-
-		battery.getF2bHardwareTypeChannel()//
-				.onChange((ignore, ignore2) -> this.updateF2bHardwareVersionOutdated(cluster, battery));
-	}
-
-	private void updateF2bSoftwareVersionOutdated(BatteryFeneconF2bCluster cluster, BatteryFeneconF2b battery) {
-		if (battery == null) {
-			cluster._setF2bSoftwareVersionOutdated(false);
-			return;
-		}
-
-		final var mainVersion = battery.getF2bApplicationMainVersion().orElse(null);
-		final var subVersion = battery.getF2bApplicationSubVersion().orElse(null);
-
-		if (mainVersion == null || subVersion == null) {
-			cluster._setF2bSoftwareVersionOutdated(false);
-			return;
-		}
-
-		cluster._setF2bSoftwareVersionOutdated(
-				new F2bSoftwareVersion(mainVersion, subVersion).isOlderThan(LATEST_F2B_SOFTWARE_VERSION));
-	}
-
-	private void updateF2bHardwareVersionOutdated(BatteryFeneconF2bCluster cluster, BatteryFeneconF2b battery) {
-		if (battery == null) {
-			cluster._setF2bHardwareVersionWrong(false);
-			return;
-		}
-
-		var hardwareVersion = battery.getF2bHardwareType().orElse(F2bHardwareType.UNDEFINED);
-
-		boolean isWrong = hardwareVersion == F2bHardwareType.UNDEFINED
-				|| (hardwareVersion.getValue() != F2B_HARDWARE_VERSION_1V0
-						&& hardwareVersion.getValue() != F2B_HARDWARE_VERSION_1V2);
-
-		cluster._setF2bHardwareVersionWrong(isWrong);
-	}
-
-	private BatteryFeneconF2b getFirstBattery(BatteryFeneconF2bCluster cluster) {
-		return cluster.getBatteries() //
-				.stream() //
-				.min(Comparator.comparing(BatteryFeneconF2b::id)) //
-				.orElse(null);
 	}
 }

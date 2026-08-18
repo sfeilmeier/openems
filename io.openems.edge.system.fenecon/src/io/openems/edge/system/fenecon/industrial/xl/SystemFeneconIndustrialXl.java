@@ -1,6 +1,5 @@
 package io.openems.edge.system.fenecon.industrial.xl;
 
-import io.openems.edge.system.fenecon.industrial.xl.statemachine.F2bUpdateSystemSubState;
 import org.osgi.service.event.EventHandler;
 
 import io.openems.common.channel.AccessMode;
@@ -18,8 +17,6 @@ public interface SystemFeneconIndustrialXl extends OpenemsComponent, StartStoppa
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 		STATE_MACHINE(Doc.of(State.values()) //
 				.text("Current State of State-Machine")), //
-		F2B_UPDATE_STATE_MACHINE(Doc.of(F2bUpdateSystemSubState.values())//
-				.text("Current State of F2BUpdate State-Machine")), //
 		RUN_FAILED(Doc.of(Level.FAULT) //
 				.text("Running the Logic failed")), //
 		IN_LAMP_TEST_MODE(Doc.of(Level.WARNING) //

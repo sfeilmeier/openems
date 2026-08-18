@@ -151,23 +151,33 @@ export const settingsRoutes: Routes = [
         canActivate: [hasEdgeRole(Role.ADMIN)],
     },
     {
-        path: "energyJourney",
-        loadComponent: () => import("./energy-journey/energy-journey").then((m) => m.EnergyJourneyComponent),
-        data: { navbarTitle: "Energy Journey" },
-    },
-    {
-        path: "energyJourney/batteryExtension",
-        component: BatteryExtensionComponent,
+        path: "energy-journey",
         data: {
             navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
         },
-    },
-    {
-        path: "energyJourney/batteryExtension/electricityPriceChoice",
-        component: ElectricityPriceSelectionComponent,
-        data: {
-            navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
-        },
+        children: [
+            {
+                path: "",
+                loadComponent: () =>
+                    import("src/app/edge/settings/energy-journey/new-navigation/energy-journey").then(
+                        (m) => m.EnergyJourneyLiveComponent,
+                    ),
+            },
+            {
+                path: "battery-extension/electricity-price-choice",
+                component: ElectricityPriceSelectionComponent,
+                data: {
+                    navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
+                },
+            },
+            {
+                path: "battery-extension",
+                component: BatteryExtensionComponent,
+                data: {
+                    navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
+                },
+            },
+        ],
     },
     {
         path: "alerting",

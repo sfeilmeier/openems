@@ -1,12 +1,17 @@
 import { TranslateService } from "@ngx-translate/core";
+import { NavigationCard } from "src/app/edge/live/navigation-info/navigation-info";
+import { User } from "src/app/shared/jsonrpc/shared";
 import { Filter } from "../app/index/filter/filter.component";
 import { DefaultTypes } from "../app/shared/type/defaulttypes";
 export { environment } from "./dummy";
 
 export type Theme = "OpenEMS" | "FENECON" | "FENECONBeta" | "Heckert";
-export type BaseMeta = Pick<Environment, "icons" | "api" | "links" | "images">;
+export type BaseMeta<TImages extends object = object> = Pick<
+    Environment<TImages>,
+    "icons" | "api" | "links" | "images" | "navigationInfo"
+>;
 
-export interface Environment {
+export interface Environment<TImages extends object = object> {
     readonly theme: Theme;
 
     readonly uiTitle: string;
@@ -30,6 +35,7 @@ export interface Environment {
     };
     readonly icons: {
         readonly COMMON: {
+            readonly FAVORITES: string;
             readonly CONSUMPTION: string;
             readonly SELFCONSUMPTION: string;
             readonly GENERATOR: string;
@@ -99,6 +105,9 @@ export interface Environment {
                 readonly HEATING_ELEMENT: string | null;
             };
         };
+    } & TImages;
+    readonly navigationInfo?: {
+        readonly myPortalIcon: string | null;
     };
     readonly links: {
         readonly DOWNLOAD: {
@@ -284,6 +293,7 @@ export interface Environment {
         };
     };
     readonly PRODUCT_TYPES: (translate: TranslateService) => Filter | null;
+    readonly INFO_CARD: (translate: TranslateService, user: User) => NavigationCard[];
 }
 
 /*

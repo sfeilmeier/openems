@@ -189,6 +189,7 @@
 	bnd.identity;id='io.openems.edge.predictor.production.linearmodel',\
 	bnd.identity;id='io.openems.edge.predictor.profileclusteringmodel',\
 	bnd.identity;id='io.openems.edge.predictor.similardaymodel',\
+	bnd.identity;id='io.openems.edge.protectionrelay.telehaase',\
 	bnd.identity;id='io.openems.edge.pvinverter.cluster',\
 	bnd.identity;id='io.openems.edge.pvinverter.kaco.blueplanet',\
 	bnd.identity;id='io.openems.edge.pvinverter.kostal',\
@@ -230,7 +231,7 @@
 	com.opencsv;version='[5.9.0,5.9.1)',\
 	com.squareup.okhttp3;version='[5.4.0,5.4.1)',\
 	com.squareup.okhttp3.logging;version='[5.4.0,5.4.1)',\
-	com.squareup.okio;version='[3.17.0,3.17.1)',\
+	com.squareup.okio;version='[3.18.0,3.18.1)',\
 	com.sun.jna;version='[5.19.1,5.19.2)',\
 	io.openems.common;version=snapshot,\
 	io.openems.common.bridge.http;version=snapshot,\
@@ -393,6 +394,7 @@
 	io.openems.edge.predictor.production.linearmodel;version=snapshot,\
 	io.openems.edge.predictor.profileclusteringmodel;version=snapshot,\
 	io.openems.edge.predictor.similardaymodel;version=snapshot,\
+	io.openems.edge.protectionrelay.telehaase;version=snapshot,\
 	io.openems.edge.pvinverter.api;version=snapshot,\
 	io.openems.edge.pvinverter.cluster;version=snapshot,\
 	io.openems.edge.pvinverter.kaco.blueplanet;version=snapshot,\
@@ -466,7 +468,7 @@
 	org.apache.felix.configadmin;version='[1.9.26,1.9.27)';startlevel=11,\
 	org.apache.felix.eventadmin;version='[1.6.4,1.6.5)';startlevel=12,\
 	org.apache.felix.fileinstall;version='[3.7.4,3.7.5)';startlevel=13,\
-	org.apache.felix.http.jetty12;version='[2.0.2,2.0.3)',\
+	org.apache.felix.http.jetty12;version='[2.0.4,2.0.5)',\
 	org.apache.felix.http.servlet-api;version='[6.1.0,6.1.1)',\
 	org.apache.felix.inventory;version='[2.0.0,2.0.1)',\
 	org.apache.felix.metatype;version='[1.2.4,1.2.5)';startlevel=14,\

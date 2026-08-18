@@ -1,11 +1,19 @@
 package io.openems.edge.battery.fenecon.f2b.bmw;
 
+import java.util.function.IntSupplier;
+
 import io.openems.edge.battery.protection.BatteryProtectionDefinition;
 import io.openems.edge.battery.protection.force.ForceCharge;
 import io.openems.edge.battery.protection.force.ForceDischarge;
 import io.openems.edge.common.linecharacteristic.PolyLine;
 
 public class BatteryProtectionDefinitionF2b implements BatteryProtectionDefinition {
+
+	private final BatteryFeneconF2bBmwImpl battery;
+
+	public BatteryProtectionDefinitionF2b(BatteryFeneconF2bBmwImpl battery) {
+		this.battery = battery;
+	}
 
 	@Override
 	public int getInitialBmsMaxEverChargeCurrent() {
@@ -76,7 +84,11 @@ public class BatteryProtectionDefinitionF2b implements BatteryProtectionDefiniti
 	@Override
 	public ForceCharge.Params getForceChargeParams() {
 		return new ForceCharge.Params(3296, 3298, 3300);
+	}
 
+	@Override
+	public IntSupplier getForceChargeDischargeCurrent() {
+		return this.battery.buildForceChargeDischargeCurrent();
 	}
 
 	@Override

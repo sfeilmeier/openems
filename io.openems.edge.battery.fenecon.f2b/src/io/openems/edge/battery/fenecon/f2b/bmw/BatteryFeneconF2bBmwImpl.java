@@ -16,6 +16,7 @@ import static io.openems.edge.common.channel.ChannelUtils.setValueIfNotRead;
 import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE;
 
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.IntSupplier;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
@@ -107,6 +108,7 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_FFFF = SET_NULL_FOR_DEFAULT(0xFFFF);
 	private static final int INNER_RESISTANCE = 100; // [mOhm]
 	private static final int CAPACITY = 41_000; // [Wh], Usable-capacity
+	private static final int BASE_FORCE_CURRENT = 2; // [A]
 
 	private boolean hvContactorUnlocked = true;
 	private boolean heatingTarget = false;
@@ -153,7 +155,7 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 
 		// Initialize Battery-Protection
 		this.batteryProtection = BatteryProtection.create(this) //
-				.applyBatteryProtectionDefinition(new BatteryProtectionDefinitionF2b(), this.componentManager) //
+				.applyBatteryProtectionDefinition(new BatteryProtectionDefinitionF2b(this), this.componentManager) //
 				.build();
 		this.updateBatteryProtection();
 	}
@@ -498,13 +500,13 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 		this.getBatteryProtectionTypeChannel().onChange((oldValue, newValue) -> {
 			if (newValue.asEnum() == BatteryProtectionDefinitionType.RESTRICTED_PROTECTION) {
 				this.batteryProtection = BatteryProtection.create(this) //
-						.applyBatteryProtectionDefinition(new BatteryProtectionDefinitionRestricted(),
+						.applyBatteryProtectionDefinition(new BatteryProtectionDefinitionRestricted(this),
 								this.componentManager) //
 						.build();
 				return;
 			}
 			this.batteryProtection = BatteryProtection.create(this) //
-					.applyBatteryProtectionDefinition(new BatteryProtectionDefinitionF2b(), this.componentManager) //
+					.applyBatteryProtectionDefinition(new BatteryProtectionDefinitionF2b(this), this.componentManager) //
 					.build();
 		});
 	}
@@ -637,6 +639,32 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 	}
 
 	public static record BatteryValues(int soc, int voltage, int chargeMaxVoltage, int dischargeMinVoltage) {
+	}
+
+	/**
+	 * Builds an {@link IntSupplier} for the force-charge current that accounts for
+	 * the battery heater load.
+	 *
+	 * @return the current supplier
+	 */
+	protected IntSupplier buildForceChargeDischargeCurrent() {
+		return () -> {
+			var voltage = this.getVoltage().get();
+			if (voltage == null || voltage <= 0) {
+				return BASE_FORCE_CURRENT;
+			}
+			var heatingPower = this.getHeatingPower().get();
+			final int effectiveHeatingPower;
+			if (heatingPower != null && heatingPower > 0) {
+				effectiveHeatingPower = heatingPower;
+			} else if (this.getHeatingRequest().asEnum() == HeatingRequest.BATTERY_HEATING_PRECONDITIONING) {
+				effectiveHeatingPower = Constants.RELEASED_POWER; // 1000 W worst-case
+			} else {
+				return BASE_FORCE_CURRENT;
+			}
+			int heaterCurrent = (int) Math.ceil((double) effectiveHeatingPower / voltage);
+			return BASE_FORCE_CURRENT + heaterCurrent;
+		};
 	}
 
 	@Override

@@ -1,14 +1,12 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE_INSTALLER": "Rückblick & Highlights: The smarter E Europe",
-            "TEXT_INSTALLER": "Messe verpasst? Kein Problem! Ende Juni erlebten wir drei Messetage voller Energie, spannender Gespräche und innovativer Lösungen. Wer nicht persönlich dabei sein konnte, bekommt nun trotzdem die geballte Ladung aller neuesten Entwicklungen und Messe-Impressionen von FENECON, kompakt zusammengefasst.",
-            "LINK_TEXT_INSTALLER": "Zu den Highlights von FENECON",
-            "LINK_INSTALLER": "https://www.fenecon.de/ees26",
-            "TITLE_OWNER": "FENECON im Podcast „Geladen“",
-            "TEXT_OWNER": "Die Brüder und FENECON-Gründer Franz-Josef und Stefan Feilmeier waren zu Gast im beliebten Format „Geladen - der Batteriepodcast zur Energiewende“. Die zentrale Frage der Podcast-Episode: Verschläft die deutsche Industrie den Speicher-Boom - oder erwacht gerade ein schlafender Riese mit irrem Wachstumspotenzial?",
-            "LINK_TEXT_OWNER": "Gleich reinhören!",
-            "LINK_OWNER": "https://www.youtube.com/watch?v=d_OMPpKgR_I"
+            "TITLE": "Schon gewusst?",
+            "TEXT": "Was bedeutet Autarkie? Was kann dein Heimspeicher wirklich? Entdecke spannende Energie-Themen und praktische Tipps in deinem Energie ABC auf unseren Social Media Kanälen!",
+            "LINK_TEXT_INSTAGRAM": "Instagram",
+            "LINK_TEXT_YOUTUBE": "YouTube",
+            "LINK_YOUTUBE": "https://youtube.com/playlist?list=PLd6Ympqq1IRc&si=SzQMG93yfkZVmA6d",
+            "LINK_INSTAGRAM": "https://www.instagram.com/fenecon.de/?hl=de"
         }
     }
 }

@@ -58,6 +58,7 @@ addIcons({
     "oe-energy-journey": environment.icons.ENERGY_JOURNEY,
     "oe-battery-extension": environment.icons.BATTERY_EXTENSION,
     "oe-wrap-up": environment.icons.WRAP_UP,
+    "oe-favorites": environment.icons.COMMON.FAVORITES,
 });
 
 export class Permission {
@@ -150,7 +151,7 @@ export class EdgePermission {
                 {
                     name: translate.instant("SETTINGS.ENERGY_JOURNEY.TO_THE_ANALYSIS"),
                     callback: () =>
-                        router.navigate(["batteryExtension", "electricityPriceChoice"], { relativeTo: route }),
+                        router.navigate(["battery-extension/electricity-price-choice"], { relativeTo: route }),
                 },
                 "assets/img/icon/energy-journey-batteryExtension.webp",
             ),
@@ -204,6 +205,17 @@ export class EdgePermission {
      */
     public static hasSystemErrorAcknowledge(edge: Edge): boolean {
         return edge.isVersionAtLeast("2025.12.1");
+    }
+
+    /**
+     * Checks if the edge version is at least 2026.8.2 to and temporally if the user is ADMIN to access the time
+     * schedule and base mode in the heatpump component.
+     *
+     * @param edge The edge to check
+     * @returns True if the edge is 2026.8.2
+     */
+    public static isHeatpumpTimeScheduleAndBaseModeAvailable(edge: Edge): boolean {
+        return edge.isVersionAtLeast("2026.8.2") && edge.roleIsAtLeast(Role.ADMIN);
     }
 }
 

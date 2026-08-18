@@ -5,6 +5,7 @@ import { SharedProduction } from "src/app/edge/live/common/production/shared/sha
 import { SharedStorage } from "src/app/edge/live/common/storage/shared/shared";
 import { SharedWeather } from "src/app/edge/live/common/weather/shared/shared";
 import { SharedControllerChannelThreshold } from "src/app/edge/live/Controller/Channelthreshold/shared/shared";
+import { SharedControllerChpSoc } from "src/app/edge/live/Controller/ChpSoc/shared/shared";
 import { SharedControllerEnerixControl } from "src/app/edge/live/Controller/EnerixControl/shared/shared";
 import { ControllerEvseSingleShared } from "src/app/edge/live/Controller/Evse/shared/shared";
 import { SharedControllerHeat } from "src/app/edge/live/Controller/Heat/shared/shared";
@@ -115,6 +116,8 @@ export class Widgets {
         }
 
         switch (widget.name) {
+            case "Controller.CHP.SoC":
+                return SharedControllerChpSoc.getNavigationTree(translate, component);
             case "Controller.Clever-PV":
                 return SharedControllerEnerixControl.getNavigationTree(translate, component);
             case "Weather.OpenMeteo":
@@ -122,7 +125,7 @@ export class Widgets {
             case "Controller.IO.HeatingElement":
                 return SharedControllerIoHeatingElement.getNavigationTree(translate, component);
             case "Controller.Io.HeatPump.SgReady":
-                return SharedControllerIoHeatpump.getNavigationTree(translate, component);
+                return SharedControllerIoHeatpump.getNavigationTree(translate, component, edge);
             case "System.Fenecon.Industrial.Xl":
                 return SharedSystemIndustrialXl.getNavigationTree(translate, widget.componentId);
             case "System.Fenecon.Industrial.L":

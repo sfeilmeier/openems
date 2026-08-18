@@ -1,5 +1,22 @@
 [
     {
+        "version": "2026.8.2",
+        "entries": {
+            "de": [
+                "FEMS App Dynamischer Stromtarif (ENTSO-E, LUOX Energy): Zeitpunkt zur Abholung der Preise verbessert",
+                "FEMS App Janitza Zähler: Kompatibilität mit UMG 96-PQ-L",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest</a>: Neue Navigation in der Smartphone-Ansicht",
+                "Interne Verbesserungen an der Modbus-Kommunikation"
+            ],
+            "en": [
+                "FEMS App Time-of-Use Tariff (ENTSO-E, LUOX Energy): Improved timing for retrieving prices",
+                "FEMS App Janitza Meter: Compatibility with UMG 96-PQ-L",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Field Test</a>: New navigation in the smartphone view",
+                "Internal improvements to Modbus communication"
+            ]
+        }
+    },
+    {
         "version": "2026.8.1",
         "entries": {
             "de": [

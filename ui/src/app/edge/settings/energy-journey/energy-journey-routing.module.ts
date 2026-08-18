@@ -1,51 +1,55 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { WrapUpComponent } from "src/app/shared/components/edge/popover/annual-review/new-navigation/wrap-up";
+import { commonRoutes } from "src/app/shared/components/navigation/navigation-routing.module";
 import { hasEdgeRole } from "src/app/shared/guards/functional-guards";
 import { Role } from "src/app/shared/type/role";
 import { environment } from "src/environments";
-import { CommonAutarchyHistoryComponent } from "../../live/common/autarchy/history/new-navigation/new-navigation";
-import { CommonAutarchyHomeComponent } from "../../live/common/autarchy/new-navigation/new-navigation";
-import { CommonSelfConsumptionHistoryComponent } from "../../live/common/selfconsumption/history/new-navigation/new-navigation";
-import { CommonSelfConsumptionHomeComponent } from "../../live/common/selfconsumption/new-navigation/new-navigation";
+import { EmptyPageComponent } from "../../../shared/components/navigation/empty-page/empty-page";
+import { HistoryExcelExportComponent } from "../../history/common/energy/export/export";
+import { HistoryChartComponent } from "../../history/common/energy/new-navigation/new-navigation";
 import { BatteryExtensionComponent } from "./pages/battery-extension/battery-extension";
 import { ElectricityPriceSelectionComponent } from "./pages/electricity-price-choice/electricity-price-selection";
 
 export const energyJourneyRoutes: Routes = [
-    { path: "common/autarchy", component: CommonAutarchyHomeComponent },
+    { path: "", component: EmptyPageComponent, pathMatch: "full" },
+    ...commonRoutes,
     {
-        path: "common/autarchy/history",
-        component: CommonAutarchyHistoryComponent,
+        path: "history",
+        component: HistoryChartComponent,
     },
     {
-        path: "common/selfconsumption",
-        component: CommonSelfConsumptionHomeComponent,
+        path: "history/export",
+        component: HistoryExcelExportComponent,
     },
     {
-        path: "common/selfconsumption/history",
-        component: CommonSelfConsumptionHistoryComponent,
-    },
-    {
-        path: "extension",
-        loadComponent: () =>
-            import("src/app/edge/settings/energy-journey/new-navigation/energy-journey").then(
-                (m) => m.EnergyJourneyLiveComponent,
-            ),
-        data: { navbarTitle: "Energy Journey" },
-    },
-    {
-        path: "extension/batteryExtension",
-        component: BatteryExtensionComponent,
+        path: "index",
         data: {
             navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
         },
-    },
-    {
-        path: "extension/batteryExtension/electricityPriceChoice",
-        component: ElectricityPriceSelectionComponent,
-        data: {
-            navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
-        },
+        children: [
+            {
+                path: "",
+                loadComponent: () =>
+                    import("src/app/edge/settings/energy-journey/new-navigation/energy-journey").then(
+                        (m) => m.EnergyJourneyLiveComponent,
+                    ),
+            },
+            {
+                path: "battery-extension/electricity-price-choice",
+                component: ElectricityPriceSelectionComponent,
+                data: {
+                    navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
+                },
+            },
+            {
+                path: "battery-extension/result",
+                component: BatteryExtensionComponent,
+                data: {
+                    navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
+                },
+            },
+        ],
     },
     {
         path: "appcenter",

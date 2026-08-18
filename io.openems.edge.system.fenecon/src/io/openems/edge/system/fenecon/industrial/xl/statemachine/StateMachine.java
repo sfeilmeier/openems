@@ -21,8 +21,6 @@ public class StateMachine extends AbstractStateMachine<StateMachine.State, Conte
 		TEST_MODE_LAMP(41), //
 		TEST_MODE_ESS(42), //
 		MANUAL_BATTERY_START(43), //
-
-		F2B_UPDATE(50), //
 		;
 
 		private final int value;
@@ -69,7 +67,6 @@ public class StateMachine extends AbstractStateMachine<StateMachine.State, Conte
 		case TEST_MODE_LAMP -> new TestModeLampHandler();
 		case TEST_MODE_ESS -> new TestModeEssHandler();
 		case MANUAL_BATTERY_START -> new ManualBatteryStartHandler();
-		case F2B_UPDATE -> new F2bUpdateHandler();
 		};
 	}
 }

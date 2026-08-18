@@ -3,11 +3,12 @@ import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { IonIcon, ModalController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
-import { filter } from "rxjs";
 import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
 import { HelpButtonComponent } from "src/app/shared/components/modal/help-button/help-button";
 import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
-import { Service, UserPermission, Websocket } from "src/app/shared/shared";
+import { RouteService } from "src/app/shared/service/route.service";
+import { UserService } from "src/app/shared/service/user.service";
+import { Service, Websocket } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
 import { Icon } from "src/app/shared/type/widget";
 import { environment } from "src/environments";
@@ -24,7 +25,8 @@ type NavigationCardFooter = {
 
 export type NavigationCard = {
     infoText: string;
-    iconName: IonIcon["name"];
+    iconName?: IonIcon["name"];
+    iconUrl?: IonIcon["src"];
     contentText: string;
     buttonText: string;
     buttonHref: string;
@@ -53,47 +55,25 @@ function initializeNavigationInfoTranslations(translate: TranslateService): void
     ],
 })
 export class NavigationInfoComponent extends AbstractModal {
-    protected readonly isUserAllowedToSeeMyPortal = signal(false);
     protected readonly isGlobalInfo = signal(false);
 
-    protected readonly showMyPortalCard = computed(() => this.isUserAllowedToSeeMyPortal() && this.isGlobalInfo());
+    protected readonly userService = inject(UserService);
 
     protected readonly cards = computed<NavigationCard[]>(() => {
-        const cards: NavigationCard[] = [
-            {
-                infoText: this.translate.instant("BETA_TEST.NEW_UI_INFO"),
-                iconName: "information-outline",
-                contentText: this.translate.instant("BETA_TEST.CHANGELOG"),
-                buttonText: this.translate.instant("BETA_TEST.BUTTON"),
-                buttonHref: this.link ?? "",
-                footer: {
-                    text: this.translate.instant("BETA_TEST.FEEDBACK"),
-                    link: this.linkSurvey ?? "",
-                    linkText: this.translate.instant("GENERAL.SURVEY_LINK"),
-                },
-            },
-        ];
-        if (this.showMyPortalCard()) {
-            cards.push({
-                infoText: this.translate.instant("MY_PORTAL.INFO"),
-                iconName: "ticket-outline",
-                contentText: this.translate.instant("MY_PORTAL.TICKET"),
-                buttonText: this.translate.instant("MY_PORTAL.BUTTON"),
-                buttonHref: "https://erp.fenecon.de/my",
-                buttonIconName: "ticket-outline",
-            });
+        const user = this.userService.currentUser();
+        if (user == null) {
+            return [];
         }
-
-        return cards;
+        return environment.INFO_CARD(this.translate, user);
     });
 
-    protected link = environment.links.REDIRECT.BETA_CHANGE_LOG;
-    protected linkSurvey = environment.links.REDIRECT.BETA_SURVEY;
     protected docs: {
         link: string | null;
         displayName: string;
         icon: IconWithRequiredName;
     } | null = null;
+
+    private readonly routeService = inject(RouteService);
 
     private navigationService = inject(NavigationService);
 
@@ -192,17 +172,11 @@ export class NavigationInfoComponent extends AbstractModal {
     }
 
     protected override onIsInitialized(): void {
-        this.subscription.add(
-            this.service.metadata.pipe(filter((metadata) => !!metadata)).subscribe((metadata) => {
-                this.isUserAllowedToSeeMyPortal.set(UserPermission.isUserAllowedToSeeMyPortal(metadata.user));
-            }),
-        );
-
         this.setHeaderTitle();
     }
 
     private resolveSourceAndMode(): void {
-        const source = this.route.snapshot.queryParamMap.get("source");
+        const source = this.routeService.getQueryParam<"global">("source");
         this.isGlobalInfo.set(source === "global");
 
         if (source && source !== "global") {

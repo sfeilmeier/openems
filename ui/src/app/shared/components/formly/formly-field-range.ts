@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { FieldType } from "@ngx-formly/core";
-import { AssertionUtils } from "../../utils/assertions/assertions.utils";
 
 @Component({
     selector: "formly-range-type",
@@ -31,6 +30,12 @@ import { AssertionUtils } from "../../utils/assertions/assertions.utils";
         <ion-text class="range-current-value">
             {{ "GENERAL.CURRENT_VALUE" | translate }}: {{ getCurrentValueLabel() }}
         </ion-text>
+
+        @if (props.description) {
+            <p class="description-text">
+                {{ props.description }}
+            </p>
+        }
 
         @if (props.info) {
             <ion-grid>
@@ -88,7 +93,9 @@ export class FormlyRangeTypeComponent extends FieldType {
 
     protected getCurrentValueLabel(): string {
         const value = this.formControl.value;
-        AssertionUtils.assertIsDefined(value);
+        if (value === undefined || value === null || value === "" || Number.isNaN(Number(value))) {
+            return this.pinFormatter(Number(this.props.defaultValue ?? this.props.min ?? 0));
+        }
         return this.pinFormatter(Number(value));
     }
 }

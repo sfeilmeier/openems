@@ -6,8 +6,6 @@ import io.openems.common.channel.Level;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
-import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.F2bUpdateSubState;
-import io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine.StateMachine.State;
 import io.openems.edge.battery.fenecon.f2b.cluster.parallel.BatteryFeneconF2bClusterParallel;
 import io.openems.edge.battery.fenecon.f2b.cluster.parallel.BatteryFeneconF2bClusterParallelImpl;
 import io.openems.edge.battery.fenecon.f2b.cluster.serial.BatteryFeneconF2bClusterSerial;
@@ -38,8 +36,6 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 				.text("All batteries are in error!")), //
 		FW_UPDATE_ERROR(Doc.of(Level.FAULT)//
 				.text("Firmware update error!")), //
-		F2B_UPDATE_STATE_MACHINE(Doc.of(F2bUpdateSubState.values())//
-				.text("Current State of F2BUpdate State-Machine")), //
 		;
 
 		private final Doc doc;
@@ -382,22 +378,6 @@ public interface BatteryFeneconF2bCluster extends BatteryFeneconF2b, Battery, Op
 	 * @return true is cluster is {@link BatteryFeneconF2bClusterParallel}
 	 */
 	public boolean isParallelCluster();
-
-	/**
-	 * Internal method to set the {@link ChannelId#STATE_MACHINE} to
-	 * {@link State#F2B_UPDATE}.
-	 */
-	public void _startF2bUpdate();
-
-	/**
-	 * Internal method to check if the F2B update is finished. It checks the
-	 * {@link ChannelId#F2B_UPDATE_STATE_MACHINE} Channel for the StateMachine state
-	 * and returns true if the StateMachine is in State {@link State#F2B_UPDATE} and
-	 * SubState {@link F2bUpdateSubState#FINISHED}.
-	 * 
-	 * @return true if F2B update is finished.
-	 */
-	public boolean isF2bUpdateFinished();
 
 	/**
 	 * Gets the list of batteries which are part of the cluster.

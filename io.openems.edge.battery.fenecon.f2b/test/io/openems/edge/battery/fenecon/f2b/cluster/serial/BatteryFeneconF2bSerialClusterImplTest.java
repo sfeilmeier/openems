@@ -65,7 +65,7 @@ public class BatteryFeneconF2bSerialClusterImplTest {
 						.input("battery1", VOLTAGE, 400)//
 						.output("battery1", STATE, State.STOPPED) //
 						.output("battery2", STATE, State.STOPPED) //
-						.output(STATE, StateMachine.State.UNDEFINED))//
+						.output(STATE, StateMachine.State.STOPPED))//
 		// .next(new TestCase() //
 		// .output("battery1", STATE, State.STOPPED) //
 		// .output("battery2", STATE, State.STOPPED) //
@@ -164,7 +164,7 @@ public class BatteryFeneconF2bSerialClusterImplTest {
 				.next(new TestCase() //
 						.output("battery1", STATE, State.STOPPED) //
 						.output("battery2", STATE, State.STOPPED) //
-						.output(STATE, StateMachine.State.UNDEFINED))//
+						.output(STATE, StateMachine.State.STOPPED))//
 		// .next(new TestCase() //
 		// .output("battery1", STATE, State.STOPPED) //
 		// .output("battery2", STATE, State.STOPPED) //
@@ -217,7 +217,7 @@ public class BatteryFeneconF2bSerialClusterImplTest {
 						.input("battery1", VOLTAGE, 400)//
 						.output("battery1", STATE, State.STOPPED) //
 						.output("battery2", STATE, State.STOPPED) //
-						.output(STATE, StateMachine.State.UNDEFINED))//
+						.output(STATE, StateMachine.State.STOPPED))//
 		// .next(new TestCase() //
 		// .output("battery1", STATE, State.STOPPED) //
 		// .output("battery2", STATE, State.STOPPED) //
