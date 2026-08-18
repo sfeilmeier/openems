@@ -29,6 +29,17 @@ export enum UserSettings {
     USE_NEW_UI = "useNewUI",
     ANNUAL_REVIEW = "annualReview",
     IS_DEVELOPER = "isDeveloper",
+    HAS_PORTAL_ACCESS = "hasPortalAccess",
+}
+
+export interface UserSettingsMap {
+    jsonrpcTest: string | number | boolean | string[];
+    theme: string | number | boolean | string[];
+    capacitorTest: string | number | boolean | string[];
+    useNewUI: boolean;
+    annualReview: string[];
+    isDeveloper: boolean;
+    hasPortalAccess: boolean;
 }
 
 export class User {
@@ -38,9 +49,7 @@ export class User {
         public globalRole: "admin" | "installer" | "owner" | "guest",
         public language: string | null,
         public hasMultipleEdges: boolean,
-        public settings: Partial<{
-            [k in UserSettings]: number | boolean | string | string[];
-        }>,
+        public settings: Partial<UserSettingsMap>,
     ) {}
 
     // TODO this should eventually replace `language: string | null`
@@ -54,9 +63,7 @@ export class User {
      * @param user The user
      * @returns The user if passed User is valid, else null
      */
-    public static from(
-        user: AuthenticateResponse["result"]["user"],
-    ): User | null {
+    public static from(user: AuthenticateResponse["result"]["user"]): User | null {
         if (user == null) {
             return null;
         }
@@ -122,8 +129,7 @@ export class User {
         translate: TranslateService,
         components: { [id: string]: EdgeConfig.Component },
     ) {
-        const showNewUI =
-            navigationTree != null || this.getUseNewUIFromSettings();
+        const showNewUI = navigationTree != null || this.getUseNewUIFromSettings();
         if (!showNewUI) {
             return;
         }

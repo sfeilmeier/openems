@@ -1,5 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
+import { NavigationCard } from "src/app/edge/live/navigation-info/navigation-info";
 import { Filter } from "src/app/index/filter/filter.component";
+import { User } from "src/app/shared/jsonrpc/shared";
 import { Theme } from "src/environments";
 import { OemMeta } from "./oem-meta";
 
@@ -12,6 +14,43 @@ export const theme = {
     edgeLongName: "FENECON",
 
     docsUrlPrefix: "https://docs.fenecon.de/{language}/_/latest/fems/",
+
+    INFO_CARD: (translate: TranslateService, user: User): NavigationCard[] => {
+        const cards: NavigationCard[] = [
+            {
+                infoText: translate.instant("BETA_TEST.NEW_UI_INFO"),
+                iconName: "information-outline",
+                contentText: translate.instant("BETA_TEST.CHANGELOG"),
+                buttonText: translate.instant("BETA_TEST.BUTTON"),
+                buttonHref: "",
+                footer: {
+                    text: translate.instant("BETA_TEST.FEEDBACK"),
+                    link: "",
+                    linkText: translate.instant("GENERAL.SURVEY_LINK"),
+                },
+            },
+        ];
+
+        function hasPortalAccess(): boolean {
+            if (user?.id === "intersolar@fenecon.de") {
+                return true;
+            }
+
+            return user.settings?.hasPortalAccess ?? false;
+        }
+
+        if (hasPortalAccess()) {
+            cards.push({
+                infoText: translate.instant("MY_PORTAL.INFO"),
+                iconUrl: "https://docs.fenecon.de/download/fenecon/de/my-fenecon/icon",
+                contentText: translate.instant("MY_PORTAL.TICKET"),
+                buttonText: translate.instant("MY_PORTAL.BUTTON"),
+                buttonHref: "https://erp.fenecon.de/my",
+                buttonIconName: "ticket-outline",
+            });
+        }
+        return cards;
+    },
 
     PRODUCT_TYPES: (translate: TranslateService): Filter => ({
         multiple: true,

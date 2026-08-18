@@ -31,7 +31,13 @@
               {{ card.infoText }}
             </p>
             <ion-card style="border-radius: 1em; opacity: 0.9">
-              <ion-icon [name]="card.iconName" style="font-size: 8rem; display: block; margin: 2% auto 0; color: var(--ion-color-primary)"></ion-icon>
+              @if (card.iconUrl) {
+                <div class="card-logo-wrapper">
+                  <oe-img [img]="{ url: card.iconUrl }"></oe-img>
+                </div>
+              } @else {
+                <ion-icon [name]="card.iconName" style="font-size: 8rem; display: block; margin: 2% auto 0; color: var(--ion-color-primary)"></ion-icon>
+              }
               <ion-card-content>
                 <div style="color: var(--ion-card-content)">
                   {{ card.contentText }}
