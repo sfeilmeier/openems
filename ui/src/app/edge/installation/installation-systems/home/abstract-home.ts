@@ -874,15 +874,26 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
     /** @returns Returns the options to be displayed in energy flow meter view. */
     public getEnergyFlowMeterFields() {
         const type: string = this.translate.instant("INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.STANDARD");
+        const optionalType: string = this.translate.instant(
+            "INSTALLATION.CONFIGURATION_ENERGY_FLOW_METER.METER.TYPE.OPTIONAL",
+        );
 
         return [
             {
-                value: Meter.GridMeterCategory.SMART_METER, //
-                label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.SMART_METER, this.translate, type),
+                value: Meter.GridMeterCategory.COMMERCIAL_METER, //
+                label: Meter.toGridMeterCategoryLabelString(
+                    Meter.GridMeterCategory.COMMERCIAL_METER,
+                    this.translate,
+                    type,
+                ),
             },
             {
-                value: Meter.GridMeterCategory.COMMERCIAL_METER, //
-                label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.COMMERCIAL_METER, this.translate),
+                value: Meter.GridMeterCategory.SMART_METER, //
+                label: Meter.toGridMeterCategoryLabelString(
+                    Meter.GridMeterCategory.SMART_METER,
+                    this.translate,
+                    optionalType,
+                ),
             },
         ];
     }

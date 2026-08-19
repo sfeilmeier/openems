@@ -24,7 +24,7 @@ export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
     public override readonly maxNumberOfMppt: number = 2;
     public override readonly maxNumberOfTowers: number = 3;
     public override readonly minNumberOfModulesPerTower: number = 4;
-    public override readonly defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.SMART_METER;
+    public override readonly defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.COMMERCIAL_METER;
     public override readonly minNumberOfTowers: number = 1;
 
     public override mppt: {

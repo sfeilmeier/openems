@@ -905,7 +905,7 @@
                 },
                 "WITH_CT": "Home 3-Phasensensor mit Stromwandler 120 A ({{type}})",
                 "WITHOUT_CT": "Home 3-Phasensensor ohne Stromwandler (Optional)",
-                "WITHOUT_CT_STANDARD_DELIVERY": "3-Phasensensor ohne Stromwandler (Standardlieferumfang)"
+                "WITHOUT_CT_STANDARD_DELIVERY": "Home 3-Phasensensor ohne Stromwandler (Standardlieferumfang)"
             },
             "TITLE": "Auswahl Energieflussrichtungszähler"
         },

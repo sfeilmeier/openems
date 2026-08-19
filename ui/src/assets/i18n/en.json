@@ -899,7 +899,7 @@
                 },
                 "WITH_CT": "Home 3-phase sensor with current transformer 120A ({{type}})",
                 "WITHOUT_CT": "Home 3-phase sensor without current transformer (optional)",
-                "WITHOUT_CT_STANDARD_DELIVERY": "3-phase sensor without current transformer (Standard delivery)"
+                "WITHOUT_CT_STANDARD_DELIVERY": "Home 3-phase sensor without current transformer (Standard delivery)"
             },
             "TITLE": "Selection of energy flow direction meter"
         },
