@@ -162,9 +162,9 @@ public class AppHeatAskoma extends AbstractOpenemsAppWithProps<AppHeatAskoma, Ap
 	@Override
 	public OpenemsAppPermissions getAppPermissions() {
 		return OpenemsAppPermissions.create() //
-				.setCanInstall(Role.ADMIN) //
-				.setCanSee(Role.ADMIN) //
-				.setCanDelete(Role.ADMIN) //
+				.setCanInstall(Role.ADMIN, Role.INSTALLER) //
+				.setCanSee(Role.INSTALLER) //
+				.setCanDelete(Role.INSTALLER) //
 				.build();
 	}
 
