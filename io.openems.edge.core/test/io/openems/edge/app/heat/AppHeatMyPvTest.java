@@ -80,9 +80,9 @@ class AppHeatMyPvTest {
 	@Test
 	void testPermissions() {
 		this.appManagerTestBundle.assertPermissions(this.heatMyPv, properties()) //
-				.canSeeWithOnlyRoles(Role.ADMIN, Role.INSTALLER) //
-				.canDeleteWithOnlyRoles(Role.ADMIN, Role.INSTALLER) //
-				.canInstallWithOnlyRoles(Role.ADMIN, Role.INSTALLER);
+				.canSeeWithOnlyRoles(Role.ADMIN) //
+				.canDeleteWithOnlyRoles(Role.ADMIN) //
+				.canInstallWithOnlyRoles(Role.ADMIN);
 	}
 
 	@Test

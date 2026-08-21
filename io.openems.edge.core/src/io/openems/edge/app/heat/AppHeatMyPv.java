@@ -162,9 +162,9 @@ public class AppHeatMyPv extends AbstractOpenemsAppWithProps<AppHeatMyPv, AppHea
 	@Override
 	public OpenemsAppPermissions getAppPermissions() {
 		return OpenemsAppPermissions.create() //
-				.setCanInstall(Role.ADMIN, Role.INSTALLER) //
-				.setCanSee(Role.INSTALLER) //
-				.setCanDelete(Role.INSTALLER) //
+				.setCanInstall(Role.ADMIN) //
+				.setCanSee(Role.ADMIN) //
+				.setCanDelete(Role.ADMIN) //
 				.build();
 	}
 

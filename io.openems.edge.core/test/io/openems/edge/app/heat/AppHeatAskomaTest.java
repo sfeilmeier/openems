@@ -54,9 +54,9 @@ class AppHeatAskomaTest {
 	@Test
 	void testPermissions() {
 		this.appManagerTestBundle.assertPermissions(this.heatAskoma, properties()) //
-				.canSeeWithOnlyRoles(Role.ADMIN, Role.INSTALLER) //
-				.canDeleteWithOnlyRoles(Role.ADMIN, Role.INSTALLER) //
-				.canInstallWithOnlyRoles(Role.ADMIN, Role.INSTALLER);
+				.canSeeWithOnlyRoles(Role.ADMIN) //
+				.canDeleteWithOnlyRoles(Role.ADMIN) //
+				.canInstallWithOnlyRoles(Role.ADMIN);
 	}
 
 	private OpenemsAppInstance createApp(User user) throws Exception {
