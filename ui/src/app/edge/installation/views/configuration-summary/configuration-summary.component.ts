@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -10,6 +10,7 @@ import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { Category } from "../../shared/category";
 import { IbnUtils } from "../../shared/ibn.utils";
 import { ComponentData, TableData } from "../../shared/ibndatatypes";
+import { Meter } from "../../shared/meter";
 import { WebLinkUtils } from "../../shared/weblink.utils";
 
 @Component({
@@ -125,19 +126,6 @@ export class ConfigurationSummaryComponent implements OnInit {
             },
         ];
 
-        const lineSideMeterFuseTitle: string = Category.toTranslatedString(
-            this.ibn.lineSideMeterFuse.category,
-            this.translate,
-        );
-        const lineSideMeterFuseValue: number | null =
-            this.ibn.lineSideMeterFuse.otherValue ?? this.ibn.lineSideMeterFuse.fixedValue;
-        if (lineSideMeterFuseValue != null) {
-            generalData.push({
-                label: lineSideMeterFuseTitle,
-                value: this.ibn.lineSideMeterFuse.otherValue ?? this.ibn.lineSideMeterFuse.fixedValue,
-            });
-        }
-
         tableData.push({
             header: Category.GENERAL,
             rows: generalData,
@@ -157,6 +145,35 @@ export class ConfigurationSummaryComponent implements OnInit {
             tableData.push({
                 header: Category.BATTERY_LOCATION,
                 rows: IbnUtils.fillData(this.ibn.location, Category.BATTERY_LOCATION, this.translate),
+            });
+        }
+
+        const lineSideMeterFuseRows: ComponentData[] = [];
+
+        // Grid connection point meter type is only relevant for line side meter fuse categories other than home.
+        if (
+            this.ibn.lineSideMeterFuse.category !== Category.LINE_SIDE_METER_FUSE_HOME &&
+            this.ibn.lineSideMeterFuse.meterType
+        ) {
+            lineSideMeterFuseRows.push({
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER"),
+                value: Meter.toGridMeterLabel(this.ibn.lineSideMeterFuse.meterType, this.ibn.systemId),
+            });
+        }
+
+        const lineSideMeterFuseValue: number | null =
+            this.ibn.lineSideMeterFuse.otherValue ?? this.ibn.lineSideMeterFuse.fixedValue;
+        if (lineSideMeterFuseValue != null) {
+            lineSideMeterFuseRows.push({
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
+                value: this.ibn.lineSideMeterFuse.otherValue ?? this.ibn.lineSideMeterFuse.fixedValue,
+            });
+        }
+
+        if (lineSideMeterFuseRows.length > 0) {
+            tableData.push({
+                header: Category.GRID,
+                rows: lineSideMeterFuseRows,
             });
         }
 
