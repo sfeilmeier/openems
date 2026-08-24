@@ -171,7 +171,7 @@ export const settingsRoutes: Routes = [
                 },
             },
             {
-                path: "battery-extension",
+                path: "battery-extension/result",
                 component: BatteryExtensionComponent,
                 data: {
                     navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
