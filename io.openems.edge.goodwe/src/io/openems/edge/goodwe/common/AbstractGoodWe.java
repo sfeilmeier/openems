@@ -1981,10 +1981,7 @@ public abstract class AbstractGoodWe extends AbstractOpenemsModbusComponent
 	protected void updatePowerAndEnergyChannels(Integer soc, Integer batteryCurrent) {
 		final var productionPower = this.calculatePvProduction();
 		final Channel<Integer> pBattery1Channel = this.channel(GoodWe.ChannelId.P_BATTERY1);
-		final Channel<Integer> pBattery2Channel = this.channel(GoodWe.ChannelId.P_BATTERY2);
-		var dcDischargePower = pBattery1Channel.value().asOptional() //
-				.map(t -> t + pBattery2Channel.value().orElse(0)) //
-				.orElse(pBattery2Channel.value().get());
+		var dcDischargePower = pBattery1Channel.value().get();
 
 		final IntegerReadChannel dcDischargePowerChannel = this.channel(this.dcDischargePowerChannelId);
 
