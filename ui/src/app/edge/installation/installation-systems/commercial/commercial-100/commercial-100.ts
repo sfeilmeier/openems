@@ -27,7 +27,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
      * model are intentionally kept so the feature can be re-enabled by flipping this flag once the Edge supports it -
      * until then the second-input option is neither displayed nor applied.
      */
-    public static readonly IS_SECOND_BATTERY_INPUT_SUPPORTED: boolean = false;
+    public static readonly IS_SECOND_BATTERY_INPUT_SUPPORTED: boolean = true;
 
     private static readonly VIEWS = [
         View.PreInstallation,
@@ -278,6 +278,8 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
      *   inputs.
      */
     protected override getTowerHeadFields(towerNr: number, batteryIndex?: number): FormlyFieldConfig[] {
+        const emsBoxSerialNumber: string | null =
+            sessionStorage.getItem("emsBoxSerialNumber")?.slice(this.emsBoxPrefix?.length) ?? null;
         if (towerNr > 0) {
             return [
                 {
@@ -327,8 +329,10 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
                     templateOptions: {
                         label: Category.toTranslatedString(Category.EMS_BOX_LABEL_HOME, this.translate),
                         required: true,
+                        prefix: this.emsBoxPrefix,
                         placeholder: "FEFxxxxxxx",
                     },
+                    defaultValue: emsBoxSerialNumber,
                     validators: { validation: ["emsBoxSerialNumber"] },
                     wrappers: ["input-serial-number"],
                 },
