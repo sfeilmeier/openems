@@ -111,8 +111,7 @@ class AppHeatMyPvTest {
 
 	private OpenemsAppInstance createApp(User user) throws Exception {
 		return this.appManagerTestBundle.sut.handleAddAppInstanceRequest(user,
-				new AddAppInstance.Request(this.heatMyPv.getAppId(), "key", "alias", properties()))
-				.instance();
+				new AddAppInstance.Request(this.heatMyPv.getAppId(), "key", "alias", properties())).instance();
 	}
 
 	private static JsonObject properties() {
@@ -122,5 +121,3 @@ class AppHeatMyPvTest {
 				.build();
 	}
 }
-
-
