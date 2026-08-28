@@ -9,6 +9,8 @@ First major update from GoodWe.
 Please make sure to upgrade their DSP, ARM and STS firmware to Version 02 provided in the attachment. 
 Version 01 contains severe deviations in load calculation logic, which have been optimized in Version 02."
 
+This release changes the VDE 4110 registers.
+
 Known issues with previous versions:
 - Generator not working properly
 - 4110 not working properly

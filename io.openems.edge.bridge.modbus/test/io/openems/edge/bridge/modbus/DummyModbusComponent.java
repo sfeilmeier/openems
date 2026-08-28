@@ -1,6 +1,8 @@
 package io.openems.edge.bridge.modbus;
 
-import io.openems.edge.bridge.modbus.api.task.hooks.TaskHook;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.osgi.framework.Constants;
 
 import io.openems.common.exceptions.OpenemsException;
@@ -11,13 +13,11 @@ import io.openems.edge.bridge.modbus.api.AbstractModbusBridge;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
 import io.openems.edge.bridge.modbus.api.ModbusProtocol;
+import io.openems.edge.bridge.modbus.api.task.hooks.TaskHook;
 import io.openems.edge.bridge.modbus.test.DummyModbusBridge;
 import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.test.DummyComponentContext;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DummyModbusComponent extends AbstractOpenemsModbusComponent implements ModbusComponent {
 
