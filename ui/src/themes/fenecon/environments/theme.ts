@@ -2,7 +2,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { NavigationCard } from "src/app/edge/live/navigation-info/navigation-info";
 import { Filter } from "src/app/index/filter/filter.component";
 import { User } from "src/app/shared/jsonrpc/shared";
-import { Theme } from "src/environments";
+import { environment, Theme } from "src/environments";
 import { OemMeta } from "./oem-meta";
 
 export const theme = {
@@ -22,10 +22,10 @@ export const theme = {
                 iconName: "information-outline",
                 contentText: translate.instant("BETA_TEST.CHANGELOG"),
                 buttonText: translate.instant("BETA_TEST.BUTTON"),
-                buttonHref: "",
+                buttonHref: environment.links.REDIRECT.BETA_CHANGE_LOG ?? "",
                 footer: {
                     text: translate.instant("BETA_TEST.FEEDBACK"),
-                    link: "",
+                    link: environment.links.REDIRECT.BETA_SURVEY ?? "",
                     linkText: translate.instant("GENERAL.SURVEY_LINK"),
                 },
             },
