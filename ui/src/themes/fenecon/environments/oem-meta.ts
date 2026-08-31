@@ -320,6 +320,8 @@ export const OemMeta: BaseMeta = {
         },
         COMPONENT: {
             EVCS: "icons/component/evcs.svg",
+            EVCS_PHASE_SWITCHING_1: "icons/component/phase-switching-1.svg",
+            EVCS_PHASE_SWITCHING_3: "icons/component/phase-switching-3.svg",
             HEATPUMP: "icons/component/heatpump.svg",
             HEATING_ELEMENT: "icons/component/heating-element.svg",
         },
