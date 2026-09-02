@@ -11,13 +11,13 @@ import { filter, takeUntil } from "rxjs/operators";
 import { environment } from "../environments";
 import { PlatFormService } from "./platform.service";
 import { NavigationService } from "./shared/components/navigation/service/navigation.service";
-import { AppStateTracker } from "./shared/ngrx-store/app-state-tracker";
 import { GlobalRouteChangeHandler } from "./shared/service/globalRouteChangeHandler";
 import { LayoutRefreshService } from "./shared/service/layoutRefreshService";
-import { RouteService } from "./shared/service/route.service";
+import { RouteService } from "./shared/service/route/route.service";
 import { SystemStateService } from "./shared/service/systemStateService";
 import { UserService } from "./shared/service/user.service";
 import { Service, UserPermission, Websocket } from "./shared/shared";
+import { AppStateTracker } from "./shared/states/app-state-tracker";
 import { Language } from "./shared/type/language";
 
 export interface CachetComponentStatus {

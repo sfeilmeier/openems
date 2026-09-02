@@ -2,60 +2,59 @@
 import { TranslateService } from "@ngx-translate/core";
 import { Category } from "src/app/edge/installation/shared/category";
 
-import { States } from "../../ngrx-store/states";
 import { Utils } from "../../shared";
+import { States } from "../../states/states";
 import { JsonrpcRequest } from "../base";
 
 export type SetupProtocol = {
     fems: {
-        id: string
-    },
+        id: string;
+    };
     installer: {
-        firstname: string,
-        lastname: string
-    },
+        firstname: string;
+        lastname: string;
+    };
     customer: {
-        firstname: string,
-        lastname: string,
-        email: string,
-        phone: string,
+        firstname: string;
+        lastname: string;
+        email: string;
+        phone: string;
         address: {
-            street: string,
-            city: string,
-            zip: string,
-            country: string
-        },
+            street: string;
+            city: string;
+            zip: string;
+            country: string;
+        };
         company?: {
-            name: string
-        }
-    },
+            name: string;
+        };
+    };
     location?: {
-        firstname: string,
-        lastname: string,
-        email: string,
-        phone: string,
+        firstname: string;
+        lastname: string;
+        email: string;
+        phone: string;
         address: {
-            street: string,
-            city: string,
-            zip: string,
-            country: string
-        },
+            street: string;
+            city: string;
+            zip: string;
+            country: string;
+        };
         company?: {
-            name: string
-
-        }
-    },
+            name: string;
+        };
+    };
     lots?: {
-        category: string,
-        name: string,
-        serialNumber: string
-    }[],
+        category: string;
+        name: string;
+        serialNumber: string;
+    }[];
     items?: {
-        category: any, // TODO is Category or string
-        name: string,
-        value: string
-    }[],
-    oem: string
+        category: any; // TODO is Category or string
+        name: string;
+        value: string;
+    }[];
+    oem: string;
 };
 
 /**
@@ -115,13 +114,12 @@ export type SetupProtocol = {
  * </pre>
  */
 export class SubmitSetupProtocolRequest extends JsonrpcRequest {
-
     private static METHOD: string = "submitSetupProtocol";
     protected override requiredState: States = States.EDGE_SELECTED;
 
     private constructor(
         public override readonly params: {
-            protocol: any
+            protocol: any;
         },
     ) {
         super(SubmitSetupProtocolRequest.METHOD, params);
@@ -130,9 +128,9 @@ export class SubmitSetupProtocolRequest extends JsonrpcRequest {
     public static translateFrom(protocol: SetupProtocol, translate: TranslateService): SubmitSetupProtocolRequest {
         // protocol.items are type category in the protocol recieved and need to be translated before the request being sent.
         const items: {
-            category: string,
-            name: string,
-            value: string
+            category: string;
+            name: string;
+            value: string;
         }[] = protocol.items.map((element) => {
             return {
                 category: Category.toTranslatedString(element.category, translate),
@@ -148,5 +146,4 @@ export class SubmitSetupProtocolRequest extends JsonrpcRequest {
 
         return new SubmitSetupProtocolRequest({ protocol: protocolTranslated });
     }
-
 }

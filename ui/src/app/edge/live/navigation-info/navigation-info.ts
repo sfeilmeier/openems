@@ -6,7 +6,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { AbstractModal } from "src/app/shared/components/modal/abstractModal";
 import { HelpButtonComponent } from "src/app/shared/components/modal/help-button/help-button";
 import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
-import { RouteService } from "src/app/shared/service/route.service";
+import { RouteService } from "src/app/shared/service/route/route.service";
 import { UserService } from "src/app/shared/service/user.service";
 import { Service, Websocket } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
@@ -66,7 +66,6 @@ export class NavigationInfoComponent extends AbstractModal {
         }
         return environment.INFO_CARD(this.translate, user);
     });
-
     protected docs: {
         link: string | null;
         displayName: string;
@@ -74,7 +73,6 @@ export class NavigationInfoComponent extends AbstractModal {
     } | null = null;
 
     private readonly routeService = inject(RouteService);
-
     private navigationService = inject(NavigationService);
 
     constructor(

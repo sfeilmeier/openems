@@ -8,9 +8,9 @@ import { SumState } from "src/app/index/shared/sumState";
 import { AddEdgeToUserRequest } from "src/app/shared/jsonrpc/request/addEdgeToUserRequest";
 import { SubscribeEdgesRequest } from "src/app/shared/jsonrpc/request/subscribeEdgesRequest";
 import { AddEdgeToUserResponse } from "src/app/shared/jsonrpc/response/addEdgeToUserResponse";
-import { States } from "src/app/shared/ngrx-store/states";
 import { UserService } from "src/app/shared/service/user.service";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
+import { States } from "src/app/shared/states/states";
 import { Role } from "src/app/shared/type/role";
 import { environment } from "src/environments";
 

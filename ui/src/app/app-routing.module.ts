@@ -278,7 +278,14 @@ export const routes: Routes = [
             {
                 path: "favorites",
                 children: [
-                    { path: "", component: EmptyPageComponent, pathMatch: "full" },
+                    {
+                        path: "",
+                        loadComponent: () =>
+                            import("./shared/components/navigation/favorite/page/favorite-page").then(
+                                (m) => m.FavoritePageComponent,
+                            ),
+                        pathMatch: "full",
+                    },
                     {
                         path: "",
                         loadChildren: () =>

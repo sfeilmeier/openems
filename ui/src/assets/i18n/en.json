@@ -1304,6 +1304,7 @@
         "ACCESS_LEVEL": "Access Level",
         "CHANGELOG": "Changelog",
         "COCKPIT": "Cockpit",
+        "FAVORITES": "Favorites",
         "DEFAULT_EDGE_LONG_NAME": "FENECON Energiemanagementsystem",
         "EDGE_SETTINGS": "Settings",
         "EDGE_SYSTEM_SETTINGS": "System Settings",
@@ -1323,7 +1324,7 @@
         "OPENEMS_ENERGY_MANAGEMENT_SYSTEM": "Open Energy Management System",
         "OTHER_USER": "Other users",
         "OVERVIEW": "All Systems",
-        "SYSTEMS": "Systeme",
+        "SYSTEMS": "Systems",
         "SETTINGS": "Settings",
         "USER": "User",
         "PROFILE": "Profile"

@@ -287,6 +287,7 @@ export const OemMeta: BaseMeta = {
         COMMON: {
             CONSUMPTION: "icons/common/consumption.svg",
             FAVORITES: "icons/common/heart.svg",
+            FAVORITES_FILLED: "icons/common/heart-filled.svg",
             SELFCONSUMPTION: "icons/common/selfconsumption.svg",
             GENERATOR: "assets/img/icon/generator.svg",
             GRID: "icons/common/grid.svg",

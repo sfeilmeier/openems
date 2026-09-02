@@ -1,6 +1,6 @@
 import { TranslateService } from "@ngx-translate/core";
 import { EdgeConfig } from "src/app/shared/shared";
-import { NavigationConstants, NavigationTree, } from "../../../../../shared/components/navigation/shared";
+import { NavigationConstants, NavigationTree } from "../../../../../shared/components/navigation/shared";
 
 export namespace SharedSystemIndustrialS {
     export function getNavigationTree(
@@ -14,7 +14,7 @@ export namespace SharedSystemIndustrialS {
             "FENECON Industrial S",
             "label",
             [
-                NavigationConstants.CommonNodes.INFO(translate, {
+                NavigationConstants.CommonNodes.INFO(translate, componentId, {
                     source: componentId,
                 }),
             ],

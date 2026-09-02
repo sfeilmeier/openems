@@ -36,6 +36,7 @@ export interface Environment<TImages extends object = object> {
     readonly icons: {
         readonly COMMON: {
             readonly FAVORITES: string;
+            readonly FAVORITES_FILLED: string;
             readonly CONSUMPTION: string;
             readonly SELFCONSUMPTION: string;
             readonly GENERATOR: string;
