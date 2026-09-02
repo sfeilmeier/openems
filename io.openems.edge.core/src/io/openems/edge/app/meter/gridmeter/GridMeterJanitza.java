@@ -9,6 +9,7 @@ import static io.openems.edge.core.appmanager.validator.Checkables.checkIndustri
 import static io.openems.edge.core.appmanager.validator.Checkables.checkIndustrialXl;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -225,7 +226,7 @@ public class GridMeterJanitza extends AbstractOpenemsAppWithProps<GridMeterJanit
 	public OpenemsAppPermissions getAppPermissions() {
 		return OpenemsAppPermissions.create() //
 				.setCanSee(Role.INSTALLER) //
-				.setCanInstall(Role.ADMIN, Role.INSTALLER) //
+				.setCanInstall(List.of(Role.ADMIN, Role.INSTALLER)) //
 				.setCanDelete(Role.INSTALLER) //
 				.build();
 	}

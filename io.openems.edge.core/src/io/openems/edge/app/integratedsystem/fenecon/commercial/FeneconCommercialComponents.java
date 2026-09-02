@@ -499,14 +499,12 @@ public final class FeneconCommercialComponents {
 	 * Creates a default gridMeter dependency for a FENECON Commercial 92.
 	 *
 	 * @param bundle the translation bundle
-	 * @param target the configuration target
 	 * @return the {@link DependencyDeclaration}
 	 */
 	public static DependencyDeclaration gridMeter(//
-			final ResourceBundle bundle, //
-			final ConfigurationTarget target //
+			final ResourceBundle bundle //
 	) {
-		return gridMeterBase(bundle, target);
+		return gridMeterBase(bundle);
 	}
 
 	/**
@@ -515,18 +513,16 @@ public final class FeneconCommercialComponents {
 	 * @param bundle      the translation bundle
 	 * @param gridMeterId the id of the grid meter
 	 * @param modbusId    the id of the modbus bridge
-	 * @param target      the configuration target
 	 * @return the {@link DependencyDeclaration}
 	 */
 	public static DependencyDeclaration gridMeterWithOldDependency(//
 			final ResourceBundle bundle, //
 			final String gridMeterId, //
-			final String modbusId, //
-			final ConfigurationTarget target //
+			final String modbusId //
 	) {
 		return gridMeterBase(//
 				bundle, //
-				target, DependencyDeclaration.AppDependencyConfig.create() //
+				DependencyDeclaration.AppDependencyConfig.create() //
 						.setAppId("App.Meter.Kdk") //
 						.setAlias(translate(bundle, "App.Meter.gridMeter")) //
 						.setProperties(JsonUtils.buildJsonObject() //
@@ -540,7 +536,6 @@ public final class FeneconCommercialComponents {
 
 	private static DependencyDeclaration gridMeterBase(//
 			final ResourceBundle bundle, //
-			final ConfigurationTarget target, //
 			final DependencyDeclaration.AppDependencyConfig... extraAppConfigs //
 	) {
 		var configs = Stream.concat(//
@@ -549,8 +544,7 @@ public final class FeneconCommercialComponents {
 				.toArray(DependencyDeclaration.AppDependencyConfig[]::new);
 
 		return new DependencyDeclaration("GRID_METER", //
-				target == ConfigurationTarget.ADD ? DependencyDeclaration.CreatePolicy.IF_NOT_EXISTING
-						: DependencyDeclaration.CreatePolicy.NEVER, //
+				DependencyDeclaration.CreatePolicy.IF_NOT_EXISTING, //
 				DependencyDeclaration.UpdatePolicy.ALWAYS, //
 				DependencyDeclaration.DeletePolicy.IF_MINE, //
 				DependencyDeclaration.DependencyUpdatePolicy.ALLOW_ONLY_UNCONFIGURED_PROPERTIES, //

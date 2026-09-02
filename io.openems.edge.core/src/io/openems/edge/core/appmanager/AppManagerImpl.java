@@ -802,9 +802,7 @@ public class AppManagerImpl extends AbstractOpenemsComponent implements AppManag
 					continue;
 				}
 				if (dependency.createPolicy == DependencyDeclaration.CreatePolicy.NEVER) {
-					dependency.appConfigs.forEach(config -> {
-						consumer.accept(config.appId);
-					});
+					consumer.accept(dependency.appConfigs.getFirst().appId);
 				}
 			}
 		}).toList();
