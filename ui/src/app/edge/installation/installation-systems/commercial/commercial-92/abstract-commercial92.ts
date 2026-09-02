@@ -108,12 +108,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER_LABEL"),
                 required: true,
-                options: [
-                    Meter.GridMeter.KDK,
-                    Meter.GridMeter.WAGO,
-                    Meter.GridMeter.JANITZA_UMG_96_RME,
-                    Meter.GridMeter.JANITZA_UMG_604_PRO,
-                ].map((meter) => ({
+                options: [Meter.GridMeter.KDK, Meter.GridMeter.WAGO].map((meter) => ({
                     label: Meter.toGridMeterLabel(meter, this.systemId),
                     value: meter,
                 })),
@@ -548,7 +543,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                     AbstractCommercial92Ibn.GRID_METER_JANITZA_APP_ID,
                     this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.GRID_METER"),
                     { MODEL: Meter.toFactoryId(meterType) },
-                    AppCenterUtil.keyForIntegratedSystems(),
+                    AppCenterUtil.keyForIntegratedSystems(), // should be removed if GRID_METER_KDK_APP_ID is added again
                 ),
         );
     }
