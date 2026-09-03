@@ -160,9 +160,7 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
     public readonly defaultNumberOfModules: number;
 
     // Label used for device check in configuration summary. It is different for Industrial systems.
-    public readonly isDevicesActiveCheckedLabel: string = this.translate.instant(
-        "INSTALLATION.CONFIGURATION_SUMMARY.DEVICE_ACTIVE_CHECKED",
-    );
+    public readonly isDevicesActiveCheckedLabel: string;
 
     // Limit value changes for home and commercial.
     public readonly maxFeedInLimit: number = 29999;
@@ -188,7 +186,11 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
     constructor(
         public views: View[],
         public translate: TranslateService,
-    ) {}
+    ) {
+        this.isDevicesActiveCheckedLabel = this.translate.instant(
+            "INSTALLATION.CONFIGURATION_SUMMARY.DEVICE_ACTIVE_CHECKED",
+        );
+    }
 
     /**
      * Sets the Feed-In-Limit fields from the model.
@@ -539,7 +541,7 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
                 protocol.items.push({
                     category: lineSideMeterFuse.category,
                     name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER"),
-                    value: lineSideMeterFuse.meterType,
+                    value: Meter.toGridMeterLabel(lineSideMeterFuse.meterType, this.systemId),
                 });
             }
 
@@ -547,7 +549,7 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
 
             if (lineSideMeterFuseValue != null) {
                 protocol.items.push({
-                    category: this.lineSideMeterFuse.category,
+                    category: lineSideMeterFuse.category,
                     name: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
                     value: lineSideMeterFuseValue ? lineSideMeterFuseValue.toString() : "",
                 });

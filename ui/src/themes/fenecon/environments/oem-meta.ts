@@ -287,6 +287,7 @@ export const OemMeta: BaseMeta = {
         COMMON: {
             CONSUMPTION: "icons/common/consumption.svg",
             FAVORITES: "icons/common/heart.svg",
+            FAVORITES_FILLED: "icons/common/heart-filled.svg",
             SELFCONSUMPTION: "icons/common/selfconsumption.svg",
             GENERATOR: "assets/img/icon/generator.svg",
             GRID: "icons/common/grid.svg",
@@ -320,6 +321,8 @@ export const OemMeta: BaseMeta = {
         },
         COMPONENT: {
             EVCS: "icons/component/evcs.svg",
+            EVCS_PHASE_SWITCHING_1: "icons/component/phase-switching-1.svg",
+            EVCS_PHASE_SWITCHING_3: "icons/component/phase-switching-3.svg",
             HEATPUMP: "icons/component/heatpump.svg",
             HEATING_ELEMENT: "icons/component/heating-element.svg",
         },

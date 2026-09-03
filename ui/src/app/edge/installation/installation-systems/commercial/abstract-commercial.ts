@@ -113,10 +113,10 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER_LABEL"),
                 required: true,
-                options: [
-                    { label: "SOCOMEC", value: Meter.GridMeter.SOCOMEC },
-                    { label: "KDK", value: Meter.GridMeter.KDK },
-                ],
+                options: [Meter.GridMeter.SOCOMEC, Meter.GridMeter.KDK].map((meter) => ({
+                    label: Meter.toGridMeterLabel(meter, this.systemId),
+                    value: meter,
+                })),
             },
             defaultValue: Meter.GridMeter.KDK,
         });

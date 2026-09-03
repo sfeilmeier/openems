@@ -34,6 +34,11 @@ export enum BatteryTarget {
 }
 
 export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
+    /** AppId of the default grid meter app installed as a dependency of the Commercial 92 App. */
+    private static readonly GRID_METER_KDK_APP_ID = "App.GridMeter.Kdk";
+    /** AppId of the Janitza grid meter app. */
+    private static readonly GRID_METER_JANITZA_APP_ID = "App.GridMeter.Janitza";
+
     public override WAIT_FOR_BATTERY_SERIAL_NUMBERS = 8 * 60 * 1000;
 
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_92_WITHOUT_CLUSTER;
@@ -103,7 +108,10 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER_LABEL"),
                 required: true,
-                options: [{ label: "KDK", value: Meter.GridMeter.KDK }],
+                options: [Meter.GridMeter.KDK, Meter.GridMeter.WAGO].map((meter) => ({
+                    label: Meter.toGridMeterLabel(meter, this.systemId),
+                    value: meter,
+                })),
             },
             defaultValue: Meter.GridMeter.KDK,
         });
@@ -300,7 +308,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                 appProperties,
                 this.feedInLimitation.dynamicLimitationType,
                 this.feedInLimitation.maximumFeedInPower,
-            );
+            ).then(() => this.installSelectedGridMeter(edge, websocket));
         });
 
         // Send request and process components
@@ -505,6 +513,39 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                 this.gridSetting = null;
             },
         });
+    }
+
+    /**
+     * Installs the grid meter app matching the selected {@link Meter.GridMeter}.
+     *
+     * The FENECON Commercial 92 App always installs the KDK grid meter app ("App.GridMeter.Kdk") as its default
+     * GRID_METER dependency. KDK and Wago share the same hardware/factory-id, so no further action is required for
+     * those options. For a Janitza grid meter, the default KDK app instance has to be removed and replaced by an
+     * instance of the Janitza grid meter app ("App.GridMeter.Janitza"), since the AppManager does not offer a property
+     * to select the grid meter type directly.
+     *
+     * @param edge The current edge.
+     * @param websocket The Websocket connection.
+     * @returns A Promise that resolves once the correct grid meter app is installed.
+     */
+    private installSelectedGridMeter(edge: Edge, websocket: Websocket): Promise<any> {
+        const meterType = this.lineSideMeterFuse?.meterType;
+
+        if (meterType == null || meterType === Meter.GridMeter.KDK || meterType === Meter.GridMeter.WAGO) {
+            return Promise.resolve();
+        }
+
+        return AppCenterUtil.removeInstancesOfApp(edge, websocket, AbstractCommercial92Ibn.GRID_METER_KDK_APP_ID).then(
+            () =>
+                AppCenterUtil.createOrUpdateApp(
+                    edge,
+                    websocket,
+                    AbstractCommercial92Ibn.GRID_METER_JANITZA_APP_ID,
+                    this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.GRID_METER"),
+                    { MODEL: Meter.toFactoryId(meterType) },
+                    AppCenterUtil.keyForIntegratedSystems(), // should be removed if GRID_METER_KDK_APP_ID is added again
+                ),
+        );
     }
 
     public abstract getEdge(index: number): Edge;

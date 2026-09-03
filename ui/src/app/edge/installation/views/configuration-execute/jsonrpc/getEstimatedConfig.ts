@@ -1,5 +1,5 @@
 import { JsonrpcRequest } from "src/app/shared/jsonrpc/base";
-import { States } from "src/app/shared/ngrx-store/states";
+import { States } from "src/app/shared/states/states";
 import { ObjectUtils } from "src/app/shared/utils/object/object-utils";
 
 /**

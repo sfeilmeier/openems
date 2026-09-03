@@ -8,7 +8,7 @@ import { JsCalendar } from "src/app/shared/components/schedule/js-calendar-task"
 import { ScheduleComponent } from "src/app/shared/components/schedule/schedule.component";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { EdgeConfig } from "../../../../../shared/components/edge/edgeconfig";
-import { RouteService } from "../../../../../shared/service/route.service";
+import { RouteService } from "../../../../../shared/service/route/route.service";
 import { UserService } from "../../../../../shared/service/user.service";
 import { HeatManualPayload } from "./js-calendar-utils";
 

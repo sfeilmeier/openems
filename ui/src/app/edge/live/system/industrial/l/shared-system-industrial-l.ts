@@ -1,7 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
 import { JsCalendar } from "src/app/shared/components/schedule/js-calendar-task";
 import { Edge, EdgeConfig } from "src/app/shared/shared";
-import { NavigationConstants, NavigationTree, } from "../../../../../shared/components/navigation/shared";
+import { NavigationConstants, NavigationTree } from "../../../../../shared/components/navigation/shared";
 
 export namespace SharedSystemIndustrialL {
     export function getNavigationTree(
@@ -16,17 +16,15 @@ export namespace SharedSystemIndustrialL {
             "label",
             [
                 new NavigationTree(
-                    "schedule",
+                    componentId + "-schedule",
                     { baseString: "schedule" },
                     { name: "calendar-outline", color: "warning" },
-                    translate.instant(
-                        "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.MAINTENANCE_WINDOW",
-                    ),
+                    translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.MAINTENANCE_WINDOW"),
                     "label",
                     [],
                     null,
                 ),
-                NavigationConstants.CommonNodes.INFO(translate, {
+                NavigationConstants.CommonNodes.INFO(translate, componentId, {
                     source: componentId,
                 }),
             ],

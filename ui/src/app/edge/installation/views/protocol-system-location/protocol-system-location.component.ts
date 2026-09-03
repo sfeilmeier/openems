@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy, signal, } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, signal, ViewChild, } from "@angular/core";
 import { GeoResult, LocationModel, SystemLocationValidatorComponent, } from "src/app/shared/components/system-location-validator/system-location-validator.component";
-import { Edge, Service, Websocket } from "src/app/shared/shared";
+import { Edge, Websocket } from "src/app/shared/shared";
 import { CountryUtils } from "src/app/shared/type/country";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { environment, Environment } from "src/environments";
@@ -27,11 +26,7 @@ export class ProtocolSystemLocationValidationComponent implements OnInit {
     protected isNextDisabled: boolean = true;
     protected isWaiting = signal<boolean>(false);
 
-    constructor(
-        protected websocket: Websocket,
-        private translate: TranslateService,
-        private service: Service,
-    ) {}
+    constructor(protected websocket: Websocket) {}
 
     public static getLocation(ibn: AbstractIbn | null) {
         if (ibn == null) {

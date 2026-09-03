@@ -52,7 +52,7 @@ export class ProtocolPvComponent implements OnInit {
 
             if (isEnabled) {
                 const existingDc = this.ibn.pv?.dc?.[i];
-                model = existingDc ?? { isSelected: this.ibn.maxNumberOfMppt > 0 };
+                model = existingDc ?? { isSelected: true };
             }
 
             const formGroup = new FormGroup({});
