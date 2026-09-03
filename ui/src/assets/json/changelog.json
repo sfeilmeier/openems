@@ -3,6 +3,25 @@
         "version": "2026.8.2",
         "entries": {
             "de": [
+                "FENECON App: Auswahl <a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">\"Neues Design\"</a> in den Benutzereinstellungen,  Allgemeine Fehlerbehebungen",
+                "FENECON Commercial 100: Unterstützung für zweiten Batterieeingang",
+                "FEMS App KEBA Ladestation: Fehlerbehebungen für KEBA P40",
+                "FEMS App Modbus-TCP Schreibzugriff: Verbesserung der Visualisierung von Leistungsvorgaben",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest (E-Mobility)</a>: Automatische Phasenumschaltung im Modus PV-Überschuss"
+            ],
+            "en": [
+                "FENECON App: Selection of <a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">\"New Design\"</a> in the user settings, general bug fixes",
+                "FENECON Commercial 100: Support for second battery input",
+                "FEMS App KEBA Charging Station: Bug fixes for KEBA P40",
+                "FEMS App Modbus-TCP Write Access: Improved visualization of power setpoints",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Field Test (E-Mobility)</a>: Automatic phase switching in PV surplus mode"
+            ]
+        }
+    },
+    {
+        "version": "2026.8.2",
+        "entries": {
+            "de": [
                 "FEMS App Dynamischer Stromtarif (ENTSO-E, LUOX Energy): Zeitpunkt zur Abholung der Preise verbessert",
                 "FEMS App Janitza Zähler: Kompatibilität mit UMG 96-PQ-L",
                 "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest</a>: Neue Navigation in der Smartphone-Ansicht",
