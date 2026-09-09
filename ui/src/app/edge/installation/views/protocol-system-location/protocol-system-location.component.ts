@@ -89,7 +89,7 @@ export class ProtocolSystemLocationValidationComponent implements OnInit {
         location.city = selectedGeo.placeName ?? location.city;
         location.zip = selectedGeo.postcode ?? location.zip;
 
-        const countryCode = selectedGeo.country ? CountryUtils.fromCountryCode(selectedGeo.country) : null;
+        const countryCode = selectedGeo.countryCode ? CountryUtils.fromCountryCode(selectedGeo.countryCode) : null;
         location.country = countryCode ?? location.country;
     }
 }
