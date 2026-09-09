@@ -39,10 +39,11 @@ module.exports = function (config) {
         customLaunchers: {
             ChromeHeadlessCI: {
                 base: "ChromeHeadless",
-                flags: ["--no-sandbox", '--disable-dev-shm-usage',],
+                flags: ["--no-sandbox"],
             },
         },
         singleRun: true,
         restartOnFileChange: true,
+        concurrency: 4,
     });
 };
