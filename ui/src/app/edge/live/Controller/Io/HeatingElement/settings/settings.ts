@@ -55,31 +55,31 @@ export class ControllerIoHeatingElementSettingsComponent extends AbstractFormlyC
 
         AssertionUtils.assertIsDefined(component);
         this.setFormControlSafelyWithChannel(
-            this.form,
+            this.form(),
             "mode",
             currentData,
             new ChannelAddress(component.id, "_PropertyMode"),
         );
         this.setFormControlSafelyWithChannel(
-            this.form,
+            this.form(),
             "defaultLevel",
             currentData,
             new ChannelAddress(component.id, "_PropertyDefaultLevel"),
         );
         this.setFormControlSafelyWithChannel(
-            this.form,
+            this.form(),
             "minTime",
             currentData,
             new ChannelAddress(component.id, "_PropertyMinTime"),
         );
         this.setFormControlSafelyWithChannel(
-            this.form,
+            this.form(),
             "workMode",
             currentData,
             new ChannelAddress(component.id, "_PropertyWorkMode"),
         );
         this.setFormControlSafelyWithChannel(
-            this.form,
+            this.form(),
             "endTime",
             currentData,
             new ChannelAddress(component.id, "_PropertyEndTime"),
