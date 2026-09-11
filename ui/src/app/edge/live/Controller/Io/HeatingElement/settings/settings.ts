@@ -85,7 +85,7 @@ export class ControllerIoHeatingElementSettingsComponent extends AbstractFormlyC
             new ChannelAddress(component.id, "_PropertyEndTime"),
         );
         this.setFormControlSafelyWithChannel(
-            this.form,
+            this.form(),
             "minEnergyLimitInKwh",
             currentData,
             new ChannelAddress(component.id, "_PropertyMinEnergyLimitInKwh"),
@@ -102,11 +102,11 @@ export class ControllerIoHeatingElementSettingsComponent extends AbstractFormlyC
         if (totalPower !== null && neededPower != null && neededPower > maxPower) {
             maxPower = neededPower;
         }
-        this.setFormControlSafelyWithValue(this.form, "maxPower", maxPower);
+        this.setFormControlSafelyWithValue(this.form(), "maxPower", maxPower);
         const currentEnergy = currentData.allComponents[component.id + "/SessionEnergy"]; // Wh
-        const endTimeWithMeter = FormUtils.findFormControlsValueSafely<string | null>(this.form, "endTimeWithMeter");
+        const endTimeWithMeter = FormUtils.findFormControlsValueSafely<string | null>(this.form(), "endTimeWithMeter");
         const minEnergyLimitInKwh = FormUtils.findFormControlsValueSafely<number | null>(
-            this.form,
+            this.form(),
             "minEnergyLimitInKwh",
         );
 
@@ -116,7 +116,7 @@ export class ControllerIoHeatingElementSettingsComponent extends AbstractFormlyC
                 ? requiredPower > totalPower * SharedControllerIoHeatingElement.POWER_OVERSHOOT_FACTOR
                 : false;
 
-        this.setFormControlSafelyWithValue(this.form, "isUnreachable", isUnreachable);
+        this.setFormControlSafelyWithValue(this.form(), "isUnreachable", isUnreachable);
     }
     private getRequiredPower(
         endTimeWithMeter: string | null,
