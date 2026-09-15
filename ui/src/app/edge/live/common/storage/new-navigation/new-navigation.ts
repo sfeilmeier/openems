@@ -268,7 +268,7 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
     }
 
     protected override onCurrentData(currentData: CurrentData): void {
-        this.setFormControlSafelyWithValue(this.form, "soc", currentData.allComponents["_sum/EssSoc"]);
+        this.setFormControlSafelyWithValue(this.form(), "soc", currentData.allComponents["_sum/EssSoc"]);
     }
 
     protected override getChannelAddresses(): Promise<ChannelAddress[]> {

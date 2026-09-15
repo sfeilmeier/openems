@@ -1,6 +1,25 @@
 [
     {
-        "version": "2026.8.2",
+        "version": "2026.9.2",
+        "entries": {
+            "de": [
+                "FENECON App: Fehlerbehebungen und Verbesserungen in der Smartphone-Ansicht",
+                "Inbetriebnahmeassistent: Fehlerbehebungen für Inbetriebnahmen in Österreich und für Home 10 Gen1",
+                "FEMS App KEBA Ladestation: Verbesserungen für KEBA P40",
+                "FEMS App Heizstab: konfigurierbare Minimale Heizenergie im neuen Design der FENECON App",
+                "FEMS Energiefahrplan: Allgemeine Verbesserungen"
+            ],
+            "en": [
+                "FENECON App: Bug fixes and improvements in the smartphone view",
+                "Commissioning wizard: Bug fixes for commissioning in Austria and for Home 10 Gen1",
+                "FEMS App KEBA Charging Station: Improvements for KEBA P40",
+                "FEMS App Heating Element: Configurable minimum heating energy in the new design of the FENECON App",
+                "FEMS Energy Schedule: General improvements"
+            ]
+        }
+    },
+    {
+        "version": "2026.9.1",
         "entries": {
             "de": [
                 "FENECON App: Auswahl <a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">\"Neues Design\"</a> in den Benutzereinstellungen,  Allgemeine Fehlerbehebungen",

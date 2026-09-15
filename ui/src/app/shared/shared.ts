@@ -25,13 +25,11 @@ import { TranslateService } from "@ngx-translate/core";
 import { isBefore, subDays, subYears } from "date-fns";
 import { addIcons } from "ionicons";
 import { environment } from "src/environments";
-import { Edge, EdgeSettings } from "./components/edge/edge";
-import { MarketingAnnualReviewButtonComponent } from "./components/edge/popover/annual-review/button/button";
+import { Edge } from "./components/edge/edge";
 import { ButtonLabel } from "./components/modal/modal-button/modal-button";
 import { User } from "./jsonrpc/shared";
 import { DefaultTypes } from "./type/defaulttypes";
 import { Role } from "./type/role";
-import { ObjectUtils } from "./utils/object/object-utils";
 import { StringUtils } from "./utils/string/string.utils";
 
 addIcons({
@@ -158,21 +156,6 @@ export class EdgePermission {
                 },
                 "assets/img/icon/energy-journey-batteryExtension.webp",
             ),
-            ...(ObjectUtils.getValueByKeySafely(edge?.settings, EdgeSettings.ANNUAL_REVIEW_2025) !== null
-                ? [
-                      new EnergyJourneyWidget(
-                          translate.instant("POPOVER.ANNUAL_REVIEW.HEADER_TEXT"),
-                          translate.instant("POPOVER.ANNUAL_REVIEW.TITLE"),
-                          translate.instant("POPOVER.ANNUAL_REVIEW.DESCRIPTION"),
-                          {
-                              name: translate.instant("POPOVER.ANNUAL_REVIEW.BUTTON_TEXT"),
-                              callback: () =>
-                                  window.open(MarketingAnnualReviewButtonComponent.buildLink(edge).text, "_blank"),
-                          },
-                          "assets/img/annual-review-horizontal.png",
-                      ),
-                  ]
-                : []),
         ];
     }
 

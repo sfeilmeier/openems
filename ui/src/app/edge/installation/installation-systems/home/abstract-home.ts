@@ -880,17 +880,13 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
 
         return [
             {
+                value: Meter.GridMeterCategory.SMART_METER, //
+                label: Meter.toGridMeterCategoryLabelString(Meter.GridMeterCategory.SMART_METER, this.translate, type),
+            },
+            {
                 value: Meter.GridMeterCategory.COMMERCIAL_METER, //
                 label: Meter.toGridMeterCategoryLabelString(
                     Meter.GridMeterCategory.COMMERCIAL_METER,
-                    this.translate,
-                    type,
-                ),
-            },
-            {
-                value: Meter.GridMeterCategory.SMART_METER, //
-                label: Meter.toGridMeterCategoryLabelString(
-                    Meter.GridMeterCategory.SMART_METER,
                     this.translate,
                     optionalType,
                 ),

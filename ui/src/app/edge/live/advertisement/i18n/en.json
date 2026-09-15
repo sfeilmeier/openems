@@ -1,14 +1,16 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE_INSTALLER": "Review & Highlights: The smarter E Europe",
-            "TEXT_INSTALLER": "Missed the trade fair? No problem! At the end of June, we enjoyed three days of the trade fair filled with energy, exciting conversations, and innovative solutions. For those who couldn't attend in person, here's a concise summary of all the latest developments and impressions from FENECON:",
-            "LINK_TEXT_INSTALLER": "See FENECON's highlights",
-            "LINK_INSTALLER": "https://www.fenecon.com/ees26",
-            "TITLE_OWNER": "Review & Highlights: The smarter E Europe",
-            "TEXT_OWNER": "Missed the trade fair? No problem! At the end of June, we enjoyed three days of the trade fair filled with energy, exciting conversations, and innovative solutions. For those who couldn't attend in person, here's a concise summary of all the latest developments and impressions from FENECON:",
-            "LINK_TEXT_OWNER": "See FENECON's highlights",
-            "LINK_OWNER": "https://www.fenecon.com/ees26"
+            "TITLE": "New Design for your Online Monitoring",
+            "TEXT": "Starting in September, you can try out the new design of your Online Monitoring. Discover new features and enjoy a more intuitive, user-friendly, and modern interface. Simply go to the settings in your profile and activate the new design to try it out right away.",
+            "LINK_TEXT": "Activate now",
+            "LINK": ""
+        },
+        "2": {
+            "TITLE": "Good energy is worth sharing!",
+            "TEXT": "Recommend FENECON to your friends, family, and acquaintances and earn attractive rewards as a thank-you. For every new Energy Journey started, both you and the new customer will receive the FEMS Time-of-Use Tariff app and a Shelly Plug free of charge. A perfect match for the free Shelly DIY FEMS app!",
+            "LINK_TEXT": "Secure Your Reward",
+            "LINK": "https://www.fenecon.de/weiterempfehlungsprogramm"
         }
     }
 }

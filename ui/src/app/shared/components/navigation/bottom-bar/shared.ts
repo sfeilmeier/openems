@@ -13,7 +13,7 @@ import { Widgets } from "src/app/shared/type/widgets";
 import { UserComponent } from "src/app/user/user.component";
 import { Edge } from "../../edge/edge";
 import { EdgeConfig } from "../../edge/edgeconfig";
-import { NavigationTree, NavigationId, NavigationConstants } from "../shared";
+import { NavigationConstants, NavigationId, NavigationTree } from "../shared";
 
 export namespace SharedBottomNavigationBar {
     export function getNavigationTree(

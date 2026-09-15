@@ -113,7 +113,6 @@ class GoodWeBatteryInverterImplTest {
 	void testEt() throws Exception {
 		var charger = new GoodWeChargerPv1();
 		new ComponentTest(charger) //
-				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("setModbus", new DummyModbusBridge("modbus0")) //
 				.activate(io.openems.edge.goodwe.charger.singlestring.MyConfig.create() //
 						.setId("charger0") //
@@ -266,7 +265,6 @@ class GoodWeBatteryInverterImplTest {
 	void testEmsPowerModeAutoWithSurplus() throws Exception {
 		var charger = new GoodWeChargerPv1();
 		new ComponentTest(charger) //
-				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("setModbus", new DummyModbusBridge("modbus0")) //
 				.activate(io.openems.edge.goodwe.charger.singlestring.MyConfig.create() //
 						.setId("charger0") //
@@ -448,7 +446,6 @@ class GoodWeBatteryInverterImplTest {
 		var charger1 = new GoodWeChargerMpptTwoStringImpl();
 
 		new ComponentTest(charger1) //
-				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("essOrBatteryInverter", inverter) //
 				.activate(io.openems.edge.goodwe.charger.mppt.twostring.MyConfig.create() //
 						.setId("charger0") //
@@ -556,7 +553,6 @@ class GoodWeBatteryInverterImplTest {
 		var charger1 = new GoodWeChargerMpptTwoStringImpl();
 
 		new ComponentTest(charger1) //
-				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("essOrBatteryInverter", inverter) //
 				.activate(io.openems.edge.goodwe.charger.mppt.twostring.MyConfig.create() //
 						.setId("charger0") //
@@ -645,7 +641,6 @@ class GoodWeBatteryInverterImplTest {
 		var charger6 = new GoodWeChargerTwoStringImpl();
 
 		new ComponentTest(charger1) //
-				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("essOrBatteryInverter", ess) //
 				.activate(io.openems.edge.goodwe.charger.twostring.MyConfig.create() //
 						.setId("charger0") //
@@ -654,7 +649,6 @@ class GoodWeBatteryInverterImplTest {
 						.build());
 
 		new ComponentTest(charger2) //
-				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("essOrBatteryInverter", ess) //
 				.activate(io.openems.edge.goodwe.charger.twostring.MyConfig.create() //
 						.setId("charger1") //
@@ -663,7 +657,6 @@ class GoodWeBatteryInverterImplTest {
 						.build());
 
 		new ComponentTest(charger3) //
-				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("essOrBatteryInverter", ess) //
 				.activate(io.openems.edge.goodwe.charger.twostring.MyConfig.create() //
 						.setId("charger2") //
@@ -672,7 +665,6 @@ class GoodWeBatteryInverterImplTest {
 						.build());
 
 		new ComponentTest(charger4) //
-				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("essOrBatteryInverter", ess) //
 				.activate(io.openems.edge.goodwe.charger.twostring.MyConfig.create() //
 						.setId("charger3") //
@@ -681,7 +673,6 @@ class GoodWeBatteryInverterImplTest {
 						.build());
 
 		new ComponentTest(charger5) //
-				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("essOrBatteryInverter", ess) //
 				.activate(io.openems.edge.goodwe.charger.twostring.MyConfig.create() //
 						.setId("charger4") //
@@ -690,7 +681,6 @@ class GoodWeBatteryInverterImplTest {
 						.build());
 
 		new ComponentTest(charger6) //
-				.addReference("cm", new DummyConfigurationAdmin()) //
 				.addReference("essOrBatteryInverter", ess) //
 				.activate(io.openems.edge.goodwe.charger.twostring.MyConfig.create() //
 						.setId("charger5") //

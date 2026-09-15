@@ -6,9 +6,6 @@ import java.util.List;
 import org.osgi.framework.Constants;
 
 import io.openems.common.exceptions.OpenemsException;
-import io.openems.common.test.DummyConfigurationAdmin;
-import io.openems.common.test.DummyConfigurationAdmin.DummyConfiguration;
-import io.openems.common.utils.ConfigUtils;
 import io.openems.edge.bridge.modbus.api.AbstractModbusBridge;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
@@ -48,12 +45,7 @@ public class DummyModbusComponent extends AbstractOpenemsModbusComponent impleme
 		this.setModbus(bridge);
 		var context = new DummyComponentContext();
 		context.addProperty(Constants.SERVICE_PID, Constants.SERVICE_PID);
-		var cm = new DummyConfigurationAdmin();
-		var dummyConfiguration = new DummyConfiguration();
-		dummyConfiguration.addProperty("Modbus.target",
-				ConfigUtils.generateReferenceTargetFilter(Constants.SERVICE_PID, bridge.id()));
-		cm.addConfiguration(Constants.SERVICE_PID, dummyConfiguration);
-		super.activate(context, id, "", true, unitId, cm, "Modbus", bridge.id());
+		super.activate(context, id, "", true, unitId);
 	}
 
 	protected ModbusProtocol defineModbusProtocol() {
