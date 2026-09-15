@@ -58,7 +58,7 @@ export type MpptConfig = {
 
 export type CommercialGen3App = {
     SAFETY_COUNTRY: SafetyCountry;
-    GRID_CODE: string;
+    GRID_CODE?: string;
     FEED_IN_TYPE: ExternalLimitationType;
     MAX_FEED_IN_POWER?: number;
     FEED_IN_SETTING: string;
@@ -682,10 +682,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         feedInSetting: FeedInSetting,
     ): CommercialGen3App & GensetProperties {
         AssertionUtils.assertIsDefined(
-            this.gridSetting,
-            "Grid setting must be selected before generating app properties",
-        );
-        AssertionUtils.assertIsDefined(
             this.energyFlowMeter.value,
             "CT ratio must be set before generating app properties",
         );
@@ -693,7 +689,7 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         return {
             ...this.commonProperties(safetyCountry, feedInSetting),
             FEED_IN_TYPE: this.feedInLimitation?.feedInType ?? ExternalLimitationType.NO_LIMITATION,
-            GRID_CODE: this.gridSetting,
+            ...(this.gridSetting != null ? { GRID_CODE: this.gridSetting } : {}),
             CT_RATIO_FIRST: this.energyFlowMeter.value,
             ...this.generateMpptProperties(),
             ...this.getGensetProperties(),
