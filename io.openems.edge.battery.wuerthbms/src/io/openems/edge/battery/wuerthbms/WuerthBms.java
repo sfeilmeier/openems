@@ -212,7 +212,7 @@ public interface WuerthBms
 		KL_30_C_FAULT(Doc.of(FAULT)//
 				.text("KL30C measurement threshold failed")),
 
-		SHUNT_CALIBRATION_ERROR(Doc.of(FAULT)//
+		SHUNT_CALIBRATION_ERROR(Doc.of(WARNING)//
 				.text("Shunt calibration procedure is not correct or value is out of range")),
 
 		SET_IP_FAIL(Doc.of(WARNING)//
