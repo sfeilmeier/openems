@@ -31,6 +31,7 @@ jobs:
         uses: ./.gitea/actions/setup-ssh
         with:
           ssh-key: ${{ secrets.MAC_SSH_KEY }}
+          host-key: ${{ secrets.MAC_HOST_KEY }}
           host: ${{ vars.MAC_HOST }}
 
       - name: Build and release iOS app

@@ -101,6 +101,7 @@ jobs:
         uses: ./.gitea/actions/setup-ssh
         with:
           ssh-key: ${{ secrets.DEPLOY_KEY }}
+          host-key: ${{ secrets.DEV_SERVER_HOST_KEY }}
           host: ${{ vars.DEV_SERVER_HOST }}
 
       - name: Check artifacts
