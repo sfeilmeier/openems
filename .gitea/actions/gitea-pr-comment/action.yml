@@ -30,5 +30,9 @@ runs:
       env:
         GITEA_REPOSITORY: ${{ github.repository }}
         GITEA_SERVER_URL: ${{ github.server_url }}
+        INPUT_GITEA_TOKEN: ${{ inputs.gitea_token }}
+        INPUT_PR_NUMBER: ${{ inputs.pr_number }}
+        INPUT_BODY: ${{ inputs.body }}
+        INPUT_MARKER: ${{ inputs.marker }}
       run: |
         python .gitea/actions/gitea-pr-comment/comment.py
