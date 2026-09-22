@@ -34,6 +34,9 @@ runs:
       env:
         PR_NUMBER: ${{ gitea.event.pull_request.number }}
         GITHUB_OUTPUT: ${{ github.output }}
+        INPUT_SONAR_HOST_URL: ${{ inputs.sonar_host_url }}
+        INPUT_SONAR_TOKEN: ${{ inputs.sonar_token }}
+        INPUT_PROJECT_KEYS: ${{ inputs.project_keys }}
       shell: bash
       run: |
         python .gitea/actions/sonarqube-qg-query/qg.py

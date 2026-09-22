@@ -7,6 +7,10 @@ inputs:
   host:
     description: "The host to connect to"
     required: true
+  host-key:
+    description: "The host key to verify the SSH connection"
+    default: ""
+    required: false
 
 runs:
   using: "composite"
@@ -17,11 +21,21 @@ runs:
         apt-get update -qq && apt-get install -y -qq rsync ssh || true
         rm -rf /var/lib/apt/lists/*
 
-    - name: Setup SSH
+    - name: Setup SSH Key
       id: setup-ssh
       shell: bash
       run: |
         mkdir -p ~/.ssh
         echo "${{ inputs.ssh-key }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ inputs.host }} >> ~/.ssh/known_hosts
+
+    - name: Setup Known Hosts
+      id: setup-known-hosts
+      shell: bash
+      run: |
+        if [ -n "${{ inputs.host-key }}" ]; then
+          echo "${{ inputs.host }} ${{ inputs.host-key }}" >> ~/.ssh/known_hosts
+        else
+          echo "No host key provided. Try keyscan instead."
+          ssh-keyscan -H ${{ inputs.host }} >> ~/.ssh/known_hosts
+        fi

@@ -30,7 +30,7 @@ runs:
         apt-get update -qq && apt-get install -y -qq ssh || true
         rm -rf /var/lib/apt/lists/*
 
-    - name: Setup SSH
+    - name: Setup SSH Key
       shell: bash
       run: |
         mkdir -p ~/.ssh
