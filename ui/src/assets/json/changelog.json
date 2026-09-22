@@ -1,5 +1,22 @@
 [
     {
+        "version": "2026.9.3",
+        "entries": {
+            "de": [
+                "FEMS App KEBA Ladestation: Verbesserungen für KEBA P40",
+                "FENECON Industrial L: Verbesserungen am Fehlerhandling",
+                "FEMS Energiefahrplan: Fehlerbehebung bei Timeout der Fahrplanberechnung",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest</a>: Verbesserungen für Askoma und my-PV Heizstäbe"
+            ],
+            "en": [
+                "FEMS App KEBA Charging Station: Improvements for KEBA P40",
+                "FENECON Industrial L: Improvements to error handling",
+                "FEMS Energy Schedule: Bug fix for timeout during schedule calculation",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Field Test</a>: Improvements for Askoma and my-PV heating elements"
+            ]
+        }
+    },
+    {
         "version": "2026.9.2",
         "entries": {
             "de": [
