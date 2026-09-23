@@ -14,6 +14,7 @@ import { SharedIoChannelSingleThreshold } from "src/app/edge/live/Controller/Io/
 import { SharedControllerIoFixDigitalOutput } from "src/app/edge/live/Controller/Io/FixDigitalOutput/shared/shared";
 import { SharedControllerIoHeatingElement } from "src/app/edge/live/Controller/Io/HeatingElement/shared/shared";
 import { SharedControllerIoHeatpump } from "src/app/edge/live/Controller/Io/Heatpump/shared/shared";
+import { SharedEvcsApiCluster } from "src/app/edge/live/Multiple/evcs-api-cluster/shared/shared";
 import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/shared-system-industrial-l";
 import { SharedSystemIndustrialM } from "src/app/edge/live/system/industrial/m/shared-system-industrial-m";
 import { SharedSystemIndustrialS } from "src/app/edge/live/system/industrial/s/shared-system-industrial-s";
@@ -146,6 +147,8 @@ export class Widgets {
                 return ControllerEvseSingleShared.getNavigationTree(edge, translate, widget.componentId, config);
             case "Controller.ChannelThreshold":
                 return SharedControllerChannelThreshold.getNavigationTree(translate, component);
+            case "io.openems.edge.evcs.api.Evcs":
+                return SharedEvcsApiCluster.getNavigationTree(translate, component.id, config);
             default:
                 return null;
         }
