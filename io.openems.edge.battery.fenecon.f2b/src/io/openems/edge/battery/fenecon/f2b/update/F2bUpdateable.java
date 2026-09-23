@@ -28,13 +28,13 @@ import org.slf4j.LoggerFactory;
 
 import io.openems.common.session.Language;
 import io.openems.common.session.Role;
+import io.openems.common.utils.TextProvider;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.BatteryFeneconF2bCluster;
 import io.openems.edge.battery.fenecon.f2b.common.enums.F2bHardwareType;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
 import io.openems.edge.bridge.modbus.api.BridgeModbusTcp;
 import io.openems.edge.common.component.OpenemsComponent;
-import io.openems.edge.common.type.TextProvider;
 import io.openems.edge.common.update.ProgressHistory;
 import io.openems.edge.common.update.ProgressPublisher;
 import io.openems.edge.common.update.Updateable;
