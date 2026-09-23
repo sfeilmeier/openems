@@ -17,6 +17,7 @@ export const OemMeta: BaseMeta = {
             ALPITRONIC: null,
             MENNEKES: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Mennekes.4You.png",
             SIMULATOR: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Simulator.png",
+            ALFEN: "https://docs.fenecon.de/de/_images/other/zz/product_pictures/Evse.ChargePoint.Alfen.png",
         },
         LOGO: {
             DARK: "assets/img/fenecon-logo-white.svg",
@@ -149,6 +150,7 @@ export const OemMeta: BaseMeta = {
             EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_keba",
             EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_hardybarth",
             EVCS_MENNEKES: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_mennekes",
+            EVSE_ALFEN: "https://docs.fenecon.de/redirect/fenecon/{language}/evse_alfen",
             EVCS_GO_E: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_goe",
             EVCS_IES: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_ies",
             EVCS_ALPITRONIC_HYPER: "https://docs.fenecon.de/redirect/fenecon/{language}/evcs_alpitronichyper",
