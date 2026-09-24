@@ -11,12 +11,12 @@ import java.util.function.BooleanSupplier;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.utils.EnumUtils;
 import io.openems.edge.common.statemachine.StateHandler;
-import io.openems.edge.controller.evse.single.statemachine.StateMachine.State;
+import io.openems.edge.controller.evse.single.EvseSingleState;
 import io.openems.edge.evse.api.chargepoint.Profile;
 import io.openems.edge.evse.api.common.ApplyPhaseSwitch;
 import io.openems.edge.evse.api.common.ApplyPhaseSwitch.PhaseSwitchAbility;
 
-public abstract sealed class PhaseSwitchHandler extends StateHandler<State, Context> {
+public abstract sealed class PhaseSwitchHandler extends StateHandler<EvseSingleState, Context> {
 
 	public static final class ToSinglePhase extends PhaseSwitchHandler {
 		public ToSinglePhase() {
@@ -31,7 +31,7 @@ public abstract sealed class PhaseSwitchHandler extends StateHandler<State, Cont
 	}
 
 	private ApplyPhaseSwitch action;
-	private State state;
+	private EvseSingleState state;
 
 	private SubStateMachine subStateMachine;
 
@@ -47,18 +47,18 @@ public abstract sealed class PhaseSwitchHandler extends StateHandler<State, Cont
 		context.setPhaseSwitchFailed.accept(false);
 	}
 
-	private State mapPhaseSwitchDirection() {
+	private EvseSingleState mapPhaseSwitchDirection() {
 		return switch (this.action.direction()) {
-		case TO_SINGLE_PHASE -> State.PHASE_SWITCH_TO_SINGLE_PHASE;
-		case TO_THREE_PHASE -> State.PHASE_SWITCH_TO_THREE_PHASE;
+		case TO_SINGLE_PHASE -> EvseSingleState.PHASE_SWITCH_TO_SINGLE_PHASE;
+		case TO_THREE_PHASE -> EvseSingleState.PHASE_SWITCH_TO_THREE_PHASE;
 		};
 	}
 
 	@Override
-	protected State runAndGetNextState(Context context) throws OpenemsNamedException {
+	protected EvseSingleState runAndGetNextState(Context context) throws OpenemsNamedException {
 		final var nextSubState = this.getNextSubState(context);
 		if (nextSubState == SubStateMachine.State.FINISHED) {
-			return State.CHARGING;
+			return EvseSingleState.CHARGING;
 		}
 		this.subStateMachine.setNextSubState(nextSubState, context);
 		return this.state;

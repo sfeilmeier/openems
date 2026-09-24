@@ -79,8 +79,12 @@ public final class Profile {
 
 			public Builder setPhaseSwitchManual(PhaseSwitchDirection direction,
 					ApplySetPoint.Ability.Watt oppositePhaseApplySetPoint) {
-				return this.setPhaseSwitch(
-						new ApplyPhaseSwitch(direction, new PhaseSwitchAbility.Manual(), oppositePhaseApplySetPoint));
+				if (direction == null) {
+					return this.setPhaseSwitch(null);
+				} else {
+					return this.setPhaseSwitch(new ApplyPhaseSwitch(direction, new PhaseSwitchAbility.Manual(),
+							oppositePhaseApplySetPoint));
+				}
 			}
 
 			public Builder setPhaseSwitch(ApplyPhaseSwitch applyPhaseSwitch) {
@@ -132,7 +136,7 @@ public final class Profile {
 	 * Declares the Actions for an {@link EvseChargePoint}.
 	 */
 	public static record ChargePointActions(ChargePointAbilities abilities, ApplySetPoint.Action applySetPoint,
-			ApplyPhaseSwitch phaseSwitch, Integer setPointWithoutPhaseLimitation) {
+			ApplyPhaseSwitch phaseSwitch, Integer idealSetPointInWatt) {
 
 		/**
 		 * Gets the {@link ApplySetPoint} in [A].
@@ -178,7 +182,7 @@ public final class Profile {
 			private final ChargePointAbilities abilities;
 			private ApplySetPoint.Action applySetPoint = null;
 			private ApplyPhaseSwitch phaseSwitch = null;
-			private Integer setPointWithoutPhaseLimitation = null;
+			private Integer idealSetPointInWatt = null;
 
 			private Builder(ChargePointAbilities abilities) {
 				this.abilities = abilities;
@@ -188,7 +192,12 @@ public final class Profile {
 				this(actions.abilities);
 				this.applySetPoint = actions.applySetPoint;
 				this.phaseSwitch = actions.phaseSwitch;
-				this.setPointWithoutPhaseLimitation = actions.setPointWithoutPhaseLimitation;
+				this.idealSetPointInWatt = actions.idealSetPointInWatt;
+			}
+
+			public Builder setIdealSetPointInWatt(int power) {
+				this.idealSetPointInWatt = power;
+				return this;
 			}
 
 			public Builder setApplySetPointInMilliAmpere(int value) throws IllegalArgumentException {
@@ -239,8 +248,22 @@ public final class Profile {
 				return this;
 			}
 
+			public Builder setCorrectApplySetPointByWatt(int watt) {
+				final var value = this.abilities.applySetPoint().fromPower(watt);
+				switch (this.abilities.applySetPoint()) {
+				case ApplySetPoint.Ability.MilliAmpere ma -> this.setApplySetPointInMilliAmpere(value);
+				case ApplySetPoint.Ability.Ampere amp -> this.setApplySetPointInAmpere(value);
+				case ApplySetPoint.Ability.Watt w -> this.setApplySetPointInWatt(value);
+				}
+				return this;
+			}
+
 			public ApplySetPoint.Action getApplySetPoint() {
 				return this.applySetPoint;
+			}
+
+			public ApplyPhaseSwitch getPhaseSwitch() {
+				return this.phaseSwitch;
 			}
 
 			public Builder setPhaseSwitch(ApplyPhaseSwitch phaseSwitch) {
@@ -254,11 +277,6 @@ public final class Profile {
 							+ "Actual [" + phaseSwitch + "]");
 				}
 				this.phaseSwitch = phaseSwitch;
-				return this;
-			}
-
-			public Builder setSetPointWithoutPhaseLimitation(Integer setPointWithoutPhaseLimitation) {
-				this.setPointWithoutPhaseLimitation = setPointWithoutPhaseLimitation;
 				return this;
 			}
 
@@ -277,7 +295,7 @@ public final class Profile {
 					throw new IllegalArgumentException("ApplySetPoint is always required");
 				}
 				return new ChargePointActions(this.abilities, this.applySetPoint, this.phaseSwitch,
-						this.setPointWithoutPhaseLimitation);
+						this.idealSetPointInWatt);
 			}
 		}
 
