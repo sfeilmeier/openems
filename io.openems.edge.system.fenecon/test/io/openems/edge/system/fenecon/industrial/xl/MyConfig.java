@@ -3,7 +3,7 @@ package io.openems.edge.system.fenecon.industrial.xl;
 import io.openems.common.test.AbstractComponentConfig;
 import io.openems.common.utils.ConfigUtils;
 import io.openems.edge.common.startstop.StartStopConfig;
-import io.openems.edge.system.fenecon.industrial.xl.hydac.FluidCoolingMode;
+import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 
 @SuppressWarnings("all")
 public class MyConfig extends AbstractComponentConfig implements Config {
@@ -19,7 +19,6 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		private int airCoolingSetPoint;
 		private String fluidCoolingId;
 		private FluidCoolingMode fluidCoolingMode;
-		private int fluidCoolingSetPoint;
 
 		private Builder() {
 		}
@@ -71,11 +70,6 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 
 		public Builder setFluidCoolingMode(FluidCoolingMode fluidCoolingMode) {
 			this.fluidCoolingMode = fluidCoolingMode;
-			return this;
-		}
-
-		public Builder setFluidCoolingSetPoint(int fluidCoolingSetPoint) {
-			this.fluidCoolingSetPoint = fluidCoolingSetPoint;
 			return this;
 		}
 
@@ -143,11 +137,6 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	@Override
 	public FluidCoolingMode fluidCoolingMode() {
 		return this.builder.fluidCoolingMode;
-	}
-
-	@Override
-	public int fluidCoolingSetPoint() {
-		return this.builder.fluidCoolingSetPoint;
 	}
 
 	@Override

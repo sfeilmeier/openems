@@ -3,8 +3,6 @@ package io.openems.edge.system.fenecon.industrial.xl.firealarmsystem;
 import static io.openems.common.utils.ConfigUtils.generateReferenceTargetFilter;
 
 import io.openems.common.test.AbstractComponentConfig;
-import io.openems.edge.system.fenecon.industrial.xl.firealarmsystem.Config;
-import io.openems.edge.system.fenecon.industrial.xl.firealarmsystem.ConfigVersion;
 
 @SuppressWarnings("all")
 public class MyConfig extends AbstractComponentConfig implements Config {

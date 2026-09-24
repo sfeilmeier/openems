@@ -1,6 +1,8 @@
 package io.openems.edge.system.fenecon.industrial.xl;
 
 import static io.openems.common.session.Role.ADMIN;
+import static io.openems.edge.common.channel.ChannelId.channelIdUpperToCamel;
+import static io.openems.edge.common.channel.ChannelUtils.setValue;
 import static io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State.UNDEFINED;
 import static java.util.stream.Collectors.groupingBy;
 
@@ -66,12 +68,13 @@ import io.openems.edge.common.update.Updateable;
 import io.openems.edge.ess.api.EssErrorAcknowledge;
 import io.openems.edge.ess.api.MetaEss;
 import io.openems.edge.ess.api.SymmetricEss;
+import io.openems.edge.fluidcooling.hydac.Hydac;
 import io.openems.edge.io.api.DigitalOutput;
+import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.jsonrpc.ErrorAcknowledgeRpc;
 import io.openems.edge.system.fenecon.industrial.jsonrpc.SystemErrorAcknowledge;
 import io.openems.edge.system.fenecon.industrial.xl.blueeplus.BlueEPlus;
 import io.openems.edge.system.fenecon.industrial.xl.firealarmsystem.HekatronB9X2;
-import io.openems.edge.system.fenecon.industrial.xl.hydac.Hydac;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.BmsHardwareReset;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction;
@@ -95,22 +98,22 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	public static final EndpointRequestType<EmptyObject, EmptyObject> CLEAR_ERROR_REQUEST = EndpointRequestType
 			.ofEmpty("clearErrorRequest");
 
-	private final StateMachine stateMachine = new StateMachine(State.UNDEFINED);
+	private static final F2bHardwareType F2B_HARDWARE_TYPE = F2bHardwareType.F2B_FM29_1V2;
+	private final StateMachine stateMachine = new StateMachine(UNDEFINED);
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialXlImpl.class);
 	private final Timeout resetTimeout = Timeout.ofSeconds(5);
 	private final List<BatteryFeneconF2bCluster> batteries = new ArrayList<>();
-	private ServiceRegistration<Updateable> serviceRegistration;
-	private static final F2bHardwareType F2B_HARDWARE_TYPE = F2bHardwareType.F2B_FM29_1V2;
 
+	private ServiceRegistration<Updateable> serviceRegistration;
 	private StartStop startStopTarget = StartStop.UNDEFINED;
-	private ChannelAddress outputDisable24vF2b = null;
 	private ChannelAddress outputSsiRunningFlashing = null;
+	private ChannelAddress outputDisable24vF2b = null;
 	private ChannelAddress outputSsiRunning = null;
 	private ChannelAddress outputSsiWarning = null;
 	private ChannelAddress outputSsiError = null;
 	private boolean isResetRunning = false;
-	private Config config;
 	private TestMode.Request request;
+	private Config config;
 
 	@Reference
 	private ComponentManager componentManager;
@@ -169,7 +172,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 		super.activate(context, config.id(), config.alias(), config.enabled());
 		this.serviceRegistration = context.getBundleContext().registerService(Updateable.class,
 				new F2bUpdateable(this.batteries, F2B_HARDWARE_TYPE), new Hashtable<>());
-		if (!this.applyConfig(context, config)) {
+		if (!this.applyConfig(config)) {
 			return;
 		}
 	}
@@ -177,12 +180,12 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	@Modified
 	private void modified(ComponentContext context, Config config) throws OpenemsNamedException {
 		super.modified(context, config.id(), config.alias(), config.enabled());
-		if (!this.applyConfig(context, config)) {
+		if (!this.applyConfig(config)) {
 			return;
 		}
 	}
 
-	private boolean applyConfig(ComponentContext context, Config config) throws OpenemsNamedException {
+	private boolean applyConfig(Config config) throws OpenemsNamedException {
 		this.config = config;
 		this.outputDisable24vF2b = ChannelAddress.fromString("io0/DigitalOutputM3C2");
 		this.outputSsiRunningFlashing = ChannelAddress.fromString("io0/DigitalOutputM3C3");
@@ -196,6 +199,23 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 			return true;
 		}
 		return false;
+	}
+
+	private void handleFluidCoolingMode(FluidCoolingMode fluidCoolingMode) {
+		try {
+			switch (fluidCoolingMode) {
+			case ENABLED -> this.fluidCooling.start();
+			case DISABLED -> this.fluidCooling.stop();
+			case AUTO -> {
+				// The cooling unit is operating in its automatic mode; no additional action is
+				// required
+			}
+			}
+			setValue(this, SystemFeneconIndustrialXl.ChannelId.FLUID_COOLING_AUTO,
+					fluidCoolingMode == FluidCoolingMode.AUTO);
+		} catch (OpenemsNamedException e) {
+			this.logError(this.log, "Could not set fluid cooling mode: " + e.getMessage());
+		}
 	}
 
 	@Deactivate
@@ -214,20 +234,20 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 			this.deactivateF2bHardwareReset();
 			this.updateSystemStatusDisplay();
 			this.updateInputChannelValues();
-			this.setCoolingUnitMode();
 			this.updateCoolingTemperatureLimits();
 			this.updateFireAlarmSystemChannels();
 			this.updateSystemFailure();
 			this.handleStateMachine();
+			this.handleFluidCoolingMode(this.config.fluidCoolingMode());
 		}
 		}
 	}
 
 	private void updateSystemFailure() {
 		var stateMachine = this.stateMachine.getCurrentState();
-		if (stateMachine == StateMachine.State.GO_RUNNING//
-				|| stateMachine == StateMachine.State.GO_STOPPED//
-				|| stateMachine == StateMachine.State.RUNNING//
+		if (stateMachine == State.GO_RUNNING//
+				|| stateMachine == State.GO_STOPPED//
+				|| stateMachine == State.RUNNING//
 		) {
 			final var fireAlarmTriggered = this.getSystemShutdownFaultChannel().value();
 			final var serviceSwitchPressed = this.getServiceSwitchPressedInOperationChannel().value();
@@ -300,7 +320,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 
 	/**
 	 * Check if the coupling-switch switched off via customer interface.
-	 * 
+	 *
 	 * @return true for coupling-switch switched off
 	 */
 	public boolean isCouplingSwitchOffDefined() {
@@ -309,7 +329,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 
 	/**
 	 * Check if the system is in system off state.
-	 * 
+	 *
 	 * @return true for system off, false if system enabled
 	 */
 	public boolean isStatusSysOffDefined() {
@@ -318,7 +338,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 
 	/**
 	 * Check if the system service required.
-	 * 
+	 *
 	 * @return true for service required, false for normal
 	 */
 	public boolean isSysServiceSwitchOnDefined() {
@@ -339,27 +359,9 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 
 	private void updateCoolingTemperatureLimits() {
 		try {
-			setIfChanged(this.fluidCooling.getCoolingCircuit1SetPointChannel(), this.config.fluidCoolingSetPoint());
 			setIfChanged(this.airCooling.getSetupStandardControlSetpointChannel(), this.config.airCoolingSetPoint());
 		} catch (OpenemsNamedException e) {
 			this.logWarn(this.log, "The cooling unit temperatures can not be updated" + e.getMessage());
-		}
-	}
-
-	private void setCoolingUnitMode() {
-		try {
-			switch (this.config.fluidCoolingMode()) {
-			case DISABLED -> {
-				setIfChanged(this.fluidCooling.getChillerOnChannel(), false);
-				setIfChanged(this.fluidCooling.getChillerOffChannel(), true);
-			}
-			case ENABLED -> {
-				setIfChanged(this.fluidCooling.getChillerOnChannel(), true);
-				setIfChanged(this.fluidCooling.getChillerOffChannel(), false);
-			}
-			}
-		} catch (OpenemsNamedException e) {
-			this.logWarn(this.log, "The cooling can not be [" + this.config.fluidCoolingMode() + "]" + e.getMessage());
 		}
 	}
 
@@ -571,7 +573,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	}
 
 	private boolean isIdle() {
-		return this.stateMachine.getCurrentState() == StateMachine.State.TEST_MODE_IDLE;
+		return this.stateMachine.getCurrentState() == State.TEST_MODE_IDLE;
 	}
 
 	public void setTestRequestParams(TestMode.Request testRequestParams) {
@@ -615,7 +617,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 
 	private void updateInputChannelValues() {
 		for (var input : SystemInputChannels.values()) {
-			Channel<Boolean> inputChannel = this.channel(toChannelIdString(input.name()));
+			Channel<Boolean> inputChannel = this.channel(channelIdUpperToCamel(input.name()));
 			try {
 				Channel<Boolean> channel = this.componentManager.getChannel(input.getAddress());
 				var value = channel.value();
@@ -670,16 +672,6 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	}
 
 	/**
-	 * Creates a Channel-ID String from the Enum and returns it.
-	 *
-	 * @param channelId the {@link channelId}
-	 * @return the ChannelId as camel-case String
-	 */
-	public static String toChannelIdString(String channelId) {
-		return io.openems.edge.common.channel.ChannelId.channelIdUpperToCamel(channelId);
-	}
-
-	/**
 	 * Proofs the input channels are defined and whether they are activated or not.
 	 *
 	 * @param input the IO mapped {@link SystemInputChannels}
@@ -688,7 +680,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	 */
 	public Value<Boolean> isEnabled(SystemInputChannels input) {
 		try {
-			Channel<Boolean> channel = this.channel(toChannelIdString(input.name()));
+			Channel<Boolean> channel = this.channel(channelIdUpperToCamel(input.name()));
 			return channel.value();
 		} catch (Exception e) {
 			return null;
@@ -831,17 +823,6 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 				.append(this.temp.getTemperature())//
 				.append("|Humidity:")//
 				.append(this.temp.getRelativeHumidity())//
-				.append("|CoolingUnit")//
-				.append("|Temp: ")//
-				.append(this.fluidCooling.getCoolingCircuit1Temperature())//
-				.append("|Fan: ")//
-				.append(this.fluidCooling.getFan())//
-				.append("|CoolingRequired: ")//
-				.append(this.fluidCooling.getCoolingRequired())//
-				.append("|Pump: ")//
-				.append(this.fluidCooling.getPump())//
-				.append("|Compressor: ")//
-				.append(this.fluidCooling.getCompressor())//
 				.toString();
 	}
 

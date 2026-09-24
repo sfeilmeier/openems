@@ -18,18 +18,18 @@ import io.openems.common.jsonrpc.serialization.JsonSerializer;
  */
 public class F2bUpdate implements EndpointRequestType<EmptyObject, EmptyObject> {
 
-    @Override
-    public String getMethod() {
-        return "f2bUpdate";
-    }
+	@Override
+	public String getMethod() {
+		return "f2bUpdate";
+	}
 
-    @Override
-    public JsonSerializer<EmptyObject> getRequestSerializer() {
-        return EmptyObject.serializer();
-    }
+	@Override
+	public JsonSerializer<EmptyObject> getRequestSerializer() {
+		return EmptyObject.serializer();
+	}
 
-    @Override
-    public JsonSerializer<EmptyObject> getResponseSerializer() {
-        return EmptyObject.serializer();
-    }
+	@Override
+	public JsonSerializer<EmptyObject> getResponseSerializer() {
+		return EmptyObject.serializer();
+	}
 }

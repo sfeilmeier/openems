@@ -9,7 +9,7 @@ import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
 import io.openems.edge.ess.test.DummyMetaEss;
 import io.openems.edge.io.test.DummyInputOutput;
-import io.openems.edge.system.fenecon.industrial.s.enums.CoolingUnitMode;
+import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 
 public class SystemFeneconIndustrialSImplTest {
 
@@ -23,7 +23,7 @@ public class SystemFeneconIndustrialSImplTest {
 				.activate(MyConfig.create() //
 						.setId("system0") //
 						.setStartStopConfig(StartStopConfig.START) //
-						.setCoolingUnitMode(CoolingUnitMode.AUTO) //
+						.setCoolingUnitMode(FluidCoolingMode.AUTO) //
 						.setEssId("ess0") //
 						.setBatteryIds("battery11", "battery12", "battery21", "battery22") //
 						.setCoolingUnitError("io0/InputOutput0") //

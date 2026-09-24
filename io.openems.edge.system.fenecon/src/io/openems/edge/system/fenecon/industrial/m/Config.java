@@ -4,8 +4,8 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 import io.openems.edge.common.startstop.StartStopConfig;
+import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.m.enums.CoolingType;
-import io.openems.edge.system.fenecon.industrial.m.enums.CoolingUnitMode;
 
 @ObjectClassDefinition(//
 		name = "System FENECON Industrial M", //
@@ -25,7 +25,7 @@ public @interface Config {
 	StartStopConfig startStop() default StartStopConfig.AUTO;
 
 	@AttributeDefinition(name = "Cooling unit behaviour?", description = "Should this Component be forced to cool down?")
-	CoolingUnitMode coolingUnitMode() default CoolingUnitMode.AUTO;
+	FluidCoolingMode coolingUnitMode() default FluidCoolingMode.AUTO;
 
 	@AttributeDefinition(name = "Cooling Type", description = "Cooling type for different thresholds")
 	CoolingType coolingType() default CoolingType.CHILLER;

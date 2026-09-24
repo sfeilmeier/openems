@@ -1,17 +1,17 @@
-package io.openems.edge.system.fenecon.industrial.m.enums;
+package io.openems.edge.system.fenecon.industrial.enums;
 
 import io.openems.common.types.OptionsEnum;
 
-public enum CoolingUnitMode implements OptionsEnum {
-	MANUAL_OFF(0, "Manual OFF"), //
-	MANUAL_ON(1, "Manual ON"), //
+public enum FluidCoolingMode implements OptionsEnum {
+	DISABLED(0, "Manual OFF"), //
+	ENABLED(1, "Manual ON"), //
 	AUTO(2, "AUTO"), //
 	;
 
 	private final int value;
 	private final String name;
 
-	private CoolingUnitMode(int value, String name) {
+	private FluidCoolingMode(int value, String name) {
 		this.value = value;
 		this.name = name;
 	}
@@ -28,6 +28,6 @@ public enum CoolingUnitMode implements OptionsEnum {
 
 	@Override
 	public OptionsEnum getUndefined() {
-		return MANUAL_OFF; // no undefined, because there should no "undefined" selection in the config
+		return DISABLED; // no undefined, because there should no "undefined" selection in the config
 	}
 }

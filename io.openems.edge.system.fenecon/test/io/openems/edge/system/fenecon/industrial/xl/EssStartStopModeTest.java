@@ -28,8 +28,9 @@ import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
 import io.openems.edge.ess.test.DummyManagedSymmetricEss;
 import io.openems.edge.ess.test.DummyMetaEss;
+import io.openems.edge.fluidcooling.hydac.DummyHydacImpl;
 import io.openems.edge.io.test.DummyCustomInputOutput;
-import io.openems.edge.system.fenecon.industrial.xl.hydac.FluidCoolingMode;
+import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.EssTest;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
@@ -49,8 +50,7 @@ public class EssStartStopModeTest {
 				.withTemperature(20);
 		final var fireAlarmSystem = new DummyHekatronB9X2Impl("fireAlarmSystem0");
 		final var hydac = new DummyHydacImpl("fluidCooling")//
-				.withCoolingCircuit1Temperature(25)//
-				.withFan(true)//
+				.withOutletTemperature(25)//
 				.withCoolingRequired(true)//
 				.withPump(true)//
 				.withCompressor(true);
@@ -96,7 +96,6 @@ public class EssStartStopModeTest {
 						.setAirCoolingSetPoint(25)//
 						.setFluidCoolingId("fluidCooling0")//
 						.setFluidCoolingMode(FluidCoolingMode.ENABLED)//
-						.setFluidCoolingSetPoint(25)//
 						.build()) //
 				.next(new TestCase("System inputs OK") //
 						.input(SYS_SERVICE_SWITCH, false)//

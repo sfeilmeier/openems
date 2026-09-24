@@ -13,8 +13,8 @@ import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
 import io.openems.edge.ess.test.DummyMetaEss;
 import io.openems.edge.io.test.DummyInputOutput;
+import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.m.enums.CoolingType;
-import io.openems.edge.system.fenecon.industrial.m.enums.CoolingUnitMode;
 
 public class SystemFeneconIndustrialMImplTest {
 
@@ -39,7 +39,7 @@ public class SystemFeneconIndustrialMImplTest {
 				.activate(MyConfig.create() //
 						.setId(COMPONENT_ID) //
 						.setStartStopConfig(StartStopConfig.START) //
-						.setCoolingUnitMode(CoolingUnitMode.AUTO)//
+						.setCoolingUnitMode(FluidCoolingMode.AUTO)//
 						.setCoolingType(CoolingType.CHILLER)//
 						.setEssId(ESS_ID)//
 						.setBatteryIds(BATTERY11_ID, BATTERY12_ID, BATTERY21_ID, BATTERY22_ID)//

@@ -278,11 +278,11 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent imple
 				this._setCoolingUnitStateMachine(this.coolingUnitStateMachine.getCurrentState());
 				this.coolingUnitStateMachine.run(coolingUnitContext);
 			}
-			case MANUAL_OFF -> {
+			case DISABLED -> {
 				coolingUnitEnableChannel.setNextWriteValue(false);
 				this.coolingUnitStateMachine.forceNextState(CoolingUnitState.STOP_COOLING);
 			}
-			case MANUAL_ON -> {
+			case ENABLED -> {
 				coolingUnitEnableChannel.setNextWriteValue(true);
 				this.coolingUnitStateMachine.forceNextState(CoolingUnitState.START_COOLING);
 			}

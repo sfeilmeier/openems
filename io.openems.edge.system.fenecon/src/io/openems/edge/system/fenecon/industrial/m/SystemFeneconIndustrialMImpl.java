@@ -234,11 +234,11 @@ public class SystemFeneconIndustrialMImpl extends AbstractOpenemsComponent
 		var maxTemperatures = new ArrayList<Integer>();
 
 		switch (this.config.coolingUnitMode()) {
-		case MANUAL_OFF -> {
+		case DISABLED -> {
 			this.coolingUnitEnableChannel.setNextWriteValue(false);
 			this._setRequestStatus(RequestStatus.OFF);
 		}
-		case MANUAL_ON -> {
+		case ENABLED -> {
 			this.coolingUnitEnableChannel.setNextWriteValue(true);
 			this._setRequestStatus(RequestStatus.ON);
 		}

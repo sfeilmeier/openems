@@ -11,8 +11,9 @@ import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
 import io.openems.edge.ess.test.DummyMetaEss;
+import io.openems.edge.fluidcooling.hydac.DummyHydacImpl;
 import io.openems.edge.io.test.DummyCustomInputOutput;
-import io.openems.edge.system.fenecon.industrial.xl.hydac.FluidCoolingMode;
+import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 
 public class SystemFeneconIndustrialXlImplTest {
 
@@ -82,8 +83,8 @@ public class SystemFeneconIndustrialXlImplTest {
 		final var system = new SystemFeneconIndustrialXlImpl();
 		final var temp = new DummyJumoHydroTransS20Impl("temp0").withHumidity(5).withTemperature(20);
 		final var fireAlarmSystem = new DummyHekatronB9X2Impl("fireAlarmSys");
-		final var hydac = new DummyHydacImpl("fluidCooling").withCoolingCircuit1Temperature(25).withFan(true)
-				.withCoolingRequired(true).withPump(true).withCompressor(true);
+		final var hydac = new DummyHydacImpl("fluidCooling").withOutletTemperature(25).withCoolingRequired(true)
+				.withPump(true).withCompressor(true);
 		final var blueeplus = new DummyBlueeplusImpl("airCooling").withSetupStandardControlSetpoint(20);
 		new ComponentTest(system) //
 				.addReference("componentManager", new DummyComponentManager()) //
@@ -105,7 +106,6 @@ public class SystemFeneconIndustrialXlImplTest {
 						.setAirCoolingSetPoint(25)//
 						.setFluidCoolingId("fluidCooling0")//
 						.setFluidCoolingMode(FluidCoolingMode.ENABLED)//
-						.setFluidCoolingSetPoint(25)//
 						.build()) //
 				.next(new TestCase("System inputs OK") //
 						.input(SYS_SERVICE_SWITCH, false)//
@@ -201,9 +201,7 @@ public class SystemFeneconIndustrialXlImplTest {
 						.output(STATUS_LIGHTING, false)//
 						.output(STATUS_SYS_OFF, false)//
 				);
-		assertEquals(
-				"GoRunning|Temperature:20 °C|Humidity:5 %|CoolingUnit|Temp: 25 °dC|Fan: true|CoolingRequired: true|Pump: true|Compressor: true",
-				system.debugLog());
+		assertEquals("GoRunning|Temperature:20 °C|Humidity:5 %", system.debugLog());
 		assertEquals("INFO: Türschalter: Containertür Batterieturm 3 geöffnet", system.getStateChannel().listStates());
 	}
 
@@ -212,8 +210,8 @@ public class SystemFeneconIndustrialXlImplTest {
 		final var system = new SystemFeneconIndustrialXlImpl();
 		final var temp = new DummyJumoHydroTransS20Impl("temp0").withHumidity(5).withTemperature(20);
 		final var fireAlarmSystem = new DummyHekatronB9X2Impl("fireAlarmSys");
-		final var hydac = new DummyHydacImpl("fluidCooling").withCoolingCircuit1Temperature(25).withFan(true)
-				.withCoolingRequired(true).withPump(true).withCompressor(true);
+		final var hydac = new DummyHydacImpl("fluidCooling").withOutletTemperature(25).withCoolingRequired(true)
+				.withPump(true).withCompressor(true);
 		final var blueeplus = new DummyBlueeplusImpl("airCooling").withSetupStandardControlSetpoint(20);
 		new ComponentTest(system) //
 				.addReference("componentManager", new DummyComponentManager()) //
@@ -235,7 +233,6 @@ public class SystemFeneconIndustrialXlImplTest {
 						.setAirCoolingSetPoint(25)//
 						.setFluidCoolingId("fluidCooling0")//
 						.setFluidCoolingMode(FluidCoolingMode.ENABLED)//
-						.setFluidCoolingSetPoint(25)//
 						.build()) //
 				.next(new TestCase("Set every battery to an outdated version/wrong hardware type") //
 						.onAfterProcessImage(() -> system.getBatteries().forEach(battery -> { //

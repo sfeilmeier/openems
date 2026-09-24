@@ -187,7 +187,6 @@ public class Ixl010 extends AbstractOpenemsAppWithProps<Ixl010, Property, Bundle
 							JsonUtils.buildJsonObject() //
 									.addProperty("enabled", true) //
 									.addProperty("modbus.id", modbusToFluidCoolingId) //
-									.addProperty("modbusUnitId", 1) //
 									.build()), //
 					modbusToCoolingUnit(bundle, t, "App.IntegratedSystem.modbusToFireAlarmSystem.alias",
 							modbusToFireAlarmSystemId, fireAlarmSystemIp), //

@@ -15,36 +15,36 @@ import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.St
 public interface SystemFeneconIndustrialXl extends OpenemsComponent, StartStoppable, EventHandler {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-		STATE_MACHINE(Doc.of(State.values()) //
+		STATE_MACHINE(Doc.of(State.values())//
 				.text("Current State of State-Machine")), //
-		RUN_FAILED(Doc.of(Level.FAULT) //
+		RUN_FAILED(Doc.of(Level.FAULT)//
 				.text("Running the Logic failed")), //
-		IN_LAMP_TEST_MODE(Doc.of(Level.WARNING) //
+		IN_LAMP_TEST_MODE(Doc.of(Level.WARNING)//
 				.text("The system is under the lamp test mode")), //
-		IN_ESS_TEST_MODE(Doc.of(Level.WARNING) //
+		IN_ESS_TEST_MODE(Doc.of(Level.WARNING)//
 				.text("The system is under the ess test mode")), //
-		ESS_TEST_FAILED(Doc.of(Level.WARNING) //
+		ESS_TEST_FAILED(Doc.of(Level.WARNING)//
 				.text("ESS test failed")), //
-		IN_IDLE_MODE(Doc.of(Level.INFO) //
+		IN_IDLE_MODE(Doc.of(Level.INFO)//
 				.translationKey(SystemFeneconIndustrialXl.class, "testModeActive")), //
-		IN_MANUAL_BATTERY_START(Doc.of(Level.WARNING) //
+		IN_MANUAL_BATTERY_START(Doc.of(Level.WARNING)//
 				.text("The system is in manual battery start, waiting for exit")), //
 
-		SYSTEM_SYS_OFF_UNDEFINED(Doc.of(Level.WARNING) //
+		SYSTEM_SYS_OFF_UNDEFINED(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "systemSysOffUndefined")),
-		OVER_VOLTAGE_PROTECTION_UNDEFINED(Doc.of(Level.WARNING) //
+		OVER_VOLTAGE_PROTECTION_UNDEFINED(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "overVoltageProtectionUndefined")),
-		DOOR_SWITCH_UNDEFINED(Doc.of(Level.INFO) //
+		DOOR_SWITCH_UNDEFINED(Doc.of(Level.INFO)//
 				.translationKey(SystemFeneconIndustrialXl.class, "doorSwitchUndefined")),
-		POWER_SUPPLY_UNDEFINED(Doc.of(Level.WARNING) //
+		POWER_SUPPLY_UNDEFINED(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "powerSupplyUndefined")),
-		NETWORK_DISTRIBUTION_UNDEFINED(Doc.of(Level.WARNING) //
+		NETWORK_DISTRIBUTION_UNDEFINED(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "networkDistributionUndefined")),
-		CONTAINER_LIGHTING_UNDEFINED(Doc.of(Level.WARNING) //
+		CONTAINER_LIGHTING_UNDEFINED(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "containerLightingUndefined")),
-		LEAK_MONITORING_UNDEFINED(Doc.of(Level.WARNING) //
+		LEAK_MONITORING_UNDEFINED(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "leakMonitoringUndefined")),
-		SYSTEM_IOS_UNDEFINED(Doc.of(Level.WARNING) //
+		SYSTEM_IOS_UNDEFINED(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "systemIosUndefined")),
 
 		// Digital Outputs
@@ -58,46 +58,49 @@ public interface SystemFeneconIndustrialXl extends OpenemsComponent, StartStoppa
 				.accessMode(AccessMode.READ_WRITE)), //
 		SSI_ERROR(Doc.of(OpenemsType.BOOLEAN)//
 				.accessMode(AccessMode.READ_WRITE)), //
-		ALL_ESS_FAULT_IN_OPERATION(Doc.of(Level.FAULT) //
+		ALL_ESS_FAULT_IN_OPERATION(Doc.of(Level.FAULT)//
 				.translationKey(SystemFeneconIndustrialXl.class, "allEssFaultInOperation")), //
-		ALL_ESS_FAULT_SYSTEM_START(Doc.of(Level.FAULT) //
+		ALL_ESS_FAULT_SYSTEM_START(Doc.of(Level.FAULT)//
 				.translationKey(SystemFeneconIndustrialXl.class, "allEssFaultSystemStart")), //
-		AT_LEAST_ONE_ESS_INFO(Doc.of(Level.INFO) //
+		AT_LEAST_ONE_ESS_INFO(Doc.of(Level.INFO)//
 				.translationKey(SystemFeneconIndustrialXl.class, "atLeastOneEssInfo")), //
-		AT_LEAST_ONE_ESS_WARNING(Doc.of(Level.WARNING) //
+		AT_LEAST_ONE_ESS_WARNING(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "atLeastOneEssWarning")), //
-		NOT_ALL_ESS_STARTED(Doc.of(Level.WARNING) //
+		NOT_ALL_ESS_STARTED(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "notAllEssStarted")), //
-		SYSTEM_SHUTDOWN_FAULT(Doc.of(Level.FAULT) //
+		SYSTEM_SHUTDOWN_FAULT(Doc.of(Level.FAULT)//
 				.translationKey(SystemFeneconIndustrialXl.class, "systemShutdownFault")), //
-		UNCLEAR_SHUTDOWN(Doc.of(Level.FAULT) //
+		UNCLEAR_SHUTDOWN(Doc.of(Level.FAULT)//
 				.translationKey(SystemFeneconIndustrialXl.class, "unclearShutdown")), //
-		COUPLING_SWITCH_FAULT_IN_OPERATION(Doc.of(Level.FAULT) //
+		COUPLING_SWITCH_FAULT_IN_OPERATION(Doc.of(Level.FAULT)//
 				.translationKey(SystemFeneconIndustrialXl.class, "couplingSwitchFaultInOperation")), //
-		SERVICE_SWITCH_PRESSED_IN_OPERATION(Doc.of(Level.FAULT) //
+		SERVICE_SWITCH_PRESSED_IN_OPERATION(Doc.of(Level.FAULT)//
 				.translationKey(SystemFeneconIndustrialXl.class, "serviceSwitchPressedInOperation")), //
-		START_BLOCKED_BY_SERVICE_SWITCH(Doc.of(Level.WARNING) //
+		START_BLOCKED_BY_SERVICE_SWITCH(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "startBlockedByServiceSwitch")), //
-		START_BLOCKED_BY_FIRE_ALARM(Doc.of(Level.WARNING) //
+		START_BLOCKED_BY_FIRE_ALARM(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "startBlockedByFireAlarm")), //
-		START_BLOCKED_BY_COUPLING_SWITCH(Doc.of(Level.WARNING) //
+		START_BLOCKED_BY_COUPLING_SWITCH(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "startBlockedByCouplingSwitch")), //
-		START_BLOCKED_BY_ESS_FAULT(Doc.of(Level.WARNING) //
+		START_BLOCKED_BY_ESS_FAULT(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "startBlockedByEssFault")), //
-		FEMS_TO_FIRE_ALARM_SYS_COMMUNICATION_FAILURE(Doc.of(Level.WARNING) //
+		FEMS_TO_FIRE_ALARM_SYS_COMMUNICATION_FAILURE(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "femsToFireAlarmSysCommunicationFailure")), //
-		SERVICE_SWITCH_PRESSED_ON_STOPPED(Doc.of(Level.INFO) //
+		SERVICE_SWITCH_PRESSED_ON_STOPPED(Doc.of(Level.INFO)//
 				.translationKey(SystemFeneconIndustrialXl.class, "serviceSwitchPressedOnStopped")), //
-		SHUTDOWN_ACTIVE_ON_STOPPED(Doc.of(Level.INFO) //
+		SHUTDOWN_ACTIVE_ON_STOPPED(Doc.of(Level.INFO)//
 				.translationKey(SystemFeneconIndustrialXl.class, "shutdownActiveOnStopped")), //
-		COUPLING_SWITCH_PRESSED_ON_STOPPED(Doc.of(Level.INFO) //
+		COUPLING_SWITCH_PRESSED_ON_STOPPED(Doc.of(Level.INFO)//
 				.translationKey(SystemFeneconIndustrialXl.class, "couplingSwitchPressedOnStopped")), //
-		FIRE_ALARM_SYSTEM_FAULT(Doc.of(Level.FAULT) //
+		FIRE_ALARM_SYSTEM_FAULT(Doc.of(Level.FAULT)//
 				.translationKey(SystemFeneconIndustrialXl.class, "fireAlarmSystemFault")), //
-		FIRE_ALARM_SYSTEM_WARNING(Doc.of(Level.WARNING) //
+		FIRE_ALARM_SYSTEM_WARNING(Doc.of(Level.WARNING)//
 				.translationKey(SystemFeneconIndustrialXl.class, "fireAlarmSystemWarning")), //
-		LEAK_MONITOR_FAULT(Doc.of(Level.FAULT) //
+		LEAK_MONITOR_FAULT(Doc.of(Level.FAULT)//
 				.translationKey(SystemFeneconIndustrialXl.class, "leakMonitorFailure")), //
+		FLUID_COOLING_AUTO(Doc.of(Level.INFO)//
+				.translationKey(SystemFeneconIndustrialXl.class, "fluidCoolingAuto")), //
+
 		;
 
 		private final Doc doc;
