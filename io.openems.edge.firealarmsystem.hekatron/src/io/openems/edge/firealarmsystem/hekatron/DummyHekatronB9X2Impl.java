@@ -1,9 +1,8 @@
-package io.openems.edge.system.fenecon.industrial.xl;
+package io.openems.edge.firealarmsystem.hekatron;
 
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.test.AbstractDummyOpenemsComponent;
-import io.openems.edge.system.fenecon.industrial.xl.firealarmsystem.HekatronB9X2;
 
 public class DummyHekatronB9X2Impl extends AbstractDummyOpenemsComponent<DummyHekatronB9X2Impl>
 		implements HekatronB9X2, OpenemsComponent, ModbusComponent {

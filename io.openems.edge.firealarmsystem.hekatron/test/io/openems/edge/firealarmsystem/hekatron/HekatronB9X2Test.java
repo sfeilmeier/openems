@@ -1,4 +1,4 @@
-package io.openems.edge.system.fenecon.industrial.xl.firealarmsystem;
+package io.openems.edge.firealarmsystem.hekatron;
 
 import org.junit.jupiter.api.Test;
 
