@@ -308,6 +308,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
                 appProperties,
                 this.feedInLimitation.dynamicLimitationType,
                 this.feedInLimitation.maximumFeedInPower,
+                this.lineSideMeterFuse.fixedValue ?? this.lineSideMeterFuse.otherValue ?? null,
             ).then(() => this.installSelectedGridMeter(edge, websocket));
         });
 

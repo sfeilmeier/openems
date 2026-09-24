@@ -255,6 +255,7 @@ export class AppCenterUtil {
         properties: {},
         dynamicLimitationType: GridFeedInLimitationType,
         maximumFeedInPower: number,
+        gridConnectionPointFuseLimit: number | null,
     ): Promise<any> {
         return AppCenterUtil.getAppInstances(edge, websocket, "App.Core.Meta")
             .then((response) => {
@@ -266,6 +267,10 @@ export class AppCenterUtil {
                 // patch properties
                 instance.properties["GRID_FEED_IN_LIMITATION_TYPE"] = dynamicLimitationType;
                 instance.properties["MAXIMUM_GRID_FEED_IN_LIMIT"] = maximumFeedInPower;
+
+                if (gridConnectionPointFuseLimit !== null) {
+                    instance.properties["GRID_CONNECTION_POINT_FUSE_LIMIT"] = gridConnectionPointFuseLimit;
+                }
 
                 return AppCenterUtil.updateApp(edge, websocket, instance.instanceId, instance.alias, {
                     ...instance.properties,

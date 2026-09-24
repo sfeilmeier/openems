@@ -94,6 +94,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                 appProperties,
                 this.feedInLimitation.dynamicLimitationType,
                 this.feedInLimitation.maximumFeedInPower,
+                this.lineSideMeterFuse.fixedValue ?? this.lineSideMeterFuse.otherValue ?? null,
             );
         });
 
