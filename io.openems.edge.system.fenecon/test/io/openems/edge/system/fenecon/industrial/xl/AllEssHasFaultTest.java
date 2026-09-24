@@ -1,13 +1,10 @@
 package io.openems.edge.system.fenecon.industrial.xl;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.channel.Level;
 import io.openems.common.test.DummyConfigurationAdmin;
-import io.openems.common.test.TimeLeapClock;
+import io.openems.common.test.TestUtils;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
@@ -28,14 +25,20 @@ public class AllEssHasFaultTest {
 
 	@Test
 	public void testAreAllEssInFailure() throws Exception {
-		final var clock = new TimeLeapClock(Instant.parse("2020-01-01T01:00:00.00Z"), ZoneOffset.UTC);
+		final var clock = TestUtils.createDummyClock();
 		final var system = new SystemFeneconIndustrialXlImpl();
 
-		final var temp = new DummyJumoHydroTransS20Impl("temp0").withHumidity(5).withTemperature(20);
+		final var temp = new DummyJumoHydroTransS20Impl("temp0") //
+				.withHumidity(5) //
+				.withTemperature(20);
 		final var fireAlarmSystem = new DummyHekatronB9X2Impl("fireAlarmSys0");
-		final var hydac = new DummyHydacImpl("fluidCooling").withOutletTemperature(25).withCoolingRequired(true)
-				.withPump(true).withCompressor(true);
-		final var blueeplus = new DummyBlueeplusImpl("airCooling").withSetupStandardControlSetpoint(20);
+		final var hydac = new DummyHydacImpl("fluidCooling") //
+				.withOutletTemperature(25) //
+				.withCoolingRequired(true) //
+				.withPump(true) //
+				.withCompressor(true);
+		final var blueeplus = new DummyBlueeplusImpl("airCooling") //
+				.withSetupStandardControlSetpoint(20);
 		var ess1 = new DummyManagedSymmetricEss("ess1").withLevel(Level.WARNING);
 		var ess2 = new DummyManagedSymmetricEss("ess2").withLevel(Level.WARNING);
 		var ess3 = new DummyManagedSymmetricEss("ess3").withLevel(Level.WARNING);

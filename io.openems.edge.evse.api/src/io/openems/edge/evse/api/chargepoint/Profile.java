@@ -87,6 +87,16 @@ public final class Profile {
 				}
 			}
 
+			public Builder setPhaseSwitchManualWithoutZeroSetPoint(PhaseSwitchDirection direction) {
+				return this.setPhaseSwitchManualWithoutZeroSetPoint(direction, null);
+			}
+
+			public Builder setPhaseSwitchManualWithoutZeroSetPoint(PhaseSwitchDirection direction,
+					ApplySetPoint.Ability.Watt oppositePhaseApplySetPoint) {
+				return this.setPhaseSwitch(new ApplyPhaseSwitch(direction,
+						new PhaseSwitchAbility.ManualWithoutZeroSetPoint(), oppositePhaseApplySetPoint));
+			}
+
 			public Builder setPhaseSwitch(ApplyPhaseSwitch applyPhaseSwitch) {
 				this.phaseSwitch = applyPhaseSwitch;
 				return this;
@@ -288,6 +298,16 @@ public final class Profile {
 					ApplySetPoint.Ability.Watt oppositePhaseApplySetPoint) {
 				return this.setPhaseSwitch(
 						new ApplyPhaseSwitch(direction, new PhaseSwitchAbility.Manual(), oppositePhaseApplySetPoint));
+			}
+
+			public Builder setPhaseSwitchManualWithoutZeroSetPoint(PhaseSwitchDirection direction) {
+				return this.setPhaseSwitchManualWithoutZeroSetPoint(direction, null);
+			}
+
+			public Builder setPhaseSwitchManualWithoutZeroSetPoint(PhaseSwitchDirection direction,
+					ApplySetPoint.Ability.Watt oppositePhaseApplySetPoint) {
+				return this.setPhaseSwitch(new ApplyPhaseSwitch(direction,
+						new PhaseSwitchAbility.ManualWithoutZeroSetPoint(), oppositePhaseApplySetPoint));
 			}
 
 			public ChargePointActions build() throws IllegalArgumentException {

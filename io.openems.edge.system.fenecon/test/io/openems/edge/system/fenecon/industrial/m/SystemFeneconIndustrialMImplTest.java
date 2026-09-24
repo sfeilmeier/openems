@@ -1,14 +1,11 @@
 package io.openems.edge.system.fenecon.industrial.m;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-
 import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
-import io.openems.common.test.TimeLeapClock;
-import io.openems.common.types.ChannelAddress;
+import io.openems.common.test.TestUtils;
 import io.openems.edge.common.startstop.StartStopConfig;
+import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
 import io.openems.edge.ess.test.DummyMetaEss;
@@ -18,33 +15,25 @@ import io.openems.edge.system.fenecon.industrial.m.enums.CoolingType;
 
 public class SystemFeneconIndustrialMImplTest {
 
-	private static final String COMPONENT_ID = "system0";
-	private static final String IO_ID = "io0";
-	private static final String ESS_ID = "ess0";
-	private static final String BATTERY11_ID = "battery11";
-	private static final String BATTERY12_ID = "battery12";
-	private static final String BATTERY21_ID = "battery21";
-	private static final String BATTERY22_ID = "battery22";
-	private static final ChannelAddress COOLING_UNIT_ENABLE = new ChannelAddress(IO_ID, "InputOutput1");
-
 	@Test
 	public void test() throws Exception {
-		final var clock = new TimeLeapClock(Instant.parse("2020-01-01T01:00:00.00Z"), ZoneOffset.UTC);
-		final var dummyIo = new DummyInputOutput(IO_ID);
+		final var clock = TestUtils.createDummyClock();
+		final var dummyIo = new DummyInputOutput("io0");
 		new ComponentTest(new SystemFeneconIndustrialMImpl()) //
 				.addReference("componentManager", new DummyComponentManager(clock)) //
 				.addReference("cm", new DummyConfigurationAdmin())//
-				.addReference("ess", new DummyMetaEss(ESS_ID)) //
+				.addReference("ess", new DummyMetaEss("ess0")) //
 				.addComponent(dummyIo) //
 				.activate(MyConfig.create() //
-						.setId(COMPONENT_ID) //
+						.setId("system0") //
 						.setStartStopConfig(StartStopConfig.START) //
 						.setCoolingUnitMode(FluidCoolingMode.AUTO)//
 						.setCoolingType(CoolingType.CHILLER)//
-						.setEssId(ESS_ID)//
-						.setBatteryIds(BATTERY11_ID, BATTERY12_ID, BATTERY21_ID, BATTERY22_ID)//
-						.setCoolingUnitEnable(COOLING_UNIT_ENABLE.toString())//
+						.setEssId("ess0")//
+						.setBatteryIds("battery11", "battery12", "battery21", "battery22")//
+						.setCoolingUnitEnable("io0/InputOutput1")//
 						.build())//
-		;
+				.next(new TestCase()) //
+				.deactivate();
 	}
 }

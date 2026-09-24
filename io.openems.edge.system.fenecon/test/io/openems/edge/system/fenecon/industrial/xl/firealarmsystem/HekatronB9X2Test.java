@@ -1,6 +1,6 @@
 package io.openems.edge.system.fenecon.industrial.xl.firealarmsystem;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
@@ -19,6 +19,7 @@ public class HekatronB9X2Test {
 						.setModbusId("modbus0") //
 						.setModbusUnitId(1) //
 						.build()) //
-				.next(new TestCase());
+				.next(new TestCase()) //
+				.deactivate();
 	}
 }
