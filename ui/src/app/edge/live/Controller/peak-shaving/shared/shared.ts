@@ -6,6 +6,8 @@ import { RouteService } from "src/app/shared/service/route/route.service";
 import { ChannelAddress, CurrentData, Edge, EdgeConfig, Service } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
+import { NumberUtils } from "src/app/shared/utils/number/number-utils";
+import { Fena } from "../../../fena/fena.type";
 
 export namespace SharedControllerPeakShaving {
     const PEAK_SHAVING_POWER_CHANNEL = "_PropertyPeakShavingPower";
@@ -176,5 +178,66 @@ export namespace SharedControllerPeakShaving {
             peakShavingPower: new FormControl(null),
             rechargePower: new FormControl(null),
         });
+    }
+
+    export function getFenaMessages(
+        widgetName: string,
+        config: EdgeConfig,
+        translate: TranslateService,
+    ): Fena.Message[] {
+        const peakShavingController = config.getFirstComponentByFactoryId(widgetName);
+
+        if (peakShavingController == null || !peakShavingController.isEnabled) {
+            return [];
+        }
+
+        return [
+            new Fena.LiveMessage(
+                "STORAGE",
+                1,
+                [],
+                [
+                    new ChannelAddress("_sum", "ConsumptionActivePower"),
+                    new ChannelAddress(peakShavingController.id, PEAK_SHAVING_POWER_CHANNEL),
+                ],
+                (currentData) => {
+                    const consumptionActivePower = currentData.allComponents["_sum/ConsumptionActivePower"];
+                    const peakShavingPower =
+                        currentData.allComponents[`${peakShavingController.id}/${PEAK_SHAVING_POWER_CHANNEL}`];
+                    return NumberUtils.isNumberHigherThan({ value: consumptionActivePower,valueToBeHigher: peakShavingPower});
+                },
+                {
+                    text: translate.instant("FENA.MESSAGES.STORAGE.PEAK_SHAVING.CONSUMPTION_OVER_DISCHARGE_ABOVE"),
+                },
+            ),
+            new Fena.LiveMessage(
+                "STORAGE",
+                2,
+                [],
+                [
+                    new ChannelAddress("_sum", "ConsumptionActivePower"),
+                    new ChannelAddress(peakShavingController.id, RECHARGE_POWER_CHANNEL),
+                ],
+                (currentData) => {
+                    const consumptionActivePower = currentData.allComponents["_sum/ConsumptionActivePower"];
+                    const rechargePower =
+                        currentData.allComponents[`${peakShavingController.id}/${RECHARGE_POWER_CHANNEL}`];
+                    return NumberUtils.isNumberLowerThan({value: consumptionActivePower, valueToBeSmaller: rechargePower});
+                },
+                {
+                    text: translate.instant("FENA.MESSAGES.STORAGE.PEAK_SHAVING.CONSUMPTION_UNDER_CHARGE_BELOW"),
+                },
+            ),
+            new Fena.LiveMessage(
+                "STORAGE",
+                2,
+                [],
+                [new ChannelAddress("_sum", "EssSoc")],
+                (currentData) => currentData.allComponents["_sum/EssSoc"] === 100,
+                {
+                    text: translate.instant("FENA.MESSAGES.STORAGE.PEAK_SHAVING.SOC_IS_100"),
+                },
+            ),
+        ];
     }
 }

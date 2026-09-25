@@ -6,11 +6,13 @@ import { Filter } from "src/app/shared/components/shared/filter";
 import { Name } from "src/app/shared/components/shared/name";
 import { OeFormlyField, OeFormlyView } from "src/app/shared/components/shared/oe-formly-component";
 import { Phase } from "src/app/shared/components/shared/phase";
-import { ChannelAddress, CurrentData, Edge, EdgeConfig, RippleControlReceiverRestrictionLevel, } from "src/app/shared/shared";
+import { ChannelAddress, CurrentData, Edge, EdgeConfig, Limiter14aRestriction, RippleControlReceiverRestrictionLevel, } from "src/app/shared/shared";
 import { ChartAnnotationState, GridMode } from "src/app/shared/type/general";
 import { Role } from "src/app/shared/type/role";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
+import { environment } from "src/environments";
 import { GridSectionComponent } from "../../../energymonitor/chart/section/grid.component";
+import { Fena } from "../../../fena/fena.type";
 import { transformRcrValues } from "../history/shared-grid";
 
 export namespace SharedGrid {
@@ -318,5 +320,71 @@ export namespace SharedGrid {
             null,
             { isCommonWidget: true },
         ).toConstructorParams();
+    }
+
+    export function getFenaMessages(translate: TranslateService): Fena.Message[] {
+        return [
+            new Fena.LiveMessage(
+                "GRID",
+                1,
+                [],
+                [
+                    new ChannelAddress("ctrlEssLimiter14a0", "RestrictionMode"),
+                    new ChannelAddress("ctrlEssRippleControlReceiver0", "RestrictionMode"),
+                ],
+                (currentData: CurrentData) => {
+                    const restrictionMode14a =
+                        currentData.allComponents["ctrlEssLimiter14a0/RestrictionMode"] ??
+                        Limiter14aRestriction.NO_RESTRICTION;
+                    const restrictionModeRcr =
+                        currentData.allComponents["ctrlEssRippleControlReceiver0/RestrictionMode"] ??
+                        RippleControlReceiverRestrictionLevel.NO_RESTRICTION;
+                    if (restrictionMode14a != null) {
+                        return restrictionModeRcr !== RippleControlReceiverRestrictionLevel.NO_RESTRICTION
+                            ? true
+                            : false;
+                    }
+                    if (restrictionModeRcr !== RippleControlReceiverRestrictionLevel.NO_RESTRICTION) {
+                        return true;
+                    }
+                    return false;
+                },
+                {
+                    text: translate.instant("FENA.MESSAGES.GRID.LIMITED_POWER"),
+                },
+            ),
+            new Fena.LiveMessage(
+                "GRID",
+                1,
+                [],
+                [new ChannelAddress("_sum", "GridMode")],
+                (currentData: CurrentData) => {
+                    const gridMode = currentData.allComponents["_sum/GridMode"];
+                    if (gridMode === GridMode.OFF_GRID) {
+                        return true;
+                    }
+                    return false;
+                },
+                {
+                    text: translate.instant("FENA.MESSAGES.GRID.EMERGENCY_POWER_ACTIVE", {edgeLongName: environment.edgeLongName}),
+                },
+            ),
+            new Fena.LiveMessage(
+                "GRID",
+                1,
+                [],
+                [new ChannelAddress("_sum", "GridMode")],
+                (currentData: CurrentData) => {
+                    const gridMode = currentData.allComponents["_sum/GridMode"];
+                    if (gridMode === GridMode.GENERATOR) {
+                        return true;
+                    }
+                    return false;
+                },
+                {
+                    text: translate.instant("FENA.MESSAGES.GRID.GENERATOR_ACTIVE", {edgeLongName: environment.edgeLongName}),
+                },
+            ),
+        ];
     }
 }

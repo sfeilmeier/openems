@@ -1,9 +1,10 @@
 // @ts-strict-ignore
-import { Signal, signal } from "@angular/core";
+import { Injector, Signal, signal } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { compareVersions } from "compare-versions";
 import { BehaviorSubject, Subject } from "rxjs";
 import { filter, first } from "rxjs/operators";
+import { Fena } from "src/app/edge/live/fena/fena.type";
 import { SumState } from "src/app/index/shared/sumState";
 import { PlatFormService } from "src/app/platform.service";
 import { environment } from "src/environments";
@@ -734,27 +735,15 @@ export class Edge {
         };
     }
 
-    protected addCommonWidgetNavigation(
-        edge: Edge,
-        config: EdgeConfig,
-        currentNavigationTree: NavigationTree,
-        translate: TranslateService,
-    ): void {
-        const classes = Widgets.parseWidgets(edge, config).classes;
-
-        for (const clazz of classes) {
-            const navigationTree: ConstructorParameters<typeof NavigationTree> | null = Widgets.getCommonNavigationTree(
-                edge,
-                clazz,
-                translate,
-                config,
-            );
-
-            if (navigationTree == null) {
-                continue;
-            }
-            currentNavigationTree.setChild(NavigationId.LIVE, new NavigationTree(...navigationTree));
-        }
+    /**
+     * Creates Fena messages for this edge.
+     *
+     * @param user The current user
+     * @param translate The translate service
+     * @returns Messages for this edge
+     */
+    public createFenaMessages(injector: Injector): Fena.Message[] {
+        return Widgets.createFenaMessages(this, injector);
     }
 
     /** Refresh the config. */

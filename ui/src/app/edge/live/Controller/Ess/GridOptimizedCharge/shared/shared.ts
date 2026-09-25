@@ -1,6 +1,7 @@
-import { Type } from "@angular/core";
+import { Injector, Type } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
+import { Fena } from "src/app/edge/live/fena/fena.type";
 import { NavigationConstants, NavigationTree } from "src/app/shared/components/navigation/shared";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { Filter } from "src/app/shared/components/shared/filter";
@@ -542,6 +543,124 @@ export namespace SharedGridOptimizedCharge {
         LOW = "LOW",
         MEDIUM = "MEDIUM",
         HIGH = "HIGH",
+    }
+
+    export function getFenaMessages(
+        config: EdgeConfig,
+        translate: TranslateService,
+        injector: Injector,
+    ): Fena.Message[] {
+        const gridOptimizedCharge = config.getFirstComponentByFactoryId("Controller.Ess.GridOptimizedCharge");
+        if (gridOptimizedCharge == null) {
+            return [];
+        }
+
+        const actionsPriorityAndCategory: {
+            category: ConstructorParameters<typeof Fena.Message>[0];
+            priority: ConstructorParameters<typeof Fena.Message>[1];
+            actions: ConstructorParameters<typeof Fena.Message>[4];
+        } = {
+            category: "STORAGE",
+            priority: 4,
+            actions: [Fena.MessageUtils.buildDetailAction(gridOptimizedCharge.id, injector)],
+        };
+
+        function getTimeAndPower(
+            currentData: CurrentData,
+            gridOptimizedChargeComponent: EdgeConfig.Component | null,
+        ): { delayChargeMaximumChargeLimit: number; chargingEndTime: string | null } | null {
+            if (gridOptimizedChargeComponent == null) {
+                return null;
+            }
+            const delayChargeMaximumChargeLimit =
+                currentData.allComponents[gridOptimizedChargeComponent.id + "/DelayChargeMaximumChargeLimit"];
+            const targetMinute = currentData.allComponents[gridOptimizedChargeComponent.id + "/TargetMinute"];
+            const chargingEndTime =
+                targetMinute !== null
+                    ? Converter.CONVERT_MINUTE_TO_TIME_OF_DAY(translate, Language.geti18nLocale())(targetMinute)
+                    : null;
+            if (delayChargeMaximumChargeLimit === null || targetMinute === null) {
+                return null;
+            }
+            return { delayChargeMaximumChargeLimit, chargingEndTime };
+        }
+
+        return [
+            new Fena.LiveMessage(
+                actionsPriorityAndCategory.category,
+                actionsPriorityAndCategory.priority,
+                actionsPriorityAndCategory.actions,
+                [
+                    new ChannelAddress(gridOptimizedCharge.id, "DelayChargeMaximumChargeLimit"),
+                    new ChannelAddress(gridOptimizedCharge.id, "TargetMinute"),
+                    new ChannelAddress(gridOptimizedCharge.id, "_PropertyMode"),
+                ],
+                (currentData: CurrentData) => {
+                    const mode = currentData.allComponents[gridOptimizedCharge.id + "/_PropertyMode"];
+                    const targetMinute =currentData.allComponents[gridOptimizedCharge.id + "/TargetMinute"];
+                    return (
+                        mode != null && mode !== Mode.OFF &&
+                        targetMinute !== null &&
+                        currentData.allComponents[gridOptimizedCharge.id + "/DelayChargeMaximumChargeLimit"] > 0
+                    );
+                },
+                {
+                    textCallback: (currentData: CurrentData) => {
+                        const timeAndPower = getTimeAndPower(currentData, gridOptimizedCharge);
+                        if (timeAndPower === null) {
+                            return "";
+                        }
+
+                        return translate.instant("FENA.MESSAGES.STORAGE.GRID_OPTIMIZED_CHARGE.DELAYED_CHARGE", {
+                            maxPower: timeAndPower.delayChargeMaximumChargeLimit,
+                            chargingEndTime: timeAndPower.chargingEndTime,
+                        });
+                    },
+                },
+            ),
+            new Fena.LiveMessage(
+                actionsPriorityAndCategory.category,
+                actionsPriorityAndCategory.priority,
+                actionsPriorityAndCategory.actions,
+                [
+                    new ChannelAddress(gridOptimizedCharge.id, "DelayChargeMaximumChargeLimit"),
+                    new ChannelAddress(gridOptimizedCharge.id, "TargetMinute"),
+                    new ChannelAddress(gridOptimizedCharge.id, "_PropertyMode"),
+                ],
+                (currentData: CurrentData) => {
+                    const mode = currentData.allComponents[gridOptimizedCharge.id + "/_PropertyMode"];
+                    const targetMinute =currentData.allComponents[gridOptimizedCharge.id + "/TargetMinute"];
+                    return (
+                        mode != null && mode !== Mode.OFF &&
+                        targetMinute !== null &&
+                        currentData.allComponents[gridOptimizedCharge.id + "/DelayChargeMaximumChargeLimit"] === 0
+                    );
+                },
+                {
+                    textCallback: (currentData: CurrentData) => {
+                        const timeAndPower = getTimeAndPower(currentData, gridOptimizedCharge);
+                        if (timeAndPower === null) {
+                            return "";
+                        }
+
+                        return translate.instant(
+                            "FENA.MESSAGES.STORAGE.GRID_OPTIMIZED_CHARGE.DELAYED_CHARGE_WITH_ZERO",
+                        );
+                    },
+                },
+            ),
+            new Fena.LiveMessage(
+                actionsPriorityAndCategory.category,
+                actionsPriorityAndCategory.priority,
+                actionsPriorityAndCategory.actions,
+                [new ChannelAddress(gridOptimizedCharge.id, "_PropertyMode")],
+                (currentData: CurrentData) =>
+                    currentData.allComponents[gridOptimizedCharge.id + "/_PropertyMode"] === Mode.OFF,
+                {
+                    text: translate.instant("FENA.MESSAGES.STORAGE.GRID_OPTIMIZED_CHARGE.TURNED_OFF"),
+                },
+            ),
+        ];
     }
 }
 
