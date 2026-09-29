@@ -6,24 +6,16 @@ import { SharedModule } from "src/app/shared/shared.module";
 import { Language } from "src/app/shared/type/language";
 import { Advert1Component } from "./1/1";
 import { Advert2Component } from "./2/2";
+import { Advert3Component } from "./3/3";
 import { AdvertisementComponent } from "./advertisement.component";
 
 @NgModule({
-    imports: [
-        SharedModule,
-    ],
-    declarations: [
-        AdvertisementComponent,
-        Advert1Component,
-        Advert2Component,
-    ],
-    exports: [
-        AdvertisementComponent,
-    ],
+    imports: [SharedModule],
+    declarations: [AdvertisementComponent, Advert1Component, Advert2Component, Advert3Component],
+    exports: [AdvertisementComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdvertisementModule {
-
     constructor(private translate: TranslateService) {
         Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {
