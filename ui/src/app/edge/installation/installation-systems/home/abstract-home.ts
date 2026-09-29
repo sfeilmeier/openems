@@ -761,6 +761,7 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
                 appProperties,
                 this.feedInLimitation.dynamicLimitationType,
                 this.feedInLimitation.maximumFeedInPower,
+                this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
             );
         });
 

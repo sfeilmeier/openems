@@ -7,6 +7,7 @@ module.exports = function (config) {
         browserDisconnectTimeout: 30000, // default 2000
         browserNoActivityTimeout: 60000, // default 30000
         browserDisconnectTolerance: 2, // default 0
+        processKillTimeout: 5000, // default 2000
         frameworks: ["jasmine", "@angular-devkit/build-angular"],
         preprocessor: {
             "src/**/*.ts": ["coverage"],
@@ -40,7 +41,7 @@ module.exports = function (config) {
         customLaunchers: {
             ChromeHeadlessCI: {
                 base: "ChromeHeadless",
-                flags: ["--no-sandbox"],
+                flags: ["--no-sandbox", '--disable-dev-shm-usage',],
             },
         },
         singleRun: true,

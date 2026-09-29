@@ -16,39 +16,39 @@ public interface JumoHydroTransS20 extends OpenemsComponent, ModbusComponent {
 		TEMPERATURE_UNIT(Doc.of(TemperatureUnit.values())), //
 		HUMIDITY_UNIT(Doc.of(HumidityUnit.values())), //
 
-		TEMPERATURE(Doc.of(OpenemsType.INTEGER) //
+		TEMPERATURE(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.DEGREE_CELSIUS)), //
-		RELATIVE_HUMIDITY(Doc.of(OpenemsType.INTEGER) //
+		RELATIVE_HUMIDITY(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.PERCENT)), //
-		CARBON_DIOXIDE(Doc.of(OpenemsType.FLOAT) //
+		CARBON_DIOXIDE(Doc.of(OpenemsType.FLOAT)//
 				.unit(Unit.PARTS_PER_MILLION)), //
-		GENERAL_ERROR(Doc.of(Level.FAULT) //
+		GENERAL_ERROR(Doc.of(Level.FAULT)//
 				.text("General error ")), //
-		CONFIGURATION_FAULT(Doc.of(Level.FAULT) //
+		CONFIGURATION_FAULT(Doc.of(Level.FAULT)//
 				.text("Configuration faulty, The checksum of the configuration data is faulty (CRC).")), //
-		CALIBRATION_FAULT(Doc.of(Level.FAULT) //
+		CALIBRATION_FAULT(Doc.of(Level.FAULT)//
 				.text("Calibration faulty, The checksum of the calibration data is faulty (CRC).")), //
-		DEVICE_NOT_CALIBRATED(Doc.of(Level.FAULT) //
+		DEVICE_NOT_CALIBRATED(Doc.of(Level.FAULT)//
 				.text("Either, The calibration flag has not been set or there is no calibration data.")), //
-		HUMIDITY_SENSOR_FAULTY(Doc.of(Level.FAULT) //
+		HUMIDITY_SENSOR_FAULTY(Doc.of(Level.FAULT)//
 				.text("Either, The humidity and temperature sensor is faulty or the communication to the sensor is impaired.")), //
-		CO2_SENSOR_FAULTY(Doc.of(Level.FAULT) //
+		CO2_SENSOR_FAULTY(Doc.of(Level.FAULT)//
 				.text("CO2 sensor faulty or the communication to the sensor is impaired.")), //
-		DEVICE_RESTART_REQUIRED(Doc.of(Level.FAULT) //
+		DEVICE_RESTART_REQUIRED(Doc.of(Level.FAULT)//
 				.text("Device restart required")), //
-		DEW_POINT(Doc.of(OpenemsType.INTEGER) //
+		DEW_POINT(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.DEGREE_CELSIUS)), //
-		MIXING_RATION(Doc.of(OpenemsType.INTEGER) //
+		MIXING_RATION(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.NONE)), //
-		ABSOLUTE_HUMIDITY(Doc.of(OpenemsType.INTEGER) //
+		ABSOLUTE_HUMIDITY(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.GRAMS_PER_CUBIC_METER)), //
-		SPECIFIC_ENTHALPY(Doc.of(OpenemsType.INTEGER) //
+		SPECIFIC_ENTHALPY(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.KILOJOULES_PER_KILOGRAM)), //
-		WET_BULB_TEMPERATURE(Doc.of(OpenemsType.INTEGER) //
+		WET_BULB_TEMPERATURE(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.DEGREE_CELSIUS)), //
-		FROST_POINT(Doc.of(OpenemsType.INTEGER) //
+		FROST_POINT(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.DEGREE_CELSIUS)), //
-		PARTIAL_WATER_VAPOR_PRESSURE(Doc.of(OpenemsType.INTEGER) //
+		PARTIAL_WATER_VAPOR_PRESSURE(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.MILLIBAR)), //
 		;
 

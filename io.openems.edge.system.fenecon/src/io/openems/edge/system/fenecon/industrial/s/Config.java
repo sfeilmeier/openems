@@ -4,7 +4,7 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 import io.openems.edge.common.startstop.StartStopConfig;
-import io.openems.edge.system.fenecon.industrial.s.enums.CoolingUnitMode;
+import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 
 @ObjectClassDefinition(//
 		name = "System FENECON Industrial S", //
@@ -24,7 +24,7 @@ public @interface Config {
 	StartStopConfig startStop() default StartStopConfig.AUTO;
 
 	@AttributeDefinition(name = "Cooling unit behaviour?", description = "Should this Component be forced to cool down?")
-	CoolingUnitMode coolingUnitMode() default CoolingUnitMode.AUTO;
+	FluidCoolingMode coolingUnitMode() default FluidCoolingMode.AUTO;
 
 	@AttributeDefinition(name = "Ess-ID", description = "ID of Ess device.")
 	String ess_id();

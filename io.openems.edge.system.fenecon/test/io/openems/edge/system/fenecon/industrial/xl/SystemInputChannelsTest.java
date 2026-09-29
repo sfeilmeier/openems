@@ -1,10 +1,11 @@
 package io.openems.edge.system.fenecon.industrial.xl;
 
+import static io.openems.edge.common.channel.ChannelId.channelIdUpperToCamel;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.openems.common.session.Language;
 
@@ -23,7 +24,7 @@ public class SystemInputChannelsTest {
 	private static void assertSystemIosTranslations(Language language) {
 		var system = new SystemFeneconIndustrialXlImpl();
 		final var missingKeys = Arrays.stream(SystemInputChannels.values()) //
-				.filter(t -> system.channel(SystemFeneconIndustrialXlImpl.toChannelIdString(t.name()))//
+				.filter(t -> system.channel(channelIdUpperToCamel(t.name()))//
 						.channelDoc()//
 						.getText(language)//
 						.equals(t.getChannelKey())) //

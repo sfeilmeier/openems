@@ -1,5 +1,27 @@
 {
     "FENA": {
-        "ELECTRICITY_PRICES_SUMMARY": "Your electricity prices:<br/>The highest is <strong>{{maxPrice}}</strong> at {{maxTime}}.<br/>The lowest is <strong>{{minPrice}}</strong> at {{minTime}}."
+        "MESSAGES": {
+            "GRID": {
+                "LIMITED_POWER": "Note: A feed-in limitation by the grid operator is currently in place.",
+                "EMERGENCY_POWER_ACTIVE": "Backup power active: Your {{edgeLongName}} system is currently supplying connected loads from your battery.",
+                "GENERATOR_ACTIVE": "Extra peace of mind: Your {{edgeLongName}} system is currently being supported by the generator."
+            },
+            "STORAGE": {
+                "PEAK_SHAVING": {
+                    "CONSUMPTION_OVER_DISCHARGE_ABOVE": "Peak shaving in progress: Your system is currently shaving a load peak, reducing your energy costs.",
+                    "CONSUMPTION_UNDER_CHARGE_BELOW": "Peak ahead: Your system is currently charging the battery to shave the upcoming load peak.",
+                    "SOC_IS_100": "Ready for peak shaving: Your system is ready to handle load peaks. There are currently none."
+                },
+                "GRID_OPTIMIZED_CHARGE": {
+                    "TURNED_OFF": "Tip: Grid-Optimized Charging can help reduce potential PV curtailment and extend the lifespan of your battery system. Would you like to enable it?",
+                    "DELAYED_CHARGE": "Forecast: Your battery is currently charging at a maximum of {{maxPower}}&nbsp;W to reduce PV curtailment. It is expected to be fully charged by {{chargingEndTime}}.",
+                    "DELAYED_CHARGE_WITH_ZERO": "Looking ahead: Your battery is currently pausing charging so it can store more solar power later and reduce PV curtailment."
+                }
+            },
+            "KPI": {
+                "AUTARCHY": "Impressive: So far, you've been covering {{autarchy}}&nbsp;% of your daily electricity needs on your own.",
+                "SELF_CONSUMPTION": "Great: So far today, you've used {{selfConsumption}}&nbsp;% of your solar power yourself."
+            }
+        }
     }
 }

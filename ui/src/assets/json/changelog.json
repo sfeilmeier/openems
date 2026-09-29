@@ -1,5 +1,22 @@
 [
     {
+        "version": "2026.9.4",
+        "entries": {
+            "de": [
+                "FENECON Industrial XL: Allgemeine Verbesserungen",
+                "FEMS App KEBA Ladestation: Benutzerhinweise zu KEBA P40",
+                "FEMS Energiefahrplan: Verbesserungen bei der Berücksichtung des Netzbezugslimits",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA Feldtest</a>: Verbesserungen in der E-Mobility-Visualisierung und PV-Überschusssteuerung und für Askoma und my-PV Heizstäbe"
+            ],
+            "en": [
+                "FENECON Industrial XL: General improvements",
+                "FEMS App KEBA charging station: User notes on KEBA P40",
+                "FEMS Energy Schedule: Improvements in the consideration of the grid-buy-limit",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA field test</a>: Improvements in e-mobility visualization and PV surplus control, and for Askoma and my-PV heating elements"
+            ]
+        }
+    },
+    {
         "version": "2026.9.3",
         "entries": {
             "de": [

@@ -7,8 +7,8 @@ import io.openems.common.types.ChannelAddress;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.statemachine.AbstractContext;
 import io.openems.edge.ess.api.SymmetricEss;
+import io.openems.edge.firealarmsystem.hekatron.HekatronB9X2;
 import io.openems.edge.system.fenecon.industrial.xl.SystemFeneconIndustrialXlImpl;
-import io.openems.edge.system.fenecon.industrial.xl.firealarmsystem.HekatronB9X2;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode;
 
 public class Context extends AbstractContext<SystemFeneconIndustrialXlImpl> {

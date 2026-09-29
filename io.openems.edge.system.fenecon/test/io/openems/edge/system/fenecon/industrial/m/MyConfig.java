@@ -3,8 +3,8 @@ package io.openems.edge.system.fenecon.industrial.m;
 import io.openems.common.test.AbstractComponentConfig;
 import io.openems.common.utils.ConfigUtils;
 import io.openems.edge.common.startstop.StartStopConfig;
+import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.m.enums.CoolingType;
-import io.openems.edge.system.fenecon.industrial.m.enums.CoolingUnitMode;
 
 @SuppressWarnings("all")
 public class MyConfig extends AbstractComponentConfig implements Config {
@@ -12,7 +12,7 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	protected static class Builder {
 		private String id;
 		private StartStopConfig startStopConfig;
-		private CoolingUnitMode coolingUnitMode;
+		private FluidCoolingMode coolingUnitMode;
 		private CoolingType coolingType;
 		private String essId;
 		private String[] batteryIds;
@@ -31,7 +31,7 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 			return this;
 		}
 
-		public Builder setCoolingUnitMode(CoolingUnitMode coolingUnitMode) {
+		public Builder setCoolingUnitMode(FluidCoolingMode coolingUnitMode) {
 			this.coolingUnitMode = coolingUnitMode;
 			return this;
 		}
@@ -83,7 +83,7 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	}
 
 	@Override
-	public CoolingUnitMode coolingUnitMode() {
+	public FluidCoolingMode coolingUnitMode() {
 		return this.builder.coolingUnitMode;
 	}
 

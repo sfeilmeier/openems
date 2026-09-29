@@ -320,6 +320,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.Evse.ChargePoint.Mennekes", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-ac-ladestation")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-ac-charging-station")) //
+			.put("App.Evse.ChargePoint.Alfen", AppLink.create() //
+					.addLink(Language.DE, "https://fenecon.de/fems-ac-ladestation")
+					.addLink(Language.EN, "https://www.fenecon.com/fems-ac-charging-station")) //
 			.put("App.Evcs.HardyBarth", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-ac-ladestation")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-ac-charging-station")) //

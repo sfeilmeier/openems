@@ -15,15 +15,15 @@ import io.openems.edge.system.fenecon.industrial.m.statemachine.StateMachine.Sta
 public interface SystemFeneconIndustrialM extends OpenemsComponent, EventHandler {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-		STATE_MACHINE(Doc.of(State.values()) //
+		STATE_MACHINE(Doc.of(State.values())//
 				.text("Current State of State-Machine")), //
-		RUN_FAILED(Doc.of(Level.FAULT) //
+		RUN_FAILED(Doc.of(Level.FAULT)//
 				.text("Running the Logic failed")), //
 		REQUEST_STATUS(Doc.of(RequestStatus.values())//
 				.accessMode(AccessMode.READ_WRITE)), //
-		EMERGENCY_STOP_STATE(Doc.of(Level.WARNING) //
+		EMERGENCY_STOP_STATE(Doc.of(Level.WARNING)//
 				.text("Emergency Stop State is active")), //
-		SPD_TRIPPED(Doc.of(Level.WARNING) //
+		SPD_TRIPPED(Doc.of(Level.WARNING)//
 				.text("SPD Tripped: Possible SPD damage")), //
 		FUSE_TRIPPED(Doc.of(Level.WARNING)//
 				.text("Fuse Tripped: At least one 24V fuse is off")), //

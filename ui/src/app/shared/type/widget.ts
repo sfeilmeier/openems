@@ -2,6 +2,8 @@
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { ArrayUtils } from "../utils/array/array.utils";
+import { Language } from "./language";
+import { Role } from "./role";
 import { TEnumKeys } from "./utility";
 
 export enum WidgetClass {
@@ -56,7 +58,9 @@ export enum WidgetFactory {
     "Evcs.Cluster.SelfConsumption",
     "Evcs.HardyBarth",
     "Evcs.Keba.KeContact",
+    "Evcs.Keba.P40",
     "Evcs.Mennekes",
+    "Evse.ChargePoint.Alfen",
     "Evse.ChargePoint.Keba.UDP",
     "Evse.Controller.Cluster",
     "Evse.Controller.Single",
@@ -120,6 +124,13 @@ export class AdvertWidgets {
             name: "advert-2",
             title: { languageKey: "ADVERT.2.TITLE" },
         });
+
+        if (edge.roleIsAtLeast(Role.INSTALLER) && Language.getCurrentLanguage() === Language.DE) {
+            list.push({
+                name: "advert-3",
+                title: { languageKey: "ADVERT.3.TITLE" },
+            });
+        }
 
         list = ArrayUtils.shuffleArray(list);
         return new AdvertWidgets(list);

@@ -14,7 +14,7 @@ import io.openems.edge.common.component.OpenemsComponent;
 public interface Airconditioning extends OpenemsComponent, EventHandler {
 
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
-		MAX_BATTERYINVERTER_TMP(Doc.of(OpenemsType.INTEGER) //
+		MAX_BATTERYINVERTER_TMP(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.DEGREE_CELSIUS)//
 				.accessMode(AccessMode.READ_ONLY)), //
 
