@@ -263,6 +263,7 @@ public interface HardyBarth extends OpenemsComponent, ElectricityMeter {
 
 	/**
 	 * get Salia Device Model Name.
+	 * 
 	 * @return channel value
 	 */
 	public default String getSaliaDeviceModelName() {
@@ -271,6 +272,7 @@ public interface HardyBarth extends OpenemsComponent, ElectricityMeter {
 
 	/**
 	 * get Raw Device Product Channel.
+	 * 
 	 * @return the channel
 	 */
 	public default StringReadChannel getRawDeviceProductChannel() {
@@ -279,6 +281,7 @@ public interface HardyBarth extends OpenemsComponent, ElectricityMeter {
 
 	/**
 	 * get raw device product.
+	 * 
 	 * @return channel value
 	 */
 	public default String getRawDeviceProduct() {
@@ -307,8 +310,8 @@ public interface HardyBarth extends OpenemsComponent, ElectricityMeter {
 	 * Reports whether the phase-switching API is available.
 	 *
 	 * <p>
-	 * Detection is based on the raw
-	 * {@code secc/port0/salia/phase_switching/status} value:
+	 * Detection is based on the raw {@code secc/port0/salia/phase_switching/status}
+	 * value:
 	 * <ul>
 	 * <li>{@code "idle"} and {@code "progress"} indicate support.
 	 * <li>A missing, null, undefined or any unknown value indicates no support.

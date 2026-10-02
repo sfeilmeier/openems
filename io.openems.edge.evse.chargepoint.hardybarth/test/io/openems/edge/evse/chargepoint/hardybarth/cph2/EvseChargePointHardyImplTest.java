@@ -1,4 +1,4 @@
-package io.openems.edge.evse.chargepoint.hardybarth;
+package io.openems.edge.evse.chargepoint.hardybarth.cph2;
 
 import static io.openems.common.bridge.http.dummy.DummyBridgeHttpFactory.ofBridgeImpl;
 import static io.openems.edge.common.test.TestUtils.withValue;
