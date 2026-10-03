@@ -1,3 +1,4 @@
+import { EnvironmentProviders } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { NavigationCard } from "src/app/edge/live/navigation-info/navigation-info";
 import { User } from "src/app/shared/jsonrpc/shared";
@@ -299,6 +300,7 @@ export interface Environment<TImages extends object = object> {
     };
     readonly PRODUCT_TYPES: (translate: TranslateService) => Filter | null;
     readonly INFO_CARD: (translate: TranslateService, user: User) => NavigationCard[];
+    readonly ENVIRONMENT_PROVIDERS: EnvironmentProviders[];
 }
 
 /*
