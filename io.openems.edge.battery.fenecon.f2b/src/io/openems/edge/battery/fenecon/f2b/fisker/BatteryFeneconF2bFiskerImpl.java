@@ -12,7 +12,6 @@ import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SET_NU
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SUBTRACT;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.chain;
 import static io.openems.edge.common.channel.ChannelUtils.setValueIfNotRead;
-import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_AFTER_PROCESS_IMAGE;
 import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE;
 import static org.osgi.service.component.annotations.ReferenceCardinality.MANDATORY;
 import static org.osgi.service.component.annotations.ReferenceCardinality.OPTIONAL;
@@ -82,6 +81,7 @@ import io.openems.edge.bridge.modbus.api.task.FC6WriteRegisterTask;
 import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.channel.ChannelId.ChannelIdImpl;
 import io.openems.edge.common.channel.Doc;
+import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.jsonapi.ComponentJsonApi;
@@ -105,12 +105,11 @@ import io.openems.edge.timedata.api.utils.CalculateStateCounter;
 		configurationPolicy = ConfigurationPolicy.REQUIRE //
 )
 @EventTopics({ //
-		TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
-		TOPIC_CYCLE_AFTER_PROCESS_IMAGE //
+		TOPIC_CYCLE_BEFORE_PROCESS_IMAGE //
 })
 public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent implements BatteryFeneconF2bFisker,
 		BatteryFeneconF2b, ModbusComponent, OpenemsComponent, Battery, ModbusSlave, StartStoppable, EventHandler,
-		ComponentJsonApi, BatteryErrorAcknowledge, BatteryVoltageProtection, TimedataProvider {
+		ComponentJsonApi, BatteryErrorAcknowledge, TimedataProvider, BatteryVoltageProtection {
 
 	public final CalculateStateCounter calculateCounter24h = new CalculateStateCounter(this,
 			BatteryFeneconF2bFisker.ChannelId.COUNTER_24H);
@@ -119,7 +118,6 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 	public final CalculateStateCounter calculateCounterLifeTime = new CalculateStateCounter(this,
 			BatteryFeneconF2bFisker.ChannelId.COUNTER_LIFE_TIME);
 
-	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_0 = SET_NULL_FOR_DEFAULT(0x0);
 	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_1 = SET_NULL_FOR_DEFAULT(0x1);
 	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_FF = SET_NULL_FOR_DEFAULT(0xFF);
 	private static final ElementToChannelConverter SET_NULL_FOR_DEFAULT_FFFF = SET_NULL_FOR_DEFAULT(0xFFFF);
@@ -133,6 +131,9 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 	private static final int INNER_RESISTANCE = 100;
 	private static final int COUNTER_WARNING_THRESHOLD = 2;
 	private static final int COUNTER_FAULT_THRESHOLD = 10;
+	private static final int MAX_16BIT_UNSIGNED_INT = 65535;
+	private static final int MIN_ALLOWED_SOC = 0;
+	private static final int MAX_ALLOWED_SOC = 980;
 
 	private final Map<F2bBatteryError, Consumer<Boolean>> errorHandler = Map.of(//
 			F2bBatteryError.NO_F2B_BATTERY_ERROR, //
@@ -185,8 +186,8 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 				StartStoppable.ChannelId.values(), //
 				BatteryProtection.ChannelId.values(), //
 				BatteryFeneconF2b.ChannelId.values(), //
-				BatteryVoltageProtection.ChannelId.values(), //
 				BatteryErrorAcknowledge.ChannelId.values(), //
+				BatteryVoltageProtection.ChannelId.values(), //
 				BatteryFeneconF2bFisker.ChannelId.values() //
 		);
 		this._setInnerResistance(INNER_RESISTANCE);
@@ -232,7 +233,7 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 			this.stateMachine.run(context);
 			this._setRunFailed(false);
 		} catch (OpenemsNamedException e) {
-			this._setRunFailed(false);
+			this._setRunFailed(true);
 			this.logError(this.log, "StateMachine failed: " + e.getMessage());
 		}
 	}
@@ -302,10 +303,10 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 	}
 
 	private ModbusProtocol cellValues(int offset) {
-		var ameVolt = this.generateCellTasks(NUMBER_OF_VOLTAGE_CELLS, offset + CELL_VOLTAGE_REGISTER_OFFSET, "_VOLTAGE",
+		var ameVolt = this.generateCellTasks(NUMBER_OF_VOLTAGE_CELLS, offset + CELL_VOLTAGE_REGISTER_OFFSET, "VOLTAGE",
 				Unit.MILLIVOLT, chain(SET_NULL_FOR_DEFAULT_FFFF, SCALE_FACTOR_MINUS_1));
 		var ameTemp = this.generateCellTasks(NUMBER_OF_TEMPERATURE_CELLS,
-				offset + CELL_VOLTAGE_REGISTER_OFFSET + CELL_TEMPERATURE_REGISTER_OFFSET, "_TEMPERATURE",
+				offset + CELL_VOLTAGE_REGISTER_OFFSET + CELL_TEMPERATURE_REGISTER_OFFSET, "TEMPERATURE",
 				Unit.DEGREE_CELSIUS, chain(SET_NULL_FOR_DEFAULT_FF, SUBTRACT(CELL_TEMPERATURE_VALUE_OFFSET)));
 
 		final var ameSum = Stream.concat(Arrays.stream(ameVolt), Arrays.stream(ameTemp)).toArray(ModbusElement[]::new);
@@ -346,23 +347,13 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 						m(Battery.ChannelId.VOLTAGE, new UnsignedWordElement(offset + 31),
 								chain(SET_NULL_FOR_DEFAULT_FFFF, SCALE_FACTOR_MINUS_2)), //
 						m(BatteryFeneconF2bFisker.ChannelId.DISCHARGE_LIMIT_CURRENT,
-								new UnsignedWordElement(offset + 32),
-								chain(SET_NULL_FOR_DEFAULT_0, MULTIPLY(2), SCALE_FACTOR_MINUS_2)), //
+								new UnsignedWordElement(offset + 32), chain(MULTIPLY(2), SCALE_FACTOR_MINUS_2)), //
 						m(BatteryFeneconF2bFisker.ChannelId.CHARGE_LIMIT_CURRENT, new UnsignedWordElement(offset + 33),
-								chain(SET_NULL_FOR_DEFAULT_0, MULTIPLY(2), SCALE_FACTOR_MINUS_2)), //
-
-						m(new SignedWordElement(offset + 34))
-								.m(Battery.ChannelId.DISCHARGE_MIN_VOLTAGE,
-										chain(MULTIPLY(2), SCALE_FACTOR_MINUS_2, SUBTRACT(10)))
-								.m(BatteryVoltageProtection.ChannelId.BVP_DISCHARGE_BMS,
-										chain(MULTIPLY(2), SCALE_FACTOR_MINUS_2)//
-								).build(), //
-						m(new SignedWordElement(offset + 35))
-								.m(Battery.ChannelId.CHARGE_MAX_VOLTAGE,
-										chain(MULTIPLY(2), SCALE_FACTOR_MINUS_2, ADD(10)))
-								.m(BatteryVoltageProtection.ChannelId.BVP_CHARGE_BMS,
-										chain(MULTIPLY(2), SCALE_FACTOR_MINUS_2, SUBTRACT(4))//
-								).build(), //
+								chain(MULTIPLY(2), SCALE_FACTOR_MINUS_2)), //
+						m(Battery.ChannelId.DISCHARGE_MIN_VOLTAGE, new SignedWordElement(offset + 34),
+								chain(MULTIPLY(2), SCALE_FACTOR_MINUS_2, SUBTRACT(10))), //
+						m(Battery.ChannelId.CHARGE_MAX_VOLTAGE, new SignedWordElement(offset + 35),
+								chain(MULTIPLY(2), SCALE_FACTOR_MINUS_2, ADD(10))), //
 						m(BatteryFeneconF2bFisker.ChannelId.AVERAGE_CELL_TEMPERATURE,
 								new UnsignedWordElement(offset + 36), chain(SET_NULL_FOR_DEFAULT_FF, SUBTRACT(48))), //
 						m(BatteryFeneconF2bFisker.ChannelId.DIFFERENCE_CELL_TEMPERATURE,
@@ -383,7 +374,8 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 								SET_NULL_FOR_DEFAULT_FFFF), //
 						m(BatteryFeneconF2bFisker.ChannelId.ACTUAL_CAPACITY, new UnsignedWordElement(offset + 45),
 								chain(SET_NULL_FOR_DEFAULT_FFFF, SCALE_FACTOR_MINUS_2)), //
-						m(Battery.ChannelId.SOC, new UnsignedWordElement(offset + 46), SET_NULL_FOR_DEFAULT_FF), //
+						m(BatteryFeneconF2bFisker.ChannelId.BATTERY_SOC, new UnsignedWordElement(offset + 46),
+								SET_NULL_FOR_DEFAULT_FF), //
 						m(Battery.ChannelId.SOH, new UnsignedWordElement(offset + 47), SET_NULL_FOR_DEFAULT_FF), //
 						m(BatteryFeneconF2bFisker.ChannelId.TOTAL_VOLTAGE_LOAD_END,
 								new UnsignedWordElement(offset + 48),
@@ -414,17 +406,17 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 								.bit(8, BatteryFeneconF2bFisker.ChannelId.CAT8)//
 						), //
 						m(BatteryProtection.ChannelId.BP_DISCHARGE_BMS, new UnsignedWordElement(offset + 58),
-								chain(SET_NULL_FOR_DEFAULT_0, MULTIPLY(5), SCALE_FACTOR_MINUS_2)), //
+								chain(MULTIPLY(5), SCALE_FACTOR_MINUS_2)), //
 						m(BatteryProtection.ChannelId.BP_CHARGE_BMS, new UnsignedWordElement(offset + 59),
-								chain(SET_NULL_FOR_DEFAULT_0, MULTIPLY(5), SCALE_FACTOR_MINUS_2)), //
+								chain(MULTIPLY(5), SCALE_FACTOR_MINUS_2)), //
 						m(BatteryFeneconF2bFisker.ChannelId.PLT_CHARGE_MAX_CURRENT,
-								new UnsignedWordElement(offset + 60),
-								chain(SET_NULL_FOR_DEFAULT_0, MULTIPLY(5), SCALE_FACTOR_MINUS_2)), //
+								new UnsignedWordElement(offset + 60), chain(MULTIPLY(5), SCALE_FACTOR_MINUS_2)), //
 						m(BatteryFeneconF2bFisker.ChannelId.PMLT_CHARGE_MAX_CURRENT,
-								new UnsignedWordElement(offset + 61),
-								chain(SET_NULL_FOR_DEFAULT_0, MULTIPLY(5), SCALE_FACTOR_MINUS_2)), //
+								new UnsignedWordElement(offset + 61), chain(MULTIPLY(5), SCALE_FACTOR_MINUS_2)), //
 						m(BatteryFeneconF2bFisker.ChannelId.CHARGE_MAX_CURRENT_TIME_UNTIL_CHANGE,
-								new UnsignedWordElement(offset + 62), SET_NULL_FOR_DEFAULT_0) //
+								new UnsignedWordElement(offset + 62)), //
+						m(BatteryFeneconF2bFisker.ChannelId.BATTERY_SOC_HIGH_RESOLUTION,
+								new UnsignedWordElement(offset + 63)) //
 				));
 	}
 
@@ -461,8 +453,8 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 
 	private io.openems.edge.common.channel.ChannelId generateDtcChannelId(String id, String prefix) {
 		final io.openems.edge.common.channel.ChannelId channelId = new ChannelIdImpl(//
-				id + "_WARNING", //
-				Doc.of(Level.WARNING)//
+				id + "_INFO", //
+				Doc.of(Level.INFO)//
 						.text(prefix));
 		try {
 			// Check if the channel is already defined
@@ -621,7 +613,7 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 	 */
 	public void handleErrorCounting() {
 		final var bmsHasLeftHvActive = this.getBmsHasLeftHvActiveChannel().value().orElse(false);
-		var isActive = bmsHasLeftHvActive & !this.previousBmsHasHvLeftActive;
+		var isActive = bmsHasLeftHvActive && !this.previousBmsHasHvLeftActive;
 		this.calculateCounter24h.update(isActive);
 		this.calculateCounterLongTime.update(isActive);
 		this.calculateCounterLifeTime.update(isActive);
@@ -630,7 +622,7 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 		var counterLongTime = this.getCounterLongTime().orElse(0);
 		this._setCounter24hWarning(counter24h == COUNTER_WARNING_THRESHOLD);
 		this._setCounter24hFault(counter24h > COUNTER_WARNING_THRESHOLD);
-		this._setCounterLongTimeWarning(TypeUtils.isBetween(counterLongTime, 5, 10));
+		this._setCounterLongTimeInfo(TypeUtils.isBetween(counterLongTime, 5, COUNTER_FAULT_THRESHOLD));
 		this._setCounterLongTimeFault(counterLongTime > COUNTER_FAULT_THRESHOLD);
 	}
 
@@ -649,7 +641,7 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 	protected synchronized void triggerF2bReset() {
 		final var counter24h = this.getCounter24h().orElse(0);
 		final var bmsHasLeftHvActive = this.getBmsHasLeftHvActiveChannel().value().orElse(false);
-		if (bmsHasLeftHvActive && counter24h < 3) {
+		if (bmsHasLeftHvActive && counter24h <= COUNTER_WARNING_THRESHOLD) {
 			try {
 				this.setErrorResetRequest(true);
 				this.setF2bReset(true);
@@ -657,6 +649,24 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 				this.logError(this.log, "Trigger F2B Reset failed: " + e.getMessage());
 			}
 		}
+	}
+
+	protected synchronized void updateSoc(Value<Integer> unlimitedSoc) {
+		if (!unlimitedSoc.isDefined()) {
+			this._setSoc(null);
+			return;
+		}
+
+		final var rawSoc = unlimitedSoc.get();
+		if (rawSoc == MAX_16BIT_UNSIGNED_INT) {
+			this._setSoc(null);
+			return;
+		}
+
+		final var multiplied = TypeUtils.multiply(TypeUtils.subtract(rawSoc, MIN_ALLOWED_SOC), 100);
+		final var scaled = TypeUtils.divide(multiplied, MAX_ALLOWED_SOC - MIN_ALLOWED_SOC);
+		final var clamped = (int) TypeUtils.fitWithin(0L, 100L, (long) TypeUtils.orElse(scaled, 0));
+		this._setSoc(clamped);
 	}
 
 	@Override

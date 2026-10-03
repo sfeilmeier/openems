@@ -23,13 +23,12 @@ import io.openems.edge.common.test.DummyComponentManager;
 public class BatteryFeneconF2bFiskerImplTest {
 
 	private static final ChannelAddress DTC_1 = new ChannelAddress("battery0", "Dtc1");
-	private static final ChannelAddress DTC_1_WARNING = new ChannelAddress("battery0", "Dtc1Warning");
+	private static final ChannelAddress DTC_1_INFO = new ChannelAddress("battery0", "Dtc1Info");
 
 	@Test
-	public void dtc1WarningTest() throws Exception {
+	public void dtc1InfoTest() throws Exception {
 		assertThrows(//
-				IllegalArgumentException.class,
-				() -> createComponentTest().getSut().channel(DTC_1_WARNING.getChannelId())//
+				IllegalArgumentException.class, () -> createComponentTest().getSut().channel(DTC_1_INFO.getChannelId())//
 		);
 	}
 
@@ -77,7 +76,7 @@ public class BatteryFeneconF2bFiskerImplTest {
 				.next(new TestCase()//
 						.input(DTC_1, 2))//
 				.next(new TestCase()//
-						.output(DTC_1_WARNING, true))//
+						.output(DTC_1_INFO, true))//
 				.next(new TestCase()//
 						.input(DTC_1, 0))//
 		;
