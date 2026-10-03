@@ -9,7 +9,7 @@ import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { DetailedAlertingSetting } from "../../settings/alerting/component/alerting.component";
 import { Category } from "../shared/category";
-import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View, } from "../shared/enums";
+import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, ModbusBridgeType, View, } from "../shared/enums";
 import { GridSettingUtils } from "../shared/gridsetting.utils";
 import { ComponentData, EmsType, TableData } from "../shared/ibndatatypes";
 import { Meter } from "../shared/meter";
@@ -108,6 +108,9 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
         fixedValue?: number;
         otherValue?: number;
         meterType?: Meter.GridMeter;
+        modbusBridgeType?: ModbusBridgeType;
+        modbusBridgeIp?: string;
+        modbusBridgePort?: number;
     };
 
     // protocol-dynamic-feed-in-limitation

@@ -185,9 +185,9 @@ export class IbnUtils {
             const existingElementIndex = arr.findIndex(el => el.header === header);
             if (existingElementIndex >= 0) {
                 arr[existingElementIndex] = { header: header, rows: [...arr[existingElementIndex].rows, ...rows] };
+            } else {
+                arr.push(item);
             }
-
-            arr.push(item);
             return arr;
         }, []);
     }

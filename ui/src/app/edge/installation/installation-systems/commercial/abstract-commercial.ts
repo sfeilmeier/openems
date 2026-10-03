@@ -46,6 +46,9 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         fixedValue?: number;
         otherValue?: number;
         meterType: Meter.GridMeter;
+        modbusBridgeType?: ModbusBridgeType;
+        modbusBridgeIp?: string;
+        modbusBridgePort?: number;
     } = {
         category: Category.LINE_SIDE_METER_FUSE_COMMERCIAL,
         meterType: Meter.GridMeter.KDK,

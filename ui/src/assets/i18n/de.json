@@ -889,6 +889,13 @@
             "RS485_LABEL": "RS485 (4-RJ45-Ports) - Anschluss: FEMS",
             "TCP_IP_LABEL": "TCP/IP (6-RJ45-Ports) - Anschluss: Internal"
         },
+        "CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION": {
+            "HEADER": "Kommunikationstyp für den Netzzähler",
+            "RS485": "RS485",
+            "TCP_IP": "TCP/IP",
+            "IP_ADDRESS": "IP-Adresse",
+            "PORT": "Port"
+        },
         "CONFIGURATION_EMERGENCY_RESERVE": {
             "COUPLER_TITLE": "Welcher Feldbuskoppler ist in der Netztrennstelle verbaut?",
             "EMERGENCY_RESERVE": "Notstromreserve {{ symbol }}",

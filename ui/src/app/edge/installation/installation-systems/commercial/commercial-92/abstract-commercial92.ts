@@ -9,7 +9,7 @@ import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/sh
 import { Country } from "src/app/shared/type/country";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
-import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View, } from "../../../shared/enums";
+import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, ModbusBridgeType, View, } from "../../../shared/enums";
 import { ExtensionBoxPrefix } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
@@ -108,12 +108,75 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER_LABEL"),
                 required: true,
-                options: [Meter.GridMeter.KDK, Meter.GridMeter.WAGO].map((meter) => ({
+                options: [
+                    Meter.GridMeter.KDK,
+                    Meter.GridMeter.WAGO,
+                    Meter.GridMeter.JANITZA_UMG_604_PRO,
+                    Meter.GridMeter.JANITZA_UMG_96_RME,
+                ].map((meter) => ({
                     label: Meter.toGridMeterLabel(meter, this.systemId),
                     value: meter,
                 })),
             },
             defaultValue: Meter.GridMeter.KDK,
+        });
+
+        fields.push({
+            key: "modbusBridgeType",
+            type: "select",
+            templateOptions: {
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION.HEADER"),
+                required: true,
+                options: [
+                    {
+                        value: ModbusBridgeType.TCP_IP,
+                        label: this.translate.instant(
+                            "INSTALLATION.CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION.TCP_IP",
+                        ),
+                    },
+                    {
+                        value: ModbusBridgeType.RS485,
+                        label: this.translate.instant(
+                            "INSTALLATION.CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION.RS485",
+                        ),
+                    },
+                ],
+            },
+            defaultValue: ModbusBridgeType.TCP_IP,
+            hideExpression: (model) =>
+                model.meterType !== Meter.GridMeter.JANITZA_UMG_604_PRO &&
+                model.meterType !== Meter.GridMeter.JANITZA_UMG_96_RME,
+        });
+
+        fields.push({
+            key: "modbusBridgeIp",
+            type: "input",
+            templateOptions: {
+                label: this.translate.instant(
+                    "INSTALLATION.CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION.IP_ADDRESS",
+                ),
+                required: true,
+            },
+            defaultValue: "10.4.0.12",
+            validators: {
+                validation: ["ip"],
+            },
+            hideExpression: (model) => model.modbusBridgeType !== ModbusBridgeType.TCP_IP,
+        });
+
+        fields.push({
+            key: "modbusBridgePort",
+            type: "input",
+            templateOptions: {
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION.PORT"),
+                type: "number",
+                required: true,
+            },
+            defaultValue: 502,
+            validators: {
+                validation: ["onlyPositiveInteger"],
+            },
+            hideExpression: (model) => model.modbusBridgeType !== ModbusBridgeType.TCP_IP,
         });
         return fields;
     }
@@ -536,16 +599,33 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             return Promise.resolve();
         }
 
+        const modbusBridgeType = this.lineSideMeterFuse?.modbusBridgeType;
+
         return AppCenterUtil.removeInstancesOfApp(edge, websocket, AbstractCommercial92Ibn.GRID_METER_KDK_APP_ID).then(
-            () =>
-                AppCenterUtil.createOrUpdateApp(
+            () => {
+                const isTcpIp = modbusBridgeType === ModbusBridgeType.TCP_IP;
+
+                let ip: string | null = null;
+                let port: number | null = null;
+
+                if (isTcpIp) {
+                    ip = this.lineSideMeterFuse?.modbusBridgeIp ?? null;
+                    port = this.lineSideMeterFuse?.modbusBridgePort ?? null;
+                }
+
+                return AppCenterUtil.createOrUpdateApp(
                     edge,
                     websocket,
                     AbstractCommercial92Ibn.GRID_METER_JANITZA_APP_ID,
                     this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.GRID_METER"),
-                    { MODEL: Meter.toFactoryId(meterType) },
-                    AppCenterUtil.keyForIntegratedSystems(), // should be removed if GRID_METER_KDK_APP_ID is added again
-                ),
+                    {
+                        MODEL: Meter.toFactoryId(meterType),
+                        INTEGRATION_TYPE: modbusBridgeType === ModbusBridgeType.TCP_IP ? "TCP" : "RTU",
+                        IP: ip,
+                        PORT: port,
+                    },
+                );
+            },
         );
     }
 

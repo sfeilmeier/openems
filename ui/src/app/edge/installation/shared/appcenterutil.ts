@@ -16,6 +16,7 @@ export class AppCenterUtil {
      * @param appId The Id of the app that should get created or updated
      * @param alias The alias of the new instance
      * @param properties The properties of the new instance
+     * @param key Optional key for creating the app instance
      * @returns A Promise of the new instance
      */
     public static createOrUpdateApp(
@@ -24,7 +25,7 @@ export class AppCenterUtil {
         appId: string,
         alias: string,
         properties: {},
-        key: string,
+        key?: string,
     ): Promise<GetAppInstances.AppInstance> {
         return new Promise<GetAppInstances.AppInstance>((resolve, reject) => {
             AppCenterUtil.getAppInstances(edge, websocket, appId)
@@ -211,7 +212,7 @@ export class AppCenterUtil {
         appId: string,
         alias: string,
         properties: {},
-        key: string,
+        key?: string,
     ): Promise<AddAppInstance.Response> {
         return new Promise<AddAppInstance.Response>((resolve, reject) => {
             edge.sendStateFullRequest(
