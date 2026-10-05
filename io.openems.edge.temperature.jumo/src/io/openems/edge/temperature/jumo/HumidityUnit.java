@@ -1,4 +1,4 @@
-package io.openems.edge.system.fenecon.industrial.xl.temperature;
+package io.openems.edge.temperature.jumo;
 
 import io.openems.common.types.OptionsEnum;
 

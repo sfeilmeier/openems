@@ -18,6 +18,7 @@ import io.openems.edge.fluidcooling.hydac.DummyHydacImpl;
 import io.openems.edge.io.test.DummyCustomInputOutput;
 import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
+import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 public class AllEssHasFaultTest {
 	private static final ChannelAddress STATE_MACHINE = new ChannelAddress("system0", "StateMachine");

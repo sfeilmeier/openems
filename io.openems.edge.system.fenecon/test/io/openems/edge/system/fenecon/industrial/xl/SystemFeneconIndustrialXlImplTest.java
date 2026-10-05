@@ -16,6 +16,7 @@ import io.openems.edge.firealarmsystem.hekatron.DummyHekatronB9X2Impl;
 import io.openems.edge.fluidcooling.hydac.DummyHydacImpl;
 import io.openems.edge.io.test.DummyCustomInputOutput;
 import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
+import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 public class SystemFeneconIndustrialXlImplTest {
 

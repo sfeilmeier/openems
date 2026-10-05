@@ -34,6 +34,7 @@ import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.EssTest;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
+import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 public class EssStartStopModeTest {
 	private static final ChannelAddress STATE_MACHINE = new ChannelAddress("system0", "StateMachine");

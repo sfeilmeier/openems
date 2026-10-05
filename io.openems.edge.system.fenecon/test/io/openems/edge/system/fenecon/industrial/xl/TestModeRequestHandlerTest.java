@@ -39,6 +39,7 @@ import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.Exit;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.LampTest;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
+import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 public class TestModeRequestHandlerTest {
 	private static final ChannelAddress STATE_MACHINE = new ChannelAddress("system0", "StateMachine");

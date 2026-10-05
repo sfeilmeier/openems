@@ -81,7 +81,7 @@ import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.Context;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
-import io.openems.edge.system.fenecon.industrial.xl.temperature.JumoHydroTransS20;
+import io.openems.edge.temperature.jumo.JumoHydroTransS20;
 
 @Designate(ocd = Config.class, factory = true)
 @Component(//

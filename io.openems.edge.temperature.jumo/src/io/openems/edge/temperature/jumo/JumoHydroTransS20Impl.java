@@ -1,25 +1,24 @@
-package io.openems.edge.system.fenecon.industrial.xl.temperature;
+package io.openems.edge.temperature.jumo;
 
 import static io.openems.edge.bridge.modbus.api.ModbusUtils.readElementOnce;
 import static io.openems.edge.bridge.modbus.api.ModbusUtils.FunctionCode.FC3;
 import static io.openems.edge.common.channel.ChannelUtils.setWriteValueIfNotRead;
+import static org.osgi.service.component.annotations.ReferenceCardinality.MANDATORY;
+import static org.osgi.service.component.annotations.ReferencePolicy.STATIC;
+import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
-import io.openems.common.exceptions.OpenemsException;
+import io.openems.common.referencetarget.GenerateTargetsFromReferences;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
 import io.openems.edge.bridge.modbus.api.BridgeModbus;
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
@@ -38,16 +37,16 @@ import io.openems.edge.common.taskmanager.Priority;
 		immediate = true, //
 		configurationPolicy = ConfigurationPolicy.REQUIRE //
 )
+@GenerateTargetsFromReferences("Modbus")
 public class JumoHydroTransS20Impl extends AbstractOpenemsModbusComponent
 		implements JumoHydroTransS20, OpenemsComponent, ModbusComponent {
 
 	private final Logger log = LoggerFactory.getLogger(JumoHydroTransS20Impl.class);
 
-	@Reference
-	private ConfigurationAdmin cm;
-
 	@Override
-	@Reference(policy = ReferencePolicy.STATIC, policyOption = ReferencePolicyOption.GREEDY, cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(//
+			policy = STATIC, policyOption = GREEDY, cardinality = MANDATORY, //
+			target = "(&(id=${config.modbus_id})(enabled=true))")
 	protected void setModbus(BridgeModbus modbus) {
 		super.setModbus(modbus);
 	}
@@ -61,11 +60,8 @@ public class JumoHydroTransS20Impl extends AbstractOpenemsModbusComponent
 	}
 
 	@Activate
-	private void activate(ComponentContext context, Config config) throws OpenemsNamedException {
-		if (super.activate(context, config.id(), config.alias(), config.enabled(), config.modbusUnitId(), this.cm,
-				"Modbus", config.modbus_id())) {
-			return;
-		}
+	private void activate(ComponentContext context, Config config) {
+		super.activate(context, config.id(), config.alias(), config.enabled(), config.modbusUnitId());
 		this.setUnits();
 	}
 
@@ -103,7 +99,7 @@ public class JumoHydroTransS20Impl extends AbstractOpenemsModbusComponent
 		);
 	}
 
-	private void setUnits() throws OpenemsException {
+	private void setUnits() {
 		readElementOnce(FC3, this.getModbusProtocol(), ModbusUtils::retryOnNull, new UnsignedWordElement(1001))
 				.thenAccept(value -> {
 					if (value == null) {

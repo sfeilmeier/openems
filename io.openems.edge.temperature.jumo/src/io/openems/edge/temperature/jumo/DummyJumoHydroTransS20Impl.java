@@ -1,9 +1,8 @@
-package io.openems.edge.system.fenecon.industrial.xl;
+package io.openems.edge.temperature.jumo;
 
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.test.AbstractDummyOpenemsComponent;
-import io.openems.edge.system.fenecon.industrial.xl.temperature.JumoHydroTransS20;
 
 public class DummyJumoHydroTransS20Impl extends AbstractDummyOpenemsComponent<DummyJumoHydroTransS20Impl>
 		implements JumoHydroTransS20, OpenemsComponent, ModbusComponent {
