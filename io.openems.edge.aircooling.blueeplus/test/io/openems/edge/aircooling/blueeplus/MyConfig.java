@@ -1,6 +1,4 @@
-package io.openems.edge.system.fenecon.industrial.xl.blueeplus;
-
-import static io.openems.common.utils.ConfigUtils.generateReferenceTargetFilter;
+package io.openems.edge.aircooling.blueeplus;
 
 import io.openems.common.test.AbstractComponentConfig;
 
@@ -59,11 +57,6 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	@Override
 	public int modbusUnitId() {
 		return this.builder.modbusUnitId;
-	}
-
-	@Override
-	public String Modbus_target() {
-		return generateReferenceTargetFilter(this.id(), this.modbus_id());
 	}
 
 }

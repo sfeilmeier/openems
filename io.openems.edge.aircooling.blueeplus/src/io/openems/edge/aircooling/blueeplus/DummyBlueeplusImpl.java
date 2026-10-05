@@ -1,9 +1,8 @@
-package io.openems.edge.system.fenecon.industrial.xl;
+package io.openems.edge.aircooling.blueeplus;
 
 import io.openems.edge.bridge.modbus.api.ModbusComponent;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.test.AbstractDummyOpenemsComponent;
-import io.openems.edge.system.fenecon.industrial.xl.blueeplus.BlueEPlus;
 
 public class DummyBlueeplusImpl extends AbstractDummyOpenemsComponent<DummyBlueeplusImpl>
 		implements BlueEPlus, OpenemsComponent, ModbusComponent {
@@ -24,7 +23,7 @@ public class DummyBlueeplusImpl extends AbstractDummyOpenemsComponent<DummyBluee
 	 * Sets and applies the
 	 * {@link BlueEPlus.ChannelId#SETUP_STANDARD_CONTROL_SETPOINT}.
 	 *
-	 * @param value the boolean value
+	 * @param value the int value
 	 * @return myself
 	 */
 	public DummyBlueeplusImpl withSetupStandardControlSetpoint(int value) {

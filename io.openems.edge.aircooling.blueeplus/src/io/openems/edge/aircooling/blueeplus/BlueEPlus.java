@@ -1,4 +1,4 @@
-package io.openems.edge.system.fenecon.industrial.xl.blueeplus;
+package io.openems.edge.aircooling.blueeplus;
 
 import io.openems.common.channel.AccessMode;
 import io.openems.common.channel.Unit;
@@ -9,7 +9,6 @@ import io.openems.edge.common.channel.Doc;
 import io.openems.edge.common.channel.IntegerWriteChannel;
 import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.component.OpenemsComponent;
-import io.openems.edge.system.fenecon.industrial.xl.enums.StatusValues;
 
 public interface BlueEPlus extends OpenemsComponent, ModbusComponent {
 

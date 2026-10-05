@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.types.ChannelAddress;
+import io.openems.edge.aircooling.blueeplus.DummyBlueeplusImpl;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;

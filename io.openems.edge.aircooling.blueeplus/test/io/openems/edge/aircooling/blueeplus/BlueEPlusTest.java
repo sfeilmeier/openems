@@ -1,4 +1,4 @@
-package io.openems.edge.system.fenecon.industrial.xl.blueeplus;
+package io.openems.edge.aircooling.blueeplus;
 
 import org.junit.jupiter.api.Test;
 

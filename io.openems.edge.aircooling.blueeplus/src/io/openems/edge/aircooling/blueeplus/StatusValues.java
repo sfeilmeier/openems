@@ -1,4 +1,4 @@
-package io.openems.edge.system.fenecon.industrial.xl.enums;
+package io.openems.edge.aircooling.blueeplus;
 
 import io.openems.common.types.OptionsEnum;
 

@@ -18,6 +18,7 @@ import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.test.TestUtils;
 import io.openems.common.types.ChannelAddress;
 import io.openems.common.utils.JsonUtils;
+import io.openems.edge.aircooling.blueeplus.DummyBlueeplusImpl;
 import io.openems.edge.common.jsonapi.Call;
 import io.openems.edge.common.jsonapi.ComponentJsonApi;
 import io.openems.edge.common.jsonapi.EdgeKeys;
