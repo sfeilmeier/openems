@@ -98,12 +98,11 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	public static final EndpointRequestType<EmptyObject, EmptyObject> CLEAR_ERROR_REQUEST = EndpointRequestType
 			.ofEmpty("clearErrorRequest");
 
-	private static final F2bHardwareType F2B_HARDWARE_TYPE = F2bHardwareType.F2B_FM29_1V2;
+	private static final F2bHardwareType F2B_HARDWARE_TYPE = F2bHardwareType.F2B_FM29_1V3;
 	private final StateMachine stateMachine = new StateMachine(UNDEFINED);
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialXlImpl.class);
 	private final Timeout resetTimeout = Timeout.ofSeconds(5);
 	private final List<BatteryFeneconF2bCluster> batteries = new ArrayList<>();
-
 	private ServiceRegistration<Updateable> serviceRegistration;
 	private StartStop startStopTarget = StartStop.UNDEFINED;
 	private ChannelAddress outputSsiRunningFlashing = null;
@@ -112,7 +111,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	private ChannelAddress outputSsiWarning = null;
 	private ChannelAddress outputSsiError = null;
 	private boolean isResetRunning = false;
-	private TestMode.Request request;
+	private volatile TestMode.Request request;
 	private Config config;
 
 	@Reference
@@ -525,8 +524,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 				call -> {
 					final var nextRequest = call.getRequest();
 					if (nextRequest.action() instanceof TestAction.Exit) {
-						this.stateMachine.forceNextState(State.GO_STOPPED);
-						return new TestMode.Response("Exiting test mode!", null, null);
+						return this.handleExit(nextRequest);
 					}
 
 					if (this.request != null) {
@@ -541,7 +539,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 								null);
 					}
 
-					this.setTestRequestParams(call.getRequest());
+					this.setTestRequestParams(nextRequest);
 					this.stateMachine.forceNextState(State.TEST_MODE_IDLE);
 					return new TestMode.Response("started", null, this.request.action());
 				});
@@ -570,6 +568,23 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 			this.fluidCooling.setClearError(false); //
 			this.logInfo(this.log, "Clearing Hydac Errors done."); //
 		}, CompletableFuture.delayedExecutor(5, TimeUnit.SECONDS));
+	}
+
+	private TestMode.Response handleExit(TestMode.Request exitRequest) {
+		switch (this.stateMachine.getCurrentState()) {
+		case TEST_MODE_IDLE, TEST_MODE_ESS, TEST_MODE_LAMP -> {
+			this.setTestRequestParams(null);
+			this.stateMachine.forceNextState(State.GO_STOPPED);
+			return new TestMode.Response("Exiting test mode!", null, null);
+		}
+		case MANUAL_BATTERY_START -> {
+			this.setTestRequestParams(exitRequest);
+			return new TestMode.Response("Exiting manual battery start!", null, null);
+		}
+		default -> {
+			return new TestMode.Response("ignored", "No test is running", null);
+		}
+		}
 	}
 
 	private boolean isIdle() {
