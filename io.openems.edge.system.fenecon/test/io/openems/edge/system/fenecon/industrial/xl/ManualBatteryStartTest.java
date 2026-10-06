@@ -22,6 +22,7 @@ import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.Exit;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.ManualBatteryStart;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
+import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 class ManualBatteryStartTest {
 	private static final ChannelAddress STATE_MACHINE = new ChannelAddress("system0", "StateMachine");
