@@ -46,6 +46,10 @@ export type ConfigurationObject = {
     baseMode?: BaseMode;
 };
 
+export type StartConfigurationOptions = {
+    skipMetaAppUpdate: boolean;
+};
+
 const DELAY_CLEAR = 5000; // Time between the clear and the start of the configurations
 const DELAY_CONFIG = 15000;
 
@@ -55,7 +59,9 @@ export class ComponentConfigurator {
     private channelMappings: { configurationObject: ConfigurationObject; channelAddress: ChannelAddress }[] = [];
     private subscriptions: Subscription[] = [];
 
-    private installAppCallbacks: (() => Promise<any>)[] = [];
+    private installAppCallbacks: ((options: StartConfigurationOptions) => Promise<unknown>)[] = [];
+    /** Set when a callback added via {@link addInstallAppCallback} rejects, e.g. the app itself could not be installed. */
+    private appInstallFailed: boolean = false;
 
     constructor(
         private edge: Edge,
@@ -78,7 +84,7 @@ export class ComponentConfigurator {
         }
     }
 
-    public addInstallAppCallback(installAppCallback: () => Promise<any>) {
+    public addInstallAppCallback(installAppCallback: (options: StartConfigurationOptions) => Promise<unknown>) {
         this.installAppCallbacks.push(installAppCallback);
     }
 
@@ -87,20 +93,27 @@ export class ComponentConfigurator {
      *
      * @returns A promise of type void
      */
-    public start(): Promise<void> {
+    public start(options: StartConfigurationOptions = { skipMetaAppUpdate: false }): Promise<void> {
+        this.appInstallFailed = false;
         // first update scheduler to make sure it is created
         return new Promise((resolve, reject) => {
             this.updateScheduler()
                 .then(() => {
                     // execute app install callbacks
                     const installApp = new Promise<void>((resolve, reject) => {
-                        const allPromises: Promise<any>[] = [];
+                        const allPromises: Promise<unknown>[] = [];
                         this.installAppCallbacks.forEach((callback) => {
-                            allPromises.push(callback());
+                            allPromises.push(callback(options));
                         });
                         Promise.all(allPromises)
                             .then(() => resolve())
-                            .catch((error) => reject(error));
+                            .catch((error) => {
+                                // The app itself was not installed: per-component states below may still
+                                // turn "Configured" independently, so this is tracked to keep the checkmarks
+                                // from misleadingly showing full success in that case.
+                                this.appInstallFailed = true;
+                                reject(error);
+                            });
                     });
 
                     this.refreshAllConfigurationStates();
@@ -143,6 +156,14 @@ export class ComponentConfigurator {
             }
         }
         return configurationObjectsToBeInstalled;
+    }
+
+    /**
+     * Whether the app installation itself (as opposed to a single component's configuration) failed during
+     * {@link start}.
+     */
+    public hasAppInstallFailed(): boolean {
+        return this.appInstallFailed;
     }
 
     /**

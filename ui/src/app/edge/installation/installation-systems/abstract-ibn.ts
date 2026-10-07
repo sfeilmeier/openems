@@ -8,6 +8,7 @@ import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { DetailedAlertingSetting } from "../../settings/alerting/component/alerting.component";
+import { InstallationService } from "../installation.service";
 import { Category } from "../shared/category";
 import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, ModbusBridgeType, View, } from "../shared/enums";
 import { GridSettingUtils } from "../shared/gridsetting.utils";
@@ -183,6 +184,13 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
     public readonly isDoubleSocketValid: boolean = false;
 
     public currentUserAlertingSettings: DetailedAlertingSetting | null = null;
+
+    /**
+     * The Edge app id installed via {@link AppCenterUtil} for this system (e.g. "App.FENECON.Home"), if any - used to
+     * look up and clean up a leftover instance of this app itself when resolving an install conflict. `null`/`undefined`
+     * for systems that are configured manually and never go through {@link AppCenterUtil}.
+     */
+    public readonly systemAppId?: string;
 
     public abstract readonly warrantyLink: WebLinks | null;
 
@@ -824,12 +832,15 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
      * @param config The EdgeConfig.
      * @param websocket The Websocket connection.
      * @param service The Service.
+     * @param installationService The InstallationService, e.g. for request deduplication.
+     * @param cluster Commercial-cluster role (master/slave), only used by cluster-capable systems.
      */
     public abstract getComponentConfigurator(
         edge: Edge,
         config: EdgeConfig,
         websocket: Websocket,
-        service?: Service,
+        service: Service,
+        installationService: InstallationService,
         cluster?: CommercialCluster,
     ): Promise<ComponentConfigurator>;
 

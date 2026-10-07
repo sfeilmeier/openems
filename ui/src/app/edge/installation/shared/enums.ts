@@ -116,3 +116,32 @@ export enum GridSetting {
     VDE_4105 = "VDE_4105",
     VDE_4110 = "VDE_4110",
 }
+
+/**
+ * OpenEMS App categories corresponding to OpenemsAppCategory.java on Edge.
+ */
+export enum OpenemsAppCategory {
+    CORE = "CORE",
+    INTEGRATED_SYSTEM = "INTEGRATED_SYSTEM",
+    TIME_OF_USE_TARIFF = "TIME_OF_USE_TARIFF",
+    TARIFF_GRID_SELL = "TARIFF_GRID_SELL",
+    EVCS = "EVCS",
+    EVCS_READ_ONLY = "EVCS_READ_ONLY",
+    ELECTRIC_VEHICLE = "ELECTRIC_VEHCILE",
+    HEAT = "HEAT",
+    ESS = "ESS",
+    LOAD_CONTROL = "LOAD_CONTROL",
+    HARDWARE = "HARDWARE",
+    SYSTEM_BASE = "SYSTEM_BASE",
+    OPENEMS_DEVICE_HARDWARE = "OPENEMS_DEVICE_HARDWARE",
+    PEAK_SHAVING = "PEAK_SHAVING",
+    PV_INVERTER = "PV_INVERTER",
+    PV_SELF_CONSUMPTION = "PV_SELF_CONSUMPTION",
+    METER = "METER",
+    GRID_METER = "GRID_METER",
+    API = "API",
+    PREDICTION = "PREDICTION",
+    TIMEDATA = "TIMEDATA",
+    TEST = "TEST",
+}
+

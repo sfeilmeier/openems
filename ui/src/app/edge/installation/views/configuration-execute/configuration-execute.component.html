@@ -1,10 +1,75 @@
-<installation-view iconName="settings-outline" header="{{ 'INSTALLATION.CONFIGURATION_EXECUTE.TITLE' | translate }}" (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isWaiting]="isWaiting" [isNextDisabled]="isNextDisabled">
+<installation-view iconName="settings-outline" header="{{ 'INSTALLATION.CONFIGURATION_EXECUTE.TITLE' | translate }}" (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()" [isWaiting]="isWaiting()" [isNextDisabled]="isNextDisabled()">
+  @if (isWaiting()) {
+    <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
+  }
+
+  <!-- Persistent status of what is currently happening, replacing a toast that would disappear on its own. -->
+  @if (currentStatusMessage() && !errorState()) {
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap ion-text-center">{{ currentStatusMessage() }}</ion-label>
+    </ion-item>
+  }
+
   <ion-item lines="none">
-    <ion-button (click)="startConfiguration()" [disabled]="isWaiting">
-      <ion-label>{{ this.isWaiting ? ("INSTALLATION.CONFIGURATION_EXECUTE.WAITING" | translate) : ("INSTALLATION.CONFIGURATION_EXECUTE.START" | translate) }}</ion-label>
+    <ion-button size="larger" (click)="startConfiguration()" [disabled]="isWaiting() || isResolvingConflict() || errorState()?.isSelfSolvableConflict">
+      <ion-label>{{ isWaiting() ? ("INSTALLATION.CONFIGURATION_EXECUTE.WAITING" | translate) : ("INSTALLATION.CONFIGURATION_EXECUTE.START" | translate) }}</ion-label>
       <ion-icon name="play-outline" slot="start"></ion-icon>
     </ion-button>
   </ion-item>
+
+  <!-- Error -->
+  @if (errorState(); as error) {
+    <ion-card>
+      <ion-card-content>
+        @if (error.headline) {
+            <ion-item lines="none">
+              <ion-label class="ion-text-center ion-text-wrap">
+                <strong>{{ error.headline }}</strong>
+              </ion-label>
+            </ion-item>
+        }
+        @if (error.title) {
+          <ion-item lines="none">
+            <ion-icon slot="start" size="large" name="oe-info" color="primary"></ion-icon>
+            <ion-label class="ion-text-wrap">
+              <strong>{{ error.title }}:</strong>
+              @if (error.hint) {
+                <p>{{ error.hint }}</p>
+              }
+            </ion-label>
+          </ion-item>
+        }
+        @if (error.isSelfSolvableConflict) {
+          <ion-item lines="none">
+            <ion-label class="ion-text-wrap">
+              @if (conflictResolutionStatus()) {
+                <p>{{ conflictResolutionStatus() }}</p>
+              } @else {
+                <ion-button (click)="resolveCategoryConflictAndRetry()" [disabled]="isResolvingConflict()">
+                  {{ "INSTALLATION.CONFIGURATION_EXECUTE.RESOLVE_CATEGORY_CONFLICT_BUTTON" | translate }}
+                </ion-button>
+              }
+            </ion-label>
+          </ion-item>
+        }
+        <ion-card color="light" class="ion-no-margin ion-margin-top">
+          <ion-card-header>
+            <ion-card-subtitle>{{ "INSTALLATION.CONFIGURATION_EXECUTE.ERROR_DETAILS" | translate }}:</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content style="font-family: monospace; overflow-x: auto; white-space: pre-wrap">
+            {{ error.message }}
+            <ion-row class="ion-justify-content-end ion-margin-top">
+              <ion-button fill="outline" (click)="copyErrorToClipboard()">
+                <ion-icon name="copy-outline" slot="start"></ion-icon>
+                {{ "INSTALLATION.CONFIGURATION_EXECUTE.COPY_ERROR" | translate }}
+              </ion-button>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+  }
+
   <ion-item>
     <ion-label class="ion-text-wrap">
       {{ "INSTALLATION.CONFIGURATION_EXECUTE.DESCRIPTION_1" | translate }}
@@ -14,24 +79,24 @@
   </ion-item>
 
   <!-- Items -->
-  @if (configurationObjectsToBeConfigured.length > 0) {
+  @if (configurationObjectsToBeConfigured().length > 0) {
     <ion-card>
       <ion-card-content>
         <ion-list>
-          @for (configurationObject of configurationObjectsToBeConfigured; track $index) {
+          @for (configurationObject of configurationObjectsToBeConfigured(); track $index) {
             <!-- Overview Item -->
             <ion-item lines="none" style="border: 2px solid black; margin-bottom: 4px">
               <ion-label>{{ configurationObject.alias }}</ion-label>
-              @if (configurationObject.configState === "configured" && configurationObject.functionState === "ok") {
+              @if (displayConfigState(configurationObject) === "configured" && displayFunctionState(configurationObject) === "ok") {
                 <ion-icon name="checkmark-outline" color="success"> </ion-icon>
               }
             </ion-item>
             <!-- Details -->
-            @if (!(configurationObject.configState === "configured" && configurationObject.functionState === "ok")) {
+            @if (!(displayConfigState(configurationObject) === "configured" && displayFunctionState(configurationObject) === "ok")) {
               <!-- Configuration Part -->
               <ion-item lines="none" style="border: 1px solid black; margin-bottom: 2px; margin-left: 10px">
                 <ion-label>{{ "INSTALLATION.CONFIGURATION_EXECUTE.TITLE" | translate }}</ion-label>
-                @switch (configurationObject.configState) {
+                @switch (displayConfigState(configurationObject)) {
                   @case ("missing") {
                     <ion-icon name="help-outline"></ion-icon>
                   }
@@ -52,8 +117,8 @@
               <!-- Function Test Part-->
               <ion-item lines="none" style="border: 1px solid black; margin-bottom: 2px; margin-left: 10px">
                 <ion-label>{{ "INSTALLATION.CONFIGURATION_EXECUTE.FUNCTION_TEST" | translate }}</ion-label>
-                @switch (configurationObject.functionState) {
-                  @case (undefined) {
+                @switch (displayFunctionState(configurationObject)) {
+                  @case (null) {
                     <ion-icon name="help-outline"></ion-icon>
                   }
                   @case ("testing") {

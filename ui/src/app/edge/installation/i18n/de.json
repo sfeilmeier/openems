@@ -204,6 +204,31 @@
                 "CHARGE_SOC_END_DESCRIPTION": "Ladezustand der Batterie, bei dem der Generator gestoppt wird."
             }
         },
+        "CONFIGURATION_EXECUTE": {
+            "COPY_ERROR": "Fehler kopieren",
+            "ERROR_COPIED": "Fehler in die Zwischenablage kopiert",
+            "ERROR_DETAILS": "Fehlerdetails",
+            "ERROR_HEADLINE_CATEGORY_CONFLICT": "Bitte entferne zuerst das bestehende System",
+            "ERROR_HEADLINE_CONNECTION": "Bitte prüfe die Verbindung und starte die Konfiguration erneut",
+            "ERROR_HEADLINE_GENERIC": "Bitte kopiere den Fehler und sende ihn an den FENECON Support",
+            "ERROR_HEADLINE_INCOMPATIBLE_APP": "Bitte entferne zuerst die inkompatiblen Apps",
+            "ERROR_HEADLINE_TIMEOUT": "Bitte prüfe die Verbindung und starte die Konfiguration erneut",
+            "ERROR_HINT_CATEGORY_CONFLICT": "Ein anderes integriertes System ist bereits auf diesem Gerät installiert. Es kann immer nur ein integriertes System (z. B. ein Home- oder Commercial-System) installiert sein.",
+            "ERROR_HINT_CONNECTION": "Die Verbindung zum Gerät wurde unterbrochen. Bitte prüfe die Netzwerk-/Serielle Verbindung.",
+            "ERROR_HINT_INCOMPATIBLE_APP": "Eine auf diesem Gerät installierte App verhindert die Installation dieses Systems. Bitte entferne sie über das App Center und starte die Konfiguration erneut. Die betroffenen Apps sind in den Fehlerdetails aufgeführt.",
+            "ERROR_HINT_STALE_INSTANCE": "Auf dem Gerät wurde ein Rest einer früheren Installation dieses Systems gefunden, der die aktuelle blockiert. Dieser kann automatisch entfernt werden.",
+            "ERROR_HINT_TIMEOUT": "Das Gerät hat nicht rechtzeitig geantwortet. Bitte prüfe die Verbindung zum Gerät.",
+            "ERROR_TITLE_CATEGORY_CONFLICT": "Bestehendes System gefunden",
+            "ERROR_TITLE_CONNECTION": "Verbindung unterbrochen",
+            "ERROR_TITLE_INCOMPATIBLE_APP": "Inkompatible App installiert",
+            "ERROR_TITLE_STALE_INSTANCE": "Rest einer früheren Installation gefunden",
+            "ERROR_TITLE_TIMEOUT": "Zeitüberschreitung",
+            "RESOLVE_CATEGORY_CONFLICT_BUTTON": "Bestehendes System entfernen und fortfahren",
+            "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Es konnte kein widersprüchliches System zum automatischen Entfernen gefunden werden. Bitte entferne es manuell über das App Center.",
+            "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Bestehendes System wird entfernt…",
+            "STATUS_CONFIGURING": "Komponenten werden konfiguriert…",
+            "STATUS_FUNCTION_TEST": "Funktionstests laufen…"
+        },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
             "FIXED_COS_PHI": "Fester Wert: Cos Phi 1"
         },

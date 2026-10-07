@@ -5,6 +5,7 @@ import { SumState } from "src/app/index/shared/sumState";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
+import { InstallationService } from "../../../installation.service";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { CommercialCluster, View } from "../../../shared/enums";
 import { SystemId } from "../../../shared/system";
@@ -19,6 +20,10 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
     public override warrantyLink = WebLinks.WARRANTY_LINK_COMMERCIAL_92;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_92_CLUSTER;
     public override isClusterConfiguration: boolean = true;
+    // Overrides the inherited standalone app id: the cluster installs "ClusterMaster"/"ClusterSlave" apps instead
+    // (see getComponentConfigurator below). configuration-execute always calls without a `cluster` param, i.e. the
+    // "Master" branch, so that is used here to look up a leftover own instance during self-solve.
+    public override readonly systemAppId: string = "App.FENECON.Commercial.92.ClusterMaster";
     public slaveEdges = [];
     public emsBoxSerialNumbers: string[] = [];
 
@@ -52,7 +57,8 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         edge: Edge,
         config: EdgeConfig,
         websocket: Websocket,
-        service?: Service,
+        service: Service,
+        installationService: InstallationService,
         cluster?: CommercialCluster,
     ): Promise<ComponentConfigurator> {
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
@@ -85,17 +91,14 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         // system not updated => newest appManager not available
         const baseMode = BaseMode.AppManager;
 
-        componentConfigurator.addInstallAppCallback(() => {
-            return AppCenterUtil.updateMetaAndInstallApp(
-                edge,
-                websocket,
-                appId,
-                alias,
-                appProperties,
-                this.feedInLimitation.dynamicLimitationType,
-                this.feedInLimitation.maximumFeedInPower,
-                this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
-            );
+        componentConfigurator.addInstallAppCallback((options) => {
+            return AppCenterUtil.updateMetaAndInstallApp(edge, websocket, appId, alias, appProperties, {
+                dynamicLimitationType: this.feedInLimitation.dynamicLimitationType,
+                maximumFeedInPower: this.feedInLimitation.maximumFeedInPower,
+                gridConnectionPointFuseLimit:
+                    this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
+                skipMetaAppUpdate: options.skipMetaAppUpdate,
+            });
         });
 
         // Send request and process components

@@ -7,6 +7,7 @@ import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { AbstractCommercial92Ibn, BatteryTarget, } from "../../installation-systems/commercial/commercial-92/abstract-commercial92";
+import { InstallationService } from "../../installation.service";
 import { CommercialCluster, GridSetting } from "../../shared/enums";
 import { ComponentConfigurator, ConfigurationState, FunctionState, } from "../configuration-execute/component-configurator";
 
@@ -42,6 +43,7 @@ export class ProtocolChecklistComponent implements OnInit {
         private translate: TranslateService,
         private websocket: Websocket,
         private service: Service,
+        private installationService: InstallationService,
     ) {}
 
     protected get isWaiting(): boolean {
@@ -89,11 +91,18 @@ export class ProtocolChecklistComponent implements OnInit {
                         config,
                         this.websocket,
                         this.service,
+                        this.installationService,
                         CommercialCluster.SLAVE,
                     );
                 } else {
                     // Fetch component configurator
-                    this.componentConfigurator = this.ibn.getComponentConfigurator(this.edge, config, this.websocket);
+                    this.componentConfigurator = this.ibn.getComponentConfigurator(
+                        this.edge,
+                        config,
+                        this.websocket,
+                        this.service,
+                        this.installationService,
+                    );
                 }
 
                 const resolvedConfigurator = await this.componentConfigurator; // Wait for resolution

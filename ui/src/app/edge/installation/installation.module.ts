@@ -15,6 +15,7 @@ import en from "./i18n/en.json";
 import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { InstallationViewComponent } from "./installation-view/installation-view.component";
 import { InstallationComponent } from "./installation.component";
+import { InstallationService } from "./installation.service";
 import { ExtensionBoxPrefix } from "./shared/ibndatatypes";
 import { CompletionComponent } from "./views/completion/completion.component";
 import { ConfigurationAdvancedSettingsComponent } from "./views/configuration-advanced-grid-settings/configuration-advanced-grid-settings.component";
@@ -299,6 +300,7 @@ export function SplitRangeValidator(control: FormControl, field: FormlyFieldConf
         ProtocolSystemLocationValidationComponent,
         ConfigurationAdvancedSettingsComponent,
     ],
+    providers: [InstallationService],
 })
 export class InstallationModule {
     constructor(translate: TranslateService) {

@@ -56,7 +56,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
 
     public override warrantyLink = WebLinks.WARRANTY_LINK_COMMERCIAL_100;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_100;
-    public override appId: string = "App.FENECON.Commercial.100";
+    public override systemAppId: string = "App.FENECON.Commercial.100";
     public override appAlias: string = "FENECON Commercial 100";
 
     /** Battery-input selection captured in the ConfigurationBatteryInputs view. */

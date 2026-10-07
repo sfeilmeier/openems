@@ -1,13 +1,25 @@
+import { EdgeAppInstanceNotFoundError } from "src/app/shared/errors/errors";
+import { JsonrpcResponseError, JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { Edge, Websocket } from "src/app/shared/shared";
 import { ObjectUtils } from "src/app/shared/utils/object/object-utils";
 import { AddAppInstance } from "../../settings/app/jsonrpc/addAppInstance";
 import { DeleteAppInstance } from "../../settings/app/jsonrpc/deleteAppInstance";
 import { GetAppInstances } from "../../settings/app/jsonrpc/getAppInstances";
+import { QueryAppInstancesByFilter } from "../../settings/app/jsonrpc/queryAppInstancesByFilter";
 import { UpdateAppInstance } from "../../settings/app/jsonrpc/updateAppInstance";
-import { GridFeedInLimitationType } from "./enums";
+import { GridFeedInLimitationType, OpenemsAppCategory } from "./enums";
+
+type MetaAppUpdateOptions = {
+    dynamicLimitationType: GridFeedInLimitationType;
+    maximumFeedInPower: number;
+    gridConnectionPointFuseLimit: number | null;
+    skipMetaAppUpdate: boolean;
+};
 
 export class AppCenterUtil {
+    private static readonly INSTANCE_NOT_FOUND_PATTERN = /unable to find (app )?instance/i;
+
     /**
      * Creates an instance with the given properties or updates the first found instance of the given appId.
      *
@@ -73,7 +85,7 @@ export class AppCenterUtil {
                         return instance.instanceId == instanceId;
                     });
                     if (matchingIds.length == 0) {
-                        reject("Instance not found!");
+                        reject(new Error("Instance not found!"));
                         return;
                     }
                     resolve(matchingIds[0]);
@@ -109,6 +121,43 @@ export class AppCenterUtil {
     }
 
     /**
+     * Gets all app instances that belong to the given {@link OpenemsAppCategory}, e.g. "INTEGRATED_SYSTEM".
+     *
+     * Used to find and remove a conflicting, already installed app of the same category (single-in-category apps like
+     * Home/Commercial systems can only have one installed at a time).
+     *
+     * @param edge The edge
+     * @param websocket The websocket connection
+     * @param categories The categories, e.g. OpenemsAppCategory.INTEGRATED_SYSTEM
+     * @returns A Promise of QueryAppInstancesByFilter.Response
+     */
+    public static getAppInstancesByCategory(
+        edge: Edge,
+        websocket: Websocket,
+        ...categories: (OpenemsAppCategory | string)[]
+    ): Promise<QueryAppInstancesByFilter.Response> {
+        return new Promise<QueryAppInstancesByFilter.Response>((resolve, reject) => {
+            edge.sendStateFullRequest(
+                websocket,
+                new ComponentJsonApiRequest({
+                    componentId: "_appManager",
+                    payload: new QueryAppInstancesByFilter.Request({
+                        filter: {
+                            categorys: categories.map((c) => c.toString()),
+                            component: {},
+                        },
+                        pagination: {
+                            limit: 10,
+                        },
+                    }),
+                }),
+            )
+                .then((response) => resolve(response as QueryAppInstancesByFilter.Response))
+                .catch((error) => reject(error));
+        });
+    }
+
+    /**
      * Deinstalls all instances of the given AppId.
      *
      * @param edge The edge
@@ -139,27 +188,28 @@ export class AppCenterUtil {
     /**
      * Deinstalls all instances that are given.
      *
+     * Removes instances one after another (not in parallel): removing one app instance can cascade-remove a dependent
+     * instance on Edge (e.g. a sub-component of the app being removed), so an "Unable to find instance..." response for
+     * a later instance in the same batch means it was already cascade-removed - not a failure.
+     *
      * @param edge The edge
      * @param websocket The websocket connection
      * @param instanceIds The instanceIds that should get deinstalled
-     * @returns A Promise that resolves after every instance got deinstalled
+     * @returns A Promise that resolves with the responses of the instances that still needed to be removed
      */
-    public static removeInstances(edge: Edge, websocket: Websocket, instanceIds: string[]): Promise<any[]> {
-        const promises: Promise<any>[] = [];
-        instanceIds.forEach((instanceId) => {
-            promises.push(
-                edge.sendStateFullRequest(
-                    websocket,
-                    new ComponentJsonApiRequest({
-                        componentId: "_appManager",
-                        payload: new DeleteAppInstance.Request({
-                            instanceId: instanceId,
-                        }),
-                    }),
-                ),
-            );
-        });
-        return Promise.all(promises);
+    public static async removeInstances(
+        edge: Edge,
+        websocket: Websocket,
+        instanceIds: string[],
+    ): Promise<JsonrpcResponseSuccess[]> {
+        const results: JsonrpcResponseSuccess[] = [];
+        for (const instanceId of instanceIds) {
+            const result = await AppCenterUtil.deleteInstanceIfPresent(edge, websocket, instanceId);
+            if (result !== null) {
+                results.push(result);
+            }
+        }
+        return results;
     }
 
     /**
@@ -245,8 +295,7 @@ export class AppCenterUtil {
      * @param appId The appId to create or update after updating Meta
      * @param alias The alias for the app
      * @param properties Properties for the app to create/update
-     * @param dynamicLimitationType The limitationType
-     * @param maximumFeedInPower The maximum feed in power
+     * @param metaAppUpdateOptions The Meta-App values and whether to skip reading/updating App.Core.Meta
      */
     public static updateMetaAndInstallApp(
         edge: Edge,
@@ -254,10 +303,19 @@ export class AppCenterUtil {
         appId: string,
         alias: string,
         properties: {},
-        dynamicLimitationType: GridFeedInLimitationType,
-        maximumFeedInPower: number,
-        gridConnectionPointFuseLimit: number | null,
+        metaAppUpdateOptions: MetaAppUpdateOptions,
     ): Promise<any> {
+        if (metaAppUpdateOptions.skipMetaAppUpdate) {
+            return AppCenterUtil.createAppInstance(
+                edge,
+                websocket,
+                appId,
+                alias,
+                properties,
+                AppCenterUtil.keyForIntegratedSystems(),
+            );
+        }
+
         return AppCenterUtil.getAppInstances(edge, websocket, "App.Core.Meta")
             .then((response) => {
                 const instance = response?.result?.instances[0] ?? null;
@@ -266,11 +324,12 @@ export class AppCenterUtil {
                 }
 
                 // patch properties
-                instance.properties["GRID_FEED_IN_LIMITATION_TYPE"] = dynamicLimitationType;
-                instance.properties["MAXIMUM_GRID_FEED_IN_LIMIT"] = maximumFeedInPower;
+                instance.properties["GRID_FEED_IN_LIMITATION_TYPE"] = metaAppUpdateOptions.dynamicLimitationType;
+                instance.properties["MAXIMUM_GRID_FEED_IN_LIMIT"] = metaAppUpdateOptions.maximumFeedInPower;
 
-                if (gridConnectionPointFuseLimit !== null) {
-                    instance.properties["GRID_CONNECTION_POINT_FUSE_LIMIT"] = gridConnectionPointFuseLimit;
+                if (metaAppUpdateOptions.gridConnectionPointFuseLimit !== null) {
+                    instance.properties["GRID_CONNECTION_POINT_FUSE_LIMIT"] =
+                        metaAppUpdateOptions.gridConnectionPointFuseLimit;
                 }
 
                 return AppCenterUtil.updateApp(edge, websocket, instance.instanceId, instance.alias, {
@@ -287,5 +346,56 @@ export class AppCenterUtil {
                     AppCenterUtil.keyForIntegratedSystems(),
                 );
             });
+    }
+
+    /**
+     * Whether the given rejection reason is Edge's "instance not found" error. Edge reports it either with the
+     * structured {@link EdgeAppInstanceNotFoundError} code ("Unable to find App instance with ID [...]") or, on some
+     * paths, as plain text with the generic code ("Unable to find instance with id '...'"), so both are matched.
+     */
+    public static isInstanceNotFoundError(reason: unknown): boolean {
+        if (reason instanceof JsonrpcResponseError) {
+            return (
+                reason.error.code === EdgeAppInstanceNotFoundError.id ||
+                AppCenterUtil.INSTANCE_NOT_FOUND_PATTERN.test(reason.error.message)
+            );
+        }
+        if (reason instanceof Error) {
+            return AppCenterUtil.INSTANCE_NOT_FOUND_PATTERN.test(reason.message);
+        }
+        if (typeof reason === "string") {
+            return AppCenterUtil.INSTANCE_NOT_FOUND_PATTERN.test(reason);
+        }
+        return false;
+    }
+
+    /**
+     * Deletes a single app instance, treating an already-cascade-removed instance (Edge's "Unable to find instance..."
+     * error) as success rather than a failure.
+     *
+     * @param edge The edge
+     * @param websocket The websocket connection
+     * @param instanceId The instance to delete
+     * @returns The delete response, or `null` if the instance was already gone
+     */
+    private static async deleteInstanceIfPresent(
+        edge: Edge,
+        websocket: Websocket,
+        instanceId: string,
+    ): Promise<JsonrpcResponseSuccess | null> {
+        try {
+            return (await edge.sendStateFullRequest(
+                websocket,
+                new ComponentJsonApiRequest({
+                    componentId: "_appManager",
+                    payload: new DeleteAppInstance.Request({ instanceId }),
+                }),
+            )) as JsonrpcResponseSuccess;
+        } catch (error) {
+            if (AppCenterUtil.isInstanceNotFoundError(error)) {
+                return null;
+            }
+            throw error;
+        }
     }
 }

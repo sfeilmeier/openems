@@ -12,6 +12,7 @@ import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/sh
 
 import { Country } from "src/app/shared/type/country";
 import { NumberUtils } from "src/app/shared/utils/number/number-utils";
+import { InstallationService } from "../../installation.service";
 import { AppCenterUtil } from "../../shared/appcenterutil";
 import { Category } from "../../shared/category";
 import { ExternalLimitationType, FeedInSetting, GridFeedInLimitationType, View } from "../../shared/enums";
@@ -118,7 +119,7 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
     public abstract readonly emsBoxLabel: Category;
     public abstract readonly maxNumberOfPvStrings: number;
     public abstract readonly maxNumberOfMppt: number;
-    public abstract readonly appId: string;
+    public abstract override readonly systemAppId: string;
     public abstract readonly appAlias: string;
     public abstract readonly maxNumberOfTowers: number;
     public abstract readonly maxNumberOfModulesPerTower: number;
@@ -731,8 +732,9 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
         edge: Edge,
         config: EdgeConfig,
         websocket: Websocket,
-        service?: Service,
-    ) {
+        service: Service,
+        installationService: InstallationService,
+    ): Promise<ComponentConfigurator> {
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
 
         // Determine safety country
@@ -752,33 +754,36 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
         const appProperties = this.getAppProperties(safetyCountry, feedInSetting);
         const baseMode = BaseMode.AppManager;
 
-        componentConfigurator.addInstallAppCallback(() => {
+        componentConfigurator.addInstallAppCallback((options) => {
             return AppCenterUtil.updateMetaAndInstallApp(
                 edge,
                 websocket,
-                this.appId,
+                this.systemAppId,
                 this.appAlias,
                 appProperties,
-                this.feedInLimitation.dynamicLimitationType,
-                this.feedInLimitation.maximumFeedInPower,
-                this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
+                {
+                    dynamicLimitationType: this.feedInLimitation.dynamicLimitationType,
+                    maximumFeedInPower: this.feedInLimitation.maximumFeedInPower,
+                    gridConnectionPointFuseLimit:
+                        this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
+                    skipMetaAppUpdate: options.skipMetaAppUpdate,
+                },
             );
         });
 
-        if (this.estimatedConfig === null) {
-            // Send request and process components
-            this.estimatedConfig = await edge.sendStateFullRequest(
+        const fetchEstimatedConfig = () =>
+            edge.sendStateFullRequest<GetEstimatedConfigResponse>(
                 websocket,
                 new ComponentJsonApiRequest({
                     componentId: "_appManager",
                     payload: new GetEstimatedConfigRequest({
-                        appId: this.appId,
+                        appId: this.systemAppId,
                         alias: this.appAlias,
                         properties: appProperties,
                     }),
                 }),
             );
-        }
+        this.estimatedConfig = await installationService.dedupe(`getEstimatedConfig-${edge.id}`, fetchEstimatedConfig);
 
         // Add components to the configurator
         this.estimatedConfig.result.configurations

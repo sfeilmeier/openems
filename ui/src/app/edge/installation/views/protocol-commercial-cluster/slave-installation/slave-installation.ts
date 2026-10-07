@@ -14,6 +14,7 @@ import { environment } from "src/environments";
 import { AbstractIbn } from "../../../installation-systems/abstract-ibn";
 import { BatteryTarget } from "../../../installation-systems/commercial/commercial-92/abstract-commercial92";
 import { Commercial92ClusterIbn } from "../../../installation-systems/commercial/commercial-92/commercial92-cluster";
+import { InstallationService } from "../../../installation.service";
 import { CommercialCluster } from "../../../shared/enums";
 import { IbnUtils } from "../../../shared/ibn.utils";
 import { ComponentConfigurator, ConfigurationState } from "../../configuration-execute/component-configurator";
@@ -56,6 +57,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
         private service: Service,
         private translate: TranslateService,
         private websocket: Websocket,
+        private installationService: InstallationService,
     ) {}
 
     protected get isNextDisabled(): boolean {
@@ -286,6 +288,7 @@ export class ProtocolCommercialClusterSlaveInstallationComponent implements OnIn
                 config,
                 this.websocket,
                 this.service,
+                this.installationService,
                 CommercialCluster.SLAVE,
             );
 

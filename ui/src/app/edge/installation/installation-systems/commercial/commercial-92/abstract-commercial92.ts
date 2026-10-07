@@ -7,6 +7,7 @@ import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componen
 import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
+import { InstallationService } from "../../../installation.service";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
 import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, ModbusBridgeType, View, } from "../../../shared/enums";
@@ -46,6 +47,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
     public override readonly minNumberOfTowers: number = 2;
     public override readonly maxFeedInLimit: number = 6000000;
     public override readonly showNote: boolean = true;
+    public override readonly systemAppId: string = "App.FENECON.Commercial.92";
     public batteryStartStopTarget: BatteryTarget = BatteryTarget.START;
     public gridSetting: GridSetting | null = null;
     public numberOfSlaves: number = 1;
@@ -339,14 +341,14 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         edge: Edge,
         config: EdgeConfig,
         websocket: Websocket,
-        service?: Service,
+        service: Service,
+        installationService: InstallationService,
         cluster?: CommercialCluster,
     ): Promise<ComponentConfigurator> {
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
 
         // system not updated => newest appManager not available
         const baseMode = BaseMode.AppManager;
-        const appId: string = "App.FENECON.Commercial.92";
         const appAlias: string = "commercial-92";
 
         // Determine safety country
@@ -362,17 +364,14 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             GRID_CODE: this.gridSetting,
         };
 
-        componentConfigurator.addInstallAppCallback(() => {
-            return AppCenterUtil.updateMetaAndInstallApp(
-                edge,
-                websocket,
-                appId,
-                appAlias,
-                appProperties,
-                this.feedInLimitation.dynamicLimitationType,
-                this.feedInLimitation.maximumFeedInPower,
-                this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
-            ).then(() => this.installSelectedGridMeter(edge, websocket));
+        componentConfigurator.addInstallAppCallback((options) => {
+            return AppCenterUtil.updateMetaAndInstallApp(edge, websocket, this.systemAppId, appAlias, appProperties, {
+                dynamicLimitationType: this.feedInLimitation.dynamicLimitationType,
+                maximumFeedInPower: this.feedInLimitation.maximumFeedInPower,
+                gridConnectionPointFuseLimit:
+                    this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
+                skipMetaAppUpdate: options.skipMetaAppUpdate,
+            }).then(() => this.installSelectedGridMeter(edge, websocket));
         });
 
         // Send request and process components
@@ -381,7 +380,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             new ComponentJsonApiRequest({
                 componentId: "_appManager",
                 payload: new GetEstimatedConfigRequest({
-                    appId: appId,
+                    appId: this.systemAppId,
                     alias: appAlias,
                     properties: appProperties,
                 }),

@@ -204,6 +204,31 @@
                 "CHARGE_SOC_END_DESCRIPTION": "State of charge of the battery at which the Genset is stopped."
             }
         },
+        "CONFIGURATION_EXECUTE": {
+            "COPY_ERROR": "Copy error",
+            "ERROR_COPIED": "Error copied to clipboard",
+            "ERROR_DETAILS": "Error details",
+            "ERROR_HEADLINE_CATEGORY_CONFLICT": "Please remove the existing system first",
+            "ERROR_HEADLINE_CONNECTION": "Please check the connection and start the configuration again",
+            "ERROR_HEADLINE_GENERIC": "Please copy the error and send it to FENECON support",
+            "ERROR_HEADLINE_INCOMPATIBLE_APP": "Please remove the incompatible apps first",
+            "ERROR_HEADLINE_TIMEOUT": "Please check the connection and start the configuration again",
+            "ERROR_HINT_CATEGORY_CONFLICT": "Another integrated system is already installed on this device. Only one integrated system (e.g. a Home or Commercial system) can be installed at a time.",
+            "ERROR_HINT_CONNECTION": "The connection to the device was interrupted. Please check the network/serial connection.",
+            "ERROR_HINT_INCOMPATIBLE_APP": "An app installed on this device prevents this system from being installed. Please remove it via the app center and start the configuration again. The affected apps are listed in the error details.",
+            "ERROR_HINT_STALE_INSTANCE": "A leftover installation attempt of this system was found on the device, blocking the current one. It can be removed automatically.",
+            "ERROR_HINT_TIMEOUT": "The device did not respond in time. Please check the connection to the device.",
+            "ERROR_TITLE_CATEGORY_CONFLICT": "Existing system found",
+            "ERROR_TITLE_CONNECTION": "Connection interrupted",
+            "ERROR_TITLE_INCOMPATIBLE_APP": "Incompatible app installed",
+            "ERROR_TITLE_STALE_INSTANCE": "Leftover installation found",
+            "ERROR_TITLE_TIMEOUT": "Timeout",
+            "RESOLVE_CATEGORY_CONFLICT_BUTTON": "Remove existing system and continue",
+            "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "No conflicting system could be found to remove automatically. Please remove it manually via the app center.",
+            "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Removing existing system…",
+            "STATUS_CONFIGURING": "Components are being configured…",
+            "STATUS_FUNCTION_TEST": "Function tests are running…"
+        },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
             "FIXED_COS_PHI": "Fixed Value: Cos Phi"
         },

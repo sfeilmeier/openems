@@ -2,7 +2,6 @@ import { Role } from "src/app/shared/type/role";
 import { environment } from "src/environments";
 
 export class Changelog {
-
     public static readonly UI_VERSION = "2026.10.1-SNAPSHOT";
 
     public static readonly GENERAL_OPTIMIZATION = "Optimierungen und Fehlerbehebungen";
@@ -10,32 +9,39 @@ export class Changelog {
     public static readonly UI = Changelog.GENERAL_OPTIMIZATION + " am Online-Monitoring. ";
     public static readonly BACKEND = Changelog.GENERAL_OPTIMIZATION + " am Backend für das Online-Monitoring.";
 
-    public static readonly BATTERY_PROTECTION = "Verbesserung des Batterie Lade- und Entladeverhaltens im oberen und unteren Ladezustandsbereich";
+    public static readonly BATTERY_PROTECTION =
+        "Verbesserung des Batterie Lade- und Entladeverhaltens im oberen und unteren Ladezustandsbereich";
 
     public static product(...products: Product[]) {
-        return products.map(product => Changelog.link(product.name, product.url)).join(", ") + ". ";
+        return products.map((product) => Changelog.link(product.name, product.url)).join(", ") + ". ";
     }
 
     public static app(app: App, ...names: string[]) {
-        return Changelog.link(app.name, app.url)
-            + (names.length === 0 ? "" : " (" + names.join(", ") + ")")
-            + ": ";
+        return Changelog.link(app.name, app.url) + (names.length === 0 ? "" : " (" + names.join(", ") + ")") + ": ";
     }
 
     public static openems(version: string) {
-        return "Update auf OpenEMS Version " + version + ". Mehr Details auf " + Changelog.link("Github", "https://github.com/OpenEMS/openems/releases/tag/" + version);
+        return (
+            "Update auf OpenEMS Version " +
+            version +
+            ". Mehr Details auf " +
+            Changelog.link("Github", "https://github.com/OpenEMS/openems/releases/tag/" + version)
+        );
     }
 
     public static openemsComponent(openemsComponent: OpenemsComponent, change: string) {
-        return { roleIsAtLeast: Role.ADMIN, change: Changelog.link(openemsComponent.name, openemsComponent.url) + ": " + change };
+        return {
+            roleIsAtLeast: Role.ADMIN,
+            change: Changelog.link(openemsComponent.name, openemsComponent.url) + ": " + change,
+        };
     }
 
     public static library(...libraries: Library[]) {
-        return "Aktualisierung externer Programmbibliotheken: " + libraries.map(library => library.name).join(", ");
+        return "Aktualisierung externer Programmbibliotheken: " + libraries.map((library) => library.name).join(", ");
     }
 
     public static link(title: string, url: string) {
-        return "<a class='ion-link' target=\"_blank\" href=\"" + url + "\">" + title + "</a>";
+        return '<a class=\'ion-link\' target="_blank" href="' + url + '">' + title + "</a>";
     }
 }
 
@@ -46,10 +52,19 @@ export class Product {
     // ESS
     public static readonly HOME_10 = new Product("FENECON Home 10", this.DEPRECATED); //
     public static readonly HOME_20_30 = new Product("FENECON Home 20 & 30", "https://fenecon.de/fenecon-home-20-30");
-    public static readonly HOME_6_10_15 = new Product("FENECON Home 6, 10 & 15", "https://fenecon.de/fenecon-home-6-10-15");
+    public static readonly HOME_6_10_15 = new Product(
+        "FENECON Home 6, 10 & 15",
+        "https://fenecon.de/fenecon-home-6-10-15",
+    );
     public static readonly COMMERCIAL_30 = new Product("FENECON Commercial 30", this.DEPRECATED);
-    public static readonly COMMERCIAL_50 = new Product("FENECON Commercial 50", "https://fenecon.de/fenecon-commercial-50");
-    public static readonly COMMERCIAL_92 = new Product("FENECON Commercial 92", "https://fenecon.de/fenecon-commercial-92");
+    public static readonly COMMERCIAL_50 = new Product(
+        "FENECON Commercial 50",
+        "https://fenecon.de/fenecon-commercial-50",
+    );
+    public static readonly COMMERCIAL_92 = new Product(
+        "FENECON Commercial 92",
+        "https://fenecon.de/fenecon-commercial-92",
+    );
 
     // Deprecated ESS
     public static readonly DESS = new Product("FENECON DESS", this.DEPRECATED);
@@ -58,27 +73,62 @@ export class Product {
     public static readonly PRO_HYBRID_AC_GW = new Product("FENECON Pro Hybrid AC GW", this.DEPRECATED);
 
     // Industrial
-    public static readonly INDUSTRIAL_S = new Product("FENECON Industrial S", "https://fenecon.de/fenecon-industrial-s");
-    public static readonly INDUSTRIAL_M = new Product("FENECON Industrial M", "https://fenecon.de/fenecon-industrial-m");
-    public static readonly INDUSTRIAL_L = new Product("FENECON Industrial L", "https://fenecon.de/fenecon-industrial-l");
-    public static readonly INDUSTRIAL_XL = new Product("FENECON Industrial XL", "https://fenecon.de/fenecon-industrial-xl");
+    public static readonly INDUSTRIAL_S = new Product(
+        "FENECON Industrial S",
+        "https://fenecon.de/fenecon-industrial-s",
+    );
+    public static readonly INDUSTRIAL_M = new Product(
+        "FENECON Industrial M",
+        "https://fenecon.de/fenecon-industrial-m",
+    );
+    public static readonly INDUSTRIAL_L = new Product(
+        "FENECON Industrial L",
+        "https://fenecon.de/fenecon-industrial-l",
+    );
+    public static readonly INDUSTRIAL_XL = new Product(
+        "FENECON Industrial XL",
+        "https://fenecon.de/fenecon-industrial-xl",
+    );
 
     // private to disallow creating other instances of this type
-    private constructor(public readonly name: string, public readonly url: string) {
-    }
+    private constructor(
+        public readonly name: string,
+        public readonly url: string,
+    ) {}
 }
 
 export class App {
     // Basis-Apps
-    public static readonly EIGENVERBRAUCHSOPTIMIERUNG_HC = new App("FEMS App Eigenverbrauchsoptimierung", "https://www.fenecon.de/fems-eigenverbrauchsoptimierung-hc");
-    public static readonly EIGENVERBRAUCHSOPTIMIERUNG_INDUSTRIAL = new App("FEMS App Eigenverbrauchsoptimierung", "https://www.fenecon.de/fems-eigenverbrauchsoptimierung-industrial");
-    public static readonly NETZDIENLICHE_BELADUNG_HC = new App("FEMS App Netzdienliche Beladung", "https://fenecon.de/fems-netzdienliche-beladung-hc");
-    public static readonly NETZDIENLICHE_BELADUNG_INDUSTRIAL = new App("FEMS App Netzdienliche Beladung", "https://fenecon.de/fems-netzdienliche-beladung-industrial");
-    public static readonly REST_JSON_API = new App("FEMS App Rest/JSON lesend", "https://fenecon.de/fems-rest-json-lesend");
-    public static readonly MODBUS_TCP_API = new App("FEMS App Modbus/TCP lesend", "https://fenecon.de/fems-modbus-tcp-lesend");
+    public static readonly EIGENVERBRAUCHSOPTIMIERUNG_HC = new App(
+        "FEMS App Eigenverbrauchsoptimierung",
+        "https://www.fenecon.de/fems-eigenverbrauchsoptimierung-hc",
+    );
+    public static readonly EIGENVERBRAUCHSOPTIMIERUNG_INDUSTRIAL = new App(
+        "FEMS App Eigenverbrauchsoptimierung",
+        "https://www.fenecon.de/fems-eigenverbrauchsoptimierung-industrial",
+    );
+    public static readonly NETZDIENLICHE_BELADUNG_HC = new App(
+        "FEMS App Netzdienliche Beladung",
+        "https://fenecon.de/fems-netzdienliche-beladung-hc",
+    );
+    public static readonly NETZDIENLICHE_BELADUNG_INDUSTRIAL = new App(
+        "FEMS App Netzdienliche Beladung",
+        "https://fenecon.de/fems-netzdienliche-beladung-industrial",
+    );
+    public static readonly REST_JSON_API = new App(
+        "FEMS App Rest/JSON lesend",
+        "https://fenecon.de/fems-rest-json-lesend",
+    );
+    public static readonly MODBUS_TCP_API = new App(
+        "FEMS App Modbus/TCP lesend",
+        "https://fenecon.de/fems-modbus-tcp-lesend",
+    );
 
     // Allgemein
-    public static readonly TIME_OF_USE = new App("FEMS App Dynamischer Stromtarif", "https://fenecon.de/fems-dynamischer-stromtarif");
+    public static readonly TIME_OF_USE = new App(
+        "FEMS App Dynamischer Stromtarif",
+        "https://fenecon.de/fems-dynamischer-stromtarif",
+    );
     public static readonly ANCILLARY_COSTS = "Zeitvariable Netzentgelte";
     public static readonly AWATTAR = "Awattar HOURLY";
     public static readonly CORRENTLY = "STROMDAO Corrently";
@@ -91,7 +141,10 @@ export class App {
     public static readonly SWISSPOWER = "Swisspower";
     public static readonly TIBBER = "Tibber";
 
-    public static readonly METER = new App("FEMS App Erzeugungs- und Verbrauchszähler", "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler");
+    public static readonly METER = new App(
+        "FEMS App Erzeugungs- und Verbrauchszähler",
+        "https://fenecon.de/fems-erzeugungs-und-verbrauchszahler",
+    );
     public static readonly SOCOMEC = "SOCOMEC";
     public static readonly KDK = "KDK";
     public static readonly JANITZA = "Janitza";
@@ -102,7 +155,10 @@ export class App {
     public static readonly SHELLY_DIY = "Shelly DIY";
     public static readonly SHELLY = "Shelly Zähler";
 
-    public static readonly PV_INVERTER = new App("FEMS App PV-Wechselrichter", "https://fenecon.de/fems-pv-wechselrichter");
+    public static readonly PV_INVERTER = new App(
+        "FEMS App PV-Wechselrichter",
+        "https://fenecon.de/fems-pv-wechselrichter",
+    );
     public static readonly KACO = "KACO";
     public static readonly SMA = "SMA";
     public static readonly KOSTAL = "Kostal";
@@ -115,7 +171,10 @@ export class App {
     public static readonly BHKW = "Blockheizkraftwerk (BHKW)";
     public static readonly WAERMEPUMPE = "SG-Ready Wärmepumpe";
 
-    public static readonly POWER_TO_HEAT_LESEND = new App("FEMS App Power-to-Heat lesend", "https://fenecon.de/fems-power-to-heat-lesend");
+    public static readonly POWER_TO_HEAT_LESEND = new App(
+        "FEMS App Power-to-Heat lesend",
+        "https://fenecon.de/fems-power-to-heat-lesend",
+    );
     public static readonly MY_PV = "my-PV AC•THOR 9s";
     public static readonly ASKOMA = "ASKOHEAT+";
 
@@ -124,7 +183,10 @@ export class App {
     public static readonly KEBA = "KEBA";
     public static readonly HARDY_BARTH = "Hardy Barth eCharge";
 
-    public static readonly EVCS_AC_LESEND = new App("FEMS App AC-Ladestation lesend", "https://fenecon.de/fems-ac-ladestation-lesend");
+    public static readonly EVCS_AC_LESEND = new App(
+        "FEMS App AC-Ladestation lesend",
+        "https://fenecon.de/fems-ac-ladestation-lesend",
+    );
     public static readonly MENNEKES = "Mennekes";
     public static readonly GO_E = "go-e Charger";
 
@@ -133,45 +195,88 @@ export class App {
     public static readonly ALPITRONIC = "Alpitronic Hypercharger";
 
     // Lastspitzenkappung und atypische Netznutzung
-    public static readonly PEAKSHAVING = new App("FEMS App Lastspitzenkappung", "https://fenecon.de/fems-lastspitzenkappung");
-    public static readonly PEAKSHAVING_PHASE = new App("FEMS App Phasengenaue Lastspitzenkappung", "https://fenecon.de/fems-phasengenaue-lastspitzenkappung");
-    public static readonly HOCHLASTZEITFENSTER = new App("FEMS App Hochlastzeitfenster", "https://fenecon.de/fems-hochlastzeitfenster");
+    public static readonly PEAKSHAVING = new App(
+        "FEMS App Lastspitzenkappung",
+        "https://fenecon.de/fems-lastspitzenkappung",
+    );
+    public static readonly PEAKSHAVING_PHASE = new App(
+        "FEMS App Phasengenaue Lastspitzenkappung",
+        "https://fenecon.de/fems-phasengenaue-lastspitzenkappung",
+    );
+    public static readonly HOCHLASTZEITFENSTER = new App(
+        "FEMS App Hochlastzeitfenster",
+        "https://fenecon.de/fems-hochlastzeitfenster",
+    );
 
     // Laststeuerung
-    public static readonly SCHWELLWERTSTEUERUNG = new App("FEMS App Schwellwertsteuerung", "https://fenecon.de/fems-schwellwertsteuerung");
-    public static readonly MANUELLE_RELAISSTEUERUNG = new App("FEMS App Manuelle Relaissteuerung", "https://fenecon.de/fems-manuelle-relaissteuerung");
+    public static readonly SCHWELLWERTSTEUERUNG = new App(
+        "FEMS App Schwellwertsteuerung",
+        "https://fenecon.de/fems-schwellwertsteuerung",
+    );
+    public static readonly MANUELLE_RELAISSTEUERUNG = new App(
+        "FEMS App Manuelle Relaissteuerung",
+        "https://fenecon.de/fems-manuelle-relaissteuerung",
+    );
 
     // Schnittstellen
-    public static readonly MODBUS_TCP_SCHREIBZUGRIFF = new App("FEMS App Modbus/TCP Schreibzugriff", "https://fenecon.de/fems-schreibzugriff-heimspeicher"); // TODO Heim/Gewerbe/Industrie
+    public static readonly MODBUS_TCP_SCHREIBZUGRIFF = new App(
+        "FEMS App Modbus/TCP Schreibzugriff",
+        "https://fenecon.de/fems-schreibzugriff-heimspeicher",
+    ); // TODO Heim/Gewerbe/Industrie
 
     // Andere
-    public static readonly CLEVER_PV = new App("FEMS App clever-PV", "https://docs.fenecon.de/de/fems/fems-app/App_clever-PV.html");
-    public static readonly ENERIX_CONTROL = new App("FEMS App enerixControl", "https://docs.fenecon.de/de/fems/fems-app/App_clever-PV.html");
+    public static readonly CLEVER_PV = new App(
+        "FEMS App clever-PV",
+        "https://docs.fenecon.de/de/fems/fems-app/App_clever-PV.html",
+    );
+    public static readonly ENERIX_CONTROL = new App(
+        "FEMS App enerixControl",
+        "https://docs.fenecon.de/de/fems/fems-app/App_clever-PV.html",
+    );
 
     // private to disallow creating other instances of this type
-    private constructor(public readonly name: string, public readonly url: string) {
-    }
+    private constructor(
+        public readonly name: string,
+        public readonly url: string,
+    ) {}
 }
 
 export class OpenemsComponent {
-    public static readonly PQ_PLUS_ZAEHLER = new OpenemsComponent("PQ-Plus Zähler", "https://github.com/OpenEMS/openems/tree/develop/io.openems.edge.meter.pqplus");
-    public static readonly SDM630_ZAEHLER = new OpenemsComponent("SDM 630 Zähler", "https://github.com/OpenEMS/openems/tree/develop/io.openems.edge.meter.microcare.sdm630");
+    public static readonly PQ_PLUS_ZAEHLER = new OpenemsComponent(
+        "PQ-Plus Zähler",
+        "https://github.com/OpenEMS/openems/tree/develop/io.openems.edge.meter.pqplus",
+    );
+    public static readonly SDM630_ZAEHLER = new OpenemsComponent(
+        "SDM 630 Zähler",
+        "https://github.com/OpenEMS/openems/tree/develop/io.openems.edge.meter.microcare.sdm630",
+    );
 
     // private to disallow creating other instances of this type
-    private constructor(public readonly name: string, public readonly url: string) {
-    }
+    private constructor(
+        public readonly name: string,
+        public readonly url: string,
+    ) {}
 }
 
 export class Library {
     // Java
     public static readonly JAVA_JRE = new Library("Java 21 Runtime Environment", "jre21");
-    public static readonly APACHE_FELIX_FILEINSTALL = new Library("Apache Felix File Install", "org.apache.felix..fileinstall");
+    public static readonly APACHE_FELIX_FILEINSTALL = new Library(
+        "Apache Felix File Install",
+        "org.apache.felix..fileinstall",
+    );
     public static readonly APACHE_FELIX_FRAMEWORK = new Library("Apache Felix Framework", "org.apache.felix.framework");
-    public static readonly APACHE_FELIX_HTTP_JETTY = new Library("Apache Felix HTTP Jetty", "org.apache.felix.http.jetty");
+    public static readonly APACHE_FELIX_HTTP_JETTY = new Library(
+        "Apache Felix HTTP Jetty",
+        "org.apache.felix.http.jetty",
+    );
     public static readonly APACHE_FELIX_INVENTORY = new Library("Apache Felix Inventory", "org.apache.felix.inventory");
     public static readonly APACHE_FELIX_METATYPE = new Library("Apache Felix MetaType", "org.apache.felix.metatype");
     public static readonly APACHE_FELIX_SCR = new Library("Apache Felix SCR", "org.apache.felix.scr");
-    public static readonly APACHE_FELIX_CONFIGADMIN = new Library("Apache Felix Configuration Admin", "org.apache.felix.configadmin");
+    public static readonly APACHE_FELIX_CONFIGADMIN = new Library(
+        "Apache Felix Configuration Admin",
+        "org.apache.felix.configadmin",
+    );
     public static readonly BNDTOOLS = new Library("bndtools", "biz.aQute.bnd"); // https://github.com/bndtools/bnd
     public static readonly CHARGETIME_OCPP = new Library("Open Charge Alliance Java OCPP", "eu.chargetime.ocpp"); // https://github.com/ChargeTimeEU/Java-OCA-OCPP
     public static readonly ECLIPSE_OSGI = new Library("Eclipse OSGi", "org.eclipse.osgi");
@@ -214,6 +319,8 @@ export class Library {
     public static readonly UUID = new Library("UUID", "uuid");
 
     // private to disallow creating other instances of this type
-    private constructor(public readonly name: string, public readonly url: string) {
-    }
+    private constructor(
+        public readonly name: string,
+        public readonly url: string,
+    ) {}
 }
