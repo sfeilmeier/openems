@@ -52,6 +52,10 @@ export class LoginComponent implements AfterContentChecked, OnDestroy {
             this.currentThemeMode = userService.getValidBrowserTheme(
                 user?.getThemeFromSettings() ?? (localStorage.getItem("THEME") as UserTheme),
             );
+
+            if (user != null) {
+                this.router.navigate(["/overview"]);
+            }
         });
     }
 
