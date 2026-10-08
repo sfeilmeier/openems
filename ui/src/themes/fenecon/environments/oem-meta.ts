@@ -298,6 +298,7 @@ export const OemMeta: BaseMeta = {
             OFFGRID: "icons/common/offgrid.svg",
             PRODUCTION: "icons/common/production.svg",
             STORAGE: "icons/common/storage.svg",
+            SCHEDULE: "icons/common/schedule.svg",
             MEGAFON: "assets/img/icon/megafon.svg",
             WEATHER: {
                 CLEAR_DAY: "icons/common/weather/clear_day.svg",

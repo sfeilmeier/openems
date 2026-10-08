@@ -6,7 +6,6 @@ import { BehaviorSubject, Subject } from "rxjs";
 import { filter, first } from "rxjs/operators";
 import { Fena } from "src/app/edge/live/fena/fena.type";
 import { SumState } from "src/app/index/shared/sumState";
-import { PlatFormService } from "src/app/platform.service";
 import { environment } from "src/environments";
 import { UnimplementedInEdgeError } from "../../errors/errors";
 import { JsonrpcRequest, JsonrpcResponseSuccess } from "../../jsonrpc/base";
@@ -582,18 +581,13 @@ export class Edge {
      * @param translate The translate
      * @returns The new navigation tree
      */
-    public createNavigationTree(
-        translate: TranslateService,
-        edge: Edge,
-        service: Service,
-        user: User,
-        platFormService: PlatFormService,
-    ): NavigationTree {
+    public createNavigationTree(translate: TranslateService, edge: Edge, service: Service, user: User): NavigationTree {
         const config = this.getConfigSignal()();
         const sharedBottomNavigationBarTree = SharedBottomNavigationBar.getNavigationTree(
             edge,
             config,
             translate,
+            service,
             user,
         );
         const baseNavigationTree: (translate: TranslateService) => ConstructorParameters<typeof NavigationTree> = (
@@ -711,8 +705,8 @@ export class Edge {
     }
 
     /**
-     * Replaces the channel subscription of the given subscription id and returns whether the union of all
-     * subscriptions changed.
+     * Replaces the channel subscription of the given subscription id and returns whether the union of all subscriptions
+     * changed.
      *
      * @param id A unique ID for this subscription (e.g. the component selector)
      * @param channels The subscribed Channel-Addresses
@@ -724,8 +718,7 @@ export class Edge {
         const unionAfter = this.getSubscribedChannelIds();
 
         return (
-            unionBefore.size !== unionAfter.size ||
-            Array.from(unionBefore).some((channel) => !unionAfter.has(channel))
+            unionBefore.size !== unionAfter.size || Array.from(unionBefore).some((channel) => !unionAfter.has(channel))
         );
     }
 

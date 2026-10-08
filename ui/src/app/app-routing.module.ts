@@ -33,6 +33,7 @@ import { ControllerPeakShavingAsymmetricOverviewComponent as AsymmetricPeakshavi
 import { ControllerPeakShavingSymmetricOverviewComponent as SymmetricPeakshavingChartOverviewComponent } from "./edge/live/Controller/peak-shaving/symmetric/history/overview/overview";
 import { ControllerPeakShavingTimeslotOverviewComponent as TimeslotPeakshavingChartOverviewComponent } from "./edge/live/Controller/peak-shaving/Symmetric_TimeSlot/history/overview/overview";
 import { LiveDataService } from "./edge/live/livedataservice";
+import { ScheduleComponent } from "./edge/schedule/schedule";
 import { BatteryExtensionComponent } from "./edge/settings/energy-journey/pages/battery-extension/battery-extension";
 import { ElectricityPriceSelectionComponent } from "./edge/settings/energy-journey/pages/electricity-price-choice/electricity-price-selection";
 import { LoginComponent } from "./index/login.component";
@@ -317,7 +318,7 @@ export const routes: Routes = [
             },
             {
                 path: "schedule",
-                children: [{ path: "", component: EmptyPageComponent, pathMatch: "full" }],
+                children: [{ path: "", component: ScheduleComponent, pathMatch: "full" }],
             },
         ],
     },

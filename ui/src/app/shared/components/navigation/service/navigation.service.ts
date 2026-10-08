@@ -183,19 +183,12 @@ export class NavigationService {
         edge: Edge,
         service: Service,
         user: User | null,
-        platFormService: PlatFormService,
     ): NavigationTree | null {
         if (edge == null || user == null) {
             return null;
         }
 
-        let navigationTree: NavigationTree | null = edge.createNavigationTree(
-            translate,
-            edge,
-            service,
-            user,
-            platFormService,
-        );
+        let navigationTree: NavigationTree | null = edge.createNavigationTree(translate, edge, service, user);
 
         navigationTree = navigationTree.setParentRecursively();
         navigationTree.reorderByShowOrder(navigationTree);
@@ -309,7 +302,6 @@ export class NavigationService {
             edge,
             this.service,
             untracked(() => this.userService.currentUser()),
-            this.platFormService,
         );
 
         if (navigationTree == null) {
