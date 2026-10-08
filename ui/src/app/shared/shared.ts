@@ -268,6 +268,7 @@ export class UserPermission {
                 case Producttype.HOME_20:
                 case Producttype.HOME_30:
                 case Producttype.COMMERCIAL_50_GEN_3:
+                case Producttype.COMMERCIAL_100:
                     return true;
                 default:
                     return false;
