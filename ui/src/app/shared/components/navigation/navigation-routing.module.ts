@@ -104,7 +104,7 @@ import { SystemIndustrialSComponent } from "src/app/edge/live/system/industrial/
 import { SystemIndustrialTokai2Component } from "src/app/edge/live/system/industrial/tokai2/new-navigation/new-navigation";
 import { SystemIndustrialXlComponent } from "src/app/edge/live/system/industrial/xl/new-navigation/new-navigation";
 import { CurrentVoltageOverviewComponent } from "src/app/shared/components/edge/meter/currentVoltage/new-navigation/new-navigation";
-import { hasEdgeRole, hasUserSettings } from "src/app/shared/guards/functional-guards";
+import { hasEdgeRole, hasUserSettings, redirectToParentOnReload } from "src/app/shared/guards/functional-guards";
 import { suffixMatcher } from "src/app/shared/guards/url-matcher";
 import { UserSettings } from "src/app/shared/jsonrpc/shared";
 import { Role } from "src/app/shared/type/role";
@@ -150,31 +150,52 @@ const systemRoutes: (suffix: string | null) => Routes = (prefix: string | null =
 
 const controllerRoutes: (suffix: string | null) => Routes = (prefix: string | null = null) =>
     [
-        { path: "evse/:componentId", component: EvseSingleComponent },
-        { path: "evse/:componentId/history", component: EvseHistoryComponent },
         {
-            path: "evse/:componentId/energy-limit",
-            component: EvseEnergyLimitComponent,
-        },
-        { path: "evse/:componentId/forecast", component: EvseForecastComponent },
-        {
-            path: "evse/:componentId/phase-switching",
-            component: EvsePhaseSwitchingComponent,
-        },
-        { path: "evse/:componentId/schedule", component: EvseScheduleComponent },
-        {
-            path: "evse/:componentId/schedule/edit-task",
-            component: EvseEditTaskComponent,
-        },
-        { path: "evse/:componentId/charge-mode", component: ChargeModeComponent },
-        {
-            path: "evse/:componentId/schedule/add-task",
-            component: EvseAddTaskComponent,
-        },
-        {
-            path: "evse/:componentId/car/update",
-            component: UpdateAppConfigComponent,
-            canActivate: [hasEdgeRole(Role.OWNER)],
+            path: "evse/:componentId",
+            children: [
+                {
+                    path: "",
+                    component: EvseSingleComponent,
+                },
+                {
+                    path: "history",
+                    component: EvseHistoryComponent,
+                },
+                {
+                    path: "energy-limit",
+                    component: EvseEnergyLimitComponent,
+                },
+                {
+                    path: "forecast",
+                    component: EvseForecastComponent,
+                },
+                {
+                    path: "phase-switching",
+                    component: EvsePhaseSwitchingComponent,
+                    canActivate: [redirectToParentOnReload],
+                },
+                {
+                    path: "schedule",
+                    component: EvseScheduleComponent,
+                },
+                {
+                    path: "schedule/edit-task",
+                    component: EvseEditTaskComponent,
+                },
+                {
+                    path: "schedule/add-task",
+                    component: EvseAddTaskComponent,
+                },
+                {
+                    path: "charge-mode",
+                    component: ChargeModeComponent,
+                },
+                {
+                    path: "car/update",
+                    component: UpdateAppConfigComponent,
+                    canActivate: [hasEdgeRole(Role.OWNER)],
+                },
+            ],
         },
         {
             path: "io-heating-room",
