@@ -18,6 +18,7 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
         View.ProtocolSystemLocation,
         View.ConfigurationEssLimiter14aComponent,
         View.ConfigurationEnergyFlowMeter,
+        View.ConfigurationLineSideMeterFuse,
         View.ConfigurationMpptSelection,
         View.ProtocolPv,
         View.ConfigurationStsBox,
