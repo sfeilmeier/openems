@@ -230,7 +230,7 @@
             "STATUS_FUNCTION_TEST": "Function tests are running…"
         },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
-            "FIXED_COS_PHI": "Fixed Value: Cos Phi"
+            "FIXED_COS_PHI": "Fixed Value: Cos Phi 1"
         },
         "PROTOCOL_SERIAL_NUMBER": {
             "BATTERY_COMMUNICATION_BOX": "Battery Communication Box",

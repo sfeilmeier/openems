@@ -19,10 +19,12 @@ import { System, SystemId, SystemType } from "../shared/system";
 import { WebLinks } from "../shared/weblink.utils";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
 
+export type SerialNumberModel = Record<string, string | number | boolean>;
+
 export type SerialNumberData = {
     formGroup: FormGroup;
     fieldSettings: FormlyFieldConfig[];
-    model: any;
+    model: SerialNumberModel;
     header: string;
 };
 
@@ -136,7 +138,7 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
             isEnabled: boolean[][];
             label?: string;
         };
-        formModels?: any[];
+        formModels?: SerialNumberModel[];
     };
 
     // configuration Energy Flow Meter
@@ -187,8 +189,8 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
 
     /**
      * The Edge app id installed via {@link AppCenterUtil} for this system (e.g. "App.FENECON.Home"), if any - used to
-     * look up and clean up a leftover instance of this app itself when resolving an install conflict. `null`/`undefined`
-     * for systems that are configured manually and never go through {@link AppCenterUtil}.
+     * look up and clean up a leftover instance of this app itself when resolving an install conflict.
+     * `null`/`undefined` for systems that are configured manually and never go through {@link AppCenterUtil}.
      */
     public readonly systemAppId?: string;
 
@@ -210,11 +212,6 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
      */
     public setFeedInLimitFields(model: any) {
         return;
-    }
-
-    /** Returns the fields that has sub systems specific to the 'System Type' selected in previous step. */
-    public getSubSystemFields(): FormlyFieldConfig[] {
-        return [];
     }
 
     /** View Emergency-reserve Adds and returns the specific battery information based on Ibn to view in summary. */
@@ -666,8 +663,8 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
         numberOfTowers: number,
         numberOfModulesPerTower: number,
         index?: number,
-    ): Promise<{}>[] {
-        const result: Promise<{}>[] = [];
+    ): Promise<SerialNumberModel>[] {
+        const result: Promise<SerialNumberModel>[] = [];
         for (let tower = 0; tower < numberOfTowers; tower++) {
             result.push(this.getSerialNumbersFromEdge(tower, edge, websocket, numberOfModulesPerTower, index));
         }
@@ -829,7 +826,7 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
         websocket: Websocket,
         numberOfModulesPerTower?: number,
         slaveNr?: number,
-    ): Promise<{}>;
+    ): Promise<SerialNumberModel>;
 
     /** View Configuration Dynamic Feed-In limitation. Returns the fields for the views based on the system. */
     public abstract getFeedInLimitFields(): FormlyFieldConfig[];
@@ -863,9 +860,6 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
 
     /** Returns the set of controller for updateScheduler in component configurator. */
     public abstract setRequiredControllers();
-
-    /** Returns the fields that has system variants specific to the 'System Type' selected in previous step. */
-    public abstract getSystemVariantFields(): FormlyFieldConfig[];
 
     /**
      * Populates the properties of this IBN instance from a plain data object.

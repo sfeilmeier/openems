@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, EventEmitter, Input, OnInit, Output, signal, } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
@@ -29,11 +29,15 @@ export class ProtocolChecklistComponent implements OnInit {
     protected fields: FormlyFieldConfig[][] = [];
     protected models: any[] = [];
 
-    protected isStartConfigurationDisabled: boolean[] = [];
-    protected expandedSlaveIndex: number = 0; // Track which slave's checklist is expanded
+    protected readonly isStartConfigurationDisabled = signal<boolean[]>([]);
+    protected readonly expandedSlaveIndex = signal<number>(0); // Track which slave's checklist is expanded
 
-    protected slavesConfiguring: (boolean | null)[] = [];
-    protected isNextDisabled: boolean;
+    protected readonly slavesConfiguring = signal<boolean[]>([]);
+    protected readonly isNextDisabled = signal<boolean>(true);
+    protected readonly isWaiting = computed(() => {
+        const slavesConfiguring = this.slavesConfiguring();
+        return !(slavesConfiguring.length > 0 && slavesConfiguring.every((status) => status === false));
+    });
     protected numberOfSlaves: number = 1; // By default. '1' is applied for non cluster configuration as well.
 
     protected readonly timeoutInMinutes: number = ComponentConfigurator.DELAY_FUNCTION_TEST / 60 / 1000;
@@ -46,31 +50,34 @@ export class ProtocolChecklistComponent implements OnInit {
         private installationService: InstallationService,
     ) {}
 
-    protected get isWaiting(): boolean {
-        return !(this.slavesConfiguring.length > 0 && this.slavesConfiguring.every((status) => status === false));
+    /** Returns a copy of the list with the value at the given index replaced, so that signals emit a new reference. */
+    private static withValueAt(list: boolean[], index: number, value: boolean): boolean[] {
+        return list.map((current, i) => (i === index ? value : current));
     }
 
     public ngOnInit(): void {
         this.numberOfSlaves = this.ibn.numberOfSlaves;
-        this.isNextDisabled = true;
+        this.isNextDisabled.set(true);
 
         for (let i = 0; i < this.numberOfSlaves; i++) {
             this.forms[i] = new FormGroup({});
             this.fields[i] = this.getFields(i);
             this.models[i] = {};
-            this.isStartConfigurationDisabled[i] = false;
-            this.slavesConfiguring[i] = null;
         }
+        this.isStartConfigurationDisabled.set(new Array(this.numberOfSlaves).fill(false));
+        this.slavesConfiguring.set(new Array(this.numberOfSlaves).fill(false));
     }
 
     protected toggleExpansion(index: number) {
-        this.expandedSlaveIndex = index;
+        this.expandedSlaveIndex.set(index);
     }
 
     /** Starts the configuration based on the components selected. */
     protected async startConfiguration(slaveIndex: number) {
         this.ibn.batteryStartStopTarget = BatteryTarget.AUTO;
-        this.isStartConfigurationDisabled[slaveIndex] = true;
+        this.isStartConfigurationDisabled.update((list) =>
+            ProtocolChecklistComponent.withValueAt(list, slaveIndex, true),
+        );
 
         const stopOnRequest: Subject<void> = new Subject<void>();
         this.edge
@@ -106,7 +113,7 @@ export class ProtocolChecklistComponent implements OnInit {
                 }
 
                 const resolvedConfigurator = await this.componentConfigurator; // Wait for resolution
-                this.slavesConfiguring[slaveIndex] = true;
+                this.slavesConfiguring.update((list) => ProtocolChecklistComponent.withValueAt(list, slaveIndex, true));
 
                 // Starts the configuration
                 resolvedConfigurator
@@ -147,10 +154,12 @@ export class ProtocolChecklistComponent implements OnInit {
                                 this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.FINISH_FUNCTION_TEST"),
                                 "success",
                             );
-                            this.slavesConfiguring[slaveIndex] = false;
+                            this.slavesConfiguring.update((list) =>
+                                ProtocolChecklistComponent.withValueAt(list, slaveIndex, false),
+                            );
 
                             if (slaveIndex == this.numberOfSlaves - 1) {
-                                this.isNextDisabled = false;
+                                this.isNextDisabled.set(false);
                             }
                         });
                     });

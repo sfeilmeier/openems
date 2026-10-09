@@ -11,30 +11,31 @@ import { SchedulerIdBehaviour } from "../../abstract-ibn";
 import { AbstractCommercial30Ibn } from "./abstract-commercial-30";
 
 export class Commercial30AnschlussIbn extends AbstractCommercial30Ibn {
-
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_30_ANSCHLUSS;
     public override readonly emergencyPower = "DISABLE";
 
     constructor(translate: TranslateService) {
-        super([
-            View.PreInstallation,
-            View.PreInstallationUpdate,
-            View.ConfigurationSystem,
-            View.ConfigurationSubSystem,
-            View.ConfigurationSystemVariant,
-            View.ProtocolInstaller,
-            View.ProtocolCustomer,
-            View.ProtocolSystem,
-            View.ProtocolSystemLocation,
-            View.ConfigurationLineSideMeterFuse,
-            View.ConfigurationCommercialModbuBridge,
-            View.ProtocolFeedInLimitation,
-            View.ConfigurationSummary,
-            View.ConfigurationExecute,
-            View.ProtocolSerialNumbers,
-            View.Alerting,
-            View.Completion,
-        ], translate);
+        super(
+            [
+                View.PreInstallation,
+                View.PreInstallationUpdate,
+                View.ConfigurationSystem,
+                View.ConfigurationSystemVariant,
+                View.ProtocolInstaller,
+                View.ProtocolCustomer,
+                View.ProtocolSystem,
+                View.ProtocolSystemLocation,
+                View.ConfigurationLineSideMeterFuse,
+                View.ConfigurationCommercialModbusBridge,
+                View.ProtocolFeedInLimitation,
+                View.ConfigurationSummary,
+                View.ConfigurationExecute,
+                View.ProtocolSerialNumbers,
+                View.Alerting,
+                View.Completion,
+            ],
+            translate,
+        );
     }
 
     public setRequiredControllers() {
@@ -53,37 +54,47 @@ export class Commercial30AnschlussIbn extends AbstractCommercial30Ibn {
 
     public getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service: Service) {
         const invalidateElementsAfterReadErrors: number = 3;
-        const componentConfigurator: ComponentConfigurator = this.getCommercial30ComponentConfigurator(edge, config, websocket, invalidateElementsAfterReadErrors, service);
+        const componentConfigurator: ComponentConfigurator = this.getCommercial30ComponentConfigurator(
+            edge,
+            config,
+            websocket,
+            invalidateElementsAfterReadErrors,
+            service,
+        );
 
         // ess0
-        componentConfigurator.add({
-            factoryId: "Ess.Generic.ManagedSymmetric",
-            componentId: "ess0",
-            alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.STORAGE_SYSTEM"),
-            properties: [
-                { name: "enabled", value: true },
-                { name: "startStop", value: "START" },
-                { name: "batteryInverter.id", value: "batteryInverter0" },
-                { name: "battery.id", value: "battery0" },
-            ],
-            mode: ConfigurationMode.RemoveAndConfigure,
-        }, 7);
+        componentConfigurator.add(
+            {
+                factoryId: "Ess.Generic.ManagedSymmetric",
+                componentId: "ess0",
+                alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.STORAGE_SYSTEM"),
+                properties: [
+                    { name: "enabled", value: true },
+                    { name: "startStop", value: "START" },
+                    { name: "batteryInverter.id", value: "batteryInverter0" },
+                    { name: "battery.id", value: "battery0" },
+                ],
+                mode: ConfigurationMode.RemoveAndConfigure,
+            },
+            7,
+        );
 
         return Promise.resolve(componentConfigurator);
     }
 
     public override getSerialNumberFields(stringNr: number, numberOfModulesPerString: number) {
-
         const fields: FormlyFieldConfig[] = this.getCommercial30SerialNumbersFields(stringNr, numberOfModulesPerString);
 
         if (stringNr === 0) {
-
             // Adds the ems box field only for Initial String.
             const emsbox: FormlyFieldConfig = {
                 key: "emsbox",
                 type: "input",
                 templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EMS_BOX_CONNECTION_BOX_COMMERCIAL30", { edgeShortName: environment.edgeShortName }),
+                    label: this.translate.instant(
+                        "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EMS_BOX_CONNECTION_BOX_COMMERCIAL30",
+                        { edgeShortName: environment.edgeShortName },
+                    ),
                     required: true,
                     placeholder: "xxxxxxxxxxxx",
                 },

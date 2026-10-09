@@ -12,7 +12,7 @@ import { ComponentData, ExtensionBoxPrefix } from "../../../shared/ibndatatypes"
 import { SystemId } from "../../../shared/system";
 import { WebLinks } from "../../../shared/weblink.utils";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
-import { BatteryTowerSettings } from "../../abstract-ibn";
+import { BatteryTowerSettings, SerialNumberModel } from "../../abstract-ibn";
 import { AbstractCommercialGen3, CommercialGen3App, GensetProperties } from "../abstract-commercial-gen3";
 
 type Commercial100AppProperties = CommercialGen3App &
@@ -33,7 +33,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
         View.PreInstallation,
         View.PreInstallationUpdate,
         View.ConfigurationSystem,
-        View.ConfigurationSubSystem,
+        View.ConfigurationSystemVariant,
         View.ConfigurationBatteryInputs,
         View.ProtocolInstaller,
         View.ProtocolCustomer,
@@ -159,7 +159,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
         websocket: Websocket,
         numberOfModulesPerTower: number,
         batteryIndex?: number,
-    ) {
+    ): Promise<SerialNumberModel> {
         return new Promise((resolve) => {
             let isResolved = false;
             const channelAddresses: { [key: string]: ChannelAddress } = {};

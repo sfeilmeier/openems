@@ -18,17 +18,17 @@ import { Category } from "../../shared/category";
 import { ExternalLimitationType, FeedInSetting, GridFeedInLimitationType, View } from "../../shared/enums";
 import { FeedInSettingUtils } from "../../shared/feedinsetting.utils";
 import { IbnUtils } from "../../shared/ibn.utils";
-import { ComponentData, DcPv, EmsType, ExtensionBoxPrefix } from "../../shared/ibndatatypes";
+import { ComponentData, DcPv, ExtensionBoxPrefix } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
 import { FEED_IN_POWER_FACTOR_OPTIONS } from "../../shared/options";
-import { SystemId, SystemType } from "../../shared/system";
+import { SystemType } from "../../shared/system";
 import { ViewUtils } from "../../shared/view.utils";
 import { WebLinks } from "../../shared/weblink.utils";
 import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject, } from "../../views/configuration-execute/component-configurator";
 import { GetEstimatedConfigRequest } from "../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
 import { SafetyCountry } from "../../views/configuration-execute/safety-country";
-import { AbstractIbn, EmergencyReserve, SchedulerIdBehaviour } from "../abstract-ibn";
+import { AbstractIbn, EmergencyReserve, SchedulerIdBehaviour, SerialNumberModel } from "../abstract-ibn";
 
 export type HomeAdditionalApp = {
     FEED_IN_TYPE: ExternalLimitationType;
@@ -240,7 +240,7 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
         edge: Edge,
         websocket: Websocket,
         numberOfModulesPerTower: number,
-    ) {
+    ): Promise<SerialNumberModel> {
         return new Promise((resolve) => {
             let isResolved = false;
             const channelAddresses: { [key: string]: ChannelAddress } = {};
@@ -645,87 +645,6 @@ export abstract class AbstractHomeIbn<T extends EmergencyReserve = EmergencyRese
                     reject(reason);
                 });
         });
-    }
-
-    public override getSystemVariantFields(): FormlyFieldConfig[] {
-        const label = [];
-        const emsType: EmsType = this.getEmsType();
-
-        switch (emsType) {
-            case "feh013":
-                label.push(
-                    {
-                        value: SystemId.FENECON_HOME_6,
-                        label: SystemId.FENECON_HOME_6,
-                    },
-                    {
-                        value: SystemId.FENECON_HOME_10_GEN_2,
-                        label: SystemId.FENECON_HOME_10_GEN_2,
-                    },
-                    {
-                        value: SystemId.FENECON_HOME_15,
-                        label: SystemId.FENECON_HOME_15,
-                    },
-                    {
-                        value: SystemId.FENECON_HOME_20,
-                        label: SystemId.FENECON_HOME_20,
-                    },
-                    {
-                        value: SystemId.FENECON_HOME_30,
-                        label: SystemId.FENECON_HOME_30,
-                    },
-                );
-                break;
-            case "fho011":
-                label.push({
-                    value: SystemId.FENECON_HOME_10,
-                    label: SystemId.FENECON_HOME_10,
-                });
-                break;
-            case null:
-                label.push(
-                    {
-                        value: SystemId.FENECON_HOME_6,
-                        label: SystemId.FENECON_HOME_6,
-                    },
-                    {
-                        value: SystemId.FENECON_HOME_10,
-                        label: SystemId.FENECON_HOME_10,
-                    },
-                    {
-                        value: SystemId.FENECON_HOME_10_GEN_2,
-                        label: SystemId.FENECON_HOME_10_GEN_2,
-                    },
-                    {
-                        value: SystemId.FENECON_HOME_15,
-                        label: SystemId.FENECON_HOME_15,
-                    },
-                    {
-                        value: SystemId.FENECON_HOME_20,
-                        label: SystemId.FENECON_HOME_20,
-                    },
-                    {
-                        value: SystemId.FENECON_HOME_30,
-                        label: SystemId.FENECON_HOME_30,
-                    },
-                );
-                break;
-        }
-
-        const fields: FormlyFieldConfig[] = [
-            {
-                key: "system",
-                type: "radio",
-                templateOptions: {
-                    label: this.translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME"),
-                    type: "radio",
-                    options: label,
-                    required: true,
-                },
-            },
-        ];
-
-        return fields;
     }
 
     public override async getComponentConfigurator(

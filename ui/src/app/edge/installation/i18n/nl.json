@@ -1,0 +1,240 @@
+{
+    "INSTALLATION": {
+        "ALERTING_INFO": "Stel als installateur e-mailmeldingen in voor het geval het FEMS gedurende een bepaalde tijd offline is of een fout meldt. Het bericht wordt verzonden naar het e-mailadres dat tijdens de inbedrijfstelling is opgegeven.",
+        "OFFLINE": "Offline",
+        "ENABLE_MPPT": "MPPT {{ mpptNumber }} actief",
+        "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
+            "MODE": "Modus",
+            "RANGE": "Bereik [{{min}},{{max}}] {{unit}}",
+            "TITLE": "VDE 4110-instellingen",
+            "POWER": "{{value}} Actief vermogen",
+            "REACTIVE_POWER": "{{value}} Reactief vermogen",
+            "GROUPS": {
+                "ACTIVE_POWER_MODE": "Instellingen voor het actieve vermogensmodus",
+                "REACTIVE_POWER_MODE": "Instellingen voor het reactieve vermogensmodus",
+                "PROTECTION": "Beveiligingsparameters",
+                "CONNECTION": "Verbindingsparameters",
+                "VOLTAGE_RIDE_THROUGH": "Voltage Ride-Through",
+                "FREQUENCY_RIDE_THROUGH": "Frequentie Ride-Through"
+            },
+            "ACTIVE_POWER_MODE": {
+                "OUTPUT_ACTIVE_POWER": "Uitgangsactief vermogen",
+                "POWER_GRADIENT": "Vermogensgradiënt",
+                "PF_OVER_FREQUENCY": {
+                    "ENABLE": "P(F)-curve (frequentiecurve) voor de ontlading bij overfrequentie",
+                    "ENABLE_DESC": "Activeert/deactiveert de P(F)-curve",
+                    "START_POINT": "Overfrequentie startpunt",
+                    "SLOPE": "Overfrequentie vermogensreductiehelling",
+                    "DELAY_TIME": "Antwoordvertragingstijd",
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Deactivatiedrempel Fstop",
+                    "HYSTERESIS_POINT": "Frequentiehysteresis",
+                    "DELAY_WAITING_TIME": "Vertraging wachttijd",
+                    "HYSTERESIS_SLOPE": "Hysteresis vermogensherstelhelling"
+                },
+                "PF_UNDER_FREQUENCY": {
+                    "ENABLE": "P(F)-curve (frequentie-vermogenscurve) voor de belasting bij onderfrequentie",
+                    "ENABLE_DESC": "Activeert/deactiveert de P(F)-curve",
+                    "THRESHOLD": "Onderfrequentiedrempel",
+                    "SLOPE": "Vermogensrespons op onderfrequentiegradiënt",
+                    "DELAY_TIME": "Antwoordvertragingstijd",
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Deactivatiedrempel Fstop",
+                    "DEACTIVATION_THRESHOLD_FSTOP_DESC": "Activeert/deactiveert de deactivatiedrempel",
+                    "HYSTERESIS_POINT": "Frequentiehysteresis",
+                    "DELAY_WAITING_TIME": "Vertraging wachttijd",
+                    "HYSTERESIS_SLOPE": "Hysteresis vermogensherstelhelling"
+                },
+                "PU_CURVE": {
+                    "ENABLE": "P(U)-curve (voltage-vermogenscurve)",
+                    "ENABLE_DESC": "Activeert/deactiveert de P(U)-curve",
+                    "RESPONSE_MODE": "Uitgangsresponsmodus",
+                    "PT1_TIME_CONSTANT": "Tijdconstante van het PT-1 laagdoorlaatfilter",
+                    "PT1_POWER_GRADIENT": "Vermogensgradiënt"
+                }
+            },
+            "REACTIVE_POWER_MODE": {
+                "MODE": "Reactief vermogensmodus",
+                "MODE_DESC": "Selectie van de reactieve vermogensmodus",
+                "OPTIONS": {
+                    "NONE": "Niet geselecteerd",
+                    "FIX_PF": "Fix Pf",
+                    "FIX_Q": "Fix Q",
+                    "QU_CURVE": "Q(U)-curve",
+                    "COSPHIP_CURVE": "CosPhi(P)-curve",
+                    "QP_CURVE": "Q(P)-curve"
+                },
+                "FIX_PF": {
+                    "POWER_FACTOR": "Arbeidsfactor",
+                    "POWER_FACTOR_DESC": "Bereik [0,8,1]"
+                },
+                "FIX_Q": {
+                    "REACTIVE_POWER": "Reactief vermogen"
+                },
+                "QU_CURVE": {
+                    "VOLTAGE_DEAD_BAND": "Voltage dode zone",
+                    "OVEREXCITED_SLOPE": "Helling bij overexcitatie",
+                    "UNDEREXCITED_SLOPE": "Helling bij underexcitatie",
+                    "TIME_CONSTANT": "Tijdconstante",
+                    "EXTENDED_FUNCTIONS": "Uitgebreide functies",
+                    "LOCK_IN_POWER": "Lock-in voltage",
+                    "LOCK_OUT_POWER": "Lock-out voltage",
+                    "VOLTAGE": "V{{number}} voltage",
+                    "ACTIVE_POWER": "V{{number}} actief vermogen",
+                    "MODE": {
+                        "STANDARD_MODE": "Basismodus",
+                        "SLOPE_MODE": "Hellingsmodus"
+                    }
+                },
+                "COSPHIP_CURVE": {
+                    "OVEREXCITED_SLOPE": "Helling bij overexcitatie",
+                    "UNDEREXCITED_SLOPE": "Helling bij underexcitatie",
+                    "COS_PHI": "{{value}} cos φ",
+                    "POWER": "{{value}} vermogen",
+                    "COS_PHI_DESC": "Bereik [-1000, -800] en [800, 1000]",
+                    "TIME_CONSTANT": "Tijdconstante",
+                    "EXTENDED_FUNCTIONS": "Uitgebreide functies",
+                    "EXTENDED_FUNCTIONS_DESC": "Activeert/deactiveert de uitgebreide functies",
+                    "LOCK_IN_VOLT": "Lock-in voltage",
+                    "LOCK_OUT_VOLT": "Lock-out voltage",
+                    "INVALID_RANGE": "De waarde moet binnen het bereik [-1000, -800] en [800, 1000] liggen"
+                },
+                "QP_CURVE": {
+                    "OVEREXCITED_SLOPE": "Helling bij overexcitatie",
+                    "UNDEREXCITED_SLOPE": "Helling bij underexcitatie",
+                    "TIME_CONSTANT": "Tijdconstante"
+                }
+            },
+            "PROTECTION": {
+                "OVERVOLTAGE_TRIGGER": "Triggerwaarde overspanning (fase {{stage}})",
+                "OVERVOLTAGE_TRIP_TIME": "Uitschakeltijd overspanning (fase {{stage}})",
+                "UNDERVOLTAGE_TRIP_VALUE": "Uitschakelwaarde undervoltage (fase {{stage}})",
+                "UNDERVOLTAGE_TRIP_TIME": "Uitschakeltijd undervoltage (fase {{stage}})",
+                "TEN_MIN_OVERVOLTAGE_THRESHOLD": "Uitschakeldrempel overspanning van 10 minuten",
+                "TEN_MIN_OVERVOLTAGE_TIME": "Uitschakeltijd overspanning van 10 minuten",
+                "OVERFREQUENCY_TRIGGER": "Triggerwaarde overfrequentie (fase {{stage}})",
+                "OVERFREQUENCY_TRIP_TIME": "Uitschakeltijd overfrequentie (fase {{stage}})",
+                "UNDERFREQUENCY_TRIP_VALUE": "Uitschakelwaarde onderfrequentie (fase {{stage}})",
+                "UNDERFREQUENCY_TRIP_TIME": "Uitschakeltijd onderfrequentie (fase {{stage}})"
+            },
+            "CONNECTION": {
+                "RAMP_UP_UPPER_VOLTAGE": "Opstart: bovengrens voltage",
+                "RAMP_UP_LOWER_VOLTAGE": "Opstart: ondergrens voltage",
+                "RAMP_UP_UPPER_FREQUENCY": "Opstart: bovengrens frequentie",
+                "RAMP_UP_LOWER_FREQUENCY": "Opstart: ondergrens frequentie",
+                "RAMP_UP_OBSERVATION_TIME": "Opstart: observatietijd",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE": "Zachte opstartgradiënt",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE_DESC": "Activeert/deactiveert de zachte opstartgradiënt",
+                "SOFT_RAMP_UP_GRADIENT_VALUE": "Zachte opstartgradiëntwaarde",
+                "RECONNECTION_UPPER_VOLTAGE": "Herkoppeling: bovengrens voltage",
+                "RECONNECTION_LOWER_VOLTAGE": "Herkoppeling: ondergrens voltage",
+                "RECONNECTION_UPPER_FREQUENCY": "Herkoppeling: bovengrens frequentie",
+                "RECONNECTION_LOWER_FREQUENCY": "Herkoppeling: ondergrens frequentie",
+                "RECONNECTION_OBSERVATION_TIME": "Herkoppeling: observatietijd",
+                "RECONNECTION_GRADIENT_ENABLE": "Herkoppelingsgradiënt",
+                "RECONNECTION_GRADIENT_ENABLE_DESC": "Activeert/deactiveert de herkoppelingsgradiënt",
+                "RECONNECTION_GRADIENT_VALUE": "Herkoppelingsgradiëntwaarde"
+            },
+            "VOLTAGE_RIDE_THROUGH": {
+                "LVRT": {
+                    "ENABLE": "LVRT",
+                    "ENABLE_DESC": "Activeert/deactiveert Low Voltage Ride Through",
+                    "UV_VOLTAGE": "Undervoltage {{stage}} voltage",
+                    "UV_TIME": "Undervoltage {{stage}} tijd",
+                    "ENTER_THRESHOLD": "LVRT-inschakeldrempel",
+                    "EXIT_ENDPOINT": "LVRT-eindpunt",
+                    "K1_SLOPE": "K1-helling",
+                    "ZERO_CURRENT_ENABLE": "Nulstroommodus",
+                    "ZERO_CURRENT_ENABLE_DESC": "Activeert/deactiveert de nulstroommodus",
+                    "ZERO_CURRENT_THRESHOLD": "Inschakeldrempel"
+                },
+                "HVRT": {
+                    "ENABLE": "HVRT",
+                    "ENABLE_DESC": "Activeert/deactiveert High Voltage Ride Through",
+                    "OV_VOLTAGE": "Overspanning {{stage}} voltage",
+                    "OV_TIME": "Overspanning {{stage}} tijd",
+                    "ENTER_THRESHOLD": "HVRT-inschakeldrempel",
+                    "EXIT_ENDPOINT": "HVRT-eindpunt",
+                    "K2_SLOPE": "K2-helling",
+                    "ZERO_CURRENT_ENABLE": "Nulstroommodus",
+                    "ZERO_CURRENT_ENABLE_DESC": "Activeert/deactiveert de nulstroommodus",
+                    "ZERO_CURRENT_THRESHOLD": "Inschakeldrempel"
+                },
+                "CURRENT_DISTRIBUTION_MODE": "Stroomverdelingsmodus",
+                "OPTIONS": {
+                    "REACTIVE_PRIORITY": "Prioriteitsmodus reactieve stroom",
+                    "ACTIVE_PRIORITY": "Prioriteitsmodus actieve stroom",
+                    "CONSTANT_CURRENT": "Constante stroommodus",
+                    "DEACTIVATE": "Deactiveren",
+                    "GRADIENT_CONTROL": "Gradiëntregeling",
+                    "PT_1_BEHAVIOUR": "PT-1 gedrag"
+                },
+                "ACTIVE_RECOVERY_MODE": "Herstelmodus actief vermogen na overschrijding",
+                "REACTIVE_RECOVERY_MODE": "Doorlopen van het einde van de reactieve vermogensherstelmodus",
+                "POWER_GRADIENT": "Vermogensgradiënt",
+                "PT1_TIME_CONSTANT": "Tijdconstante van het PT-1 laagdoorlaatfilter"
+            },
+            "FREQUENCY_RIDE_THROUGH": {
+                "ENABLE": "Frequentie Ride-Through",
+                "ENABLE_DESC": "Activeert/deactiveert frequentie Ride-Through",
+                "UF_FREQUENCY": "Onderfrequentie {{stage}} frequentie",
+                "UF_TIME": "Onderfrequentie {{stage}} tijd",
+                "OF_FREQUENCY": "Overfrequentie {{stage}} frequentie",
+                "OF_TIME": "Overfrequentie {{stage}} tijd"
+            },
+            "SLOPE_RANGE": "Vermenigvuldigingsfactor [{{min}}, {{max}}]"
+        },
+        "CONFIGURATION_BATTERY_INPUTS": {
+            "TITLE": "Configuratie van batterijingangen",
+            "BATTERY_INPUT": "Batterijingang {{ key }}",
+            "INPUT_CONFIRMATION": "Bevestiging: ingangen correct aangesloten",
+            "NUMBER_OF_BATTERY_INPUTS": "Aantal gebruikte batterijingangen"
+        },
+        "CONFIGURATION_EMERGENCY_RESERVE": {
+            "GENSET": {
+                "CONNECTED": "Generator aangesloten?",
+                "POWER": "Nominaal vermogen",
+                "PREHEAT_TIME": "Voorlooptijd",
+                "RUN_TIME": "Looptijd",
+                "EMERGENCY_POWER_FUNCTION": "Moet de noodstroom-generatorfunctie worden geactiveerd?",
+                "BATTERY_CHARGING": "Batterij opladen vanuit de generator activeren?",
+                "MAX_POWER": "Maximaal percentage laadvermogen",
+                "MAX_POWER_DESCRIPTION": "Percentage van het hierboven vermelde beschikbare nominale generatorvermogen waarmee de batterij wordt geladen. [{{min}}, {{max}}] %",
+                "CHARGE_SOC_START": "Batterijlaadtoestand voor het starten van de generator",
+                "CHARGE_SOC_START_DESCRIPTION": "Laadtoestand van de batterij waarbij de generator start. Deze waarde mag niet lager zijn dan de opgegeven laadtoestand die voor de noodreserve is gereserveerd.",
+                "CHARGE_SOC_END": "Batterijlaadtoestand voor het stoppen van de generator",
+                "CHARGE_SOC_END_DESCRIPTION": "Laadtoestand van de batterij waarbij de generator stopt."
+            }
+        },
+        "CONFIGURATION_EXECUTE": {
+            "COPY_ERROR": "Fout kopiëren",
+            "ERROR_COPIED": "Fout naar het klembord gekopieerd",
+            "ERROR_DETAILS": "Foutdetails",
+            "ERROR_HEADLINE_CATEGORY_CONFLICT": "Verwijder eerst het bestaande systeem",
+            "ERROR_HEADLINE_CONNECTION": "Controleer de verbinding en start de configuratie opnieuw",
+            "ERROR_HEADLINE_GENERIC": "Kopieer de fout en stuur deze naar de FENECON-support",
+            "ERROR_HEADLINE_INCOMPATIBLE_APP": "Verwijder eerst de incompatibele apps",
+            "ERROR_HEADLINE_TIMEOUT": "Controleer de verbinding en start de configuratie opnieuw",
+            "ERROR_HINT_CATEGORY_CONFLICT": "Er is al een ander geïntegreerd systeem op dit apparaat geïnstalleerd. Er kan slechts één geïntegreerd systeem (bijv. een Home- of Commercial-systeem) tegelijk worden geïnstalleerd.",
+            "ERROR_HINT_CONNECTION": "De verbinding met het apparaat is verbroken. Controleer de netwerk-/seriële verbinding.",
+            "ERROR_HINT_INCOMPATIBLE_APP": "Een op dit apparaat geïnstalleerde app voorkomt dat dit systeem wordt geïnstalleerd. Verwijder deze via het App Center en start de configuratie opnieuw. De betrokken apps staan vermeld in de foutdetails.",
+            "ERROR_HINT_STALE_INSTANCE": "Er is een rest van een eerdere installatiepoging van dit systeem op het apparaat gevonden, die de huidige installatie blokkeert. Deze kan automatisch worden verwijderd.",
+            "ERROR_HINT_TIMEOUT": "Het apparaat heeft niet tijdig gereageerd. Controleer de verbinding met het apparaat.",
+            "ERROR_TITLE_CATEGORY_CONFLICT": "Bestaand systeem gevonden",
+            "ERROR_TITLE_CONNECTION": "Verbinding verbroken",
+            "ERROR_TITLE_INCOMPATIBLE_APP": "Incompatibele app geïnstalleerd",
+            "ERROR_TITLE_STALE_INSTANCE": "Rest van eerdere installatie gevonden",
+            "ERROR_TITLE_TIMEOUT": "Time-out",
+            "RESOLVE_CATEGORY_CONFLICT_BUTTON": "Bestaande systeem verwijderen en doorgaan",
+            "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Er kon geen conflicterend systeem worden gevonden om automatisch te verwijderen. Verwijder het handmatig via het App Center.",
+            "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Bestaande systeem wordt verwijderd…",
+            "STATUS_CONFIGURING": "Componenten worden geconfigureerd…",
+            "STATUS_FUNCTION_TEST": "Functietests worden uitgevoerd…"
+        },
+        "PROTOCOL_FEED_IN_MANAGEMENT": {
+            "FIXED_COS_PHI": "Vaste waarde: Cos Phi 1"
+        },
+        "PROTOCOL_SERIAL_NUMBER": {
+            "BATTERY_COMMUNICATION_BOX": "Batterij communicatiebox",
+            "BATTERY_INPUT_TOWER": "Batterijingang {{ batteryInput }} Toren {{ towerNumber }}"
+        }
+    }
+}

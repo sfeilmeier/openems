@@ -1009,11 +1009,6 @@
             "STS_BOX_AVAILABLE": "STS box installed",
             "STS_BOX_FIELD_LABEL": "Is an STS box installed for emergency power capability:"
         },
-        "CONFIGURATION_SUB_SYSTEM": {
-            "NOTE": {
-                "COMMERCIAL_92": "Before you continue, make sure that you use the following device(s) to ensure that the next steps - especially for configuring the KACO inverter - run smoothly:\n\na laptop with “LAN-WLAN parallel” function\nor\ntwo mobile devices, each with a WLAN and a LAN function"
-            }
-        },
         "CONFIGURATION_SYSTEM_VARIANT": "Select installed component",
         "CONFIGURATION_SUMMARY": {
             "ACCEPT": "accepted",

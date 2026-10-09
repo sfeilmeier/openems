@@ -19,8 +19,8 @@ export class PreInstallationUpdateComponent {
     @Input() public edge: Edge;
     public readonly spinnerId: string = PreInstallationUpdateComponent.SELECTOR;
 
-    protected isWaiting: boolean;
-    protected isUpdated: boolean;
+    protected isWaiting: boolean = false;
+    protected isUpdated: boolean = false;
 
     constructor(
         private service: Service,

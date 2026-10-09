@@ -19,6 +19,7 @@ import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject
 import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
+import { SerialNumberModel } from "../../abstract-ibn";
 import { AbstractCommercialIbn } from "../abstract-commercial";
 
 export type Commercial92App = {
@@ -415,17 +416,13 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         this.requiredControllerIds = [];
     }
 
-    public override getSystemVariantFields(): FormlyFieldConfig[] {
-        return [];
-    }
-
     public override getSerialNumbersFromEdge(
         towerNr: number,
         edge: Edge,
         websocket: Websocket,
         numberOfModulesPerTower: number,
         slaveNr?: number,
-    ) {
+    ): Promise<SerialNumberModel> {
         return new Promise((resolve) => {
             const subscriptionId = `Commercial-tower${towerNr}`;
             const serialNumbers: { [key: string]: string } = {};

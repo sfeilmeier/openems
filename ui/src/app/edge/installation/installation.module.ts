@@ -10,8 +10,13 @@ import { Language } from "src/app/shared/type/language";
 import { AlertingComponent } from "../settings/alerting/component/alerting.component";
 import { SettingsModule } from "../settings/settings.module";
 import { OeSystemUpdateComponent } from "../settings/system/oe-system-update.component";
+import cz from "./i18n/cz.json";
 import de from "./i18n/de.json";
 import en from "./i18n/en.json";
+import es from "./i18n/es.json";
+import fr from "./i18n/fr.json";
+import ja from "./i18n/ja.json";
+import nl from "./i18n/nl.json";
 import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { InstallationViewComponent } from "./installation-view/installation-view.component";
 import { InstallationComponent } from "./installation.component";
@@ -29,7 +34,6 @@ import { ConfigurationGridSettingComponent } from "./views/configuration-grid-se
 import { ConfigurationLineSideMeterFuseComponent } from "./views/configuration-line-side-meter-fuse/configuration-line-side-meter-fuse.component";
 import { ConfigurationMpptSelectionComponent } from "./views/configuration-mppt-selection/configuration-mppt-selection.component";
 import { ConfigurationStsBoxComponent } from "./views/configuration-sts-box/configuration-sts-box.component";
-import { ConfigurationSubSystemComponent } from "./views/configuration-sub-system/configuration-sub-system";
 import { ConfigurationSummaryComponent } from "./views/configuration-summary/configuration-summary.component";
 import { ConfigurationSystemComponent } from "./views/configuration-system/configuration-system.component";
 
@@ -287,7 +291,6 @@ export function SplitRangeValidator(control: FormControl, field: FormlyFieldConf
         ConfigurationCommercialModbuBridgeComponent,
         ConfigurationMpptSelectionComponent,
         ConfigurationSystemVariantComponent,
-        ConfigurationSubSystemComponent,
         ConfigurationEnergyFlowMeterComponent,
         ConfigurationEssLimiter14aComponent,
         ProtocolChecklistComponent,
@@ -304,7 +307,15 @@ export function SplitRangeValidator(control: FormControl, field: FormlyFieldConf
 })
 export class InstallationModule {
     constructor(translate: TranslateService) {
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+        Language.normalizeAdditionalTranslationFiles({
+            cz: cz,
+            de: de,
+            en: en,
+            es: es,
+            fr: fr,
+            ja: ja,
+            nl: nl,
+        }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {
                 translate.setTranslation(lang, translation, shouldMerge);
             }

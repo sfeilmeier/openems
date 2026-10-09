@@ -14,6 +14,7 @@ import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject
 import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
+import { SerialNumberModel } from "../../abstract-ibn";
 import { AbstractCommercial92Ibn } from "./abstract-commercial92";
 
 export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
@@ -33,7 +34,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                 View.PreInstallation,
                 View.PreInstallationUpdate,
                 View.ConfigurationSystem,
-                View.ConfigurationSubSystem,
+                View.ConfigurationSystemVariant,
                 View.ProtocolInstaller,
                 View.ProtocolCustomer,
                 View.ProtocolSystem,
@@ -171,9 +172,9 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         numberOfTowers: number,
         numberOfModulesPerTower: number,
         index: number,
-    ): Promise<{}>[] {
+    ): Promise<SerialNumberModel>[] {
         const slaveNr = index + 1; // Convert 0-based index to 1-based slave number
-        const result: Promise<{}>[] = [];
+        const result: Promise<SerialNumberModel>[] = [];
         // Only process towers for the given slaveNr
         for (let tower = 0; tower < numberOfTowers; tower++) {
             result.push(this.getSerialNumbersFromEdge(tower, edge, websocket, numberOfModulesPerTower, slaveNr));
@@ -187,7 +188,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         websocket: Websocket,
         numberOfModulesPerTower: number,
         slaveNr: number,
-    ) {
+    ): Promise<SerialNumberModel> {
         return new Promise((resolve) => {
             const subscriptionId = `Commercial-battery${slaveNr}-tower${towerNr}`;
             const serialNumbers: { [key: string]: string } = {};
@@ -280,7 +281,10 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                 )
                 .subscribe((currentData) => {
                     // Initialize result as empty array
-                    const result: Array<{ numberOfTowers: number; numberOfModulesPerTower: number }> = [];
+                    const result: Array<{
+                        numberOfTowers: number;
+                        numberOfModulesPerTower: number;
+                    }> = [];
 
                     for (let i = 1; i <= this.numberOfSlaves; i++) {
                         const numberOfTowers = currentData.channel[`battery${i}/NumberOfTowers`];
@@ -306,7 +310,10 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                 // promise gets resolved with default values
                 if (!isResolved) {
                     // Initialize result as empty array
-                    const result: Array<{ numberOfTowers: number; numberOfModulesPerTower: number }> = [];
+                    const result: Array<{
+                        numberOfTowers: number;
+                        numberOfModulesPerTower: number;
+                    }> = [];
                     for (let i = 1; i <= this.numberOfSlaves; i++) {
                         result.push({
                             numberOfTowers: this.minNumberOfTowers,

@@ -1,25 +1,24 @@
 // @ts-strict-ignore
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-import { StrictFormlyFieldConfig, TypedFormlyFieldConfig, } from "src/app/shared/components/formly/formly-utils";
+import { StrictFormlyFieldConfig, TypedFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
 import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
-import { SetupProtocol, SubmitSetupProtocolRequest, } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
+import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
 import { Category } from "../../../shared/category";
 import { Coupler } from "../../../shared/coupler";
-import { GridFeedInLimitationType, ModbusBridgeType, View, } from "../../../shared/enums";
+import { GridFeedInLimitationType, ModbusBridgeType, View } from "../../../shared/enums";
 import { IbnUtils } from "../../../shared/ibn.utils";
 import { SystemId } from "../../../shared/system";
-import { ComponentConfigurator, ConfigurationMode, } from "../../../views/configuration-execute/component-configurator";
+import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
 import { EmergencyReserve, SchedulerIdBehaviour } from "../../abstract-ibn";
 import { AbstractCommercial30Ibn } from "./abstract-commercial-30";
 
 type EmergencyReserveCouplerModel = EmergencyReserve & { coupler: Coupler };
 
 export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
-    public override readonly systemId: SystemId =
-        SystemId.COMMERCIAL_30_NETZTRENNSTELLE;
+    public override readonly systemId: SystemId = SystemId.COMMERCIAL_30_NETZTRENNSTELLE;
     public override readonly emergencyPower = "ENABLE";
 
     // configuration-emergency-reserve
@@ -37,7 +36,6 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
                 View.PreInstallation,
                 View.PreInstallationUpdate,
                 View.ConfigurationSystem,
-                View.ConfigurationSubSystem,
                 View.ConfigurationSystemVariant,
                 View.ProtocolInstaller,
                 View.ProtocolCustomer,
@@ -45,7 +43,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
                 View.ProtocolSystemLocation,
                 View.ConfigurationEmergencyReserve,
                 View.ConfigurationLineSideMeterFuse,
-                View.ConfigurationCommercialModbuBridge,
+                View.ConfigurationCommercialModbusBridge,
                 View.ProtocolFeedInLimitation,
                 View.ConfigurationSummary,
                 View.ConfigurationExecute,
@@ -65,10 +63,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
                 behaviour: SchedulerIdBehaviour.ALWAYS_INCLUDE,
             });
         }
-        if (
-            this.feedInLimitation.dynamicLimitationType ===
-            GridFeedInLimitationType.DYNAMIC_LIMITATION
-        ) {
+        if (this.feedInLimitation.dynamicLimitationType === GridFeedInLimitationType.DYNAMIC_LIMITATION) {
             this.requiredControllerIds.push({
                 componentId: "ctrlGridOptimizedCharge0",
                 behaviour: SchedulerIdBehaviour.ALWAYS_INCLUDE,
@@ -87,30 +82,23 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         service: Service,
     ): Promise<ComponentConfigurator> {
         const invalidateElementsAfterReadErrors: number = 3;
-        const componentConfigurator: ComponentConfigurator =
-            super.getCommercial30ComponentConfigurator(
-                edge,
-                config,
-                websocket,
-                invalidateElementsAfterReadErrors,
-                service,
-            );
+        const componentConfigurator: ComponentConfigurator = super.getCommercial30ComponentConfigurator(
+            edge,
+            config,
+            websocket,
+            invalidateElementsAfterReadErrors,
+            service,
+        );
 
         // Modbus bridge type will already have modbus3 reserved for io0.
-        const couplerComponentId: string =
-            this.modbusBridgeType === ModbusBridgeType.TCP_IP
-                ? "modbus4"
-                : "modbus3";
+        const couplerComponentId: string = this.modbusBridgeType === ModbusBridgeType.TCP_IP ? "modbus4" : "modbus3";
 
         // modbus3/modbus4
         componentConfigurator.add(
             {
                 factoryId: "Bridge.Modbus.Tcp",
                 componentId: couplerComponentId,
-                alias: Coupler.toAliasString(
-                    this.emergencyReserve.coupler,
-                    this.translate,
-                ),
+                alias: Coupler.toAliasString(this.emergencyReserve.coupler, this.translate),
                 properties: [
                     { name: "enabled", value: true },
                     { name: "ip", value: "192.168.1.50" },
@@ -124,15 +112,8 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         );
 
         // Add ip address to network configuration to communicate with the Coupler.
-        if (
-            !IbnUtils.addIpAddress("eth1", "192.168.1.49/30", edge, websocket)
-        ) {
-            service.toast(
-                this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_EXECUTE.IP_ADDRESS_WARNING",
-                ),
-                "danger",
-            );
+        if (!IbnUtils.addIpAddress("eth1", "192.168.1.49/30", edge, websocket)) {
+            service.toast(this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.IP_ADDRESS_WARNING"), "danger");
         }
 
         // io1
@@ -140,13 +121,9 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
             case Coupler.WEIDMUELLER:
                 componentConfigurator.add(
                     {
-                        factoryId: Coupler.toFactoryId(
-                            this.emergencyReserve.coupler,
-                        ),
+                        factoryId: Coupler.toFactoryId(this.emergencyReserve.coupler),
                         componentId: "io1",
-                        alias: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EXECUTE.FIELD_BUS_COUPLER",
-                        ),
+                        alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.FIELD_BUS_COUPLER"),
                         properties: [
                             { name: "enabled", value: true },
                             { name: "modbus.id", value: couplerComponentId },
@@ -162,9 +139,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
                     {
                         factoryId: "Io.Off.Grid.Switch",
                         componentId: "offGridSwitch0",
-                        alias: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EXECUTE.CONTROL_GRID_POINT",
-                        ),
+                        alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.CONTROL_GRID_POINT"),
                         properties: [
                             { name: "enabled", value: true },
                             {
@@ -196,13 +171,9 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
             case Coupler.WAGO:
                 componentConfigurator.add(
                     {
-                        factoryId: Coupler.toFactoryId(
-                            this.emergencyReserve.coupler,
-                        ),
+                        factoryId: Coupler.toFactoryId(this.emergencyReserve.coupler),
                         componentId: "io1",
-                        alias: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EXECUTE.FIELD_BUS_COUPLER",
-                        ),
+                        alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.FIELD_BUS_COUPLER"),
                         properties: [
                             { name: "enabled", value: true },
                             { name: "modbus.id", value: couplerComponentId },
@@ -219,9 +190,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
                     {
                         factoryId: "Io.Off.Grid.Switch",
                         componentId: "offGridSwitch0",
-                        alias: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EXECUTE.CONTROL_GRID_POINT",
-                        ),
+                        alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.CONTROL_GRID_POINT"),
                         properties: [
                             {
                                 name: "inputGridStatus",
@@ -256,9 +225,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
             {
                 factoryId: "Ess.Generic.OffGrid",
                 componentId: "ess0",
-                alias: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_EXECUTE.STORAGE_SYSTEM",
-                ),
+                alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.STORAGE_SYSTEM"),
                 properties: [
                     { name: "enabled", value: true },
                     { name: "startStop", value: "START" },
@@ -276,9 +243,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
             {
                 factoryId: "Controller.Ess.EmergencyCapacityReserve",
                 componentId: "ctrlEmergencyCapacityReserve0",
-                alias: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_EXECUTE.EMERGENCY_CAPACITY_RESERVE",
-                ),
+                alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.EMERGENCY_CAPACITY_RESERVE"),
                 properties: [
                     { name: "enabled", value: true },
                     { name: "ess.id", value: "ess0" },
@@ -288,9 +253,7 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
                     },
                     {
                         name: "reserveSoc",
-                        value:
-                            this.emergencyReserve.value ??
-                            5 /* minimum allowed value */,
+                        value: this.emergencyReserve.value ?? 5 /* minimum allowed value */,
                     },
                 ],
                 mode: this.emergencyReserve.isEnabled
@@ -303,19 +266,15 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         return Promise.resolve(componentConfigurator);
     }
 
-    public override getProtocol(
-        edge: Edge,
-        websocket: Websocket,
-    ): Promise<string> {
+    public override getProtocol(edge: Edge, websocket: Websocket): Promise<string> {
         const protocol: SetupProtocol = super.getCommonProtocolItems(edge);
 
         const emergencyReserve = this.emergencyReserve;
         protocol.items.push({
             category: Category.EMERGENCY_RESERVE,
-            name: this.translate.instant(
-                "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE",
-                { symbol: "?" },
-            ),
+            name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE", {
+                symbol: "?",
+            }),
             value: emergencyReserve.isEnabled
                 ? this.translate.instant("GENERAL.YES")
                 : this.translate.instant("GENERAL.NO"),
@@ -324,24 +283,16 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         if (emergencyReserve.isEnabled) {
             protocol.items.push({
                 category: Category.EMERGENCY_RESERVE,
-                name: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE",
-                    { symbol: "[%]" },
-                ),
-                value: emergencyReserve.value
-                    ? emergencyReserve.value.toString()
-                    : "",
+                name: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.EMERGENCY_RESERVE", {
+                    symbol: "[%]",
+                }),
+                value: emergencyReserve.value ? emergencyReserve.value.toString() : "",
             });
         }
 
         return new Promise((resolve, reject) => {
             websocket
-                .sendStateFullRequest(
-                    SubmitSetupProtocolRequest.translateFrom(
-                        protocol,
-                        this.translate,
-                    ),
-                )
+                .sendStateFullRequest(SubmitSetupProtocolRequest.translateFrom(protocol, this.translate))
                 .then((response: JsonrpcResponseSuccess) => {
                     resolve(response.result["setupProtocolId"]);
                 })
@@ -351,15 +302,8 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
         });
     }
 
-    public override getSerialNumberFields(
-        stringNr: number,
-        numberOfModulesPerString: number,
-    ) {
-        const fields: FormlyFieldConfig[] =
-            this.getCommercial30SerialNumbersFields(
-                stringNr,
-                numberOfModulesPerString,
-            );
+    public override getSerialNumberFields(stringNr: number, numberOfModulesPerString: number) {
+        const fields: FormlyFieldConfig[] = this.getCommercial30SerialNumbersFields(stringNr, numberOfModulesPerString);
 
         if (stringNr === 0) {
             // Adds the ems box field only for Initial String.
@@ -387,41 +331,31 @@ export class Commercial30NetztrennIbn extends AbstractCommercial30Ibn {
     }
 
     public override getEmergencyReserveFields(): TypedFormlyFieldConfig<EmergencyReserveCouplerModel>[] {
-        const fields =
-            super.getEmergencyReserveFields() as TypedFormlyFieldConfig<EmergencyReserveCouplerModel>[];
-        const netztrennFields: StrictFormlyFieldConfig<EmergencyReserveCouplerModel>[] =
-            [
-                {
-                    key: "coupler",
-                    type: "radio",
-                    props: {
-                        label: this.translate.instant(
-                            "INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.COUPLER_TITLE",
-                        ),
-                        required: true,
-                        radioSlot: "start",
-                        options: [
-                            {
-                                label: Coupler.toLabelString(
-                                    Coupler.WAGO,
-                                    this.translate,
-                                ),
-                                value: Coupler.WAGO,
-                                url: Coupler.toImageUrl(Coupler.WAGO),
-                            },
-                            {
-                                label: Coupler.toLabelString(
-                                    Coupler.WEIDMUELLER,
-                                    this.translate,
-                                ),
-                                value: Coupler.WEIDMUELLER,
-                                url: Coupler.toImageUrl(Coupler.WEIDMUELLER),
-                            },
-                        ],
-                    },
-                    defaultValue: this.emergencyReserve?.coupler,
+        const fields = super.getEmergencyReserveFields() as TypedFormlyFieldConfig<EmergencyReserveCouplerModel>[];
+        const netztrennFields: StrictFormlyFieldConfig<EmergencyReserveCouplerModel>[] = [
+            {
+                key: "coupler",
+                type: "radio",
+                props: {
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_EMERGENCY_RESERVE.COUPLER_TITLE"),
+                    required: true,
+                    radioSlot: "start",
+                    options: [
+                        {
+                            label: Coupler.toLabelString(Coupler.WAGO, this.translate),
+                            value: Coupler.WAGO,
+                            url: Coupler.toImageUrl(Coupler.WAGO),
+                        },
+                        {
+                            label: Coupler.toLabelString(Coupler.WEIDMUELLER, this.translate),
+                            value: Coupler.WEIDMUELLER,
+                            url: Coupler.toImageUrl(Coupler.WEIDMUELLER),
+                        },
+                    ],
                 },
-            ];
+                defaultValue: this.emergencyReserve?.coupler,
+            },
+        ];
 
         fields.push(...netztrennFields);
 

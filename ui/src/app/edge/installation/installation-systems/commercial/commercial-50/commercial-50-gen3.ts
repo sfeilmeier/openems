@@ -11,7 +11,7 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
         View.PreInstallation,
         View.PreInstallationUpdate,
         View.ConfigurationSystem,
-        View.ConfigurationSubSystem,
+        View.ConfigurationSystemVariant,
         View.ProtocolInstaller,
         View.ProtocolCustomer,
         View.ProtocolSystem,

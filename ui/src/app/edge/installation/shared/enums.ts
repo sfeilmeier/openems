@@ -84,10 +84,9 @@ export enum View {
     ProtocolPv,
     ProtocolSerialNumbers,
     ProtocolSystem,
-    ConfigurationCommercialModbuBridge,
+    ConfigurationCommercialModbusBridge,
     ConfigurationMpptSelection,
     ConfigurationSystemVariant,
-    ConfigurationSubSystem,
     ConfigurationEnergyFlowMeter,
     ConfigurationEssLimiter14aComponent,
     ProtocolChecklist,
@@ -117,9 +116,7 @@ export enum GridSetting {
     VDE_4110 = "VDE_4110",
 }
 
-/**
- * OpenEMS App categories corresponding to OpenemsAppCategory.java on Edge.
- */
+/** OpenEMS App categories corresponding to OpenemsAppCategory.java on Edge. */
 export enum OpenemsAppCategory {
     CORE = "CORE",
     INTEGRATED_SYSTEM = "INTEGRATED_SYSTEM",
@@ -144,4 +141,3 @@ export enum OpenemsAppCategory {
     TIMEDATA = "TIMEDATA",
     TEST = "TEST",
 }
-

@@ -1009,11 +1009,6 @@
             "STS_BOX_AVAILABLE": "STS-Box installiert",
             "STS_BOX_FIELD_LABEL": "Ist eine STS-Box für Notstromfähigkeit installiert:"
         },
-        "CONFIGURATION_SUB_SYSTEM": {
-            "NOTE": {
-                "COMMERCIAL_92": "Bevor du weiter fortfährst, stelle sicher, dass für die reibungslose Durchführung der kommenden Schritte - insbesondere zur Konfiguration des KACO-Wechselrichters - folgende/-s Endgerät verwendet werden:\n\neinen Laptop mit “LAN-WLAN-parallel” Funktion \noder\nzwei mobile Endgeräte, mit jeweils einer WLAN und einer LAN-Funktion"
-            }
-        },
         "CONFIGURATION_SYSTEM_VARIANT": "Auswahl der verbauten Komponente",
         "CONFIGURATION_SUMMARY": {
             "ACCEPT": "akzeptieren",

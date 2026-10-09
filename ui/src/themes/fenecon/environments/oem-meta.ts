@@ -204,51 +204,34 @@ export const OemMeta: BaseMeta = {
         MANUALS: {
             SYSTEM: {
                 HOME: {
-                    HOME_10:
-                        "https://docs.fenecon.de/_/de/home/home_10/montage_und_service_anleitung/Montage_und_Serviceanleitung_Home.html",
-                    HOME_20_30: {
-                        DE: "https://docs.fenecon.de/_/de/home/home_20-30/montage_und_service_anleitung/Montage_und_Serviceanleitung_Home_20-30.html",
-                        EN: "https://docs.fenecon.de/en/home/home_20-30_overview.html",
-                    },
-                    HOME_GEN_2: {
-                        DE: "https://docs.fenecon.de/de/home/home_6-10-15/betrieb_und_serviceanleitung/Betriebsanleitung_Home_6-10-15.html",
-                        EN: "https://docs.fenecon.de/en/home/home_6-10-15_overview.html",
-                    },
+                    HOME_10: "https://docs.fenecon.de/redirect/fenecon/{language}/home_10_manual",
+                    HOME_20_30: "https://docs.fenecon.de/redirect/fenecon/{language}/home_20_30_manual",
+                    HOME_GEN_2: "https://docs.fenecon.de/redirect/fenecon/{language}/home_6_10_15_manual",
                 },
                 COMMERCIAL: {
-                    COMMERCIAL_30:
-                        "https://docs.fenecon.de/_/de/commercial/commercial_30/montage_und_serviceanleitung/Montage_und_Serviceanleitung_Commercial_30.html",
+                    COMMERCIAL_30: "https://docs.fenecon.de/redirect/fenecon/{language}/commercial_30_manual",
                     COMMERCIAL_50_GEN_1:
-                        "https://docs.fenecon.de/_/de/commercial/commercial_50/montage_und_serviceanleitung/Montage_und_Serviceanleitung_Commercial_50.html",
+                        "https://docs.fenecon.de/redirect/fenecon/{language}/commercial_50_gen1_manual",
                     COMMERCIAL_50_GEN_3:
-                        "https://docs.fenecon.de/de/commercial/commercial_50-3/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Commercial_50-3.html",
-                    COMMERCIAL_92:
-                        "https://docs.fenecon.de/de/commercial/commercial_92/betrieb_und_serviceanleitung/Betriebsanleitung_Commercial_92.html",
+                        "https://docs.fenecon.de/redirect/fenecon/{language}/commercial_50_gen3_manual",
+                    COMMERCIAL_92: "https://docs.fenecon.de/redirect/fenecon/{language}/commercial_92_manual",
                     COMMERCIAL_92_CLUSTER:
-                        "https://docs.fenecon.de/de/commercial/commercial_92_cluster/betrieb_und_serviceanleitung/Betriebsanleitung_Commercial_92_Cluster.html",
-                    COMMERCIAL_92_OVERVIEW: "https://docs.fenecon.de/de/commercial/commercial_92_overview.html",
-                    COMMERCIAL_100:
-                        "https://docs.fenecon.de/de/commercial/commercial_100/betrieb_und_serviceanleitung/Commercial_100_instructions.html",
+                        "https://docs.fenecon.de/redirect/fenecon/{language}/commercial_92_cluster_manual",
+                    COMMERCIAL_100: "https://docs.fenecon.de/redirect/fenecon/{language}/commercial_100_manual",
                 },
             },
 
-            RUNDSTEUER: {
-                HOME: "https://fenecon.de/wp-content/uploads/2022/06/20220523_Anleitung-Rundsteuerempfaenger.pdf",
-                HOME_GEN_2:
-                    "https://docs.fenecon.de/de/home/home_6-10-15/betrieb_und_serviceanleitung/Betriebsanleitung_Home_6-10-15.html#_rundsteuerempf%C3%A4nger",
-                HOME_6_10_15:
-                    "https://docs.fenecon.de/de/home/home_6-10-15/betrieb_und_serviceanleitung/Betriebsanleitung_Home_6-10-15.html#_rundsteuerempf%C3%A4nger",
-                HOME_20_30:
-                    "https://docs.fenecon.de/de/home/home_20-30/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Home_20-30.html#_rundsteuerempf%C3%A4nger_auf_netzanschlusspunkt",
+            RIPPLE_CONTROL: {
+                HOME_10_GEN_1: "https://docs.fenecon.de/redirect/fenecon/{language}/home_10_gen1_ripple_control",
+                HOME_GEN_2: "https://docs.fenecon.de/redirect/fenecon/{language}/home_6_10_15_ripple_control",
+                HOME_20_30: "https://docs.fenecon.de/redirect/fenecon/{language}/home_20_30_ripple_control",
                 COMMERCIAL_50_GEN_3:
-                    "https://docs.fenecon.de/de/commercial/commercial_50-3/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_Commercial_50-3.html#_rundsteuerempf%C3%A4nger_auf_netzanschlusspunkt",
+                    "https://docs.fenecon.de/redirect/fenecon/{language}/commercial_50_gen3_ripple_control",
             },
 
             AVU: {
-                STANDARD:
-                    "https://docs.fenecon.de/de/home/avu/betrieb_und_serviceanleitung/Betrieb_und_Serviceanleitung_AVU.html",
-                EXTENDED:
-                    "https://docs.fenecon.de/de/home/avu/betrieb_und_serviceanleitung/extended-compatibility/Betrieb_und_Serviceanleitung_AVU-extended.html",
+                STANDARD: "https://docs.fenecon.de/redirect/fenecon/{language}/avu_manual",
+                EXTENDED: "https://docs.fenecon.de/redirect/fenecon/{language}/avu_extended_manual",
             },
         },
         APP_CENTER: {

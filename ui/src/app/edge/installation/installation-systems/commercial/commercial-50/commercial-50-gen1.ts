@@ -13,30 +13,32 @@ import { SchedulerIdBehaviour } from "../../abstract-ibn";
 import { AbstractCommercialIbn } from "../abstract-commercial";
 
 export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
-
     public override warrantyLink = WebLinks.WARRANTY_LINK_COMMERCIAL_50_GEN3;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_50_GEN_1;
     public override readonly defaultNumberOfModules: number = 20;
 
     constructor(translate: TranslateService) {
-        super([
-            View.PreInstallation,
-            View.PreInstallationUpdate,
-            View.ConfigurationSystem,
-            View.ConfigurationSubSystem,
-            View.ProtocolInstaller,
-            View.ProtocolCustomer,
-            View.ProtocolSystem,
-            View.ProtocolSystemLocation,
-            View.ConfigurationLineSideMeterFuse,
-            View.ConfigurationCommercialModbuBridge,
-            View.ProtocolFeedInLimitation,
-            View.ConfigurationSummary,
-            View.ConfigurationExecute,
-            View.ProtocolSerialNumbers,
-            View.Alerting,
-            View.Completion,
-        ], translate);
+        super(
+            [
+                View.PreInstallation,
+                View.PreInstallationUpdate,
+                View.ConfigurationSystem,
+                View.ConfigurationSystemVariant,
+                View.ProtocolInstaller,
+                View.ProtocolCustomer,
+                View.ProtocolSystem,
+                View.ProtocolSystemLocation,
+                View.ConfigurationLineSideMeterFuse,
+                View.ConfigurationCommercialModbusBridge,
+                View.ProtocolFeedInLimitation,
+                View.ConfigurationSummary,
+                View.ConfigurationExecute,
+                View.ProtocolSerialNumbers,
+                View.Alerting,
+                View.Completion,
+            ],
+            translate,
+        );
     }
 
     public override getPreSettingsFields(numberOfModulesPerTower: number, numberOfTowers: number) {
@@ -50,7 +52,10 @@ export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NUMBER_OF_STRINGS"),
                 min: 1,
                 max: 4,
-                description: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MINIMUM_AND_MAXIMUM_STRINGS", { min: 1, max: 4 }),
+                description: this.translate.instant(
+                    "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MINIMUM_AND_MAXIMUM_STRINGS",
+                    { min: 1, max: 4 },
+                ),
                 required: true,
             },
             parsers: [Number],
@@ -64,7 +69,10 @@ export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
                 type: "number",
                 label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NUMBER_OF_MODULES_PER_STRINGS"),
                 max: 20,
-                description: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MODULES_PER_STRINGS_DESCRIPTION", { number: 20 }),
+                description: this.translate.instant(
+                    "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MODULES_PER_STRINGS_DESCRIPTION",
+                    { number: 20 },
+                ),
                 required: true,
             },
             parsers: [Number],
@@ -80,7 +88,6 @@ export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
         const fields: FormlyFieldConfig[] = [];
 
         if (towerNr === 0) {
-
             fields.push({
                 key: "batteryInverter",
                 type: "input",
@@ -100,7 +107,9 @@ export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
                 key: "emsBox",
                 type: "input",
                 templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EMS_BOX_COMMERCIAL", { edgeShortname: environment.edgeShortName }),
+                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EMS_BOX_COMMERCIAL", {
+                        edgeShortname: environment.edgeShortName,
+                    }),
                     required: true,
                     placeholder: "xxxxxxxxxxxx",
                 },
@@ -148,12 +157,15 @@ export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
                 key: "module" + moduleNr,
                 type: "input",
                 templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") + (moduleNr + 1),
+                    label:
+                        this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") + (moduleNr + 1),
                     required: true,
                     // Note: Edit also validator (substring 12) if removing prefix
                     prefix: "WSDE...",
                     placeholder: "xxxxxxxx",
-                    description: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE_DESCRIPTION"),
+                    description: this.translate.instant(
+                        "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE_DESCRIPTION",
+                    ),
                 },
                 validators: {
                     validation: ["commercialBatteryModuleSerialNumber"],
@@ -164,14 +176,25 @@ export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
         return fields;
     }
 
-    public override getComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, service?: Service): Promise<ComponentConfigurator> {
-
+    public override getComponentConfigurator(
+        edge: Edge,
+        config: EdgeConfig,
+        websocket: Websocket,
+        service?: Service,
+    ): Promise<ComponentConfigurator> {
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
         const invalidateElementsAfterReadErrors: number = 3; // static value for commercial-50 systems.
 
         // adds Modbus 0, io0 (also modbus3 for Modbusbridge type TCP )
-        super.addModbusBridgeAndIoComponents(this.modbusBridgeType, invalidateElementsAfterReadErrors, this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.BATTERY_INTERFACE"), componentConfigurator,
-            edge, websocket, service);
+        super.addModbusBridgeAndIoComponents(
+            this.modbusBridgeType,
+            invalidateElementsAfterReadErrors,
+            this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.BATTERY_INTERFACE"),
+            componentConfigurator,
+            edge,
+            websocket,
+            service,
+        );
 
         // modbus1
         componentConfigurator.add({
@@ -183,7 +206,10 @@ export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
                 { name: "ip", value: "10.4.0.10" },
                 { name: "port", value: "502" },
                 { name: "logVerbosity", value: "NONE" },
-                { name: "invalidateElementsAfterReadErrors", value: invalidateElementsAfterReadErrors },
+                {
+                    name: "invalidateElementsAfterReadErrors",
+                    value: invalidateElementsAfterReadErrors,
+                },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         });
@@ -201,7 +227,10 @@ export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
                 { name: "stopbits", value: "ONE" },
                 { name: "parity", value: "NONE" },
                 { name: "logVerbosity", value: "NONE" },
-                { name: "invalidateElementsAfterReadErrors", value: invalidateElementsAfterReadErrors },
+                {
+                    name: "invalidateElementsAfterReadErrors",
+                    value: invalidateElementsAfterReadErrors,
+                },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         });
@@ -318,9 +347,5 @@ export class Commercial50Gen1Ibn extends AbstractCommercialIbn {
             componentId: "ctrlBalancing0",
             behaviour: SchedulerIdBehaviour.ALWAYS_INCLUDE,
         });
-    }
-
-    public override getSystemVariantFields(): FormlyFieldConfig[] {
-        return [];
     }
 }

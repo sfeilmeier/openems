@@ -1,26 +1,23 @@
-<installation-view iconName="checkmark-done-outline"
-  header="{{ 'INSTALLATION.CONFIGURATION_SUMMARY.SUMMARY' | translate }}" (previousClicked)="onPreviousClicked()"
-  (nextClicked)="onNextClicked()">
-
+<installation-view iconName="checkmark-done-outline" header="{{ 'INSTALLATION.CONFIGURATION_SUMMARY.SUMMARY' | translate }}" (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()">
   <ion-list>
-    @for (block of tableData; track block) {
+    @for (block of tableData; track $index) {
       <ion-item lines="none">
         <ion-grid>
           <ion-row>
             <ion-col>
               <div>
-                <b>{{block.header}}</b>
+                <b>{{ block.header }}</b>
               </div>
             </ion-col>
           </ion-row>
-          @for (row of block.rows; track row) {
+          @for (row of block.rows; track $index) {
             <ion-row>
-              <ion-col style="border: 1px solid black; border-right: none;">
+              <ion-col style="border: 1px solid black; border-right: none">
                 <div>
-                  <b>{{row.label}}</b>
+                  <b>{{ row.label }}</b>
                 </div>
               </ion-col>
-              <ion-col style="border: 1px solid black">{{row.value}}</ion-col>
+              <ion-col style="border: 1px solid black">{{ row.value }}</ion-col>
             </ion-row>
           }
         </ion-grid>
@@ -30,8 +27,5 @@
 
   <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
 
-  <ion-textarea readonly auto-grow
-    value="{{ 'INSTALLATION.CONFIGURATION_SUMMARY.NEXT_CLICKED_DESCRIPTION' | translate }}">
-  </ion-textarea>
-
+  <ion-textarea readonly auto-grow value="{{ 'INSTALLATION.CONFIGURATION_SUMMARY.NEXT_CLICKED_DESCRIPTION' | translate }}"> </ion-textarea>
 </installation-view>

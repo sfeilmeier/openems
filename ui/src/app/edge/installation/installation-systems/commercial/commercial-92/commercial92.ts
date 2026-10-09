@@ -20,7 +20,7 @@ export class Commercial92Ibn extends AbstractCommercial92Ibn {
                 View.PreInstallation,
                 View.PreInstallationUpdate,
                 View.ConfigurationSystem,
-                View.ConfigurationSubSystem,
+                View.ConfigurationSystemVariant,
                 View.ProtocolInstaller,
                 View.ProtocolCustomer,
                 View.ProtocolSystem,

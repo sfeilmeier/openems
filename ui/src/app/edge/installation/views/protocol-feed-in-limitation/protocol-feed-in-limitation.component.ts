@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
+import { InstallationSystem } from "../../core/installation-system";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { ExternalLimitationType, GridFeedInLimitationType } from "../../shared/enums";
-import { System } from "../../shared/system";
 
 @Component({
     selector: ProtocolFeedInLimitationComponent.SELECTOR,
@@ -25,6 +25,7 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
     public showRundSteuerManual: boolean;
     public readonly FeedInType = ExternalLimitationType;
     public readonly DynamicLimitationType = GridFeedInLimitationType;
+
     private totalPvPower: number = 0;
 
     public get isDynamicLimitation(): boolean {
@@ -67,6 +68,6 @@ export class ProtocolFeedInLimitationComponent implements OnInit {
     }
 
     protected openManual() {
-        window.open(System.getRundsteuerManual(this.ibn.systemId));
+        window.open(InstallationSystem.getRippleControlManualLink(this.ibn.systemId));
     }
 }

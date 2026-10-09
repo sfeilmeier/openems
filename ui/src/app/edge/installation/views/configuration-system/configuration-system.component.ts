@@ -6,7 +6,9 @@ import { TranslateService } from "@ngx-translate/core";
 import { GetEmsTypeRequest } from "src/app/shared/jsonrpc/request/getEmsTypeRequest";
 import { GetEmsTypeResponse } from "src/app/shared/jsonrpc/response/getEmsTypeResponse";
 import { Edge, Websocket } from "src/app/shared/shared";
+import { DocsUtils } from "src/app/shared/utils/docs/docs.utils";
 import { environment } from "src/environments";
+import { InstallationSystem } from "../../core/installation-system";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
 import { ComponentData, EmsType } from "../../shared/ibndatatypes";
 import { System, SystemType } from "../../shared/system";
@@ -68,33 +70,7 @@ export class ConfigurationSystemComponent implements OnInit {
 
     public getFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
-        const options: ComponentData[] = [];
-
-        switch (environment.theme) {
-            case "Heckert":
-                options.push({ value: SystemType.HECKERT_HOME, label: SystemType.HECKERT_HOME });
-                break;
-            case "FENECON":
-            default:
-                // Home stays valid for all systems, but variants will change (configuration system variant).
-                switch (this.emsType) {
-                    case "feh013": // New type
-                    case null: // No type is set in Odoo
-                        options.push(
-                            { value: SystemType.FENECON_HOME, label: SystemType.FENECON_HOME },
-                            { value: SystemType.COMMERCIAL, label: SystemType.COMMERCIAL },
-                        );
-                        break;
-                    case "fho011": // old type
-                        options.push({ value: SystemType.FENECON_HOME, label: SystemType.FENECON_HOME });
-                        break;
-                    case "fec011":
-                    case "fec013":
-                        options.push({ value: SystemType.COMMERCIAL, label: SystemType.COMMERCIAL });
-                        break;
-                }
-                break;
-        }
+        const options: ComponentData[] = InstallationSystem.getSupportedSystemTypes(this.emsType);
 
         fields.push({
             key: "type",
@@ -115,7 +91,7 @@ export class ConfigurationSystemComponent implements OnInit {
 
     /** Redirects to the url for Heckert system manual. */
     protected openManual(): void {
-        window.open(environment.links.MANUALS.SYSTEM.HOME.HOME_10);
+        window.open(DocsUtils.replaceWithCurrentDocsLanguage(environment.links.MANUALS.SYSTEM.HOME.HOME_10));
     }
 
     /** Loads the appropriate Ibn object. */

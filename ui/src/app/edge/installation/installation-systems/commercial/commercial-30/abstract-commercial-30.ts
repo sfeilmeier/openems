@@ -4,12 +4,10 @@ import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/sh
 
 import { GridFeedInLimitationType } from "../../../shared/enums";
 import { Meter } from "../../../shared/meter";
-import { SystemId } from "../../../shared/system";
 import { ComponentConfigurator, ConfigurationMode } from "../../../views/configuration-execute/component-configurator";
 import { AbstractCommercialIbn } from "../abstract-commercial";
 
 export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
-
     public override readonly defaultNumberOfModules = 9;
     public abstract readonly emergencyPower: "ENABLE" | "DISABLE";
 
@@ -24,7 +22,10 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NUMBER_OF_STRINGS"),
                 min: 1,
                 max: 2,
-                description: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MINIMUM_AND_MAXIMUM_STRINGS", { min: 1, max: 2 }),
+                description: this.translate.instant(
+                    "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MINIMUM_AND_MAXIMUM_STRINGS",
+                    { min: 1, max: 2 },
+                ),
                 required: true,
             },
             parsers: [Number],
@@ -39,7 +40,10 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
                 label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.NUMBER_OF_MODULES_PER_STRINGS"),
                 min: 9,
                 max: 17,
-                description: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS", { min: 9, max: 17 }),
+                description: this.translate.instant(
+                    "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS",
+                    { min: 9, max: 17 },
+                ),
                 required: true,
             },
             parsers: [Number],
@@ -48,45 +52,36 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         return fields;
     }
 
-    public override getSystemVariantFields(): FormlyFieldConfig[] {
-        const fields: FormlyFieldConfig[] = [];
-        const componentLabel = ([
-            { value: SystemId.COMMERCIAL_30_ANSCHLUSS, label: SystemId.COMMERCIAL_30_ANSCHLUSS },
-            { value: SystemId.COMMERCIAL_30_NETZTRENNSTELLE, label: SystemId.COMMERCIAL_30_NETZTRENNSTELLE },
-        ]);
-
-        fields.push({
-            key: "system",
-            type: "radio",
-            className: "line-break",
-            templateOptions: {
-                options: componentLabel,
-                required: true,
-            },
-        });
-
-        return fields;
-    }
-
     /**
-     * View Configuration-execute.
-     * Returns the common required configuration object for commercial-30 systems with components specific to the system.
+     * View Configuration-execute. Returns the common required configuration object for commercial-30 systems with
+     * components specific to the system.
      *
-     * @param edge the current edge.
-     * @param config the EdgeConfig.
-     * @param websocket the Websocket connection.
-     * @param invalidateElementsAfterReadErrors specifies the number of times to check before invalidating.
-     * @param service the Service
-     *
+     * @param edge The current edge.
+     * @param config The EdgeConfig.
+     * @param websocket The Websocket connection.
+     * @param invalidateElementsAfterReadErrors Specifies the number of times to check before invalidating.
+     * @param service The Service
      * @returns ComponentConfigurator
      */
-    public getCommercial30ComponentConfigurator(edge: Edge, config: EdgeConfig, websocket: Websocket, invalidateElementsAfterReadErrors: number, service: Service) {
-
+    public getCommercial30ComponentConfigurator(
+        edge: Edge,
+        config: EdgeConfig,
+        websocket: Websocket,
+        invalidateElementsAfterReadErrors: number,
+        service: Service,
+    ) {
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
 
         // adds Modbus 0, io0 (also modbus3 for Modbusbridge type TCP )
-        super.addModbusBridgeAndIoComponents(this.modbusBridgeType, invalidateElementsAfterReadErrors, this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_BATTERY"), componentConfigurator,
-            edge, websocket, service);
+        super.addModbusBridgeAndIoComponents(
+            this.modbusBridgeType,
+            invalidateElementsAfterReadErrors,
+            this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.COMMUNICATION_WITH_BATTERY"),
+            componentConfigurator,
+            edge,
+            websocket,
+            service,
+        );
 
         // modbus1
         componentConfigurator.add({
@@ -98,7 +93,10 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
                 { name: "ip", value: "192.168.1.11" },
                 { name: "port", value: "502" },
                 { name: "logVerbosity", value: "NONE" },
-                { name: "invalidateElementsAfterReadErrors", value: invalidateElementsAfterReadErrors },
+                {
+                    name: "invalidateElementsAfterReadErrors",
+                    value: invalidateElementsAfterReadErrors,
+                },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         });
@@ -116,7 +114,10 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
                 { name: "stopbits", value: "ONE" },
                 { name: "parity", value: "NONE" },
                 { name: "logVerbosity", value: "NONE" },
-                { name: "invalidateElementsAfterReadErrors", value: invalidateElementsAfterReadErrors },
+                {
+                    name: "invalidateElementsAfterReadErrors",
+                    value: invalidateElementsAfterReadErrors,
+                },
             ],
             mode: ConfigurationMode.RemoveAndConfigure,
         });
@@ -191,7 +192,8 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
         }
 
         // ctrlBalancing0
-        componentConfigurator.add({ // Clearify with Productmanagement if a different App like peak shaving could be selected in IBN
+        componentConfigurator.add({
+            // Clearify with Productmanagement if a different App like peak shaving could be selected in IBN
             factoryId: "Controller.Symmetric.Balancing",
             componentId: "ctrlBalancing0",
             alias: this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.SELF_CONSUMPTION"),
@@ -231,13 +233,15 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
      *
      * @param stringNr Number of Strings configured.
      * @param numberOfModulesPerString Number of Modules per String.
-     * @returns the fields.
+     * @returns The fields.
      */
-    protected getCommercial30SerialNumbersFields(stringNr: number, numberOfModulesPerString: number): FormlyFieldConfig[] {
+    protected getCommercial30SerialNumbersFields(
+        stringNr: number,
+        numberOfModulesPerString: number,
+    ): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
 
         if (stringNr === 0) {
-
             fields.push({
                 key: "batteryInverter",
                 type: "input",
@@ -289,12 +293,15 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
                 key: "module" + moduleNr,
                 type: "input",
                 templateOptions: {
-                    label: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") + (moduleNr + 1),
+                    label:
+                        this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE") + (moduleNr + 1),
                     required: true,
                     // Note: Edit also validator (substring 12) if removing prefix
                     prefix: "WSDE...",
                     placeholder: "xxxxxxxx",
-                    description: this.translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE_DESCRIPTION"),
+                    description: this.translate.instant(
+                        "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.BATTERY_MODULE_DESCRIPTION",
+                    ),
                 },
                 validators: {
                     validation: ["commercialBatteryModuleSerialNumber"],
@@ -303,7 +310,5 @@ export abstract class AbstractCommercial30Ibn extends AbstractCommercialIbn {
             });
         }
         return fields;
-
     }
-
 }

@@ -1,9 +1,11 @@
 // @ts-strict-ignore
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
+import { TranslateService } from "@ngx-translate/core";
+import { InstallationSystem } from "../../core/installation-system";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
-import { HomeSystemId, System, SystemId } from "../../shared/system";
+import { SystemId } from "../../shared/system";
 
 @Component({
     selector: ConfigurationSystemVariantComponent.SELECTOR,
@@ -18,26 +20,22 @@ export class ConfigurationSystemVariantComponent implements OnInit {
     @Output() public nextViewEvent = new EventEmitter();
     @Output() public previousViewEvent: EventEmitter<any> = new EventEmitter();
 
-    public form: FormGroup;
+    public form: FormGroup = new FormGroup({});
     public fields: FormlyFieldConfig[];
     public model;
 
+    private translate: TranslateService = inject(TranslateService);
+
     /**
-     * Displays the button for home systems, otherwise false.
-     *
-     * @remarks
-     *   This getter is used to determine whether the system selected in the form is one of the predefined home systems.
-     *   It checks if the selected system value exists and is included in the `homeSystemIds` array.
-     * @returns {boolean} True if the selected system is a home system, false otherwise.
+     * Determines whether the button to open the system manual should be shown. It is shown when a system variant has
+     * been selected, as the manual links are specific to each system variant.
      */
     protected get showManualButton(): boolean {
-        const selectedSystem: SystemId = this.form.controls.system?.value;
-        return System.isHomeSystemSelected(selectedSystem);
+        return this.form.controls.system.value != null;
     }
 
     public ngOnInit() {
-        this.form = new FormGroup({});
-        this.fields = this.ibn.getSystemVariantFields();
+        this.fields = this.generateFields();
     }
 
     public onNextClicked() {
@@ -56,9 +54,32 @@ export class ConfigurationSystemVariantComponent implements OnInit {
         this.previousViewEvent.emit();
     }
 
-    /** Redirects to the appropriate url for system manual. Apples only to Home systems. */
+    /** Redirects to the appropriate url for system manual. Applies to all systems. */
     protected openManual(): void {
-        const homeSystemVariant = this.form.controls.system?.value as HomeSystemId;
-        window.open(System.getHomeSystemInstructionsLink(homeSystemVariant));
+        const systemVariant = this.form.controls.system?.value as SystemId;
+        window.open(InstallationSystem.getSystemManualLink(systemVariant));
+    }
+
+    private generateFields(): FormlyFieldConfig[] {
+        // A null emsType is a valid, supported state (e.g. type not yet set in Odoo) and is handled by
+        // EmsTypeConfig.from() via DefaultEmsConfig. Only a missing ibn or systemType is an actual error.
+        if (this.ibn?.systemType == null) {
+            console.error("System type is not defined. Cannot generate form fields.");
+            return [];
+        }
+
+        const emsType = this.ibn.getEmsType();
+
+        return [
+            {
+                key: "system",
+                type: "radio",
+                templateOptions: {
+                    label: this.translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME"),
+                    options: InstallationSystem.getSystemVariants(this.ibn.systemType, emsType),
+                    required: true,
+                },
+            },
+        ];
     }
 }

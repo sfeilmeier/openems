@@ -1,10 +1,9 @@
 // @ts-strict-ignore
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, OnInit, signal } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Edge, Logger, Service, Websocket } from "src/app/shared/shared";
 import { AbstractIbn } from "./installation-systems/abstract-ibn";
-import { GeneralIbn } from "./installation-systems/general-ibn";
 import { View } from "./shared/enums";
 import { IbnUtils } from "./shared/ibn.utils";
 import { System, SystemId } from "./shared/system";
@@ -18,13 +17,54 @@ import { System, SystemId } from "./shared/system";
 export class InstallationComponent implements OnInit {
     private static readonly SELECTOR = "installation";
 
-    public ibn: AbstractIbn | null = null;
-    public progressValue: number;
-    public progressText: string;
-    public edge: Edge = null;
-    public displayedView: View;
+    /**
+     * Fixed views shown before a product system has been selected. All specific IBN subclasses also begin their own
+     * views[] with these same entries, so the view index remains stable when the ibn is first set at
+     * ConfigurationSystem.
+     */
+    private static readonly STARTUP_VIEWS: View[] = [
+        View.PreInstallation,
+        View.PreInstallationUpdate,
+        View.ConfigurationSystem,
+    ];
+
     public readonly view = View;
-    public spinnerId: string;
+    public readonly spinnerId = "installation-websocket-spinner";
+
+    public readonly ibn = signal<AbstractIbn | null>(null);
+    public readonly edge = signal<Edge | null>(null);
+
+    public readonly currentView = computed(() => this.resolveView(this.viewIndex(), this.ibn()));
+
+    public readonly progressValue = computed(() => {
+        const { index, viewCount } = this.viewMeta();
+        return viewCount <= 1 ? 0 : index / (viewCount - 1);
+    });
+
+    public readonly progressText = computed(() => {
+        const { index, viewCount, showViewCount } = this.viewMeta();
+        return showViewCount
+            ? this.translate.instant("INSTALLATION.STEP_FROM_TO", {
+                  from: index + 1,
+                  to: viewCount,
+              })
+            : this.translate.instant("INSTALLATION.STEP_TO", {
+                  number: index + 1,
+              });
+    });
+
+    private readonly viewIndex = signal<number>(0);
+
+    private readonly viewMeta = computed(() => {
+        const index = this.viewIndex();
+        const ibn = this.ibn();
+        const views = ibn !== null ? ibn.views : InstallationComponent.STARTUP_VIEWS;
+        return {
+            index,
+            viewCount: views.length,
+            showViewCount: ibn !== null ? ibn.showViewCount : false,
+        };
+    });
 
     constructor(
         private service: Service,
@@ -34,159 +74,121 @@ export class InstallationComponent implements OnInit {
         private logger: Logger,
     ) {}
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.service.currentPageTitle = "Installation";
-        this.spinnerId = "installation-websocket-spinner";
         this.service.startSpinner(this.spinnerId);
-        let ibn: AbstractIbn = null;
-        let viewIndex: number;
+        this.restoreSession();
+    }
 
-        // Determine view index
-        if (sessionStorage?.viewIndex) {
-            // 10 is given as radix parameter.
-            // 2 = binary, 8 = octal, 10 = decimal, 16 = hexadecimal.
-            viewIndex = Number.parseInt(sessionStorage.viewIndex, 10);
-        } else {
-            viewIndex = 0;
+    /** Advances to the next view, optionally updating the active ibn. */
+    public nextView(updatedIbn?: AbstractIbn): void {
+        if (updatedIbn != null) {
+            this.ibn.set(updatedIbn);
+            IbnUtils.addIbnToSessionStorage(updatedIbn);
+        }
+        this.navigate(+1);
+    }
+
+    /** Returns to the previous view. */
+    public previousView(): void {
+        this.navigate(-1);
+    }
+
+    /** Stores the edge resolved by the pre-installation step. */
+    public updateEdge(edge: Edge): void {
+        this.edge.set(edge);
+    }
+
+    private restoreSession(): void {
+        const storedIndex = sessionStorage?.viewIndex ? Number.parseInt(sessionStorage.viewIndex, 10) : 0;
+
+        if (sessionStorage?.ibn) {
+            const ibnString = JSON.parse(sessionStorage.getItem("ibn"));
+            this.ibn.set(this.loadIbnFromSession(ibnString));
         }
 
-        // Load 'Ibn' and 'edge' If it is available from session storage.
         if (sessionStorage?.edge) {
-            // Ibn is added in second view.
-            if (sessionStorage.ibn) {
-                const ibnString = JSON.parse(sessionStorage.getItem("ibn"));
-                const systemId: SystemId = ibnString.systemId;
-
-                // Load the specific Ibn implementation. and copy to the indivual fileds.
-                // Copying the plain Json string does not recognize particular Ibn functions.
-                // So we have to mention what type of implementation it is.
-                // This is helpful particularly if installer does the refresh in between views.
-                ibn = this.getIbn(systemId);
-                ibn.showViewCount = ibnString.showViewCount ?? false;
-                ibn.views = ibnString.views ?? [];
-                ibn.customer = ibnString.customer ?? {};
-                ibn.installer = ibnString.installer ?? {};
-                ibn.location = ibnString.location ?? {};
-                ibn.requiredControllerIds = ibnString.requiredControllerIds ?? [];
-                ibn.lineSideMeterFuse = ibnString.lineSideMeterFuse ?? {};
-                ibn.feedInLimitation = ibnString.feedInLimitation ?? {};
-                ibn.serialNumbers = ibnString.serialNumbers ?? {};
-                ibn.currentUserAlertingSettings = ibnString.currentUserAlertingSettings ?? {};
-
-                ibn.populateFromData(ibnString);
-            }
-        }
-
-        // Load Ibn with 'General Ibn' data initially.
-        if (ibn === null) {
-            ibn = new GeneralIbn(this.translate);
-        }
-        // Load it in the global Ibn from local.
-        this.setIbn(ibn);
-
-        // display view after loading edge
-        // => update view needs to get removed if version is to low
-        if (sessionStorage?.edge) {
-            // The prototype can't be saved as JSON,
-            // so it has to get instantiated here again)
             const edgeId = JSON.parse(sessionStorage.getItem("edge")).id;
             this.service
                 .updateCurrentEdge(edgeId)
                 .then((edge) => {
-                    this.edge = edge;
-                    this.displayViewAtIndex(viewIndex);
+                    this.updateEdge(edge);
+                    this.navigateTo(storedIndex);
                 })
-                .catch(() => {
-                    // View with index 0 will always be the Pre-InstallationView,
-                    // so if there is non subscribable edge due to being offline or not reachable, the IBN will be directed back to its initial page.
-                    this.displayViewAtIndex(0);
-                });
+                .catch(() => this.navigateTo(0))
+                .finally(() => this.service.stopSpinner(this.spinnerId));
         } else {
-            this.displayViewAtIndex(0);
+            this.navigateTo(storedIndex);
+            this.service.stopSpinner(this.spinnerId);
         }
     }
 
-    /**
-     * Retrieves the Ibn implementation specific to the system.
-     *
-     * @returns Specific Ibn object
-     */
-    public getIbn(systemId: SystemId): AbstractIbn {
-        return System.getSystemObjectFromSystemId(systemId, this.translate);
+    private loadIbnFromSession(ibnString: any): AbstractIbn | null {
+        // The stored systemId comes from untrusted session storage; an unknown id (e.g. from an older UI version
+        // after a SystemId was removed) degrades to the startup views instead of crashing the wizard.
+        if (!System.isKnownSystemId(ibnString.systemId)) {
+            return null;
+        }
+        const ibn = System.getSystemObjectFromSystemId(ibnString.systemId as SystemId, this.translate);
+
+        ibn.showViewCount = ibnString.showViewCount ?? false;
+        ibn.views = ibnString.views ?? [];
+        ibn.customer = ibnString.customer ?? {};
+        ibn.installer = ibnString.installer ?? {};
+        ibn.location = ibnString.location ?? {};
+        ibn.requiredControllerIds = ibnString.requiredControllerIds ?? [];
+        ibn.lineSideMeterFuse = ibnString.lineSideMeterFuse ?? {};
+        ibn.feedInLimitation = ibnString.feedInLimitation ?? {};
+        ibn.serialNumbers = ibnString.serialNumbers ?? {};
+        ibn.currentUserAlertingSettings = ibnString.currentUserAlertingSettings ?? {};
+        ibn.populateFromData(ibnString);
+
+        return ibn;
     }
 
-    /**
-     * Determines the index of the current view in Ibn.
-     *
-     * @param view Current view.
-     * @returns The index of the current view.
-     */
-    public getViewIndex(view: View): number {
-        return this.ibn.views.indexOf(view);
+    private resolveView(index: number, ibn: AbstractIbn | null): View {
+        const views = ibn !== null ? ibn.views : InstallationComponent.STARTUP_VIEWS;
+        return views[index] ?? View.PreInstallation;
     }
 
-    /**
-     * Displays the view based on the index.
-     *
-     * @param index Index of the desired view.
-     */
-    public displayViewAtIndex(index: number) {
+    private navigate(delta: number): void {
+        const ibn = this.ibn();
+
+        if (ibn !== null) {
+            ibn.removeOrAddView(this.edge());
+        }
+
+        const views = ibn !== null ? ibn.views : InstallationComponent.STARTUP_VIEWS;
+        const next = Math.max(0, this.viewIndex() + delta);
+
+        if (next === views.length) {
+            const edgeId = this.edge()?.id;
+            if (edgeId != null) {
+                this.router.navigate(["device", edgeId]);
+            } else {
+                this.router.navigate(["/overview"]);
+            }
+            sessionStorage.clear();
+            return;
+        }
+
+        this.navigateTo(next);
+    }
+
+    private navigateTo(index: number): void {
+        const ibn = this.ibn();
+        const views = ibn !== null ? ibn.views : InstallationComponent.STARTUP_VIEWS;
+
         this.logger.debug(
             "View: " +
-                Object.keys(View)[Object.values(View).indexOf(this.ibn.views[index])] +
+                Object.keys(View)[Object.values(View).indexOf(views[index])] +
                 ", Edge: " +
-                (this.edge?.id ?? "") +
+                (this.edge()?.id ?? "") +
                 ", SystemId: " +
-                (this.ibn?.systemId ?? ""),
+                (ibn?.systemId ?? ""),
         );
 
-        this.ibn.removeOrAddView(this.edge);
-        const viewCount = this.ibn.views.length;
-        if (index >= 0 && index < viewCount) {
-            this.displayedView = this.ibn.views[index];
-            this.progressValue = viewCount === 0 ? 0 : index / (viewCount - 1);
-
-            // Till the initial system and components are selected show only current page number.
-            // The view count changes based on the components selected.
-            this.progressText = this.ibn.showViewCount
-                ? this.translate.instant("INSTALLATION.STEP_FROM_TO", { from: index + 1, to: viewCount })
-                : this.translate.instant("INSTALLATION.STEP_TO", { number: index + 1 });
-
-            if (sessionStorage) {
-                sessionStorage.setItem("viewIndex", index.toString());
-            }
-
-            // When clicking next on the last view
-        } else if (index === viewCount) {
-            // Navigate to online monitoring of the edge
-            this.router.navigate(["device", this.edge.id]);
-
-            // Clear session storage
-            sessionStorage.clear();
-        } else {
-            console.warn("The given view index is out of bounds.");
-        }
-    }
-
-    /** Displays the previous view. */
-    public displayPreviousView() {
-        this.displayViewAtIndex(this.getViewIndex(this.displayedView) - 1);
-    }
-
-    /** Displays the Next view. */
-    public displayNextView(ibn?: AbstractIbn) {
-        // Stores the Ibn locally
-        if (ibn) {
-            this.setIbn(ibn);
-            if (sessionStorage) {
-                IbnUtils.addIbnToSessionStorage(ibn);
-            }
-        }
-
-        this.displayViewAtIndex(this.getViewIndex(this.displayedView) + 1);
-    }
-
-    private setIbn(ibn: AbstractIbn | null) {
-        this.ibn = ibn;
+        sessionStorage.setItem("viewIndex", index.toString());
+        this.viewIndex.set(index);
     }
 }
