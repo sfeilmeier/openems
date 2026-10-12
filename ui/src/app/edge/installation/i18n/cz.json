@@ -227,7 +227,7 @@
             "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Nepodařilo se najít konfliktní systém k automatickému odstranění. Odstraňte jej prosím ručně přes App Center.",
             "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Odstraňování existujícího systému…",
             "STATUS_CONFIGURING": "Konfigurace komponent…",
-            "STATUS_FUNCTION_TEST": "Probíhají testy funkcí…"
+            "STATUS_FUNCTION_TEST": "Konfigurace dokončena. Probíhají testy funkcí…"
         },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
             "FIXED_COS_PHI": "Pevná hodnota: Cos Phi 1"

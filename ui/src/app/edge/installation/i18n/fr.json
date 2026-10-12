@@ -227,7 +227,7 @@
             "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Aucun système conflictuel n'a pu être trouvé pour une suppression automatique. Veuillez le supprimer manuellement via l'App Center.",
             "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Suppression du système existant…",
             "STATUS_CONFIGURING": "Configuration des composants en cours…",
-            "STATUS_FUNCTION_TEST": "Exécution des tests de fonction…"
+            "STATUS_FUNCTION_TEST": "Configuration terminée. Exécution des tests de fonction…"
         },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
             "FIXED_COS_PHI": "Valeur fixe : Cos Phi 1"

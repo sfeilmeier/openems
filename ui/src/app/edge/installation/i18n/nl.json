@@ -227,7 +227,7 @@
             "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Er kon geen conflicterend systeem worden gevonden om automatisch te verwijderen. Verwijder het handmatig via het App Center.",
             "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Bestaande systeem wordt verwijderd…",
             "STATUS_CONFIGURING": "Componenten worden geconfigureerd…",
-            "STATUS_FUNCTION_TEST": "Functietests worden uitgevoerd…"
+            "STATUS_FUNCTION_TEST": "Configuratie voltooid. Functietests worden uitgevoerd…"
         },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
             "FIXED_COS_PHI": "Vaste waarde: Cos Phi 1"

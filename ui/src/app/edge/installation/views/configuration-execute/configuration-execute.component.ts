@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal, WritableSignal } from "@angular/core";
+import { Component, computed, EventEmitter, Input, OnInit, Output, Signal, signal, WritableSignal, } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
@@ -47,9 +47,9 @@ interface KnownErrorSignature {
  * {@link KnownErrorSignature.pattern} instead.
  *
  * The category conflict entry additionally keeps a message-text {@link KnownErrorSignature.pattern} fallback: if the
- * request is relayed through a backend that does not yet know error code 2102, {@link JsonrpcResponseError#from} on
- * that older binary can't resolve the code and collapses the response to the generic code `1`. Remove this pattern
- * once every relevant backend is guaranteed to know code 2102.
+ * request is relayed through a backend that does not yet know error code 2102, {@link JsonrpcResponseError#from} on that
+ * older binary can't resolve the code and collapses the response to the generic code `1`. Remove this pattern once
+ * every relevant backend is guaranteed to know code 2102.
  */
 const KNOWN_ERROR_SIGNATURES: KnownErrorSignature[] = [
     {
@@ -84,7 +84,8 @@ const KNOWN_ERROR_SIGNATURES: KnownErrorSignature[] = [
     },
     {
         code: EdgeAppValidationCheckCardinalitySingleInCategoryError.id,
-        pattern: /bereits.*App.*derselben Kategorie.*Integrierte Systeme.*installiert|already.*app.*of the same category.*Integrated Systems.*installed/i,
+        pattern:
+            /bereits.*App.*derselben Kategorie.*Integrierte Systeme.*installiert|already.*app.*of the same category.*Integrated Systems.*installed/i,
         isSelfSolvableConflict: true,
         getTexts: (translate) => ({
             headline: translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.ERROR_HEADLINE_CATEGORY_CONFLICT"),
@@ -134,7 +135,9 @@ export class ConfigurationExecuteComponent implements OnInit {
     @Output() public nextViewEvent: EventEmitter<void> = new EventEmitter<void>();
 
     protected isWaiting: WritableSignal<boolean> = signal(false);
-    protected configurationObjectsToBeConfigured: WritableSignal<ConfigurationObject[]> = signal([]);
+    protected readonly configurationObjectsToBeConfigured: Signal<ConfigurationObject[]> = computed(
+        () => this.resolvedConfigurator()?.configurationObjectsToBeConfigured() ?? [],
+    );
     protected showConfigurationExecuteBatteryNote: boolean = false;
     protected goNextPage: boolean = true;
     protected isNextDisabled: WritableSignal<boolean> = signal(true);
@@ -156,6 +159,7 @@ export class ConfigurationExecuteComponent implements OnInit {
     protected currentStatusMessage: WritableSignal<string | null> = signal(null);
     private componentConfigurator: Promise<ComponentConfigurator> | null = null;
     private isAnyConfigurationObjectPreConfigured: boolean = false;
+    private readonly resolvedConfigurator: WritableSignal<ComponentConfigurator | null> = signal(null);
 
     constructor(
         private service: Service,
@@ -208,10 +212,7 @@ export class ConfigurationExecuteComponent implements OnInit {
                     return;
                 }
 
-                // Add objects to component configurator
-                this.configurationObjectsToBeConfigured.set(
-                    resolvedConfigurator.getConfigurationObjectsToBeConfigured(),
-                );
+                this.resolvedConfigurator.set(resolvedConfigurator);
                 this.isAnyConfigurationObjectPreConfigured = resolvedConfigurator.anyHasConfigurationState(
                     ConfigurationState.PreConfigured,
                 );
@@ -293,11 +294,8 @@ export class ConfigurationExecuteComponent implements OnInit {
             return;
         }
 
-        this.service.toast(
-            this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.SUCCESSFULLY_CONFIGURED"),
-            "success",
-        );
-
+        // No success toast here: installers read it as "everything done" while the function tests are still running.
+        // The status message states both phases instead.
         this.currentStatusMessage.set(
             this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.STATUS_FUNCTION_TEST"),
         );
@@ -349,8 +347,8 @@ export class ConfigurationExecuteComponent implements OnInit {
     }
 
     /**
-     * Effective function state for display, see {@link displayConfigState}. Null until the function test has started
-     * or while the component's State channel has no known value yet.
+     * Effective function state for display, see {@link displayConfigState}. Null until the function test has started or
+     * while the component's State channel has no known value yet.
      */
     protected displayFunctionState(configurationObject: ConfigurationObject): FunctionState | null {
         if (this.appInstallFailed() && configurationObject.functionState === FunctionState.Ok) {
