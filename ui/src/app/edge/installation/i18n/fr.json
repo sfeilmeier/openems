@@ -1,66 +1,104 @@
 {
     "INSTALLATION": {
         "ALERTING_INFO": "En tant qu'installateur, configure des notifications par e-mail lorsque le FEMS est hors ligne pendant une certaine durée ou signale une erreur. Le message est envoyé à l'adresse e-mail indiquée lors de la mise en service.",
-        "OFFLINE": "Hors ligne",
-        "ENABLE_MPPT": "MPPT {{ mpptNumber }} actif",
         "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
-            "MODE": "Mode",
-            "RANGE": "Plage [{{min}},{{max}}] {{unit}}",
-            "TITLE": "Paramètres VDE 4110",
-            "POWER": "{{value}} Puissance active",
-            "REACTIVE_POWER": "{{value}} Puissance réactive",
-            "GROUPS": {
-                "ACTIVE_POWER_MODE": "Paramètres du mode de puissance active",
-                "REACTIVE_POWER_MODE": "Paramètres du mode de puissance réactive",
-                "PROTECTION": "Paramètres de protection",
-                "CONNECTION": "Paramètres de connexion",
-                "VOLTAGE_RIDE_THROUGH": "Ride-Through de tension",
-                "FREQUENCY_RIDE_THROUGH": "Ride-Through de fréquence"
-            },
             "ACTIVE_POWER_MODE": {
                 "OUTPUT_ACTIVE_POWER": "Puissance active de sortie",
-                "POWER_GRADIENT": "Gradient de puissance",
                 "PF_OVER_FREQUENCY": {
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Seuil de désactivation Fstop",
+                    "DELAY_TIME": "Temps de retard de réponse",
+                    "DELAY_WAITING_TIME": "Temps d'attente du délai",
                     "ENABLE": "Courbe P(F) (courbe de fréquence) pour la décharge en surfréquence",
                     "ENABLE_DESC": "Active/Désactive la courbe P(F)",
-                    "START_POINT": "Point de départ de surfréquence",
-                    "SLOPE": "Pente de réduction de puissance en surfréquence",
-                    "DELAY_TIME": "Temps de retard de réponse",
-                    "DEACTIVATION_THRESHOLD_FSTOP": "Seuil de désactivation Fstop",
                     "HYSTERESIS_POINT": "Hystérésis de fréquence",
-                    "DELAY_WAITING_TIME": "Temps d'attente du délai",
-                    "HYSTERESIS_SLOPE": "Pente de récupération de puissance de l'hystérésis"
+                    "HYSTERESIS_SLOPE": "Pente de récupération de puissance de l'hystérésis",
+                    "SLOPE": "Pente de réduction de puissance en surfréquence",
+                    "START_POINT": "Point de départ de surfréquence"
                 },
                 "PF_UNDER_FREQUENCY": {
-                    "ENABLE": "Courbe P(F) (courbe puissance-fréquence) pour la charge en sous-fréquence",
-                    "ENABLE_DESC": "Active/Désactive la courbe P(F)",
-                    "THRESHOLD": "Seuil de sous-fréquence",
-                    "SLOPE": "Réponse de puissance au gradient de sous-fréquence",
-                    "DELAY_TIME": "Temps de retard de réponse",
                     "DEACTIVATION_THRESHOLD_FSTOP": "Seuil de désactivation Fstop",
                     "DEACTIVATION_THRESHOLD_FSTOP_DESC": "Active/Désactive le seuil de désactivation",
-                    "HYSTERESIS_POINT": "Hystérésis de fréquence",
+                    "DELAY_TIME": "Temps de retard de réponse",
                     "DELAY_WAITING_TIME": "Temps d'attente du délai",
-                    "HYSTERESIS_SLOPE": "Pente de récupération de puissance de l'hystérésis"
+                    "ENABLE": "Courbe P(F) (courbe puissance-fréquence) pour la charge en sous-fréquence",
+                    "ENABLE_DESC": "Active/Désactive la courbe P(F)",
+                    "HYSTERESIS_POINT": "Hystérésis de fréquence",
+                    "HYSTERESIS_SLOPE": "Pente de récupération de puissance de l'hystérésis",
+                    "SLOPE": "Réponse de puissance au gradient de sous-fréquence",
+                    "THRESHOLD": "Seuil de sous-fréquence"
                 },
+                "POWER_GRADIENT": "Gradient de puissance",
                 "PU_CURVE": {
                     "ENABLE": "Courbe P(U) (courbe puissance-tension)",
                     "ENABLE_DESC": "Active/Désactive la courbe P(U)",
-                    "RESPONSE_MODE": "Mode de réponse de sortie",
+                    "PT1_POWER_GRADIENT": "Gradient de puissance",
                     "PT1_TIME_CONSTANT": "Constante de temps du filtre passe-bas PT-1",
-                    "PT1_POWER_GRADIENT": "Gradient de puissance"
+                    "RESPONSE_MODE": "Mode de réponse de sortie"
                 }
             },
+            "CONNECTION": {
+                "RAMP_UP_LOWER_FREQUENCY": "Montée en régime : fréquence inférieure",
+                "RAMP_UP_LOWER_VOLTAGE": "Montée en régime : tension inférieure",
+                "RAMP_UP_OBSERVATION_TIME": "Montée en régime : temps d'observation",
+                "RAMP_UP_UPPER_FREQUENCY": "Montée en régime : fréquence supérieure",
+                "RAMP_UP_UPPER_VOLTAGE": "Montée en régime : tension supérieure",
+                "RECONNECTION_GRADIENT_ENABLE": "Gradient de reconnexion",
+                "RECONNECTION_GRADIENT_ENABLE_DESC": "Active/Désactive le gradient de reconnexion",
+                "RECONNECTION_GRADIENT_VALUE": "Valeur du gradient de reconnexion",
+                "RECONNECTION_LOWER_FREQUENCY": "Reconnexion : fréquence inférieure",
+                "RECONNECTION_LOWER_VOLTAGE": "Reconnexion : tension inférieure",
+                "RECONNECTION_OBSERVATION_TIME": "Reconnexion : temps d'observation",
+                "RECONNECTION_UPPER_FREQUENCY": "Reconnexion : fréquence supérieure",
+                "RECONNECTION_UPPER_VOLTAGE": "Reconnexion : tension supérieure",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE": "Gradient de montée en régime progressif",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE_DESC": "Active/Désactive le gradient de montée en régime progressif",
+                "SOFT_RAMP_UP_GRADIENT_VALUE": "Valeur du gradient de montée en régime progressif"
+            },
+            "FREQUENCY_RIDE_THROUGH": {
+                "ENABLE": "Ride-Through de fréquence",
+                "ENABLE_DESC": "Active/Désactive le Ride-Through de fréquence",
+                "OF_FREQUENCY": "Surfréquence {{stage}} fréquence",
+                "OF_TIME": "Surfréquence {{stage}} temps",
+                "UF_FREQUENCY": "Sous-fréquence {{stage}} fréquence",
+                "UF_TIME": "Sous-fréquence {{stage}} temps"
+            },
+            "GROUPS": {
+                "ACTIVE_POWER_MODE": "Paramètres du mode de puissance active",
+                "CONNECTION": "Paramètres de connexion",
+                "FREQUENCY_RIDE_THROUGH": "Ride-Through de fréquence",
+                "PROTECTION": "Paramètres de protection",
+                "REACTIVE_POWER_MODE": "Paramètres du mode de puissance réactive",
+                "VOLTAGE_RIDE_THROUGH": "Ride-Through de tension"
+            },
+            "MODE": "Mode",
+            "POWER": "{{value}} Puissance active",
+            "PROTECTION": {
+                "OVERFREQUENCY_TRIGGER": "Valeur de déclenchement en surfréquence (palier {{stage}})",
+                "OVERFREQUENCY_TRIP_TIME": "Temps de déclenchement en surfréquence (palier {{stage}})",
+                "OVERVOLTAGE_TRIGGER": "Valeur de déclenchement en surtension (palier {{stage}})",
+                "OVERVOLTAGE_TRIP_TIME": "Temps de déclenchement en surtension (palier {{stage}})",
+                "TEN_MIN_OVERVOLTAGE_THRESHOLD": "Seuil de déclenchement de surtension sur 10 minutes",
+                "TEN_MIN_OVERVOLTAGE_TIME": "Temps de déclenchement de surtension sur 10 minutes",
+                "UNDERFREQUENCY_TRIP_TIME": "Temps de déclenchement en sous-fréquence (palier {{stage}})",
+                "UNDERFREQUENCY_TRIP_VALUE": "Valeur de déclenchement en sous-fréquence (palier {{stage}})",
+                "UNDERVOLTAGE_TRIP_TIME": "Temps de déclenchement en sous-tension (palier {{stage}})",
+                "UNDERVOLTAGE_TRIP_VALUE": "Valeur de déclenchement en sous-tension (palier {{stage}})"
+            },
+            "RANGE": "Plage [{{min}},{{max}}] {{unit}}",
+            "REACTIVE_POWER": "{{value}} Puissance réactive",
             "REACTIVE_POWER_MODE": {
-                "MODE": "Mode de puissance réactive",
-                "MODE_DESC": "Sélection du mode de puissance réactive",
-                "OPTIONS": {
-                    "NONE": "Non sélectionné",
-                    "FIX_PF": "Fix Pf",
-                    "FIX_Q": "Fix Q",
-                    "QU_CURVE": "Courbe Q(U)",
-                    "COSPHIP_CURVE": "Courbe CosPhi(P)",
-                    "QP_CURVE": "Courbe Q(P)"
+                "COSPHIP_CURVE": {
+                    "COS_PHI": "{{value}} cos φ",
+                    "COS_PHI_DESC": "Plage [-1000, -800] et [800, 1000]",
+                    "EXTENDED_FUNCTIONS": "Fonctions étendues",
+                    "EXTENDED_FUNCTIONS_DESC": "Active/Désactive les fonctions étendues",
+                    "INVALID_RANGE": "La valeur doit être comprise dans la plage [-1000, -800] et [800, 1000]",
+                    "LOCK_IN_VOLT": "Tension de Lock-in",
+                    "LOCK_OUT_VOLT": "Tension de Lock-out",
+                    "OVEREXCITED_SLOPE": "Pente en surexcitation",
+                    "POWER": "{{value}} puissance",
+                    "TIME_CONSTANT": "Constante de temps",
+                    "UNDEREXCITED_SLOPE": "Pente en sous-excitation"
                 },
                 "FIX_PF": {
                     "POWER_FACTOR": "Facteur de puissance",
@@ -69,139 +107,99 @@
                 "FIX_Q": {
                     "REACTIVE_POWER": "Puissance réactive"
                 },
-                "QU_CURVE": {
-                    "VOLTAGE_DEAD_BAND": "Bande morte de tension",
-                    "OVEREXCITED_SLOPE": "Pente en surexcitation",
-                    "UNDEREXCITED_SLOPE": "Pente en sous-excitation",
-                    "TIME_CONSTANT": "Constante de temps",
-                    "EXTENDED_FUNCTIONS": "Fonctions étendues",
-                    "LOCK_IN_POWER": "Tension de Lock-in",
-                    "LOCK_OUT_POWER": "Tension de Lock-out",
-                    "VOLTAGE": "V{{number}} tension",
-                    "ACTIVE_POWER": "V{{number}} puissance active",
-                    "MODE": {
-                        "STANDARD_MODE": "Mode de base",
-                        "SLOPE_MODE": "Mode pente"
-                    }
-                },
-                "COSPHIP_CURVE": {
-                    "OVEREXCITED_SLOPE": "Pente en surexcitation",
-                    "UNDEREXCITED_SLOPE": "Pente en sous-excitation",
-                    "COS_PHI": "{{value}} cos φ",
-                    "POWER": "{{value}} puissance",
-                    "COS_PHI_DESC": "Plage [-1000, -800] et [800, 1000]",
-                    "TIME_CONSTANT": "Constante de temps",
-                    "EXTENDED_FUNCTIONS": "Fonctions étendues",
-                    "EXTENDED_FUNCTIONS_DESC": "Active/Désactive les fonctions étendues",
-                    "LOCK_IN_VOLT": "Tension de Lock-in",
-                    "LOCK_OUT_VOLT": "Tension de Lock-out",
-                    "INVALID_RANGE": "La valeur doit être comprise dans la plage [-1000, -800] et [800, 1000]"
+                "MODE": "Mode de puissance réactive",
+                "MODE_DESC": "Sélection du mode de puissance réactive",
+                "OPTIONS": {
+                    "COSPHIP_CURVE": "Courbe CosPhi(P)",
+                    "FIX_PF": "Fix Pf",
+                    "FIX_Q": "Fix Q",
+                    "NONE": "Non sélectionné",
+                    "QP_CURVE": "Courbe Q(P)",
+                    "QU_CURVE": "Courbe Q(U)"
                 },
                 "QP_CURVE": {
                     "OVEREXCITED_SLOPE": "Pente en surexcitation",
+                    "TIME_CONSTANT": "Constante de temps",
+                    "UNDEREXCITED_SLOPE": "Pente en sous-excitation"
+                },
+                "QU_CURVE": {
+                    "ACTIVE_POWER": "V{{number}} puissance active",
+                    "EXTENDED_FUNCTIONS": "Fonctions étendues",
+                    "LOCK_IN_POWER": "Tension de Lock-in",
+                    "LOCK_OUT_POWER": "Tension de Lock-out",
+                    "MODE": {
+                        "SLOPE_MODE": "Mode pente",
+                        "STANDARD_MODE": "Mode de base"
+                    },
+                    "OVEREXCITED_SLOPE": "Pente en surexcitation",
+                    "TIME_CONSTANT": "Constante de temps",
                     "UNDEREXCITED_SLOPE": "Pente en sous-excitation",
-                    "TIME_CONSTANT": "Constante de temps"
+                    "VOLTAGE": "V{{number}} tension",
+                    "VOLTAGE_DEAD_BAND": "Bande morte de tension"
                 }
             },
-            "PROTECTION": {
-                "OVERVOLTAGE_TRIGGER": "Valeur de déclenchement en surtension (palier {{stage}})",
-                "OVERVOLTAGE_TRIP_TIME": "Temps de déclenchement en surtension (palier {{stage}})",
-                "UNDERVOLTAGE_TRIP_VALUE": "Valeur de déclenchement en sous-tension (palier {{stage}})",
-                "UNDERVOLTAGE_TRIP_TIME": "Temps de déclenchement en sous-tension (palier {{stage}})",
-                "TEN_MIN_OVERVOLTAGE_THRESHOLD": "Seuil de déclenchement de surtension sur 10 minutes",
-                "TEN_MIN_OVERVOLTAGE_TIME": "Temps de déclenchement de surtension sur 10 minutes",
-                "OVERFREQUENCY_TRIGGER": "Valeur de déclenchement en surfréquence (palier {{stage}})",
-                "OVERFREQUENCY_TRIP_TIME": "Temps de déclenchement en surfréquence (palier {{stage}})",
-                "UNDERFREQUENCY_TRIP_VALUE": "Valeur de déclenchement en sous-fréquence (palier {{stage}})",
-                "UNDERFREQUENCY_TRIP_TIME": "Temps de déclenchement en sous-fréquence (palier {{stage}})"
-            },
-            "CONNECTION": {
-                "RAMP_UP_UPPER_VOLTAGE": "Montée en régime : tension supérieure",
-                "RAMP_UP_LOWER_VOLTAGE": "Montée en régime : tension inférieure",
-                "RAMP_UP_UPPER_FREQUENCY": "Montée en régime : fréquence supérieure",
-                "RAMP_UP_LOWER_FREQUENCY": "Montée en régime : fréquence inférieure",
-                "RAMP_UP_OBSERVATION_TIME": "Montée en régime : temps d'observation",
-                "SOFT_RAMP_UP_GRADIENT_ENABLE": "Gradient de montée en régime progressif",
-                "SOFT_RAMP_UP_GRADIENT_ENABLE_DESC": "Active/Désactive le gradient de montée en régime progressif",
-                "SOFT_RAMP_UP_GRADIENT_VALUE": "Valeur du gradient de montée en régime progressif",
-                "RECONNECTION_UPPER_VOLTAGE": "Reconnexion : tension supérieure",
-                "RECONNECTION_LOWER_VOLTAGE": "Reconnexion : tension inférieure",
-                "RECONNECTION_UPPER_FREQUENCY": "Reconnexion : fréquence supérieure",
-                "RECONNECTION_LOWER_FREQUENCY": "Reconnexion : fréquence inférieure",
-                "RECONNECTION_OBSERVATION_TIME": "Reconnexion : temps d'observation",
-                "RECONNECTION_GRADIENT_ENABLE": "Gradient de reconnexion",
-                "RECONNECTION_GRADIENT_ENABLE_DESC": "Active/Désactive le gradient de reconnexion",
-                "RECONNECTION_GRADIENT_VALUE": "Valeur du gradient de reconnexion"
-            },
+            "SLOPE_RANGE": "Facteur multiplicatif [{{min}}, {{max}}]",
+            "TITLE": "Paramètres VDE 4110",
             "VOLTAGE_RIDE_THROUGH": {
-                "LVRT": {
-                    "ENABLE": "LVRT",
-                    "ENABLE_DESC": "Active/Désactive le Low Voltage Ride Through",
-                    "UV_VOLTAGE": "Sous-tension {{stage}} tension",
-                    "UV_TIME": "Sous-tension {{stage}} temps",
-                    "ENTER_THRESHOLD": "Seuil d'entrée en LVRT",
-                    "EXIT_ENDPOINT": "Point de sortie de LVRT",
-                    "K1_SLOPE": "Pente K1",
-                    "ZERO_CURRENT_ENABLE": "Mode courant nul",
-                    "ZERO_CURRENT_ENABLE_DESC": "Active/Désactive le mode courant nul",
-                    "ZERO_CURRENT_THRESHOLD": "Seuil d'entrée"
-                },
+                "ACTIVE_RECOVERY_MODE": "Mode de récupération de puissance active après dépassement",
+                "CURRENT_DISTRIBUTION_MODE": "Mode de répartition du courant",
                 "HVRT": {
                     "ENABLE": "HVRT",
                     "ENABLE_DESC": "Active/Désactive le High Voltage Ride Through",
-                    "OV_VOLTAGE": "Surtension {{stage}} tension",
-                    "OV_TIME": "Surtension {{stage}} temps",
                     "ENTER_THRESHOLD": "Seuil d'entrée en HVRT",
                     "EXIT_ENDPOINT": "Point de sortie de HVRT",
                     "K2_SLOPE": "Pente K2",
+                    "OV_TIME": "Surtension {{stage}} temps",
+                    "OV_VOLTAGE": "Surtension {{stage}} tension",
                     "ZERO_CURRENT_ENABLE": "Mode courant nul",
                     "ZERO_CURRENT_ENABLE_DESC": "Active/Désactive le mode courant nul",
                     "ZERO_CURRENT_THRESHOLD": "Seuil d'entrée"
                 },
-                "CURRENT_DISTRIBUTION_MODE": "Mode de répartition du courant",
+                "LVRT": {
+                    "ENABLE": "LVRT",
+                    "ENABLE_DESC": "Active/Désactive le Low Voltage Ride Through",
+                    "ENTER_THRESHOLD": "Seuil d'entrée en LVRT",
+                    "EXIT_ENDPOINT": "Point de sortie de LVRT",
+                    "K1_SLOPE": "Pente K1",
+                    "UV_TIME": "Sous-tension {{stage}} temps",
+                    "UV_VOLTAGE": "Sous-tension {{stage}} tension",
+                    "ZERO_CURRENT_ENABLE": "Mode courant nul",
+                    "ZERO_CURRENT_ENABLE_DESC": "Active/Désactive le mode courant nul",
+                    "ZERO_CURRENT_THRESHOLD": "Seuil d'entrée"
+                },
                 "OPTIONS": {
-                    "REACTIVE_PRIORITY": "Mode priorité courant réactif",
                     "ACTIVE_PRIORITY": "Mode priorité courant actif",
                     "CONSTANT_CURRENT": "Mode courant constant",
                     "DEACTIVATE": "Désactiver",
                     "GRADIENT_CONTROL": "Contrôle de gradient",
-                    "PT_1_BEHAVIOUR": "Comportement PT-1"
+                    "PT_1_BEHAVIOUR": "Comportement PT-1",
+                    "REACTIVE_PRIORITY": "Mode priorité courant réactif"
                 },
-                "ACTIVE_RECOVERY_MODE": "Mode de récupération de puissance active après dépassement",
-                "REACTIVE_RECOVERY_MODE": "Traversée de la fin du mode de récupération de puissance réactive",
                 "POWER_GRADIENT": "Gradient de puissance",
-                "PT1_TIME_CONSTANT": "Constante de temps du filtre passe-bas PT-1"
-            },
-            "FREQUENCY_RIDE_THROUGH": {
-                "ENABLE": "Ride-Through de fréquence",
-                "ENABLE_DESC": "Active/Désactive le Ride-Through de fréquence",
-                "UF_FREQUENCY": "Sous-fréquence {{stage}} fréquence",
-                "UF_TIME": "Sous-fréquence {{stage}} temps",
-                "OF_FREQUENCY": "Surfréquence {{stage}} fréquence",
-                "OF_TIME": "Surfréquence {{stage}} temps"
-            },
-            "SLOPE_RANGE": "Facteur multiplicatif [{{min}}, {{max}}]"
+                "PT1_TIME_CONSTANT": "Constante de temps du filtre passe-bas PT-1",
+                "REACTIVE_RECOVERY_MODE": "Traversée de la fin du mode de récupération de puissance réactive"
+            }
         },
         "CONFIGURATION_BATTERY_INPUTS": {
-            "TITLE": "Configuration des entrées de batterie",
             "BATTERY_INPUT": "Entrée de batterie {{ key }}",
             "INPUT_CONFIRMATION": "Confirmation : entrées correctement connectées",
-            "NUMBER_OF_BATTERY_INPUTS": "Nombre d'entrées de batterie utilisées"
+            "NUMBER_OF_BATTERY_INPUTS": "Nombre d'entrées de batterie utilisées",
+            "TITLE": "Configuration des entrées de batterie"
         },
         "CONFIGURATION_EMERGENCY_RESERVE": {
             "GENSET": {
-                "CONNECTED": "Groupe électrogène connecté ?",
-                "POWER": "Puissance nominale",
-                "PREHEAT_TIME": "Temps de préchauffage",
-                "RUN_TIME": "Durée de fonctionnement",
-                "EMERGENCY_POWER_FUNCTION": "La fonction groupe électrogène d'urgence doit-elle être activée ?",
                 "BATTERY_CHARGING": "Activer la charge de la batterie depuis le groupe électrogène ?",
-                "MAX_POWER": "Puissance de charge maximale en pourcentage",
-                "MAX_POWER_DESCRIPTION": "Pourcentage de la puissance nominale disponible du générateur mentionnée ci-dessus avec lequel la batterie doit être chargée. [{{min}}, {{max}}] %",
+                "CHARGE_SOC_END": "Niveau de charge de la batterie pour l'arrêt du groupe électrogène",
+                "CHARGE_SOC_END_DESCRIPTION": "État de charge de la batterie auquel le groupe électrogène s'arrête.",
                 "CHARGE_SOC_START": "Niveau de charge de la batterie pour le démarrage du groupe électrogène",
                 "CHARGE_SOC_START_DESCRIPTION": "État de charge de la batterie auquel le groupe électrogène démarre. La valeur ne peut pas être inférieure à l'état de charge réservé à la réserve d'urgence.",
-                "CHARGE_SOC_END": "Niveau de charge de la batterie pour l'arrêt du groupe électrogène",
-                "CHARGE_SOC_END_DESCRIPTION": "État de charge de la batterie auquel le groupe électrogène s'arrête."
+                "CONNECTED": "Groupe électrogène connecté ?",
+                "EMERGENCY_POWER_FUNCTION": "La fonction groupe électrogène d'urgence doit-elle être activée ?",
+                "MAX_POWER": "Puissance de charge maximale en pourcentage",
+                "MAX_POWER_DESCRIPTION": "Pourcentage de la puissance nominale disponible du générateur mentionnée ci-dessus avec lequel la batterie doit être chargée. [{{min}}, {{max}}] %",
+                "POWER": "Puissance nominale",
+                "PREHEAT_TIME": "Temps de préchauffage",
+                "RUN_TIME": "Durée de fonctionnement"
             }
         },
         "CONFIGURATION_EXECUTE": {
@@ -229,6 +227,8 @@
             "STATUS_CONFIGURING": "Configuration des composants en cours…",
             "STATUS_FUNCTION_TEST": "Configuration terminée. Exécution des tests de fonction…"
         },
+        "ENABLE_MPPT": "MPPT {{ mpptNumber }} actif",
+        "OFFLINE": "Hors ligne",
         "PROTOCOL_FEED_IN_MANAGEMENT": {
             "FIXED_COS_PHI": "Valeur fixe : Cos Phi 1"
         },

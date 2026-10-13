@@ -1,23 +1,23 @@
 {
     "POPOVER": {
-        "WEATHER_PROGNOSIS": {
-            "TITLE": "New: Forecast now 50 % more accurate thanks to weather data",
-            "DESCRIPTION": "The integration of local weather data improves your consumption/production forecast – at no extra charge!",
-            "APP": "Download from our App Center:",
-            "CHECKBOX_LABEL": "I acknowledge that, for the purpose of using the app, the forwarding of the main user’s personal data to a third party is necessary. Read more about how your personal data is used here <a href={{link}} target='_blank'>here</a>.",
-            "DECLINE": "Decline",
-            "ACCEPT": "Accept & Install",
-            "SPINNER_TEXT_ACCEPTED": "Just a moment—the app is getting installed",
-            "SPINNER_TEXT_DECLINED": "The app can be installed later at any time in the FEMS App Center.",
-            "APP_WEATHER": "Weather"
-        },
         "ANNUAL_REVIEW": {
-            "TITLE": "Discover your Energy Journey 2025",
-            "SUB_TITLE": "Your personal annual review is now online!",
-            "DESCRIPTION": "Discover the highlights of your personal energy usage, how your FENECON storage system supported your home, the contribution you made to the energy transition and above all: how much it paid off for you in 2025.",
             "BUTTON_TEXT": "View annual review now",
             "CONCLUSION": "Learn more about the campaign on our info page at <br><a href='https://www.fenecon.de/meine-energy-journey-2025'>https://www.fenecon.de/meine-energy-journey-2025</a>",
-            "HEADER_TEXT": "Your personal annual review is now online! We show you still untapped possibilities to make your energy system even more efficient, optimize your self-consumption and stay on the cheapest course."
+            "DESCRIPTION": "Discover the highlights of your personal energy usage, how your FENECON storage system supported your home, the contribution you made to the energy transition and above all: how much it paid off for you in 2025.",
+            "HEADER_TEXT": "Your personal annual review is now online! We show you still untapped possibilities to make your energy system even more efficient, optimize your self-consumption and stay on the cheapest course.",
+            "SUB_TITLE": "Your personal annual review is now online!",
+            "TITLE": "Discover your Energy Journey 2025"
+        },
+        "WEATHER_PROGNOSIS": {
+            "ACCEPT": "Accept & Install",
+            "APP": "Download from our App Center:",
+            "APP_WEATHER": "Weather",
+            "CHECKBOX_LABEL": "I acknowledge that, for the purpose of using the app, the forwarding of the main user’s personal data to a third party is necessary. Read more about how your personal data is used here <a href={{link}} target='_blank'>here</a>.",
+            "DECLINE": "Decline",
+            "DESCRIPTION": "The integration of local weather data improves your consumption/production forecast – at no extra charge!",
+            "SPINNER_TEXT_ACCEPTED": "Just a moment—the app is getting installed",
+            "SPINNER_TEXT_DECLINED": "The app can be installed later at any time in the FEMS App Center.",
+            "TITLE": "New: Forecast now 50 % more accurate thanks to weather data"
         }
     }
 }
