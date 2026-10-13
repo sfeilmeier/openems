@@ -1,13 +1,8 @@
-import { Injector } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { SharedAutarchy } from "src/app/edge/live/common/autarchy/shared/shared";
-import { SharedGrid } from "src/app/edge/live/common/grid/shared/shared";
-import { SharedSelfConsumption } from "src/app/edge/live/common/selfconsumption/shared/shared";
 import { SharedWeather } from "src/app/edge/live/common/weather/shared/shared";
 import { SharedControllerChannelThreshold } from "src/app/edge/live/Controller/Channelthreshold/shared/shared";
 import { SharedControllerChpSoc } from "src/app/edge/live/Controller/ChpSoc/shared/shared";
 import { SharedControllerEnerixControl } from "src/app/edge/live/Controller/EnerixControl/shared/shared";
-import { SharedGridOptimizedCharge } from "src/app/edge/live/Controller/Ess/GridOptimizedCharge/shared/shared";
 import { ControllerEvseSingleShared } from "src/app/edge/live/Controller/Evse/shared/shared";
 import { SharedControllerHeat } from "src/app/edge/live/Controller/Heat/shared/shared";
 import { ControllerBraiinsShared } from "src/app/edge/live/Controller/Io/Braiins/shared/shared";
@@ -15,8 +10,6 @@ import { SharedIoChannelSingleThreshold } from "src/app/edge/live/Controller/Io/
 import { SharedControllerIoFixDigitalOutput } from "src/app/edge/live/Controller/Io/FixDigitalOutput/shared/shared";
 import { SharedControllerIoHeatingElement } from "src/app/edge/live/Controller/Io/HeatingElement/shared/shared";
 import { SharedControllerIoHeatpump } from "src/app/edge/live/Controller/Io/Heatpump/shared/shared";
-import { SharedControllerPeakShaving } from "src/app/edge/live/Controller/peak-shaving/shared/shared";
-import { Fena } from "src/app/edge/live/fena/fena.type";
 import { SharedEvcsApiCluster } from "src/app/edge/live/Multiple/evcs-api-cluster/shared/shared";
 import { SharedSystemIndustrialL } from "src/app/edge/live/system/industrial/l/shared-system-industrial-l";
 import { SharedSystemIndustrialM } from "src/app/edge/live/system/industrial/m/shared-system-industrial-m";
@@ -27,7 +20,6 @@ import { SharedSystemIndustrialXl } from "../../edge/live/system/industrial/xl/s
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { NavigationTree } from "../components/navigation/shared";
-import { StringUtils } from "../utils/string/string.utils";
 import { TEnumKeys } from "./utility";
 import { Widget, WidgetClass, WidgetFactory, WidgetNature } from "./widget";
 
@@ -87,75 +79,6 @@ export class Widgets {
                 this.names.push(name);
             }
         }
-    }
-
-    public static createFenaMessages(edge: Edge, injector: Injector): Fena.Message[] {
-        const translate = injector.get(TranslateService);
-        const config = edge.getConfigSignal()();
-        const widgetNames: string[] = [
-            ...(config?.widgets?.classes ?? []),
-            ...(config?.widgets?.list ?? []).map((widget) => widget.name),
-        ];
-
-        if (
-            StringUtils.isNotInArr(edge.id, [
-                "fems4",
-                "fems666",
-                "fems888",
-                "fems3800",
-                "fems10004",
-                "fems10303",
-                "fems58732",
-                "fems59509",
-                "fems72127",
-                "fems72317",
-                "fems72800",
-                "fems73475",
-                "fems74326",
-                "fems82085",
-                "fems83584",
-                "fems86450",
-                "fems86876",
-                "fems90206",
-            ])
-        ) {
-            return [];
-        }
-
-        return (
-            widgetNames
-                .flatMap((widgetName): Fena.Message[] => {
-                    switch (widgetName) {
-                        case "Common_Autarchy":
-                            return SharedAutarchy.getFenaMessages(translate, config, injector);
-                        case "Common_Selfconsumption":
-                            return SharedSelfConsumption.getFenaMessages(translate, config, injector);
-                        case "Grid":
-                            return SharedGrid.getFenaMessages(translate);
-                        case "Controller.Asymmetric.PeakShaving":
-                        case "Controller.Symmetric.PeakShaving":
-                        case "Controller.TimeslotPeakshaving":
-                            return SharedControllerPeakShaving.getFenaMessages(widgetName, config, translate);
-                        case "Controller.Ess.GridOptimizedCharge":
-                            return SharedGridOptimizedCharge.getFenaMessages(config, translate, injector);
-                        default:
-                            return [];
-                    }
-                })
-
-                /** Sort the Fena messages by individual priority and then for same priorities by categorie priorities. */
-                .sort((first, second) => {
-                    const priority = first.getPriority() - second.getPriority();
-                    if (priority !== 0) {
-                        return priority;
-                    }
-
-                    return (
-                        Fena.CATEGORIES.find((category) => category.name === first.getCategory())!.priority -
-                        Fena.CATEGORIES.find((category) => category.name === second.getCategory())!.priority
-                    );
-                })
-        );
     }
 
     public static getControllerNavigationTree(

@@ -16,6 +16,11 @@
                     "TURNED_OFF": "Tipp: Mit netzdienlicher Beladung kannst du mögliche PV-Abregelungen reduzieren und die Lebensdauer deines Speichers erhöhen. Möchtest du sie aktivieren?",
                     "DELAYED_CHARGE": "Vorausschauend: Dein Speicher lädt aktuell mit maximal {{maxPower}}&nbsp;W, um PV-Abregelungen zu reduzieren. Voll geladen ist er voraussichtlich um {{chargingEndTime}}.",
                     "DELAYED_CHARGE_WITH_ZERO": "Vorausschauend: Dein Speicher pausiert die Beladung aktuell, um später mehr Solarstrom aufnehmen und PV-Abregelungen reduzieren zu können."
+                },
+                "TIME_OF_USE_TARIFF": {
+                    "NEGATIVE_GRID_BUY_PRICE": "Aktuell liegt der Strompreis an der Börse bei nur {{priceWithUnit}}. Dein System nutzt diese günstige Energie und hilft dabei, Stromüberschüsse im Netz aufzunehmen.",
+                    "CHARGE_FROM_GRID_ACTIVE": "Guter Zeitpunkt: Dein FENECON-System nutzt aktuell günstigen Strom für {{priceWithUnit}} aus dem Netz und speichert ihn für später.",
+                    "DELAY_CHARGE_ACTIVE": "Smart: Dein Speicher verzögert aktuell die Entladung. So steht günstige Energie später zur Verfügung, wenn der Strompreis höher ist."
                 }
             },
             "KPI": {

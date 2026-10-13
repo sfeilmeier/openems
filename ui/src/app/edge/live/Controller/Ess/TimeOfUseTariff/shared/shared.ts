@@ -1,13 +1,16 @@
+import { Injector } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
+import { Fena } from "src/app/edge/live/fena/fena.type";
 import { MetaComponent } from "src/app/shared/components/edge/config-components/meta/meta";
 import { NavigationConstants, NavigationTree } from "src/app/shared/components/navigation/shared";
 import { Name } from "src/app/shared/components/shared/name";
 import { OeFormlyView } from "src/app/shared/components/shared/oe-formly-component";
 import { RouteService } from "src/app/shared/service/route/route.service";
-import { ChannelAddress, Currency, Edge, EdgeConfig, Service, Utils } from "src/app/shared/shared";
+import { ChannelAddress, Currency, CurrentData, Edge, EdgeConfig, Service, Utils } from "src/app/shared/shared";
 import { Mode } from "src/app/shared/type/general";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
+import { TimeOfUseTariffUtils } from "src/app/shared/utils/utils";
 
 export namespace SharedControllerEssTimeOfUseTariff {
     // hide automatic elements when mode is manual
@@ -87,9 +90,6 @@ export namespace SharedControllerEssTimeOfUseTariff {
                 const edge = service.currentEdge();
                 const config = edge.getCurrentConfig();
                 const meta = new MetaComponent(config);
-                if (meta == null) {
-                    return "-";
-                }
                 const currency = meta.getCurrency();
                 if (typeof currency !== "string") {
                     return "-";
@@ -170,6 +170,102 @@ export namespace SharedControllerEssTimeOfUseTariff {
             ],
             null,
         ).toConstructorParams();
+    }
+
+    export function getFenaMessages(
+        config: EdgeConfig,
+        translate: TranslateService,
+        injector: Injector,
+    ): Fena.Message[] {
+        const timeOfUseTariffController = config.getFirstComponentByFactoryId("Controller.Ess.Time-Of-Use-Tariff");
+        const isEssChargeFromGridAllowed =
+            config.getPropertyFromComponentId<boolean>("_meta", "isEssChargeFromGridAllowed") ?? false;
+
+        if (timeOfUseTariffController === null) {
+            return [];
+        }
+
+        const getFormattedPrice = (currentData: CurrentData) => {
+            const meta = new MetaComponent(config);
+            const currency = meta.getCurrency();
+            if (typeof currency !== "string") {
+                return "-";
+            }
+
+            const currencyLabel: Currency.Label = Currency.getCurrencyLabelByCurrency(currency);
+            const quarterlyPrice = currentData.allComponents[`${timeOfUseTariffController.id}/QuarterlyPrices`];
+            return Utils.CONVERT_PRICE_TO_CENT_PER_KWH(2, currencyLabel)(quarterlyPrice);
+        };
+
+        return [
+            new Fena.LiveMessage({
+                category: "GRID",
+                priority: 1,
+                actions: [Fena.MessageUtils.buildDetailAction(timeOfUseTariffController.id, injector)],
+                channels: [
+                    new ChannelAddress("_sum", "GridActivePower"),
+                    new ChannelAddress(timeOfUseTariffController.id, "QuarterlyPrices"),
+                ],
+                showCallback: (currentData) => {
+                    const gridActivePower = currentData.allComponents["_sum/GridActivePower"];
+                    const gridBuyPrice = currentData.allComponents[`${timeOfUseTariffController.id}/QuarterlyPrices`];
+                    return gridActivePower > 0 && gridBuyPrice != null && gridBuyPrice <= 0;
+                },
+                message: {
+                    textCallback: (currentData: CurrentData) => {
+                        const formattedPrice = getFormattedPrice(currentData);
+                        return translate.instant("FENA.MESSAGES.STORAGE.TIME_OF_USE_TARIFF.NEGATIVE_GRID_BUY_PRICE", {
+                            priceWithUnit: formattedPrice,
+                        });
+                    },
+                },
+            }),
+
+            new Fena.LiveMessage({
+                category: "GRID",
+                priority: 2,
+                actions: [Fena.MessageUtils.buildDetailAction(timeOfUseTariffController.id, injector)],
+                channels: [
+                    new ChannelAddress("_sum", "GridActivePower"),
+                    new ChannelAddress(timeOfUseTariffController.id, "QuarterlyPrices"),
+                    new ChannelAddress(timeOfUseTariffController.id, "StateMachine"),
+                ],
+                showCallback: (currentData) => {
+                    const isInModeChargeGrid =
+                        currentData.allComponents[`${timeOfUseTariffController.id}/StateMachine`] ===
+                        TimeOfUseTariffUtils.State.ChargeGrid;
+                    const gridActivePower = currentData.allComponents["_sum/GridActivePower"];
+                    const gridBuyPrice = currentData.allComponents[`${timeOfUseTariffController.id}/QuarterlyPrices`];
+                    return gridActivePower > 0 && gridBuyPrice > 0 && isInModeChargeGrid && isEssChargeFromGridAllowed;
+                },
+                message: {
+                    textCallback: (currentData: CurrentData) => {
+                        const formattedPrice = getFormattedPrice(currentData);
+                        return translate.instant("FENA.MESSAGES.STORAGE.TIME_OF_USE_TARIFF.CHARGE_FROM_GRID_ACTIVE", {
+                            priceWithUnit: formattedPrice,
+                        });
+                    },
+                },
+            }),
+            new Fena.LiveMessage({
+                category: "GRID",
+                priority: 3,
+                actions: [Fena.MessageUtils.buildDetailAction(timeOfUseTariffController.id, injector)],
+                channels: [
+                    new ChannelAddress("_sum", "GridActivePower"),
+                    new ChannelAddress(timeOfUseTariffController.id, "QuarterlyPrices"),
+                    new ChannelAddress(timeOfUseTariffController.id, "StateMachine"),
+                ],
+                showCallback: (currentData) => {
+                    const gridBuyPrice = currentData.allComponents[`${timeOfUseTariffController.id}/QuarterlyPrices`];
+                    const gridActivePower = currentData.allComponents["_sum/GridActivePower"];
+                    return gridBuyPrice != null && gridBuyPrice <= 10 && gridActivePower > 0;
+                },
+                message: {
+                    text: translate.instant("FENA.MESSAGES.STORAGE.TIME_OF_USE_TARIFF.DELAY_CHARGE_ACTIVE"),
+                },
+            }),
+        ];
     }
 }
 

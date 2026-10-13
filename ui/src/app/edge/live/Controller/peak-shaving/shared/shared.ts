@@ -192,52 +192,58 @@ export namespace SharedControllerPeakShaving {
         }
 
         return [
-            new Fena.LiveMessage(
-                "STORAGE",
-                1,
-                [],
-                [
+            new Fena.LiveMessage({
+                category: "STORAGE",
+                priority: 1,
+                actions: [],
+                channels: [
                     new ChannelAddress("_sum", "ConsumptionActivePower"),
                     new ChannelAddress(peakShavingController.id, PEAK_SHAVING_POWER_CHANNEL),
                 ],
-                (currentData) => {
+                showCallback: (currentData) => {
                     const consumptionActivePower = currentData.allComponents["_sum/ConsumptionActivePower"];
                     const peakShavingPower =
                         currentData.allComponents[`${peakShavingController.id}/${PEAK_SHAVING_POWER_CHANNEL}`];
-                    return NumberUtils.isNumberHigherThan({ value: consumptionActivePower,valueToBeHigher: peakShavingPower});
+                    return NumberUtils.isNumberHigherThan({
+                        value: consumptionActivePower,
+                        valueToBeHigher: peakShavingPower,
+                    });
                 },
-                {
+                message: {
                     text: translate.instant("FENA.MESSAGES.STORAGE.PEAK_SHAVING.CONSUMPTION_OVER_DISCHARGE_ABOVE"),
                 },
-            ),
-            new Fena.LiveMessage(
-                "STORAGE",
-                2,
-                [],
-                [
+            }),
+            new Fena.LiveMessage({
+                category: "STORAGE",
+                priority: 2,
+                actions: [],
+                channels: [
                     new ChannelAddress("_sum", "ConsumptionActivePower"),
                     new ChannelAddress(peakShavingController.id, RECHARGE_POWER_CHANNEL),
                 ],
-                (currentData) => {
+                showCallback: (currentData) => {
                     const consumptionActivePower = currentData.allComponents["_sum/ConsumptionActivePower"];
                     const rechargePower =
                         currentData.allComponents[`${peakShavingController.id}/${RECHARGE_POWER_CHANNEL}`];
-                    return NumberUtils.isNumberLowerThan({value: consumptionActivePower, valueToBeSmaller: rechargePower});
+                    return NumberUtils.isNumberLowerThan({
+                        value: consumptionActivePower,
+                        valueToBeSmaller: rechargePower,
+                    });
                 },
-                {
+                message: {
                     text: translate.instant("FENA.MESSAGES.STORAGE.PEAK_SHAVING.CONSUMPTION_UNDER_CHARGE_BELOW"),
                 },
-            ),
-            new Fena.LiveMessage(
-                "STORAGE",
-                2,
-                [],
-                [new ChannelAddress("_sum", "EssSoc")],
-                (currentData) => currentData.allComponents["_sum/EssSoc"] === 100,
-                {
+            }),
+            new Fena.LiveMessage({
+                category: "STORAGE",
+                priority: 2,
+                actions: [],
+                channels: [new ChannelAddress("_sum", "EssSoc")],
+                showCallback: (currentData) => currentData.allComponents["_sum/EssSoc"] === 100,
+                message: {
                     text: translate.instant("FENA.MESSAGES.STORAGE.PEAK_SHAVING.SOC_IS_100"),
                 },
-            ),
+            }),
         ];
     }
 }

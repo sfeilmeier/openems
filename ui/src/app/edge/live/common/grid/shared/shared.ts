@@ -324,15 +324,15 @@ export namespace SharedGrid {
 
     export function getFenaMessages(translate: TranslateService): Fena.Message[] {
         return [
-            new Fena.LiveMessage(
-                "GRID",
-                1,
-                [],
-                [
+            new Fena.LiveMessage({
+                category: "GRID",
+                priority: 1,
+                actions: [],
+                channels: [
                     new ChannelAddress("ctrlEssLimiter14a0", "RestrictionMode"),
                     new ChannelAddress("ctrlEssRippleControlReceiver0", "RestrictionMode"),
                 ],
-                (currentData: CurrentData) => {
+                showCallback: (currentData: CurrentData) => {
                     const restrictionMode14a =
                         currentData.allComponents["ctrlEssLimiter14a0/RestrictionMode"] ??
                         Limiter14aRestriction.NO_RESTRICTION;
@@ -349,42 +349,46 @@ export namespace SharedGrid {
                     }
                     return false;
                 },
-                {
+                message: {
                     text: translate.instant("FENA.MESSAGES.GRID.LIMITED_POWER"),
                 },
-            ),
-            new Fena.LiveMessage(
-                "GRID",
-                1,
-                [],
-                [new ChannelAddress("_sum", "GridMode")],
-                (currentData: CurrentData) => {
+            }),
+            new Fena.LiveMessage({
+                category: "GRID",
+                priority: 1,
+                actions: [],
+                channels: [new ChannelAddress("_sum", "GridMode")],
+                showCallback: (currentData: CurrentData) => {
                     const gridMode = currentData.allComponents["_sum/GridMode"];
                     if (gridMode === GridMode.OFF_GRID) {
                         return true;
                     }
                     return false;
                 },
-                {
-                    text: translate.instant("FENA.MESSAGES.GRID.EMERGENCY_POWER_ACTIVE", {edgeLongName: environment.edgeLongName}),
+                message: {
+                    text: translate.instant("FENA.MESSAGES.GRID.EMERGENCY_POWER_ACTIVE", {
+                        edgeLongName: environment.edgeLongName,
+                    }),
                 },
-            ),
-            new Fena.LiveMessage(
-                "GRID",
-                1,
-                [],
-                [new ChannelAddress("_sum", "GridMode")],
-                (currentData: CurrentData) => {
+            }),
+            new Fena.LiveMessage({
+                category: "GRID",
+                priority: 1,
+                actions: [],
+                channels: [new ChannelAddress("_sum", "GridMode")],
+                showCallback: (currentData: CurrentData) => {
                     const gridMode = currentData.allComponents["_sum/GridMode"];
                     if (gridMode === GridMode.GENERATOR) {
                         return true;
                     }
                     return false;
                 },
-                {
-                    text: translate.instant("FENA.MESSAGES.GRID.GENERATOR_ACTIVE", {edgeLongName: environment.edgeLongName}),
+                message: {
+                    text: translate.instant("FENA.MESSAGES.GRID.GENERATOR_ACTIVE", {
+                        edgeLongName: environment.edgeLongName,
+                    }),
                 },
-            ),
+            }),
         ];
     }
 }

@@ -1,10 +1,9 @@
 // @ts-strict-ignore
-import { Injector, Signal, signal } from "@angular/core";
+import { Signal, signal } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { compareVersions } from "compare-versions";
 import { BehaviorSubject, Subject } from "rxjs";
 import { filter, first } from "rxjs/operators";
-import { Fena } from "src/app/edge/live/fena/fena.type";
 import { SumState } from "src/app/index/shared/sumState";
 import { environment } from "src/environments";
 import { UnimplementedInEdgeError } from "../../errors/errors";
@@ -33,7 +32,6 @@ import { GetPropertiesOfFactoryResponse } from "../../jsonrpc/response/getProper
 import { User } from "../../jsonrpc/shared";
 import { ChannelAddress, Service, SystemLog, Websocket } from "../../shared";
 import { Role } from "../../type/role";
-import { Widgets } from "../../type/widgets";
 import { ObjectUtils } from "../../utils/object/object-utils";
 import { PromiseUtils } from "../../utils/promise/promise.utils";
 import { StringUtils } from "../../utils/string/string.utils";
@@ -684,17 +682,6 @@ export class Edge {
             includes: Array.isArray(favorites?.includes) ? favorites.includes : [],
             excludes: Array.isArray(favorites?.excludes) ? favorites.excludes : [],
         };
-    }
-
-    /**
-     * Creates Fena messages for this edge.
-     *
-     * @param user The current user
-     * @param translate The translate service
-     * @returns Messages for this edge
-     */
-    public createFenaMessages(injector: Injector): Fena.Message[] {
-        return Widgets.createFenaMessages(this, injector);
     }
 
     /** Removes the channel subscription entry for the given subscription id. */

@@ -3,16 +3,17 @@ import { Websocket } from "src/app/shared/shared";
 import { NumberUtils } from "src/app/shared/utils/number/number-utils";
 
 import { Edge } from "../../edge";
-import { EdgeConfig } from "../../edgeconfig";
+import { EdgeComponent } from "../../edge-component";
+import type { EdgeConfig } from "../../edgeconfig";
 import { GetSchedule } from "./getSchedule";
 
-export class EnergyScheduler extends EdgeConfig.Component {
+export class EnergyScheduler extends EdgeComponent {
     public static readonly nowToHistoryInHours: number = 4;
 
     private _schedule: GetSchedule.Response = GetSchedule.Response.empty;
 
     constructor(private readonly config: EdgeConfig | null) {
-        const component = config?.getFirstComponentByFactoryId("Core.Energy") ?? new EdgeConfig.Component();
+        const component = config?.getFirstComponentByFactoryId("Core.Energy") ?? new EdgeComponent();
         super(
             component.id,
             component.alias,
