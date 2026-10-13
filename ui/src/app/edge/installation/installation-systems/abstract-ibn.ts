@@ -647,9 +647,8 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
     /**
      * Updates the `views` array by removing or adding specific views.
      *
-     * Manages the presense of the `PreInstallationUpdate` based on the Edge version for all systems. Manages the
-     * presence of the `ConfigurationEssLimiter14aComponent` view based on country location, for both Home and
-     * Commercial systems. Manages the presence of the `ConfigurationGridSettingComponent` view based on country
+     * Manages the presence of the `ConfigurationEssLimiter14aComponent` view based on the country location, for both
+     * Home and Commercial systems. Manages the presence of the `ConfigurationGridSetting` view based on the country
      * location, for Commercial systems.
      *
      * @param edge The current edge.

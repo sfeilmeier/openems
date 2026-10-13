@@ -34,7 +34,7 @@ export class InstallationComponent implements OnInit {
     public readonly ibn = signal<AbstractIbn | null>(null);
     public readonly edge = signal<Edge | null>(null);
 
-    public readonly currentView = computed(() => this.resolveView(this.viewIndex(), this.ibn()));
+    public readonly currentView = computed(() => this.views()[this.viewIndex()] ?? View.PreInstallation);
 
     public readonly progressValue = computed(() => {
         const { index, viewCount } = this.viewMeta();
@@ -53,15 +53,18 @@ export class InstallationComponent implements OnInit {
               });
     });
 
+    /**
+     * Copy of the views at the last navigation. {@link AbstractIbn.removeOrAddView} changes the ibn views in place,
+     * which no signal would notice, so they are copied into this signal on every navigation.
+     */
+    private readonly views = signal<View[]>(InstallationComponent.STARTUP_VIEWS);
     private readonly viewIndex = signal<number>(0);
 
     private readonly viewMeta = computed(() => {
-        const index = this.viewIndex();
         const ibn = this.ibn();
-        const views = ibn !== null ? ibn.views : InstallationComponent.STARTUP_VIEWS;
         return {
-            index,
-            viewCount: views.length,
+            index: this.viewIndex(),
+            viewCount: this.views().length,
             showViewCount: ibn !== null ? ibn.showViewCount : false,
         };
     });
@@ -81,17 +84,24 @@ export class InstallationComponent implements OnInit {
     }
 
     /** Advances to the next view, optionally updating the active ibn. */
-    public nextView(updatedIbn?: AbstractIbn): void {
+    public goToNextView(updatedIbn?: AbstractIbn): void {
         if (updatedIbn != null) {
             this.ibn.set(updatedIbn);
             IbnUtils.addIbnToSessionStorage(updatedIbn);
         }
-        this.navigate(+1);
+
+        const displayedView = this.updateViewsAndLocateDisplayedView();
+        if (displayedView.isLastView) {
+            this.finishInstallation();
+            return;
+        }
+        this.navigateTo(displayedView.index + 1);
     }
 
     /** Returns to the previous view. */
-    public previousView(): void {
-        this.navigate(-1);
+    public goToPreviousView(): void {
+        const displayedView = this.updateViewsAndLocateDisplayedView();
+        this.navigateTo(Math.max(0, displayedView.index - 1));
     }
 
     /** Stores the edge resolved by the pre-installation step. */
@@ -146,33 +156,35 @@ export class InstallationComponent implements OnInit {
         return ibn;
     }
 
-    private resolveView(index: number, ibn: AbstractIbn | null): View {
+    /**
+     * Lets the ibn add or remove its optional views (e.g. depending on the country), then looks up where the displayed
+     * view is now. Views may have been inserted or removed before it, so its position is searched instead of relying on
+     * the stored index.
+     */
+    private updateViewsAndLocateDisplayedView(): { index: number; isLastView: boolean } {
+        const shownView = this.currentView();
+        const ibn = this.ibn();
+        ibn?.removeOrAddView(this.edge());
+
         const views = ibn !== null ? ibn.views : InstallationComponent.STARTUP_VIEWS;
-        return views[index] ?? View.PreInstallation;
+        const foundIndex = views.indexOf(shownView);
+        const index = foundIndex !== -1 ? foundIndex : this.viewIndex();
+
+        return {
+            index,
+            isLastView: shownView === View.Completion || index >= views.length - 1,
+        };
     }
 
-    private navigate(delta: number): void {
-        const ibn = this.ibn();
-
-        if (ibn !== null) {
-            ibn.removeOrAddView(this.edge());
+    /** Leaves the wizard to the online monitoring of the installed edge and clears the stored installation. */
+    private finishInstallation(): void {
+        const edgeId = this.edge()?.id;
+        if (edgeId != null) {
+            this.router.navigate(["device", edgeId]);
+        } else {
+            this.router.navigate(["/overview"]);
         }
-
-        const views = ibn !== null ? ibn.views : InstallationComponent.STARTUP_VIEWS;
-        const next = Math.max(0, this.viewIndex() + delta);
-
-        if (next === views.length) {
-            const edgeId = this.edge()?.id;
-            if (edgeId != null) {
-                this.router.navigate(["device", edgeId]);
-            } else {
-                this.router.navigate(["/overview"]);
-            }
-            sessionStorage.clear();
-            return;
-        }
-
-        this.navigateTo(next);
+        sessionStorage.clear();
     }
 
     private navigateTo(index: number): void {
@@ -189,6 +201,8 @@ export class InstallationComponent implements OnInit {
         );
 
         sessionStorage.setItem("viewIndex", index.toString());
+        // A copy, as the ibn views are changed in place: setting the same array again would not notify
+        this.views.set([...views]);
         this.viewIndex.set(index);
     }
 }
