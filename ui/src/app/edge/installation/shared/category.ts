@@ -56,7 +56,9 @@ export namespace Category {
             case Category.PRODUCER:
                 return translate.instant("INSTALLATION.CONFIGURATION_SUMMARY.PRODUCER");
             case Category.EMS_BOX_LABEL_HOME:
-                return translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EMS_BOX_HOME", { edgeShortName: environment.edgeShortName });
+                return translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EMS_BOX_HOME", {
+                    edgeShortName: environment.edgeShortName,
+                });
             case Category.EMS_BOX_LABEL_HECKERT:
                 return translate.instant("INSTALLATION.PROTOCOL_SERIAL_NUMBERS.EMS_BOX_HECKERT");
             case Category.GRID:

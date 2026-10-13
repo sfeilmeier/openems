@@ -12,7 +12,7 @@ import { ComponentData, ExtensionBoxPrefix } from "../../../shared/ibndatatypes"
 import { SystemId } from "../../../shared/system";
 import { WebLinks } from "../../../shared/weblink.utils";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
-import { BatteryTowerSettings } from "../../abstract-ibn";
+import { BatteryTowerSettings, SerialNumberModel } from "../../abstract-ibn";
 import { AbstractCommercialGen3, CommercialGen3App, GensetProperties } from "../abstract-commercial-gen3";
 
 type Commercial100AppProperties = CommercialGen3App &
@@ -33,7 +33,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
         View.PreInstallation,
         View.PreInstallationUpdate,
         View.ConfigurationSystem,
-        View.ConfigurationSubSystem,
+        View.ConfigurationSystemVariant,
         View.ConfigurationBatteryInputs,
         View.ProtocolInstaller,
         View.ProtocolCustomer,
@@ -41,6 +41,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
         View.ProtocolSystemLocation,
         View.ConfigurationEssLimiter14aComponent,
         View.ConfigurationEnergyFlowMeter,
+        View.ConfigurationLineSideMeterFuse,
         View.ConfigurationMpptSelection,
         View.ProtocolPv,
         View.ConfigurationStsBox,
@@ -56,7 +57,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
 
     public override warrantyLink = WebLinks.WARRANTY_LINK_COMMERCIAL_100;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_100;
-    public override appId: string = "App.FENECON.Commercial.100";
+    public override systemAppId: string = "App.FENECON.Commercial.100";
     public override appAlias: string = "FENECON Commercial 100";
 
     /** Battery-input selection captured in the ConfigurationBatteryInputs view. */
@@ -158,7 +159,7 @@ export class Commercial100Ibn extends AbstractCommercialGen3 {
         websocket: Websocket,
         numberOfModulesPerTower: number,
         batteryIndex?: number,
-    ) {
+    ): Promise<SerialNumberModel> {
         return new Promise((resolve) => {
             let isResolved = false;
             const channelAddresses: { [key: string]: ChannelAddress } = {};

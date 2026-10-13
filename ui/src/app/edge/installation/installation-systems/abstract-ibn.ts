@@ -8,8 +8,9 @@ import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { DetailedAlertingSetting } from "../../settings/alerting/component/alerting.component";
+import { InstallationService } from "../installation.service";
 import { Category } from "../shared/category";
-import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View, } from "../shared/enums";
+import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, ModbusBridgeType, View, } from "../shared/enums";
 import { GridSettingUtils } from "../shared/gridsetting.utils";
 import { ComponentData, EmsType, TableData } from "../shared/ibndatatypes";
 import { Meter } from "../shared/meter";
@@ -18,10 +19,12 @@ import { System, SystemId, SystemType } from "../shared/system";
 import { WebLinks } from "../shared/weblink.utils";
 import { ComponentConfigurator } from "../views/configuration-execute/component-configurator";
 
+export type SerialNumberModel = Record<string, string | number | boolean>;
+
 export type SerialNumberData = {
     formGroup: FormGroup;
     fieldSettings: FormlyFieldConfig[];
-    model: any;
+    model: SerialNumberModel;
     header: string;
 };
 
@@ -108,6 +111,9 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
         fixedValue?: number;
         otherValue?: number;
         meterType?: Meter.GridMeter;
+        modbusBridgeType?: ModbusBridgeType;
+        modbusBridgeIp?: string;
+        modbusBridgePort?: number;
     };
 
     // protocol-dynamic-feed-in-limitation
@@ -132,7 +138,7 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
             isEnabled: boolean[][];
             label?: string;
         };
-        formModels?: any[];
+        formModels?: SerialNumberModel[];
     };
 
     // configuration Energy Flow Meter
@@ -181,6 +187,13 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
 
     public currentUserAlertingSettings: DetailedAlertingSetting | null = null;
 
+    /**
+     * The Edge app id installed via {@link AppCenterUtil} for this system (e.g. "App.FENECON.Home"), if any - used to
+     * look up and clean up a leftover instance of this app itself when resolving an install conflict.
+     * `null`/`undefined` for systems that are configured manually and never go through {@link AppCenterUtil}.
+     */
+    public readonly systemAppId?: string;
+
     public abstract readonly warrantyLink: WebLinks | null;
 
     constructor(
@@ -199,11 +212,6 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
      */
     public setFeedInLimitFields(model: any) {
         return;
-    }
-
-    /** Returns the fields that has sub systems specific to the 'System Type' selected in previous step. */
-    public getSubSystemFields(): FormlyFieldConfig[] {
-        return [];
     }
 
     /** View Emergency-reserve Adds and returns the specific battery information based on Ibn to view in summary. */
@@ -397,6 +405,15 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
                     { label: "80 A", value: 80 },
                     { label: "100 A", value: 100 },
                     { label: "120 A", value: 120 },
+                    { label: "125 A", value: 125 },
+                    { label: "160 A", value: 160 },
+                    { label: "200 A", value: 200 },
+                    { label: "250 A", value: 250 },
+                    { label: "315 A", value: 315 },
+                    { label: "355 A", value: 355 },
+                    { label: "400 A", value: 400 },
+                    { label: "500 A", value: 500 },
+                    { label: "630 A", value: 630 },
                     {
                         label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.OTHER"),
                         value: -1,
@@ -630,9 +647,8 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
     /**
      * Updates the `views` array by removing or adding specific views.
      *
-     * Manages the presense of the `PreInstallationUpdate` based on the Edge version for all systems. Manages the
-     * presence of the `ConfigurationEssLimiter14aComponent` view based on country location, for both Home and
-     * Commercial systems. Manages the presence of the `ConfigurationGridSettingComponent` view based on country
+     * Manages the presence of the `ConfigurationEssLimiter14aComponent` view based on the country location, for both
+     * Home and Commercial systems. Manages the presence of the `ConfigurationGridSetting` view based on the country
      * location, for Commercial systems.
      *
      * @param edge The current edge.
@@ -646,8 +662,8 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
         numberOfTowers: number,
         numberOfModulesPerTower: number,
         index?: number,
-    ): Promise<{}>[] {
-        const result: Promise<{}>[] = [];
+    ): Promise<SerialNumberModel>[] {
+        const result: Promise<SerialNumberModel>[] = [];
         for (let tower = 0; tower < numberOfTowers; tower++) {
             result.push(this.getSerialNumbersFromEdge(tower, edge, websocket, numberOfModulesPerTower, index));
         }
@@ -809,7 +825,7 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
         websocket: Websocket,
         numberOfModulesPerTower?: number,
         slaveNr?: number,
-    ): Promise<{}>;
+    ): Promise<SerialNumberModel>;
 
     /** View Configuration Dynamic Feed-In limitation. Returns the fields for the views based on the system. */
     public abstract getFeedInLimitFields(): FormlyFieldConfig[];
@@ -821,12 +837,15 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
      * @param config The EdgeConfig.
      * @param websocket The Websocket connection.
      * @param service The Service.
+     * @param installationService The InstallationService, e.g. for request deduplication.
+     * @param cluster Commercial-cluster role (master/slave), only used by cluster-capable systems.
      */
     public abstract getComponentConfigurator(
         edge: Edge,
         config: EdgeConfig,
         websocket: Websocket,
-        service?: Service,
+        service: Service,
+        installationService: InstallationService,
         cluster?: CommercialCluster,
     ): Promise<ComponentConfigurator>;
 
@@ -840,9 +859,6 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
 
     /** Returns the set of controller for updateScheduler in component configurator. */
     public abstract setRequiredControllers();
-
-    /** Returns the fields that has system variants specific to the 'System Type' selected in previous step. */
-    public abstract getSystemVariantFields(): FormlyFieldConfig[];
 
     /**
      * Populates the properties of this IBN instance from a plain data object.

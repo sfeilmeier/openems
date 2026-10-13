@@ -6,12 +6,20 @@ import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { addIcons } from "ionicons";
 import { DataService } from "src/app/shared/components/shared/dataservice";
 import { UserService } from "src/app/shared/service/user.service";
-import { Service } from "src/app/shared/shared";
+import { Edge, Service } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
+import { StringUtils } from "src/app/shared/utils/string/string.utils";
+import { SharedAutarchy } from "../common/autarchy/shared/shared";
+import { SharedGrid } from "../common/grid/shared/shared";
+import { SharedSelfConsumption } from "../common/selfconsumption/shared/shared";
+import { SharedGridOptimizedCharge } from "../Controller/Ess/GridOptimizedCharge/shared/shared";
+import { SharedControllerEssTimeOfUseTariff } from "../Controller/Ess/TimeOfUseTariff/shared/shared";
+import { SharedControllerPeakShaving } from "../Controller/peak-shaving/shared/shared";
 import { LiveDataService } from "../livedataservice";
 import { Fena } from "./fena.type";
 import de from "./i18n/de.json";
 import en from "./i18n/en.json";
+import nl from "./i18n/nl.json";
 
 @Component({
     selector: "oe-fena",
@@ -42,8 +50,6 @@ export class FenaComponent implements OnDestroy {
         },
     );
 
-    private readonly areTranslationsLoaded = signal<boolean>(false);
-
     private readonly plainMessages = computed<Fena.Message[]>(() => {
         const areTranslationsLoaded = this.areTranslationsLoaded();
         if (!areTranslationsLoaded) {
@@ -57,8 +63,9 @@ export class FenaComponent implements OnDestroy {
             return [];
         }
 
-        return edge.createFenaMessages(this.injector);
+        return FenaComponent.createFenaMessages(edge, this.injector);
     });
+    private readonly areTranslationsLoaded = signal<boolean>(false);
 
     private readonly userService = inject(UserService);
     private readonly service = inject(Service);
@@ -66,7 +73,7 @@ export class FenaComponent implements OnDestroy {
     private readonly injector = inject(Injector);
 
     constructor() {
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+        Language.normalizeAdditionalTranslationFiles({ de: de, en: en, nl: nl }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {
                 this.translate.setTranslation(lang, translation, shouldMerge);
             }
@@ -90,6 +97,78 @@ export class FenaComponent implements OnDestroy {
         addIcons({
             "oe-fena": "icons/common/fena.svg",
         });
+    }
+
+    public static createFenaMessages(edge: Edge, injector: Injector): Fena.Message[] {
+        const translate = injector.get(TranslateService);
+        const config = edge.getConfigSignal()();
+        const widgetNames: string[] = [
+            ...(config?.widgets?.classes ?? []),
+            ...(config?.widgets?.list ?? []).map((widget) => widget.name),
+        ];
+
+        if (
+            StringUtils.isNotInArr(edge.id, [
+                "fems4",
+                "fems666",
+                "fems888",
+                "fems3800",
+                "fems10004",
+                "fems10303",
+                "fems58732",
+                "fems59509",
+                "fems72127",
+                "fems72317",
+                "fems72800",
+                "fems73475",
+                "fems74326",
+                "fems82085",
+                "fems83584",
+                "fems86450",
+                "fems86876",
+                "fems90206",
+                "fems86287",
+            ])
+        ) {
+            return [];
+        }
+
+        return (
+            widgetNames
+                .flatMap((widgetName): Fena.Message[] => {
+                    switch (widgetName) {
+                        case "Common_Autarchy":
+                            return SharedAutarchy.getFenaMessages(translate, config, injector);
+                        case "Common_Selfconsumption":
+                            return SharedSelfConsumption.getFenaMessages(translate, config, injector);
+                        case "Grid":
+                            return SharedGrid.getFenaMessages(translate);
+                        case "Controller.Asymmetric.PeakShaving":
+                        case "Controller.Symmetric.PeakShaving":
+                        case "Controller.TimeslotPeakshaving":
+                            return SharedControllerPeakShaving.getFenaMessages(widgetName, config, translate);
+                        case "Controller.Ess.GridOptimizedCharge":
+                            return SharedGridOptimizedCharge.getFenaMessages(config, translate, injector);
+                        case "Controller.Ess.Time-Of-Use-Tariff":
+                            return SharedControllerEssTimeOfUseTariff.getFenaMessages(config, translate, injector);
+                        default:
+                            return [];
+                    }
+                })
+
+                /** Sort the Fena messages by individual priority and then for same priorities by category priorities. */
+                .sort((first, second) => {
+                    const priority = first.getPriority() - second.getPriority();
+                    if (priority !== 0) {
+                        return priority;
+                    }
+
+                    return (
+                        Fena.CATEGORIES.find((category) => category.name === first.getCategory())!.priority -
+                        Fena.CATEGORIES.find((category) => category.name === second.getCategory())!.priority
+                    );
+                })
+        );
     }
 
     ngOnDestroy() {

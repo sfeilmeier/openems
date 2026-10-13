@@ -14,7 +14,7 @@
           </ion-label>
         </ion-item>
       </ion-card-header>
-      @for (batteryForm of batterySettingsForms; track batteryForm; let i = $index) {
+      @for (batteryForm of batterySettingsForms; track i; let i = $index) {
         @if (batterySettingsForms.length > 1) {
           <ion-card-header>
             <ion-item lines="none">
@@ -89,7 +89,7 @@
             <ion-text>{{ "INSTALLATION.PROTOCOL_SERIAL_NUMBERS.SETUP_NOTE" | translate }}</ion-text>
           </ion-card-content>
         </ion-card>
-        @for (form of forms; track form; let i = $index) {
+        @for (form of forms; track i; let i = $index) {
           <ion-card>
             <ion-card-header>
               <ion-item>

@@ -70,18 +70,14 @@ public class BatteryProtectionDefinition implements io.openems.edge.battery.prot
 	@Override
 	public PolyLine getChargeSocToPercent() {
 		return PolyLine.create() //
-				.addPoint(94, 1.0) //
-				.addPoint(95, 0.0) //
+				.addPoint(99, 1.0) //
+				.addPoint(100, 0.0) //
 				.build();
-
 	}
 
 	@Override
 	public PolyLine getDischargeSocToPercent() {
-		return PolyLine.create() //
-				.addPoint(6, 1.0) //
-				.addPoint(5, 0.0) //
-				.build();
+		return PolyLine.empty();
 	}
 
 	@Override

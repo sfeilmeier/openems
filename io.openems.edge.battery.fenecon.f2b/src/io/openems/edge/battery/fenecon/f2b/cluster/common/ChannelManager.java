@@ -40,7 +40,7 @@ public class ChannelManager extends AbstractChannelListenerManager {
 	 * @param cluster   the battery f2b cluster {@link BatteryFeneconF2bCluster}
 	 */
 	public void activate(List<BatteryFeneconF2b> batteries, BatteryFeneconF2bCluster cluster) {
-		this.calculate(INTEGER_AVG, batteries, Battery.ChannelId.SOC);
+		this.calculateSoc(batteries);
 		this.calculate(INTEGER_AVG, batteries, Battery.ChannelId.SOH);
 		this.calculate(INTEGER_AVG, batteries, BatteryFeneconF2b.ChannelId.AVG_CELL_TEMPERATURE);
 		this.calculate(INTEGER_SUM, batteries, Battery.ChannelId.CAPACITY);
@@ -98,6 +98,41 @@ public class ChannelManager extends AbstractChannelListenerManager {
 		};
 		for (var battery : batteries) {
 			this.addOnSetNextValueListener(battery, channelId, callback);
+		}
+	}
+
+	/**
+	 * Calculates the aggregated SOC for the cluster based on the average SOC of all
+	 * batteries.
+	 *
+	 * <p>
+	 * If the average SOC is greater than or equal to 50, the maximum SOC value
+	 * among all batteries is used. Otherwise, the minimum SOC value is used.
+	 *
+	 * @param batteries the List of {@link BatteryFeneconF2b}
+	 */
+	protected void calculateSoc(List<BatteryFeneconF2b> batteries) {
+		final Consumer<Value<Boolean>> callback = (value) -> {
+			var socList = batteries.stream()//
+					.map(Battery::getSoc)//
+					.filter(Value::isDefined)//
+					.map(Value::get)//
+					.toList();
+
+			var avgSoc = TypeUtils.averageInt(socList);
+			if (avgSoc == null) {
+				this.parent.getSocChannel().setNextValue(null);
+				return;
+			}
+
+			var result = avgSoc >= 50//
+					? socList.stream().max(Integer::compareTo).orElse(null)//
+					: socList.stream().min(Integer::compareTo).orElse(null);
+			this.parent.getSocChannel().setNextValue(result);
+		};
+
+		for (var battery : batteries) {
+			this.addOnSetNextValueListener(battery, Battery.ChannelId.SOC, callback);
 		}
 	}
 

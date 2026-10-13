@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.types.ChannelAddress;
+import io.openems.edge.aircooling.blueeplus.DummyBlueeplusImpl;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
@@ -15,6 +16,7 @@ import io.openems.edge.firealarmsystem.hekatron.DummyHekatronB9X2Impl;
 import io.openems.edge.fluidcooling.hydac.DummyHydacImpl;
 import io.openems.edge.io.test.DummyCustomInputOutput;
 import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
+import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 public class SystemFeneconIndustrialXlImplTest {
 

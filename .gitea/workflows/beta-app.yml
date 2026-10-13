@@ -143,7 +143,7 @@ jobs:
 
   cleanup:
     runs-on: ubuntu-latest
-    needs: [build-android-app, upload, create-android-release]
+    needs: [build-android-app, upload, release-android-app]
     if: always()
     continue-on-error: true
     steps:

@@ -1,5 +1,32 @@
 [
     {
+        "version": "2026.10.1",
+        "entries": {
+            "de": [
+                "FENECON App: Neue Seite \"Fahrplan\" in der Hauptnavigation.",
+                "Inbetriebnahmeassistent: Die letzte Sitzung wird bei Aktualisieren nun zuverlässiger wiederhergestellt; die Seite \"Vorsicherung Hausanschlusszähler\" ist nun auch für Commercial 50 und 100 verfügbar; die Konfigurationsübernahme ins FEMS liefert detailliertere Fehlermeldungen.",
+                "FENECON Home 30: Einspeisebegrenzung von mehr als 30 kW wird unterstützt (ein Firmware-Update am Wechselrichter ist erforderlich).",
+                "FENECON Commercial 92 (auch Cluster): Unterstützung für Janitza-Netzzähler (Modbus/TCP, Modbus/RTU) in der Inbetriebnahme.",
+                "FENECON Commercial 100: Fehlerbehebung bei Systemen mit 2 Batterieabgängen.",
+                "Die Status-LED am Batterieturm ist jetzt für Commercial 50, Commercial 92, Commercial 92 Cluster, Commercial 100 aktiviert.",
+                "FENECON Industrial XL: Verbessertes Start-/Stop-Verhalten der Batterie.",
+                "FEMS App SG-Ready Wärmepumpe: Fahrplan, Grundmodus sind jetzt öffentlich freigegeben.",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">BETA-Feldtest E-Mobility</a>: Verbesserte Anzeige der Phasenumschaltung für Hardy-Barth-Ladestationen; Fehlerbehebungen im App Center beim Wechsel zwischen BETA-Test, Standard-App."
+            ],
+            "en": [
+                "FENECON App: New \"Schedule\" page in the main navigation.",
+                "Commissioning assistant: The last session is now restored more reliably when refreshing; the \"Grid connection meter pre-insurance\" page is now also available for Commercial 50 and 100; transferring the configuration to FEMS now provides more detailed error messages.",
+                "FENECON Home 30: Feed-in limitation above 30 kW is now supported (a firmware update of the inverter is required).",
+                "FENECON Commercial 92 (including Cluster): Support for Janitza grid meters (Modbus/TCP, Modbus/RTU) during commissioning.",
+                "FENECON Commercial 100: Bug fix for systems with 2 battery circuits.",
+                "The status LED on the battery tower is now enabled for Commercial 50, Commercial 92, Commercial 92 Cluster, Commercial 100.",
+                "FENECON Industrial XL: Improved battery start/stop behavior.",
+                "FEMS App SG-Ready Heat Pump: Schedule, basic mode are now publicly released.",
+                "<a class=\"ion-link\" target=\"_blank\" href=\"https://docs.fenecon.de/de/fems/change_log_beta_test/change_log_full.html\">E-Mobility beta field test</a>: Improved display of phase switching for Hardy-Barth charging stations; bug fixes in the App Center when switching between beta test, standard app."
+            ]
+        }
+    },
+    {
         "version": "2026.9.4",
         "entries": {
             "de": [

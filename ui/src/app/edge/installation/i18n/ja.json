@@ -1,0 +1,240 @@
+{
+    "INSTALLATION": {
+        "ALERTING_INFO": "システムが一定時間オフラインになった場合やエラーを報告した場合に備えて、設置者としてEメール通知を設定してください。メッセージは、稼働開始時に入力されたEメールアドレスに送信されます。",
+        "OFFLINE": "オフライン",
+        "ENABLE_MPPT": "MPPT {{ mpptNumber }} 有効",
+        "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
+            "MODE": "モード",
+            "RANGE": "範囲 [{{min}},{{max}}] {{unit}}",
+            "TITLE": "VDE 4110 設定",
+            "POWER": "{{value}} 有効電力",
+            "REACTIVE_POWER": "{{value}} 無効電力",
+            "GROUPS": {
+                "ACTIVE_POWER_MODE": "有効電力モードの設定",
+                "REACTIVE_POWER_MODE": "無効電力モードの設定",
+                "PROTECTION": "保護パラメータ",
+                "CONNECTION": "接続パラメータ",
+                "VOLTAGE_RIDE_THROUGH": "電圧ライドスルー",
+                "FREQUENCY_RIDE_THROUGH": "周波数ライドスルー"
+            },
+            "ACTIVE_POWER_MODE": {
+                "OUTPUT_ACTIVE_POWER": "出力有効電力",
+                "POWER_GRADIENT": "出力勾配",
+                "PF_OVER_FREQUENCY": {
+                    "ENABLE": "過周波数放電用のP(F)カーブ（周波数カーブ）",
+                    "ENABLE_DESC": "P(F)カーブを有効/無効にする",
+                    "START_POINT": "過周波数開始点",
+                    "SLOPE": "過周波数出力低下勾配",
+                    "DELAY_TIME": "応答遅延時間",
+                    "DEACTIVATION_THRESHOLD_FSTOP": "無効化しきい値 Fstop",
+                    "HYSTERESIS_POINT": "周波数ヒステリシス",
+                    "DELAY_WAITING_TIME": "遅延待機時間",
+                    "HYSTERESIS_SLOPE": "ヒステリシス出力回復勾配"
+                },
+                "PF_UNDER_FREQUENCY": {
+                    "ENABLE": "低周波数負荷用のP(F)カーブ（周波数出力カーブ）",
+                    "ENABLE_DESC": "P(F)カーブを有効/無効にする",
+                    "THRESHOLD": "低周波数しきい値",
+                    "SLOPE": "低周波数勾配に対する出力応答",
+                    "DELAY_TIME": "応答遅延時間",
+                    "DEACTIVATION_THRESHOLD_FSTOP": "無効化しきい値 Fstop",
+                    "DEACTIVATION_THRESHOLD_FSTOP_DESC": "無効化しきい値を有効/無効にする",
+                    "HYSTERESIS_POINT": "周波数ヒステリシス",
+                    "DELAY_WAITING_TIME": "遅延待機時間",
+                    "HYSTERESIS_SLOPE": "ヒステリシス出力回復勾配"
+                },
+                "PU_CURVE": {
+                    "ENABLE": "P(U)カーブ（電圧出力カーブ）",
+                    "ENABLE_DESC": "P(U)カーブを有効/無効にする",
+                    "RESPONSE_MODE": "出力応答モード",
+                    "PT1_TIME_CONSTANT": "PT-1ローパスフィルタ時定数",
+                    "PT1_POWER_GRADIENT": "出力勾配"
+                }
+            },
+            "REACTIVE_POWER_MODE": {
+                "MODE": "無効電力モード",
+                "MODE_DESC": "無効電力モードの選択",
+                "OPTIONS": {
+                    "NONE": "未選択",
+                    "FIX_PF": "Fix Pf",
+                    "FIX_Q": "Fix Q",
+                    "QU_CURVE": "Q(U)カーブ",
+                    "COSPHIP_CURVE": "CosPhi(P)カーブ",
+                    "QP_CURVE": "Q(P)カーブ"
+                },
+                "FIX_PF": {
+                    "POWER_FACTOR": "力率",
+                    "POWER_FACTOR_DESC": "範囲 [0.8,1]"
+                },
+                "FIX_Q": {
+                    "REACTIVE_POWER": "無効電力"
+                },
+                "QU_CURVE": {
+                    "VOLTAGE_DEAD_BAND": "電圧不感帯",
+                    "OVEREXCITED_SLOPE": "過励磁勾配",
+                    "UNDEREXCITED_SLOPE": "不足励磁勾配",
+                    "TIME_CONSTANT": "時定数",
+                    "EXTENDED_FUNCTIONS": "拡張機能",
+                    "LOCK_IN_POWER": "ロックイン電圧",
+                    "LOCK_OUT_POWER": "ロックアウト電圧",
+                    "VOLTAGE": "V{{number}} 電圧",
+                    "ACTIVE_POWER": "V{{number}} 有効電力",
+                    "MODE": {
+                        "STANDARD_MODE": "基本モード",
+                        "SLOPE_MODE": "勾配モード"
+                    }
+                },
+                "COSPHIP_CURVE": {
+                    "OVEREXCITED_SLOPE": "過励磁勾配",
+                    "UNDEREXCITED_SLOPE": "不足励磁勾配",
+                    "COS_PHI": "{{value}} cos φ",
+                    "POWER": "{{value}} 出力",
+                    "COS_PHI_DESC": "範囲 [-1000, -800] および [800, 1000]",
+                    "TIME_CONSTANT": "時定数",
+                    "EXTENDED_FUNCTIONS": "拡張機能",
+                    "EXTENDED_FUNCTIONS_DESC": "拡張機能を有効/無効にする",
+                    "LOCK_IN_VOLT": "ロックイン電圧",
+                    "LOCK_OUT_VOLT": "ロックアウト電圧",
+                    "INVALID_RANGE": "値は [-1000, -800] および [800, 1000] の範囲内である必要があります"
+                },
+                "QP_CURVE": {
+                    "OVEREXCITED_SLOPE": "過励磁勾配",
+                    "UNDEREXCITED_SLOPE": "不足励磁勾配",
+                    "TIME_CONSTANT": "時定数"
+                }
+            },
+            "PROTECTION": {
+                "OVERVOLTAGE_TRIGGER": "過電圧トリガー値（段階 {{stage}}）",
+                "OVERVOLTAGE_TRIP_TIME": "過電圧トリップ時間（段階 {{stage}}）",
+                "UNDERVOLTAGE_TRIP_VALUE": "低電圧トリップ値（段階 {{stage}}）",
+                "UNDERVOLTAGE_TRIP_TIME": "低電圧トリップ時間（段階 {{stage}}）",
+                "TEN_MIN_OVERVOLTAGE_THRESHOLD": "10分間過電圧トリップしきい値",
+                "TEN_MIN_OVERVOLTAGE_TIME": "10分間過電圧トリップ時間",
+                "OVERFREQUENCY_TRIGGER": "過周波数トリガー値（段階 {{stage}}）",
+                "OVERFREQUENCY_TRIP_TIME": "過周波数トリップ時間（段階 {{stage}}）",
+                "UNDERFREQUENCY_TRIP_VALUE": "低周波数トリップ値（段階 {{stage}}）",
+                "UNDERFREQUENCY_TRIP_TIME": "低周波数トリップ時間（段階 {{stage}}）"
+            },
+            "CONNECTION": {
+                "RAMP_UP_UPPER_VOLTAGE": "立ち上げ：上限電圧",
+                "RAMP_UP_LOWER_VOLTAGE": "立ち上げ：下限電圧",
+                "RAMP_UP_UPPER_FREQUENCY": "立ち上げ：上限周波数",
+                "RAMP_UP_LOWER_FREQUENCY": "立ち上げ：下限周波数",
+                "RAMP_UP_OBSERVATION_TIME": "立ち上げ：観測時間",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE": "ソフト立ち上げ勾配",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE_DESC": "ソフト立ち上げ勾配を有効/無効にする",
+                "SOFT_RAMP_UP_GRADIENT_VALUE": "ソフト立ち上げ勾配値",
+                "RECONNECTION_UPPER_VOLTAGE": "再接続：上限電圧",
+                "RECONNECTION_LOWER_VOLTAGE": "再接続：下限電圧",
+                "RECONNECTION_UPPER_FREQUENCY": "再接続：上限周波数",
+                "RECONNECTION_LOWER_FREQUENCY": "再接続：下限周波数",
+                "RECONNECTION_OBSERVATION_TIME": "再接続：観測時間",
+                "RECONNECTION_GRADIENT_ENABLE": "再接続勾配",
+                "RECONNECTION_GRADIENT_ENABLE_DESC": "再接続勾配を有効/無効にする",
+                "RECONNECTION_GRADIENT_VALUE": "再接続勾配値"
+            },
+            "VOLTAGE_RIDE_THROUGH": {
+                "LVRT": {
+                    "ENABLE": "LVRT",
+                    "ENABLE_DESC": "低電圧ライドスルーを有効/無効にする",
+                    "UV_VOLTAGE": "低電圧 {{stage}} 電圧",
+                    "UV_TIME": "低電圧 {{stage}} 時間",
+                    "ENTER_THRESHOLD": "LVRT突入しきい値",
+                    "EXIT_ENDPOINT": "LVRT終了ポイント",
+                    "K1_SLOPE": "K1勾配",
+                    "ZERO_CURRENT_ENABLE": "ゼロ電流モード",
+                    "ZERO_CURRENT_ENABLE_DESC": "ゼロ電流モードを有効/無効にする",
+                    "ZERO_CURRENT_THRESHOLD": "突入しきい値"
+                },
+                "HVRT": {
+                    "ENABLE": "HVRT",
+                    "ENABLE_DESC": "高電圧ライドスルーを有効/無効にする",
+                    "OV_VOLTAGE": "過電圧 {{stage}} 電圧",
+                    "OV_TIME": "過電圧 {{stage}} 時間",
+                    "ENTER_THRESHOLD": "HVRT突入しきい値",
+                    "EXIT_ENDPOINT": "HVRT終了ポイント",
+                    "K2_SLOPE": "K2勾配",
+                    "ZERO_CURRENT_ENABLE": "ゼロ電流モード",
+                    "ZERO_CURRENT_ENABLE_DESC": "ゼロ電流モードを有効/無効にする",
+                    "ZERO_CURRENT_THRESHOLD": "突入しきい値"
+                },
+                "CURRENT_DISTRIBUTION_MODE": "電流分配モード",
+                "OPTIONS": {
+                    "REACTIVE_PRIORITY": "無効電流優先モード",
+                    "ACTIVE_PRIORITY": "有効電流優先モード",
+                    "CONSTANT_CURRENT": "定電流モード",
+                    "DEACTIVATE": "無効化",
+                    "GRADIENT_CONTROL": "勾配制御",
+                    "PT_1_BEHAVIOUR": "PT-1動作"
+                },
+                "ACTIVE_RECOVERY_MODE": "通過後の有効電力回復モード",
+                "REACTIVE_RECOVERY_MODE": "無効電力回復モード終了の通過",
+                "POWER_GRADIENT": "出力勾配",
+                "PT1_TIME_CONSTANT": "PT-1ローパスフィルタ時定数"
+            },
+            "FREQUENCY_RIDE_THROUGH": {
+                "ENABLE": "周波数ライドスルー",
+                "ENABLE_DESC": "周波数ライドスルーを有効/無効にする",
+                "UF_FREQUENCY": "低周波数 {{stage}} 周波数",
+                "UF_TIME": "低周波数 {{stage}} 時間",
+                "OF_FREQUENCY": "過周波数 {{stage}} 周波数",
+                "OF_TIME": "過周波数 {{stage}} 時間"
+            },
+            "SLOPE_RANGE": "乗算係数 [{{min}}, {{max}}]"
+        },
+        "CONFIGURATION_BATTERY_INPUTS": {
+            "TITLE": "電池入力の設定",
+            "BATTERY_INPUT": "電池入力 {{ key }}",
+            "INPUT_CONFIRMATION": "確認：入力が正しく接続されています",
+            "NUMBER_OF_BATTERY_INPUTS": "使用する電池入力の数"
+        },
+        "CONFIGURATION_EMERGENCY_RESERVE": {
+            "GENSET": {
+                "CONNECTED": "発電機は接続されていますか？",
+                "POWER": "定格出力",
+                "PREHEAT_TIME": "予熱時間",
+                "RUN_TIME": "運転時間",
+                "EMERGENCY_POWER_FUNCTION": "非常用発電機機能を有効にしますか？",
+                "BATTERY_CHARGING": "発電機からの電池充電を有効にしますか？",
+                "MAX_POWER": "最大充電出力（割合）",
+                "MAX_POWER_DESCRIPTION": "上記の利用可能な発電機定格出力に対する、電池を充電する割合。 [{{min}}, {{max}}] %",
+                "CHARGE_SOC_START": "発電機起動用の電池充電状態",
+                "CHARGE_SOC_START_DESCRIPTION": "発電機が起動する電池の充電状態。この値は、非常用予備として確保された充電状態を下回ることはできません。",
+                "CHARGE_SOC_END": "発電機停止用の電池充電状態",
+                "CHARGE_SOC_END_DESCRIPTION": "発電機が停止する電池の充電状態。"
+            }
+        },
+        "CONFIGURATION_EXECUTE": {
+            "COPY_ERROR": "エラーをコピー",
+            "ERROR_COPIED": "エラーをクリップボードにコピーしました",
+            "ERROR_DETAILS": "エラー詳細",
+            "ERROR_HEADLINE_CATEGORY_CONFLICT": "既存のシステムを先に削除してください",
+            "ERROR_HEADLINE_CONNECTION": "接続を確認して設定を再開してください",
+            "ERROR_HEADLINE_GENERIC": "エラーをコピーしてFENECONサポートに送ってください",
+            "ERROR_HEADLINE_INCOMPATIBLE_APP": "互換性のないアプリを先に削除してください",
+            "ERROR_HEADLINE_TIMEOUT": "接続を確認して設定を再開してください",
+            "ERROR_HINT_CATEGORY_CONFLICT": "このデバイスには別の統合システムがすでにインストールされています。統合システム（HomeやCommercialなど）は同時に1つしかインストールできません。",
+            "ERROR_HINT_CONNECTION": "デバイスへの接続が中断されました。ネットワーク/シリアル接続を確認してください。",
+            "ERROR_HINT_INCOMPATIBLE_APP": "このデバイスにインストールされたアプリが、このシステムのインストールを妨げています。App Centerから削除し、設定を再開してください。対象のアプリはエラー詳細に記載されています。",
+            "ERROR_HINT_STALE_INSTANCE": "デバイス上にこのシステムの以前のインストールの残骸が見つかり、現在のインストールを妨げています。自動的に削除できます。",
+            "ERROR_HINT_TIMEOUT": "デバイスが時間内に応答しませんでした。デバイスへの接続を確認してください。",
+            "ERROR_TITLE_CATEGORY_CONFLICT": "既存のシステムが見つかりました",
+            "ERROR_TITLE_CONNECTION": "接続が中断されました",
+            "ERROR_TITLE_INCOMPATIBLE_APP": "互換性のないアプリがインストールされています",
+            "ERROR_TITLE_STALE_INSTANCE": "以前のインストールの残骸が見つかりました",
+            "ERROR_TITLE_TIMEOUT": "タイムアウト",
+            "RESOLVE_CATEGORY_CONFLICT_BUTTON": "既存のシステムを削除して続行",
+            "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "自動削除できる競合するシステムが見つかりませんでした。App Centerから手動で削除してください。",
+            "RESOLVE_CATEGORY_CONFLICT_REMOVING": "既存のシステムを削除しています…",
+            "STATUS_CONFIGURING": "コンポーネントを設定中…",
+            "STATUS_FUNCTION_TEST": "設定が完了しました。機能テストを実行中…"
+        },
+        "PROTOCOL_FEED_IN_MANAGEMENT": {
+            "FIXED_COS_PHI": "固定値: Cos Phi 1"
+        },
+        "PROTOCOL_SERIAL_NUMBER": {
+            "BATTERY_COMMUNICATION_BOX": "電池通信ボックス",
+            "BATTERY_INPUT_TOWER": "電池入力 {{ batteryInput }} タワー {{ towerNumber }}"
+        }
+    }
+}

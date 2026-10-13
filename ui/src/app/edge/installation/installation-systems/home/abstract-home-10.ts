@@ -18,7 +18,7 @@ type Home10AppPv = {
 
 export abstract class AbstractHome10Ibn extends AbstractHomeIbn {
     public override readonly appAlias: string = "FENECON Home";
-    public override readonly appId: string = "App.FENECON.Home";
+    public override readonly systemAppId: string = "App.FENECON.Home";
     public override readonly maxNumberOfModulesPerTower: number = 10;
     public override readonly maxNumberOfPvStrings: number = 2;
     public override readonly maxNumberOfMppt: number = 2;

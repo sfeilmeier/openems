@@ -32,6 +32,7 @@ public class TestModeEssHandler extends StateHandler<State, Context> {
 		final var system = context.getParent();
 		system._setInEssTestMode(true);
 		this.testModeEssState = new TestModeEssState(TestModeEssSubState.ESS_START);
+		this.essQueue.clear();
 		final var startStoppableEss = system.getEsssList().stream() //
 				.filter(StartStoppable.class::isInstance) //
 				.map(StartStoppable.class::cast) //
@@ -72,14 +73,14 @@ public class TestModeEssHandler extends StateHandler<State, Context> {
 		}
 
 		var ess = this.essQueue.peek();
-		var essCLuster = context.ess;
+		var essCluster = context.ess;
 		return switch (this.testModeEssState.subState) {
 		case ESS_START -> {
 			if (ess.isStarted()) {
 				this.timeout.start(context.clock);
 				yield TestModeEssSubState.WAIT_5_SECOND;
 			}
-			if (essCLuster instanceof StartStoppable e) {
+			if (essCluster instanceof StartStoppable e) {
 				e.setStartStop(StartStop.UNDEFINED);
 			}
 			ess.start();

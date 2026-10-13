@@ -6,6 +6,7 @@ import io.openems.common.channel.Level;
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.test.TestUtils;
 import io.openems.common.types.ChannelAddress;
+import io.openems.edge.aircooling.blueeplus.DummyBlueeplusImpl;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
@@ -17,6 +18,7 @@ import io.openems.edge.fluidcooling.hydac.DummyHydacImpl;
 import io.openems.edge.io.test.DummyCustomInputOutput;
 import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
+import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 public class AllEssHasFaultTest {
 	private static final ChannelAddress STATE_MACHINE = new ChannelAddress("system0", "StateMachine");

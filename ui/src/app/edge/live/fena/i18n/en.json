@@ -16,6 +16,11 @@
                     "TURNED_OFF": "Tip: Grid-Optimized Charging can help reduce potential PV curtailment and extend the lifespan of your battery system. Would you like to enable it?",
                     "DELAYED_CHARGE": "Forecast: Your battery is currently charging at a maximum of {{maxPower}}&nbsp;W to reduce PV curtailment. It is expected to be fully charged by {{chargingEndTime}}.",
                     "DELAYED_CHARGE_WITH_ZERO": "Looking ahead: Your battery is currently pausing charging so it can store more solar power later and reduce PV curtailment."
+                },
+                "TIME_OF_USE_TARIFF": {
+                    "NEGATIVE_GRID_BUY_PRICE": "Currently, the price of electricity on the exchange is only {{priceWithUnit}}. Your system uses this low-cost energy and helps absorb excess grid electricity.",
+                    "CHARGE_FROM_GRID_ACTIVE": "Good timing: Your FENECON system is taking advantage of a low-price window, drawing electricity from the grid at {{priceWithUnit}} and storing it for later.",
+                    "DELAY_CHARGE_ACTIVE": "Smart: Your battery is currently delaying discharge, so low-price energy is available later, when electricity prices are higher."
                 }
             },
             "KPI": {

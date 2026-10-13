@@ -466,21 +466,21 @@ export namespace SharedGridOptimizedCharge {
         ]);
     }
 
-    export function getFormGroup(): FormGroup {
+    export function getFormGroup(component: EdgeConfig.Component): FormGroup {
         return new FormGroup({
             mode: new FormControl(null),
-            manualTargetTime: new FormControl(null),
+            manualTargetTime: new FormControl(component.getPropertyFromComponent("manualTargetTime")),
             delayChargeRiskLevel: new FormControl(null),
             delayChargeState: new FormControl(null),
         });
     }
 
-    export function isEnergySchedulerV2Enabled(config: EdgeConfig): boolean {
-        return config.getComponentSafely("_energy")?.getPropertyFromComponent("version") === "V2_ENERGY_SCHEDULABLE";
+    export function isEnergySchedulerV1Enabled(config: EdgeConfig): boolean {
+        return config.getComponentSafely("_energy")?.getPropertyFromComponent("version") === "V1_ESS_ONLY";
     }
 
     export function isDisabledByTimeOfUse(config: EdgeConfig, component: EdgeConfig.Component): boolean {
-        if (isEnergySchedulerV2Enabled(config) == false) {
+        if (isEnergySchedulerV1Enabled(config) === true) {
             return false;
         }
 
@@ -501,7 +501,7 @@ export namespace SharedGridOptimizedCharge {
     }
 
     export function isEeg2025Supported(config: EdgeConfig): boolean {
-        if (isEnergySchedulerV2Enabled(config) == false) {
+        if (isEnergySchedulerV1Enabled(config) === true) {
             return false;
         }
 
@@ -556,9 +556,9 @@ export namespace SharedGridOptimizedCharge {
         }
 
         const actionsPriorityAndCategory: {
-            category: ConstructorParameters<typeof Fena.Message>[0];
-            priority: ConstructorParameters<typeof Fena.Message>[1];
-            actions: ConstructorParameters<typeof Fena.Message>[4];
+            category: Fena.Message["category"];
+            priority: Fena.Message["priority"];
+            actions: Fena.Message["actions"];
         } = {
             category: "STORAGE",
             priority: 4,
@@ -586,25 +586,26 @@ export namespace SharedGridOptimizedCharge {
         }
 
         return [
-            new Fena.LiveMessage(
-                actionsPriorityAndCategory.category,
-                actionsPriorityAndCategory.priority,
-                actionsPriorityAndCategory.actions,
-                [
+            new Fena.LiveMessage({
+                category: actionsPriorityAndCategory.category,
+                priority: actionsPriorityAndCategory.priority,
+                actions: actionsPriorityAndCategory.actions,
+                channels: [
                     new ChannelAddress(gridOptimizedCharge.id, "DelayChargeMaximumChargeLimit"),
                     new ChannelAddress(gridOptimizedCharge.id, "TargetMinute"),
                     new ChannelAddress(gridOptimizedCharge.id, "_PropertyMode"),
                 ],
-                (currentData: CurrentData) => {
+                showCallback: (currentData: CurrentData) => {
                     const mode = currentData.allComponents[gridOptimizedCharge.id + "/_PropertyMode"];
-                    const targetMinute =currentData.allComponents[gridOptimizedCharge.id + "/TargetMinute"];
+                    const targetMinute = currentData.allComponents[gridOptimizedCharge.id + "/TargetMinute"];
                     return (
-                        mode != null && mode !== Mode.OFF &&
+                        mode != null &&
+                        mode !== Mode.OFF &&
                         targetMinute !== null &&
                         currentData.allComponents[gridOptimizedCharge.id + "/DelayChargeMaximumChargeLimit"] > 0
                     );
                 },
-                {
+                message: {
                     textCallback: (currentData: CurrentData) => {
                         const timeAndPower = getTimeAndPower(currentData, gridOptimizedCharge);
                         if (timeAndPower === null) {
@@ -617,26 +618,27 @@ export namespace SharedGridOptimizedCharge {
                         });
                     },
                 },
-            ),
-            new Fena.LiveMessage(
-                actionsPriorityAndCategory.category,
-                actionsPriorityAndCategory.priority,
-                actionsPriorityAndCategory.actions,
-                [
+            }),
+            new Fena.LiveMessage({
+                category: actionsPriorityAndCategory.category,
+                priority: actionsPriorityAndCategory.priority,
+                actions: actionsPriorityAndCategory.actions,
+                channels: [
                     new ChannelAddress(gridOptimizedCharge.id, "DelayChargeMaximumChargeLimit"),
                     new ChannelAddress(gridOptimizedCharge.id, "TargetMinute"),
                     new ChannelAddress(gridOptimizedCharge.id, "_PropertyMode"),
                 ],
-                (currentData: CurrentData) => {
+                showCallback: (currentData: CurrentData) => {
                     const mode = currentData.allComponents[gridOptimizedCharge.id + "/_PropertyMode"];
-                    const targetMinute =currentData.allComponents[gridOptimizedCharge.id + "/TargetMinute"];
+                    const targetMinute = currentData.allComponents[gridOptimizedCharge.id + "/TargetMinute"];
                     return (
-                        mode != null && mode !== Mode.OFF &&
+                        mode != null &&
+                        mode !== Mode.OFF &&
                         targetMinute !== null &&
                         currentData.allComponents[gridOptimizedCharge.id + "/DelayChargeMaximumChargeLimit"] === 0
                     );
                 },
-                {
+                message: {
                     textCallback: (currentData: CurrentData) => {
                         const timeAndPower = getTimeAndPower(currentData, gridOptimizedCharge);
                         if (timeAndPower === null) {
@@ -648,18 +650,18 @@ export namespace SharedGridOptimizedCharge {
                         );
                     },
                 },
-            ),
-            new Fena.LiveMessage(
-                actionsPriorityAndCategory.category,
-                actionsPriorityAndCategory.priority,
-                actionsPriorityAndCategory.actions,
-                [new ChannelAddress(gridOptimizedCharge.id, "_PropertyMode")],
-                (currentData: CurrentData) =>
+            }),
+            new Fena.LiveMessage({
+                category: actionsPriorityAndCategory.category,
+                priority: actionsPriorityAndCategory.priority,
+                actions: actionsPriorityAndCategory.actions,
+                channels: [new ChannelAddress(gridOptimizedCharge.id, "_PropertyMode")],
+                showCallback: (currentData: CurrentData) =>
                     currentData.allComponents[gridOptimizedCharge.id + "/_PropertyMode"] === Mode.OFF,
-                {
+                message: {
                     text: translate.instant("FENA.MESSAGES.STORAGE.GRID_OPTIMIZED_CHARGE.TURNED_OFF"),
                 },
-            ),
+            }),
         ];
     }
 }

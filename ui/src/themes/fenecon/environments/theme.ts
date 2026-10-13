@@ -2,10 +2,10 @@ import { TranslateService } from "@ngx-translate/core";
 import { NavigationCard } from "src/app/edge/live/navigation-info/navigation-info";
 import { Filter } from "src/app/index/filter/filter.component";
 import { User } from "src/app/shared/jsonrpc/shared";
-import { environment, Theme } from "src/environments";
+import { Environment, environment, Theme } from "src/environments";
 import { OemMeta } from "./oem-meta";
 
-export const theme = {
+export const theme: Omit<Environment, "url" | "backend" | "production" | "debugMode"> = {
     theme: "FENECON" as Theme,
 
     uiTitle: "FENECON Online-Monitoring",
@@ -131,5 +131,6 @@ export const theme = {
             },
         ],
     }),
+    ENVIRONMENT_PROVIDERS: [],
     ...OemMeta,
 };

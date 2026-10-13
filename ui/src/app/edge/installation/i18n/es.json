@@ -1,0 +1,240 @@
+{
+    "INSTALLATION": {
+        "ALERTING_INFO": "Como instalador, configura notificaciones por correo electrónico para cuando el FEMS esté sin conexión durante un determinado periodo de tiempo o informe de un error. El mensaje se envía a la dirección de correo electrónico indicada durante la puesta en servicio.",
+        "OFFLINE": "Sin conexión",
+        "ENABLE_MPPT": "MPPT {{ mpptNumber }} activo",
+        "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
+            "MODE": "Modo",
+            "RANGE": "Rango [{{min}},{{max}}] {{unit}}",
+            "TITLE": "Ajustes VDE 4110",
+            "POWER": "{{value}} Potencia activa",
+            "REACTIVE_POWER": "{{value}} Potencia reactiva",
+            "GROUPS": {
+                "ACTIVE_POWER_MODE": "Ajustes del modo de potencia activa",
+                "REACTIVE_POWER_MODE": "Ajustes del modo de potencia reactiva",
+                "PROTECTION": "Parámetros de protección",
+                "CONNECTION": "Parámetros de conexión",
+                "VOLTAGE_RIDE_THROUGH": "Ride-Through de tensión",
+                "FREQUENCY_RIDE_THROUGH": "Ride-Through de frecuencia"
+            },
+            "ACTIVE_POWER_MODE": {
+                "OUTPUT_ACTIVE_POWER": "Potencia activa de salida",
+                "POWER_GRADIENT": "Gradiente de potencia",
+                "PF_OVER_FREQUENCY": {
+                    "ENABLE": "Curva P(F) (curva de frecuencia) para la descarga en sobrefrecuencia",
+                    "ENABLE_DESC": "Activa/Desactiva la curva P(F)",
+                    "START_POINT": "Punto de inicio de sobrefrecuencia",
+                    "SLOPE": "Pendiente de reducción de potencia en sobrefrecuencia",
+                    "DELAY_TIME": "Tiempo de retardo de respuesta",
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Umbral de desactivación Fstop",
+                    "HYSTERESIS_POINT": "Histéresis de frecuencia",
+                    "DELAY_WAITING_TIME": "Tiempo de espera del retardo",
+                    "HYSTERESIS_SLOPE": "Pendiente de recuperación de potencia de la histéresis"
+                },
+                "PF_UNDER_FREQUENCY": {
+                    "ENABLE": "Curva P(F) (curva de frecuencia-potencia) para la carga en subfrecuencia",
+                    "ENABLE_DESC": "Activa/Desactiva la curva P(F)",
+                    "THRESHOLD": "Umbral de subfrecuencia",
+                    "SLOPE": "Respuesta de potencia al gradiente de subfrecuencia",
+                    "DELAY_TIME": "Tiempo de retardo de respuesta",
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Umbral de desactivación Fstop",
+                    "DEACTIVATION_THRESHOLD_FSTOP_DESC": "Activa/Desactiva el umbral de desactivación",
+                    "HYSTERESIS_POINT": "Histéresis de frecuencia",
+                    "DELAY_WAITING_TIME": "Tiempo de espera del retardo",
+                    "HYSTERESIS_SLOPE": "Pendiente de recuperación de potencia de la histéresis"
+                },
+                "PU_CURVE": {
+                    "ENABLE": "Curva P(U) (curva de tensión-potencia)",
+                    "ENABLE_DESC": "Activa/Desactiva la curva P(U)",
+                    "RESPONSE_MODE": "Modo de respuesta de salida",
+                    "PT1_TIME_CONSTANT": "Constante de tiempo del filtro paso bajo PT-1",
+                    "PT1_POWER_GRADIENT": "Gradiente de potencia"
+                }
+            },
+            "REACTIVE_POWER_MODE": {
+                "MODE": "Modo de potencia reactiva",
+                "MODE_DESC": "Selección del modo de potencia reactiva",
+                "OPTIONS": {
+                    "NONE": "No seleccionado",
+                    "FIX_PF": "Fix Pf",
+                    "FIX_Q": "Fix Q",
+                    "QU_CURVE": "Curva Q(U)",
+                    "COSPHIP_CURVE": "Curva CosPhi(P)",
+                    "QP_CURVE": "Curva Q(P)"
+                },
+                "FIX_PF": {
+                    "POWER_FACTOR": "Factor de potencia",
+                    "POWER_FACTOR_DESC": "Rango [0,8,1]"
+                },
+                "FIX_Q": {
+                    "REACTIVE_POWER": "Potencia reactiva"
+                },
+                "QU_CURVE": {
+                    "VOLTAGE_DEAD_BAND": "Banda muerta de tensión",
+                    "OVEREXCITED_SLOPE": "Pendiente en sobreexcitación",
+                    "UNDEREXCITED_SLOPE": "Pendiente en subexcitación",
+                    "TIME_CONSTANT": "Constante de tiempo",
+                    "EXTENDED_FUNCTIONS": "Funciones ampliadas",
+                    "LOCK_IN_POWER": "Tensión de Lock-in",
+                    "LOCK_OUT_POWER": "Tensión de Lock-out",
+                    "VOLTAGE": "V{{number}} tensión",
+                    "ACTIVE_POWER": "V{{number}} potencia activa",
+                    "MODE": {
+                        "STANDARD_MODE": "Modo básico",
+                        "SLOPE_MODE": "Modo de pendiente"
+                    }
+                },
+                "COSPHIP_CURVE": {
+                    "OVEREXCITED_SLOPE": "Pendiente en sobreexcitación",
+                    "UNDEREXCITED_SLOPE": "Pendiente en subexcitación",
+                    "COS_PHI": "{{value}} cos φ",
+                    "POWER": "{{value}} potencia",
+                    "COS_PHI_DESC": "Rango [-1000, -800] y [800, 1000]",
+                    "TIME_CONSTANT": "Constante de tiempo",
+                    "EXTENDED_FUNCTIONS": "Funciones ampliadas",
+                    "EXTENDED_FUNCTIONS_DESC": "Activa/Desactiva las funciones ampliadas",
+                    "LOCK_IN_VOLT": "Tensión de Lock-in",
+                    "LOCK_OUT_VOLT": "Tensión de Lock-out",
+                    "INVALID_RANGE": "El valor debe estar en el rango [-1000, -800] y [800, 1000]"
+                },
+                "QP_CURVE": {
+                    "OVEREXCITED_SLOPE": "Pendiente en sobreexcitación",
+                    "UNDEREXCITED_SLOPE": "Pendiente en subexcitación",
+                    "TIME_CONSTANT": "Constante de tiempo"
+                }
+            },
+            "PROTECTION": {
+                "OVERVOLTAGE_TRIGGER": "Valor de disparo por sobretensión (etapa {{stage}})",
+                "OVERVOLTAGE_TRIP_TIME": "Tiempo de disparo por sobretensión (etapa {{stage}})",
+                "UNDERVOLTAGE_TRIP_VALUE": "Valor de disparo por subtensión (etapa {{stage}})",
+                "UNDERVOLTAGE_TRIP_TIME": "Tiempo de disparo por subtensión (etapa {{stage}})",
+                "TEN_MIN_OVERVOLTAGE_THRESHOLD": "Umbral de disparo por sobretensión de 10 minutos",
+                "TEN_MIN_OVERVOLTAGE_TIME": "Tiempo de disparo por sobretensión de 10 minutos",
+                "OVERFREQUENCY_TRIGGER": "Valor de disparo por sobrefrecuencia (etapa {{stage}})",
+                "OVERFREQUENCY_TRIP_TIME": "Tiempo de disparo por sobrefrecuencia (etapa {{stage}})",
+                "UNDERFREQUENCY_TRIP_VALUE": "Valor de disparo por subfrecuencia (etapa {{stage}})",
+                "UNDERFREQUENCY_TRIP_TIME": "Tiempo de disparo por subfrecuencia (etapa {{stage}})"
+            },
+            "CONNECTION": {
+                "RAMP_UP_UPPER_VOLTAGE": "Arranque: tensión superior",
+                "RAMP_UP_LOWER_VOLTAGE": "Arranque: tensión inferior",
+                "RAMP_UP_UPPER_FREQUENCY": "Arranque: frecuencia superior",
+                "RAMP_UP_LOWER_FREQUENCY": "Arranque: frecuencia inferior",
+                "RAMP_UP_OBSERVATION_TIME": "Arranque: tiempo de observación",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE": "Gradiente de arranque suave",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE_DESC": "Activa/Desactiva el gradiente de arranque suave",
+                "SOFT_RAMP_UP_GRADIENT_VALUE": "Valor del gradiente de arranque suave",
+                "RECONNECTION_UPPER_VOLTAGE": "Reconexión: tensión superior",
+                "RECONNECTION_LOWER_VOLTAGE": "Reconexión: tensión inferior",
+                "RECONNECTION_UPPER_FREQUENCY": "Reconexión: frecuencia superior",
+                "RECONNECTION_LOWER_FREQUENCY": "Reconexión: frecuencia inferior",
+                "RECONNECTION_OBSERVATION_TIME": "Reconexión: tiempo de observación",
+                "RECONNECTION_GRADIENT_ENABLE": "Gradiente de reconexión",
+                "RECONNECTION_GRADIENT_ENABLE_DESC": "Activa/Desactiva el gradiente de reconexión",
+                "RECONNECTION_GRADIENT_VALUE": "Valor del gradiente de reconexión"
+            },
+            "VOLTAGE_RIDE_THROUGH": {
+                "LVRT": {
+                    "ENABLE": "LVRT",
+                    "ENABLE_DESC": "Activa/Desactiva Low Voltage Ride Through",
+                    "UV_VOLTAGE": "Subtensión {{stage}} tensión",
+                    "UV_TIME": "Subtensión {{stage}} tiempo",
+                    "ENTER_THRESHOLD": "Umbral de entrada en LVRT",
+                    "EXIT_ENDPOINT": "Punto de salida de LVRT",
+                    "K1_SLOPE": "Pendiente K1",
+                    "ZERO_CURRENT_ENABLE": "Modo de corriente cero",
+                    "ZERO_CURRENT_ENABLE_DESC": "Activa/Desactiva el modo de corriente cero",
+                    "ZERO_CURRENT_THRESHOLD": "Umbral de entrada"
+                },
+                "HVRT": {
+                    "ENABLE": "HVRT",
+                    "ENABLE_DESC": "Activa/Desactiva High Voltage Ride Through",
+                    "OV_VOLTAGE": "Sobretensión {{stage}} tensión",
+                    "OV_TIME": "Sobretensión {{stage}} tiempo",
+                    "ENTER_THRESHOLD": "Umbral de entrada en HVRT",
+                    "EXIT_ENDPOINT": "Punto de salida de HVRT",
+                    "K2_SLOPE": "Pendiente K2",
+                    "ZERO_CURRENT_ENABLE": "Modo de corriente cero",
+                    "ZERO_CURRENT_ENABLE_DESC": "Activa/Desactiva el modo de corriente cero",
+                    "ZERO_CURRENT_THRESHOLD": "Umbral de entrada"
+                },
+                "CURRENT_DISTRIBUTION_MODE": "Modo de distribución de corriente",
+                "OPTIONS": {
+                    "REACTIVE_PRIORITY": "Modo de prioridad de corriente reactiva",
+                    "ACTIVE_PRIORITY": "Modo de prioridad de corriente activa",
+                    "CONSTANT_CURRENT": "Modo de corriente constante",
+                    "DEACTIVATE": "Desactivar",
+                    "GRADIENT_CONTROL": "Control de gradiente",
+                    "PT_1_BEHAVIOUR": "Comportamiento PT-1"
+                },
+                "ACTIVE_RECOVERY_MODE": "Modo de recuperación de potencia activa tras la sobrepasación",
+                "REACTIVE_RECOVERY_MODE": "Transición del fin del modo de recuperación de potencia reactiva",
+                "POWER_GRADIENT": "Gradiente de potencia",
+                "PT1_TIME_CONSTANT": "Constante de tiempo del filtro paso bajo PT-1"
+            },
+            "FREQUENCY_RIDE_THROUGH": {
+                "ENABLE": "Ride-Through de frecuencia",
+                "ENABLE_DESC": "Activa/Desactiva el Ride-Through de frecuencia",
+                "UF_FREQUENCY": "Subfrecuencia {{stage}} frecuencia",
+                "UF_TIME": "Subfrecuencia {{stage}} tiempo",
+                "OF_FREQUENCY": "Sobrefrecuencia {{stage}} frecuencia",
+                "OF_TIME": "Sobrefrecuencia {{stage}} tiempo"
+            },
+            "SLOPE_RANGE": "Factor de multiplicación [{{min}}, {{max}}]"
+        },
+        "CONFIGURATION_BATTERY_INPUTS": {
+            "TITLE": "Configuración de las entradas de batería",
+            "BATTERY_INPUT": "Entrada de batería {{ key }}",
+            "INPUT_CONFIRMATION": "Confirmación: entradas conectadas correctamente",
+            "NUMBER_OF_BATTERY_INPUTS": "Número de entradas de batería utilizadas"
+        },
+        "CONFIGURATION_EMERGENCY_RESERVE": {
+            "GENSET": {
+                "CONNECTED": "¿Generador conectado?",
+                "POWER": "Potencia nominal",
+                "PREHEAT_TIME": "Tiempo de precalentamiento",
+                "RUN_TIME": "Tiempo de funcionamiento",
+                "EMERGENCY_POWER_FUNCTION": "¿Debe activarse la función de generador de emergencia?",
+                "BATTERY_CHARGING": "¿Activar la carga de la batería desde el generador?",
+                "MAX_POWER": "Potencia de carga máxima en porcentaje",
+                "MAX_POWER_DESCRIPTION": "Porcentaje de la potencia nominal disponible del generador indicada anteriormente con el que se cargará la batería. [{{min}}, {{max}}] %",
+                "CHARGE_SOC_START": "Nivel de carga de la batería para arrancar el generador",
+                "CHARGE_SOC_START_DESCRIPTION": "Estado de carga de la batería al que se arranca el generador. El valor no puede ser inferior al estado de carga especificado para la reserva de emergencia.",
+                "CHARGE_SOC_END": "Nivel de carga de la batería para detener el generador",
+                "CHARGE_SOC_END_DESCRIPTION": "Estado de carga de la batería al que se detiene el generador."
+            }
+        },
+        "CONFIGURATION_EXECUTE": {
+            "COPY_ERROR": "Copiar error",
+            "ERROR_COPIED": "Error copiado al portapapeles",
+            "ERROR_DETAILS": "Detalles del error",
+            "ERROR_HEADLINE_CATEGORY_CONFLICT": "Elimina primero el sistema existente",
+            "ERROR_HEADLINE_CONNECTION": "Comprueba la conexión y vuelve a iniciar la configuración",
+            "ERROR_HEADLINE_GENERIC": "Copia el error y envíalo al soporte de FENECON",
+            "ERROR_HEADLINE_INCOMPATIBLE_APP": "Elimina primero las aplicaciones incompatibles",
+            "ERROR_HEADLINE_TIMEOUT": "Comprueba la conexión y vuelve a iniciar la configuración",
+            "ERROR_HINT_CATEGORY_CONFLICT": "Ya hay otro sistema integrado instalado en este dispositivo. Solo puede haber un sistema integrado (p. ej., un sistema Home o Commercial) instalado a la vez.",
+            "ERROR_HINT_CONNECTION": "Se interrumpió la conexión con el dispositivo. Comprueba la conexión de red/serie.",
+            "ERROR_HINT_INCOMPATIBLE_APP": "Una aplicación instalada en este dispositivo impide la instalación de este sistema. Elimínala a través del App Center y vuelve a iniciar la configuración. Las aplicaciones afectadas se indican en los detalles del error.",
+            "ERROR_HINT_STALE_INSTANCE": "Se encontró en el dispositivo el resto de una instalación anterior de este sistema, que bloquea la actual. Puede eliminarse automáticamente.",
+            "ERROR_HINT_TIMEOUT": "El dispositivo no respondió a tiempo. Comprueba la conexión con el dispositivo.",
+            "ERROR_TITLE_CATEGORY_CONFLICT": "Sistema existente encontrado",
+            "ERROR_TITLE_CONNECTION": "Conexión interrumpida",
+            "ERROR_TITLE_INCOMPATIBLE_APP": "Aplicación incompatible instalada",
+            "ERROR_TITLE_STALE_INSTANCE": "Resto de una instalación anterior encontrado",
+            "ERROR_TITLE_TIMEOUT": "Tiempo de espera agotado",
+            "RESOLVE_CATEGORY_CONFLICT_BUTTON": "Eliminar el sistema existente y continuar",
+            "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "No se pudo encontrar ningún sistema en conflicto para eliminarlo automáticamente. Elimínalo manualmente a través del App Center.",
+            "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Eliminando el sistema existente…",
+            "STATUS_CONFIGURING": "Configurando los componentes…",
+            "STATUS_FUNCTION_TEST": "Configuración completada. Ejecutando las pruebas de función…"
+        },
+        "PROTOCOL_FEED_IN_MANAGEMENT": {
+            "FIXED_COS_PHI": "Valor fijo: Cos Phi 1"
+        },
+        "PROTOCOL_SERIAL_NUMBER": {
+            "BATTERY_COMMUNICATION_BOX": "Caja de comunicación de la batería",
+            "BATTERY_INPUT_TOWER": "Entrada de batería {{ batteryInput }} Torre {{ towerNumber }}"
+        }
+    }
+}

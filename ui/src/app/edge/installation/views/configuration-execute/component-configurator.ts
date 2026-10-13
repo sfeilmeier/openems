@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { computed, Signal, signal } from "@angular/core";
 import { Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
 import { ChannelAddress, Edge, EdgeConfig, Websocket } from "src/app/shared/shared";
@@ -46,16 +47,35 @@ export type ConfigurationObject = {
     baseMode?: BaseMode;
 };
 
+export type StartConfigurationOptions = {
+    skipMetaAppUpdate: boolean;
+};
+
 const DELAY_CLEAR = 5000; // Time between the clear and the start of the configurations
 const DELAY_CONFIG = 15000;
 
 export class ComponentConfigurator {
     public static DELAY_FUNCTION_TEST: number = 120000; // Time between the configuration of every component
+
+    /**
+     * The objects returned by {@link getConfigurationObjectsToBeConfigured}, re-evaluated whenever a config or function
+     * state changes. States are mutated on the plain objects (function test results arrive asynchronously via
+     * websocket), so a new array is needed for views to re-render.
+     */
+    public readonly configurationObjectsToBeConfigured: Signal<ConfigurationObject[]> = computed(() => {
+        this.stateVersion();
+        return this.getConfigurationObjectsToBeConfigured();
+    });
+
     private configurationObjects: ConfigurationObject[] = [];
     private channelMappings: { configurationObject: ConfigurationObject; channelAddress: ChannelAddress }[] = [];
     private subscriptions: Subscription[] = [];
 
-    private installAppCallbacks: (() => Promise<any>)[] = [];
+    private installAppCallbacks: ((options: StartConfigurationOptions) => Promise<unknown>)[] = [];
+    /** Set when a callback added via {@link addInstallAppCallback} rejects, e.g. the app itself could not be installed. */
+    private appInstallFailed: boolean = false;
+    /** Incremented on every state change, see {@link configurationObjectsToBeConfigured}. */
+    private readonly stateVersion = signal(0);
 
     constructor(
         private edge: Edge,
@@ -76,9 +96,10 @@ export class ComponentConfigurator {
         } else {
             this.configurationObjects.push(configurationObject);
         }
+        this.stateVersion.update((version) => version + 1);
     }
 
-    public addInstallAppCallback(installAppCallback: () => Promise<any>) {
+    public addInstallAppCallback(installAppCallback: (options: StartConfigurationOptions) => Promise<unknown>) {
         this.installAppCallbacks.push(installAppCallback);
     }
 
@@ -87,20 +108,27 @@ export class ComponentConfigurator {
      *
      * @returns A promise of type void
      */
-    public start(): Promise<void> {
+    public start(options: StartConfigurationOptions = { skipMetaAppUpdate: false }): Promise<void> {
+        this.appInstallFailed = false;
         // first update scheduler to make sure it is created
         return new Promise((resolve, reject) => {
             this.updateScheduler()
                 .then(() => {
                     // execute app install callbacks
                     const installApp = new Promise<void>((resolve, reject) => {
-                        const allPromises: Promise<any>[] = [];
+                        const allPromises: Promise<unknown>[] = [];
                         this.installAppCallbacks.forEach((callback) => {
-                            allPromises.push(callback());
+                            allPromises.push(callback(options));
                         });
                         Promise.all(allPromises)
                             .then(() => resolve())
-                            .catch((error) => reject(error));
+                            .catch((error) => {
+                                // The app itself was not installed: per-component states below may still
+                                // turn "Configured" independently, so this is tracked to keep the checkmarks
+                                // from misleadingly showing full success in that case.
+                                this.appInstallFailed = true;
+                                reject(error);
+                            });
                     });
 
                     this.refreshAllConfigurationStates();
@@ -143,6 +171,14 @@ export class ComponentConfigurator {
             }
         }
         return configurationObjectsToBeInstalled;
+    }
+
+    /**
+     * Whether the app installation itself (as opposed to a single component's configuration) failed during
+     * {@link start}.
+     */
+    public hasAppInstallFailed(): boolean {
+        return this.appInstallFailed;
     }
 
     /**
@@ -199,7 +235,7 @@ export class ComponentConfigurator {
                         continue;
                     }
 
-                    configurationObject.functionState = FunctionState.Testing;
+                    this.setFunctionState(configurationObject, FunctionState.Testing);
 
                     const channelAddress = new ChannelAddress(configurationObject.componentId, "State");
                     const channelMapping = { configurationObject: configurationObject, channelAddress: channelAddress };
@@ -243,7 +279,7 @@ export class ComponentConfigurator {
                                     break;
                             }
 
-                            channelMapping.configurationObject.functionState = functionState;
+                            this.setFunctionState(channelMapping.configurationObject, functionState);
                         });
 
                     // Add subscription to list
@@ -257,10 +293,26 @@ export class ComponentConfigurator {
 
     private refreshConfigurationState(configurationObject: ConfigurationObject) {
         if (this.exists(configurationObject.componentId)) {
-            configurationObject.configState = ConfigurationState.PreConfigured;
+            this.setConfigState(configurationObject, ConfigurationState.PreConfigured);
         } else {
-            configurationObject.configState = ConfigurationState.Missing;
+            this.setConfigState(configurationObject, ConfigurationState.Missing);
         }
+    }
+
+    private setConfigState(configurationObject: ConfigurationObject, configState: ConfigurationState): void {
+        if (configurationObject.configState === configState) {
+            return;
+        }
+        configurationObject.configState = configState;
+        this.stateVersion.update((version) => version + 1);
+    }
+
+    private setFunctionState(configurationObject: ConfigurationObject, functionState: FunctionState | undefined): void {
+        if (configurationObject.functionState === functionState) {
+            return;
+        }
+        configurationObject.functionState = functionState;
+        this.stateVersion.update((version) => version + 1);
     }
 
     private refreshAllConfigurationStates() {
@@ -309,7 +361,7 @@ export class ComponentConfigurator {
             }
 
             const clearNext = () => {
-                configurationObject.configState = ConfigurationState.Missing;
+                this.setConfigState(configurationObject, ConfigurationState.Missing);
 
                 setTimeout(() => {
                     if (index + 1 < preConfiguredObjects.length) {
@@ -340,7 +392,7 @@ export class ComponentConfigurator {
                 .deleteComponentConfig(this.websocket, configurationObject.componentId)
                 .then(clearNext)
                 .catch((reason) => {
-                    configurationObject.configState = ConfigurationState.Error;
+                    this.setConfigState(configurationObject, ConfigurationState.Error);
                     reject(reason);
                 });
         });
@@ -376,11 +428,11 @@ export class ComponentConfigurator {
         return new Promise((resolve, reject) => {
             const configurationObject = this.configurationObjects[index];
 
-            configurationObject.configState = ConfigurationState.Configuring;
+            this.setConfigState(configurationObject, ConfigurationState.Configuring);
 
             this.configure(configurationObject)
                 .then(() => {
-                    configurationObject.configState = ConfigurationState.Configured;
+                    this.setConfigState(configurationObject, ConfigurationState.Configured);
 
                     let timeout = DELAY_CONFIG;
 
@@ -410,7 +462,7 @@ export class ComponentConfigurator {
                     }, timeout);
                 })
                 .catch((reason) => {
-                    configurationObject.configState = ConfigurationState.Error;
+                    this.setConfigState(configurationObject, ConfigurationState.Error);
                     reject(reason);
                 });
         });

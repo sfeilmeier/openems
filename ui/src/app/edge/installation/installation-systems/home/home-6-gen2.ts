@@ -18,7 +18,7 @@ export class Home6Gen2FeneconIbn extends AbstractHomeGen2Ibn {
 
     public override readonly systemId: SystemId = SystemId.FENECON_HOME_6;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
-    public override readonly appId: string = "App.FENECON.Home6";
+    public override readonly systemAppId: string = "App.FENECON.Home6";
     public override readonly appAlias: string = "FENECON Home";
     public override readonly defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.INTEGRATED_METER;
 

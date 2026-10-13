@@ -45,6 +45,7 @@ import io.openems.common.session.Role;
 import io.openems.common.timedata.Timeout;
 import io.openems.common.types.ChannelAddress;
 import io.openems.common.types.OpenemsType;
+import io.openems.edge.aircooling.blueeplus.BlueEPlus;
 import io.openems.edge.battery.fenecon.f2b.cluster.common.BatteryFeneconF2bCluster;
 import io.openems.edge.battery.fenecon.f2b.common.enums.F2bHardwareType;
 import io.openems.edge.battery.fenecon.f2b.update.F2bUpdateable;
@@ -74,14 +75,13 @@ import io.openems.edge.io.api.DigitalOutput;
 import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.jsonrpc.ErrorAcknowledgeRpc;
 import io.openems.edge.system.fenecon.industrial.jsonrpc.SystemErrorAcknowledge;
-import io.openems.edge.system.fenecon.industrial.xl.blueeplus.BlueEPlus;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.BmsHardwareReset;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.Context;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
-import io.openems.edge.system.fenecon.industrial.xl.temperature.JumoHydroTransS20;
+import io.openems.edge.temperature.jumo.JumoHydroTransS20;
 
 @Designate(ocd = Config.class, factory = true)
 @Component(//
@@ -98,12 +98,11 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	public static final EndpointRequestType<EmptyObject, EmptyObject> CLEAR_ERROR_REQUEST = EndpointRequestType
 			.ofEmpty("clearErrorRequest");
 
-	private static final F2bHardwareType F2B_HARDWARE_TYPE = F2bHardwareType.F2B_FM29_1V2;
+	private static final F2bHardwareType F2B_HARDWARE_TYPE = F2bHardwareType.F2B_FM29_1V3;
 	private final StateMachine stateMachine = new StateMachine(UNDEFINED);
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialXlImpl.class);
 	private final Timeout resetTimeout = Timeout.ofSeconds(5);
 	private final List<BatteryFeneconF2bCluster> batteries = new ArrayList<>();
-
 	private ServiceRegistration<Updateable> serviceRegistration;
 	private StartStop startStopTarget = StartStop.UNDEFINED;
 	private ChannelAddress outputSsiRunningFlashing = null;
@@ -112,7 +111,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	private ChannelAddress outputSsiWarning = null;
 	private ChannelAddress outputSsiError = null;
 	private boolean isResetRunning = false;
-	private TestMode.Request request;
+	private volatile TestMode.Request request;
 	private Config config;
 
 	@Reference
@@ -525,8 +524,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 				call -> {
 					final var nextRequest = call.getRequest();
 					if (nextRequest.action() instanceof TestAction.Exit) {
-						this.stateMachine.forceNextState(State.GO_STOPPED);
-						return new TestMode.Response("Exiting test mode!", null, null);
+						return this.handleExit(nextRequest);
 					}
 
 					if (this.request != null) {
@@ -541,7 +539,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 								null);
 					}
 
-					this.setTestRequestParams(call.getRequest());
+					this.setTestRequestParams(nextRequest);
 					this.stateMachine.forceNextState(State.TEST_MODE_IDLE);
 					return new TestMode.Response("started", null, this.request.action());
 				});
@@ -570,6 +568,23 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 			this.fluidCooling.setClearError(false); //
 			this.logInfo(this.log, "Clearing Hydac Errors done."); //
 		}, CompletableFuture.delayedExecutor(5, TimeUnit.SECONDS));
+	}
+
+	private TestMode.Response handleExit(TestMode.Request exitRequest) {
+		switch (this.stateMachine.getCurrentState()) {
+		case TEST_MODE_IDLE, TEST_MODE_ESS, TEST_MODE_LAMP -> {
+			this.setTestRequestParams(null);
+			this.stateMachine.forceNextState(State.GO_STOPPED);
+			return new TestMode.Response("Exiting test mode!", null, null);
+		}
+		case MANUAL_BATTERY_START -> {
+			this.setTestRequestParams(exitRequest);
+			return new TestMode.Response("Exiting manual battery start!", null, null);
+		}
+		default -> {
+			return new TestMode.Response("ignored", "No test is running", null);
+		}
+		}
 	}
 
 	private boolean isIdle() {

@@ -11,13 +11,14 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
         View.PreInstallation,
         View.PreInstallationUpdate,
         View.ConfigurationSystem,
-        View.ConfigurationSubSystem,
+        View.ConfigurationSystemVariant,
         View.ProtocolInstaller,
         View.ProtocolCustomer,
         View.ProtocolSystem,
         View.ProtocolSystemLocation,
         View.ConfigurationEssLimiter14aComponent,
         View.ConfigurationEnergyFlowMeter,
+        View.ConfigurationLineSideMeterFuse,
         View.ConfigurationMpptSelection,
         View.ProtocolPv,
         View.ConfigurationStsBox,
@@ -32,7 +33,7 @@ export class Commercial50Gen3Ibn extends AbstractCommercialGen3 {
 
     public override warrantyLink: WebLinks = WebLinks.WARRANTY_LINK_COMMERCIAL_50_GEN3;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_50_GEN_3;
-    public override appId: string = "App.FENECON.Commercial.50.Gen3";
+    public override systemAppId: string = "App.FENECON.Commercial.50.Gen3";
     public override appAlias: string = "FENECON Commercial 50";
 
     protected override readonly mpptImagePaths = environment.links.DOWNLOAD.INSTALLATION.COMMERCIAL.COMMERCIAL_50.MPPT;

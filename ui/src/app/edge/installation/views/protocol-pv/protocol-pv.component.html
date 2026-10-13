@@ -1,27 +1,22 @@
-<installation-view iconName="clipboard-outline" header="{{ 'INSTALLATION.PROTOCOL_PV.TITLE_PV' | translate }}"
-  (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()">
-
+<installation-view iconName="clipboard-outline" header="{{ 'INSTALLATION.PROTOCOL_PV.TITLE_PV' | translate }}" (previousClicked)="onPreviousClicked()" (nextClicked)="onNextClicked()">
   <ion-accordion-group [value]="expandedAccordions" multiple="true">
-    @for (form of forms; track form; let i = $index) {
-      @if (form.fields.length > 0){
+    @for (form of forms; track i; let i = $index) {
+      @if (form.fields.length > 0) {
         <ion-accordion [value]="'mppt-' + (i + 1)">
-
           <ion-item slot="header" color="light">
             <ion-label>
               {{ form.uiLabel }}
               @if (form.model.isSelected && form.model.alias) {
                 <span class="ion-text-wrap text-small">
-                  <br><small>{{ form.model.alias }}</small>
+                  <br /><small>{{ form.model.alias }}</small>
                 </span>
               }
             </ion-label>
           </ion-item>
 
           <div class="ion-padding" slot="content">
-            <formly-form [form]="form.formGroup" [fields]="form.fields" [model]="form.model">
-            </formly-form>
+            <formly-form [form]="form.formGroup" [fields]="form.fields" [model]="form.model"> </formly-form>
           </div>
-
         </ion-accordion>
       }
     }

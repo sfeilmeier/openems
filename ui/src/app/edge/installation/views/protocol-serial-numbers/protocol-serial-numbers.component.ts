@@ -7,7 +7,7 @@ import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { ArrayUtils } from "src/app/shared/utils/array/array.utils";
 import { ObjectUtils } from "src/app/shared/utils/object/object-utils";
 import { environment } from "src/environments";
-import { AbstractIbn, BatteryTowerSettings } from "../../installation-systems/abstract-ibn";
+import { AbstractIbn, BatteryTowerSettings, SerialNumberModel } from "../../installation-systems/abstract-ibn";
 import { Commercial92Ibn } from "../../installation-systems/commercial/commercial-92/commercial92";
 import { ComponentData, SerialNumberFormData } from "../../shared/ibndatatypes";
 
@@ -234,16 +234,18 @@ export class ProtocolSerialNumbersComponent implements OnInit {
             }
 
             // Map each battery to its promises (towers)
-            const batteryPromises: Promise<{}>[][] = this.numberOfTowersPerBattery.map((numberOfTowers, index) => {
-                const numberOfModulesPerTower = this.numberOfModulesPerTowerPerBattery[index];
-                return this.ibn.readSerialNumbersFromRegisters(
-                    this.edge,
-                    this.websocket,
-                    numberOfTowers,
-                    numberOfModulesPerTower,
-                    index,
-                );
-            });
+            const batteryPromises: Promise<SerialNumberModel>[][] = this.numberOfTowersPerBattery.map(
+                (numberOfTowers, index) => {
+                    const numberOfModulesPerTower = this.numberOfModulesPerTowerPerBattery[index];
+                    return this.ibn.readSerialNumbersFromRegisters(
+                        this.edge,
+                        this.websocket,
+                        numberOfTowers,
+                        numberOfModulesPerTower,
+                        index,
+                    );
+                },
+            );
 
             // Flatten array of arrays into single promise array
             const flattenedPromises = batteryPromises.flat();

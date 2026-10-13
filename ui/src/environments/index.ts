@@ -1,3 +1,4 @@
+import { EnvironmentProviders } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { NavigationCard } from "src/app/edge/live/navigation-info/navigation-info";
 import { User } from "src/app/shared/jsonrpc/shared";
@@ -47,6 +48,7 @@ export interface Environment<TImages extends object = object> {
             readonly OFFGRID: string;
             readonly PRODUCTION: string;
             readonly STORAGE: string;
+            readonly SCHEDULE: string;
 
             readonly WEATHER: {
                 readonly CLEAR_DAY: string;
@@ -223,14 +225,8 @@ export interface Environment<TImages extends object = object> {
             readonly SYSTEM: {
                 readonly HOME: {
                     readonly HOME_10: string;
-                    readonly HOME_20_30: {
-                        readonly DE: string;
-                        readonly EN: string;
-                    };
-                    readonly HOME_GEN_2: {
-                        readonly DE: string;
-                        readonly EN: string;
-                    };
+                    readonly HOME_20_30: string;
+                    readonly HOME_GEN_2: string;
                 };
                 readonly COMMERCIAL: {
                     readonly COMMERCIAL_30: string;
@@ -238,7 +234,6 @@ export interface Environment<TImages extends object = object> {
                     readonly COMMERCIAL_50_GEN_3: string;
                     readonly COMMERCIAL_92: string;
                     readonly COMMERCIAL_92_CLUSTER: string;
-                    readonly COMMERCIAL_92_OVERVIEW: string;
                     readonly COMMERCIAL_100: string;
                 };
                 readonly INDUSTRIAL?: {
@@ -247,11 +242,10 @@ export interface Environment<TImages extends object = object> {
                 };
             };
 
-            readonly RUNDSTEUER: {
-                readonly HOME: string;
+            readonly RIPPLE_CONTROL: {
+                readonly HOME_10_GEN_1: string;
                 readonly HOME_GEN_2: string;
                 readonly HOME_20_30: string;
-                readonly HOME_6_10_15: string;
                 readonly COMMERCIAL_50_GEN_3: string;
             };
 
@@ -299,6 +293,7 @@ export interface Environment<TImages extends object = object> {
     };
     readonly PRODUCT_TYPES: (translate: TranslateService) => Filter | null;
     readonly INFO_CARD: (translate: TranslateService, user: User) => NavigationCard[];
+    readonly ENVIRONMENT_PROVIDERS: EnvironmentProviders[];
 }
 
 /*

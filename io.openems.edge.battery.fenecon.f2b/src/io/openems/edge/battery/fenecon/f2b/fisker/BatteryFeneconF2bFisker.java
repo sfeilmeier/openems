@@ -19,6 +19,7 @@ import io.openems.edge.battery.fenecon.f2b.fisker.enums.OperatingStates;
 import io.openems.edge.battery.fenecon.f2b.fisker.statemachine.StateMachine.State;
 import io.openems.edge.common.channel.Channel;
 import io.openems.edge.common.channel.Doc;
+import io.openems.edge.common.channel.IntegerDoc;
 import io.openems.edge.common.channel.StateChannel;
 import io.openems.edge.common.channel.WriteChannel;
 import io.openems.edge.common.channel.value.Value;
@@ -143,7 +144,7 @@ public interface BatteryFeneconF2bFisker extends BatteryFeneconF2b, StartStoppab
 						BatteryFeneconF2bFiskerImpl::updateBatteryFaultChannels)), //
 		ACTUAL_CAPACITY(Doc.of(OpenemsType.INTEGER)//
 				.accessMode(AccessMode.READ_ONLY)),
-		AVERAGE_CELL_TEMPERATURE(Doc.of(OpenemsType.INTEGER)// ^
+		AVERAGE_CELL_TEMPERATURE(Doc.of(OpenemsType.INTEGER)//
 				.accessMode(AccessMode.READ_ONLY)),
 		AVERAGE_CELL_VOLTAGE(Doc.of(OpenemsType.INTEGER)//
 				.accessMode(AccessMode.READ_ONLY)),
@@ -170,8 +171,6 @@ public interface BatteryFeneconF2bFisker extends BatteryFeneconF2b, StartStoppab
 				.accessMode(AccessMode.READ_ONLY)),
 		TOTAL_VOLTAGE_LOAD_END(Doc.of(OpenemsType.INTEGER)//
 				.accessMode(AccessMode.READ_ONLY)),
-		READ_CAN_COMMUNICATION(Doc.of(OpenemsType.INTEGER)//
-				.accessMode(AccessMode.READ_ONLY)), //
 		BMS_STATE_MACHINE(Doc.of(BmsStateMachine.values())//
 				.accessMode(AccessMode.READ_ONLY)),
 		ACTUAL_STATE(Doc.of(ActualState.values())//
@@ -258,13 +257,21 @@ public interface BatteryFeneconF2bFisker extends BatteryFeneconF2b, StartStoppab
 		COUNTER_LONG_TIME(Doc.of(OpenemsType.INTEGER)//
 				.accessMode(AccessMode.READ_ONLY)//
 				.persistencePriority(PersistencePriority.HIGH)), //
-		COUNTER_LONG_TIME_WARNING(Doc.of(Level.WARNING)//
-				.translationKey(BatteryFeneconF2bFisker.class, "counterLongTimeWarning")), //
+		COUNTER_LONG_TIME_INFO(Doc.of(Level.INFO)//
+				.translationKey(BatteryFeneconF2bFisker.class, "counterLongTimeInfo")), //
 		COUNTER_LONG_TIME_FAULT(Doc.of(Level.FAULT)//
 				.translationKey(BatteryFeneconF2bFisker.class, "counterLongTimeFault")), //
 		COUNTER_LIFE_TIME(Doc.of(OpenemsType.INTEGER)//
 				.accessMode(AccessMode.READ_ONLY)//
 				.persistencePriority(PersistencePriority.HIGH)), //
+		BATTERY_SOC(Doc.of(OpenemsType.INTEGER)//
+				.unit(Unit.PERCENT)//
+				.persistencePriority(PersistencePriority.HIGH)), //
+		BATTERY_SOC_HIGH_RESOLUTION(new IntegerDoc() //
+				.accessMode(AccessMode.READ_ONLY) //
+				.unit(Unit.PERCENT)//
+				.persistencePriority(PersistencePriority.HIGH)//
+				.onChannelUpdate(BatteryFeneconF2bFiskerImpl::updateSoc)), //
 
 		;
 
@@ -679,30 +686,30 @@ public interface BatteryFeneconF2bFisker extends BatteryFeneconF2b, StartStoppab
 	}
 
 	/**
-	 * Gets the Channel for {@link ChannelId#COUNTER_LONG_TIME_WARNING}.
+	 * Gets the Channel for {@link ChannelId#COUNTER_LONG_TIME_INFO}.
 	 *
 	 * @return the Channel
 	 */
-	public default StateChannel getCounterLongTimeWarningChannel() {
-		return this.channel(ChannelId.COUNTER_LONG_TIME_WARNING);
+	public default StateChannel getCounterLongTimeInfoChannel() {
+		return this.channel(ChannelId.COUNTER_LONG_TIME_INFO);
 	}
 
 	/**
-	 * Gets the {@link StateChannel} for {@link ChannelId#COUNTER_24H_WARNING}.
+	 * Gets the {@link StateChannel} for {@link ChannelId#COUNTER_LONG_TIME_INFO}.
 	 *
 	 * @return the Channel {@link Value}
 	 */
-	public default Value<Boolean> getCounterLongTimeWarning() {
-		return this.getCounterLongTimeWarningChannel().value();
+	public default Value<Boolean> getCounterLongTimeInfo() {
+		return this.getCounterLongTimeInfoChannel().value();
 	}
 
 	/**
-	 * Writes the value to the {@link ChannelId#COUNTER_LONG_TIME_WARNING}.
+	 * Writes the value to the {@link ChannelId#COUNTER_LONG_TIME_INFO}.
 	 *
 	 * @param value the next value
 	 */
-	public default void _setCounterLongTimeWarning(boolean value) {
-		this.getCounterLongTimeWarningChannel().setNextValue(value);
+	public default void _setCounterLongTimeInfo(boolean value) {
+		this.getCounterLongTimeInfoChannel().setNextValue(value);
 	}
 
 	/**

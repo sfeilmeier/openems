@@ -4,9 +4,10 @@ import { ArrayUtils } from "src/app/shared/utils/array/array.utils";
 import { StringUtils } from "src/app/shared/utils/string/string.utils";
 import { HistoryUtils } from "src/app/shared/utils/utils";
 import { Edge } from "../../edge";
-import { EdgeConfig } from "../../edgeconfig";
+import { EdgeComponent } from "../../edge-component";
+import type { EdgeConfig } from "../../edgeconfig";
 
-export class EvcsComponent extends EdgeConfig.Component {
+export class EvcsComponent extends EdgeComponent {
     private constructor(
         id: string,
         alias: string,

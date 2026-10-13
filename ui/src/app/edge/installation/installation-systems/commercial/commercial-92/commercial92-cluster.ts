@@ -5,6 +5,7 @@ import { SumState } from "src/app/index/shared/sumState";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
+import { InstallationService } from "../../../installation.service";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { CommercialCluster, View } from "../../../shared/enums";
 import { SystemId } from "../../../shared/system";
@@ -13,12 +14,17 @@ import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject
 import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
+import { SerialNumberModel } from "../../abstract-ibn";
 import { AbstractCommercial92Ibn } from "./abstract-commercial92";
 
 export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
     public override warrantyLink = WebLinks.WARRANTY_LINK_COMMERCIAL_92;
     public override readonly systemId: SystemId = SystemId.COMMERCIAL_92_CLUSTER;
     public override isClusterConfiguration: boolean = true;
+    // Overrides the inherited standalone app id: the cluster installs "ClusterMaster"/"ClusterSlave" apps instead
+    // (see getComponentConfigurator below). configuration-execute always calls without a `cluster` param, i.e. the
+    // "Master" branch, so that is used here to look up a leftover own instance during self-solve.
+    public override readonly systemAppId: string = "App.FENECON.Commercial.92.ClusterMaster";
     public slaveEdges = [];
     public emsBoxSerialNumbers: string[] = [];
 
@@ -28,7 +34,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                 View.PreInstallation,
                 View.PreInstallationUpdate,
                 View.ConfigurationSystem,
-                View.ConfigurationSubSystem,
+                View.ConfigurationSystemVariant,
                 View.ProtocolInstaller,
                 View.ProtocolCustomer,
                 View.ProtocolSystem,
@@ -52,7 +58,8 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         edge: Edge,
         config: EdgeConfig,
         websocket: Websocket,
-        service?: Service,
+        service: Service,
+        installationService: InstallationService,
         cluster?: CommercialCluster,
     ): Promise<ComponentConfigurator> {
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
@@ -85,17 +92,14 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         // system not updated => newest appManager not available
         const baseMode = BaseMode.AppManager;
 
-        componentConfigurator.addInstallAppCallback(() => {
-            return AppCenterUtil.updateMetaAndInstallApp(
-                edge,
-                websocket,
-                appId,
-                alias,
-                appProperties,
-                this.feedInLimitation.dynamicLimitationType,
-                this.feedInLimitation.maximumFeedInPower,
-                this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
-            );
+        componentConfigurator.addInstallAppCallback((options) => {
+            return AppCenterUtil.updateMetaAndInstallApp(edge, websocket, appId, alias, appProperties, {
+                dynamicLimitationType: this.feedInLimitation.dynamicLimitationType,
+                maximumFeedInPower: this.feedInLimitation.maximumFeedInPower,
+                gridConnectionPointFuseLimit:
+                    this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
+                skipMetaAppUpdate: options.skipMetaAppUpdate,
+            });
         });
 
         // Send request and process components
@@ -168,9 +172,9 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         numberOfTowers: number,
         numberOfModulesPerTower: number,
         index: number,
-    ): Promise<{}>[] {
+    ): Promise<SerialNumberModel>[] {
         const slaveNr = index + 1; // Convert 0-based index to 1-based slave number
-        const result: Promise<{}>[] = [];
+        const result: Promise<SerialNumberModel>[] = [];
         // Only process towers for the given slaveNr
         for (let tower = 0; tower < numberOfTowers; tower++) {
             result.push(this.getSerialNumbersFromEdge(tower, edge, websocket, numberOfModulesPerTower, slaveNr));
@@ -184,7 +188,7 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
         websocket: Websocket,
         numberOfModulesPerTower: number,
         slaveNr: number,
-    ) {
+    ): Promise<SerialNumberModel> {
         return new Promise((resolve) => {
             const subscriptionId = `Commercial-battery${slaveNr}-tower${towerNr}`;
             const serialNumbers: { [key: string]: string } = {};
@@ -277,7 +281,10 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                 )
                 .subscribe((currentData) => {
                     // Initialize result as empty array
-                    const result: Array<{ numberOfTowers: number; numberOfModulesPerTower: number }> = [];
+                    const result: Array<{
+                        numberOfTowers: number;
+                        numberOfModulesPerTower: number;
+                    }> = [];
 
                     for (let i = 1; i <= this.numberOfSlaves; i++) {
                         const numberOfTowers = currentData.channel[`battery${i}/NumberOfTowers`];
@@ -303,7 +310,10 @@ export class Commercial92ClusterIbn extends AbstractCommercial92Ibn {
                 // promise gets resolved with default values
                 if (!isResolved) {
                     // Initialize result as empty array
-                    const result: Array<{ numberOfTowers: number; numberOfModulesPerTower: number }> = [];
+                    const result: Array<{
+                        numberOfTowers: number;
+                        numberOfModulesPerTower: number;
+                    }> = [];
                     for (let i = 1; i <= this.numberOfSlaves; i++) {
                         result.push({
                             numberOfTowers: this.minNumberOfTowers,

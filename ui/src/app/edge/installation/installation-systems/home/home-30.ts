@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { TranslateService } from "@ngx-translate/core";
+import { DocsUtils } from "src/app/shared/utils/docs/docs.utils";
 import { environment } from "src/environments";
 import { Category } from "../../shared/category";
 import { FeedInSetting, View } from "../../shared/enums";
@@ -23,7 +24,7 @@ export class Home30FeneconIbn extends AbstractHomeIbn {
     public override readonly systemId: SystemId = SystemId.FENECON_HOME_30;
     public override readonly emsBoxLabel = Category.EMS_BOX_LABEL_HOME;
     public override readonly appAlias: string = "FENECON Home 30";
-    public override readonly appId: string = "App.FENECON.Home.30";
+    public override readonly systemAppId: string = "App.FENECON.Home.30";
     public override readonly maxNumberOfModulesPerTower: number = 15;
     public override readonly maxNumberOfPvStrings: number = 6;
     public override readonly maxNumberOfMppt: number = 3;
@@ -102,7 +103,7 @@ export class Home30FeneconIbn extends AbstractHomeIbn {
     }
 
     public override getExternalLimitationTypeOptions(): ComponentData[] {
-        const docLink = environment.links.MANUALS.RUNDSTEUER.HOME_20_30;
+        const docLink = DocsUtils.replaceWithCurrentDocsLanguage(environment.links.MANUALS.RIPPLE_CONTROL.HOME_20_30);
         return EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES(this.translate, docLink);
     }
 }

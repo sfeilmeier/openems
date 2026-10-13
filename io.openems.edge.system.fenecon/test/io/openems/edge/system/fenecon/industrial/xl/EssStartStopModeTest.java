@@ -1,23 +1,13 @@
 package io.openems.edge.system.fenecon.industrial.xl;
 
-import static io.openems.edge.common.test.DummyUser.DUMMY_INSTALLER;
-import static org.junit.Assert.assertFalse;
-
 import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.Test;
 
-import com.google.gson.JsonObject;
-
-import io.openems.common.jsonrpc.base.GenericJsonrpcRequest;
-import io.openems.common.jsonrpc.base.JsonrpcRequest;
-import io.openems.common.jsonrpc.base.JsonrpcResponse;
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.test.TestUtils;
 import io.openems.common.types.ChannelAddress;
-import io.openems.common.utils.JsonUtils;
-import io.openems.edge.common.jsonapi.Call;
-import io.openems.edge.common.jsonapi.EdgeKeys;
+import io.openems.edge.aircooling.blueeplus.DummyBlueeplusImpl;
 import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStopConfig;
@@ -30,9 +20,9 @@ import io.openems.edge.firealarmsystem.hekatron.DummyHekatronB9X2Impl;
 import io.openems.edge.fluidcooling.hydac.DummyHydacImpl;
 import io.openems.edge.io.test.DummyCustomInputOutput;
 import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode;
 import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.EssTest;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
+import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 public class EssStartStopModeTest {
 	private static final ChannelAddress STATE_MACHINE = new ChannelAddress("system0", "StateMachine");
@@ -120,15 +110,7 @@ public class EssStartStopModeTest {
 				.next(new TestCase()//
 						.onAfterProcessImage(() -> {
 							final var builder = new JsonApiBuilder();
-							var params = JsonUtils.buildJsonObject() //
-									.add("action", JsonUtils.buildJsonObject()//
-											.addProperty("type", EssTest.getTypeName())//
-											.build())//
-									.build();
-							var call = performJsonRpcCall(builder, params);
-							system.buildJsonApiRoutes(builder);
-							assertFalse(builder.getEndpoints().isEmpty());
-							builder.handle(call);
+							TestModeUtils.performJsonRpcCall(system, builder, EssTest.getTypeName());
 						}))//
 				.next(new TestCase()//
 						.output(STATE_MACHINE, State.STOPPED))//
@@ -141,13 +123,5 @@ public class EssStartStopModeTest {
 						.output(STATE_MACHINE, State.TEST_MODE_IDLE))//
 		;
 
-	}
-
-	private static Call<JsonrpcRequest, JsonrpcResponse> performJsonRpcCall(JsonApiBuilder builder, JsonObject params) {
-		var request = new GenericJsonrpcRequest(new TestMode().getMethod(), params);
-		var call = new Call<JsonrpcRequest, JsonrpcResponse>(request);
-		call.put(EdgeKeys.USER_KEY, DUMMY_INSTALLER);
-		builder.handle(call);
-		return call;
 	}
 }

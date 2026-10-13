@@ -10,6 +10,7 @@ public enum F2bHardwareType implements OptionsEnum {
 	F2B_FIS_PCB(3, "F2B FIS PCB"), //
 	F2B_FM29_1V0(4, "F2B FM29 1V0"), //
 	F2B_FM29_1V2(5, "F2B FM29 1V2"), //
+	F2B_FM29_1V3(6, "F2B FM29 1V3"), //
 	;//
 
 	private final int value;

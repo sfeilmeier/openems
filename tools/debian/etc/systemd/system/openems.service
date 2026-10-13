@@ -9,6 +9,7 @@ Group=root
 Type=notify
 WorkingDirectory=/usr/lib/openems
 ExecStart=/usr/bin/java \
+    --enable-native-access=ALL-UNNAMED \
     -Dorg.osgi.framework.storage=/tmp/org.osgi.framework.storage \
     -Dosgi.clean=true \
     -Dfelix.cm.dir=/etc/openems.d/ \

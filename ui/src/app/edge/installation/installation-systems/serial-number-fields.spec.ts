@@ -5,7 +5,7 @@ import { AbstractCommercialGen3 } from "./commercial/abstract-commercial-gen3";
 import { AbstractHomeIbn } from "./home/abstract-home";
 
 export class DummyHomeIbn extends AbstractHomeIbn {
-    public override appId: string = "home";
+    public override systemAppId: string = "home";
     public override appAlias: string = "Home";
     public override maxNumberOfTowers = 1;
     public override minNumberOfTowers = 1;
@@ -37,7 +37,7 @@ export class DummyHomeIbn extends AbstractHomeIbn {
 }
 
 export class DummyCommercialGen3Ibn extends AbstractCommercialGen3 {
-    public override appId: string = "commercial-gen3";
+    public override systemAppId: string = "commercial-gen3";
     public override appAlias: string = "Commercial Gen3";
     public override mpptImagePaths: Record<number, string | null> = {};
     public override isDoubleSocketValid = true;

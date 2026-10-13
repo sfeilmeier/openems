@@ -6,14 +6,15 @@ import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrp
 import { Edge, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
+import { DocsUtils } from "src/app/shared/utils/docs/docs.utils";
 import { environment } from "src/environments";
 import { Category } from "../../shared/category";
 import { ExternalLimitationType, FeedInSetting, GridSetting, View } from "../../shared/enums";
 import { GridSettingUtils } from "../../shared/gridsetting.utils";
-import { ComponentData, EmsType, ExtensionBoxPrefix } from "../../shared/ibndatatypes";
+import { ComponentData, ExtensionBoxPrefix } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
 import { EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES } from "../../shared/options";
-import { System, SystemType } from "../../shared/system";
+import { SystemType } from "../../shared/system";
 import { ViewUtils } from "../../shared/view.utils";
 import { AdvancedGridSettingsModel, getDefaultAdvancedGridSettings, } from "../../views/configuration-advanced-grid-settings/advanced-grid-settings.model";
 import { ConfigurationAdvancedSettingsComponent } from "../../views/configuration-advanced-grid-settings/configuration-advanced-grid-settings.component";
@@ -535,11 +536,6 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
         return batteryInverterData;
     }
 
-    public override getSubSystemFields(): FormlyFieldConfig[] {
-        const emsType: EmsType = this.getEmsType();
-        return System.getSubSystemFields(emsType, this.translate);
-    }
-
     public override addProtocolItems(protocol: SetupProtocol) {
         super.addProtocolItems(protocol);
 
@@ -636,7 +632,9 @@ export abstract class AbstractCommercialGen3 extends AbstractHomeIbn<EmergencyMo
     }
 
     public override getExternalLimitationTypeOptions(): ComponentData[] {
-        const docLink = environment.links.MANUALS.RUNDSTEUER.COMMERCIAL_50_GEN_3;
+        const docLink = DocsUtils.replaceWithCurrentDocsLanguage(
+            environment.links.MANUALS.RIPPLE_CONTROL.COMMERCIAL_50_GEN_3,
+        );
         return EXTERNAL_LIMITATION_OPTIONS_WITH_IMAGES(this.translate, docLink);
     }
 

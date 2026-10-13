@@ -7,9 +7,10 @@ import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componen
 import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
+import { InstallationService } from "../../../installation.service";
 import { AppCenterUtil } from "../../../shared/appcenterutil";
 import { Category } from "../../../shared/category";
-import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, View, } from "../../../shared/enums";
+import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, ModbusBridgeType, View, } from "../../../shared/enums";
 import { ExtensionBoxPrefix } from "../../../shared/ibndatatypes";
 import { Meter } from "../../../shared/meter";
 import { SystemId } from "../../../shared/system";
@@ -18,6 +19,7 @@ import { BaseMode, ComponentConfigurator, ConfigurationMode, ConfigurationObject
 import { GetEstimatedConfigRequest } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfig";
 import { GetEstimatedConfigResponse } from "../../../views/configuration-execute/jsonrpc/getEstimatedConfigResponse";
 import { SafetyCountry } from "../../../views/configuration-execute/safety-country";
+import { SerialNumberModel } from "../../abstract-ibn";
 import { AbstractCommercialIbn } from "../abstract-commercial";
 
 export type Commercial92App = {
@@ -46,6 +48,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
     public override readonly minNumberOfTowers: number = 2;
     public override readonly maxFeedInLimit: number = 6000000;
     public override readonly showNote: boolean = true;
+    public override readonly systemAppId: string = "App.FENECON.Commercial.92";
     public batteryStartStopTarget: BatteryTarget = BatteryTarget.START;
     public gridSetting: GridSetting | null = null;
     public numberOfSlaves: number = 1;
@@ -108,12 +111,75 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             templateOptions: {
                 label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.METER_LABEL"),
                 required: true,
-                options: [Meter.GridMeter.KDK, Meter.GridMeter.WAGO].map((meter) => ({
+                options: [
+                    Meter.GridMeter.KDK,
+                    Meter.GridMeter.WAGO,
+                    Meter.GridMeter.JANITZA_UMG_604_PRO,
+                    Meter.GridMeter.JANITZA_UMG_96_RME,
+                ].map((meter) => ({
                     label: Meter.toGridMeterLabel(meter, this.systemId),
                     value: meter,
                 })),
             },
             defaultValue: Meter.GridMeter.KDK,
+        });
+
+        fields.push({
+            key: "modbusBridgeType",
+            type: "select",
+            templateOptions: {
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION.HEADER"),
+                required: true,
+                options: [
+                    {
+                        value: ModbusBridgeType.TCP_IP,
+                        label: this.translate.instant(
+                            "INSTALLATION.CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION.TCP_IP",
+                        ),
+                    },
+                    {
+                        value: ModbusBridgeType.RS485,
+                        label: this.translate.instant(
+                            "INSTALLATION.CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION.RS485",
+                        ),
+                    },
+                ],
+            },
+            defaultValue: ModbusBridgeType.TCP_IP,
+            hideExpression: (model) =>
+                model.meterType !== Meter.GridMeter.JANITZA_UMG_604_PRO &&
+                model.meterType !== Meter.GridMeter.JANITZA_UMG_96_RME,
+        });
+
+        fields.push({
+            key: "modbusBridgeIp",
+            type: "input",
+            templateOptions: {
+                label: this.translate.instant(
+                    "INSTALLATION.CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION.IP_ADDRESS",
+                ),
+                required: true,
+            },
+            defaultValue: "10.4.0.12",
+            validators: {
+                validation: ["ip"],
+            },
+            hideExpression: (model) => model.modbusBridgeType !== ModbusBridgeType.TCP_IP,
+        });
+
+        fields.push({
+            key: "modbusBridgePort",
+            type: "input",
+            templateOptions: {
+                label: this.translate.instant("INSTALLATION.CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION.PORT"),
+                type: "number",
+                required: true,
+            },
+            defaultValue: 502,
+            validators: {
+                validation: ["onlyPositiveInteger"],
+            },
+            hideExpression: (model) => model.modbusBridgeType !== ModbusBridgeType.TCP_IP,
         });
         return fields;
     }
@@ -276,14 +342,14 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         edge: Edge,
         config: EdgeConfig,
         websocket: Websocket,
-        service?: Service,
+        service: Service,
+        installationService: InstallationService,
         cluster?: CommercialCluster,
     ): Promise<ComponentConfigurator> {
         const componentConfigurator: ComponentConfigurator = new ComponentConfigurator(edge, config, websocket);
 
         // system not updated => newest appManager not available
         const baseMode = BaseMode.AppManager;
-        const appId: string = "App.FENECON.Commercial.92";
         const appAlias: string = "commercial-92";
 
         // Determine safety country
@@ -299,17 +365,14 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             GRID_CODE: this.gridSetting,
         };
 
-        componentConfigurator.addInstallAppCallback(() => {
-            return AppCenterUtil.updateMetaAndInstallApp(
-                edge,
-                websocket,
-                appId,
-                appAlias,
-                appProperties,
-                this.feedInLimitation.dynamicLimitationType,
-                this.feedInLimitation.maximumFeedInPower,
-                this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
-            ).then(() => this.installSelectedGridMeter(edge, websocket));
+        componentConfigurator.addInstallAppCallback((options) => {
+            return AppCenterUtil.updateMetaAndInstallApp(edge, websocket, this.systemAppId, appAlias, appProperties, {
+                dynamicLimitationType: this.feedInLimitation.dynamicLimitationType,
+                maximumFeedInPower: this.feedInLimitation.maximumFeedInPower,
+                gridConnectionPointFuseLimit:
+                    this.lineSideMeterFuse.otherValue ?? this.lineSideMeterFuse.fixedValue ?? null,
+                skipMetaAppUpdate: options.skipMetaAppUpdate,
+            }).then(() => this.installSelectedGridMeter(edge, websocket));
         });
 
         // Send request and process components
@@ -318,7 +381,7 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             new ComponentJsonApiRequest({
                 componentId: "_appManager",
                 payload: new GetEstimatedConfigRequest({
-                    appId: appId,
+                    appId: this.systemAppId,
                     alias: appAlias,
                     properties: appProperties,
                 }),
@@ -353,17 +416,13 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
         this.requiredControllerIds = [];
     }
 
-    public override getSystemVariantFields(): FormlyFieldConfig[] {
-        return [];
-    }
-
     public override getSerialNumbersFromEdge(
         towerNr: number,
         edge: Edge,
         websocket: Websocket,
         numberOfModulesPerTower: number,
         slaveNr?: number,
-    ) {
+    ): Promise<SerialNumberModel> {
         return new Promise((resolve) => {
             const subscriptionId = `Commercial-tower${towerNr}`;
             const serialNumbers: { [key: string]: string } = {};
@@ -536,16 +595,33 @@ export abstract class AbstractCommercial92Ibn extends AbstractCommercialIbn {
             return Promise.resolve();
         }
 
+        const modbusBridgeType = this.lineSideMeterFuse?.modbusBridgeType;
+
         return AppCenterUtil.removeInstancesOfApp(edge, websocket, AbstractCommercial92Ibn.GRID_METER_KDK_APP_ID).then(
-            () =>
-                AppCenterUtil.createOrUpdateApp(
+            () => {
+                const isTcpIp = modbusBridgeType === ModbusBridgeType.TCP_IP;
+
+                let ip: string | null = null;
+                let port: number | null = null;
+
+                if (isTcpIp) {
+                    ip = this.lineSideMeterFuse?.modbusBridgeIp ?? null;
+                    port = this.lineSideMeterFuse?.modbusBridgePort ?? null;
+                }
+
+                return AppCenterUtil.createOrUpdateApp(
                     edge,
                     websocket,
                     AbstractCommercial92Ibn.GRID_METER_JANITZA_APP_ID,
                     this.translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.GRID_METER"),
-                    { MODEL: Meter.toFactoryId(meterType) },
-                    AppCenterUtil.keyForIntegratedSystems(), // should be removed if GRID_METER_KDK_APP_ID is added again
-                ),
+                    {
+                        MODEL: Meter.toFactoryId(meterType),
+                        INTEGRATION_TYPE: modbusBridgeType === ModbusBridgeType.TCP_IP ? "TCP" : "RTU",
+                        IP: ip,
+                        PORT: port,
+                    },
+                );
+            },
         );
     }
 

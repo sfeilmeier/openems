@@ -37,6 +37,13 @@ export namespace Fena {
     }));
 
     export namespace MessageUtils {
+        /**
+         * The detail action builder for Fena messages.
+         *
+         * @param nodeId The ID of the navigation node.
+         * @param injector The global injector.
+         * @returns An object containing the title and callback for the detail action.
+         */
         export function buildDetailAction(
             nodeId: NavigationTree["id"],
             injector: Injector,
@@ -178,7 +185,7 @@ export namespace Fena {
                 requests.map((req) => edge.sendRequest<QueryHistoricTimeseriesEnergyResponse>(service.websocket, req)),
             );
 
-            if(result.length !== historyMessages.length) {
+            if (result.length !== historyMessages.length) {
                 return;
             }
 
@@ -199,14 +206,23 @@ export namespace Fena {
      */
     export class LiveMessage extends Message<CurrentData> {
         constructor(
-            protected override readonly category: (typeof CATEGORIES)[number]["name"],
-            protected override readonly priority: number = 0,
-            protected override readonly actions: { title: string; callback: () => void }[] = [],
-            protected override readonly channels: ChannelAddress[] = [],
-            protected override readonly showCallback: (data: CurrentData) => boolean = (data) => true,
-            protected override readonly message: FenaMessageType<CurrentData>,
+            protected readonly params: {
+                readonly category: (typeof CATEGORIES)[number]["name"];
+                readonly priority: number;
+                readonly actions: { title: string; callback: () => void }[];
+                readonly channels: ChannelAddress[];
+                readonly showCallback: (data: CurrentData) => boolean;
+                readonly message: FenaMessageType<CurrentData>;
+            },
         ) {
-            super(category, priority, channels, showCallback, actions, message);
+            super(
+                params.category,
+                params.priority,
+                params.channels,
+                params.showCallback,
+                params.actions,
+                params.message,
+            );
         }
 
         /**

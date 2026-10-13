@@ -116,9 +116,11 @@ export class ProtocolAvuBoxComponent implements OnInit {
      * @returns The AVU manual url
      */
     private getAvuManualLink(): string {
-        return this.ibn.systemId === SystemId.FENECON_HOME_15
-            ? environment.links.MANUALS.AVU.EXTENDED
-            : environment.links.MANUALS.AVU.STANDARD;
+        return DocsUtils.replaceWithCurrentDocsLanguage(
+            this.ibn.systemId === SystemId.FENECON_HOME_15
+                ? environment.links.MANUALS.AVU.EXTENDED
+                : environment.links.MANUALS.AVU.STANDARD,
+        );
     }
 
     private getFields() {

@@ -1,0 +1,240 @@
+{
+    "INSTALLATION": {
+        "ALERTING_INFO": "Jako instalátor si nastav e-mailová upozornění pro případ, že je FEMS po určitou dobu offline nebo hlásí chybu. Zpráva se odesílá na e-mailovou adresu zadanou při uvedení do provozu.",
+        "OFFLINE": "Offline",
+        "ENABLE_MPPT": "MPPT {{ mpptNumber }} aktivní",
+        "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
+            "MODE": "Režim",
+            "RANGE": "Rozsah [{{min}},{{max}}] {{unit}}",
+            "TITLE": "Nastavení VDE 4110",
+            "POWER": "{{value}} činný výkon",
+            "REACTIVE_POWER": "{{value}} jalový výkon",
+            "GROUPS": {
+                "ACTIVE_POWER_MODE": "Nastavení režimu činného výkonu",
+                "REACTIVE_POWER_MODE": "Nastavení režimu jalového výkonu",
+                "PROTECTION": "Parametry ochrany",
+                "CONNECTION": "Parametry připojení",
+                "VOLTAGE_RIDE_THROUGH": "Napěťový Ride-Through",
+                "FREQUENCY_RIDE_THROUGH": "Frekvenční Ride-Through"
+            },
+            "ACTIVE_POWER_MODE": {
+                "OUTPUT_ACTIVE_POWER": "Výstupní činný výkon",
+                "POWER_GRADIENT": "Gradient výkonu",
+                "PF_OVER_FREQUENCY": {
+                    "ENABLE": "Křivka P(F) (frekvenční křivka) pro vybíjení při nadfrekvenci",
+                    "ENABLE_DESC": "Aktivuje/deaktivuje křivku P(F)",
+                    "START_POINT": "Startovní bod nadfrekvence",
+                    "SLOPE": "Sklon snižování výkonu při nadfrekvenci",
+                    "DELAY_TIME": "Zpoždění odezvy",
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Práh deaktivace Fstop",
+                    "HYSTERESIS_POINT": "Hystereze frekvence",
+                    "DELAY_WAITING_TIME": "Čekací doba zpoždění",
+                    "HYSTERESIS_SLOPE": "Sklon obnovy výkonu při hysterézi"
+                },
+                "PF_UNDER_FREQUENCY": {
+                    "ENABLE": "Křivka P(F) (frekvenčně-výkonová křivka) pro zatížení při podfrekvenci",
+                    "ENABLE_DESC": "Aktivuje/deaktivuje křivku P(F)",
+                    "THRESHOLD": "Práh podfrekvence",
+                    "SLOPE": "Odezva výkonu na gradient podfrekvence",
+                    "DELAY_TIME": "Zpoždění odezvy",
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Práh deaktivace Fstop",
+                    "DEACTIVATION_THRESHOLD_FSTOP_DESC": "Aktivuje/deaktivuje práh deaktivace",
+                    "HYSTERESIS_POINT": "Hystereze frekvence",
+                    "DELAY_WAITING_TIME": "Čekací doba zpoždění",
+                    "HYSTERESIS_SLOPE": "Sklon obnovy výkonu při hysterézi"
+                },
+                "PU_CURVE": {
+                    "ENABLE": "Křivka P(U) (napěťově-výkonová křivka)",
+                    "ENABLE_DESC": "Aktivuje/deaktivuje křivku P(U)",
+                    "RESPONSE_MODE": "Režim výstupní odezvy",
+                    "PT1_TIME_CONSTANT": "Časová konstanta PT-1 dolnopropustného filtru",
+                    "PT1_POWER_GRADIENT": "Gradient výkonu"
+                }
+            },
+            "REACTIVE_POWER_MODE": {
+                "MODE": "Režim jalového výkonu",
+                "MODE_DESC": "Výběr režimu jalového výkonu",
+                "OPTIONS": {
+                    "NONE": "Nevybráno",
+                    "FIX_PF": "Fix Pf",
+                    "FIX_Q": "Fix Q",
+                    "QU_CURVE": "Křivka Q(U)",
+                    "COSPHIP_CURVE": "Křivka CosPhi(P)",
+                    "QP_CURVE": "Křivka Q(P)"
+                },
+                "FIX_PF": {
+                    "POWER_FACTOR": "Účiník",
+                    "POWER_FACTOR_DESC": "Rozsah [0,8;1]"
+                },
+                "FIX_Q": {
+                    "REACTIVE_POWER": "Jalový výkon"
+                },
+                "QU_CURVE": {
+                    "VOLTAGE_DEAD_BAND": "Mrtvé napěťové pásmo",
+                    "OVEREXCITED_SLOPE": "Sklon přebuzení",
+                    "UNDEREXCITED_SLOPE": "Sklon podbuzení",
+                    "TIME_CONSTANT": "Časová konstanta",
+                    "EXTENDED_FUNCTIONS": "Rozšířené funkce",
+                    "LOCK_IN_POWER": "Napětí Lock-in",
+                    "LOCK_OUT_POWER": "Napětí Lock-out",
+                    "VOLTAGE": "V{{number}} napětí",
+                    "ACTIVE_POWER": "V{{number}} činný výkon",
+                    "MODE": {
+                        "STANDARD_MODE": "Základní režim",
+                        "SLOPE_MODE": "Režim sklonu"
+                    }
+                },
+                "COSPHIP_CURVE": {
+                    "OVEREXCITED_SLOPE": "Sklon přebuzení",
+                    "UNDEREXCITED_SLOPE": "Sklon podbuzení",
+                    "COS_PHI": "{{value}} cos φ",
+                    "POWER": "{{value}} výkon",
+                    "COS_PHI_DESC": "Rozsah [-1000, -800] a [800, 1000]",
+                    "TIME_CONSTANT": "Časová konstanta",
+                    "EXTENDED_FUNCTIONS": "Rozšířené funkce",
+                    "EXTENDED_FUNCTIONS_DESC": "Aktivuje/deaktivuje rozšířené funkce",
+                    "LOCK_IN_VOLT": "Napětí Lock-in",
+                    "LOCK_OUT_VOLT": "Napětí Lock-out",
+                    "INVALID_RANGE": "Hodnota by měla být v rozsahu [-1000, -800] a [800, 1000]"
+                },
+                "QP_CURVE": {
+                    "OVEREXCITED_SLOPE": "Sklon přebuzení",
+                    "UNDEREXCITED_SLOPE": "Sklon podbuzení",
+                    "TIME_CONSTANT": "Časová konstanta"
+                }
+            },
+            "PROTECTION": {
+                "OVERVOLTAGE_TRIGGER": "Mezní hodnota přepětí (stupeň {{stage}})",
+                "OVERVOLTAGE_TRIP_TIME": "Čas vypnutí při přepětí (stupeň {{stage}})",
+                "UNDERVOLTAGE_TRIP_VALUE": "Vypínací hodnota podpětí (stupeň {{stage}})",
+                "UNDERVOLTAGE_TRIP_TIME": "Čas vypnutí při podpětí (stupeň {{stage}})",
+                "TEN_MIN_OVERVOLTAGE_THRESHOLD": "Práh desetiminutového vypnutí při přepětí",
+                "TEN_MIN_OVERVOLTAGE_TIME": "Čas desetiminutového vypnutí při přepětí",
+                "OVERFREQUENCY_TRIGGER": "Mezní hodnota nadfrekvence (stupeň {{stage}})",
+                "OVERFREQUENCY_TRIP_TIME": "Čas vypnutí při nadfrekvenci (stupeň {{stage}})",
+                "UNDERFREQUENCY_TRIP_VALUE": "Vypínací hodnota podfrekvence (stupeň {{stage}})",
+                "UNDERFREQUENCY_TRIP_TIME": "Čas vypnutí při podfrekvenci (stupeň {{stage}})"
+            },
+            "CONNECTION": {
+                "RAMP_UP_UPPER_VOLTAGE": "Rozběh: horní napětí",
+                "RAMP_UP_LOWER_VOLTAGE": "Rozběh: dolní napětí",
+                "RAMP_UP_UPPER_FREQUENCY": "Rozběh: horní frekvence",
+                "RAMP_UP_LOWER_FREQUENCY": "Rozběh: dolní frekvence",
+                "RAMP_UP_OBSERVATION_TIME": "Rozběh: doba pozorování",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE": "Měkký gradient rozběhu",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE_DESC": "Aktivuje/deaktivuje měkký gradient rozběhu",
+                "SOFT_RAMP_UP_GRADIENT_VALUE": "Hodnota měkkého gradientu rozběhu",
+                "RECONNECTION_UPPER_VOLTAGE": "Opětovné připojení: horní napětí",
+                "RECONNECTION_LOWER_VOLTAGE": "Opětovné připojení: dolní napětí",
+                "RECONNECTION_UPPER_FREQUENCY": "Opětovné připojení: horní frekvence",
+                "RECONNECTION_LOWER_FREQUENCY": "Opětovné připojení: dolní frekvence",
+                "RECONNECTION_OBSERVATION_TIME": "Opětovné připojení: doba pozorování",
+                "RECONNECTION_GRADIENT_ENABLE": "Gradient opětovného připojení",
+                "RECONNECTION_GRADIENT_ENABLE_DESC": "Aktivuje/deaktivuje gradient opětovného připojení",
+                "RECONNECTION_GRADIENT_VALUE": "Hodnota gradientu opětovného připojení"
+            },
+            "VOLTAGE_RIDE_THROUGH": {
+                "LVRT": {
+                    "ENABLE": "LVRT",
+                    "ENABLE_DESC": "Aktivuje/deaktivuje Low Voltage Ride Through",
+                    "UV_VOLTAGE": "Podpětí {{stage}} napětí",
+                    "UV_TIME": "Podpětí {{stage}} čas",
+                    "ENTER_THRESHOLD": "Práh vstupu do LVRT",
+                    "EXIT_ENDPOINT": "Bod výstupu z LVRT",
+                    "K1_SLOPE": "Sklon K1",
+                    "ZERO_CURRENT_ENABLE": "Režim nulového proudu",
+                    "ZERO_CURRENT_ENABLE_DESC": "Aktivuje/deaktivuje režim nulového proudu",
+                    "ZERO_CURRENT_THRESHOLD": "Práh vstupu"
+                },
+                "HVRT": {
+                    "ENABLE": "HVRT",
+                    "ENABLE_DESC": "Aktivuje/deaktivuje High Voltage Ride Through",
+                    "OV_VOLTAGE": "Přepětí {{stage}} napětí",
+                    "OV_TIME": "Přepětí {{stage}} čas",
+                    "ENTER_THRESHOLD": "Práh vstupu do HVRT",
+                    "EXIT_ENDPOINT": "Bod výstupu z HVRT",
+                    "K2_SLOPE": "Sklon K2",
+                    "ZERO_CURRENT_ENABLE": "Režim nulového proudu",
+                    "ZERO_CURRENT_ENABLE_DESC": "Aktivuje/deaktivuje režim nulového proudu",
+                    "ZERO_CURRENT_THRESHOLD": "Práh vstupu"
+                },
+                "CURRENT_DISTRIBUTION_MODE": "Režim rozdělení proudu",
+                "OPTIONS": {
+                    "REACTIVE_PRIORITY": "Režim priority jalového proudu",
+                    "ACTIVE_PRIORITY": "Režim priority činného proudu",
+                    "CONSTANT_CURRENT": "Režim konstantního proudu",
+                    "DEACTIVATE": "Deaktivovat",
+                    "GRADIENT_CONTROL": "Řízení gradientu",
+                    "PT_1_BEHAVIOUR": "Chování PT-1"
+                },
+                "ACTIVE_RECOVERY_MODE": "Režim obnovy činného výkonu po překročení",
+                "REACTIVE_RECOVERY_MODE": "Průchod koncem režimu obnovy jalového výkonu",
+                "POWER_GRADIENT": "Gradient výkonu",
+                "PT1_TIME_CONSTANT": "Časová konstanta PT-1 dolnopropustného filtru"
+            },
+            "FREQUENCY_RIDE_THROUGH": {
+                "ENABLE": "Frekvenční Ride-Through",
+                "ENABLE_DESC": "Aktivuje/deaktivuje frekvenční Ride-Through",
+                "UF_FREQUENCY": "Podfrekvence {{stage}} frekvence",
+                "UF_TIME": "Podfrekvence {{stage}} čas",
+                "OF_FREQUENCY": "Nadfrekvence {{stage}} frekvence",
+                "OF_TIME": "Nadfrekvence {{stage}} čas"
+            },
+            "SLOPE_RANGE": "Násobící faktor [{{min}}, {{max}}]"
+        },
+        "CONFIGURATION_BATTERY_INPUTS": {
+            "TITLE": "Konfigurace vstupů baterie",
+            "BATTERY_INPUT": "Vstup baterie {{ key }}",
+            "INPUT_CONFIRMATION": "Potvrzení: vstupy správně připojeny",
+            "NUMBER_OF_BATTERY_INPUTS": "Počet použitých vstupů baterie"
+        },
+        "CONFIGURATION_EMERGENCY_RESERVE": {
+            "GENSET": {
+                "CONNECTED": "Generátor připojen?",
+                "POWER": "Jmenovitý výkon",
+                "PREHEAT_TIME": "Doba předehřevu",
+                "RUN_TIME": "Doba běhu",
+                "EMERGENCY_POWER_FUNCTION": "Má být aktivována funkce nouzového generátoru?",
+                "BATTERY_CHARGING": "Povolit nabíjení baterie z generátoru?",
+                "MAX_POWER": "Maximální procentní nabíjecí výkon",
+                "MAX_POWER_DESCRIPTION": "Procentní podíl výše uvedeného dostupného jmenovitého výkonu generátoru, kterým má být baterie nabíjena. [{{min}}, {{max}}] %",
+                "CHARGE_SOC_START": "Stav nabití baterie pro start generátoru",
+                "CHARGE_SOC_START_DESCRIPTION": "Stav nabití baterie, při kterém se generátor spustí. Hodnota nesmí být nižší než zadaný stav nabití vyhrazený pro nouzovou rezervu.",
+                "CHARGE_SOC_END": "Stav nabití baterie pro zastavení generátoru",
+                "CHARGE_SOC_END_DESCRIPTION": "Stav nabití baterie, při kterém se generátor zastaví."
+            }
+        },
+        "CONFIGURATION_EXECUTE": {
+            "COPY_ERROR": "Zkopírovat chybu",
+            "ERROR_COPIED": "Chyba zkopírována do schránky",
+            "ERROR_DETAILS": "Detaily chyby",
+            "ERROR_HEADLINE_CATEGORY_CONFLICT": "Nejprve prosím odstraňte existující systém",
+            "ERROR_HEADLINE_CONNECTION": "Zkontrolujte prosím připojení a spusťte konfiguraci znovu",
+            "ERROR_HEADLINE_GENERIC": "Zkopírujte prosím chybu a odešlete ji podpoře FENECON",
+            "ERROR_HEADLINE_INCOMPATIBLE_APP": "Nejprve prosím odstraňte nekompatibilní aplikace",
+            "ERROR_HEADLINE_TIMEOUT": "Zkontrolujte prosím připojení a spusťte konfiguraci znovu",
+            "ERROR_HINT_CATEGORY_CONFLICT": "Na tomto zařízení je již nainstalován jiný integrovaný systém. Vždy může být nainstalován pouze jeden integrovaný systém (např. systém Home nebo Commercial).",
+            "ERROR_HINT_CONNECTION": "Připojení k zařízení bylo přerušeno. Zkontrolujte prosím síťové/sériové připojení.",
+            "ERROR_HINT_INCOMPATIBLE_APP": "Aplikace nainstalovaná na tomto zařízení brání instalaci tohoto systému. Odstraňte ji prosím přes App Center a spusťte konfiguraci znovu. Ovlivněné aplikace jsou uvedeny v detailech chyby.",
+            "ERROR_HINT_STALE_INSTANCE": "Na zařízení byl nalezen zbytek dřívější instalace tohoto systému, který blokuje aktuální instalaci. Lze jej automaticky odstranit.",
+            "ERROR_HINT_TIMEOUT": "Zařízení neodpovědělo včas. Zkontrolujte prosím připojení k zařízení.",
+            "ERROR_TITLE_CATEGORY_CONFLICT": "Nalezen existující systém",
+            "ERROR_TITLE_CONNECTION": "Připojení přerušeno",
+            "ERROR_TITLE_INCOMPATIBLE_APP": "Nainstalována nekompatibilní aplikace",
+            "ERROR_TITLE_STALE_INSTANCE": "Nalezen zbytek dřívější instalace",
+            "ERROR_TITLE_TIMEOUT": "Vypršel časový limit",
+            "RESOLVE_CATEGORY_CONFLICT_BUTTON": "Odstranit existující systém a pokračovat",
+            "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Nepodařilo se najít konfliktní systém k automatickému odstranění. Odstraňte jej prosím ručně přes App Center.",
+            "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Odstraňování existujícího systému…",
+            "STATUS_CONFIGURING": "Konfigurace komponent…",
+            "STATUS_FUNCTION_TEST": "Konfigurace dokončena. Probíhají testy funkcí…"
+        },
+        "PROTOCOL_FEED_IN_MANAGEMENT": {
+            "FIXED_COS_PHI": "Pevná hodnota: Cos Phi 1"
+        },
+        "PROTOCOL_SERIAL_NUMBER": {
+            "BATTERY_COMMUNICATION_BOX": "Komunikační box baterie",
+            "BATTERY_INPUT_TOWER": "Vstup baterie {{ batteryInput }} věž {{ towerNumber }}"
+        }
+    }
+}

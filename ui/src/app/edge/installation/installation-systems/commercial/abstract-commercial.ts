@@ -9,12 +9,12 @@ import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared"
 import { Category } from "../../shared/category";
 import { ExternalLimitationType, GridFeedInLimitationType, ModbusBridgeType } from "../../shared/enums";
 import { IbnUtils } from "../../shared/ibn.utils";
-import { ComponentData, EmsType } from "../../shared/ibndatatypes";
+import { ComponentData } from "../../shared/ibndatatypes";
 import { Meter } from "../../shared/meter";
-import { System, SystemId, SystemType } from "../../shared/system";
+import { SystemType } from "../../shared/system";
 import { WebLinks } from "../../shared/weblink.utils";
 import { ComponentConfigurator, ConfigurationMode, ConfigurationObject, } from "../../views/configuration-execute/component-configurator";
-import { AbstractIbn } from "../abstract-ibn";
+import { AbstractIbn, SerialNumberModel } from "../abstract-ibn";
 
 export abstract class AbstractCommercialIbn extends AbstractIbn {
     private static readonly SELECTOR = "Commercial";
@@ -46,6 +46,9 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         fixedValue?: number;
         otherValue?: number;
         meterType: Meter.GridMeter;
+        modbusBridgeType?: ModbusBridgeType;
+        modbusBridgeIp?: string;
+        modbusBridgePort?: number;
     } = {
         category: Category.LINE_SIDE_METER_FUSE_COMMERCIAL,
         meterType: Meter.GridMeter.KDK,
@@ -148,7 +151,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         edge: Edge,
         websocket: Websocket,
         numberOfModulesPerTower: number,
-    ) {
+    ): Promise<SerialNumberModel> {
         return new Promise((resolve) => {
             let isResolved = false;
             const channelAddresses: ChannelAddress[] = this.getChannels(towerNr, numberOfModulesPerTower);
@@ -214,51 +217,6 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
         if ("modbusBridgeType" in ibnString) {
             this.modbusBridgeType = ibnString.modbusBridgeType;
         }
-    }
-
-    public override getSubSystemFields(): FormlyFieldConfig[] {
-        const emsType: EmsType = this.getEmsType();
-
-        return System.getSubSystemFields(emsType, this.translate);
-    }
-
-    public override getSystemVariantFields(): FormlyFieldConfig[] {
-        const label = [];
-        const emsType: EmsType = this.getEmsType();
-
-        switch (emsType) {
-            case "feh013":
-                label.push(
-                    { value: SystemId.COMMERCIAL_92_WITHOUT_CLUSTER, label: SystemId.COMMERCIAL_92_WITHOUT_CLUSTER },
-                    { value: SystemId.COMMERCIAL_50_GEN_3, label: SystemId.COMMERCIAL_50_GEN_3 },
-                );
-                break;
-            case "fec013":
-                label.push({ value: SystemId.COMMERCIAL_92_CLUSTER, label: SystemId.COMMERCIAL_92_CLUSTER });
-                break;
-            case null:
-                label.push(
-                    { value: SystemId.COMMERCIAL_30_ANSCHLUSS, label: SystemId.COMMERCIAL_30_ANSCHLUSS },
-                    { value: SystemId.COMMERCIAL_30_NETZTRENNSTELLE, label: SystemId.COMMERCIAL_30_NETZTRENNSTELLE },
-                    { value: SystemId.COMMERCIAL_50_GEN_1, label: SystemId.COMMERCIAL_50_GEN_1 },
-                );
-                break;
-        }
-
-        const fields: FormlyFieldConfig[] = [
-            {
-                key: "system",
-                type: "radio",
-                templateOptions: {
-                    label: this.translate.instant("INSTALLATION.CONFIGURATION_SYSTEM.PRODUCT_NAME"),
-                    type: "radio",
-                    options: label,
-                    required: true,
-                },
-            },
-        ];
-
-        return fields;
     }
 
     public override getPreSettingInformationFromEdge(

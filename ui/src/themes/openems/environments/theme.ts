@@ -19,5 +19,6 @@ export const theme: Omit<Environment, "url" | "backend" | "production" | "debugM
     },
 
     PRODUCT_TYPES: () => null,
+    ENVIRONMENT_PROVIDERS: [],
     ...OemMeta,
 };
