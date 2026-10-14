@@ -1,0 +1,23 @@
+{
+    "POPOVER": {
+        "ANNUAL_REVIEW": {
+            "BUTTON_TEXT": "Ver el balance anual ahora",
+            "CONCLUSION": "Más información sobre la campaña en nuestra página informativa: <br><a href='https://www.fenecon.de/meine-energy-journey-2025'>https://www.fenecon.de/meine-energy-journey-2025</a>",
+            "DESCRIPTION": "Descubre los momentos destacados de tu consumo personal de energía, cómo tu sistema de almacenamiento FENECON apoyó tu hogar, tu contribución a la transición energética y, sobre todo: lo mucho que te ha compensado en 2025.",
+            "HEADER_TEXT": "¡Tu balance anual personal ya está disponible! Te mostramos posibilidades aún desaprovechadas para hacer tu sistema energético aún más eficiente, optimizar tu autoconsumo y seguir con la tarifa más barata.",
+            "SUB_TITLE": "¡Tu balance anual personal ya está disponible!",
+            "TITLE": "Descubre tu Energy Journey 2025"
+        },
+        "WEATHER_PROGNOSIS": {
+            "ACCEPT": "Aceptar e instalar",
+            "APP": "Descárgalo de nuestro App Center:",
+            "APP_WEATHER": "Tiempo",
+            "CHECKBOX_LABEL": "Confirmo que, para el uso de la aplicación, es necesaria la transmisión de los datos personales del usuario principal a un tercero. Encuentra más información sobre cómo se utilizan tus datos personales <a href={{link}} target=\"_blank\">aquí</a>.",
+            "DECLINE": "Rechazar",
+            "DESCRIPTION": "La integración de datos meteorológicos locales mejora tu pronóstico de consumo y generación, ¡sin coste alguno!",
+            "SPINNER_TEXT_ACCEPTED": "Un momento, por favor: la aplicación se está instalando",
+            "SPINNER_TEXT_DECLINED": "La aplicación se puede instalar más adelante en cualquier momento en el FEMS App Center.",
+            "TITLE": "Nuevo: el pronóstico es ahora un 50 % más preciso gracias a los datos meteorológicos"
+        }
+    }
+}

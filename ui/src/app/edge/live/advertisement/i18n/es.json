@@ -1,0 +1,22 @@
+{
+    "ADVERT": {
+        "1": {
+            "LINK": "",
+            "LINK_TEXT": "Activar ahora",
+            "TEXT": "A partir de septiembre puedes probar el nuevo diseño de tu monitorización en línea. Te esperan nuevas funciones y una interfaz más intuitiva, más sencilla y más moderna. Ve a los ajustes de tu perfil y activa el nuevo diseño para probarlo ahora mismo.",
+            "TITLE": "Nuevo diseño para tu monitorización en línea"
+        },
+        "2": {
+            "LINK": "https://www.fenecon.de/weiterempfehlungsprogramm",
+            "LINK_TEXT": "Asegura tu recompensa",
+            "TEXT": "Recomienda FENECON a tus amigos, familiares y conocidos y consigue como agradecimiento atractivas recompensas. Por cada Energy Journey iniciada, tú y el nuevo cliente recibís gratis la app FEMS de tarifa dinámica y un enchufe Shelly. ¡La combinación perfecta con la app gratuita Shelly DIY FEMS!",
+            "TITLE": "¡La buena energía merece ser compartida!"
+        },
+        "3": {
+            "LINK": "https://fenecon-gmbh.webinargeek.com/eeg-2027-wie-sich-installateure-jetzt-zukunftssicher-aufstellen-koennen?cst=fems-widget",
+            "LINK_TEXT": "Registrarse gratis",
+            "TEXT": "¿Qué cambia para los instaladores con la EEG 2027? En el nuevo seminario web del 20.10. mostramos qué desarrollos se avecinan en el mercado fotovoltaico y de almacenamiento y qué nuevas oportunidades de negocio surgen: desde la comercialización directa y el almacenamiento sin PV hasta soluciones para empresas.",
+            "TITLE": "EEG 2027: Prepárate ahora para el futuro"
+        }
+    }
+}

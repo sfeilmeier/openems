@@ -1,0 +1,23 @@
+{
+    "POPOVER": {
+        "ANNUAL_REVIEW": {
+            "BUTTON_TEXT": "Zobrazit roční bilanci",
+            "CONCLUSION": "Více o kampani se dozvíte na naší informační stránce: <br><a href='https://www.fenecon.de/meine-energy-journey-2025'>https://www.fenecon.de/meine-energy-journey-2025</a>",
+            "DESCRIPTION": "Objevte zajímavé momenty své osobní spotřeby energie, jak váš úložný systém FENECON podporoval vaši domácnost, jaký jste přispěli k energetické transformaci a hlavně: jak se vám to v roce 2025 vyplatilo.",
+            "HEADER_TEXT": "Vaše osobní roční bilance je od teď online! Ukážeme vám dosud nevyužité možnosti, jak udělat svůj energetický systém ještě efektivnějším, optimalizovat vlastní spotřebu a zůstat na nejvýhodnější cenové dráze.",
+            "SUB_TITLE": "Vaše osobní roční bilance je od teď online!",
+            "TITLE": "Objevte svou Energy Journey 2025"
+        },
+        "WEATHER_PROGNOSIS": {
+            "ACCEPT": "Přijmout a nainstalovat",
+            "APP": "Ke stažení v našem App Center:",
+            "APP_WEATHER": "Počasí",
+            "CHECKBOX_LABEL": "Beru na vědomí, že pro používání aplikace je nezbytné předání osobních údajů hlavního uživatele třetí straně. Více o tom, jak jsou vaše osobní údaje zpracovávány, najdete <a href={{link}} target=\"_blank\">zde</a>.",
+            "DECLINE": "Odmítnout",
+            "DESCRIPTION": "Integrace místních meteorologických dat zlepšuje vaši prognózu spotřeby a výroby – zcela <b>zdarma!</b>",
+            "SPINNER_TEXT_ACCEPTED": "Chviličku strpení – aplikace se instaluje",
+            "SPINNER_TEXT_DECLINED": "Aplikaci můžete kdykoli později nainstalovat ve FEMS App Center.",
+            "TITLE": "Novinka: Prognóza je díky meteorologickým datům nyní o 50 % přesnější"
+        }
+    }
+}

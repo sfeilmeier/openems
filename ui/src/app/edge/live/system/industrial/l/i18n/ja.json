@@ -1,0 +1,6 @@
+{
+    "INDUSTRIAL_L": {
+        "BMS_HELP_MSG": "潜在的な故障を回避するため、BMSセルフテストを月1回実行する日時",
+        "BMS_SELF_TEST": "BMSセルフテスト"
+    }
+}

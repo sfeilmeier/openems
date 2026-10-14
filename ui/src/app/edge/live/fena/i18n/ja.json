@@ -1,0 +1,32 @@
+{
+    "FENA": {
+        "MESSAGES": {
+            "GRID": {
+                "EMERGENCY_POWER_ACTIVE": "バックアップ電源が動作中：{{edgeLongName}}システムは現在、接続された負荷をバッテリーから給電しています。",
+                "GENERATOR_ACTIVE": "安心のバックアップ：{{edgeLongName}}システムは現在、発電機によって支援されています。",
+                "LIMITED_POWER": "注意：現在、系統事業者による系統への出力制限が適用されています。"
+            },
+            "KPI": {
+                "AUTARCHY": "素晴らしい：今日の電力需要の{{autarchy}}&nbsp;%をこれまでに自給で賄っています。",
+                "SELF_CONSUMPTION": "素晴らしい：今日はこれまでに、太陽光発電の{{selfConsumption}}&nbsp;%を自分で使用しています。"
+            },
+            "STORAGE": {
+                "GRID_OPTIMIZED_CHARGE": {
+                    "DELAYED_CHARGE": "先読み：現在、バッテリーは太陽光の出力抑制を減らすため、最大{{maxPower}}&nbsp;Wで充電しています。{{chargingEndTime}}頃に満充電になる見込みです。",
+                    "DELAYED_CHARGE_WITH_ZERO": "先を見据えて：バッテリーは現在充電を一時停止し、後でより多くの太陽光エネルギーを蓄えて出力抑制を減らせるようにしています。",
+                    "TURNED_OFF": "ヒント：系統に最適化された充電は、太陽光の出力抑制を軽減し、蓄電システムの寿命を延ばすのに役立ちます。有効にしますか？"
+                },
+                "PEAK_SHAVING": {
+                    "CONSUMPTION_OVER_DISCHARGE_ABOVE": "ピークシェービング実行中：システムは現在、負荷ピークを抑えてエネルギーコストを削減しています。",
+                    "CONSUMPTION_UNDER_CHARGE_BELOW": "ピークに備えて：システムは現在、来るべき負荷ピークに向けてバッテリーを充電しています。",
+                    "SOC_IS_100": "ピークシェービング準備完了：システムは負荷ピークに対応できる状態です。現在は発生していません。"
+                },
+                "TIME_OF_USE_TARIFF": {
+                    "CHARGE_FROM_GRID_ACTIVE": "良いタイミング：FENECONシステムは低価格時間帯を利用し、{{priceWithUnit}}で電力を系統から取り込み、後のために蓄電しています。",
+                    "DELAY_CHARGE_ACTIVE": "スマート：バッテリーは現在、放電を遅らせています。これにより、電力料金が高くなる後で安価なエネルギーを利用できます。",
+                    "NEGATIVE_GRID_BUY_PRICE": "現在、取引所での電力価格はわずか{{priceWithUnit}}です。システムはこの低コストのエネルギーを利用し、系統の余剰電力の吸収に貢献しています。"
+                }
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 {
-  "name": "fenecon",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
+    "integrations": {
+        "capacitor": {}
+    },
+    "name": "fenecon",
+    "type": "angular"
 }

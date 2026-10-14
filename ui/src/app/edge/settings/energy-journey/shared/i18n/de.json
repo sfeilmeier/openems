@@ -20,6 +20,7 @@
             "DISCLAIMER": "Haftungsausschluss",
             "DISCLAIMER_TEXT": "Die Berechnungen der Analyse basieren auf deinen Angaben zum Strompreis, den Netzbezügen und den Netzeinspeise-Daten deines Speichers im vergangenen Jahr. Diese zugrunde liegenden Parameter können sich jederzeit ändern. Die Berechnungen sind daher nur Beispiele, die zur Orientierung über die mögliche Rentabilität einer Batterieerweiterung dienen und keine Garantie für tatsächlich erzielbare finanzielle Einsparungen bieten. Eine Zusicherung seitens FENECON ist damit nicht verbunden.",
             "ELECTRICITY_PRICE_SELECTION_TITLE": "Energy Journey: Batterieerweiterung",
+            "ELECTRICITY_PRICE_TEXT": "Dein System ist seit mehr als einem Jahr in Betrieb. Analysiere hier, welche Auswirkungen eine Batterieerweiterung gehabt hätte.",
             "ELECTRICITY_PRICE_VALUE_TEXT": "Bitte gib deinen aktuellen Strompreis an. Falls du bereits einen dynamischen Stromtarif nutzt, gib bitte einen Mittelwert an.",
             "GRID_CONSUMPTION_TITLE": "Einsparung Strombezug in kWh ({{date}})",
             "MODULE": "Modul",

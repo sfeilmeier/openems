@@ -9,8 +9,13 @@ import { Edge, EdgePermission } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
 import { Role } from "src/app/shared/type/role";
 import { AbstractIndustrialComponent } from "../../AbstractIndustrialComponent";
+import cz from "../i18n/cz.json";
 import de from "../i18n/de.json";
 import en from "../i18n/en.json";
+import es from "../i18n/es.json";
+import fr from "../i18n/fr.json";
+import ja from "../i18n/ja.json";
+import nl from "../i18n/nl.json";
 
 @Component({
     selector: "oe-system-industrial-xl",
@@ -24,11 +29,13 @@ export class SystemIndustrialXlComponent extends AbstractIndustrialComponent {
 
     constructor() {
         super();
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
-            for (const { lang, translation, shouldMerge } of translations) {
-                this.translate.setTranslation(lang, translation, shouldMerge);
-            }
-        });
+        Language.normalizeAdditionalTranslationFiles({ cz: cz, de: de, en: en, es: es, fr: fr, ja: ja, nl: nl }).then(
+            (translations) => {
+                for (const { lang, translation, shouldMerge } of translations) {
+                    this.translate.setTranslation(lang, translation, shouldMerge);
+                }
+            },
+        );
     }
 
     public static getFormlyGeneralView(

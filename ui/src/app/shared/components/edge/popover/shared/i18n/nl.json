@@ -1,0 +1,23 @@
+{
+    "POPOVER": {
+        "ANNUAL_REVIEW": {
+            "BUTTON_TEXT": "Bekijk het jaaroverzicht nu",
+            "CONCLUSION": "Meer over de campagne op onze infopagina: <br><a href='https://www.fenecon.de/meine-energy-journey-2025'>https://www.fenecon.de/meine-energy-journey-2025</a>",
+            "DESCRIPTION": "Ontdek de hoogtepunten van je persoonlijk energiegebruik, hoe je FENECON-opslagsysteem je huis heeft ondersteund, je bijdrage aan de energietransitie en vooral: hoeveel het je in 2025 heeft opgeleverd.",
+            "HEADER_TEXT": "Je persoonlijke jaaroverzicht is vanaf nu online! We laten je nog onbenutte mogelijkheden zien om je energiesysteem nog efficiënter te maken, je eigen verbruik te optimaliseren en tegen de goedkoopste koers onderweg te blijven.",
+            "SUB_TITLE": "Je persoonlijke jaaroverzicht is vanaf nu online!",
+            "TITLE": "Ontdek je Energy Journey 2025"
+        },
+        "WEATHER_PROGNOSIS": {
+            "ACCEPT": "Accepteren en installeren",
+            "APP": "Downloaden via ons App Center:",
+            "APP_WEATHER": "Weer",
+            "CHECKBOX_LABEL": "Ik begrijp dat voor het gebruik van de app het doorgeven van persoonsgegevens van de hoofdgebruiker aan een derde noodzakelijk is. Lees <a href={{link}} target=\"_blank\">hier</a> meer over hoe je persoonsgegevens worden gebruikt.",
+            "DECLINE": "Afwijzen",
+            "DESCRIPTION": "Door integratie van lokale weergegevens verbetert de nauwkeurigheid van je verbruiks- en opwekprognose – volledig <b>gratis!</b>",
+            "SPINNER_TEXT_ACCEPTED": "Even geduld – de app wordt geïnstalleerd",
+            "SPINNER_TEXT_DECLINED": "De app kan op elk later moment worden geïnstalleerd via het FEMS App Center.",
+            "TITLE": "Nieuw: prognose nu 50 % nauwkeuriger dankzij weergegevens"
+        }
+    }
+}

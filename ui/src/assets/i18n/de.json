@@ -863,7 +863,6 @@
     },
     "INSTALLATION": {
         "ALIAS_WITH_LABEL": "Alias {{label}}{{number}}",
-        "ATTENTION_MESSAGE": "Beachte, dass die Auswahl nachträglich nicht mehr rückgängig gemacht werden kann.",
         "BACK": "zurück",
         "CLICK_RECOMMENDATION": "Bitte klicke unten auf den \"Hinzufügen\"-Button wenn du ein {{ edgeShortName }} in Betrieb nehmen möchtest.",
         "COMPLETE": "Zum Online-Monitoring",
@@ -901,7 +900,6 @@
             "INFO": "Beachten Sie bei Verwendung des Generators: der Ladezustand der Notstromreserve muss größer (oder genauso groß) sein, wie die Angaben zum Ladezustand für den Start des Generators (siehe Angaben unten)",
             "IS_ACTIVATED": "Notstromreserve aktiv?",
             "IS_ENABLED": "Soll die Notstromfunktion aktiviert werden?",
-            "RECENT": "Aktuell:",
             "TITLE": "Angaben zu Notstrom",
             "VALUE": "Wert [%]"
         },
@@ -930,7 +928,6 @@
             "BATTERY": "Batterie",
             "BATTERY_INTERFACE": "Schnittstelle Batterie",
             "BATTERY_INVERTER": "Batterie-Wechselrichter",
-            "COMMERCIAL_BATTERY_NOTE": "\nWenn du nun auf “WEITER ->” klickst, stehen dir ca. 15  Minuten zur vollständigen Durchführung der restlichen Inbetriebnahme (IBN) zur Verfügung. Danach geht die BMS in einen zur Sicherheit eingestellten “Time-Out”. Normalerweise ist diese Zeit ausreichend, um die letzten Schritte der IBN in Ruhe abzuschließen. \nSollte die Zeit trotzdem nicht genügen, kannst du die IBN erneut von vorne starten.",
             "COMMUNICATION_WITH_BATTERY": "Kommunikation mit der Batterie",
             "COMMUNICATION_WITH_BATTERY_INVERTER": "Kommunikation mit dem Batterie-Wechselrichter",
             "COMMUNICATION_WITH_METER": "Kommunikation mit den Zählern",
@@ -939,9 +936,7 @@
             "DESCRIPTION_1": "Um sicherzustellen, dass alle Komponenten deines Systems korrekt eingerichtet werden,",
             "DESCRIPTION_2": "können die Konfiguration und die nachfolgenden Funktionstests bis zu 10 Minuten in Anspruch nehmen.",
             "EMERGENCY_CAPACITY_RESERVE": "Ansteuerung der Notstromreserve",
-            "EMERGENCY_POWER_CONSUMER": "Notstrombraucher",
             "ERROR": "Fehler",
-            "ESS_LIMITER_ALIAS": "ESS Limiter für §14a",
             "EXISTING_CONFIGURATION": "Es wurden eine bestehende Konfiguration gefunden. Diese kann überschrieben werden, indem du den Konfigurationsvorgang manuell startest.",
             "FIELD_BUS_COUPLER": "Feldbuskoppler",
             "FINISH_FUNCTION_TEST": "Funktionstests für die verbauten Komponenten abgeschlossen",
@@ -957,21 +952,15 @@
                 "WEIDMUELLER_BRIDGE": "Weidmüller (schwarze Komponente)"
             },
             "LEGEND": "Legende",
-            "NOTE": "Bitte beachte:",
             "NOT_YET_CONFIGURED": "noch nicht konfiguriert / ausgeführt",
             "PARTIAL_CONFIGURATION": "Es konnten nicht alle Komponenten richtig konfiguriert werden.",
-            "POWER": "Power",
-            "PREPARE_BATTERY_EXTENSION": "Batterienachrüstung",
             "PRE_CONFIGURED": "vorkonfiguriert / Warnung",
-            "PROGNOSIS": "Prognose",
             "RELAY_BOARD": "Relaisboard",
             "SELF_CONSUMPTION": "Eigenverbrauchoptimierung",
             "START": "Konfiguration starten",
             "START_FUNCTION_TEST": "Funktionstests für die installierten Komponenten gestartet",
             "STORAGE_SYSTEM": "Speichersystem",
             "SUCCESSFULLY_CONFIGURED": "erfolgreich konfiguriert / ausgeführt",
-            "SURPLUS_ENERGY_FEEDIN": "Überschusseinspeisung",
-            "TIME_OF_USE_TARIFF": "Dynamischer Stromtarif",
             "TITLE": "Konfiguration",
             "UNDEFINED_COMPONENT_CONFIGURATOR": "Komponentenkonfigurator ist nicht definiert",
             "WAGO_BRIDGE": "Wago Bridge",
@@ -998,7 +987,6 @@
             "CONNECTION_CHECK_LABEL": "Wurden alle Anschlüsse kontrolliert?",
             "NOTE": "Weitere Erzeuger können im Anschluss über das App Center konfiguriert werden."
         },
-        "CONFIGURATION_MPPT_SELECTION_NOTE": "Weitere Erzeuger können im Anschluss über das App Center konfiguriert werden.",
         "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
             "SLAVE_COUNT_TITLE": "Informationen zur Anzahl der Slaves",
             "SLAVE_INSTALLATION_TITLE": "Installation einzelner Speichereinheiten (Slaves)"
@@ -1019,7 +1007,6 @@
             "COUNTRY_SETTING": "Ländereinstellung",
             "CUSTOMER": "Kunde",
             "DEVICE_ACTIVE_CHECKED": "Batterie und Wechselrichter eingeschaltet",
-            "DEVICE_CONNECTION_CHECKED": "Das Stromspeichersystem ist an das Stromnetz angeschlossen",
             "EDGE_NUMBER": "{{ edgeShortName }} Nummer",
             "ENERGY_FLOW_METER": {
                 "LABEL": "Netz"
@@ -1044,8 +1031,6 @@
             "TITLE": "Welches Speichersystem soll konfiguriert werden?"
         },
         "CONFIGURATION_SYSTEM_VARIANT": "Auswahl der verbauten Komponente",
-        "CONFIRM_APP_SELECTION": "Bist du sicher, die folgende App auszuwählen?",
-        "CONFIRM_APP_SELECTION_LATER": "Bist du sicher, die Auswahl später zu treffen?",
         "FORM": {
             "BATTERY_SERIAL_NUMBER": "{{ serialNumber }} ist keine gültige Seriennummer. Eine gültige Seriennummer besteht aus {{ length }} Ziffern.",
             "EMAIL": "{{ email }} ist keine gültige E-Mail-Adresse.",
@@ -1057,10 +1042,8 @@
             "POSITIVE_INTEGER": "Nur positive Ganzzahlen erlaubt.",
             "STS_SERIAL_NUMBER_REQUIREMENT": "Die Seriennummer besteht aus maximal 16 Ziffern."
         },
-        "FORWARD": "weiter",
         "LOAD": "laden...",
         "NEXT": "weiter",
-        "PLEASE_SELECT_OPTION": "Bitte wähle eine Option aus",
         "PRE_INSTALLATION": {
             "AUTHENTICATION_FAILED": "Fehler bei der Authentifizierung",
             "EDGE_OFFLINE": "Es konnte keine Verbindung zum {{ edgeShortName }} hergestellt werden",
@@ -1113,10 +1096,7 @@
             "SLAVE_FILED_LABEL": "Bitte gib die Anzahl der zu konfigurierenden Slaves ein",
             "SLAVE_INSTALLATION": {
                 "CONNECTION_STATUS": {
-                    "AUTHENTICATING": "Authentifizierung",
-                    "CONNECTED": "Verbunden",
-                    "NOT_FOUND": "Slave Nicht gefunden",
-                    "NOT_YET_CONNECTED": "Noch nicht verbunden"
+                    "NOT_FOUND": "Slave Nicht gefunden"
                 },
                 "LOG_MESSAGE": {
                     "AUTHENTICATION_SUCCESSFUL": "Authentifizierung erfolgreich. System wird aktualisiert …",
@@ -1136,22 +1116,16 @@
             "CONSTANT_VALUE": "Cos φ Festwert",
             "DYNAMIC_EXTERNAL_LIMITATION": "Dynamischer Rundsteuerempfänger: Abregelung am Netzanschlusspunkt",
             "DYNAMIC_LIMITATION": "Dynamische Begrenzung der Einspeisung",
-            "DYNAMIC_LIMITATION_ACTIVATED": "Dynamische Begrenzung der Einspeisung aktiviert?",
             "DYNAMIC_LIMITATION_TYPE": "Einspeiselimitierung",
-            "DYNAMIC_LIMITATION_WITH_RIPPLE_CONTROLLER": "Dynamische Begrenzung der Einspeisung & Rundsteuerempfänger",
             "EXTERNAL_CONTROLLER_CHECK": "Der Rundsteuerempfänger wurde lt. Anleitung ordnungsgemäß und vollständig installiert.",
-            "EXTERNAL_CONTROLLER_RECEIVER": "Rundsteuerempfänger",
             "EXTERNAL_LIMITATION": "Rundsteuerempfänger: Abregelung am AC-Ausgang des Wechselrichters",
-            "EXTERNAL_LIMITATION_ACTIVATED": "Rundsteuerempfänger aktiviert?",
             "EXTERNAL_LIMITATION_TYPE": "Externe Limitierung",
             "FEED_IN_SETTING_DESCRIPTION": "Wirkleistungsreduzierung bei Überfrequenz",
             "FIXED_POWER_FACTOR": "Fester Verschiebungsfaktor Cos φ",
             "FIXED_POWER_FACTOR_DESCRIPTION": "In der Regel gibt der Netzbetreiber einen festen Verschiebungsfaktor von '1' an",
             "INDUCTIVE": "induktiv",
             "INFO_TEXT": "Dein Energiespeicher versucht durch intelligentes Laden, eine Abregelung der PV-Anlage zu vermeiden.",
-            "LIMITATION": "Limitierung",
             "MAXIMUM_FEED_IN_VALUE": "Maximale Einspeiseleistung [W]",
-            "MAXIMUM_FEED_IN_VALUE_DYNAMIC_AND_EXTERNAL_LIMITATION": "Wert der dynamischen Begrenzung (max Einspeisewert, z.B. 60 % der kWp) [W]",
             "MAXIMUM_VALUE_DESCRIPTION": "Diesen Wert kannst du der Anschlussbestätigung deines Netzbetreibers entnehmen",
             "NA_PROTECTION": "Fernabschaltung aktiviert (Zentraler NA-Schutz)",
             "NO_LIMITATION": "Keine Limitierung",
@@ -1193,7 +1167,6 @@
                 "SOUTH_WEST": "Suedwest",
                 "WEST": "West"
             },
-            "DUPLICATE": " MPPT {{ mppt }} doppelt belegt (beschriftet mit \"PV{{ pv }}\")",
             "INSTALLED_POWER": "Installierte Leistung [Wₚ]",
             "INSTALLED_POWER_PER_STRING": "Installierte Leistung pro String [Wₚ]",
             "MARKED_AS": " MPPT {{ mppt }} (beschriftet mit \"PV{{ mppt }}\")",
@@ -1207,8 +1180,6 @@
             "OPEN_MANUAL": "Anleitung öffnen",
             "ORIENTATION": "Ausrichtung",
             "ORIENTATION_WITH_LABEL": "Ausrichtung {{ label }}{{ number }}",
-            "SHADE_MANAGEMENT_DEACTIVATE": "Schattenmanagement deaktivieren",
-            "SHADE_MANAGEMENT_DESCRIPTION": "Nur wenn Optimierer verbaut sind, muss das Schattenmanagement deaktiviert werden",
             "TITLE_DC": "DC-PV-Installation",
             "TITLE_PV": "DC-PV Installation (Wechselrichtereingänge)"
         },
@@ -1314,11 +1285,9 @@
         "ACCESS_LEVEL": "Zugriffslevel",
         "CHANGELOG": "Changelog",
         "COCKPIT": "Cockpit",
-        "DEFAULT_EDGE_LONG_NAME": "FENECON Energiemanagementsystem",
         "EDGE_SETTINGS": "Einstellungen",
         "EDGE_SYSTEM_SETTINGS": "Systemeinstellungen",
         "FAVORITES": "Favoriten",
-        "FENECON_ENERGY_MANAGEMENT_SYSTEM": "FENECON Energiemanagementsystem",
         "GENERAL_SETTINGS": "Allgemeine Einstellungen",
         "GROUPS": {
             "BRAIINS": "Bitcoin Miner",
@@ -1326,7 +1295,6 @@
             "FIX_DIGITAL_OUTPUT": "Manuelle Relaissteuerung",
             "HEATING_ROOM": "Heizung"
         },
-        "HECKERT_ENERGY_MANAGEMENT_SYSTEM": "Heckert Solar Symphon-E Energiemanagementsystem",
         "INDEX": "Übersicht",
         "LOGOUT": "Abmelden",
         "MENU": "Menü",
@@ -1390,10 +1358,6 @@
                 "HEADER": "Routerverbindung mit Laptop überprüfen"
             }
         },
-        "EDGE": {
-            "DESCRIPTION": "Im Falle eines Neustarts des {{edgeShortName}}-Gerät, warte bitte einen Moment, bis der Neustart vollkommen durchgeführt wurde.",
-            "LOCAL_ACCESS_CURRENTLY_NOT_POSSIBLE": "Lokalzugriff derzeit nicht möglich"
-        },
         "GENERAL": {
             "AVAILABILITY": "Der Onlinezugriff auf das Speichersystem ist aktuell nicht möglich.<br>Die Daten werden lokal gespeichert und gehen nicht verloren.",
             "EMS_OFFLINE": "{{edgeShortName}} ist offline",
@@ -1411,7 +1375,7 @@
                 "HEADER": "Internetverbindung prüfen"
             },
             "SUB_HEADER": "Dein System ist <b>länger als 10 Minuten offline?</b> Folgendes kann vor Ort geprüft werden:",
-            "TIME_OUT": " Das aufgerufene FEMS ist <b>seit {{timeSinceOffline}}</b> offline.",
+            "TIME_OUT": " Das aufgerufene {{ edgeShortName }} ist <b>seit {{timeSinceOffline}}</b> offline.",
             "TRY": "Lade bitte in 10 Minuten den Browser neu."
         },
         "HOME_10": {
@@ -1541,6 +1505,11 @@
             "UPDATE_SEARCH": "Suche nach Updates...",
             "UPDATE_TIME": "(Dies kann bis zu {{minutes}} min dauern)",
             "WARNING": "Im Rahmen des Systemupdates wird {{system}} neu gestartet und dabei die Kommunikation unterbrochen. In dieser Zeit werden keine Daten aufgezeichnet oder Komponenten angesteuert. Bitte stelle sicher, dass sich das Gesamtsystem in einem sicheren Zustand befindet."
+        }
+    },
+    "SYSTEM": {
+        "INDUSTRIAL": {
+            "SYSTEM_ERROR_ACKNOWLEDGE": "Systemfehler bestätigen"
         }
     }
 }

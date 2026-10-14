@@ -1,0 +1,44 @@
+{
+    "SETTINGS": {
+        "ENERGY_JOURNEY": {
+            "ANALYSE_BATTERY_EXTENSION_TITLE": "Analyse de l'extension de batterie",
+            "BATTERY_MODULE_EXTENSION": "Extension par module de batterie",
+            "CHARGE_DISCHARGE_CAPACITY": "Puissance de charge et de décharge du stockage en kW :**",
+            "CHARGE_DISCHARGE_POWER_NOTE": "** La puissance de charge et de décharge (kW) ainsi que la capacité d'alimentation de secours de votre stockage augmentent jusqu'à cette valeur. Vous trouverez des informations détaillées sur les valeurs exploitables côté CA et la puissance atteignable selon le nombre de modules dans la&nbsp;<a href='{{productLink}}' target='_blank'>fiche produit {{productName}}</a>&nbsp;",
+            "CONSTANTS": {
+                "BATTERY_MODULE": "Modules de batterie",
+                "CHARGE_DISCHARGE": "Puissance de charge et de décharge",
+                "EDIT": "modifier",
+                "ELECTRICITY_PRICE": "Prix de l'électricité",
+                "GRID_SUPPLY": "Prélèvement réseau",
+                "TITLE": "Vos données"
+            },
+            "CONSTANTS_DESCRIPTION": "Ton système actuel {{ theme }} {{ label }} comprenait l'année dernière :",
+            "CURRENT_NUMBER_OF_MODULES": "Actuel",
+            "DECREASE_IN_PEAK_POWER_TOOLTIP": "Des valeurs négatives indiquent une extension de tour qui n'entraîne aucune augmentation supplémentaire de la puissance de charge et de décharge.",
+            "DESCRIPTION": "Que l'extension de votre stockage d'électricité soit rentable\ndépend de divers facteurs. Votre système est en service depuis plus\nd'un an. Analysez ici l'effet qu'aurait eu\nune extension de batterie",
+            "DISCLAIMER": "Avertissement",
+            "DISCLAIMER_TEXT": "Les calculs de l'analyse reposent sur vos indications relatives au prix de l'électricité, aux prélèvements réseau et aux données d'injection réseau de votre stockage de l'année écoulée. Ces paramètres sous-jacents peuvent changer à tout moment. Les calculs ne sont donc que des exemples destinés à donner une orientation sur la rentabilité possible d'une extension de batterie et ne garantissent aucune économie financière réellement réalisable. Ceci ne constitue aucun engagement de la part de FENECON.",
+            "ELECTRICITY_PRICE_SELECTION_TITLE": "Energy Journey : extension de batterie",
+            "ELECTRICITY_PRICE_TEXT": "Votre système est en service depuis plus d'un an. Analysez ici l'effet qu'aurait eu une extension de batterie.",
+            "ELECTRICITY_PRICE_VALUE_TEXT": "Indiquez votre prix actuel de l'électricité. Si vous utilisez déjà un tarif dynamique, indiquez une valeur moyenne.",
+            "GRID_CONSUMPTION_TITLE": "Économie sur le prélèvement d'électricité en kWh ({{date}})",
+            "MODULE": "Module",
+            "MODULES": "Modules",
+            "MODULE_COUNT": "Nombre de modules",
+            "MORE_DETAILS": "Plus de détails dans la fiche produit {{productName}}",
+            "POTENTIAL_SAVINGS_CALCULATION_NOTE": "Calcul : votre prix actuel de l'électricité multiplié par l'économie sur le prélèvement d'électricité en kWh par module.",
+            "POTENTIAL_SAVINGS_NOTE": "* Économie annuelle potentielle en euros qu'aurait procurée une extension de batterie",
+            "SAVINGS_LABEL": "Économie sur le prélèvement d'électricité en euros :*",
+            "SEE_CHANGES_SLOGAN": "À l'aide de notre plateforme Energy Journey, analysez et calculez comment faire évoluer judicieusement votre installation et de quelles extensions vous pouvez tirer profit.",
+            "SEE_CHANGES_SUB_TEXT": "Avec nous, vous êtes idéalement préparé pour votre transition énergétique à 100 %.",
+            "SEE_CHANGES_TEXT": "Affrontez sereinement les changements dans le monde de l'énergie.",
+            "SIMULATION_NOT_STARTED": "Simulation non démarrée",
+            "SLOGAN": "Extension de batterie : est-ce rentable ?",
+            "START_ANALYSIS": "Lancer l'analyse",
+            "TOTAL": "(Total)",
+            "TOTAL_CAPACITY": "Augmentation de la capacité totale utilisable en kWh :",
+            "WIDGET_TITLE": "Extension de batterie"
+        }
+    }
+}

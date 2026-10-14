@@ -1,0 +1,14 @@
+{
+    "BETA_TEST": {
+        "BUTTON": "Vers le journal des modifications du test bêta",
+        "CHANGELOG": "Vous trouverez ici des informations sur les changements, des explications ou de l'aide. Restez informé des dernières évolutions grâce à notre journal des modifications.",
+        "FEEDBACK": "Votre avis compte : dites-nous ce que vous pensez du test BÊTA :",
+        "NEW_UI_INFO": "Notre suivi en ligne est en cours de refonte. Une nouvelle navigation et de nouvelles fonctions feront leur apparition."
+    },
+    "MY_PORTAL": {
+        "BUTTON": "Accéder à myFENECON",
+        "INFO": "Cliquez ici pour accéder à la version bêta de notre portail exclusif, « myFENECON ».",
+        "TICKET": "Vous pouvez actuellement y télécharger des supports marketing. D'autres contenus seront bientôt disponibles."
+    },
+    "NAVIGATION_INFO_MANUAL": "Manuel {{source}}"
+}

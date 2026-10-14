@@ -1,0 +1,6 @@
+{
+    "INDUSTRIAL_L": {
+        "BMS_HELP_MSG": "Date/heure des autotests du BMS une fois par mois pour éviter les défauts latents",
+        "BMS_SELF_TEST": "Autotest du BMS"
+    }
+}

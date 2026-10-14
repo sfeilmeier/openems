@@ -1,0 +1,23 @@
+{
+    "POPOVER": {
+        "ANNUAL_REVIEW": {
+            "BUTTON_TEXT": "今すぐ年間まとめを見る",
+            "CONCLUSION": "キャンペーンの詳細は当社の情報ページでご確認ください：<br><a href='https://www.fenecon.de/meine-energy-journey-2025'>https://www.fenecon.de/meine-energy-journey-2025</a>",
+            "DESCRIPTION": "あなたの個人的なエネルギー利用のハイライト、FENECON蓄電システムがどのようにあなたの家を支えたか、エネルギー転換への貢献、そして何よりも：2025年にどれだけお得だったかをご覧ください。",
+            "HEADER_TEXT": "あなたの個人向け年間まとめが公開されました！エネルギーシステムをさらに効率化し、自家消費を最適化し、最も安いコースで進むための、まだ活用されていない可能性をご紹介します。",
+            "SUB_TITLE": "あなたの個人向け年間まとめが公開されました！",
+            "TITLE": "あなたのEnergy Journey 2025を発見"
+        },
+        "WEATHER_PROGNOSIS": {
+            "ACCEPT": "同意してインストール",
+            "APP": "App Centerからダウンロード：",
+            "APP_WEATHER": "天気",
+            "CHECKBOX_LABEL": "アプリの利用には、メインユーザーの個人データを第三者へ提供することが必要であることを了承します。個人データの取り扱いについては、<a href={{link}} target=\"_blank\">こちら</a>をご覧ください。",
+            "DECLINE": "同意しない",
+            "DESCRIPTION": "地域の気象データの統合により、消費・発電予測の精度が向上します – 完全に<b>無料！</b>",
+            "SPINNER_TEXT_ACCEPTED": "少々お待ちください – アプリをインストールしています",
+            "SPINNER_TEXT_DECLINED": "アプリは後でいつでもFEMS App Centerからインストールできます。",
+            "TITLE": "新機能：気象データにより予測精度が50%向上"
+        }
+    }
+}

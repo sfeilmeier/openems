@@ -11,6 +11,12 @@
             "LINK_TEXT": "Secure Your Reward",
             "TEXT": "Recommend FENECON to your friends, family, and acquaintances and earn attractive rewards as a thank-you. For every new Energy Journey started, both you and the new customer will receive the FEMS Time-of-Use Tariff app and a Shelly Plug free of charge. A perfect match for the free Shelly DIY FEMS app!",
             "TITLE": "Good energy is worth sharing!"
+        },
+        "3": {
+            "LINK": "https://fenecon-gmbh.webinargeek.com/eeg-2027-wie-sich-installateure-jetzt-zukunftssicher-aufstellen-koennen?cst=fems-widget",
+            "LINK_TEXT": "Register for free",
+            "TEXT": "What will change for installers with the EEG 2027? In our new webinar on 20 October, we show which developments are coming to the PV and storage market and which new business opportunities are emerging – from direct marketing and storage without PV to commercial solutions.",
+            "TITLE": "EEG 2027: Get ready for the future now"
         }
     }
 }

@@ -1,0 +1,44 @@
+{
+    "SETTINGS": {
+        "ENERGY_JOURNEY": {
+            "ANALYSE_BATTERY_EXTENSION_TITLE": "Analýza rozšíření baterie",
+            "BATTERY_MODULE_EXTENSION": "Rozšíření o modul baterie",
+            "CHARGE_DISCHARGE_CAPACITY": "Nabíjecí a vybíjecí výkon úložiště v kW:**",
+            "CHARGE_DISCHARGE_POWER_NOTE": "** Nabíjecí a vybíjecí výkon (kW) i schopnost nouzového napájení vašeho úložiště se zvýší na tuto hodnotu. Podrobné informace o hodnotách zpracovatelných na straně AC a o dosažitelném výkonu v závislosti na počtu modulů najdete v&nbsp;<a href='{{productLink}}' target='_blank'>produktovém listu {{productName}}</a>&nbsp;",
+            "CONSTANTS": {
+                "BATTERY_MODULE": "Moduly baterie",
+                "CHARGE_DISCHARGE": "Nabíjecí a vybíjecí výkon",
+                "EDIT": "upravit",
+                "ELECTRICITY_PRICE": "Cena elektřiny",
+                "GRID_SUPPLY": "Odběr ze sítě",
+                "TITLE": "Vaše údaje"
+            },
+            "CONSTANTS_DESCRIPTION": "Váš aktuální systém {{ theme }} {{ label }} loni zahrnoval:",
+            "CURRENT_NUMBER_OF_MODULES": "Aktuálně",
+            "DECREASE_IN_PEAK_POWER_TOOLTIP": "Záporné hodnoty naznačují rozšíření věže, které nezpůsobuje žádné další zvýšení nabíjecího a vybíjecího výkonu.",
+            "DESCRIPTION": "To, zda se vám rozšíření úložiště elektřiny vyplatí,\n        závisí na různých faktorech. Váš systém je v provozu více\n        než rok. Zjistěte zde, jaký efekt by mělo rozšíření\n        baterie",
+            "DISCLAIMER": "Vyloučení odpovědnosti",
+            "DISCLAIMER_TEXT": "Výpočty analýzy vycházejí z vašich údajů o ceně elektřiny, odběru ze sítě a datech vstupu do sítě vašeho úložiště za uplynulý rok. Tyto podkladové parametry se mohou kdykoli změnit. Výpočty jsou proto pouze příklady, které slouží jako orientace možné výnosnosti rozšíření baterie, a negarantují skutečně dosažitelné finanční úspory. Nejde o žádné ujištění ze strany FENECON.",
+            "ELECTRICITY_PRICE_SELECTION_TITLE": "Energy Journey: Rozšíření baterie",
+            "ELECTRICITY_PRICE_TEXT": "Váš systém je v provozu déle než rok. Zjistěte zde, jaký účinek by mělo rozšíření baterie.",
+            "ELECTRICITY_PRICE_VALUE_TEXT": "Zadejte prosím svou aktuální cenu elektřiny. Pokud už využíváte dynamický tarif, zadejte prosím průměrnou hodnotu.",
+            "GRID_CONSUMPTION_TITLE": "Úspora odběru elektřiny v kWh ({{date}})",
+            "MODULE": "Modul",
+            "MODULES": "Moduly",
+            "MODULE_COUNT": "Počet modulů",
+            "MORE_DETAILS": "Další podrobnosti v produktovém listu {{productName}}",
+            "POTENTIAL_SAVINGS_CALCULATION_NOTE": "Výpočet: Vaše aktuální cena elektřiny násobená úsporou odběru elektřiny v kWh na modul.",
+            "POTENTIAL_SAVINGS_NOTE": "* Potenciální roční úspora v eurech, která by vyplynula z rozšíření baterie",
+            "SAVINGS_LABEL": "Úspora odběru elektřiny v eurech:*",
+            "SEE_CHANGES_SLOGAN": "Pomocí naší platformy Energy Journey analyzujte a vypočítejte, jak můžete svůj systém smysluplně rozvíjet a z jakých rozšíření budete mít užitek.",
+            "SEE_CHANGES_SUB_TEXT": "S námi jste ideálně připraveni na svou 100% energetickou transformaci.",
+            "SEE_CHANGES_TEXT": "Změnám ve světě energie se postavte s klidem.",
+            "SIMULATION_NOT_STARTED": "Simulace nebyla spuštěna",
+            "SLOGAN": "Rozšíření baterie: Vyplatí se?",
+            "START_ANALYSIS": "Spustit analýzu",
+            "TOTAL": "(Celkem)",
+            "TOTAL_CAPACITY": "Zvýšení celkové využitelné kapacity v kWh:",
+            "WIDGET_TITLE": "Rozšíření baterie"
+        }
+    }
+}

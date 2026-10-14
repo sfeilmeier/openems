@@ -17,8 +17,12 @@ import { SharedControllerEssTimeOfUseTariff } from "../Controller/Ess/TimeOfUseT
 import { SharedControllerPeakShaving } from "../Controller/peak-shaving/shared/shared";
 import { LiveDataService } from "../livedataservice";
 import { Fena } from "./fena.type";
+import cz from "./i18n/cz.json";
 import de from "./i18n/de.json";
 import en from "./i18n/en.json";
+import es from "./i18n/es.json";
+import fr from "./i18n/fr.json";
+import ja from "./i18n/ja.json";
 import nl from "./i18n/nl.json";
 
 @Component({
@@ -73,12 +77,14 @@ export class FenaComponent implements OnDestroy {
     private readonly injector = inject(Injector);
 
     constructor() {
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en, nl: nl }).then((translations) => {
-            for (const { lang, translation, shouldMerge } of translations) {
-                this.translate.setTranslation(lang, translation, shouldMerge);
-            }
-            this.areTranslationsLoaded.set(true);
-        });
+        Language.normalizeAdditionalTranslationFiles({ cz: cz, de: de, en: en, es: es, fr: fr, ja: ja, nl: nl }).then(
+            (translations) => {
+                for (const { lang, translation, shouldMerge } of translations) {
+                    this.translate.setTranslation(lang, translation, shouldMerge);
+                }
+                this.areTranslationsLoaded.set(true);
+            },
+        );
 
         let hasBeenSet = false;
 

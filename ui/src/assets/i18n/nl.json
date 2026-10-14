@@ -1,37 +1,106 @@
 {
     "ABOUT": {
         "BUILD": "Versie",
+        "CONTACT": "Voor vragen of feedback kunt u terecht op het <a target=\"_blank\" href=\"https://community.openems.io/\">OpenEMS Community Forum</a>.",
         "CURRENT_DEVELOPMENTS": "Huidige ontwikkelingen",
+        "DESCRIPTION": "Dit energiemanagementsysteem is gebaseerd op OpenEMS &ndash; het Open Source Energy Management System. OpenEMS is een modulair platform voor het monitoren en besturen van energie-apparaten. De ontwikkeling wordt gecoördineerd door de OpenEMS Association e.V.",
         "DEVELOPED": "Deze gebruikersinterface is ontwikkeld als open-source-software.",
+        "ENERGY_MANAGEMENT": "Energiemanagementsysteem",
         "FAQ": "Veel Gestelde Vragen (FAQ)",
         "LANGUAGE": "Selecteer taal:",
+        "NEW_UI": "Nieuw ontwerp",
         "OPEN_EMS": "Meer over OpenEMS",
-        "PATCHNOTES": "Veranderingen in de monitoring voor deze build"
+        "PATCHNOTES": "Veranderingen in de monitoring voor deze build",
+        "THEME": "Thema"
+    },
+    "APP": {
+        "FUNCTIONALITY_TEMPORARILY_NOT_AVAILABLE": "Deze functie is tijdelijk niet beschikbaar in de app; gebruik in plaats daarvan de webapp."
+    },
+    "CHANNELS": {
+        "ADD": "Toevoegen",
+        "ADD_CHANNEL": "Kanaal toevoegen",
+        "CHANNEL": "Kanaal",
+        "COMPONENT": "Component",
+        "MORE_CHANNELS": "Meer kanalen toevoegen",
+        "SAVE": "Configuratie opslaan",
+        "SAVE_DESCRIPTION": "Het opslaan van de configuratie overschrijft de bestaande configuratie van deze {{edgeShortName}} en wordt toegepast bij het herladen van de pagina.",
+        "SET_VALUE": "Ingestelde waarde",
+        "VALUE": "Waarde"
     },
     "EDGE": {
         "CONFIG": {
             "ALERTING": {
                 "ACTIVATE": "Activeer",
+                "DEACTIVATED": "Gedeactiveerd",
                 "DELAY": "Vertraging",
+                "FAULT": "Foutmeldingen",
+                "OFFLINE": "Offline meldingen",
                 "TOAST": {
                     "ERROR": "Fout bij het laden van de instellingen",
                     "SUCCESS": "Goedgekeurde instellingen"
-                }
+                },
+                "WARNING": "Waarschuwingsmeldingen"
             },
             "APP": {
+                "APP_DETAILS": "App-details",
                 "AVAILABLE": "Beschikbaar",
                 "BUY_APP": "App kopen",
+                "CARDINALITY": "Kardinaliteit",
+                "CATEGORY": "Categorie",
                 "CREATE_APP": "App installeren",
                 "DELETE_APP": "App verwijderen",
+                "DELETE_CONFIRM": "verwijderen",
+                "DELETE_CONFIRM_DESCRIPTION": "Door de app te verwijderen worden alle bijbehorende componenten verwijderd en alle door de app gemaakte instellingen gewist.",
+                "DELETE_CONFIRM_HEADLINE": "Weet u zeker dat u de app wilt verwijderen?",
                 "ERROR_COMPATIBLE": "Compatibiliteitsfouten",
                 "ERROR_INSTALLABLE": "Installatiefouten",
+                "FAIL_DELETE": "Fout bij verwijderen van app '{{error}}'",
+                "FAIL_INSTALL": "Fout bij installeren van app '{{error}}'",
+                "FAIL_UPDATE": "Fout bij bijwerken van app '{{error}}'",
                 "HEADER": "De App Manager bevindt zich momenteel in een eerste testversie.",
                 "INCOMPATIBLE": "Onverenigbaar",
                 "INSTALLED": "Geïnstalleerd",
+                "KEY": {
+                    "ALREADY_REGISTERED_DIFFERENT_APP": "De sleutel is al geregistreerd voor een app op dit systeem! Als u doorgaat, wordt de andere registratie verwijderd.",
+                    "ALREADY_REGISTERED_DIFFERENT_SYSTEM": "De sleutel is al geregistreerd op een ander systeem! Als u doorgaat, wordt de andere registratie verwijderd.",
+                    "ENTER_KEY": "Voer de licentiesleutel in die u bij de bestelling van de app heeft ontvangen",
+                    "FAILED_LOADING_REGISTER_KEY": "Ophalen van reeds geregistreerde sleutels is mislukt",
+                    "FAILED_REGISTER_KEY": "Registreren van de sleutel is mislukt",
+                    "INVALID": "de licentiesleutel is ongeldig",
+                    "INVALID_PATTERN": "De invoer is ongeldig",
+                    "KEY": "licentiesleutel",
+                    "KEY_TYPO_MESSAGE_HINT": "<br><span class=\"warning\">Let op</span>: Let bij het invoeren van de licentiesleutel op mogelijke typfouten: <ul><li>kleine „l“ versus hoofdletter „I“ </li><li>nul „0“ versus hoofdletter „O“</li></ul>Wij raden aan de licentiesleutel altijd te kopiëren van de pakbon en in het bovenstaande veld te plakken in plaats van handmatig in te voeren.<br>",
+                    "MASTER_KEY_HINT": "<br><span class=\"warning\">Let op</span>: Op de achtergrond wordt de mastersleutel gebruikt. Er wordt geen sleutel getoond. Gebruik een licentiesleutel indien beschikbaar.<br>",
+                    "REGISTERED_KEY": "Geregistreerde licentiesleutels",
+                    "REGISTER_KEY": "licentiesleutel registreren",
+                    "SUCCESS_REGISTER_KEY": "Sleutel succesvol geregistreerd",
+                    "USE_KEY": "licentiesleutel verzilveren",
+                    "USE_MASTER_KEY": "Mastersleutel gebruiken",
+                    "USE_REGISTERED_KEY": "Reeds geregistreerde licentiesleutel verzilveren?",
+                    "VALID": "de licentiesleutel is geldig",
+                    "VALIDATE_KEY": "licentiesleutel valideren"
+                },
                 "MODIFY_APP": "App wijzigen",
+                "NAME": "App Center",
+                "NAME_WITH_EDGE_NAME": "{{ edgeShortName }} App Center",
                 "NOT_AVAILABLE": "Niet beschikbaar",
+                "OAUTH": {
+                    "BROWSER_ONLY": "Aanmelden bij {{ oauthName }} gebeurt via de webbrowser, niet via de {{ edgeLongName }}-app.",
+                    "CONNECT": "Verbinden met {{ oauthName }}",
+                    "LOG_IN": "{{ oauthName }} aanmelden",
+                    "LOG_OUT": "Afmelden",
+                    "STATES_MISMATCH": "Er is een probleem opgetreden bij het aanmelden. Probeer het opnieuw.",
+                    "SWITCH_TO_BROWSER": "Overschakelen naar browser",
+                    "UNABLE_TO_CONNECT_CODE": "Kan de code niet verbinden. Probeer het opnieuw. {{ error }}"
+                },
+                "SUCCESS_DELETE": "App succesvol verwijderd",
+                "SUCCESS_INSTALL": "App succesvol geïnstalleerd",
+                "SUCCESS_UPDATE": "App succesvol bijgewerkt",
+                "TECHNICAL_NAME": "Technische naam",
+                "UNKNOWN_INSTALLATION_STEP": "Onbekende installatiestap: {{ step }}",
+                "UNUSED_REGISTERED_KEY_AVAILABLE": "Er is nog een app beschikbaar voor installatie! U kunt deze installeren door op de knop 'licentiesleutel verzilveren' te klikken.",
                 "UPDATE_APP": "App bijwerken",
-                "UPDATE_AVAILABLE": "Er is een nieuwe {{ randShortName }} versie is beschikbaar! Gelieve de {{ edgeShortName }} bij te werken zodat alle nieuwe {{ edgeShortName }} Apps worden weergegeven in het App Center."
+                "UPDATE_AVAILABLE": "Er is een nieuwe {{ edgeShortName }} versie beschikbaar! Werk de {{ edgeShortName }} bij, zodat alle nieuwe {{ edgeShortName }} apps in het App Center worden weergegeven."
             },
             "BRIDGE": {
                 "NEW_CONNECTION": "Nieuwe verbinding...",
@@ -47,21 +116,30 @@
                 "ADJUST_COMPONENTS": "Componenten configureren",
                 "ALERTING": "Waarschuwing",
                 "BRIDGE": "Verbindingen en apparaten",
+                "COMMENT": "Opmerking",
+                "CONFIGURATION": "Configuratie",
                 "CONTROLLER": "Toepassingen",
                 "DATA_STORAGE": "Gegevensopslag",
                 "EXECUTE_SIMULATOR": "Simulatie uitvoeren",
+                "EXPORT": "Exporteren",
+                "EXPORT_CHANNELS": "Kanalen exporteren",
+                "GENERAL_DATA": "Algemene gegevens",
                 "LIVE_LOG": "Live System log",
                 "LOG": "Log",
                 "MANUAL_CONTROL": "Handmatige bediening",
                 "NETWORK_CONFIGURATION": "Netwerk configuratie",
+                "PRODUCT_TYPE": "Producttype",
                 "RENAME_COMPONENTS": "Componenten hernoem",
+                "ROLE": "Rol",
                 "SCHEDULER": "Toepassingsschema",
                 "SIMULATOR": "Simulator",
+                "SYSTEM": "Systeem",
                 "SYSTEM_EXECUTE": "Voer systeemopdracht uit",
                 "SYSTEM_PROFILE": "Systeemprofiel"
             },
             "LOG": {
                 "AUTOMATIC_UPDATING": "Automatisch updaten",
+                "CONDENSED_OUTPUT": "Verkorte uitvoer",
                 "LEVEL": "Niveau",
                 "MESSAGE": "Bericht",
                 "SOURCE": "Bron",
@@ -78,6 +156,9 @@
                 "REFU_STOP": "Stop",
                 "SEND": "Verstuur"
             },
+            "PROFILE": {
+                "ERROR_DOWNLOADING_MODBUS_PROTOCOL": "Fout bij het downloaden van het Modbus-protocol"
+            },
             "SCHEDULER": {
                 "ALWAYS": "Altijd",
                 "CLASS": "Soort:",
@@ -86,15 +167,23 @@
                 "NOT_IMPLEMENTED": "Gegevens niet geïmplementeerd:"
             }
         },
+        "FOOTER": {
+            "REFRESHED_LAST": "{{period}} geleden bijgewerkt"
+        },
         "HISTORY": {
             "ACTIVE_DURATION": "actieve duur",
+            "ACTIVE_DURATION_WITH_LEVEL": "Ingeschakelde duur niveau {{level}}",
             "APR": "Apr",
             "AUG": "Aug",
             "BEGIN_DATE": "Selecteer startdatum",
+            "CURRENT": "Stroom",
+            "CURRENT_AND_VOLTAGE": "Stroom en spanning",
             "DAY": "Dag",
             "DEC": "Dec",
             "END_DATE": "Selecteer einddatum",
             "EXPORT": "download als Excel-bestand",
+            "EXPORT_LOADING": "Rapport wordt geladen - bedankt voor uw geduld",
+            "EXTERNAL_LIMITATION": "Externe beperking",
             "FEB": "Feb",
             "FRI": "Vri",
             "GO": "Ga!",
@@ -110,9 +199,12 @@
             "MONTH": "Maand",
             "NOV": "Nov",
             "NO_DATA": "geen gegevens beschikbaar",
+            "NO_LOCAL_DATA_INFO": "Historische gegevens zijn momenteel lokaal niet beschikbaar",
+            "NO_LOCAL_DATA_NOTICE": "",
             "OCT": "Okt",
             "OTHER_PERIOD": "Andere periode",
             "PERIOD": "Periode",
+            "PHASE_ACCURATE": "fase nauwkeurig",
             "SAT": "Zat",
             "SELECTED_DAY": "{{ value }}",
             "SELECTED_PERIOD": "Geselecteerde periode:",
@@ -120,8 +212,11 @@
             "SUN": "Zon",
             "THU": "Don",
             "TODAY": "Vandaag",
+            "TOMORROW": "Morgen",
+            "TOTAL": "Totaal",
             "TRY_AGAIN": "Probeer het later nog eens...",
             "TUE": "Din",
+            "VOLTAGE": "Spanning",
             "WED": "Woe",
             "WEEK": "Woche",
             "YEAR": "Jaar",
@@ -135,16 +230,43 @@
             "ENERGYMONITOR": {
                 "ACTIVE_POWER": "Actief vermogen",
                 "CONSUMPTION_WARNING": "Verbruik & onbekende producenten",
+                "ERROR_TEMPORARY": "Fout bij het ophalen van de gegevens. Probeer het later opnieuw.",
+                "ERROR_TOO_LONG": "De weergave van de data is deels niet mogelijk door verbouwingswerkzaamheden aan onze servers. Je data van deze periode is niet verloren. Als alternatief kun je de historische data nog steeds bekijken via de <a href='https://docs.fenecon.de/de/_/latest/fems/ui/introduction.html#_offlinelokal' target='_blank'>lokale monitoring</a>. We vragen om je begrip.",
                 "GRID_METER": "Energiemeter",
                 "PRODUCTION_METER": "Productiemeter",
                 "REACTIVE_POWER": "Blind vermogen",
                 "STORAGE": "Batterij",
+                "STORAGE_CHARGE": "Acculaden",
+                "STORAGE_DISCHARGE": "Accuontladen",
                 "TITLE": "Energiemonitor"
             },
+            "RETROFITTING": {
+                "INFORMATION_FOR_INSTANT_START": "De accu wordt met maximaal vermogen geladen of gelost om zo snel mogelijk een laadtoestand van {{targetSoc}} % te bereiken voor een uitbreiding. Hierdoor kan netafname of netvoeding optreden. Deze laadtoestand wordt {{targetTimeBuffer}} minuten gehandhaafd, waarna, of na het uitbreiden van de capaciteit, het opslagsysteem terugkeert naar de normale bedrijfsstatus.",
+                "INFORMATION_FOR_PLANNED_EXPANSION": "Verwacht wordt dat de accu vanaf {{targetTime}} op {{targetDate}} wordt geladen/gelost om voor de geplande uitbreiding een laadtoestand van {{targetSoc}} % te bereiken. Hierbij kan netafname of netvoeding optreden. Deze laadtoestand wordt {{targetTimeBuffer}} minuten gehandhaafd, waarna, of na de capaciteitsuitbreiding, het opslagsysteem terugkeert naar de normale bedrijfsstatus.",
+                "INFORMATION_FOR_PLANNED_EXPANSION_INVALID_TARGET_DATE": "Verwacht wordt dat de accu wordt geladen/gelost om voor de geplande uitbreiding een laadtoestand van {{targetSoc}} % te bereiken.",
+                "INSTANT_START": "Direct starten",
+                "IN_REFERENCE_CYCLE": "Referentiecyclus actief - de accu wordt voorbereid op de capaciteitsuitbreiding.",
+                "ON_DATE_AT_TIME": "op {{date}} om {{time}}",
+                "OPTIMAL": "Capaciteitsuitbreiding",
+                "PLANNED_EXPANSION": "Geplande uitbreiding",
+                "PREPARING": "Capaciteitsuitbreiding wordt voorbereid",
+                "REACHED_TARGET_SOC": "Gereed voor capaciteitsuitbreiding",
+                "REFERENCING_OF_STORAGE": {
+                    "CONTENT": "Vóór een capaciteitsuitbreiding moet de accu in de dagen vóór de uitbreiding worden gereferentieerd. Dit betekent dat deze volledig moet worden gelost (SOC: 0 %) en daarna volledig geladen (SOC: 100 %).",
+                    "HEADER": "Let op: de accu moet vóór de capaciteitsuitbreiding worden gereferentieerd",
+                    "TO_INSTRUCTIONS": "Link naar de instructies"
+                },
+                "SELECT_A_DATE": "Selecteer een datum",
+                "TARGET_TIME_SPECIFIED": "De capaciteitsuitbreiding wordt uitgevoerd op {{targetDate}} om {{targetTime}}",
+                "UPDATE_TO_NEW_VERSION": "Om de functie voor accu-uitbreiding te kunnen gebruiken, is een update naar de nieuwste versie vereist."
+            },
+            "SYSTEMUPDATE": "Systeemupdate",
             "WIDGETS": {
                 "AUTARCHY_INFO": "Autarky geeft het percentage huidig ​​vermogen aan dat kan worden gedekt door opwekking en ontlading van de opslag.",
                 "CHANNELTRESHOLD": {
-                    "OUTPUT": "uitgang"
+                    "ACTIVE_TIME_OVER_PERIOD": "Actieve tijd",
+                    "OUTPUT": "uitgang",
+                    "TITLE": "Kanaaldrempelregelaar"
                 },
                 "CHP": {
                     "HIGH_THRESHOLD": "hoge drempel",
@@ -156,7 +278,21 @@
                     "SELL_TO_GRID_POWER_LIMIT": "Laad hierboven op"
                 },
                 "ENERIX_CONTROL": {
-                    "CHARGE_FROM_GRID": "Laden vanuit het net"
+                    "CHARGE_CONSUMPTION": "<b>LETTEN:</b> Het actief laden van de accu vanuit het net, verder dan de technisch noodzakelijke onderhoudslading, vereist een passende registratie van het opslagsysteem. Raadpleeg bij twijfel uw installateur. Door op de blauwe knop „Opslaan“ te drukken, bevestigt u dat deze verificatie is uitgevoerd.<br/><br/><b>Wees u bewust:</b> Voorwaarde voor het ontvangen van een subsidie op grond van de Duitse wet op hernieuwbare energie (EEG 2023) is dat er uitsluitend energie uit hernieuwbare bronnen en/of mijngas in de accu wordt opgeslagen. Door deze functie te activeren wordt de accu geladen met energie uit het net. Deze energie is, afhankelijk van het individuele stroomleveringscontract, waarschijnlijk opgewekt uit fossiele en/of kernenergiebronnen. Daarom kunnen wij niet garanderen dat de accu uitsluitend wordt geladen met energie uit hernieuwbare bronnen en/of mijngas.",
+                    "CHARGE_FROM_GRID": "Laden vanuit het net",
+                    "CHARGE_FROM_GRID_ALLOWED": "Actief laden vanuit het net toestaan",
+                    "CONNECTED": "Verbonden",
+                    "DISCHARGE_TO_GRID_ACTIVATE": "Actief lossen naar het net toestaan",
+                    "DISCHARGE_TO_GRID_DESCRIPTION": "<b>LETTEN:</b> Het actief lossen van de accu naar het net, verder dan de om technische redenen vereiste bedrijfsstaten, vereist een formele registratie van het opslagsysteem. Raadpleeg bij twijfel uw installateur. Door op de blauwe knop „Opslaan“ te klikken, bevestigt u dat deze beoordeling heeft plaatsgevonden.<br/><br/><b>Let op:</b> Door deze functie te activeren wordt het invoeden van energie uit het accuopslagsysteem in het openbare net mogelijk. Afhankelijk van het subsidieregeling-, vergunnings-, meetconcept- en toepasselijke regelgevingsmodel kan dit gevolgen hebben voor bestaande rechten met betrekking tot subsidies, vergoedingen of herkomstsbewijzen.<br/><br/>Met name kan het nodig zijn om de ingevoede elektriciteit eenduidig toe te wijzen en de herkomst ervan door middeling aan te tonen. Wij kunnen niet garanderen dat het gebruik van deze functie verenigbaar is met de vereisten van uw specifieke subsidie- of vergunningsmodel.<br/><br/>Bespreek de gevolgen vóór activering met uw installateur, directe verkoper, netbeheerder of een gekwalificeerde adviseur.",
+                    "DISCONNECTED": "Geen verbinding",
+                    "NOTE": "Let op:",
+                    "NO_DISCHARGE": "Geen lossen",
+                    "NO_INPUT": "Geen opdracht",
+                    "NO_OVERWRITE": "Geen overschrijving",
+                    "OVERWRITE": "Actieve overschrijving",
+                    "OVERWRITE_INFO": "Bij het activeren van deze functie worden de standaardinstellingen voor het laden en lossen van het opslagsysteem vervangen door externe specificaties van enerix Franchise GmbH & Co. KG. Dit kan leiden tot afwijkingen van het gebruikelijke gedrag - zo kan er bijvoorbeeld stroom uit het net worden gehaald, ook al is het opslagsysteem voldoende geladen.",
+                    "OVERWRITE_MODE": "Overschrijvingsmodus",
+                    "READ_ONLY": "Alleen lezen"
                 },
                 "EVCS": {
                     "ACTIVATE_CHARGING": "Activeer het laadstation",
@@ -166,6 +302,8 @@
                         "RENAULT_ZOE": "Wordt een Renault Zoe voornamelijk op dit laadstation geladen?"
                     },
                     "AMOUNT_OF_CHARGING_STATIONS": "Aantal laadstations",
+                    "AUTOMATIC_SWITCHING": "Automatisch fase-omschakelen",
+                    "AUTOMATIC_SWITCHING_DESCRIPTION": "Automatisch fase-omschakelen vereist dat zowel het voertuig als het laadpunt deze functie technisch ondersteunen. Het omschakelproces kan enkele minuten duren, gedurende welke het voertuig niet laadt.",
                     "CABLE": "Kabel",
                     "CABLE_NOT_CONNECTED": "Kabel is niet aangesloten",
                     "CAR_FULL": "Auto is vol",
@@ -177,16 +315,17 @@
                     "CHARGING_STATION": "Laadstation",
                     "CHARGING_STATION_CLUSTER": "Laadstation cluster",
                     "CHARGING_STATION_DEACTIVATED": "Laadstation gedeactiveerd",
+                    "CHARGING_STATION_PLUGGED_IN": "Laadstation aangesloten",
                     "CHARGING_STATION_PLUGGED_IN_EV": "Laadstation + E-Auto aangesloten",
                     "CHARGING_STATION_PLUGGED_IN_EVLOCKED": "Laadstation + E-Auto aangesloten + op slot",
                     "CHARGING_STATION_PLUGGED_IN_LOCKED": "Laadstation aangesloten + op slot",
-                    "CHARING_STATION_PLUGGED_IN": "Laadstation aangesloten",
                     "CLUSTER_CONFIG_ERROR": "Er is een fout opgetreden in de configuratie van het Evcs-cluster",
                     "CURRENT_CHARGE": "Huidige lading",
                     "ENERGY_LIMIT": "Energielimiet",
                     "ENERGY_SINCE_BEGINNING": "Energie sinds de laatste lading start",
                     "ENFORCE_CHARGING": "Handhaaf het laden",
                     "ERROR": "Fout",
+                    "FORCE_CHARGE": "Snel laden",
                     "FORCE_CHARGE_MODE": {
                         "INFO": "In deze modus wordt het laden van de auto afgedwongen, d.w.z. het is altijd gegarandeerd dat de auto wordt opgeladen, zelfs als het laadstation toegang moet hebben tot netstroom.",
                         "MAX_CHARGING": "Maximale laadstroom",
@@ -194,7 +333,14 @@
                         "NAME": "Gedwongen laden",
                         "SHORT_NAME": "handmatig"
                     },
+                    "FORCE_SINGLE_PHASE": "1-fase",
+                    "FORCE_THREE_PHASE": "3-fase",
+                    "HYSTERESIS": "Minimale omschakeltijd van het laadstation actief",
+                    "HYSTERESIS_INFO": "Om laadonderbrekingen als gevolg van te vaak starten/pauzeren van het laadproces te voorkomen, wordt de huidige laadmodus nog enkele minuten voortgezet.",
+                    "KEBA_WARNING": "Let op: Bij het gebruik van deze modus kan er momenteel een fout optreden in combinatie met de KEBA P40. Wij adviseren daarom deze modus tijdelijk niet te gebruiken en in plaats daarvan de modus „Automatisch“ met „Minimale lading garanderen“ te activeren.",
+                    "LINK_TO_DOCUMENTATION": "Meer informatie",
                     "MAX_ENERGY_RESTRICTION": "Beperk de maximale energie per lading",
+                    "MINIMUM": "PV-overschot met gegarandeerde lading",
                     "NOT_AUTHORIZED": "Geen bevoegdheid",
                     "NOT_CHARGING": "Niet opladen",
                     "NOT_READY_FOR_CHARGING": "Niet klaar voor opladen",
@@ -217,18 +363,38 @@
                         "SHORT_NAME": "Automatisch"
                     },
                     "OVERVIEW_CHARGING_STATIONS": "Overzicht laadstations",
+                    "PHASE_SWITCHING": "Fase-omschakeling",
+                    "PHASE_SWITCHING_INFO": "Met hoeveel fases moet het voertuig worden geladen?",
                     "PRIORITIZATION": "Prioritering",
                     "READY_FOR_CHARGING": "Klaar om op te laden",
                     "STARTING": "Beginnend",
                     "STATUS": "Staat",
+                    "SURPLUS": "PV-overschot",
+                    "TASKS": "Taken",
                     "TOTAL_CHARGE": "Totale lading",
                     "TOTAL_CHARGING_POWER": "Totaal laadvermogen",
+                    "UNCONTROLLABLE": "Dit laadstation kan niet worden bestuurd.",
                     "UNKNOWN": "Onbekend",
-                    "UNPLUGGED": "Unplugged"
+                    "UNPLUGGED": "Unplugged",
+                    "ZERO": "Geen lading"
                 },
+                "EVSE": {
+                    "CHARGE_MODE": "Basismodus",
+                    "KEBA_WARNING": "Let op: Bij het gebruik van deze modus kan er een fout optreden in combinatie met de KEBA P40. Wij adviseren deze modus voorlopig niet te gebruiken en in plaats daarvan tijdelijk de modus „PV-overschot met gegarandeerde lading“ of „Snel laden“ te gebruiken.",
+                    "SCHEDULE": {
+                        "ADD_TASK": "Taak toevoegen",
+                        "SCHEDULE": "Tijdschema"
+                    },
+                    "VEHICLE_ID_ERROR": "Het voertuig-ID kon niet worden gevonden. Controleer de configuratie. Alle geregistreerde voertuigen worden weergegeven."
+                },
+                "FIX_DIGITAL_OUTPUT": "Digitale uitgangsregelaar",
                 "GRID_OPTIMIZED_CHARGE": {
                     "CHARGING_DELAYED": "Opladen vertraagd",
                     "CONSIDER_GRID_FEED_IN_LIMIT": "Houd rekening met de maximale teruglevering van het net",
+                    "EEG_2025_APP_LINK": "Naar de app",
+                    "EEG_2025_APP_NAME": "EEG 2025",
+                    "EEG_2025_DESCRIPTION_INSTALLED": "De EEG-2025-app is actief.<br/><br/>Bij negatieve marktprijzen wordt de netvoeding automatisch zoveel mogelijk beperkt. Als er nog overschotenergie beschikbaar is, wordt deze alsnog ingevoed en gaat deze niet verloren.",
+                    "EEG_2025_DESCRIPTION_NOT_INSTALLED": "Wordt uw installatie geraakt door de EEG-2025-regeling?<br/><br/>Met de EEG-2025-app wordt de netvoeding bij negatieve marktprijzen automatisch zoveel mogelijk beperkt. Als er nog overschotenergie beschikbaar is, wordt deze alsnog ingevoed en gaat deze niet verloren.",
                     "END_TIME": "Eindtijd",
                     "END_TIME_DESCRIPTION": "Het opladen gebeurt niet met de maximale hoeveelheid voor een paar uur, maar gestaag over een langere periode.",
                     "END_TIME_DETAILED_DESCRIPTION": "Het laden vindt niet plaats met de maximale output voor een paar uur, maar gestaag met een maximum van {{ maxChargingPowerW }} tot {{ endTime }}.",
@@ -243,8 +409,10 @@
                         "PRIORITY_DESCRIPTION": "De minimale acculading heeft een hogere prioriteit dan de maximale acculading"
                     },
                     "INFO_DISABLED_BY_TIME_OF_USE": "Let op: Laden geoptimaliseerd voor het elektriciteitsnet is nu geïntegreerd in de app 'Dynamisch elektriciteitstarief'. De hier geconfigureerde instellingen blijven van kracht.",
+                    "LIMITED_FUNCTIONALITY": "Beperkte functionaliteit",
                     "LOW": "Laag",
                     "MAXIMUM_CHARGE": "Maximale lading",
+                    "MAXIMUM_GRIDSELL_WITH_CHARGE": "Maximale netvoeding door middel van acculading",
                     "MAXIMUM_GRID_FEED_IN": "Maximaal toegestane teruglevering",
                     "MEDIUM": "Medium",
                     "MINIMUM_CHARGE": "Minimale lading",
@@ -268,6 +436,7 @@
                     "RISK_PROPENSITY": "Risicobereidheid",
                     "SETTING_ONLY_VISABLE_FOR_INSTALLER": "Deze instelling is alleen zichtbaar voor de installateur",
                     "STATE": {
+                        "ALLOWED_FEED_IN_LIMIT_TOO_LOW_DESCRIPTION": "Beperkt of vertraagd laden is niet mogelijk omdat er geen of slechts een geringe netvoeding is toegestaan.",
                         "AVOID_LOW_CHARGING": "Laag opladen vermeden",
                         "CHARGE_LIMIT_ACTIVE": "Laadlimiet actief",
                         "END_TIME_NOT_CALCULATED": "Eindtijd niet berekend",
@@ -280,18 +449,48 @@
                     },
                     "STORAGE_CAPACITY": "opslagcapaciteit (alleen zichtbaar voor admin)"
                 },
+                "HEAT": {
+                    "CHANGES_MY_PV_INFO": "Wijzigingen in de instellingen van uw AC-Thor verwarmingselement kunt u doen in de MyPV-app.",
+                    "CONTROL_NOT_ALLOWED": "Besturing niet toegestaan",
+                    "ERROR": "Fout",
+                    "HEATING": "Aan het verwarmen",
+                    "HEATING_ENERGY": "Verwarmingsenergie",
+                    "HEATING_OUTPUT": "Verwarmingsvermogen",
+                    "NO_HEATING": "Verwarmt niet",
+                    "TARGET_TEMPERATURE_REACHED": "Doeltemperatuur bereikt",
+                    "TEMPERATURE": "Huidige temperatuur",
+                    "TEMPERATURE_UNIT": "Temperatuur in °C"
+                },
                 "HEATINGELEMENT": {
+                    "ACTIVED_FORCED_LIMIT": "Actief (extra energie)",
                     "ACTIVE_FORCED": "Actief (Minimale looptijd)",
                     "ACTIVE_LEVEL": "Actieve level",
+                    "CALIBRATION": "Kalibratie",
+                    "CALIBRATION_DESCRIPTION": "Het verwarmingselement wordt gekalibreerd om het vermogen van de afzonderlijke niveaus van de meter te bepalen",
+                    "DONE": "Klaar",
                     "ENDTIME": "Einde tijd",
                     "ENERGY": "Energie",
+                    "ENERGY_SINCE_BEGINNING": "Energie sinds het begin",
+                    "GUARANTEE_HEATING": "Minimale verwarmingsenergie garanderen",
                     "GUARANTEE_MINIMUM_HEATING": "Minimale verwarming garanderen",
+                    "GUARANTEE_MODE": "Garantiemodus",
+                    "GUARANTEE_NONE": "Geen modus",
                     "HEATINGELEMENT": "Verwarmingselement",
+                    "HEATING_POWER": "Verwarmingsvermogen",
+                    "LEVEL_ONE": "Niveau 1",
+                    "LEVEL_THREE": "Niveau 3",
+                    "LEVEL_TWO": "Niveau 2",
+                    "MESSAGE_UNREACHABLE": "De energielimiet kan niet op tijd worden gehaald",
                     "MINIMAL_ENERGY_AMOUNT": "Minimale hoeveelheid energie",
+                    "MINIMAL_ENERGY_LIMIT": "Minimale energielimiet",
+                    "MINIMUM_DURATION": "Minimale duur",
+                    "MINIMUM_ENERGY": "Minimale energie",
                     "MINIMUM_RUN_TIME": "Minimale looptijd",
                     "PRIORITY": "Prioriteit",
+                    "SET_ENDTIME": "Eindtijd instellen",
                     "TIME": "Tijd",
-                    "TIME_COUNTDOWN": "Tijd om te beginnen"
+                    "TIME_COUNTDOWN": "Tijd om te beginnen",
+                    "UNREACHABLE": "Niet bereikbaar"
                 },
                 "HEAT_PUMP": {
                     "ABOVE_SOC": "en van staat van last van",
@@ -325,6 +524,7 @@
                     "ASYMMETRIC_INFO": "De ingevoerde prestatiewaarden verwijzen naar afzonderlijke fasen. Het is aangepast aan de meest gestresste fase.",
                     "END_DATE": "Einddatum",
                     "END_TIME": "Eindtijd",
+                    "HYSTERESIS_SO_C": "Drempelwaarde laadtoestand",
                     "MOST_STRESSED_PHASE": "Meest gestresste fase",
                     "PEAKSHAVING": "Piek scheren",
                     "PEAKSHAVING_POWER": "Afvoer voorbij",
@@ -336,6 +536,9 @@
                     "START_TIME_CHARGE": "Starttijd laden"
                 },
                 "PHASES_INFO": "De som van de afzonderlijke fasen kan om technische redenen enigszins afwijken van het totaal.",
+                "SCHEDULE": {
+                    "CHART_TITLE_ADMIN": "Gepland schema (alleen voor beheerders)"
+                },
                 "SELFCONSUMPTION_INFO": "Eigen verbruik geeft het percentage van de momenteel gegenereerde uitvoer aan dat kan worden gebruikt door direct verbruik en opslagbelasting zelf.",
                 "SINGLETHRESHOLD": {
                     "ABOVE": "Over",
@@ -351,27 +554,75 @@
                     "SWITCH_OFF_ABOVE": "Uitschakelen via",
                     "SWITCH_OFF_BELOW": "Schakel uit onder",
                     "SWITCH_ON_ABOVE": "Inschakelen via",
+                    "SWITCH_ON_ABOVE_THRESHOLD": "Inschakelen boven drempelwaarde",
                     "SWITCH_ON_BELOW": "Inschakelen onder",
+                    "SWITCH_ON_BELOW_THRESHOLD": "Inschakelen onder drempelwaarde",
                     "THRESHOLD": "Thresholded"
+                },
+                "STORAGE": {
+                    "AMBIENT_TEMPERATURE": "Omgevingstemperatuur",
+                    "BATTERY_DC": "Accu - DC",
+                    "GRID_CHARGE": "Handhaving van de noodstroomreserve vanuit het net activeren",
+                    "GRID_CHARGE_WARNING": "Het opslagsysteem kan actief vanuit het net bijladen om de ingestelde noodstroomreserve te handhaven en zo verliezen door intern eigenverbruik te compenseren bij langdurige uitval van opwekking. <br/><br/>LETTEN: Het actief laden van de accu vanuit het net, verder dan de technisch noodzakelijke onderhoudslading, vereist een passende registratie van het opslagsysteem. Raadpleeg bij twijfel uw installateur. Door op de blauwe knop „Opslaan“ te drukken, bevestigt u dat deze verificatie is uitgevoerd.<br/><br/>Wees u bewust: voorwaarde voor het ontvangen van een subsidie op grond van de Duitse wet op de uitbreiding van hernieuwbare energie (EEG) is dat er uitsluitend energie uit hernieuwbare bronnen en/of mijngas in de accu wordt opgeslagen. Door deze functie te activeren wordt de accu geladen met energie uit het net. Deze energie is, afhankelijk van het individuele stroomleveringscontract, waarschijnlijk opgewekt uit fossiele bronnen en/of kerncentrales. Daarom kunnen wij niet garanderen dat de accu uitsluitend wordt geladen met energie uit hernieuwbare bronnen en/of mijngas.",
+                    "INVERTER": "Omvormer",
+                    "TOTAL_AC": "Totaal AC",
+                    "TOTAL_DC": "Totaal DC"
+                },
+                "SYSTEM": {
+                    "EXECUTE": "Uitvoeren",
+                    "INDUSTRIAL": {
+                        "BMS_HARD_RESET": "BMS hard reset",
+                        "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Reset koelunit:",
+                        "CLEAR_COOLING_UNIT_ERRORS_TEXT": "noodzakelijk bij fouten van de koelunit",
+                        "F2B_UPDATE_HEADER": "F2B-update",
+                        "MAINTENANCE_WINDOW": "Onderhoudsvenster",
+                        "NOTE": "Start of stopt het hele systeem, inclusief batterijomvormer en batterijen",
+                        "RESET": "RESET",
+                        "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Reset systeemfout:",
+                        "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "omvat systeemcomponenten, batterijen, omvormers, ESS"
+                    },
+                    "OVERALL_SYSTEM": "Totaalsysteem",
+                    "RPC_FAILED": "Uitvoeren van opdracht mislukt",
+                    "RPC_SUCCESS": "Opdracht succesvol uitgevoerd"
+                },
+                "TIME_OF_USE_TARIFF": {
+                    "CHARGE_FROM_GRID_ACTIVATE": "Laden vanuit het net activeren",
+                    "CHART_TITLE": "Gepland schema",
+                    "CHART_WARNING_NOTE": "De grafiek toont de afgelopen drie uur evenals de geplande bedrijfsvoering voor de periode waarvoor de dynamische netafkoopprijzen beschikbaar zijn. Houd er rekening mee dat het schema doorlopend opnieuw wordt berekend en zich in de loop van de dag kan wijzigen.",
+                    "CONTROL_MODE_DESCRIPTION": {
+                        "CHARGE_CONSUMPTION": "Door de accu actief op te laden vanuit het net in periodes met lage elektriciteitsprijzen, kan het kopen van energie in periodes met hoge prijzen worden vermeden.<br/><br/>ATTENTIE: Het actief laden van de accu vanuit het net, voorbij de technisch noodzakelijke onderhoudslading, vereist een passende registratie van het opslagsysteem. Twijfel je, controleer dit dan met je installateur. Door op de blauwe knop „Opslaan” te drukken, bevestig je dat deze verificatie heeft plaatsgevonden.<br/><br/>Let op: Voorwaarde voor de subsidie op grond van de Duitse wet op hernieuwbare energie (EEG 2023) is dat er uitsluitend energie uit hernieuwbare bronnen en/of mijngas in de accu wordt opgeslagen. Door deze functie te activeren wordt de accu geladen met energie uit het net. Deze energie wordt, afhankelijk van het individuele leveringscontract, waarschijnlijk opgewekt uit fossiele en/of nucleaire bronnen. Wij kunnen daarom niet garanderen dat de accu uitsluitend wordt geladen met energie uit hernieuwbare bronnen en/of mijngas."
+                    },
+                    "EEG_2025_DESCRIPTION": "De grafiek toont de verwachte toekomstige netvoeding en de verwachte invoedingsvergoeding volgens de EEG 2025. Deze wordt meegenomen in de berekening van de optimale bedrijfsvoering. Het systeem probeert de netvoeding in periodes zonder vergoeding zo laag mogelijk te houden. Houd er rekening mee dat de prognose doorlopend opnieuw wordt berekend en zich in de loop van de dag kan wijzigen.",
+                    "EEG_2025_HEADER": "EEG 2025 prognose",
+                    "POWER_SOC_CHART_TITLE": "Prognoses",
+                    "PRICE": "Actuele afkoopprijs van elektriciteit",
+                    "STATE": {
+                        "AVOID_GRID_SELL_LIMIT": "Voedingslimiet vermijden",
+                        "BALANCING": "Optimalisatie van eigen verbruik",
+                        "CHARGE_GRID": "Laden vanuit het net",
+                        "DELAY_CHARGE": "Laden vertragen",
+                        "DELAY_DISCHARGE": "Lossen vertragen",
+                        "DISCHARGE_CONSUMPTION": "Lossen naar verbruik",
+                        "DISCHARGE_GRID": "Lossen naar het net",
+                        "LIMIT_CHARGE": "Laden beperken",
+                        "PEAK_SHAVING": "Piekbelasting afsnijden"
+                    }
                 },
                 "TWO_WAY_INFO_GRID": "Negatieve waarden komen overeen met netinvoeding, Positieve waarden komen overeen met netvoeding"
             }
         },
-        "INSTALLATION": {
-            "ATTENTION_MESSAGE": "Merk op dat de selectie achteraf niet ongedaan kan worden gemaakt.",
-            "BACKWARD": "achterwaarts",
-            "CONFIRM_APP_SELECTION": "Weet u zeker dat u de volgende app wilt selecteren?",
-            "CONFIRM_APP_SELECTION_LATER": "Zijn ze er zeker van dat ze de selectie later maken?",
-            "FORWARD": "voorwaarts",
-            "PLEASE_SELECT_OPTION": "Gelieve een optie te kiezen"
-        },
         "NETWORK": {
             "ADD_IP": "Statische IP-adressen toevoegen",
             "ADVANCED_MODE": "Geavanceerde modus",
+            "DHCP": {
+                "ADDRESS": "DHCP-adres",
+                "INFO": "Het weergegeven IP-adres is dynamisch toegewezen via DHCP (Dynamic Host Configuration Protocol). Het is niet permanent en kan wijzigen wanneer het apparaat of de router opnieuw wordt opgestart."
+            },
             "ERROR_READING": "Fout bij lezen huidige netwerkconfiguratie:",
             "ERROR_UPDATING": "Fout bij updaten",
             "IP_ADDRESS": "IP-adres",
             "MANDATORY_FIELDS": "Gelieve de verplichte velden in te vullen",
+            "SUBMIT": "Toepassen",
             "SUBNETMASK": "Subnetmasker",
             "SUCCESS_UPDATE": "Netwerkconfiguratie geüpdatet voor:",
             "VALID_ADDRESS_WARNING": "Voer bij 'Statische IP-adressen toevoegen' een geldig ip-adres in met netmasker, b.v. 10.4.1.6/24"
@@ -383,11 +634,37 @@
                 "VOLTAGES": "Celspanningen"
             },
             "ENTIRE_SYSTEM": "Hele systeem"
+        },
+        "TITLE": "{{ edgeShortName }}"
+    },
+    "EVSE_SINGLE": {
+        "SETTINGS": {
+            "CHARGE_MODE": "In welke modus moet er geladen worden"
+        }
+    },
+    "FORMLY_FORM": {
+        "TARIFF_TABLE": {
+            "ADD_TIME_SLOT": "Tijdslot toevoegen",
+            "ADD_YEAR": "Jaar {{ year }} toevoegen",
+            "ERROR_MESSAGES": {
+                "INVALID_TIME_INPUT": "De „tot“-tijd kan niet later of gelijk zijn aan de „van“-tijd"
+            },
+            "GROSS_PREIS_TITLE": "Brutoprijs voor het jaar {{ year }}*",
+            "PRICE_ITEMS": "Prijsonderdelen",
+            "REMOVE_YEAR": "Jaar {{ year }} verwijderen",
+            "TARIFFS": {
+                "HIGH": "Hoogtarief",
+                "LOW": "Laagtarief",
+                "STANDARD": "Standaardtarief"
+            },
+            "TITLE": "{{ year }} bijkomende kosten"
         }
     },
     "GENERAL": {
         "ACTIVE": "Actief",
         "ACTUAL_POWER": "e-car Laad vermogen",
+        "ALL": "Alle",
+        "APPLY": "Toepassen",
         "AUTARCHY": "Autarkie",
         "AUTOMATIC": "Automatisch",
         "BACK": "Terug",
@@ -398,33 +675,67 @@
         "CHANGE_FAILED": "Wijziging mislukt",
         "CHARGE": "Laden",
         "CHARGE_DISCHARGE": "Debet/ontlaad",
+        "CHARGE_ONCE": "Eenmalig laden",
         "COMPONENT_COUNT": "Aantal componenten",
         "COMPONENT_INACTIVE": "Component is inactief!",
         "CONNECTION_LOST": "Verbinding verbroken. Probeer opnieuw verbinding te maken.",
         "CONSUMPTION": "Verbruik",
+        "COUNTRY": {
+            "AUSTRIA": "Oostenrijk",
+            "CZECH": "Tsjechië",
+            "GERMANY": "Duitsland",
+            "GREECE": "Griekenland",
+            "LITHUANIA": "Litouwen",
+            "NETHERLANDS": "Nederland",
+            "SWEDEN": "Zweden",
+            "SWITZERLAND": "Zwitserland"
+        },
         "CUMULATIVE": "Cumulatieve Waarden",
+        "CURRENT_NAME": "huidige naam",
+        "CURRENT_STATUS": "Huidige status",
         "CURRENT_VALUE": "Huidige waarde",
+        "DARK": "Donker",
         "DATE_FORMAT": "dd-MM-yyyy",
+        "DETAILS": "Details",
         "DIGITAL_INPUTS": "Digitale Ingangen",
         "DIRECT_CONSUMPTION": "Directe consumptie",
         "DISCHARGE": "Afvoer",
+        "DISCHARGE_ONCE": "Eenmalig lossen",
+        "EDIT": "Bewerken",
+        "ENERGY_LIMIT": "Energielimiet",
         "FAULT": "Fout",
+        "FOR": "voor",
+        "FORECAST": "Prognose",
         "FORMLY": {
-            "LINK_TO_DOCS": "Link naar documentatie"
+            "INITIALIZING_ERROR": "Fout bij het initialiseren van de component",
+            "LINK_TO_DOCS": "Link naar documentatie",
+            "REQUIRED": "Is vereist"
         },
+        "FROM": "Van",
+        "GENERATOR_ON": "Generator actief",
+        "GENERATOR_SUPPLY": "Generatorvoorziening",
         "GRID": "Net",
         "GRID_BUY": "Netafname",
         "GRID_BUY_ADVANCED": "Netafname",
+        "GRID_BUY_PRICE": "Stroomprijs",
         "GRID_SELL": "Netteruglevering",
         "GRID_SELL_ADVANCED": "Netteruglevering",
+        "GRID_SELL_PRICE": "Invoedingsvergoeding",
         "HEAT_PUMP": "Warmtepomp",
+        "HELP": "Help",
         "HISTORY": "Historie",
         "INACTIVE": "Inactief",
         "INFO": "Info",
         "INPUT_NOT_VALID": "Invoer ongeldig",
+        "INSTALL": "Installeren",
         "INSUFFICIENT_RIGHTS": "Onvoldoende rechten",
+        "LIGHT": "Licht",
+        "LINK": "Meer informatie vindt u via de volgende link (in het Duits):",
+        "LINK_TEXT": "Bekijk het changelog van de bètatest",
         "LIVE": "Live",
         "LOAD": "Laden",
+        "MANAGED_CONSUMPTION": "Gestuurd verbruik",
+        "MANUAL": "Handleiding",
         "MANUALLY": "handmatig",
         "MEASURED_VALUE": "Gemeten Waarde",
         "MODE": "Mode",
@@ -443,6 +754,9 @@
             "SEPTEMBER": "September"
         },
         "MORE": "Meer…",
+        "NAVIGATION_DETAILS": "Deze hulpchip biedt u ondersteuning. Lees meer over wijzigingen, uitleg en informatie, inclusief de uitgebreide functionaliteiten van uw KEBA P40 laadstation.",
+        "NAVIGATION_INFO": "Wij zijn momenteel bezig ons monitoring en de app opnieuw te ontwerpen, met geoptimaliseerde navigatie en functionaliteit.",
+        "NO": "Nee",
         "NO_VALUE": "Geen waarde",
         "NUMBER_OF_COMPONENTS": "aantal componenten",
         "OFF": "Van",
@@ -453,19 +767,45 @@
         "OTHER_CONSUMPTION": "andere consumptie",
         "PERCENTAGE": "Procent",
         "PERIOD_FROM_TO": "van {{ value1 }} tot {{ value2 }}",
+        "PHASE": "Fase",
+        "PHASES": "Fasen",
         "POWER": "Vermogen",
         "PRODUCTION": "Opwekking",
+        "RENAME": "Hernoemen",
         "REPORT": "verslag",
         "REPORT_VALUE": "Rapporteer beschadigde gegevens",
+        "RESET": "Resetten",
+        "RESTART": "Herstarten",
         "SAVE": "Opslaan",
+        "SEARCH": "Zoeken",
         "SELF_CONSUMPTION": "Eigen consumptie",
         "SOC": "Laadstatus",
         "STATE": "Staat",
+        "STATE_MACHINE": {
+            "ERROR": "Fout",
+            "GO_RUNNING": "Starten...",
+            "GO_STOPPED": "Stoppen...",
+            "RUNNING": "Gestart",
+            "STOPPED": "Gestopt",
+            "UNDEFINED": "Onbekend"
+        },
+        "STATUS": "Status",
         "STORAGE_SYSTEM": "Batterij",
         "SUFFIX": {
             "HOUR": "uur"
         },
+        "SUM_STATE": "Systeemstatus",
+        "SURVEY": "Hier kunt u uw feedback over de bètatest met ons delen:",
+        "SURVEY_LINK": "Deelnemen aan de bètatest-enquête",
+        "SYSTEM": "systeem",
+        "SYSTEM_OUTAGE": "Door onderhoudswerkzaamheden is online monitoring tijdelijk niet beschikbaar. Probeer het later opnieuw. Meer informatie vindt u op",
         "SYSTEM_STATE": "Systeemstatus",
+        "SYSTEM_THEME": "Systeem",
+        "TARGET_SOC": "Doellaadtoestand",
+        "THEME_SELECTION": {
+            "DESCRIPTION": "Ons monitoring is nu beschikbaar in <b>dark mode</b>.<hr>Schakel gewoon om en begin!",
+            "TITLE": "Licht uit, comfort aan!"
+        },
         "TIME": {
             "DAY": "Dag",
             "DAYS": "Dagen",
@@ -475,8 +815,13 @@
             "MINUTES": "Minuten"
         },
         "TIME_SCHEDULE": "Tijdschema",
+        "TO": "Tot",
         "TOTAL": "totale verbruik",
+        "TOTAL_CHARGE": "Totale lading",
+        "TOTAL_DISCHARGE": "Totaal gelost",
         "TOTAL_STATE": "Algemene staat",
+        "VALUE": "waarde",
+        "VISIBLE_FOR_ADMINS_ONLY": "Alleen zichtbaar voor Service & Administratie",
         "WARNING": "Waarschuwing",
         "WEEK": {
             "FRIDAY": "Vrijdag",
@@ -486,18 +831,423 @@
             "THURSDAY": "Donderdag",
             "TUESDAY": "Dinsdag",
             "WEDNESDAY": "Woensdag"
-        }
+        },
+        "YES": "Ja"
+    },
+    "GRID_STATES": {
+        "CONSUMPTION_LIMITATION": "Beperking van laden vanuit het net",
+        "FEED_IN_DESCRIPITON": "Beperking van laden uit het opslagsysteem ",
+        "FEED_IN_LIMITATION": "Voedingsbeperking",
+        "GRID_LIMITATION": "Netbeperking",
+        "NO_EXTERNAL_LIMITATION": "geen beperking",
+        "OFF_GRID": "Stroomuitval",
+        "RIPPLE_CONTROL_RECEIVER": "Ripple-controlereceiver",
+        "SECTION_14A": "Beperking volgens §14a EnWG"
     },
     "INDEX": {
+        "ADD_EDGE": "Nieuwe {{ edgeShortName }} toevoegen",
         "ALL_CONNECTED": "Alle verbindingen gemaakt.",
         "CONNECTION_FAILED": "Verbinding met {{ value }} mislukt.",
         "CONNECTION_IN_PROGRESS": "Verbinding tot stand brengen...",
         "CONNECTION_SUCCESSFUL": "Succesvol verbonden met {{ value }}.",
         "DEVICE_OFFLINE": "Het apparaat is niet aangesloten!",
+        "FIRST_SETUP_PROTOCOL": "Eerste installatie",
         "IS_OFFLINE": "OpenEMS is offline!",
         "LOGGED_IN_AS": "Geregistreerd als",
+        "NO_EDGE_AVAILABLE": "U heeft nog geen {{edgeShortName}} toegevoegd.",
+        "NO_EDGE_FOR_USER": "Helaas is er nog geen {{ edgeShortName }} gekoppeld aan uw account.",
+        "OFFLINE_SINCE": "Offline sinds",
         "TO_ENERGYMONITOR": "Naar Energiemonitor...",
-        "TYPE": "Type"
+        "TYPE": "Type",
+        "VISIBLE_HERE_AFTER_INSTALLATION": "Nadat uw {{ edgeShortName }} door een installateur in bedrijf is gesteld, ziet u deze op deze plek."
+    },
+    "INSTALLATION": {
+        "ALIAS_WITH_LABEL": "Alias {{label}}{{number}}",
+        "BACK": "Terug",
+        "CLICK_RECOMMENDATION": "Klik hieronder op de knop „Toevoegen” als je een {{ edgeShortName }} in bedrijf wilt nemen.",
+        "COMPLETE": "Naar de online monitoring",
+        "COMPLETION": {
+            "DOWNLOAD": "Ingebruikstellingsrapport downloaden",
+            "DOWNLOAD_ERROR": "Het rapport kon niet worden gedownload",
+            "DOWNLOAD_SUCCESS": "Rapport succesvol gedownload",
+            "HECKERT_NOTE": "Er is nu een gratis app voor je beschikbaar om te installeren in het App Center.",
+            "INVALID_PAYLOAD": "Ongeldig antwoord van de server",
+            "NAVIGATION_LABEL": "Naar het App Center",
+            "NOTE": "Klik hier om naar het App Center te gaan om aanvullende componenten te configureren en apps te installeren.",
+            "SUB_TITLE": "{{ value }} is succesvol in bedrijf gesteld.",
+            "TITLE": "Afronden"
+        },
+        "CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION": {
+            "HEADER": "Communicatietype voor de netmeter",
+            "IP_ADDRESS": "IP-adres",
+            "PORT": "Poort",
+            "RS485": "RS485",
+            "TCP_IP": "TCP/IP"
+        },
+        "CONFIGURATION_COMMERCIAL_MODBUS_BRIDGE": {
+            "HEADER": "Keuze van het communicatietype"
+        },
+        "CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT": {
+            "RS485_LABEL": "RS485 (4 RJ45-poorten) – Aansluiting: FEMS",
+            "TCP_IP_LABEL": "TCP/IP (6 RJ45-poorten) – Aansluiting: intern"
+        },
+        "CONFIGURATION_EMERGENCY_RESERVE": {
+            "COUPLER_TITLE": "Welke veldbuskoppelaar is geïnstalleerd in je Offgrid-netkoppelpunt?",
+            "EMERGENCY_RESERVE": "Noodstroomreserve {{ symbol }}",
+            "EMERGENCY_RESERVE_LABEL": "Noodstroom {{ symbol }}",
+            "EMERGENCY_RESERVE_NOTE": "Als deze functie is geactiveerd, kan het laadniveau van de accu niet onder de ingestelde waarde dalen.",
+            "EMERGENCY_RESERVE_VALUE": "Noodstroomwaarde",
+            "INFO": "Let bij gebruik van de generator op het volgende: het laadniveau van de noodstroomreserve moet groter dan (of gelijk aan) het opgegeven laadniveau zijn dat nodig is om de generator te starten (zie details hieronder).",
+            "IS_ACTIVATED": "Noodstroomreserve actief?",
+            "IS_ENABLED": "Moet de noodstroomfunctie worden geactiveerd?",
+            "TITLE": "Gegevens over noodstroom",
+            "VALUE": "Waarde [%]"
+        },
+        "CONFIGURATION_ENERGY_FLOW_METER": {
+            "CONVERTER_RATIO": "Primaire stroom (200–5000 A)",
+            "METER": {
+                "INTEGRATED": "Geïntegreerde Home 3-fase sensor met stroomtransformator ({{type}})",
+                "LABEL": "Meter",
+                "TYPE": {
+                    "OPTIONAL": "Optioneel",
+                    "STANDARD": "standaard leveringsomvang"
+                },
+                "WITHOUT_CT": "Home 3-fase sensor zonder stroomtransformator (optioneel)",
+                "WITHOUT_CT_STANDARD_DELIVERY": "Home 3-fase sensor zonder stroomtransformator (standaardlevering)",
+                "WITH_CT": "Home 3-fase sensor met stroomtransformator 120 A ({{type}})"
+            },
+            "TITLE": "Keuze van de energieflowrichtingsmeter"
+        },
+        "CONFIGURATION_ESS_LIMITER": {
+            "INFO_NOTE": "Om overbelasting van het net te voorkomen, krijgt de netbeheerder in de toekomst de mogelijkheid om alle sinds 1 januari 2024 geïnstalleerde verbruikersapparaten te regelen („dimmen”) naar een vermogen van 4,2 kW.",
+            "IS_ACTIVATE": "Mogelijkheid tot regeling volgens §14a EnWG activeren",
+            "IS_ACTIVATE_LABEL": "De bedradingswerkzaamheden moeten overeenkomstig de installatie-instructies worden uitgevoerd.",
+            "TITLE": "Regeling volgens §14a EnWG"
+        },
+        "CONFIGURATION_EXECUTE": {
+            "BATTERY": "Accu",
+            "BATTERY_INTERFACE": "Accu-interface",
+            "BATTERY_INVERTER": "Accu-omvormer",
+            "COMMUNICATION_WITH_BATTERY": "Communicatie met de accu",
+            "COMMUNICATION_WITH_BATTERY_INVERTER": "Communicatie met de accu-omvormer",
+            "COMMUNICATION_WITH_METER": "Communicatie met de meters",
+            "COMMUNICATION_WITH_RELAY": "Communicatie met de relais",
+            "CONTROL_GRID_POINT": "Aansturing van het netkoppelpunt",
+            "DESCRIPTION_1": "Om te controleren of alle componenten van je systeem juist zijn ingesteld,",
+            "DESCRIPTION_2": "kunnen de configuratie en de daaropvolgende functionele tests tot 10 minuten duren.",
+            "EMERGENCY_CAPACITY_RESERVE": "Aansturing van de noodstroomreserve",
+            "ERROR": "Fout",
+            "EXISTING_CONFIGURATION": "Er is een bestaande configuratie gevonden. Je kunt deze overschrijven door het configuratieproces handmatig te starten.",
+            "FIELD_BUS_COUPLER": "Veldbuskoppelaar",
+            "FINISH_FUNCTION_TEST": "Functionele tests van de ingebouwde componenten afgerond",
+            "FUNCTION_TEST": "Functionele test",
+            "FUNCTION_TEST_ERROR": "Functionele test afgerond met fouten.",
+            "GRID_METER": "Netmeter",
+            "GRID_OPTIMIZED_CHARGE": "Netgeoptimaliseerd laden",
+            "IP_ADDRESS_ERROR": "Een voor de {{ system}} noodzakelijk IP-adres kon niet aan de netwerkconfiguratie worden toegevoegd.",
+            "IP_ADDRESS_WARNING": "Een voor de koppelaar vereist IP-adres kon niet aan de netwerkconfiguratie worden toegevoegd.",
+            "IS_BEING_CONFIGURED": "wordt geconfigureerd",
+            "LABEL": {
+                "WAGO_BRIDGE": "WAGO (grijze component)",
+                "WEIDMUELLER_BRIDGE": "Weidmüller (zwarte component)"
+            },
+            "LEGEND": "Legenda",
+            "NOT_YET_CONFIGURED": "nog niet geconfigureerd / gecontroleerd",
+            "PARTIAL_CONFIGURATION": "Niet alle componenten konden juist worden geconfigureerd.",
+            "PRE_CONFIGURED": "voorgeconfigureerd / waarschuwing",
+            "RELAY_BOARD": "Relaiskaart",
+            "SELF_CONSUMPTION": "Optimalisatie van eigen verbruik",
+            "START": "Configuratie starten",
+            "START_FUNCTION_TEST": "Functionele tests voor de geïnstalleerde componenten gestart",
+            "STORAGE_SYSTEM": "Opslagsysteem",
+            "SUCCESSFULLY_CONFIGURED": "succesvol geconfigureerd / gecontroleerd",
+            "TITLE": "Configuratie",
+            "UNDEFINED_COMPONENT_CONFIGURATOR": "Componentconfigurator is niet gedefinieerd",
+            "WAGO_BRIDGE": "Wago-brug",
+            "WAITING": "Configuratie loopt...",
+            "WEIDMUELLER_BRIDGE": "Weidmueller-brug"
+        },
+        "CONFIGURATION_FEATURES_STORAGE_SYSTEM": {
+            "BALANCING": "Optimalisatie van eigen verbruik"
+        },
+        "CONFIGURATION_GRID_SETTING": {
+            "TITLE": "Nettype"
+        },
+        "CONFIGURATION_LINE_SIDE_METER_FUSE": {
+            "FIXED_VALUE_DESCRIPTION": "Met welke stroomsterkte is de meter beveiligd?",
+            "METER": "Meter",
+            "METER_LABEL": "Metertype van het netaansluitpunt",
+            "OTHER": "Overige",
+            "OTHER_VALUE": "Eigen waarde",
+            "TITLE_COMMERCIAL": "Voorbeveiliging netaansluitpunt / meterbeveiliging",
+            "TITLE_HOME": "Beveiliging huisaansluitmeter",
+            "VALUE": "Waarde [A]"
+        },
+        "CONFIGURATION_MPPT_SELECTION": {
+            "CONNECTION_CHECK_LABEL": "Zijn alle aansluitingen gecontroleerd?",
+            "NOTE": "Aanvullende opwekkers kunnen daarna via het App Center worden geconfigureerd."
+        },
+        "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVE_COUNT_TITLE": "Informatie over het aantal slaves",
+            "SLAVE_INSTALLATION_TITLE": "Installatie van afzonderlijke opslagunits (slaves)"
+        },
+        "CONFIGURATION_STS_BOX": {
+            "HELP_TEXT": "Het serienummer van de STS-Box bevindt zich op het typeplaatje aan de zijkant van de STS-Box",
+            "LABEL": "STS-Box",
+            "STS_BOX_AVAILABLE": "STS-Box geïnstalleerd",
+            "STS_BOX_FIELD_LABEL": "Is er een STS-Box geïnstalleerd voor noodstroomfunctionaliteit:"
+        },
+        "CONFIGURATION_SUMMARY": {
+            "ACCEPT": "accepteren",
+            "ACCEPT_TERMS": "Accepteer de garantievoorwaarden om door te gaan.",
+            "ALIAS_WITH_LABEL_HOME_DC": "Alias MPPT{{mppt}}",
+            "BATTERY": "Accu",
+            "BATTERY_LOCATION": "Locatie BESS",
+            "BOTH_SELECTED_LABEL": "Beide PV-poorten (\"PV{{ pv1 }}\" en \"PV{{ pv2 }}\") aangesloten",
+            "COUNTRY_SETTING": "Landinstellingen",
+            "CUSTOMER": "Klant",
+            "DEVICE_ACTIVE_CHECKED": "Accu en omvormer ingeschakeld",
+            "EDGE_NUMBER": "{{ edgeShortName }} nummer",
+            "ENERGY_FLOW_METER": {
+                "LABEL": "Net"
+            },
+            "GENERAL": "Algemeen",
+            "INSTALLER": "Installateur",
+            "INVERTER": "Omvormer",
+            "IS_DEVICE_ACTIVE_CHECKED": "Controleer of de accu en de omvormer zijn ingeschakeld en bevestig dit.",
+            "MODULE_TYPE_WITH_LABEL_HOME_DC": "Type modules MPPT{{ mppt }}",
+            "NEXT_CLICKED_DESCRIPTION": "Door op de knop „volgende” te klikken, wordt het opslagsysteem geconfigureerd. Zorg ervoor dat de accu en de omvormer tijdens het hele configuratieproces aan staan.",
+            "NUMBER_OF_MODULES_WITH_LABEL_HOME_DC": "Aantal PV-modules MPPT{{ mppt }}",
+            "ORIENTATION_WITH_LABEL_HOME_DC": "Oriëntatie MPPT{{ mppt }}",
+            "PRODUCER": "Opwekker",
+            "SUMMARY": "Samenvatting",
+            "TIME_OF_INSTALLATION": "Tijdstip van de installatie",
+            "VALUE_WITH_LABEL_HOME_DC": "Waarde MPPT{{ mppt }} {{ symbol }}",
+            "WARRANTY_TERMS": "Garantievoorwaarden"
+        },
+        "CONFIGURATION_SYSTEM": {
+            "OPEN_INSTRUCTIONS": "Instructies openen",
+            "PRODUCT_NAME": "Type opslag",
+            "TITLE": "Welk opslagsysteem moet worden geconfigureerd?"
+        },
+        "CONFIGURATION_SYSTEM_VARIANT": "Keuze van de ingebouwde component",
+        "FORM": {
+            "BATTERY_SERIAL_NUMBER": "{{ serialNumber }} is geen geldig serienummer. Een geldig serienummer bestaat uit {{ length }} cijfers.",
+            "EMAIL": "{{ email }} is geen geldig e-mailadres.",
+            "EMAIL_MATCH": "E-mailadressen komen niet overeen.",
+            "INVALID_ZIPCODE": "Ongeldig postcodeformaat",
+            "MANDATORY_FIELD": "Dit is een verplicht veld",
+            "MAX": "Voer een waarde in die kleiner is dan {{ max }}.",
+            "MIN": "Voer een waarde in die groter is dan {{ min }}",
+            "POSITIVE_INTEGER": "Alleen positieve gehele getallen zijn toegestaan.",
+            "STS_SERIAL_NUMBER_REQUIREMENT": "Het serienummer bestaat uit maximaal 16 cijfers."
+        },
+        "LOAD": "laden...",
+        "NEXT": "verder",
+        "PRE_INSTALLATION": {
+            "AUTHENTICATION_FAILED": "Authenticatie mislukt",
+            "EDGE_OFFLINE": "Er kon geen verbinding met de {{ edgeShortName }} tot stand worden gebracht",
+            "INSTALLATION_SUCCESS": "Installatie voor {{ edgeId }} gestart",
+            "NOTE": "Let op:",
+            "TITLE": "Voer de installatiesleutel in",
+            "WRONG_KEY_NOTE": "Mocht de installatiesleutel ten onrechte als ongeldig worden herkend, vernieuw dan de pagina."
+        },
+        "PROTOCOL_AVU_BOX": {
+            "LABEL": "AVU",
+            "SERIAL_NUMBER": "Serienummer",
+            "TITLE": "Bevat het installatiepakket een AVU-Box (automatische verbruikersomschakeling)?"
+        },
+        "PROTOCOL_CHECKLIST": {
+            "CHANGE_NETWORK_SETTINGS": "B) Netwerkinstellingen op de computer wijzigen (IP-adres)",
+            "CONNECT_INVERTER": "A) Computer via netwerkkabel met de omvormer verbinden (bovenste LAN-aansluiting)",
+            "ENTER_PASSWORD": "D) Wachtwoord invoeren",
+            "IP_ADDRESS": "C) IP-adres in de browser invoeren",
+            "IP_ADDRESS_DESCRIPTION": "IP-adres: 169.254.1.1",
+            "MIN_VOLTAGE": "G) Aanvulling: minimale spanningslimiet instellen op 600 V",
+            "MIN_VOLTAGE_DESCRIPTION": "Werkt alleen met het installateurswachtwoord (eigen wachtwoord voor FENECON of voorgeconfigureerd)\n\n<ul><li>Minimale spanningslimiet:<b> {{voltageLimit}} V</b> (-> nettype: <b>{{gridSetting}}</b>)</li></ul>",
+            "MULTI_STEP": "{{listPosition}}) Voer stappen 1 tot en met {{totalSteps}} uit",
+            "NETWORK_SETTINGS": "IP-adres: 169.254.1.12\nSubnetmasker: 255.255.255.0",
+            "NETWORK_SETTINGS_INFO": "Let op dat de stappen en afbeeldingen voor het instellen van een statisch IP-adres kunnen verschillen afhankelijk van het gebruikte apparaat. Voor andere apparaten, zoals Apple-apparaten, kunnen de procedures afwijken.",
+            "NETWORK_SETTINGS_NOTE": "Om via het vaste IP-adres toegang tot de omvormer te krijgen, moet aan het met de omvormer verbonden apparaat handmatig een statisch IP-adres worden toegewezen dat binnen hetzelfde netwerkbereik valt",
+            "PASSWORD_DESCRIPTION": "Servicewachtwoord:\n\nGebruiker: service\nWachtwoord: Ye_r0d4w0P!",
+            "POWER_CONTROL": "H) Vermogensregeling instellen (Cos-Phi enz.)",
+            "POWER_CONTROL_DESCRIPTION": "-> welke instellingen hier noodzakelijk zijn, vind je in de gegevens van de netbeheerder\n-> Wijzigingen kunnen alleen met het installateurswachtwoord worden aangebracht",
+            "START_CONFIGURATION": "E) KACO-configuratie starten met de Installation Wizard",
+            "STEP": "Stap {{currStep}}/{{totalStep}} – {{description}}",
+            "STEP_1": "Taal selecteren",
+            "STEP_2": "Land / nettype vastleggen",
+            "STEP_2_DESCRIPTION": "Selecteer hier je nettype:\n\n<ul><li>Duitsland <b>{{gridSetting}}</b> (-> stel bij G) de \"Minimale spanningslimiet\" in op <b>{{voltageLimit}} V </b>)",
+            "STEP_3": "Vermogensbeperking",
+            "STEP_3_DESCRIPTION": "-> Neem de standaardinstellingen zo over.",
+            "STEP_4": "IP-instelling",
+            "STEP_4_DESCRIPTION": "IP-adres: 172.16.0.100\nSubnetmasker: 255.255.255.0\nStandaardgateway: 172.16.0.1",
+            "STEP_5": "Lokalisatie",
+            "STEP_5_DESCRIPTION": "Synchroniseer hier de tijd met de knop „Sync”",
+            "STEP_6": "Modbus",
+            "STEP_6_DESCRIPTION": "De Modbus-instelling moet op 502 staan",
+            "STEP_7": "Overige (optionele parameters)",
+            "STEP_8": "Afronden",
+            "STEP_8_DESCRIPTION": "Vul de naam van de installateur in",
+            "TIMEOUT_NOTE": "Het volgende proces kan tot {{timeoutInMinutes}} minuten duren."
+        },
+        "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO – Omvormer koppelen",
+        "PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVES_TITLE": "Slave {{number}}",
+            "SLAVE_FILED_LABEL": "Voer het aantal te configureren slaves in",
+            "SLAVE_INSTALLATION": {
+                "CONNECTION_STATUS": {
+                    "NOT_FOUND": "Slave niet gevonden"
+                },
+                "LOG_MESSAGE": {
+                    "AUTHENTICATION_SUCCESSFUL": "Authenticatie geslaagd. Systeem wordt bijgewerkt...",
+                    "CONFIGURATION_FAILED": "Configuratie mislukt: {{ error }}",
+                    "CONFIGURED_SUCCESSFULLY": "Toepassing succesvol geconfigureerd.",
+                    "FUNCTION_TESTS_FAILED": "Functionele test mislukt: {{ error }}",
+                    "PARTIALLY_CONFIGURED": "Configuratie gedeeltelijk afgerond.",
+                    "SLAVE_STATUS_ERROR": "Fout bij ophalen van de status voor slave {{ slaveNr }}",
+                    "STARTING_AUTHENTICATION": "Authenticatie wordt gestart...",
+                    "UPDATE_COMPLETED": "Systeemupdate voltooid. App wordt geconfigureerd..."
+                }
+            }
+        },
+        "PROTOCOL_FEED_IN_MANAGEMENT": {
+            "CAPACITIVE": "capacitief",
+            "CHOOSE": "Type",
+            "CONSTANT_VALUE": "Cos φ-waarde",
+            "DYNAMIC_EXTERNAL_LIMITATION": "Dynamische rijstuurontvanger: regeling op het netaansluitpunt",
+            "DYNAMIC_LIMITATION": "Dynamische beperking van de invoeding",
+            "DYNAMIC_LIMITATION_TYPE": "Invoerbeperking",
+            "EXTERNAL_CONTROLLER_CHECK": "De rijstuurontvanger is volgens de instructies juist en volledig geïnstalleerd.",
+            "EXTERNAL_LIMITATION": "Rijstuurontvanger: regeling op de AC-uitgang van de omvormer",
+            "EXTERNAL_LIMITATION_TYPE": "Externe beperking",
+            "FEED_IN_SETTING_DESCRIPTION": "Vermogensreductie bij overfrequentie",
+            "FIXED_POWER_FACTOR": "Constante Cos φ (P)",
+            "FIXED_POWER_FACTOR_DESCRIPTION": "In de regel schrijft de netbeheerder een vaste verschuivingsfactor „1” voor",
+            "INDUCTIVE": "inductief",
+            "INFO_TEXT": "Je energieopslag probeert door intelligent laden beperking van de PV-installatie te voorkomen.",
+            "MAXIMUM_FEED_IN_VALUE": "Maximaal invoedervermogen [W]",
+            "MAXIMUM_VALUE_DESCRIPTION": "Deze waarde kan door de netbeheerder worden vereist.",
+            "NA_PROTECTION": "Uitschakeling op afstand geactiveerd (centrale NA-beveiliging)",
+            "NO_LIMITATION": "Geen beperking",
+            "PLACE_HOLDER": "Kies een optie",
+            "PU_ENABLED_CURVE": "Verschuivingsfactorvermogenkromme Cos φ (P)",
+            "QU_ENABLED_CURVE": "Blindvermogen-spanningskromme Q(U)",
+            "SHADE_MANAGEMENT_DEACTIVATED": "Schaduwbeheer gedeactiveerd?",
+            "TITLE": "Invoederbeheer",
+            "WARNING_TEXT": "Dit vervangt niet de correcte configuratie van de PV-omvormer!"
+        },
+        "PROTOCOL_INSTALLER_AND_CUSTOMER": {
+            "CITY": "Plaats",
+            "COMPANY_CUSTOMER": "Zakelijke klant?",
+            "COMPANY_NAME": "Bedrijfsnaam",
+            "COUNTRY": "Land",
+            "EMAIL": "E-mailadres",
+            "EMAIL_CONFIRMATION": "bevestigen",
+            "EMAIL_DESCRIPTION": "voor het aanmaken van persoonlijke toegang",
+            "FIRST_NAME": "Voornaam",
+            "LAST_NAME": "Achternaam",
+            "PHONE": "Telefoonnummer",
+            "STREET_ADDRESS": "Straat / huisnummer",
+            "TITLE_CUSTOMER": "Contactgegevens – Eindklant",
+            "TITLE_INSTALLER": "Contactgegevens – Installateur",
+            "ZIP": "Postcode"
+        },
+        "PROTOCOL_PV": {
+            "ADDITIONAL_GENERATOR": "Aanvullende AC-opwekker",
+            "ALIAS": "Omschrijving",
+            "ALIAS_DESCRIPTION_PV": "wordt weergegeven in de online monitoring, bijv. \"PV-dak\"",
+            "BOTH_SELECTED_LABEL": "Zijn beide aansluitingen (\"PV{{ pv1 }}\" en \"PV{{ pv2 }}\") aangesloten?",
+            "DIRECTIONS": {
+                "EAST": "Oost",
+                "NORTH": "Noord",
+                "NORTH_EAST": "Noordoost",
+                "NORTH_WEST": "Noordwest",
+                "SOUTH": "Zuid",
+                "SOUTH_EAST": "Zuidoost",
+                "SOUTH_WEST": "Zuidwest",
+                "WEST": "West"
+            },
+            "INSTALLED_POWER": "Geïnstalleerd vermogen [Wₚ]",
+            "INSTALLED_POWER_PER_STRING": "Geïnstalleerd vermogen per string [Wₚ]",
+            "MARKED_AS": " MPPT {{ mppt }} (gemarkeerd als \"PV{{ mppt }}\")",
+            "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (gemarkeerd als \"{{ pv1 }}\" en \"{{ pv2 }}\")",
+            "MODULE_TYPE": "Type modules",
+            "MODULE_TYPE_DESCRIPTION": "bijv. fabrikant en vermogen",
+            "MODULE_TYPE_WITH_LABEL": "Type modules {{ label }}{{ number }}",
+            "NUMBER_OF_MODULES": "Aantal PV-modules per string",
+            "NUMBER_OF_MODULES_PER_STRING": "Aantal PV-modules",
+            "NUMBER_OF_MODULES_WITH_LABEL": "Aantal PV-modules {{ label }}{{ number }}",
+            "OPEN_MANUAL": "Handleiding openen",
+            "ORIENTATION": "Oriëntatie",
+            "ORIENTATION_WITH_LABEL": "Oriëntatie {{ label }}{{ number }}",
+            "TITLE_DC": "DC-PV-installatie",
+            "TITLE_PV": "DC-PV-installatie (omvormer-ingangen)"
+        },
+        "PROTOCOL_SERIAL_NUMBERS": {
+            "BATTERY_MODULE": "Accumodule ",
+            "BATTERY_MODULE_DESCRIPTION": "Voer alleen de laatste 8 cijfers van het serienummer in.",
+            "BATTERY_STRING": "Accustring {{ stringNumber }}",
+            "BATTERY_TOWER": "Accutoren {{ number }}",
+            "BATTERY_TOWER_CLUSTER": "Accu {{ batteryNumber }} toren {{towerNumber}}",
+            "BESS_COMPONENTS": "Componenten van het opslagsysteem",
+            "BMS_BOX": "BMS-Box en voetstuk",
+            "CONFIRM": "opslaan",
+            "DOUBLE_SOCKET": "Split-voetstuk",
+            "DOUBLE_SOCKET_LABEL": "Split-voetstuk ingebouwd",
+            "EDGE_TIMEOUT_DESC": "We konden de serienummers niet automatisch uitlezen. Het systeem is mogelijk bezig met opstarten.",
+            "EMS_BOX_COMMERCIAL": "Aansluitbox {{ edgeShortname }}",
+            "EMS_BOX_CONNECTION_BOX_COMMERCIAL30": "Aansluitbox {{ edgeShortName }}",
+            "EMS_BOX_GRID_CONNECTION_POINT_COMMERCIAL30": "Netaansluitpunt",
+            "EMS_BOX_HECKERT": "EMS-Box",
+            "EMS_BOX_HOME": "EMS-Box ({{edgeShortName }} Box)",
+            "ENTER_MANUALLY": "Serienummers handmatig invoeren",
+            "ENTER_VALID_ADDRESS": "Voer geldige waarden in om de instellingen toe te passen.",
+            "ERROR_SENDING": "Fout bij het verzenden van het rapport.",
+            "INVALID_SERIALNUMBER_KEY": "Controleer het serienummer van {{ key }} in {{ header }}",
+            "INVERTER": "Omvormer",
+            "MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS": "Minimaal aantal modules per string: {{ min }} en maximaal: {{ max }}",
+            "MINIMUM_AND_MAXIMUM_STRINGS": "Minimaal aantal strings: {{ min }} en maximaal: {{ max }}",
+            "MODULES_PER_STRINGS_DESCRIPTION": "Modules per string voor Commercial-50-systeem: {{ number }}",
+            "NEXT_BUTTON_DESCRIPTION": "Door op de knop „verder” te klikken, wordt het ingebruikstellingsrapport („IBN”-rapport) automatisch naar FENECON GmbH verzonden.",
+            "NO_DATA_FOUND": "Niet alle serienummers zijn gevonden",
+            "NUMBER_OF_MODULES_PER_STRINGS": "Aantal modules per string",
+            "NUMBER_OF_MODULES_PER_TOWER": "Aantal modules per toren",
+            "NUMBER_OF_STRINGS": "Aantal strings",
+            "NUMBER_OF_TOWERS": "Aantal torens",
+            "READ_DESCRIPTION": "Controleer de \"systeeminstellingen\". Lees de omschrijving van de velden.",
+            "SAME_SERIAL_NUMBERS": "{{ serialNumbers }} hebben dezelfde serienummers",
+            "SENT_SUCCESSFULLY": "Het rapport is succesvol verzonden.",
+            "SERIAL_NUMBER": "Serienummers",
+            "SETUP_NOTE": "Voltooi de serienummers door de plaatshouders (gemarkeerd met \"x\") te vervangen door de juiste tekens.",
+            "SINGLE_SERIAL_NUMBER": " Serienummer {{ label }}",
+            "SYSTEM_SETUP": "Voorinstellingen",
+            "TROUBLESHOOTING": {
+                "INTRO": "Mocht er nog steeds geen data worden gevonden, volg dan deze stappen:",
+                "STEP_BRIDGES": "Controleer of de eindbrug volgens de instructies is geplaatst",
+                "STEP_LAN": "Controleer of de LAN-kabel juist is aangesloten",
+                "STEP_MANUAL": "Blijft het probleem bestaan, dan kun je de serienummers handmatig invoeren en na afronding van de ingebruikstelling contact opnemen met de FENECON-service."
+            },
+            "TRY_READING_AGAIN": "Uitlezen opnieuw starten"
+        },
+        "PROTOCOL_SYSTEM": {
+            "FIRSTNAME": "Voornaam contactpersoon",
+            "LAST_NAME": "Achternaam contactpersoon",
+            "LOCATION_SAME_AS_ADDRESS": "Komt de locatie van de BESS overeen met het adres van de klant?",
+            "TITLE": "Locatie van de BESS"
+        },
+        "PROTOCOL_SYSTEM_LOCATION_VALIDATION": {
+            "TITLE": "Adresvalidatie van de opslaglocatie"
+        },
+        "SHARED": {
+            "NOTE": "Let op",
+            "WARNING": "Waarschuwing"
+        },
+        "STEP_FROM_TO": "Stap {{ from }} van {{ to }}",
+        "STEP_TO": "Stap {{ number }}",
+        "SYSTEM_UPDATE": {
+            "UPDATE_WARNING": "De versie moet worden bijgewerkt!"
+        },
+        "VALUE_WITH_LABEL": "Waarde {{ label }}{{ number }} {{ symbol }}"
     },
     "JS_SCHEDULE": {
         "ADD_EVENT": "Gebeurtenis toevoegen",
@@ -508,28 +1258,76 @@
         "NEXT_EVENTS": "Aankomende gebeurtenissen",
         "SMART_EVENTS": "Slimme gebeurtenissen"
     },
+    "LIVE": {
+        "PULL_TO_REFRESH": "Trek aan deze banner om te vernieuwen"
+    },
+    "LOADING_SCREEN": {
+        "LOADING": "Laden",
+        "SERVER_NOT_ACCESSIBLE": "Server niet bereikbaar",
+        "SERVER_NOT_ACCESSIBLE_ACCESS_LOCALLY": "Lokaal toegang krijgen",
+        "SERVER_NOT_ACCESSIBLE_DESCRIPTION": "Online weergave van het opslagsysteem is momenteel niet mogelijk. De gegevens worden lokaal opgeslagen en gaan niet verloren.",
+        "SERVER_NOT_ACCESSIBLE_TRY_RELOADING": "Probeer de browser over 10 minuten opnieuw te laden."
+    },
     "LOGIN": {
         "AUTHENTICATION_FAILED": "Authenticatie mislukt",
+        "DEMO_ACCESS": "Demotoegang",
+        "EMPLOYEE_LOGIN": "Medewerkerslogin",
+        "ENERGY_JOURNEY_SLOGAN": "Je maakt deel uit van de Energy Journey",
         "PASSWORD_LABEL": "Wachtwoord",
         "PASSWORD_RESET": "Wachtwoord opnieuw instellen",
         "PREAMBLE": "Voer uw wachtwoord in of bevestig de standaard om in te loggen als gast.",
+        "REQUEST_TIMEOUT": "Uw verzoek is verlopen. Probeer het later opnieuw.",
+        "SIGN_IN": "Aanmelden",
         "TITLE": "Login",
         "USER": "Gebruiker"
     },
     "MENU": {
         "ACCESS_LEVEL": "Toegangsniveau",
         "CHANGELOG": "Changelog",
+        "COCKPIT": "Cockpit",
         "EDGE_SETTINGS": "instellingen",
+        "EDGE_SYSTEM_SETTINGS": "Systeeminstellingen",
+        "FAVORITES": "Favorieten",
         "GENERAL_SETTINGS": "Algemene instellingen",
+        "GROUPS": {
+            "BRAIINS": "Bitcoin Miner",
+            "CHANNEL_SINGLE_THRESHOLD": "Drempelregeling",
+            "FIX_DIGITAL_OUTPUT": "Handmatige relaisbesturing",
+            "HEATING_ROOM": "Verwarming"
+        },
         "INDEX": "Overzicht",
         "LOGOUT": "Uitloggen",
         "MENU": "Menu",
         "NAME": "Naam",
+        "OPENEMS_ENERGY_MANAGEMENT_SYSTEM": "Open Energy Management System",
         "OTHER_USER": "Andere gebruikers",
         "OVERVIEW": "Alle systemen",
+        "PROFILE": "Profiel",
         "SCHEDULE": "Planning",
         "SETTINGS": "Instellingen",
+        "SYSTEMS": "Systemen",
         "USER": "Gebruiker"
+    },
+    "MODBUS_TCP_API_READ_WRITE": {
+        "ACTIVE_POWER_LIMITATIONS": "Begrenzingen actief vermogen",
+        "ACTUAL_VALUE": "Werkelijke waarde",
+        "CUMULATED_ACTIVE_TIME": "Externe opdrachten in aanmerking genomen",
+        "CUMULATED_INACTIVE_TIME": "Geen externe opdrachten aanwezig",
+        "CURRENT_STATE": "Huidige status",
+        "DOWNLOAD_PROTOCOL": "Protocol downloaden",
+        "INFO_TEXT": "De werkelijke waarde kan afwijken van de ingestelde waarde. Negatieve waarden komen overeen met laden van de opslag - positieve met lossen van de opslag. Een gedetailleerde uitleg vindt u in de handleiding.",
+        "LAST_COMMAND": "Laatste overschrijving",
+        "LIMITATION": "Specificatie",
+        "NOT_OVERRIDING": "Geen externe opdrachten aanwezig",
+        "NO_OVERRIDDEN_CHANNELS": "Er zijn nog geen kanalen overschreven.",
+        "OVERRIDING": "Externe opdracht wordt in aanmerking genomen",
+        "REGISTER": "Register",
+        "SET_ACTIVE_POWER_EQUALS": "Instelling actief vermogen",
+        "SET_ACTIVE_POWER_GREATER_OR_EQUALS": "Maximale laadvermogen-instelling",
+        "SET_ACTIVE_POWER_LESS_OR_EQUALS": "Maximale losvermogen-instelling",
+        "SET_REACTIVE_POWER_EQUALS": "Instelling blindvermogen",
+        "SET_REACTIVE_POWER_GREATER_OR_EQUALS": "Minimale blindvermogen-instelling",
+        "SET_REACTIVE_POWER_LESS_OR_EQUALS": "Maximale blindvermogen-instelling"
     },
     "NOTIFICATIONS": {
         "AUTHENTICATION_FAILED": "Geen verbinding.Autorisatie mislukt.",
@@ -538,15 +1336,91 @@
         "LOGGED_IN": "Aangemeld.",
         "LOGGED_IN_AS": "Aangemeld als gebruiker {{ value }}."
     },
+    "OFFLINE": {
+        "DEFAULT": {
+            "STEP_CONTACT_INSTALLER": {
+                "DESCRIPTION": "Als je alle voorgaande stappen al hebt gecontroleerd en de online monitoring nog steeds geen data toont, neem dan contact op met je <b>elektricien/installateur</b>.",
+                "HEADER": "Contact opnemen met de installateur"
+            },
+            "STEP_EMS_RESTART": {
+                "HEADER": "{{edgeShortName}} opnieuw opstarten en LAN-aansluiting controleren"
+            },
+            "STEP_FIREWALL": {
+                "DESCRIPTION": "Firewallinstellingen kunnen de internetverbinding van de {{edgeShortName}} beperken. Dit gebeurt vooral bij de eerste ingebruikstelling. Gebruik de <a href={{link}} target=\"_blank\">instructies</a> om de poorten en diensten die op de {{edgeShortName}} actief zijn te controleren.",
+                "HEADER": "Poorttoegang/firewall controleren"
+            },
+            "STEP_SERVICE": {
+                "DESCRIPTION": "Als je alle voorgaande stappen al hebt gecontroleerd en de online monitoring nog steeds geen data toont, neem dan contact op met onze servicedienst:<br>Per e-mail: <a href=\"mailto:service@fenecon.de\">service@fenecon.de</a> of telefonisch: +49 9903 6280-0 (ma – do: 08:00 – 12:00 uur | 13:00 – 17:00 uur | vr: 08:00 – 12:00 uur | 13:00 – 15:00 uur)",
+                "HEADER": "FENECON-service"
+            },
+            "STEP_TEST_WIFI_CONNECTION": {
+                "DESCRIPTION": "<p><b>a)</b> Koppel de LAN-kabel los van de Home-{{edgeShortName}} box (interface „LAN”) en sluit deze aan op een laptop/PC (schakel de Wi-Fi-adapter uit). Als de laptop/PC succesvol een internetverbinding tot stand brengt, ga dan door naar stap 3, anders ga door naar b.</p><p><b>b)</b> Als de laptop/PC geen verbinding met internet maakt, sluit het apparaat dan rechtstreeks via een LAN-kabel op de router aan om er zeker van te zijn dat de router correct functioneert (zonder extra kabellengte en zonder andere netwerkapparaten ertussen).</p><p>→ Als de router functioneert, is het mogelijk dat de LAN-kabel, een Wi-Fi-repeater of een powerline-adapter het signaal niet correct doorgeeft. Meer informatie vind je in de productspecifieke instructies van de betreffende fabrikant.</p>",
+                "HEADER": "Routerverbinding met laptop controleren"
+            }
+        },
+        "GENERAL": {
+            "AVAILABILITY": "Online toegang tot het opslagsysteem is momenteel niet mogelijk.<br>De data wordt lokaal opgeslagen en gaat niet verloren.",
+            "EMS_OFFLINE": "{{edgeShortName}} is offline",
+            "MORE_INFO": "Meer info",
+            "STEP_TEST_WIFI_CONNECTION": {
+                "CHILD_1": {
+                    "DESCRIPTION": "Sluit je computer rechtstreeks via een LAN-kabel op de router aan. Zorg ervoor dat er geen extra kabels of netwerkapparaten (zoals Wi-Fi-versterkers of switches) ertussen staan, zodat de router correct werkt. Als er opnieuw geen internetverbinding tot stand kan worden gebracht, volg dan de productspecifieke instructies van de betreffende fabrikant van je netwerkapparaten.",
+                    "HEADER": "-> Nog steeds geen internetverbinding"
+                },
+                "CHILD_2": {
+                    "DESCRIPTION": "Ga verder naar stap 3) Poorttoegang/firewall controleren.",
+                    "HEADER": "-> Internet via laptop tot stand gebracht"
+                },
+                "DESCRIPTION": "Test in de volgende stap de werking van de router door de LAN-stekker uit de aansluitbox van de {{edgeShortName}} Box te halen en deze op een laptop of desktop-pc aan te sluiten. Let op: schakel Wi-Fi op dit apparaat uit.",
+                "HEADER": "Internetverbinding controleren"
+            },
+            "SUB_HEADER": "Is je systeem <b>al langer dan 10 minuten offline?</b> Het volgende kun je ter plaatse controleren:",
+            "TIME_OUT": "De opgevraagde {{ edgeShortName }} is <b>al {{timeSinceOffline}}</b> offline.",
+            "TRY": "Probeer de browser over 10 minuten te vernieuwen."
+        },
+        "HOME_10": {
+            "STEP_EMS_RESTART": {
+                "DESCRIPTION": "Op de bovenste doos van de opslagtoren zit een cold device-stekker (zwart en blauw gekleurd). Trek deze eruit en wacht 15 seconden. Steek de cold device-stekker er weer in en wacht <b>5 tot 10 minuten</b> (het systeem start opnieuw op). Controleer ook of de LAN-stekker juist in de aansluitbox van de {{edgeShortName}} zit. Vernieuw nu het browservenster van de online monitoring: als de actie is geslaagd, zou de offline-melding moeten verdwijnen en zou de gebruikelijke interface van de FENECON-online monitoring zichtbaar moeten zijn.",
+                "HEADER": "{{edgeShortName}} opnieuw opstarten"
+            }
+        },
+        "HOME_20_30": {
+            "STEP_EMS_RESTART": {
+                "DESCRIPTION": "Start de {{edgeShortName}} opnieuw op door de knop op de bovenste doos van de opslagtoren aan de voorzijde 10 seconden ingedrukt te houden. Wacht nu <b>5 - 10 minuten</b> (het systeem start opnieuw op). Controleer ook of de LAN-stekker juist in de aansluitbox van de {{edgeShortName}} zit. Vernieuw nu het browservenster van de online monitoring: als de actie is geslaagd, zou de foutmelding moeten worden geannuleerd en zou de gebruikelijke weergave van het {{edgeLongName}}-energiemanagementsysteem in de online monitoring zichtbaar moeten zijn."
+            }
+        },
+        "STEP_EMS_RESTART": {
+            "DESCRIPTION": "Bovenaan de accu-opslagtoren bevindt zich aan de voorzijde een drukknop. Houd deze 10 seconden ingedrukt. Wacht nu 5 tot 10 minuten (het systeem start opnieuw op). Controleer ook of de LAN-stekker juist in de aansluitbox van de {{edgeShortName}} zit. Vernieuw nu het browservenster van de online monitoring: als de actie is geslaagd, zou de offline-melding moeten verdwijnen en zou de gebruikelijke interface van de FENECON-online monitoring zichtbaar moeten zijn."
+        }
+    },
+    "ORDER": {
+        "ASCENDING": "Oplopend op {{edgeShortName}} nr.",
+        "A_TO_Z": "Aanduiding A - Z",
+        "DESCENDING": "Aflopend op {{edgeShortName}} nr.",
+        "FAULT_TO_OK": "Systeemstatus Fout - OK",
+        "OK_TO_FAULT": "Systeemstatus OK - Fout",
+        "SORTING": "Sortering",
+        "Z_TO_A": "Aanduiding Z - A"
+    },
+    "PAGE_HEADERS": {
+        "ENERGY_JOURNEY": "Accu-uitbreiding analyseren",
+        "WRAP_UP_2025": "Jouw Wrap up 2025"
+    },
     "REGISTER": {
         "BUTTON": "Maken",
+        "CREATE_USER": "Account aanmaken",
+        "CREATING_USER": "Account wordt aangemaakt...",
         "ERRORS": {
+            "EMAIL_NOT_EQUAL": "E-mailadressen zijn niet gelijk",
+            "PASSWORD_NOT_EQUAL": "Wachtwoorden zijn niet gelijk",
             "REQUIRED_FIELDS": "Gelieve alle velden in te vullen"
         },
         "FORM": {
             "ACCEPT_AGB": "Ik bevestig de <a target=\"_blank\" href=\"https://fenecon.de/allgemeine-lieferungs-und-zahlungsbedingungen/\">AGB</a>.*",
             "CITY": "Stad",
+            "COMPANY": "Bedrijf",
             "COMPANY_NAME": "Bedrijfsnaam",
+            "CONFIRM_EMAIL": "e-mailadres bevestigen",
             "CONFIRM_PASSWORD": "Bevestig wachtwoord",
             "CONTACT_DETAILS": "Contactgegevens",
             "COUNTRY": "Land",
@@ -559,6 +1433,7 @@
             "LASTNAME": "Achternaam",
             "PASSWORD": "Wachtwoord",
             "PHONE": "Telefoonnummer",
+            "PRIVATE": "Particulier",
             "STREET": "Straat | huisnummer",
             "SUBSCRIBE_NEWSLETTER": "Ik wil me graag abonneren op de FENECON nieuwsbrief om al het laatste nieuws van FENECON te ontvangen.",
             "USER": {
@@ -566,11 +1441,75 @@
             },
             "ZIP": "Postcode"
         },
-        "PASSWORD_NOT_EQUAL": "Wachtwoorden zijn niet gelijk",
         "SEGMENT": {
             "INSTALLER": "Installateur",
             "USER": "Gebruiker"
         },
-        "SUCCESS": "Registratie succesvol"
+        "SUCCESS": "Registratie succesvol",
+        "TITLE": "Account aanmaken"
+    },
+    "ROLE": {
+        "ADMIN": "Beheerder",
+        "GUEST": "Gast",
+        "INSTALLER": "Installateur",
+        "OWNER": "Eigenaar"
+    },
+    "SETTINGS": {
+        "CATEGORY": {
+            "TITLE": {
+                "CLOUD_INTERFACES": "Cloud-interfaces",
+                "DEDICATED_CONTROLLERS": "Specifieke regelaars",
+                "DEVICE_INTERFACES": "Apparaat-interfaces",
+                "EV_CHARGING_STATION": "EV-laadstation",
+                "EV_CHARGING_STATION_CONTROL": "Besturing EV-laadstation",
+                "EXTERNAL_INTERFACES": "Externe interfaces",
+                "IOS": "I/O",
+                "IO_CONTROL": "I/O-besturing",
+                "METER": "Meter",
+                "OTHERS": "Meer",
+                "SIMULATORS": "Simulatoren",
+                "STANDARD_COMPONENTS": "Standaardcomponenten",
+                "STORAGE_SYSTEMS": "Opslagsystemen",
+                "STORAGE_SYSTEM_CONTROL": "Besturing opslagsystemen",
+                "TEMPERATURE_SENSORS": "Temperatuursensoren"
+            }
+        },
+        "ENERGY_JOURNEY": {
+            "TO_THE_ANALYSIS": "Bekijk analyse",
+            "YOUR_ENERYJOURNEY": "OpenEMS Journey"
+        },
+        "POWER_ASSISTANT": {
+            "INFO": "De 'Power Assistant' toont de respectieve regelaars voor alle opslagsystemen (ess0, ess1, ...) en enkele relevante datapunten per systeem. De volgorde komt overeen met de volgorde in de scheduler."
+        },
+        "SYSTEM_UPDATE": {
+            "CONFIRMATION_INFO": "Wilt u uw {{edgeShortName}} bijwerken?",
+            "CREATE_COMPONENT": "Component aanmaken",
+            "DELETE_COMPONENT": "Component verwijderen",
+            "EDGE_RESTARTING": "{{ edge }} wordt opnieuw gestart...",
+            "EMS_RESTARTING": "{{edgeShortName}} herstarten",
+            "INSTALLED_VERSION": "Geïnstalleerde versie:",
+            "LATEST_VERISON": "Het systeem is voorzien van de nieuwste software",
+            "NEW_VERSION": "Nieuwste versie:",
+            "NEW_VERSION_INSTALLING": "Nieuwste versie installeren",
+            "OFFLINE": "De {{ edgeShortName }} is offline.",
+            "RESTARTED": "Herstarten van {{system}} is geslaagd.",
+            "RESTARTING": "{{system}} wordt opnieuw opgestart. (Dit kan tot {{minutes}} minuten duren)",
+            "RESTART_CONFIRMATION": "Wilt u {{system}} herstarten?",
+            "RESTART_FAILED": "Herstarten van {{system}} is mislukt.",
+            "RESTART_WARNING": "Tijdens het herstarten van {{system}} wordt de communicatie onderbroken. Gedurende deze tijd worden geen gegevens vastgelegd en geen componenten bestuurd. Zorg ervoor dat het volledige systeem zich in een veilige staat bevindt.",
+            "SUB_HEADER": "Wilt u een systeemupdate uitvoeren?",
+            "UPDATE_COMPONENT": "Component bijwerken",
+            "UPDATE_EXECUTE": "Systeemupdate uitvoeren",
+            "UPDATE_NOT_POSSIBLE": "Systeem kan niet worden bijgewerkt!",
+            "UPDATE_PROGRESS": "Update wordt uitgevoerd.",
+            "UPDATE_SEARCH": "Zoeken naar updates...",
+            "UPDATE_TIME": "(Dit kan tot {{minutes}} minuten duren)",
+            "WARNING": "Na de systeemupdate wordt de software opnieuw opgestart. Gedurende deze tijd worden geen gegevens vastgelegd en geen componenten bestuurd. Zorg ervoor dat het volledige systeem zich in een veilige staat bevindt."
+        }
+    },
+    "SYSTEM": {
+        "INDUSTRIAL": {
+            "SYSTEM_ERROR_ACKNOWLEDGE": "Systeemfout bevestigen"
+        }
     }
 }

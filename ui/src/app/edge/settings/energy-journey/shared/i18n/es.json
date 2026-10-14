@@ -1,0 +1,44 @@
+{
+    "SETTINGS": {
+        "ENERGY_JOURNEY": {
+            "ANALYSE_BATTERY_EXTENSION_TITLE": "Analizar ampliación de batería",
+            "BATTERY_MODULE_EXTENSION": "Ampliación con módulo de batería",
+            "CHARGE_DISCHARGE_CAPACITY": "Potencia de carga y descarga del almacenamiento en kW:**",
+            "CHARGE_DISCHARGE_POWER_NOTE": "** La potencia de carga y descarga (kW), así como la capacidad de alimentación de respaldo de tu almacenamiento, aumentan hasta este valor. Encontrarás información detallada sobre los valores procesables en el lado de CA y el rendimiento alcanzable según el número de módulos en la&nbsp;<a href='{{productLink}}' target='_blank'>ficha de producto {{productName}}</a>&nbsp;",
+            "CONSTANTS": {
+                "BATTERY_MODULE": "Módulos de batería",
+                "CHARGE_DISCHARGE": "Potencia de carga y descarga",
+                "EDIT": "editar",
+                "ELECTRICITY_PRICE": "Precio de la electricidad",
+                "GRID_SUPPLY": "Consumo de la red",
+                "TITLE": "Tus datos"
+            },
+            "CONSTANTS_DESCRIPTION": "Tu sistema actual {{ theme }} {{ label }} incluía el año pasado:",
+            "CURRENT_NUMBER_OF_MODULES": "Actual",
+            "DECREASE_IN_PEAK_POWER_TOOLTIP": "Los valores negativos indican una ampliación de la torre que no provoca ningún aumento adicional de la potencia de carga y descarga.",
+            "DESCRIPTION": "Si merece la pena ampliar tu almacenamiento de electricidad\ndepende de varios factores. Tu sistema lleva más\nde un año en funcionamiento. Analiza aquí qué efecto\nhabría tenido una ampliación de batería",
+            "DISCLAIMER": "Exención de responsabilidad",
+            "DISCLAIMER_TEXT": "Los cálculos del análisis se basan en tus datos sobre el precio de la electricidad, los consumos de la red y los datos de inyección a la red de tu almacenamiento del último año. Estos parámetros pueden cambiar en cualquier momento. Los cálculos son, por tanto, solo ejemplos que sirven de orientación sobre la posible rentabilidad de una ampliación de batería y no garantizan un ahorro económico real. Esto no constituye ninguna garantía por parte de FENECON.",
+            "ELECTRICITY_PRICE_SELECTION_TITLE": "Energy Journey: ampliación de batería",
+            "ELECTRICITY_PRICE_TEXT": "Tu sistema lleva más de un año en funcionamiento. Analiza aquí qué efecto habría tenido una ampliación de batería.",
+            "ELECTRICITY_PRICE_VALUE_TEXT": "Introduce tu precio actual de la electricidad. Si ya utilizas una tarifa dinámica, introduce un valor promedio.",
+            "GRID_CONSUMPTION_TITLE": "Ahorro en el consumo de electricidad en kWh ({{date}})",
+            "MODULE": "Módulo",
+            "MODULES": "Módulos",
+            "MODULE_COUNT": "Número de módulos",
+            "MORE_DETAILS": "Más detalles en la ficha de producto {{productName}}",
+            "POTENTIAL_SAVINGS_CALCULATION_NOTE": "Cálculo: tu precio actual de la electricidad multiplicado por el ahorro en el consumo de electricidad en kWh por módulo.",
+            "POTENTIAL_SAVINGS_NOTE": "* Posible ahorro anual en euros que habría supuesto una ampliación de batería",
+            "SAVINGS_LABEL": "Ahorro en el consumo de electricidad en euros:*",
+            "SEE_CHANGES_SLOGAN": "Con nuestra plataforma Energy Journey analiza y calcula cómo desarrollar tu instalación de forma sensata y de qué ampliaciones puedes beneficiarte.",
+            "SEE_CHANGES_SUB_TEXT": "Con nosotros estás perfectamente preparado para tu transición energética del 100 %.",
+            "SEE_CHANGES_TEXT": "Afronta con serenidad los cambios en el mundo de la energía.",
+            "SIMULATION_NOT_STARTED": "Simulación no iniciada",
+            "SLOGAN": "Ampliación de batería: ¿merece la pena?",
+            "START_ANALYSIS": "Iniciar análisis",
+            "TOTAL": "(Total)",
+            "TOTAL_CAPACITY": "Aumento de la capacidad total utilizable en kWh:",
+            "WIDGET_TITLE": "Ampliación de batería"
+        }
+    }
+}

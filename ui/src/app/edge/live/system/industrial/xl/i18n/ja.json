@@ -1,0 +1,8 @@
+{
+    "INDUSTRIAL_XL": {
+        "TEST_MODE_ESS_TEST": "テストモード：ESSテスト",
+        "TEST_MODE_EXIT": "テストモード：終了",
+        "TEST_MODE_LAMP_TEST": "テストモード：ランプテスト",
+        "TEST_MODE_MANUAL_BATTERY_START": "テストモード：バッテリーの手動起動"
+    }
+}

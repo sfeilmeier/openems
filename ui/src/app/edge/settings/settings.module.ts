@@ -14,8 +14,13 @@ import { ComponentInstallComponent } from "./component/install/install.component
 import { IndexComponent as ComponentUpdateIndexComponent } from "./component/update/index.component";
 import { ComponentUpdateComponent } from "./component/update/update.component";
 import { EnergyJourneyModule } from "./energy-journey/energy-journey.module";
+import cz from "./i18n/cz.json";
 import de from "./i18n/de.json";
 import en from "./i18n/en.json";
+import es from "./i18n/es.json";
+import fr from "./i18n/fr.json";
+import ja from "./i18n/ja.json";
+import nl from "./i18n/nl.json";
 import { JsonrpcTestModule } from "./jsonrpctest/jsonrpctest.module";
 import { NetworkOldComponent } from "./network.old/network.old.component";
 import { ServiceAssistantModule } from "./serviceassistant/serviceassistant.module";
@@ -48,10 +53,12 @@ import { SystemExecuteComponent } from "./systemexecute/systemexecute.component"
 })
 export class SettingsModule {
     constructor(private translate: TranslateService) {
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
-            for (const { lang, translation, shouldMerge } of translations) {
-                translate.setTranslation(lang, translation, shouldMerge);
-            }
-        });
+        Language.normalizeAdditionalTranslationFiles({ cs: cz, de: de, en: en, es: es, fr: fr, ja: ja, nl: nl }).then(
+            (translations) => {
+                for (const { lang, translation, shouldMerge } of translations) {
+                    translate.setTranslation(lang, translation, shouldMerge);
+                }
+            },
+        );
     }
 }
