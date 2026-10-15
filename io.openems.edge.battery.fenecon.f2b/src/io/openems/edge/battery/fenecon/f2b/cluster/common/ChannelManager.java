@@ -20,7 +20,7 @@ import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.startstop.StartStoppable;
 import io.openems.edge.common.type.TypeUtils;
 
-public class ChannelManager extends AbstractChannelListenerManager {
+public abstract class ChannelManager extends AbstractChannelListenerManager {
 
 	private final Battery parent;
 
@@ -102,39 +102,12 @@ public class ChannelManager extends AbstractChannelListenerManager {
 	}
 
 	/**
-	 * Calculates the aggregated SOC for the cluster based on the average SOC of all
-	 * batteries.
-	 *
-	 * <p>
-	 * If the average SOC is greater than or equal to 50, the maximum SOC value
-	 * among all batteries is used. Otherwise, the minimum SOC value is used.
+	 * Calculates the aggregated SOC for the cluster. Each implementation defines
+	 * its own aggregation strategy.
 	 *
 	 * @param batteries the List of {@link BatteryFeneconF2b}
 	 */
-	protected void calculateSoc(List<BatteryFeneconF2b> batteries) {
-		final Consumer<Value<Boolean>> callback = (value) -> {
-			var socList = batteries.stream()//
-					.map(Battery::getSoc)//
-					.filter(Value::isDefined)//
-					.map(Value::get)//
-					.toList();
-
-			var avgSoc = TypeUtils.averageInt(socList);
-			if (avgSoc == null) {
-				this.parent.getSocChannel().setNextValue(null);
-				return;
-			}
-
-			var result = avgSoc >= 50//
-					? socList.stream().max(Integer::compareTo).orElse(null)//
-					: socList.stream().min(Integer::compareTo).orElse(null);
-			this.parent.getSocChannel().setNextValue(result);
-		};
-
-		for (var battery : batteries) {
-			this.addOnSetNextValueListener(battery, Battery.ChannelId.SOC, callback);
-		}
-	}
+	protected abstract void calculateSoc(List<BatteryFeneconF2b> batteries);
 
 	/**
 	 * For each battery, according to the given method {@code "channelsMethod"}
