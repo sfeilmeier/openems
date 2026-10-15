@@ -103,7 +103,7 @@ export class CompletionComponent implements OnInit {
                 const view = new Uint8Array(buffer);
 
                 for (let i = 0; i < length; i++) {
-                    view[i] = binary.charCodeAt(i);
+                    view[i] = binary.codePointAt(i) ?? Number.NaN;
                 }
 
                 const data: Blob = new Blob([view], {
