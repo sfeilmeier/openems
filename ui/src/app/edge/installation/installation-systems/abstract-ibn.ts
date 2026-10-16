@@ -385,6 +385,11 @@ export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve>
 
     /** Retrieves the fields for View Line side meter Fuse, which are different for Home and Commercial systems. */
     public getLineSideMeterFuseFields(): FormlyFieldConfig[] {
+        return this.getLineSideMeterFuseValueFields();
+    }
+
+    /** Retrieves the fuse value fields (fixed values and "other"), shared by all systems. */
+    public getLineSideMeterFuseValueFields(): FormlyFieldConfig[] {
         const fields: FormlyFieldConfig[] = [];
 
         fields.push({
