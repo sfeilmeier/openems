@@ -6,7 +6,7 @@ import { ChannelAddress, Edge, EdgeConfig } from "../../shared";
 import { DefaultTypes } from "../../type/defaulttypes";
 import { Language } from "../../type/language";
 import { Role } from "../../type/role";
-import { AdvertWidgets } from "../../type/widget";
+import { AdvertWidget, AdvertWidgets } from "../../type/widget";
 import { AbstractService } from "../abstractservice";
 
 export class DummyService extends AbstractService {
@@ -18,7 +18,7 @@ export class DummyService extends AbstractService {
 
     private readonly edgeConfig = new EdgeConfig(this.edge, undefined);
 
-    override getAvailableAdvertWidgets(advertWidgets: AdvertWidgets) {
+    override getAvailableAdvertWidgets(advertWidgets: AdvertWidgets): AdvertWidget[] {
         throw new Error("Method not implemented.");
     }
 

@@ -801,6 +801,7 @@ export namespace GroupedNavigationTreeUtility {
             label: string,
             baseString: string,
             translate: TranslateService,
+            config: EdgeConfig,
         ) => NavigationTree,
     ): NavigationTree | null {
         const component = config.getComponentSafely(componentId);
@@ -809,6 +810,6 @@ export namespace GroupedNavigationTreeUtility {
         }
 
         const label = Name.METER_ALIAS_OR_ID(component);
-        return createComponentNavigationTree(componentId, label, componentId, translate);
+        return createComponentNavigationTree(componentId, label, componentId, translate, config);
     }
 }

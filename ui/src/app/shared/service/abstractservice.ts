@@ -6,7 +6,7 @@ import { QueryHistoricTimeseriesEnergyResponse } from "../jsonrpc/response/query
 import { ChannelAddress } from "../shared";
 import { DefaultTypes } from "../type/defaulttypes";
 import { Language } from "../type/language";
-import { AdvertWidgets } from "../type/widget";
+import { AdvertWidget, AdvertWidgets } from "../type/widget";
 
 export abstract class AbstractService extends ErrorHandler {
 
@@ -107,5 +107,5 @@ export abstract class AbstractService extends ErrorHandler {
    * @param advertWidgets the advertWidgets
    * @returns true if advertWidgets should be shown, false if not
    */
-    abstract getAvailableAdvertWidgets(advertWidgets: AdvertWidgets);
+    abstract getAvailableAdvertWidgets(advertWidgets: AdvertWidgets): AdvertWidget[];
 }

@@ -311,6 +311,7 @@ export class NavigationService {
 
         this.executeNavigationCallbacks(navigationTree);
         this.navigationTree.set(navigationTree);
+
         this.initNavigation(
             currentUrl,
             untracked(() => this.navigationTree()),
