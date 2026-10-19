@@ -124,6 +124,10 @@ export class User {
         return Role.isAtLeast(this.globalRole, role);
     }
 
+    public isAtMost(role: Role) {
+        return Role.isAtMost(this.globalRole, role);
+    }
+
     public getNavigationTree(
         navigationTree: NavigationTree,
         translate: TranslateService,

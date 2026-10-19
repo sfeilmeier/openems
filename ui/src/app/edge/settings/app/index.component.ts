@@ -173,6 +173,7 @@ export class IndexComponent implements OnInit, OnDestroy {
             node.addEventListener("click", async () => {
                 const popoverEvent = await EdgeComponent.showPrivacyPolicyPopover(this.modalController);
                 const acceptance = popoverEvent.data?.thirdPartyUsageAcceptance;
+
                 if (acceptance != null) {
                     // update app status
                     this.edge

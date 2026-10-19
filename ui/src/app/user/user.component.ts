@@ -236,19 +236,6 @@ export class UserComponent implements OnInit {
         this.websocket.logout();
     }
 
-    // TODO redo when darkMode is applied
-    // protected toggleMode(key: string, event: CustomEvent) {
-    //   let userSettings = this.service.currentUser.settings;
-    //   userSettings[key] = event.detail['checked'];
-
-    //   this.websocket.sendRequest(
-    //     new UpdateUserSettingsRequest({ settings: userSettings })).then(() => {
-    //       this.service.toast(this.translate.instant('GENERAL.CHANGE_ACCEPTED'), 'success');
-    //     }).catch((reason) => {
-    //       this.service.toast(this.translate.instant('GENERAL.CHANGE_FAILED') + '\n' + reason.error.message, 'danger');
-    //     });
-    // }
-
     public navigateToChangelog(event: Event) {
         event.preventDefault();
         const prev = this.routeService.getCurrentUrl();

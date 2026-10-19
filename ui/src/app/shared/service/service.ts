@@ -28,7 +28,6 @@ import { Role } from "../type/role";
 import { AdvertWidget, AdvertWidgets } from "../type/widget";
 import { DateUtils } from "../utils/date/dateutils";
 import { AbstractService } from "./abstractservice";
-import { RouteService } from "./route/route.service";
 import { Websocket } from "./websocket";
 
 @Injectable()
@@ -87,7 +86,6 @@ export class Service extends AbstractService {
         private toaster: ToastController,
         public translate: TranslateService,
         private _injector: Injector,
-        private routeService: RouteService,
     ) {
         super();
         // add language
@@ -442,6 +440,7 @@ export class Service extends AbstractService {
                     this.currentEdge.set(currentEdge);
                     value.edges[edgeData.id] = currentEdge;
                     this.metadata.next(value);
+                    this.websocket.state.set(States.EDGE_SELECTED);
                     resolve(currentEdge);
                 })
                 .catch(reject);

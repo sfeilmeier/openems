@@ -1,7 +1,7 @@
 import { inject, NgModule } from "@angular/core";
 import { NoPreloading, RedirectFunction, RouterModule, Routes } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
-import { EmptyPageComponent } from "src/app/shared/components/navigation/empty-page/empty-page";
+import { EmptyPageComponent } from "./shared/components/navigation/empty-page/empty-page";
 import { environment } from "src/environments";
 import { EdgeComponent } from "./edge/edge.component";
 import { DelayedSellToGridChartOverviewComponent } from "./edge/history/delayedselltogrid/symmetricpeakshavingchartoverview/delayedselltogridchartoverview.component";
@@ -260,7 +260,7 @@ export const routes: Routes = [
                     {
                         path: "",
                         loadComponent: () =>
-                            import("src/app/edge/settings/energy-journey/new-navigation/energy-journey").then(
+                            import("./edge/settings/energy-journey/new-navigation/energy-journey").then(
                                 (m) => m.EnergyJourneyLiveComponent,
                             ),
                     },

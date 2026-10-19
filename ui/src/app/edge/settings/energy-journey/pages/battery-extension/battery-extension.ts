@@ -52,7 +52,8 @@ export class BatteryExtensionComponent extends AbstractFlatWidget {
         }
     }
 
-    ionViewWillEnter(): void {
+    override ngOnInit(): void {
+        super.ngOnInit();
         this.electricityPrice = this.route?.snapshot?.queryParams["electricityPrice"] as number;
         this.getSimulatedData(this.electricityPrice);
     }

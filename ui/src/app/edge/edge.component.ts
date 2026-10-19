@@ -1,8 +1,11 @@
 // @ts-strict-ignore
-import { Component, effect, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
-import { Router } from "@angular/router";
-import { ModalController, ViewWillLeave } from "@ionic/angular";
+import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, OnDestroy, OnInit } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ModalController } from "@ionic/angular";
+import { distinctUntilChanged, map, skip } from "rxjs";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
+import { States } from "src/app/shared/states/states";
 import { MarketingAnnualReviewComponent } from "../shared/components/edge/popover/annual-review/popover";
 import { WeatherForecastApprovalComponent } from "../shared/components/edge/popover/data-privacy/popover";
 import { Pagination } from "../shared/service/pagination";
@@ -13,15 +16,16 @@ import { UserService } from "../shared/service/user.service";
 @Component({
     selector: "edge",
     template: `
-        <ion-content></ion-content>
-        <ion-router-outlet id="content"></ion-router-outlet>
+        <ng-content></ng-content>
+        <router-outlet id="content"></router-outlet>
     `,
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false,
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
-export class EdgeComponent implements OnDestroy, ViewWillLeave {
-    protected latestIncident: { message: string | null; id: string } | null = null;
+export class EdgeComponent implements OnDestroy, OnInit {
+    private latestIncident: { message: string | null; id: string } | null = null;
     private edge: Edge | null = null;
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private routeService: RouteService,
@@ -31,6 +35,7 @@ export class EdgeComponent implements OnDestroy, ViewWillLeave {
         private popoverCtrl: ModalController,
         private router: Router,
         private userService: UserService,
+        private route: ActivatedRoute,
     ) {
         effect(async () => {
             const edge = this.service.currentEdge();
@@ -40,7 +45,6 @@ export class EdgeComponent implements OnDestroy, ViewWillLeave {
             }
             this.edge = edge;
 
-            pagination.getAndSubscribeEdge(edge.id);
             this.handlePrivacyPopover(edge);
             this.handleAnnualReviewPopover(edge);
         });
@@ -75,21 +79,41 @@ export class EdgeComponent implements OnDestroy, ViewWillLeave {
         popover.onDidDismiss();
     }
 
-    async ionViewWillEnter() {
-        const edgeId = this.routeService.getRouteParam<string>("edgeId");
-        await this.service.updateCurrentEdge(edgeId);
-        const edge = this.service.currentEdge();
-        await this.pagination.subscribeEdge(edge, this.websocket);
-    }
-
-    public ionViewWillLeave() {
-        this.ngOnDestroy();
+    public async ngOnInit(): Promise<void> {
+        this.route.paramMap
+            .pipe(
+                map((params) => params.get("edgeId")),
+                distinctUntilChanged(),
+                skip(1),
+                takeUntilDestroyed(this.destroyRef),
+            )
+            .subscribe((edgeId) => {
+                if (edgeId != null) {
+                    void this.selectEdge(edgeId);
+                }
+            });
+        const edgeId = this.route.snapshot.paramMap.get("edgeId");
+        if (edgeId != null) {
+            await this.selectEdge(edgeId);
+        }
     }
 
     public ngOnDestroy(): void {
         this.service.currentEdge.set(null);
-        if (!this.edge) {
-            return;
+    }
+
+    private async selectEdge(edgeId: string): Promise<void> {
+        try {
+            const edge = await this.service.updateCurrentEdge(edgeId);
+            if (this.route.snapshot.paramMap.get("edgeId") !== edgeId) {
+                return;
+            }
+            this.websocket.state.set(States.EDGE_SELECTED);
+            await this.pagination.subscribeEdge(edge, this.websocket);
+        } catch {
+            if (this.route.snapshot.paramMap.get("edgeId") === edgeId) {
+                await this.router.navigate(["index"]);
+            }
         }
     }
 
