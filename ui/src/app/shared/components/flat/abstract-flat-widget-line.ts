@@ -1,4 +1,4 @@
-import { Directive, effect, EffectRef, inject, Inject, Injector, Input, OnChanges, OnDestroy, signal } from "@angular/core";
+import { Directive, effect, EffectRef, inject, Inject, Injector, Input, OnChanges, OnDestroy, signal, } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ModalController } from "@ionic/angular";
 import { Subject } from "rxjs";
@@ -87,7 +87,7 @@ export abstract class AbstractFlatWidgetLine implements OnChanges, OnDestroy {
         if (typeof this._name == "function") {
             this.displayName.set(this._name(value));
         } else {
-            this.displayName.set(this._name);
+            this.displayName.set(this._name ?? null);
         }
         this.displayValue.set(this.converter(value));
 
