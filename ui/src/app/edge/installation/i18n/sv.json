@@ -1,0 +1,240 @@
+{
+    "INSTALLATION": {
+        "ALERTING_INFO": "Konfigurera e-postmeddelanden som installatör när FEMS är offline under en viss tid eller rapporterar ett fel. Meddelandet skickas till den e-postadress som angavs vid idrifttagningen.",
+        "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
+            "ACTIVE_POWER_MODE": {
+                "OUTPUT_ACTIVE_POWER": "Aktiv utgångseffekt",
+                "PF_OVER_FREQUENCY": {
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Avaktiveringsgräns Fstop",
+                    "DELAY_TIME": "Fördröjningstid för respons",
+                    "DELAY_WAITING_TIME": "Väntetid för fördröjning",
+                    "ENABLE": "P(F)-kurva (frekvenskurva) för överfrekvensurladdning",
+                    "ENABLE_DESC": "Aktivera/avaktivera P(F)-kurvan",
+                    "HYSTERESIS_POINT": "Hysteres-tid för frekvens",
+                    "HYSTERESIS_SLOPE": "Hysteres-lutning för effektåterhämtning",
+                    "SLOPE": "Lutning för effektminskning vid överfrekvens",
+                    "START_POINT": "Startpunkt vid överfrekvens"
+                },
+                "PF_UNDER_FREQUENCY": {
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Avaktiveringsgräns Fstop",
+                    "DEACTIVATION_THRESHOLD_FSTOP_DESC": "Aktivera/avaktivera avaktiveringsgränsen",
+                    "DELAY_TIME": "Fördröjningstid för respons",
+                    "DELAY_WAITING_TIME": "Väntetid för fördröjning",
+                    "ENABLE": "P(F)-kurva (frekvenseffektkurva) för underfrekvenslast",
+                    "ENABLE_DESC": "Aktivera/avaktivera P(F)-kurvan",
+                    "HYSTERESIS_POINT": "Hysteres-tid för frekvens",
+                    "HYSTERESIS_SLOPE": "Hysteres-lutning för effektåterhämtning",
+                    "SLOPE": "Effektrespons vid underfrekvensgradient",
+                    "THRESHOLD": "Underfrekvenströskel"
+                },
+                "POWER_GRADIENT": "Effektgradient",
+                "PU_CURVE": {
+                    "ENABLE": "P(U)-kurva (spänningseffektkurva)",
+                    "ENABLE_DESC": "Aktivera/avaktivera P(U)-kurvan",
+                    "PT1_POWER_GRADIENT": "Effektgradient",
+                    "PT1_TIME_CONSTANT": "Tidskonstant för PT-1-lågpassfilter",
+                    "RESPONSE_MODE": "Responsläge för utgång"
+                }
+            },
+            "CONNECTION": {
+                "RAMP_UP_LOWER_FREQUENCY": "Uppstart: Lägre frekvens",
+                "RAMP_UP_LOWER_VOLTAGE": "Uppstart: Lägre spänning",
+                "RAMP_UP_OBSERVATION_TIME": "Uppstart: Observationstid",
+                "RAMP_UP_UPPER_FREQUENCY": "Uppstart: Övre frekvens",
+                "RAMP_UP_UPPER_VOLTAGE": "Uppstart: Övre spänning",
+                "RECONNECTION_GRADIENT_ENABLE": "Gradient för återanslutning",
+                "RECONNECTION_GRADIENT_ENABLE_DESC": "Aktivera/avaktivera gradienten för återanslutning",
+                "RECONNECTION_GRADIENT_VALUE": "Gradientvärde för återanslutning",
+                "RECONNECTION_LOWER_FREQUENCY": "Återanslutning: Lägre frekvens",
+                "RECONNECTION_LOWER_VOLTAGE": "Återanslutning: Lägre spänning",
+                "RECONNECTION_OBSERVATION_TIME": "Återanslutning: Observationstid",
+                "RECONNECTION_UPPER_FREQUENCY": "Återanslutning: Övre frekvens",
+                "RECONNECTION_UPPER_VOLTAGE": "Återanslutning: Övre spänning",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE": "Mjuk uppstartsgradient",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE_DESC": "Aktivera/avaktivera den mjuka uppstartsgradienten",
+                "SOFT_RAMP_UP_GRADIENT_VALUE": "Värde för mjuk uppstartsgradient"
+            },
+            "FREQUENCY_RIDE_THROUGH": {
+                "ENABLE": "Frequency Ride Through",
+                "ENABLE_DESC": "Aktiverar/avaktiverar Frequency Ride Through",
+                "OF_FREQUENCY": "Överfrekvens {{stage}} frekvens",
+                "OF_TIME": "Överfrekvens {{stage}} tid",
+                "UF_FREQUENCY": "Underfrekvens {{stage}} frekvens",
+                "UF_TIME": "Underfrekvens {{stage}} tid"
+            },
+            "GROUPS": {
+                "ACTIVE_POWER_MODE": "Inställningar för aktiv effekt",
+                "CONNECTION": "Anslutningsparametrar",
+                "FREQUENCY_RIDE_THROUGH": "Frequency Ride Through",
+                "PROTECTION": "Skyddsparametrar",
+                "REACTIVE_POWER_MODE": "Inställningar för reaktiv effekt",
+                "VOLTAGE_RIDE_THROUGH": "Voltage Ride Through"
+            },
+            "MODE": "Läge",
+            "POWER": "{{value}} effekt",
+            "PROTECTION": {
+                "OVERFREQUENCY_TRIGGER": "Utlösningsvärde för överfrekvens (steg {{stage}})",
+                "OVERFREQUENCY_TRIP_TIME": "Utlösningstid vid överfrekvens (steg {{stage}})",
+                "OVERVOLTAGE_TRIGGER": "Utlösningsvärde för överspänning (steg {{stage}})",
+                "OVERVOLTAGE_TRIP_TIME": "Utlösningstid vid överspänning (steg {{stage}})",
+                "TEN_MIN_OVERVOLTAGE_THRESHOLD": "Utlösningsgräns för 10-minuters överspänning",
+                "TEN_MIN_OVERVOLTAGE_TIME": "Utlösningstid för 10-minuters överspänning",
+                "UNDERFREQUENCY_TRIP_TIME": "Utlösningstid vid underfrekvens (steg {{stage}})",
+                "UNDERFREQUENCY_TRIP_VALUE": "Utlösningsvärde vid underfrekvens (steg {{stage}})",
+                "UNDERVOLTAGE_TRIP_TIME": "Utlösningstid vid underspänning (steg {{stage}})",
+                "UNDERVOLTAGE_TRIP_VALUE": "Utlösningsvärde vid underspänning (steg {{stage}})"
+            },
+            "RANGE": "Område [{{min}},{{max}}] {{unit}}",
+            "REACTIVE_POWER": "{{value}} reaktiv effekt",
+            "REACTIVE_POWER_MODE": {
+                "COSPHIP_CURVE": {
+                    "COS_PHI": "{{value}} cos φ",
+                    "COS_PHI_DESC": "Område [-1000, -800] och [800, 1000]",
+                    "EXTENDED_FUNCTIONS": "Utökade funktioner",
+                    "EXTENDED_FUNCTIONS_DESC": "Aktivera/avaktivera utökade funktioner",
+                    "INVALID_RANGE": "Värdet ska ligga inom området [-1000, -800] och [800, 1000]",
+                    "LOCK_IN_VOLT": "Lock-in-spänning",
+                    "LOCK_OUT_VOLT": "Lock-out-spänning",
+                    "OVEREXCITED_SLOPE": "Överexciterad lutning",
+                    "POWER": "{{value}} effekt",
+                    "TIME_CONSTANT": "Tidskonstant",
+                    "UNDEREXCITED_SLOPE": "Underexciterad lutning"
+                },
+                "FIX_PF": {
+                    "POWER_FACTOR": "Effektfaktor",
+                    "POWER_FACTOR_DESC": "Område [0.8, 1]"
+                },
+                "FIX_Q": {
+                    "REACTIVE_POWER": "Reaktiv effekt"
+                },
+                "MODE": "Läge för reaktiv effekt",
+                "MODE_DESC": "Val av läget för reaktiv effekt",
+                "OPTIONS": {
+                    "COSPHIP_CURVE": "CosPhi(P)-kurva",
+                    "FIX_PF": "Fast Pf",
+                    "FIX_Q": "Fast Q",
+                    "NONE": "Ej valt",
+                    "QP_CURVE": "Q(P)-kurva",
+                    "QU_CURVE": "Q(U)-kurva"
+                },
+                "QP_CURVE": {
+                    "OVEREXCITED_SLOPE": "Överexciterad lutning",
+                    "TIME_CONSTANT": "Tidskonstant",
+                    "UNDEREXCITED_SLOPE": "Underexciterad lutning"
+                },
+                "QU_CURVE": {
+                    "ACTIVE_POWER": "V{{number}} aktiv effekt",
+                    "EXTENDED_FUNCTIONS": "Utökade funktioner",
+                    "LOCK_IN_POWER": "Lock-in-spänning",
+                    "LOCK_OUT_POWER": "Lock-out-spänning",
+                    "MODE": {
+                        "SLOPE_MODE": "Lutningsläge",
+                        "STANDARD_MODE": "Grundläge"
+                    },
+                    "OVEREXCITED_SLOPE": "Överexciterad lutning",
+                    "TIME_CONSTANT": "Tidskonstant",
+                    "UNDEREXCITED_SLOPE": "Underexciterad lutning",
+                    "VOLTAGE": "V{{number}} spänning",
+                    "VOLTAGE_DEAD_BAND": "Spänningsdödband"
+                }
+            },
+            "SLOPE_RANGE": "Multiplikationsfaktor [{{min}}, {{max}}]",
+            "TITLE": "VDE 4110-inställningar",
+            "VOLTAGE_RIDE_THROUGH": {
+                "ACTIVE_RECOVERY_MODE": "Återhämtningsläge för aktiv effekt efter överskridande",
+                "CURRENT_DISTRIBUTION_MODE": "Strömfördelningsläge",
+                "HVRT": {
+                    "ENABLE": "HVRT",
+                    "ENABLE_DESC": "Aktivera/avaktivera High Voltage Ride Through",
+                    "ENTER_THRESHOLD": "Tröskel för att påbörja högt spänningsöverskridande",
+                    "EXIT_ENDPOINT": "Slutpunkt för högt spänningsöverskridande",
+                    "K2_SLOPE": "K2-lutning",
+                    "OV_TIME": "Överspänning {{stage}} tid",
+                    "OV_VOLTAGE": "Överspänning {{stage}} spänning",
+                    "ZERO_CURRENT_ENABLE": "Nollströmsläge",
+                    "ZERO_CURRENT_ENABLE_DESC": "Aktivera/avaktivera nollströmsläget",
+                    "ZERO_CURRENT_THRESHOLD": "Tröskelvärde för aktivering"
+                },
+                "LVRT": {
+                    "ENABLE": "LVRT",
+                    "ENABLE_DESC": "Aktivera/avaktivera Low Voltage Ride Through",
+                    "ENTER_THRESHOLD": "Tröskel för att påbörja LVRT",
+                    "EXIT_ENDPOINT": "Slutpunkt för LVRT",
+                    "K1_SLOPE": "K1-lutning",
+                    "UV_TIME": "Underspänning {{stage}} tid",
+                    "UV_VOLTAGE": "Underspänning {{stage}} spänning",
+                    "ZERO_CURRENT_ENABLE": "Nollströmsläge",
+                    "ZERO_CURRENT_ENABLE_DESC": "Aktivera/avaktivera nollströmsläget",
+                    "ZERO_CURRENT_THRESHOLD": "Tröskelvärde för aktivering"
+                },
+                "OPTIONS": {
+                    "ACTIVE_PRIORITY": "Läge med prioritet för aktiv ström",
+                    "CONSTANT_CURRENT": "Läge med konstant ström",
+                    "DEACTIVATE": "Avaktivera",
+                    "GRADIENT_CONTROL": "Gradientreglering",
+                    "PT_1_BEHAVIOUR": "PT-1-beteende",
+                    "REACTIVE_PRIORITY": "Läge med prioritet för reaktiv ström"
+                },
+                "POWER_GRADIENT": "Effektgradient",
+                "PT1_TIME_CONSTANT": "Tidskonstant för PT-1-lågpassfilter",
+                "REACTIVE_RECOVERY_MODE": "Passerande av slutet på återhämtningsläget för reaktiv effekt"
+            }
+        },
+        "CONFIGURATION_BATTERY_INPUTS": {
+            "BATTERY_INPUT": "Batteriingång {{ key }}",
+            "INPUT_CONFIRMATION": "Bekräftelse: Ingångarna är korrekt anslutna",
+            "NUMBER_OF_BATTERY_INPUTS": "Antal använda batteriingångar",
+            "TITLE": "Konfiguration av batteriingångar"
+        },
+        "CONFIGURATION_EMERGENCY_RESERVE": {
+            "GENSET": {
+                "BATTERY_CHARGING": "Aktivera batteriladdning från generatorn?",
+                "CHARGE_SOC_END": "Batteriladdningsnivå för att stoppa generatorn",
+                "CHARGE_SOC_END_DESCRIPTION": "Batteriets laddningstillstånd vid vilket generatorn stoppas.",
+                "CHARGE_SOC_START": "Batteriladdningsnivå för att starta generatorn",
+                "CHARGE_SOC_START_DESCRIPTION": "Batteriets laddningstillstånd vid vilket generatorn startas. Detta värde kan inte vara lägre än det laddningstillstånd som angivits som reserverat för nödbackup.",
+                "CONNECTED": "Generator ansluten?",
+                "EMERGENCY_POWER_FUNCTION": "Ska generatorns nödkraftsfunktion aktiveras?",
+                "MAX_POWER": "Maximal laddningseffekt i procent",
+                "MAX_POWER_DESCRIPTION": "Procentandel av den ovan nämnda tillgängliga märkeffekten för generatorn med vilken batteriet ska laddas. [{{min}}, {{max}}] %",
+                "POWER": "Märkeffekt",
+                "PREHEAT_TIME": "Förledtid",
+                "RUN_TIME": "Drifttid"
+            }
+        },
+        "CONFIGURATION_EXECUTE": {
+            "COPY_ERROR": "Kopiera fel",
+            "ERROR_COPIED": "Felet kopierades till urklipp",
+            "ERROR_DETAILS": "Feldetaljer",
+            "ERROR_HEADLINE_CATEGORY_CONFLICT": "Ta bort det befintliga systemet först",
+            "ERROR_HEADLINE_CONNECTION": "Kontrollera anslutningen och starta konfigurationen igen",
+            "ERROR_HEADLINE_GENERIC": "Kopiera felet och skicka det till FENECON-supporten",
+            "ERROR_HEADLINE_INCOMPATIBLE_APP": "Ta bort de inkompatibla apparna först",
+            "ERROR_HEADLINE_TIMEOUT": "Kontrollera anslutningen och starta konfigurationen igen",
+            "ERROR_HINT_CATEGORY_CONFLICT": "Ett annat integrerat system är redan installerat på denna enhet. Endast ett integrerat system (t.ex. ett Home- eller Commercial-system) kan installeras åt gången.",
+            "ERROR_HINT_CONNECTION": "Anslutningen till enheten avbröts. Kontrollera nätverks-/serielanslutningen.",
+            "ERROR_HINT_INCOMPATIBLE_APP": "En app som är installerad på denna enhet förhindrar att detta system installeras. Ta bort den via appcentret och starta konfigurationen igen. De berörda apparna listas i feldetaljerna.",
+            "ERROR_HINT_STALE_INSTANCE": "Ett kvarvarande installationsförsök av detta system hittades på enheten, vilket blockerar den aktuella installationen. Det kan tas bort automatiskt.",
+            "ERROR_HINT_TIMEOUT": "Enheten svarade inte i tid. Kontrollera anslutningen till enheten.",
+            "ERROR_TITLE_CATEGORY_CONFLICT": "Befintligt system hittat",
+            "ERROR_TITLE_CONNECTION": "Anslutningen avbröts",
+            "ERROR_TITLE_INCOMPATIBLE_APP": "Inkompatibel app installerad",
+            "ERROR_TITLE_STALE_INSTANCE": "Kvarvarande installation hittad",
+            "ERROR_TITLE_TIMEOUT": "Timeout",
+            "RESOLVE_CATEGORY_CONFLICT_BUTTON": "Ta bort befintligt system och fortsätt",
+            "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Inget motstridigt system kunde hittas för automatisk borttagning. Ta bort det manuellt via appcentret.",
+            "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Tar bort befintligt system…",
+            "STATUS_CONFIGURING": "Komponenterna konfigureras…",
+            "STATUS_FUNCTION_TEST": "Konfigurationen klar. Funktionstester körs…"
+        },
+        "ENABLE_MPPT": "MPPT {{ mpptNumber }} aktiv",
+        "OFFLINE": "Offline",
+        "PROTOCOL_FEED_IN_MANAGEMENT": {
+            "FIXED_COS_PHI": "Fast värde: Cos Phi 1"
+        },
+        "PROTOCOL_SERIAL_NUMBER": {
+            "BATTERY_COMMUNICATION_BOX": "Batterikommunikationslåda",
+            "BATTERY_INPUT_TOWER": "Batteriingång {{ batteryInput }} torn {{ towerNumber }}"
+        }
+    }
+}

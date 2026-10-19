@@ -1,0 +1,14 @@
+{
+    "BETA_TEST": {
+        "BUTTON": "Till changeloggen för betatestet",
+        "CHANGELOG": "Här hittar du information om ändringarna, förklaringar eller hjälp. Håll dig uppdaterad med vår changelog om de senaste utvecklingarna.",
+        "FEEDBACK": "Din feedback är viktig – berätta för oss vad du tycker om betatestet:",
+        "NEW_UI_INFO": "Vår övervakning får en ny design. Ny navigation och nya funktioner kommer att introduceras."
+    },
+    "MY_PORTAL": {
+        "BUTTON": "Gå till myFENECON",
+        "INFO": "Klicka här för att komma åt betaversionen av vår exklusiva portal, \\\"myFENECON\\\".",
+        "TICKET": "Här kan du för närvarande ladda ner marknadsföringsmaterial. Mer innehåll kommer inom kort."
+    },
+    "NAVIGATION_INFO_MANUAL": "Manual för {{source}}"
+}

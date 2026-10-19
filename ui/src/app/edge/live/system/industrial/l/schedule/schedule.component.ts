@@ -21,6 +21,7 @@ import fr from "../i18n/fr.json";
 import ja from "../i18n/ja.json";
 import lt from "../i18n/lt.json";
 import nl from "../i18n/nl.json";
+import sv from "../i18n/sv.json";
 import { SharedSystemIndustrialL } from "../shared-system-industrial-l";
 
 @Component({
@@ -55,6 +56,7 @@ export class IndustrialLScheduleComponent extends AbstractModal {
             ja: ja,
             lt: lt,
             nl: nl,
+            sv: sv,
         }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {
                 translate.setTranslation(lang, translation, shouldMerge);

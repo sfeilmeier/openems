@@ -1,0 +1,22 @@
+{
+    "ADVERT": {
+        "1": {
+            "LINK": "",
+            "LINK_TEXT": "Aktivera nu",
+            "TEXT": "Från och med september kan du prova den nya designen på din onlineövervakning. Upptäck nya funktioner och njut av ett mer intuitivt, användarvänligt och modernt gränssnitt. Gå helt enkelt till inställningarna i din profil och aktivera den nya designen för att prova den direkt.",
+            "TITLE": "Ny design för din onlineövervakning"
+        },
+        "2": {
+            "LINK": "https://www.fenecon.de/weiterempfehlungsprogramm",
+            "LINK_TEXT": "Säkra din belöning",
+            "TEXT": "Rekommendera FENECON till dina vänner, familj och bekanta och få attraktiva belöningar som tack. För varje ny påbörjad Energy Journey får både du och den nya kunden appen FEMS Time-of-Use Tariff och en Shelly Plug kostnadsfritt. En perfekt matchning till den kostnadsfria Shelly DIY FEMS-appen!",
+            "TITLE": "Bra energi är värd att dela!"
+        },
+        "3": {
+            "LINK": "https://fenecon-gmbh.webinargeek.com/eeg-2027-wie-sich-installateure-jetzt-zukunftssicher-aufstellen-koennen?cst=fems-widget",
+            "LINK_TEXT": "Registrera dig kostnadsfritt",
+            "TEXT": "Vad förändras för installatörer med EEG 2027? I vår nya webinar den 20 oktober visar vi vilka förändringar som väntar på marknaden för PV och lagring och vilka nya affärsmöjligheter som öppnas – från direktmarknadsföring och lagring utan PV till kommersiella lösningar.",
+            "TITLE": "EEG 2027: Gör dig redo för framtiden nu"
+        }
+    }
+}
