@@ -1,0 +1,44 @@
+{
+    "SETTINGS": {
+        "ENERGY_JOURNEY": {
+            "ANALYSE_BATTERY_EXTENSION_TITLE": "Akumuliatoriaus išplėtimo analizė",
+            "BATTERY_MODULE_EXTENSION": "Akumuliatoriaus modulių išplėtimas",
+            "CHARGE_DISCHARGE_CAPACITY": "Kaupimo įrenginio įkrovimo ir iškrovimo galia kW:**",
+            "CHARGE_DISCHARGE_POWER_NOTE": "** Įkrovimo ir iškrovimo galia (kW) bei jūsų kaupimo įrenginio avarinės galios talpa padidėja iki šios reikšmės. Išsami informacija apie AC pusėje apdorojamas reikšmes ir priklausomai nuo modulių skaičiaus pasiekiamą išėjimo galią pateikta<a href='{{productLink}}' target='_blank'>&nbsp;produktų duomenų lape {{productName}}</a>&nbsp;",
+            "CONSTANTS": {
+                "BATTERY_MODULE": "Akumuliatoriaus moduliai",
+                "CHARGE_DISCHARGE": "Įkrovimo ir iškrovimo galia",
+                "EDIT": "Redaguoti",
+                "ELECTRICITY_PRICE": "Elektros kaina",
+                "GRID_SUPPLY": "Tinklo tiekimas",
+                "TITLE": "Jūsų duomenys"
+            },
+            "CONSTANTS_DESCRIPTION": "Praėjusių metų duomenys apie jūsų dabartinį {{ theme }} {{ label }}:",
+            "CURRENT_NUMBER_OF_MODULES": "Dabartinis",
+            "DECREASE_IN_PEAK_POWER_TOOLTIP": "Neigiamos reikšmės rodo bokšto išplėtimą, dėl kurio įkrovimo ir iškrovimo galia nepadidėja.",
+            "DESCRIPTION": "Ar verta modernizuoti jūsų energijos kaupimo sistemą, priklauso nuo įvairių veiksnių. \nJūsų sistema eksploatuojama ilgiau nei metus. \nČia išanalizuokite, kokį poveikį būtų turėjęs akumuliatoriaus išplėtimas",
+            "DISCLAIMER": "Atsakomybės apribojimas",
+            "DISCLAIMER_TEXT": "Analizės skaičiavimai grindžiami jūsų pateikta informacija apie elektros kainą, tinklo pirkimus bei praėjusiais metais jūsų kaupimo sistemos tiekimo į tinklą duomenimis. Šie pagrindiniai parametrai gali bet kada pasikeisti. Todėl skaičiavimai yra tik pavyzdžiai, padedantys susiorientuoti dėl galimos akumuliatoriaus išplėtimo naudos, ir negarantuoja, kad taupymas iš tiesų bus pasiektas. Tai nėra FENECON garantija.",
+            "ELECTRICITY_PRICE_SELECTION_TITLE": "Energy Journey: akumuliatoriaus išplėtimas",
+            "ELECTRICITY_PRICE_TEXT": "Jūsų sistema veikia ilgiau nei metus. Čia išanalizuokite, kokį poveikį būtų turėjęs akumuliatoriaus išplėtimas.",
+            "ELECTRICITY_PRICE_VALUE_TEXT": "Įveskite dabartinę elektros kainą. Jei jau naudojate laiko tarifą, įveskite vidutinę reikšmę.",
+            "GRID_CONSUMPTION_TITLE": "Tinklo suvartojimo sutaupymas kWh ({{date}})",
+            "MODULE": "Modulis",
+            "MODULES": "Moduliai",
+            "MODULE_COUNT": "Modulių skaičius",
+            "MORE_DETAILS": "Daugiau informacijos „Home 10“ produkto duomenų lape",
+            "POTENTIAL_SAVINGS_CALCULATION_NOTE": "Skaičiavimas: jūsų dabartinė elektros kaina, padauginta iš sutaupyto elektros kiekio kWh kiekvienam moduliui.",
+            "POTENTIAL_SAVINGS_NOTE": "* Galimi metiniai taupymai eurais, kurie būtų atsiradę dėl akumuliatoriaus išplėtimo",
+            "SAVINGS_LABEL": "Elektros suvartojimo taupymas eurais:*",
+            "SEE_CHANGES_SLOGAN": "Naudokite mūsų Energy Journey platformą, kad išanalizuotumėte ir apskaičiuotumėte, kaip tikslingai plėtoti savo sistemą ir nuo kurių išplėtimų galite gauti naudos.",
+            "SEE_CHANGES_SUB_TEXT": "Su mumis esate puikiai pasiruošę 100 % energijos perėjimui.",
+            "SEE_CHANGES_TEXT": "Ramiai priimkite pokyčius energijos pasaulyje.",
+            "SIMULATION_NOT_STARTED": "Modeliavimas nepradėtas",
+            "SLOGAN": "Akumuliatoriaus išplėtimas: ar tai apsimoka?",
+            "START_ANALYSIS": "Pradėti analizę",
+            "TOTAL": "(Iš viso)",
+            "TOTAL_CAPACITY": "Visos naudojamos talpos padidėjimas kWh:",
+            "WIDGET_TITLE": "Akumuliatoriaus išplėtimas"
+        }
+    }
+}

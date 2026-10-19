@@ -1,0 +1,32 @@
+{
+    "FENA": {
+        "MESSAGES": {
+            "GRID": {
+                "EMERGENCY_POWER_ACTIVE": "Atsarginis maitinimas aktyvus: jūsų {{edgeLongName}} sistema šiuo metu maitina prijungtus vartotojus iš jūsų akumuliatoriaus.",
+                "GENERATOR_ACTIVE": "Papildomas saugumas: jūsų {{edgeLongName}} sistemą šiuo metu palaiko generatorius.",
+                "LIMITED_POWER": "Pastaba: šiuo metu galioja tinklo operatoriaus nustatytas tiekimo į tinklą apribojimas."
+            },
+            "KPI": {
+                "AUTARCHY": "Įspūdinga: iki šiol {{autarchy}}&nbsp;% savo kasdieninių elektros poreikių patenkinate patys.",
+                "SELF_CONSUMPTION": "Puiku: iki šiol šiandien {{selfConsumption}}&nbsp;% savo saulės energijos sunaudojote patys."
+            },
+            "STORAGE": {
+                "GRID_OPTIMIZED_CHARGE": {
+                    "DELAYED_CHARGE": "Prognozė: jūsų akumuliatorius šiuo metu kraunamas ne didesniu nei {{maxPower}}&nbsp;W galiu, kad būtų sumažintas PV galios ribojimas. Manoma, kad jis bus pilnai įkrautas iki {{chargingEndTime}}.",
+                    "DELAYED_CHARGE_WITH_ZERO": "Žvelgiant į priekį: jūsų akumuliatorius šiuo metu pristabdė krovimą, kad vėliau galėtų sukaupti daugiau saulės energijos ir sumažinti PV galios ribojimą.",
+                    "TURNED_OFF": "Patarimas: tinklo optimizuotas krovimas gali padėti sumažinti galimą PV galios ribojimą ir pratęsti jūsų akumuliatoriaus sistemos tarnavimo laiką. Ar norite jį įjungti?"
+                },
+                "PEAK_SHAVING": {
+                    "CONSUMPTION_OVER_DISCHARGE_ABOVE": "Apkrovos piko lyginimas vyksta: jūsų sistema šiuo metu lygina apkrovos piką ir taip mažina jūsų energijos išlaidas.",
+                    "CONSUMPTION_UNDER_CHARGE_BELOW": "Pikas priešakyje: jūsų sistema šiuo metu krauna akumuliatorių, kad išlygintų būsimą apkrovos piką.",
+                    "SOC_IS_100": "Parengta pikų lyginimui: jūsų sistema pasirengusi valdyti apkrovos pikus. Šiuo metu jų nėra."
+                },
+                "TIME_OF_USE_TARIFF": {
+                    "CHARGE_FROM_GRID_ACTIVE": "Geras laikas: jūsų FENECON sistema pasinaudoja žemos kainos laikotarpiu, ima elektrą iš tinklo už {{priceWithUnit}} ir kaupia ją ateičiai.",
+                    "DELAY_CHARGE_ACTIVE": "Protinga: jūsų akumuliatorius šiuo metu atideda iškrovimą, kad pigi energija būtų prieinama vėliau, kai elektros kainos yra aukštesnės.",
+                    "NEGATIVE_GRID_BUY_PRICE": "Šiuo metu elektros kaina biržoje yra tik {{priceWithUnit}}. Jūsų sistema naudoja šią pigią energiją ir padeda absorbuoti perteklinę tinklo elektrą."
+                }
+            }
+        }
+    }
+}

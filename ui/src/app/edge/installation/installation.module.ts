@@ -16,6 +16,7 @@ import en from "./i18n/en.json";
 import es from "./i18n/es.json";
 import fr from "./i18n/fr.json";
 import ja from "./i18n/ja.json";
+import lt from "./i18n/lt.json";
 import nl from "./i18n/nl.json";
 import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { InstallationViewComponent } from "./installation-view/installation-view.component";
@@ -314,6 +315,7 @@ export class InstallationModule {
             es: es,
             fr: fr,
             ja: ja,
+            lt: lt,
             nl: nl,
         }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {

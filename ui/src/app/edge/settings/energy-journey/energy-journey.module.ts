@@ -7,6 +7,7 @@ import enPopover from "src/app/shared/components/edge/popover/shared/i18n/en.jso
 import esPopover from "src/app/shared/components/edge/popover/shared/i18n/es.json";
 import frPopover from "src/app/shared/components/edge/popover/shared/i18n/fr.json";
 import jaPopover from "src/app/shared/components/edge/popover/shared/i18n/ja.json";
+import ltPopover from "src/app/shared/components/edge/popover/shared/i18n/lt.json";
 import nlPopover from "src/app/shared/components/edge/popover/shared/i18n/nl.json";
 import { FlatWidgetButtonComponent } from "src/app/shared/components/flat/flat-widget-button/flat-widget-button";
 import { SharedModule } from "src/app/shared/shared.module";
@@ -18,6 +19,7 @@ import en from "./shared/i18n/en.json";
 import es from "./shared/i18n/es.json";
 import fr from "./shared/i18n/fr.json";
 import ja from "./shared/i18n/ja.json";
+import lt from "./shared/i18n/lt.json";
 import nl from "./shared/i18n/nl.json";
 import { EnergyJourneySharedModule } from "./shared/shared.module";
 
@@ -41,18 +43,26 @@ export class EnergyJourneyModule {
             es: esPopover,
             fr: frPopover,
             ja: jaPopover,
+            lt: ltPopover,
             nl: nlPopover,
         }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {
                 translate.setTranslation(lang, translation, shouldMerge);
             }
         });
-        Language.normalizeAdditionalTranslationFiles({ cz: cz, de: de, en: en, es: es, fr: fr, ja: ja, nl: nl }).then(
-            (translations) => {
-                for (const { lang, translation, shouldMerge } of translations) {
-                    translate.setTranslation(lang, translation, shouldMerge);
-                }
-            },
-        );
+        Language.normalizeAdditionalTranslationFiles({
+            cz: cz,
+            de: de,
+            en: en,
+            es: es,
+            fr: fr,
+            ja: ja,
+            lt: lt,
+            nl: nl,
+        }).then((translations) => {
+            for (const { lang, translation, shouldMerge } of translations) {
+                translate.setTranslation(lang, translation, shouldMerge);
+            }
+        });
     }
 }

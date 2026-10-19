@@ -1,0 +1,8 @@
+{
+    "INDUSTRIAL_XL": {
+        "TEST_MODE_ESS_TEST": "Testinis režimas: ESS testas",
+        "TEST_MODE_EXIT": "Testinis režimas: išėjimas",
+        "TEST_MODE_LAMP_TEST": "Testinis režimas: lempų testas",
+        "TEST_MODE_MANUAL_BATTERY_START": "Testinis režimas: paleisti akumuliatorius rankiniu būdu"
+    }
+}

@@ -1,0 +1,240 @@
+{
+    "INSTALLATION": {
+        "ALERTING_INFO": "Kaip montuotojas, nustatykite el. pašto pranešimus, kai FEMS tam tikrą laiką yra neprisijungęs arba praneša apie klaidą. Pranešimas siunčiamas el. pašto adresu, nurodytu paleidimo metu.",
+        "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
+            "ACTIVE_POWER_MODE": {
+                "OUTPUT_ACTIVE_POWER": "Išvesties aktyvi galia",
+                "PF_OVER_FREQUENCY": {
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Išjungimo riba Fstop",
+                    "DELAY_TIME": "Atsakos atidėjimo laikas",
+                    "DELAY_WAITING_TIME": "Atidėjimo laukimo laikas",
+                    "ENABLE": "P(F) kreivė (dažnio kreivė) iškrovimui esant peraukštam dažniui",
+                    "ENABLE_DESC": "Aktyvuoti / deaktyvuoti P(F) kreivę",
+                    "HYSTERESIS_POINT": "Dažnio histerezės laikas",
+                    "HYSTERESIS_SLOPE": "Histerezės galios atkūrimo nuolydis",
+                    "SLOPE": "Galios mažinimo esant peraukštam dažniui nuolydis",
+                    "START_POINT": "Peraukšto dažnio pradžios taškas"
+                },
+                "PF_UNDER_FREQUENCY": {
+                    "DEACTIVATION_THRESHOLD_FSTOP": "Išjungimo riba Fstop",
+                    "DEACTIVATION_THRESHOLD_FSTOP_DESC": "Aktyvuoti / deaktyvuoti išjungimo ribą",
+                    "DELAY_TIME": "Atsakos atidėjimo laikas",
+                    "DELAY_WAITING_TIME": "Atidėjimo laukimo laikas",
+                    "ENABLE": "P(F) kreivė (dažnio galios kreivė) apkrovai esant peržemam dažniui",
+                    "ENABLE_DESC": "Aktyvuoti / deaktyvuoti P(F) kreivę",
+                    "HYSTERESIS_POINT": "Dažnio histerezės laikas",
+                    "HYSTERESIS_SLOPE": "Histerezės galios atkūrimo nuolydis",
+                    "SLOPE": "Galios atsako į peržemą dažnį gradientas",
+                    "THRESHOLD": "Peržemo dažnio riba"
+                },
+                "POWER_GRADIENT": "Galios gradientas",
+                "PU_CURVE": {
+                    "ENABLE": "P(U) kreivė (įtampos galios kreivė)",
+                    "ENABLE_DESC": "Aktyvuoti / deaktyvuoti P(U) kreivę",
+                    "PT1_POWER_GRADIENT": "Galios gradientas",
+                    "PT1_TIME_CONSTANT": "PT-1 žemų dažnių filtro laiko konstanta",
+                    "RESPONSE_MODE": "Išvesties atsako režimas"
+                }
+            },
+            "CONNECTION": {
+                "RAMP_UP_LOWER_FREQUENCY": "Sklandus paleidimas: žemesnis dažnis",
+                "RAMP_UP_LOWER_VOLTAGE": "Sklandus paleidimas: žemesnė įtampa",
+                "RAMP_UP_OBSERVATION_TIME": "Sklandus paleidimas: stebėjimo laikas",
+                "RAMP_UP_UPPER_FREQUENCY": "Sklandus paleidimas: aukštesnis dažnis",
+                "RAMP_UP_UPPER_VOLTAGE": "Sklandus paleidimas: aukštesnė įtampa",
+                "RECONNECTION_GRADIENT_ENABLE": "Pakartotinio prisijungimo gradientas",
+                "RECONNECTION_GRADIENT_ENABLE_DESC": "Aktyvuoti / deaktyvuoti pakartotinio prisijungimo gradientą",
+                "RECONNECTION_GRADIENT_VALUE": "Pakartotinio prisijungimo gradiento reikšmė",
+                "RECONNECTION_LOWER_FREQUENCY": "Pakartotinis prisijungimas: žemesnis dažnis",
+                "RECONNECTION_LOWER_VOLTAGE": "Pakartotinis prisijungimas: žemesnė įtampa",
+                "RECONNECTION_OBSERVATION_TIME": "Pakartotinis prisijungimas: stebėjimo laikas",
+                "RECONNECTION_UPPER_FREQUENCY": "Pakartotinis prisijungimas: aukštesnis dažnis",
+                "RECONNECTION_UPPER_VOLTAGE": "Pakartotinis prisijungimas: aukštesnė įtampa",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE": "Sklandaus paleidimo gradientas",
+                "SOFT_RAMP_UP_GRADIENT_ENABLE_DESC": "Aktyvuoti / deaktyvuoti sklandaus paleidimo gradientą",
+                "SOFT_RAMP_UP_GRADIENT_VALUE": "Sklandaus paleidimo gradiento reikšmė"
+            },
+            "FREQUENCY_RIDE_THROUGH": {
+                "ENABLE": "Dažnio atlaikymas (Frequency Ride Through)",
+                "ENABLE_DESC": "Aktyvuoja / deaktyvuoja dažnio atlaikymą (Frequency Ride Through)",
+                "OF_FREQUENCY": "Peraukšto dažnio {{stage}} dažnis",
+                "OF_TIME": "Peraukšto dažnio {{stage}} laikas",
+                "UF_FREQUENCY": "Peržemo dažnio {{stage}} dažnis",
+                "UF_TIME": "Peržemo dažnio {{stage}} laikas"
+            },
+            "GROUPS": {
+                "ACTIVE_POWER_MODE": "Aktyvios galios režimo nustatymai",
+                "CONNECTION": "Prisijungimo parametras",
+                "FREQUENCY_RIDE_THROUGH": "Dažnio atlaikymas (Frequency Ride Through)",
+                "PROTECTION": "Apsaugos parametras",
+                "REACTIVE_POWER_MODE": "Reaktyvios galios režimo nustatymai",
+                "VOLTAGE_RIDE_THROUGH": "Įtampos atlaikymas (Voltage Ride Through)"
+            },
+            "MODE": "Režimas",
+            "POWER": "{{value}} galia",
+            "PROTECTION": {
+                "OVERFREQUENCY_TRIGGER": "Peraukšto dažnio suaktyvinimo reikšmė (etapas {{stage}})",
+                "OVERFREQUENCY_TRIP_TIME": "Peraukšto dažnio išjungimo laikas (etapas {{stage}})",
+                "OVERVOLTAGE_TRIGGER": "Peraukštos įtampos suaktyvinimo reikšmė (etapas {{stage}})",
+                "OVERVOLTAGE_TRIP_TIME": "Peraukštos įtampos išjungimo laikas (etapas {{stage}})",
+                "TEN_MIN_OVERVOLTAGE_THRESHOLD": "10 minučių peraukštos įtampos išjungimo riba",
+                "TEN_MIN_OVERVOLTAGE_TIME": "10 minučių peraukštos įtampos išjungimo laikas",
+                "UNDERFREQUENCY_TRIP_TIME": "Peržemo dažnio išjungimo laikas (etapas {{stage}})",
+                "UNDERFREQUENCY_TRIP_VALUE": "Peržemo dažnio išjungimo reikšmė (etapas {{stage}})",
+                "UNDERVOLTAGE_TRIP_TIME": "Peržemos įtampos išjungimo laikas (etapas {{stage}})",
+                "UNDERVOLTAGE_TRIP_VALUE": "Peržemos įtampos išjungimo reikšmė (etapas {{stage}})"
+            },
+            "RANGE": "Diapazonas [{{min}},{{max}}] {{unit}}",
+            "REACTIVE_POWER": "{{value}} reaktyvi galia",
+            "REACTIVE_POWER_MODE": {
+                "COSPHIP_CURVE": {
+                    "COS_PHI": "{{value}} cos φ",
+                    "COS_PHI_DESC": "Diapazonas [-1000, -800] ir [800, 1000]",
+                    "EXTENDED_FUNCTIONS": "Išplėstinės funkcijos",
+                    "EXTENDED_FUNCTIONS_DESC": "Aktyvuoti / deaktyvuoti išplėstines funkcijas",
+                    "INVALID_RANGE": "Reikšmė turi būti intervale [-1,000, -800] ir [800, 1,000]",
+                    "LOCK_IN_VOLT": "Įjungimo įtampa",
+                    "LOCK_OUT_VOLT": "Atjungimo įtampa",
+                    "OVEREXCITED_SLOPE": "Peržadinto režimo nuolydis",
+                    "POWER": "{{value}} galia",
+                    "TIME_CONSTANT": "Laiko konstanta",
+                    "UNDEREXCITED_SLOPE": "Neužžadinto režimo nuolydis"
+                },
+                "FIX_PF": {
+                    "POWER_FACTOR": "Galios faktorius",
+                    "POWER_FACTOR_DESC": "Diapazonas [0.8,1]"
+                },
+                "FIX_Q": {
+                    "REACTIVE_POWER": "Reaktyvi galia"
+                },
+                "MODE": "Reaktyvios galios režimas",
+                "MODE_DESC": "Reaktyvios galios režimo pasirinkimas",
+                "OPTIONS": {
+                    "COSPHIP_CURVE": "CosPhi(P) kreivė",
+                    "FIX_PF": "Fiksuotas Pf",
+                    "FIX_Q": "Fiksuota Q",
+                    "NONE": "Nepasirinkta",
+                    "QP_CURVE": "Q(P) kreivė",
+                    "QU_CURVE": "Q(U) kreivė"
+                },
+                "QP_CURVE": {
+                    "OVEREXCITED_SLOPE": "Peržadinto režimo nuolydis",
+                    "TIME_CONSTANT": "Laiko konstanta",
+                    "UNDEREXCITED_SLOPE": "Neužžadinto režimo nuolydis"
+                },
+                "QU_CURVE": {
+                    "ACTIVE_POWER": "V{{number}} aktyvi galia",
+                    "EXTENDED_FUNCTIONS": "Išplėstinės funkcijos",
+                    "LOCK_IN_POWER": "Įjungimo įtampa",
+                    "LOCK_OUT_POWER": "Atjungimo įtampa",
+                    "MODE": {
+                        "SLOPE_MODE": "Nuolydžio režimas",
+                        "STANDARD_MODE": "Pagrindinis režimas"
+                    },
+                    "OVEREXCITED_SLOPE": "Peržadinto režimo nuolydis",
+                    "TIME_CONSTANT": "Laiko konstanta",
+                    "UNDEREXCITED_SLOPE": "Neužžadinto režimo nuolydis",
+                    "VOLTAGE": "V{{number}} įtampa",
+                    "VOLTAGE_DEAD_BAND": "Įtampos neveikimo sritis"
+                }
+            },
+            "SLOPE_RANGE": "Daugiklis [{{min}}, {{max}}]",
+            "TITLE": "VDE 4110 nustatymai",
+            "VOLTAGE_RIDE_THROUGH": {
+                "ACTIVE_RECOVERY_MODE": "Aktyvios galios atkūrimo režimas po peržengimo",
+                "CURRENT_DISTRIBUTION_MODE": "Srovės pasiskirstymo režimas",
+                "HVRT": {
+                    "ENABLE": "HVRT",
+                    "ENABLE_DESC": "Aktyvuoti / deaktyvuoti aukštos įtampos atlaikymą (HVRT)",
+                    "ENTER_THRESHOLD": "Įėjimo į aukšto peržengimo sritį riba",
+                    "EXIT_ENDPOINT": "Išėjimo iš aukšto peržengimo pabaigos taškas",
+                    "K2_SLOPE": "K2 nuolydis",
+                    "OV_TIME": "Peraukšta įtampa {{stage}} laikas",
+                    "OV_VOLTAGE": "Peraukšta įtampa {{stage}} įtampa",
+                    "ZERO_CURRENT_ENABLE": "Nulinės srovės režimas",
+                    "ZERO_CURRENT_ENABLE_DESC": "Aktyvuoti / deaktyvuoti nulinės srovės režimą",
+                    "ZERO_CURRENT_THRESHOLD": "Įėjimo riba"
+                },
+                "LVRT": {
+                    "ENABLE": "LVRT",
+                    "ENABLE_DESC": "Aktyvuoti / deaktyvuoti žemos įtampos atlaikymą (LVRT)",
+                    "ENTER_THRESHOLD": "Įėjimo į LVRT riba",
+                    "EXIT_ENDPOINT": "Išėjimo iš LVRT pabaigos taškas",
+                    "K1_SLOPE": "K1 nuolydis",
+                    "UV_TIME": "Peržema įtampa {{stage}} laikas",
+                    "UV_VOLTAGE": "Peržema įtampa {{stage}} įtampa",
+                    "ZERO_CURRENT_ENABLE": "Nulinės srovės režimas",
+                    "ZERO_CURRENT_ENABLE_DESC": "Aktyvuoti / deaktyvuoti nulinės srovės režimą",
+                    "ZERO_CURRENT_THRESHOLD": "Įėjimo riba"
+                },
+                "OPTIONS": {
+                    "ACTIVE_PRIORITY": "Aktyvios srovės prioriteto režimas",
+                    "CONSTANT_CURRENT": "Pastovios srovės režimas",
+                    "DEACTIVATE": "Deaktyvuoti",
+                    "GRADIENT_CONTROL": "Gradiento valdymas",
+                    "PT_1_BEHAVIOUR": "PT-1 elgsena",
+                    "REACTIVE_PRIORITY": "Reaktyvios srovės prioriteto režimas"
+                },
+                "POWER_GRADIENT": "Galios gradientas",
+                "PT1_TIME_CONSTANT": "PT-1 žemų dažnių filtro laiko konstanta",
+                "REACTIVE_RECOVERY_MODE": "Reaktyvios galios atkūrimo režimo pabaigos perėjimas"
+            }
+        },
+        "CONFIGURATION_BATTERY_INPUTS": {
+            "BATTERY_INPUT": "Akumuliatoriaus įvestis {{ key }}",
+            "INPUT_CONFIRMATION": "Patvirtinimas: įvestys prijungtos teisingai",
+            "NUMBER_OF_BATTERY_INPUTS": "Naudojamų akumuliatoriaus įvesčių skaičius",
+            "TITLE": "Akumuliatoriaus įvesčių konfigūracija"
+        },
+        "CONFIGURATION_EMERGENCY_RESERVE": {
+            "GENSET": {
+                "BATTERY_CHARGING": "Ar įgalinti akumuliatoriaus įkrovimą iš Genset?",
+                "CHARGE_SOC_END": "Akumuliatoriaus įkrovos lygis, kuriuo Genset stabdomas",
+                "CHARGE_SOC_END_DESCRIPTION": "Akumuliatoriaus įkrovos lygis, prie kurio Genset yra stabdomas.",
+                "CHARGE_SOC_START": "Akumuliatoriaus įkrovos lygis, kuriuo Genset paleidžiamas",
+                "CHARGE_SOC_START_DESCRIPTION": "Akumuliatoriaus įkrovos lygis, prie kurio Genset yra paleidžiamas. Ši reikšmė negali būti mažesnė už nurodytą avarinei atsargai rezervuotą įkrovos lygį.",
+                "CONNECTED": "Genset prijungtas?",
+                "EMERGENCY_POWER_FUNCTION": "Ar aktyvuoti avarinės energijos Genset funkciją?",
+                "MAX_POWER": "Maksimalus procentinis įkrovimo galingumas",
+                "MAX_POWER_DESCRIPTION": "Procentinė dalis nuo aukščiau nurodyto galimo generatoriaus nominalaus galingumo, kuriuo akumuliatorius yra kraunamas. [{{min}}, {{max}}] %",
+                "POWER": "Nominalus galingumas",
+                "PREHEAT_TIME": "Išankstinio paruošimo laikas",
+                "RUN_TIME": "Darbo laikas"
+            }
+        },
+        "CONFIGURATION_EXECUTE": {
+            "COPY_ERROR": "Kopijuoti klaidą",
+            "ERROR_COPIED": "Klaida nukopijuota į iškarpinę",
+            "ERROR_DETAILS": "Klaidos duomenys",
+            "ERROR_HEADLINE_CATEGORY_CONFLICT": "Pirmiausia pašalinkite esamą sistemą",
+            "ERROR_HEADLINE_CONNECTION": "Patikrinkite ryšį ir paleiskite konfigūraciją iš naujo",
+            "ERROR_HEADLINE_GENERIC": "Nukopijuokite klaidą ir atsiųskite ją FENECON pagalbai",
+            "ERROR_HEADLINE_INCOMPATIBLE_APP": "Pirmiausia pašalinkite nesuderinamas programas",
+            "ERROR_HEADLINE_TIMEOUT": "Patikrinkite ryšį ir paleiskite konfigūraciją iš naujo",
+            "ERROR_HINT_CATEGORY_CONFLICT": "Šiame įrenginyje jau įdiegta kita integruota sistema. Vienu metu galima įdiegti tik vieną integruotą sistemą (pvz., namų ar komercinę sistemą).",
+            "ERROR_HINT_CONNECTION": "Ryšys su įrenginiu buvo nutrūkęs. Patikrinkite tinklo ar nuoseklųjį (serial) ryšį.",
+            "ERROR_HINT_INCOMPATIBLE_APP": "Šiame įrenginyje įdiegta programa neleidžia įdiegti šios sistemos. Pašalinkite ją per programų centrą ir paleiskite konfigūraciją iš naujo. Paveiktos programos išvardytos klaidos duomenyse.",
+            "ERROR_HINT_STALE_INSTANCE": "Įrenginyje rasta ankstesnio šios sistemos diegimo bandymo likučiai, blokuojantys dabartinį diegimą. Jį galima pašalinti automatiškai.",
+            "ERROR_HINT_TIMEOUT": "Įrenginys laiku neatsakė. Patikrinkite ryšį su įrenginiu.",
+            "ERROR_TITLE_CATEGORY_CONFLICT": "Rasta esama sistema",
+            "ERROR_TITLE_CONNECTION": "Ryšys nutrūko",
+            "ERROR_TITLE_INCOMPATIBLE_APP": "Įdiegta nesuderinama programa",
+            "ERROR_TITLE_STALE_INSTANCE": "Rastas likęs diegimas",
+            "ERROR_TITLE_TIMEOUT": "Baigėsi skirtasis laikas",
+            "RESOLVE_CATEGORY_CONFLICT_BUTTON": "Pašalinti esamą sistemą ir tęsti",
+            "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Nepavyko rasti konfliktuojančios sistemos, kurią būtų galima pašalinti automatiškai. Pašalinkite ją rankiniu būdu per programų centrą.",
+            "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Šalinama esama sistema…",
+            "STATUS_CONFIGURING": "Konfigūruojami komponentai…",
+            "STATUS_FUNCTION_TEST": "Konfigūracija baigta. Vykdomi funkcijų testai…"
+        },
+        "ENABLE_MPPT": "MPPT {{ mpptNumber }} aktyvus",
+        "OFFLINE": "Neprisijungęs",
+        "PROTOCOL_FEED_IN_MANAGEMENT": {
+            "FIXED_COS_PHI": "Fiksuota reikšmė: Cos Phi 1"
+        },
+        "PROTOCOL_SERIAL_NUMBER": {
+            "BATTERY_COMMUNICATION_BOX": "Akumuliatoriaus komunikacijos blokas",
+            "BATTERY_INPUT_TOWER": "Akumuliatoriaus įvestis {{ batteryInput }}, bokštas {{ towerNumber }}"
+        }
+    }
+}
