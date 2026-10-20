@@ -27,7 +27,13 @@ export class NavigationService {
     });
 
     /** @todo Refactor to be moved to action when navigated */
-    public headerTitle: WritableSignal<string | null> = signal(null);
+    public headerTitle: WritableSignal<{
+        text: string | null;
+        useCiFont?: boolean;
+    }> = signal({
+        text: null,
+        useCiFont: false,
+    });
 
     private readonly platFormService = inject(PlatFormService);
     private isInitialized = signal<boolean>(false);
@@ -486,7 +492,6 @@ export class NavigationService {
     private async initNavigation(currentUrl: string | null, navigationTree: NavigationTree | null) {
         this.setActiveNavigationTreeNode(currentUrl, navigationTree);
         this.setPosition();
-        this.headerTitle.set(null);
         this.isInitialized.set(true);
     }
 

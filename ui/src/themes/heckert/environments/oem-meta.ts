@@ -11,6 +11,9 @@ export const OemMeta: BaseMeta = {
     },
     icons: {
         COMMON: {
+            USER: "assets/img/icon/user.svg",
+            SETTINGS: "assets/img/icon/settings.svg",
+            COCKPIT: "assets/img/icon/cockpit.svg",
             CONSUMPTION: "assets/img/icon/consumption.svg",
             SELFCONSUMPTION: "assets/img/icon/selfconsumption.svg",
             GENERATOR: "assets/img/icon/generator.svg",

@@ -1,6 +1,13 @@
 @if (edge) {
   <oe-navigation-view>
     <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label class="ion-text-center"> {{ "PAGE_HEADERS.ENERGY_JOURNEY" | translate }} </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
       <ion-row class="ion-justify-content-center ion-padding-top">
         @for (widget of allowedWidgets; track widget; let first = $first) {
           <ion-col size-lg="5" size-md="6" size-sm="12" class="ion-padding">

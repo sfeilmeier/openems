@@ -42,7 +42,7 @@ export class CommonStorageHomeComponent extends AbstractFormlyComponent {
             helpKey: "REDIRECT.COMMON_STORAGE",
             lines: await CommonStorageHomeComponent.getLines(translate, service, edge, config, energyScheduler),
             component: new EdgeConfig.Component(),
-            isCommonWidget: true,
+            useCiFont: true,
         };
     }
 

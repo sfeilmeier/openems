@@ -4,7 +4,6 @@ import { WrapUpComponent } from "src/app/shared/components/edge/popover/annual-r
 import { commonRoutes } from "src/app/shared/components/navigation/navigation-routing.module";
 import { hasEdgeRole } from "src/app/shared/guards/functional-guards";
 import { Role } from "src/app/shared/type/role";
-import { environment } from "src/environments";
 import { EmptyPageComponent } from "../../../shared/components/navigation/empty-page/empty-page";
 import { HistoryExcelExportComponent } from "../../history/common/energy/export/export";
 import { HistoryChartComponent } from "../../history/common/energy/new-navigation/new-navigation";
@@ -24,9 +23,6 @@ export const energyJourneyRoutes: Routes = [
     },
     {
         path: "index",
-        data: {
-            navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
-        },
         children: [
             {
                 path: "",
@@ -38,16 +34,10 @@ export const energyJourneyRoutes: Routes = [
             {
                 path: "battery-extension/electricity-price-choice",
                 component: ElectricityPriceSelectionComponent,
-                data: {
-                    navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
-                },
             },
             {
                 path: "battery-extension/result",
                 component: BatteryExtensionComponent,
-                data: {
-                    navbarTitleToBeTranslated: "SETTINGS.ENERGY_JOURNEY.ANALYSE_BATTERY_EXTENSION_TITLE",
-                },
             },
         ],
     },
@@ -55,7 +45,6 @@ export const energyJourneyRoutes: Routes = [
         path: "appcenter",
         loadComponent: () => import("src/app/edge/settings/app/index.component").then((m) => m.IndexComponent),
         canActivate: [hasEdgeRole(Role.OWNER)],
-        data: { navbarTitle: environment.edgeShortName + " Apps" },
     },
     {
         path: "appcenter/single/install",
@@ -75,7 +64,6 @@ export const energyJourneyRoutes: Routes = [
     },
     {
         path: "appcenter/oauth",
-        data: { navbarTitle: "OAuth" },
         loadComponent: () =>
             import("src/app/edge/settings/app/oauth/oauth.component").then((m) => m.OAuthIndexComponent),
         canActivate: [hasEdgeRole(Role.ADMIN)],
