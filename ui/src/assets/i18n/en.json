@@ -337,8 +337,7 @@
                     "FORCE_THREE_PHASE": "3-phase",
                     "HYSTERESIS": "Minimum switching time of the charging station active",
                     "HYSTERESIS_INFO": "For preventing charging interruptions due to frequent starting/pausing of the charing process, the charging mode currently selected will continue for the next few minutes.",
-                    "KEBA_WARNING": "Hinweis: Bei der Nutzung dieses Modus kann es aktuell in Verbindung mit FEMS und der KEBA P40 zu einem Fehler kommen. Wir empfehlen daher, diesen Modus vorübergehend nicht zu verwenden und stattdessen den Modus „Automatisch“ mit „Minimale Beladung garantieren“ aktiviert zu wählen. FENECON und KEBA arbeiten bereits mit Hochdruck an einer Lösung.",
-                    "LINK_TO_DOCUMENTATION": "Mehr Informationen",
+                    "KEBA_WARNING": "Note: When using this mode, an error can currently occur in combination with FEMS and the KEBA P40. We therefore recommend not using this mode for the time being and instead selecting the “Automatically” mode with “Guarantee minimum charge” enabled. {{ environment }} and KEBA are already working at full speed on a solution. <a class=\"ion-link\" href={{link}} target=\"_blank\">More information</a>",
                     "MAX_ENERGY_RESTRICTION": "Limit maximum energy per charge",
                     "MINIMUM": "PV Surplus with guaranteed charge",
                     "NOT_AUTHORIZED": "Not authorized",
@@ -380,7 +379,7 @@
                 },
                 "EVSE": {
                     "CHARGE_MODE": "Base mode",
-                    "KEBA_WARNING": "Hinweis: Bei der Nutzung dieses Modus kann es in Verbindung mit FEMS und der KEBA P40 zu einem Fehler kommen. Wir empfehlen daher, diesen Modus derzeit nicht zu verwenden und stattdessen vorübergehend den Modus „PV-Überschuss mit garantierter Beladung“ oder „Schnellladen“ zu nutzen. FENECON und KEBA arbeiten bereits mit Hochdruck an einer Lösung.",
+                    "KEBA_WARNING": "Note: When using this mode, an error can occur in combination with FEMS and the KEBA P40. We therefore recommend not using this mode for now and instead temporarily using the “PV Surplus with guaranteed charge” or “Fast Charging” mode. {{ environment }} and KEBA are already working at full speed on a solution. <a class=\"ion-link\" href={{link}} target=\"_blank\">More information</a>",
                     "SCHEDULE": {
                         "ADD_TASK": "Add task",
                         "SCHEDULE": "Schedule"
