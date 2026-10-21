@@ -3,7 +3,6 @@ import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { ArrayUtils } from "../utils/array/array.utils";
 import { Language } from "./language";
-import { Role } from "./role";
 import { TEnumKeys } from "./utility";
 
 export enum WidgetClass {
@@ -106,6 +105,90 @@ export type AdvertWidget = {
 };
 
 export class AdvertWidgets {
+    private static readonly SV_EDGE_IDS = new Set([
+        "fems71681",
+        "fems16759",
+        "fems83388",
+        "fems52776",
+        "fems92999",
+        "fems66196",
+        "fems66196",
+        "fems71677",
+        "fems17294",
+        "fems62798",
+        "fems70680",
+        "fems92994",
+        "fems17289",
+        "fems66741",
+        "fems16769",
+        "fems17301",
+        "fems83245",
+        "fems92993",
+        "fems83385",
+        "fems17311",
+        "fems91590",
+        "fems73160",
+        "fems16748",
+        "fems69501",
+        "fems70180",
+        "fems78179",
+        "fems81605",
+        "fems17308",
+        "fems67615",
+        "fems66747",
+        "fems70288",
+        "fems92996",
+        "fems52791",
+        "fems30754",
+        "fems78176",
+        "fems67000",
+        "fems30643",
+        "fems67600",
+        "fems81539",
+        "fems70683",
+        "fems73188",
+        "fems75255",
+        "fems83386",
+        "fems70679",
+        "fems30718",
+        "fems30720",
+        "fems30717",
+        "fems30719",
+        "fems91974",
+        "fems65401",
+        "fems69756",
+        "fems66665",
+        "fems78327",
+        "fems78335",
+        "fems73161",
+        "fems67577",
+        "fems78172",
+        "fems16751",
+        "fems83393",
+        "fems52799",
+        "fems93011",
+        "fems81086",
+        "fems92995",
+        "fems52791",
+        "fems70681",
+        "fems71678",
+        "fems70682",
+        "fems52783",
+        "fems66751",
+        "fems83391",
+        "fems65377",
+        "fems30478",
+        "fems92998",
+        "fems66746",
+        "fems66099",
+        "fems70684",
+        "fems69105",
+        "fems30578",
+        "fems75256",
+        "fems65081",
+        "fems66620",
+    ]);
+
     constructor(
         /** List of all Widgets. */
         public readonly list: AdvertWidget[],
@@ -125,7 +208,7 @@ export class AdvertWidgets {
             title: { languageKey: "ADVERT.2.TITLE" },
         });
 
-        if (edge.roleIsAtLeast(Role.INSTALLER) && Language.getCurrentLanguage() === Language.DE) {
+        if (AdvertWidgets.SV_EDGE_IDS.has(edge.id) && Language.getCurrentLanguage() === Language.SV) {
             list.push({
                 name: "advert-3",
                 title: { languageKey: "ADVERT.3.TITLE" },
