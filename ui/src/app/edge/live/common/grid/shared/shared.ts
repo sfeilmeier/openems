@@ -313,6 +313,7 @@ export namespace SharedGrid {
                         null,
                     ),
                 ]),
+                NavigationConstants.CommonNodes.SETTINGS(translate, "grid"),
                 NavigationConstants.CommonNodes.INFO(translate, "grid", {
                     source: "grid",
                 }),
