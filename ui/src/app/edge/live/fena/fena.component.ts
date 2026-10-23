@@ -12,7 +12,6 @@ import { StringUtils } from "src/app/shared/utils/string/string.utils";
 import { SharedAutarchy } from "../common/autarchy/shared/shared";
 import { SharedGrid } from "../common/grid/shared/shared";
 import { SharedSelfConsumption } from "../common/selfconsumption/shared/shared";
-import { SharedGridOptimizedCharge } from "../Controller/Ess/GridOptimizedCharge/shared/shared";
 import { SharedControllerEssTimeOfUseTariff } from "../Controller/Ess/TimeOfUseTariff/shared/shared";
 import { SharedControllerPeakShaving } from "../Controller/peak-shaving/shared/shared";
 import { LiveDataService } from "../livedataservice";
@@ -163,8 +162,6 @@ export class FenaComponent implements OnDestroy {
                         case "Controller.Symmetric.PeakShaving":
                         case "Controller.TimeslotPeakshaving":
                             return SharedControllerPeakShaving.getFenaMessages(widgetName, config, translate);
-                        case "Controller.Ess.GridOptimizedCharge":
-                            return SharedGridOptimizedCharge.getFenaMessages(config, translate, injector);
                         case "Controller.Ess.Time-Of-Use-Tariff":
                             return SharedControllerEssTimeOfUseTariff.getFenaMessages(config, translate, injector);
                         default:
