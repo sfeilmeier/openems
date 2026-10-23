@@ -8,7 +8,6 @@ import { DataService } from "src/app/shared/components/shared/dataservice";
 import { UserService } from "src/app/shared/service/user.service";
 import { Edge, Service } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
-import { StringUtils } from "src/app/shared/utils/string/string.utils";
 import { SharedAutarchy } from "../common/autarchy/shared/shared";
 import { SharedGrid } from "../common/grid/shared/shared";
 import { SharedSelfConsumption } from "../common/selfconsumption/shared/shared";
@@ -121,32 +120,6 @@ export class FenaComponent implements OnDestroy {
             ...(config?.widgets?.classes ?? []),
             ...(config?.widgets?.list ?? []).map((widget) => widget.name),
         ];
-
-        if (
-            StringUtils.isNotInArr(edge.id, [
-                "fems4",
-                "fems666",
-                "fems888",
-                "fems3800",
-                "fems10004",
-                "fems10303",
-                "fems58732",
-                "fems59509",
-                "fems72127",
-                "fems72317",
-                "fems72800",
-                "fems73475",
-                "fems74326",
-                "fems82085",
-                "fems83584",
-                "fems86450",
-                "fems86876",
-                "fems90206",
-                "fems86287",
-            ])
-        ) {
-            return [];
-        }
 
         return (
             widgetNames
