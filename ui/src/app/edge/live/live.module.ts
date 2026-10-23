@@ -13,6 +13,7 @@ import { CommonGrid } from "./common/grid/Common_Grid";
 import { CommonProduction } from "./common/production/common-production";
 import { CommonSelfconsumption } from "./common/selfconsumption/common-selfconsumption";
 import { SohStatusBannerComponent } from "./common/soh/components/soh-status-banner/soh-status-banner";
+import { CapacityExtensionStatusBannerComponent } from "./common/storage/components/capacity-extension-status-banner/capacity-extension-status-banner";
 import { StorageLiveModule } from "./common/storage/storage.module";
 import { WeatherModule } from "./common/weather/weather.module";
 import { Controller_ChannelthresholdComponent } from "./Controller/Channelthreshold/Channelthreshold";
@@ -53,7 +54,6 @@ import { ChartComponent as EvcsClusterApiChartComponent } from "./Multiple/evcs-
 import { ModalComponent as EvcsClusterApiModalComponent } from "./Multiple/evcs-api-cluster/modal/modal";
 import { NavigationInfoComponent } from "./navigation-info/navigation-info";
 import { SystemModule } from "./system/system.module";
-
 import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage-info";
 
 @NgModule({
@@ -86,6 +86,7 @@ import { SystemOutageInfoComponent } from "./system-outage-info/oe-system-outage
         ModalModule,
         SharedModule,
         SohStatusBannerComponent,
+        CapacityExtensionStatusBannerComponent,
         SystemOutageInfoComponent,
         SystemModule,
         PullToRefreshComponent,
