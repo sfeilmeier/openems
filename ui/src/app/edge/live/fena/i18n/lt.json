@@ -8,7 +8,8 @@
             },
             "KPI": {
                 "AUTARCHY": "Įspūdinga: iki šiol {{autarchy}}&nbsp;% savo kasdieninių elektros poreikių patenkinate patys.",
-                "SELF_CONSUMPTION": "Puiku: iki šiol šiandien {{selfConsumption}}&nbsp;% savo saulės energijos sunaudojote patys."
+                "SELF_CONSUMPTION": "Puiku: iki šiol šiandien {{selfConsumption}}&nbsp;% savo saulės energijos sunaudojote patys.",
+                "WELCOME": "Sveiki atvykę į {{edgeLongName}}!<br/>Aš esu FENA. Kaip jūsų asmeninis {{edgeLongName}} asistentas, lydėsiu jus jūsų energetinėje kelionėje."
             },
             "STORAGE": {
                 "GRID_OPTIMIZED_CHARGE": {

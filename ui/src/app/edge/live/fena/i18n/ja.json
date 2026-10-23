@@ -8,7 +8,8 @@
             },
             "KPI": {
                 "AUTARCHY": "素晴らしい：今日の電力需要の{{autarchy}}&nbsp;%をこれまでに自給で賄っています。",
-                "SELF_CONSUMPTION": "素晴らしい：今日はこれまでに、太陽光発電の{{selfConsumption}}&nbsp;%を自分で使用しています。"
+                "SELF_CONSUMPTION": "素晴らしい：今日はこれまでに、太陽光発電の{{selfConsumption}}&nbsp;%を自分で使用しています。",
+                "WELCOME": "こんにちは、{{edgeLongName}}へようこそ！<br/>私はFENAです。あなたのパーソナル{{edgeLongName}}アシスタントとして、エナジージャーニーをサポートします。"
             },
             "STORAGE": {
                 "GRID_OPTIMIZED_CHARGE": {

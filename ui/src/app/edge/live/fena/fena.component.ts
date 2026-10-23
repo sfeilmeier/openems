@@ -8,6 +8,7 @@ import { DataService } from "src/app/shared/components/shared/dataservice";
 import { UserService } from "src/app/shared/service/user.service";
 import { Edge, Service } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
+import { environment } from "src/environments";
 import { SharedAutarchy } from "../common/autarchy/shared/shared";
 import { SharedGrid } from "../common/grid/shared/shared";
 import { SharedSelfConsumption } from "../common/selfconsumption/shared/shared";
@@ -121,8 +122,29 @@ export class FenaComponent implements OnDestroy {
             ...(config?.widgets?.list ?? []).map((widget) => widget.name),
         ];
 
-        return (
-            widgetNames
+        const fenaMessages: Fena.Message[] = [];
+
+        if (edge.id === "fems66738") {
+            fenaMessages.push(
+                new Fena.LiveMessage({
+                    category: "KPI",
+                    priority: 1,
+                    actions: [],
+                    channels: [],
+                    showCallback: () => true,
+                    message: {
+                        textCallback: () => {
+                            return translate.instant("FENA.MESSAGES.KPI.WELCOME", {
+                                edgeLongName: environment.edgeLongName,
+                            });
+                        },
+                    },
+                }),
+            );
+        }
+
+        fenaMessages.push(
+            ...widgetNames
                 .flatMap((widgetName): Fena.Message[] => {
                     switch (widgetName) {
                         case "Common_Autarchy":
@@ -153,8 +175,10 @@ export class FenaComponent implements OnDestroy {
                         Fena.CATEGORIES.find((category) => category.name === first.getCategory())!.priority -
                         Fena.CATEGORIES.find((category) => category.name === second.getCategory())!.priority
                     );
-                })
+                }),
         );
+
+        return fenaMessages;
     }
 
     ngOnDestroy() {

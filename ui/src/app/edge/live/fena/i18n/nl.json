@@ -8,7 +8,8 @@
             },
             "KPI": {
                 "AUTARCHY": "Indrukwekkend: tot nu toe heb je {{autarchy}}&nbsp;% van je dagelijkse elektriciteitsbehoefte zelf opgevangen.",
-                "SELF_CONSUMPTION": "Top: tot nu toe heb je vandaag {{selfConsumption}}&nbsp;% van je zonne-energie zelf gebruikt."
+                "SELF_CONSUMPTION": "Top: tot nu toe heb je vandaag {{selfConsumption}}&nbsp;% van je zonne-energie zelf gebruikt.",
+                "WELCOME": "Hallo en welkom bij {{edgeLongName}}!<br/>Ik ben FENA. Als je persoonlijke {{edgeLongName}} Assistent begeleid ik je op je energie-reis."
             },
             "STORAGE": {
                 "GRID_OPTIMIZED_CHARGE": {

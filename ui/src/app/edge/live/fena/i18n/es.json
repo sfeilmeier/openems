@@ -8,7 +8,8 @@
             },
             "KPI": {
                 "AUTARCHY": "Impresionante: hasta ahora has cubierto por tu cuenta el {{autarchy}}&nbsp;% de tu necesidad diaria de electricidad.",
-                "SELF_CONSUMPTION": "Genial: hasta ahora hoy has usado tú mismo el {{selfConsumption}}&nbsp;% de tu energía solar."
+                "SELF_CONSUMPTION": "Genial: hasta ahora hoy has usado tú mismo el {{selfConsumption}}&nbsp;% de tu energía solar.",
+                "WELCOME": "¡Hola y bienvenido a {{edgeLongName}}!<br/>Soy FENA. Como tu asistente personal de {{edgeLongName}}, estoy aquí para acompañarte en tu viaje energético."
             },
             "STORAGE": {
                 "GRID_OPTIMIZED_CHARGE": {

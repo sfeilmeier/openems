@@ -8,7 +8,8 @@
             },
             "KPI": {
                 "AUTARCHY": "Stark: {{autarchy}}&nbsp;% deines heutigen Strombedarfs deckst du bis jetzt selbst.",
-                "SELF_CONSUMPTION": "Prima: Du nutzt heute bis jetzt {{selfConsumption}}&nbsp;% deines Solarstroms direkt selbst."
+                "SELF_CONSUMPTION": "Prima: Du nutzt heute bis jetzt {{selfConsumption}}&nbsp;% deines Solarstroms direkt selbst.",
+                "WELCOME": "Hallo und willkommen bei {{edgeLongName}}!<br/>Ich bin FENA. Als persönlicher {{edgeLongName}} Assistant begleite ich dich auf deiner Energy Journey."
             },
             "STORAGE": {
                 "GRID_OPTIMIZED_CHARGE": {

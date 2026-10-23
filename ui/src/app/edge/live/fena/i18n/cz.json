@@ -8,7 +8,8 @@
             },
             "KPI": {
                 "AUTARCHY": "Působivé: Dosud jste sami pokryli {{autarchy}}&nbsp;% svého dnešního výdeje elektřiny.",
-                "SELF_CONSUMPTION": "Skvělé: Dnes jste dosud sami využili {{selfConsumption}}&nbsp;% své solární elektřiny."
+                "SELF_CONSUMPTION": "Skvělé: Dnes jste dosud sami využili {{selfConsumption}}&nbsp;% své solární elektřiny.",
+                "WELCOME": "Ahoj a vítejte v systému {{edgeLongName}}!<br/>Jsem FENA. Jako váš osobní asistent {{edgeLongName}} vás budu provázet na vaší energetické cestě."
             },
             "STORAGE": {
                 "GRID_OPTIMIZED_CHARGE": {
