@@ -213,6 +213,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.TimeOfUseTariff.LuoxEnergy", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-dynamischer-stromtarif")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-time-of-use-tariff")) //
+			.put("App.Tariff.SpotTariff", AppLink.create() //
+					.addLink(Language.DE, "https://fenecon.de/fems-dynamischer-stromtarif")
+					.addLink(Language.EN, "https://www.fenecon.com/fems-time-of-use-tariff")) //
 			.put("App.TimeOfUseTariff.AncillaryCosts", AppLink.create() //
 					.addLink(Language.DE, "https://docs.fenecon.de/de/fems/fems-app/App_Zeitvariable_Netzentgelte.html")
 					.addLink(Language.EN,
