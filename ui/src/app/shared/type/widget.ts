@@ -3,6 +3,7 @@ import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { ArrayUtils } from "../utils/array/array.utils";
 import { Language } from "./language";
+import { Role } from "./role";
 import { TEnumKeys } from "./utility";
 
 export enum WidgetClass {
@@ -203,10 +204,12 @@ export class AdvertWidgets {
             title: { languageKey: "ADVERT.1.TITLE" },
         });
 
-        list.push({
-            name: "advert-2",
-            title: { languageKey: "ADVERT.2.TITLE" },
-        });
+        if (edge.roleIsAtLeast(Role.INSTALLER) && Language.getCurrentLanguage() === Language.DE) {
+            list.push({
+                name: "advert-2",
+                title: { languageKey: "ADVERT.2.TITLE" },
+            });
+        }
 
         if (AdvertWidgets.SV_EDGE_IDS.has(edge.id) && Language.getCurrentLanguage() === Language.SV) {
             list.push({
