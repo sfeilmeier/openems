@@ -1,5 +1,30 @@
 [
     {
+        "version": "2026.10.2",
+        "entries": {
+            "de": [
+                "FENECON App: Netz | Einstellungen – neue Konfigurationsseite für Speicherbeladung aus dem Netz, Entladung in das Netz.",
+                "FENECON App: Aktualisierte Übersetzungen (Schwedisch, Litauisch, Tschechisch, Spanisch, Französisch, Japanisch, Niederländisch).",
+                "Inbetriebnahmeassistent: Auswahl der Sicherungslimits für alle Systeme angepasst.",
+                "FENECON Industrial XL: Implementierung der Lampen-Test-Sequenz; verbesserte Ladestandsberechnung (SoC).",
+                "FENECON Home & Commercial: Neuer Hinweis \"Eingeschränkter Speicherbetrieb – Kapazitätserweiterung wird vorbereitet\" bei geplanter Batterieerweiterung; Batterieerweiterung nur noch für zukünftige Zeitpunkte möglich.",
+                "FEMS App Dynamischer Stromtarif ENTSO-E / EEG-2025: Börsenpreise werden jetzt vom FENECON Backend bereitgestellt, von mehreren Quellen bezogen; dadurch höhere Ausfallsicherheit.",
+                "FEMS App AC/DC-Ladestation: Unterstützung für Mennekes Professional; Unterstützung neuer Firmware-Versionen der Alpitronic.",
+                "FEMS App Shelly DIY: Unterstützung für Shelly Plug M Gen3."
+            ],
+            "en": [
+                "FENECON App: Grid | Settings – new configuration page for charging the battery from the grid, discharging to the grid.",
+                "FENECON App: Updated translations (Swedish, Lithuanian, Czech, Spanish, French, Japanese, Dutch).",
+                "Commissioning assistant: Adjusted selection of fuse limits for all systems.",
+                "FENECON Industrial XL: Implementation of the lamp test sequence; improved state-of-charge (SOC) calculation.",
+                "FENECON Home & Commercial: New notice \"Restricted battery operation – capacity expansion being prepared\" when a battery expansion is planned; battery expansion only possible for future dates.",
+                "FEMS App Dynamic Electricity Tariff ENTSO-E / EEG-2025: Spot prices are now provided by the FENECON backend, sourced from multiple providers; improved reliability.",
+                "FEMS App AC/DC Charging Station: Support for Mennekes Professional; support for new Alpitronic firmware versions.",
+                "FEMS App Shelly DIY: Support for Shelly Plug M Gen3."
+            ]
+        }
+    },
+    {
         "version": "2026.10.1",
         "entries": {
             "de": [
