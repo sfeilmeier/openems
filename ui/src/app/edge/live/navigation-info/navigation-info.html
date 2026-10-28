@@ -1,5 +1,10 @@
 @if (isInitialized) {
   <oe-navigation-view>
+    <ng-container header #header>
+      <ion-item lines="none">
+        <ion-label class="ion-text-center"> {{ "GENERAL.INFO" | translate }} </ion-label>
+      </ion-item>
+    </ng-container>
     <div class="ion-padding ion-text-wrap ion-font">
       @if (docs !== null) {
         <ion-grid class="ion-no-padding-left-right">

@@ -1,0 +1,23 @@
+{
+    "POPOVER": {
+        "ANNUAL_REVIEW": {
+            "BUTTON_TEXT": "Peržiūrėti metinę apžvalgą dabar",
+            "CONCLUSION": "Daugiau apie kampaniją sužinokite mūsų informaciniame puslapyje: <br><a href='https://www.fenecon.de/meine-energy-journey-2025'>https://www.fenecon.de/meine-energy-journey-2025</a>",
+            "DESCRIPTION": "Sužinokite svarbiausius savo asmeninio energijos naudojimo momentus, kaip jūsų FENECON kaupimo sistema rėmė jūsų namus, kokį indėlį įnešėte į energetikos perėjimą ir svarbiausia: kiek tai jums atsipirko 2025 metais.",
+            "HEADER_TEXT": "Jūsų asmeninė metinė apžvalga jau prieinama internete! Parodome dar neišnaudotas galimybes, kaip padaryti jūsų energijos sistemą dar efektyvesnę, optimizuoti savo suvartojimą ir išlikti pačioje pigiausioje kryptimi.",
+            "SUB_TITLE": "Jūsų asmeninė metinė apžvalga jau prieinama internete!",
+            "TITLE": "Atraskite savo Energy Journey 2025"
+        },
+        "WEATHER_PROGNOSIS": {
+            "ACCEPT": "Priimti ir įdiegti",
+            "APP": "Atsisiųskite iš mūsų App Center:",
+            "APP_WEATHER": "Orai",
+            "CHECKBOX_LABEL": "Patvirtinu, kad siekiant naudotis programėle, būtina perduoti pagrindinio naudotojo asmens duomenis trečiajai šaliai. Daugiau apie tai, kaip naudojami jūsų asmens duomenys, rasite <a href={{link}} target='_blank'>čia</a>.",
+            "DECLINE": "Atsisakyti",
+            "DESCRIPTION": "Vietos orų duomenų integravimas patobulina jūsų suvartojimo/gamybos prognozę – be jokių papildomų mokesčių!",
+            "SPINNER_TEXT_ACCEPTED": "Minutėlę – programėlė diegiama",
+            "SPINNER_TEXT_DECLINED": "Programėlę galima įdiegti vėliau bet kuriuo metu iš FEMS App Center.",
+            "TITLE": "Naujiena: prognozė dabar 50 % tikslesnė dėka orų duomenų"
+        }
+    }
+}

@@ -267,8 +267,8 @@ public interface BatteryFeneconF2bFisker extends BatteryFeneconF2b, StartStoppab
 		BATTERY_SOC(Doc.of(OpenemsType.INTEGER)//
 				.unit(Unit.PERCENT)//
 				.persistencePriority(PersistencePriority.HIGH)), //
-		BATTERY_SOC_HIGH_RESOLUTION(new IntegerDoc() //
-				.accessMode(AccessMode.READ_ONLY) //
+		BATTERY_SOC_HIGH_RESOLUTION(new IntegerDoc()//
+				.accessMode(AccessMode.READ_ONLY)//
 				.unit(Unit.PERCENT)//
 				.persistencePriority(PersistencePriority.HIGH)//
 				.onChannelUpdate(BatteryFeneconF2bFiskerImpl::updateSoc)), //

@@ -124,7 +124,7 @@ export namespace SharedGrid {
             lines: lines,
             helpKey: "REDIRECT.COMMON_GRID",
             component: new EdgeConfig.Component(),
-            isCommonWidget: true,
+            useCiFont: true,
         };
     }
 
@@ -313,6 +313,7 @@ export namespace SharedGrid {
                         null,
                     ),
                 ]),
+                NavigationConstants.CommonNodes.SETTINGS(translate, "grid"),
                 NavigationConstants.CommonNodes.INFO(translate, "grid", {
                     source: "grid",
                 }),

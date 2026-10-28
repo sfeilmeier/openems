@@ -1,0 +1,23 @@
+{
+    "POPOVER": {
+        "ANNUAL_REVIEW": {
+            "BUTTON_TEXT": "Voir le bilan annuel maintenant",
+            "CONCLUSION": "En savoir plus sur la campagne sur notre page d'information : <br><a href='https://www.fenecon.de/meine-energy-journey-2025'>https://www.fenecon.de/meine-energy-journey-2025</a>",
+            "DESCRIPTION": "Découvrez les temps forts de votre consommation d'énergie personnelle, la manière dont votre système de stockage FENECON a soutenu votre maison, votre contribution à la transition énergétique et surtout : à quel point cela vous a été rentable en 2025.",
+            "HEADER_TEXT": "Votre bilan annuel personnel est dès maintenant en ligne ! Nous vous montrons les possibilités encore inexploitées pour rendre votre système énergétique encore plus efficace, optimiser votre autoconsommation et rester sur le cap le plus avantageux.",
+            "SUB_TITLE": "Votre bilan annuel personnel est dès maintenant en ligne !",
+            "TITLE": "Découvrez votre Energy Journey 2025"
+        },
+        "WEATHER_PROGNOSIS": {
+            "ACCEPT": "Accepter et installer",
+            "APP": "Téléchargez-le depuis notre App Center :",
+            "APP_WEATHER": "Météo",
+            "CHECKBOX_LABEL": "Je reconnais que, pour utiliser l'application, la transmission des données personnelles de l'utilisateur principal à un tiers est nécessaire. Pour en savoir plus sur l'utilisation de vos données personnelles, c'est <a href={{link}} target=\"_blank\">ici</a>.",
+            "DECLINE": "Refuser",
+            "DESCRIPTION": "L'intégration de données météorologiques locales améliore votre prévision de consommation et de production, et c'est entièrement <b>gratuit !</b>",
+            "SPINNER_TEXT_ACCEPTED": "Un instant : l'application est en cours d'installation",
+            "SPINNER_TEXT_DECLINED": "L'application peut être installée plus tard à tout moment depuis le FEMS App Center.",
+            "TITLE": "Nouveau : des prévisions désormais 50 % plus précises grâce aux données météo"
+        }
+    }
+}

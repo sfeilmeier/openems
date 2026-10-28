@@ -1,0 +1,33 @@
+{
+    "FENA": {
+        "MESSAGES": {
+            "GRID": {
+                "EMERGENCY_POWER_ACTIVE": "Alimentación de respaldo activa: tu sistema {{edgeLongName}} está alimentando actualmente las cargas conectadas desde tu batería.",
+                "GENERATOR_ACTIVE": "Tranquilidad extra: tu sistema {{edgeLongName}} está siendo apoyado actualmente por el generador.",
+                "LIMITED_POWER": "Nota: actualmente el operador de red aplica una limitación de vertido a la red."
+            },
+            "KPI": {
+                "AUTARCHY": "Impresionante: hasta ahora has cubierto por tu cuenta el {{autarchy}}&nbsp;% de tu necesidad diaria de electricidad.",
+                "SELF_CONSUMPTION": "Genial: hasta ahora hoy has usado tú mismo el {{selfConsumption}}&nbsp;% de tu energía solar.",
+                "WELCOME": "¡Hola y bienvenido a {{edgeLongName}}!<br/>Soy FENA. Como tu asistente personal de {{edgeLongName}}, estoy aquí para acompañarte en tu viaje energético."
+            },
+            "STORAGE": {
+                "GRID_OPTIMIZED_CHARGE": {
+                    "DELAYED_CHARGE": "Con previsión: tu batería se está cargando actualmente con un máximo de {{maxPower}}&nbsp;W para reducir los recortes fotovoltaicos. Se espera que esté completamente cargada hacia las {{chargingEndTime}}.",
+                    "DELAYED_CHARGE_WITH_ZERO": "Con visión de futuro: tu batería está pausando ahora mismo la carga para poder almacenar más energía solar más tarde y reducir los recortes fotovoltaicos.",
+                    "TURNED_OFF": "Consejo: la carga optimizada para la red puede ayudar a reducir posibles recortes fotovoltaicos y alargar la vida útil de tu sistema de almacenamiento. ¿Quieres activarla?"
+                },
+                "PEAK_SHAVING": {
+                    "CONSUMPTION_OVER_DISCHARGE_ABOVE": "Recorte de picos en curso: tu sistema está suavizando ahora mismo un pico de carga, reduciendo tus costes energéticos.",
+                    "CONSUMPTION_UNDER_CHARGE_BELOW": "Pico por delante: tu sistema está cargando ahora mismo la batería para suavizar el próximo pico de carga.",
+                    "SOC_IS_100": "Listo para el recorte de picos: tu sistema está preparado para gestionar picos de carga. Ahora mismo no se produce ninguno."
+                },
+                "TIME_OF_USE_TARIFF": {
+                    "CHARGE_FROM_GRID_ACTIVE": "Buen momento: tu sistema FENECON aprovecha una franja de precios bajos, tomando electricidad de la red a {{priceWithUnit}} y almacenándola para más tarde.",
+                    "DELAY_CHARGE_ACTIVE": "Inteligente: tu batería está retrasando ahora mismo la descarga, de modo que la energía barata estará disponible más tarde, cuando los precios de la electricidad sean más altos.",
+                    "NEGATIVE_GRID_BUY_PRICE": "Actualmente, el precio de la electricidad en el mercado es de solo {{priceWithUnit}}. Tu sistema utiliza esta energía barata y ayuda a absorber el excedente de electricidad de la red."
+                }
+            }
+        }
+    }
+}

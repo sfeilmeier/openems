@@ -1,0 +1,44 @@
+{
+    "SETTINGS": {
+        "ENERGY_JOURNEY": {
+            "ANALYSE_BATTERY_EXTENSION_TITLE": "バッテリー増設の分析",
+            "BATTERY_MODULE_EXTENSION": "バッテリーモジュールの増設",
+            "CHARGE_DISCHARGE_CAPACITY": "蓄電システムの充放電出力（kW）：**",
+            "CHARGE_DISCHARGE_POWER_NOTE": "** 充放電出力（kW）および非常用電源としての容量はこの値まで向上します。AC側で処理可能な値や、モジュール数に応じた達成可能な出力に関する詳細は、<a href='{{productLink}}' target='_blank'>製品データシート{{productName}}</a>&nbsp;をご覧ください。",
+            "CONSTANTS": {
+                "BATTERY_MODULE": "バッテリーモジュール",
+                "CHARGE_DISCHARGE": "充放電出力",
+                "EDIT": "編集",
+                "ELECTRICITY_PRICE": "電力料金",
+                "GRID_SUPPLY": "系統からの購入電力",
+                "TITLE": "あなたの入力内容"
+            },
+            "CONSTANTS_DESCRIPTION": "現在の{{ theme }} {{ label }}システムは昨年、以下の内容でした：",
+            "CURRENT_NUMBER_OF_MODULES": "現在",
+            "DECREASE_IN_PEAK_POWER_TOOLTIP": "負の値は、充放電出力のさらなる増加を伴わないタワー拡張を示します。",
+            "DESCRIPTION": "蓄電システムの増設がお得かどうかは、\n        さまざまな要因によって異なります。お使いのシステムは1年\n        以上運用されています。ここで、バッテリー増設が\n        どのような効果をもたらしたかを分析できます",
+            "DISCLAIMER": "免責事項",
+            "DISCLAIMER_TEXT": "分析の計算は、電力料金、系統からの購入電力量、昨年の蓄電システムの系統への売電データに関するあなたの入力に基づきます。これらの前提条件はいつでも変動する可能性があります。したがって、計算はあくまで例であり、バッテリー増設の想定される収益性の目安を示すものであって、実際の財務上の節約を保証するものではありません。これはFENECONによる保証ではありません。",
+            "ELECTRICITY_PRICE_SELECTION_TITLE": "Energy Journey：バッテリー増設",
+            "ELECTRICITY_PRICE_TEXT": "お使いのシステムは1年以上運用されています。ここで、バッテリー増設がどのような効果をもたらしたかを分析できます。",
+            "ELECTRICITY_PRICE_VALUE_TEXT": "現在の電力料金を入力してください。すでにダイナミック電力料金を利用している場合は、平均値を入力してください。",
+            "GRID_CONSUMPTION_TITLE": "電力購入の節約量（kWh）（{{date}}）",
+            "MODULE": "モジュール",
+            "MODULES": "モジュール",
+            "MODULE_COUNT": "モジュール数",
+            "MORE_DETAILS": "製品資料{{productName}}の詳細はこちら",
+            "POTENTIAL_SAVINGS_CALCULATION_NOTE": "計算：現在の電力料金に、モジュールあたりの電力購入節約量（kWh）を掛けた値です。",
+            "POTENTIAL_SAVINGS_NOTE": "* バッテリー増設によって得られたはずの年間の潜在的節約額（ユーロ）",
+            "SAVINGS_LABEL": "電力購入の節約額（ユーロ）：*",
+            "SEE_CHANGES_SLOGAN": "当社のEnergy Journeyプラットフォームを使って、システムをどう有意義に発展させるべきか、どの拡張が有益かを分析・計算しましょう。",
+            "SEE_CHANGES_SUB_TEXT": "当社と一緒になら、100%のエネルギー転換に向けて万全の準備が整っています。",
+            "SEE_CHANGES_TEXT": "エネルギー世界の変化を、焦らず冷静に見つめましょう。",
+            "SIMULATION_NOT_STARTED": "シミュレーション未開始",
+            "SLOGAN": "バッテリー増設：お得になる？",
+            "START_ANALYSIS": "分析を開始",
+            "TOTAL": "（合計）",
+            "TOTAL_CAPACITY": "利用可能な総容量の増加（kWh）：",
+            "WIDGET_TITLE": "バッテリー増設"
+        }
+    }
+}

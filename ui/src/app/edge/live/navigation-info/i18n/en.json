@@ -1,13 +1,13 @@
 {
     "BETA_TEST": {
-        "NEW_UI_INFO": "Our monitoring is being redesigned. New navigation and features will be introduced.",
         "BUTTON": "To the Beta Test Changelog",
         "CHANGELOG": "Here you can find information about the changes, explanations or help. Stay up to date with our changelog on the latest developments.",
-        "FEEDBACK": "Your feedback counts, let us know what you want to say about the BETA test:"
+        "FEEDBACK": "Your feedback counts, let us know what you want to say about the BETA test:",
+        "NEW_UI_INFO": "Our monitoring is being redesigned. New navigation and features will be introduced."
     },
     "MY_PORTAL": {
-        "INFO": "Click here to access the beta version of our exclusive portal, \"myFENECON\".",
         "BUTTON": "Go to myFENECON",
+        "INFO": "Click here to access the beta version of our exclusive portal, \"myFENECON\".",
         "TICKET": "You can currently download marketing materials here. More content will be available soon."
     },
     "NAVIGATION_INFO_MANUAL": "{{source}} manual"

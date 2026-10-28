@@ -1,0 +1,8 @@
+{
+    "INDUSTRIAL_XL": {
+        "TEST_MODE_ESS_TEST": "Mode test : test de l'ESS",
+        "TEST_MODE_EXIT": "Mode test : quitter",
+        "TEST_MODE_LAMP_TEST": "Mode test : test des lampes",
+        "TEST_MODE_MANUAL_BATTERY_START": "Mode test : démarrage manuel des batteries"
+    }
+}

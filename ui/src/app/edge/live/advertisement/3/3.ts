@@ -14,15 +14,7 @@ import { Service } from "src/app/shared/shared";
                     <ion-col class="ion-padding" [innerHTML]="text | translate"></ion-col>
                 </ion-row>
                 <ion-row class="ion-padding-top ion-justify-content-center">
-                    <ion-button
-                        [href]="link | translate"
-                        target="_blank"
-                        size="small"
-                        fill="outline"
-                        style="font-size: small;"
-                    >
-                        <span>{{ linkText | translate }}</span>
-                    </ion-button>
+                    <span>{{ linkText | translate }}</span>
                 </ion-row>
             </ion-grid>
         }

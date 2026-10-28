@@ -1,11 +1,31 @@
 {
     "FENA": {
         "MESSAGES": {
+            "GRID": {
+                "EMERGENCY_POWER_ACTIVE": "Noodstroom actief: je {{edgeLongName}}-systeem voorziet de aangesloten verbruikers momenteel van stroom uit je accu.",
+                "GENERATOR_ACTIVE": "Extra zekerheid: je {{edgeLongName}}-systeem wordt momenteel ondersteund door de generator.",
+                "LIMITED_POWER": "Let op: er is momenteel een invoerbeperking van de netbeheerder actief."
+            },
+            "KPI": {
+                "AUTARCHY": "Indrukwekkend: tot nu toe heb je {{autarchy}}&nbsp;% van je dagelijkse elektriciteitsbehoefte zelf opgevangen.",
+                "SELF_CONSUMPTION": "Top: tot nu toe heb je vandaag {{selfConsumption}}&nbsp;% van je zonne-energie zelf gebruikt.",
+                "WELCOME": "Hallo en welkom bij {{edgeLongName}}!<br/>Ik ben FENA. Als je persoonlijke {{edgeLongName}} Assistent begeleid ik je op je energie-reis."
+            },
             "STORAGE": {
+                "GRID_OPTIMIZED_CHARGE": {
+                    "DELAYED_CHARGE": "Vooruitziend: je accu laadt momenteel op met maximaal {{maxPower}}&nbsp;W om PV-terugregeling te beperken. Verwacht vol rond {{chargingEndTime}}.",
+                    "DELAYED_CHARGE_WITH_ZERO": "Vooruitziend: je accu pauzeert het laden nu, om later meer zonne-energie op te slaan en PV-terugregeling te beperken.",
+                    "TURNED_OFF": "Tip: netgeoptimaliseerd laden kan helpen om mogelijke PV-terugregeling te beperken en de levensduur van je opslagsysteem te verlengen. Wil je dit inschakelen?"
+                },
+                "PEAK_SHAVING": {
+                    "CONSUMPTION_OVER_DISCHARGE_ABOVE": "Peak shaving gaande: je systeem vlakt momenteel een belastingpiek af, wat je energiekosten verlaagt.",
+                    "CONSUMPTION_UNDER_CHARGE_BELOW": "Spike op komst: je systeem laadt momenteel de accu om de komende belastingpiek af te vlakken.",
+                    "SOC_IS_100": "Klaar voor peak shaving: je systeem is klaar om belastingpieken op te vangen. Er zijn er momenteel geen."
+                },
                 "TIME_OF_USE_TARIFF": {
-                    "NEGATIVE_GRID_BUY_PRICE": "Momenteel bedraagt de elektriciteitsprijs op de beurs slechts {{priceWithUnit}}. Uw systeem maakt optimaal gebruik van deze lage energieprijzen en draagt tegelijkertijd bij aan het opvangen van tijdelijke stroomoverschotten op het elektriciteitsnet.",
                     "CHARGE_FROM_GRID_ACTIVE": "Goed getimed: Je FENECON-systeem gebruikt op dit moment een laag tarief, haalt stroom voor {{priceWithUnit}} van het net en slaat deze op voor later.",
-                    "DELAY_CHARGE_ACTIVE": "Slim: Je batterij stelt het ontladen op dit moment uit. Zo is de voordelige energie later beschikbaar tegen een laag tarief, wanneer de stroomprijs hoger is."
+                    "DELAY_CHARGE_ACTIVE": "Slim: Je batterij stelt het ontladen op dit moment uit. Zo is de voordelige energie later beschikbaar tegen een laag tarief, wanneer de stroomprijs hoger is.",
+                    "NEGATIVE_GRID_BUY_PRICE": "Momenteel bedraagt de elektriciteitsprijs op de beurs slechts {{priceWithUnit}}. Uw systeem maakt optimaal gebruik van deze lage energieprijzen en draagt tegelijkertijd bij aan het opvangen van tijdelijke stroomoverschotten op het elektriciteitsnet."
                 }
             }
         }

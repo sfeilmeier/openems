@@ -12,8 +12,15 @@ import { Service, Websocket } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
 import { Icon } from "src/app/shared/type/widget";
 import { environment } from "src/environments";
+import cz from "./i18n/cz.json";
 import de from "./i18n/de.json";
 import en from "./i18n/en.json";
+import es from "./i18n/es.json";
+import fr from "./i18n/fr.json";
+import ja from "./i18n/ja.json";
+import lt from "./i18n/lt.json";
+import nl from "./i18n/nl.json";
+import sv from "./i18n/sv.json";
 
 type IconWithRequiredName = Required<Pick<Icon, "name">> & Partial<Omit<Icon, "name">>;
 
@@ -50,7 +57,17 @@ const EVSE_DOC_LINKS = {
 } as const;
 
 function initializeNavigationInfoTranslations(translate: TranslateService): void {
-    void Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+    void Language.normalizeAdditionalTranslationFiles({
+        cs: cz,
+        de: de,
+        en: en,
+        es: es,
+        fr: fr,
+        ja: ja,
+        lt: lt,
+        nl: nl,
+        sv: sv,
+    }).then((translations) => {
         for (const { lang, translation, shouldMerge } of translations) {
             translate.setTranslation(lang, translation, shouldMerge);
         }
@@ -190,11 +207,8 @@ export class NavigationInfoComponent extends AbstractModal {
                 : []),
         ]);
 
-    ionViewWillLeave() {
-        this.ngOnDestroy();
-    }
-
-    ionViewWillEnter() {
+    override ngOnInit() {
+        super.ngOnInit();
         this.resolveSourceAndMode();
         this.setHeaderTitle();
     }
@@ -220,8 +234,8 @@ export class NavigationInfoComponent extends AbstractModal {
     }
 
     private setHeaderTitle(): void {
-        this.navigationService.headerTitle.set(
-            this.translate.instant(this.isGlobalInfo() ? "GENERAL.HELP" : "GENERAL.INFO"),
-        );
+        this.navigationService.headerTitle.set({
+            text: this.translate.instant(this.isGlobalInfo() ? "GENERAL.HELP" : "GENERAL.INFO"),
+        });
     }
 }

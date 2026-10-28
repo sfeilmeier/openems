@@ -1,0 +1,44 @@
+{
+    "SETTINGS": {
+        "ENERGY_JOURNEY": {
+            "ANALYSE_BATTERY_EXTENSION_TITLE": "Analyse accu-uitbreiding",
+            "BATTERY_MODULE_EXTENSION": "Uitbreiding met accumodule",
+            "CHARGE_DISCHARGE_CAPACITY": "Laad- en ontlaadvermogen van de opslag in kW:**",
+            "CHARGE_DISCHARGE_POWER_NOTE": "** Het laad- en ontlaadvermogen (kW) en de noodstroomcapaciteit van je opslag stijgen tot deze waarde. Gedetailleerde informatie over de aan de AC-kant verwerkbare waarden en het haalbare vermogen afhankelijk van het aantal modules vind je in het&nbsp;<a href='{{productLink}}' target='_blank'>productgegevensblad {{productName}}</a>&nbsp;",
+            "CONSTANTS": {
+                "BATTERY_MODULE": "Accumodules",
+                "CHARGE_DISCHARGE": "Laad- en ontlaadvermogen",
+                "EDIT": "bewerken",
+                "ELECTRICITY_PRICE": "Stroomprijs",
+                "GRID_SUPPLY": "Netverbruik",
+                "TITLE": "Jouw gegevens"
+            },
+            "CONSTANTS_DESCRIPTION": "Je huidige {{ theme }} {{ label }}-systeem omvatte vorig jaar:",
+            "CURRENT_NUMBER_OF_MODULES": "Huidig",
+            "DECREASE_IN_PEAK_POWER_TOOLTIP": "Negatieve waarden duiden op een uitbreiding van de accutoren die geen extra stijging van het laad- en ontlaadvermogen veroorzaakt.",
+            "DESCRIPTION": "Of het uitbreiden van je stroomopslag lonend is,\n        hangt af van verschillende factoren. Je systeem is al meer\n        dan een jaar in bedrijf. Analyseer hier welk effect een\n        accu-uitbreiding zou hebben gehad",
+            "DISCLAIMER": "Vrijwaring",
+            "DISCLAIMER_TEXT": "De berekeningen in de analyse zijn gebaseerd op jouw opgaven over de stroomprijs, het netverbruik en de netinvoergegevens van je opslag in het afgelopen jaar. Deze onderliggende parameters kunnen elk moment wijzigen. De berekeningen zijn daarom slechts voorbeelden die als richtlijn dienen voor de mogelijke rendabiliteit van een accu-uitbreiding en bieden geen garantie voor daadwerkelijk haalbare financiële besparingen. Dit houdt geen garantie van FENECON in.",
+            "ELECTRICITY_PRICE_SELECTION_TITLE": "Energy Journey: accu-uitbreiding",
+            "ELECTRICITY_PRICE_TEXT": "Je systeem is al meer dan een jaar in bedrijf. Analyseer hier welk effect een accu-uitbreiding zou hebben gehad.",
+            "ELECTRICITY_PRICE_VALUE_TEXT": "Voer je huidige stroomprijs in. Gebruik je al een dynamisch tarief, voer dan een gemiddelde waarde in.",
+            "GRID_CONSUMPTION_TITLE": "Besparing op stroomverbruik in kWh ({{date}})",
+            "MODULE": "Module",
+            "MODULES": "Modules",
+            "MODULE_COUNT": "Aantal modules",
+            "MORE_DETAILS": "Meer details in het productgegevensblad {{productName}}",
+            "POTENTIAL_SAVINGS_CALCULATION_NOTE": "Berekening: je huidige stroomprijs vermenigvuldigd met de besparing op stroomverbruik in kWh per module.",
+            "POTENTIAL_SAVINGS_NOTE": "* Potentiële jaarlijkse besparing in euro's die een accu-uitbreiding zou hebben opgeleverd",
+            "SAVINGS_LABEL": "Besparing op stroomverbruik in euro's:*",
+            "SEE_CHANGES_SLOGAN": "Analyseer en bereken met ons Energy Journey-platform hoe je je installatie verstandig verder kunt ontwikkelen en van welke uitbreidingen je kunt profiteren.",
+            "SEE_CHANGES_SUB_TEXT": "Met ons ben je optimaal voorbereid op jouw 100% energietransitie.",
+            "SEE_CHANGES_TEXT": "Kijk ontspannen naar de veranderingen in de energiemarkt.",
+            "SIMULATION_NOT_STARTED": "Simulatie niet gestart",
+            "SLOGAN": "Accu-uitbreiding: is het het waard?",
+            "START_ANALYSIS": "Analyse starten",
+            "TOTAL": "(Totaal)",
+            "TOTAL_CAPACITY": "Toename van de totale bruikbare capaciteit in kWh:",
+            "WIDGET_TITLE": "Accu-uitbreiding"
+        }
+    }
+}

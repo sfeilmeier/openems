@@ -8,18 +8,23 @@ import { DataService } from "src/app/shared/components/shared/dataservice";
 import { UserService } from "src/app/shared/service/user.service";
 import { Edge, Service } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
-import { StringUtils } from "src/app/shared/utils/string/string.utils";
+import { environment } from "src/environments";
 import { SharedAutarchy } from "../common/autarchy/shared/shared";
 import { SharedGrid } from "../common/grid/shared/shared";
 import { SharedSelfConsumption } from "../common/selfconsumption/shared/shared";
-import { SharedGridOptimizedCharge } from "../Controller/Ess/GridOptimizedCharge/shared/shared";
 import { SharedControllerEssTimeOfUseTariff } from "../Controller/Ess/TimeOfUseTariff/shared/shared";
 import { SharedControllerPeakShaving } from "../Controller/peak-shaving/shared/shared";
 import { LiveDataService } from "../livedataservice";
 import { Fena } from "./fena.type";
+import cz from "./i18n/cz.json";
 import de from "./i18n/de.json";
 import en from "./i18n/en.json";
+import es from "./i18n/es.json";
+import fr from "./i18n/fr.json";
+import ja from "./i18n/ja.json";
+import lt from "./i18n/lt.json";
 import nl from "./i18n/nl.json";
+import sv from "./i18n/sv.json";
 
 @Component({
     selector: "oe-fena",
@@ -73,7 +78,17 @@ export class FenaComponent implements OnDestroy {
     private readonly injector = inject(Injector);
 
     constructor() {
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en, nl: nl }).then((translations) => {
+        Language.normalizeAdditionalTranslationFiles({
+            cz: cz,
+            de: de,
+            en: en,
+            es: es,
+            fr: fr,
+            ja: ja,
+            lt: lt,
+            nl: nl,
+            sv: sv,
+        }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {
                 this.translate.setTranslation(lang, translation, shouldMerge);
             }
@@ -107,34 +122,29 @@ export class FenaComponent implements OnDestroy {
             ...(config?.widgets?.list ?? []).map((widget) => widget.name),
         ];
 
-        if (
-            StringUtils.isNotInArr(edge.id, [
-                "fems4",
-                "fems666",
-                "fems888",
-                "fems3800",
-                "fems10004",
-                "fems10303",
-                "fems58732",
-                "fems59509",
-                "fems72127",
-                "fems72317",
-                "fems72800",
-                "fems73475",
-                "fems74326",
-                "fems82085",
-                "fems83584",
-                "fems86450",
-                "fems86876",
-                "fems90206",
-                "fems86287",
-            ])
-        ) {
-            return [];
+        const fenaMessages: Fena.Message[] = [];
+
+        if (edge.id === "fems66738") {
+            fenaMessages.push(
+                new Fena.LiveMessage({
+                    category: "KPI",
+                    priority: 1,
+                    actions: [],
+                    channels: [],
+                    showCallback: () => true,
+                    message: {
+                        textCallback: () => {
+                            return translate.instant("FENA.MESSAGES.KPI.WELCOME", {
+                                edgeLongName: environment.edgeLongName,
+                            });
+                        },
+                    },
+                }),
+            );
         }
 
-        return (
-            widgetNames
+        fenaMessages.push(
+            ...widgetNames
                 .flatMap((widgetName): Fena.Message[] => {
                     switch (widgetName) {
                         case "Common_Autarchy":
@@ -147,8 +157,6 @@ export class FenaComponent implements OnDestroy {
                         case "Controller.Symmetric.PeakShaving":
                         case "Controller.TimeslotPeakshaving":
                             return SharedControllerPeakShaving.getFenaMessages(widgetName, config, translate);
-                        case "Controller.Ess.GridOptimizedCharge":
-                            return SharedGridOptimizedCharge.getFenaMessages(config, translate, injector);
                         case "Controller.Ess.Time-Of-Use-Tariff":
                             return SharedControllerEssTimeOfUseTariff.getFenaMessages(config, translate, injector);
                         default:
@@ -167,8 +175,10 @@ export class FenaComponent implements OnDestroy {
                         Fena.CATEGORIES.find((category) => category.name === first.getCategory())!.priority -
                         Fena.CATEGORIES.find((category) => category.name === second.getCategory())!.priority
                     );
-                })
+                }),
         );
+
+        return fenaMessages;
     }
 
     ngOnDestroy() {

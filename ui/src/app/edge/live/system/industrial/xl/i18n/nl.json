@@ -1,0 +1,8 @@
+{
+    "INDUSTRIAL_XL": {
+        "TEST_MODE_ESS_TEST": "Testmodus: ESS-test",
+        "TEST_MODE_EXIT": "Testmodus: afsluiten",
+        "TEST_MODE_LAMP_TEST": "Testmodus: lamptest",
+        "TEST_MODE_MANUAL_BATTERY_START": "Testmodus: batterijen handmatig starten"
+    }
+}

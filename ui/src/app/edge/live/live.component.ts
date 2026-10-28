@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, OnDestroy, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, OnDestroy, ViewChild, OnInit, } from "@angular/core";
 import { RefresherCustomEvent } from "@ionic/angular";
 import { Subject } from "rxjs";
 import { PlatFormService } from "src/app/platform.service";
@@ -25,7 +25,7 @@ import { DateTimeUtils } from "src/app/shared/utils/datetime/datetime-utils";
         }
     `,
 })
-export class LiveComponent implements OnDestroy {
+export class LiveComponent implements OnDestroy, OnInit {
     @ViewChild("modal", { read: ElementRef }) public modal!: ElementRef;
 
     protected edge: Edge | null = null;
@@ -68,7 +68,7 @@ export class LiveComponent implements OnDestroy {
         });
     }
 
-    public ionViewWillEnter() {
+    ngOnInit() {
         if (this.widgets?.list) {
             this.showNewFooter =
                 this.widgets?.list.filter(
@@ -76,10 +76,6 @@ export class LiveComponent implements OnDestroy {
                 )?.length > 0;
         }
         this.layoutRefresh.request(300);
-    }
-
-    ionViewWillLeave() {
-        this.ngOnDestroy();
     }
 
     public ngOnDestroy() {

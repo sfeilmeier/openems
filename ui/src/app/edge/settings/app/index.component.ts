@@ -18,8 +18,15 @@ import { CommonUiModule } from "../../../shared/common-ui.module";
 import { Edge, Service, Websocket } from "../../../shared/shared";
 import { EdgeComponent } from "../../edge.component";
 import { ExecuteSystemUpdate } from "../system/executeSystemUpdate";
+import cz from "./i18n/cz.json";
 import de from "./i18n/de.json";
 import en from "./i18n/en.json";
+import es from "./i18n/es.json";
+import fr from "./i18n/fr.json";
+import ja from "./i18n/ja.json";
+import lt from "./i18n/lt.json";
+import nl from "./i18n/nl.json";
+import sv from "./i18n/sv.json";
 import { InstallAppComponent } from "./install.component";
 import { Flags } from "./jsonrpc/flag/flags";
 import { GetApp } from "./jsonrpc/getApp";
@@ -111,7 +118,17 @@ export class IndexComponent implements OnInit, OnDestroy {
         private router: Router,
         private modalController: ModalController,
     ) {
-        Language.normalizeAdditionalTranslationFiles({ de: de, en: en }).then((translations) => {
+        Language.normalizeAdditionalTranslationFiles({
+            cs: cz,
+            de: de,
+            en: en,
+            es: es,
+            fr: fr,
+            ja: ja,
+            lt: lt,
+            nl: nl,
+            sv: sv,
+        }).then((translations) => {
             for (const { lang, translation, shouldMerge } of translations) {
                 translate.setTranslation(lang, translation, shouldMerge);
             }
@@ -158,6 +175,7 @@ export class IndexComponent implements OnInit, OnDestroy {
             node.addEventListener("click", async () => {
                 const popoverEvent = await EdgeComponent.showPrivacyPolicyPopover(this.modalController);
                 const acceptance = popoverEvent.data?.thirdPartyUsageAcceptance;
+
                 if (acceptance != null) {
                     // update app status
                     this.edge

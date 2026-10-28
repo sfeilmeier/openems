@@ -17,9 +17,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
-import io.openems.backend.common.debugcycle.DebugLoggable;
 import io.openems.backend.common.metadata.Edge;
 import io.openems.common.event.EventReader;
+import io.openems.common.logger.DebugLoggable;
 import io.openems.common.types.EdgeConfig;
 import io.openems.common.utils.JsonUtils;
 

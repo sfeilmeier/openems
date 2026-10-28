@@ -1,16 +1,10 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE": "New Design for your Online Monitoring",
-            "TEXT": "Starting in September, you can try out the new design of your Online Monitoring. Discover new features and enjoy a more intuitive, user-friendly, and modern interface. Simply go to the settings in your profile and activate the new design to try it out right away.",
+            "LINK": "",
             "LINK_TEXT": "Activate now",
-            "LINK": ""
-        },
-        "2": {
-            "TITLE": "Good energy is worth sharing!",
-            "TEXT": "Recommend FENECON to your friends, family, and acquaintances and earn attractive rewards as a thank-you. For every new Energy Journey started, both you and the new customer will receive the FEMS Time-of-Use Tariff app and a Shelly Plug free of charge. A perfect match for the free Shelly DIY FEMS app!",
-            "LINK_TEXT": "Secure Your Reward",
-            "LINK": "https://www.fenecon.de/weiterempfehlungsprogramm"
+            "TEXT": "Starting in September, you can try out the new design of your Online Monitoring. Discover new features and enjoy a more intuitive, user-friendly, and modern interface. Simply go to the settings in your profile and activate the new design to try it out right away.",
+            "TITLE": "New Design for your Online Monitoring"
         }
     }
 }

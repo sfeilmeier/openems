@@ -214,13 +214,13 @@
 	bnd.identity;id='io.openems.edge.timeofusetariff.ancillarycosts',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.awattar',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.corrently',\
-	bnd.identity;id='io.openems.edge.timeofusetariff.entsoe',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.ews',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.groupe',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.hassfurt',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.luox',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.manual',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.rabotcharge',\
+	bnd.identity;id='io.openems.edge.timeofusetariff.spottariff',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.swisspower',\
 	bnd.identity;id='io.openems.edge.timeofusetariff.tibber',\
 	bnd.identity;id='io.openems.edge.weather.openmeteo',\
@@ -242,6 +242,9 @@
 	com.sun.jna;version='[5.19.1,5.19.2)',\
 	io.openems.common;version=snapshot,\
 	io.openems.common.bridge.http;version=snapshot,\
+	io.openems.common.tariff.api;version=snapshot,\
+	io.openems.common.tariff.entsoe;version=snapshot,\
+	io.openems.common.tariff.smard;version=snapshot,\
 	io.openems.core.logger;version=snapshot;startlevel=18,\
 	io.openems.core.referencetarget;version=snapshot;startlevel=17,\
 	io.openems.edge.aircooling.blueeplus;version=snapshot,\
@@ -430,13 +433,13 @@
 	io.openems.edge.timeofusetariff.api;version=snapshot,\
 	io.openems.edge.timeofusetariff.awattar;version=snapshot,\
 	io.openems.edge.timeofusetariff.corrently;version=snapshot,\
-	io.openems.edge.timeofusetariff.entsoe;version=snapshot,\
 	io.openems.edge.timeofusetariff.ews;version=snapshot,\
 	io.openems.edge.timeofusetariff.groupe;version=snapshot,\
 	io.openems.edge.timeofusetariff.hassfurt;version=snapshot,\
 	io.openems.edge.timeofusetariff.luox;version=snapshot,\
 	io.openems.edge.timeofusetariff.manual;version=snapshot,\
 	io.openems.edge.timeofusetariff.rabotcharge;version=snapshot,\
+	io.openems.edge.timeofusetariff.spottariff;version=snapshot,\
 	io.openems.edge.timeofusetariff.swisspower;version=snapshot,\
 	io.openems.edge.timeofusetariff.tibber;version=snapshot,\
 	io.openems.edge.weather.api;version=snapshot,\
@@ -481,7 +484,7 @@
 	org.apache.felix.configadmin;version='[1.9.26,1.9.27)';startlevel=11,\
 	org.apache.felix.eventadmin;version='[1.6.4,1.6.5)';startlevel=12,\
 	org.apache.felix.fileinstall;version='[3.7.4,3.7.5)';startlevel=13,\
-	org.apache.felix.http.jetty12;version='[2.0.6,2.0.7)',\
+	org.apache.felix.http.jetty12;version='[2.0.8,2.0.9)',\
 	org.apache.felix.http.servlet-api;version='[6.1.0,6.1.1)',\
 	org.apache.felix.inventory;version='[2.0.0,2.0.1)',\
 	org.apache.felix.metatype;version='[1.2.4,1.2.5)';startlevel=14,\
@@ -496,6 +499,7 @@
 	org.ops4j.pax.logging.pax-logging-api;version='[2.3.5,2.3.6)';startlevel=15,\
 	org.ops4j.pax.logging.pax-logging-log4j2;version='[2.3.5,2.3.6)';startlevel=16,\
 	org.osgi.service.component;version='[1.5.1,1.5.2)',\
+	org.osgi.service.component.annotations;version='[1.5.1,1.5.2)',\
 	org.osgi.util.function;version='[1.2.0,1.2.1)',\
 	org.osgi.util.promise;version='[1.3.0,1.3.1)',\
 	org.owasp.encoder;version='[1.5.0,1.5.1)',\

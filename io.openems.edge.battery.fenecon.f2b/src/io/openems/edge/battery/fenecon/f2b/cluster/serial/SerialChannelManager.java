@@ -1,6 +1,7 @@
 package io.openems.edge.battery.fenecon.f2b.cluster.serial;
 
 import static io.openems.common.utils.IntUtils.sumInteger;
+import static io.openems.edge.common.channel.ChannelUtils.setValue;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -86,4 +87,45 @@ public class SerialChannelManager extends ChannelManager {
 			this.addOnSetNextValueListener(battery, BatteryFeneconF2b.ChannelId.INTERNAL_VOLTAGE, callback);
 		}
 	}
+
+	@Override
+	protected void calculateSoc(List<BatteryFeneconF2b> batteries) {
+		final Consumer<Value<Boolean>> callback = (value) -> {
+			var socList = batteries.stream()//
+					.map(Battery::getSoc)//
+					.filter(Value::isDefined)//
+					.map(Value::get)//
+					.toList();
+			setValue(this.parent, Battery.ChannelId.SOC, calculateSerialSoc(socList));
+		};
+
+		for (var battery : batteries) {
+			this.addOnSetNextValueListener(battery, Battery.ChannelId.SOC, callback);
+		}
+	}
+
+	/**
+	 * Calculates the cluster SOC of serial connected batteries.
+	 *
+	 * <p>
+	 * The result is interpolated between the lowest and the highest SOC, weighted
+	 * by the average SOC.
+	 *
+	 * @param socList the SOC values of all batteries
+	 * @return the cluster SOC; or null if the list is empty
+	 */
+	protected static Integer calculateSerialSoc(List<Integer> socList) {
+		if (socList.isEmpty()) {
+			return null;
+		}
+
+		final var stats = socList.stream() //
+				.mapToInt(Integer::intValue) //
+				.summaryStatistics();
+
+		var socAvg = TypeUtils.averageInt(socList);
+		var tendency = socAvg / 100f;
+		return Math.round(stats.getMin() + tendency * (stats.getMax() - stats.getMin()));
+	}
+
 }

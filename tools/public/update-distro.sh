@@ -149,6 +149,16 @@ function install_debian_apt_key {
     fi
 }
 
+function install_raspbian_apt_key {
+    local keytmp="/tmp/raspbian.public.key"
+    local keystore="/etc/apt/trusted.gpg.d/raspbian.asc"
+    
+    if [ ! -f "$keystore" ]; then
+        wget "https://deb.fenecon.de/debian-keys/raspbian.public.key" -O "${keytmp}"
+        install -m 644 "${keytmp}" "${keystore}"
+    fi
+}
+
 function install_freexian_apt_key {
     local keytmp="/tmp/freexian-archive-extended-lts.gpg"
     local keystore="/etc/apt/trusted.gpg.d/freexian-archive-extended-lts.gpg"
@@ -182,6 +192,7 @@ function update_to_stretch {
   echo "deb https://deb.fenecon.de/debian-elts/ stretch main contrib non-free" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
+    install_raspbian_apt_key;
     echo "deb https://deb.fenecon.de/raspbian-legacy/ stretch main contrib non-free rpi" > "/tmp/raspi.list"
   fi
   
@@ -208,7 +219,7 @@ function update_to_stretch {
   start_service systemd-timesyncd
   
   # Make sure systemd resolved is properly activated
-  ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
+  ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf || true
 }
 
 function update_to_buster {
@@ -216,7 +227,8 @@ function update_to_buster {
   echo "deb https://deb.fenecon.de/debian-elts/ buster main contrib non-free" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
-    echo "deb https://deb.fenecon.de/raspbian/ buster main contrib non-free rpi" > "/tmp/raspi.list"
+    install_raspbian_apt_key;
+    echo "deb https://deb.fenecon.de/raspbian-legacy/ buster main contrib non-free rpi" > "/tmp/raspi.list"
   fi
   
   echo "update all packages"
@@ -241,7 +253,7 @@ function update_to_buster {
   start_service systemd-timesyncd
   
   # Make sure systemd resolved is properly activated
-  ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
+  ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf || true
 }
 
 function update_to_bullseye {
@@ -249,6 +261,7 @@ function update_to_bullseye {
   echo "deb https://deb.fenecon.de/debian/ bullseye main contrib non-free" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
+    install_raspbian_apt_key;
     echo "deb https://deb.fenecon.de/raspbian/ bullseye main contrib non-free rpi" > "/tmp/raspi.list"
   fi
   
@@ -275,7 +288,7 @@ function update_to_bullseye {
   start_service systemd-timesyncd
   
   # Make sure systemd resolved is properly activated
-  ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
+  ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf || true
 }
 
 function update_to_bookworm {
@@ -283,6 +296,7 @@ function update_to_bookworm {
   echo "deb https://deb.fenecon.de/debian/ bookworm main contrib non-free-firmware" > "/tmp/sources.list"
   
   if [[ "$HARDWARE" == *"BCM"* ]]; then
+    install_raspbian_apt_key;
     echo "deb https://deb.fenecon.de/raspbian/ bookworm main contrib non-free rpi" > "/tmp/raspi.list"
   fi
   
@@ -309,7 +323,7 @@ function update_to_bookworm {
   start_service systemd-timesyncd
   
   # Make sure systemd resolved is properly activated
-  ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf || true
+  ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf || true
 }
 
 ####### MAIN ############

@@ -164,19 +164,32 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 					.addLink(Language.DE, "https://fenecon.de/fenecon-industrial-s/")
 					.addLink(Language.EN, "https://www.fenecon.com/fenecon-industrial-s/")) //
 			.put("App.FENECON.ProHybrid.10", AppLink.create() //
-					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018").emptyLink(Language.EN) //
+					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018") //
+					.emptyLink(Language.EN) //
 			) //
 			.put("App.FENECON.ProHybrid.GW", AppLink.create() //
-					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018").emptyLink(Language.EN) //
+					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018") //
+					.emptyLink(Language.EN) //
 			) //
 			.put("App.FENECON.ProHybrid.9.10", AppLink.create() //
-					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018").emptyLink(Language.EN) //
+					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018") //
+					.emptyLink(Language.EN) //
 			) //
 			.put("App.FENECON.Mini.ES.3.3", AppLink.create() //
-					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018").emptyLink(Language.EN) //
+					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018") //
+					.emptyLink(Language.EN) //
 			) //
 			.put("App.FENECON.Mini.ES.3.6", AppLink.create() //
-					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018").emptyLink(Language.EN) //
+					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018") //
+					.emptyLink(Language.EN) //
+			) //
+			.put("App.FENECON.Pro.9.12", AppLink.create() //
+					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018") //
+					.emptyLink(Language.EN) //
+			) //
+			.put("App.FENECON.Pro.9.12.Cluster", AppLink.create() //
+					.addLink(Language.DE, "https://docs.fenecon.de/de/legacy.html#_2018") //
+					.emptyLink(Language.EN) //
 			) //
 
 			// Basis-Apps
@@ -198,6 +211,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 
 			// Allgemein
 			.put("App.TimeOfUseTariff.LuoxEnergy", AppLink.create() //
+					.addLink(Language.DE, "https://fenecon.de/fems-dynamischer-stromtarif")
+					.addLink(Language.EN, "https://www.fenecon.com/fems-time-of-use-tariff")) //
+			.put("App.Tariff.SpotTariff", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-dynamischer-stromtarif")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-time-of-use-tariff")) //
 			.put("App.TimeOfUseTariff.AncillaryCosts", AppLink.create() //

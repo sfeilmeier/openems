@@ -8,10 +8,10 @@
         "ENERGY_MANAGEMENT": "Energy management system",
         "FAQ": "Frequently asked questions (FAQ)",
         "LANGUAGE": "Select language:",
-        "THEME": "Theme",
         "NEW_UI": "New Design",
         "OPEN_EMS": "More about OpenEMS",
-        "PATCHNOTES": "Changes in the monitoring for this build"
+        "PATCHNOTES": "Changes in the monitoring for this build",
+        "THEME": "Theme"
     },
     "APP": {
         "FUNCTIONALITY_TEMPORARILY_NOT_AVAILABLE": "This function is temporarily not available in the app, please use the web app instead."
@@ -71,8 +71,8 @@
                     "KEY": "licence key",
                     "KEY_TYPO_MESSAGE_HINT": "<br><span class=\"warning\">Note</span>: When entering the licence key, watch out for possible typos: <ul><li>small L \"l\" vs. capital i \"I\" </li><li>zero \"0\" vs. capital o \"O\"</li></ul>We always recommend copying the licence key from the delivery note and pasting it into the field above instead of typing it in manually.<br>",
                     "MASTER_KEY_HINT": "<br><span class=\"warning\">Note</span>: The master key is used in the background. No key is displayed. If a licence key is available, please use it.<br>",
-                    "REGISTER_KEY": "register licence key",
                     "REGISTERED_KEY": "Registered licence keys",
+                    "REGISTER_KEY": "register licence key",
                     "SUCCESS_REGISTER_KEY": "successfully registered Key",
                     "USE_KEY": "redeem licence key",
                     "USE_MASTER_KEY": "Use masterkey",
@@ -146,10 +146,10 @@
                 "TIMESTAMP": "Timestamp"
             },
             "MORE": {
-                "MANUAL_COMMAND": "Manual command",
                 "MANUALPQ_POWER_SPECIFICATION": "Power specification",
                 "MANUALPQ_RESET": "Reset",
                 "MANUALPQ_SUBMIT": "Submit",
+                "MANUAL_COMMAND": "Manual command",
                 "REFU_INVERTER": "REFU Inverter",
                 "REFU_START": "Start",
                 "REFU_START_STOP": "Start/Stop inverter",
@@ -197,8 +197,10 @@
             "MAY": "May",
             "MON": "Mon",
             "MONTH": "Month",
-            "NO_DATA": "No data available",
             "NOV": "Nov",
+            "NO_DATA": "No data available",
+            "NO_LOCAL_DATA_INFO": "Historical data is currently unavailable locally",
+            "NO_LOCAL_DATA_NOTICE": "Please use the FENECON Online-Monitoring on <a class=\"ion-link\" href=\"http://www.fenecon.de\" target=\"_blank\">www.fenecon.de</a>.",
             "OCT": "Oct",
             "OTHER_PERIOD": "Other period",
             "PERIOD": "Period",
@@ -218,9 +220,7 @@
             "WED": "Wed",
             "WEEK": "Week",
             "YEAR": "Year",
-            "YESTERDAY": "Yesterday",
-            "NO_LOCAL_DATA_INFO": "Historical data is currently unavailable locally",
-            "NO_LOCAL_DATA_NOTICE": "Please use the FENECON Online-Monitoring on <a class=\"ion-link\" href=\"http://www.fenecon.de\" target=\"_blank\">www.fenecon.de</a>."
+            "YESTERDAY": "Yesterday"
         },
         "INDEX": {
             "EMERGENCY_RESERVE": {
@@ -240,15 +240,25 @@
                 "STORAGE_DISCHARGE": "Storage-Discharge",
                 "TITLE": "Energy monitor"
             },
+            "GRID": {
+                "CHARGE_FROM_GRID_ACTIVATE": "Allow active charging from the grid",
+                "CHARGE_FROM_GRID_DESCRIPTION": "<b>ATTENTION:</b> Actively charging the battery from grid beyond the technically necessary maintenance charging, requires an appropriate registration of the storage system. If in doubt, please verify with your installer. By pressing the blue \"Save\" button you confirm that this verification has been done.<br/><br/><b>Be aware:</b> Precondition for the German Renewable Energy Sources Act (EEG 2023) grant is that only energy from renewable sources and/or pit gas is stored in the battery. By activating this function the battery is charged with energy from the grid. This energy is, depending on the individual power-supply contract, probably generated from fossil and/or nuclear power sources. Thus we cannot guarantee that the battery is exclusively charged with energy gained from renewable sources and/or pit gas.",
+                "CHARGE_ONCE_GRID_PERMISSION_REQUIRED": "Active charging from the grid is not allowed. You can change this permission in grid settings.",
+                "DISCHARGE_ONCE_GRID_PERMISSION_REQUIRED": "Active discharge to the grid is not allowed. You can change this permission in grid settings.",
+                "DISCHARGE_TO_GRID_ACTIVATE": "Allow active discharge into the grid",
+                "DISCHARGE_TO_GRID_DESCRIPTION": "<b>ATTENTION:</b> Actively discharging the battery into the grid beyond the operating states required for technical reasons necessitates formal registration of the storage system. If in doubt, please consult your installer. By clicking the blue \"Save\" button, you confirm that this assessment has been carried out.<br/><br/><b>Note:</b> Activating this function enables the feed-in of energy from the battery storage system into the public grid. Depending on the subsidy program, remuneration model, metering concept, and applicable regulatory requirements, this may affect existing claims regarding subsidies, remuneration, or proof of origin.<br/><br/>In particular, it may be necessary to clearly attribute the fed-in electricity and verify its origin through metering. We cannot guarantee that using this function is compatible with the requirements of your specific subsidy or remuneration model.<br/><br/>Please review the implications with your installer, direct marketer, grid operator, or a qualified advisor before activation.",
+                "SETTINGS_LINK": "Go to grid settings"
+            },
             "RETROFITTING": {
+                "EXPANSION_RUNNING": "System operation limited - Capacity expansion is being prepared",
                 "INFORMATION_FOR_INSTANT_START": "The battery is charged or discharged at maximum power in order to reach a state of charge of {{targetSoc}} % as quickly as possible for an expansion. This can result in grid consumption or grid feed-in. This state of charge is maintained for {{targetTimeBuffer}} minutes, after which, or after the capacity has been expanded, the storage system returns to its regular operating state.",
                 "INFORMATION_FOR_PLANNED_EXPANSION": "The battery is expected to be charged/discharged from {{targetTime}} on {{targetDate}} to reach reach {{targetSoc}} % state of charge for the planned expansion. In the process there may be grid consumption or grid feed-in. This state of charge is maintained for {{targetTimeBuffer}} minutes, after which or after the capacity expansion, the storage system returns to the regular operating state.",
                 "INFORMATION_FOR_PLANNED_EXPANSION_INVALID_TARGET_DATE": "The battery is expected to be charged/discharged to reach {{targetSoc}} % state of charge for the planned expansion.",
                 "INSTANT_START": "Instant start",
+                "IN_REFERENCE_CYCLE": "Reference cycle active - battery is being prepared for capacity extension.",
                 "ON_DATE_AT_TIME": "on {{date}} at {{time}}",
                 "OPTIMAL": "Capacity expansion",
                 "PLANNED_EXPANSION": "Planned Expansion",
-                "IN_REFERENCE_CYCLE": "Reference cycle active - battery is being prepared for capacity extension.",
                 "PREPARING": "Prepare for Capacity Extension",
                 "REACHED_TARGET_SOC": "Ready for Capacity Extension",
                 "REFERENCING_OF_STORAGE": {
@@ -258,7 +268,9 @@
                 },
                 "SELECT_A_DATE": "Please select a date",
                 "TARGET_TIME_SPECIFIED": "Capacity Extension will be performed on {{targetDate}} at {{targetTime}}",
-                "UPDATE_TO_NEW_VERSION": "Update to the newest version to be able to use the battery retrofitting feature."
+                "UPDATE_TO_NEW_VERSION": "Update to the newest version to be able to use the battery retrofitting feature.",
+                "WARNING_CHECK": "I acknowledge this information",
+                "WARNING_MESSAGE": "In preparation for the capacity expansion, currently running system applications will be temporarily suspended. This includes, among others, Peak Shaving, Self-Consumption Optimization, and other system applications. Once preparations are complete, these will be available again as usual."
             },
             "SYSTEMUPDATE": "System update",
             "WIDGETS": {
@@ -280,19 +292,19 @@
                 "ENERIX_CONTROL": {
                     "CHARGE_CONSUMPTION": "<b>ATTENTION:</b> Actively charging the battery from grid beyond the technically necessary maintenance charging, requires an appropriate registration of the storage system. If in doubt, please verify with your installer. By pressing the blue \"Save\" button you confirm that this verification has been done.<br/><br/><b>Be aware:</b> Precondition for the German Renewable Energy Sources Act (EEG 2023) grant is that only energy from renewable sources and/or pit gas is stored in the battery. By activating this function the battery is charged with energy from the grid. This energy is, depending on the individual power-supply contract, probably generated from fossil and/or nuclear power sources. Thus we cannot guarantee that the battery is exclusively charged with energy gained from renewable sources and/or pit gas.",
                     "CHARGE_FROM_GRID": "Charge from grid",
+                    "CHARGE_FROM_GRID_ALLOWED": "Allow active charging from the grid",
                     "CONNECTED": "Connected",
+                    "DISCHARGE_TO_GRID_ACTIVATE": "Allow active discharge into the grid",
+                    "DISCHARGE_TO_GRID_DESCRIPTION": "<b>ATTENTION:</b> Actively discharging the battery into the grid beyond the operating states required for technical reasons necessitates formal registration of the storage system. If in doubt, please consult your installer. By clicking the blue \"Save\" button, you confirm that this assessment has been carried out.<br/><br/><b>Note:</b> Activating this function enables the feed-in of energy from the battery storage system into the public grid. Depending on the subsidy program, remuneration model, metering concept, and applicable regulatory requirements, this may affect existing claims regarding subsidies, remuneration, or proof of origin.<br/><br/>In particular, it may be necessary to clearly attribute the fed-in electricity and verify its origin through metering. We cannot guarantee that using this function is compatible with the requirements of your specific subsidy or remuneration model.<br/><br/>Please review the implications with your installer, direct marketer, grid operator, or a qualified advisor before activation.",
                     "DISCONNECTED": "Disconnected",
+                    "NOTE": "Please note:",
                     "NO_DISCHARGE": "No discharge",
                     "NO_INPUT": "No input",
                     "NO_OVERWRITE": "No overwrite",
-                    "NOTE": "Please note:",
                     "OVERWRITE": "Overwrite active",
                     "OVERWRITE_INFO": "When this function is activated, the standard settings for charging and discharging the storage system are replaced by external specifications from enerix Franchise GmbH & Co. KG. This may lead to deviations from the usual operating behavior - for example, electricity may be drawn from the grid even though the storage system is sufficiently charged.",
                     "OVERWRITE_MODE": "Overwrite mode",
-                    "READ_ONLY": "Read only",
-                    "DISCHARGE_TO_GRID_ACTIVATE": "Allow active discharge into the grid",
-                    "DISCHARGE_TO_GRID_DESCRIPTION": "<b>ATTENTION:</b> Actively discharging the battery into the grid beyond the operating states required for technical reasons necessitates formal registration of the storage system. If in doubt, please consult your installer. By clicking the blue \"Save\" button, you confirm that this assessment has been carried out.<br/><br/><b>Note:</b> Activating this function enables the feed-in of energy from the battery storage system into the public grid. Depending on the subsidy program, remuneration model, metering concept, and applicable regulatory requirements, this may affect existing claims regarding subsidies, remuneration, or proof of origin.<br/><br/>In particular, it may be necessary to clearly attribute the fed-in electricity and verify its origin through metering. We cannot guarantee that using this function is compatible with the requirements of your specific subsidy or remuneration model.<br/><br/>Please review the implications with your installer, direct marketer, grid operator, or a qualified advisor before activation.",
-                    "CHARGE_FROM_GRID_ALLOWED": "Allow active charging from the grid"
+                    "READ_ONLY": "Read only"
                 },
                 "EVCS": {
                     "ACTIVATE_CHARGING": "Activate the charging station",
@@ -325,8 +337,7 @@
                     "ENERGY_SINCE_BEGINNING": "Energy since the last charge start",
                     "ENFORCE_CHARGING": "Enforce charging",
                     "ERROR": "Error",
-                    "KEBA_WARNING": "Hinweis: Bei der Nutzung dieses Modus kann es aktuell in Verbindung mit FEMS und der KEBA P40 zu einem Fehler kommen. Wir empfehlen daher, diesen Modus vorübergehend nicht zu verwenden und stattdessen den Modus „Automatisch“ mit „Minimale Beladung garantieren“ aktiviert zu wählen. FENECON und KEBA arbeiten bereits mit Hochdruck an einer Lösung.",
-                    "LINK_TO_DOCUMENTATION": "Mehr Informationen",
+                    "FORCE_CHARGE": "Fast Charging",
                     "FORCE_CHARGE_MODE": {
                         "INFO": "In this mode the loading of the car is enforced, i.e. it is always guaranteed that the car will be charged, even if the charging station needs to access grid power.",
                         "MAX_CHARGING": "Maximum charging power",
@@ -338,15 +349,17 @@
                     "FORCE_THREE_PHASE": "3-phase",
                     "HYSTERESIS": "Minimum switching time of the charging station active",
                     "HYSTERESIS_INFO": "For preventing charging interruptions due to frequent starting/pausing of the charing process, the charging mode currently selected will continue for the next few minutes.",
+                    "KEBA_WARNING": "Note: When using this mode, an error can currently occur in combination with FEMS and the KEBA P40. We therefore recommend not using this mode for the time being and instead selecting the “Automatically” mode with “Guarantee minimum charge” enabled. {{ environment }} and KEBA are already working at full speed on a solution. <a class=\"ion-link\" href={{link}} target=\"_blank\">More information</a>",
                     "MAX_ENERGY_RESTRICTION": "Limit maximum energy per charge",
+                    "MINIMUM": "PV Surplus with guaranteed charge",
+                    "NOT_AUTHORIZED": "Not authorized",
+                    "NOT_CHARGING": "Not charging",
+                    "NOT_READY_FOR_CHARGING": "Not ready for charging",
                     "NO_CONNECTION": {
                         "DESCRIPTION": "No connection to the charging station.",
                         "HELP1": "Check if the charging station is switched on and can be reached via the network.",
                         "HELP1_1": "The IP of the charging station appears when switching on again"
                     },
-                    "NOT_AUTHORIZED": "Not authorized",
-                    "NOT_CHARGING": "Not charging",
-                    "NOT_READY_FOR_CHARGING": "Not ready for charging",
                     "OPTIMIZED_CHARGE_MODE": {
                         "CHARGING_PRIORITY": {
                             "CAR": "Car",
@@ -367,21 +380,32 @@
                     "READY_FOR_CHARGING": "Ready for charging",
                     "STARTING": "Starting",
                     "STATUS": "Status",
+                    "SURPLUS": "PV Surplus",
+                    "TASKS": "Tasks",
                     "TOTAL_CHARGE": "Total charge",
                     "TOTAL_CHARGING_POWER": "Total chargingpower",
                     "UNCONTROLLABLE": "This charging station can not be controlled.",
                     "UNKNOWN": "Unknown",
                     "UNPLUGGED": "Unplugged",
-                    "ZERO": "No Charge",
-                    "MINIMUM": "PV Surplus with guaranteed charge",
-                    "SURPLUS": "PV Surplus",
-                    "FORCE_CHARGE": "Fast Charging",
-                    "TASKS": "Tasks"
+                    "ZERO": "No Charge"
+                },
+                "EVSE": {
+                    "CHARGE_MODE": "Base mode",
+                    "KEBA_WARNING": "Note: When using this mode, an error can occur in combination with FEMS and the KEBA P40. We therefore recommend not using this mode for now and instead temporarily using the “PV Surplus with guaranteed charge” or “Fast Charging” mode. {{ environment }} and KEBA are already working at full speed on a solution. <a class=\"ion-link\" href={{link}} target=\"_blank\">More information</a>",
+                    "SCHEDULE": {
+                        "ADD_TASK": "Add task",
+                        "SCHEDULE": "Schedule"
+                    },
+                    "VEHICLE_ID_ERROR": "The vehicle ID could not be found. Please check the configuration. All registered vehicles are displayed."
                 },
                 "FIX_DIGITAL_OUTPUT": "Digital Outputcontroller",
                 "GRID_OPTIMIZED_CHARGE": {
                     "CHARGING_DELAYED": "Charging delayed",
                     "CONSIDER_GRID_FEED_IN_LIMIT": "Consider maximum grid feed-in",
+                    "EEG_2025_APP_LINK": "To the app",
+                    "EEG_2025_APP_NAME": "EEG 2025",
+                    "EEG_2025_DESCRIPTION_INSTALLED": "The EEG 2025 app is active.<br/><br/>During negative electricity market prices, feed-in is automatically reduced as much as possible. If excess energy is still available, it will continue to be fed into the grid and will not be lost.",
+                    "EEG_2025_DESCRIPTION_NOT_INSTALLED": "Is your system affected by the EEG 2025 regulation?<br/><br/>With the EEG 2025 app, feed-in during negative electricity market prices is automatically reduced as much as possible. If excess energy is still available, it will continue to be fed into the grid and will not be lost.",
                     "END_TIME": "End time",
                     "END_TIME_DESCRIPTION": "The charging does not take place with the maximum amount for a few hours, but steadily over a longer period of time.",
                     "END_TIME_DETAILED_DESCRIPTION": "The charging does not take place with the maximum amount for a few hours, but steadily with a maximum of {{ maxChargingPowerW }} until {{ endTime }}.",
@@ -395,10 +419,12 @@
                         "BATTERY_CHARGE_GRID_LIMIT_DESCRIPTION": "The maximum grid feed-in, above which battery charging is increased (as far as possible) is below the maximum permitted grid feed-in in order to prevent premature production curtailment.",
                         "PRIORITY_DESCRIPTION": "The minimum charge has a higher priority than the maximum charge"
                     },
+                    "INFO_DISABLED_BY_TIME_OF_USE": "Note: Grid-optimized charging is now integrated into the “Time-of-Use Tariff” app. The settings configured here will continue to remain effective.",
+                    "LIMITED_FUNCTIONALITY": "Limited functionality",
                     "LOW": "Low",
                     "MAXIMUM_CHARGE": "Maximum charge",
-                    "MAXIMUM_GRID_FEED_IN": "Maximum allowed grid feed-in",
                     "MAXIMUM_GRIDSELL_WITH_CHARGE": "Maximum grid feed-in through charging",
+                    "MAXIMUM_GRID_FEED_IN": "Maximum allowed grid feed-in",
                     "MEDIUM": "Medium",
                     "MINIMUM_CHARGE": "Minimal charge",
                     "RISK_DESCRIPTION": {
@@ -421,24 +447,18 @@
                     "RISK_PROPENSITY": "Risk propensity",
                     "SETTING_ONLY_VISABLE_FOR_INSTALLER": "This setting is only visible to the installer",
                     "STATE": {
+                        "ALLOWED_FEED_IN_LIMIT_TOO_LOW_DESCRIPTION": "Limited or delayed charging is not possible because no grid feed-in or only a small amount of grid feed-in is allowed.",
                         "AVOID_LOW_CHARGING": "Low charging avoided",
                         "CHARGE_LIMIT_ACTIVE": "Charge limit active",
                         "END_TIME_NOT_CALCULATED": "End time not calculated",
                         "GRID_FEED_IN_LIMITATION_IS_AVOIDED": "Grid-Feed-in limitation is avoided",
+                        "NOT_DEFINED": "Not defined",
                         "NO_LIMIT_ACTIVE": "No charge limit active",
                         "NO_LIMIT_POSSIBLE": "No limitation possible (restricted by controls with higher priority)",
-                        "NOT_DEFINED": "Not defined",
                         "PASSED_END_TIME": "End time of limited charging exceeded",
-                        "STORAGE_ALREADY_FULL": "Storage already full",
-                        "ALLOWED_FEED_IN_LIMIT_TOO_LOW_DESCRIPTION": "Limited or delayed charging is not possible because no grid feed-in or only a small amount of grid feed-in is allowed."
+                        "STORAGE_ALREADY_FULL": "Storage already full"
                     },
-                    "LIMITED_FUNCTIONALITY": "Limited functionality",
-                    "STORAGE_CAPACITY": "Storage capacity (only visible for admin)",
-                    "INFO_DISABLED_BY_TIME_OF_USE": "Note: Grid-optimized charging is now integrated into the “Time-of-Use Tariff” app. The settings configured here will continue to remain effective.",
-                    "EEG_2025_APP_NAME": "EEG 2025",
-                    "EEG_2025_DESCRIPTION_NOT_INSTALLED": "Is your system affected by the EEG 2025 regulation?<br/><br/>With the EEG 2025 app, feed-in during negative electricity market prices is automatically reduced as much as possible. If excess energy is still available, it will continue to be fed into the grid and will not be lost.",
-                    "EEG_2025_DESCRIPTION_INSTALLED": "The EEG 2025 app is active.<br/><br/>During negative electricity market prices, feed-in is automatically reduced as much as possible. If excess energy is still available, it will continue to be fed into the grid and will not be lost.",
-                    "EEG_2025_APP_LINK": "To the app"
+                    "STORAGE_CAPACITY": "Storage capacity (only visible for admin)"
                 },
                 "HEAT": {
                     "CHANGES_MY_PV_INFO": "You can make changes to the settings of your AC-Thor heating element in your MyPV app.",
@@ -452,8 +472,47 @@
                     "TEMPERATURE": "Current temperature",
                     "TEMPERATURE_UNIT": "Temperature in °C"
                 },
+                "HEATINGELEMENT": {
+                    "ACTIVED_FORCED_LIMIT": "Active (additional energy)",
+                    "ACTIVE_FORCED": "Active (Minimum runtime)",
+                    "ACTIVE_LEVEL": "Active level",
+                    "CALIBRATION": "Calibration",
+                    "CALIBRATION_DESCRIPTION": "The heating element is calibrated to get the power of the single levels of the meter",
+                    "DONE": "Done",
+                    "ENDTIME": "Endtime",
+                    "ENERGY": "Energy",
+                    "ENERGY_SINCE_BEGINNING": "Energy since beginning",
+                    "GUARANTEE_HEATING": "Guarantee minimum heating energy",
+                    "GUARANTEE_MINIMUM_HEATING": "Guarantee minimum heating time",
+                    "GUARANTEE_MODE": "Guarantee mode",
+                    "GUARANTEE_NONE": "None",
+                    "HEATINGELEMENT": "Heating element",
+                    "HEATING_POWER": "Heating power",
+                    "LEVEL_ONE": "Level 1",
+                    "LEVEL_THREE": "Level 3",
+                    "LEVEL_TWO": "Level 2",
+                    "MESSAGE_UNREACHABLE": "The energy limit can't be reached in time",
+                    "MINIMAL_ENERGY_AMOUNT": "Minimal charge amount",
+                    "MINIMAL_ENERGY_LIMIT": "Minimum energy limit",
+                    "MINIMUM_DURATION": "Minimum duration",
+                    "MINIMUM_ENERGY": "Minimum energy",
+                    "MINIMUM_RUN_TIME": "Minimum runtime",
+                    "PRIORITY": "Priority",
+                    "SET_ENDTIME": "Set end time",
+                    "TIME": "Time",
+                    "TIME_COUNTDOWN": "Time until start",
+                    "UNREACHABLE": "Unreachable"
+                },
                 "HEAT_PUMP": {
                     "ABOVE_SOC": "and from the state of charge of",
+                    "AUTOMATIC_DESCRIPTION": "Set your thresholds for the PV surplus mode",
+                    "BASE_MODE_DESCRIPTIONS": {
+                        "AUTOMATIC": "Depending on the set thresholds for grid purchase and feed-in, the individual modes are switched. (The thresholds can be changed under Settings)",
+                        "LOCK": "This operating state limits the power consumption of the heat pump according to the heat pump settings to 0 kW or 4.2 kW.",
+                        "NORMAL_OPERATION": "The heat pump operates in a demand-driven manner within the regular power range.",
+                        "SWITCH_ON_COM": "The heat pump is switched on when the excess feed-in exceeds the entered value and the state of charge of the storage system is above the entered value.",
+                        "SWITCH_ON_REC": "When activated, the heat pump increases its output and utilizes available energy more intensively for heat generation."
+                    },
                     "BELOW_SOC": "and below state of charge of",
                     "GRID_BUY": "From grid purchase of",
                     "GRID_SELL": "From excess feed-in of",
@@ -462,52 +521,13 @@
                     "MORE_THAN_HP_POWER": "The value must not be lower than the maximum output of the heat pump",
                     "NORMAL_OPERATION": "Normal operation",
                     "NORMAL_OPERATION_SHORT": "Normal",
+                    "OPERATING_STATUS": "Operating status",
                     "RELATION_ERROR": "Switch-on command excess value must be greater than switch-on recommended value",
                     "SWITCH_ON_COM": "Switch-on command",
                     "SWITCH_ON_COM_SHORT": "Command",
                     "SWITCH_ON_REC": "Switch-on recommendation",
                     "SWITCH_ON_REC_SHORT": "Recommendation",
-                    "UNDEFINED": "Undefined",
-                    "OPERATING_STATUS": "Operating status",
-                    "AUTOMATIC_DESCRIPTION": "Set your thresholds for the PV surplus mode",
-                    "BASE_MODE_DESCRIPTIONS": {
-                        "SWITCH_ON_COM": "The heat pump is switched on when the excess feed-in exceeds the entered value and the state of charge of the storage system is above the entered value.",
-                        "SWITCH_ON_REC": "When activated, the heat pump increases its output and utilizes available energy more intensively for heat generation.",
-                        "NORMAL_OPERATION": "The heat pump operates in a demand-driven manner within the regular power range.",
-                        "AUTOMATIC": "Depending on the set thresholds for grid purchase and feed-in, the individual modes are switched. (The thresholds can be changed under Settings)",
-                        "LOCK": "This operating state limits the power consumption of the heat pump according to the heat pump settings to 0 kW or 4.2 kW."
-                    }
-                },
-                "HEATINGELEMENT": {
-                    "ACTIVE_FORCED": "Active (Minimum runtime)",
-                    "ACTIVE_LEVEL": "Active level",
-                    "LEVEL_ONE": "Level 1",
-                    "LEVEL_TWO": "Level 2",
-                    "LEVEL_THREE": "Level 3",
-                    "ACTIVED_FORCED_LIMIT": "Active (additional energy)",
-                    "CALIBRATION": "Calibration",
-                    "CALIBRATION_DESCRIPTION": "The heating element is calibrated to get the power of the single levels of the meter",
-                    "DONE": "Done",
-                    "ENDTIME": "Endtime",
-                    "SET_ENDTIME": "Set end time",
-                    "ENERGY": "Energy",
-                    "ENERGY_SINCE_BEGINNING": "Energy since beginning",
-                    "GUARANTEE_MODE": "Guarantee mode",
-                    "GUARANTEE_HEATING": "Guarantee minimum heating energy",
-                    "GUARANTEE_MINIMUM_HEATING": "Guarantee minimum heating time",
-                    "MINIMUM_ENERGY": "Minimum energy",
-                    "MINIMUM_DURATION": "Minimum duration",
-                    "GUARANTEE_NONE": "None",
-                    "HEATING_POWER": "Heating power",
-                    "HEATINGELEMENT": "Heating element",
-                    "MESSAGE_UNREACHABLE": "The energy limit can't be reached in time",
-                    "MINIMAL_ENERGY_AMOUNT": "Minimal charge amount",
-                    "MINIMAL_ENERGY_LIMIT": "Minimum energy limit",
-                    "MINIMUM_RUN_TIME": "Minimum runtime",
-                    "PRIORITY": "Priority",
-                    "TIME": "Time",
-                    "TIME_COUNTDOWN": "Time until start",
-                    "UNREACHABLE": "Unreachable"
+                    "UNDEFINED": "Undefined"
                 },
                 "INFO_STORAGE_FOR_CHARGE": "Negative values correspond to storage charging",
                 "INFO_STORAGE_FOR_DISCHARGE": "Positive values correspond to storage discharge",
@@ -541,40 +561,42 @@
                     "MORE_THAN_HP_POWER": "Value must not be lower than the maximum power of the controlled device",
                     "OTHER": "Other",
                     "RELATION_ERROR": "Threshold must be greater than the switched load power",
+                    "SWITCHED_LOAD_POWER": "Switched load power",
                     "SWITCH_OFF_ABOVE": "Switch off above",
                     "SWITCH_OFF_BELOW": "Switch off below",
                     "SWITCH_ON_ABOVE": "Switch on above",
-                    "SWITCH_ON_BELOW": "Switch on below",
-                    "SWITCHED_LOAD_POWER": "Switched load power",
-                    "THRESHOLD": "Threshold",
                     "SWITCH_ON_ABOVE_THRESHOLD": "Switch on above threshold",
-                    "SWITCH_ON_BELOW_THRESHOLD": "Switch on below threshold"
+                    "SWITCH_ON_BELOW": "Switch on below",
+                    "SWITCH_ON_BELOW_THRESHOLD": "Switch on below threshold",
+                    "THRESHOLD": "Threshold"
                 },
                 "STORAGE": {
                     "AMBIENT_TEMPERATURE": "Ambient temperature",
                     "BATTERY_DC": "Batterie - DC",
                     "GRID_CHARGE": "Activate maintenance of the emergency power reserve from the grid",
+                    "GRID_CHARGE_ALLOWED_INFO": "Your backup reserve is maintained by recharging from the grid. If you don't want this, you can disable the permission in grid settings.",
+                    "GRID_CHARGE_NOT_ALLOWED_INFO": "Your backup reserve is not maintained by charging from the grid. If you do want this, you can enable the permission in grid settings.",
                     "GRID_CHARGE_WARNING": "The storage system can actively recharge from the grid to maintain the set emergency power reserve in order to compensate for losses due to internal self-consumption in the event of a prolonged absence of generation. <br/><br/>ATTENTION: Actively charging the battery from grid beyond the technically necessary maintenance charging, requires an appropriate registration of the storage system. If in doubt, please verify with your installer. By pressing the blue \"Save\" button you confirm that this verification has been done.<br/><br/>Be aware: precondition for German \"Gesetz für den Ausbau erneuerbarer Energien (EEG)\" grant is, that only energy from renewable sources and/or pit gas is stored in the battery. By activating this function, the battery is charged with energy from grid. This energy is, depending on the individual power-supply contract, probably made from fossil sources and/or nuclear power plants. Because of this we can not guarantee, that the battery is only charged with energy from renewable sources and/or pit gas.",
                     "INVERTER": "Inverter",
                     "TOTAL_AC": "Total AC",
                     "TOTAL_DC": "Total DC"
                 },
                 "SYSTEM": {
+                    "EXECUTE": "Execute",
                     "INDUSTRIAL": {
-                        "NOTE": "Starts or stops the entire system, including battery inverter and batteries",
-                        "RESET": "RESET",
                         "BMS_HARD_RESET": "BMS hard reset",
-                        "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "System error acknowledge:",
-                        "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "includes system components, batteries, inverters, ESS",
-                        "MAINTENANCE_WINDOW": "Maintenance window",
                         "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Cooling unit reset:",
                         "CLEAR_COOLING_UNIT_ERRORS_TEXT": "necessary for cooling unit errors",
-                        "F2B_UPDATE_HEADER": "F2B Update"
+                        "F2B_UPDATE_HEADER": "F2B Update",
+                        "MAINTENANCE_WINDOW": "Maintenance window",
+                        "NOTE": "Starts or stops the entire system, including battery inverter and batteries",
+                        "RESET": "RESET",
+                        "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "System error acknowledge:",
+                        "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "includes system components, batteries, inverters, ESS"
                     },
-                    "RPC_SUCCESS": "Command execution successfully",
+                    "OVERALL_SYSTEM": "Overall system",
                     "RPC_FAILED": "Command execution failed",
-                    "EXECUTE": "Execute",
-                    "OVERALL_SYSTEM": "Overall system"
+                    "RPC_SUCCESS": "Command execution successfully"
                 },
                 "TIME_OF_USE_TARIFF": {
                     "CHARGE_FROM_GRID_ACTIVATE": "Activate charge from the grid",
@@ -583,32 +605,23 @@
                     "CONTROL_MODE_DESCRIPTION": {
                         "CHARGE_CONSUMPTION": "By actively charging the battery from grid in periods of low electricity prices, buying energy in periods with high price can be avoided.<br/><br/>ATTENTION: Actively charging the battery from grid beyond the technically necessary maintenance charging, requires an appropriate registration of the storage system. If in doubt, please verify with your installer. By pressing the blue \"Save\" button you confirm that this verification has been done.<br/><br/>Be aware: Precondition for the German Renewable Energy Sources Act (EEG 2023) grant is that only energy from renewable sources and/or pit gas is stored in the battery. By activating this function the battery is charged with energy from the grid. This energy is, depending on the individual power-supply contract, probably generated from fossil and/or nuclear power sources. Thus we cannot guarantee that the battery is exclusively charged with energy gained from renewable sources and/or pit gas."
                     },
+                    "EEG_2025_DESCRIPTION": "The graph shows the expected future grid feed-in and the projected feed-in tariff under the EEG 2025. This is taken into account when calculating the optimal operating mode. The system attempts to keep grid feed-in as low as possible during periods when no tariff is paid. Please note that the forecast is continuously recalculated and may therefore change throughout the day.",
+                    "EEG_2025_HEADER": "EEG 2025 Forecast",
                     "POWER_SOC_CHART_TITLE": "Forecasts",
                     "PRICE": "Current price",
                     "STATE": {
+                        "AVOID_GRID_SELL_LIMIT": "Avoid feed-in limit",
                         "BALANCING": "Self-consumption optimization",
                         "CHARGE_GRID": "Charge from grid",
-                        "DELAY_DISCHARGE": "Delay discharge",
-                        "PEAK_SHAVING": "Peak shaving",
                         "DELAY_CHARGE": "Delay charge",
-                        "LIMIT_CHARGE": "Limit charge",
-                        "AVOID_GRID_SELL_LIMIT": "Avoid feed-in limit",
+                        "DELAY_DISCHARGE": "Delay discharge",
                         "DISCHARGE_CONSUMPTION": "Discharge to consumption",
-                        "DISCHARGE_GRID": "Discharge to grid"
-                    },
-                    "EEG_2025_HEADER": "EEG 2025 Forecast",
-                    "EEG_2025_DESCRIPTION": "The graph shows the expected future grid feed-in and the projected feed-in tariff under the EEG 2025. This is taken into account when calculating the optimal operating mode. The system attempts to keep grid feed-in as low as possible during periods when no tariff is paid. Please note that the forecast is continuously recalculated and may therefore change throughout the day."
+                        "DISCHARGE_GRID": "Discharge to grid",
+                        "LIMIT_CHARGE": "Limit charge",
+                        "PEAK_SHAVING": "Peak shaving"
+                    }
                 },
-                "TWO_WAY_INFO_GRID": "Negative values correspond to grid feed-in, Positive values correspond to mains supply",
-                "EVSE": {
-                    "SCHEDULE": {
-                        "SCHEDULE": "Schedule",
-                        "ADD_TASK": "Add task"
-                    },
-                    "CHARGE_MODE": "Base mode",
-                    "VEHICLE_ID_ERROR": "The vehicle ID could not be found. Please check the configuration. All registered vehicles are displayed.",
-                    "KEBA_WARNING": "Hinweis: Bei der Nutzung dieses Modus kann es in Verbindung mit FEMS und der KEBA P40 zu einem Fehler kommen. Wir empfehlen daher, diesen Modus derzeit nicht zu verwenden und stattdessen vorübergehend den Modus „PV-Überschuss mit garantierter Beladung“ oder „Schnellladen“ zu nutzen. FENECON und KEBA arbeiten bereits mit Hochdruck an einer Lösung."
-                }
+                "TWO_WAY_INFO_GRID": "Negative values correspond to grid feed-in, Positive values correspond to mains supply"
             }
         },
         "NETWORK": {
@@ -675,6 +688,7 @@
         "CHANGE_FAILED": "Change failed",
         "CHARGE": "Charge",
         "CHARGE_DISCHARGE": "Charge/Discharge",
+        "CHARGE_ONCE": "Charge Once",
         "COMPONENT_COUNT": "Number of components",
         "COMPONENT_INACTIVE": "Component is not active!",
         "CONNECTION_LOST": "Connection lost. Trying to reconnect.",
@@ -699,6 +713,7 @@
         "DIGITAL_INPUTS": "Digital Inputs",
         "DIRECT_CONSUMPTION": "Direct consumption",
         "DISCHARGE": "Discharge",
+        "DISCHARGE_ONCE": "Discharge Once",
         "EDIT": "Edit",
         "ENERGY_LIMIT": "Energy limit",
         "FAULT": "Fault",
@@ -710,6 +725,8 @@
             "REQUIRED": "Is required"
         },
         "FROM": "From",
+        "GENERATOR_ON": "Generator active",
+        "GENERATOR_SUPPLY": "Generator supply",
         "GRID": "Grid",
         "GRID_BUY": "Buy from grid",
         "GRID_BUY_ADVANCED": "Buy",
@@ -718,6 +735,7 @@
         "GRID_SELL_ADVANCED": "Sell",
         "GRID_SELL_PRICE": "Feed-in compensation",
         "HEAT_PUMP": "Heat pump",
+        "HELP": "Help",
         "HISTORY": "History",
         "INACTIVE": "Inactive",
         "INFO": "Info",
@@ -725,6 +743,8 @@
         "INSTALL": "Install",
         "INSUFFICIENT_RIGHTS": "Insufficient rights",
         "LIGHT": "Light",
+        "LINK": "Read more by following this link (German):",
+        "LINK_TEXT": "View the changelog for the beta test",
         "LIVE": "Live",
         "LOAD": "Load",
         "MANAGED_CONSUMPTION": "Managed consumption",
@@ -747,13 +767,13 @@
             "SEPTEMBER": "September"
         },
         "MORE": "More...",
+        "NAVIGATION_DETAILS": "This Help-Chip provides you with assistance. Read more about changes, get explanations and info, including the extended functionalities of your KEBA P40 charging station.",
+        "NAVIGATION_INFO": "We are currently redesigning our monitoring and app, optimizing their navigation and functionality.",
         "NO": "No",
         "NO_VALUE": "No value",
         "NUMBER_OF_COMPONENTS": "Number of Components",
         "OFF": "Off",
         "OFF_GRID": "No Grid Connection!",
-        "GENERATOR_SUPPLY": "Generator supply",
-        "GENERATOR_ON": "Generator active",
         "OK": "ok",
         "ON": "On",
         "OPEN": "Open",
@@ -788,10 +808,13 @@
             "HOUR": ""
         },
         "SUM_STATE": "System state",
+        "SURVEY": "You can share your feedback on the beta test with us here:",
+        "SURVEY_LINK": "Take part in the beta test survey",
         "SYSTEM": "system",
         "SYSTEM_OUTAGE": "Due to maintenance work the online monitoring is temporarily unavailable. Please try again later. For more information see",
         "SYSTEM_STATE": "System state",
         "SYSTEM_THEME": "System",
+        "TARGET_SOC": "Target state of charge",
         "THEME_SELECTION": {
             "DESCRIPTION": "Our monitoring is now available in <b>dark mode</b>.<hr>Simply switch over and get started!",
             "TITLE": "Lights off, comfort on!"
@@ -822,17 +845,7 @@
             "TUESDAY": "Tuesday",
             "WEDNESDAY": "Wednesday"
         },
-        "YES": "Yes",
-        "NAVIGATION_INFO": "We are currently redesigning our monitoring and app, optimizing their navigation and functionality.",
-        "NAVIGATION_DETAILS": "This Help-Chip provides you with assistance. Read more about changes, get explanations and info, including the extended functionalities of your KEBA P40 charging station.",
-        "LINK": "Read more by following this link (German):",
-        "LINK_TEXT": "View the changelog for the beta test",
-        "SURVEY": "You can share your feedback on the beta test with us here:",
-        "SURVEY_LINK": "Take part in the beta test survey",
-        "HELP": "Help",
-        "CHARGE_ONCE": "Charge Once",
-        "DISCHARGE_ONCE": "Discharge Once",
-        "TARGET_SOC": "Target state of charge"
+        "YES": "Yes"
     },
     "GRID_STATES": {
         "CONSUMPTION_LIMITATION": "Charge from grid limitation",
@@ -855,15 +868,14 @@
         "IS_OFFLINE": "OpenEMS is offline!",
         "LOGGED_IN_AS": "Logged in as",
         "NO_EDGE_AVAILABLE": "You have not added any {{edgeShortName}} yet.",
-        "NO_EDGE_FOR_USER": "Sorry, no {{value}} has been associated with your account yet.",
+        "NO_EDGE_FOR_USER": "Sorry, no {{ edgeShortName }} has been associated with your account yet.",
         "OFFLINE_SINCE": "Offline since",
         "TO_ENERGYMONITOR": "To Energymonitor...",
         "TYPE": "Type",
-        "VISIBLE_HERE_AFTER_INSTALLATION": "After your {{value}} has been commissioned by an installer, you will see it at this point."
+        "VISIBLE_HERE_AFTER_INSTALLATION": "After your {{ edgeShortName }} has been commissioned by an installer, you will see it at this point."
     },
     "INSTALLATION": {
         "ALIAS_WITH_LABEL": "Alias {{label}}{{number}}",
-        "ATTENTION_MESSAGE": "Note that the selection cannot be undone afterwards.",
         "BACK": "Back",
         "CLICK_RECOMMENDATION": "Please click on the \"Add\" button below if you want to commission a {{ edgeShortName }}.",
         "COMPLETE": "To Online-Monitoring",
@@ -878,19 +890,19 @@
             "SUB_TITLE": "You have successfully commisioned the {{ value }}.",
             "TITLE": "Set-up complete"
         },
+        "CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION": {
+            "HEADER": "Communication type for the grid meter",
+            "IP_ADDRESS": "IP address",
+            "PORT": "Port",
+            "RS485": "RS485",
+            "TCP_IP": "TCP/IP"
+        },
         "CONFIGURATION_COMMERCIAL_MODBUS_BRIDGE": {
             "HEADER": "Select the type of Communication"
         },
         "CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT": {
             "RS485_LABEL": "RS485 (4-RJ45-Ports) - Anschluss: FEMS",
             "TCP_IP_LABEL": "TCP/IP (6-RJ45-Ports) - Anschluss: Internal"
-        },
-        "CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION": {
-            "HEADER": "Communication type for the grid meter",
-            "RS485": "RS485",
-            "TCP_IP": "TCP/IP",
-            "IP_ADDRESS": "IP address",
-            "PORT": "Port"
         },
         "CONFIGURATION_EMERGENCY_RESERVE": {
             "COUPLER_TITLE": "Which fieldbus coupler is installed in your Offgrid network point?",
@@ -901,7 +913,6 @@
             "INFO": "When using the generator, please note: the charge level of the emergency power reserve must be greater than (or equal to) the specified charge level required to start the generator (see details below).",
             "IS_ACTIVATED": "Emergency power reserve active?",
             "IS_ENABLED": "Should the Emergency power function be activated?",
-            "RECENT": "Current:",
             "TITLE": "Emergency power reserve",
             "VALUE": "Value [%]"
         },
@@ -914,9 +925,9 @@
                     "OPTIONAL": "Optional",
                     "STANDARD": "standard scope of delivery"
                 },
-                "WITH_CT": "Home 3-phase sensor with current transformer 120A ({{type}})",
                 "WITHOUT_CT": "Home 3-phase sensor without current transformer (optional)",
-                "WITHOUT_CT_STANDARD_DELIVERY": "Home 3-phase sensor without current transformer (Standard delivery)"
+                "WITHOUT_CT_STANDARD_DELIVERY": "Home 3-phase sensor without current transformer (Standard delivery)",
+                "WITH_CT": "Home 3-phase sensor with current transformer 120A ({{type}})"
             },
             "TITLE": "Selection of energy flow direction meter"
         },
@@ -930,7 +941,6 @@
             "BATTERY": "Battery",
             "BATTERY_INTERFACE": "Battery interface",
             "BATTERY_INVERTER": "Battery-Inverter",
-            "COMMERCIAL_BATTERY_NOTE": "If you now click on “NEXT ->”, you have around 15 minutes to complete the rest of the commissioning process. After that, the BMS goes into a “time-out” set for safety reasons. Normally, this time is sufficient to complete the last steps of the commissioning in peace.\nIf there is still not enough time, you can start the commissioning again from the beginning.",
             "COMMUNICATION_WITH_BATTERY": "Communication with Battery",
             "COMMUNICATION_WITH_BATTERY_INVERTER": "Communication with Battery-Inverter",
             "COMMUNICATION_WITH_METER": "Communication with the Meter",
@@ -939,9 +949,7 @@
             "DESCRIPTION_1": "To verify that all components of your system are set up correctly,",
             "DESCRIPTION_2": "the configuration and the subsequent functional tests can take up to 10 minutes to complete.",
             "EMERGENCY_CAPACITY_RESERVE": "Emergency control reserve",
-            "EMERGENCY_POWER_CONSUMER": "Emergency power consumer",
             "ERROR": "Error",
-            "ESS_LIMITER_ALIAS": "ESS Limiter for §14a",
             "EXISTING_CONFIGURATION": "An existing configuration was found. You can overwrite these by starting the configuration process manually.",
             "FIELD_BUS_COUPLER": "Fieldbus coupler",
             "FINISH_FUNCTION_TEST": "Finished function tests for the installed components",
@@ -958,20 +966,14 @@
             },
             "LEGEND": "Legend",
             "NOT_YET_CONFIGURED": "Not yet configured / checked",
-            "NOTE": "Please note:",
             "PARTIAL_CONFIGURATION": "Not all components could be configured correctly.",
-            "POWER": "Power",
             "PRE_CONFIGURED": "Preconfigured / Warning",
-            "PREPARE_BATTERY_EXTENSION": "Battery retrofitting",
-            "PROGNOSIS": "Prognosis",
             "RELAY_BOARD": "Relay board",
             "SELF_CONSUMPTION": "Self-consumption optimization",
             "START": "Start configuration",
             "START_FUNCTION_TEST": "Initiated function tests for the installed components",
             "STORAGE_SYSTEM": "Energy storage system",
             "SUCCESSFULLY_CONFIGURED": "Successfully configured / checked",
-            "SURPLUS_ENERGY_FEEDIN": "Surplus energy feed-in",
-            "TIME_OF_USE_TARIFF": "Time-of-use tariff",
             "TITLE": "Configuration",
             "UNDEFINED_COMPONENT_CONFIGURATOR": "Component configurator is undefined",
             "WAGO_BRIDGE": "Wago Bridge",
@@ -995,10 +997,9 @@
             "VALUE": "Value [A]"
         },
         "CONFIGURATION_MPPT_SELECTION": {
-            "NOTE": "Additional generators can then be configured via the App Center.",
-            "CONNECTION_CHECK_LABEL": "Have all connections been checked?"
+            "CONNECTION_CHECK_LABEL": "Have all connections been checked?",
+            "NOTE": "Additional generators can then be configured via the App Center."
         },
-        "CONFIGURATION_MPPT_SELECTION_NOTE": "Additional generators can then be configured via the App Center.",
         "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
             "SLAVE_COUNT_TITLE": "Information about the number of slaves",
             "SLAVE_INSTALLATION_TITLE": "Installation of individual storage units (slaves)"
@@ -1009,9 +1010,9 @@
             "STS_BOX_AVAILABLE": "STS box installed",
             "STS_BOX_FIELD_LABEL": "Is an STS box installed for emergency power capability:"
         },
-        "CONFIGURATION_SYSTEM_VARIANT": "Select installed component",
         "CONFIGURATION_SUMMARY": {
             "ACCEPT": "accepted",
+            "ACCEPT_TERMS": "Accept the Warranty Terms to proceed.",
             "ALIAS_WITH_LABEL_HOME_DC": "Alias MPPT{{mppt}}",
             "BATTERY": "Battery",
             "BATTERY_LOCATION": "BESS Location",
@@ -1019,7 +1020,6 @@
             "COUNTRY_SETTING": "Country settings",
             "CUSTOMER": "Customer",
             "DEVICE_ACTIVE_CHECKED": "Battery and Inverter switched ON",
-            "DEVICE_CONNECTION_CHECKED": "The energy storage system is connected to the power grid",
             "EDGE_NUMBER": "{{ edgeShortName }} Number",
             "ENERGY_FLOW_METER": {
                 "LABEL": "Grid"
@@ -1027,6 +1027,7 @@
             "GENERAL": "General",
             "INSTALLER": "Installer",
             "INVERTER": "Inverter",
+            "IS_DEVICE_ACTIVE_CHECKED": "Check that the battery and inverter are switched on and confirm this.",
             "MODULE_TYPE_WITH_LABEL_HOME_DC": "Type of modules MPPT{{ mppt }}",
             "NEXT_CLICKED_DESCRIPTION": "By clicking on the 'next' button, the storage system will be configured. Make sure the battery and inverter are powered on throughout the configuration process.",
             "NUMBER_OF_MODULES_WITH_LABEL_HOME_DC": "Numnber of PV modules MPPT{{ mppt }}",
@@ -1034,8 +1035,6 @@
             "PRODUCER": "Generator",
             "SUMMARY": "Summary",
             "TIME_OF_INSTALLATION": "Time of the installation",
-            "ACCEPT_TERMS": "Accept the Warranty Terms to proceed.",
-            "IS_DEVICE_ACTIVE_CHECKED": "Check that the battery and inverter are switched on and confirm this.",
             "VALUE_WITH_LABEL_HOME_DC": "Value MPPT{{ mppt }} {{ symbol }}",
             "WARRANTY_TERMS": "Warranty terms"
         },
@@ -1044,8 +1043,7 @@
             "PRODUCT_NAME": "Product name",
             "TITLE": "Please choose the product to be configured."
         },
-        "CONFIRM_APP_SELECTION": "Are you sure to select the following app?",
-        "CONFIRM_APP_SELECTION_LATER": "Are you sure to do the selection later?",
+        "CONFIGURATION_SYSTEM_VARIANT": "Select installed component",
         "FORM": {
             "BATTERY_SERIAL_NUMBER": "{{ serialNumber }} is not a valid serial number. A valid serial number consists of {{ length }} digits.",
             "EMAIL": "{{ email }} is not a valid E-Mail-Adress.",
@@ -1057,10 +1055,8 @@
             "POSITIVE_INTEGER": "Only positive integer numbers are allowed.",
             "STS_SERIAL_NUMBER_REQUIREMENT": "The serial number consists of a maximum of 16 digits."
         },
-        "FORWARD": "continue",
         "LOAD": "load",
         "NEXT": "next",
-        "PLEASE_SELECT_OPTION": "Please select a option",
         "PRE_INSTALLATION": {
             "AUTHENTICATION_FAILED": "Authentication failed",
             "EDGE_OFFLINE": "A connection to the {{ edgeShortName }} could not be established",
@@ -1109,13 +1105,11 @@
         },
         "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO - Connect inverter",
         "PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVES_TITLE": "Slave {{number}}",
             "SLAVE_FILED_LABEL": "Please enter the number of Slaves to be configured",
             "SLAVE_INSTALLATION": {
                 "CONNECTION_STATUS": {
-                    "AUTHENTICATING": "Authenticating",
-                    "CONNECTED": "Connected",
-                    "NOT_FOUND": "Slave not found",
-                    "NOT_YET_CONNECTED": "Not yet connected"
+                    "NOT_FOUND": "Slave not found"
                 },
                 "LOG_MESSAGE": {
                     "AUTHENTICATION_SUCCESSFUL": "Authentication successful. Updating system...",
@@ -1127,8 +1121,7 @@
                     "STARTING_AUTHENTICATION": "Starting authentication...",
                     "UPDATE_COMPLETED": "System update completed. Configuring app..."
                 }
-            },
-            "SLAVES_TITLE": "Slave {{number}}"
+            }
         },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
             "CAPACITIVE": "capacitive",
@@ -1136,22 +1129,16 @@
             "CONSTANT_VALUE": "Cos φ value",
             "DYNAMIC_EXTERNAL_LIMITATION": "Dynamic External controller",
             "DYNAMIC_LIMITATION": "Dynamic limitation of the feed-in",
-            "DYNAMIC_LIMITATION_ACTIVATED": "Dynamic feed-in limitation activated?",
             "DYNAMIC_LIMITATION_TYPE": "Feed-in limitation",
-            "DYNAMIC_LIMITATION_WITH_RIPPLE_CONTROLLER": "Dynamic limitation of feed-in & ripple control receiver",
             "EXTERNAL_CONTROLLER_CHECK": "The external control receiver was installed properly and completely according to the instructions.",
-            "EXTERNAL_CONTROLLER_RECEIVER": "Ripple control receiver",
             "EXTERNAL_LIMITATION": "External controller (External limitation by the DSO)",
-            "EXTERNAL_LIMITATION_ACTIVATED": "External control receiver activated?",
             "EXTERNAL_LIMITATION_TYPE": "External Limitation",
             "FEED_IN_SETTING_DESCRIPTION": "Active power reduction in case of overfrequency",
             "FIXED_POWER_FACTOR": "Constant Cos φ (P)",
             "FIXED_POWER_FACTOR_DESCRIPTION": "Typically, the grid operator specifies a fixed power factor of '1'",
             "INDUCTIVE": "inductive",
             "INFO_TEXT": "Your energy storage system attempts to avoid curtailing the PV system through intelligent charging.",
-            "LIMITATION": "Limitation",
             "MAXIMUM_FEED_IN_VALUE": "Maximum feed-in value [W]",
-            "MAXIMUM_FEED_IN_VALUE_DYNAMIC_AND_EXTERNAL_LIMITATION": "Value of the dynamic limitation (max feed-in value, e.g. 60% of kWp) [W]",
             "MAXIMUM_VALUE_DESCRIPTION": "This value may be required by the DSO.",
             "NA_PROTECTION": "Activate remote shutdown (central NS protection)",
             "NO_LIMITATION": "No limitation",
@@ -1193,7 +1180,6 @@
                 "SOUTH_WEST": "Southwest",
                 "WEST": "West"
             },
-            "DUPLICATE": " MPPT {{ mppt }} double occupied (marked as \"PV{{ pv }}\")",
             "INSTALLED_POWER": "Installed power [Wₚ]",
             "INSTALLED_POWER_PER_STRING": "Installed power per string [Wₚ]",
             "MARKED_AS": " MPPT {{ mppt }} (marked as \"PV{{ mppt }}\")",
@@ -1207,8 +1193,6 @@
             "OPEN_MANUAL": "Open manual",
             "ORIENTATION": "Orientation",
             "ORIENTATION_WITH_LABEL": "{{ label }}{{ number }} Orientation",
-            "SHADE_MANAGEMENT_DEACTIVATE": "Deactivate Shade management",
-            "SHADE_MANAGEMENT_DESCRIPTION": "The shade management has to be disabled, only if optimizers are installed.",
             "TITLE_DC": "DC-PV-Installation",
             "TITLE_PV": "DC-PV installation (Inverter inputs)"
         },
@@ -1252,8 +1236,8 @@
             "SYSTEM_SETUP": "System setup",
             "TROUBLESHOOTING": {
                 "INTRO": "If no data is found, please follow these steps:",
-                "STEP_LAN": "Check if the LAN cable is correctly connected",
                 "STEP_BRIDGES": "Check if the jumper plug has been connected according to the instructions",
+                "STEP_LAN": "Check if the LAN cable is correctly connected",
                 "STEP_MANUAL": "If the problem persists, you can manually enter the serial numbers and contact FENECON service after completing the commissioning process."
             },
             "TRY_READING_AGAIN": "Retry reading"
@@ -1283,8 +1267,8 @@
         "ADD_TASK": "Add Task",
         "EDIT_EVENT": "Edit Event",
         "EDIT_TASK": "Edit task",
-        "NEXT_EVENTS": "Next Events",
         "MANUAL_EVENTS": "Manual Events",
+        "NEXT_EVENTS": "Next Events",
         "SMART_EVENTS": "Smart Events"
     },
     "LIVE": {
@@ -1300,6 +1284,7 @@
     "LOGIN": {
         "AUTHENTICATION_FAILED": "Authentication Failed",
         "DEMO_ACCESS": "Demo Access",
+        "EMPLOYEE_LOGIN": "Employee Login",
         "ENERGY_JOURNEY_SLOGAN": "You are part of the energy journey",
         "PASSWORD_LABEL": "Password",
         "PASSWORD_RESET": "Reset Password",
@@ -1307,26 +1292,23 @@
         "REQUEST_TIMEOUT": "Your request has timed out. Please try again later.",
         "SIGN_IN": "Sign in",
         "TITLE": "Login",
-        "USER": "User",
-        "EMPLOYEE_LOGIN": "Employee Login"
+        "USER": "User"
     },
     "MENU": {
         "ACCESS_LEVEL": "Access Level",
         "CHANGELOG": "Changelog",
         "COCKPIT": "Cockpit",
-        "FAVORITES": "Favorites",
-        "DEFAULT_EDGE_LONG_NAME": "FENECON Energiemanagementsystem",
         "EDGE_SETTINGS": "Settings",
         "EDGE_SYSTEM_SETTINGS": "System Settings",
-        "FENECON_ENERGY_MANAGEMENT_SYSTEM": "FENECON Energy Management System",
+        "FAVORITES": "Favorites",
         "GENERAL_SETTINGS": "General Settings",
         "GROUPS": {
-            "FIX_DIGITAL_OUTPUT": "Manual Relay Control",
+            "BRAIINS": "Bitcoin Miner",
             "CHANNEL_SINGLE_THRESHOLD": "Threshold Control",
-            "HEATING_ROOM": "Heating",
-            "BRAIINS": "Bitcoin Miner"
+            "EVCS": "Multi-Charging Point Management",
+            "FIX_DIGITAL_OUTPUT": "Manual Relay Control",
+            "HEATING_ROOM": "Heating"
         },
-        "HECKERT_ENERGY_MANAGEMENT_SYSTEM": "Heckert Solar Symphon-E Energy Management System",
         "INDEX": "Index",
         "LOGOUT": "Sign Out",
         "MENU": "Menu",
@@ -1334,11 +1316,11 @@
         "OPENEMS_ENERGY_MANAGEMENT_SYSTEM": "Open Energy Management System",
         "OTHER_USER": "Other users",
         "OVERVIEW": "All Systems",
-        "SYSTEMS": "Systems",
-        "SETTINGS": "Settings",
-        "USER": "User",
         "PROFILE": "Profile",
-        "SCHEDULE": "Schedule"
+        "SCHEDULE": "Schedule",
+        "SETTINGS": "Settings",
+        "SYSTEMS": "Systems",
+        "USER": "User"
     },
     "MODBUS_TCP_API_READ_WRITE": {
         "ACTIVE_POWER_LIMITATIONS": "Active power limitations",
@@ -1350,8 +1332,8 @@
         "INFO_TEXT": "Actual value may deviate from the specification. Negative values correspond to storage loading - positive storage discharging. A detailed explanation can be found in the instructions.",
         "LAST_COMMAND": "Last override",
         "LIMITATION": "Limitation",
-        "NO_OVERRIDDEN_CHANNELS": "No channels have been overridden yet.",
         "NOT_OVERRIDING": "No external commands present",
+        "NO_OVERRIDDEN_CHANNELS": "No channels have been overridden yet.",
         "OVERRIDING": "External command is being considered",
         "REGISTER": "Register",
         "SET_ACTIVE_POWER_EQUALS": "Active Power setpoint",
@@ -1390,10 +1372,6 @@
                 "HEADER": "Check router connection with laptop"
             }
         },
-        "EDGE": {
-            "DESCRIPTION": "If the {{edgeShortName}} has been restarted, please wait a moment until the restart has been completed.",
-            "LOCAL_ACCESS_CURRENTLY_NOT_POSSIBLE": "Local access currently not possible"
-        },
         "GENERAL": {
             "AVAILABILITY": "Online access to the energy storage system is currently not available.<br>The data is stored locally and will not be lost.",
             "EMS_OFFLINE": "{{edgeShortName}} is offline",
@@ -1411,7 +1389,7 @@
                 "HEADER": "Check internet connection"
             },
             "SUB_HEADER": "Your system has been <b>offline for more than 10 minutes?</b> The following can be checked on-site:",
-            "TIME_OUT": "The requested FEMS has been offline <b>for {{timeSinceOffline}}</b>.",
+            "TIME_OUT": "The requested {{ edgeShortName }} has been offline <b>for {{timeSinceOffline}}</b>.",
             "TRY": "Try refreshing the browser in 10 minutes."
         },
         "HOME_10": {
@@ -1430,8 +1408,8 @@
         }
     },
     "ORDER": {
-        "A_TO_Z": "Designation A - Z",
         "ASCENDING": "Ascending {{edgeShortName}} no.",
+        "A_TO_Z": "Designation A - Z",
         "DESCENDING": "Descending {{edgeShortName}} no.",
         "FAULT_TO_OK": "System status Fault - OK",
         "OK_TO_FAULT": "System status OK - Fault",
@@ -1499,14 +1477,14 @@
                 "EV_CHARGING_STATION": "EV charging station",
                 "EV_CHARGING_STATION_CONTROL": "EV charging station control",
                 "EXTERNAL_INTERFACES": "External interfaces",
-                "IO_CONTROL": "I/O control",
                 "IOS": "I/Os",
+                "IO_CONTROL": "I/O control",
                 "METER": "Meter",
                 "OTHERS": "More",
                 "SIMULATORS": "Simulators",
                 "STANDARD_COMPONENTS": "Standard components",
-                "STORAGE_SYSTEM_CONTROL": "Storage systems control",
                 "STORAGE_SYSTEMS": "Storage systems",
+                "STORAGE_SYSTEM_CONTROL": "Storage systems control",
                 "TEMPERATURE_SENSORS": "Temperature sensors"
             }
         },
@@ -1528,11 +1506,11 @@
             "NEW_VERSION": "Latest version:",
             "NEW_VERSION_INSTALLING": "Install latest version",
             "OFFLINE": "The {{ edgeShortName }} is offline.",
+            "RESTARTED": "{{system}} restarting successful.",
+            "RESTARTING": "Restarting {{system}}. (This can take up to {{minutes}} minutes)",
             "RESTART_CONFIRMATION": "Would you like to restart {{system}}?",
             "RESTART_FAILED": "Restart of {{system}} failed.",
             "RESTART_WARNING": "Communication is interrupted while {{system}} is restarting. No data is recorded or components controlled during this time. Please ensure that the entire system is in a safe state.",
-            "RESTARTED": "{{system}} restarting successful.",
-            "RESTARTING": "Restarting {{system}}. (This can take up to {{minutes}} minutes)",
             "SUB_HEADER": "Would you like to execute a system update?",
             "UPDATE_COMPONENT": "Update component",
             "UPDATE_EXECUTE": "Execute system update",
@@ -1541,6 +1519,11 @@
             "UPDATE_SEARCH": "Checking for updates...",
             "UPDATE_TIME": "(This can take up to {{minutes}} minutes)",
             "WARNING": "The software will restart after the system update. No data is recorded or components controlled during this time. Please ensure that the entire system is in a safe state."
+        }
+    },
+    "SYSTEM": {
+        "INDUSTRIAL": {
+            "SYSTEM_ERROR_ACKNOWLEDGE": "System error acknowledge"
         }
     }
 }

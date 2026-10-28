@@ -1,0 +1,77 @@
+{
+    "EVSE_SINGLE": {
+        "HOME": {
+            "ACTUAL_MODE": {
+                "LABEL": "Faktiskt läge"
+            },
+            "ENERGY_SINCE_START": "Energi sedan senaste laddningsstart",
+            "MODE": {
+                "FORCE": "Snabb",
+                "LABEL": "Grundläge",
+                "MINIMUM": "Minimal",
+                "SURPLUS": "PV",
+                "ZERO": "Av"
+            },
+            "POWER": "Effekt",
+            "STATE_MACHINE": {
+                "CHARGE_DISABLED": "Laddning avaktiverad",
+                "CHARGE_PAUSED": "Laddning pausad",
+                "CHARGE_RESUMING": "Återupptar laddningen",
+                "CHARGING": "Fordonet laddas",
+                "EV_CONNECTED": "Fordon anslutet",
+                "EV_NOT_CONNECTED": "Fordon ej anslutet",
+                "FINISHED_ENERGY_SESSION_LIMIT": "Energimålet uppnått, laddningen är klar",
+                "FINISHED_EV_STOP": "Laddningen stoppad av fordonet",
+                "LABEL": "Status",
+                "NOT_READY": "Laddstationen är inte redo",
+                "PHASE_SWITCH": "Manuell fasomkoppling",
+                "PHASE_SWITCH_TO_SINGLE_PHASE": "Växlar till enfasig laddning",
+                "PHASE_SWITCH_TO_THREE_PHASE": "Växlar till trefasig laddning"
+            },
+            "VEHICLES": "App Center-fordon"
+        },
+        "SCHEDULE": {
+            "ACCEPT": "Godkänn",
+            "ADD": "Lägg till",
+            "ADD_ERROR": "Uppgiften kunde inte läggas till",
+            "ADD_SUCCESS": "Uppgiften lades till",
+            "DAY": {
+                "FRIDAY": "Fredag",
+                "MONDAY": "Måndag",
+                "SATURDAY": "Lördag",
+                "SUNDAY": "Söndag",
+                "THURSDAY": "Torsdag",
+                "TUESDAY": "Tisdag",
+                "WEDNESDAY": "Onsdag"
+            },
+            "DELETE": "Ta bort",
+            "DELETE_ERROR": "Uppgiften kunde inte tas bort",
+            "DELETE_SUCCESS": "Uppgiften togs bort",
+            "DURATION": "Längd",
+            "EDIT": "Redigera",
+            "EDIT_ERROR": "Uppgiften kunde inte anpassas",
+            "EDIT_SUCCESS": "Uppgiften anpassades",
+            "END": "Slut",
+            "FREQ": {
+                "DAILY": "Dagligen",
+                "MONTHLY": "Månadsvis",
+                "WEEKLY": "Veckovis",
+                "YEARLY": "Årligen"
+            },
+            "FREQUENCY": "Upprepa",
+            "MODE": "Laddningsläge",
+            "MODE_SELECTION_PLACEHOLDER": "Välj",
+            "SMART_EVENT_TITLE": "Smart laddning av {{kwh}} kWh",
+            "START": "Start",
+            "VALIDATION_ERROR_1": "Ange starttiden",
+            "VALIDATION_ERROR_2": "Ange sluttiden",
+            "VALIDATION_ERROR_3": "Välj laddningsläge",
+            "VALIDATION_ERROR_4": "Ange starttiden i formatet HH:mm och endast i kvartstimmar (00, 15, 30 eller 45 minuter)",
+            "VALIDATION_ERROR_5": "Ange sluttiden i formatet HH:mm och endast i kvartstimmar (00, 15, 30 eller 45 minuter)",
+            "VALIDATION_ERROR_6": "Sluttiden måste ligga efter starttiden"
+        },
+        "SETTINGS": {
+            "ENERGY_LIMIT": "Energigräns"
+        }
+    }
+}

@@ -13,17 +13,17 @@ public class TestModeLampHandler extends StateHandler<State, Context> {
 
 	protected TestModeLampState testModeLampState;
 
-	private Timeout timeout = Timeout.ofSeconds(5);
+	private final Timeout timeout = Timeout.ofSeconds(3);
 
 	private enum TestModeLampSubState {
-		ALL_ON, FLASHING, ALL_OFF, FINISHED
+		FLASHING, WARNING, ERROR, RUNNING, OFF, FINISHED
 	}
 
 	@Override
 	protected void onEntry(Context context) throws OpenemsNamedException {
 		final var system = context.getParent();
 		system._setInLampTestMode(true);
-		this.testModeLampState = new TestModeLampState(TestModeLampSubState.ALL_ON);
+		this.testModeLampState = new TestModeLampState(TestModeLampSubState.FLASHING);
 		this.timeout.start(context.clock);
 	}
 
@@ -47,39 +47,61 @@ public class TestModeLampHandler extends StateHandler<State, Context> {
 	private TestModeLampSubState getNextSubState(Context context) throws OpenemsNamedException {
 		final var system = context.getParent();
 		return switch (this.testModeLampState.subState) {
-		case ALL_ON -> {
-			system.setOutput(context.outputSsiRunning, true);
-			system.setOutput(context.outputSsiWarning, true);
-			system.setOutput(context.outputSsiError, true);
-			system.setOutput(context.outputSsiRunningFlashing, false);
-			if (this.timeout.elapsed(context.clock)) {
-				this.timeout.start(context.clock);
+			case FLASHING -> {
+				system.setOutput(context.outputSsiRunning, true);
+				system.setOutput(context.outputSsiWarning, false);
+				system.setOutput(context.outputSsiError, false);
+				system.setOutput(context.outputSsiRunningFlashing, true);
+				if (this.timeout.elapsed(context.clock)) {
+					this.timeout.start(context.clock);
+					yield TestModeLampSubState.WARNING;
+				}
 				yield TestModeLampSubState.FLASHING;
 			}
-			yield TestModeLampSubState.ALL_ON;
-		}
-		case FLASHING -> {
-			system.setOutput(context.outputSsiRunning, true);
-			system.setOutput(context.outputSsiWarning, true);
-			system.setOutput(context.outputSsiError, true);
-			system.setOutput(context.outputSsiRunningFlashing, true);
-			if (this.timeout.elapsed(context.clock)) {
-				this.timeout.start(context.clock);
-				yield TestModeLampSubState.ALL_OFF;
+			case WARNING -> {
+				system.setOutput(context.outputSsiRunning, false);
+				system.setOutput(context.outputSsiWarning, true);
+				system.setOutput(context.outputSsiError, false);
+				system.setOutput(context.outputSsiRunningFlashing, false);
+				if (this.timeout.elapsed(context.clock)) {
+					this.timeout.start(context.clock);
+					yield TestModeLampSubState.ERROR;
+				}
+				yield TestModeLampSubState.WARNING;
 			}
-			yield TestModeLampSubState.FLASHING;
-		}
-		case ALL_OFF -> {
-			system.setOutput(context.outputSsiRunning, false);
-			system.setOutput(context.outputSsiWarning, false);
-			system.setOutput(context.outputSsiError, false);
-			system.setOutput(context.outputSsiRunningFlashing, false);
-			if (this.timeout.elapsed(context.clock)) {
-				yield TestModeLampSubState.FINISHED;
+			case ERROR -> {
+				system.setOutput(context.outputSsiRunning, false);
+				system.setOutput(context.outputSsiWarning, false);
+				system.setOutput(context.outputSsiError, true);
+				system.setOutput(context.outputSsiRunningFlashing, false);
+				if (this.timeout.elapsed(context.clock)) {
+					this.timeout.start(context.clock);
+					yield TestModeLampSubState.RUNNING;
+				}
+				yield TestModeLampSubState.ERROR;
 			}
-			yield TestModeLampSubState.ALL_OFF;
-		}
-		case FINISHED -> TestModeLampSubState.FINISHED;
+			case RUNNING -> {
+				system.setOutput(context.outputSsiRunning, true);
+				system.setOutput(context.outputSsiWarning, false);
+				system.setOutput(context.outputSsiError, false);
+				system.setOutput(context.outputSsiRunningFlashing, false);
+				if (this.timeout.elapsed(context.clock)) {
+					this.timeout.start(context.clock);
+					yield TestModeLampSubState.OFF;
+				}
+				yield TestModeLampSubState.RUNNING;
+			}
+			case OFF -> {
+				system.setOutput(context.outputSsiRunning, false);
+				system.setOutput(context.outputSsiWarning, false);
+				system.setOutput(context.outputSsiError, false);
+				system.setOutput(context.outputSsiRunningFlashing, false);
+				if (this.timeout.elapsed(context.clock)) {
+					yield TestModeLampSubState.FINISHED;
+				}
+				yield TestModeLampSubState.OFF;
+			}
+			case FINISHED -> TestModeLampSubState.FINISHED;
 		};
 	}
 

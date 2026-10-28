@@ -1,0 +1,44 @@
+{
+    "SETTINGS": {
+        "ENERGY_JOURNEY": {
+            "ANALYSE_BATTERY_EXTENSION_TITLE": "Analysera batteriutbyggnad",
+            "BATTERY_MODULE_EXTENSION": "Batterimodulsutbyggnad",
+            "CHARGE_DISCHARGE_CAPACITY": "Laddnings- och urladdningskapacitet för lagringen i kW:**",
+            "CHARGE_DISCHARGE_POWER_NOTE": "** Laddnings- och urladdningseffekten (kW) samt nödelförsörjningskapaciteten för ditt lagringssystem ökar till detta värde. Detaljerad information om vilka värden som kan hanteras på AC-sidan och den uppnåeliga effekten beroende på antalet moduler finns i<a href='{{productLink}}' target='_blank'>&nbsp;produktdatabladet {{productName}}</a>&nbsp;",
+            "CONSTANTS": {
+                "BATTERY_MODULE": "Batterimoduler",
+                "CHARGE_DISCHARGE": "Laddnings- och urladdningskapacitet",
+                "EDIT": "Redigera",
+                "ELECTRICITY_PRICE": "Elpris",
+                "GRID_SUPPLY": "Nätinköp",
+                "TITLE": "Dina uppgifter"
+            },
+            "CONSTANTS_DESCRIPTION": "Förra årets uppgifter om din nuvarande {{ theme }} {{ label }}:",
+            "CURRENT_NUMBER_OF_MODULES": "Nuvarande",
+            "DECREASE_IN_PEAK_POWER_TOOLTIP": "Negativa värden indikerar ett tornutbyggnad som inte ger någon ytterligare ökning av laddnings- och urladdningskapaciteten.",
+            "DESCRIPTION": "Om det är värt att bygga ut ditt energilagringssystem beror på olika faktorer. \nDitt system har varit i drift i mer än ett år. \nAnalysera här vilken effekt en batteriutbyggnad skulle ha haft",
+            "DISCLAIMER": "Ansvarsfriskrivning",
+            "DISCLAIMER_TEXT": "Beräkningarna i analysen baseras på dina uppgifter om elpriset samt nätinköpen och inmatningsdata för ditt lagringssystem under det gångna året. Dessa underliggande parametrar kan ändras när som helst. Beräkningarna är därför endast exempel som fungerar som en riktlinje för den möjliga lönsamheten hos en batteriutbyggnad och garanterar inte att faktiska ekonomiska besparingar kan uppnås. Detta utgör ingen garanti från FENECON.",
+            "ELECTRICITY_PRICE_SELECTION_TITLE": "Energy Journey: Batteriutbyggnad",
+            "ELECTRICITY_PRICE_TEXT": "Ditt system har varit i drift i mer än ett år. Analysera här vilken effekt en batteriutbyggnad skulle ha haft.",
+            "ELECTRICITY_PRICE_VALUE_TEXT": "Ange ditt nuvarande elpris. Om du redan använder en tidstariff, ange ett genomsnittligt värde.",
+            "GRID_CONSUMPTION_TITLE": "Sparad nätelförbrukning i kWh ({{date}})",
+            "MODULE": "Modul",
+            "MODULES": "Moduler",
+            "MODULE_COUNT": "Antal moduler",
+            "MORE_DETAILS": "Ytterligare detaljer i Home 10-produktbladet",
+            "POTENTIAL_SAVINGS_CALCULATION_NOTE": "Beräkning: Ditt nuvarande elpris multiplicerat med elsparandet i kWh per modul.",
+            "POTENTIAL_SAVINGS_NOTE": "* Potentiella årliga besparingar i euro som en batteriutbyggnad skulle ha inneburit",
+            "SAVINGS_LABEL": "Besparingar på elkonsumtionen i euro:*",
+            "SEE_CHANGES_SLOGAN": "Använd vår Energy Journey-plattform för att analysera och beräkna hur du kan utveckla ditt system på ett meningsfullt sätt och vilka utbyggnader du kan dra nytta av.",
+            "SEE_CHANGES_SUB_TEXT": "Med oss är du optimalt förberedd för din 100 % energiomställning.",
+            "SEE_CHANGES_TEXT": "Ta ändringarna i energivärlden med ro.",
+            "SIMULATION_NOT_STARTED": "Simuleringen har inte startat",
+            "SLOGAN": "Batteriutbyggnad: är det värt det?",
+            "START_ANALYSIS": "Starta analysen",
+            "TOTAL": "(Totalt)",
+            "TOTAL_CAPACITY": "Ökning av total användbar kapacitet i kWh:",
+            "WIDGET_TITLE": "Batteriutbyggnad"
+        }
+    }
+}

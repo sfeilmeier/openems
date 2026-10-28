@@ -1,0 +1,8 @@
+{
+    "INDUSTRIAL_XL": {
+        "TEST_MODE_ESS_TEST": "Testovací režim: Test ESS",
+        "TEST_MODE_EXIT": "Testovací režim: Ukončit",
+        "TEST_MODE_LAMP_TEST": "Testovací režim: Test osvětlení",
+        "TEST_MODE_MANUAL_BATTERY_START": "Testovací režim: Ruční spuštění baterií"
+    }
+}

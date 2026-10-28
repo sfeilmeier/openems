@@ -1,0 +1,1518 @@
+{
+    "ABOUT": {
+        "BUILD": "Denna version",
+        "CONTACT": "Om du har frågor eller förslag om energihantering och våra produkter, kontakta vårt team på <a href=\"mailto:service@fenecon.de\">service&#64;fenecon.de</a>. För frågor om OpenEMS finns <a target=\"_blank\" href=\"https://community.openems.io/\">OpenEMS Community Forum</a>.",
+        "CURRENT_DEVELOPMENTS": "Aktuella utvecklingar",
+        "DESCRIPTION": "Vårt FENECON Energy Management System (FEMS) bygger på OpenEMS, energihanteringssystemet med öppen källkod. Det är en modulär plattform för energihanteringsapplikationer. Det initierades av FENECON och används nu av ett stort antal företag, universitet och institut för forskning och utveckling samt för egna energihanteringssystem. Utvecklingen samordnas av OpenEMS Association e.V.",
+        "DEVELOPED": "Detta användargränssnitt utvecklas som programvara med öppen källkod.",
+        "ENERGY_MANAGEMENT": "Energihanteringssystem",
+        "FAQ": "Vanliga frågor (FAQ)",
+        "LANGUAGE": "Välj språk:",
+        "NEW_UI": "Ny design",
+        "OPEN_EMS": "Mer om OpenEMS",
+        "PATCHNOTES": "Ändringar i övervakningen i denna version",
+        "THEME": "Tema"
+    },
+    "APP": {
+        "FUNCTIONALITY_TEMPORARILY_NOT_AVAILABLE": "Denna funktion är för närvarande inte tillgänglig i appen, använd webbappen istället."
+    },
+    "CHANNELS": {
+        "ADD": "Lägg till",
+        "ADD_CHANNEL": "Lägg till kanal",
+        "CHANNEL": "Kanal",
+        "COMPONENT": "Komponent",
+        "MORE_CHANNELS": "Lägg till fler kanaler",
+        "SAVE": "Spara konfigurationen",
+        "SAVE_DESCRIPTION": "Sparandet av konfigurationen skriver över den befintliga konfigurationen för denna {{edgeShortName}} och tillämpas vid nästa sidinläsning.",
+        "SET_VALUE": "Ange värde",
+        "VALUE": "Värde"
+    },
+    "EDGE": {
+        "CONFIG": {
+            "ALERTING": {
+                "ACTIVATE": "Aktivera",
+                "DEACTIVATED": "Avaktiverad",
+                "DELAY": "Fördröjning",
+                "FAULT": "Felmeddelanden",
+                "OFFLINE": "Offline-meddelanden",
+                "TOAST": {
+                    "ERROR": "Fel vid inläsning av inställningarna",
+                    "SUCCESS": "Inställningarna har tillämpats"
+                },
+                "WARNING": "Varningsmeddelanden"
+            },
+            "APP": {
+                "APP_DETAILS": "Appdetaljer",
+                "AVAILABLE": "Tillgänglig",
+                "BUY_APP": "Köpa licensnyckel",
+                "CARDINALITY": "Kardinalitet",
+                "CATEGORY": "Kategori",
+                "CREATE_APP": "Installera app",
+                "DELETE_APP": "Avinstallera app",
+                "DELETE_CONFIRM": "avinstallera",
+                "DELETE_CONFIRM_DESCRIPTION": "Om appen avinstalleras tas alla dess komponenter bort och alla inställningar som gjorts med den raderas.",
+                "DELETE_CONFIRM_HEADLINE": "Är du säker på att du vill avinstallera appen?",
+                "ERROR_COMPATIBLE": "Kompatibilitetsfel",
+                "ERROR_INSTALLABLE": "Installationsfel",
+                "FAIL_DELETE": "Fel vid borttagning av appen '{{error}}'",
+                "FAIL_INSTALL": "Fel vid installation av appen '{{error}}'",
+                "FAIL_UPDATE": "Fel vid uppdatering av appen '{{error}}'",
+                "HEADER": "Apphanteraren är för närvarande i en första testversion.",
+                "INCOMPATIBLE": "Inkompatibel",
+                "INSTALLED": "Installerad",
+                "KEY": {
+                    "ALREADY_REGISTERED_DIFFERENT_APP": "Nyckeln har redan registrerats för en app på detta system! Om du fortsätter kommer den andra registreringen att tas bort.",
+                    "ALREADY_REGISTERED_DIFFERENT_SYSTEM": "Nyckeln har redan registrerats på ett annat system! Om du fortsätter kommer den andra registreringen att tas bort.",
+                    "ENTER_KEY": "Ange licensnyckeln du fick tillsammans med beställningen av appen",
+                    "FAILED_LOADING_REGISTER_KEY": "misslyckades att hämta redan registrerade nycklar",
+                    "FAILED_REGISTER_KEY": "misslyckades att registrera nyckeln",
+                    "INVALID": "licensnyckeln är ogiltig",
+                    "INVALID_PATTERN": "Ogiltig inmatning",
+                    "KEY": "licensnyckel",
+                    "KEY_TYPO_MESSAGE_HINT": "<br><span class=\"warning\">Obs</span>: Kontrollera möjliga stavfel när du anger licensnyckeln: <ul><li>litet L \"l\" eller stort i \"I\" </li><li>nolla \"0\" eller stort o \"O\"</li></ul>Vi rekommenderar alltid att kopiera licensnyckeln från följesedeln och klistra in den i fältet ovan istället för att skriva in den manuellt.<br>",
+                    "MASTER_KEY_HINT": "<br><span class=\"warning\">Obs</span>: Huvudnyckeln används i bakgrunden. Ingen nyckel visas. Om en licensnyckel finns tillgänglig, använd den.<br>",
+                    "REGISTERED_KEY": "Registrerade licensnycklar",
+                    "REGISTER_KEY": "registrera licensnyckel",
+                    "SUCCESS_REGISTER_KEY": "nyckeln registrerades",
+                    "USE_KEY": "lös in licensnyckel",
+                    "USE_MASTER_KEY": "Använd huvudnyckeln",
+                    "USE_REGISTERED_KEY": "Lösa in en redan registrerad licensnyckel?",
+                    "VALID": "licensnyckeln är giltig",
+                    "VALIDATE_KEY": "validera licensnyckel"
+                },
+                "MODIFY_APP": "Ändra app",
+                "NAME": "App Center",
+                "NAME_WITH_EDGE_NAME": "{{ edgeShortName }} App Center",
+                "NOT_AVAILABLE": "Inte tillgänglig",
+                "OAUTH": {
+                    "BROWSER_ONLY": "Inloggning till {{ oauthName }} sker via webbläsaren, inte via {{ edgeLongName }}-appen.",
+                    "CONNECT": "Anslut med {{ oauthName }}",
+                    "LOG_IN": "{{ oauthName }} inloggning",
+                    "LOG_OUT": "Logga ut",
+                    "STATES_MISMATCH": "Det uppstod ett problem vid inloggningen. Försök igen.",
+                    "SWITCH_TO_BROWSER": "Växla till webbläsaren",
+                    "UNABLE_TO_CONNECT_CODE": "Kunde inte ansluta koden. Försök igen. {{ error }}"
+                },
+                "SUCCESS_DELETE": "Appen togs bort",
+                "SUCCESS_INSTALL": "Appen installerades",
+                "SUCCESS_UPDATE": "Appen uppdaterades",
+                "TECHNICAL_NAME": "Tekniskt namn",
+                "UNKNOWN_INSTALLATION_STEP": "Okänt installationssteg: {{ step }}",
+                "UNUSED_REGISTERED_KEY_AVAILABLE": "Det finns fortfarande en app tillgänglig för installation! Du kan installera den genom att klicka på knappen \"lös in licensnyckel\".",
+                "UPDATE_APP": "Uppdatera app",
+                "UPDATE_AVAILABLE": "Det finns en ny version av {{ edgeShortName }}! Uppdatera {{ edgeShortName }} så att alla nya {{ edgeShortName }}-appar visas i App Center."
+            },
+            "BRIDGE": {
+                "NEW_CONNECTION": "Ny anslutning...",
+                "NEW_DEVICE": "Ny enhet..."
+            },
+            "CONTROLLER": {
+                "APP": "App:",
+                "INTERNALLY_ID": "Internt ID:",
+                "PRIORITY": "Prioritet:"
+            },
+            "INDEX": {
+                "ADD_COMPONENTS": "Installera komponenter",
+                "ADJUST_COMPONENTS": "Konfigurera komponenter",
+                "ALERTING": "Larm",
+                "BRIDGE": "Anslutningar och enheter",
+                "COMMENT": "Kommentar",
+                "CONFIGURATION": "Konfiguration",
+                "CONTROLLER": "Applikationer",
+                "DATA_STORAGE": "Datalagring",
+                "EXECUTE_SIMULATOR": "Kör simuleringar",
+                "EXPORT": "Export",
+                "EXPORT_CHANNELS": "Exportera kanaler",
+                "GENERAL_DATA": "Allmänna data",
+                "LIVE_LOG": "Systemlogg i realtid",
+                "LOG": "Logg",
+                "MANUAL_CONTROL": "Manuell styrning",
+                "NETWORK_CONFIGURATION": "Nätverkskonfiguration",
+                "PRODUCT_TYPE": "Produkttyp",
+                "RENAME_COMPONENTS": "Byt namn på komponenter",
+                "ROLE": "Roll",
+                "SCHEDULER": "Applikationsplanerare",
+                "SIMULATOR": "Simulator",
+                "SYSTEM": "System",
+                "SYSTEM_EXECUTE": "Kör systemkommando",
+                "SYSTEM_PROFILE": "Systemprofil"
+            },
+            "LOG": {
+                "AUTOMATIC_UPDATING": "Automatisk uppdatering",
+                "CONDENSED_OUTPUT": "Komprimerad utmatning",
+                "LEVEL": "Nivå",
+                "MESSAGE": "Meddelande",
+                "SOURCE": "Källa",
+                "TIMESTAMP": "Tidsstämpel"
+            },
+            "MORE": {
+                "MANUALPQ_POWER_SPECIFICATION": "Effektspecifikation",
+                "MANUALPQ_RESET": "Återställ",
+                "MANUALPQ_SUBMIT": "Skicka",
+                "MANUAL_COMMAND": "Manuellt kommando",
+                "REFU_INVERTER": "REFU-växelriktare",
+                "REFU_START": "Start",
+                "REFU_START_STOP": "Starta/stoppa växelriktaren",
+                "REFU_STOP": "Stopp",
+                "SEND": "Skicka"
+            },
+            "PROFILE": {
+                "ERROR_DOWNLOADING_MODBUS_PROTOCOL": "Fel vid nedladdning av Modbus-protokollet"
+            },
+            "SCHEDULER": {
+                "ALWAYS": "Alltid",
+                "CLASS": "Klass:",
+                "CONTACT": "Det här ska inte hända. Kontakta <a href=\"mailto:{{ value }}\">{{ value }}</a>.",
+                "NEW_SCHEDULER": "Ny schemaläggare...",
+                "NOT_IMPLEMENTED": "Formulär inte implementerat:"
+            }
+        },
+        "FOOTER": {
+            "REFRESHED_LAST": "uppdaterad för {{period}} sedan"
+        },
+        "HISTORY": {
+            "ACTIVE_DURATION": "Aktiv varaktighet",
+            "ACTIVE_DURATION_WITH_LEVEL": "Aktiv varaktighet nivå {{level}}",
+            "APR": "apr",
+            "AUG": "aug",
+            "BEGIN_DATE": "Välj startdatum",
+            "CURRENT": "Nuvarande",
+            "CURRENT_AND_VOLTAGE": "Ström och spänning",
+            "DAY": "Dag",
+            "DEC": "dec",
+            "END_DATE": "Välj slutdatum",
+            "EXPORT": "ladda ner som Excel-fil",
+            "EXPORT_LOADING": "Rapporten laddas – tack för ditt tålamod",
+            "EXTERNAL_LIMITATION": "Extern begränsning",
+            "FEB": "feb",
+            "FRI": "fre",
+            "GO": "Kör!",
+            "JAN": "jan",
+            "JUL": "jul",
+            "JUN": "jun",
+            "LAST_MONTH": "Förra månaden",
+            "LAST_WEEK": "Förra veckan",
+            "LAST_YEAR": "Förra året",
+            "MAR": "mar",
+            "MAY": "maj",
+            "MON": "mån",
+            "MONTH": "Månad",
+            "NOV": "nov",
+            "NO_DATA": "Inga data tillgängliga",
+            "NO_LOCAL_DATA_INFO": "Historiska data är för närvarande inte tillgängliga lokalt",
+            "NO_LOCAL_DATA_NOTICE": "Använd FENECON onlineövervakning på <a class=\"ion-link\" href=\"http://www.fenecon.de\" target=\"_blank\">www.fenecon.de</a>.",
+            "OCT": "okt",
+            "OTHER_PERIOD": "Annan period",
+            "PERIOD": "Period",
+            "PHASE_ACCURATE": "fasexakt",
+            "SAT": "lör",
+            "SELECTED_DAY": "{{ value }}",
+            "SELECTED_PERIOD": "Vald period:",
+            "SEP": "sep",
+            "SUN": "sön",
+            "THU": "tors",
+            "TODAY": "Idag",
+            "TOMORROW": "Imorgon",
+            "TOTAL": "Totalt",
+            "TRY_AGAIN": "försök igen senare...",
+            "TUE": "tis",
+            "VOLTAGE": "Spänning",
+            "WED": "ons",
+            "WEEK": "Vecka",
+            "YEAR": "År",
+            "YESTERDAY": "Igår"
+        },
+        "INDEX": {
+            "EMERGENCY_RESERVE": {
+                "EMERGENCY_RESERVE": "Nödkraftsreserv",
+                "INFO_FOR_EMERGENCY_RESERVE_SLIDER": "Genom att aktivera nödkraftsreserven kan värdet väljas fritt mellan 5 % och 100 %."
+            },
+            "ENERGYMONITOR": {
+                "ACTIVE_POWER": "Aktiv effekt",
+                "CONSUMPTION_WARNING": "Förbrukning och okända producenter",
+                "ERROR_TEMPORARY": "Fel vid hämtning av data. Försök igen senare.",
+                "ERROR_TOO_LONG": "Visningen av data är delvis inte möjlig på grund av ombyggnadsarbete på våra servrar. Dina data för denna period är inte förlorade. Alternativt går det fortfarande att se historiska data via <a href='https://docs.fenecon.de/de/_/latest/fems/ui/introduction.html#_offlinelokal' target='_blank'>lokal övervakning</a>. Vi ber om ditt tålamod.",
+                "GRID_METER": "Nätmätare",
+                "PRODUCTION_METER": "Produktionsmätare",
+                "REACTIVE_POWER": "Reaktiv effekt",
+                "STORAGE": "Lagring",
+                "STORAGE_CHARGE": "Lagring-laddning",
+                "STORAGE_DISCHARGE": "Lagring-urladdning",
+                "TITLE": "Energimonitor"
+            },
+            "RETROFITTING": {
+                "EXPANSION_RUNNING": "Begränsad systemdrift - Kapacitetsutbyggnad förbereds",
+                "INFORMATION_FOR_INSTANT_START": "Batteriet laddas eller urladdas med maximal effekt för att så snabbt som möjligt nå ett laddningstillstånd på {{targetSoc}} % för en utbyggnad. Detta kan resultera i nätköp eller inmatning till nätet. Detta laddningstillstånd hålls i {{targetTimeBuffer}} minuter, därefter, eller när kapacitetsutbyggnaden har skett, återgår lagringssystemet till sitt normala drifttillstånd.",
+                "INFORMATION_FOR_PLANNED_EXPANSION": "Batteriet väntas laddas/urladdas från {{targetTime}} den {{targetDate}} för att nå ett laddningstillstånd på {{targetSoc}} % för den planerade utbyggnaden. Under processen kan nätköp eller inmatning till nätet förekomma. Detta laddningstillstånd hålls i {{targetTimeBuffer}} minuter, därefter eller efter kapacitetsutbyggnaden återgår lagringssystemet till det normala drifttillståndet.",
+                "INFORMATION_FOR_PLANNED_EXPANSION_INVALID_TARGET_DATE": "Batteriet väntas laddas/urladdas för att nå ett laddningstillstånd på {{targetSoc}} % för den planerade utbyggnaden.",
+                "INSTANT_START": "Omedelbar start",
+                "IN_REFERENCE_CYCLE": "Referenscykel aktiv – batteriet förbereds för kapacitetsutbyggnad.",
+                "ON_DATE_AT_TIME": "den {{date}} klockan {{time}}",
+                "OPTIMAL": "Kapacitetsutbyggnad",
+                "PLANNED_EXPANSION": "Planerad utbyggnad",
+                "PREPARING": "Förbered för kapacitetsutbyggnad",
+                "REACHED_TARGET_SOC": "Klar för kapacitetsutbyggnad",
+                "REFERENCING_OF_STORAGE": {
+                    "CONTENT": "Innan en kapacitetsutbyggnad måste batteriet refereras under dagarna innan kapacitetsutbyggnaden sker. Det innebär att det måste urladdas helt (SOC: 0 %) och därefter laddas fullt (SOC: 100 %).",
+                    "HEADER": "Observera att batteriet måste refereras innan kapaciteten byggs ut",
+                    "TO_INSTRUCTIONS": "Länk till instruktioner"
+                },
+                "SELECT_A_DATE": "Välj ett datum",
+                "TARGET_TIME_SPECIFIED": "Kapacitetsutbyggnaden utförs den {{targetDate}} klockan {{targetTime}}",
+                "UPDATE_TO_NEW_VERSION": "Uppdatera till den senaste versionen för att kunna använda funktionen för batteriutbyggnad.",
+                "WARNING_CHECK": "Jag bekräftar att jag har tagit del av denna information",
+                "WARNING_MESSAGE": "I samband med förberedelsen av kapacitetsutbyggnaden kommer systemapplikationer som för närvarande körs att tillfälligt pausas. Detta påverkar bland annat peak shaving, optimering av egenförbrukning och andra systemapplikationer. När förberedelsen är klar är dessa återigen tillgängliga som vanligt."
+            },
+            "SYSTEMUPDATE": "Systemuppdatering",
+            "WIDGETS": {
+                "AUTARCHY_INFO": "Självförsörjningsgraden anger andelen av den aktuella effekten som kan täckas av produktion och urladdning från lagringen.",
+                "CHANNELTRESHOLD": {
+                    "ACTIVE_TIME_OVER_PERIOD": "Tid",
+                    "OUTPUT": "Utgång",
+                    "TITLE": "Tröskelvärdeskontroll för kanal"
+                },
+                "CHP": {
+                    "HIGH_THRESHOLD": "Hög tröskel",
+                    "LOW_THRESHOLD": "Låg tröskel"
+                },
+                "DELAYED_SELL_TO_GRID": {
+                    "CONTINUOUS_SELL_TO_GRID_POWER": "Urladdning under",
+                    "RELATION_ERROR": "Laddningsgränsen måste vara större än urladdningsgränsen",
+                    "SELL_TO_GRID_POWER_LIMIT": "Laddning över"
+                },
+                "ENERIX_CONTROL": {
+                    "CHARGE_CONSUMPTION": "<b>OBS:</b> Aktiv laddning av batteriet från nätet utöver den tekniskt nödvändiga underhållsladdningen kräver en lämplig registrering av lagringssystemet. Om du är osäker, kontrollera med din installatör. Genom att trycka på den blå \"Spara\"-knappen bekräftar du att denna kontroll har gjorts.<br/><br/><b>Observera:</b> Förutsättningen för stödet enligt den tyska lagen om förnybara energikällor (EEG 2023) är att endast energi från förnybara källor och/eller deponigas lagras i batteriet. Genom att aktivera denna funktion laddas batteriet med energi från nätet. Denna energi är, beroende på det individuella elavtalet, sannolikt producerad från fossila och/eller kärnkraftskällor. Därför kan vi inte garantera att batteriet uteslutande laddas med energi från förnybara källor och/eller deponigas.",
+                    "CHARGE_FROM_GRID": "Ladda från nätet",
+                    "CHARGE_FROM_GRID_ALLOWED": "Tillåt aktiv laddning från nätet",
+                    "CONNECTED": "Ansluten",
+                    "DISCHARGE_TO_GRID_ACTIVATE": "Tillåt aktiv urladdning till nätet",
+                    "DISCHARGE_TO_GRID_DESCRIPTION": "<b>OBS:</b> Aktiv urladdning av batteriet till nätet utöver de drifttillstånd som krävs av tekniska skäl kräver en formell registrering av lagringssystemet. Om du är osäker, kontakta din installatör. Genom att klicka på den blå \"Spara\"-knappen bekräftar du att denna bedömning har genomförts.<br/><br/><b>Obs:</b> Aktivering av denna funktion möjliggör inmatning av energi från batterilagringssystemet till det allmänna nätet. Beroende på stödupplägg, ersättningsmodell, mätkoncept och tillämpliga regulatoriska krav kan detta påverka befintliga anspråk på stöd, ersättning eller ursprungsbevis.<br/><br/>Särskilt kan det vara nödvändigt att tydligt fördela den inmatade elen och verifiera dess ursprung genom mätning. Vi kan inte garantera att användningen av denna funktion är förenlig med kraven i din specifika stöd- eller ersättningsmodell.<br/><br/>Gå igenom konsekvenserna med din installatör, direktmarknadsförare, nätoperatör eller en kvalificerad rådgivare innan aktivering.",
+                    "DISCONNECTED": "Frånkopplad",
+                    "NOTE": "Observera:",
+                    "NO_DISCHARGE": "Ingen urladdning",
+                    "NO_INPUT": "Ingen inmatning",
+                    "NO_OVERWRITE": "Ingen överskrivning",
+                    "OVERWRITE": "Överskrivning aktiv",
+                    "OVERWRITE_INFO": "När denna funktion är aktiverad ersätts standardinställningarna för laddning och urladdning av lagringssystemet av externa specifikationer från enerix Franchise GmbH & Co. KG. Detta kan leda till avvikelser från det vanliga driftbeteendet – till exempel kan el tas från nätet även om lagringssystemet är tillräckligt laddat.",
+                    "OVERWRITE_MODE": "Överskrivningsläge",
+                    "READ_ONLY": "Endast läsning"
+                },
+                "EVCS": {
+                    "ACTIVATE_CHARGING": "Aktivera laddstationen",
+                    "ADMINISTRATION": {
+                        "CAR_ADMINISTRATION": "Biladministration",
+                        "CUSTOM_CAR_INFO": "Om så är fallet kan din bil endast laddas effektivt från en viss effekt. Med denna knapp inkluderas detta i dina konfigurationsalternativ samt i de automatiska laddberäkningarna.",
+                        "RENAULT_ZOE": "Laddas en Renault Zoe huvudsakligen vid denna laddstation?"
+                    },
+                    "AMOUNT_OF_CHARGING_STATIONS": "Antal laddstationer",
+                    "AUTOMATIC_SWITCHING": "Automatisk fasomkoppling",
+                    "AUTOMATIC_SWITCHING_DESCRIPTION": "Automatisk fasomkoppling kräver att både fordonet och laddpunkten tekniskt stöder denna funktion. Fasomkopplingsprocessen kan ta några minuter, under vilka fordonet inte laddas.",
+                    "CABLE": "Kabel",
+                    "CABLE_NOT_CONNECTED": "Kabeln är inte ansluten",
+                    "CAR_FULL": "Bilen är fullt laddad",
+                    "CHARGE_LIMIT_REACHED": "Laddningsgränsen uppnådd",
+                    "CHARGE_TARGET": "Laddningsmål",
+                    "CHARGING": "Laddar",
+                    "CHARGING_LIMIT": "Laddningsgräns",
+                    "CHARGING_POWER": "Laddningseffekt",
+                    "CHARGING_STATION": "Laddstation",
+                    "CHARGING_STATION_CLUSTER": "Laddstationskluster",
+                    "CHARGING_STATION_DEACTIVATED": "Laddstationen är avaktiverad",
+                    "CHARGING_STATION_PLUGGED_IN": "Laddstationen är ipluggad",
+                    "CHARGING_STATION_PLUGGED_IN_EV": "Laddstation + elfordon ipluggade",
+                    "CHARGING_STATION_PLUGGED_IN_EVLOCKED": "Laddstation + elfordon ipluggade + låsta",
+                    "CHARGING_STATION_PLUGGED_IN_LOCKED": "Laddstationen ipluggad + låst",
+                    "CLUSTER_CONFIG_ERROR": "Ett fel uppstod i konfigurationen av Evcs-klustret",
+                    "CURRENT_CHARGE": "Aktuell laddning",
+                    "ENERGY_LIMIT": "Energigräns",
+                    "ENERGY_SINCE_BEGINNING": "Energi sedan senaste laddningsstart",
+                    "ENFORCE_CHARGING": "Tvinga laddning",
+                    "ERROR": "Fel",
+                    "FORCE_CHARGE": "Snabbladdning",
+                    "FORCE_CHARGE_MODE": {
+                        "INFO": "I detta läge tvingas bilens laddning fram, dvs. det garanteras alltid att bilen laddas, även om laddstationen behöver använda näteffekt.",
+                        "MAX_CHARGING": "Maximal laddningseffekt",
+                        "MAX_CHARGING_DETAILS": "Om bilen inte kan ladda med det angivna maxvärdet begränsas effekten automatiskt.",
+                        "NAME": "Tvingad laddning",
+                        "SHORT_NAME": "Manuellt"
+                    },
+                    "FORCE_SINGLE_PHASE": "1-fas",
+                    "FORCE_THREE_PHASE": "3-fas",
+                    "HYSTERESIS": "Laddstationens minsta omkopplingstid aktiv",
+                    "HYSTERESIS_INFO": "För att förhindra avbrott i laddningen på grund av frekvent start/pausning av laddprocessen fortsätter det för närvarande valda laddningsläget i några minuter till.",
+                    "KEBA_WARNING": "Obs: Vid användning av detta läge kan det för närvarande uppstå ett fel i kombination med FEMS och KEBA P40. Vi rekommenderar därför att inte använda detta läge för tillfället och istället välja läget \"Automatiskt\" med \"Garantera minimal laddning\" aktiverat. {{ environment }} och KEBA arbetar redan med högt tryck på en lösning. <a class=\"ion-link\" href={{link}} target=\"_blank\">Mer information</a>",
+                    "MAX_ENERGY_RESTRICTION": "Begränsa maximal energi per laddning",
+                    "MINIMUM": "PV-överskott med garanterad laddning",
+                    "NOT_AUTHORIZED": "Inte behörig",
+                    "NOT_CHARGING": "Laddar inte",
+                    "NOT_READY_FOR_CHARGING": "Inte redo för laddning",
+                    "NO_CONNECTION": {
+                        "DESCRIPTION": "Ingen anslutning till laddstationen.",
+                        "HELP1": "Kontrollera att laddstationen är påslagen och kan nås via nätverket.",
+                        "HELP1_1": "Laddstationens IP-adress visas vid återaktivering"
+                    },
+                    "OPTIMIZED_CHARGE_MODE": {
+                        "CHARGING_PRIORITY": {
+                            "CAR": "Bil",
+                            "INFO": "Beroende på prioriteringen laddas den valda komponenten först",
+                            "STORAGE": "Lagring"
+                        },
+                        "INFO": "I detta läge anpassas bilens laddning till den aktuella produktionen och förbrukningen.",
+                        "MIN_CHARGE_POWER": "Laddningshastighet",
+                        "MIN_CHARGING": "Garantera minimiladdning",
+                        "MIN_INFO": "Om du vill förhindra att bilen inte laddar på natten kan du ställa in en minimiladdning.",
+                        "NAME": "Optimerad laddning",
+                        "SHORT_NAME": "Automatiskt"
+                    },
+                    "OVERVIEW_CHARGING_STATIONS": "Översikt laddstationer",
+                    "PHASE_SWITCHING": "Fasomkoppling",
+                    "PHASE_SWITCHING_INFO": "Med hur många faser ska fordonet laddas?",
+                    "PRIORITIZATION": "Prioritering",
+                    "READY_FOR_CHARGING": "Redo för laddning",
+                    "STARTING": "Startar",
+                    "STATUS": "Status",
+                    "SURPLUS": "PV-överskott",
+                    "TASKS": "Uppgifter",
+                    "TOTAL_CHARGE": "Total laddning",
+                    "TOTAL_CHARGING_POWER": "Total laddningseffekt",
+                    "UNCONTROLLABLE": "Denna laddstation kan inte styras.",
+                    "UNKNOWN": "Okänd",
+                    "UNPLUGGED": "Urkopplad",
+                    "ZERO": "Ingen laddning"
+                },
+                "EVSE": {
+                    "CHARGE_MODE": "Grundläge",
+                    "KEBA_WARNING": "Obs: Vid användning av detta läge kan det uppstå ett fel i kombination med FEMS och KEBA P40. Vi rekommenderar därför att inte använda detta läge för närvarande och istället tillfälligt använda läget \"PV-överskott med garanterad laddning\" eller \"Snabbladdning\". {{ environment }} och KEBA arbetar redan med högt tryck på en lösning. <a class=\"ion-link\" href={{link}} target=\"_blank\">Mer information</a>",
+                    "SCHEDULE": {
+                        "ADD_TASK": "Lägg till uppgift",
+                        "SCHEDULE": "Schema"
+                    },
+                    "VEHICLE_ID_ERROR": "Fordonets ID kunde inte hittas. Kontrollera konfigurationen. Alla registrerade fordon visas."
+                },
+                "FIX_DIGITAL_OUTPUT": "Kontroller för digitala utgångar",
+                "GRID_OPTIMIZED_CHARGE": {
+                    "CHARGING_DELAYED": "Laddningen fördröjd",
+                    "CONSIDER_GRID_FEED_IN_LIMIT": "Beakta maximal inmatning till nätet",
+                    "EEG_2025_APP_LINK": "Till appen",
+                    "EEG_2025_APP_NAME": "EEG 2025",
+                    "EEG_2025_DESCRIPTION_INSTALLED": "Appen EEG 2025 är aktiv.<br/><br/>Vid negativa elmarknadspriser minskas inmatningen automatiskt så mycket som möjligt. Om det fortfarande finns överskottsenergi matas den fortsättningsvis in i nätet och går inte förlorad.",
+                    "EEG_2025_DESCRIPTION_NOT_INSTALLED": "Påverkas ditt system av EEG 2025-förordningen?<br/><br/>Med appen EEG 2025 minskas inmatningen vid negativa elmarknadspriser automatiskt så mycket som möjligt. Om det fortfarande finns överskottsenergi matas den fortsättningsvis in i nätet och går inte förlorad.",
+                    "END_TIME": "Sluttid",
+                    "END_TIME_DESCRIPTION": "Laddningen sker inte med maximal effekt under några timmar, utan jämnt över en längre tidsperiod.",
+                    "END_TIME_DETAILED_DESCRIPTION": "Laddningen sker inte med maximal effekt under några timmar, utan jämnt med maximalt {{ maxChargingPowerW }} till {{ endTime }}.",
+                    "END_TIME_LONG": "Sluttid för begränsad laddning",
+                    "EXPECTED_SOC": "Förväntat laddningstillstånd",
+                    "EXPECTED_SOC_WITHOUT_SELL_TO_GRID_LIMIT": "Utan att undvika den maximala inmatningen till nätet",
+                    "GRID_FEED_IN_LIMITATION_AVOIDED": "Inmatningsbegränsning till nätet undveks",
+                    "GRID_OPTIMIZED_CHARGE_DISABLED": "Nätsoptimerad laddning avaktiverad",
+                    "HIGH": "Hög",
+                    "HISTORY": {
+                        "BATTERY_CHARGE_GRID_LIMIT_DESCRIPTION": "Den maximala inmatningen till nätet, över vilken batteriladdningen ökas (så långt som möjligt), ligger under den maximalt tillåtna inmatningen till nätet för att förhindra för tidig produktionsbegränsning.",
+                        "PRIORITY_DESCRIPTION": "Minimiladdningen har högre prioritet än maximalladdningen"
+                    },
+                    "INFO_DISABLED_BY_TIME_OF_USE": "Obs: Nätsoptimerad laddning är nu integrerad i appen \"Time-of-Use Tariff\". De inställningar som konfigurerats här fortsätter att gälla.",
+                    "LIMITED_FUNCTIONALITY": "Begränsad funktionalitet",
+                    "LOW": "Låg",
+                    "MAXIMUM_CHARGE": "Maximalladdning",
+                    "MAXIMUM_GRIDSELL_WITH_CHARGE": "Maximal inmatning till nätet vid laddning",
+                    "MAXIMUM_GRID_FEED_IN": "Maximalt tillåten inmatning till nätet",
+                    "MEDIUM": "Medel",
+                    "MINIMUM_CHARGE": "Minimiladdning",
+                    "RISK_DESCRIPTION": {
+                        "HIGH": {
+                            "FUNCTION_DESCRIPTION": "Relativt sen laddning av batteriet",
+                            "PV_CURTAIL": "Högre sannolikhet att begränsning av PV-anläggningen undviks",
+                            "STORAGE_DESCRIPTION": "Lägre sannolikhet att batteriet blir fullt laddat"
+                        },
+                        "LOW": {
+                            "FUNCTION_DESCRIPTION": "Relativt tidig laddning av batteriet",
+                            "PV_CURTAIL": "Lägre sannolikhet att begränsning av PV-anläggningen undviks",
+                            "STORAGE_DESCRIPTION": "Högre sannolikhet att batteriet blir fullt laddat"
+                        },
+                        "MEDIUM": {
+                            "FUNCTION_DESCRIPTION": "Relativt jämn laddning av batteriet",
+                            "PV_CURTAIL": "Hög sannolikhet att begränsning av PV-anläggningen undviks",
+                            "STORAGE_DESCRIPTION": "Hög sannolikhet att batteriet blir fullt laddat"
+                        }
+                    },
+                    "RISK_PROPENSITY": "Riskbenägenhet",
+                    "SETTING_ONLY_VISABLE_FOR_INSTALLER": "Denna inställning är endast synlig för installatören",
+                    "STATE": {
+                        "ALLOWED_FEED_IN_LIMIT_TOO_LOW_DESCRIPTION": "Begränsad eller fördröjd laddning är inte möjlig eftersom ingen eller endast en liten mängd inmatning till nätet är tillåten.",
+                        "AVOID_LOW_CHARGING": "Låg laddning undveks",
+                        "CHARGE_LIMIT_ACTIVE": "Laddningsgräns aktiv",
+                        "END_TIME_NOT_CALCULATED": "Sluttiden inte beräknad",
+                        "GRID_FEED_IN_LIMITATION_IS_AVOIDED": "Inmatningsbegränsningen till nätet undviks",
+                        "NOT_DEFINED": "Ej definierad",
+                        "NO_LIMIT_ACTIVE": "Ingen laddningsgräns aktiv",
+                        "NO_LIMIT_POSSIBLE": "Ingen begränsning möjlig (begränsad av kontroller med högre prioritet)",
+                        "PASSED_END_TIME": "Sluttiden för begränsad laddning har passerats",
+                        "STORAGE_ALREADY_FULL": "Lagringen är redan full"
+                    },
+                    "STORAGE_CAPACITY": "Lagringskapacitet (endast synlig för administratörer)"
+                },
+                "HEAT": {
+                    "CHANGES_MY_PV_INFO": "Du kan göra ändringar i inställningarna för ditt AC-Thor värmeelement i din MyPV-app.",
+                    "CONTROL_NOT_ALLOWED": "Styrning inte tillåten",
+                    "ERROR": "Fel",
+                    "HEATING": "Uppvärmning pågår",
+                    "HEATING_ENERGY": "Värmeenergi",
+                    "HEATING_OUTPUT": "Värmeeffekt",
+                    "NO_HEATING": "Ingen uppvärmning",
+                    "TARGET_TEMPERATURE_REACHED": "Måltemperatur uppnådd",
+                    "TEMPERATURE": "Aktuell temperatur",
+                    "TEMPERATURE_UNIT": "Temperatur i °C"
+                },
+                "HEATINGELEMENT": {
+                    "ACTIVED_FORCED_LIMIT": "Aktiv (ytterligare energi)",
+                    "ACTIVE_FORCED": "Aktiv (minsta drifttid)",
+                    "ACTIVE_LEVEL": "Aktiv nivå",
+                    "CALIBRATION": "Kalibrering",
+                    "CALIBRATION_DESCRIPTION": "Värmeelementet kalibreras för att få effekten för de enskilda nivåerna från mätaren",
+                    "DONE": "Klar",
+                    "ENDTIME": "Sluttid",
+                    "ENERGY": "Energi",
+                    "ENERGY_SINCE_BEGINNING": "Energi sedan början",
+                    "GUARANTEE_HEATING": "Garantera minsta värmeenergi",
+                    "GUARANTEE_MINIMUM_HEATING": "Garantera minsta uppvärmningstid",
+                    "GUARANTEE_MODE": "Garantiläge",
+                    "GUARANTEE_NONE": "Ingen",
+                    "HEATINGELEMENT": "Värmeelement",
+                    "HEATING_POWER": "Värmeeffekt",
+                    "LEVEL_ONE": "Nivå 1",
+                    "LEVEL_THREE": "Nivå 3",
+                    "LEVEL_TWO": "Nivå 2",
+                    "MESSAGE_UNREACHABLE": "Energigränsen kan inte nås i tid",
+                    "MINIMAL_ENERGY_AMOUNT": "Minsta energimängd",
+                    "MINIMAL_ENERGY_LIMIT": "Minsta energigräns",
+                    "MINIMUM_DURATION": "Kortaste varaktighet",
+                    "MINIMUM_ENERGY": "Minsta energi",
+                    "MINIMUM_RUN_TIME": "Kortaste drifttid",
+                    "PRIORITY": "Prioritet",
+                    "SET_ENDTIME": "Ange sluttid",
+                    "TIME": "Tid",
+                    "TIME_COUNTDOWN": "Tid till start",
+                    "UNREACHABLE": "Onåbar"
+                },
+                "HEAT_PUMP": {
+                    "ABOVE_SOC": "och från laddningstillståndet",
+                    "AUTOMATIC_DESCRIPTION": "Ställ in dina tröskelvärden för PV-överskottsläget",
+                    "BASE_MODE_DESCRIPTIONS": {
+                        "AUTOMATIC": "Beroende på de inställda tröskelvärdena för nätköp och inmatning växlas de enskilda lägena. (Tröskelvärdena kan ändras under Inställningar)",
+                        "LOCK": "Detta drifttillstånd begränsar värmepumpens effektförbrukning enligt värmepumpsinställningarna till 0 kW eller 4,2 kW.",
+                        "NORMAL_OPERATION": "Värmepumpen drivs behovsbaserat inom det normala effektområdet.",
+                        "SWITCH_ON_COM": "Värmepumpen slås på när inmatningsöverskottet överstiger det angivna värdet och lagringssystemets laddningstillstånd ligger över det angivna värdet.",
+                        "SWITCH_ON_REC": "Vid aktivering ökar värmepumpen sin effekt och utnyttjar tillgänglig energi mer intensivt för värmeproduktion."
+                    },
+                    "BELOW_SOC": "och under laddningstillståndet",
+                    "GRID_BUY": "Från nätköp av",
+                    "GRID_SELL": "Från inmatningsöverskott av",
+                    "HEAT_PUMP": "Värmepump",
+                    "LOCK": "Lås",
+                    "MORE_THAN_HP_POWER": "Värdet får inte vara lägre än värmepumpens maximala effekt",
+                    "NORMAL_OPERATION": "Normaldrift",
+                    "NORMAL_OPERATION_SHORT": "Normal",
+                    "OPERATING_STATUS": "Driftstatus",
+                    "RELATION_ERROR": "Överskottsvärdet för påslagningskommandot måste vara större än det rekommenderade påslagningsvärdet",
+                    "SWITCH_ON_COM": "Påslagningskommando",
+                    "SWITCH_ON_COM_SHORT": "Kommando",
+                    "SWITCH_ON_REC": "Påslagningsrekommendation",
+                    "SWITCH_ON_REC_SHORT": "Rekommendation",
+                    "UNDEFINED": "Odefinierad"
+                },
+                "INFO_STORAGE_FOR_CHARGE": "Negativa värden motsvarar laddning av lagringen",
+                "INFO_STORAGE_FOR_DISCHARGE": "Positiva värden motsvarar urladdning av lagringen",
+                "PEAKSHAVING": {
+                    "ASYMMETRIC_INFO": "De angivna effektvärdena avser enskilda faser. Anpassningen sker efter den mest belastade fasen.",
+                    "END_DATE": "Slutdatum",
+                    "END_TIME": "Sluttid",
+                    "HYSTERESIS_SO_C": "Tröskelvärde SoC",
+                    "MOST_STRESSED_PHASE": "Mest belastade fas",
+                    "PEAKSHAVING": "Topputjämning",
+                    "PEAKSHAVING_POWER": "Urladdning över",
+                    "RECHARGE": "Återladdningseffekt",
+                    "RECHARGE_POWER": "Laddning under",
+                    "RELATION_ERROR": "Urladdningsgränsen måste vara större än eller lika med laddningsgränsen",
+                    "START_DATE": "Startdatum",
+                    "START_TIME": "Starttid",
+                    "START_TIME_CHARGE": "Starttid för laddning"
+                },
+                "PHASES_INFO": "Av tekniska skäl kan summan av de enskilda faserna avvika något från totalsumman.",
+                "SCHEDULE": {
+                    "CHART_TITLE_ADMIN": "Planerat schema (endast för administratörer)"
+                },
+                "SELFCONSUMPTION_INFO": "Egenförbrukningen anger andelen av den aktuella produktionen som kan användas genom direktförbrukning och laddning av lagringen.",
+                "SINGLETHRESHOLD": {
+                    "ABOVE": "Över",
+                    "BEHAVIOUR": "Beteende",
+                    "BELOW": "Under",
+                    "CURRENT_VALUE": "Aktuellt värde",
+                    "DEPENDEND_ON": "Beroende på",
+                    "MIN_SWITCHING_TIME": "Kortaste omkopplingstid",
+                    "MORE_THAN_HP_POWER": "Värdet får inte vara lägre än maxeffekten hos den styrda enheten",
+                    "OTHER": "Annat",
+                    "RELATION_ERROR": "Tröskelvärdet måste vara större än den omkopplade lastens effekt",
+                    "SWITCHED_LOAD_POWER": "Omkopplad lasteffekt",
+                    "SWITCH_OFF_ABOVE": "Stäng av över",
+                    "SWITCH_OFF_BELOW": "Stäng av under",
+                    "SWITCH_ON_ABOVE": "Slå på över",
+                    "SWITCH_ON_ABOVE_THRESHOLD": "Slå på över tröskelvärdet",
+                    "SWITCH_ON_BELOW": "Slå på under",
+                    "SWITCH_ON_BELOW_THRESHOLD": "Slå på under tröskelvärdet",
+                    "THRESHOLD": "Tröskelvärde"
+                },
+                "STORAGE": {
+                    "AMBIENT_TEMPERATURE": "Omgivningstemperatur",
+                    "BATTERY_DC": "Batteri - DC",
+                    "GRID_CHARGE": "Aktivera underhåll av nödkraftsreserven från nätet",
+                    "GRID_CHARGE_WARNING": "Lagringssystemet kan aktivt ladda om från nätet för att bibehålla den inställda nödkraftsreserven och kompensera för förluster på grund av intern egenförbrukning vid längre frånvaro av produktion. <br/><br/>OBS: Aktiv laddning av batteriet från nätet utöver den tekniskt nödvändiga underhållsladdningen kräver en lämplig registrering av lagringssystemet. Om du är osäker, kontrollera med din installatör. Genom att trycka på den blå \"Spara\"-knappen bekräftar du att denna kontroll har gjorts.<br/><br/>Observera: Förutsättningen för stödet enligt den tyska \"Gesetz für den Ausbau erneuerbarer Energien (EEG)\" är att endast energi från förnybara källor och/eller deponigas lagras i batteriet. Genom att aktivera denna funktion laddas batteriet med energi från nätet. Denna energi är, beroende på det individuella elavtalet, sannolikt producerad från fossila källor och/eller kärnkraftverk. Därför kan vi inte garantera att batteriet endast laddas med energi från förnybara källor och/eller deponigas.",
+                    "INVERTER": "Växelriktare",
+                    "TOTAL_AC": "Total AC",
+                    "TOTAL_DC": "Total DC"
+                },
+                "SYSTEM": {
+                    "EXECUTE": "Utför",
+                    "INDUSTRIAL": {
+                        "BMS_HARD_RESET": "Hård återställning av BMS",
+                        "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Återställning av kylaggregat:",
+                        "CLEAR_COOLING_UNIT_ERRORS_TEXT": "nödvändigt vid fel på kylaggregatet",
+                        "F2B_UPDATE_HEADER": "F2B-uppdatering",
+                        "MAINTENANCE_WINDOW": "Underhållsfönster",
+                        "NOTE": "Startar eller stoppar hela systemet, inklusive batteriväxelriktare och batterier",
+                        "RESET": "RESET",
+                        "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Bekräfta systemfel:",
+                        "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "inkluderar systemkomponenter, batterier, växelriktare, ESS"
+                    },
+                    "OVERALL_SYSTEM": "Hela systemet",
+                    "RPC_FAILED": "Kommandot kunde inte utföras",
+                    "RPC_SUCCESS": "Kommandot utfördes"
+                },
+                "TIME_OF_USE_TARIFF": {
+                    "CHARGE_FROM_GRID_ACTIVATE": "Aktivera laddning från nätet",
+                    "CHART_TITLE": "Planerat schema",
+                    "CHART_WARNING_NOTE": "Grafiken visar de senaste tre timmarna samt det framtida planerade driftläget för den period för vilken de dynamiska nätköpspriserna finns tillgängliga. Observera att det planerade schemat beräknas om kontinuerligt och kan ändras under dagen.",
+                    "CONTROL_MODE_DESCRIPTION": {
+                        "CHARGE_CONSUMPTION": "Genom att aktivt ladda batteriet från nätet under perioder med låga elpriser kan köp av energi under perioder med högt pris undvikas.<br/><br/>OBS: Aktiv laddning av batteriet från nätet utöver den tekniskt nödvändiga underhållsladdningen kräver en lämplig registrering av lagringssystemet. Om du är osäker, kontrollera med din installatör. Genom att trycka på den blå \"Spara\"-knappen bekräftar du att denna kontroll har gjorts.<br/><br/>Observera: Förutsättningen för stödet enligt den tyska lagen om förnybara energikällor (EEG 2023) är att endast energi från förnybara källor och/eller deponigas lagras i batteriet. Genom att aktivera denna funktion laddas batteriet med energi från nätet. Denna energi är, beroende på det individuella elavtalet, sannolikt producerad från fossila och/eller kärnkraftskällor. Därför kan vi inte garantera att batteriet uteslutande laddas med energi från förnybara källor och/eller deponigas."
+                    },
+                    "EEG_2025_DESCRIPTION": "Grafen visar den förväntade framtida inmatningen till nätet och den prognostiserade inmatningstariffen enligt EEG 2025. Detta beaktas vid beräkningen av det optimala driftläget. Systemet försöker hålla inmatningen till nätet så låg som möjligt under perioder då ingen tariff betalas. Observera att prognosen beräknas om kontinuerligt och därför kan ändras under dagen.",
+                    "EEG_2025_HEADER": "EEG 2025-prognos",
+                    "POWER_SOC_CHART_TITLE": "Prognoser",
+                    "PRICE": "Aktuellt pris",
+                    "STATE": {
+                        "AVOID_GRID_SELL_LIMIT": "Undvik inmatningsgränsen",
+                        "BALANCING": "Optimering av egenförbrukning",
+                        "CHARGE_GRID": "Ladda från nätet",
+                        "DELAY_CHARGE": "Fördröj laddning",
+                        "DELAY_DISCHARGE": "Fördröj urladdning",
+                        "DISCHARGE_CONSUMPTION": "Urladdning till förbrukning",
+                        "DISCHARGE_GRID": "Urladdning till nätet",
+                        "LIMIT_CHARGE": "Begränsa laddning",
+                        "PEAK_SHAVING": "Topputjämning"
+                    }
+                },
+                "TWO_WAY_INFO_GRID": "Negativa värden motsvarar inmatning till nätet, positiva värden motsvarar nätförsörjning"
+            }
+        },
+        "NETWORK": {
+            "ADD_IP": "Lägg till statiska IP-adresser",
+            "ADVANCED_MODE": "Avancerat läge",
+            "DHCP": {
+                "ADDRESS": "DHCP-adress",
+                "INFO": "Den visade IP-adressen tilldelades dynamiskt via DHCP (Dynamic Host Configuration Protocol). Den är inte permanent och kan ändras när enheten eller routern startas om."
+            },
+            "ERROR_READING": "Fel vid inläsning av den aktuella nätverkskonfigurationen:",
+            "ERROR_UPDATING": "Fel vid uppdatering",
+            "IP_ADDRESS": "IP-adress",
+            "MANDATORY_FIELDS": "Fyll i de obligatoriska fälten",
+            "SUBMIT": "Skicka",
+            "SUBNETMASK": "Nätmask",
+            "SUCCESS_UPDATE": "Nätverkskonfigurationen uppdaterades för",
+            "VALID_ADDRESS_WARNING": "I \"Lägg till statiska IP-adresser\" anger du en giltig IP-adress med nätmask, t.ex. 10.4.1.6/24"
+        },
+        "SERVICE": {
+            "CELL": {
+                "INSULATION": "Isolation",
+                "TEMPERATURES": "Celltemperaturer",
+                "VOLTAGES": "Cellspänningar"
+            },
+            "ENTIRE_SYSTEM": "Hela systemet"
+        },
+        "TITLE": "{{ edgeShortName }}"
+    },
+    "EVSE_SINGLE": {
+        "SETTINGS": {
+            "CHARGE_MODE": "Vilket läge ska användas för laddning"
+        }
+    },
+    "FORMLY_FORM": {
+        "TARIFF_TABLE": {
+            "ADD_TIME_SLOT": "Lägg till tidslucka",
+            "ADD_YEAR": "Lägg till år {{ year }}",
+            "ERROR_MESSAGES": {
+                "INVALID_TIME_INPUT": "\"Till\"-tiden kan inte vara senare än eller lika med \"från\"-tiden"
+            },
+            "GROSS_PREIS_TITLE": "Bruttopris för året {{ year }}*",
+            "PRICE_ITEMS": "Prisposter",
+            "REMOVE_YEAR": "Ta bort år {{ year }}",
+            "TARIFFS": {
+                "HIGH": "Hög tariff",
+                "LOW": "Låg tariff",
+                "STANDARD": "Standardtariff"
+            },
+            "TITLE": "{{ year }} Bikostnader"
+        }
+    },
+    "GENERAL": {
+        "ACTIVE": "Aktiv",
+        "ACTUAL_POWER": "Laddningseffekt för elfordon",
+        "ALL": "Alla",
+        "APPLY": "Använd",
+        "AUTARCHY": "Självförsörjningsgrad",
+        "AUTOMATIC": "Automatisk",
+        "BACK": "Tillbaka",
+        "BASE_MODE": "Grundläge",
+        "CANCEL": "Avbryt",
+        "CAPACITY": "Kapacitet",
+        "CHANGE_ACCEPTED": "Ändringen godkänd",
+        "CHANGE_FAILED": "Ändringen misslyckades",
+        "CHARGE": "Laddning",
+        "CHARGE_DISCHARGE": "Laddning/Urladdning",
+        "CHARGE_ONCE": "Ladda en gång",
+        "COMPONENT_COUNT": "Antal komponenter",
+        "COMPONENT_INACTIVE": "Komponenten är inte aktiv!",
+        "CONNECTION_LOST": "Anslutningen förlorad. Försöker återansluta.",
+        "CONSUMPTION": "Förbrukning",
+        "COUNTRY": {
+            "AUSTRIA": "Österrike",
+            "CZECH": "Tjeckien",
+            "GERMANY": "Tyskland",
+            "GREECE": "Grekland",
+            "LITHUANIA": "Litauen",
+            "NETHERLANDS": "Nederländerna",
+            "SWEDEN": "Sverige",
+            "SWITZERLAND": "Schweiz"
+        },
+        "CUMULATIVE": "Kumulativa värden",
+        "CURRENT_NAME": "aktuellt namn",
+        "CURRENT_STATUS": "Aktuell status",
+        "CURRENT_VALUE": "aktuellt värde",
+        "DARK": "Mörkt",
+        "DATE_FORMAT": "yyyy-MM-dd",
+        "DETAILS": "Detaljer",
+        "DIGITAL_INPUTS": "Digitala ingångar",
+        "DIRECT_CONSUMPTION": "Direktförbrukning",
+        "DISCHARGE": "Urladdning",
+        "DISCHARGE_ONCE": "Urladda en gång",
+        "EDIT": "Redigera",
+        "ENERGY_LIMIT": "Energigräns",
+        "FAULT": "Fel",
+        "FOR": "för",
+        "FORECAST": "Prognos",
+        "FORMLY": {
+            "INITIALIZING_ERROR": "Fel vid initiering av komponenten",
+            "LINK_TO_DOCS": "Länk till dokumentationen",
+            "REQUIRED": "Krävs"
+        },
+        "FROM": "Från",
+        "GENERATOR_ON": "Generator aktiv",
+        "GENERATOR_SUPPLY": "Generatorförsörjning",
+        "GRID": "Nät",
+        "GRID_BUY": "Köp från nätet",
+        "GRID_BUY_ADVANCED": "Köp",
+        "GRID_BUY_PRICE": "Elpris",
+        "GRID_SELL": "Sälj till nätet",
+        "GRID_SELL_ADVANCED": "Sälj",
+        "GRID_SELL_PRICE": "Inmatningsersättning",
+        "HEAT_PUMP": "Värmepump",
+        "HELP": "Hjälp",
+        "HISTORY": "Historik",
+        "INACTIVE": "Inaktiv",
+        "INFO": "Info",
+        "INPUT_NOT_VALID": "Ogiltig inmatning",
+        "INSTALL": "Installera",
+        "INSUFFICIENT_RIGHTS": "Otillräckliga behörigheter",
+        "LIGHT": "Ljust",
+        "LINK": "Läs mer via denna länk (tyska):",
+        "LINK_TEXT": "Se changeloggen för betatestet",
+        "LIVE": "Live",
+        "LOAD": "Last",
+        "MANAGED_CONSUMPTION": "Styrd förbrukning",
+        "MANUAL": "Manuell",
+        "MANUALLY": "Manuellt",
+        "MEASURED_VALUE": "Mätvärde",
+        "MODE": "Läge",
+        "MONTH": {
+            "APRIL": "april",
+            "AUGUST": "augusti",
+            "DECEMBER": "december",
+            "FEBRUARY": "februari",
+            "JANUARY": "januari",
+            "JULY": "juli",
+            "JUNE": "juni",
+            "MARCH": "mars",
+            "MAY": "maj",
+            "NOVEMBER": "november",
+            "OCTOBER": "oktober",
+            "SEPTEMBER": "september"
+        },
+        "MORE": "Mer...",
+        "NAVIGATION_DETAILS": "Denna hjälpbricka ger dig assistans. Läs mer om ändringar, få förklaringar och information, inklusive de utökade funktionerna hos din KEBA P40-laddstation.",
+        "NAVIGATION_INFO": "Vi arbetar just nu med att designa om vår övervakning och app och optimera deras navigation och funktionalitet.",
+        "NO": "Nej",
+        "NO_VALUE": "Inget värde",
+        "NUMBER_OF_COMPONENTS": "Antal komponenter",
+        "OFF": "Av",
+        "OFF_GRID": "Ingen nätanslutning!",
+        "OK": "ok",
+        "ON": "På",
+        "OPEN": "Öppna",
+        "OTHER_CONSUMPTION": "annan förbrukning",
+        "PERCENTAGE": "Procent",
+        "PERIOD_FROM_TO": "från {{ value1 }} till {{ value2 }}",
+        "PHASE": "Fas",
+        "PHASES": "Faser",
+        "POWER": "Effekt",
+        "PRODUCTION": "Produktion",
+        "RENAME": "Byt namn",
+        "REPORT": "Rapportera",
+        "REPORT_VALUE": "Rapportera skadade data",
+        "RESET": "Återställ",
+        "RESTART": "Starta om",
+        "SAVE": "Spara",
+        "SEARCH": "Sök",
+        "SELF_CONSUMPTION": "Egenförbrukning",
+        "SOC": "Laddningstillstånd",
+        "STATE": "Tillstånd",
+        "STATE_MACHINE": {
+            "ERROR": "Fel",
+            "GO_RUNNING": "Startar...",
+            "GO_STOPPED": "Stoppar...",
+            "RUNNING": "Startad",
+            "STOPPED": "Stoppad",
+            "UNDEFINED": "Okänd"
+        },
+        "STATUS": "Status",
+        "STORAGE_SYSTEM": "Lagringssystem",
+        "SUFFIX": {
+            "HOUR": ""
+        },
+        "SUM_STATE": "Systemtillstånd",
+        "SURVEY": "Här kan du dela din feedback om betatesten med oss:",
+        "SURVEY_LINK": "Delta i betatestens undersökning",
+        "SYSTEM": "system",
+        "SYSTEM_OUTAGE": "På grund av underhållsarbete är onlineövervakningen tillfälligt inte tillgänglig. Försök igen senare. Mer information finns här",
+        "SYSTEM_STATE": "Systemtillstånd",
+        "SYSTEM_THEME": "System",
+        "TARGET_SOC": "Mål för laddningstillstånd",
+        "THEME_SELECTION": {
+            "DESCRIPTION": "Vår övervakning finns nu i <b>mörkt läge</b>.<hr>Byt enkelt och sätt igång!",
+            "TITLE": "Släck ljuset, öka komforten!"
+        },
+        "TIME": {
+            "DAY": "Dag",
+            "DAYS": "Dagar",
+            "HOUR": "Timme",
+            "HOURS": "Timmar",
+            "MINUTE": "Minut",
+            "MINUTES": "Minuter"
+        },
+        "TIME_SCHEDULE": "Tidsschema",
+        "TO": "Till",
+        "TOTAL": "Totalt",
+        "TOTAL_CHARGE": "Total laddning",
+        "TOTAL_DISCHARGE": "Total urladdning",
+        "TOTAL_STATE": "Totaltillstånd",
+        "VALUE": "värde",
+        "VISIBLE_FOR_ADMINS_ONLY": "Synlig endast för service och administration",
+        "WARNING": "Varning",
+        "WEEK": {
+            "FRIDAY": "Fredag",
+            "MONDAY": "Måndag",
+            "SATURDAY": "Lördag",
+            "SUNDAY": "Söndag",
+            "THURSDAY": "Torsdag",
+            "TUESDAY": "Tisdag",
+            "WEDNESDAY": "Onsdag"
+        },
+        "YES": "Ja"
+    },
+    "GRID_STATES": {
+        "CONSUMPTION_LIMITATION": "Begränsning av laddning från nätet",
+        "FEED_IN_DESCRIPITON": "Begränsning av urladdning från lagringssystemet ",
+        "FEED_IN_LIMITATION": "Inmatningsbegränsning",
+        "GRID_LIMITATION": "Nätbegränsning",
+        "NO_EXTERNAL_LIMITATION": "Ingen begränsning",
+        "OFF_GRID": "Strömavbrott",
+        "RIPPLE_CONTROL_RECEIVER": "Ripple control-mottagare",
+        "SECTION_14A": "Begränsning enligt §14a EnWG"
+    },
+    "INDEX": {
+        "ADD_EDGE": "Lägg till ny {{ edgeShortName }}",
+        "ALL_CONNECTED": "Alla anslutningar upprättade.",
+        "CONNECTION_FAILED": "Anslutningen till {{ value }} misslyckades.",
+        "CONNECTION_IN_PROGRESS": "Etablerar anslutning...",
+        "CONNECTION_SUCCESSFUL": "Ansluten till {{ value }}.",
+        "DEVICE_OFFLINE": "Enheten är inte ansluten!",
+        "FIRST_SETUP_PROTOCOL": "Initial idrifttagning",
+        "IS_OFFLINE": "OpenEMS är offline!",
+        "LOGGED_IN_AS": "Inloggad som",
+        "NO_EDGE_AVAILABLE": "Du har inte lagt till någon {{edgeShortName}} ännu.",
+        "NO_EDGE_FOR_USER": "Tyvärr har ingen {{ edgeShortName }} kopplats till ditt konto ännu.",
+        "OFFLINE_SINCE": "Offline sedan",
+        "TO_ENERGYMONITOR": "Till energimonitorn...",
+        "TYPE": "Typ",
+        "VISIBLE_HERE_AFTER_INSTALLATION": "När din {{ edgeShortName }} har tagits i drift av en installatör visas den på denna plats."
+    },
+    "INSTALLATION": {
+        "ALIAS_WITH_LABEL": "Alias {{label}}{{number}}",
+        "BACK": "Tillbaka",
+        "CLICK_RECOMMENDATION": "Klicka på knappen \"Lägg till\" nedan om du vill idriftsätta en {{ edgeShortName }}.",
+        "COMPLETE": "Till onlineövervakningen",
+        "COMPLETION": {
+            "DOWNLOAD": "Ladda ner rapporten",
+            "DOWNLOAD_ERROR": "Protokollet kunde inte laddas ner",
+            "DOWNLOAD_SUCCESS": "Protokollet laddades ner",
+            "HECKERT_NOTE": "Det finns nu en kostnadsfri app tillgänglig för installation i appcentret.",
+            "INVALID_PAYLOAD": "Ogiltigt svar från servern",
+            "NAVIGATION_LABEL": "Gå till App Center",
+            "NOTE": "Klicka här för att gå till App Center för att konfigurera ytterligare komponenter och installera appar.",
+            "SUB_TITLE": "Du har tagit {{ value }} i drift.",
+            "TITLE": "Installationen är klar"
+        },
+        "CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION": {
+            "HEADER": "Kommunikationstyp för nätmätaren",
+            "IP_ADDRESS": "IP-adress",
+            "PORT": "Port",
+            "RS485": "RS485",
+            "TCP_IP": "TCP/IP"
+        },
+        "CONFIGURATION_COMMERCIAL_MODBUS_BRIDGE": {
+            "HEADER": "Välj kommunikationstyp"
+        },
+        "CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT": {
+            "RS485_LABEL": "RS485 (4 RJ45-portar) - Anslutning: FEMS",
+            "TCP_IP_LABEL": "TCP/IP (6 RJ45-portar) - Anslutning: Intern"
+        },
+        "CONFIGURATION_EMERGENCY_RESERVE": {
+            "COUPLER_TITLE": "Vilken fältbusskoppling är installerad i din Offgrid-nätpunkt?",
+            "EMERGENCY_RESERVE": "Nödkraftsreserv {{ symbol }}",
+            "EMERGENCY_RESERVE_LABEL": "Nödkraft{{ symbol }}",
+            "EMERGENCY_RESERVE_NOTE": "Om denna funktion aktiveras kan batteriets laddningsnivå inte sjunka under det inställda värdet.",
+            "EMERGENCY_RESERVE_VALUE": "Värde för nödkraftsreserv",
+            "INFO": "Vid användning av generatorn, observera: laddningsnivån för nödkraftsreserven måste vara större än (eller lika med) den angivna laddningsnivå som krävs för att starta generatorn (se detaljer nedan).",
+            "IS_ACTIVATED": "Nödkraftsreserv aktiv?",
+            "IS_ENABLED": "Ska nödkraftsfunktionen aktiveras?",
+            "TITLE": "Nödkraftsreserv",
+            "VALUE": "Värde [%]"
+        },
+        "CONFIGURATION_ENERGY_FLOW_METER": {
+            "CONVERTER_RATIO": "Omvandlarförhållande (200–5000A)",
+            "METER": {
+                "INTEGRATED": "Integrerad Home 3-fassensor med strömtransformator ({{type}})",
+                "LABEL": "Mätare",
+                "TYPE": {
+                    "OPTIONAL": "Valfri",
+                    "STANDARD": "standardleverans"
+                },
+                "WITHOUT_CT": "Home 3-fassensor utan strömtransformator (valfri)",
+                "WITHOUT_CT_STANDARD_DELIVERY": "Home 3-fassensor utan strömtransformator (standardleverans)",
+                "WITH_CT": "Home 3-fassensor med strömtransformator 120A ({{type}})"
+            },
+            "TITLE": "Val av mätare för energiflödesriktning"
+        },
+        "CONFIGURATION_ESS_LIMITER": {
+            "INFO_NOTE": "För att undvika överbelastning av nätet kommer nätoperatören i framtiden att kunna dimra alla förbrukningsenheter som installerats sedan den 1 januari 2024 till en effekt på 4,2 kW.",
+            "IS_ACTIVATE": "Aktivera begränsningsalternativ enligt §14a EnWG",
+            "IS_ACTIVATE_LABEL": "Kablaget måste vara installerat enligt installationsanvisningarna.",
+            "TITLE": "Begränsning enligt §14a EnWG"
+        },
+        "CONFIGURATION_EXECUTE": {
+            "BATTERY": "Batteri",
+            "BATTERY_INTERFACE": "Batterigränssnitt",
+            "BATTERY_INVERTER": "Batteriväxelriktare",
+            "COMMUNICATION_WITH_BATTERY": "Kommunikation med batteriet",
+            "COMMUNICATION_WITH_BATTERY_INVERTER": "Kommunikation med batteriväxelriktaren",
+            "COMMUNICATION_WITH_METER": "Kommunikation med mätaren",
+            "COMMUNICATION_WITH_RELAY": "Kommunikation med reläet",
+            "CONTROL_GRID_POINT": "Styrning av nätfrånkopplingspunkten",
+            "DESCRIPTION_1": "För att verifiera att alla komponenter i ditt system är korrekt konfigurerade,",
+            "DESCRIPTION_2": "kan konfigurationen och de efterföljande funktionstesterna ta upp till 10 minuter att slutföra.",
+            "EMERGENCY_CAPACITY_RESERVE": "Reserv för nödstyrning",
+            "ERROR": "Fel",
+            "EXISTING_CONFIGURATION": "En befintlig konfiguration hittades. Du kan skriva över den genom att starta konfigurationsprocessen manuellt.",
+            "FIELD_BUS_COUPLER": "Fältbusskoppling",
+            "FINISH_FUNCTION_TEST": "Avslutade funktionstester för de installerade komponenterna",
+            "FUNCTION_TEST": "Funktionstest",
+            "FUNCTION_TEST_ERROR": "Funktionstestet avslutades med fel.",
+            "GRID_METER": "Nätmätare",
+            "GRID_OPTIMIZED_CHARGE": "Nätsoptimerad laddning",
+            "IP_ADDRESS_ERROR": "En IP-adress som krävs för {{ system}} kunde inte läggas till i nätverkskonfigurationen.",
+            "IP_ADDRESS_WARNING": "En IP-adress som krävs för kopplingen kunde inte läggas till i nätverkskonfigurationen.",
+            "IS_BEING_CONFIGURED": "konfigureras",
+            "LABEL": {
+                "WAGO_BRIDGE": "WAGO (grå komponent)",
+                "WEIDMUELLER_BRIDGE": "Weidmüller (svart komponent)"
+            },
+            "LEGEND": "Förklaring",
+            "NOT_YET_CONFIGURED": "Ännu inte konfigurerad / kontrollerad",
+            "PARTIAL_CONFIGURATION": "Alla komponenter kunde inte konfigureras korrekt.",
+            "PRE_CONFIGURED": "Förkonfigurerad / Varning",
+            "RELAY_BOARD": "Reläkort",
+            "SELF_CONSUMPTION": "Optimering av egenförbrukning",
+            "START": "Starta konfigurationen",
+            "START_FUNCTION_TEST": "Initierade funktionstester för de installerade komponenterna",
+            "STORAGE_SYSTEM": "Energilagringssystem",
+            "SUCCESSFULLY_CONFIGURED": "Konfigurerad / kontrollerad",
+            "TITLE": "Konfiguration",
+            "UNDEFINED_COMPONENT_CONFIGURATOR": "Komponentkonfigureraren är odefinierad",
+            "WAGO_BRIDGE": "Wago-brygga",
+            "WAITING": "Konfigurationen körs...",
+            "WEIDMUELLER_BRIDGE": "Weidmueller-brygga"
+        },
+        "CONFIGURATION_FEATURES_STORAGE_SYSTEM": {
+            "BALANCING": "Optimering av egenförbrukning"
+        },
+        "CONFIGURATION_GRID_SETTING": {
+            "TITLE": "Nätinställning"
+        },
+        "CONFIGURATION_LINE_SIDE_METER_FUSE": {
+            "FIXED_VALUE_DESCRIPTION": "Vad är det aktuella värdet på säkringen?",
+            "METER": "Mätare",
+            "METER_LABEL": "Typ av mätare vid nätanslutningspunkten",
+            "OTHER": "Annat",
+            "OTHER_VALUE": "Eget värde",
+            "TITLE_COMMERCIAL": "Säkring vid nätanslutningspunkten / Mätarsäkring",
+            "TITLE_HOME": "Säkring vid nätanslutningspunkten",
+            "VALUE": "Värde [A]"
+        },
+        "CONFIGURATION_MPPT_SELECTION": {
+            "CONNECTION_CHECK_LABEL": "Har alla anslutningar kontrollerats?",
+            "NOTE": "Ytterligare generatorer kan därefter konfigureras via App Center."
+        },
+        "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVE_COUNT_TITLE": "Information om antalet slavar",
+            "SLAVE_INSTALLATION_TITLE": "Installation av enskilda lagringsenheter (slavar)"
+        },
+        "CONFIGURATION_STS_BOX": {
+            "HELP_TEXT": "Serienumret på STS-lådan finns på typskylten på sidan av STS-lådan",
+            "LABEL": "STS-låda",
+            "STS_BOX_AVAILABLE": "STS-låda installerad",
+            "STS_BOX_FIELD_LABEL": "Är en STS-låda installerad för nödkraftsförmåga:"
+        },
+        "CONFIGURATION_SUMMARY": {
+            "ACCEPT": "godkänt",
+            "ACCEPT_TERMS": "Godkänn garantivillkoren för att fortsätta.",
+            "ALIAS_WITH_LABEL_HOME_DC": "Alias MPPT{{mppt}}",
+            "BATTERY": "Batteri",
+            "BATTERY_LOCATION": "Plats för BESS",
+            "BOTH_SELECTED_LABEL": "Båda PV-portarna (\"PV{{ pv1 }}\" och \"PV{{ pv2 }}\") anslutna",
+            "COUNTRY_SETTING": "Landsinställningar",
+            "CUSTOMER": "Kund",
+            "DEVICE_ACTIVE_CHECKED": "Batteri och växelriktare påslagna",
+            "EDGE_NUMBER": "{{ edgeShortName }}-nummer",
+            "ENERGY_FLOW_METER": {
+                "LABEL": "Nät"
+            },
+            "GENERAL": "Allmänt",
+            "INSTALLER": "Installatör",
+            "INVERTER": "Växelriktare",
+            "IS_DEVICE_ACTIVE_CHECKED": "Kontrollera att batteriet och växelriktaren är påslagna och bekräfta detta.",
+            "MODULE_TYPE_WITH_LABEL_HOME_DC": "Typ av moduler MPPT{{ mppt }}",
+            "NEXT_CLICKED_DESCRIPTION": "Genom att klicka på knappen \"nästa\" konfigureras lagringssystemet. Se till att batteriet och växelriktaren är påslagna under hela konfigurationsprocessen.",
+            "NUMBER_OF_MODULES_WITH_LABEL_HOME_DC": "Antal PV-moduler MPPT{{ mppt }}",
+            "ORIENTATION_WITH_LABEL_HOME_DC": "Orientering MPPT{{ mppt }}",
+            "PRODUCER": "Generator",
+            "SUMMARY": "Sammanfattning",
+            "TIME_OF_INSTALLATION": "Tidpunkt för installationen",
+            "VALUE_WITH_LABEL_HOME_DC": "Värde MPPT{{ mppt }} {{ symbol }}",
+            "WARRANTY_TERMS": "Garantivillkor"
+        },
+        "CONFIGURATION_SYSTEM": {
+            "OPEN_INSTRUCTIONS": "Öppna anvisningarna",
+            "PRODUCT_NAME": "Produktnamn",
+            "TITLE": "Välj produkten som ska konfigureras."
+        },
+        "CONFIGURATION_SYSTEM_VARIANT": "Välj installerad komponent",
+        "FORM": {
+            "BATTERY_SERIAL_NUMBER": "{{ serialNumber }} är inte ett giltigt serienummer. Ett giltigt serienummer består av {{ length }} siffror.",
+            "EMAIL": "{{ email }} är inte en giltig e-postadress.",
+            "EMAIL_MATCH": "E-postadresserna matchar inte.",
+            "INVALID_ZIPCODE": "Ogiltigt format för postnummer",
+            "MANDATORY_FIELD": "Detta är ett obligatoriskt fält",
+            "MAX": "Ange ett värde lägre än {{ max }}.",
+            "MIN": "Ange ett värde större än {{ min }}",
+            "POSITIVE_INTEGER": "Endast positiva heltal är tillåtna.",
+            "STS_SERIAL_NUMBER_REQUIREMENT": "Serienumret består av maximalt 16 siffror."
+        },
+        "LOAD": "last",
+        "NEXT": "nästa",
+        "PRE_INSTALLATION": {
+            "AUTHENTICATION_FAILED": "Autentiseringen misslyckades",
+            "EDGE_OFFLINE": "En anslutning till {{ edgeShortName }} kunde inte upprättas",
+            "INSTALLATION_SUCCESS": "installationen startade för {{ edgeId }}",
+            "NOTE": "Obs:",
+            "TITLE": "Ange installationsnyckeln",
+            "WRONG_KEY_NOTE": "Om installationsnyckeln felaktigt känns igen som ogiltig, uppdatera sidan."
+        },
+        "PROTOCOL_AVU_BOX": {
+            "LABEL": "AVU",
+            "SERIAL_NUMBER": "Serienummer",
+            "TITLE": "Innehåller installationspaketet en AVU-låda (automatisk förbrukarbrytare)?"
+        },
+        "PROTOCOL_CHECKLIST": {
+            "CHANGE_NETWORK_SETTINGS": "B) Ändra nätverksinställningar på datorn (IP-adress)",
+            "CONNECT_INVERTER": "A) Anslut datorn till växelriktaren med en nätverkskabel (övre LAN-uttag)",
+            "ENTER_PASSWORD": "D) Ange lösenord",
+            "IP_ADDRESS": "C) Ange IP-adress i webbläsaren",
+            "IP_ADDRESS_DESCRIPTION": "IP-adress: 169.254.1.1",
+            "MIN_VOLTAGE": "G) Tillägg: Ställ in minsta spänningsgräns på 600 V",
+            "MIN_VOLTAGE_DESCRIPTION": "Fungerar endast med installatörslösenord (eget lösenord för FENECON eller förkonfigurerat)\n\n<ul><li>Minsta spänningsgräns:<b> {{voltageLimit}} V</b> (-> Nätinställning: <b>{{gridSetting}}</b>)</li></ul>",
+            "MULTI_STEP": "{{listPosition}}) Utför steg 1 till {{totalSteps}}",
+            "NETWORK_SETTINGS": "IP-adress: 169.254.1.12\nNätmask: 255.255.255.0",
+            "NETWORK_SETTINGS_INFO": "Observera att stegen och illustrationerna för att ställa in en statisk IP-adress kan variera beroende på den använda enheten. För andra enheter, som Apple-enheter, kan procedurerna skilja sig.",
+            "NETWORK_SETTINGS_NOTE": "För att komma åt växelriktaren via dess fasta IP-adress måste enheten som är ansluten till växelriktaren tilldelas en statisk IP manuellt som ligger inom samma nätverksområde",
+            "PASSWORD_DESCRIPTION": "Servicelösenord:\n\nAnvändare: service\nLösenord: Ye_r0d4w0P!",
+            "POWER_CONTROL": "H) Ställ in effektstyrning (Cos-Phi m.m.)",
+            "POWER_CONTROL_DESCRIPTION": "-> vilka inställningar som behövs här finns i nätoperatörens data\n-> Ändringar kan endast göras med installatörslösenordet",
+            "START_CONFIGURATION": "E) Starta KACO-konfigurationen med installationsguiden",
+            "STEP": "Steg {{currStep}}/{{totalStep}} - {{description}}",
+            "STEP_1": "Välj språk",
+            "STEP_2": "Ange land / nättyp",
+            "STEP_2_DESCRIPTION": "Välj din nätinställning här:\n\n<ul><li>Tyskland <b>{{gridSetting}}</b> (-> under G) ställ in \"Minsta spänningsgräns\" på <b>{{voltageLimit}} V </b>)",
+            "STEP_3": "Effektbegränsning",
+            "STEP_3_DESCRIPTION": "-> Godkänn standardinställningarna som de är.",
+            "STEP_4": "IP-inställning",
+            "STEP_4_DESCRIPTION": "IP-adress: 172.16.0.100\nNätmask: 255.255.255.0\nStandardgateway: 172.16.0.1",
+            "STEP_5": "Lokalisering",
+            "STEP_5_DESCRIPTION": "Synkronisera tiden här med knappen \"Sync\"",
+            "STEP_6": "Modbus",
+            "STEP_6_DESCRIPTION": "Modbus-inställningen ska vara satt till 502",
+            "STEP_7": "Övrigt (valfria parametrar)",
+            "STEP_8": "Slutför",
+            "STEP_8_DESCRIPTION": "Ange installatörens namn",
+            "TIMEOUT_NOTE": "Följande process kan ta upp till {{timeoutInMinutes}} minuter."
+        },
+        "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO - Anslut växelriktaren",
+        "PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVES_TITLE": "Slav {{number}}",
+            "SLAVE_FILED_LABEL": "Ange antalet slavar som ska konfigureras",
+            "SLAVE_INSTALLATION": {
+                "CONNECTION_STATUS": {
+                    "NOT_FOUND": "Slav hittades inte"
+                },
+                "LOG_MESSAGE": {
+                    "AUTHENTICATION_SUCCESSFUL": "Autentiseringen lyckades. Uppdaterar systemet...",
+                    "CONFIGURATION_FAILED": "Konfigurationen misslyckades: {{ error }}",
+                    "CONFIGURED_SUCCESSFULLY": "Applikationen konfigurerades.",
+                    "FUNCTION_TESTS_FAILED": "Funktionstestet misslyckades: {{ error }}",
+                    "PARTIALLY_CONFIGURED": "Konfigurationen delvis slutförd.",
+                    "SLAVE_STATUS_ERROR": "Fel vid hämtning av status för slav {{ slaveNr }}",
+                    "STARTING_AUTHENTICATION": "Startar autentisering...",
+                    "UPDATE_COMPLETED": "Systemuppdateringen klar. Konfigurerar appen..."
+                }
+            }
+        },
+        "PROTOCOL_FEED_IN_MANAGEMENT": {
+            "CAPACITIVE": "kapacitiv",
+            "CHOOSE": "Välj",
+            "CONSTANT_VALUE": "Cos φ-värde",
+            "DYNAMIC_EXTERNAL_LIMITATION": "Dynamisk extern kontroller",
+            "DYNAMIC_LIMITATION": "Dynamisk begränsning av inmatningen",
+            "DYNAMIC_LIMITATION_TYPE": "Inmatningsbegränsning",
+            "EXTERNAL_CONTROLLER_CHECK": "Den externa styrningsmottagaren installerades korrekt och fullständigt enligt anvisningarna.",
+            "EXTERNAL_LIMITATION": "Extern kontroller (extern begränsning av DSO)",
+            "EXTERNAL_LIMITATION_TYPE": "Extern begränsning",
+            "FEED_IN_SETTING_DESCRIPTION": "Minskning av aktiv effekt vid överfrekvens",
+            "FIXED_POWER_FACTOR": "Konstant Cos φ (P)",
+            "FIXED_POWER_FACTOR_DESCRIPTION": "Vanligtvis anger nätoperatören en fast effektfaktor på \"1\"",
+            "INDUCTIVE": "induktiv",
+            "INFO_TEXT": "Ditt energilagringssystem försöker undvika begränsning av PV-systemet genom intelligent laddning.",
+            "MAXIMUM_FEED_IN_VALUE": "Maximalt inmatningsvärde [W]",
+            "MAXIMUM_VALUE_DESCRIPTION": "Detta värde kan krävas av DSO.",
+            "NA_PROTECTION": "Aktivera fjärrfrånkoppling (centralt NS-skydd)",
+            "NO_LIMITATION": "Ingen begränsning",
+            "PLACE_HOLDER": "Välj alternativ",
+            "PU_ENABLED_CURVE": "Fasförskjutningsfaktor Cos φ (P)",
+            "QU_ENABLED_CURVE": "Reaktiv effekt - Q(U)-karakteristik",
+            "SHADE_MANAGEMENT_DEACTIVATED": "Skugghantering avaktiverad?",
+            "TITLE": "Inmatningshantering",
+            "WARNING_TEXT": "Detta ersätter inte korrekt konfiguration av PV-växelriktaren!"
+        },
+        "PROTOCOL_INSTALLER_AND_CUSTOMER": {
+            "CITY": "Ort",
+            "COMPANY_CUSTOMER": "Företag?",
+            "COMPANY_NAME": "Företagsnamn",
+            "COUNTRY": "Land",
+            "EMAIL": "E-postadress",
+            "EMAIL_CONFIRMATION": "bekräftelse",
+            "EMAIL_DESCRIPTION": "för den personliga åtkomsten",
+            "FIRST_NAME": "Förnamn",
+            "LAST_NAME": "Efternamn",
+            "PHONE": "Telefonnummer",
+            "STREET_ADDRESS": "Gatuadress",
+            "TITLE_CUSTOMER": "Kontaktuppgifter - Slutkund",
+            "TITLE_INSTALLER": "Kontaktuppgifter - Installatör",
+            "ZIP": "Postnummer"
+        },
+        "PROTOCOL_PV": {
+            "ADDITIONAL_GENERATOR": "Ytterligare AC-generator",
+            "ALIAS": "Beskrivning",
+            "ALIAS_DESCRIPTION_PV": "visas i onlineövervakningen, t.ex. \"PV-Tak\"",
+            "BOTH_SELECTED_LABEL": "Är båda portarna (\"PV{{ pv1 }}\" och \"PV{{ pv2 }}\") anslutna?",
+            "DIRECTIONS": {
+                "EAST": "Öster",
+                "NORTH": "Norr",
+                "NORTH_EAST": "Nordost",
+                "NORTH_WEST": "Nordväst",
+                "SOUTH": "Söder",
+                "SOUTH_EAST": "Sydost",
+                "SOUTH_WEST": "Sydväst",
+                "WEST": "Väster"
+            },
+            "INSTALLED_POWER": "Installerad effekt [Wₚ]",
+            "INSTALLED_POWER_PER_STRING": "Installerad effekt per string [Wₚ]",
+            "MARKED_AS": " MPPT {{ mppt }} (markerad som \"PV{{ mppt }}\")",
+            "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (markerad som \"{{ pv1 }}\" och \"{{ pv2 }}\")",
+            "MODULE_TYPE": "Typ av moduler",
+            "MODULE_TYPE_DESCRIPTION": "t.ex. tillverkare och effekt",
+            "MODULE_TYPE_WITH_LABEL": "Typ av moduler {{ label }}{{ number }}",
+            "NUMBER_OF_MODULES": "Antal PV-moduler per string",
+            "NUMBER_OF_MODULES_PER_STRING": "Antal PV-moduler",
+            "NUMBER_OF_MODULES_WITH_LABEL": "Antal PV-moduler {{ label }}{{ number }}",
+            "OPEN_MANUAL": "Öppna manualen",
+            "ORIENTATION": "Orientering",
+            "ORIENTATION_WITH_LABEL": "Orientering {{ label }}{{ number }}",
+            "TITLE_DC": "DC-PV-installation",
+            "TITLE_PV": "DC-PV-installation (växelriktaringångar)"
+        },
+        "PROTOCOL_SERIAL_NUMBERS": {
+            "BATTERY_MODULE": "Batterimodul ",
+            "BATTERY_MODULE_DESCRIPTION": "Ange endast de sista 8 siffrorna i serienumret.",
+            "BATTERY_STRING": "Batteristring {{ stringNumber }}",
+            "BATTERY_TOWER": "Batteritorn {{ number }}",
+            "BATTERY_TOWER_CLUSTER": "Batteri {{ batteryNumber }} Torn {{towerNumber}}",
+            "BESS_COMPONENTS": "BESS-komponenter",
+            "BMS_BOX": "BMS-låda och bas",
+            "CONFIRM": "Bekräfta",
+            "DOUBLE_SOCKET": "Delad sockel",
+            "DOUBLE_SOCKET_LABEL": "Delad sockel installerad",
+            "EDGE_TIMEOUT_DESC": "Vi kunde inte läsa serienumren automatiskt. Systemet kan vara upptaget med att starta.",
+            "EMS_BOX_COMMERCIAL": "{{ edgeShortname }} anslutningslåda",
+            "EMS_BOX_CONNECTION_BOX_COMMERCIAL30": "{{ edgeShortName }} anslutningslåda",
+            "EMS_BOX_GRID_CONNECTION_POINT_COMMERCIAL30": "Nätanslutningspunkt",
+            "EMS_BOX_HECKERT": "EMS-låda",
+            "EMS_BOX_HOME": "EMS-låda ({{edgeShortName }}-låda)",
+            "ENTER_MANUALLY": "Ange serienummer manuellt",
+            "ENTER_VALID_ADDRESS": "För att tillämpa inställningarna, ange giltiga värden.",
+            "ERROR_SENDING": "Fel vid sändning av protokollen.",
+            "INVALID_SERIALNUMBER_KEY": "Kontrollera serienumret för {{ key }} i {{ header }}",
+            "INVERTER": "Växelriktare",
+            "MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS": "Minsta antal moduler per string: {{ min }} och maximalt: {{ max }}",
+            "MINIMUM_AND_MAXIMUM_STRINGS": "Minsta antal strings: {{ min }} och maximalt: {{ max }}",
+            "MODULES_PER_STRINGS_DESCRIPTION": "Moduler per string för Commercial-50-system: {{ number }}",
+            "NEXT_BUTTON_DESCRIPTION": "Genom att klicka på knappen \"nästa\" skickas idrifttagningsrapporten/\"IBN\"-rapporten automatiskt till FENECON GmbH.",
+            "NO_DATA_FOUND": "Inga serienummer hittades",
+            "NUMBER_OF_MODULES_PER_STRINGS": "Antal moduler per string",
+            "NUMBER_OF_MODULES_PER_TOWER": "Antal moduler per torn",
+            "NUMBER_OF_STRINGS": "Antal strings",
+            "NUMBER_OF_TOWERS": "Antal torn",
+            "READ_DESCRIPTION": "Kontrollera \"Systeminställningarna\". Läs beskrivningarna av fälten.",
+            "SAME_SERIAL_NUMBERS": "{{ serialNumbers }} har samma serienummer",
+            "SENT_SUCCESSFULLY": "Protokollen skickades.",
+            "SERIAL_NUMBER": "Serienummer",
+            "SETUP_NOTE": "Slutför serienumren genom att ersätta platshållarna (markerade med \"x\") med lämpliga tecken.",
+            "SINGLE_SERIAL_NUMBER": " Serienummer för {{ label }}",
+            "SYSTEM_SETUP": "Systeminställningar",
+            "TROUBLESHOOTING": {
+                "INTRO": "Om inga data hittas, följ dessa steg:",
+                "STEP_BRIDGES": "Kontrollera att hopparpluggen har anslutits enligt anvisningarna",
+                "STEP_LAN": "Kontrollera att LAN-kabeln är korrekt ansluten",
+                "STEP_MANUAL": "Om problemet kvarstår kan du ange serienumren manuellt och kontakta FENECON-service efter att idrifttagningsprocessen har slutförts."
+            },
+            "TRY_READING_AGAIN": "Försök läsa igen"
+        },
+        "PROTOCOL_SYSTEM": {
+            "FIRSTNAME": "Förnamn på kontaktpersonen",
+            "LAST_NAME": "Efternamn på kontaktpersonen",
+            "LOCATION_SAME_AS_ADDRESS": "Är BESS-platsen samma som kundens adress?",
+            "TITLE": "Plats för BESS"
+        },
+        "PROTOCOL_SYSTEM_LOCATION_VALIDATION": {
+            "TITLE": "Adressvalidering av lagringsplatsen"
+        },
+        "SHARED": {
+            "NOTE": "Obs",
+            "WARNING": "Varning"
+        },
+        "STEP_FROM_TO": "Steg {{ from }} av {{ to }}",
+        "STEP_TO": "Steg {{ number }}",
+        "SYSTEM_UPDATE": {
+            "UPDATE_WARNING": "Versionen måste uppdateras!"
+        },
+        "VALUE_WITH_LABEL": "Värde {{ label }}{{ number }} {{ symbol }}"
+    },
+    "JS_SCHEDULE": {
+        "ADD_EVENT": "Lägg till händelse",
+        "ADD_TASK": "Lägg till uppgift",
+        "EDIT_EVENT": "Redigera händelse",
+        "EDIT_TASK": "Redigera uppgift",
+        "MANUAL_EVENTS": "Manuella händelser",
+        "NEXT_EVENTS": "Nästa händelser",
+        "SMART_EVENTS": "Smarta händelser"
+    },
+    "LIVE": {
+        "PULL_TO_REFRESH": "Dra i detta band för att uppdatera"
+    },
+    "LOADING_SCREEN": {
+        "LOADING": "Läser in",
+        "SERVER_NOT_ACCESSIBLE": "Servern är inte åtkomlig",
+        "SERVER_NOT_ACCESSIBLE_ACCESS_LOCALLY": "Åtkomst lokalt",
+        "SERVER_NOT_ACCESSIBLE_DESCRIPTION": "Onlinevisning av lagringssystemet är för närvarande inte möjlig. Data sparas lokalt och går inte förlorade.",
+        "SERVER_NOT_ACCESSIBLE_TRY_RELOADING": "Försök uppdatera webbläsaren om 10 minuter."
+    },
+    "LOGIN": {
+        "AUTHENTICATION_FAILED": "Autentiseringen misslyckades",
+        "DEMO_ACCESS": "Demoåtkomst",
+        "EMPLOYEE_LOGIN": "Medarbetarinloggning",
+        "ENERGY_JOURNEY_SLOGAN": "Du är en del av energiresan",
+        "PASSWORD_LABEL": "Lösenord",
+        "PASSWORD_RESET": "Återställ lösenord",
+        "PREAMBLE": "Ange ditt lösenord eller skicka in standardvärdet för att logga in som gäst.",
+        "REQUEST_TIMEOUT": "Din förfrågan har nått tidsgränsen. Försök igen senare.",
+        "SIGN_IN": "Logga in",
+        "TITLE": "Inloggning",
+        "USER": "Användare"
+    },
+    "MENU": {
+        "ACCESS_LEVEL": "Åtkomstnivå",
+        "CHANGELOG": "Changelog",
+        "COCKPIT": "Cockpit",
+        "EDGE_SETTINGS": "Inställningar",
+        "EDGE_SYSTEM_SETTINGS": "Systeminställningar",
+        "FAVORITES": "Favoriter",
+        "GENERAL_SETTINGS": "Allmänna inställningar",
+        "GROUPS": {
+            "BRAIINS": "Bitcoin-miner",
+            "CHANNEL_SINGLE_THRESHOLD": "Tröskelvärdesstyrning",
+            "EVCS": "Hantering av flera laddpunkter",
+            "FIX_DIGITAL_OUTPUT": "Manuell relästyrning",
+            "HEATING_ROOM": "Uppvärmning"
+        },
+        "INDEX": "Index",
+        "LOGOUT": "Logga ut",
+        "MENU": "Meny",
+        "NAME": "Namn",
+        "OPENEMS_ENERGY_MANAGEMENT_SYSTEM": "Öppet energihanteringssystem",
+        "OTHER_USER": "Andra användare",
+        "OVERVIEW": "Alla system",
+        "PROFILE": "Profil",
+        "SCHEDULE": "Schema",
+        "SETTINGS": "Inställningar",
+        "SYSTEMS": "System",
+        "USER": "Användare"
+    },
+    "MODBUS_TCP_API_READ_WRITE": {
+        "ACTIVE_POWER_LIMITATIONS": "Begränsningar av aktiv effekt",
+        "ACTUAL_VALUE": "Faktiskt värde",
+        "CUMULATED_ACTIVE_TIME": "Externa kommandon beaktas",
+        "CUMULATED_INACTIVE_TIME": "Inga externa kommandon finns",
+        "CURRENT_STATE": "Aktuellt tillstånd",
+        "DOWNLOAD_PROTOCOL": "Ladda ner protokollet",
+        "INFO_TEXT": "Det faktiska värdet kan avvika från specifikationen. Negativa värden motsvarar laddning av lagringen - positiva urladdning av lagringen. En detaljerad förklaring finns i anvisningarna.",
+        "LAST_COMMAND": "Senaste överskrivning",
+        "LIMITATION": "Begränsning",
+        "NOT_OVERRIDING": "Inga externa kommandon finns",
+        "NO_OVERRIDDEN_CHANNELS": "Inga kanaler har överskrivits ännu.",
+        "OVERRIDING": "Externt kommando beaktas",
+        "REGISTER": "Register",
+        "SET_ACTIVE_POWER_EQUALS": "Börvärde för aktiv effekt",
+        "SET_ACTIVE_POWER_GREATER_OR_EQUALS": "Börvärde för maximal laddningseffekt",
+        "SET_ACTIVE_POWER_LESS_OR_EQUALS": "Börvärde för maximal urladdningseffekt",
+        "SET_REACTIVE_POWER_EQUALS": "Börvärde för reaktiv effekt",
+        "SET_REACTIVE_POWER_GREATER_OR_EQUALS": "Börvärde för minsta reaktiva effekt",
+        "SET_REACTIVE_POWER_LESS_OR_EQUALS": "Börvärde för maximal reaktiv effekt"
+    },
+    "NOTIFICATIONS": {
+        "AUTHENTICATION_FAILED": "Ingen anslutning: Autentiseringen misslyckades.",
+        "CLOSED": "Anslutningen stängd.",
+        "FAILED": "Anslutningen misslyckades.",
+        "LOGGED_IN": "Inloggad.",
+        "LOGGED_IN_AS": "Inloggad som '{{ value }}'."
+    },
+    "OFFLINE": {
+        "DEFAULT": {
+            "STEP_CONTACT_INSTALLER": {
+                "DESCRIPTION": "Om du redan har kontrollerat alla tidigare steg och onlineövervakningen fortfarande inte visar några data, kontakta din <b>elektriker/installatör</b>.",
+                "HEADER": "Kontakta installatören"
+            },
+            "STEP_EMS_RESTART": {
+                "HEADER": "Starta om {{edgeShortName}} och kontrollera LAN-anslutningen"
+            },
+            "STEP_FIREWALL": {
+                "DESCRIPTION": "Brandväggsinställningar kan begränsa internetanslutningen till {{edgeShortName}}. Detta inträffar särskilt vid första idrifttagningen. Använd <a href={{link}} target=\"_blank\">anvisningarna</a> för att kontrollera portarna och tjänsterna som är aktiva på {{edgeShortName}}.",
+                "HEADER": "Kontrollera portvidarebefordran/brandväggsinställningar"
+            },
+            "STEP_SERVICE": {
+                "DESCRIPTION": "Om du redan har kontrollerat alla tidigare steg och onlineövervakningen fortfarande inte visar några data, kontakta vår serviceavdelning:<br>Via e-post: <a href=\"mailto:service@fenecon.de\">service@fenecon.de</a> eller per telefon: +49 9903 6280-0 (mån. – tors.: 08:00 – 12:00 | 13:00 – 17:00 | fre.: 08:00 – 12:00 | 13:00 – 15:00)",
+                "HEADER": "Kontakta FENECON Service"
+            },
+            "STEP_TEST_WIFI_CONNECTION": {
+                "DESCRIPTION": "<p><b>a)</b> Koppla ur LAN-kabeln från Home-{{edgeShortName}}-lådan (gränssnittet \"LAN\") och anslut den till en laptop/PC (se till att inaktivera Wi-Fi-adaptern). Om laptopen/PCn upprättar en internetanslutning, fortsätt till steg 3, annars fortsätt till b.</p><p><b>b)</b> Om laptopen/PCn inte ansluter till internet, anslut enheten direkt till routern via en LAN-kabel för att säkerställa att routern fungerar korrekt (utan extra kabellängd och utan andra nätverksenheter emellan).</p><p>→ Om routern fungerar kan det hända att LAN-kabeln, en Wi-Fi-repeater eller en powerline-adapter inte vidarebefordrar signalen korrekt. Mer information finns i de produktspecifika anvisningarna från respektive tillverkare.</p>",
+                "HEADER": "Kontrollera routeranslutningen med laptop"
+            }
+        },
+        "GENERAL": {
+            "AVAILABILITY": "Onlineåtkomst till energilagringssystemet är för närvarande inte tillgänglig.<br>Data lagras lokalt och går inte förlorade.",
+            "EMS_OFFLINE": "{{edgeShortName}} är offline",
+            "MORE_INFO": "Mer information",
+            "STEP_TEST_WIFI_CONNECTION": {
+                "CHILD_1": {
+                    "DESCRIPTION": "Anslut din dator direkt till routern via LAN-kabel. Se till att det inte finns extra kablar eller nätverksenheter (som Wi-Fi-förstärkare eller switchar) anslutna emellan för att säkerställa att din router fungerar korrekt. Om det återigen inte går att upprätta en internetanslutning, följ de produktspecifika anvisningarna från respektive tillverkare av dina nätverksenhet(er) för mer information.",
+                    "HEADER": "-> Fortfarande ingen internetanslutning"
+                },
+                "CHILD_2": {
+                    "DESCRIPTION": "Fortsätt till steg 3) Kontrollera portvidarebefordran/brandväggsinställningar.",
+                    "HEADER": "-> Internet upprättat via laptop"
+                },
+                "DESCRIPTION": "Testa i nästa steg routerfunktionen genom att koppla ur LAN-pluggen på anslutningslådan till {{edgeShortName}}-lådan och ansluta den till en laptop eller stationär dator. Observera: Stäng av Wi-Fi på denna enhet.",
+                "HEADER": "Kontrollera internetanslutningen"
+            },
+            "SUB_HEADER": "Har ditt system varit <b>offline i mer än 10 minuter?</b> Följande kan kontrolleras på plats:",
+            "TIME_OUT": "Den begärda {{ edgeShortName }} har varit offline <b>i {{timeSinceOffline}}</b>.",
+            "TRY": "Försök uppdatera webbläsaren om 10 minuter."
+        },
+        "HOME_10": {
+            "STEP_EMS_RESTART": {
+                "DESCRIPTION": "På den översta lådan i lagringstornet finns en kalluttagskontakt (färgad i svart och blått). Koppla ur den och vänta 15 sekunder. Koppla in kalluttagskontakten igen och vänta <b>5 till 10 minuter</b> (systemet startar om). Kontrollera också att LAN-pluggen är korrekt ipluggad i {{edgeShortName}}-anslutningslådan. Uppdatera nu webbläsarfönstret för onlineövervakningen: Om åtgärden lyckades ska offline-meddelandet nu vara borta och det vanliga gränssnittet i FENECON onlineövervakning visas.",
+                "HEADER": "Omstart av {{edgeShortName}}"
+            }
+        },
+        "HOME_20_30": {
+            "STEP_EMS_RESTART": {
+                "DESCRIPTION": "Starta om {{edgeShortName}} genom att trycka och hålla ner knappen på den översta lådan i lagringstornet framtill i 10 sekunder. Vänta nu <b>5 - 10 minuter</b> (systemet startar om). Kontrollera också att LAN-pluggen är korrekt isatt i {{edgeShortName}}-anslutningslådan. Uppdatera nu webbläsarfönstret för onlineövervakningen: Om åtgärden lyckades ska felmeddelandet nu vara hävt och den vanliga vyn av {{edgeLongName}} energihanteringssystemets onlineövervakning visas."
+            }
+        },
+        "STEP_EMS_RESTART": {
+            "DESCRIPTION": "Längst upp på batterilagringstornet finns en tryckknapp på framsidan. Tryck och håll ner den i 10 sekunder. Vänta nu i 5 till 10 minuter (systemet startar om). Kontrollera också att LAN-pluggen är korrekt ipluggad i {{edgeShortName}}-anslutningslådan. Uppdatera nu webbläsarfönstret för onlineövervakningen: Om åtgärden lyckades ska offline-meddelandet nu vara borta och det vanliga gränssnittet i FENECON onlineövervakning visas."
+        }
+    },
+    "ORDER": {
+        "ASCENDING": "Stigande {{edgeShortName}}-nr",
+        "A_TO_Z": "Beteckning A - Ö",
+        "DESCENDING": "Fallande {{edgeShortName}}-nr",
+        "FAULT_TO_OK": "Systemstatus Fel - OK",
+        "OK_TO_FAULT": "Systemstatus OK - Fel",
+        "SORTING": "Sortering",
+        "Z_TO_A": "Beteckning Ö - A"
+    },
+    "PAGE_HEADERS": {
+        "ENERGY_JOURNEY": "Analysera batteriutbyggnad",
+        "WRAP_UP_2025": "Din sammanfattning 2025"
+    },
+    "REGISTER": {
+        "BUTTON": "Skapa",
+        "CREATE_USER": "Skapa konto",
+        "CREATING_USER": "Skapar konto...",
+        "ERRORS": {
+            "EMAIL_NOT_EQUAL": "E-postadresserna är inte lika",
+            "PASSWORD_NOT_EQUAL": "Lösenorden är inte lika",
+            "REQUIRED_FIELDS": "Fyll i alla fält"
+        },
+        "FORM": {
+            "ACCEPT_AGB": "Jag godkänner <a target=\"_blank\" href=\"https://fenecon.de/page/gtc/\">villkoren</a>.*",
+            "CITY": "Ort",
+            "COMPANY": "Företag",
+            "COMPANY_NAME": "Företagsnamn",
+            "CONFIRM_EMAIL": "bekräfta e-post",
+            "CONFIRM_PASSWORD": "Bekräfta lösenord",
+            "CONTACT_DETAILS": "Kontaktuppgifter",
+            "COUNTRY": "Land",
+            "EMAIL": "E-post",
+            "FIRSTNAME": "Förnamn",
+            "INSTALLER": {
+                "ACCEPT_PRIVACY_POLICY": "Genom att skapa ett FENECON-installatörskonto intygar jag att jag har läst och godkänner FENECONs <a target=\"_blank\" href={{link}}>sekretesspolicy</a> och användarvillkor.*"
+            },
+            "IS_ELECTRICIAN": "Jag bekräftar att mitt företag är registrerat i installatörsregistret och att jag därmed är behörig att ansluta och idriftsätta ett lagringssystem.",
+            "LASTNAME": "Efternamn",
+            "PASSWORD": "Lösenord",
+            "PHONE": "Telefonnummer",
+            "PRIVATE": "Privat",
+            "STREET": "Gata",
+            "SUBSCRIBE_NEWSLETTER": "Här kan du prenumerera på <a href='https://erp.fenecon.de/fenmail' target='_blank'>FENECON-nyhetsbrevet</a>, som utkommer flera gånger per år.",
+            "USER": {
+                "ACCEPT_PRIVACY_POLICY": "Genom att skapa ett FENECON-konto intygar jag att jag har läst och godkänner FENECONs <a target=\"_blank\" href={{link}}>sekretesspolicy</a> och användarvillkor.*"
+            },
+            "ZIP": "Postnummer"
+        },
+        "SEGMENT": {
+            "INSTALLER": "Installatör",
+            "USER": "Användare"
+        },
+        "SUCCESS": "Registreringen lyckades",
+        "TITLE": "Skapa konto"
+    },
+    "ROLE": {
+        "ADMIN": "Administratör",
+        "GUEST": "Gäst",
+        "INSTALLER": "Installatör",
+        "OWNER": "Ägare"
+    },
+    "SETTINGS": {
+        "CATEGORY": {
+            "TITLE": {
+                "CLOUD_INTERFACES": "Molngränssnitt",
+                "DEDICATED_CONTROLLERS": "Dedikerade kontroller",
+                "DEVICE_INTERFACES": "Enhetsgränssnitt",
+                "EV_CHARGING_STATION": "Laddstation för elfordon",
+                "EV_CHARGING_STATION_CONTROL": "Styrning av laddstation för elfordon",
+                "EXTERNAL_INTERFACES": "Externa gränssnitt",
+                "IOS": "I/O",
+                "IO_CONTROL": "I/O-styrning",
+                "METER": "Mätare",
+                "OTHERS": "Mer",
+                "SIMULATORS": "Simulatorer",
+                "STANDARD_COMPONENTS": "Standardkomponenter",
+                "STORAGE_SYSTEMS": "Lagringssystem",
+                "STORAGE_SYSTEM_CONTROL": "Styrning av lagringssystem",
+                "TEMPERATURE_SENSORS": "Temperatursensorer"
+            }
+        },
+        "ENERGY_JOURNEY": {
+            "TO_THE_ANALYSIS": "Visa analysen",
+            "YOUR_ENERYJOURNEY": "Din Energy Journey"
+        },
+        "POWER_ASSISTANT": {
+            "INFO": "'Krafthjälpen' visar respektive kontroller för alla lagringssystem (ess0, ess1, ...) och några relevanta datapunkter för varje. Ordningen motsvarar ordningen i schemaläggaren."
+        },
+        "SYSTEM_UPDATE": {
+            "CONFIRMATION_INFO": "Vill du uppdatera din {{edgeShortName}}?",
+            "CREATE_COMPONENT": "Skapa komponent",
+            "DELETE_COMPONENT": "Ta bort komponent",
+            "EDGE_RESTARTING": "{{ edge }} startar om...",
+            "EMS_RESTARTING": "Starta om {{edgeShortName}}",
+            "INSTALLED_VERSION": "Installerad version:",
+            "LATEST_VERISON": "Systemet är uppdaterat med den senaste programvaran",
+            "NEW_VERSION": "Senaste version:",
+            "NEW_VERSION_INSTALLING": "Installera senaste version",
+            "OFFLINE": "{{ edgeShortName }} är offline.",
+            "RESTARTED": "Omstart av {{system}} lyckades.",
+            "RESTARTING": "Startar om {{system}}. (Detta kan ta upp till {{minutes}} minuter)",
+            "RESTART_CONFIRMATION": "Vill du starta om {{system}}?",
+            "RESTART_FAILED": "Omstarten av {{system}} misslyckades.",
+            "RESTART_WARNING": "Kommunikationen avbryts medan {{system}} startar om. Inga data registreras och inga komponenter styrs under denna tid. Se till att hela systemet är i ett säkert tillstånd.",
+            "SUB_HEADER": "Vill du utföra en systemuppdatering?",
+            "UPDATE_COMPONENT": "Uppdatera komponent",
+            "UPDATE_EXECUTE": "Utför systemuppdateringen",
+            "UPDATE_NOT_POSSIBLE": "Systemet kan inte uppdateras!",
+            "UPDATE_PROGRESS": "Uppdatering pågår.",
+            "UPDATE_SEARCH": "Söker efter uppdateringar...",
+            "UPDATE_TIME": "(Detta kan ta upp till {{minutes}} minuter)",
+            "WARNING": "Programvaran kommer att startas om efter systemuppdateringen. Inga data registreras och inga komponenter styrs under denna tid. Se till att hela systemet är i ett säkert tillstånd."
+        }
+    },
+    "SYSTEM": {
+        "INDUSTRIAL": {
+            "SYSTEM_ERROR_ACKNOWLEDGE": "Bekräfta systemfel"
+        }
+    }
+}

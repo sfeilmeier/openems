@@ -1,0 +1,6 @@
+{
+    "INDUSTRIAL_L": {
+        "BMS_HELP_MSG": "Datum/čas pro samočinné testy BMS jednou měsíčně, aby se předešlo latentním závadám",
+        "BMS_SELF_TEST": "Samočinný test BMS"
+    }
+}

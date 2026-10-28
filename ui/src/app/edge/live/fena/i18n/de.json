@@ -2,30 +2,31 @@
     "FENA": {
         "MESSAGES": {
             "GRID": {
-                "LIMITED_POWER": "Hinweis: Aktuell begrenzt dein Netzbetreiber die verfügbare Leistung.",
                 "EMERGENCY_POWER_ACTIVE": "Notstrom aktiv: Dein {{edgeLongName}} versorgt deine Verbraucher aktuell aus deinem Speicher.",
-                "GENERATOR_ACTIVE": "Gut abgesichert: Dein {{edgeLongName}} wird aktuell vom Generator versorgt."
+                "GENERATOR_ACTIVE": "Gut abgesichert: Dein {{edgeLongName}} wird aktuell vom Generator versorgt.",
+                "LIMITED_POWER": "Hinweis: Aktuell begrenzt dein Netzbetreiber die verfügbare Leistung."
+            },
+            "KPI": {
+                "AUTARCHY": "Stark: {{autarchy}}&nbsp;% deines heutigen Strombedarfs deckst du bis jetzt selbst.",
+                "SELF_CONSUMPTION": "Prima: Du nutzt heute bis jetzt {{selfConsumption}}&nbsp;% deines Solarstroms direkt selbst.",
+                "WELCOME": "Hallo und willkommen bei {{edgeLongName}}!<br/>Ich bin FENA. Als persönlicher {{edgeLongName}} Assistant begleite ich dich auf deiner Energy Journey."
             },
             "STORAGE": {
+                "GRID_OPTIMIZED_CHARGE": {
+                    "DELAYED_CHARGE": "Vorausschauend: Dein Speicher lädt aktuell mit maximal {{maxPower}}&nbsp;W, um PV-Abregelungen zu reduzieren. Voll geladen ist er voraussichtlich um {{chargingEndTime}}.",
+                    "DELAYED_CHARGE_WITH_ZERO": "Vorausschauend: Dein Speicher pausiert die Beladung aktuell, um später mehr Solarstrom aufnehmen und PV-Abregelungen reduzieren zu können.",
+                    "TURNED_OFF": "Tipp: Mit netzdienlicher Beladung kannst du mögliche PV-Abregelungen reduzieren und die Lebensdauer deines Speichers erhöhen. Möchtest du sie aktivieren?"
+                },
                 "PEAK_SHAVING": {
                     "CONSUMPTION_OVER_DISCHARGE_ABOVE": "Gut abgefangen: Dein Speicher reduziert aktuell Lastspitzen und senkt damit deine Leistungskosten.",
                     "CONSUMPTION_UNDER_CHARGE_BELOW": "Vorausschauend: Dein Speicher lädt aktuell Energie, um die nächste Lastspitze abzufangen.",
                     "SOC_IS_100": "Bereit für den Einsatz: Dein Speicher ist bereit Lastspitzen abzufangen. Aktuell treten keine auf."
                 },
-                "GRID_OPTIMIZED_CHARGE": {
-                    "TURNED_OFF": "Tipp: Mit netzdienlicher Beladung kannst du mögliche PV-Abregelungen reduzieren und die Lebensdauer deines Speichers erhöhen. Möchtest du sie aktivieren?",
-                    "DELAYED_CHARGE": "Vorausschauend: Dein Speicher lädt aktuell mit maximal {{maxPower}}&nbsp;W, um PV-Abregelungen zu reduzieren. Voll geladen ist er voraussichtlich um {{chargingEndTime}}.",
-                    "DELAYED_CHARGE_WITH_ZERO": "Vorausschauend: Dein Speicher pausiert die Beladung aktuell, um später mehr Solarstrom aufnehmen und PV-Abregelungen reduzieren zu können."
-                },
                 "TIME_OF_USE_TARIFF": {
-                    "NEGATIVE_GRID_BUY_PRICE": "Aktuell liegt der Strompreis an der Börse bei nur {{priceWithUnit}}. Dein System nutzt diese günstige Energie und hilft dabei, Stromüberschüsse im Netz aufzunehmen.",
                     "CHARGE_FROM_GRID_ACTIVE": "Guter Zeitpunkt: Dein FENECON-System nutzt aktuell günstigen Strom für {{priceWithUnit}} aus dem Netz und speichert ihn für später.",
-                    "DELAY_CHARGE_ACTIVE": "Smart: Dein Speicher verzögert aktuell die Entladung. So steht günstige Energie später zur Verfügung, wenn der Strompreis höher ist."
+                    "DELAY_CHARGE_ACTIVE": "Smart: Dein Speicher verzögert aktuell die Entladung. So steht günstige Energie später zur Verfügung, wenn der Strompreis höher ist.",
+                    "NEGATIVE_GRID_BUY_PRICE": "Aktuell liegt der Strompreis an der Börse bei nur {{priceWithUnit}}. Dein System nutzt diese günstige Energie und hilft dabei, Stromüberschüsse im Netz aufzunehmen."
                 }
-            },
-            "KPI": {
-                "AUTARCHY": "Stark: {{autarchy}}&nbsp;% deines heutigen Strombedarfs deckst du bis jetzt selbst.",
-                "SELF_CONSUMPTION": "Prima: Du nutzt heute bis jetzt {{selfConsumption}}&nbsp;% deines Solarstroms direkt selbst."
             }
         }
     }

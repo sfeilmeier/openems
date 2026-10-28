@@ -90,25 +90,7 @@ export abstract class AbstractCommercialIbn extends AbstractIbn {
     }
 
     public override getLineSideMeterFuseFields() {
-        const fields: FormlyFieldConfig[] = [];
-
-        fields.push({
-            key: "otherValue",
-            type: "input",
-            templateOptions: {
-                label: this.translate.instant("INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.VALUE"),
-                type: "number",
-                description: this.translate.instant(
-                    "INSTALLATION.CONFIGURATION_LINE_SIDE_METER_FUSE.FIXED_VALUE_DESCRIPTION",
-                ),
-                min: 0,
-                required: true,
-            },
-            parsers: [Number],
-            validators: {
-                validation: ["onlyPositiveInteger"],
-            },
-        });
+        const fields: FormlyFieldConfig[] = this.getLineSideMeterFuseValueFields();
 
         fields.push({
             key: "meterType",

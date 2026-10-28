@@ -545,6 +545,7 @@ export namespace SharedGridOptimizedCharge {
         HIGH = "HIGH",
     }
 
+    // This code is intentionally kept, as it may be needed again in the future.
     export function getFenaMessages(
         config: EdgeConfig,
         translate: TranslateService,

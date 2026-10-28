@@ -41,7 +41,7 @@ public class PossibleBatteryCapacityExtensionUtilTest {
 		final var simulatedDataCsv = PossibleBatteryCapacityExtensionUtilTest.class.getResource("simulatedData.csv");
 		try (final var inputStream = simulatedDataCsv.openStream();
 				final var inputStreamReader = new InputStreamReader(inputStream);
-					final var br = new BufferedReader(inputStreamReader)) {
+				final var br = new BufferedReader(inputStreamReader)) {
 			return br.lines() //
 					.map(l -> l.split(";")) //
 					.collect(ImmutableSortedMap

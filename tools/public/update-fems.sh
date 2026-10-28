@@ -214,7 +214,12 @@ find /etc/apt/sources.list.d -name "*.list" -delete
 # Modberry add raspbian source
 if [[ "$( cat /proc/cpuinfo | grep Hardware )" == *"BCM"* ]]; then
     install_raspbian_apt_key;
-    echo "deb https://deb.fenecon.de/raspbian/ $VERSION_CODENAME main contrib non-free rpi" > "/etc/apt/sources.list.d/raspi.list"
+    case "$VERSION_CODENAME" in
+    "jessie" | "stretch" | "buster" )
+        echo "deb https://deb.fenecon.de/raspbian-legacy/ $VERSION_CODENAME main contrib non-free rpi" > "/etc/apt/sources.list.d/raspi.list";;
+    "bullseye" | "bookworm" | "trixie" )
+        echo "deb https://deb.fenecon.de/raspbian/ $VERSION_CODENAME main contrib non-free rpi" > "/etc/apt/sources.list.d/raspi.list";;
+    esac
 fi
 
 # Install apt keys

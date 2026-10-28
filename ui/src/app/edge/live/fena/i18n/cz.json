@@ -1,0 +1,33 @@
+{
+    "FENA": {
+        "MESSAGES": {
+            "GRID": {
+                "EMERGENCY_POWER_ACTIVE": "Nouzový provoz aktivní: Váš systém {{edgeLongName}} aktuálně zásobuje připojené spotřebiče z vaší baterie.",
+                "GENERATOR_ACTIVE": "Dobře zajištěno: Váš systém {{edgeLongName}} je aktuálně podporován generátorem.",
+                "LIMITED_POWER": "Poznámka: Provozovatel sítě aktuálně uplatňuje omezení dodávky do sítě."
+            },
+            "KPI": {
+                "AUTARCHY": "Působivé: Dosud jste sami pokryli {{autarchy}}&nbsp;% svého dnešního výdeje elektřiny.",
+                "SELF_CONSUMPTION": "Skvělé: Dnes jste dosud sami využili {{selfConsumption}}&nbsp;% své solární elektřiny.",
+                "WELCOME": "Ahoj a vítejte v systému {{edgeLongName}}!<br/>Jsem FENA. Jako váš osobní asistent {{edgeLongName}} vás budu provázet na vaší energetické cestě."
+            },
+            "STORAGE": {
+                "GRID_OPTIMIZED_CHARGE": {
+                    "DELAYED_CHARGE": "Předvídavě: Vaše baterie se aktuálně nabíjí maximálním výkonem {{maxPower}}&nbsp;W, aby se omezilo omezování výroby FVE. Plně nabita by měla být přibližně v {{chargingEndTime}}.",
+                    "DELAYED_CHARGE_WITH_ZERO": "Předvídavě: Vaše baterie aktuálně pozastavila nabíjení, aby později mohla pojmout více solární elektřiny a omezit omezování výroby FVE.",
+                    "TURNED_OFF": "Tip: Síťově optimalizované nabíjení může pomoci omezit případné omezování výroby FVE a prodloužit životnost vašeho úložného systému. Chcete jej aktivovat?"
+                },
+                "PEAK_SHAVING": {
+                    "CONSUMPTION_OVER_DISCHARGE_ABOVE": "Peak shaving probíhá: Váš systém aktuálně stříhá špičku zatížení a snižuje tak vaše náklady na energii.",
+                    "CONSUMPTION_UNDER_CHARGE_BELOW": "Špička před námi: Váš systém aktuálně dobíjí baterii, aby zvládl nadcházející špičku zatížení.",
+                    "SOC_IS_100": "Připraveno na peak shaving: Váš systém je připraven zvládat špičky zatížení. Momentálně žádné nenastávají."
+                },
+                "TIME_OF_USE_TARIFF": {
+                    "CHARGE_FROM_GRID_ACTIVE": "Dobrý čas: Váš systém FENECON využívá okno s nízkou cenou, odebírá ze sítě elektřinu za {{priceWithUnit}} a ukládá ji na později.",
+                    "DELAY_CHARGE_ACTIVE": "Chyře: Vaše baterie aktuálně oddaluje vybíjení, takže levná energie bude k dispozici později, kdy jsou ceny elektřiny vyšší.",
+                    "NEGATIVE_GRID_BUY_PRICE": "Cena elektřiny na burze je aktuálně jen {{priceWithUnit}}. Váš systém tuto levnou energii využívá a pomáhá vstřebat přebytky elektřiny v síti."
+                }
+            }
+        }
+    }
+}

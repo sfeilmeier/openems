@@ -1,0 +1,33 @@
+{
+    "FENA": {
+        "MESSAGES": {
+            "GRID": {
+                "EMERGENCY_POWER_ACTIVE": "Alimentation de secours active : votre système {{edgeLongName}} alimente actuellement les charges raccordées depuis votre batterie.",
+                "GENERATOR_ACTIVE": "Bien sécurisé : votre système {{edgeLongName}} est actuellement épaulé par le générateur.",
+                "LIMITED_POWER": "Note : une limitation d'injection est actuellement appliquée par le gestionnaire de réseau."
+            },
+            "KPI": {
+                "AUTARCHY": "Impressionnant : jusqu'ici, vous avez couvert vous-même {{autarchy}}&nbsp;% de vos besoins quotidiens en électricité.",
+                "SELF_CONSUMPTION": "Super : jusqu'ici aujourd'hui, vous avez utilisé vous-même {{selfConsumption}}&nbsp;% de votre électricité solaire.",
+                "WELCOME": "Bonjour et bienvenue chez {{edgeLongName}} !<br/>Je suis FENA. En tant qu'assistant personnel {{edgeLongName}}, je suis là pour vous accompagner dans votre parcours énergétique."
+            },
+            "STORAGE": {
+                "GRID_OPTIMIZED_CHARGE": {
+                    "DELAYED_CHARGE": "Anticipé : votre batterie se recharge actuellement à hauteur maximale de {{maxPower}}&nbsp;W afin de limiter les écrêtements photovoltaïques. Elle devrait être pleine vers {{chargingEndTime}}.",
+                    "DELAYED_CHARGE_WITH_ZERO": "Anticipé : votre batterie met actuellement la charge en pause afin de stocker davantage d'électricité solaire plus tard et de limiter les écrêtements photovoltaïques.",
+                    "TURNED_OFF": "Astuce : la charge optimisée pour le réseau peut aider à réduire d'éventuels écrêtements photovoltaïques et à prolonger la durée de vie de votre système de stockage. Souhaitez-vous l'activer ?"
+                },
+                "PEAK_SHAVING": {
+                    "CONSUMPTION_OVER_DISCHARGE_ABOVE": "Écrêtage de pointe en cours : votre système est en train d'écrêter un pic de charge, réduisant ainsi vos coûts d'énergie.",
+                    "CONSUMPTION_UNDER_CHARGE_BELOW": "Pic en approche : votre système charge actuellement la batterie pour écrêter le prochain pic de charge.",
+                    "SOC_IS_100": "Prêt pour l'écrêtage : votre système est prêt à gérer les pics de charge. Il n'y en a actuellement aucun."
+                },
+                "TIME_OF_USE_TARIFF": {
+                    "CHARGE_FROM_GRID_ACTIVE": "Bien joué : votre système FENECON profite d'une fenêtre à bas prix et prélève de l'électricité du réseau à {{priceWithUnit}} pour la stocker pour plus tard.",
+                    "DELAY_CHARGE_ACTIVE": "Malin : votre batterie retarde actuellement la décharge, afin que l'énergie bon marché soit disponible plus tard, quand les prix de l'électricité sont plus élevés.",
+                    "NEGATIVE_GRID_BUY_PRICE": "Actuellement, le prix de l'électricité en bourse n'est que de {{priceWithUnit}}. Votre système utilise cette énergie bon marché et contribue à absorber l'excédent d'électricité du réseau."
+                }
+            }
+        }
+    }
+}

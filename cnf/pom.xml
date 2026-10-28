@@ -327,7 +327,7 @@
 			-->
 			<groupId>io.openems</groupId>
 			<artifactId>j2mod</artifactId>
-			<version>3.4.0-openems.1</version>
+			<version>3.4.0-openems.2</version>
 		</dependency>
 		<dependency>
 			<groupId>io.reactivex.rxjava3</groupId>
@@ -424,7 +424,7 @@
 			-->
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.http.jetty12</artifactId>
-			<version>2.0.6</version>
+			<version>2.0.8</version>
 		</dependency>
 		<dependency>
 			<!-- Apache Felix Servlet API -->
@@ -549,6 +549,16 @@
 			<groupId>org.eclipse.paho</groupId>
 			<artifactId>org.eclipse.paho.mqttv5.client</artifactId>
 			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<!--
+			Java Hamcrest
+			Changelog: https://github.com/hamcrest/JavaHamcrest/releases
+			Keep in sync with openems.junit.version in cnf/build.bnd
+			-->
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest</artifactId>
+			<version>3.0</version>
 		</dependency>
 		<dependency>
 			<!--

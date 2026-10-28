@@ -30,7 +30,7 @@ public class LatestTaskPerKeyExecutor<K> {
 	 */
 	public void execute(K key, Runnable task) {
 		final var schedule = new AtomicBoolean(false);
-		this.latestTasks.compute(key, (k, v) -> { 
+		this.latestTasks.compute(key, (k, v) -> {
 			if (v == null) {
 				schedule.set(true);
 			} else {

@@ -35,6 +35,10 @@ public class TestModeRequestHandlerTest {
 	private static final ChannelAddress STATUS_SYS_OFF = new ChannelAddress("system0", "StatusSysOff");
 	private static final ChannelAddress ENABLE_COUPLING_SWITCH = new ChannelAddress("system0", "EnableCouplingSwitch");
 	private static final ChannelAddress SYS_SERVICE_SWITCH = new ChannelAddress("system0", "SysServiceSwitch");
+	private static final ChannelAddress SSI_RUNNING_FLASHING = new ChannelAddress("io0", "DigitalOutputM3C3");
+	private static final ChannelAddress SSI_RUNNING = new ChannelAddress("io0", "DigitalOutputM3C4");
+	private static final ChannelAddress SSI_WARNING = new ChannelAddress("io0", "DigitalOutputM3C5");
+	private static final ChannelAddress SSI_ERROR = new ChannelAddress("io0", "DigitalOutputM3C6");
 
 	@Test
 	public void testTestModeRequestHandling() throws Exception {
@@ -123,7 +127,11 @@ public class TestModeRequestHandlerTest {
 				.next(new TestCase()//
 						.output(STATE_MACHINE, State.TEST_MODE_IDLE))//
 				.next(new TestCase()//
-						.output(STATE_MACHINE, State.TEST_MODE_LAMP))//
+						.output(STATE_MACHINE, State.TEST_MODE_LAMP)//
+						.output(SSI_RUNNING, true)//
+						.output(SSI_WARNING, false)//
+						.output(SSI_ERROR, false)//
+						.output(SSI_RUNNING_FLASHING, true))//
 				.next(new TestCase()//
 						.timeleap(clock, 6, ChronoUnit.SECONDS))//
 				.next(new TestCase()//
@@ -137,14 +145,37 @@ public class TestModeRequestHandlerTest {
 							assertEquals("ignored", res.status());
 						}))//
 				.next(new TestCase()//
+						.output(STATE_MACHINE, State.TEST_MODE_LAMP)//
+						.output(SSI_RUNNING, false)//
+						.output(SSI_WARNING, true)//
+						.output(SSI_ERROR, false)//
+						.output(SSI_RUNNING_FLASHING, false))//
+				.next(new TestCase()//
+						.timeleap(clock, 4, ChronoUnit.SECONDS)//
 						.output(STATE_MACHINE, State.TEST_MODE_LAMP))//
 				.next(new TestCase()//
-						.timeleap(clock, 6, ChronoUnit.SECONDS))//
+						.timeleap(clock, 4, ChronoUnit.SECONDS)//
+						.output(STATE_MACHINE, State.TEST_MODE_LAMP)//
+						.output(SSI_RUNNING, false)//
+						.output(SSI_WARNING, false)//
+						.output(SSI_ERROR, true)//
+						.output(SSI_RUNNING_FLASHING, false))//
 				.next(new TestCase()//
-						.output(STATE_MACHINE, State.TEST_MODE_LAMP))//
+						.timeleap(clock, 4, ChronoUnit.SECONDS)//
+						.output(STATE_MACHINE, State.TEST_MODE_LAMP)//
+						.output(SSI_RUNNING, true)//
+						.output(SSI_WARNING, false)//
+						.output(SSI_ERROR, false)//
+						.output(SSI_RUNNING_FLASHING, false))//
 				.next(new TestCase()//
-						.timeleap(clock, 6, ChronoUnit.SECONDS))//
+						.timeleap(clock, 4, ChronoUnit.SECONDS)//
+						.output(STATE_MACHINE, State.TEST_MODE_LAMP)//
+						.output(SSI_RUNNING, false)//
+						.output(SSI_WARNING, false)//
+						.output(SSI_ERROR, false)//
+						.output(SSI_RUNNING_FLASHING, false))//
 				.next(new TestCase()//
+						.timeleap(clock, 4, ChronoUnit.SECONDS)//
 						.output(STATE_MACHINE, State.TEST_MODE_IDLE))//
 				.next(new TestCase()//
 						.onAfterProcessImage(() -> {

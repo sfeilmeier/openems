@@ -1,0 +1,23 @@
+{
+    "POPOVER": {
+        "ANNUAL_REVIEW": {
+            "BUTTON_TEXT": "Se årsöversikten nu",
+            "CONCLUSION": "Läs mer om kampanjen på vår informationssida på <br><a href='https://www.fenecon.de/meine-energy-journey-2025'>https://www.fenecon.de/meine-energy-journey-2025</a>",
+            "DESCRIPTION": "Upptäck höjdpunkterna i din personliga energianvändning, hur ditt FENECON-lagringssystem stödde ditt hem, vilket bidrag du gav till energiomställningen och framför allt: hur lönsamt det var för dig 2025.",
+            "HEADER_TEXT": "Din personliga årsöversikt är nu tillgänglig online! Vi visar dig ännu outnyttjade möjligheter att göra ditt energisystem ännu mer effektivt, optimera din egenförbrukning och ligga på den billigaste kursen.",
+            "SUB_TITLE": "Din personliga årsöversikt är nu tillgänglig online!",
+            "TITLE": "Upptäck din Energy Journey 2025"
+        },
+        "WEATHER_PROGNOSIS": {
+            "ACCEPT": "Godkänn och installera",
+            "APP": "Ladda ner från vårt App Center:",
+            "APP_WEATHER": "Väder",
+            "CHECKBOX_LABEL": "Jag bekräftar att vidarebefordring av huvudanvändarens personuppgifter till en tredje part är nödvändig för att kunna använda appen. Läs mer om hur dina personuppgifter används <a href={{link}} target='_blank'>här</a>.",
+            "DECLINE": "Avböj",
+            "DESCRIPTION": "Integreringen av lokala väderdata förbättrar din förbruknings- och produktionsprognos – utan extra kostnad!",
+            "SPINNER_TEXT_ACCEPTED": "Ett ögonblick – appen installeras",
+            "SPINNER_TEXT_DECLINED": "Appen kan installeras senare när som helst i FEMS App Center.",
+            "TITLE": "Nytt: Prognosen är nu 50 % mer träffsäker tack vare väderdata"
+        }
+    }
+}

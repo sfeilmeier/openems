@@ -11,6 +11,9 @@ export const OemMeta: BaseMeta = {
     },
     icons: {
         COMMON: {
+            USER: "assets/img/icon/user.svg",
+            SETTINGS: "assets/img/icon/settings.svg",
+            COCKPIT: "assets/img/icon/cockpit.svg",
             CONSUMPTION: "assets/img/icon/consumption.svg",
             SELFCONSUMPTION: "assets/img/icon/selfconsumption.svg",
             GENERATOR: "assets/img/icon/generator.svg",
@@ -186,6 +189,7 @@ export const OemMeta: BaseMeta = {
                 "https://docs.fenecon.de/redirect/fenecon/{language}/controller_timeslot_peakshaving",
 
             EVCS_KEBA: "https://docs.fenecon.de/redirect/fenecon/de/evcs_keba",
+            EVCS_KEBA_HELP: "https://docs.fenecon.de/redirect/fenecon/de/evcs_keba_help",
             EVCS_HARDY_BARTH: "https://docs.fenecon.de/redirect/fenecon/de/evcs_hardybarth",
             EVCS_MENNEKES: "https://docs.fenecon.de/redirect/fenecon/de/evcs_mennekes",
             EVSE_ALFEN: "https://docs.fenecon.de/redirect/fenecon/de/evse_alfen",

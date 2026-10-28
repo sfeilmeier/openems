@@ -1,22 +1,16 @@
 {
     "ADVERT": {
         "1": {
-            "TITLE": "Neues Design im Online Monitoring",
-            "TEXT": "Ab September kannst Du das neue Design deines Online Monitorings ausprobieren. Auf Dich warten neue Funktionen und eine intuitivere, einfachere und modernere Nutzeroberfläche. Gehe dazu einfach in Deinem Profil zu den Einstellungen und teste das neue Design direkt aus.",
+            "LINK": "",
             "LINK_TEXT": "Jetzt aktivieren",
-            "LINK": ""
+            "TEXT": "Ab September kannst Du das neue Design deines Online Monitorings ausprobieren. Auf Dich warten neue Funktionen und eine intuitivere, einfachere und modernere Nutzeroberfläche. Gehe dazu einfach in Deinem Profil zu den Einstellungen und teste das neue Design direkt aus.",
+            "TITLE": "Neues Design im Online Monitoring"
         },
         "2": {
-            "TITLE": "Weitersagen lohnt sich!",
-            "TEXT": "Empfehle FENECON weiter an Freunde, Familie und Bekannte und sichere dir dafür als Dankeschön attraktive Prämien. Für jede neu gestartete Energy Journey erhalten du & der Neukunde gratis die FEMS App Dynamischer Stromtarif und einen Shelly Stecker. Passend zur kostenlosen Shelly DIY FEMS App!",
-            "LINK_TEXT": "Prämie sichern",
-            "LINK": "https://www.fenecon.de/weiterempfehlungsprogramm"
-        },
-        "3": {
-            "TITLE": "EEG 2027: Jetzt zukunftssicher aufstellen",
-            "TEXT": "Was ändert sich mit dem EEG 2027 für Installateure? Im neuen Webinar am 20.10. zeigen wir auf, welche Entwicklungen auf den PV- und Speichermarkt zukommen und welche neuen Geschäftschancen entstehen – von Direktvermarktung, Speicher ohne PV bis hin zu Gewerbelösungen.",
-            "LINK_TEXT": "Kostenlos anmelden",
-            "LINK": "https://fenecon-gmbh.webinargeek.com/eeg-2027-wie-sich-installateure-jetzt-zukunftssicher-aufstellen-koennen?cst=fems-widget"
+            "LINK": "https://youtu.be/JldFD1DsrEw",
+            "LINK_TEXT": "Jetzt anschauen",
+            "TEXT": "Du hast unser Webinar verpasst? Kein Problem! Erfahre, welche Veränderungen das EEG 2027 für den PV- und Speichermarkt mit sich bringt und welche 15 Erfolgsfaktoren sich für dich als Installateur daraus ergeben.",
+            "TITLE": "EEG 2027: Webinar-Aufzeichnung ansehen"
         }
     }
 }

@@ -36,6 +36,9 @@ export interface Environment<TImages extends object = object> {
     };
     readonly icons: {
         readonly COMMON: {
+            readonly USER: string;
+            readonly SETTINGS: string;
+            readonly COCKPIT: string;
             readonly FAVORITES: string;
             readonly FAVORITES_FILLED: string;
             readonly CONSUMPTION: string;
@@ -176,6 +179,7 @@ export interface Environment<TImages extends object = object> {
             readonly CONTROLLER_TIMESLOT_PEAKSHAVING: string | null;
 
             readonly EVCS_KEBA: string | null;
+            readonly EVCS_KEBA_HELP: string | null;
             readonly EVCS_HARDY_BARTH: string | null;
             readonly EVCS_MENNEKES: string | null;
             readonly EVSE_ALFEN: string | null;

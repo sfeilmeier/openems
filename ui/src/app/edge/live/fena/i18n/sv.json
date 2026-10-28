@@ -1,0 +1,33 @@
+{
+    "FENA": {
+        "MESSAGES": {
+            "GRID": {
+                "EMERGENCY_POWER_ACTIVE": "Nödkraft aktiv: Ditt {{edgeLongName}}-system försörjer för närvarande anslutna förbrukare från ditt batteri.",
+                "GENERATOR_ACTIVE": "Extra trygghet: Ditt {{edgeLongName}}-system stöds för närvarande av generatorn.",
+                "LIMITED_POWER": "Obs! En inmatningsbegränsning från nätoperatören gäller för närvarande."
+            },
+            "KPI": {
+                "AUTARCHY": "Imponerande: Hittills har du själva täckt {{autarchy}}&nbsp;% av ditt dagliga elbehov.",
+                "SELF_CONSUMPTION": "Toppen: Hittills idag har du använt {{selfConsumption}}&nbsp;% av din solenergi själv.",
+                "WELCOME": "Hej och välkommen till {{edgeLongName}}!<br/>Jag är FENA. Som din personliga {{edgeLongName}}-Assistent är jag här för att vägleda dig på din energi-resa."
+            },
+            "STORAGE": {
+                "GRID_OPTIMIZED_CHARGE": {
+                    "DELAYED_CHARGE": "Prognos: Ditt batteri laddas för närvarande med maximalt {{maxPower}}&nbsp;W för att minska PV-begränsningen. Det väntas vara fullt laddat senast {{chargingEndTime}}.",
+                    "DELAYED_CHARGE_WITH_ZERO": "Med framtiden i sikte: Ditt batteri pausar laddningen just nu för att kunna lagra mer solenergi senare och minska PV-begränsningen.",
+                    "TURNED_OFF": "Tips: Nätsoptimerad laddning kan bidra till att minska eventuell PV-begränsning och förlänga livslängden på ditt batterisystem. Vill du aktivera den?"
+                },
+                "PEAK_SHAVING": {
+                    "CONSUMPTION_OVER_DISCHARGE_ABOVE": "Topputjämning pågår: Ditt system utjämnar för närvarande en lasttopp och minskar dina energikostnader.",
+                    "CONSUMPTION_UNDER_CHARGE_BELOW": "Topp i sikte: Ditt system laddar batteriet just nu för att utjämna den kommande lasttoppen.",
+                    "SOC_IS_100": "Redo för topputjämning: Ditt system är redo att hantera lasttoppar. För närvarande finns inga."
+                },
+                "TIME_OF_USE_TARIFF": {
+                    "CHARGE_FROM_GRID_ACTIVE": "Bra timing: Ditt FENECON-system utnyttjar ett lågprisfönster, tar el från nätet till {{priceWithUnit}} och lagrar den för senare användning.",
+                    "DELAY_CHARGE_ACTIVE": "Smart: Ditt batteri skjuter upp urladdningen just nu, så att billig energi finns tillgänglig senare när elpriserna är högre.",
+                    "NEGATIVE_GRID_BUY_PRICE": "Just nu är elpriset på börsen endast {{priceWithUnit}}. Ditt system använder denna billiga energi och hjälper till att absorbera överskottsel från nätet."
+                }
+            }
+        }
+    }
+}
