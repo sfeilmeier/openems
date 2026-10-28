@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  group: ${{ gitea.workflow }}-${{ gitea.head_ref || gitea.ref_name }}
   cancel-in-progress: true
 
 env:

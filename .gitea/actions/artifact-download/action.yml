@@ -43,7 +43,7 @@ runs:
         names=$(echo "${{ inputs.name }}" | tr ',' '\n')
         /tools/mc alias set local http://gitea-runner-cache:9000 ${{ inputs.user }} ${{ inputs.password }}
         for name in $names; do
-          reference=fems-${{ github.run_id }}_$name
+          reference=fems-${{ gitea.run_id }}_$name
           
           # Check if the artifact exists before trying to download
           if /tools/mc stat local/cache-fems/$reference > /dev/null 2>&1; then

@@ -9,7 +9,7 @@ token = os.environ.get("INPUT_SONAR_TOKEN")
 projects = os.environ.get("INPUT_PROJECT_KEYS").strip().split(",")
 pr_number = os.environ.get("PR_NUMBER")
 
-output_file = os.environ.get("GITHUB_OUTPUT")
+output_file = os.environ.get("GITEA_OUTPUT")
 
 class Status(Enum):
     OK = "OK"

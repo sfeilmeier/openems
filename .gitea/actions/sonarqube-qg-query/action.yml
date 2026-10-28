@@ -33,7 +33,7 @@ runs:
       id: qg
       env:
         PR_NUMBER: ${{ gitea.event.pull_request.number }}
-        GITHUB_OUTPUT: ${{ github.output }}
+        GITEA_OUTPUT: ${{ gitea.output }}
         INPUT_SONAR_HOST_URL: ${{ inputs.sonar_host_url }}
         INPUT_SONAR_TOKEN: ${{ inputs.sonar_token }}
         INPUT_PROJECT_KEYS: ${{ inputs.project_keys }}
