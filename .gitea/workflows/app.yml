@@ -158,8 +158,8 @@ jobs:
 
       - name: Update App
         run: |
-          echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
-          rsync --mkpath /artifacts/* ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/
+          echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/"
+          rsync --mkpath /artifacts/* ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/
 
   release-android-app:
     runs-on: ubuntu-latest-android
@@ -191,7 +191,7 @@ jobs:
           common_initialize_environment
           source openems.env
           echo -n "${{ secrets.DEVELOPER_API_SERVICE_ACCOUNT }}" | base64 -d > secret.json
-          python3 tools/deploy/android/create_release.py "${{ matrix.theme }}" "$VERSION_FULL" secret.json ${CI_COMMIT_BRANCH}
+          python3 tools/deploy/android/create_release.py "${{ matrix.theme }}" "$VERSION_FULL" secret.json ${{ env.CI_COMMIT_BRANCH }}
 
   release-ios-app:
     if: gitea.ref == 'refs/heads/main' || gitea.ref == 'refs/heads/main-ui'

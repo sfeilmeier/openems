@@ -14,9 +14,9 @@ jobs:
   build-debian:
     runs-on: ubuntu-latest
     env:
-      OPENEMS_ENV: "${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/openems.env" 
-      EDGE_JAR: "${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/edge.jar"
-      UI_BUNDLE: "${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems-ui-edge.tar.gz"
+      OPENEMS_ENV: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/openems.env" 
+      EDGE_JAR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/edge.jar"
+      UI_BUNDLE: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/fems-ui-edge.tar.gz"
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -40,7 +40,7 @@ jobs:
           echo "UI Bundle exists: $UI_EXISTS"
 
           if [[ "$EDGE_EXISTS" == "false" && "$UI_EXISTS" == "false" ]]; then
-            echo "No artifacts found for branch '${CI_COMMIT_BRANCH}'! Aborting build."
+            echo "No artifacts found for branch '${{ env.CI_COMMIT_BRANCH }}'! Aborting build."
             exit 1
           fi
 
@@ -94,6 +94,6 @@ jobs:
 
       - name: Upload Debian Package
         run: |
-          echo "Upload to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
-          rsync --mkpath /build/target/fems.deb ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems.deb
-          rsync --mkpath /build/target/fems.version ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/fems.version
+          echo "Upload to ${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/"
+          rsync --mkpath /build/target/fems.deb ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/fems.deb
+          rsync --mkpath /build/target/fems.version ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/fems.version

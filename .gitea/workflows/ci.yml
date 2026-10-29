@@ -292,6 +292,7 @@ jobs:
 
       - name: Test UI
         run: |
+          export CI_COMMIT_BRANCH=${{ env.CI_COMMIT_BRANCH }}
           export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
           echo "Testing UI for $OEM"
           cd ui
@@ -306,6 +307,7 @@ jobs:
 
       - name: Build UI
         run: |
+          export CI_COMMIT_BRANCH=${{ env.CI_COMMIT_BRANCH }}
           export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
           source tools/common.sh
           common_initialize_environment
@@ -356,8 +358,9 @@ jobs:
       (needs.build-backend.result == 'skipped' || needs.build-backend.result == 'success') &&
       (needs.build-ui.result == 'skipped' || needs.build-ui.result == 'success')
     env:
+      CI_COMMIT_BRANCH: ${{ gitea.head_ref || gitea.ref_name }}
       DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
-      DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}"
+      DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ gitea.head_ref || gitea.ref_name }}"
       DEPLOY_SCRIPTS: "${{ vars.DEV_SERVER_SCRIPTS }}/fems-ui"
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -422,12 +425,12 @@ jobs:
             echo "Deploying to ${{ env.DEPLOY_DIR }}/fems-ui-backend.tar.gz"
             rsync --mkpath /artifacts/fems-ui-edge.tar.gz ${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_DIR }}/fems-ui-edge.tar.gz
             rsync --mkpath /artifacts/fems-ui-backend.tar.gz ${{ env.DEPLOY_HOST }}:${{ env.DEPLOY_DIR }}/fems-ui-backend.tar.gz
-            ssh ${{ env.DEPLOY_HOST }} "${{ env.DEPLOY_SCRIPTS }}/update-nginx.sh ${CI_COMMIT_BRANCH}"
+            ssh ${{ env.DEPLOY_HOST }} "${{ env.DEPLOY_SCRIPTS }}/update-nginx.sh ${{ env.CI_COMMIT_BRANCH }}"
           else
             echo "Delete from ${{ env.DEPLOY_DIR }}/fems-ui-edge.tar.gz"
             echo "Delete from ${{ env.DEPLOY_DIR }}/fems-ui-backend.tar.gz"
             ssh ${{ env.DEPLOY_HOST }} "rm ${{ env.DEPLOY_DIR }}/fems-ui-*.tar.gz || true"
-            ssh ${{ env.DEPLOY_HOST }} "${{ env.DEPLOY_SCRIPTS }}/update-nginx.sh ${CI_COMMIT_BRANCH} --cleanup || true"
+            ssh ${{ env.DEPLOY_HOST }} "${{ env.DEPLOY_SCRIPTS }}/update-nginx.sh ${{ env.CI_COMMIT_BRANCH }} --cleanup || true"
           fi
 
       - name: Update Environment

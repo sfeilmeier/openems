@@ -275,6 +275,7 @@ jobs:
 
       - name: Test UI
         run: |
+          export CI_COMMIT_BRANCH=${{ env.CI_COMMIT_BRANCH }}
           export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
           echo "Testing UI for $OEM"
           cd ui
@@ -289,6 +290,7 @@ jobs:
 
       - name: Build UI
         run: |
+          export CI_COMMIT_BRANCH=${{ env.CI_COMMIT_BRANCH }}
           export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
           source tools/common.sh
           common_initialize_environment
@@ -420,14 +422,15 @@ jobs:
 
       - name: Upload artifacts
         env:
+          CI_COMMIT_BRANCH: ${{ gitea.ref_name }}
           DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
-          DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}"
+          DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
           DEPLOY_SCRIPTS: "${{ vars.DEV_SERVER_SCRIPTS }}/fems-ui"
         run: |
-          if [[ -z "${CI_COMMIT_BRANCH}" ]]; then echo "CI_COMMIT_BRANCH is not set"; exit 1; fi
+          if [[ -z "${{ env.CI_COMMIT_BRANCH }}" ]]; then echo "CI_COMMIT_BRANCH is not set"; exit 1; fi
           echo "Upload to $DEPLOY_DIR/"
           rsync --mkpath /artifacts/* $DEPLOY_HOST:$DEPLOY_DIR/
-          ssh $DEPLOY_HOST "${DEPLOY_SCRIPTS}/update-nginx.sh ${CI_COMMIT_BRANCH}"
+          ssh $DEPLOY_HOST "${DEPLOY_SCRIPTS}/update-nginx.sh ${{ env.CI_COMMIT_BRANCH }}"
 
   cleanup:
     runs-on: ubuntu-latest
