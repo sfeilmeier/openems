@@ -9,6 +9,7 @@ import io.openems.common.jsonrpc.serialization.JsonSerializer;
 import io.openems.common.jsonrpc.serialization.JsonSerializerUtil;
 import io.openems.common.jsonrpc.serialization.PolymorphicSerializer;
 import io.openems.common.jsonrpc.syncable.types.SyncableExchangeRateData;
+import io.openems.common.jsonrpc.syncable.types.SyncableLuoxControlData;
 import io.openems.common.types.BiddingZone;
 import io.openems.common.types.TariffData;
 
@@ -63,6 +64,20 @@ public sealed interface SyncableKey<VALUE> {
 		}
 	}
 
+	record LuoxControl() implements SyncableKey<SyncableLuoxControlData> {
+
+		@Override
+		public JsonSerializer<SyncableLuoxControlData> getValueSerializer() {
+			return SyncableLuoxControlData.serializer();
+		}
+
+		@Override
+		public SyncableProviderType getProviderType() {
+			return SyncableProviderType.BACKEND;
+		}
+
+	}
+
 	record CurrentTimeInUnixTimestamp() implements SyncableKey<Long> {
 		@Override
 		public JsonSerializer<Long> getValueSerializer() {
@@ -113,6 +128,8 @@ public sealed interface SyncableKey<VALUE> {
 						CurrentTimeInUnixTimestamp.class.getSimpleName()) //
 				.add(TimeDataTransferAllowed.class, emptyObjectSerializer(TimeDataTransferAllowed::new),
 						TimeDataTransferAllowed.class.getSimpleName()) //
+				.add(LuoxControl.class, emptyObjectSerializer(LuoxControl::new),
+						LuoxControl.class.getSimpleName()) //
 				.build();
 
 		return JsonSerializerUtil.jsonSerializer(

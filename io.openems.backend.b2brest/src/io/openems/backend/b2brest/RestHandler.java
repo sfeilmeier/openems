@@ -1,151 +1,84 @@
 package io.openems.backend.b2brest;
 
-import static io.openems.common.utils.JettyUtils.parseJson;
-import static io.openems.common.utils.JettyUtils.sendErrorResponse;
-import static io.openems.common.utils.JettyUtils.sendOkResponse;
-import static io.openems.common.utils.JsonUtils.getAsJsonObject;
+import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE;
+import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
+import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.Response;
-import org.eclipse.jetty.util.Callback;
+import org.eclipse.jetty.ee11.servlet.ServletContextHandler;
+import org.osgi.framework.Constants;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.openems.backend.common.metadata.User;
-import io.openems.common.exceptions.OpenemsError;
-import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
-import io.openems.common.exceptions.OpenemsException;
-import io.openems.common.jsonrpc.base.JsonrpcMessage;
-import io.openems.common.jsonrpc.base.JsonrpcRequest;
-import io.openems.common.jsonrpc.base.JsonrpcResponseSuccess;
+import io.openems.common.utils.BehaviorSubject;
+import jakarta.servlet.http.HttpServlet;
 
-public class RestHandler extends Handler.Abstract {
+@Component(service = RestHandler.class)
+public class RestHandler {
+
+	public static final String SERVLET_PATH = "servlet.path";
 
 	private final Logger log = LoggerFactory.getLogger(RestHandler.class);
-	private final Backend2BackendRest parent;
 
-	public RestHandler(Backend2BackendRest parent) {
-		this.parent = parent;
+	private record ServletHolder(String id, HttpServlet servlet, String path) {
 	}
 
-	@Override
-	public boolean handle(Request request, Response response, Callback callback) throws Exception {
+	private final List<ServletHolder> servlets = new CopyOnWriteArrayList<>();
+
+	private final ReadWriteLock lock = new ReentrantReadWriteLock();
+	private final BehaviorSubject<ServletContextHandler> contextHandlerSubject = new BehaviorSubject<>(
+			new ServletContextHandler());
+
+	@Reference(cardinality = MULTIPLE, policy = DYNAMIC, policyOption = GREEDY)
+	void bindServlet(HttpServlet servlet, Map<String, ?> ref) {
+		final var servicePid = String.valueOf(ref.get(Constants.SERVICE_ID));
+		final var path = (String) ref.get(SERVLET_PATH);
+
+		this.log.info("Binding {} with path '{}' and servicePid {}", servlet.getClass().getSimpleName(), path,
+				servicePid);
+
+		final var holder = new ServletHolder(servicePid, servlet, path);
+
+		this.lock.readLock().lock();
 		try {
-			var user = this.authenticate(request).get(1, TimeUnit.MINUTES);
-
-			// Determine the target from the path info.
-			var target = request.getHttpURI().getDecodedPath();
-			if (target == null || target.isEmpty() || "/".equals(target)) {
-				throw new OpenemsException("Missing arguments to handle request");
-			}
-			// Remove leading '/' and split by '/'
-			var parts = target.substring(1).split("/");
-			var thisTarget = parts[0];
-
-			if ("jsonrpc".equals(thisTarget)) {
-				this.handleJsonRpc(user, request, response);
-			}
-			// Signal that the request has been handled.
-			callback.succeeded();
-			return true;
-
-		} catch (Exception e) {
-			this.log.error("Error handling request: " + e.getMessage(), e);
-			callback.failed(e);
-			return false;
+			this.servlets.add(holder);
+			this.contextHandlerSubject.getValue().addServlet(holder.servlet(), holder.path());
+		} finally {
+			this.lock.readLock().unlock();
 		}
 	}
 
-	/**
-	 * Authenticate a user.
-	 *
-	 * @param request the {@link Request}
-	 * @return the {@link User}
-	 * @throws OpenemsNamedException on error
-	 */
-	private CompletableFuture<User> authenticate(Request request) throws OpenemsNamedException {
-		var authHeader = request.getHeaders().get("Authorization");
-		if (authHeader != null) {
-			var parts = authHeader.split(" ");
-			if (parts.length >= 2 && "Basic".equalsIgnoreCase(parts[0])) {
-				try {
-					var credentials = new String(Base64.getDecoder().decode(parts[1]), StandardCharsets.UTF_8);
-					int p = credentials.indexOf(":");
-					if (p != -1) {
-						var username = credentials.substring(0, p).trim();
-						var password = credentials.substring(p + 1).trim();
-						return this.parent.authService.authenticateWithPassword(username, password)
-								.thenCompose(result -> {
-									return this.parent.metadata.getUserByExternalId(result.userId());
-								});
-					}
-				} catch (Exception e) {
-					throw OpenemsError.COMMON_AUTHENTICATION_FAILED.exception();
-				}
-			}
-		}
-		throw OpenemsError.COMMON_AUTHENTICATION_FAILED.exception();
-	}
+	void unbindServlet(HttpServlet servlet, Map<String, ?> ref) {
+		final var servicePid = String.valueOf(ref.get(Constants.SERVICE_ID));
+		final var path = (String) ref.get(SERVLET_PATH);
 
-	/**
-	 * Handles an http request to 'jsonrpc' endpoint.
-	 *
-	 * @param user     the {@link User}
-	 * @param request  the {@link Request}
-	 * @param response the {@link Response}
-	 */
-	private void handleJsonRpc(User user, Request request, Response response) {
-		var requestId = new UUID(0L, 0L); // dummy UUID in case of error
-		try {
-			if (!"POST".equals(request.getMethod())) {
-				throw new OpenemsException(
-						"Method [" + request.getMethod() + "] is not supported for JSON-RPC endpoint");
-			}
-			var json = parseJson(request);
-			if (!json.has("jsonrpc")) {
-				json.addProperty("jsonrpc", "2.0");
-			}
-			if (!json.has("id")) {
-				json.addProperty("id", UUID.randomUUID().toString());
-			}
-			if (json.has("params")) {
-				var params = getAsJsonObject(json, "params");
-				if (params.has("payload")) {
-					var payload = getAsJsonObject(params, "payload");
-					if (!payload.has("jsonrpc")) {
-						payload.addProperty("jsonrpc", "2.0");
-					}
-					if (!payload.has("id")) {
-						payload.addProperty("id", UUID.randomUUID().toString());
-					}
-					params.add("payload", payload);
-				}
-				json.add("params", params);
-			}
-			var message = JsonrpcMessage.from(json);
-			if (!(message instanceof JsonrpcRequest requestMessage)) {
-				throw new OpenemsException("Only JSON-RPC Request is supported here.");
-			}
-			var responseFuture = this.parent.jsonRpcRequestHandler.handleRequest(this.parent.getName(), user,
-					requestMessage);
-			final JsonrpcResponseSuccess rpcResponse;
+		this.log.info("Unbinding {} with path '{}' and servicePid {}", servlet.getClass().getSimpleName(), path,
+				servicePid);
+
+		if (this.servlets.removeIf(s -> s.id.equals(servicePid))) {
+			this.lock.writeLock().lock();
 			try {
-				rpcResponse = responseFuture.get();
-			} catch (Exception e) {
-				sendErrorResponse(response, requestMessage.getId(), e);
-				return;
-			}
-			sendOkResponse(response, rpcResponse.toJsonObject());
+				final var contextHandler = new ServletContextHandler();
+				for (var servletHolder : this.servlets) {
+					contextHandler.addServlet(servletHolder.servlet(), servletHolder.path());
+				}
 
-		} catch (OpenemsNamedException e) {
-			sendErrorResponse(response, requestId, new OpenemsException("Unable to get Response: " + e.getMessage()));
+				this.contextHandlerSubject.setValue(contextHandler);
+			} finally {
+				this.lock.writeLock().unlock();
+			}
 		}
 	}
+
+	public BehaviorSubject<ServletContextHandler> getContextHandlerSubject() {
+		return this.contextHandlerSubject;
+	}
+
 }

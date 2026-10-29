@@ -91,6 +91,7 @@
 	io.openems.backend.common;version=snapshot,\
 	io.openems.backend.core;version=snapshot,\
 	io.openems.backend.edge.manager;version=snapshot,\
+	io.openems.backend.luox;version=snapshot,\
 	io.openems.backend.metadata.dummy;version=snapshot,\
 	io.openems.backend.metadata.file;version=snapshot,\
 	io.openems.backend.metadata.odoo;version=snapshot,\

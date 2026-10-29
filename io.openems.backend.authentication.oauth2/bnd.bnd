@@ -15,4 +15,7 @@ Bundle-Version: 1.0.0.${tstamp}
 	io.openems.wrapper.auth0-jwks-rsa,\
 
 -testpath: \
-	${testpath}
+	${testpath},\
+	io.prometheus.metrics-config,\
+	io.prometheus.metrics-core,\
+	io.prometheus.metrics-model,\

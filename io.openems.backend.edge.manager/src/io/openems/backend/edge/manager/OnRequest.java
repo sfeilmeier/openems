@@ -22,6 +22,7 @@ import io.openems.common.jsonrpc.base.JsonrpcResponseSuccess;
 import io.openems.common.jsonrpc.request.AppCenterRequest;
 import io.openems.common.jsonrpc.request.EdgeRpcRequest;
 import io.openems.common.jsonrpc.request.OAuthRegistryRequest;
+import io.openems.common.jsonrpc.request.RegisterLuoxContractRequest;
 import io.openems.common.jsonrpc.request.SyncableSubscribeRequest;
 import io.openems.common.jsonrpc.request.SyncableUnsubscribeRequest;
 import io.openems.common.jsonrpc.response.EdgeRpcResponse;
@@ -93,6 +94,8 @@ public class OnRequest implements io.openems.common.websocket.OnRequest {
 			this.handleSyncableSubscribe(SyncableSubscribeRequest.from(request), edgeId);
 		case SyncableUnsubscribeRequest.METHOD -> //
 			this.handleSyncableUnsubscribe(SyncableUnsubscribeRequest.from(request), edgeId);
+		case RegisterLuoxContractRequest.METHOD -> //
+			this.handleRegisterLuoxContractRequest(RegisterLuoxContractRequest.from(request), edgeId);
 
 		default -> {
 			this.logWarn.accept(this.log, "Unhandled Request: " + request);
@@ -129,6 +132,16 @@ public class OnRequest implements io.openems.common.websocket.OnRequest {
 				}) //
 				.orElseGet(() -> CompletableFuture.failedFuture(
 						new OpenemsNamedException(OpenemsError.COMMON_AUTHENTICATION_FAILED, requestRaw.getMethod())));
+	}
+
+	private CompletableFuture<? extends JsonrpcResponseSuccess> handleRegisterLuoxContractRequest(
+			RegisterLuoxContractRequest request, String edgeId) throws OpenemsException {
+		final var luoxBackend = this.edgeManager.luoxBackendApi;
+		if (luoxBackend == null) {
+			throw new OpenemsException("Luox backend is not configured");
+		}
+		return luoxBackend.registerContract(request, edgeId)
+				.thenApply(r -> new GenericJsonrpcResponseSuccess(request.getId()));
 	}
 
 	private CompletableFuture<? extends JsonrpcResponseSuccess> handleSyncableSubscribe(
