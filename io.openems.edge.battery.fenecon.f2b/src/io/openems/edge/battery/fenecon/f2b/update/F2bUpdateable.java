@@ -2,7 +2,6 @@ package io.openems.edge.battery.fenecon.f2b.update;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -11,17 +10,12 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
-import java.util.function.UnaryOperator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,55 +34,32 @@ import io.openems.edge.common.update.ProgressPublisher;
 import io.openems.edge.common.update.Updateable;
 import io.openems.edge.common.update.jsonrpc.GetUpdateState;
 
+/**
+ * Service for updating an F2B cluster.
+ * 
+ * <p>
+ * Usually it waits for a JSON-RPC (e.g. when an update button is clicked) to
+ * execute a firmware update on the linked F2B cluster.
+ */
 public class F2bUpdateable implements Updateable {
-	private static final int AVG_UPDATE_DURATION_IN_MINUTES = 15;
 
+	private static final Map<String, F2bFirmwareVersion> LATEST_VERSIONS = Map.of(//
+			"FM29", new F2bFirmwareVersion(1, 3));
+	private static final URI DOWNLOAD_BASE_URI = URI.create("https://fenecon.de/fems-tools/");
+	private static final String FIRMWARE_DIRECTORY = System.getProperty("java.io.tmpdir");
+	private static final int AVG_UPDATE_DURATION_IN_MINUTES = 10;
+	private static final String LOG_TAG = "[F2B-Update]";
 	private static final Logger LOG = LoggerFactory.getLogger(F2bUpdateable.class);
-	private final ExecutorService executor = Executors.newSingleThreadExecutor(Thread.ofVirtual().factory());
+
 	private final List<BatteryFeneconF2bCluster> clusters;
-	private final Runnable closeChannelListener;
+	private final F2bHardwareType hardwareType;
+	private final ExecutorService executor = Executors.newSingleThreadExecutor(Thread.ofVirtual().factory());
 
-	private static final File TEMP_DIRECTORY = new File(System.getProperty("java.io.tmpdir"));
-	private static final String BASE_URI = "https://fenecon.de/fems-tools/f2bUpdate/";
+	private volatile F2bUpdateState updateState = new F2bUpdateState.Idle();
 
-	private final Map<String, AtomicReference<F2bFirmwareVersion>> versions = new ConcurrentHashMap<>();
-	private final Map<String, List<Consumer<F2bFirmwareVersion>>> versionListeners = new ConcurrentHashMap<>();
-
-	private volatile F2bUpdateState updateState = new F2bUpdateState.NormalOperation();
-	private final HardwareType hardwareType;
-
-	public F2bUpdateable(List<BatteryFeneconF2bCluster> clusters, F2bHardwareType f2bHardwareType) {
+	public F2bUpdateable(List<BatteryFeneconF2bCluster> clusters, F2bHardwareType hardwareType) {
 		this.clusters = clusters;
-		this.hardwareType = this.getHardwareTypeInfo(f2bHardwareType);
-		final var cleanupListener = new ArrayList<Runnable>();
-
-		for (var cluster : this.clusters) {
-
-			final var battery = this.getFirstBattery(cluster);
-
-			if (battery == null) {
-				continue;
-			}
-
-			final var major = battery.getF2bApplicationMainVersion().orElse(null);
-			final var minor = battery.getF2bApplicationSubVersion().orElse(null);
-			this.versions.put(cluster.id(), new AtomicReference<>(new F2bFirmwareVersion(major, minor)));
-
-			this.versionListeners.put(cluster.id(), new CopyOnWriteArrayList<>());
-
-			var majorListener = battery.getF2bApplicationMainVersionChannel().onChange((oldValue, newValue) -> this
-					.updateVersion(cluster.id(), version -> version.withVersionMajor(newValue.get())));
-
-			var subListener = battery.getF2bApplicationSubVersionChannel().onChange((oldValue, newValue) -> this
-					.updateVersion(cluster.id(), version -> version.withVersionSub(newValue.get())));
-
-			cleanupListener
-					.add(() -> battery.getF2bApplicationMainVersionChannel().removeOnChangeCallback(majorListener));
-
-			cleanupListener.add(() -> battery.getF2bApplicationSubVersionChannel().removeOnChangeCallback(subListener));
-		}
-
-		this.closeChannelListener = () -> cleanupListener.forEach(Runnable::run);
+		this.hardwareType = hardwareType;
 	}
 
 	/**
@@ -96,17 +67,6 @@ public class F2bUpdateable implements Updateable {
 	 */
 	public void deactivate() {
 		this.executor.shutdown();
-		this.closeChannelListener.run();
-	}
-
-	private void updateVersion(String clusterId, UnaryOperator<F2bFirmwareVersion> updateFunction) {
-		final var newVersion = this.versions //
-				.get(clusterId) //
-				.updateAndGet(updateFunction);
-
-		for (var listener : this.versionListeners.get(clusterId)) {
-			listener.accept(newVersion);
-		}
 	}
 
 	@Override
@@ -117,6 +77,7 @@ public class F2bUpdateable implements Updateable {
 	/**
 	 * Executes the update.
 	 */
+	@Override
 	public void executeUpdate() {
 		synchronized (this) {
 			if (this.updateState instanceof F2bUpdateState.UpdateRunning) {
@@ -127,8 +88,8 @@ public class F2bUpdateable implements Updateable {
 
 		this.executor.execute(() -> {
 			try {
-				this.executeInternal();
-				this.updateState = new F2bUpdateState.NormalOperation();
+				this.updateF2bFirmware();
+				this.updateState = new F2bUpdateState.Idle();
 			} catch (Exception e) {
 				var errorText = TextProvider //
 						.byTranslation(F2bUpdateable.class, "F2bUpdate.UpdateFailed") //
@@ -138,136 +99,149 @@ public class F2bUpdateable implements Updateable {
 		});
 	}
 
-	private void executeInternal() throws Exception {
-		final var progressHistory = new ProgressHistory();
-
-		progressHistory.addOnChangeListener(history -> {
-			final var last = history.last();
-			LOG.info("Update State: {}", last);
-			this.updateState = new F2bUpdateState.UpdateRunning(last.percentage(), history.asLog());
-		});
-
-		final var progress = new ProgressPublisher();
-		progress.addListener(progressHistory::addProgress);
-		progress.setPercentage(5, "Downloading latest F2B firmware version...");
-		this.downloadLatestF2bFirmwareVersion(progress);
-		progress.sleep(5000, 12, 14, "Latest F2B firmware version downloaded, starting update per cluster...");
+	private void updateF2bFirmware() {
+		final var progress = this.createProgress();
+		progress.setPercentage(1, "Starting F2B firmware update");
+		this.downloadLatestFirmware(progress.subProgress(1, 10));
 
 		try {
-			this.runUpdate(progress.subProgress(14, 99));
-			progress.setPercentage(100, "Update successful");
+			for (final var pair : progress.forEachWithProgress(11, 95, this.clusters, "Update")) {
+				this.updateCluster(pair.b(), pair.a(), 1);
+			}
+			progress.sleep(3000, 96, 99, "Validating installed version...");
+			progress.setPercentage(100, "F2B firmware update successful");
 
 		} catch (Exception e) {
-			LOG.error("Update {} failed", e.getMessage());
-			progress.setPercentage(5, "Retrying update...");
+			LOG.error("{} Update failed: {}", LOG_TAG, e.getMessage());
+			progress.setPercentage(0, "Update failed");
 		}
 	}
 
-	private void downloadLatestF2bFirmwareVersion(ProgressPublisher progress) {
-		if (this.hardwareType == HardwareType.FM_29) {
-			var uri = this.buildFirmwareUri();
-			try {
-				HttpClient client = HttpClient.newHttpClient();
+	private ProgressPublisher createProgress() {
+		final var progressHistory = new ProgressHistory();
+		progressHistory.addOnChangeListener(history -> {
+			final var last = history.last();
+			LOG.info("{} Update State: {}", LOG_TAG, last);
+			this.updateState = new F2bUpdateState.UpdateRunning(last.percentage(), history.asLog());
+		});
+		final var progress = new ProgressPublisher();
+		progress.addListener(progressHistory::addProgress);
+		return progress;
+	}
+
+	private void downloadLatestFirmware(ProgressPublisher progress) {
+		progress.setPercentage(1, "Starting download of latest F2B Firmware version");
+		if (this.hardwareType == F2bHardwareType.F2B_FM29_1V0 //
+				|| this.hardwareType == F2bHardwareType.F2B_FM29_1V2 //
+				|| this.hardwareType == F2bHardwareType.F2B_FM29_1V3) {
+
+			var uri = DOWNLOAD_BASE_URI.resolve(this.getFirmwareFileName());
+
+			try (HttpClient client = HttpClient.newHttpClient()) {
 				var request = HttpRequest.newBuilder() //
 						.uri(uri) //
 						.build();
 
+				progress.setPercentage(10, "Firmware file source: " + uri);
+				progress.setPercentage(11, "Downloading...");
 				HttpResponse<Path> response = client.send(request,
-						HttpResponse.BodyHandlers.ofFile(this.getFirmwarePath()));
-				progress.setPercentage(9, "Downloading file from: " + uri);
+						HttpResponse.BodyHandlers.ofFile(this.getFirmwareFilePath()));
 
 				if (response.statusCode() == 200) {
-					progress.setPercentage(10, "Firmware downloaded successfully: " + response.body());
-					LOG.info("Firmware downloaded successfully: {}", response.body());
+					progress.setPercentage(100, "Download successful (" + response.body() + ")");
+					LOG.info("{} Firmware downloaded successfully ({})", LOG_TAG, response.body());
 				} else {
 					throw new IOException("Download failed. HTTP-StatusCode: " + response.statusCode());
 				}
+
 			} catch (Exception e) {
-				LOG.error("Failed to download firmware from {}: {}", uri, e.getMessage());
-				throw new RuntimeException("Failed to download firmware: from" + uri + e.getMessage(), e);
+				LOG.warn("{} Failed to download firmware from {}: {}", LOG_TAG, uri, e.getMessage());
+				throw new RuntimeException("Failed to download firmware from " + uri + ": " + e.getMessage(), e);
 			}
 		}
 	}
 
-	private void runUpdate(ProgressPublisher progress) throws Exception {
-		final var fileName = this.buildFirmwareName();
-
-		for (final var pair : progress.forEachWithProgress(12, 82, this.clusters, "Update")) {
-			this.updateSingleCluster(pair.b(), pair.a(), fileName, 1);
-		}
-	}
-
-	private void updateSingleCluster(BatteryFeneconF2bCluster cluster, ProgressPublisher progress, String fileName,
-			int attempt) throws Exception {
-
+	private void updateCluster(BatteryFeneconF2bCluster cluster, ProgressPublisher progress, int attempt)
+			throws Exception {
 		try {
-			LOG.info("Updating cluster {} (attempt {})", cluster.id(), attempt);
-
+			LOG.info("{} ({}) Starting update (attempt #{})", LOG_TAG, cluster.id(), attempt);
+			progress.setPercentage(1, "(" + cluster.id() + ") Starting update (attempt #" + attempt + ")");
 			var battery = this.getFirstBattery(cluster);
 
-			progress.sleep(2000, 21, 22, "Triggering F2B reset for: " + cluster.id());
+			Objects.requireNonNull(battery, "Battery is null");
 			battery.setF2bReset(true);
+			progress.sleep(5000, 18, 19, "(" + cluster.id() + ") Resetting F2B cluster...");
+			progress.setPercentage(20, "(" + cluster.id() + ") F2B cluster reset finished");
 
-			String ip = this.getModbusBridgeIpAddress(battery);
+			this.uploadWithTftp(cluster.id(), this.getModbusBridgeIpAddress(battery), progress.subProgress(21, 99));
 
-			progress.setPercentage(50, "TFTP upload " + cluster.id());
-			this.executeTftp(ip, fileName);
-
-			progress.sleep(30000, 52, 55,
-					"TFTP upload finished... waiting for update to complete for cluster " + cluster.id());
-
-			LOG.info("Cluster {} update successful", cluster.id());
+			progress.setPercentage(100, "(" + cluster.id() + ") Update finished");
+			LOG.info("{} Cluster {} update successful", LOG_TAG, cluster.id());
 
 		} catch (Exception e) {
-			LOG.error("Cluster {} update failed", cluster.id(), e);
+			LOG.warn("{} Cluster {} update failed: {}", LOG_TAG, cluster.id(), e.getMessage());
 
-			// if failed three times, stop updating cluster and set error
 			if (attempt >= 3) {
 				cluster.setFwUpdateError(true);
 				throw e;
 			}
+
 			this.clearUpdateErrors(cluster);
-			// if it fails, try again and increase count
-			this.updateSingleCluster(cluster, progress, fileName, attempt + 1);
+			this.updateCluster(cluster, progress, ++attempt);
 		}
 	}
 
-	private void executeTftp(String ip, String fileName) throws IOException, InterruptedException {
+	private void uploadWithTftp(String clusterId, String ip, ProgressPublisher progress)
+			throws IOException, InterruptedException {
+		progress.setPercentage(1, "(" + clusterId + ") Starting TFTP upload");
 		var processBuilder = new ProcessBuilder("tftp", ip);
 		processBuilder.redirectErrorStream(true);
-
 		var process = processBuilder.start();
+		progress.setPercentage(30, "(" + clusterId + ") Uploading with TFTP...");
 
 		try (var writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
 				var reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-
 			writer.write("mode binary\n");
 			writer.write("rexmt 20\n");
 			writer.write("timeout 25\n");
 			writer.write("verbose\n");
-			writer.write("put " + this.getFirmwarePath() + " " + fileName + "\n");
+			writer.write("put " + this.getFirmwareFilePath() + " " + this.getFirmwareFileName() + "\n");
 			writer.write("quit\n");
 			writer.flush();
 
 			String line;
 			while ((line = reader.readLine()) != null) {
-				LOG.info("TFTP {}", line);
+				LOG.info("{} ({}) TFTP {}", LOG_TAG, clusterId, line);
 			}
 		}
+		progress.setPercentage(90);
 
 		int exitCode = process.waitFor();
-		LOG.info("TFTP finished with exitCode {}", exitCode);
+
+		LOG.info("{} ({}) TFTP finished with exitCode {}", LOG_TAG, clusterId, exitCode);
+		progress.setPercentage(100, "(" + clusterId + ") TFTP upload finished");
 
 		if (exitCode != 0) {
-			throw new IOException("TFTP failed with exit code " + exitCode);
+			throw new IOException("(" + clusterId + ") TFTP failed with exit code " + exitCode);
 		}
+	}
+
+	private Path getFirmwareFilePath() {
+		return Path.of(FIRMWARE_DIRECTORY, this.getFirmwareFileName());
+	}
+
+	private String getFirmwareFileName() {
+		return String.format("App_F2B_%s_%dV%d.bin", //
+				this.hardwareType.getHardwareModelName(), //
+				LATEST_VERSIONS.get(this.hardwareType.getHardwareModelName()).versionMajor(), //
+				LATEST_VERSIONS.get(this.hardwareType.getHardwareModelName()).versionSub());
 	}
 
 	@Override
 	public GetUpdateState.UpdateState getUpdateState(Language lang) {
 		return switch (this.updateState) {
-		case F2bUpdateState.NormalOperation() -> //
-			this.calculateAvailableUpdatesStatus();
+		case F2bUpdateState.Idle() -> //
+			this.checkClusterUpdateStates();
 		case F2bUpdateState.UpdateRunning(var percentCompleted, var logs) -> //
 			new GetUpdateState.UpdateState.Running(percentCompleted, AVG_UPDATE_DURATION_IN_MINUTES, logs);
 		case F2bUpdateState.UpdateFailed(var errorText) -> //
@@ -275,57 +249,54 @@ public class F2bUpdateable implements Updateable {
 		};
 	}
 
-	private GetUpdateState.UpdateState calculateAvailableUpdatesStatus() {
-		for (var cluster : this.clusters) {
-
-			var updateState = this.calculateClusterUpdateState(cluster);
-
-			if (updateState instanceof GetUpdateState.UpdateState.Available
-					|| updateState instanceof GetUpdateState.UpdateState.Unknown) {
-				return updateState;
-			}
-		}
-
+	private GetUpdateState.UpdateState checkClusterUpdateStates() {
 		if (this.clusters.isEmpty()) {
+			LOG.warn("{} Clusters are empty", LOG_TAG);
 			return new GetUpdateState.UpdateState.Unknown();
 		}
 
-		var version = this.versions.get(this.clusters.getFirst().id()).get();
-		return new GetUpdateState.UpdateState.Updated(version.toString());
-	}
+		for (var cluster : this.clusters) {
+			var clusterUpdateState = this.checkFirmware(cluster);
+			if (clusterUpdateState instanceof GetUpdateState.UpdateState.Available
+					|| clusterUpdateState instanceof GetUpdateState.UpdateState.Unknown) {
+				return clusterUpdateState;
+			}
+		}
 
-	private GetUpdateState.UpdateState calculateClusterUpdateState(BatteryFeneconF2bCluster cluster) {
-		var battery = this.getFirstBattery(cluster);
+		var battery = this.getFirstBattery(this.clusters.getFirst());
 		if (battery == null) {
 			return new GetUpdateState.UpdateState.Unknown();
 		}
 
-		var versionRef = this.versions.get(cluster.id());
-		if (versionRef == null) {
+		return new GetUpdateState.UpdateState.Updated(battery.getF2bApplicationVersion());
+	}
+
+	private GetUpdateState.UpdateState checkFirmware(BatteryFeneconF2bCluster cluster) {
+		var battery = this.getFirstBattery(cluster);
+		if (battery == null) {
+			LOG.warn("{} Battery of cluster {} is null", LOG_TAG, cluster.id());
 			return new GetUpdateState.UpdateState.Unknown();
 		}
 
-		var version = versionRef.get();
-		if (!version.isDefined()) {
+		var batteryHardwareType = battery.getF2bHardwareTypeEnum();
+		var batteryFirmwareVersion = new F2bFirmwareVersion(//
+				battery.getF2bApplicationMainVersion().get(), //
+				battery.getF2bApplicationSubVersion().get());
+
+		if (!batteryFirmwareVersion.isDefined()) {
 			return new GetUpdateState.UpdateState.Unknown();
 		}
 
-		var hardwareType = this.getHardwareTypeInfo(battery.getF2bHardwareTypeEnum());
-		if (hardwareType == null) {
-			return new GetUpdateState.UpdateState.Unknown();
+		var latest = LATEST_VERSIONS.get(batteryHardwareType.getHardwareModelName());
+		if (batteryFirmwareVersion.isOlderThan(latest)) {
+			return new GetUpdateState.UpdateState.Available(batteryFirmwareVersion.toString(), latest.toString());
 		}
 
-		var latestVersion = hardwareType.getLatestFirmwareVersion();
-
-		if (version.isOlderThan(latestVersion)) {
-			return new GetUpdateState.UpdateState.Available(version.toString(), latestVersion.toString());
-		}
-
-		return new GetUpdateState.UpdateState.Updated(version.toString());
+		return new GetUpdateState.UpdateState.Updated(batteryFirmwareVersion.toString());
 	}
 
 	private sealed interface F2bUpdateState {
-		record NormalOperation() implements F2bUpdateState {
+		record Idle() implements F2bUpdateState {
 		}
 
 		record UpdateRunning(int percentCompleted, List<String> logs) implements F2bUpdateState {
@@ -354,57 +325,4 @@ public class F2bUpdateable implements Updateable {
 	private BatteryFeneconF2b getFirstBattery(BatteryFeneconF2bCluster cluster) {
 		return cluster.getBatteries().stream().min(Comparator.comparing(OpenemsComponent::id)).orElse(null);
 	}
-
-	private HardwareType getHardwareTypeInfo(F2bHardwareType hardwareType) {
-
-		if (hardwareType == null) {
-			return null;
-		}
-
-		return switch (hardwareType) {
-		case F2bHardwareType.F2B_FM29_1V0, F2bHardwareType.F2B_FM29_1V2 -> HardwareType.FM_29;
-		default -> null;
-		};
-	}
-
-	/**
-	 * Creates the firmware download {@link URI}.
-	 * 
-	 * <p>
-	 * Currently this method only supports firmware files for Fisker F2Bs. If
-	 * additional F2B variants are introduced in the future, this implementation
-	 * needs to be extended accordingly.
-	 *
-	 * @return the firmware download URI
-	 */
-	private URI buildFirmwareUri() {
-		var firmwareName = this.buildFirmwareName();
-
-		return URI.create(String.format("%sFisker/%s/%s/%s", BASE_URI, //
-				this.hardwareType.getName(), //
-				this.hardwareType.getLatestVersionDate(), //
-				firmwareName));
-	}
-
-	/**
-	 * Creates the firmware file name.
-	 * 
-	 * <p>
-	 * Currently this method only generates file names for Fisker F2B firmware. If
-	 * additional F2B variants are introduced in the future, this implementation
-	 * needs to be extended accordingly.
-	 *
-	 * @return the firmware file name
-	 */
-	private String buildFirmwareName() {
-		return String.format("App_F2B_%s_%dV%d.bin", //
-				this.hardwareType.getName(), //
-				this.hardwareType.getLatestFirmwareVersion().versionMajor(), //
-				this.hardwareType.getLatestFirmwareVersion().versionSub());
-	}
-
-	private Path getFirmwarePath() {
-		return TEMP_DIRECTORY.toPath().resolve(this.buildFirmwareName());
-	}
-
 }

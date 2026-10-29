@@ -2,6 +2,11 @@ package io.openems.edge.battery.fenecon.f2b.common.enums;
 
 import io.openems.common.types.OptionsEnum;
 
+/**
+ * These types are separate values within the hardware sourcecode and are not
+ * directly related to the software version, e.g. there can be a firmware
+ * version 1.3 but no hardware type F2B_FM_29_1V3.
+ */
 public enum F2bHardwareType implements OptionsEnum {
 	UNDEFINED(-1, "Undefined"), //
 	NO_TYPE_DEFINED(0, "No type defined"), //
@@ -34,5 +39,12 @@ public enum F2bHardwareType implements OptionsEnum {
 	@Override
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
+	}
+
+	public String getHardwareModelName() {
+		return switch (this) {
+		case F2B_FM29_1V0, F2B_FM29_1V2, F2B_FM29_1V3 -> "FM29";
+		default -> null;
+		};
 	}
 }
