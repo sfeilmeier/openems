@@ -143,6 +143,10 @@ export class FenaComponent implements OnDestroy {
             );
         }
 
+        if (config == null) {
+            return fenaMessages;
+        }
+
         fenaMessages.push(
             ...widgetNames
                 .flatMap((widgetName): Fena.Message[] => {
