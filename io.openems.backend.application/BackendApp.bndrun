@@ -1,5 +1,5 @@
 -runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
--runee: JavaSE-21
+-runee: JavaSE-25
 -runprovidedcapabilities: ${native_capability}
 
 -resolve.effective: active
@@ -52,6 +52,7 @@
 	bnd.identity;id='io.openems.backend.common',\
 	bnd.identity;id='io.openems.backend.core',\
 	bnd.identity;id='io.openems.backend.edge.manager',\
+	bnd.identity;id='io.openems.backend.luox',\
 	bnd.identity;id='io.openems.backend.metadata.dummy',\
 	bnd.identity;id='io.openems.backend.metadata.file',\
 	bnd.identity;id='io.openems.backend.metadata.odoo',\

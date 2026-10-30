@@ -260,7 +260,7 @@ export class OpenemsComponent {
 
 export class Library {
     // Java
-    public static readonly JAVA_JRE = new Library("Java 21 Runtime Environment", "jre21");
+    public static readonly JAVA_JRE = new Library("Java 25 Runtime Environment", "jre25");
     public static readonly APACHE_FELIX_FILEINSTALL = new Library(
         "Apache Felix File Install",
         "org.apache.felix..fileinstall",

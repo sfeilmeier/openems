@@ -314,7 +314,7 @@ if is_installed fems-techbase-sys-mods; then
 fi
 
 if ! is_installed temurin-25-jre; then
-    apt_install fonts-dejavu
+    apt_install fonts-dejavu-core
 
     echo "# Install JRE 25"
     dpkg_download_install https://fenecon.de/fems-download/deb/adoptium-ca-certificates-latest.deb
