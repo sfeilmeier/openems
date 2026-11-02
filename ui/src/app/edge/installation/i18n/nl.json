@@ -1,6 +1,20 @@
 {
     "INSTALLATION": {
         "ALERTING_INFO": "Stel als installateur e-mailmeldingen in voor het geval het FEMS gedurende een bepaalde tijd offline is of een fout meldt. Het bericht wordt verzonden naar het e-mailadres dat tijdens de inbedrijfstelling is opgegeven.",
+        "ALIAS_WITH_LABEL": "Alias {{label}}{{number}}",
+        "BACK": "Terug",
+        "COMPLETE": "Naar de online monitoring",
+        "COMPLETION": {
+            "DOWNLOAD": "Ingebruikstellingsrapport downloaden",
+            "DOWNLOAD_ERROR": "Het rapport kon niet worden gedownload",
+            "DOWNLOAD_SUCCESS": "Rapport succesvol gedownload",
+            "HECKERT_NOTE": "Er is nu een gratis app voor je beschikbaar om te installeren in het App Center.",
+            "INVALID_PAYLOAD": "Ongeldig antwoord van de server",
+            "NAVIGATION_LABEL": "Naar het App Center",
+            "NOTE": "Klik hier om naar het App Center te gaan om aanvullende componenten te configureren en apps te installeren.",
+            "SUB_TITLE": "{{ value }} is succesvol in bedrijf gesteld.",
+            "TITLE": "Afronden"
+        },
         "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
             "ACTIVE_POWER_MODE": {
                 "OUTPUT_ACTIVE_POWER": "Uitgangsactief vermogen",
@@ -186,7 +200,26 @@
             "NUMBER_OF_BATTERY_INPUTS": "Aantal gebruikte batterijingangen",
             "TITLE": "Configuratie van batterijingangen"
         },
+        "CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION": {
+            "HEADER": "Communicatietype voor de netmeter",
+            "IP_ADDRESS": "IP-adres",
+            "PORT": "Poort",
+            "RS485": "RS485",
+            "TCP_IP": "TCP/IP"
+        },
+        "CONFIGURATION_COMMERCIAL_MODBUS_BRIDGE": {
+            "HEADER": "Keuze van het communicatietype"
+        },
+        "CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT": {
+            "RS485_LABEL": "RS485 (4 RJ45-poorten) – Aansluiting: FEMS",
+            "TCP_IP_LABEL": "TCP/IP (6 RJ45-poorten) – Aansluiting: intern"
+        },
         "CONFIGURATION_EMERGENCY_RESERVE": {
+            "COUPLER_TITLE": "Welke veldbuskoppelaar is geïnstalleerd in je Offgrid-netkoppelpunt?",
+            "EMERGENCY_RESERVE": "Noodstroomreserve {{ symbol }}",
+            "EMERGENCY_RESERVE_LABEL": "Noodstroom {{ symbol }}",
+            "EMERGENCY_RESERVE_NOTE": "Als deze functie is geactiveerd, kan het laadniveau van de accu niet onder de ingestelde waarde dalen.",
+            "EMERGENCY_RESERVE_VALUE": "Noodstroomwaarde",
             "GENSET": {
                 "BATTERY_CHARGING": "Batterij opladen vanuit de generator activeren?",
                 "CHARGE_SOC_END": "Batterijlaadtoestand voor het stoppen van de generator",
@@ -200,10 +233,48 @@
                 "POWER": "Nominaal vermogen",
                 "PREHEAT_TIME": "Voorlooptijd",
                 "RUN_TIME": "Looptijd"
-            }
+            },
+            "INFO": "Let bij gebruik van de generator op het volgende: het laadniveau van de noodstroomreserve moet groter dan (of gelijk aan) het opgegeven laadniveau zijn dat nodig is om de generator te starten (zie details hieronder).",
+            "IS_ACTIVATED": "Noodstroomreserve actief?",
+            "IS_ENABLED": "Moet de noodstroomfunctie worden geactiveerd?",
+            "TITLE": "Gegevens over noodstroom",
+            "VALUE": "Waarde [%]"
+        },
+        "CONFIGURATION_ENERGY_FLOW_METER": {
+            "CONVERTER_RATIO": "Primaire stroom (200–5000 A)",
+            "METER": {
+                "INTEGRATED": "Geïntegreerde Home 3-fase sensor met stroomtransformator ({{type}})",
+                "LABEL": "Meter",
+                "TYPE": {
+                    "OPTIONAL": "Optioneel",
+                    "STANDARD": "standaard leveringsomvang"
+                },
+                "WITHOUT_CT": "Home 3-fase sensor zonder stroomtransformator (optioneel)",
+                "WITHOUT_CT_STANDARD_DELIVERY": "Home 3-fase sensor zonder stroomtransformator (standaardlevering)",
+                "WITH_CT": "Home 3-fase sensor met stroomtransformator 120 A ({{type}})"
+            },
+            "TITLE": "Keuze van de energieflowrichtingsmeter"
+        },
+        "CONFIGURATION_ESS_LIMITER": {
+            "INFO_NOTE": "Om overbelasting van het net te voorkomen, krijgt de netbeheerder in de toekomst de mogelijkheid om alle sinds 1 januari 2024 geïnstalleerde verbruikersapparaten te regelen („dimmen”) naar een vermogen van 4,2 kW.",
+            "IS_ACTIVATE": "Mogelijkheid tot regeling volgens §14a EnWG activeren",
+            "IS_ACTIVATE_LABEL": "De bedradingswerkzaamheden moeten overeenkomstig de installatie-instructies worden uitgevoerd.",
+            "TITLE": "Regeling volgens §14a EnWG"
         },
         "CONFIGURATION_EXECUTE": {
+            "BATTERY": "Accu",
+            "BATTERY_INTERFACE": "Accu-interface",
+            "BATTERY_INVERTER": "Accu-omvormer",
+            "COMMUNICATION_WITH_BATTERY": "Communicatie met de accu",
+            "COMMUNICATION_WITH_BATTERY_INVERTER": "Communicatie met de accu-omvormer",
+            "COMMUNICATION_WITH_METER": "Communicatie met de meters",
+            "COMMUNICATION_WITH_RELAY": "Communicatie met de relais",
+            "CONTROL_GRID_POINT": "Aansturing van het netkoppelpunt",
             "COPY_ERROR": "Fout kopiëren",
+            "DESCRIPTION_1": "Om te controleren of alle componenten van je systeem juist zijn ingesteld,",
+            "DESCRIPTION_2": "kunnen de configuratie en de daaropvolgende functionele tests tot 10 minuten duren.",
+            "EMERGENCY_CAPACITY_RESERVE": "Aansturing van de noodstroomreserve",
+            "ERROR": "Fout",
             "ERROR_COPIED": "Fout naar het klembord gekopieerd",
             "ERROR_DETAILS": "Foutdetails",
             "ERROR_HEADLINE_CATEGORY_CONFLICT": "Verwijder eerst het bestaande systeem",
@@ -221,20 +292,319 @@
             "ERROR_TITLE_INCOMPATIBLE_APP": "Incompatibele app geïnstalleerd",
             "ERROR_TITLE_STALE_INSTANCE": "Rest van eerdere installatie gevonden",
             "ERROR_TITLE_TIMEOUT": "Time-out",
+            "EXISTING_CONFIGURATION": "Er is een bestaande configuratie gevonden. Je kunt deze overschrijven door het configuratieproces handmatig te starten.",
+            "FIELD_BUS_COUPLER": "Veldbuskoppelaar",
+            "FINISH_FUNCTION_TEST": "Functionele tests van de ingebouwde componenten afgerond",
+            "FUNCTION_TEST": "Functionele test",
+            "FUNCTION_TEST_ERROR": "Functionele test afgerond met fouten.",
+            "GRID_METER": "Netmeter",
+            "GRID_OPTIMIZED_CHARGE": "Netgeoptimaliseerd laden",
+            "IP_ADDRESS_ERROR": "Een voor de {{ system}} noodzakelijk IP-adres kon niet aan de netwerkconfiguratie worden toegevoegd.",
+            "IP_ADDRESS_WARNING": "Een voor de koppelaar vereist IP-adres kon niet aan de netwerkconfiguratie worden toegevoegd.",
+            "IS_BEING_CONFIGURED": "wordt geconfigureerd",
+            "LABEL": {
+                "WAGO_BRIDGE": "WAGO (grijze component)",
+                "WEIDMUELLER_BRIDGE": "Weidmüller (zwarte component)"
+            },
+            "LEGEND": "Legenda",
+            "NOT_YET_CONFIGURED": "nog niet geconfigureerd / gecontroleerd",
+            "PARTIAL_CONFIGURATION": "Niet alle componenten konden juist worden geconfigureerd.",
+            "PRE_CONFIGURED": "voorgeconfigureerd / waarschuwing",
+            "RELAY_BOARD": "Relaiskaart",
             "RESOLVE_CATEGORY_CONFLICT_BUTTON": "Bestaande systeem verwijderen en doorgaan",
             "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Er kon geen conflicterend systeem worden gevonden om automatisch te verwijderen. Verwijder het handmatig via het App Center.",
             "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Bestaande systeem wordt verwijderd…",
+            "SELF_CONSUMPTION": "Optimalisatie van eigen verbruik",
+            "START": "Configuratie starten",
+            "START_FUNCTION_TEST": "Functionele tests voor de geïnstalleerde componenten gestart",
             "STATUS_CONFIGURING": "Componenten worden geconfigureerd…",
-            "STATUS_FUNCTION_TEST": "Configuratie voltooid. Functietests worden uitgevoerd…"
+            "STATUS_FUNCTION_TEST": "Configuratie voltooid. Functietests worden uitgevoerd…",
+            "STORAGE_SYSTEM": "Opslagsysteem",
+            "SUCCESSFULLY_CONFIGURED": "succesvol geconfigureerd / gecontroleerd",
+            "TITLE": "Configuratie",
+            "UNDEFINED_COMPONENT_CONFIGURATOR": "Componentconfigurator is niet gedefinieerd",
+            "WAGO_BRIDGE": "Wago-brug",
+            "WAITING": "Configuratie loopt...",
+            "WEIDMUELLER_BRIDGE": "Weidmueller-brug"
         },
+        "CONFIGURATION_FEATURES_STORAGE_SYSTEM": {
+            "BALANCING": "Optimalisatie van eigen verbruik"
+        },
+        "CONFIGURATION_GRID_SETTING": {
+            "TITLE": "Nettype"
+        },
+        "CONFIGURATION_LINE_SIDE_METER_FUSE": {
+            "FIXED_VALUE_DESCRIPTION": "Met welke stroomsterkte is de meter beveiligd?",
+            "METER": "Meter",
+            "METER_LABEL": "Metertype van het netaansluitpunt",
+            "OTHER": "Overige",
+            "OTHER_VALUE": "Eigen waarde",
+            "TITLE_COMMERCIAL": "Voorbeveiliging netaansluitpunt / meterbeveiliging",
+            "TITLE_HOME": "Beveiliging huisaansluitmeter",
+            "VALUE": "Waarde [A]"
+        },
+        "CONFIGURATION_MPPT_SELECTION": {
+            "CONNECTION_CHECK_LABEL": "Zijn alle aansluitingen gecontroleerd?",
+            "NOTE": "Aanvullende opwekkers kunnen daarna via het App Center worden geconfigureerd."
+        },
+        "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVE_COUNT_TITLE": "Informatie over het aantal slaves",
+            "SLAVE_INSTALLATION_TITLE": "Installatie van afzonderlijke opslagunits (slaves)"
+        },
+        "CONFIGURATION_STS_BOX": {
+            "HELP_TEXT": "Het serienummer van de STS-Box bevindt zich op het typeplaatje aan de zijkant van de STS-Box",
+            "LABEL": "STS-Box",
+            "STS_BOX_AVAILABLE": "STS-Box geïnstalleerd",
+            "STS_BOX_FIELD_LABEL": "Is er een STS-Box geïnstalleerd voor noodstroomfunctionaliteit:"
+        },
+        "CONFIGURATION_SUMMARY": {
+            "ACCEPT": "accepteren",
+            "ACCEPT_TERMS": "Accepteer de garantievoorwaarden om door te gaan.",
+            "ALIAS_WITH_LABEL_HOME_DC": "Alias MPPT{{mppt}}",
+            "BATTERY": "Accu",
+            "BATTERY_LOCATION": "Locatie BESS",
+            "BOTH_SELECTED_LABEL": "Beide PV-poorten (\"PV{{ pv1 }}\" en \"PV{{ pv2 }}\") aangesloten",
+            "COUNTRY_SETTING": "Landinstellingen",
+            "CUSTOMER": "Klant",
+            "DEVICE_ACTIVE_CHECKED": "Accu en omvormer ingeschakeld",
+            "EDGE_NUMBER": "{{ edgeShortName }} nummer",
+            "ENERGY_FLOW_METER": {
+                "LABEL": "Net"
+            },
+            "GENERAL": "Algemeen",
+            "INSTALLER": "Installateur",
+            "INVERTER": "Omvormer",
+            "IS_DEVICE_ACTIVE_CHECKED": "Controleer of de accu en de omvormer zijn ingeschakeld en bevestig dit.",
+            "MODULE_TYPE_WITH_LABEL_HOME_DC": "Type modules MPPT{{ mppt }}",
+            "NEXT_CLICKED_DESCRIPTION": "Door op de knop „volgende” te klikken, wordt het opslagsysteem geconfigureerd. Zorg ervoor dat de accu en de omvormer tijdens het hele configuratieproces aan staan.",
+            "NUMBER_OF_MODULES_WITH_LABEL_HOME_DC": "Aantal PV-modules MPPT{{ mppt }}",
+            "ORIENTATION_WITH_LABEL_HOME_DC": "Oriëntatie MPPT{{ mppt }}",
+            "PRODUCER": "Opwekker",
+            "SUMMARY": "Samenvatting",
+            "TIME_OF_INSTALLATION": "Tijdstip van de installatie",
+            "VALUE_WITH_LABEL_HOME_DC": "Waarde MPPT{{ mppt }} {{ symbol }}",
+            "WARRANTY_TERMS": "Garantievoorwaarden"
+        },
+        "CONFIGURATION_SYSTEM": {
+            "OPEN_INSTRUCTIONS": "Instructies openen",
+            "PRODUCT_NAME": "Type opslag",
+            "TITLE": "Welk opslagsysteem moet worden geconfigureerd?"
+        },
+        "CONFIGURATION_SYSTEM_VARIANT": "Keuze van de ingebouwde component",
         "ENABLE_MPPT": "MPPT {{ mpptNumber }} actief",
+        "FORM": {
+            "BATTERY_SERIAL_NUMBER": "{{ serialNumber }} is geen geldig serienummer. Een geldig serienummer bestaat uit {{ length }} cijfers.",
+            "EMAIL_MATCH": "E-mailadressen komen niet overeen.",
+            "POSITIVE_INTEGER": "Alleen positieve gehele getallen zijn toegestaan.",
+            "STS_SERIAL_NUMBER_REQUIREMENT": "Het serienummer bestaat uit maximaal 16 cijfers."
+        },
+        "LOAD": "laden...",
+        "NEXT": "verder",
         "OFFLINE": "Offline",
+        "PRE_INSTALLATION": {
+            "AUTHENTICATION_FAILED": "Authenticatie mislukt",
+            "EDGE_OFFLINE": "Er kon geen verbinding met de {{ edgeShortName }} tot stand worden gebracht",
+            "INSTALLATION_SUCCESS": "Installatie voor {{ edgeId }} gestart",
+            "NOTE": "Let op:",
+            "TITLE": "Voer de installatiesleutel in",
+            "WRONG_KEY_NOTE": "Mocht de installatiesleutel ten onrechte als ongeldig worden herkend, vernieuw dan de pagina."
+        },
+        "PROTOCOL_AVU_BOX": {
+            "LABEL": "AVU",
+            "SERIAL_NUMBER": "Serienummer",
+            "TITLE": "Bevat het installatiepakket een AVU-Box (automatische verbruikersomschakeling)?"
+        },
+        "PROTOCOL_CHECKLIST": {
+            "CHANGE_NETWORK_SETTINGS": "B) Netwerkinstellingen op de computer wijzigen (IP-adres)",
+            "CONNECT_INVERTER": "A) Computer via netwerkkabel met de omvormer verbinden (bovenste LAN-aansluiting)",
+            "ENTER_PASSWORD": "D) Wachtwoord invoeren",
+            "IP_ADDRESS": "C) IP-adres in de browser invoeren",
+            "IP_ADDRESS_DESCRIPTION": "IP-adres: 169.254.1.1",
+            "MIN_VOLTAGE": "G) Aanvulling: minimale spanningslimiet instellen op 600 V",
+            "MIN_VOLTAGE_DESCRIPTION": "Werkt alleen met het installateurswachtwoord (eigen wachtwoord voor FENECON of voorgeconfigureerd)\n\n<ul><li>Minimale spanningslimiet:<b> {{voltageLimit}} V</b> (-> nettype: <b>{{gridSetting}}</b>)</li></ul>",
+            "MULTI_STEP": "{{listPosition}}) Voer stappen 1 tot en met {{totalSteps}} uit",
+            "NETWORK_SETTINGS": "IP-adres: 169.254.1.12\nSubnetmasker: 255.255.255.0",
+            "NETWORK_SETTINGS_INFO": "Let op dat de stappen en afbeeldingen voor het instellen van een statisch IP-adres kunnen verschillen afhankelijk van het gebruikte apparaat. Voor andere apparaten, zoals Apple-apparaten, kunnen de procedures afwijken.",
+            "NETWORK_SETTINGS_NOTE": "Om via het vaste IP-adres toegang tot de omvormer te krijgen, moet aan het met de omvormer verbonden apparaat handmatig een statisch IP-adres worden toegewezen dat binnen hetzelfde netwerkbereik valt",
+            "PASSWORD_DESCRIPTION": "Servicewachtwoord:\n\nGebruiker: service\nWachtwoord: Ye_r0d4w0P!",
+            "POWER_CONTROL": "H) Vermogensregeling instellen (Cos-Phi enz.)",
+            "POWER_CONTROL_DESCRIPTION": "-> welke instellingen hier noodzakelijk zijn, vind je in de gegevens van de netbeheerder\n-> Wijzigingen kunnen alleen met het installateurswachtwoord worden aangebracht",
+            "START_CONFIGURATION": "E) KACO-configuratie starten met de Installation Wizard",
+            "STEP": "Stap {{currStep}}/{{totalStep}} – {{description}}",
+            "STEP_1": "Taal selecteren",
+            "STEP_2": "Land / nettype vastleggen",
+            "STEP_2_DESCRIPTION": "Selecteer hier je nettype:\n\n<ul><li>Duitsland <b>{{gridSetting}}</b> (-> stel bij G) de \"Minimale spanningslimiet\" in op <b>{{voltageLimit}} V </b>)",
+            "STEP_3": "Vermogensbeperking",
+            "STEP_3_DESCRIPTION": "-> Neem de standaardinstellingen zo over.",
+            "STEP_4": "IP-instelling",
+            "STEP_4_DESCRIPTION": "IP-adres: 172.16.0.100\nSubnetmasker: 255.255.255.0\nStandaardgateway: 172.16.0.1",
+            "STEP_5": "Lokalisatie",
+            "STEP_5_DESCRIPTION": "Synchroniseer hier de tijd met de knop „Sync”",
+            "STEP_6": "Modbus",
+            "STEP_6_DESCRIPTION": "De Modbus-instelling moet op 502 staan",
+            "STEP_7": "Overige (optionele parameters)",
+            "STEP_8": "Afronden",
+            "STEP_8_DESCRIPTION": "Vul de naam van de installateur in",
+            "TIMEOUT_NOTE": "Het volgende proces kan tot {{timeoutInMinutes}} minuten duren."
+        },
+        "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO – Omvormer koppelen",
+        "PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVES_TITLE": "Slave {{number}}",
+            "SLAVE_FILED_LABEL": "Voer het aantal te configureren slaves in",
+            "SLAVE_INSTALLATION": {
+                "CONNECTION_STATUS": {
+                    "NOT_FOUND": "Slave niet gevonden"
+                },
+                "LOG_MESSAGE": {
+                    "AUTHENTICATION_SUCCESSFUL": "Authenticatie geslaagd. Systeem wordt bijgewerkt...",
+                    "CONFIGURATION_FAILED": "Configuratie mislukt: {{ error }}",
+                    "CONFIGURED_SUCCESSFULLY": "Toepassing succesvol geconfigureerd.",
+                    "FUNCTION_TESTS_FAILED": "Functionele test mislukt: {{ error }}",
+                    "PARTIALLY_CONFIGURED": "Configuratie gedeeltelijk afgerond.",
+                    "SLAVE_STATUS_ERROR": "Fout bij ophalen van de status voor slave {{ slaveNr }}",
+                    "STARTING_AUTHENTICATION": "Authenticatie wordt gestart...",
+                    "UPDATE_COMPLETED": "Systeemupdate voltooid. App wordt geconfigureerd..."
+                }
+            }
+        },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
-            "FIXED_COS_PHI": "Vaste waarde: Cos Phi 1"
+            "CAPACITIVE": "capacitief",
+            "CHOOSE": "Type",
+            "CONSTANT_VALUE": "Cos φ-waarde",
+            "DYNAMIC_EXTERNAL_LIMITATION": "Dynamische rijstuurontvanger: regeling op het netaansluitpunt",
+            "DYNAMIC_LIMITATION": "Dynamische beperking van de invoeding",
+            "DYNAMIC_LIMITATION_TYPE": "Invoerbeperking",
+            "EXTERNAL_CONTROLLER_CHECK": "De rijstuurontvanger is volgens de instructies juist en volledig geïnstalleerd.",
+            "EXTERNAL_LIMITATION": "Rijstuurontvanger: regeling op de AC-uitgang van de omvormer",
+            "EXTERNAL_LIMITATION_TYPE": "Externe beperking",
+            "FEED_IN_SETTING_DESCRIPTION": "Vermogensreductie bij overfrequentie",
+            "FIXED_COS_PHI": "Vaste waarde: Cos Phi 1",
+            "FIXED_POWER_FACTOR": "Constante Cos φ (P)",
+            "FIXED_POWER_FACTOR_DESCRIPTION": "In de regel schrijft de netbeheerder een vaste verschuivingsfactor „1” voor",
+            "INDUCTIVE": "inductief",
+            "INFO_TEXT": "Je energieopslag probeert door intelligent laden beperking van de PV-installatie te voorkomen.",
+            "MAXIMUM_FEED_IN_VALUE": "Maximaal invoedervermogen [W]",
+            "MAXIMUM_VALUE_DESCRIPTION": "Deze waarde kan door de netbeheerder worden vereist.",
+            "NA_PROTECTION": "Uitschakeling op afstand geactiveerd (centrale NA-beveiliging)",
+            "NO_LIMITATION": "Geen beperking",
+            "PLACE_HOLDER": "Kies een optie",
+            "PU_ENABLED_CURVE": "Verschuivingsfactorvermogenkromme Cos φ (P)",
+            "QU_ENABLED_CURVE": "Blindvermogen-spanningskromme Q(U)",
+            "SHADE_MANAGEMENT_DEACTIVATED": "Schaduwbeheer gedeactiveerd?",
+            "TITLE": "Invoederbeheer",
+            "WARNING_TEXT": "Dit vervangt niet de correcte configuratie van de PV-omvormer!"
+        },
+        "PROTOCOL_INSTALLER_AND_CUSTOMER": {
+            "COMPANY_CUSTOMER": "Zakelijke klant?",
+            "COMPANY_NAME": "Bedrijfsnaam",
+            "EMAIL": "E-mailadres",
+            "EMAIL_CONFIRMATION": "bevestigen",
+            "EMAIL_DESCRIPTION": "voor het aanmaken van persoonlijke toegang",
+            "FIRST_NAME": "Voornaam",
+            "LAST_NAME": "Achternaam",
+            "PHONE": "Telefoonnummer",
+            "TITLE_CUSTOMER": "Contactgegevens – Eindklant",
+            "TITLE_INSTALLER": "Contactgegevens – Installateur"
+        },
+        "PROTOCOL_PV": {
+            "ADDITIONAL_GENERATOR": "Aanvullende AC-opwekker",
+            "ALIAS": "Omschrijving",
+            "ALIAS_DESCRIPTION_PV": "wordt weergegeven in de online monitoring, bijv. \"PV-dak\"",
+            "BOTH_SELECTED_LABEL": "Zijn beide aansluitingen (\"PV{{ pv1 }}\" en \"PV{{ pv2 }}\") aangesloten?",
+            "DIRECTIONS": {
+                "EAST": "Oost",
+                "NORTH": "Noord",
+                "NORTH_EAST": "Noordoost",
+                "NORTH_WEST": "Noordwest",
+                "SOUTH": "Zuid",
+                "SOUTH_EAST": "Zuidoost",
+                "SOUTH_WEST": "Zuidwest",
+                "WEST": "West"
+            },
+            "INSTALLED_POWER": "Geïnstalleerd vermogen [Wₚ]",
+            "INSTALLED_POWER_PER_STRING": "Geïnstalleerd vermogen per string [Wₚ]",
+            "MARKED_AS": " MPPT {{ mppt }} (gemarkeerd als \"PV{{ mppt }}\")",
+            "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (gemarkeerd als \"{{ pv1 }}\" en \"{{ pv2 }}\")",
+            "MODULE_TYPE": "Type modules",
+            "MODULE_TYPE_DESCRIPTION": "bijv. fabrikant en vermogen",
+            "MODULE_TYPE_WITH_LABEL": "Type modules {{ label }}{{ number }}",
+            "NUMBER_OF_MODULES": "Aantal PV-modules per string",
+            "NUMBER_OF_MODULES_PER_STRING": "Aantal PV-modules",
+            "NUMBER_OF_MODULES_WITH_LABEL": "Aantal PV-modules {{ label }}{{ number }}",
+            "OPEN_MANUAL": "Handleiding openen",
+            "ORIENTATION": "Oriëntatie",
+            "ORIENTATION_WITH_LABEL": "Oriëntatie {{ label }}{{ number }}",
+            "TITLE_DC": "DC-PV-installatie",
+            "TITLE_PV": "DC-PV-installatie (omvormer-ingangen)"
         },
         "PROTOCOL_SERIAL_NUMBER": {
             "BATTERY_COMMUNICATION_BOX": "Batterij communicatiebox",
             "BATTERY_INPUT_TOWER": "Batterijingang {{ batteryInput }} Toren {{ towerNumber }}"
-        }
+        },
+        "PROTOCOL_SERIAL_NUMBERS": {
+            "BATTERY_MODULE": "Accumodule ",
+            "BATTERY_MODULE_DESCRIPTION": "Voer alleen de laatste 8 cijfers van het serienummer in.",
+            "BATTERY_STRING": "Accustring {{ stringNumber }}",
+            "BATTERY_TOWER": "Accutoren {{ number }}",
+            "BATTERY_TOWER_CLUSTER": "Accu {{ batteryNumber }} toren {{towerNumber}}",
+            "BESS_COMPONENTS": "Componenten van het opslagsysteem",
+            "BMS_BOX": "BMS-Box en voetstuk",
+            "CONFIRM": "opslaan",
+            "DOUBLE_SOCKET": "Split-voetstuk",
+            "DOUBLE_SOCKET_LABEL": "Split-voetstuk ingebouwd",
+            "EDGE_TIMEOUT_DESC": "We konden de serienummers niet automatisch uitlezen. Het systeem is mogelijk bezig met opstarten.",
+            "EMS_BOX_COMMERCIAL": "Aansluitbox {{ edgeShortname }}",
+            "EMS_BOX_CONNECTION_BOX_COMMERCIAL30": "Aansluitbox {{ edgeShortName }}",
+            "EMS_BOX_GRID_CONNECTION_POINT_COMMERCIAL30": "Netaansluitpunt",
+            "EMS_BOX_HECKERT": "EMS-Box",
+            "EMS_BOX_HOME": "EMS-Box ({{edgeShortName }} Box)",
+            "ENTER_MANUALLY": "Serienummers handmatig invoeren",
+            "ENTER_VALID_ADDRESS": "Voer geldige waarden in om de instellingen toe te passen.",
+            "ERROR_SENDING": "Fout bij het verzenden van het rapport.",
+            "INVALID_SERIALNUMBER_KEY": "Controleer het serienummer van {{ key }} in {{ header }}",
+            "INVERTER": "Omvormer",
+            "MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS": "Minimaal aantal modules per string: {{ min }} en maximaal: {{ max }}",
+            "MINIMUM_AND_MAXIMUM_STRINGS": "Minimaal aantal strings: {{ min }} en maximaal: {{ max }}",
+            "MODULES_PER_STRINGS_DESCRIPTION": "Modules per string voor Commercial-50-systeem: {{ number }}",
+            "NEXT_BUTTON_DESCRIPTION": "Door op de knop „verder” te klikken, wordt het ingebruikstellingsrapport („IBN”-rapport) automatisch naar FENECON GmbH verzonden.",
+            "NO_DATA_FOUND": "Niet alle serienummers zijn gevonden",
+            "NUMBER_OF_MODULES_PER_STRINGS": "Aantal modules per string",
+            "NUMBER_OF_MODULES_PER_TOWER": "Aantal modules per toren",
+            "NUMBER_OF_STRINGS": "Aantal strings",
+            "NUMBER_OF_TOWERS": "Aantal torens",
+            "READ_DESCRIPTION": "Controleer de \"systeeminstellingen\". Lees de omschrijving van de velden.",
+            "SAME_SERIAL_NUMBERS": "{{ serialNumbers }} hebben dezelfde serienummers",
+            "SENT_SUCCESSFULLY": "Het rapport is succesvol verzonden.",
+            "SERIAL_NUMBER": "Serienummers",
+            "SETUP_NOTE": "Voltooi de serienummers door de plaatshouders (gemarkeerd met \"x\") te vervangen door de juiste tekens.",
+            "SINGLE_SERIAL_NUMBER": " Serienummer {{ label }}",
+            "SYSTEM_SETUP": "Voorinstellingen",
+            "TROUBLESHOOTING": {
+                "INTRO": "Mocht er nog steeds geen data worden gevonden, volg dan deze stappen:",
+                "STEP_BRIDGES": "Controleer of de eindbrug volgens de instructies is geplaatst",
+                "STEP_LAN": "Controleer of de LAN-kabel juist is aangesloten",
+                "STEP_MANUAL": "Blijft het probleem bestaan, dan kun je de serienummers handmatig invoeren en na afronding van de ingebruikstelling contact opnemen met de FENECON-service."
+            },
+            "TRY_READING_AGAIN": "Uitlezen opnieuw starten"
+        },
+        "PROTOCOL_SYSTEM": {
+            "FIRSTNAME": "Voornaam contactpersoon",
+            "LAST_NAME": "Achternaam contactpersoon",
+            "LOCATION_SAME_AS_ADDRESS": "Komt de locatie van de BESS overeen met het adres van de klant?",
+            "TITLE": "Locatie van de BESS"
+        },
+        "PROTOCOL_SYSTEM_LOCATION_VALIDATION": {
+            "TITLE": "Adresvalidatie van de opslaglocatie"
+        },
+        "SHARED": {
+            "NOTE": "Let op",
+            "WARNING": "Waarschuwing"
+        },
+        "STEP_FROM_TO": "Stap {{ from }} van {{ to }}",
+        "STEP_TO": "Stap {{ number }}",
+        "SYSTEM_UPDATE": {
+            "UPDATE_WARNING": "De versie moet worden bijgewerkt!"
+        },
+        "VALUE_WITH_LABEL": "Waarde {{ label }}{{ number }} {{ symbol }}"
     }
 }

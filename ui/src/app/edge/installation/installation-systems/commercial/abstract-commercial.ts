@@ -3,9 +3,9 @@ import { FormlyFieldConfig } from "@ngx-formly/core";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
-import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, Service, Websocket } from "src/app/shared/shared";
 
+import { SetupProtocol, SubmitSetupProtocolRequest } from "../../jsonrpc/submitSetupProtocolRequest";
 import { Category } from "../../shared/category";
 import { ExternalLimitationType, GridFeedInLimitationType, ModbusBridgeType } from "../../shared/enums";
 import { IbnUtils } from "../../shared/ibn.utils";

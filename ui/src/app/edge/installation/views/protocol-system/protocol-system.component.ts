@@ -107,7 +107,7 @@ export class ProtocolSystemComponent implements OnInit {
             key: "street",
             type: "input",
             templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.STREET_ADDRESS"),
+                label: this.translate.instant("GENERAL.ADDRESS.STREET_ADDRESS"),
                 required: true,
             },
             hideExpression: (model) => model.isEqualToCustomerData,
@@ -117,7 +117,7 @@ export class ProtocolSystemComponent implements OnInit {
             key: "zip",
             type: "input",
             templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.ZIP"),
+                label: this.translate.instant("GENERAL.ADDRESS.ZIP"),
                 required: true,
             },
             validators: {
@@ -130,7 +130,7 @@ export class ProtocolSystemComponent implements OnInit {
             key: "city",
             type: "input",
             templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.CITY"),
+                label: this.translate.instant("GENERAL.ADDRESS.CITY"),
                 required: true,
             },
             hideExpression: (model) => model.isEqualToCustomerData,
@@ -140,7 +140,7 @@ export class ProtocolSystemComponent implements OnInit {
             key: "country",
             type: "select",
             templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.COUNTRY"),
+                label: this.translate.instant("GENERAL.ADDRESS.COUNTRY"),
                 required: true,
                 options: COUNTRY_OPTIONS(this.translate),
             },

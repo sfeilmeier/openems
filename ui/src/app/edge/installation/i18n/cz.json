@@ -1,6 +1,20 @@
 {
     "INSTALLATION": {
         "ALERTING_INFO": "Jako instalátor si nastav e-mailová upozornění pro případ, že je FEMS po určitou dobu offline nebo hlásí chybu. Zpráva se odesílá na e-mailovou adresu zadanou při uvedení do provozu.",
+        "ALIAS_WITH_LABEL": "Alias {{label}}{{number}}",
+        "BACK": "Zpět",
+        "COMPLETE": "Do online monitoringu",
+        "COMPLETION": {
+            "DOWNLOAD": "Stáhnout protokol uvedení do provozu",
+            "DOWNLOAD_ERROR": "Protokol se nepodařilo stáhnout",
+            "DOWNLOAD_SUCCESS": "Protokol byl úspěšně stažen",
+            "HECKERT_NOTE": "V App Center je pro vás nyní k dispozici bezplatná aplikace k instalaci.",
+            "INVALID_PAYLOAD": "Neplatná odpověď ze serveru",
+            "NAVIGATION_LABEL": "Přejít do App Center",
+            "NOTE": "Pokračujte kliknutím sem do App Center, kde můžete nakonfigurovat další komponenty a instalovat aplikace.",
+            "SUB_TITLE": "{{ value }} byl úspěšně uveden do provozu.",
+            "TITLE": "Dokončit"
+        },
         "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
             "ACTIVE_POWER_MODE": {
                 "OUTPUT_ACTIVE_POWER": "Výstupní činný výkon",
@@ -186,7 +200,26 @@
             "NUMBER_OF_BATTERY_INPUTS": "Počet použitých vstupů baterie",
             "TITLE": "Konfigurace vstupů baterie"
         },
+        "CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION": {
+            "HEADER": "Typ komunikace s elektroměrem",
+            "IP_ADDRESS": "IP adresa",
+            "PORT": "Port",
+            "RS485": "RS485",
+            "TCP_IP": "TCP/IP"
+        },
+        "CONFIGURATION_COMMERCIAL_MODBUS_BRIDGE": {
+            "HEADER": "Výběr typu komunikace"
+        },
+        "CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT": {
+            "RS485_LABEL": "RS485 (4 porty RJ45) – připojení: FEMS",
+            "TCP_IP_LABEL": "TCP/IP (6 portů RJ45) – připojení: interní"
+        },
         "CONFIGURATION_EMERGENCY_RESERVE": {
+            "COUPLER_TITLE": "Jaký fieldbus koppler je instalován ve vašem odpojovacím bodu sítě?",
+            "EMERGENCY_RESERVE": "Nouzová rezerva {{ symbol }}",
+            "EMERGENCY_RESERVE_LABEL": "Nouzový provoz {{ symbol }}",
+            "EMERGENCY_RESERVE_NOTE": "Pokud je tato funkce aktivní, stav nabití baterie nemůže klesnout pod nastavenou hodnotu.",
+            "EMERGENCY_RESERVE_VALUE": "Hodnota nouzové rezervy",
             "GENSET": {
                 "BATTERY_CHARGING": "Povolit nabíjení baterie z generátoru?",
                 "CHARGE_SOC_END": "Stav nabití baterie pro zastavení generátoru",
@@ -200,10 +233,48 @@
                 "POWER": "Jmenovitý výkon",
                 "PREHEAT_TIME": "Doba předehřevu",
                 "RUN_TIME": "Doba běhu"
-            }
+            },
+            "INFO": "Při použití generátoru vezměte prosím v úvahu: stav nabití nouzové rezervy musí být větší než (nebo roven) určenému stavu nabití potřebnému ke spuštění generátoru (podrobnosti viz níže).",
+            "IS_ACTIVATED": "Nouzová rezerva aktivní?",
+            "IS_ENABLED": "Má být funkce nouzového napájení aktivována?",
+            "TITLE": "Údaje o nouzovém napájení",
+            "VALUE": "Hodnota [%]"
+        },
+        "CONFIGURATION_ENERGY_FLOW_METER": {
+            "CONVERTER_RATIO": "Proud na primární straně (200–5000 A)",
+            "METER": {
+                "INTEGRATED": "Integrovaný třífázový senzor Home s proudovým transformátorem ({{type}})",
+                "LABEL": "Elektroměr",
+                "TYPE": {
+                    "OPTIONAL": "Nepovinné",
+                    "STANDARD": "standardní rozsah dodávky"
+                },
+                "WITHOUT_CT": "Třífázový senzor Home bez proudového transformátoru (nepovinné)",
+                "WITHOUT_CT_STANDARD_DELIVERY": "Třífázový senzor Home bez proudového transformátoru (standardní dodávka)",
+                "WITH_CT": "Třífázový senzor Home s proudovým transformátorem 120 A ({{type}})"
+            },
+            "TITLE": "Výběr měřiče směru toku energie"
+        },
+        "CONFIGURATION_ESS_LIMITER": {
+            "INFO_NOTE": "Aby se předešlo přetížení sítě, bude mít provozovatel distribuční sítě v budoucnu možnost regulovat („stínit“) všechna od 1. ledna 2024 instalovaná spotřebiče na výkon 4,2 kW.",
+            "IS_ACTIVATE": "Aktivovat možnost regulace podle §14a EnWG",
+            "IS_ACTIVATE_LABEL": "Wiring musí být proveden v souladu s instalační příručkou.",
+            "TITLE": "Regulace podle §14a EnWG"
         },
         "CONFIGURATION_EXECUTE": {
+            "BATTERY": "Baterie",
+            "BATTERY_INTERFACE": "Rozhraní baterie",
+            "BATTERY_INVERTER": "Bateriový měnič",
+            "COMMUNICATION_WITH_BATTERY": "Komunikace s baterií",
+            "COMMUNICATION_WITH_BATTERY_INVERTER": "Komunikace s bateriovým měničem",
+            "COMMUNICATION_WITH_METER": "Komunikace s elektroměry",
+            "COMMUNICATION_WITH_RELAY": "Komunikace s relé",
+            "CONTROL_GRID_POINT": "Ovládání odpojovacího bodu sítě",
             "COPY_ERROR": "Zkopírovat chybu",
+            "DESCRIPTION_1": "Abychom ověřili, že jsou všechny komponenty vašeho systému správně nastaveny,",
+            "DESCRIPTION_2": "může konfigurace a následné funkční testy trvat až 10 minut.",
+            "EMERGENCY_CAPACITY_RESERVE": "Ovládání nouzové rezervy",
+            "ERROR": "Chyba",
             "ERROR_COPIED": "Chyba zkopírována do schránky",
             "ERROR_DETAILS": "Detaily chyby",
             "ERROR_HEADLINE_CATEGORY_CONFLICT": "Nejprve prosím odstraňte existující systém",
@@ -221,20 +292,319 @@
             "ERROR_TITLE_INCOMPATIBLE_APP": "Nainstalována nekompatibilní aplikace",
             "ERROR_TITLE_STALE_INSTANCE": "Nalezen zbytek dřívější instalace",
             "ERROR_TITLE_TIMEOUT": "Vypršel časový limit",
+            "EXISTING_CONFIGURATION": "Byla nalezena existující konfigurace. Můžete ji přepsat ručním spuštěním procesu konfigurace.",
+            "FIELD_BUS_COUPLER": "Fieldbus koppler",
+            "FINISH_FUNCTION_TEST": "Funkční testy vestavěných komponent dokončeny",
+            "FUNCTION_TEST": "Funkční test",
+            "FUNCTION_TEST_ERROR": "Funkční test dokončen s chybami.",
+            "GRID_METER": "Elektroměr na připojení k síti",
+            "GRID_OPTIMIZED_CHARGE": "Síťově optimalizované nabíjení",
+            "IP_ADDRESS_ERROR": "IP adresa nutná pro {{ system}} se nepodařilo přidat do konfigurace sítě.",
+            "IP_ADDRESS_WARNING": "IP adresu nutnou pro koppler se nepodařilo přidat do konfigurace sítě.",
+            "IS_BEING_CONFIGURED": "konfiguruje se",
+            "LABEL": {
+                "WAGO_BRIDGE": "WAGO (šedá komponenta)",
+                "WEIDMUELLER_BRIDGE": "Weidmüller (černá komponenta)"
+            },
+            "LEGEND": "Legenda",
+            "NOT_YET_CONFIGURED": "ještě nekonfigurováno / nekontrolováno",
+            "PARTIAL_CONFIGURATION": "Ne všechny komponenty se podařilo správně nakonfigurovat.",
+            "PRE_CONFIGURED": "předkonfigurováno / upozornění",
+            "RELAY_BOARD": "Relé deska",
             "RESOLVE_CATEGORY_CONFLICT_BUTTON": "Odstranit existující systém a pokračovat",
             "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Nepodařilo se najít konfliktní systém k automatickému odstranění. Odstraňte jej prosím ručně přes App Center.",
             "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Odstraňování existujícího systému…",
+            "SELF_CONSUMPTION": "Optimalizace vlastní spotřeby",
+            "START": "Spustit konfiguraci",
+            "START_FUNCTION_TEST": "Funkční testy instalovaných komponent spuštěny",
             "STATUS_CONFIGURING": "Konfigurace komponent…",
-            "STATUS_FUNCTION_TEST": "Konfigurace dokončena. Probíhají testy funkcí…"
+            "STATUS_FUNCTION_TEST": "Konfigurace dokončena. Probíhají testy funkcí…",
+            "STORAGE_SYSTEM": "Úložný systém",
+            "SUCCESSFULLY_CONFIGURED": "úspěšně nakonfigurováno / zkontrolováno",
+            "TITLE": "Konfigurace",
+            "UNDEFINED_COMPONENT_CONFIGURATOR": "Konfigurátor komponent není definován",
+            "WAGO_BRIDGE": "Wago most",
+            "WAITING": "Konfigurace běží...",
+            "WEIDMUELLER_BRIDGE": "Weidmueller most"
         },
+        "CONFIGURATION_FEATURES_STORAGE_SYSTEM": {
+            "BALANCING": "Optimalizace vlastní spotřeby"
+        },
+        "CONFIGURATION_GRID_SETTING": {
+            "TITLE": "Typ sítě"
+        },
+        "CONFIGURATION_LINE_SIDE_METER_FUSE": {
+            "FIXED_VALUE_DESCRIPTION": "Jakým proudem je elektroměr jištěn?",
+            "METER": "Elektroměr",
+            "METER_LABEL": "Typ elektroměru v bodě připojení k síti",
+            "OTHER": "Jiné",
+            "OTHER_VALUE": "Vlastní hodnota",
+            "TITLE_COMMERCIAL": "Pojistka v bodě připojení k síti / předjištění elektroměru",
+            "TITLE_HOME": "Pojistka domácího elektroměru",
+            "VALUE": "Hodnota [A]"
+        },
+        "CONFIGURATION_MPPT_SELECTION": {
+            "CONNECTION_CHECK_LABEL": "Byly zkontrolovány všechny přípojky?",
+            "NOTE": "Další generátory lze následně nakonfigurovat přes App Center."
+        },
+        "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVE_COUNT_TITLE": "Informace o počtu slave jednotek",
+            "SLAVE_INSTALLATION_TITLE": "Instalace jednotlivých úložných jednotek (slaves)"
+        },
+        "CONFIGURATION_STS_BOX": {
+            "HELP_TEXT": "Sériové číslo STS boxu najdete na typovém štítku na boku STS boxu",
+            "LABEL": "STS Box",
+            "STS_BOX_AVAILABLE": "STS box instalován",
+            "STS_BOX_FIELD_LABEL": "Je pro funkci nouzového napájení instalována STS box:"
+        },
+        "CONFIGURATION_SUMMARY": {
+            "ACCEPT": "přijmout",
+            "ACCEPT_TERMS": "Pro pokračování přijměte záruční podmínky.",
+            "ALIAS_WITH_LABEL_HOME_DC": "Alias MPPT{{mppt}}",
+            "BATTERY": "Baterie",
+            "BATTERY_LOCATION": "Umístění BESS",
+            "BOTH_SELECTED_LABEL": "Oba PV porty (\"PV{{ pv1 }}\" a \"PV{{ pv2 }}\") připojeny",
+            "COUNTRY_SETTING": "Nastavení země",
+            "CUSTOMER": "Zákazník",
+            "DEVICE_ACTIVE_CHECKED": "Baterie a měnič zapnuty",
+            "EDGE_NUMBER": "Číslo {{ edgeShortName }}",
+            "ENERGY_FLOW_METER": {
+                "LABEL": "Síť"
+            },
+            "GENERAL": "Obecné",
+            "INSTALLER": "Instalatér",
+            "INVERTER": "Měnič",
+            "IS_DEVICE_ACTIVE_CHECKED": "Zkontrolujte, zda jsou baterie a měnič zapnuty, a potvrďte to.",
+            "MODULE_TYPE_WITH_LABEL_HOME_DC": "Typ modulů MPPT{{ mppt }}",
+            "NEXT_CLICKED_DESCRIPTION": "Kliknutím na tlačítko „další“ se úložný systém nakonfiguruje. Ujistěte se, že jsou baterie a měnič během celého procesu konfigurace zapnuté.",
+            "NUMBER_OF_MODULES_WITH_LABEL_HOME_DC": "Počet PV modulů MPPT{{ mppt }}",
+            "ORIENTATION_WITH_LABEL_HOME_DC": "Orientace MPPT{{ mppt }}",
+            "PRODUCER": "Generátor",
+            "SUMMARY": "Souhrn",
+            "TIME_OF_INSTALLATION": "Čas instalace",
+            "VALUE_WITH_LABEL_HOME_DC": "Hodnota MPPT{{ mppt }} {{ symbol }}",
+            "WARRANTY_TERMS": "Záruční podmínky"
+        },
+        "CONFIGURATION_SYSTEM": {
+            "OPEN_INSTRUCTIONS": "Otevřít příručku",
+            "PRODUCT_NAME": "Typ úložiště",
+            "TITLE": "Který úložný systém má být nakonfigurován?"
+        },
+        "CONFIGURATION_SYSTEM_VARIANT": "Výběr vestavěné komponenty",
         "ENABLE_MPPT": "MPPT {{ mpptNumber }} aktivní",
+        "FORM": {
+            "BATTERY_SERIAL_NUMBER": "{{ serialNumber }} není platné sériové číslo. Platné sériové číslo se skládá z {{ length }} číslic.",
+            "EMAIL_MATCH": "E-maily nesouhlasí.",
+            "POSITIVE_INTEGER": "Povolena jsou pouze kladná celá čísla.",
+            "STS_SERIAL_NUMBER_REQUIREMENT": "Sériové číslo se skládá z maximálně 16 číslic."
+        },
+        "LOAD": "načítání...",
+        "NEXT": "další",
         "OFFLINE": "Offline",
+        "PRE_INSTALLATION": {
+            "AUTHENTICATION_FAILED": "Autentizace selhala",
+            "EDGE_OFFLINE": "Připojení k {{ edgeShortName }} se nepodařilo navázat",
+            "INSTALLATION_SUCCESS": "Instalace pro {{ edgeId }} zahájena",
+            "NOTE": "Poznámka:",
+            "TITLE": "Zadejte instalační klíč",
+            "WRONG_KEY_NOTE": "Pokud je instalační klíč mylně vyhodnocen jako neplatný, obnovte prosím stránku."
+        },
+        "PROTOCOL_AVU_BOX": {
+            "LABEL": "AVU",
+            "SERIAL_NUMBER": "Sériové číslo",
+            "TITLE": "Obsahuje instalační balíček AVU box (automatické přepínání spotřebičů)?"
+        },
+        "PROTOCOL_CHECKLIST": {
+            "CHANGE_NETWORK_SETTINGS": "B) Změnit nastavení sítě v počítači (IP adresa)",
+            "CONNECT_INVERTER": "A) Připojit počítač ke měniči síťovým kabelem (horní LAN zásuvka)",
+            "ENTER_PASSWORD": "D) Zadat heslo",
+            "IP_ADDRESS": "C) Zadat IP adresu do prohlížeče",
+            "IP_ADDRESS_DESCRIPTION": "IP adresa: 169.254.1.1",
+            "MIN_VOLTAGE": "G) Doplněk: Nastavit minimální napěťový limit na 600 V",
+            "MIN_VOLTAGE_DESCRIPTION": "Funguje pouze s instalatérským heslem (vlastní heslo pro FENECON nebo předkonfigurované)\n\n<ul><li>Minimální napěťový limit:<b> {{voltageLimit}} V</b> (-> typ sítě: <b>{{gridSetting}}</b>)</li></ul>",
+            "MULTI_STEP": "{{listPosition}}) Proveďte kroky 1 až {{totalSteps}}",
+            "NETWORK_SETTINGS": "IP adresa: 169.254.1.12\nMaska podsítě: 255.255.255.0",
+            "NETWORK_SETTINGS_INFO": "Mějte na paměti, že kroky a obrázky pro nastavení statické IP adresy se mohou lišit v závislosti na použitém zařízení. U jiných zařízení, např. zařízení Apple, se postupy mohou lišit.",
+            "NETWORK_SETTINGS_NOTE": "Pro přístup k měniči přes jeho pevnou IP adresu musí mít zařízení připojené k měniči ručně přiřazenu statickou IP adresu, která leží ve stejném síťovém rozsahu",
+            "PASSWORD_DESCRIPTION": "Servisní heslo:\n\nUživatel: service\nHeslo: Ye_r0d4w0P!",
+            "POWER_CONTROL": "H) Nastavit regulaci výkonu (Cos-Phi atd.)",
+            "POWER_CONTROL_DESCRIPTION": "-> jaká nastavení jsou zde nutná, najdete v údajích provozovatele sítě\n-> Změny lze provádět pouze s instalatérským heslem",
+            "START_CONFIGURATION": "E) Spustit konfiguraci KACO pomocí Installation Wizard",
+            "STEP": "Krok {{currStep}}/{{totalStep}} – {{description}}",
+            "STEP_1": "Vybrat jazyk",
+            "STEP_2": "Určit zemi / typ sítě",
+            "STEP_2_DESCRIPTION": "Zvolte zde prosím typ sítě:\n\n<ul><li>Německo <b>{{gridSetting}}</b> (-> v kroku G nastavte „Minimální napěťový limit“ na <b>{{voltageLimit}} V </b>)",
+            "STEP_3": "Omezení výkonu",
+            "STEP_3_DESCRIPTION": "-> Převezměte výchozí nastavení tak, jak jsou.",
+            "STEP_4": "Nastavení IP",
+            "STEP_4_DESCRIPTION": "IP adresa: 172.16.0.100\nMaska podsítě: 255.255.255.0\nVýchozí brána: 172.16.0.1",
+            "STEP_5": "Lokalizace",
+            "STEP_5_DESCRIPTION": "Synchronizujte zde prosím čas tlačítkem „Sync“",
+            "STEP_6": "Modbus",
+            "STEP_6_DESCRIPTION": "Nastavení Modbus by mělo být 502",
+            "STEP_7": "Ostatní (volitelné parametry)",
+            "STEP_8": "Dokončení",
+            "STEP_8_DESCRIPTION": "Zadejte jméno instalatéra",
+            "TIMEOUT_NOTE": "Následující proces může trvat až {{timeoutInMinutes}} minut."
+        },
+        "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO – Připojit měnič",
+        "PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVES_TITLE": "Slave {{number}}",
+            "SLAVE_FILED_LABEL": "Zadejte prosím počet slave jednotek, které mají být nakonfigurovány",
+            "SLAVE_INSTALLATION": {
+                "CONNECTION_STATUS": {
+                    "NOT_FOUND": "Slave nenalezen"
+                },
+                "LOG_MESSAGE": {
+                    "AUTHENTICATION_SUCCESSFUL": "Autentizace úspěšná. Aktualizuji systém...",
+                    "CONFIGURATION_FAILED": "Konfigurace selhala: {{ error }}",
+                    "CONFIGURED_SUCCESSFULLY": "Aplikace úspěšně nakonfigurována.",
+                    "FUNCTION_TESTS_FAILED": "Funkční test selhal: {{ error }}",
+                    "PARTIALLY_CONFIGURED": "Konfigurace částečně dokončena.",
+                    "SLAVE_STATUS_ERROR": "Chyba při načítání stavu pro slave {{ slaveNr }}",
+                    "STARTING_AUTHENTICATION": "Spouštím autentizaci...",
+                    "UPDATE_COMPLETED": "Aktualizace systému dokončena. Konfiguruji aplikaci..."
+                }
+            }
+        },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
-            "FIXED_COS_PHI": "Pevná hodnota: Cos Phi 1"
+            "CAPACITIVE": "kapacitní",
+            "CHOOSE": "Typ",
+            "CONSTANT_VALUE": "Hodnota Cos φ",
+            "DYNAMIC_EXTERNAL_LIMITATION": "Dynamický přijímač řídicího signálu: regulace v bodě připojení k síti",
+            "DYNAMIC_LIMITATION": "Dynamické omezení vstupu",
+            "DYNAMIC_LIMITATION_TYPE": "Omezení vstupu",
+            "EXTERNAL_CONTROLLER_CHECK": "Přijímač řídicího signálu byl správně a úplně nainstalován podle pokynů.",
+            "EXTERNAL_LIMITATION": "Přijímač řídicího signálu: regulace na AC výstupu měniče",
+            "EXTERNAL_LIMITATION_TYPE": "Externí omezení",
+            "FEED_IN_SETTING_DESCRIPTION": "Redukce činného výkonu při překročení frekvence",
+            "FIXED_COS_PHI": "Pevná hodnota: Cos Phi 1",
+            "FIXED_POWER_FACTOR": "Konstantní Cos φ (P)",
+            "FIXED_POWER_FACTOR_DESCRIPTION": "Obvykle provozovatel sítě předepisuje pevný účinník „1“",
+            "INDUCTIVE": "induktivní",
+            "INFO_TEXT": "Váš úložný systém se intelligentním nabíjením snaží zabránit omezení výroby FVE.",
+            "MAXIMUM_FEED_IN_VALUE": "Maximální vstupní výkon [W]",
+            "MAXIMUM_VALUE_DESCRIPTION": "Tuto hodnotu může vyžadovat provozovatel distribuční sítě.",
+            "NA_PROTECTION": "Aktivováno vzdálené odpojení (centrální ochrana NA)",
+            "NO_LIMITATION": "Bez omezení",
+            "PLACE_HOLDER": "Vyberte možnost",
+            "PU_ENABLED_CURVE": "Křivka účinníku Cos φ (P)",
+            "QU_ENABLED_CURVE": "Křivka jalového výkonu a napětí Q(U)",
+            "SHADE_MANAGEMENT_DEACTIVATED": "Řízení stínění deaktivováno?",
+            "TITLE": "Řízení vstupu",
+            "WARNING_TEXT": "Toto nenahrazuje správnou konfiguraci PV měniče!"
+        },
+        "PROTOCOL_INSTALLER_AND_CUSTOMER": {
+            "COMPANY_CUSTOMER": "Firemní zákazník?",
+            "COMPANY_NAME": "Název firmy",
+            "EMAIL": "E-mailová adresa",
+            "EMAIL_CONFIRMATION": "potvrzení",
+            "EMAIL_DESCRIPTION": "pro vytvoření osobního přístupu",
+            "FIRST_NAME": "Jméno",
+            "LAST_NAME": "Příjmení",
+            "PHONE": "Telefonní číslo",
+            "TITLE_CUSTOMER": "Kontaktní údaje – konečný zákazník",
+            "TITLE_INSTALLER": "Kontaktní údaje – instalatér"
+        },
+        "PROTOCOL_PV": {
+            "ADDITIONAL_GENERATOR": "Další AC generátor",
+            "ALIAS": "Označení",
+            "ALIAS_DESCRIPTION_PV": "zobrazí se v online monitoringu, např. \"PV-střecha\"",
+            "BOTH_SELECTED_LABEL": "Jsou připojeny oba porty (\"PV{{ pv1 }}\" a \"PV{{ pv2 }}\")?",
+            "DIRECTIONS": {
+                "EAST": "Východ",
+                "NORTH": "Sever",
+                "NORTH_EAST": "Severovýchod",
+                "NORTH_WEST": "Severozápad",
+                "SOUTH": "Jih",
+                "SOUTH_EAST": "Jihovýchod",
+                "SOUTH_WEST": "Jihozápad",
+                "WEST": "Západ"
+            },
+            "INSTALLED_POWER": "Instalovaný výkon [Wₚ]",
+            "INSTALLED_POWER_PER_STRING": "Instalovaný výkon na string [Wₚ]",
+            "MARKED_AS": " MPPT {{ mppt }} (označeno jako \"PV{{ mppt }}\")",
+            "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (označeno jako \"{{ pv1 }}\" a \"{{ pv2 }}\")",
+            "MODULE_TYPE": "Typ modulů",
+            "MODULE_TYPE_DESCRIPTION": "např. výrobce a výkon",
+            "MODULE_TYPE_WITH_LABEL": "Typ modulů {{ label }}{{ number }}",
+            "NUMBER_OF_MODULES": "Počet PV modulů na string",
+            "NUMBER_OF_MODULES_PER_STRING": "Počet PV modulů",
+            "NUMBER_OF_MODULES_WITH_LABEL": "Počet PV modulů {{ label }}{{ number }}",
+            "OPEN_MANUAL": "Otevřít příručku",
+            "ORIENTATION": "Orientace",
+            "ORIENTATION_WITH_LABEL": "Orientace {{ label }}{{ number }}",
+            "TITLE_DC": "DC PV instalace",
+            "TITLE_PV": "DC PV instalace (vstupy měniče)"
         },
         "PROTOCOL_SERIAL_NUMBER": {
             "BATTERY_COMMUNICATION_BOX": "Komunikační box baterie",
             "BATTERY_INPUT_TOWER": "Vstup baterie {{ batteryInput }} věž {{ towerNumber }}"
-        }
+        },
+        "PROTOCOL_SERIAL_NUMBERS": {
+            "BATTERY_MODULE": "Bateriový modul ",
+            "BATTERY_MODULE_DESCRIPTION": "Zadejte prosím pouze posledních 8 číslic sériového čísla.",
+            "BATTERY_STRING": "Bateriový string {{ stringNumber }}",
+            "BATTERY_TOWER": "Bateriová věž {{ number }}",
+            "BATTERY_TOWER_CLUSTER": "Baterie {{ batteryNumber }} věž {{towerNumber}}",
+            "BESS_COMPONENTS": "Komponenty úložného systému",
+            "BMS_BOX": "BMS box a podstavec",
+            "CONFIRM": "uložit",
+            "DOUBLE_SOCKET": "Dvojitá zásuvka",
+            "DOUBLE_SOCKET_LABEL": "Dvojitá zásuvka vestavěna",
+            "EDGE_TIMEOUT_DESC": "Sériová čísla se nepodařilo automaticky načíst. Systém je pravděpodobně zaneprázdněn spouštěním.",
+            "EMS_BOX_COMMERCIAL": "Připojovací box {{ edgeShortname }}",
+            "EMS_BOX_CONNECTION_BOX_COMMERCIAL30": "Připojovací box {{ edgeShortName }}",
+            "EMS_BOX_GRID_CONNECTION_POINT_COMMERCIAL30": "Bod připojení k síti",
+            "EMS_BOX_HECKERT": "EMS Box",
+            "EMS_BOX_HOME": "EMS Box (box {{edgeShortName }})",
+            "ENTER_MANUALLY": "Zadat sériová čísla ručně",
+            "ENTER_VALID_ADDRESS": "Pro použití nastavení zadejte platné hodnoty.",
+            "ERROR_SENDING": "Chyba při odesílání protokolu.",
+            "INVALID_SERIALNUMBER_KEY": "Zkontrolujte prosím sériové číslo {{ key }} v {{ header }}",
+            "INVERTER": "Měnič",
+            "MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS": "Minimální počet modulů na string: {{ min }} a maximální: {{ max }}",
+            "MINIMUM_AND_MAXIMUM_STRINGS": "Minimální počet stringů: {{ min }} a maximální: {{ max }}",
+            "MODULES_PER_STRINGS_DESCRIPTION": "Modulů na string pro systém Commercial-50: {{ number }}",
+            "NEXT_BUTTON_DESCRIPTION": "Kliknutím na „DALŠÍ“ se protokol o uvedení do provozu automaticky odešle společnosti FENECON GmbH.",
+            "NO_DATA_FOUND": "Nebyla nalezena všechna sériová čísla",
+            "NUMBER_OF_MODULES_PER_STRINGS": "Počet modulů na string",
+            "NUMBER_OF_MODULES_PER_TOWER": "Počet modulů na věž",
+            "NUMBER_OF_STRINGS": "Počet stringů",
+            "NUMBER_OF_TOWERS": "Počet věží",
+            "READ_DESCRIPTION": "Zkontrolujte prosím „Přednastavení“. Přečtěte si prosím popisy polí.",
+            "SAME_SERIAL_NUMBERS": "{{ serialNumbers }} mají stejná sériová čísla",
+            "SENT_SUCCESSFULLY": "Protokol byl úspěšně odeslán.",
+            "SERIAL_NUMBER": "Sériová čísla",
+            "SETUP_NOTE": "Doplňte sériová čísla nahrazením zástupných znaků (označených \"x\") příslušnými znaky.",
+            "SINGLE_SERIAL_NUMBER": " Sériové číslo {{ label }}",
+            "SYSTEM_SETUP": "Přednastavení",
+            "TROUBLESHOOTING": {
+                "INTRO": "Pokud se stále nenacházejí žádná data, postupujte podle těchto kroků:",
+                "STEP_BRIDGES": "Zkontrolujte, zda byla koncová můstková zásuvka zasazena podle příručky",
+                "STEP_LAN": "Zkontrolujte, zda je LAN kabel správně připojen",
+                "STEP_MANUAL": "Pokud problém přetrvává, můžete sériová čísla zadat ručně a po dokončení uvádění do provozu kontaktovat servis FENECON."
+            },
+            "TRY_READING_AGAIN": "Znovu spustit načítání"
+        },
+        "PROTOCOL_SYSTEM": {
+            "FIRSTNAME": "Jméno kontaktní osoby",
+            "LAST_NAME": "Příjmení kontaktní osoby",
+            "LOCATION_SAME_AS_ADDRESS": "Shoduje se umístění BESS s adresou zákazníka?",
+            "TITLE": "Umístění BESS"
+        },
+        "PROTOCOL_SYSTEM_LOCATION_VALIDATION": {
+            "TITLE": "Validace adresy umístění úložiště"
+        },
+        "SHARED": {
+            "NOTE": "Poznámka",
+            "WARNING": "Upozornění"
+        },
+        "STEP_FROM_TO": "Krok {{ from }} z {{ to }}",
+        "STEP_TO": "Krok {{ number }}",
+        "SYSTEM_UPDATE": {
+            "UPDATE_WARNING": "Je nutné provést aktualizaci verze!"
+        },
+        "VALUE_WITH_LABEL": "Hodnota {{ label }}{{ number }} {{ symbol }}"
     }
 }

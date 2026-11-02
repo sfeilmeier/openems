@@ -7,12 +7,12 @@ import { v4 as uuidv4 } from "uuid";
 
 import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
 import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componentJsonApiRequest";
-import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
 import { Country } from "src/app/shared/type/country";
 import { NumberUtils } from "src/app/shared/utils/number/number-utils";
 import { InstallationService } from "../../installation.service";
+import { SetupProtocol, SubmitSetupProtocolRequest } from "../../jsonrpc/submitSetupProtocolRequest";
 import { AppCenterUtil } from "../../shared/appcenterutil";
 import { Category } from "../../shared/category";
 import { ExternalLimitationType, FeedInSetting, GridFeedInLimitationType, View } from "../../shared/enums";

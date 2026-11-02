@@ -1,10 +1,10 @@
-import { EmsType } from "src/app/edge/installation/shared/ibndatatypes";
-import { JsonrpcResponseSuccess } from "../base";
+import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
+import { EmsType } from "../shared/ibndatatypes";
 
 /**
  * Wraps a JSON-RPC Response for a GetEmsTypeRequest.
  *
- * <pre>
+ * ```json
  * {
  *   "jsonrpc": "2.0",
  *   "id": UUID,
@@ -12,14 +12,13 @@ import { JsonrpcResponseSuccess } from "../base";
  *     "emsType": EmsType
  *   }
  * }
- * </pre>
+ * ```
  */
 export class GetEmsTypeResponse extends JsonrpcResponseSuccess {
-
     public constructor(
         public override readonly id: string,
         public override readonly result: {
-            emsType: EmsType
+            emsType: EmsType;
         },
     ) {
         super(id, result);

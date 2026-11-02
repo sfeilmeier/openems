@@ -1,6 +1,12 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { ModalController } from "@ionic/angular";
-import { ComponentData } from "src/app/edge/installation/shared/ibndatatypes";
+
+export type SelectWithImageOption = {
+    label: string;
+    value: unknown;
+    imageUrl?: string;
+    docUrl?: string;
+};
 
 @Component({
     selector: "select-with-image-modal",
@@ -42,7 +48,7 @@ import { ComponentData } from "src/app/edge/installation/shared/ibndatatypes";
     standalone: false,
 })
 export class FormlySelectOptionsWithImageModalComponent implements OnInit {
-    @Input() public options: ComponentData[] = [];
+    @Input() public options: SelectWithImageOption[] = [];
     @Input() public value: any;
     @Input() public title!: string;
 

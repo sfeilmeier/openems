@@ -3,9 +3,9 @@ import { TranslateService } from "@ngx-translate/core";
 import { filter, Subject, takeUntil } from "rxjs";
 import { v4 as uuidv4 } from "uuid";
 
-import { SetupProtocol } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { ChannelAddress, Edge, Websocket } from "src/app/shared/shared";
 import { environment } from "src/environments";
+import { SetupProtocol } from "../../../jsonrpc/submitSetupProtocolRequest";
 import { Category } from "../../../shared/category";
 import { ConnectedBatterySystems, FeedInSetting, View } from "../../../shared/enums";
 import { ComponentData, ExtensionBoxPrefix } from "../../../shared/ibndatatypes";

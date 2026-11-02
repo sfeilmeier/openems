@@ -1,10 +1,9 @@
 // @ts-strict-ignore
 import { TranslateService } from "@ngx-translate/core";
-import { Category } from "src/app/edge/installation/shared/category";
-
-import { Utils } from "../../shared";
-import { States } from "../../states/states";
-import { JsonrpcRequest } from "../base";
+import { JsonrpcRequest } from "src/app/shared/jsonrpc/base";
+import { Utils } from "src/app/shared/shared";
+import { States } from "src/app/shared/states/states";
+import { Category } from "../shared/category";
 
 export type SetupProtocol = {
     fems: {

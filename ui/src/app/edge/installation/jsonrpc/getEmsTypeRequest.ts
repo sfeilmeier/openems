@@ -1,12 +1,11 @@
-import { JsonrpcRequest } from "../base";
+import { JsonrpcRequest } from "src/app/shared/jsonrpc/base";
 
 /**
  * Represents a JSON-RPC Request to get the EmsType.
  *
- * <p>
  * This is used by UI to get the EmsType.
  *
- * <pre>
+ * ```json
  * {
  *   "jsonrpc": "2.0",
  *   "id": "UUID",
@@ -15,18 +14,16 @@ import { JsonrpcRequest } from "../base";
  *    "edgeId": string
  *   }
  * }
- * </pre>
+ * ```
  */
 export class GetEmsTypeRequest extends JsonrpcRequest {
-
     private static METHOD: string = "getEmsType";
 
     public constructor(
         public override readonly params: {
-            edgeId: string
+            edgeId: string;
         },
     ) {
         super(GetEmsTypeRequest.METHOD, params);
     }
-
 }

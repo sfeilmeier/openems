@@ -3,13 +3,13 @@ import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
-import { GetEmsTypeRequest } from "src/app/shared/jsonrpc/request/getEmsTypeRequest";
-import { GetEmsTypeResponse } from "src/app/shared/jsonrpc/response/getEmsTypeResponse";
 import { Edge, Websocket } from "src/app/shared/shared";
 import { DocsUtils } from "src/app/shared/utils/docs/docs.utils";
 import { environment } from "src/environments";
 import { InstallationSystem } from "../../core/installation-system";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
+import { GetEmsTypeRequest } from "../../jsonrpc/getEmsTypeRequest";
+import { GetEmsTypeResponse } from "../../jsonrpc/getEmsTypeResponse";
 import { ComponentData, EmsType } from "../../shared/ibndatatypes";
 import { System, SystemType } from "../../shared/system";
 
