@@ -581,6 +581,8 @@
                         "MAINTENANCE_WINDOW": "メンテナンス期間",
                         "NOTE": "バッテリーインバーターおよびバッテリーを含むシステム全体を起動または停止します",
                         "RESET": "リセット",
+                        "SERVICE_ASSISTANT": "サービスアシスタント",
+                        "SYSTEM_ERROR_ACKNOWLEDGE": "システムエラーを確認",
                         "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "システムエラーのリセット：",
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "システムコンポーネント、バッテリー、インバーター、ESSを含む"
                     },
@@ -1134,11 +1136,6 @@
             "UPDATE_SEARCH": "アップデートの確認...",
             "UPDATE_TIME": "（これには最大{{minutes}}分かかることがあります）",
             "WARNING": "システムアップデート後、ソフトウェアは再起動されます。この間、データの記録やコンポーネントの制御は行われません。システム全体が安全な状態にあることを確認してください。"
-        }
-    },
-    "SYSTEM": {
-        "INDUSTRIAL": {
-            "SYSTEM_ERROR_ACKNOWLEDGE": "システムエラーを確認"
         }
     }
 }

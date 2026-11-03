@@ -581,6 +581,8 @@
                         "MAINTENANCE_WINDOW": "Techninės priežiūros langas",
                         "NOTE": "Paleidžia arba stabdo visą sistemą, įskaitant akumuliatorių inverterį ir akumuliatorius",
                         "RESET": "RESET",
+                        "SERVICE_ASSISTANT": "Serviso asistentas",
+                        "SYSTEM_ERROR_ACKNOWLEDGE": "Sistemos klaidos patvirtinimas",
                         "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Sistemos klaidos patvirtinimas:",
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "apima sistemos komponentus, akumuliatorius, inverterius, ESS"
                     },
@@ -1134,11 +1136,6 @@
             "UPDATE_SEARCH": "Tikrinama, ar yra atnaujinimų...",
             "UPDATE_TIME": "(Tai gali užtrukti iki {{minutes}} minučių)",
             "WARNING": "Po sistemos atnaujinimo programinė įranga bus paleista iš naujo. Šiuo metu duomenys nėra įrašomi, o komponentai nevaldomi. Įsitikinkite, kad visa sistema yra saugioje būsenoje."
-        }
-    },
-    "SYSTEM": {
-        "INDUSTRIAL": {
-            "SYSTEM_ERROR_ACKNOWLEDGE": "Sistemos klaidos patvirtinimas"
         }
     }
 }

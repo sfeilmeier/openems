@@ -581,6 +581,8 @@
                         "MAINTENANCE_WINDOW": "Servisní okno",
                         "NOTE": "Spustí nebo zastaví celý systém včetně bateriového měniče a baterií",
                         "RESET": "RESET",
+                        "SERVICE_ASSISTANT": "Servisní asistent",
+                        "SYSTEM_ERROR_ACKNOWLEDGE": "Potvrdit systémovou chybu",
                         "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Reset systémové chyby:",
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "zahrnuje systémové komponenty, baterie, měniče, ESS"
                     },
@@ -1134,11 +1136,6 @@
             "UPDATE_SEARCH": "Vyhledávání aktualizací...",
             "UPDATE_TIME": "(Může to trvat až {{minutes}} minut)",
             "WARNING": "Po aktualizaci systému se software restartuje. V této době nejsou zaznamenávána data ani nejsou řízeny komponenty. Ujistěte se prosím, že je celý systém v bezpečném stavu."
-        }
-    },
-    "SYSTEM": {
-        "INDUSTRIAL": {
-            "SYSTEM_ERROR_ACKNOWLEDGE": "Potvrdit systémovou chybu"
         }
     }
 }

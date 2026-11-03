@@ -581,6 +581,8 @@
                         "MAINTENANCE_WINDOW": "Underhållsfönster",
                         "NOTE": "Startar eller stoppar hela systemet, inklusive batteriväxelriktare och batterier",
                         "RESET": "RESET",
+                        "SERVICE_ASSISTANT": "Serviceassistent",
+                        "SYSTEM_ERROR_ACKNOWLEDGE": "Bekräfta systemfel",
                         "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Bekräfta systemfel:",
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "inkluderar systemkomponenter, batterier, växelriktare, ESS"
                     },
@@ -1135,11 +1137,6 @@
             "UPDATE_SEARCH": "Söker efter uppdateringar...",
             "UPDATE_TIME": "(Detta kan ta upp till {{minutes}} minuter)",
             "WARNING": "Programvaran kommer att startas om efter systemuppdateringen. Inga data registreras och inga komponenter styrs under denna tid. Se till att hela systemet är i ett säkert tillstånd."
-        }
-    },
-    "SYSTEM": {
-        "INDUSTRIAL": {
-            "SYSTEM_ERROR_ACKNOWLEDGE": "Bekräfta systemfel"
         }
     }
 }

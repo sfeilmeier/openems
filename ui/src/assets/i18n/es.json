@@ -581,6 +581,8 @@
                         "MAINTENANCE_WINDOW": "Ventana de mantenimiento",
                         "NOTE": "Inicia o detiene todo el sistema, incluidos el inversor de batería y las baterías",
                         "RESET": "REINICIAR",
+                        "SERVICE_ASSISTANT": "Asistente de servicio",
+                        "SYSTEM_ERROR_ACKNOWLEDGE": "Confirmar error del sistema",
                         "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Reinicio de error del sistema:",
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "incluye componentes del sistema, baterías, inversores, ESS"
                     },
@@ -1134,11 +1136,6 @@
             "UPDATE_SEARCH": "Buscando actualizaciones...",
             "UPDATE_TIME": "(Puede tardar hasta {{minutes}} minutos)",
             "WARNING": "El software se reiniciará tras la actualización del sistema. Durante este tiempo no se registran datos ni se controlan componentes. Asegúrese de que todo el sistema esté en un estado seguro."
-        }
-    },
-    "SYSTEM": {
-        "INDUSTRIAL": {
-            "SYSTEM_ERROR_ACKNOWLEDGE": "Confirmar error del sistema"
         }
     }
 }

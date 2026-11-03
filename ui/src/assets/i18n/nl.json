@@ -581,6 +581,8 @@
                         "MAINTENANCE_WINDOW": "Onderhoudsvenster",
                         "NOTE": "Start of stopt het hele systeem, inclusief batterijomvormer en batterijen",
                         "RESET": "RESET",
+                        "SERVICE_ASSISTANT": "Service-assistent",
+                        "SYSTEM_ERROR_ACKNOWLEDGE": "Systeemfout bevestigen",
                         "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Reset systeemfout:",
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "omvat systeemcomponenten, batterijen, omvormers, ESS"
                     },
@@ -1134,11 +1136,6 @@
             "UPDATE_SEARCH": "Zoeken naar updates...",
             "UPDATE_TIME": "(Dit kan tot {{minutes}} minuten duren)",
             "WARNING": "Na de systeemupdate wordt de software opnieuw opgestart. Gedurende deze tijd worden geen gegevens vastgelegd en geen componenten bestuurd. Zorg ervoor dat het volledige systeem zich in een veilige staat bevindt."
-        }
-    },
-    "SYSTEM": {
-        "INDUSTRIAL": {
-            "SYSTEM_ERROR_ACKNOWLEDGE": "Systeemfout bevestigen"
         }
     }
 }

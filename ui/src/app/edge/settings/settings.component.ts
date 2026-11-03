@@ -28,7 +28,6 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     public isNewNavigation = signal(false);
     public canSeeJsonrpcTest: boolean = false;
 
-    protected canSeeIndustrialLAssistant: boolean = false;
     protected isEdgeBackend = signal(environment.backend === "OpenEMS Edge");
     protected canSeeHomeAssistant: boolean = false;
     protected canSeeCommercialAssistant: boolean = false;
@@ -54,7 +53,6 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.isAtLeastInstaller = edge.roleIsAtLeast(Role.INSTALLER);
             this.isAtLeastAdmin = edge.roleIsAtLeast(Role.ADMIN);
             this.canSeeJsonrpcTest = JsonrpcTestPermission.canSee(user, edge);
-            this.canSeeIndustrialLAssistant = UserPermission.isUserAllowedToSeeIndustrialAssistant(user, edge);
             this.canSeeHomeAssistant = UserPermission.isUserAllowedToSeeHomeAssistant(user, edge);
             this.canSeeCommercialAssistant = UserPermission.isUserAllowedToSeeCommercialServiceAssistant(user, edge);
             this.canSeeEnergyJourney.set(

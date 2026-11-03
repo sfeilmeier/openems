@@ -581,6 +581,8 @@
                         "MAINTENANCE_WINDOW": "Fenêtre de maintenance",
                         "NOTE": "Démarre ou arrête l'ensemble du système, y compris l'onduleur de batterie et les batteries",
                         "RESET": "RÉINITIALISER",
+                        "SERVICE_ASSISTANT": "Assistant de service",
+                        "SYSTEM_ERROR_ACKNOWLEDGE": "Acquitter l'erreur système",
                         "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Réinitialisation de l'erreur système :",
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "inclut les composants du système, les batteries, les onduleurs, l'ESS"
                     },
@@ -1134,11 +1136,6 @@
             "UPDATE_SEARCH": "Recherche de mises à jour...",
             "UPDATE_TIME": "(Cela peut prendre jusqu'à {{minutes}} minutes)",
             "WARNING": "Le logiciel redémarrera après la mise à jour du système. Pendant ce temps, aucune donnée n'est enregistrée et aucun composant n'est piloté. Veuillez vous assurer que l'ensemble du système est dans un état sûr."
-        }
-    },
-    "SYSTEM": {
-        "INDUSTRIAL": {
-            "SYSTEM_ERROR_ACKNOWLEDGE": "Acquitter l'erreur système"
         }
     }
 }

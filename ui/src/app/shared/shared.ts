@@ -301,18 +301,6 @@ export class UserPermission {
         return Role.isAtLeast(edge.role, Role.ADMIN) && isProductTypeAllowed;
     }
 
-    public static isUserAllowedToSeeIndustrialAssistant(user: User, edge: Edge): boolean {
-        const isProductTypeAllowed = (() => {
-            switch (edge.producttype) {
-                case Producttype.INDUSTRIAL_L:
-                    return true;
-                default:
-                    return false;
-            }
-        })();
-        return Role.isAtLeast(edge.role, Role.ADMIN) && isProductTypeAllowed;
-    }
-
     /**
      * Checks if user is allowed to see {@link SystemRestartComponent}
      *

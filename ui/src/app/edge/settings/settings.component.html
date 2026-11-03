@@ -202,22 +202,6 @@
                 </ion-card>
               </ion-col>
             }
-            @if (canSeeIndustrialLAssistant) {
-              <ion-col size="12" size-sm="4">
-                <ion-card>
-                  <ion-item lines="full" color="light">
-                    <ion-icon slot="start" size="large" class="normal-icon" name="construct-outline"></ion-icon>
-                    <ion-label>Industrial L Service Assistant</ion-label>
-                  </ion-item>
-                  <ion-card-content>
-                    <oe-flat-button [link]="{ text: '/device/' + edge.id + '/settings/industrialLAssistant' }" color="light">
-                      {{ "GENERAL.OPEN" | translate | uppercase }}
-                      <ion-icon name="arrow-forward-outline"></ion-icon>
-                    </oe-flat-button>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-            }
             @if (canSeeCommercialAssistant) {
               <ion-col size="12" size-sm="4">
                 <ion-card>

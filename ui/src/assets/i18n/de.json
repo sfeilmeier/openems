@@ -592,6 +592,8 @@
                         "MAINTENANCE_WINDOW": "Wartungsfenster",
                         "NOTE": "Startet oder stoppt das Gesamtsystem, inklusive Batteriewechselrichter & Batterien",
                         "RESET": "RESET",
+                        "SERVICE_ASSISTANT": "Service Assistent",
+                        "SYSTEM_ERROR_ACKNOWLEDGE": "Systemfehler bestätigen",
                         "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Systemfehler reset:",
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "beinhaltet System Komponente, Batterien, Wechselrichter, ESS"
                     },
@@ -1146,11 +1148,6 @@
             "UPDATE_SEARCH": "Suche nach Updates...",
             "UPDATE_TIME": "(Dies kann bis zu {{minutes}} min dauern)",
             "WARNING": "Im Rahmen des Systemupdates wird {{system}} neu gestartet und dabei die Kommunikation unterbrochen. In dieser Zeit werden keine Daten aufgezeichnet oder Komponenten angesteuert. Bitte stelle sicher, dass sich das Gesamtsystem in einem sicheren Zustand befindet."
-        }
-    },
-    "SYSTEM": {
-        "INDUSTRIAL": {
-            "SYSTEM_ERROR_ACKNOWLEDGE": "Systemfehler bestätigen"
         }
     }
 }

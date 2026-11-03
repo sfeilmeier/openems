@@ -592,6 +592,8 @@
                         "MAINTENANCE_WINDOW": "Maintenance window",
                         "NOTE": "Starts or stops the entire system, including battery inverter and batteries",
                         "RESET": "RESET",
+                        "SERVICE_ASSISTANT": "Service Assistant",
+                        "SYSTEM_ERROR_ACKNOWLEDGE": "System error acknowledge",
                         "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "System error acknowledge:",
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "includes system components, batteries, inverters, ESS"
                     },
@@ -1146,11 +1148,6 @@
             "UPDATE_SEARCH": "Checking for updates...",
             "UPDATE_TIME": "(This can take up to {{minutes}} minutes)",
             "WARNING": "The software will restart after the system update. No data is recorded or components controlled during this time. Please ensure that the entire system is in a safe state."
-        }
-    },
-    "SYSTEM": {
-        "INDUSTRIAL": {
-            "SYSTEM_ERROR_ACKNOWLEDGE": "System error acknowledge"
         }
     }
 }
