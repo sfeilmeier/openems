@@ -74,18 +74,18 @@ export class ProtocolInstallerComponent implements OnInit {
             {
                 fieldGroup: [
                     {
-                        key: "lastName",
-                        type: "input",
-                        templateOptions: {
-                            label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.LAST_NAME"),
-                            required: true,
-                        },
-                    },
-                    {
                         key: "firstName",
                         type: "input",
                         templateOptions: {
                             label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.FIRST_NAME"),
+                            required: true,
+                        },
+                    },
+                    {
+                        key: "lastName",
+                        type: "input",
+                        templateOptions: {
+                            label: this.translate.instant("INSTALLATION.PROTOCOL_INSTALLER_AND_CUSTOMER.LAST_NAME"),
                             required: true,
                         },
                     },

@@ -78,10 +78,10 @@ export class ProtocolSystemComponent implements OnInit {
         });
 
         fields.push({
-            key: "lastName",
+            key: "firstName",
             type: "input",
             templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM.LAST_NAME"),
+                label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM.FIRSTNAME"),
                 required: true,
             },
             hideExpression: (model) => model.isEqualToCustomerData,
@@ -91,10 +91,10 @@ export class ProtocolSystemComponent implements OnInit {
         });
 
         fields.push({
-            key: "firstName",
+            key: "lastName",
             type: "input",
             templateOptions: {
-                label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM.FIRSTNAME"),
+                label: this.translate.instant("INSTALLATION.PROTOCOL_SYSTEM.LAST_NAME"),
                 required: true,
             },
             hideExpression: (model) => model.isEqualToCustomerData,

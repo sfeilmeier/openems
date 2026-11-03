@@ -13,32 +13,33 @@ import { Category } from "./category";
 import { ComponentData } from "./ibndatatypes";
 
 export class IbnUtils {
-
     /**
-     * Adds the IBN data to session storage safely.
-     * This mehtod is specifically implemented to deal with "cyclic object value" exception, which is caused due to Object reference.
+     * Adds the IBN data to session storage safely. This mehtod is specifically implemented to deal with "cyclic object
+     * value" exception, which is caused due to Object reference.
      *
      * @param ibn The IBN
      */
     public static addIbnToSessionStorage(ibn: AbstractIbn) {
-        sessionStorage.setItem("ibn", JSON.stringify(ibn, (key, value) => {
-            // Do not stringify the translate service
-            if (key === "translate") {
-                return undefined;
-            }
-            return value;
-        }));
+        sessionStorage.setItem(
+            "ibn",
+            JSON.stringify(ibn, (key, value) => {
+                // Do not stringify the translate service
+                if (key === "translate") {
+                    return undefined;
+                }
+                return value;
+            }),
+        );
     }
 
     /**
-     * Adds an ip address to the given interface.
-     * Returns false if an error occurs.
+     * Adds an ip address to the given interface. Returns false if an error occurs.
      *
      * @param interfaceName Interface default 'eth0'
      * @param ip Ip that should be added
-     * @param edge the current edge.
-     * @param websocket the websocket connection.
-     * @returns the status of adding ip address as boolean.
+     * @param edge The current edge.
+     * @param websocket The websocket connection.
+     * @returns The status of adding ip address as boolean.
      */
     public static addIpAddress(interfaceName: string, ip: string, edge: Edge, websocket: Websocket) {
         let iface: Interface;
@@ -46,102 +47,112 @@ export class IbnUtils {
         edge.sendStateFullRequest(
             websocket,
             new ComponentJsonApiRequest({ componentId: "_host", payload: new GetNetworkConfigRequest() }),
-        ).then((response) => {
-            const result = (response as GetNetworkConfigResponse).result;
+        )
+            .then((response) => {
+                const result = (response as GetNetworkConfigResponse).result;
 
-            // Get interface
-            for (const name of Object.keys(result.interfaces)) {
-                if (name === interfaceName) {
-                    iface = { name, model: result.interfaces[name] };
-                }
-            }
-
-            // No interface with given name found
-            if (!iface) {
-                console.log("Network interface with name ''" + interfaceName + "'' was not found.");
-                return false;
-            }
-
-            // Unset Gateway and DNS if DHCP is activated
-            if (iface.model.dhcp) {
-                iface.model.gateway = null;
-                iface.model.dns = null;
-            }
-
-            // Set the ip in the model of the interface
-            // or return if it already exists
-            const [address, subnet] = ip.split("/");
-
-            if ("addresses" in iface.model) {
-                for (const addr of iface.model.addresses) {
-                    if (addr.address == address) {
-                        return true;
+                // Get interface
+                for (const name of Object.keys(result.interfaces)) {
+                    if (name === interfaceName) {
+                        iface = { name, model: result.interfaces[name] };
                     }
                 }
 
-                iface.model.addresses.push({
-                    label: "",
-                    address: address,
-                    subnetmask: NetworkUtils.getSubnetmaskAsString(Number.parseInt(subnet)),
-                });
+                // No interface with given name found
+                if (!iface) {
+                    console.log("Network interface with name ''" + interfaceName + "'' was not found.");
+                    return false;
+                }
 
-            } else {
-                iface.model.addresses = new Array({
-                    label: "",
-                    address: address,
-                    subnetmask: NetworkUtils.getSubnetmaskAsString(Number.parseInt(subnet)),
-                });
-            }
+                // Unset Gateway and DNS if DHCP is activated
+                if (iface.model.dhcp) {
+                    iface.model.gateway = null;
+                    iface.model.dns = null;
+                }
 
-            const params = {
-                interfaces: {},
-            };
-            params.interfaces[iface.name] = iface.model;
+                // Set the ip in the model of the interface
+                // or return if it already exists
+                const [address, subnet] = ip.split("/");
 
-            edge.sendStateFullRequest(
-                websocket,
-                new ComponentJsonApiRequest({ componentId: "_host", payload: new SetNetworkConfigRequest(params) }),
-            ).then(() => true).catch((reason) => {
+                if ("addresses" in iface.model) {
+                    for (const addr of iface.model.addresses) {
+                        if (addr.address == address) {
+                            return true;
+                        }
+                    }
+
+                    iface.model.addresses.push({
+                        label: "",
+                        address: address,
+                        subnetmask: NetworkUtils.getSubnetmaskAsString(Number.parseInt(subnet)),
+                    });
+                } else {
+                    iface.model.addresses = new Array({
+                        label: "",
+                        address: address,
+                        subnetmask: NetworkUtils.getSubnetmaskAsString(Number.parseInt(subnet)),
+                    });
+                }
+
+                const params = {
+                    interfaces: {},
+                };
+                params.interfaces[iface.name] = iface.model;
+
+                edge.sendStateFullRequest(
+                    websocket,
+                    new ComponentJsonApiRequest({ componentId: "_host", payload: new SetNetworkConfigRequest(params) }),
+                )
+                    .then(() => true)
+                    .catch((reason) => {
+                        console.log(reason);
+                    });
+            })
+            .catch((reason) => {
                 console.log(reason);
             });
-        }).catch(reason => {
-            console.log(reason);
-        });
         return false;
     }
 
     /**
-   * Returns the country label selected.
-   *
-   * @param countryValue the country value.
-   * @param translate the Translate service.
-   * @returns country label.
-   */
+     * Returns the country label selected.
+     *
+     * @param countryValue The country value.
+     * @param translate The Translate service.
+     * @returns Country label.
+     */
     public static getCountryLabel(countryValue: string, translate: TranslateService) {
         return COUNTRY_OPTIONS(translate).find((country) => country.value === countryValue)?.label ?? "";
     }
 
     /**
- * Fills data based on the provided category.
- *
- * @param data  The data object containing information to be filled.
- * @param category The category determining which data fields to include.
- * @returns An array of ComponentData objects filled based on the provided data and category.
- */
-    public static fillData(data: any, category: Category.CUSTOMER | Category.INSTALLER | Category.BATTERY_LOCATION, translate: TranslateService): ComponentData[] {
+     * Fills data based on the provided category.
+     *
+     * @param data The data object containing information to be filled.
+     * @param category The category determining which data fields to include.
+     * @returns An array of ComponentData objects filled based on the provided data and category.
+     */
+    public static fillData(
+        data: any,
+        category: Category.CUSTOMER | Category.INSTALLER | Category.BATTERY_LOCATION,
+        translate: TranslateService,
+    ): ComponentData[] {
         const rows: ComponentData[] = [];
 
-        if ((category === Category.CUSTOMER && data.isCorporateClient) || (category === Category.INSTALLER)) {
+        if ((category === Category.CUSTOMER && data.isCorporateClient) || category === Category.INSTALLER) {
             rows.push({ label: translate.instant("REGISTER.FORM.COMPANY"), value: data.companyName });
         }
 
         rows.push(
-            { label: translate.instant("REGISTER.FORM.LASTNAME"), value: data.lastName },
             { label: translate.instant("REGISTER.FORM.FIRSTNAME"), value: data.firstName },
+            { label: translate.instant("REGISTER.FORM.LASTNAME"), value: data.lastName },
             { label: translate.instant("REGISTER.FORM.STREET"), value: data.street },
             { label: translate.instant("REGISTER.FORM.ZIP"), value: data.zip },
             { label: translate.instant("REGISTER.FORM.CITY"), value: data.city },
-            { label: translate.instant("REGISTER.FORM.COUNTRY"), value: IbnUtils.getCountryLabel(data.country, translate) },
+            {
+                label: translate.instant("REGISTER.FORM.COUNTRY"),
+                value: IbnUtils.getCountryLabel(data.country, translate),
+            },
             { label: translate.instant("REGISTER.FORM.EMAIL"), value: data.email },
         );
 
@@ -153,21 +164,21 @@ export class IbnUtils {
     }
 
     /**
-     * Removes the specified prefix from the beginning of the given serial number.
-     * If the prefix is not present at the start, the original serial number is returned unchanged.
+     * Removes the specified prefix from the beginning of the given serial number. If the prefix is not present at the
+     * start, the original serial number is returned unchanged.
+     *
+     * @example
+     *     ```typescript
+     *     const result1 = ProtocolAvuBoxComponent.removePrefix("FHA12345", "FHA");
+     *     Output: "12345"
+     *
+     *     const result2 = ProtocolAvuBoxComponent.removePrefix("XYZ789", "FHA");
+     *     Output: "XYZ789"
+     *     ```;
      *
      * @param serialNumber The serial number from which the prefix should be removed.
      * @param prefix The prefix to be removed.
      * @returns The serial number without the prefix if it starts with it, otherwise the original serial number.
-     *
-     * @example
-     * ```typescript
-     * const result1 = ProtocolAvuBoxComponent.removePrefix("FHA12345", "FHA");
-     * Output: "12345"
-     *
-     * const result2 = ProtocolAvuBoxComponent.removePrefix("XYZ789", "FHA");
-     * Output: "XYZ789"
-     * ```
      */
     public static removePrefix(serialNumber: string, prefix: string): string {
         return serialNumber.startsWith(prefix) ? serialNumber.slice(prefix.length) : serialNumber;
@@ -176,13 +187,13 @@ export class IbnUtils {
     /**
      * Groups the table data by its header.
      *
-     * @param tableData the table data
+     * @param tableData The table data
      * @returns
      */
     public static groupDatasetsByHeader(tableData: { header: string; rows: ComponentData[] }[]) {
         return tableData.reduce((arr: typeof tableData, item) => {
             const { header, rows } = item;
-            const existingElementIndex = arr.findIndex(el => el.header === header);
+            const existingElementIndex = arr.findIndex((el) => el.header === header);
             if (existingElementIndex >= 0) {
                 arr[existingElementIndex] = { header: header, rows: [...arr[existingElementIndex].rows, ...rows] };
             } else {
