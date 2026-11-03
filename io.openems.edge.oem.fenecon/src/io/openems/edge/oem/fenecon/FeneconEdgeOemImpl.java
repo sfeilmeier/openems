@@ -388,7 +388,9 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 			.put("App.LoadControl.ManualRelayControl", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-manuelle-relaissteuerung")
 					.addLink(Language.EN, "https://www.fenecon.com/fems-manual-relay-control")) //
-
+			.put("App.LoadControl.BraiinsOs", AppLink.create() //
+					.emptyLink(Language.DE) //
+					.emptyLink(Language.EN)) //
 			// Schnittstellen
 			.put("App.Api.ModbusTcp.ReadWrite", AppLink.create() //
 					.addLink(Language.DE, "https://fenecon.de/fems-schreibzugriff-heimspeicher")
