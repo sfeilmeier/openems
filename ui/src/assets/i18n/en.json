@@ -588,7 +588,6 @@
                         "BMS_HARD_RESET": "BMS hard reset",
                         "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Cooling unit reset:",
                         "CLEAR_COOLING_UNIT_ERRORS_TEXT": "necessary for cooling unit errors",
-                        "F2B_UPDATE_HEADER": "F2B Update",
                         "MAINTENANCE_WINDOW": "Maintenance window",
                         "NOTE": "Starts or stops the entire system, including battery inverter and batteries",
                         "RESET": "RESET",

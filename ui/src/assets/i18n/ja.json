@@ -577,7 +577,6 @@
                         "BMS_HARD_RESET": "BMSハードリセット",
                         "CLEAR_COOLING_UNIT_ERRORS_HEADER": "冷却ユニットのリセット：",
                         "CLEAR_COOLING_UNIT_ERRORS_TEXT": "冷却ユニットのエラー時に必要",
-                        "F2B_UPDATE_HEADER": "F2Bアップデート",
                         "MAINTENANCE_WINDOW": "メンテナンス期間",
                         "NOTE": "バッテリーインバーターおよびバッテリーを含むシステム全体を起動または停止します",
                         "RESET": "リセット",

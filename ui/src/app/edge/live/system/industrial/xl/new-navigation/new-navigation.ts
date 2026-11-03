@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { FormlyModule } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
@@ -19,6 +19,7 @@ import lt from "../i18n/lt.json";
 import nl from "../i18n/nl.json";
 import sv from "../i18n/sv.json";
 
+/** Content page of the Industrial XL widget */
 @Component({
     selector: "oe-system-industrial-xl",
     templateUrl: "../../../../../../shared/components/formly/formly-field-modal/template.html",
@@ -78,42 +79,33 @@ export class SystemIndustrialXlComponent extends AbstractIndustrialComponent {
         }
 
         if (edge.roleIsAtLeast(Role.ADMIN)) {
-            if (edge.roleIsAtLeast(Role.ADMIN)) {
-                self.addExecuteButton(
-                    lines,
-                    translate,
-                    self.f2bUpdate(),
-                    translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.F2B_UPDATE_HEADER"),
-                );
+            self.addExecuteButton(
+                lines,
+                translate,
+                self.testModeEssTest(),
+                translate.instant("INDUSTRIAL_XL.TEST_MODE_ESS_TEST"),
+            );
 
-                self.addExecuteButton(
-                    lines,
-                    translate,
-                    self.testModeEssTest(),
-                    translate.instant("INDUSTRIAL_XL.TEST_MODE_ESS_TEST"),
-                );
+            self.addExecuteButton(
+                lines,
+                translate,
+                self.testModeManualBatteryStart(),
+                translate.instant("INDUSTRIAL_XL.TEST_MODE_MANUAL_BATTERY_START"),
+            );
 
-                self.addExecuteButton(
-                    lines,
-                    translate,
-                    self.testModeManualBatteryStart(),
-                    translate.instant("INDUSTRIAL_XL.TEST_MODE_MANUAL_BATTERY_START"),
-                );
+            self.addExecuteButton(
+                lines,
+                translate,
+                self.testModeLampTest(),
+                translate.instant("INDUSTRIAL_XL.TEST_MODE_LAMP_TEST"),
+            );
 
-                self.addExecuteButton(
-                    lines,
-                    translate,
-                    self.testModeLampTest(),
-                    translate.instant("INDUSTRIAL_XL.TEST_MODE_LAMP_TEST"),
-                );
-
-                self.addExecuteButton(
-                    lines,
-                    translate,
-                    self.testModeExit(),
-                    translate.instant("INDUSTRIAL_XL.TEST_MODE_EXIT"),
-                );
-            }
+            self.addExecuteButton(
+                lines,
+                translate,
+                self.testModeExit(),
+                translate.instant("INDUSTRIAL_XL.TEST_MODE_EXIT"),
+            );
         }
 
         return {

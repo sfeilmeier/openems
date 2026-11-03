@@ -577,7 +577,6 @@
                         "BMS_HARD_RESET": "Redémarrage matériel du BMS",
                         "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Réinitialisation du groupe de refroidissement :",
                         "CLEAR_COOLING_UNIT_ERRORS_TEXT": "nécessaire en cas d'erreurs du groupe de refroidissement",
-                        "F2B_UPDATE_HEADER": "Mise à jour F2B",
                         "MAINTENANCE_WINDOW": "Fenêtre de maintenance",
                         "NOTE": "Démarre ou arrête l'ensemble du système, y compris l'onduleur de batterie et les batteries",
                         "RESET": "RÉINITIALISER",

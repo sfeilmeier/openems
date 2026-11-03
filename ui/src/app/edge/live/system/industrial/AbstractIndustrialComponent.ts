@@ -8,15 +8,12 @@ import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils
 import { SystemIndustrialJsonRpcHelper } from "../system-industrial-json-rpc-helper";
 import { BmsHardResetRequest } from "./jsonrpc/bmsHardReset";
 import { ClearErrorRequest } from "./jsonrpc/clearErrorRequest";
-import { F2BUpdate } from "./jsonrpc/f2bUpdate";
 import { SystemErrorAcknowledge } from "./jsonrpc/systemErrorAcknowledge";
 import { TestMode } from "./jsonrpc/testMode";
 import { TestModeType } from "./jsonrpc/testModeType";
 
 export abstract class AbstractIndustrialComponent extends AbstractFormlyComponent {
-    protected override formlyWrapper:
-        | "formly-field-modal"
-        | "formly-field-navigation" = "formly-field-navigation";
+    protected override formlyWrapper: "formly-field-modal" | "formly-field-navigation" = "formly-field-navigation";
     protected component: EdgeConfig.Component | null = null;
     protected startStopChannel: ChannelAddress | null = null;
     private websocket: Websocket = inject(Websocket);
@@ -39,13 +36,9 @@ export abstract class AbstractIndustrialComponent extends AbstractFormlyComponen
         return component;
     }
 
-    protected loadComponentFromViewContext(
-        viewContext: ViewContext,
-    ): EdgeConfig.Component {
+    protected loadComponentFromViewContext(viewContext: ViewContext): EdgeConfig.Component {
         AssertionUtils.assertIsDefined(viewContext.config);
-        const component = viewContext.config.getFirstComponentByFactoryId(
-            this.factoryId,
-        );
+        const component = viewContext.config.getFirstComponentByFactoryId(this.factoryId);
         AssertionUtils.assertIsDefined(component);
         this.component = component;
         return component;
@@ -53,10 +46,7 @@ export abstract class AbstractIndustrialComponent extends AbstractFormlyComponen
 
     protected override async getChannelAddresses(): Promise<ChannelAddress[]> {
         const component = await this.loadComponentFromConfig();
-        this.startStopChannel = new ChannelAddress(
-            component.id,
-            "_PropertyStartStop",
-        );
+        this.startStopChannel = new ChannelAddress(component.id, "_PropertyStartStop");
         return [this.startStopChannel];
     }
 
@@ -67,21 +57,15 @@ export abstract class AbstractIndustrialComponent extends AbstractFormlyComponen
         });
     }
 
-    protected createDefaultStartStop(
-        translate: TranslateService,
-    ): OeFormlyField[] {
+    protected createDefaultStartStop(translate: TranslateService): OeFormlyField[] {
         return [
             {
                 type: "name-line",
-                name: translate.instant(
-                    "EDGE.INDEX.WIDGETS.SYSTEM.OVERALL_SYSTEM",
-                ),
+                name: translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.OVERALL_SYSTEM"),
             },
             {
                 type: "info-line",
-                name: translate.instant(
-                    "EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.NOTE",
-                ),
+                name: translate.instant("EDGE.INDEX.WIDGETS.SYSTEM.INDUSTRIAL.NOTE"),
                 icon: {
                     name: "information-outline",
                     color: "primary",
@@ -117,9 +101,7 @@ export abstract class AbstractIndustrialComponent extends AbstractFormlyComponen
         ];
     }
 
-    protected systemErrorAcknowledge(
-        this: AbstractIndustrialComponent,
-    ): () => void {
+    protected systemErrorAcknowledge(this: AbstractIndustrialComponent): () => void {
         return SystemIndustrialJsonRpcHelper.createRpcCallback(
             this.service,
             this.translate,
@@ -152,21 +134,7 @@ export abstract class AbstractIndustrialComponent extends AbstractFormlyComponen
         );
     }
 
-    protected f2bUpdate(this: AbstractIndustrialComponent): () => void {
-        return SystemIndustrialJsonRpcHelper.createRpcCallback(
-            this.service,
-            this.translate,
-            this.websocket,
-            this.service.currentEdge(),
-            this.component,
-            new F2BUpdate(),
-        );
-    }
-
-    protected testMode(
-        this: AbstractIndustrialComponent,
-        testMode: TestModeType,
-    ): () => void {
+    protected testMode(this: AbstractIndustrialComponent, testMode: TestModeType): () => void {
         return SystemIndustrialJsonRpcHelper.createRpcCallback(
             this.service,
             this.translate,
@@ -236,12 +204,6 @@ export abstract class AbstractIndustrialComponent extends AbstractFormlyComponen
         callback: () => void,
         name: string,
     ): void {
-        this.addActionButton(
-            lines,
-            translate,
-            callback,
-            name,
-            "EDGE.INDEX.WIDGETS.SYSTEM.EXECUTE",
-        );
+        this.addActionButton(lines, translate, callback, name, "EDGE.INDEX.WIDGETS.SYSTEM.EXECUTE");
     }
 }
