@@ -1,5 +1,4 @@
-// @ts-strict-ignore
-import { Component, Input, OnChanges, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, OnChanges } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { AbstractHistoryChart } from "src/app/shared/components/chart/abstracthistorychart";
 import { ChartTypes } from "src/app/shared/components/chart/chart.types";
@@ -19,8 +18,8 @@ export class GridBuyChartComponent extends AbstractHistoryChart implements OnCha
     @Input({ required: true }) public simulatedData: SimulationResult = {
         simulationData: [],
     };
-    @Input({ required: true }) public fromDate: Date;
-    @Input({ required: true }) public toDate: Date;
+    @Input({ required: true }) public fromDate!: Date;
+    @Input({ required: true }) public toDate!: Date;
 
     public static getChartData(
         simulatedData: PossibleBatteryExtensionResponse["result"]["simulationData"],
