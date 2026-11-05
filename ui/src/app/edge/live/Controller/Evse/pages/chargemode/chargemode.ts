@@ -10,7 +10,7 @@ import { Language } from "src/app/shared/type/language";
 import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { DocsUtils } from "src/app/shared/utils/docs/docs.utils";
 import { environment } from "src/environments";
-import { EvcsChargeModeViewModel } from "../../shared/shared";
+import { ControllerEvseSingleShared, EvcsChargeModeViewModel } from "../../shared/shared";
 
 @Component({
     selector: "oe-evse-charge-mode",
@@ -63,24 +63,10 @@ export class ChargeModeComponent extends AbstractFormlyComponent<EvcsChargeModeV
                 type: "radio-buttons-from-form-control-line",
                 name: "phase-switching",
                 controlName: "mode", // propertyname
-                buttons: [
-                    {
-                        name: translate.instant("EDGE.INDEX.WIDGETS.EVCS.ZERO"),
-                        value: Mode.ZERO,
-                    },
-                    {
-                        name: translate.instant("EDGE.INDEX.WIDGETS.EVCS.SURPLUS"),
-                        value: Mode.SURPLUS,
-                    },
-                    {
-                        name: translate.instant("EDGE.INDEX.WIDGETS.EVCS.MINIMUM"),
-                        value: Mode.MINIMUM,
-                    },
-                    {
-                        name: translate.instant("EDGE.INDEX.WIDGETS.EVCS.FORCE_CHARGE"),
-                        value: Mode.FORCE,
-                    },
-                ],
+                buttons: Object.values(Mode).map((mode) => ({
+                    name: ControllerEvseSingleShared.CONVERT_TO_MODE_LABEL(translate)(mode),
+                    value: mode,
+                })),
             },
             {
                 type: "info-line",

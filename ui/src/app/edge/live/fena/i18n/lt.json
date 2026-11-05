@@ -1,6 +1,13 @@
 {
     "FENA": {
         "MESSAGES": {
+            "CONSUMPTION": {
+                "EVSE": {
+                    "CHARGING": "{{wallboxAlias}} šiuo metu krauna jūsų automobilį {{activePower}} galia.",
+                    "CHARGING_WITH_MODE": "{{wallboxAlias}} šiuo metu krauna jūsų automobilį {{activePower}} galia {{mode}} režimu.",
+                    "NOT_CHARGING": "Jūsų automobilis prijungtas prie {{wallboxAlias}} ir laukia energijos. Įkrovimas šiuo metu išjungtas. Ar norite pradėti įkrovimą, ar pasirinkti kitą bazinį režimą?"
+                }
+            },
             "GRID": {
                 "EMERGENCY_POWER_ACTIVE": "Atsarginis maitinimas aktyvus: jūsų {{edgeLongName}} sistema šiuo metu maitina prijungtus vartotojus iš jūsų akumuliatoriaus.",
                 "GENERATOR_ACTIVE": "Papildomas saugumas: jūsų {{edgeLongName}} sistemą šiuo metu palaiko generatorius.",

@@ -1,6 +1,13 @@
 {
     "FENA": {
         "MESSAGES": {
+            "CONSUMPTION": {
+                "EVSE": {
+                    "CHARGING": "{{wallboxAlias}}が現在、{{activePower}}でお車を充電しています。",
+                    "CHARGING_WITH_MODE": "{{wallboxAlias}}が現在、モード{{mode}}で{{activePower}}でお車を充電しています。",
+                    "NOT_CHARGING": "お車は{{wallboxAlias}}に接続され、エネルギーを待っています。現在、充電は無効になっています。充電を開始しますか、それとも別の基本モードに切り替えますか？"
+                }
+            },
             "GRID": {
                 "EMERGENCY_POWER_ACTIVE": "バックアップ電源が動作中：{{edgeLongName}}システムは現在、接続された負荷をバッテリーから給電しています。",
                 "GENERATOR_ACTIVE": "安心のバックアップ：{{edgeLongName}}システムは現在、発電機によって支援されています。",

@@ -1,6 +1,13 @@
 {
     "FENA": {
         "MESSAGES": {
+            "CONSUMPTION": {
+                "EVSE": {
+                    "CHARGING": "{{wallboxAlias}} lädt dein Auto aktuell mit {{activePower}}.",
+                    "CHARGING_WITH_MODE": "{{wallboxAlias}} lädt dein Auto aktuell im Modus {{mode}} mit {{activePower}}.",
+                    "NOT_CHARGING": "Dein Fahrzeug wartet an {{wallboxAlias}} auf Energie. Aktuell ist die Ladung deaktiviert. Möchtest du die Ladung starten oder einen anderen Grundmodus wählen?"
+                }
+            },
             "GRID": {
                 "EMERGENCY_POWER_ACTIVE": "Notstrom aktiv: Dein {{edgeLongName}} versorgt deine Verbraucher aktuell aus deinem Speicher.",
                 "GENERATOR_ACTIVE": "Gut abgesichert: Dein {{edgeLongName}} wird aktuell vom Generator versorgt.",

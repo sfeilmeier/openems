@@ -1,6 +1,13 @@
 {
     "FENA": {
         "MESSAGES": {
+            "CONSUMPTION": {
+                "EVSE": {
+                    "CHARGING": "{{wallboxAlias}} laadt je auto momenteel met {{activePower}}.",
+                    "CHARGING_WITH_MODE": "{{wallboxAlias}} laadt je auto momenteel met {{activePower}} in de modus {{mode}}.",
+                    "NOT_CHARGING": "Uw voertuig is verbonden met {{wallboxAlias}} en wacht op stroom. Op dit moment is het opladen uitgeschakeld. Wil je het opladen starten of een ander laadmodus kiezen?"
+                }
+            },
             "GRID": {
                 "EMERGENCY_POWER_ACTIVE": "Noodstroom actief: je {{edgeLongName}}-systeem voorziet de aangesloten verbruikers momenteel van stroom uit je accu.",
                 "GENERATOR_ACTIVE": "Extra zekerheid: je {{edgeLongName}}-systeem wordt momenteel ondersteund door de generator.",

@@ -1,6 +1,13 @@
 {
     "FENA": {
         "MESSAGES": {
+            "CONSUMPTION": {
+                "EVSE": {
+                    "CHARGING": "{{wallboxAlias}} charge actuellement votre véhicule à {{activePower}}.",
+                    "CHARGING_WITH_MODE": "{{wallboxAlias}} charge actuellement votre véhicule à {{activePower}} en mode {{mode}}.",
+                    "NOT_CHARGING": "Votre véhicule est connecté à {{wallboxAlias}} et attend de l'énergie. La charge est actuellement désactivée. Souhaitez-vous démarrer la charge ou passer à un autre mode de base ?"
+                }
+            },
             "GRID": {
                 "EMERGENCY_POWER_ACTIVE": "Alimentation de secours active : votre système {{edgeLongName}} alimente actuellement les charges raccordées depuis votre batterie.",
                 "GENERATOR_ACTIVE": "Bien sécurisé : votre système {{edgeLongName}} est actuellement épaulé par le générateur.",

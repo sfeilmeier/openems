@@ -8,11 +8,14 @@ import { DataService } from "src/app/shared/components/shared/dataservice";
 import { UserService } from "src/app/shared/service/user.service";
 import { Edge, Service } from "src/app/shared/shared";
 import { Language } from "src/app/shared/type/language";
+import { StringUtils } from "src/app/shared/utils/string/string.utils";
 import { environment } from "src/environments";
 import { SharedAutarchy } from "../common/autarchy/shared/shared";
 import { SharedGrid } from "../common/grid/shared/shared";
 import { SharedSelfConsumption } from "../common/selfconsumption/shared/shared";
 import { SharedControllerEssTimeOfUseTariff } from "../Controller/Ess/TimeOfUseTariff/shared/shared";
+import { SharedEvcs } from "../Controller/Evcs/shared/shared";
+import { ControllerEvseSingleShared } from "../Controller/Evse/shared/shared";
 import { SharedControllerPeakShaving } from "../Controller/peak-shaving/shared/shared";
 import { LiveDataService } from "../livedataservice";
 import { Fena } from "./fena.type";
@@ -44,7 +47,6 @@ export class FenaComponent implements OnDestroy {
                 if (messageData == null || !message.show(messageData)) {
                     return [];
                 }
-
                 return [
                     {
                         text: message.getMessage(messageData),
@@ -115,12 +117,33 @@ export class FenaComponent implements OnDestroy {
     }
 
     public static createFenaMessages(edge: Edge, injector: Injector): Fena.Message[] {
+        const testEdges = [
+            "fems4",
+            "fems666",
+            "fems888",
+            "fems3800",
+            "fems10004",
+            "fems10303",
+            "fems58732",
+            "fems59509",
+            "fems72127",
+            "fems72317",
+            "fems72800",
+            "fems73475",
+            "fems74326",
+            "fems82085",
+            "fems83584",
+            "fems86450",
+            "fems86876",
+            "fems90206",
+            "fems86287",
+        ];
+        const isTestEdge = StringUtils.isInArr(edge.id, testEdges);
         const translate = injector.get(TranslateService);
         const config = edge.getConfigSignal()();
-        const widgetNames: string[] = [
-            ...(config?.widgets?.classes ?? []),
-            ...(config?.widgets?.list ?? []).map((widget) => widget.name),
-        ];
+        const widgetNames: string[] = [...(config?.widgets?.classes ?? [])];
+        const widgetListNames = Array.from(new Set((config?.widgets?.list ?? []).map((widget) => widget.name)));
+        widgetNames.push(...widgetListNames);
 
         const fenaMessages: Fena.Message[] = [];
 
@@ -163,6 +186,18 @@ export class FenaComponent implements OnDestroy {
                             return SharedControllerPeakShaving.getFenaMessages(widgetName, config, translate);
                         case "Controller.Ess.Time-Of-Use-Tariff":
                             return SharedControllerEssTimeOfUseTariff.getFenaMessages(config, translate, injector);
+                        case "Evcs.Mennekes":
+                        case "Evcs.HardyBarth":
+                        case "Evcs.Keba.KeContact":
+                        case "Evcs.Keba.P40":
+                        case "Evcs.Goe.Http":
+                            return isTestEdge
+                                ? SharedEvcs.getFenaMessages(widgetName, config, translate, injector)
+                                : [];
+                        case "Evse.Controller.Single":
+                            return isTestEdge
+                                ? ControllerEvseSingleShared.getFenaMessages(widgetName, config, translate, injector)
+                                : [];
                         default:
                             return [];
                     }
