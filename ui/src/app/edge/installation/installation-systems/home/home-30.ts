@@ -33,6 +33,7 @@ export class Home30FeneconIbn extends AbstractHomeIbn {
     public override readonly minNumberOfTowers: number = 1;
     public override readonly relayFactoryId: string = "IO.KMtronic";
     public override readonly defaultEnergyFlowMeter: Meter.GridMeterCategory = Meter.GridMeterCategory.SMART_METER;
+    public override readonly maxFeedInLimit: number = 60000;
 
     public override mppt: {
         connectionCheck: boolean;
