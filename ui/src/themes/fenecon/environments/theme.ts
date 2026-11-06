@@ -2,9 +2,11 @@ import { TranslateService } from "@ngx-translate/core";
 import { NavigationCard, NavigationCardActions } from "src/app/edge/live/navigation-info/navigation-info";
 import { Filter } from "src/app/index/filter/filter.component";
 import { User } from "src/app/shared/jsonrpc/shared";
+import { EdgeConfig } from "src/app/shared/shared";
 import { provideNavigationTour } from "src/app/shared/tour/navigation-tour";
 import { TutorialTargetId } from "src/app/shared/tour/tutorial-target-id";
-import { Environment, Theme } from "src/environments";
+import { StringUtils } from "src/app/shared/utils/string/string.utils";
+import { Environment, environment, Theme } from "src/environments";
 import { OemMeta } from "./oem-meta";
 
 export const theme: Omit<Environment, "url" | "backend" | "production" | "debugMode"> = {
@@ -17,12 +19,34 @@ export const theme: Omit<Environment, "url" | "backend" | "production" | "debugM
 
     docsUrlPrefix: "https://docs.fenecon.de/{language}/_/latest/fems/",
 
+    CLEANED_FACTORIES: (config: EdgeConfig): EdgeConfig["factories"] => {
+        const hasGoodWeBatteryInverter = StringUtils.isInArr("GoodWe.BatteryInverter", Object.keys(config.factories));
+
+        if (!hasGoodWeBatteryInverter) {
+            return config?.factories ?? {};
+        }
+
+        return Object.entries(config.factories).reduce(
+            (acc, [key, value]) => {
+                // Replace GoodWe with FENECON in factory description
+                const newValue = {
+                    ...value,
+                    name: value?.description?.replace("GoodWe", environment.edgeLongName) ?? "",
+                };
+                acc[key] = newValue;
+                return acc;
+            },
+            {} as EdgeConfig["factories"],
+        );
+    },
+
     INFO_CARD: (translate: TranslateService, user: User, actions: NavigationCardActions): NavigationCard[] => {
         const cards: NavigationCard[] = [];
 
         if (actions.canStartNavigationTour) {
             cards.push({
                 infoText: translate.instant("GUIDED_TOUR.NEW_UI_INFO"),
+
                 iconName: "information-outline",
                 contentText: translate.instant("GUIDED_TOUR.CHANGELOG"),
                 buttonText: translate.instant("GUIDED_TOUR.BUTTON"),
