@@ -1,0 +1,36 @@
+{
+    "NAVIGATION_TOUR": {
+        "ALERTING_TEXT": "Always stay informed: You can chose to be notified by mail about specific events related to your FEMS. The notification will be sent to the email address provided during commissioning. \n\nYou’ll find the settings for this under ‘Notifications’ in the system settings.\n\n💡 Tip: It’s worth installers look at this section from time to time to stay informed of possible issues early on.",
+        "COCKPIT_TEXT": "New name, familiar content: Under ‘Cockpit’, you can still find all the key current performance figures at a glance.\n\n💡 <strong>Tip:</strong> Tap on the individual icons to go directly to the corresponding details page, where you’ll find further information and additional control options.",
+        "ENERGY_JOURNEY_APPCENTER_TEXT": "Find FENECON’s <strong>AppCenter</strong> under ‘<strong>Your Energy Journey</strong>’. Discover FEMS Apps, redeem license keys for new apps, and manage them.\n\nYou will find both <strong>free</strong> and <strong>paid</strong> apps in the <strong>AppCenter</strong>.\n\n<strong>Note:</strong> Obtain license keys for paid Apps from your installer.",
+        "ENERGY_JOURNEY_TEXT": "Track the development of your energy system in one central place. Here you can carry out analyses and gain an overview, as well as discover options for the next sensible steps in your development.",
+        "FAVORITES_TEXT": "With the <strong>Owner</strong> access level, you can save frequently used menu items as <strong>Favorites</strong>. These are grouped together in the side menu under Favorites for quick access.",
+        "HISTORY_DOWNLOAD_TEXT": "<strong>History</strong> offers the <strong>Export</strong> menu option. There, you can download the figures for the selected period as an Excel file (.xlsx).",
+        "HISTORY_INTRO": "In the <strong>History</strong> section, you will find the most important metrics for your system summarized in graphs. The period can be adjusted as required. The system-wide view provides an ideal basis for tracking trends and carrying out analyses.",
+        "HISTORY_SERIES": {
+            "CHARGING": "Charging",
+            "CONSUMPTION": "Consumption",
+            "DISCHARGING": "Discharging",
+            "FEED_IN": "Grid feed-in",
+            "GRID": "Grid withdrawal",
+            "PRODUCTION": "Production",
+            "STATE_OF_CHARGE": "State of Charge (SoC)"
+        },
+        "RESTART_TUTORIAL": "Would you like to see the tutorial again? Go to <strong>Info</strong> and restart the tutorial any time.",
+        "SYSTEM_STATUS": "You’ll find the overall system status in the top right-hand corner of the Cockpit. Tap the icon to view an overview of all the relevant system components and their status.",
+        "TITLE": {
+            "ALERTING": "My tip: Set up notifications",
+            "APPCENTER": "FEMS AppCenter",
+            "COCKPIT": "Your performance monitor is now in the Cockpit",
+            "DOWNLOAD": "Download data",
+            "ENERGY_JOURNEY": "Your Energy Journey",
+            "ENERGY_JOURNEY_MOBILE": "Journey",
+            "FAVORITES": "Save your most important pages as Favorites",
+            "HISTORY": "History",
+            "RESTART_TUTORIAL": "Restart tutorial",
+            "SYSTEM_STATUS": "System status"
+        },
+        "WELCOME": "Welcome to the New Design!",
+        "WELCOME_TEXT": "Hello, I’m FENA, your FENECON Assistant. I’m here to help you keep track of your energy management.\n\nTo help you make the most of the new design straight away, I’ll give you a quick overview of the key new features in the FENECON App.\n\nSome content has been reorganized, and new features have been added to improve the user experience."
+    }
+}

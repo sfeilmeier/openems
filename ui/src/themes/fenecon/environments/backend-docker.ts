@@ -9,6 +9,6 @@ export const environment: Environment = {
 
         production: true,
         debugMode: false,
-        ENVIRONMENT_PROVIDERS: [],
+        ENVIRONMENT_PROVIDERS: [...theme.ENVIRONMENT_PROVIDERS],
     },
 };

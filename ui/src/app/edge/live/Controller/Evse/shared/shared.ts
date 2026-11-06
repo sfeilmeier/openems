@@ -433,7 +433,7 @@ export namespace ControllerEvseSingleShared {
         translate: TranslateService,
         injector: Injector,
     ): Fena.Message[] {
-        if (ctrlEvse === null) {
+        if (ctrlEvse == null) {
             return [];
         }
         const isReadOnly: boolean = ctrlEvse.getPropertyFromComponent("readOnly") ?? true;
@@ -442,7 +442,8 @@ export namespace ControllerEvseSingleShared {
             ctrlEvse.id,
             "chargePoint.id",
         );
-        if (evse === null) {
+        // The referenced charge point may be missing from the config, e.g. after it was deleted
+        if (evse == null) {
             return [];
         }
         return [

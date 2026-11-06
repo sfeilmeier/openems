@@ -1,0 +1,36 @@
+{
+    "NAVIGATION_TOUR": {
+        "ALERTING_TEXT": "Håll dig alltid informerad: Om ditt <strong>FEMS</strong> saknar anslutning till FENECON-backend under en längre tid kan du få ett meddelande via e-post. Meddelandet skickas till den e-postadress som angavs vid driftsättningen.\n\nInställningarna hittar du under <strong>”Aviseringar” i systeminställningarna</strong>.\n\n💡 <strong>Tips:</strong> Särskilt för installatörer lönar det sig att titta in i det här avsnittet för att i tid bli informerade om möjliga problem.",
+        "COCKPIT_TEXT": "Nytt namn, välbekant innehåll: Under Cockpit hittar du fortfarande alla viktiga aktuella effektvärden på ett ögonblick.\n\n<strong>Tips:</strong> Om du trycker på de enskilda ikonerna kommer du direkt till respektive detaljsida med mer information och fler styrmöjligheter.",
+        "ENERGY_JOURNEY_APPCENTER_TEXT": "FENECON <strong>AppCenter</strong> hittar du nu i huvudmenyn under <strong>”Din Energy Journey”</strong>. Här kan du upptäcka appar samt lösa in och hantera licensnycklar för nya appar.\n\nDet finns både <strong>kostnadsfria och betalda appar</strong>. <strong>Obs!</strong> Licensnycklar för betalda appar får du via din installatör.",
+        "ENERGY_JOURNEY_TEXT": "Följ utvecklingen av ditt energisystem på ett centralt ställe. Här kan du göra analyser och får både en översikt och möjligheter för nästa meningsfulla utbyggnadssteg.",
+        "FAVORITES_TEXT": "Med behörighetsnivån <strong>Owner</strong> kan du spara ofta använda menyalternativ som <strong>favoriter</strong>. Du hittar dem samlade i sidomenyn under <strong>”Favoriter”</strong> för snabb åtkomst.",
+        "HISTORY_DOWNLOAD_TEXT": "Under <strong>Historik</strong> hittar du menyalternativet <strong>Exportera</strong>. Där kan du ladda ner värdena för den valda perioden som en Excel-fil (.xlsx).",
+        "HISTORY_INTRO": "I <strong>Historik</strong> hittar du de viktigaste värdena för ditt system sammanfattade i ett diagram. Tidsperioden kan anpassas flexibelt. Den systemövergripande vyn är en idealisk grund för att följa utvecklingen och göra analyser.",
+        "HISTORY_SERIES": {
+            "CHARGING": "Laddning",
+            "CONSUMPTION": "Förbrukning",
+            "DISCHARGING": "Urladdning",
+            "FEED_IN": "Inmatning till nätet",
+            "GRID": "Köpt från nätet",
+            "PRODUCTION": "Produktion",
+            "STATE_OF_CHARGE": "Laddningsnivå (SoC)"
+        },
+        "RESTART_TUTORIAL": "Vill du se guiden igen senare? Under <strong>Info</strong> kan du när som helst starta den igen och gå igenom turen i lugn och ro.",
+        "SYSTEM_STATUS": "Uppe till höger i Cockpit hittar du statusen för hela systemet. Tryck på symbolen för att visa en översikt över alla tillhörande systemkomponenter och deras aktuella status.",
+        "TITLE": {
+            "ALERTING": "Mitt tips: Ställ in aviseringar",
+            "APPCENTER": "AppCenter",
+            "COCKPIT": "Din effektmonitor finns nu i Cockpit",
+            "DOWNLOAD": "Ladda ner data",
+            "ENERGY_JOURNEY": "Din Energy Journey",
+            "ENERGY_JOURNEY_MOBILE": "Journey",
+            "FAVORITES": "Snabbare till målet med favoriter",
+            "HISTORY": "Historik",
+            "RESTART_TUTORIAL": "Starta guiden igen",
+            "SYSTEM_STATUS": "Systemstatus"
+        },
+        "WELCOME": "Välkommen till den nya designen!",
+        "WELCOME_TEXT": "Hej, jag är FENA, din FENECON Assistant. Jag hjälper dig att hålla koll på din energihantering.\n\nFör att du snabbt ska kunna dra nytta av fördelarna med den nya designen visar jag dig kort de viktigaste nyheterna i FENECON-appen.\n\nInnehåll har delvis strukturerats om och funktioner för bättre mobil användning har lagts till."
+    }
+}

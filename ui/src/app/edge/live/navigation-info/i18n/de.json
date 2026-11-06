@@ -1,8 +1,7 @@
 {
-    "BETA_TEST": {
-        "BUTTON": "Zum Beta-Test Changelog",
-        "CHANGELOG": "Hier gibt es Infos zu den Änderungen, Erklärungen oder Hilfestellungen. Bleib durch unseren Changelog immer am neuesten Stand der Entwicklungen.",
-        "FEEDBACK": "Dein Feedback zählt, lass uns wissen was du zum BETA Test sagen möchtest:",
+    "GUIDED_TOUR": {
+        "BUTTON": "Tutorial starten",
+        "CHANGELOG": "Hier kannst du das Tutorial mit der Tour durch die neue Navigation starten.",
         "NEW_UI_INFO": "Unser Monitoring wird neu gestaltet. Neue Navigation und Funktionen werden Einzug finden."
     },
     "MY_PORTAL": {

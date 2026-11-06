@@ -1,8 +1,10 @@
 import { TranslateService } from "@ngx-translate/core";
-import { NavigationCard } from "src/app/edge/live/navigation-info/navigation-info";
+import { NavigationCard, NavigationCardActions } from "src/app/edge/live/navigation-info/navigation-info";
 import { Filter } from "src/app/index/filter/filter.component";
 import { User } from "src/app/shared/jsonrpc/shared";
-import { Environment, environment, Theme } from "src/environments";
+import { provideNavigationTour } from "src/app/shared/tour/navigation-tour";
+import { TutorialTargetId } from "src/app/shared/tour/tutorial-target-id";
+import { Environment, Theme } from "src/environments";
 import { OemMeta } from "./oem-meta";
 
 export const theme: Omit<Environment, "url" | "backend" | "production" | "debugMode"> = {
@@ -15,21 +17,20 @@ export const theme: Omit<Environment, "url" | "backend" | "production" | "debugM
 
     docsUrlPrefix: "https://docs.fenecon.de/{language}/_/latest/fems/",
 
-    INFO_CARD: (translate: TranslateService, user: User): NavigationCard[] => {
-        const cards: NavigationCard[] = [
-            {
-                infoText: translate.instant("BETA_TEST.NEW_UI_INFO"),
+    INFO_CARD: (translate: TranslateService, user: User, actions: NavigationCardActions): NavigationCard[] => {
+        const cards: NavigationCard[] = [];
+
+        if (actions.canStartNavigationTour) {
+            cards.push({
+                infoText: translate.instant("GUIDED_TOUR.NEW_UI_INFO"),
                 iconName: "information-outline",
-                contentText: translate.instant("BETA_TEST.CHANGELOG"),
-                buttonText: translate.instant("BETA_TEST.BUTTON"),
-                buttonHref: environment.links.REDIRECT.BETA_CHANGE_LOG ?? "",
-                footer: {
-                    text: translate.instant("BETA_TEST.FEEDBACK"),
-                    link: environment.links.REDIRECT.BETA_SURVEY ?? "",
-                    linkText: translate.instant("GENERAL.SURVEY_LINK"),
-                },
-            },
-        ];
+                contentText: translate.instant("GUIDED_TOUR.CHANGELOG"),
+                buttonText: translate.instant("GUIDED_TOUR.BUTTON"),
+                buttonIconName: "play-outline",
+                buttonAction: actions.startNavigationTour,
+                tutorialTargetId: TutorialTargetId.PROFILE_INFO,
+            });
+        }
 
         function hasPortalAccess(): boolean {
             if (user?.id === "intersolar@fenecon.de") {
@@ -131,6 +132,12 @@ export const theme: Omit<Environment, "url" | "backend" | "production" | "debugM
             },
         ],
     }),
-    ENVIRONMENT_PROVIDERS: [],
+    ENVIRONMENT_PROVIDERS: [
+        provideNavigationTour({
+            // Loaded on demand: a static import would evaluate application code before the environment exists
+            load: () => import("../tour/navigation-tour").then((m) => m.FeneconNavigationTour),
+            avatar: { name: "oe-fena", src: "icons/common/fena.svg" },
+        }),
+    ],
     ...OemMeta,
 };

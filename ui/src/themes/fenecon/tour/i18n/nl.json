@@ -1,0 +1,36 @@
+{
+    "NAVIGATION_TOUR": {
+        "ALERTING_TEXT": "Blijf altijd op de hoogte: als je <strong>FEMS</strong> gedurende langere tijd geen verbinding heeft met de FENECON-backend, kun je een melding per e-mail ontvangen. De melding wordt verstuurd naar het e-mailadres dat bij de inbedrijfstelling is opgegeven.\n\nDe instellingen hiervoor vind je onder <strong>„Meldingen” in de systeeminstellingen</strong>.\n\n💡 <strong>Tip:</strong> vooral voor installateurs loont het om in dit gedeelte te kijken, zodat ze tijdig op de hoogte zijn van mogelijke problemen.",
+        "COCKPIT_TEXT": "Nieuwe naam, vertrouwde inhoud: onder Cockpit vind je nog steeds alle belangrijke actuele vermogenswaarden in één oogopslag.\n\n<strong>Tip:</strong> door op de afzonderlijke iconen te tikken ga je direct naar de betreffende detailpagina met meer informatie en extra bedieningsmogelijkheden.",
+        "ENERGY_JOURNEY_APPCENTER_TEXT": "Het FENECON <strong>AppCenter</strong> vind je nu in het hoofdmenu onder <strong>„Jouw Energy Journey”</strong>. Hier kun je apps ontdekken en licentiesleutels voor nieuwe apps inwisselen en beheren.\n\nEr zijn zowel <strong>gratis als betaalde apps</strong> beschikbaar. <strong>Let op:</strong> licentiesleutels voor betaalde apps ontvang je via je installateur.",
+        "ENERGY_JOURNEY_TEXT": "Volg de ontwikkeling van je energiesysteem op één centrale plek. Hier kun je analyses uitvoeren en krijg je zowel een overzicht als de mogelijkheden voor de volgende zinvolle uitbreidingsstappen.",
+        "FAVORITES_TEXT": "Met het toegangsniveau <strong>Owner</strong> kun je veelgebruikte menu-items als <strong>favorieten</strong> opslaan. Je vindt ze verzameld in het zijmenu onder <strong>„Favorieten”</strong> voor snelle toegang.",
+        "HISTORY_DOWNLOAD_TEXT": "Onder <strong>Historie</strong> vind je het menu-item <strong>Exporteren</strong>. Daar kun je de waarden van de gekozen periode als Excel-bestand (.xlsx) downloaden.",
+        "HISTORY_INTRO": "In de <strong>Historie</strong> vind je de belangrijkste waarden van je systeem samengevat in een grafiek. De periode kun je flexibel aanpassen. Het systeembrede overzicht is een ideale basis om ontwikkelingen te volgen en analyses uit te voeren.",
+        "HISTORY_SERIES": {
+            "CHARGING": "Laden",
+            "CONSUMPTION": "Verbruik",
+            "DISCHARGING": "Ontladen",
+            "FEED_IN": "Teruglevering",
+            "GRID": "Netafname",
+            "PRODUCTION": "Opwekking",
+            "STATE_OF_CHARGE": "Laadtoestand (SoC)"
+        },
+        "RESTART_TUTORIAL": "Wil je de tutorial later nog eens bekijken? Onder <strong>Info</strong> kun je hem op elk moment opnieuw starten en de tour rustig doorlopen.",
+        "SYSTEM_STATUS": "Rechtsboven in de Cockpit vind je de status van het totale systeem. Tik op het symbool om een overzicht van alle bijbehorende systeemcomponenten en hun actuele status te bekijken.",
+        "TITLE": {
+            "ALERTING": "Mijn tip: meldingen instellen",
+            "APPCENTER": "Het AppCenter",
+            "COCKPIT": "Je vermogensmonitor staat nu in de Cockpit",
+            "DOWNLOAD": "Gegevens downloaden",
+            "ENERGY_JOURNEY": "Jouw Energy Journey",
+            "ENERGY_JOURNEY_MOBILE": "Journey",
+            "FAVORITES": "Sneller naar je doel met favorieten",
+            "HISTORY": "Historie",
+            "RESTART_TUTORIAL": "Tutorial opnieuw starten",
+            "SYSTEM_STATUS": "Systeemstatus"
+        },
+        "WELCOME": "Welkom in het nieuwe ontwerp!",
+        "WELCOME_TEXT": "Hallo, ik ben FENA, je FENECON Assistant. Ik help je om je energiebeheer in de gaten te houden.\n\nZodat je snel van de voordelen van het nieuwe ontwerp kunt profiteren, laat ik je kort de belangrijkste vernieuwingen van de FENECON-app zien.\n\nInhoud is deels opnieuw ingedeeld en er zijn functies toegevoegd voor een betere mobiele bediening."
+    }
+}

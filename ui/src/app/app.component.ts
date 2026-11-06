@@ -17,6 +17,7 @@ import { SystemStateService } from "./shared/service/systemStateService";
 import { UserService } from "./shared/service/user.service";
 import { Service, UserPermission, Websocket } from "./shared/shared";
 import { AppStateTracker } from "./shared/states/app-state-tracker";
+import { TutorialTargetId } from "./shared/tour/tutorial-target-id";
 import { Language } from "./shared/type/language";
 
 export interface CachetComponentStatus {
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     protected isSmartphone: boolean = false;
 
+    private readonly tutorialTargetId = TutorialTargetId;
     private ngUnsubscribe: Subject<void> = new Subject<void>();
     private subscription: Subscription = new Subscription();
 

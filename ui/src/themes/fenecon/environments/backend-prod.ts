@@ -13,6 +13,7 @@ export const environment: Environment = {
         debugMode: false,
 
         ENVIRONMENT_PROVIDERS: [
+            ...theme.ENVIRONMENT_PROVIDERS,
             // Activate tracking only in production
             provideMatomo(
                 {

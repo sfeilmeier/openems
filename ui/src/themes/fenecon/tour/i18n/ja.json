@@ -1,0 +1,36 @@
+{
+    "NAVIGATION_TOUR": {
+        "ALERTING_TEXT": "常に最新情報を把握：<strong>FEMS</strong>が長時間FENECONバックエンドに接続できない場合、メールで通知を受け取ることができます。通知は試運転時に登録したメールアドレスに送信されます。\n\n設定は<strong>システム設定の「通知」</strong>にあります。\n\n💡 <strong>ヒント：</strong>特に施工業者の方は、問題を早期に把握できるよう、このセクションを確認することをおすすめします。",
+        "COCKPIT_TEXT": "新しい名称、おなじみの内容：Cockpitでは、これまでどおり重要な現在の出力値をすべてひと目で確認できます。\n\n<strong>ヒント：</strong>各アイコンをタップすると、詳細情報や追加の制御オプションを備えた該当する詳細ページに直接移動します。",
+        "ENERGY_JOURNEY_APPCENTER_TEXT": "FENECONの<strong>AppCenter</strong>は、メインメニューの<strong>「あなたのEnergy Journey」</strong>に移動しました。ここでは、アプリを見つけたり、新しいアプリのライセンスキーを適用・管理したりできます。\n\n<strong>無料アプリと有料アプリ</strong>の両方をご利用いただけます。<strong>注意：</strong>有料アプリのライセンスキーは施工業者から入手できます。",
+        "ENERGY_JOURNEY_TEXT": "エネルギーシステムの推移を一か所で確認できます。ここでは分析を行い、概要とともに、次に検討すべき拡張ステップを確認できます。",
+        "FAVORITES_TEXT": "アクセスレベル<strong>Owner</strong>では、よく使うメニュー項目を<strong>お気に入り</strong>に保存できます。保存した項目はサイドメニューの<strong>「お気に入り」</strong>にまとめて表示され、すばやくアクセスできます。",
+        "HISTORY_DOWNLOAD_TEXT": "<strong>履歴</strong>の下に<strong>エクスポート</strong>メニューがあります。ここから、選択した期間の値をExcelファイル（.xlsx）としてダウンロードできます。",
+        "HISTORY_INTRO": "<strong>履歴</strong>では、システムの最も重要な値がグラフにまとめて表示されます。期間は自由に変更できます。システム全体のビューは、推移の把握や分析に最適です。",
+        "HISTORY_SERIES": {
+            "CHARGING": "充電",
+            "CONSUMPTION": "消費",
+            "DISCHARGING": "放電",
+            "FEED_IN": "売電",
+            "GRID": "買電",
+            "PRODUCTION": "発電",
+            "STATE_OF_CHARGE": "充電状態（SoC）"
+        },
+        "RESTART_TUTORIAL": "後でもう一度チュートリアルを見たいですか？「<strong>情報</strong>」からいつでも再開して、ツアーをゆっくり確認できます。",
+        "SYSTEM_STATUS": "Cockpitの右上にシステム全体のステータスが表示されます。アイコンをタップすると、関連するすべてのシステムコンポーネントとその現在のステータスの一覧が表示されます。",
+        "TITLE": {
+            "ALERTING": "おすすめ：通知を設定する",
+            "APPCENTER": "AppCenter",
+            "COCKPIT": "パワーモニターはCockpitに移動しました",
+            "DOWNLOAD": "データのダウンロード",
+            "ENERGY_JOURNEY": "あなたのEnergy Journey",
+            "ENERGY_JOURNEY_MOBILE": "Journey",
+            "FAVORITES": "お気に入りですばやくアクセス",
+            "HISTORY": "履歴",
+            "RESTART_TUTORIAL": "チュートリアルを再開",
+            "SYSTEM_STATUS": "システムステータス"
+        },
+        "WELCOME": "新しいデザインへようこそ！",
+        "WELCOME_TEXT": "こんにちは、FENECON AssistantのFENAです。エネルギー管理を常に把握できるようお手伝いします。\n\n新しいデザインのメリットをすぐに活用できるよう、FENECONアプリの主な新機能を簡単にご紹介します。\n\n一部のコンテンツを再構成し、モバイルでの操作性を向上させる機能を追加しました。"
+    }
+}

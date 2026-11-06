@@ -102,8 +102,6 @@ export const OemMeta: BaseMeta = {
             "https://auth.fenecon.de/realms/fenecon/login-actions/reset-credentials?client_id=fenecon-backend",
         DATA_PROTECTION: "https://docs.fenecon.de/{language}/fems/data_protection/data_protection_info.html",
         REDIRECT: {
-            BETA_SURVEY: "https://erp.fenecon.de/survey/start/d123c5ff-72e1-4fdf-bbc8-867d5a75c51c",
-            BETA_CHANGE_LOG: "https://docs.fenecon.de/redirect/fenecon/de/beta_change_log", // only available in german
             COMMON_STORAGE: "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_storage",
             COMMON_AUTARCHY: "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_autarchy",
             COMMON_CONSUMPTION: "https://docs.fenecon.de/redirect/fenecon/{language}/standardwidgets_consumption",

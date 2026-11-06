@@ -35,6 +35,7 @@ import { Pagination } from "./shared/service/pagination";
 import { TrackingService } from "./shared/service/tracking-service";
 import { SharedModule } from "./shared/shared.module";
 import { AppStateTracker } from "./shared/states/app-state-tracker";
+import { TourOverlayComponent } from "./shared/tour/tour-overlay.component";
 import { registerTranslateExtension } from "./shared/translate.extension";
 import { Language, MyTranslateLoader } from "./shared/type/language";
 import { UserModule } from "./user/user.module";
@@ -43,6 +44,7 @@ provideTranslateLoader(MyTranslateLoader);
 @NgModule({
     declarations: [AppComponent, ChartOptionsPopoverComponent],
     imports: [
+        TourOverlayComponent,
         BottomNavigationBarComponent,
         NavigationBackButtonComponent,
         FooterContentComponent,

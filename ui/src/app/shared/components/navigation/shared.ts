@@ -1,5 +1,6 @@
 import { Injector } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { TutorialTargetId } from "../../tour/tutorial-target-id";
 import { Role } from "../../type/role";
 import { OeSet } from "../../type/set";
 import { TEnumKeys, TPartialBy } from "../../type/utility";
@@ -68,6 +69,7 @@ export type NavigationTreeOptions = {
     customLink?: string | null;
     isCommonWidget?: boolean;
     accordionOpenedOnDefault?: boolean;
+    tourId?: string | null;
     hideFavorite?: boolean;
     callback?: (this: NavigationTree, injector: Injector) => Promise<unknown>;
 };
@@ -79,6 +81,7 @@ export class NavigationTree {
     public customLink: NavigationTreeOptions["customLink"];
     public isCommonWidget: NavigationTreeOptions["isCommonWidget"];
     public accordionOpenedOnDefault: NavigationTreeOptions["accordionOpenedOnDefault"];
+    public tourId: NavigationTreeOptions["tourId"];
     public hideFavorite: NavigationTreeOptions["hideFavorite"];
     public callback: NavigationTreeOptions["callback"];
 
@@ -101,6 +104,7 @@ export class NavigationTree {
         this.pageFilter = options.pageFilter ?? null;
         this.customLink = options.customLink ?? null;
         this.isCommonWidget = options.isCommonWidget ?? false;
+        this.tourId = options.tourId ?? id;
         this.accordionOpenedOnDefault = options.accordionOpenedOnDefault ?? false;
         this.hideFavorite = options.hideFavorite ?? false;
         this.callback = options.callback ?? (async (injector: Injector) => this);
@@ -130,6 +134,7 @@ export class NavigationTree {
                 pageFilter: navigationTree.pageFilter,
                 customLink: navigationTree.customLink,
                 isCommonWidget: navigationTree.isCommonWidget,
+                tourId: navigationTree.tourId,
                 accordionOpenedOnDefault: navigationTree.accordionOpenedOnDefault,
                 hideFavorite: navigationTree.hideFavorite,
                 callback: navigationTree.callback,
@@ -448,6 +453,7 @@ export class NavigationTree {
                 pageFilter: this.pageFilter,
                 isCommonWidget: this.isCommonWidget,
                 customLink: this.customLink,
+                tourId: this.tourId,
                 accordionOpenedOnDefault: this.accordionOpenedOnDefault,
                 hideFavorite: this.hideFavorite,
             },
@@ -692,6 +698,7 @@ export namespace NavigationConstants {
             componentId: string,
             queryParams: { source: string } | {} = {},
         ) {
+            const hasNoQueryParams = Object.keys(queryParams).length === 0;
             return new NavigationTree(
                 componentId + "-info",
                 { baseString: "navigation-info", queryParams: queryParams },
@@ -700,7 +707,13 @@ export namespace NavigationConstants {
                 "label",
                 [],
                 null,
-                { showOrder: "LOW", hideFavorite: true },
+                {
+                    showOrder: "LOW",
+                    // Only show the tour on the general info, not on component-specific info pages
+                    // General info has no query parameters
+                    ...(hasNoQueryParams ? { tourId: TutorialTargetId.NAVIGATION_INFO } : {}),
+                    hideFavorite: true,
+                },
             );
         }
         export function HISTORY(translate: TranslateService, componentId: string, children: NavigationTree[] = []) {

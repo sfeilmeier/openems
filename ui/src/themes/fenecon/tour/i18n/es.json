@@ -1,0 +1,36 @@
+{
+    "NAVIGATION_TOUR": {
+        "ALERTING_TEXT": "Mantente siempre informado: si tu <strong>FEMS</strong> no tiene conexión con el backend de FENECON durante un periodo prolongado, puedes recibir una notificación por correo electrónico. La notificación se envía a la dirección de correo electrónico indicada durante la puesta en marcha.\n\nEncontrarás la configuración en <strong>«Notificaciones», dentro de la configuración del sistema</strong>.\n\n💡 <strong>Consejo:</strong> especialmente para los instaladores merece la pena echar un vistazo a esta sección para estar informados a tiempo de posibles problemas.",
+        "COCKPIT_TEXT": "Nuevo nombre, contenido conocido: en el Cockpit sigues encontrando de un vistazo todos los valores de potencia actuales más importantes.\n\n<strong>Consejo:</strong> al tocar los distintos iconos accedes directamente a la página de detalles correspondiente, con más información y opciones de control adicionales.",
+        "ENERGY_JOURNEY_APPCENTER_TEXT": "El <strong>AppCenter</strong> de FENECON se encuentra ahora en el menú principal, en <strong>«Tu Energy Journey»</strong>. Aquí puedes descubrir apps, así como canjear y gestionar claves de licencia para nuevas apps.\n\nHay disponibles <strong>apps gratuitas y de pago</strong>. <strong>Nota:</strong> las claves de licencia para apps de pago las obtienes a través de tu instalador.",
+        "ENERGY_JOURNEY_TEXT": "Sigue la evolución de tu sistema energético en un lugar central. Aquí puedes realizar análisis y obtienes tanto una visión general como las opciones para los próximos pasos de ampliación más útiles.",
+        "FAVORITES_TEXT": "Con el nivel de acceso <strong>Owner</strong> puedes guardar como <strong>favoritos</strong> los elementos del menú que usas con frecuencia. Los encontrarás agrupados en el menú lateral, en <strong>«Favoritos»</strong>, para un acceso rápido.",
+        "HISTORY_DOWNLOAD_TEXT": "En <strong>Historial</strong> encontrarás la opción de menú <strong>Exportar</strong>. Allí puedes descargar los valores del periodo seleccionado como archivo de Excel (.xlsx).",
+        "HISTORY_INTRO": "En el <strong>Historial</strong> encontrarás los valores más importantes de tu sistema resumidos en un gráfico. El periodo se puede ajustar de forma flexible. La vista de todo el sistema es una base ideal para seguir la evolución y realizar análisis.",
+        "HISTORY_SERIES": {
+            "CHARGING": "Carga",
+            "CONSUMPTION": "Consumo",
+            "DISCHARGING": "Descarga",
+            "FEED_IN": "Inyección a red",
+            "GRID": "Consumo de red",
+            "PRODUCTION": "Producción",
+            "STATE_OF_CHARGE": "Estado de carga (SoC)"
+        },
+        "RESTART_TUTORIAL": "¿Quieres volver a ver el tutorial más tarde? En <strong>Informacion</strong> puedes iniciarlo de nuevo en cualquier momento y recorrer el tour con calma.",
+        "SYSTEM_STATUS": "En la parte superior derecha del Cockpit encontrarás el estado general del sistema. Toca el símbolo para ver una vista general de todos los componentes del sistema asociados y su estado actual.",
+        "TITLE": {
+            "ALERTING": "Mi consejo: configura las notificaciones",
+            "APPCENTER": "El AppCenter",
+            "COCKPIT": "Tu monitor de potencia ahora está en el Cockpit",
+            "DOWNLOAD": "Descargar datos",
+            "ENERGY_JOURNEY": "Tu Energy Journey",
+            "ENERGY_JOURNEY_MOBILE": "Journey",
+            "FAVORITES": "Llega más rápido con Favoritos",
+            "HISTORY": "Historial",
+            "RESTART_TUTORIAL": "Reiniciar tutorial",
+            "SYSTEM_STATUS": "Estado del sistema"
+        },
+        "WELCOME": "¡Bienvenido al nuevo diseño!",
+        "WELCOME_TEXT": "Hola, soy FENA, tu FENECON Assistant. Te ayudo a tener siempre bajo control tu gestión energética.\n\nPara que puedas aprovechar rápidamente las ventajas del nuevo diseño, te muestro brevemente las novedades más importantes de la app de FENECON.\n\nAlgunos contenidos se han reestructurado y se han añadido funciones para un mejor manejo en dispositivos móviles."
+    }
+}
