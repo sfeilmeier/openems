@@ -1,12 +1,12 @@
-import { TranslateService } from "@ngx-translate/core";
-import { NavigationCard, NavigationCardActions } from "src/app/edge/live/navigation-info/navigation-info";
-import { Filter } from "src/app/index/filter/filter.component";
-import { User } from "src/app/shared/jsonrpc/shared";
-import { EdgeConfig } from "src/app/shared/shared";
+import type { TranslateService } from "@ngx-translate/core";
+import type { NavigationCard, NavigationCardActions } from "src/app/edge/live/navigation-info/navigation-info";
+import type { Filter } from "src/app/index/filter/filter.component";
+import type { User } from "src/app/shared/jsonrpc/shared";
+import type { EdgeConfig } from "src/app/shared/shared";
 import { provideNavigationTour } from "src/app/shared/tour/navigation-tour";
 import { TutorialTargetId } from "src/app/shared/tour/tutorial-target-id";
-import { StringUtils } from "src/app/shared/utils/string/string.utils";
-import { Environment, environment, Theme } from "src/environments";
+import type { Environment, Theme } from "src/environments";
+import { environment } from "src/environments";
 import { OemMeta } from "./oem-meta";
 
 export const theme: Omit<Environment, "url" | "backend" | "production" | "debugMode"> = {
@@ -20,7 +20,7 @@ export const theme: Omit<Environment, "url" | "backend" | "production" | "debugM
     docsUrlPrefix: "https://docs.fenecon.de/{language}/_/latest/fems/",
 
     CLEANED_FACTORIES: (config: EdgeConfig): EdgeConfig["factories"] => {
-        const hasGoodWeBatteryInverter = StringUtils.isInArr("GoodWe.BatteryInverter", Object.keys(config.factories));
+        const hasGoodWeBatteryInverter = Object.keys(config.factories).includes("GoodWe.BatteryInverter");
 
         if (!hasGoodWeBatteryInverter) {
             return config?.factories ?? {};
