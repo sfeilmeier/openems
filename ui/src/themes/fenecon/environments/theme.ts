@@ -28,10 +28,11 @@ export const theme: Omit<Environment, "url" | "backend" | "production" | "debugM
 
         return Object.entries(config.factories).reduce(
             (acc, [key, value]) => {
-                // Replace GoodWe with FENECON in factory description
+                // Replace GoodWe with FENECON in factory description and name
                 const newValue = {
                     ...value,
-                    name: value?.description?.replace("GoodWe", environment.edgeLongName) ?? "",
+                    name: value?.name?.replace("GoodWe", environment.edgeLongName) ?? "",
+                    description: value?.description?.replace("GoodWe", environment.edgeLongName) ?? "",
                 };
                 acc[key] = newValue;
                 return acc;
