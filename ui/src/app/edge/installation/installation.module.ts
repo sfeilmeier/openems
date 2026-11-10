@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { NgModule } from "@angular/core";
 import { AbstractControl, FormControl, ValidationErrors } from "@angular/forms";
-import { FormlyFieldConfig, FormlyModule } from "@ngx-formly/core";
+import { FORMLY_CONFIG, FormlyFieldConfig, FormlyModule } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { SetupKeyComponent } from "src/app/edge/installation/shared/reusable-input-field";
 import { SystemLocationValidatorComponent } from "src/app/shared/components/system-location-validator/system-location-validator.component";
@@ -19,11 +19,11 @@ import ja from "./i18n/ja.json";
 import lt from "./i18n/lt.json";
 import nl from "./i18n/nl.json";
 import sv from "./i18n/sv.json";
-import { AbstractIbn } from "./installation-systems/abstract-ibn";
 import { InstallationViewComponent } from "./installation-view/installation-view.component";
 import { InstallationComponent } from "./installation.component";
 import { InstallationService } from "./installation.service";
 import { ExtensionBoxPrefix } from "./shared/ibndatatypes";
+import { registerInstallationValidationMessages } from "./shared/validation-messages";
 import { CompletionComponent } from "./views/completion/completion.component";
 import { ConfigurationAdvancedSettingsComponent } from "./views/configuration-advanced-grid-settings/configuration-advanced-grid-settings.component";
 import { ConfigurationBatteryInputsComponent } from "./views/configuration-battery-inputs/configuration-battery-inputs";
@@ -142,11 +142,6 @@ export function Commercial50BatteryInverterSerialNumberValidator(control: FormCo
     return /^.{6}$/.test(control.value) ? null : { commercialBatteryInverterSerialNumber: true };
 }
 
-export function ZipCodeValidator(control: FormControl): ValidationErrors {
-    // This validator checks the zip code pattern
-    return AbstractIbn.COUNTRY_PARTNER_ZIP_CODE_REGEX.test(control.value) ? null : { zip: true };
-}
-
 export function serialNumberRequiredWhenCheckedValidator(
     control: AbstractControl,
     field: FormlyFieldConfig,
@@ -258,7 +253,6 @@ export function SplitRangeValidator(control: FormControl, field: FormlyFieldConf
                     name: "defaultAsMinimumValue",
                     validation: DefaultAsMinValueValidator,
                 },
-                { name: "zip", validation: ZipCodeValidator },
                 {
                     name: "serialNumberRequiredWhenChecked",
                     validation: serialNumberRequiredWhenCheckedValidator,
@@ -305,7 +299,15 @@ export function SplitRangeValidator(control: FormControl, field: FormlyFieldConf
         ProtocolSystemLocationValidationComponent,
         ConfigurationAdvancedSettingsComponent,
     ],
-    providers: [InstallationService],
+    providers: [
+        InstallationService,
+        {
+            provide: FORMLY_CONFIG,
+            multi: true,
+            useFactory: registerInstallationValidationMessages,
+            deps: [TranslateService],
+        },
+    ],
 })
 export class InstallationModule {
     constructor(translate: TranslateService) {

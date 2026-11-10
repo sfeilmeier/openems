@@ -1,8 +1,7 @@
 {
-    "BETA_TEST": {
-        "BUTTON": "Pereiti į Beta testavimo pakeitimų žurnalą",
-        "CHANGELOG": "Čia rasite informacijos apie pakeitimus, paaiškinimų ir pagalbos. Mūsų pakeitimų žurnale visada galite sekti naujausias kūrimo naujienas.",
-        "FEEDBACK": "Jūsų atsiliepimas mums svarbus — pasakykite, ką manote apie BETA testavimą:",
+    "GUIDED_TOUR": {
+        "BUTTON": "Pradėti mokymą",
+        "CHANGELOG": "Čia galite pradėti mokymą su naujos naršymo sistemos turu.",
         "NEW_UI_INFO": "Mūsų stebėjimo aplinka pertvarkoma. Bus pristatyta nauja naršymo sistema ir naujos funkcijos."
     },
     "MY_PORTAL": {

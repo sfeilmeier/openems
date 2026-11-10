@@ -1,8 +1,7 @@
 {
-    "BETA_TEST": {
-        "BUTTON": "Till changeloggen för betatestet",
-        "CHANGELOG": "Här hittar du information om ändringarna, förklaringar eller hjälp. Håll dig uppdaterad med vår changelog om de senaste utvecklingarna.",
-        "FEEDBACK": "Din feedback är viktig – berätta för oss vad du tycker om betatestet:",
+    "GUIDED_TOUR": {
+        "BUTTON": "Starta guiden",
+        "CHANGELOG": "Här kan du starta guiden med en rundtur i den nya navigeringen.",
         "NEW_UI_INFO": "Vår övervakning får en ny design. Ny navigation och nya funktioner kommer att introduceras."
     },
     "MY_PORTAL": {

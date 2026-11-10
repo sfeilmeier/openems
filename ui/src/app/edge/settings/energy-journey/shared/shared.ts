@@ -4,6 +4,7 @@ import { SharedSelfConsumption } from "src/app/edge/live/common/selfconsumption/
 import { EdgeSettings } from "src/app/shared/components/edge/edge";
 import { NavigationTree, NavigationId } from "src/app/shared/components/navigation/shared";
 import { Edge, EdgeConfig, EdgePermission } from "src/app/shared/shared";
+import { TutorialTargetId } from "src/app/shared/tour/tutorial-target-id";
 import { Role } from "src/app/shared/type/role";
 
 export namespace EnergyJourneyShared {
@@ -23,6 +24,7 @@ export namespace EnergyJourneyShared {
                     "label",
                     [],
                     null,
+                    { tourId: TutorialTargetId.HISTORY_EXPORT },
                 ),
             ],
             null,

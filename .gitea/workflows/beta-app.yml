@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ gitea.workflow }}-${{ gitea.ref }}
   cancel-in-progress: true
 
 env:
-  CI_COMMIT_BRANCH: ${{ github.ref_name }}
-  CI_GROUP: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  CI_COMMIT_BRANCH: ${{ gitea.ref_name }}
+  CI_GROUP: ${{ gitea.workflow }}-${{ gitea.event.pull_request.number || gitea.ref }}
 
 jobs:
   setup:
@@ -109,8 +109,8 @@ jobs:
 
       - name: Update App
         run: |
-          echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/"
-          rsync --mkpath /artifacts/* ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${CI_COMMIT_BRANCH}/
+          echo "Deploying to ${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/"
+          rsync --mkpath /artifacts/* ${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}:${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}/
 
   release-android-app:
     runs-on: ubuntu-latest-android
@@ -139,7 +139,7 @@ jobs:
           common_initialize_environment
           source openems.env
           echo -n "${{ secrets.DEVELOPER_API_SERVICE_ACCOUNT }}" | base64 -d > secret.json
-          python3 tools/deploy/android/create_release.py "feneconbeta" "$VERSION_FULL" secret.json ${CI_COMMIT_BRANCH}
+          python3 tools/deploy/android/create_release.py "feneconbeta" "$VERSION_FULL" secret.json ${{ env.CI_COMMIT_BRANCH }}
 
   cleanup:
     runs-on: ubuntu-latest

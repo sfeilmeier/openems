@@ -6,12 +6,12 @@ on:
 
 # https://docs.gitea.com/next/usage/actions/comparison#concurrency
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  group: ${{ gitea.workflow }}-${{ gitea.head_ref || gitea.ref_name }}
   cancel-in-progress: true
 
 env:
-  CI_COMMIT_BRANCH: ${{ github.head_ref || github.ref_name }}
-  CI_GROUP: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  CI_COMMIT_BRANCH: ${{ gitea.head_ref || gitea.ref_name }}
+  CI_GROUP: ${{ gitea.workflow }}-${{ gitea.head_ref || gitea.ref_name }}
   CI_MAX_CONCURRENT_BUILDS: ${{ vars.CI_MAX_CONCURRENT_BUILDS }}
 
 jobs:
@@ -83,11 +83,11 @@ jobs:
           name: environment
           verbose: "true"
 
-      - name: Setup Java 21
+      - name: Setup Java 25
         uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5.5.0
         with:
           distribution: "temurin"
-          java-version: "21"
+          java-version: "25"
           cache: gradle
 
       - name: Restore Maven cache
@@ -177,11 +177,11 @@ jobs:
           name: environment
           verbose: "true"
 
-      - name: Setup Java 21
+      - name: Setup Java 25
         uses: actions/setup-java@0f481fcb613427c0f801b606911222b5b6f3083a # v5.5.0
         with:
           distribution: "temurin"
-          java-version: "21"
+          java-version: "25"
           cache: gradle
 
       - name: Restore Maven cache
@@ -292,6 +292,7 @@ jobs:
 
       - name: Test UI
         run: |
+          export CI_COMMIT_BRANCH=${{ env.CI_COMMIT_BRANCH }}
           export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
           echo "Testing UI for $OEM"
           cd ui
@@ -306,6 +307,7 @@ jobs:
 
       - name: Build UI
         run: |
+          export CI_COMMIT_BRANCH=${{ env.CI_COMMIT_BRANCH }}
           export OEM=$(case ${CI_COMMIT_BRANCH^^} in *HECKERT*) echo "heckert";; *) echo "fenecon";; esac)
           source tools/common.sh
           common_initialize_environment
@@ -356,8 +358,9 @@ jobs:
       (needs.build-backend.result == 'skipped' || needs.build-backend.result == 'success') &&
       (needs.build-ui.result == 'skipped' || needs.build-ui.result == 'success')
     env:
+      CI_COMMIT_BRANCH: ${{ gitea.head_ref || gitea.ref_name }}
       DEPLOY_HOST: "${{ vars.DEV_SERVER_USER }}@${{ vars.DEV_SERVER_HOST }}"
-      DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ env.CI_COMMIT_BRANCH }}"
+      DEPLOY_DIR: "${{ vars.DEV_SERVER_DIR }}/${{ gitea.head_ref || gitea.ref_name }}"
       DEPLOY_SCRIPTS: "${{ vars.DEV_SERVER_SCRIPTS }}/fems-ui"
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0

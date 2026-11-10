@@ -3,12 +3,12 @@ import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { TypedFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
-import { SetupProtocol } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 import { Country } from "src/app/shared/type/country";
 import { environment } from "src/environments";
 import { DetailedAlertingSetting } from "../../settings/alerting/component/alerting.component";
 import { InstallationService } from "../installation.service";
+import { SetupProtocol } from "../jsonrpc/submitSetupProtocolRequest";
 import { Category } from "../shared/category";
 import { CommercialCluster, ExternalLimitationType, GridFeedInLimitationType, GridSetting, ModbusBridgeType, View, } from "../shared/enums";
 import { GridSettingUtils } from "../shared/gridsetting.utils";
@@ -52,10 +52,6 @@ export interface EmergencyReserve {
 }
 
 export abstract class AbstractIbn<T extends EmergencyReserve = EmergencyReserve> {
-    //Regex code for validating Countries.
-    public static readonly COUNTRY_PARTNER_ZIP_CODE_REGEX: RegExp =
-        /^((\d{5}(-\d{4})?)|([1-9]\d{3}\s?[A-Z]{2})|(\d{3}\s?\d{2})|(\d{4}))$/;
-
     // Battery type
     public readonly systemType: SystemType;
 

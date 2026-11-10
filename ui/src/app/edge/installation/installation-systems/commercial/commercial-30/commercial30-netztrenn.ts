@@ -3,9 +3,9 @@ import { FormlyFieldConfig } from "@ngx-formly/core";
 import { TranslateService } from "@ngx-translate/core";
 import { StrictFormlyFieldConfig, TypedFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
 import { JsonrpcResponseSuccess } from "src/app/shared/jsonrpc/base";
-import { SetupProtocol, SubmitSetupProtocolRequest } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { Edge, EdgeConfig, Service, Websocket } from "src/app/shared/shared";
 
+import { SetupProtocol, SubmitSetupProtocolRequest } from "../../../jsonrpc/submitSetupProtocolRequest";
 import { Category } from "../../../shared/category";
 import { Coupler } from "../../../shared/coupler";
 import { GridFeedInLimitationType, ModbusBridgeType, View } from "../../../shared/enums";

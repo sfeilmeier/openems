@@ -12,7 +12,7 @@ LimitRTPRIO=2
 LimitRTTIME=60000000
 CPUSchedulingPolicy=rr
 CPUSchedulingPriority=1
-ExecStart=/usr/lib/jvm/java-17-openjdk-amd64/bin/java \
+ExecStart=/usr/bin/java \
     -Xms45G -Xmx200G \
     -Dorg.osgi.framework.storage=/opt/openems-backend/org.osgi.framework.storage \
     -Dosgi.clean=true \

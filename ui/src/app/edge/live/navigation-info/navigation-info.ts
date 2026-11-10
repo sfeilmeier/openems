@@ -9,6 +9,8 @@ import { NavigationService } from "src/app/shared/components/navigation/service/
 import { RouteService } from "src/app/shared/service/route/route.service";
 import { UserService } from "src/app/shared/service/user.service";
 import { Service, Websocket } from "src/app/shared/shared";
+import { TourService } from "src/app/shared/tour/tour.service";
+import { TutorialTargetId } from "src/app/shared/tour/tutorial-target-id";
 import { Language } from "src/app/shared/type/language";
 import { Icon } from "src/app/shared/type/widget";
 import { environment } from "src/environments";
@@ -36,15 +38,24 @@ export type DocsMapValue = {
     link: NonNullable<HelpButtonComponent["key"]>;
 };
 
-export type NavigationCard = {
+type NavigationCardBase = {
     infoText: string;
     iconName?: IonIcon["name"];
     iconUrl?: IonIcon["src"];
     contentText: string;
     buttonText: string;
-    buttonHref: string;
     buttonIconName?: string;
     footer?: NavigationCardFooter;
+    tutorialTargetId?: TutorialTargetId;
+};
+
+export type NavigationCard = NavigationCardBase &
+    ({ buttonHref: string; buttonAction?: never } | { buttonHref?: never; buttonAction: () => void });
+
+export type NavigationCardActions = {
+    /** Whether the navigation tour is available for the current device layout. */
+    canStartNavigationTour: boolean;
+    startNavigationTour: () => void;
 };
 
 const EVSE_DOC_LINKS = {
@@ -100,7 +111,10 @@ export class NavigationInfoComponent extends AbstractModal {
         if (user == null) {
             return [];
         }
-        return environment.INFO_CARD(this.translate, user);
+        return environment.INFO_CARD(this.translate, user, {
+            canStartNavigationTour: this.tourService.canStartNavigationTour(),
+            startNavigationTour: () => this.tourService.startNavigationTour(),
+        });
     });
 
     protected docs: {
@@ -109,6 +123,7 @@ export class NavigationInfoComponent extends AbstractModal {
         icon: IconWithRequiredName;
     } | null = null;
 
+    private readonly tourService = inject(TourService);
     private readonly routeService = inject(RouteService);
     private navigationService = inject(NavigationService);
 

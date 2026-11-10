@@ -1,13 +1,15 @@
+import { Injector } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { ChartDataset } from "chart.js";
 import { EvseChargepoint } from "src/app/edge/live/Controller/Evse/shared/evse-chargepoint";
 import { NavigationConstants, NavigationTree } from "src/app/shared/components/navigation/shared";
 import { Converter } from "src/app/shared/components/shared/converter";
 import { Name } from "src/app/shared/components/shared/name";
-import { Edge, EdgeConfig } from "src/app/shared/shared";
+import { ChannelAddress, CurrentData, Edge, EdgeConfig } from "src/app/shared/shared";
 import { Role } from "src/app/shared/type/role";
 import { TimeOfUseTariffUtils } from "src/app/shared/utils/utils";
 import { environment } from "src/environments";
+import { Fena } from "../../../fena/fena.type";
 import { Mode } from "../pages/chargemode/chargemode";
 
 export namespace ControllerEvseSingleShared {
@@ -28,8 +30,7 @@ export namespace ControllerEvseSingleShared {
             return null;
         }
 
-        const chargePointComponent =
-            config.getComponentFromOtherComponentsProperty(component.id, "chargePoint.id") ?? null;
+        const chargePointComponent = config.getComponentFromOtherComponentsProperty(component.id, "chargePoint.id");
 
         const phaseSwitchingNode = new NavigationTree(
             component.id + "-phase-switching",
@@ -418,6 +419,109 @@ export namespace ControllerEvseSingleShared {
         };
 
         return scheduleChartData;
+    }
+
+    /**
+     * This function is needed because there can be more evse components (e.g. two Keba udp).
+     *
+     * @returns The Fena messages for a evse component by its unique ctrlEvse component.
+     */
+    function getFenaMessageForCtrlEvse(
+        ctrlEvse: EdgeConfig.Component,
+        edgeConfig: EdgeConfig,
+        translate: TranslateService,
+        injector: Injector,
+    ): Fena.Message[] {
+        if (ctrlEvse == null) {
+            return [];
+        }
+        const isReadOnly: boolean = ctrlEvse.getPropertyFromComponent("readOnly") ?? true;
+        const wallboxAlias = ctrlEvse.alias;
+        const evse: EdgeConfig.Component | null = edgeConfig.getComponentFromOtherComponentsProperty(
+            ctrlEvse.id,
+            "chargePoint.id",
+        );
+        // The referenced charge point may be missing from the config, e.g. after it was deleted
+        if (evse == null) {
+            return [];
+        }
+        return [
+            new Fena.LiveMessage({
+                category: "CONSUMPTION",
+                priority: 2,
+                actions: [Fena.MessageUtils.buildDetailAction(ctrlEvse.id, injector)],
+                channels: [
+                    new ChannelAddress(ctrlEvse.id, "StateMachine"),
+                    new ChannelAddress(evse.id, "ActivePower"),
+                    new ChannelAddress(ctrlEvse.id, "ActualMode"),
+                ],
+                showCallback: (currentData) => {
+                    const currentState = currentData.allComponents[ctrlEvse.id + "/StateMachine"];
+                    return !isReadOnly && currentState === StateMachine.CHARGING;
+                },
+                message: {
+                    textCallback: (currentData: CurrentData) => {
+                        const activePower = currentData.allComponents[evse.id + "/ActivePower"];
+                        const mode = currentData.allComponents[ctrlEvse.id + "/ActualMode"];
+                        return translate.instant("FENA.MESSAGES.CONSUMPTION.EVSE.CHARGING_WITH_MODE", {
+                            wallboxAlias,
+                            mode:
+                                mode !== null ? ControllerEvseSingleShared.CONVERT_TO_MODE_LABEL(translate)(mode) : "-",
+                            activePower: Converter.POWER_IN_KILO_WATT(activePower),
+                        });
+                    },
+                },
+            }),
+            new Fena.LiveMessage({
+                category: "CONSUMPTION",
+                priority: 2,
+                actions: [Fena.MessageUtils.buildDetailAction(ctrlEvse.id, injector)],
+                channels: [new ChannelAddress(ctrlEvse.id, "StateMachine"), new ChannelAddress(evse.id, "ActivePower")],
+                showCallback: (currentData) => {
+                    const currentState = currentData.allComponents[ctrlEvse.id + "/StateMachine"];
+                    return isReadOnly && currentState === StateMachine.CHARGING;
+                },
+                message: {
+                    textCallback: (currentData: CurrentData) => {
+                        const activePower = currentData.allComponents[evse.id + "/ActivePower"];
+                        return translate.instant("FENA.MESSAGES.CONSUMPTION.EVSE.CHARGING", {
+                            wallboxAlias,
+                            activePower: Converter.POWER_IN_KILO_WATT(activePower),
+                        });
+                    },
+                },
+            }),
+            new Fena.LiveMessage({
+                category: "CONSUMPTION",
+                priority: 3,
+                actions: [Fena.MessageUtils.buildDetailAction(ctrlEvse.id, injector)],
+                channels: [
+                    new ChannelAddress(ctrlEvse.id, "StateMachine"),
+                    new ChannelAddress(ctrlEvse.id, "ActualMode"),
+                ],
+                showCallback: (currentData) => {
+                    const currentState = currentData.allComponents[ctrlEvse.id + "/StateMachine"];
+                    const mode = currentData.allComponents[ctrlEvse.id + "/ActualMode"];
+                    return !isReadOnly && currentState === StateMachine.EV_CONNECTED && mode === Mode.ZERO;
+                },
+                message: {
+                    textCallback: () => {
+                        return translate.instant("FENA.MESSAGES.CONSUMPTION.EVSE.NOT_CHARGING", { wallboxAlias });
+                    },
+                },
+            }),
+        ];
+    }
+
+    export function getFenaMessages(
+        factoryId: string,
+        config: EdgeConfig,
+        translate: TranslateService,
+        injector: Injector,
+    ): Fena.Message[] {
+        // Find every ctrl evse
+        const ctrlEvses: EdgeConfig.Component[] = config.getComponentsByFactory(factoryId);
+        return ctrlEvses.flatMap((ctrlEvse) => getFenaMessageForCtrlEvse(ctrlEvse, config, translate, injector));
     }
 }
 

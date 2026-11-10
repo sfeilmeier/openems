@@ -30,6 +30,14 @@ export enum UserSettings {
     ANNUAL_REVIEW = "annualReview",
     IS_DEVELOPER = "isDeveloper",
     HAS_PORTAL_ACCESS = "hasPortalAccess",
+    TUTORIAL_STATE = "tutorialState",
+}
+
+/** Stored result of the guided navigation tour. */
+export interface TutorialState {
+    state: "completed" | "skipped";
+    /** UI version the tour was finished or dismissed with; steps of a newer version start the tour automatically again. */
+    uiVersion: string;
 }
 
 export interface UserSettingsMap {
@@ -40,6 +48,7 @@ export interface UserSettingsMap {
     annualReview: string[];
     isDeveloper: boolean;
     hasPortalAccess: boolean;
+    tutorialState: TutorialState;
 }
 
 export class User {

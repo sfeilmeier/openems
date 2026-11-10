@@ -97,6 +97,7 @@ import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk010;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk011;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.s.Isk110;
 import io.openems.edge.app.integratedsystem.fenecon.industrial.xl.Ixl010;
+import io.openems.edge.app.loadcontrol.AppBraiinsOsDiy;
 import io.openems.edge.app.loadcontrol.ManualRelayControl;
 import io.openems.edge.app.loadcontrol.ThresholdControl;
 import io.openems.edge.app.meter.CarloGavazziMeter;
@@ -1182,6 +1183,16 @@ public final class Apps {
 	 */
 	public static final ThresholdControl thresholdControl(AppManagerTestBundle t) {
 		return app(t, ThresholdControl::new, "App.LoadControl.ThresholdControl");
+	}
+
+	/**
+	 * Test method for creating a {@link AppBraiinsOsDiy}.
+	 *
+	 * @param t the {@link AppManagerTestBundle}
+	 * @return the {@link OpenemsApp} instance
+	 */
+	public static final AppBraiinsOsDiy braiinsOsMeterDiy(AppManagerTestBundle t) {
+		return app(t, AppBraiinsOsDiy::new, "App.LoadControl.BraiinsOs");
 	}
 
 	// Meter

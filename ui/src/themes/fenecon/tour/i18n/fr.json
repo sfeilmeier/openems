@@ -1,0 +1,36 @@
+{
+    "NAVIGATION_TOUR": {
+        "ALERTING_TEXT": "Restez informé à tout moment : si votre <strong>FEMS</strong> n'a pas de connexion au backend FENECON pendant une période prolongée, vous pouvez être averti par e-mail. La notification est envoyée à l'adresse e-mail indiquée lors de la mise en service.\n\nVous trouvez les paramètres correspondants sous <strong>« Notifications » dans les paramètres système</strong>.\n\n💡 <strong>Astuce :</strong> pour les installateurs en particulier, il vaut la peine de consulter cette section afin d'être informés à temps d'éventuels problèmes.",
+        "COCKPIT_TEXT": "Nouveau nom, contenu familier : dans le Cockpit, vous trouvez toujours toutes les valeurs de puissance actuelles importantes en un coup d'œil.\n\n<strong>Astuce :</strong> en touchant les différentes icônes, vous accédez directement à la page de détails correspondante, avec des informations supplémentaires et d'autres options de commande.",
+        "ENERGY_JOURNEY_APPCENTER_TEXT": "L'<strong>AppCenter</strong> FENECON se trouve désormais dans le menu principal sous <strong>« Votre Energy Journey »</strong>. Vous pouvez y découvrir des applications, ainsi qu'utiliser et gérer des clés de licence pour de nouvelles applications.\n\nDes <strong>applications gratuites et payantes</strong> sont disponibles. <strong>Remarque :</strong> vous obtenez les clés de licence des applications payantes auprès de votre installateur.",
+        "ENERGY_JOURNEY_TEXT": "Suivez l'évolution de votre système énergétique en un lieu central. Vous pouvez y effectuer des analyses et obtenez à la fois une vue d'ensemble et les possibilités pour les prochaines étapes d'extension pertinentes.",
+        "FAVORITES_TEXT": "Avec le niveau d'accès <strong>Owner</strong>, vous pouvez enregistrer les éléments de menu fréquemment utilisés comme <strong>favoris</strong>. Vous les retrouvez regroupés dans le menu latéral sous <strong>« Favoris »</strong> pour un accès rapide.",
+        "HISTORY_DOWNLOAD_TEXT": "Sous <strong>Historique</strong>, vous trouvez l'élément de menu <strong>Exporter</strong>. Vous pouvez y télécharger les valeurs de la période sélectionnée sous forme de fichier Excel (.xlsx).",
+        "HISTORY_INTRO": "Dans l'<strong>Historique</strong>, vous trouvez les principales valeurs de votre système résumées dans un graphique. La période peut être ajustée de manière flexible. La vue à l'échelle du système constitue une base idéale pour suivre les évolutions et effectuer des analyses.",
+        "HISTORY_SERIES": {
+            "CHARGING": "Charge",
+            "CONSUMPTION": "Consommation",
+            "DISCHARGING": "Décharge",
+            "FEED_IN": "Injection",
+            "GRID": "Soutirage réseau",
+            "PRODUCTION": "Production",
+            "STATE_OF_CHARGE": "État de charge (SoC)"
+        },
+        "RESTART_TUTORIAL": "Vous souhaitez revoir le tutoriel plus tard ? Sous <strong>Info</strong>, vous pouvez le relancer à tout moment et parcourir la visite à votre rythme.",
+        "SYSTEM_STATUS": "En haut à droite du Cockpit, vous trouvez l'état global du système. Touchez le symbole pour afficher un aperçu de tous les composants du système concernés et de leur état actuel.",
+        "TITLE": {
+            "ALERTING": "Mon conseil : configurer les notifications",
+            "APPCENTER": "L'AppCenter",
+            "COCKPIT": "Votre moniteur de puissance se trouve désormais dans le Cockpit",
+            "DOWNLOAD": "Télécharger les données",
+            "ENERGY_JOURNEY": "Votre Energy Journey",
+            "ENERGY_JOURNEY_MOBILE": "Journey",
+            "FAVORITES": "Plus rapide avec les favoris",
+            "HISTORY": "Historique",
+            "RESTART_TUTORIAL": "Relancer le tutoriel",
+            "SYSTEM_STATUS": "État du système"
+        },
+        "WELCOME": "Bienvenue dans le nouveau design !",
+        "WELCOME_TEXT": "Bonjour, je suis FENA, votre FENECON Assistant. Je vous aide à garder un œil sur votre gestion de l'énergie.\n\nAfin que vous puissiez profiter rapidement des avantages du nouveau design, je vous présente brièvement les principales nouveautés de l'application FENECON.\n\nCertains contenus ont été restructurés et des fonctions ont été ajoutées pour une meilleure utilisation sur mobile."
+    }
+}

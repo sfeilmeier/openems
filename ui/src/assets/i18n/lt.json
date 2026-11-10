@@ -241,6 +241,7 @@
                 "TITLE": "Energijos monitorius"
             },
             "RETROFITTING": {
+                "EXPANSION_AVAILABLE": "Apribotas sistemos veikimas - Talpos didinimą dabar galima atlikti",
                 "EXPANSION_RUNNING": "Apribotas sistemos veikimas - ruošiamas talpos didinimas",
                 "INFORMATION_FOR_INSTANT_START": "Akumuliatorius yra kraunamas arba iškraunamas maksimalia galia, kad plėtimui kuo greičiau būtų pasiektas {{targetSoc}} % įkrovos lygis. Dėl to gali kilti suvartojimas iš tinklo arba tiekimas į tinklą. Šis įkrovos lygis palaikomas {{targetTimeBuffer}} minučių, o po to arba po to, kai talpa bus išplėsta, kaupimo sistema grįžta į įprastinę darbo būseną.",
                 "INFORMATION_FOR_PLANNED_EXPANSION": "Numatoma, kad akumuliatorius bus kraunamas/iškraunamas nuo {{targetTime}} {{targetDate}}, kad planuojamam plėtimui būtų pasiektas {{targetSoc}} % įkrovos lygis. Šio proceso metu gali kilti suvartojimas iš tinklo arba tiekimas į tinklą. Šis įkrovos lygis palaikomas {{targetTimeBuffer}} minučių, o po to arba po talpos plėtimo, kaupimo sistema grįžta į įprastinę darbo būseną.",
@@ -576,10 +577,11 @@
                         "BMS_HARD_RESET": "BMS atstatymas iš naujo",
                         "CLEAR_COOLING_UNIT_ERRORS_HEADER": "Aušinimo bloko atstatymas:",
                         "CLEAR_COOLING_UNIT_ERRORS_TEXT": "būtina esant aušinimo bloko klaidoms",
-                        "F2B_UPDATE_HEADER": "F2B atnaujinimas",
                         "MAINTENANCE_WINDOW": "Techninės priežiūros langas",
                         "NOTE": "Paleidžia arba stabdo visą sistemą, įskaitant akumuliatorių inverterį ir akumuliatorius",
                         "RESET": "RESET",
+                        "SERVICE_ASSISTANT": "Serviso asistentas",
+                        "SYSTEM_ERROR_ACKNOWLEDGE": "Sistemos klaidos patvirtinimas",
                         "SYSTEM_ERROR_ACKNOWLEDGE_HEADER": "Sistemos klaidos patvirtinimas:",
                         "SYSTEM_ERROR_ACKNOWLEDGE_TEXT": "apima sistemos komponentus, akumuliatorius, inverterius, ESS"
                     },
@@ -660,11 +662,24 @@
                 "STANDARD": "Standartinis tarifas"
             },
             "TITLE": "{{ year }} papildomos išlaidos"
+        },
+        "VALIDATION": {
+            "EMAIL": "{{ email }} nėra galiojantis el. pašto adresas.",
+            "INVALID_ZIPCODE": "Neteisingas pašto kodo formatas",
+            "MANDATORY_FIELD": "Tai privalomas laukas",
+            "MAX": "Įveskite reikšmę, mažesnę nei {{ max }}.",
+            "MIN": "Įveskite reikšmę, didesnę nei {{ min }}"
         }
     },
     "GENERAL": {
         "ACTIVE": "Aktyvus",
         "ACTUAL_POWER": "EV krovinimo galia",
+        "ADDRESS": {
+            "CITY": "Miestas",
+            "COUNTRY": "Šalis",
+            "STREET_ADDRESS": "Gatvės adresas",
+            "ZIP": "Pašto kodas"
+        },
         "ALL": "Visi",
         "APPLY": "Taikyti",
         "AUTARCHY": "Autarkija",
@@ -798,7 +813,6 @@
         },
         "SUM_STATE": "Sistemos būsena",
         "SURVEY": "Čia galite pasidalinti su mumis savo atsiliepimu apie beta testavimą:",
-        "SURVEY_LINK": "Dalyvauti beta testavimo apklausoje",
         "SYSTEM": "sistema",
         "SYSTEM_OUTAGE": "Dėl techninės priežiūros darbų internetinis stebėjimas laikinai neprieinamas. Prašome pabandyti vėliau. Daugiau informacijos rasite",
         "SYSTEM_STATE": "Sistemos būsena",
@@ -854,6 +868,7 @@
         "CONNECTION_SUCCESSFUL": "Sėkmingai prisijungta prie {{ value }}.",
         "DEVICE_OFFLINE": "Įrenginys neprijungtas!",
         "FIRST_SETUP_PROTOCOL": "Pradinis paleidimas",
+        "INSTALLATION_RECOMMENDATION": "Jei norite paleisti {{ edgeShortName }}, spustelėkite žemiau esantį mygtuką \"Pridėti\".",
         "IS_OFFLINE": "OpenEMS neprisijungęs!",
         "LOGGED_IN_AS": "Prisijungta kaip",
         "NO_EDGE_AVAILABLE": "Dar nepridėjote nė vieno {{edgeShortName}}.",
@@ -862,394 +877,6 @@
         "TO_ENERGYMONITOR": "Į energijos monitorių...",
         "TYPE": "Tipas",
         "VISIBLE_HERE_AFTER_INSTALLATION": "Kai montuotojas sukonfigūruos ir paleis jūsų {{ edgeShortName }}, matysite jį čia."
-    },
-    "INSTALLATION": {
-        "ALIAS_WITH_LABEL": "Alias {{label}}{{number}}",
-        "BACK": "Atgal",
-        "CLICK_RECOMMENDATION": "Jei norite paleisti {{ edgeShortName }}, spustelėkite žemiau esantį mygtuką \"Pridėti\".",
-        "COMPLETE": "Į internetinį stebėjimą",
-        "COMPLETION": {
-            "DOWNLOAD": "Atsisiųsti ataskaitą",
-            "DOWNLOAD_ERROR": "Protokolo nepavyko atsisiųsti",
-            "DOWNLOAD_SUCCESS": "Protokolas sėkmingai atsisiųstas",
-            "HECKERT_NOTE": "Nemokama programėlė jau prieinama diegimui programėlių centre.",
-            "INVALID_PAYLOAD": "Netinkamas serverio atsakymas",
-            "NAVIGATION_LABEL": "Eiti į programėlių centrą",
-            "NOTE": "Spustelėkite čia, kad patektumėte į programėlių centrą, sukonfigūruotumėte papildomus komponentus ir įdiegtumėte programėles.",
-            "SUB_TITLE": "Sėkmingai paleidote {{ value }}.",
-            "TITLE": "Sąranka baigta"
-        },
-        "CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION": {
-            "HEADER": "Tinklo skaitiklio ryšio tipas",
-            "IP_ADDRESS": "IP adresas",
-            "PORT": "Prievadas",
-            "RS485": "RS485",
-            "TCP_IP": "TCP/IP"
-        },
-        "CONFIGURATION_COMMERCIAL_MODBUS_BRIDGE": {
-            "HEADER": "Pasirinkite ryšio tipą"
-        },
-        "CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT": {
-            "RS485_LABEL": "RS485 (4-RJ45 prievadai) - Prijungimas: FEMS",
-            "TCP_IP_LABEL": "TCP/IP (6-RJ45 prievadai) - Prijungimas: Internal"
-        },
-        "CONFIGURATION_EMERGENCY_RESERVE": {
-            "COUPLER_TITLE": "Kuris fieldbus sujungiklis yra įrengtas jūsų Offgrid tinklo taške?",
-            "EMERGENCY_RESERVE": "Avarinės energijos rezervas {{ symbol }}",
-            "EMERGENCY_RESERVE_LABEL": "Avarinis maitinimas{{ symbol }}",
-            "EMERGENCY_RESERVE_NOTE": "Jei ši funkcija įjungta, akumuliatoriaus įkrovos lygis negali nukristi žemiau nustatytos reikšmės.",
-            "EMERGENCY_RESERVE_VALUE": "Avarinio rezervo reikšmė",
-            "INFO": "Naudodami generatorių atkreipkite dėmesį: avarinės energijos rezervo įkrovos lygis turi būti didesnis (arba lygus) už nurodytą generatoriui paleisti reikalingą įkrovos lygį (žr. išsamesnę informaciją žemiau).",
-            "IS_ACTIVATED": "Avarinės energijos rezervas aktyvus?",
-            "IS_ENABLED": "Ar įjungti avarinio maitinimo funkciją?",
-            "TITLE": "Avarinės energijos rezervas",
-            "VALUE": "Reikšmė [%]"
-        },
-        "CONFIGURATION_ENERGY_FLOW_METER": {
-            "CONVERTER_RATIO": "Srovės transformatoriaus santykis (200–5000A)",
-            "METER": {
-                "INTEGRATED": "Integruotas trijų fazių namų sensorius su srovės transformatoriumi ({{type}})",
-                "LABEL": "Skaitiklis",
-                "TYPE": {
-                    "OPTIONAL": "Neprivalomas",
-                    "STANDARD": "standartinė komplektacija"
-                },
-                "WITHOUT_CT": "Trijų fazių namų sensorius be srovės transformatoriaus (neprivalomas)",
-                "WITHOUT_CT_STANDARD_DELIVERY": "Trijų fazių namų sensorius be srovės transformatoriaus (standartinė komplektacija)",
-                "WITH_CT": "Trijų fazių namų sensorius su 120A srovės transformatoriumi ({{type}})"
-            },
-            "TITLE": "Energijos srauto krypties skaitiklio pasirinkimas"
-        },
-        "CONFIGURATION_ESS_LIMITER": {
-            "INFO_NOTE": "Siekiant išvengti tinklo perkrovos, tinklo operatoriui ateityje bus suteikta galimybė sumažinti visų nuo 2024 m. sausio 1 d. įrengtų vartojimo įrenginių galią iki 4.2 kW.",
-            "IS_ACTIVATE": "Įjungti ribojimo parinktį pagal §14a EnWG",
-            "IS_ACTIVATE_LABEL": "Laidai turi būti sumontuoti pagal montavimo instrukcijas.",
-            "TITLE": "Ribojimas pagal §14a EnWG"
-        },
-        "CONFIGURATION_EXECUTE": {
-            "BATTERY": "Akumuliatorius",
-            "BATTERY_INTERFACE": "Akumuliatoriaus sąsaja",
-            "BATTERY_INVERTER": "Akumuliatoriaus inverteris",
-            "COMMUNICATION_WITH_BATTERY": "Ryšys su akumuliatoriumi",
-            "COMMUNICATION_WITH_BATTERY_INVERTER": "Ryšys su akumuliatoriaus inverteriu",
-            "COMMUNICATION_WITH_METER": "Ryšys su skaitikliu",
-            "COMMUNICATION_WITH_RELAY": "Ryšys su relė",
-            "CONTROL_GRID_POINT": "Tinklo atjungimo taško valdymas",
-            "DESCRIPTION_1": "Kad įsitikintumėte, jog visi jūsų sistemos komponentai sukonfigūruoti teisingai,",
-            "DESCRIPTION_2": "konfigūracija ir vėlesni funkcijų testai gali užtrukti iki 10 minučių.",
-            "EMERGENCY_CAPACITY_RESERVE": "Avarinis valdymo rezervas",
-            "ERROR": "Klaida",
-            "EXISTING_CONFIGURATION": "Rasta esama konfigūracija. Galite ją perrašyti paleisdami konfigūravimo procesą rankiniu būdu.",
-            "FIELD_BUS_COUPLER": "Fieldbus sujungiklis",
-            "FINISH_FUNCTION_TEST": "Užbaigti įdiegtų komponentų funkcijų testai",
-            "FUNCTION_TEST": "Funkcijų testas",
-            "FUNCTION_TEST_ERROR": "Funkcijų testas užbaigtas su klaidomis.",
-            "GRID_METER": "Tinklo skaitiklis",
-            "GRID_OPTIMIZED_CHARGE": "Pagal tinklą optimizuotas krovimas",
-            "IP_ADDRESS_ERROR": "Nepavyko prie tinklo konfigūracijos pridėti {{ system}} reikalingo IP adreso.",
-            "IP_ADDRESS_WARNING": "Nepavyko prie tinklo konfigūracijos pridėti sujungikliui reikalingo IP adreso.",
-            "IS_BEING_CONFIGURED": "konfigūruojama",
-            "LABEL": {
-                "WAGO_BRIDGE": "WAGO (pilkas komponentas)",
-                "WEIDMUELLER_BRIDGE": "Weidmüller (juodas komponentas)"
-            },
-            "LEGEND": "Legenda",
-            "NOT_YET_CONFIGURED": "Dar nesukonfigūruota / nepatikrinta",
-            "PARTIAL_CONFIGURATION": "Ne visus komponentus pavyko sukonfigūruoti teisingai.",
-            "PRE_CONFIGURED": "Iš anksto sukonfigūruota / Įspėjimas",
-            "RELAY_BOARD": "Relių plokštė",
-            "SELF_CONSUMPTION": "Savitiekio optimizavimas",
-            "START": "Pradėti konfigūravimą",
-            "START_FUNCTION_TEST": "Pradėti įdiegtų komponentų funkcijų testai",
-            "STORAGE_SYSTEM": "Energijos kaupimo sistema",
-            "SUCCESSFULLY_CONFIGURED": "Sėkmingai sukonfigūruota / patikrinta",
-            "TITLE": "Konfigūracija",
-            "UNDEFINED_COMPONENT_CONFIGURATOR": "Komponento konfigūratorius neapibrėžtas",
-            "WAGO_BRIDGE": "WAGO tiltelis",
-            "WAITING": "Konfigūravimas vyksta...",
-            "WEIDMUELLER_BRIDGE": "Weidmueller tiltelis"
-        },
-        "CONFIGURATION_FEATURES_STORAGE_SYSTEM": {
-            "BALANCING": "Savitiekio optimizavimas"
-        },
-        "CONFIGURATION_GRID_SETTING": {
-            "TITLE": "Tinklo nustatymas"
-        },
-        "CONFIGURATION_LINE_SIDE_METER_FUSE": {
-            "FIXED_VALUE_DESCRIPTION": "Kokia dabartinė automatinio jungiklio reikšmė?",
-            "METER": "Skaitiklis",
-            "METER_LABEL": "Tinklo prijungimo taško skaitiklio tipas",
-            "OTHER": "Kita",
-            "OTHER_VALUE": "Pasirinktinė reikšmė",
-            "TITLE_COMMERCIAL": "Automatinis jungiklis tinklo prijungimo taške / skaitiklio automatinis jungiklis",
-            "TITLE_HOME": "Automatinis jungiklis tinklo prijungimo taške",
-            "VALUE": "Reikšmė [A]"
-        },
-        "CONFIGURATION_MPPT_SELECTION": {
-            "CONNECTION_CHECK_LABEL": "Ar visi prijungimai buvo patikrinti?",
-            "NOTE": "Papildomi generatoriai vėliau gali būti sukonfigūruoti programėlių centre."
-        },
-        "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
-            "SLAVE_COUNT_TITLE": "Informacija apie slave įrenginių skaičių",
-            "SLAVE_INSTALLATION_TITLE": "Atskirų kaupimo įrenginių (slave) įdiegimas"
-        },
-        "CONFIGURATION_STS_BOX": {
-            "HELP_TEXT": "STS Box serijinis numeris yra ant tipo lentelės, esančios STS Box šone",
-            "LABEL": "STS Box",
-            "STS_BOX_AVAILABLE": "STS Box įdiegtas",
-            "STS_BOX_FIELD_LABEL": "Ar avarinio maitinimo galimybei įdiegtas STS Box:"
-        },
-        "CONFIGURATION_SUMMARY": {
-            "ACCEPT": "priimta",
-            "ACCEPT_TERMS": "Norėdami tęsti, priimkite garantijos sąlygas.",
-            "ALIAS_WITH_LABEL_HOME_DC": "Alias MPPT{{mppt}}",
-            "BATTERY": "Akumuliatorius",
-            "BATTERY_LOCATION": "BESS vieta",
-            "BOTH_SELECTED_LABEL": "Abu PV prievadai (\"PV{{ pv1 }}\" ir \"PV{{ pv2 }}\") prijungti",
-            "COUNTRY_SETTING": "Šalies nustatymai",
-            "CUSTOMER": "Klientas",
-            "DEVICE_ACTIVE_CHECKED": "Akumuliatorius ir inverteris įjungti",
-            "EDGE_NUMBER": "{{ edgeShortName }} numeris",
-            "ENERGY_FLOW_METER": {
-                "LABEL": "Tinklas"
-            },
-            "GENERAL": "Bendra",
-            "INSTALLER": "Montuotojas",
-            "INVERTER": "Inverteris",
-            "IS_DEVICE_ACTIVE_CHECKED": "Patikrinkite, ar akumuliatorius ir inverteris yra įjungti, ir patvirtinkite tai.",
-            "MODULE_TYPE_WITH_LABEL_HOME_DC": "Modulių tipas MPPT{{ mppt }}",
-            "NEXT_CLICKED_DESCRIPTION": "Spustelėjus mygtuką 'kitas', kaupimo sistema bus sukonfigūruota. Įsitikinkite, kad akumuliatorius ir inverteris yra įjungti viso konfigūravimo proceso metu.",
-            "NUMBER_OF_MODULES_WITH_LABEL_HOME_DC": "PV modulių skaičius MPPT{{ mppt }}",
-            "ORIENTATION_WITH_LABEL_HOME_DC": "MPPT{{ mppt }} orientacija",
-            "PRODUCER": "Generatorius",
-            "SUMMARY": "Santrauka",
-            "TIME_OF_INSTALLATION": "Montavimo laikas",
-            "VALUE_WITH_LABEL_HOME_DC": "Reikšmė MPPT{{ mppt }} {{ symbol }}",
-            "WARRANTY_TERMS": "Garantijos sąlygos"
-        },
-        "CONFIGURATION_SYSTEM": {
-            "OPEN_INSTRUCTIONS": "Atidaryti instrukcijas",
-            "PRODUCT_NAME": "Produkto pavadinimas",
-            "TITLE": "Prašome pasirinkti produktą, kurį reikia sukonfigūruoti."
-        },
-        "CONFIGURATION_SYSTEM_VARIANT": "Pasirinkite įdiegtą komponentą",
-        "FORM": {
-            "BATTERY_SERIAL_NUMBER": "{{ serialNumber }} nėra galiojantis serijinis numeris. Galiojantis serijinis numeris susideda iš {{ length }} skaitmenų.",
-            "EMAIL": "{{ email }} nėra galiojantis el. pašto adresas.",
-            "EMAIL_MATCH": "El. pašto adresai nesutampa.",
-            "INVALID_ZIPCODE": "Neteisingas pašto kodo formatas",
-            "MANDATORY_FIELD": "Tai privalomas laukas",
-            "MAX": "Įveskite reikšmę, mažesnę nei {{ max }}.",
-            "MIN": "Įveskite reikšmę, didesnę nei {{ min }}",
-            "POSITIVE_INTEGER": "Leidžiami tik teigiami sveikieji skaičiai.",
-            "STS_SERIAL_NUMBER_REQUIREMENT": "Serijinis numeris susideda iš ne daugiau kaip 16 skaitmenų."
-        },
-        "LOAD": "įkėlimas",
-        "NEXT": "toliau",
-        "PRE_INSTALLATION": {
-            "AUTHENTICATION_FAILED": "Autentifikacija nepavyko",
-            "EDGE_OFFLINE": "Nepavyko užmegzti ryšio su {{ edgeShortName }}",
-            "INSTALLATION_SUCCESS": "diegimas pradėtas {{ edgeId }}",
-            "NOTE": "Pastaba:",
-            "TITLE": "Įveskite diegimo raktą",
-            "WRONG_KEY_NOTE": "Jei diegimo raktas neteisingai atpažįstamas kaip negaliojantis, atnaujinkite puslapį."
-        },
-        "PROTOCOL_AVU_BOX": {
-            "LABEL": "AVU",
-            "SERIAL_NUMBER": "Serijinis numeris",
-            "TITLE": "Ar diegimo pakete yra AVU dėžė (automatinis vartotojo jungiklis)?"
-        },
-        "PROTOCOL_CHECKLIST": {
-            "CHANGE_NETWORK_SETTINGS": "B) Pakeiskite kompiuterio tinklo nustatymus (IP adresas)",
-            "CONNECT_INVERTER": "A) Prijunkite kompiuterį prie inverterio naudodami tinklo kabelį (viršutinis LAN lizdas)",
-            "ENTER_PASSWORD": "D) Įveskite slaptažodį",
-            "IP_ADDRESS": "C) Įveskite IP adresą naršyklėje",
-            "IP_ADDRESS_DESCRIPTION": "IP adresas: 169.254.1.1",
-            "MIN_VOLTAGE": "G) Papildomai: nustatykite minimalų įtampos limitą 600 V",
-            "MIN_VOLTAGE_DESCRIPTION": "Veikia tik su montuotojo slaptažodžiu (asmeninis FENECON slaptažodis arba iš anksto sukonfigūruotas)\n\n<ul><li>Minimalus įtampos limitas:<b> {{voltageLimit}} V</b> (-> Tinklo nustatymas: <b>{{gridSetting}}</b>)</li></ul>",
-            "MULTI_STEP": "{{listPosition}}) Atlikite veiksmus nuo 1 iki {{totalSteps}}",
-            "NETWORK_SETTINGS": "IP adresas: 169.254.1.12\nPotinklio kaukė: 255.255.255.0",
-            "NETWORK_SETTINGS_INFO": "Atkreipkite dėmesį, kad statinio IP adreso nustatymo veiksmai ir iliustracijos gali skirtis priklausomai nuo naudojamo įrenginio. Kituose įrenginiuose, pavyzdžiui, „Apple“ įrenginiuose, procedūros gali skirtis.",
-            "NETWORK_SETTINGS_NOTE": "Norint pasiekti inverterį per jo fiksuotą IP adresą, su inverteriu sujungtam įrenginiui reikia rankiniu būdu priskirti statinį IP, esantį tame pačiame tinklo diapazone",
-            "PASSWORD_DESCRIPTION": "Serviso slaptažodis:\n\nNaudotojas: service\nSlaptažodis: Ye_r0d4w0P!",
-            "POWER_CONTROL": "H) Nustatykite galios valdymą (Cos-Phi ir kt.)",
-            "POWER_CONTROL_DESCRIPTION": "-> kokios nuostatos čia reikalingos, rasite tinklo operatoriaus duomenyse\n-> Keitimus galima atlikti tik su montuotojo slaptažodžiu",
-            "START_CONFIGURATION": "E) Paleiskite KACO konfigūraciją naudodami diegimo vedlį",
-            "STEP": "Veiksmas {{currStep}}/{{totalStep}} - {{description}}",
-            "STEP_1": "Pasirinkite kalbą",
-            "STEP_2": "Nurodykite šalį / tinklo tipą",
-            "STEP_2_DESCRIPTION": "Čia pasirinkite tinklo nustatymą:\n\n<ul><li>Vokietija <b>{{gridSetting}}</b> (-> punkte G) nustatykite \"Minimum Voltage limit\" į <b>{{voltageLimit}} V </b>)",
-            "STEP_3": "Aktyvios galios ribojimas",
-            "STEP_3_DESCRIPTION": "-> Priimkite numatytuosius nustatymus tokius, kokie jie yra.",
-            "STEP_4": "IP nustatymas",
-            "STEP_4_DESCRIPTION": "IP adresas: 172.16.0.100\nPotinklio kaukė: 255.255.255.0\nNumatytasis šliuzas: 172.16.0.1",
-            "STEP_5": "Lokalizacija",
-            "STEP_5_DESCRIPTION": "Čia sinchronizuokite laiką mygtuku „Sync“",
-            "STEP_6": "Modbus",
-            "STEP_6_DESCRIPTION": "Modbus nustatymas turi būti 502",
-            "STEP_7": "Kita (neprivalomi parametrai)",
-            "STEP_8": "Užbaigimas",
-            "STEP_8_DESCRIPTION": "Įveskite montuotojo vardą",
-            "TIMEOUT_NOTE": "Šis procesas gali užtrukti iki {{timeoutInMinutes}} minučių."
-        },
-        "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO - Prijunkite inverterį",
-        "PROTOCOL_COMMERCIAL_CLUSTER": {
-            "SLAVES_TITLE": "Slave {{number}}",
-            "SLAVE_FILED_LABEL": "Įveskite konfigūruotinų Slave skaičių",
-            "SLAVE_INSTALLATION": {
-                "CONNECTION_STATUS": {
-                    "NOT_FOUND": "Slave nerastas"
-                },
-                "LOG_MESSAGE": {
-                    "AUTHENTICATION_SUCCESSFUL": "Autentifikacija sėkminga. Atnaujinama sistema...",
-                    "CONFIGURATION_FAILED": "Konfigūracija nepavyko: {{ error }}",
-                    "CONFIGURED_SUCCESSFULLY": "Programa sukonfigūruota sėkmingai.",
-                    "FUNCTION_TESTS_FAILED": "Funkcijų testas nepavyko: {{ error }}",
-                    "PARTIALLY_CONFIGURED": "Konfigūracija atlikta iš dalies.",
-                    "SLAVE_STATUS_ERROR": "Klaida gaunant Slave {{ slaveNr }} būseną",
-                    "STARTING_AUTHENTICATION": "Pradedama autentifikacija...",
-                    "UPDATE_COMPLETED": "Sistemos atnaujinimas baigtas. Konfigūruojama programa..."
-                }
-            }
-        },
-        "PROTOCOL_FEED_IN_MANAGEMENT": {
-            "CAPACITIVE": "kapacityvinis",
-            "CHOOSE": "Pasirinkite",
-            "CONSTANT_VALUE": "Cos φ reikšmė",
-            "DYNAMIC_EXTERNAL_LIMITATION": "Dinaminis išorinis valdiklis",
-            "DYNAMIC_LIMITATION": "Dinaminis tiekimo į tinklą ribojimas",
-            "DYNAMIC_LIMITATION_TYPE": "Tiekimo į tinklą ribojimas",
-            "EXTERNAL_CONTROLLER_CHECK": "Išorinio valdymo imtuvas sumontuotas tinkamai ir pilnai pagal instrukcijas.",
-            "EXTERNAL_LIMITATION": "Išorinis valdiklis (išorinis ribojimas pagal DSO)",
-            "EXTERNAL_LIMITATION_TYPE": "Išorinis ribojimas",
-            "FEED_IN_SETTING_DESCRIPTION": "Aktyvios galios mažinimas esant per dideliam dažniui",
-            "FIXED_POWER_FACTOR": "Pastovus Cos φ (P)",
-            "FIXED_POWER_FACTOR_DESCRIPTION": "Paprastai tinklo operatorius nurodo pastovią galios koeficiento reikšmę '1'",
-            "INDUCTIVE": "indukcinis",
-            "INFO_TEXT": "Jūsų energijos kaupimo sistema naudodama išmanų įkrovimą stengiasi išvengti PV sistemos galios ribojimo.",
-            "MAXIMUM_FEED_IN_VALUE": "Maksimali tiekimo į tinklą reikšmė [W]",
-            "MAXIMUM_VALUE_DESCRIPTION": "Šią reikšmę gali reikalauti DSO.",
-            "NA_PROTECTION": "Aktyvuoti nuotolinį išjungimą (centrinė NS apsauga)",
-            "NO_LIMITATION": "Be ribojimo",
-            "PLACE_HOLDER": "Pasirinkite parinktį",
-            "PU_ENABLED_CURVE": "Poslinkio galios koeficientas Cos φ (P)",
-            "QU_ENABLED_CURVE": "Reaktyvioji galia - Q(U) charakteristika",
-            "SHADE_MANAGEMENT_DEACTIVATED": "Ar šešėlio valdymas išjungtas?",
-            "TITLE": "Tiekimo į tinklą valdymas",
-            "WARNING_TEXT": "Tai nepakeičia tinkamos fotovoltaikos inverterio konfigūracijos!"
-        },
-        "PROTOCOL_INSTALLER_AND_CUSTOMER": {
-            "CITY": "Miestas",
-            "COMPANY_CUSTOMER": "Įmonė?",
-            "COMPANY_NAME": "Įmonės pavadinimas",
-            "COUNTRY": "Šalis",
-            "EMAIL": "El. pašto adresas",
-            "EMAIL_CONFIRMATION": "patvirtinimas",
-            "EMAIL_DESCRIPTION": "asmeninei prieigai",
-            "FIRST_NAME": "Vardas",
-            "LAST_NAME": "Pavardė",
-            "PHONE": "Telefonas",
-            "STREET_ADDRESS": "Gatvės adresas",
-            "TITLE_CUSTOMER": "Kontaktinė informacija - Galutinis klientas",
-            "TITLE_INSTALLER": "Kontaktinė informacija - Montuotojas",
-            "ZIP": "Pašto kodas"
-        },
-        "PROTOCOL_PV": {
-            "ADDITIONAL_GENERATOR": "Papildomas AC generatorius",
-            "ALIAS": "Aprašymas",
-            "ALIAS_DESCRIPTION_PV": "bus rodoma internetiniame monitoringe, pvz. \"PV-Roof\"",
-            "BOTH_SELECTED_LABEL": "Ar abu prievadai (\"PV{{ pv1 }}\" & \"PV{{ pv2 }}\") prijungti?",
-            "DIRECTIONS": {
-                "EAST": "Rytai",
-                "NORTH": "Šiaurė",
-                "NORTH_EAST": "Šiaurės rytai",
-                "NORTH_WEST": "Šiaurės vakarai",
-                "SOUTH": "Pietūs",
-                "SOUTH_EAST": "Pietryčiai",
-                "SOUTH_WEST": "Pietvakariai",
-                "WEST": "Vakarai"
-            },
-            "INSTALLED_POWER": "Įdiegta galia [Wₚ]",
-            "INSTALLED_POWER_PER_STRING": "Įdiegta galia vienai gijai [Wₚ]",
-            "MARKED_AS": " MPPT {{ mppt }} (pažymėtas kaip \"PV{{ mppt }}\")",
-            "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (pažymėtas kaip \"{{ pv1 }}\" & \"{{ pv2 }}\")",
-            "MODULE_TYPE": "Modulių tipas",
-            "MODULE_TYPE_DESCRIPTION": "pvz. gamintojas ir galia",
-            "MODULE_TYPE_WITH_LABEL": "Modulių tipas {{ label }}{{ number }}",
-            "NUMBER_OF_MODULES": "PV modulių skaičius vienoje gijoje",
-            "NUMBER_OF_MODULES_PER_STRING": "PV modulių skaičius",
-            "NUMBER_OF_MODULES_WITH_LABEL": "PV modulių skaičius {{ label }}{{ number }}",
-            "OPEN_MANUAL": "Atidaryti vadovą",
-            "ORIENTATION": "Orientacija",
-            "ORIENTATION_WITH_LABEL": "{{ label }}{{ number }} Orientacija",
-            "TITLE_DC": "DC-PV įrengimas",
-            "TITLE_PV": "DC-PV įrengimas (inverterio įėjimai)"
-        },
-        "PROTOCOL_SERIAL_NUMBERS": {
-            "BATTERY_MODULE": "Akumuliatoriaus modulis ",
-            "BATTERY_MODULE_DESCRIPTION": "Įveskite tik paskutinius 8 serijinio numerio skaitmenis.",
-            "BATTERY_STRING": "Akumuliatoriaus gija {{ stringNumber }}",
-            "BATTERY_TOWER": "Akumuliatoriaus bokštas {{ number }}",
-            "BATTERY_TOWER_CLUSTER": "Akumuliatorius {{ batteryNumber }} Bokštas {{towerNumber}}",
-            "BESS_COMPONENTS": "BESS komponentai",
-            "BMS_BOX": "BMS Box & Base",
-            "CONFIRM": "Patvirtinti",
-            "DOUBLE_SOCKET": "Padalinta rozetė",
-            "DOUBLE_SOCKET_LABEL": "Padalinta rozetė sumontuota",
-            "EDGE_TIMEOUT_DESC": "Nepavyko automatiškai perskaityti serijinių numerių. Sistema gali būti užimta paleidimo metu.",
-            "EMS_BOX_COMMERCIAL": "{{ edgeShortname }} jungimo dėžė",
-            "EMS_BOX_CONNECTION_BOX_COMMERCIAL30": "{{ edgeShortName }}  jungimo dėžė",
-            "EMS_BOX_GRID_CONNECTION_POINT_COMMERCIAL30": "Tinklo prijungimo taškas",
-            "EMS_BOX_HECKERT": "EMS Box",
-            "EMS_BOX_HOME": "EMS Box ({{edgeShortName }} Box)",
-            "ENTER_MANUALLY": "Įvesti serijinius numerius rankiniu būdu",
-            "ENTER_VALID_ADDRESS": "Norint pritaikyti nustatymus, įveskite galiojančias reikšmes.",
-            "ERROR_SENDING": "Klaida siunčiant protokolus.",
-            "INVALID_SERIALNUMBER_KEY": "Patikrinkite {{ key }} serijinį numerį skyriuje {{ header }}",
-            "INVERTER": "Inverteris",
-            "MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS": "Mažiausias modulių skaičius vienoje gijoje: {{ min }} ir didžiausias: {{ max }}",
-            "MINIMUM_AND_MAXIMUM_STRINGS": "Mažiausias gijų skaičius: {{ min }} ir didžiausias: {{ max }}",
-            "MODULES_PER_STRINGS_DESCRIPTION": "Modulių vienoje gijoje skaičius Commercial-50 sistemai: {{ number }}",
-            "NEXT_BUTTON_DESCRIPTION": "Paspaudus mygtuką „toliau“, paleidimo ataskaita / „IBN“ ataskaita bus automatiškai išsiųsta į FENECON GmbH.",
-            "NO_DATA_FOUND": "Serijinių numerių nerasta",
-            "NUMBER_OF_MODULES_PER_STRINGS": "Modulių skaičius vienoje gijoje",
-            "NUMBER_OF_MODULES_PER_TOWER": "Modulių skaičius viename bokšte",
-            "NUMBER_OF_STRINGS": "Gijų skaičius",
-            "NUMBER_OF_TOWERS": "Bokštų skaičius",
-            "READ_DESCRIPTION": "Patikrinkite „System setup“. Perskaitykite laukų aprašymus.",
-            "SAME_SERIAL_NUMBERS": "{{ serialNumbers }} turi vienodus serijinius numerius",
-            "SENT_SUCCESSFULLY": "Protokolai išsiųsti sėkmingai.",
-            "SERIAL_NUMBER": "Serijiniai numeriai",
-            "SETUP_NOTE": "Užpildykite serijinius numerius pakeisdami vietos žymeklius (pažymėtus \"x\") atitinkamais simboliais.",
-            "SINGLE_SERIAL_NUMBER": " {{ label }} Serijinis numeris",
-            "SYSTEM_SETUP": "System setup",
-            "TROUBLESHOOTING": {
-                "INTRO": "Jei duomenų nerandama, atlikite šiuos veiksmus:",
-                "STEP_BRIDGES": "Patikrinkite, ar jumperio kištukas prijungtas pagal instrukcijas",
-                "STEP_LAN": "Patikrinkite, ar LAN kabelis teisingai prijungtas",
-                "STEP_MANUAL": "Jei problema išlieka, galite serijinius numerius įvesti rankiniu būdu, o baigę paleidimo procesą susisiekti su FENECON aptarnavimo tarnyba."
-            },
-            "TRY_READING_AGAIN": "Pakartoti skaitymą"
-        },
-        "PROTOCOL_SYSTEM": {
-            "FIRSTNAME": "Kontaktinio asmens vardas",
-            "LAST_NAME": "Kontaktinio asmens pavardė",
-            "LOCATION_SAME_AS_ADDRESS": "Ar BESS vieta yra tokia pati kaip kliento adresas?",
-            "TITLE": "BESS vieta"
-        },
-        "PROTOCOL_SYSTEM_LOCATION_VALIDATION": {
-            "TITLE": "Kaupimo vietos adreso patikra"
-        },
-        "SHARED": {
-            "NOTE": "Pastaba",
-            "WARNING": "Įspėjimas"
-        },
-        "STEP_FROM_TO": "Veiksmas {{ from }} iš {{ to }}",
-        "STEP_TO": "Veiksmas {{ number }}",
-        "SYSTEM_UPDATE": {
-            "UPDATE_WARNING": "Versiją reikia atnaujinti!"
-        },
-        "VALUE_WITH_LABEL": "Reikšmė {{ label }}{{ number }} {{ symbol }}"
     },
     "JS_SCHEDULE": {
         "ADD_EVENT": "Pridėti įvykį",
@@ -1507,11 +1134,6 @@
             "UPDATE_SEARCH": "Tikrinama, ar yra atnaujinimų...",
             "UPDATE_TIME": "(Tai gali užtrukti iki {{minutes}} minučių)",
             "WARNING": "Po sistemos atnaujinimo programinė įranga bus paleista iš naujo. Šiuo metu duomenys nėra įrašomi, o komponentai nevaldomi. Įsitikinkite, kad visa sistema yra saugioje būsenoje."
-        }
-    },
-    "SYSTEM": {
-        "INDUSTRIAL": {
-            "SYSTEM_ERROR_ACKNOWLEDGE": "Sistemos klaidos patvirtinimas"
         }
     }
 }

@@ -1,8 +1,7 @@
 {
-    "BETA_TEST": {
-        "BUTTON": "Vers le journal des modifications du test bêta",
-        "CHANGELOG": "Vous trouverez ici des informations sur les changements, des explications ou de l'aide. Restez informé des dernières évolutions grâce à notre journal des modifications.",
-        "FEEDBACK": "Votre avis compte : dites-nous ce que vous pensez du test BÊTA :",
+    "GUIDED_TOUR": {
+        "BUTTON": "Démarrer le tutoriel",
+        "CHANGELOG": "Ici, vous pouvez démarrer le tutoriel avec une visite de la nouvelle navigation.",
         "NEW_UI_INFO": "Notre suivi en ligne est en cours de refonte. Une nouvelle navigation et de nouvelles fonctions feront leur apparition."
     },
     "MY_PORTAL": {

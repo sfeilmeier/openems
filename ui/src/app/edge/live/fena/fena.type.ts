@@ -11,7 +11,7 @@ import { ArrayUtils } from "src/app/shared/utils/array/array.utils";
 import { DateUtils } from "src/app/shared/utils/date/dateutils";
 
 export namespace Fena {
-    type CategoryName = "GRID" | "STORAGE" | "KPI";
+    type CategoryName = "GRID" | "STORAGE" | "CONSUMPTION" | "KPI";
 
     type FenaMessageType<T> =
         | { text: string; textCallback?: never }
@@ -28,7 +28,8 @@ export namespace Fena {
     const CATEGORY_NAMES_BY_PRIORITY = {
         0: "GRID",
         1: "STORAGE",
-        2: "KPI",
+        2: "CONSUMPTION",
+        3: "KPI",
     } as const satisfies Record<number, string>;
 
     export const CATEGORIES: FenaCategory[] = Object.entries(CATEGORY_NAMES_BY_PRIORITY).map(([priority, name]) => ({
@@ -262,8 +263,12 @@ export namespace Fena {
             }
         }
 
-        getData(injector: Injector): CurrentData {
-            return injector.get(DataService).currentValue();
+        getData(injector: Injector): CurrentData | null {
+            const currentValue = injector.get(DataService).currentValue();
+            if (Object.values(currentValue.allComponents).every((el) => el == null)) {
+                return null;
+            }
+            return currentValue;
         }
     }
 }

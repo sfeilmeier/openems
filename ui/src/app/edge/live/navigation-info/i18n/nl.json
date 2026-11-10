@@ -1,8 +1,7 @@
 {
-    "BETA_TEST": {
-        "BUTTON": "Naar het changelog van de bètatest",
-        "CHANGELOG": "Hier vind je informatie over de wijzigingen, uitleg of hulp. Blijf via ons changelog op de hoogte van de nieuwste ontwikkelingen.",
-        "FEEDBACK": "Jouw feedback telt. Laat ons weten wat je van de bètatest vindt:",
+    "GUIDED_TOUR": {
+        "BUTTON": "Tutorial starten",
+        "CHANGELOG": "Hier kun je de tutorial met een rondleiding door de nieuwe navigatie starten.",
         "NEW_UI_INFO": "Onze monitoring krijgt een nieuw ontwerp. Er komen een nieuwe navigatie en nieuwe functies."
     },
     "MY_PORTAL": {

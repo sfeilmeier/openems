@@ -6,6 +6,7 @@ import { ComponentsBaseModule } from "src/app/shared/components/components.modul
 import { FlatWidgetButtonComponent } from "src/app/shared/components/flat/flat-widget-button/flat-widget-button";
 import { NavigationService } from "src/app/shared/components/navigation/service/navigation.service";
 import { UserService } from "src/app/shared/service/user.service";
+import { TutorialTargetId } from "src/app/shared/tour/tutorial-target-id";
 import { Role } from "src/app/shared/type/role";
 import { environment } from "src/environments";
 import { Edge, EdgePermission, Service, UserPermission, Utils } from "../../shared/shared";
@@ -28,7 +29,6 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     public isNewNavigation = signal(false);
     public canSeeJsonrpcTest: boolean = false;
 
-    protected canSeeIndustrialLAssistant: boolean = false;
     protected isEdgeBackend = signal(environment.backend === "OpenEMS Edge");
     protected canSeeHomeAssistant: boolean = false;
     protected canSeeCommercialAssistant: boolean = false;
@@ -39,6 +39,7 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private readonly navigationService: NavigationService = inject(NavigationService);
     private readonly translate = inject(TranslateService);
+    private readonly tutorialTargetId = TutorialTargetId;
 
     constructor(
         protected utils: Utils,
@@ -54,7 +55,6 @@ export class SettingsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.isAtLeastInstaller = edge.roleIsAtLeast(Role.INSTALLER);
             this.isAtLeastAdmin = edge.roleIsAtLeast(Role.ADMIN);
             this.canSeeJsonrpcTest = JsonrpcTestPermission.canSee(user, edge);
-            this.canSeeIndustrialLAssistant = UserPermission.isUserAllowedToSeeIndustrialAssistant(user, edge);
             this.canSeeHomeAssistant = UserPermission.isUserAllowedToSeeHomeAssistant(user, edge);
             this.canSeeCommercialAssistant = UserPermission.isUserAllowedToSeeCommercialServiceAssistant(user, edge);
             this.canSeeEnergyJourney.set(

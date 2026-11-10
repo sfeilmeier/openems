@@ -1,5 +1,22 @@
 [
     {
+        "version": "2026.11.1",
+        "entries": {
+            "de": [
+                "FENECON App: Geführte Tour durch das neue Design – beim ersten Öffnen des neuen Designs oder über den Punkt \"Profil | Info\" startbar (vorerst nur am Desktop).",
+                "FENECON App: Kleinere Fehlerbehebungen – u. a. Detail-Widget für E-Mobility lässt sich wieder öffnen, lesbarere Farben, native Navigation am Smartphone repariert.",
+                "FENECON Home & Commercial: Dynamisches Einspeiselimit kann jetzt bis 60 kW konfiguriert werden; verbesserte Hinweise bei der Batterieerweiterung, wenn der Ziel-Ladezustand erreicht ist.",
+                "FENECON Commercial 50: Optimierung der Erkennung von Netzausfällen."
+            ],
+            "en": [
+                "FENECON App: Guided tour of the new design – available when opening the new design for the first time or via \"Profile | Info\" (desktop only for now).",
+                "FENECON App: Minor bug fixes – including the E-Mobility detail widget can be opened again, more readable colors, native smartphone navigation fixed.",
+                "FENECON Home & Commercial: Dynamic feed-in limit can now be configured up to 60 kW; improved notices during battery expansion when the target state of charge is reached.",
+                "FENECON Commercial 50: Improved detection of grid failures."
+            ]
+        }
+    },
+    {
         "version": "2026.10.2",
         "entries": {
             "de": [

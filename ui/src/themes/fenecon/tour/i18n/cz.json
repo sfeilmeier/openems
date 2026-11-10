@@ -1,0 +1,36 @@
+{
+    "NAVIGATION_TOUR": {
+        "ALERTING_TEXT": "Buďte stále informováni: Pokud váš <strong>FEMS</strong> delší dobu nemá spojení se serverem FENECON Backend, můžete se nechat upozornit e-mailem. Upozornění se odešle na e-mailovou adresu zadanou při uvedení do provozu.\n\nNastavení najdete v části <strong>„Upozornění“ v nastavení systému</strong>.\n\n💡 <strong>Tip:</strong> Zejména pro instalační techniky se vyplatí do této oblasti nahlédnout, aby byli o možných problémech informováni včas.",
+        "COCKPIT_TEXT": "Nový název, známý obsah: V Cockpitu i nadále najdete všechny důležité aktuální hodnoty výkonu na první pohled.\n\n<strong>Tip:</strong> Klepnutím na jednotlivé ikony se dostanete přímo na příslušnou stránku s podrobnostmi, kde najdete další informace a možnosti ovládání.",
+        "ENERGY_JOURNEY_APPCENTER_TEXT": "FENECON <strong>AppCenter</strong> nyní najdete v hlavním menu v části <strong>„Vaše Energy Journey“</strong>. Zde můžete objevovat aplikace a uplatňovat a spravovat licenční klíče pro nové aplikace.\n\nK dispozici jsou <strong>bezplatné i placené aplikace</strong>. <strong>Upozornění:</strong> Licenční klíče pro placené aplikace získáte od svého instalačního technika.",
+        "ENERGY_JOURNEY_TEXT": "Sledujte vývoj svého energetického systému na jednom centrálním místě. Zde můžete provádět analýzy a získáte přehled i možnosti dalších smysluplných kroků rozšíření.",
+        "FAVORITES_TEXT": "S úrovní přístupu <strong>Owner</strong> si můžete často používané položky menu uložit jako <strong>oblíbené</strong>. Pro rychlý přístup je najdete pohromadě v bočním menu pod položkou <strong>„Oblíbené“</strong>.",
+        "HISTORY_DOWNLOAD_TEXT": "V <strong>Historii</strong> najdete položku menu <strong>Export</strong>. Zde si můžete stáhnout hodnoty za zvolené období jako soubor Excel (.xlsx).",
+        "HISTORY_INTRO": "V <strong>Historii</strong> najdete nejdůležitější hodnoty svého systému shrnuté v jednom grafu. Období lze flexibilně upravit. Celosystémový pohled je ideálním základem pro sledování vývoje a provádění analýz.",
+        "HISTORY_SERIES": {
+            "CHARGING": "Nabíjení",
+            "CONSUMPTION": "Spotřeba",
+            "DISCHARGING": "Vybíjení",
+            "FEED_IN": "Dodávka do sítě",
+            "GRID": "Odběr ze sítě",
+            "PRODUCTION": "Výroba",
+            "STATE_OF_CHARGE": "Stav nabití (SoC)"
+        },
+        "RESTART_TUTORIAL": "Chcete si tutoriál prohlédnout později znovu? V části <strong>Informace</strong> ho můžete kdykoli spustit znovu a projít si prohlídku v klidu.",
+        "SYSTEM_STATUS": "Vpravo nahoře v Cockpitu najdete celkový stav systému. Klepnutím na symbol zobrazíte přehled všech souvisejících komponent systému a jejich aktuálního stavu.",
+        "TITLE": {
+            "ALERTING": "Můj tip: Nastavte si upozornění",
+            "APPCENTER": "AppCenter",
+            "COCKPIT": "Váš monitor výkonu je nyní v Cockpitu",
+            "DOWNLOAD": "Stažení dat",
+            "ENERGY_JOURNEY": "Vaše Energy Journey",
+            "ENERGY_JOURNEY_MOBILE": "Journey",
+            "FAVORITES": "Rychleji k cíli s oblíbenými",
+            "HISTORY": "Historie",
+            "RESTART_TUTORIAL": "Spustit tutoriál znovu",
+            "SYSTEM_STATUS": "Stav systému"
+        },
+        "WELCOME": "Vítejte v novém designu!",
+        "WELCOME_TEXT": "Dobrý den, jsem FENA, váš FENECON Assistant. Pomáhám vám mít přehled o vašem energetickém managementu.\n\nAbyste mohli rychle využívat výhody nového designu, krátce vám ukážu nejdůležitější novinky aplikace FENECON.\n\nObsah byl částečně nově uspořádán a byly doplněny funkce pro lepší ovládání na mobilních zařízeních."
+    }
+}

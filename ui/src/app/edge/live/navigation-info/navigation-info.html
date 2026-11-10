@@ -30,7 +30,7 @@
             <p style="margin-left: 1em; margin-top: 0; min-height: 3em">
               {{ card.infoText }}
             </p>
-            <ion-card style="border-radius: 1em; opacity: 0.9">
+            <ion-card style="border-radius: 1em; opacity: 0.9" [attr.data-tutorial-id]="card.tutorialTargetId ?? null">
               @if (card.iconUrl) {
                 <div class="card-logo-wrapper">
                   <oe-img [img]="{ url: card.iconUrl }"></oe-img>
@@ -44,12 +44,16 @@
                   <ion-row class="full_width align_right">
                     <ion-col class="align_right full_width">
                       <ion-item lines="none" class="ion-float-right">
-                        <ion-button fill="solid" style="text-transform: none" [href]="card.buttonHref" target="_blank">
-                          @if (card.buttonIconName) {
-                            <ion-icon [name]="card.buttonIconName"></ion-icon>
-                          }
-                          <ion-label style="margin-left: 1em">{{ card.buttonText }}</ion-label>
-                        </ion-button>
+                        <!-- Ionic renders an unfocusable link instead of a button once href is set, even to null -->
+                        @if (card.buttonHref != null) {
+                          <ion-button fill="solid" style="text-transform: none" [href]="card.buttonHref" target="_blank">
+                            <ng-container *ngTemplateOutlet="buttonContent; context: { $implicit: card }"></ng-container>
+                          </ion-button>
+                        } @else {
+                          <ion-button fill="solid" style="text-transform: none" (click)="card.buttonAction()">
+                            <ng-container *ngTemplateOutlet="buttonContent; context: { $implicit: card }"></ng-container>
+                          </ion-button>
+                        }
                       </ion-item>
                     </ion-col>
                   </ion-row>
@@ -69,3 +73,10 @@
     </ion-grid>
   </oe-navigation-view>
 }
+
+<ng-template #buttonContent let-card>
+  @if (card.buttonIconName != null) {
+    <ion-icon [name]="card.buttonIconName"></ion-icon>
+  }
+  <ion-label style="margin-left: 1em">{{ card.buttonText }}</ion-label>
+</ng-template>

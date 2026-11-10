@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { FormlyUtils, StrictFormlyFieldConfig } from "src/app/shared/components/formly/formly-utils";
-import { SetupProtocol } from "src/app/shared/jsonrpc/request/submitSetupProtocolRequest";
 import { Commercial50Gen3Ibn } from "../../installation-systems/commercial/commercial-50/commercial-50-gen3";
+import { SetupProtocol } from "../../jsonrpc/submitSetupProtocolRequest";
 import { Category } from "../../shared/category";
 import { ComponentData } from "../../shared/ibndatatypes";
 import { FEED_IN_POWER_FACTOR_OPTIONS } from "../../shared/options";
@@ -1630,11 +1630,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
             if (isDynamicPow) {
                 powField.expressions = {
-                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "RPM_QP_CURVE_MODE",
-                        CurveMode.BASIC,
-                        true,
-                    ),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_QP_CURVE_MODE", CurveMode.BASIC, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "RPM_QP_CURVE_MODE",
                         CurveMode.BASIC,
@@ -1663,11 +1659,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
             if (isDynamicReact) {
                 reactField.expressions = {
-                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>(
-                        "RPM_QP_CURVE_MODE",
-                        CurveMode.BASIC,
-                        true,
-                    ),
+                    hide: FormlyUtils.propNotEquals<ReactivePowerModeModel>("RPM_QP_CURVE_MODE", CurveMode.BASIC, true),
                     "templateOptions.required": FormlyUtils.propEquals<ReactivePowerModeModel>(
                         "RPM_QP_CURVE_MODE",
                         CurveMode.BASIC,

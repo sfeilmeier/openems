@@ -1,0 +1,36 @@
+{
+    "NAVIGATION_TOUR": {
+        "ALERTING_TEXT": "Būkite visada informuoti: jei jūsų <strong>FEMS</strong> ilgesnį laiką neturi ryšio su FENECON Backend, galite gauti pranešimą el. paštu. Pranešimas siunčiamas paleidimo metu nurodytu el. pašto adresu.\n\nNustatymus rasite skiltyje <strong>„Pranešimai“ sistemos nustatymuose</strong>.\n\n💡 <strong>Patarimas:</strong> ypač montuotojams verta peržiūrėti šią skiltį, kad apie galimas problemas sužinotų laiku.",
+        "COCKPIT_TEXT": "Naujas pavadinimas, pažįstamas turinys: Cockpit ir toliau iš karto matysite visas svarbiausias dabartines galios vertes.\n\n<strong>Patarimas:</strong> bakstelėję atskiras piktogramas pateksite tiesiai į atitinkamą išsamios informacijos puslapį su papildoma informacija ir valdymo galimybėmis.",
+        "ENERGY_JOURNEY_APPCENTER_TEXT": "FENECON <strong>AppCenter</strong> dabar rasite pagrindiniame meniu skiltyje <strong>„Jūsų Energy Journey“</strong>. Čia galite atrasti programėles, aktyvuoti ir valdyti naujų programėlių licencijų raktus.\n\nGalimos tiek <strong>nemokamos, tiek mokamos programėlės</strong>. <strong>Pastaba:</strong> mokamų programėlių licencijų raktus gausite iš savo montuotojo.",
+        "ENERGY_JOURNEY_TEXT": "Stebėkite savo energetinės sistemos raidą vienoje vietoje. Čia galite atlikti analizes ir gauti tiek apžvalgą, tiek galimybes kitiems prasmingiems plėtros žingsniams.",
+        "FAVORITES_TEXT": "Turėdami <strong>Owner</strong> prieigos lygį, dažnai naudojamus meniu punktus galite išsaugoti kaip <strong>mėgstamiausius</strong>. Juos greitai pasieksite šoniniame meniu skiltyje <strong>„Mėgstamiausi“</strong>.",
+        "HISTORY_DOWNLOAD_TEXT": "Skiltyje <strong>Istorija</strong> rasite meniu punktą <strong>Eksportuoti</strong>. Ten galite atsisiųsti pasirinkto laikotarpio vertes kaip Excel failą (.xlsx).",
+        "HISTORY_INTRO": "<strong>Istorijoje</strong> rasite svarbiausias savo sistemos vertes, apibendrintas grafike. Laikotarpį galima lanksčiai keisti. Visos sistemos rodinys yra ideali priemonė raidai stebėti ir analizėms atlikti.",
+        "HISTORY_SERIES": {
+            "CHARGING": "Įkrovimas",
+            "CONSUMPTION": "Suvartojimas",
+            "DISCHARGING": "Iškrovimas",
+            "FEED_IN": "Tiekimas į tinklą",
+            "GRID": "Pirkimas iš tinklo",
+            "PRODUCTION": "Gamyba",
+            "STATE_OF_CHARGE": "Įkrovos būsena (SoC)"
+        },
+        "RESTART_TUTORIAL": "Norite vėliau dar kartą peržiūrėti mokomąją medžiagą? Skiltyje <strong>Informacija</strong> galite bet kada ją paleisti iš naujo ir ramiai peržiūrėti turą.",
+        "SYSTEM_STATUS": "Cockpit viršuje dešinėje rasite bendrą sistemos būseną. Bakstelėkite simbolį, kad pamatytumėte visų susijusių sistemos komponentų ir jų dabartinės būsenos apžvalgą.",
+        "TITLE": {
+            "ALERTING": "Mano patarimas: nustatykite pranešimus",
+            "APPCENTER": "AppCenter",
+            "COCKPIT": "Jūsų galios monitorius dabar yra Cockpit",
+            "DOWNLOAD": "Duomenų atsisiuntimas",
+            "ENERGY_JOURNEY": "Jūsų Energy Journey",
+            "ENERGY_JOURNEY_MOBILE": "Journey",
+            "FAVORITES": "Greičiau prie tikslo su mėgstamiausiais",
+            "HISTORY": "Istorija",
+            "RESTART_TUTORIAL": "Paleisti mokomąją medžiagą iš naujo",
+            "SYSTEM_STATUS": "Sistemos būsena"
+        },
+        "WELCOME": "Sveiki atvykę į naują dizainą!",
+        "WELCOME_TEXT": "Sveiki, aš esu FENA, jūsų FENECON Assistant. Padedu jums nuolat stebėti energijos valdymą.\n\nKad galėtumėte greitai pasinaudoti naujojo dizaino privalumais, trumpai parodysiu svarbiausias FENECON programėlės naujoves.\n\nDalis turinio buvo pertvarkyta, o patogesniam naudojimui mobiliuosiuose įrenginiuose pridėta naujų funkcijų."
+    }
+}

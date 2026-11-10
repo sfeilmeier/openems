@@ -1,6 +1,13 @@
 {
     "FENA": {
         "MESSAGES": {
+            "CONSUMPTION": {
+                "EVSE": {
+                    "CHARGING": "{{wallboxAlias}} laddar för närvarande ditt fordon med {{activePower}}.",
+                    "CHARGING_WITH_MODE": "{{wallboxAlias}} laddar för närvarande ditt fordon med {{activePower}} i läget {{mode}}.",
+                    "NOT_CHARGING": "Ditt fordon är anslutet till {{wallboxAlias}} och väntar på energi. Laddningen är för närvarande inaktiverad. Vill du starta laddningen eller byta till ett annat grundläge?"
+                }
+            },
             "GRID": {
                 "EMERGENCY_POWER_ACTIVE": "Nödkraft aktiv: Ditt {{edgeLongName}}-system försörjer för närvarande anslutna förbrukare från ditt batteri.",
                 "GENERATOR_ACTIVE": "Extra trygghet: Ditt {{edgeLongName}}-system stöds för närvarande av generatorn.",

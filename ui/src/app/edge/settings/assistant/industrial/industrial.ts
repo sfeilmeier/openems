@@ -1,6 +1,5 @@
-// @ts-strict-ignore
 import { formatNumber } from "@angular/common";
-import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { LiveDataService } from "src/app/edge/live/livedataservice";
 import { SystemErrorAcknowledge } from "src/app/edge/live/system/industrial/jsonrpc/systemErrorAcknowledge";
@@ -13,6 +12,8 @@ import { ComponentJsonApiRequest } from "src/app/shared/jsonrpc/request/componen
 import { LiveDataServiceProvider } from "src/app/shared/provider/live-data-service-provider";
 import { LocaleProvider } from "src/app/shared/provider/locale-provider";
 import { ChannelAddress, CurrentData, Edge, EdgeConfig, EdgePermission, Utils } from "src/app/shared/shared";
+import { ArrayUtils } from "src/app/shared/utils/array/array.utils";
+import { AssertionUtils } from "src/app/shared/utils/assertions/assertions.utils";
 import { CommonUiModule } from "../../../../shared/common-ui.module";
 import { ChartComponent } from "./chart/chart";
 
@@ -34,22 +35,28 @@ import { ChartComponent } from "./chart/chart";
 export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     private static readonly SELECTOR = "industrialserviceassistant";
 
-    protected convertToGridMeterCategory: Converter;
     protected chargerComponents: EdgeConfig.Component[] = [];
     protected Filter = Filter;
-    protected selectedBattery: EdgeConfig.Component;
+    protected selectedBattery: EdgeConfig.Component | null = null;
     protected cellVoltageDifferences: { [batteryId: string]: number | null } = {};
     protected cellVoltageDifference: number | null = null;
     protected cellTemperatureDifference: number | null = null;
     protected batteries: EdgeConfig.Component[] = [];
     protected esss: EdgeConfig.Component[] = [];
     protected batteryInverters: EdgeConfig.Component[] = [];
-    protected tower: { [batteryId: string]: { [id: string]: any } } = {};
-    protected systemFeneconIndustrialL: { [id: string]: any } = {};
-    protected CONVERT_TO_GRID_METER_CATEGORY = Converter.CONVERT_TO_GRID_METER_CATEGORY(this.translate);
+    protected tower: { [batteryId: string]: { [id: string]: string } } = {};
+    protected systemFeneconIndustrialL: Record<string, string> = {};
     protected date: string = this.service?.historyPeriod?.value?.getText(this.translate, this.service) ?? "";
     protected currentEdge: Edge | null = null;
     protected canSeeSystemErrorAcknowledge: boolean = false;
+
+    private static getBatteryFirmwareString(currentData: CurrentData, batteryId: string, patchKey: string): any {
+        return [
+            currentData.allComponents[batteryId + "/SoftwareVersionMajor"],
+            currentData.allComponents[batteryId + "/SoftwareVersionMinor"],
+            currentData.allComponents[batteryId + "/" + patchKey],
+        ].join(".");
+    }
 
     private static getHeatingState(currentData: CurrentData): any {
         if (currentData.allComponents["system0/HeaterRunningState"] == 1) {
@@ -65,37 +72,9 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
         return Converter.HIDE_VALUE(null);
     }
 
-    private static getBatteryFirmwareString(currentData: CurrentData, batteryId: string, patchKey: string): any {
-        return [
-            currentData.allComponents[batteryId + "/SoftwareVersionMajor"],
-            currentData.allComponents[batteryId + "/SoftwareVersionMinor"],
-            currentData.allComponents[batteryId + "/" + patchKey],
-        ].join(".");
-    }
-
-    protected override getChannelAddresses(): ChannelAddress[] {
-        const channels: ChannelAddress[] = [
-            new ChannelAddress("system0", "HeaterRunningState"),
-            new ChannelAddress("system0", "Compressor1RunningState"),
-            new ChannelAddress("system0", "Compressor2RunningState"),
-        ];
-
-        this.batteries = this.config.getComponentsByFactory("Battery.EnfasBms");
-        for (const battery of this.batteries) {
-            channels.push(
-                new ChannelAddress(battery.id, "MaxCellVoltage"),
-                new ChannelAddress(battery.id, "MinCellVoltage"),
-                new ChannelAddress(battery.id, "PackShuntTemperature"),
-            );
-        }
-
-        this.esss = this.config.getComponentsByFactory("Ess.Generic.ManagedSymmetric");
-
-        return channels;
-    }
-
     protected override async afterIsInitialized(): Promise<void> {
         this.currentEdge = await this.service.getCurrentEdge();
+        AssertionUtils.assertIsDefined(this.config);
         if (this.config?.components) {
             this.chargerComponents = Object.values(this.config.components).filter(
                 (component) =>
@@ -108,22 +87,19 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
         );
         this.selectedBattery = this.batteries[0];
 
-        const patchKey = this.currentEdge.isVersionAtLeast("2025.2.2") ? "SoftwareVersionPatch" : "SoftwareVersionPath";
-
         for (const battery of this.batteries) {
-            const channelAddresses: ChannelAddress[] = [
-                new ChannelAddress(battery.id, "SoftwareVersionMajor"),
-                new ChannelAddress(battery.id, "SoftwareVersionMinor"),
-                new ChannelAddress(battery.id, patchKey),
-            ];
-
+            AssertionUtils.assertIsDefined(this.componentId);
             const data = await (this.dataService as LiveDataService).subscribeAndGetFirstValidValueForChannels(
-                channelAddresses,
+                this.getSubscribeChannels(battery),
                 this.componentId,
             );
 
             this.tower[battery.id] = {
-                Firmware: IndustrialServiceAssistantComponent.getBatteryFirmwareString(data, battery.id, patchKey),
+                Firmware: IndustrialServiceAssistantComponent.getBatteryFirmwareString(
+                    data,
+                    battery.id,
+                    this.getPatchKey(),
+                ),
             };
         }
         this.canSeeSystemErrorAcknowledge = EdgePermission.hasSystemErrorAcknowledge(this.currentEdge);
@@ -137,6 +113,7 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
                 currentData.allComponents[batteryId + "/MinCellVoltage"],
             );
         }
+
         this.systemFeneconIndustrialL["HeatingState"] =
             IndustrialServiceAssistantComponent.getHeatingState(currentData);
 
@@ -151,8 +128,35 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
         );
     }
 
+    protected override getChannelAddresses(): ChannelAddress[] {
+        const channels: ChannelAddress[] = [
+            new ChannelAddress("system0", "HeaterRunningState"),
+            new ChannelAddress("system0", "Compressor1RunningState"),
+            new ChannelAddress("system0", "Compressor2RunningState"),
+        ];
+
+        AssertionUtils.assertIsDefined(this.config);
+        this.batteries = ArrayUtils.sortByTrailingNumber(
+            this.config.getComponentsImplementingNature("io.openems.edge.battery.api.Battery"),
+            (e: EdgeConfig.Component): string => {
+                return e.id;
+            },
+        );
+        for (const battery of this.batteries) {
+            channels.push(
+                new ChannelAddress(battery.id, "MaxCellVoltage"),
+                new ChannelAddress(battery.id, "MinCellVoltage"),
+                new ChannelAddress(battery.id, "PackShuntTemperature"),
+            );
+        }
+        this.esss = this.config.getComponentsByFactory("Ess.Generic.ManagedSymmetric");
+
+        return channels;
+    }
+
     protected systemErrorAcknowledge() {
         this.esss.forEach((ess) => {
+            AssertionUtils.assertIsDefined(this.edge);
             this.edge.sendRequest(
                 this.websocket,
                 new ComponentJsonApiRequest({ componentId: ess.id, payload: new SystemErrorAcknowledge() }),
@@ -165,7 +169,7 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     };
 
     protected VOLTAGE_IN_MILLI_VOLT_TO_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
-        return Converter.IF_NUMBER(raw, (value) => formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " V");
+        return Converter.IF_NUMBER(raw, (value) => formatNumber(value / 1000, "de", "1.0-3") + " V");
     };
 
     protected VOLTAGE_TO_MILLI_VOLT_WITH_3_DECIMALS: Converter = (raw): string => {
@@ -173,6 +177,17 @@ export class IndustrialServiceAssistantComponent extends AbstractFlatWidget {
     };
 
     protected AMPERE_IN_MILLI_AMPERE_TO_AMPERE_WITH_3_DECIMALS: Converter = (raw): string => {
-        return Converter.IF_NUMBER(raw, (value) => formatNumber(Utils.divideSafely(value, 1000), "de", "1.0-3") + " A");
+        return Converter.IF_NUMBER(raw, (value) => formatNumber(value / 1000, "de", "1.0-3") + " A");
     };
+    private getSubscribeChannels(battery: EdgeConfig.Component) {
+        return [
+            new ChannelAddress(battery.id, "SoftwareVersionMajor"),
+            new ChannelAddress(battery.id, "SoftwareVersionMinor"),
+            new ChannelAddress(battery.id, this.getPatchKey()),
+        ];
+    }
+    private getPatchKey() {
+        AssertionUtils.assertIsDefined(this.currentEdge);
+        return this.currentEdge.isVersionAtLeast("2025.2.2") ? "SoftwareVersionPatch" : "SoftwareVersionPath";
+    }
 }

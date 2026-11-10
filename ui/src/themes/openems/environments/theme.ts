@@ -1,6 +1,7 @@
 import { TranslateService } from "@ngx-translate/core";
 import { NavigationCard } from "src/app/edge/live/navigation-info/navigation-info";
 import { User } from "src/app/shared/jsonrpc/shared";
+import { EdgeConfig } from "src/app/shared/shared";
 import { Environment, Theme } from "src/environments";
 import { OemMeta } from "./oem-meta";
 
@@ -19,6 +20,7 @@ export const theme: Omit<Environment, "url" | "backend" | "production" | "debugM
     },
 
     PRODUCT_TYPES: () => null,
+    CLEANED_FACTORIES: (config: EdgeConfig): EdgeConfig["factories"] => config.factories,
     ENVIRONMENT_PROVIDERS: [],
     ...OemMeta,
 };

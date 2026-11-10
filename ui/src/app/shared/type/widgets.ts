@@ -109,13 +109,13 @@ export class Widgets {
             case "Controller.Io.HeatPump.SgReady":
                 return SharedControllerIoHeatpump.getNavigationTree(translate, component, edge);
             case "System.Fenecon.Industrial.Xl":
-                return SharedSystemIndustrialXl.getNavigationTree(translate, widget.componentId);
+                return SharedSystemIndustrialXl.getNavigationTree(translate, widget.componentId, edge);
             case "System.Fenecon.Industrial.L":
-                return SharedSystemIndustrialL.getNavigationTree(translate, widget.componentId);
+                return SharedSystemIndustrialL.getNavigationTree(translate, widget.componentId, edge);
             case "System.Fenecon.Industrial.M":
-                return SharedSystemIndustrialM.getNavigationTree(translate, widget.componentId);
+                return SharedSystemIndustrialM.getNavigationTree(translate, widget.componentId, edge);
             case "System.Fenecon.Industrial.S":
-                return SharedSystemIndustrialS.getNavigationTree(translate, widget.componentId);
+                return SharedSystemIndustrialS.getNavigationTree(translate, widget.componentId, edge);
             case "System.Fenecon.Industrial.Tokai2":
                 return SharedSystemIndustrialTokai2.getNavigationTree(translate, widget.componentId);
             case "Heat.Askoma":

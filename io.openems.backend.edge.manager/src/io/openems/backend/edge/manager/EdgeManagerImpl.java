@@ -4,6 +4,9 @@ import static io.openems.common.utils.JsonUtils.getAsJsonObject;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toUnmodifiableMap;
+import static org.osgi.service.component.annotations.ReferenceCardinality.OPTIONAL;
+import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
+import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
 import java.util.Map;
 import java.util.Objects;
@@ -22,9 +25,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 import org.osgi.service.event.EventHandler;
@@ -48,6 +48,7 @@ import io.openems.backend.common.metadata.Metadata;
 import io.openems.backend.common.metadata.User;
 import io.openems.backend.common.timedata.TimedataManager;
 import io.openems.backend.common.uiwebsocket.UiWebsocket;
+import io.openems.backend.luox.api.LuoxBackendApi;
 import io.openems.backend.metrics.prometheus.DebugExecutor;
 import io.openems.backend.oauthregistry.OAuthRegistry;
 import io.openems.common.exceptions.OpenemsError;
@@ -95,7 +96,7 @@ public class EdgeManagerImpl extends AbstractOpenemsBackendComponent
 	@Reference
 	protected volatile Metadata metadata;
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL, policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
+	@Reference(cardinality = OPTIONAL, policy = DYNAMIC, policyOption = GREEDY)
 	protected volatile AppCenterMetadata.EdgeData appCenterMetadata;
 
 	@Reference
@@ -107,7 +108,7 @@ public class EdgeManagerImpl extends AbstractOpenemsBackendComponent
 	@Reference
 	protected volatile EventAdmin eventAdmin;
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	@Reference(cardinality = OPTIONAL)
 	protected volatile UiWebsocket uiWebsocket;
 
 	@Reference
@@ -115,6 +116,9 @@ public class EdgeManagerImpl extends AbstractOpenemsBackendComponent
 
 	@Reference
 	protected SubscriptionManager subscriptionManager;
+
+	@Reference(cardinality = OPTIONAL, policy = DYNAMIC, policyOption = GREEDY)
+	protected volatile LuoxBackendApi luoxBackendApi;
 
 	private final Consumer<SyncableRepository.ChangeEvent> syncableRepositoryChangeHandler = this::handleSyncableRepositoryChange;
 

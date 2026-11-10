@@ -20,11 +20,6 @@ export const settingsRoutes: Routes = [
         component: SettingsComponent,
     },
     {
-        path: "industrialLAssistant",
-        loadComponent: () =>
-            import("./assistant/industrial/industrial").then((m) => m.IndustrialServiceAssistantComponent),
-    },
-    {
         path: "homeServiceAssistant",
         loadComponent: () => import("./assistant/home/home").then((m) => m.HomeServiceAssistantComponent),
     },

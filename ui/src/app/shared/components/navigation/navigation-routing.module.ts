@@ -109,6 +109,7 @@ import { SystemIndustrialMComponent } from "src/app/edge/live/system/industrial/
 import { SystemIndustrialSComponent } from "src/app/edge/live/system/industrial/s/new-navigation/new-navigation";
 import { SystemIndustrialTokai2Component } from "src/app/edge/live/system/industrial/tokai2/new-navigation/new-navigation";
 import { SystemIndustrialXlComponent } from "src/app/edge/live/system/industrial/xl/new-navigation/new-navigation";
+import { IndustrialServiceAssistantComponent } from "src/app/edge/settings/assistant/industrial/industrial";
 import { CurrentVoltageOverviewComponent } from "src/app/shared/components/edge/meter/currentVoltage/new-navigation/new-navigation";
 import { hasEdgeRole, hasUserSettings, redirectToParentOnReload } from "src/app/shared/guards/functional-guards";
 import { suffixMatcher } from "src/app/shared/guards/url-matcher";
@@ -151,6 +152,26 @@ const systemRoutes: (suffix: string | null) => Routes = (prefix: string | null =
         {
             path: ":componentId/industrial-tokai2",
             component: SystemIndustrialTokai2Component,
+        },
+        {
+            path: ":componentId/industrial-s/service-assistant",
+            component: IndustrialServiceAssistantComponent,
+            canActivate: [hasEdgeRole(Role.ADMIN)],
+        },
+        {
+            path: ":componentId/industrial-m/service-assistant",
+            component: IndustrialServiceAssistantComponent,
+            canActivate: [hasEdgeRole(Role.ADMIN)],
+        },
+        {
+            path: ":componentId/industrial-l/service-assistant",
+            component: IndustrialServiceAssistantComponent,
+            canActivate: [hasEdgeRole(Role.ADMIN)],
+        },
+        {
+            path: ":componentId/industrial-xl/service-assistant",
+            component: IndustrialServiceAssistantComponent,
+            canActivate: [hasEdgeRole(Role.ADMIN)],
         },
     ].map((el) => ({ ...el, path: prefix != null ? prefix + "/" + el.path : el.path }));
 

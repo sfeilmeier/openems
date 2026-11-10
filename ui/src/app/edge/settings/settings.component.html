@@ -90,7 +90,7 @@
           }
           @if (isAtLeastOwner() && !isEdgeBackend()) {
             <ion-col size="12" size-sm="4">
-              <ion-card>
+              <ion-card [attr.data-tutorial-id]="tutorialTargetId.PROFILE_ALERTING">
                 <ion-item lines="full" color="light">
                   <ion-icon slot="start" size="large" color="primary" name="notifications-outline"></ion-icon>
                   <ion-label>{{ "EDGE.CONFIG.INDEX.ALERTING" | translate }}</ion-label>
@@ -195,22 +195,6 @@
                   <ion-card-content>
                     <ion-note>Für Home 10 optimiert</ion-note>
                     <oe-flat-button [link]="{ text: '/device/' + edge.id + '/settings/homeServiceAssistant' }" color="light">
-                      {{ "GENERAL.OPEN" | translate | uppercase }}
-                      <ion-icon name="arrow-forward-outline"></ion-icon>
-                    </oe-flat-button>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-            }
-            @if (canSeeIndustrialLAssistant) {
-              <ion-col size="12" size-sm="4">
-                <ion-card>
-                  <ion-item lines="full" color="light">
-                    <ion-icon slot="start" size="large" class="normal-icon" name="construct-outline"></ion-icon>
-                    <ion-label>Industrial L Service Assistant</ion-label>
-                  </ion-item>
-                  <ion-card-content>
-                    <oe-flat-button [link]="{ text: '/device/' + edge.id + '/settings/industrialLAssistant' }" color="light">
                       {{ "GENERAL.OPEN" | translate | uppercase }}
                       <ion-icon name="arrow-forward-outline"></ion-icon>
                     </oe-flat-button>

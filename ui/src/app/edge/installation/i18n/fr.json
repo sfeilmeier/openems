@@ -1,6 +1,20 @@
 {
     "INSTALLATION": {
         "ALERTING_INFO": "En tant qu'installateur, configure des notifications par e-mail lorsque le FEMS est hors ligne pendant une certaine durée ou signale une erreur. Le message est envoyé à l'adresse e-mail indiquée lors de la mise en service.",
+        "ALIAS_WITH_LABEL": "Alias {{label}}{{number}}",
+        "BACK": "Retour",
+        "COMPLETE": "Vers le suivi en ligne",
+        "COMPLETION": {
+            "DOWNLOAD": "Télécharger le rapport de mise en service",
+            "DOWNLOAD_ERROR": "Le protocole n'a pas pu être téléchargé",
+            "DOWNLOAD_SUCCESS": "Protocole téléchargé avec succès",
+            "HECKERT_NOTE": "Une application gratuite est désormais disponible à l'installation dans l'App Center.",
+            "INVALID_PAYLOAD": "Réponse non valide du serveur",
+            "NAVIGATION_LABEL": "Aller à l'App Center",
+            "NOTE": "Cliquez ici pour accéder à l'App Center afin de configurer des composants supplémentaires et d'installer des applications.",
+            "SUB_TITLE": "{{ value }} a été mis en service avec succès.",
+            "TITLE": "Terminer"
+        },
         "CONFIGURATION_ADVANCED_GRID_SETTINGS": {
             "ACTIVE_POWER_MODE": {
                 "OUTPUT_ACTIVE_POWER": "Puissance active de sortie",
@@ -186,7 +200,26 @@
             "NUMBER_OF_BATTERY_INPUTS": "Nombre d'entrées de batterie utilisées",
             "TITLE": "Configuration des entrées de batterie"
         },
+        "CONFIGURATION_COMMERCIAL_GRIDMETER_COMMUNICATION": {
+            "HEADER": "Type de communication du compteur réseau",
+            "IP_ADDRESS": "Adresse IP",
+            "PORT": "Port",
+            "RS485": "RS485",
+            "TCP_IP": "TCP/IP"
+        },
+        "CONFIGURATION_COMMERCIAL_MODBUS_BRIDGE": {
+            "HEADER": "Sélection du type de communication"
+        },
+        "CONFIGURATION_COMMERCIAL_MODBUS_COMPONENT": {
+            "RS485_LABEL": "RS485 (4 ports RJ45) – Connexion : FEMS",
+            "TCP_IP_LABEL": "TCP/IP (6 ports RJ45) – Connexion : interne"
+        },
         "CONFIGURATION_EMERGENCY_RESERVE": {
+            "COUPLER_TITLE": "Quel coupleur de bus de terrain est installé dans votre point de découplage réseau Offgrid ?",
+            "EMERGENCY_RESERVE": "Réserve de secours {{ symbol }}",
+            "EMERGENCY_RESERVE_LABEL": "Alimentation de secours {{ symbol }}",
+            "EMERGENCY_RESERVE_NOTE": "Si cette fonction est activée, le niveau de charge de la batterie ne peut pas descendre en dessous de la valeur définie.",
+            "EMERGENCY_RESERVE_VALUE": "Valeur de la réserve de secours",
             "GENSET": {
                 "BATTERY_CHARGING": "Activer la charge de la batterie depuis le groupe électrogène ?",
                 "CHARGE_SOC_END": "Niveau de charge de la batterie pour l'arrêt du groupe électrogène",
@@ -200,10 +233,48 @@
                 "POWER": "Puissance nominale",
                 "PREHEAT_TIME": "Temps de préchauffage",
                 "RUN_TIME": "Durée de fonctionnement"
-            }
+            },
+            "INFO": "Lors de l'utilisation du générateur, veuillez noter : le niveau de charge de la réserve de secours doit être supérieur (ou égal) au niveau de charge spécifié nécessaire au démarrage du générateur (voir détails ci-dessous).",
+            "IS_ACTIVATED": "Réserve de secours active ?",
+            "IS_ENABLED": "La fonction d'alimentation de secours doit-elle être activée ?",
+            "TITLE": "Données de l'alimentation de secours",
+            "VALUE": "Valeur [%]"
+        },
+        "CONFIGURATION_ENERGY_FLOW_METER": {
+            "CONVERTER_RATIO": "Courant primaire (200–5000 A)",
+            "METER": {
+                "INTEGRATED": "Capteur Home triphasé intégré avec transformateur de courant ({{type}})",
+                "LABEL": "Compteur",
+                "TYPE": {
+                    "OPTIONAL": "En option",
+                    "STANDARD": "périmètre de livraison standard"
+                },
+                "WITHOUT_CT": "Capteur Home triphasé sans transformateur de courant (en option)",
+                "WITHOUT_CT_STANDARD_DELIVERY": "Capteur Home triphasé sans transformateur de courant (livraison standard)",
+                "WITH_CT": "Capteur Home triphasé avec transformateur de courant 120 A ({{type}})"
+            },
+            "TITLE": "Sélection du compteur de direction du flux d'énergie"
+        },
+        "CONFIGURATION_ESS_LIMITER": {
+            "INFO_NOTE": "Afin d'éviter une surcharge du réseau, l'opérateur réseau aura à l'avenir la possibilité de réguler (réduire) tous les appareils consommateurs installés depuis le 1er janvier 2024 à une puissance de 4,2 kW.",
+            "IS_ACTIVATE": "Activer la possibilité de régulation selon §14a EnWG",
+            "IS_ACTIVATE_LABEL": "Le câblage doit être réalisé conformément aux instructions d'installation.",
+            "TITLE": "Régulation selon §14a EnWG"
         },
         "CONFIGURATION_EXECUTE": {
+            "BATTERY": "Batterie",
+            "BATTERY_INTERFACE": "Interface batterie",
+            "BATTERY_INVERTER": "Onduleur de batterie",
+            "COMMUNICATION_WITH_BATTERY": "Communication avec la batterie",
+            "COMMUNICATION_WITH_BATTERY_INVERTER": "Communication avec l'onduleur de batterie",
+            "COMMUNICATION_WITH_METER": "Communication avec les compteurs",
+            "COMMUNICATION_WITH_RELAY": "Communication avec le relais",
+            "CONTROL_GRID_POINT": "Commande du point de découplage réseau",
             "COPY_ERROR": "Copier l'erreur",
+            "DESCRIPTION_1": "Pour vérifier que tous les composants de votre système sont correctement configurés,",
+            "DESCRIPTION_2": "la configuration et les tests fonctionnels qui suivent peuvent prendre jusqu'à 10 minutes.",
+            "EMERGENCY_CAPACITY_RESERVE": "Commande de la réserve de secours",
+            "ERROR": "Erreur",
             "ERROR_COPIED": "Erreur copiée dans le presse-papiers",
             "ERROR_DETAILS": "Détails de l'erreur",
             "ERROR_HEADLINE_CATEGORY_CONFLICT": "Veuillez d'abord supprimer le système existant",
@@ -221,20 +292,319 @@
             "ERROR_TITLE_INCOMPATIBLE_APP": "Application incompatible installée",
             "ERROR_TITLE_STALE_INSTANCE": "Reste d'installation trouvé",
             "ERROR_TITLE_TIMEOUT": "Délai dépassé",
+            "EXISTING_CONFIGURATION": "Une configuration existante a été trouvée. Vous pouvez l'écraser en lançant manuellement le processus de configuration.",
+            "FIELD_BUS_COUPLER": "Coupleur de bus de terrain",
+            "FINISH_FUNCTION_TEST": "Tests fonctionnels des composants installés terminés",
+            "FUNCTION_TEST": "Test fonctionnel",
+            "FUNCTION_TEST_ERROR": "Test fonctionnel terminé avec des erreurs.",
+            "GRID_METER": "Compteur réseau",
+            "GRID_OPTIMIZED_CHARGE": "Charge optimisée pour le réseau",
+            "IP_ADDRESS_ERROR": "Une adresse IP nécessaire pour le {{ system}} n'a pas pu être ajoutée à la configuration réseau.",
+            "IP_ADDRESS_WARNING": "Une adresse IP nécessaire pour le coupleur n'a pas pu être ajoutée à la configuration réseau.",
+            "IS_BEING_CONFIGURED": "est en cours de configuration",
+            "LABEL": {
+                "WAGO_BRIDGE": "WAGO (composant gris)",
+                "WEIDMUELLER_BRIDGE": "Weidmüller (composant noir)"
+            },
+            "LEGEND": "Légende",
+            "NOT_YET_CONFIGURED": "pas encore configuré / vérifié",
+            "PARTIAL_CONFIGURATION": "Tous les composants n'ont pas pu être configurés correctement.",
+            "PRE_CONFIGURED": "préconfiguré / avertissement",
+            "RELAY_BOARD": "Carte de relais",
             "RESOLVE_CATEGORY_CONFLICT_BUTTON": "Supprimer le système existant et continuer",
             "RESOLVE_CATEGORY_CONFLICT_NOT_FOUND": "Aucun système conflictuel n'a pu être trouvé pour une suppression automatique. Veuillez le supprimer manuellement via l'App Center.",
             "RESOLVE_CATEGORY_CONFLICT_REMOVING": "Suppression du système existant…",
+            "SELF_CONSUMPTION": "Optimisation de l'autoconsommation",
+            "START": "Démarrer la configuration",
+            "START_FUNCTION_TEST": "Tests fonctionnels des composants installés démarrés",
             "STATUS_CONFIGURING": "Configuration des composants en cours…",
-            "STATUS_FUNCTION_TEST": "Configuration terminée. Exécution des tests de fonction…"
+            "STATUS_FUNCTION_TEST": "Configuration terminée. Exécution des tests de fonction…",
+            "STORAGE_SYSTEM": "Système de stockage d'énergie",
+            "SUCCESSFULLY_CONFIGURED": "configuré / vérifié avec succès",
+            "TITLE": "Configuration",
+            "UNDEFINED_COMPONENT_CONFIGURATOR": "Le configurateur de composants n'est pas défini",
+            "WAGO_BRIDGE": "Pont Wago",
+            "WAITING": "Configuration en cours...",
+            "WEIDMUELLER_BRIDGE": "Pont Weidmueller"
         },
+        "CONFIGURATION_FEATURES_STORAGE_SYSTEM": {
+            "BALANCING": "Optimisation de l'autoconsommation"
+        },
+        "CONFIGURATION_GRID_SETTING": {
+            "TITLE": "Type de réseau"
+        },
+        "CONFIGURATION_LINE_SIDE_METER_FUSE": {
+            "FIXED_VALUE_DESCRIPTION": "Avec quelle intensité le compteur est-il protégé ?",
+            "METER": "Compteur",
+            "METER_LABEL": "Type de compteur au point de raccordement réseau",
+            "OTHER": "Autres",
+            "OTHER_VALUE": "Valeur personnalisée",
+            "TITLE_COMMERCIAL": "Protection du point de raccordement / protection du compteur",
+            "TITLE_HOME": "Protection du compteur du raccordement domestique",
+            "VALUE": "Valeur [A]"
+        },
+        "CONFIGURATION_MPPT_SELECTION": {
+            "CONNECTION_CHECK_LABEL": "Toutes les connexions ont-elles été vérifiées ?",
+            "NOTE": "Les générateurs supplémentaires peuvent ensuite être configurés via l'App Center."
+        },
+        "CONFIGURATION_PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVE_COUNT_TITLE": "Informations sur le nombre d'esclaves (slaves)",
+            "SLAVE_INSTALLATION_TITLE": "Installation d'unités de stockage individuelles (slaves)"
+        },
+        "CONFIGURATION_STS_BOX": {
+            "HELP_TEXT": "Le numéro de série de la STS Box se trouve sur la plaque signalétique sur le côté de la STS Box",
+            "LABEL": "STS Box",
+            "STS_BOX_AVAILABLE": "STS Box installée",
+            "STS_BOX_FIELD_LABEL": "Une STS Box est-elle installée pour la capacité d'alimentation de secours :"
+        },
+        "CONFIGURATION_SUMMARY": {
+            "ACCEPT": "accepter",
+            "ACCEPT_TERMS": "Accepte les conditions de garantie pour continuer.",
+            "ALIAS_WITH_LABEL_HOME_DC": "Alias MPPT{{mppt}}",
+            "BATTERY": "Batterie",
+            "BATTERY_LOCATION": "Emplacement du BESS",
+            "BOTH_SELECTED_LABEL": "Les deux ports PV (\"PV{{ pv1 }}\" et \"PV{{ pv2 }}\") raccordés",
+            "COUNTRY_SETTING": "Paramètres du pays",
+            "CUSTOMER": "Client",
+            "DEVICE_ACTIVE_CHECKED": "Batterie et onduleur allumés",
+            "EDGE_NUMBER": "Numéro {{ edgeShortName }}",
+            "ENERGY_FLOW_METER": {
+                "LABEL": "Réseau"
+            },
+            "GENERAL": "Général",
+            "INSTALLER": "Installateur",
+            "INVERTER": "Onduleur",
+            "IS_DEVICE_ACTIVE_CHECKED": "Vérifie que la batterie et l'onduleur sont allumés et confirme-le.",
+            "MODULE_TYPE_WITH_LABEL_HOME_DC": "Type de modules MPPT{{ mppt }}",
+            "NEXT_CLICKED_DESCRIPTION": "En cliquant sur le bouton « suivant », le système de stockage sera configuré. Assure-toi que la batterie et l'onduleur restent sous tension pendant tout le processus de configuration.",
+            "NUMBER_OF_MODULES_WITH_LABEL_HOME_DC": "Nombre de modules PV MPPT{{ mppt }}",
+            "ORIENTATION_WITH_LABEL_HOME_DC": "Orientation MPPT{{ mppt }}",
+            "PRODUCER": "Générateur",
+            "SUMMARY": "Résumé",
+            "TIME_OF_INSTALLATION": "Date et heure de l'installation",
+            "VALUE_WITH_LABEL_HOME_DC": "Valeur MPPT{{ mppt }} {{ symbol }}",
+            "WARRANTY_TERMS": "Conditions de garantie"
+        },
+        "CONFIGURATION_SYSTEM": {
+            "OPEN_INSTRUCTIONS": "Ouvrir les instructions",
+            "PRODUCT_NAME": "Type de stockage",
+            "TITLE": "Quel système de stockage faut-il configurer ?"
+        },
+        "CONFIGURATION_SYSTEM_VARIANT": "Sélection du composant installé",
         "ENABLE_MPPT": "MPPT {{ mpptNumber }} actif",
+        "FORM": {
+            "BATTERY_SERIAL_NUMBER": "{{ serialNumber }} n'est pas un numéro de série valide. Un numéro de série valide se compose de {{ length }} chiffres.",
+            "EMAIL_MATCH": "Les e-mails ne correspondent pas.",
+            "POSITIVE_INTEGER": "Seuls les nombres entiers positifs sont autorisés.",
+            "STS_SERIAL_NUMBER_REQUIREMENT": "Le numéro de série se compose de 16 chiffres au maximum."
+        },
+        "LOAD": "chargement...",
+        "NEXT": "suivant",
         "OFFLINE": "Hors ligne",
+        "PRE_INSTALLATION": {
+            "AUTHENTICATION_FAILED": "Échec de l'authentification",
+            "EDGE_OFFLINE": "Impossible d'établir une connexion avec le {{ edgeShortName }}",
+            "INSTALLATION_SUCCESS": "Installation démarrée pour {{ edgeId }}",
+            "NOTE": "Remarque :",
+            "TITLE": "Saisir la clé d'installation",
+            "WRONG_KEY_NOTE": "Si la clé d'installation est reconnue à tort comme non valide, veuillez actualiser la page."
+        },
+        "PROTOCOL_AVU_BOX": {
+            "LABEL": "AVU",
+            "SERIAL_NUMBER": "Numéro de série",
+            "TITLE": "Le périmètre d'installation comprend-il une AVU Box (commutation automatique des consommateurs) ?"
+        },
+        "PROTOCOL_CHECKLIST": {
+            "CHANGE_NETWORK_SETTINGS": "B) Modifier les paramètres réseau de l'ordinateur (adresse IP)",
+            "CONNECT_INVERTER": "A) Relier l'ordinateur à l'onduleur par un câble réseau (prise LAN supérieure)",
+            "ENTER_PASSWORD": "D) Saisir le mot de passe",
+            "IP_ADDRESS": "C) Saisir l'adresse IP dans le navigateur",
+            "IP_ADDRESS_DESCRIPTION": "Adresse IP : 169.254.1.1",
+            "MIN_VOLTAGE": "G) En complément : régler la limite de tension minimale à 600 V",
+            "MIN_VOLTAGE_DESCRIPTION": "Fonctionne uniquement avec le mot de passe installateur (mot de passe propre à FENECON ou préconfiguré)\n\n<ul><li>Limite de tension minimale :<b> {{voltageLimit}} V</b> (-> type de réseau : <b>{{gridSetting}}</b>)</li></ul>",
+            "MULTI_STEP": "{{listPosition}}) Réaliser les étapes 1 à {{totalSteps}}",
+            "NETWORK_SETTINGS": "Adresse IP : 169.254.1.12\nMasque de sous-réseau : 255.255.255.0",
+            "NETWORK_SETTINGS_INFO": "Veuillez noter que les étapes et illustrations pour la configuration d'une adresse IP statique peuvent varier selon l'appareil utilisé. Pour d'autres appareils, comme les appareils Apple, les procédures peuvent différer.",
+            "NETWORK_SETTINGS_NOTE": "Pour accéder à l'onduleur via son adresse IP fixe, l'appareil connecté à l'onduleur doit se voir attribuer manuellement une adresse IP statique située dans le même plage réseau",
+            "PASSWORD_DESCRIPTION": "Mot de passe service :\n\nUtilisateur : service\nMot de passe : Ye_r0d4w0P!",
+            "POWER_CONTROL": "H) Régler la commande de puissance (Cos-Phi, etc.)",
+            "POWER_CONTROL_DESCRIPTION": "-> les réglages nécessaires ici figurent dans les données de l'opérateur réseau\n-> Les modifications ne peuvent être effectuées qu'avec le mot de passe installateur",
+            "START_CONFIGURATION": "E) Démarrer la configuration KACO avec l'Installation Wizard",
+            "STEP": "Étape {{currStep}}/{{totalStep}} – {{description}}",
+            "STEP_1": "Sélectionner la langue",
+            "STEP_2": "Définir le pays / le type de réseau",
+            "STEP_2_DESCRIPTION": "Veuillez sélectionner ici votre type de réseau :\n\n<ul><li>Allemagne <b>{{gridSetting}}</b> (-> sous G) régler la \"Limite de tension minimale\" à <b>{{voltageLimit}} V </b>)",
+            "STEP_3": "Limitation de puissance",
+            "STEP_3_DESCRIPTION": "-> Reprendre les paramètres par défaut tels quels.",
+            "STEP_4": "Réglage IP",
+            "STEP_4_DESCRIPTION": "Adresse IP : 172.16.0.100\nMasque de sous-réseau : 255.255.255.0\nPasserelle par défaut : 172.16.0.1",
+            "STEP_5": "Localisation",
+            "STEP_5_DESCRIPTION": "Veuillez synchroniser ici l'heure avec le bouton « Sync »",
+            "STEP_6": "Modbus",
+            "STEP_6_DESCRIPTION": "Le paramètre Modbus doit être réglé sur 502",
+            "STEP_7": "Autres (paramètres optionnels)",
+            "STEP_8": "Finaliser",
+            "STEP_8_DESCRIPTION": "Saisir le nom de l'installateur",
+            "TIMEOUT_NOTE": "Le processus suivant peut prendre jusqu'à {{timeoutInMinutes}} minutes."
+        },
+        "PROTOCOL_CHECKLIST_PAGE_TITLE": "KACO – Intégrer l'onduleur",
+        "PROTOCOL_COMMERCIAL_CLUSTER": {
+            "SLAVES_TITLE": "Slave {{number}}",
+            "SLAVE_FILED_LABEL": "Veuillez saisir le nombre de slaves à configurer",
+            "SLAVE_INSTALLATION": {
+                "CONNECTION_STATUS": {
+                    "NOT_FOUND": "Slave introuvable"
+                },
+                "LOG_MESSAGE": {
+                    "AUTHENTICATION_SUCCESSFUL": "Authentification réussie. Mise à jour du système...",
+                    "CONFIGURATION_FAILED": "Échec de la configuration : {{ error }}",
+                    "CONFIGURED_SUCCESSFULLY": "Application configurée avec succès.",
+                    "FUNCTION_TESTS_FAILED": "Échec du test fonctionnel : {{ error }}",
+                    "PARTIALLY_CONFIGURED": "Configuration partiellement terminée.",
+                    "SLAVE_STATUS_ERROR": "Erreur lors de la récupération de l'état du slave {{ slaveNr }}",
+                    "STARTING_AUTHENTICATION": "Démarrage de l'authentification...",
+                    "UPDATE_COMPLETED": "Mise à jour du système terminée. Configuration de l'application..."
+                }
+            }
+        },
         "PROTOCOL_FEED_IN_MANAGEMENT": {
-            "FIXED_COS_PHI": "Valeur fixe : Cos Phi 1"
+            "CAPACITIVE": "capacitif",
+            "CHOOSE": "Type",
+            "CONSTANT_VALUE": "Valeur de Cos φ",
+            "DYNAMIC_EXTERNAL_LIMITATION": "Récepteur de commande dynamique : régulation au point de raccordement réseau",
+            "DYNAMIC_LIMITATION": "Limitation dynamique de l'injection",
+            "DYNAMIC_LIMITATION_TYPE": "Limitation d'injection",
+            "EXTERNAL_CONTROLLER_CHECK": "Le récepteur de commande externe a été installé correctement et complètement selon les instructions.",
+            "EXTERNAL_LIMITATION": "Récepteur de commande : régulation à la sortie CA de l'onduleur",
+            "EXTERNAL_LIMITATION_TYPE": "Limitation externe",
+            "FEED_IN_SETTING_DESCRIPTION": "Réduction de puissance active en cas de surfréquence",
+            "FIXED_COS_PHI": "Valeur fixe : Cos Phi 1",
+            "FIXED_POWER_FACTOR": "Facteur de puissance constant Cos φ (P)",
+            "FIXED_POWER_FACTOR_DESCRIPTION": "En règle générale, l'opérateur réseau prescrit un facteur de puissance fixe de « 1 »",
+            "INDUCTIVE": "inductif",
+            "INFO_TEXT": "Votre système de stockage d'énergie tente d'éviter l'écrêtage de l'installation photovoltaïque grâce à une charge intelligente.",
+            "MAXIMUM_FEED_IN_VALUE": "Puissance d'injection maximale [W]",
+            "MAXIMUM_VALUE_DESCRIPTION": "Cette valeur peut être exigée par le gestionnaire du réseau de distribution.",
+            "NA_PROTECTION": "Coupure à distance activée (protection NA centrale)",
+            "NO_LIMITATION": "Aucune limitation",
+            "PLACE_HOLDER": "Choisir une option",
+            "PU_ENABLED_CURVE": "Courbe du facteur de puissance Cos φ (P)",
+            "QU_ENABLED_CURVE": "Caractéristique puissance réactive – tension Q(U)",
+            "SHADE_MANAGEMENT_DEACTIVATED": "Gestion de l'ombrage désactivée ?",
+            "TITLE": "Gestion de l'injection",
+            "WARNING_TEXT": "Ceci ne remplace pas la configuration correcte de l'onduleur photovoltaïque !"
+        },
+        "PROTOCOL_INSTALLER_AND_CUSTOMER": {
+            "COMPANY_CUSTOMER": "Client professionnel ?",
+            "COMPANY_NAME": "Nom de l'entreprise",
+            "EMAIL": "Adresse e-mail",
+            "EMAIL_CONFIRMATION": "confirmer",
+            "EMAIL_DESCRIPTION": "pour l'accès personnel",
+            "FIRST_NAME": "Prénom",
+            "LAST_NAME": "Nom",
+            "PHONE": "Numéro de téléphone",
+            "TITLE_CUSTOMER": "Coordonnées – Client final",
+            "TITLE_INSTALLER": "Coordonnées – Installateur"
+        },
+        "PROTOCOL_PV": {
+            "ADDITIONAL_GENERATOR": "Générateur CA supplémentaire",
+            "ALIAS": "Désignation",
+            "ALIAS_DESCRIPTION_PV": "sera affiché dans le suivi en ligne, p. ex. \"PV-Toit\"",
+            "BOTH_SELECTED_LABEL": "Les deux ports (\"PV{{ pv1 }}\" et \"PV{{ pv2 }}\") sont-ils raccordés ?",
+            "DIRECTIONS": {
+                "EAST": "Est",
+                "NORTH": "Nord",
+                "NORTH_EAST": "Nord-est",
+                "NORTH_WEST": "Nord-ouest",
+                "SOUTH": "Sud",
+                "SOUTH_EAST": "Sud-est",
+                "SOUTH_WEST": "Sud-ouest",
+                "WEST": "Ouest"
+            },
+            "INSTALLED_POWER": "Puissance installée [Wₚ]",
+            "INSTALLED_POWER_PER_STRING": "Puissance installée par string [Wₚ]",
+            "MARKED_AS": " MPPT {{ mppt }} (repéré comme \"PV{{ mppt }}\")",
+            "MARKED_AS_BOTH_STRINGS": " MPPT {{ mppt }} (repéré comme \"{{ pv1 }}\" et \"{{ pv2 }}\")",
+            "MODULE_TYPE": "Type de modules",
+            "MODULE_TYPE_DESCRIPTION": "p. ex. fabricant et puissance",
+            "MODULE_TYPE_WITH_LABEL": "Type de modules {{ label }}{{ number }}",
+            "NUMBER_OF_MODULES": "Nombre de modules PV par string",
+            "NUMBER_OF_MODULES_PER_STRING": "Nombre de modules PV",
+            "NUMBER_OF_MODULES_WITH_LABEL": "Nombre de modules PV {{ label }}{{ number }}",
+            "OPEN_MANUAL": "Ouvrir le manuel",
+            "ORIENTATION": "Orientation",
+            "ORIENTATION_WITH_LABEL": "Orientation {{ label }}{{ number }}",
+            "TITLE_DC": "Installation PV en DC",
+            "TITLE_PV": "Installation PV en DC (entrées de l'onduleur)"
         },
         "PROTOCOL_SERIAL_NUMBER": {
             "BATTERY_COMMUNICATION_BOX": "Boîtier de communication de la batterie",
             "BATTERY_INPUT_TOWER": "Entrée de batterie {{ batteryInput }} Tour {{ towerNumber }}"
-        }
+        },
+        "PROTOCOL_SERIAL_NUMBERS": {
+            "BATTERY_MODULE": "Module de batterie ",
+            "BATTERY_MODULE_DESCRIPTION": "Veuillez ne saisir que les 8 derniers chiffres du numéro de série.",
+            "BATTERY_STRING": "String de batterie {{ stringNumber }}",
+            "BATTERY_TOWER": "Tour de batterie {{ number }}",
+            "BATTERY_TOWER_CLUSTER": "Batterie {{ batteryNumber }} tour {{towerNumber}}",
+            "BESS_COMPONENTS": "Composants du système de stockage",
+            "BMS_BOX": "BMS Box et socle",
+            "CONFIRM": "enregistrer",
+            "DOUBLE_SOCKET": "Socle double",
+            "DOUBLE_SOCKET_LABEL": "Socle double installé",
+            "EDGE_TIMEOUT_DESC": "Nous n'avons pas pu lire les numéros de série automatiquement. Le système est peut-être occupé à démarrer.",
+            "EMS_BOX_COMMERCIAL": "Boîtier de raccordement {{ edgeShortname }}",
+            "EMS_BOX_CONNECTION_BOX_COMMERCIAL30": "Boîtier de raccordement {{ edgeShortName }}",
+            "EMS_BOX_GRID_CONNECTION_POINT_COMMERCIAL30": "Point de raccordement réseau",
+            "EMS_BOX_HECKERT": "EMS Box",
+            "EMS_BOX_HOME": "EMS Box (boîtier {{edgeShortName }})",
+            "ENTER_MANUALLY": "Saisir les numéros de série manuellement",
+            "ENTER_VALID_ADDRESS": "Pour appliquer les paramètres, saisissez des valeurs valides.",
+            "ERROR_SENDING": "Erreur lors de l'envoi du protocole.",
+            "INVALID_SERIALNUMBER_KEY": "Veuillez vérifier le numéro de série {{ key }} dans {{ header }}",
+            "INVERTER": "Onduleur",
+            "MINIMUM_AND_MAXIMUM_MODULES_PER_STRINGS": "Modules minimum par string : {{ min }} et maximum : {{ max }}",
+            "MINIMUM_AND_MAXIMUM_STRINGS": "Strings minimum : {{ min }} et maximum : {{ max }}",
+            "MODULES_PER_STRINGS_DESCRIPTION": "Modules par string pour le système Commercial-50 : {{ number }}",
+            "NEXT_BUTTON_DESCRIPTION": "En cliquant sur le bouton « suivant », le rapport de mise en service (rapport « IBN ») sera envoyé automatiquement à FENECON GmbH.",
+            "NO_DATA_FOUND": "Tous les numéros de série n'ont pas été trouvés",
+            "NUMBER_OF_MODULES_PER_STRINGS": "Nombre de modules par string",
+            "NUMBER_OF_MODULES_PER_TOWER": "Nombre de modules par tour",
+            "NUMBER_OF_STRINGS": "Nombre de strings",
+            "NUMBER_OF_TOWERS": "Nombre de tours",
+            "READ_DESCRIPTION": "Veuillez vérifier la \"configuration du système\". Veuillez lire la description des champs.",
+            "SAME_SERIAL_NUMBERS": "{{ serialNumbers }} ont les mêmes numéros de série",
+            "SENT_SUCCESSFULLY": "Le protocole a été envoyé avec succès.",
+            "SERIAL_NUMBER": "Numéros de série",
+            "SETUP_NOTE": "Complétez les numéros de série en remplaçant les caractères génériques (marqués avec \"x\") par les caractères appropriés.",
+            "SINGLE_SERIAL_NUMBER": " Numéro de série {{ label }}",
+            "SYSTEM_SETUP": "Préréglages",
+            "TROUBLESHOOTING": {
+                "INTRO": "Si aucune donnée n'est trouvée, veuillez suivre ces étapes :",
+                "STEP_BRIDGES": "Vérifie si le pont de fin est installé conformément aux instructions",
+                "STEP_LAN": "Vérifie si le câble LAN est correctement branché",
+                "STEP_MANUAL": "Si le problème persiste, tu peux saisir les numéros de série manuellement et contacter le service FENECON après avoir terminé la mise en service."
+            },
+            "TRY_READING_AGAIN": "Relancer la lecture"
+        },
+        "PROTOCOL_SYSTEM": {
+            "FIRSTNAME": "Prénom de la personne de contact",
+            "LAST_NAME": "Nom de la personne de contact",
+            "LOCATION_SAME_AS_ADDRESS": "L'emplacement du BESS correspond-il à l'adresse du client ?",
+            "TITLE": "Emplacement du BESS"
+        },
+        "PROTOCOL_SYSTEM_LOCATION_VALIDATION": {
+            "TITLE": "Validation de l'adresse de l'emplacement du stockage"
+        },
+        "SHARED": {
+            "NOTE": "Remarque",
+            "WARNING": "Avertissement"
+        },
+        "STEP_FROM_TO": "Étape {{ from }} sur {{ to }}",
+        "STEP_TO": "Étape {{ number }}",
+        "SYSTEM_UPDATE": {
+            "UPDATE_WARNING": "La version doit être mise à jour !"
+        },
+        "VALUE_WITH_LABEL": "Valeur {{ label }}{{ number }} {{ symbol }}"
     }
 }

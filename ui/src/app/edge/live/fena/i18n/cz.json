@@ -1,6 +1,13 @@
 {
     "FENA": {
         "MESSAGES": {
+            "CONSUMPTION": {
+                "EVSE": {
+                    "CHARGING": "{{wallboxAlias}} aktuálně nabíjí Vaše vozidlo výkonem {{activePower}}.",
+                    "CHARGING_WITH_MODE": "{{wallboxAlias}} aktuálně nabíjí Vaše vozidlo výkonem {{activePower}} v režimu {{mode}}.",
+                    "NOT_CHARGING": "Vaše vozidlo je připojeno k {{wallboxAlias}} a čeká na energii. Nabíjení je aktuálně deaktivováno. Chcete nabíjení spustit, nebo zvolit jiný základní režim?"
+                }
+            },
             "GRID": {
                 "EMERGENCY_POWER_ACTIVE": "Nouzový provoz aktivní: Váš systém {{edgeLongName}} aktuálně zásobuje připojené spotřebiče z vaší baterie.",
                 "GENERATOR_ACTIVE": "Dobře zajištěno: Váš systém {{edgeLongName}} je aktuálně podporován generátorem.",

@@ -1,8 +1,7 @@
 {
-    "BETA_TEST": {
-        "BUTTON": "Do changelogu beta testu",
-        "CHANGELOG": "Zde najdete informace o změnách, vysvětlení a pomoc. S našim changelogem zůstaňte stále informováni o nejnovějším vývoji.",
-        "FEEDBACK": "Váš názor je pro nás důležitý. Sdělte nám, co si o beta testu myslíte:",
+    "GUIDED_TOUR": {
+        "BUTTON": "Spustit tutoriál",
+        "CHANGELOG": "Zde můžete spustit tutoriál s prohlídkou nové navigace.",
         "NEW_UI_INFO": "Naše monitorování dostává nový design. Přibude nová navigace a nové funkce."
     },
     "MY_PORTAL": {
