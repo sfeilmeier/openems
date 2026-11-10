@@ -386,10 +386,8 @@ describe("TourService", () => {
     });
 
     it("activates a step when its target is hidden inside an accordion the step will open", async () => {
-        const accordionGroup = document.createElement("ion-accordion-group") as HTMLElement & {
-            value: string | string[] | null;
-        };
-        accordionGroup.value = [];
+        const accordionGroup = document.createElement("ion-accordion-group");
+        accordionGroup.value = null;
 
         const accordion = document.createElement("ion-accordion");
         accordion.setAttribute("value", "closed-accordion");

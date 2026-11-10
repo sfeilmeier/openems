@@ -1,14 +1,6 @@
 import { compareVersions } from "compare-versions";
 import { TourStep } from "./tour-step";
 
-export interface IonicAccordionElement extends HTMLElement {
-    value?: string;
-}
-
-export interface IonicAccordionGroupElement extends HTMLElement {
-    value: string | string[] | null;
-}
-
 export interface HighlightRect {
     top: number;
     left: number;
@@ -168,12 +160,36 @@ export function getBoundingRect(rects: DOMRect[]): DOMRect {
  * @param value Current accordion group value.
  * @returns A new array containing the open values, or an empty array.
  */
-export function getOpenAccordionValues(value: IonicAccordionGroupElement["value"]): string[] {
+export function getOpenAccordionValues(value: HTMLIonAccordionGroupElement["value"]): string[] {
     if (Array.isArray(value)) {
         return [...value];
     }
 
     return value == null ? [] : [value];
+}
+
+/**
+ * Converts open accordion values to the value shape expected by the given group.
+ *
+ * Ionic expects a string when `multiple` is false and warns if an array is passed. Such a group can only keep one
+ * accordion open, so the last value wins.
+ *
+ * @param accordionGroup Group the value will be assigned to.
+ * @param values Values of the accordions that should be open.
+ * @returns An array for groups with `multiple`, otherwise the last value or null.
+ */
+export function toAccordionGroupValue(
+    accordionGroup: HTMLIonAccordionGroupElement,
+    values: string[],
+): HTMLIonAccordionGroupElement["value"] {
+    if (accordionGroup.multiple) {
+        return [...values];
+    }
+
+    if (values.length === 0) {
+        return null;
+    }
+    return values[values.length - 1];
 }
 
 export interface ActiveTourTargetOptions {
@@ -224,11 +240,11 @@ function isVisibleTourTarget(target: HTMLElement): boolean {
 }
 
 function isInsideClosedAccordion(target: HTMLElement): boolean {
-    let accordion = target.closest<IonicAccordionElement>("ion-accordion");
+    let accordion = target.closest("ion-accordion");
 
     while (accordion != null) {
         const accordionValue = accordion.value ?? accordion.getAttribute("value");
-        const accordionGroup = accordion.closest<IonicAccordionGroupElement>("ion-accordion-group");
+        const accordionGroup = accordion.closest("ion-accordion-group");
 
         if (accordionValue != null && accordionValue !== "" && accordionGroup != null) {
             if (!getOpenAccordionValues(accordionGroup.value).includes(accordionValue)) {
@@ -236,7 +252,7 @@ function isInsideClosedAccordion(target: HTMLElement): boolean {
             }
         }
 
-        accordion = accordion.parentElement?.closest<IonicAccordionElement>("ion-accordion") ?? null;
+        accordion = accordion.parentElement?.closest("ion-accordion") ?? null;
     }
 
     return false;

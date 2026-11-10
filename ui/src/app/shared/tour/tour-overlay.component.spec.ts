@@ -10,7 +10,7 @@ describe("TourOverlayComponent", () => {
     let fixture: ComponentFixture<TourOverlayComponent>;
     let activeStep: ReturnType<typeof signal<TourStep | null>>;
     let isActive: ReturnType<typeof signal<boolean>>;
-    let accordionGroup: HTMLElement & { value: string | string[] | null };
+    let accordionGroup: HTMLIonAccordionGroupElement;
 
     beforeEach(async () => {
         activeStep = signal<TourStep | null>(null);
@@ -35,9 +35,8 @@ describe("TourOverlayComponent", () => {
 
         fixture = TestBed.createComponent(TourOverlayComponent);
 
-        accordionGroup = document.createElement("ion-accordion-group") as HTMLElement & {
-            value: string | string[] | null;
-        };
+        accordionGroup = document.createElement("ion-accordion-group");
+        accordionGroup.multiple = true;
         accordionGroup.value = ["user-open"];
 
         const accordion = document.createElement("ion-accordion");
@@ -77,6 +76,29 @@ describe("TourOverlayComponent", () => {
         fixture.detectChanges();
 
         expect(accordionGroup.value).toEqual(["user-open"]);
+    });
+
+    it("assigns string values to accordion groups without multiple", () => {
+        accordionGroup.multiple = false;
+        accordionGroup.value = "user-open";
+
+        fixture.detectChanges();
+        activeStep.set({
+            id: "accordion",
+            version: "2026.11.1",
+            text: "Accordion",
+            targets: [{ id: TutorialTargetId.ENERGY_MONITOR }],
+            position: "auto",
+            closeAllAccordions: true,
+            openParentAccordion: true,
+        });
+        fixture.detectChanges();
+        expect(accordionGroup.value).toBe("tour-open");
+
+        activeStep.set(null);
+        fixture.detectChanges();
+
+        expect(accordionGroup.value).toBe("user-open");
     });
 
     it("closes accordions the tour opened in groups rendered after the tour started", () => {

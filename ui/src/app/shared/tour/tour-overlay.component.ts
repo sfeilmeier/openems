@@ -6,7 +6,7 @@ import { addIcons } from "ionicons";
 import { NAVIGATION_TOUR } from "./navigation-tour";
 import { TourPosition, TourStep } from "./tour-step";
 import { TourService } from "./tour.service";
-import { IonicAccordionElement, IonicAccordionGroupElement, getActiveTourTarget, getBoundingRect, getOpenAccordionValues, getPaddedHighlightRects, getUntransformedSize, selectTooltipPlacement, } from "./tour.utils";
+import { getActiveTourTarget, getBoundingRect, getOpenAccordionValues, getPaddedHighlightRects, getUntransformedSize, selectTooltipPlacement, toAccordionGroupValue, } from "./tour.utils";
 import { TutorialTargetId } from "./tutorial-target-id";
 
 interface TooltipPosition {
@@ -15,11 +15,11 @@ interface TooltipPosition {
 }
 
 interface OpenedAccordion {
-    group: IonicAccordionGroupElement;
+    group: HTMLIonAccordionGroupElement;
     value: string;
 }
 
-type AccordionGroupValue = IonicAccordionGroupElement["value"];
+type AccordionGroupValue = HTMLIonAccordionGroupElement["value"];
 
 @Component({
     selector: "app-tour-overlay",
@@ -53,7 +53,7 @@ export class TourOverlayComponent {
     );
 
     private tourOpenedAccordions: OpenedAccordion[] = [];
-    private readonly originalAccordionValues = new Map<IonicAccordionGroupElement, AccordionGroupValue>();
+    private readonly originalAccordionValues = new Map<HTMLIonAccordionGroupElement, AccordionGroupValue>();
     private hasCapturedAccordionState = false;
     private tooltipResizeObserver: ResizeObserver | null = null;
     private observedTooltip: HTMLElement | null = null;
@@ -346,17 +346,17 @@ export class TourOverlayComponent {
     }
 
     private closeAllOpenedAccordions(): void {
-        const accordionGroups = document.querySelectorAll<IonicAccordionGroupElement>("ion-accordion-group");
+        const accordionGroups = document.querySelectorAll("ion-accordion-group");
 
         for (const accordionGroup of accordionGroups) {
-            accordionGroup.value = [];
+            accordionGroup.value = toAccordionGroupValue(accordionGroup, []);
         }
 
         this.tourOpenedAccordions = [];
     }
 
     private captureAccordionState(): void {
-        const accordionGroups = document.querySelectorAll<IonicAccordionGroupElement>("ion-accordion-group");
+        const accordionGroups = document.querySelectorAll("ion-accordion-group");
 
         for (const accordionGroup of accordionGroups) {
             const value = accordionGroup.value;
@@ -431,7 +431,7 @@ export class TourOverlayComponent {
 
         for (const accordion of accordions) {
             const accordionValue = accordion.value ?? accordion.getAttribute("value");
-            const accordionGroup = accordion.closest<IonicAccordionGroupElement>("ion-accordion-group");
+            const accordionGroup = accordion.closest("ion-accordion-group");
 
             if (accordionValue == null || accordionValue === "" || accordionGroup == null) {
                 continue;
@@ -443,7 +443,7 @@ export class TourOverlayComponent {
                 continue;
             }
 
-            accordionGroup.value = [...openedValues, accordionValue];
+            accordionGroup.value = toAccordionGroupValue(accordionGroup, [...openedValues, accordionValue]);
 
             this.tourOpenedAccordions.push({
                 group: accordionGroup,
@@ -454,8 +454,9 @@ export class TourOverlayComponent {
 
     private closeTourOpenedAccordions(): void {
         for (const openedAccordion of [...this.tourOpenedAccordions].reverse()) {
-            openedAccordion.group.value = getOpenAccordionValues(openedAccordion.group.value).filter(
-                (value) => value !== openedAccordion.value,
+            openedAccordion.group.value = toAccordionGroupValue(
+                openedAccordion.group,
+                getOpenAccordionValues(openedAccordion.group.value).filter((value) => value !== openedAccordion.value),
             );
         }
 
@@ -468,13 +469,12 @@ export class TourOverlayComponent {
      * @param target Element whose accordion ancestors should be found.
      * @returns Unique ancestor accordion elements, nearest first.
      */
-    private getParentAccordions(target: HTMLElement): IonicAccordionElement[] {
-        const accordions: IonicAccordionElement[] = [];
+    private getParentAccordions(target: HTMLElement): HTMLIonAccordionElement[] {
+        const accordions: HTMLIonAccordionElement[] = [];
         let currentElement: HTMLElement | null = target;
 
         while (currentElement != null) {
-            const accordion: IonicAccordionElement | null =
-                currentElement.closest<IonicAccordionElement>("ion-accordion");
+            const accordion: HTMLIonAccordionElement | null = currentElement.closest("ion-accordion");
 
             if (accordion == null || accordions.includes(accordion)) {
                 break;
