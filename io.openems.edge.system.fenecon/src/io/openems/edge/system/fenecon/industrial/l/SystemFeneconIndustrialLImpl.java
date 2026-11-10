@@ -2,7 +2,7 @@ package io.openems.edge.system.fenecon.industrial.l;
 
 import static io.openems.common.session.Role.ADMIN;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.MULTIPLY;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverters.SCALE_FACTOR_MINUS_1;
 import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE;
 import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_1_RUNNING_STATE;
 import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_2_RUNNING_STATE;

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Edge } from "../components/edge/edge";
 import { EdgeConfig } from "../components/edge/edgeconfig";
 import { ArrayUtils } from "../utils/array/array.utils";
@@ -95,9 +94,9 @@ export type ImageIcon = {
 };
 
 export class Widget {
-    public name: TEnumKeys<typeof WidgetNature | typeof WidgetFactory> | string;
-    public componentId: string;
-    public alias: string;
+    public name!: TEnumKeys<typeof WidgetNature | typeof WidgetFactory> | string;
+    public componentId!: string;
+    public alias!: string;
 }
 
 export type AdvertWidget = {

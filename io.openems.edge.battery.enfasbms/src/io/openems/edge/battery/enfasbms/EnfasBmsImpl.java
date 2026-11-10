@@ -1,9 +1,9 @@
 package io.openems.edge.battery.enfasbms;
 
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.MULTIPLY;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_2;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_3;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverters.SCALE_FACTOR_MINUS_1;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverters.SCALE_FACTOR_MINUS_2;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverters.SCALE_FACTOR_MINUS_3;
 import static io.openems.edge.common.type.TypeUtils.divide;
 import static io.openems.edge.common.type.TypeUtils.multiply;
 

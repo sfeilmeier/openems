@@ -5,12 +5,12 @@ import static io.openems.edge.battery.fenecon.f2b.fisker.enums.DtcFailure.getDtc
 import static io.openems.edge.battery.fenecon.f2b.fisker.statemachine.StateMachine.State.UNDEFINED;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.ADD;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.MULTIPLY;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_1;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_1;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SCALE_FACTOR_MINUS_2;
-import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SET_NULL_FOR_DEFAULT;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.SUBTRACT;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.chain;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverters.SCALE_FACTOR_1;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverters.SCALE_FACTOR_MINUS_1;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverters.SCALE_FACTOR_MINUS_2;
+import static io.openems.edge.bridge.modbus.api.ElementToChannelConverters.SET_NULL_FOR_DEFAULT;
 import static io.openems.edge.common.channel.ChannelUtils.setValueIfNotRead;
 import static io.openems.edge.common.event.EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE;
 import static org.osgi.service.component.annotations.ReferenceCardinality.MANDATORY;
