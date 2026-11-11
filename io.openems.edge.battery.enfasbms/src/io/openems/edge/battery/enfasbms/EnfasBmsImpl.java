@@ -948,7 +948,7 @@ public class EnfasBmsImpl extends AbstractOpenemsModbusComponent implements Enfa
 		var result = multiply(value - MIN_ALLOWED_SOC, //
 				divide(100, (MAX_ALLOWED_SOC - MIN_ALLOWED_SOC)));
 		// limit to 0 - 100 %
-		result = Math.max(0, Math.min(100, result));
+		result = Math.clamp(result, 0, 100);
 
 		if (result == 96) {
 			result = 95;

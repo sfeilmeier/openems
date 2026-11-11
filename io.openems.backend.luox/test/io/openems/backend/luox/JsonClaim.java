@@ -66,6 +66,7 @@ public class JsonClaim implements Claim {
 		return this.asList(aClass).toArray((T[]) Array.newInstance(aClass, this.jsonElement.getAsJsonArray().size()));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> asList(Class<T> aClass) throws JWTDecodeException {
 		return JsonUtils.stream(this.jsonElement.getAsJsonArray()) //
@@ -84,6 +85,7 @@ public class JsonClaim implements Claim {
 		throw new RuntimeException("Not implemented yet");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T as(Class<T> aClass) throws JWTDecodeException {
 		try {

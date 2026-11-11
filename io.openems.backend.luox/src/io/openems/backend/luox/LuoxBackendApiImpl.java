@@ -143,7 +143,7 @@ public class LuoxBackendApiImpl implements LuoxBackendApi, DebugLoggable {
 
 			this.updateLock.readLock().lock();
 			try {
-				this.feedLimitationByContract.compute(limitationRequest.contract(), (userContract, subscription) -> {
+				this.feedLimitationByContract.compute(limitationRequest.contract(), (_, subscription) -> {
 					if (subscription == null) {
 						return new ContractEdgeData(limitationData, limitationRequest.contract(), null);
 					}
@@ -210,7 +210,7 @@ public class LuoxBackendApiImpl implements LuoxBackendApi, DebugLoggable {
 			this.updateLock.writeLock().lock();
 			try {
 				final var data = this.feedLimitationByContract.computeIfAbsent(contract,
-						c -> new ContractEdgeData(new SyncableLuoxControlData.NoLimitation(), contract, edgeId));
+						_ -> new ContractEdgeData(new SyncableLuoxControlData.NoLimitation(), contract, edgeId));
 
 				if (!Objects.equals(data.edgeId, edgeId)) {
 					this.feedLimitationByEdgeId.remove(data.edgeId);

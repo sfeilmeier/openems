@@ -42,6 +42,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JsonRpcServlet extends HttpServlet {
 
 	private static final Logger LOG = LoggerFactory.getLogger(JsonRpcServlet.class);
+	private static final long serialVersionUID = 1L;
 
 	private final transient JsonRpcRequestHandler jsonRpcRequestHandler;
 	private final transient Metadata metadata;

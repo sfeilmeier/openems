@@ -13,7 +13,7 @@ import io.openems.backend.simulation.engine.possiblebatterycapacityextension.Pos
 public class ProductTest {
 
 	private static long count(NavigableMap<Integer, ImmutableSortedMap<Integer, ProductData>> ptd) {
-		return ptd.entrySet().stream().flatMap(e -> e.getValue().values().stream()).count();
+		return ptd.values().stream().mapToLong(ImmutableSortedMap::size).sum();
 	}
 
 	private static ProductData lastProductData(NavigableMap<Integer, ImmutableSortedMap<Integer, ProductData>> ptd) {

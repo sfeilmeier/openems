@@ -91,7 +91,7 @@ public class UpdateProducttypeHandler implements EventHandler, DebugLoggable {
 				return;
 			}
 
-			edge.setProducttype(producttypes.get(0));
+			edge.setProducttype(producttypes.getFirst());
 		});
 	}
 

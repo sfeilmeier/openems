@@ -82,7 +82,7 @@ public class OnNotification implements io.openems.common.websocket.OnNotificatio
 	@Override
 	public void accept(WebSocket ws, JsonrpcNotification notification) throws OpenemsNamedException {
 		final var method = notification.getMethod();
-		try (final var timer = this.startTimer(notification.getFullyQualifiedMethod())) {
+		try (final var _ = this.startTimer(notification.getFullyQualifiedMethod())) {
 			WsData wsData = ws.getAttachment();
 
 			switch (method) {
@@ -230,7 +230,7 @@ public class OnNotification implements io.openems.common.websocket.OnNotificatio
 				edgeCache.updateAggregatedData(notification);
 				timedataManager.write(edgeId, notification);
 			}
-			case ResendDataNotification unused -> {
+			case ResendDataNotification _ -> {
 				// Nothing
 			}
 			}

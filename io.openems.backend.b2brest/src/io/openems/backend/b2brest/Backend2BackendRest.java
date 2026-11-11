@@ -33,7 +33,7 @@ public class Backend2BackendRest extends AbstractOpenemsBackendComponent {
 
 	@Reference
 	private RestHandler restHandler;
-	private final Consumer<ServletContextHandler> contextHandlerChangeSubscription = contextHandler -> {
+	private final Consumer<ServletContextHandler> contextHandlerChangeSubscription = _ -> {
 		this.stopServer();
 		this.startServer();
 	};

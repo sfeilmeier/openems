@@ -45,6 +45,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class LuoxServlet extends HttpServlet {
 
 	private static final Logger LOG = LoggerFactory.getLogger(LuoxServlet.class);
+	private static final long serialVersionUID = 1L;
 	private static final int DEFAULT_TIMEOUT_MS = 30_000;
 	private static final int DEFAULT_TIMEOUT_CONTEXT_BUFFER_MS = DEFAULT_TIMEOUT_MS + 5_000;
 
@@ -129,7 +130,7 @@ public class LuoxServlet extends HttpServlet {
 		final var context = req.startAsync();
 		context.setTimeout(DEFAULT_TIMEOUT_CONTEXT_BUFFER_MS);
 		authenticationService.authenticate(getAllHeadersFrom(req), Set.of("write:control")) //
-				.handle((unused, authenticationError) -> {
+				.handle((_, authenticationError) -> {
 					if (authenticationError != null) {
 						handleAuthenticationError(resp, authenticationError);
 						context.complete();
@@ -138,7 +139,7 @@ public class LuoxServlet extends HttpServlet {
 					try {
 						return luoxApi.sendFeedLimitation(new LuoxBackendApi.FeedLimitationRequest(
 								new LuoxBackendApi.UserContract(customerId, contractId), request.toApiFeedLimitation()))
-								.whenComplete((unused2, throwable) -> {
+								.whenComplete((_, throwable) -> {
 									if (throwable != null) {
 										handleError(resp, HttpStatus.INTERNAL_SERVER_ERROR, throwable,
 												"Unable to set feed limitation");
@@ -189,7 +190,7 @@ public class LuoxServlet extends HttpServlet {
 		final var context = req.startAsync();
 		context.setTimeout(DEFAULT_TIMEOUT_CONTEXT_BUFFER_MS);
 		authenticationService.authenticate(getAllHeadersFrom(req), Set.of("read:control")) //
-				.handle((unused, authenticationError) -> {
+				.handle((_, authenticationError) -> {
 					if (authenticationError != null) {
 						handleAuthenticationError(resp, authenticationError);
 						context.complete();
@@ -260,7 +261,7 @@ public class LuoxServlet extends HttpServlet {
 		final var context = req.startAsync();
 		context.setTimeout(DEFAULT_TIMEOUT_CONTEXT_BUFFER_MS);
 		authenticationService.authenticate(getAllHeadersFrom(req), Set.of("read:measurements")) //
-				.handle((unused, authenticationError) -> {
+				.handle((_, authenticationError) -> {
 					if (authenticationError != null) {
 						handleAuthenticationError(resp, authenticationError);
 						context.complete();

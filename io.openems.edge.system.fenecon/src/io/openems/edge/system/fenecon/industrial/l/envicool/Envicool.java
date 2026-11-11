@@ -1,7 +1,5 @@
 package io.openems.edge.system.fenecon.industrial.l.envicool;
 
-import static io.openems.common.utils.IntUtils.fitWithin;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.OptionalInt;
@@ -59,7 +57,7 @@ public class Envicool {
 				LOG.warn("The cooling setpoint temperature [" //
 						+ config.coolingUnitCoolingSetPoint() //
 						+ "] should be between [" + MINIMUM_TEMP + " °C] and [" + MAXIMUM_TEMP + " °C]");
-				coolingSetPoint = fitWithin(MINIMUM_TEMP, MAXIMUM_TEMP, coolingSetPoint);
+				coolingSetPoint = Math.clamp(coolingSetPoint, MINIMUM_TEMP, MAXIMUM_TEMP);
 			}
 
 			int heatingSetPoint = config.coolingUnitHeatingSetPoint();
@@ -67,7 +65,7 @@ public class Envicool {
 				LOG.warn("The heating setpoint temperature [" //
 						+ config.coolingUnitCoolingSetPoint() //
 						+ "] should be between [" + MINIMUM_TEMP + " °C] and [" + MAXIMUM_TEMP + " °C]");
-				heatingSetPoint = fitWithin(MINIMUM_TEMP, MAXIMUM_TEMP, heatingSetPoint);
+				heatingSetPoint = Math.clamp(heatingSetPoint, MINIMUM_TEMP, MAXIMUM_TEMP);
 			}
 
 			if (coolingSetPoint <= heatingSetPoint) {

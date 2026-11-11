@@ -665,7 +665,7 @@ public class BatteryFeneconF2bFiskerImpl extends AbstractOpenemsModbusComponent 
 
 		final var multiplied = TypeUtils.multiply(TypeUtils.subtract(rawSoc, MIN_ALLOWED_SOC), 100);
 		final var scaled = TypeUtils.divide(multiplied, MAX_ALLOWED_SOC - MIN_ALLOWED_SOC);
-		final var clamped = (int) TypeUtils.fitWithin(0L, 100L, (long) TypeUtils.orElse(scaled, 0));
+		final int clamped = Math.clamp(TypeUtils.orElse(scaled, 0), 0, 100);
 		this._setSoc(clamped);
 	}
 

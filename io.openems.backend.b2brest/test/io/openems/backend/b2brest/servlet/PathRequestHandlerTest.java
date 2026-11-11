@@ -18,7 +18,7 @@ public class PathRequestHandlerTest {
 		var sut = new PathRequestHandler();
 		var pathVariables = new AtomicReference<Map<String, String>>();
 
-		sut.addRoute("/{customer_id}/{contract_id}/feed-limitation", (variables, req, resp) -> {
+		sut.addRoute("/{customer_id}/{contract_id}/feed-limitation", (variables, _, _) -> {
 			pathVariables.set(variables);
 		});
 
@@ -33,7 +33,7 @@ public class PathRequestHandlerTest {
 		var sut = new PathRequestHandler();
 		var calls = new AtomicInteger();
 
-		sut.addRoute("/{customer_id}/{contract_id}/feed-limitation", (variables, req, resp) -> {
+		sut.addRoute("/{customer_id}/{contract_id}/feed-limitation", (_, _, _) -> {
 			calls.incrementAndGet();
 		});
 
@@ -48,7 +48,7 @@ public class PathRequestHandlerTest {
 		var sut = new PathRequestHandler();
 
 		assertThrows(IllegalArgumentException.class,
-				() -> sut.addRoute("/{}/222/feed-limitation", (variables, req, resp) -> {
+				() -> sut.addRoute("/{}/222/feed-limitation", (_, _, _) -> {
 				}));
 	}
 }
