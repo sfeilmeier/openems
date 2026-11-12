@@ -2,7 +2,7 @@ import { Component, computed, EventEmitter, Input, OnInit, Output, Signal, signa
 import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
-import { EdgeAppComponentsUpdateFailedError, EdgeAppInstanceNotFoundError, EdgeAppValidationAppsNotInstalledError, EdgeAppValidationCheckCardinalitySingleInCategoryError, GenericError, } from "src/app/shared/errors/errors";
+import { EdgeAppInstanceNotFoundError, EdgeAppValidationAppsNotInstalledError, EdgeAppValidationCheckCardinalitySingleInCategoryError, GenericError, } from "src/app/shared/errors/errors";
 import { Edge, Service, Websocket } from "src/app/shared/shared";
 import { PromiseUtils } from "src/app/shared/utils/promise/promise.utils";
 import { AbstractIbn } from "../../installation-systems/abstract-ibn";
@@ -54,16 +54,6 @@ interface KnownErrorSignature {
 const KNOWN_ERROR_SIGNATURES: KnownErrorSignature[] = [
     {
         code: EdgeAppInstanceNotFoundError.id,
-        pattern: null,
-        isSelfSolvableConflict: true,
-        getTexts: (translate) => ({
-            headline: translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.ERROR_HEADLINE_CATEGORY_CONFLICT"),
-            title: translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.ERROR_TITLE_STALE_INSTANCE"),
-            hint: translate.instant("INSTALLATION.CONFIGURATION_EXECUTE.ERROR_HINT_STALE_INSTANCE"),
-        }),
-    },
-    {
-        code: EdgeAppComponentsUpdateFailedError.id,
         pattern: null,
         isSelfSolvableConflict: true,
         getTexts: (translate) => ({
