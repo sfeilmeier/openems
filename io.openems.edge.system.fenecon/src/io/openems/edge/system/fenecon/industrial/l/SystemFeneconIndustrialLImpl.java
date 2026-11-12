@@ -1,6 +1,5 @@
 package io.openems.edge.system.fenecon.industrial.l;
 
-import static io.openems.common.session.Role.ADMIN;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverter.MULTIPLY;
 import static io.openems.edge.bridge.modbus.api.ElementToChannelConverters.SCALE_FACTOR_MINUS_1;
 import static io.openems.edge.system.fenecon.industrial.l.SystemFeneconIndustrialL.ChannelId.CUMULATED_TIME_COMPRESSOR_1_AND_2_RUNNING_STATE;
@@ -49,9 +48,6 @@ import org.slf4j.LoggerFactory;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.function.ThrowingConsumer;
 import io.openems.common.jscalendar.JSCalendar;
-import io.openems.common.jsonrpc.serialization.EmptyObject;
-import io.openems.common.jsonrpc.serialization.EndpointRequestType;
-import io.openems.common.session.Role;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.battery.api.Battery;
 import io.openems.edge.bridge.modbus.api.AbstractOpenemsModbusComponent;
@@ -72,20 +68,17 @@ import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.event.EdgeEventConstants;
 import io.openems.edge.common.jsonapi.ComponentJsonApi;
-import io.openems.edge.common.jsonapi.EdgeGuards;
 import io.openems.edge.common.jsonapi.JSCalendarApi;
 import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.startstop.StartStoppable;
 import io.openems.edge.common.taskmanager.Priority;
-import io.openems.edge.ess.api.EssErrorAcknowledge;
 import io.openems.edge.ess.api.MetaEss;
 import io.openems.edge.ess.api.SymmetricEss;
-import io.openems.edge.system.fenecon.industrial.jsonrpc.BmsHardReset;
-import io.openems.edge.system.fenecon.industrial.jsonrpc.EmergencyStopAcknowledge;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.BmsHardwareResetRpc;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.EmergencyStopAcknowledgeRpc;
 import io.openems.edge.system.fenecon.industrial.jsonrpc.ErrorAcknowledgeRpc;
-import io.openems.edge.system.fenecon.industrial.jsonrpc.SystemErrorAcknowledge;
 import io.openems.edge.system.fenecon.industrial.l.envicool.Envicool;
 import io.openems.edge.system.fenecon.industrial.l.statemachine.Context;
 import io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine;
@@ -104,7 +97,7 @@ import io.openems.edge.timedata.api.utils.CalculateActiveTime;
 })
 public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 		implements SystemFeneconIndustrialL, ModbusComponent, OpenemsComponent, StartStoppable, EventHandler,
-		ComponentJsonApi, TimedataProvider, ErrorAcknowledgeRpc {
+		ComponentJsonApi, TimedataProvider, ErrorAcknowledgeRpc, BmsHardwareResetRpc, EmergencyStopAcknowledgeRpc {
 
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialLImpl.class);
 
@@ -327,7 +320,8 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 		return StartStop.UNDEFINED;
 	}
 
-	private List<SymmetricEss> getEsssList() {
+	@Override
+	public List<SymmetricEss> getEsssList() {
 		var esss = new ArrayList<SymmetricEss>();
 		// ESS is here the EssCluster
 		if (this.ess instanceof MetaEss metaEss) {
@@ -528,29 +522,6 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 
 	@Override
 	public void buildJsonApiRoutes(JsonApiBuilder builder) {
-		builder.handleRequest(new EmergencyStopAcknowledge(), endpoint -> {
-			endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.INSTALLER));
-		}, call -> {
-			this.acknowledgeEmergencyStop();
-			return EmptyObject.INSTANCE;
-		});
-
-		builder.handleRequest(new BmsHardReset(), endpoint -> {
-			endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.INSTALLER));
-		}, call -> {
-			this.stateMachine.forceNextState(BMS_RESET);
-			return EmptyObject.INSTANCE;
-		});
-
-		this.executeErrorAcknowledgeRpc(builder, new SystemErrorAcknowledge(), () -> {
-			this.stateMachine.forceNextState(UNDEFINED);
-			for (var ess : this.getEsssList()) {
-				if (ess instanceof EssErrorAcknowledge genericEss) {
-					genericEss.executeErrorAcknowledge();
-				}
-			}
-		});
-
 		JSCalendarApi.buildJsonApiRoutes(//
 				builder, //
 				JSCalendar.VOID_SERIALIZER, //
@@ -564,8 +535,13 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 		);
 	}
 
-	private void acknowledgeEmergencyStop() throws Exception {
-		this.getWriteAcknowledgeChannel().setNextWriteValue(true);
+	@Override
+	public void acknowledgeEmergencyStop() {
+		try {
+			this.getWriteAcknowledgeChannel().setNextWriteValue(true);
+		} catch (Exception e) {
+			this.logError(this.log, e.getClass().getSimpleName() + ": " + e.getMessage());
+		}
 	}
 
 	private final AtomicBoolean allowAcknowledge = new AtomicBoolean(false);
@@ -683,22 +659,6 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	}
 
 	@Override
-	public void executeErrorAcknowledgeRpc(JsonApiBuilder builder,
-			EndpointRequestType<EmptyObject, EmptyObject> request) {
-		builder.handleRequest(request, endpoint -> endpoint.setGuards(EdgeGuards.roleIsAtleast(ADMIN)), //
-				call -> {
-					var channels = this.defineChannelsForErrorAcknowledge();
-					channels.forEach(c -> c.setNextValue(null));
-					this.getEsssList().forEach(ess -> {
-						if (ess instanceof EssErrorAcknowledge genericEss) {
-							genericEss.executeErrorAcknowledge();
-						}
-					});
-					return EmptyObject.INSTANCE;
-				});
-	}
-
-	@Override
 	public List<Channel<?>> defineChannelsForErrorAcknowledge() {
 		return List.of(//
 				getModbusCommunicationFailedChannel(), //
@@ -715,5 +675,15 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 			return;
 		}
 		this.stateMachine.forceNextState(BMS_RESET);
+	}
+
+	@Override
+	public void activateBmsHardwareReset() {
+		this.stateMachine.forceNextState(BMS_RESET);
+	}
+
+	@Override
+	public void forceStateMachineUndefined() {
+		this.stateMachine.forceNextState(UNDEFINED);
 	}
 }

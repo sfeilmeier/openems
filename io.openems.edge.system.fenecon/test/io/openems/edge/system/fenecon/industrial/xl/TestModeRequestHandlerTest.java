@@ -1,5 +1,6 @@
 package io.openems.edge.system.fenecon.industrial.xl;
 
+import static io.openems.edge.common.test.DummyUser.DUMMY_INSTALLER;
 import static org.junit.Assert.assertEquals;
 
 import java.time.temporal.ChronoUnit;
@@ -11,22 +12,23 @@ import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.test.TestUtils;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.aircooling.blueeplus.DummyBlueeplusImpl;
-import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
+import io.openems.edge.common.test.RpcTestUtils;
 import io.openems.edge.ess.test.DummyManagedSymmetricEss;
 import io.openems.edge.ess.test.DummyMetaEss;
 import io.openems.edge.firealarmsystem.hekatron.DummyHekatronB9X2Impl;
 import io.openems.edge.fluidcooling.hydac.DummyHydacImpl;
 import io.openems.edge.io.test.DummyCustomInputOutput;
 import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.EssTest;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.Exit;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.LampTest;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode.TestAction.EssTest;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode.TestAction.Exit;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode.TestAction.LampTest;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestModeRpcExtension;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
 import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
@@ -119,8 +121,8 @@ public class TestModeRequestHandlerTest {
 						.output(STATE_MACHINE, State.STOPPED))//
 				.next(new TestCase()//
 						.onAfterProcessImage(() -> {
-							final var builder = new JsonApiBuilder();
-							TestModeUtils.performJsonRpcCall(system, builder, LampTest.getTypeName());
+							RpcTestUtils.performCall(new TestModeRpcExtension(), system, new TestMode(),
+									new TestMode.Request(new LampTest()), DUMMY_INSTALLER);
 						}))//
 				.next(new TestCase()//
 						.output(STATE_MACHINE, State.STOPPED))//
@@ -136,9 +138,12 @@ public class TestModeRequestHandlerTest {
 						.timeleap(clock, 6, ChronoUnit.SECONDS))//
 				.next(new TestCase()//
 						.onAfterProcessImage(() -> {
-							final var builder = new JsonApiBuilder();
-							var performedCall = TestModeUtils.performJsonRpcCall(system, builder,
-									EssTest.getTypeName());
+							var performedCall = RpcTestUtils.performCall(//
+									new TestModeRpcExtension(), //
+									system, //
+									new TestMode(), //
+									new TestMode.Request(new EssTest()), DUMMY_INSTALLER//
+							);
 							final var success = GenericJsonrpcResponseSuccess
 									.from(performedCall.getResponse().toJsonObject());
 							final var res = TestMode.Response.serializer().deserialize(success.getResult());
@@ -179,8 +184,13 @@ public class TestModeRequestHandlerTest {
 						.output(STATE_MACHINE, State.TEST_MODE_IDLE))//
 				.next(new TestCase()//
 						.onAfterProcessImage(() -> {
-							final var builder = new JsonApiBuilder();
-							TestModeUtils.performJsonRpcCall(system, builder, Exit.getTypeName());
+							RpcTestUtils.performCall(//
+									new TestModeRpcExtension(), //
+									system, //
+									new TestMode(), //
+									new TestMode.Request(new Exit()), //
+									DUMMY_INSTALLER//
+							);
 						}))//
 				.next(new TestCase()//
 						.output(STATE_MACHINE, State.TEST_MODE_IDLE))//
@@ -191,8 +201,13 @@ public class TestModeRequestHandlerTest {
 						.output(STATE_MACHINE, State.STOPPED))//
 				.next(new TestCase()//
 						.onAfterProcessImage(() -> {
-							final var builder = new JsonApiBuilder();
-							var call = TestModeUtils.performJsonRpcCall(system, builder, EssTest.getTypeName());
+							var call = RpcTestUtils.performCall(//
+									new TestModeRpcExtension(), //
+									system, //
+									new TestMode(), //
+									new TestMode.Request(new EssTest()), //
+									DUMMY_INSTALLER//
+							);
 							final var success = GenericJsonrpcResponseSuccess.from(call.getResponse().toJsonObject());
 							final var res = TestMode.Response.serializer().deserialize(success.getResult());
 							assertEquals("started", res.status());
@@ -207,8 +222,13 @@ public class TestModeRequestHandlerTest {
 				// Check if exit no longer works during EssTest / LampTest
 				.next(new TestCase()//
 						.onAfterProcessImage(() -> {
-							final var builder = new JsonApiBuilder();
-							TestModeUtils.performJsonRpcCall(system, builder, Exit.getTypeName());
+							RpcTestUtils.performCall(//
+									new TestModeRpcExtension(), //
+									system, //
+									new TestMode(), //
+									new TestMode.Request(new Exit()), //
+									DUMMY_INSTALLER//
+							);
 						}))//
 				.next(new TestCase()//
 						.output(STATE_MACHINE, State.TEST_MODE_ESS))//

@@ -53,9 +53,10 @@ public class TestModeEssHandler extends StateHandler<State, Context> {
 		} else if (this.timeoutSubstate.elapsed(context.clock)) {
 			var system = context.getParent();
 			var ess = this.essQueue.peek();
-			if (ess != null) {
+			if (ess != null && ess.hasFaults()) {
 				var essTestFailed = system.getEssTestFailedChannel();
 				essTestFailed.channelDoc().text("ESS test Failed! " + ess.id());
+				system._setEssTestFailed(true);
 			}
 			return State.TEST_MODE_IDLE;
 		}
@@ -108,7 +109,7 @@ public class TestModeEssHandler extends StateHandler<State, Context> {
 	protected void onExit(Context context) throws OpenemsNamedException {
 		final var system = context.getParent();
 		system._setInEssTestMode(false);
-		system.setTestRequestParams(null);
+		system.setTestRequest(null);
 	}
 
 	@Override

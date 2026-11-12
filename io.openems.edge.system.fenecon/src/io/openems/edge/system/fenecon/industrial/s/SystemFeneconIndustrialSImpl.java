@@ -31,8 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.function.ThrowingConsumer;
-import io.openems.common.jsonrpc.serialization.EmptyObject;
-import io.openems.common.session.Role;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.battery.fenecon.f2b.BatteryFeneconF2b;
 import io.openems.edge.battery.fenecon.f2b.BatteryProtectionDefinitionType;
@@ -44,16 +42,13 @@ import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.event.EdgeEventConstants;
 import io.openems.edge.common.jsonapi.ComponentJsonApi;
-import io.openems.edge.common.jsonapi.EdgeGuards;
 import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
-import io.openems.edge.ess.api.EssErrorAcknowledge;
 import io.openems.edge.ess.api.MetaEss;
 import io.openems.edge.ess.api.SymmetricEss;
-import io.openems.edge.system.fenecon.industrial.jsonrpc.EmergencyStopAcknowledge;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.EmergencyStopAcknowledgeRpc;
 import io.openems.edge.system.fenecon.industrial.jsonrpc.ErrorAcknowledgeRpc;
-import io.openems.edge.system.fenecon.industrial.jsonrpc.SystemErrorAcknowledge;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitContext;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitStateMachine;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitStateMachine.CoolingUnitState;
@@ -70,8 +65,9 @@ import io.openems.edge.system.fenecon.industrial.s.statemachine.StateMachine.Sta
 @EventTopics({ //
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE, //
 })
-public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent implements SystemFeneconIndustrialS,
-		OpenemsComponent, StartStoppable, EventHandler, ComponentJsonApi, ErrorAcknowledgeRpc {
+public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent
+		implements SystemFeneconIndustrialS, OpenemsComponent, StartStoppable, EventHandler, ComponentJsonApi,
+		ErrorAcknowledgeRpc, EmergencyStopAcknowledgeRpc {
 
 	private final Logger log = LoggerFactory.getLogger(SystemFeneconIndustrialSImpl.class);
 	private final StateMachine stateMachine = new StateMachine(State.UNDEFINED);
@@ -176,7 +172,8 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent imple
 		return false;
 	}
 
-	private List<SymmetricEss> getEsssList() {
+	@Override
+	public List<SymmetricEss> getEsssList() {
 		var esss = new ArrayList<SymmetricEss>();
 		// ESS is here the EssCluster
 		if (this.ess instanceof MetaEss metaEss) {
@@ -364,24 +361,13 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent imple
 
 	@Override
 	public void buildJsonApiRoutes(JsonApiBuilder builder) {
-		builder.handleRequest(new EmergencyStopAcknowledge(), endpoint -> {
-			endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.INSTALLER));
-		}, call -> {
-			this.acknowledgeEmergencyStop();
-			return EmptyObject.INSTANCE;
-		});
-		this.executeErrorAcknowledgeRpc(builder, new SystemErrorAcknowledge(), () -> {
-			for (var ess : this.getEsssList()) {
-				if (ess instanceof EssErrorAcknowledge genericEss) {
-					genericEss.executeErrorAcknowledge();
-				}
-			}
-		});
+		// Routes are provided by the ComponentJsonApiExtension implementations
 	}
 
 	private final AtomicBoolean allowAcknowledge = new AtomicBoolean(false);
 
-	private void acknowledgeEmergencyStop() throws OpenemsNamedException {
+	@Override
+	public void acknowledgeEmergencyStop() throws OpenemsNamedException {
 		try {
 			WriteChannel<Boolean> outputChannel = this.componentManager
 					.getChannel(this.parsedConfig.acknowledgeEmergencyStopChannel());
@@ -481,4 +467,5 @@ public class SystemFeneconIndustrialSImpl extends AbstractOpenemsComponent imple
 				getRunFailedChannel() //
 		);
 	}
+
 }

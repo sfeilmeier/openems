@@ -1,26 +1,29 @@
 package io.openems.edge.system.fenecon.industrial.xl;
 
 import static io.openems.edge.common.startstop.StartStoppable.ChannelId.START_STOP;
+import static io.openems.edge.common.test.DummyUser.DUMMY_INSTALLER;
 
 import org.junit.jupiter.api.Test;
 
 import io.openems.common.test.DummyConfigurationAdmin;
 import io.openems.common.types.ChannelAddress;
 import io.openems.edge.aircooling.blueeplus.DummyBlueeplusImpl;
-import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStopConfig;
 import io.openems.edge.common.test.AbstractComponentTest.TestCase;
 import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
+import io.openems.edge.common.test.RpcTestUtils;
 import io.openems.edge.ess.test.DummyManagedSymmetricEss;
 import io.openems.edge.ess.test.DummyMetaEss;
 import io.openems.edge.firealarmsystem.hekatron.DummyHekatronB9X2Impl;
 import io.openems.edge.fluidcooling.hydac.DummyHydacImpl;
 import io.openems.edge.io.test.DummyCustomInputOutput;
 import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.Exit;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction.ManualBatteryStart;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode.TestAction.Exit;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode.TestAction.ManualBatteryStart;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestModeRpcExtension;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
 import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
@@ -81,8 +84,8 @@ class ManualBatteryStartTest {
 						.output(STATE_MACHINE, State.STOPPED))//
 				.next(new TestCase() //
 						.onAfterProcessImage(() -> {
-							final var builder = new JsonApiBuilder();
-							TestModeUtils.performJsonRpcCall(system, builder, ManualBatteryStart.getTypeName());
+							RpcTestUtils.performCall(new TestModeRpcExtension(), system, new TestMode(),
+									new TestMode.Request(new ManualBatteryStart()), DUMMY_INSTALLER);
 						})) //
 				.next(new TestCase() //
 						.input(START_STOP, StartStop.STOP)) //
@@ -92,8 +95,8 @@ class ManualBatteryStartTest {
 						.output(STATE_MACHINE, State.MANUAL_BATTERY_START)) //
 				.next(new TestCase()//
 						.onAfterProcessImage(() -> {
-							final var builder = new JsonApiBuilder();
-							TestModeUtils.performJsonRpcCall(system, builder, Exit.getTypeName());
+							RpcTestUtils.performCall(new TestModeRpcExtension(), system, new TestMode(),
+									new TestMode.Request(new Exit()), DUMMY_INSTALLER);
 						}))//
 				.next(new TestCase() //
 						.output(STATE_MACHINE, State.MANUAL_BATTERY_START))//

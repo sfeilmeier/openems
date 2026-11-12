@@ -1,6 +1,5 @@
 package io.openems.edge.system.fenecon.industrial.xl;
 
-import static io.openems.common.session.Role.ADMIN;
 import static io.openems.edge.common.channel.ChannelId.channelIdUpperToCamel;
 import static io.openems.edge.common.channel.ChannelUtils.setValue;
 import static io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State.UNDEFINED;
@@ -12,8 +11,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -39,9 +36,6 @@ import org.slf4j.LoggerFactory;
 import io.openems.common.channel.Debounce;
 import io.openems.common.channel.Level;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
-import io.openems.common.jsonrpc.serialization.EmptyObject;
-import io.openems.common.jsonrpc.serialization.EndpointRequestType;
-import io.openems.common.session.Role;
 import io.openems.common.timedata.Timeout;
 import io.openems.common.types.ChannelAddress;
 import io.openems.common.types.OpenemsType;
@@ -61,23 +55,21 @@ import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.component.OpenemsComponent;
 import io.openems.edge.common.event.EdgeEventConstants;
 import io.openems.edge.common.jsonapi.ComponentJsonApi;
-import io.openems.edge.common.jsonapi.EdgeGuards;
 import io.openems.edge.common.jsonapi.JsonApiBuilder;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
 import io.openems.edge.common.update.Updateable;
-import io.openems.edge.ess.api.EssErrorAcknowledge;
 import io.openems.edge.ess.api.MetaEss;
 import io.openems.edge.ess.api.SymmetricEss;
 import io.openems.edge.firealarmsystem.hekatron.HekatronB9X2;
 import io.openems.edge.fluidcooling.hydac.Hydac;
 import io.openems.edge.io.api.DigitalOutput;
 import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.BmsHardwareResetRpc;
 import io.openems.edge.system.fenecon.industrial.jsonrpc.ErrorAcknowledgeRpc;
-import io.openems.edge.system.fenecon.industrial.jsonrpc.SystemErrorAcknowledge;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.BmsHardwareReset;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.TestAction;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode.Request;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestModeRpc;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.Context;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
@@ -92,11 +84,9 @@ import io.openems.edge.temperature.jumo.JumoHydroTransS20;
 @EventTopics({ //
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_PROCESS_IMAGE //
 })
-public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent implements SystemFeneconIndustrialXl,
-		OpenemsComponent, StartStoppable, EventHandler, ComponentJsonApi, ErrorAcknowledgeRpc {
-
-	public static final EndpointRequestType<EmptyObject, EmptyObject> CLEAR_ERROR_REQUEST = EndpointRequestType
-			.ofEmpty("clearErrorRequest");
+public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent
+		implements SystemFeneconIndustrialXl, OpenemsComponent, StartStoppable, EventHandler, ComponentJsonApi,
+		ErrorAcknowledgeRpc, TestModeRpc, BmsHardwareResetRpc {
 
 	private static final F2bHardwareType F2B_HARDWARE_TYPE = F2bHardwareType.F2B_FM29_1V3;
 	private final StateMachine stateMachine = new StateMachine(UNDEFINED);
@@ -470,6 +460,7 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	 *
 	 * @return the ess list
 	 */
+	@Override
 	public List<SymmetricEss> getEsssList() {
 		var esss = new ArrayList<SymmetricEss>();
 		// ESS is here the EssCluster
@@ -514,72 +505,20 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 
 	@Override
 	public void buildJsonApiRoutes(JsonApiBuilder builder) {
-		builder.handleRequest(new BmsHardwareReset(),
-				endpoint -> endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.INSTALLER)), //
-				call -> {
-					this.activateF2bHardwareReset();
-					return EmptyObject.INSTANCE;
-				});
-		builder.handleRequest(new TestMode(), endpoint -> endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.INSTALLER)), //
-				call -> {
-					final var nextRequest = call.getRequest();
-					if (nextRequest.action() instanceof TestAction.Exit) {
-						return this.handleExit(nextRequest);
-					}
-
-					if (this.request != null) {
-						return new TestMode.Response(//
-								"ignored", //
-								"A test is already running: ", //
-								this.request.action());
-					}
-
-					if (!this.isStopped() && !this.isIdle()) {
-						return new TestMode.Response("Stop operation or Idle state required before proceeding!", null,
-								null);
-					}
-
-					this.setTestRequestParams(nextRequest);
-					this.stateMachine.forceNextState(State.TEST_MODE_IDLE);
-					return new TestMode.Response("started", null, this.request.action());
-				});
-
-		this.executeErrorAcknowledgeRpc(builder, new SystemErrorAcknowledge(), () -> {
-			this.stateMachine.forceNextState(UNDEFINED);
-			for (var ess : this.getEsssList()) {
-				if (ess instanceof EssErrorAcknowledge genericEss) {
-					genericEss.executeErrorAcknowledge();
-				}
-			}
-		});
-
-		builder.handleRequest(CLEAR_ERROR_REQUEST,
-				endpoint -> endpoint.setGuards(EdgeGuards.roleIsAtleast(Role.INSTALLER)), //
-				call -> {
-					this.clearCoolingUnitErrors();
-					return EmptyObject.INSTANCE;
-				});
+		// Routes are provided by the ComponentJsonApiExtension implementations
 	}
 
-	protected void clearCoolingUnitErrors() {
-		this.fluidCooling.setClearError(true);
-		this.logInfo(this.log, "Clearing Hydac Errors.");
-		CompletableFuture.runAsync(() -> {
-			this.fluidCooling.setClearError(false); //
-			this.logInfo(this.log, "Clearing Hydac Errors done."); //
-		}, CompletableFuture.delayedExecutor(5, TimeUnit.SECONDS));
-	}
-
-	private TestMode.Response handleExit(TestMode.Request exitRequest) {
+	@Override
+	public TestMode.Response handleExit(TestMode.Request exitRequest) {
 		switch (this.stateMachine.getCurrentState()) {
 		case TEST_MODE_IDLE, TEST_MODE_ESS, TEST_MODE_LAMP -> {
-			this.setTestRequestParams(null);
+			this.setTestRequest(null);
 			this.stateMachine.forceNextState(State.GO_STOPPED);
-			return new TestMode.Response("Exiting test mode!", null, null);
+			return new TestMode.Response("exited", "Exiting test mode!", null);
 		}
 		case MANUAL_BATTERY_START -> {
-			this.setTestRequestParams(exitRequest);
-			return new TestMode.Response("Exiting manual battery start!", null, null);
+			this.setTestRequest(exitRequest);
+			return new TestMode.Response("exited", "Exiting manual battery start! ", null);
 		}
 		default -> {
 			return new TestMode.Response("ignored", "No test is running", null);
@@ -587,16 +526,24 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 		}
 	}
 
-	private boolean isIdle() {
+	@Override
+	public boolean isIdle() {
 		return this.stateMachine.getCurrentState() == State.TEST_MODE_IDLE;
 	}
 
-	public void setTestRequestParams(TestMode.Request testRequestParams) {
+	@Override
+	public boolean isStateStopped() {
+		return this.stateMachine.getCurrentState() == State.STOPPED;
+	}
+
+	@Override
+	public void setTestRequest(TestMode.Request testRequestParams) {
 		this.request = testRequestParams;
 	}
 
-	private void activateF2bHardwareReset() {
-		// Block the second call, service people....
+	@Override
+	public void activateBmsHardwareReset() {
+		// Block the second call
 		if (this.isResetRunning) {
 			return;
 		}
@@ -921,18 +868,18 @@ public class SystemFeneconIndustrialXlImpl extends AbstractOpenemsComponent impl
 	}
 
 	@Override
-	public void executeErrorAcknowledgeRpc(JsonApiBuilder builder,
-			EndpointRequestType<EmptyObject, EmptyObject> request) {
-		builder.handleRequest(request, endpoint -> endpoint.setGuards(EdgeGuards.roleIsAtleast(ADMIN)), //
-				call -> {
-					var channels = this.defineChannelsForErrorAcknowledge();
-					channels.forEach(c -> c.setNextValue(null));
-					this.getEsssList().forEach(ess -> {
-						if (ess instanceof EssErrorAcknowledge genericEss) {
-							genericEss.executeErrorAcknowledge();
-						}
-					});
-					return EmptyObject.INSTANCE;
-				});
+	public void forceTestModeIdle() {
+		this.stateMachine.forceNextState(State.TEST_MODE_IDLE);
 	}
+
+	@Override
+	public void forceStateMachineUndefined() {
+		this.stateMachine.forceNextState(State.UNDEFINED);
+	}
+
+	@Override
+	public Request getTestRequest() {
+		return this.request;
+	}
+
 }

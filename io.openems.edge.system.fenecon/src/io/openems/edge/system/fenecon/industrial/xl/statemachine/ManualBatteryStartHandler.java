@@ -7,7 +7,7 @@ import io.openems.common.utils.EnumUtils;
 import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
 import io.openems.edge.common.statemachine.StateHandler;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode;
 import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.State;
 
 public class ManualBatteryStartHandler extends StateHandler<State, Context> {
@@ -16,7 +16,7 @@ public class ManualBatteryStartHandler extends StateHandler<State, Context> {
 	}
 
 	protected ManualBatteryStartState manualBatteryStartState;
-	
+
 	private enum ManualBatterySubState {
 		START_ALL_BATTERIES, //
 		WAIT_FOR_EXIT, //
@@ -87,7 +87,7 @@ public class ManualBatteryStartHandler extends StateHandler<State, Context> {
 	@Override
 	protected void onExit(Context context) throws OpenemsNamedException {
 		final var system = context.getParent();
-		system.setTestRequestParams(null);
+		system.setTestRequest(null);
 		system._setInManualBatteryStartMode(false);
 	}
 

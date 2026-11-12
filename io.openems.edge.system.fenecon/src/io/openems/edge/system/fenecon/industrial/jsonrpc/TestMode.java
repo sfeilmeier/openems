@@ -1,4 +1,4 @@
-package io.openems.edge.system.fenecon.industrial.xl.jsonrpc;
+package io.openems.edge.system.fenecon.industrial.jsonrpc;
 
 import static io.openems.common.jsonrpc.serialization.JsonSerializerUtil.jsonObjectSerializer;
 import static io.openems.common.jsonrpc.serialization.JsonSerializerUtil.jsonSerializer;
@@ -7,8 +7,8 @@ import io.openems.common.jsonrpc.serialization.EndpointRequestType;
 import io.openems.common.jsonrpc.serialization.JsonSerializer;
 import io.openems.common.jsonrpc.serialization.PolymorphicSerializer;
 import io.openems.common.utils.JsonUtils;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.Request;
-import io.openems.edge.system.fenecon.industrial.xl.jsonrpc.TestMode.Response;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode.Request;
+import io.openems.edge.system.fenecon.industrial.jsonrpc.TestMode.Response;
 
 /**
  * Wraps a JSON-RPC Request to start a system test mode with specific action and
