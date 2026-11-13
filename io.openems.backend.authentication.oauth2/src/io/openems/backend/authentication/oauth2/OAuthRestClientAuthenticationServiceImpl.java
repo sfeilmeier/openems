@@ -1,6 +1,5 @@
 package io.openems.backend.authentication.oauth2;
 
-import static io.openems.common.utils.StringUtils.startsWithIgnoreCase;
 import static io.openems.common.utils.ThreadPoolUtils.shutdownAndAwaitTermination;
 
 import java.net.MalformedURLException;
@@ -78,10 +77,10 @@ public class OAuthRestClientAuthenticationServiceImpl implements AuthRestAuthent
 	public CompletableFuture<Void> authenticate(Map<String, String> headers, Set<String> requiredScopes) {
 		return this.executor.submit("authenticate", () -> {
 			final var authHeader = headers.get(HttpHeader.HEADER_AUTHORIZATION);
-			if (authHeader == null || !startsWithIgnoreCase(authHeader, HttpAuthorization.VALUE_BEARER_PREFIX + " ")) {
+			final var tokenString = HttpAuthorization.extractBearerToken(authHeader);
+			if (tokenString == null) {
 				throw new AuthenticationFailedException("Missing or invalid Authorization header");
 			}
-			final var tokenString = authHeader.substring(HttpAuthorization.VALUE_BEARER_PREFIX.length() + 1);
 			final var jwt = this.processAccessToken(tokenString);
 
 			if (requiredScopes.isEmpty()) {
