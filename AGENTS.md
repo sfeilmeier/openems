@@ -21,6 +21,7 @@ Main stacks: Java 25, Gradle, OSGi/bnd workspace, JUnit, Angular/Ionic.
 - Run the narrowest relevant validation for the changed area.
 - Do not bump dependencies, wrappers, plugins, or introduce new frameworks unless explicitly requested.
 - `cnf/pom.xml` must explicitly declare every Maven dependency of the OSGi runtime, including transitive ones, so it acts as a complete and reliable SBOM. When adding a dependency, also add its compile- and runtime-scope transitive dependencies at the same version (skip `optional`, `provided`, and `test` scopes) and verify with the app resolve tasks (e.g. `.\gradlew.bat :io.openems.backend.application:resolve.BackendApp`).
+- Follow git-flow branch naming: create feature branches with the `feature/` prefix from `develop` (e.g. `feature/my-change`).
 - Never create a Git commit without asking the user first. Leave changes uncommitted for review; commit only after the user explicitly confirms (or asks you to commit).
 
 ## Java / Edge / Backend
@@ -32,7 +33,7 @@ Main stacks: Java 25, Gradle, OSGi/bnd workspace, JUnit, Angular/Ionic.
 - Prefer `ChannelUtils.setValue(component, ChannelId, value)` (and the matching `ChannelUtils` variants) over generated `_set...()` methods or direct `channel.setNextValue()` calls.
 - Edge logic is cycle/event driven via `EdgeEventConstants` topics. For controller changes, consider scheduler order, channel interactions, ESS/grid/PV/load energy flow, and production debugging.
 - Modbus devices should use the existing `io.openems.edge.bridge.modbus` protocol/register mapping patterns.
-- Checkstyle is enforced via `cnf/checkstyle.xml` with zero warnings.
+- Checkstyle is enforced via `cnf/checkstyle.xml` with zero warnings. The Checkstyle tool version is pinned via `checkstyle.toolVersion` in `gradle.properties` and mirrored as `checkstyleVersion` in `.idea/checkstyle-idea.xml`; keep both in sync with the eclipse-cs release in use (currently 14.1.0, which bundles Checkstyle 14.1.0). When bumping the version, also adopt newly introduced checks in `cnf/checkstyle.xml` where they match the project style; new checks not yet decided on are tracked in `cnf/checkstyle-pending-checks.md`.
 - Add new bundles/components only when explicitly required; follow the closest existing bundle structure.
 - Useful Java entry point bundles: `io.openems.edge.controller.ess.balancing`, `io.openems.edge.evse.chargepoint.keba`, and `io.openems.edge.evse.chargepoint.mennekes`; inspect matching `Config.java`, `*Impl.java`, and `*Test.java` files before copying patterns.
 
