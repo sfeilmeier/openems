@@ -212,6 +212,12 @@
       <property name="allowPublicImmutableFields" value="true"/>
       <property name="protectedAllowed" value="true"/>
     </module>
+    <module name="MultilineCommentLeadingAsteriskPresence"/>
+    <module name="ExpressionOverBlockLambda"/>
+    <module name="UnnecessaryTypeArgumentsWithRecordPattern"/>
+    <module name="MissingOverrideOnRecordAccessor"/>
+    <module name="JavadocEndCommentDelimiter"/>
+    <module name="WhitespaceBeforeEmptyBody"/>
   </module>
   <module name="LineLength">
     <property name="severity" value="ignore"/>
@@ -224,4 +230,5 @@
     <property name="eachLine" value="true"/>
     <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
   </module>
+  <module name="LineEnding"/>
 </module>
