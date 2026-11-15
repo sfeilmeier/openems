@@ -3,6 +3,7 @@ package io.openems.edge.pvinverter.solarlog;
 import io.openems.common.types.OptionsEnum;
 
 public enum PLimitType implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NOT_ACTIVE(0, "Interface not active"), //
 	NO_LIMIT(1, "No limitation active (100 %)"), //
@@ -31,4 +32,5 @@ public enum PLimitType implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

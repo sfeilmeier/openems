@@ -31,4 +31,5 @@ public interface ControllerChpSoc extends Controller, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

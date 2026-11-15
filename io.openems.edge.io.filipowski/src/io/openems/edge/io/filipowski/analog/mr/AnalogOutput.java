@@ -1,6 +1,7 @@
 package io.openems.edge.io.filipowski.analog.mr;
 
 public enum AnalogOutput {
+
 	OUTPUT_1(3000), //
 	OUTPUT_2(3001), //
 	OUTPUT_3(3002), //
@@ -12,4 +13,5 @@ public enum AnalogOutput {
 	private AnalogOutput(int startAddress) {
 		this.startAddress = startAddress;
 	}
+
 }

@@ -189,4 +189,5 @@ public class ScheduleHandler {
 	protected Set<UUID> getSubscribedWebsocketIds(String edgeId) {
 		return this.subscriptions.get(edgeId);
 	}
+
 }

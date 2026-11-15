@@ -96,4 +96,5 @@ public class ManualBatteryStartHandler extends StateHandler<State, Context> {
 		return State.MANUAL_BATTERY_START.asCamelCase() + "-"
 				+ EnumUtils.nameAsCamelCase(this.manualBatteryStartState.subState);
 	}
+
 }

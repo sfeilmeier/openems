@@ -10,4 +10,5 @@ public final class GaussianKernels {
 	}
 
 	public static final double[] SIZE_9 = { 1, 2, 3, 4, 5, 4, 3, 2, 1 };
+
 }

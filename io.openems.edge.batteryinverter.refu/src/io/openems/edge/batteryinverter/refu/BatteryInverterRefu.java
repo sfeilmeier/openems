@@ -119,4 +119,5 @@ public interface BatteryInverterRefu extends ManagedSymmetricBatteryInverter, Sy
 	public default void _setMaxStopTimeout(boolean value) {
 		this.getMaxStopTimeoutChannel().setNextValue(value);
 	}
+
 }

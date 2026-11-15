@@ -3,6 +3,7 @@ package io.openems.edge.controller.io.heatingelement.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum Level implements OptionsEnum {
+
 	/**
 	 * Switch off everything.
 	 */
@@ -71,4 +72,5 @@ public enum Level implements OptionsEnum {
 		}
 		throw new IllegalArgumentException("No Level with value [" + value + "]");
 	}
+
 }

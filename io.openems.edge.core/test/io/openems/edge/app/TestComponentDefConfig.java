@@ -43,6 +43,7 @@ import io.openems.edge.core.appmanager.formly.JsonFormlyUtil;
 public class TestComponentDefConfig
 		extends AbstractOpenemsAppWithProps<TestComponentDefConfig, Property, TestComponentDefConfigParameter>
 		implements OpenemsApp {
+
 	public record TestComponentDefConfigParameter(ResourceBundle bundle) implements BundleProvider {
 
 	}

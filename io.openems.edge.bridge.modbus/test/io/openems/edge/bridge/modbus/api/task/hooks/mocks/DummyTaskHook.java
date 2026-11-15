@@ -7,6 +7,7 @@ import io.openems.edge.bridge.modbus.api.task.Task;
 import io.openems.edge.bridge.modbus.api.task.hooks.TaskHook;
 
 public class DummyTaskHook extends TaskHook {
+
 	private HookState state = HookState.NEW;
 
 	private void expectHookState(HookState state) {
@@ -42,4 +43,5 @@ public class DummyTaskHook extends TaskHook {
 	public enum HookState {
 		NEW, PRE_EXECUTE, EXECUTE, POST_EXECUTE
 	}
+
 }

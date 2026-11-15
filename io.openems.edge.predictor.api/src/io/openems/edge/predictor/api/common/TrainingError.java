@@ -16,4 +16,5 @@ public interface TrainingError {
 	 * @return the {@link LogSeverity} for this training error
 	 */
 	public LogSeverity getSeverity();
+
 }

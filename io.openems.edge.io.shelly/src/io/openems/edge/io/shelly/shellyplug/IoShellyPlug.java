@@ -131,4 +131,5 @@ public interface IoShellyPlug
 	public default void _setSlaveCommunicationFailed(boolean value) {
 		this.getSlaveCommunicationFailedChannel().setNextValue(value);
 	}
+
 }

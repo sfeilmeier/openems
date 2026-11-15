@@ -22,6 +22,7 @@ import io.openems.edge.core.appmanager.formly.JsonFormlyUtil;
 import io.openems.edge.core.appmanager.formly.enums.InputType;
 
 public class BraiinsOsProps {
+
 	/**
 	 * Creates a {@link AppDef} for configuring the read only of a braiinsos app.
 	 *

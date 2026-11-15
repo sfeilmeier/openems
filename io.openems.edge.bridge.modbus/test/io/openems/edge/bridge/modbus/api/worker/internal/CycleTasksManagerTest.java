@@ -231,4 +231,5 @@ public class CycleTasksManagerTest {
 		var writeTask = sut.getNextTask();
 		assertEquals(WT_1, writeTask);
 	}
+
 }

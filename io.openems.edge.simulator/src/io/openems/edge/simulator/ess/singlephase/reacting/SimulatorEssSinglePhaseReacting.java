@@ -38,4 +38,5 @@ public interface SimulatorEssSinglePhaseReacting
 		ManagedSinglePhaseEss.super.applyPower(activePowerL1, reactivePowerL1, activePowerL2, reactivePowerL2,
 				activePowerL3, reactivePowerL3);
 	}
+
 }

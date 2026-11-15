@@ -28,4 +28,5 @@ public record CommonConfig(boolean readOnly, PhaseRotation phaseRotation, boolea
 		return new CommonConfig(config.readOnly(), config.phaseRotation(), config.p30hasS10PhaseSwitching(),
 				config.wiring(), config.logVerbosity());
 	}
+
 }

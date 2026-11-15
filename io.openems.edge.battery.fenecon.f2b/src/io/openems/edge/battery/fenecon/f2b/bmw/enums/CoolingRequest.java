@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.bmw.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum CoolingRequest implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_COOLING_REQUESTED(0, "No cooling requested"), //
 	COOLING_REQUESTED(1, "Cooling requested"), //
@@ -31,4 +32,5 @@ public enum CoolingRequest implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

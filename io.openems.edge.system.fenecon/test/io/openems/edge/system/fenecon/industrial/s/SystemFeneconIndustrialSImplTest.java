@@ -36,4 +36,5 @@ public class SystemFeneconIndustrialSImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

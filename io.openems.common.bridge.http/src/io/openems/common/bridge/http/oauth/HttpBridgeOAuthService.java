@@ -57,4 +57,5 @@ public class HttpBridgeOAuthService implements HttpBridgeService {
 	public void close() throws Exception {
 
 	}
+
 }

@@ -46,4 +46,5 @@ public @interface Config {
 	LogVerbosity logVerbosity() default LogVerbosity.NONE;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Api Modbus/TCP Read-Write [{id}]";
+
 }

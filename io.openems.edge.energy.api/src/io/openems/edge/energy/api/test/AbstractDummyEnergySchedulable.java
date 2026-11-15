@@ -16,4 +16,5 @@ public abstract class AbstractDummyEnergySchedulable<SELF extends AbstractDummyE
 						.addProperty("service.factoryPid", factoryPid), //
 				firstInitialChannelIds, furtherInitialChannelIds);
 	}
+
 }

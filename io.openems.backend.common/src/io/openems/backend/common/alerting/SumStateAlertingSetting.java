@@ -6,6 +6,7 @@ import io.openems.common.channel.Level;
 
 public record SumStateAlertingSetting(String edgeId, String userLogin, int faultDelay, int warningDelay,
 		ZonedDateTime lastNotification) {
+
 	/**
 	 * Get the appropriate delay for the given SumState level .
 	 *
@@ -20,4 +21,5 @@ public record SumStateAlertingSetting(String edgeId, String userLogin, int fault
 		default -> -1;
 		};
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum WorkMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	WAIT(0, "cut off all the connection to Inverter"), //
 	ON_GRID(1, "PV inputs to Inverter,Inverter outputs to Grid"), //
@@ -33,4 +34,5 @@ public enum WorkMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

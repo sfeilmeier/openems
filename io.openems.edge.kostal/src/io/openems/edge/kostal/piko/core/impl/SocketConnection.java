@@ -77,4 +77,5 @@ public class SocketConnection {
 	public InputStream getIn() {
 		return this.in;
 	}
+
 }

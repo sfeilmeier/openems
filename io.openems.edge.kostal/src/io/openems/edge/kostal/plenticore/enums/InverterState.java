@@ -4,6 +4,7 @@ import io.openems.common.types.OptionsEnum;
 
 // 0x38 56 Inverter state 2 - U32 2 RO 0x03
 public enum InverterState implements OptionsEnum {
+
 	OFF(0, "Off"), //
 	INIT(1, "Init"), //
 	ISOMEAS(2, "IsoMeas"), //
@@ -46,4 +47,5 @@ public enum InverterState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

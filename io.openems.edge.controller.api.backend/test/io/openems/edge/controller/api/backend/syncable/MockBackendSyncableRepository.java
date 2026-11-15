@@ -8,6 +8,7 @@ import java.util.concurrent.Future;
 import io.openems.edge.controller.api.backend.api.ControllerApiBackend;
 
 public class MockBackendSyncableRepository extends BackendSyncableRepository {
+
 	private final List<Future<?>> asyncTasks = new LinkedList<>();
 
 	MockBackendSyncableRepository(ControllerApiBackend backend) {
@@ -49,4 +50,5 @@ public class MockBackendSyncableRepository extends BackendSyncableRepository {
 			task.get();
 		}
 	}
+
 }

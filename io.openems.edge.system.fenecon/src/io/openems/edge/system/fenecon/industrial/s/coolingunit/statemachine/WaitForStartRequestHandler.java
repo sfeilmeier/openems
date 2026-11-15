@@ -10,6 +10,7 @@ import io.openems.edge.common.statemachine.StateHandler;
 import io.openems.edge.system.fenecon.industrial.s.coolingunit.statemachine.CoolingUnitStateMachine.CoolingUnitState;
 
 public class WaitForStartRequestHandler extends StateHandler<CoolingUnitState, CoolingUnitContext> {
+
 	private final Logger log = LoggerFactory.getLogger(WaitForStartRequestHandler.class);
 
 	@Override
@@ -38,4 +39,5 @@ public class WaitForStartRequestHandler extends StateHandler<CoolingUnitState, C
 
 		return CoolingUnitState.WAIT_FOR_START_REQUEST;
 	}
+
 }

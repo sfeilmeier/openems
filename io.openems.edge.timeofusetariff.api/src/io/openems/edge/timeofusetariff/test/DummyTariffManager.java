@@ -64,4 +64,5 @@ public class DummyTariffManager implements TariffManager {
 	public void ungetSpotTariff(SpotTariffTracker spotTariffTracker) {
 		// Nothing, because getSpotTariff() is not supported either.
 	}
+
 }

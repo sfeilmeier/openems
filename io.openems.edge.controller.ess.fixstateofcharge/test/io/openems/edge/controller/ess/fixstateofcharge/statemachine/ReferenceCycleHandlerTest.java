@@ -203,4 +203,5 @@ class ReferenceCycleHandlerTest {
 		var targetSoc = 30;
 		return new Context(this.controller, null, MAX_APPARENT_POWER, soc, targetSoc, ZonedDateTime.now(clock), clock);
 	}
+
 }

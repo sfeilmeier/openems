@@ -75,4 +75,5 @@ public class TimeOfUseTariffControllerImplTest {
 				.next(new TestCase());
 		return sut;
 	}
+
 }

@@ -380,4 +380,5 @@ public class EvseAlfenImpl extends AbstractOpenemsModbusComponent implements Evs
 		}
 		return b.toString();
 	}
+
 }

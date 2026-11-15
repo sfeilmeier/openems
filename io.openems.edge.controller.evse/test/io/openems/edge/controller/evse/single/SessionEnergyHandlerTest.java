@@ -45,4 +45,5 @@ public class SessionEnergyHandlerTest {
 		sut.onAfterProcessImage(cp);
 		assertEquals(0, sut.onBeforeProcessImage(cp));
 	}
+
 }

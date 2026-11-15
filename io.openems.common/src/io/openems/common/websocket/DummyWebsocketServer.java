@@ -140,4 +140,5 @@ public class DummyWebsocketServer extends AbstractWebsocketServer<WsData> implem
 	public void close() {
 		this.stop();
 	}
+
 }

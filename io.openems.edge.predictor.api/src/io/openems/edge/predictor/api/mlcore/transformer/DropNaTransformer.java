@@ -16,4 +16,5 @@ public class DropNaTransformer<I> extends AbstractDualTransformer<I> {
 		dataframe.dropNa();
 		return dataframe;
 	}
+
 }

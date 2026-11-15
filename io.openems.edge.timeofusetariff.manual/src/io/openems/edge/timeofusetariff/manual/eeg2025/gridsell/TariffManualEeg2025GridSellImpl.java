@@ -268,4 +268,5 @@ public class TariffManualEeg2025GridSellImpl extends AbstractTariffComponent imp
 	public BehaviorSubject<TariffUpdateStatus> getLastUpdateStatus() {
 		return this.updateStatus;
 	}
+
 }

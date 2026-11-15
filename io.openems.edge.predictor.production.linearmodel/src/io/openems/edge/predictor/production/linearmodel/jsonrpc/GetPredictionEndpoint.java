@@ -73,4 +73,5 @@ public class GetPredictionEndpoint implements EndpointRequestType<EmptyObject, R
 					});
 		}
 	}
+
 }

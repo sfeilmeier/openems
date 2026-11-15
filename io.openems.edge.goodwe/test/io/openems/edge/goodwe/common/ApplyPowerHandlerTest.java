@@ -364,4 +364,5 @@ public class ApplyPowerHandlerTest {
 			assertTrue(filtered <= 1000, "Mode " + mode + " should not exceed target");
 		}
 	}
+
 }

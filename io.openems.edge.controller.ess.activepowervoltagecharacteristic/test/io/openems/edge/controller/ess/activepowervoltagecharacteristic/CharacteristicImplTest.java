@@ -112,4 +112,5 @@ public class CharacteristicImplTest {
 						.output("ess1", SET_ACTIVE_POWER_EQUALS, -4000)) //
 				.deactivate();
 	}
+
 }

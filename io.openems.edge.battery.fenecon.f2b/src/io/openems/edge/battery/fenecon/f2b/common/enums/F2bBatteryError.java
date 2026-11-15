@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum F2bBatteryError implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_F2B_BATTERY_ERROR(0, "No f2b battery error"), //
 	HV_START_UP_ERROR_RESET_FAILED(1, "Hv startup error reset failed"), //
@@ -35,4 +36,5 @@ public enum F2bBatteryError implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

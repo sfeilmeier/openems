@@ -150,4 +150,5 @@ public interface EssErrorAcknowledge extends OpenemsComponent {
 	default void _setTimeoutStopBattery(boolean value) {
 		this.getTimeoutStopBatteryChannel().setNextValue(value);
 	}
+
 }

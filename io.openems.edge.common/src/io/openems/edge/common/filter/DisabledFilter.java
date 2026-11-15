@@ -25,4 +25,5 @@ public final class DisabledFilter extends Filter {
 		// apply output value limits
 		return this.applyLowHighLimits(value);
 	}
+
 }

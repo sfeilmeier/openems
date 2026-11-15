@@ -21,4 +21,5 @@ public interface FeneconProPvMeter extends ElectricityMeter, ModbusComponent, Op
 			return this.doc;
 		}
 	}
+
 }

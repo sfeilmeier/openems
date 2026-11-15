@@ -33,4 +33,5 @@ public class TariffManualFixedGridSellImplTest {
 			assertEquals(75.0, price, 0.0);
 		}
 	}
+
 }

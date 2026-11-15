@@ -23,4 +23,5 @@ public record HeatMyPvPayload(Mode mode) {
 						.addProperty("mode", obj.mode()) //
 						.build());
 	}
+
 }

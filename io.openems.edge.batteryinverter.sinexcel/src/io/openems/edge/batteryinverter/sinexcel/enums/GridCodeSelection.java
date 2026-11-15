@@ -1,6 +1,7 @@
 package io.openems.edge.batteryinverter.sinexcel.enums;
 
 public enum GridCodeSelection {
+
 	SA1741("SA1741", 0), //
 	VDE("VDE", 1), //
 	AUSTRALIAN("Australian", 2), //
@@ -24,4 +25,5 @@ public enum GridCodeSelection {
 	public int getValue() {
 		return this.value;
 	}
+
 }

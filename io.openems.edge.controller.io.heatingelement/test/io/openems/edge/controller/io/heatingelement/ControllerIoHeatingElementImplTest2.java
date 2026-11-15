@@ -177,4 +177,5 @@ public class ControllerIoHeatingElementImplTest2 {
 						.output(FORCE_START_AT_SECONDS_OF_DAY, 54_180 /* current time */)) //
 				.deactivate();
 	}
+
 }

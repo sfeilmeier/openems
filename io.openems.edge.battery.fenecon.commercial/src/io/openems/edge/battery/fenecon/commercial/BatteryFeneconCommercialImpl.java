@@ -1309,4 +1309,5 @@ public class BatteryFeneconCommercialImpl extends AbstractOpenemsModbusComponent
 		case STOP -> StartStop.STOP; // force STOP
 		};
 	}
+
 }

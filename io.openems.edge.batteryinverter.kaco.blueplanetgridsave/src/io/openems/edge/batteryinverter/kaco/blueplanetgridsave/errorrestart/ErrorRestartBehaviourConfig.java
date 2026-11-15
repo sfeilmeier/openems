@@ -1,6 +1,7 @@
 package io.openems.edge.batteryinverter.kaco.blueplanetgridsave.errorrestart;
 
 public enum ErrorRestartBehaviourConfig {
+
 	NO_RESTART(new DefaultErrorRestartBehaviour()), //
 	ALWAYS_RESTART(new AlwaysRestartErrorRestartBehaviour()), //
 	;

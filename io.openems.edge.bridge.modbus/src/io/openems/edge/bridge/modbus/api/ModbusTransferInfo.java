@@ -15,4 +15,5 @@ public record ModbusTransferInfo(Instant time, ModbusCommunicationType communica
 	public enum ModbusCommunicationType {
 		REQUEST, RESPONSE
 	}
+
 }

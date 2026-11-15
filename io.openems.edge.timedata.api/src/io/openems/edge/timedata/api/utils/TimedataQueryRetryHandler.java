@@ -55,4 +55,5 @@ class TimedataQueryRetryHandler {
 	void reset() {
 		this.firstFailedAt = null;
 	}
+
 }

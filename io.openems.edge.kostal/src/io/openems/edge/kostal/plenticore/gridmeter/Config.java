@@ -8,6 +8,7 @@ import io.openems.common.types.MeterType;
 @ObjectClassDefinition(name = "KOSTAL Smart Energy Meter (KSEM)", //
 		description = "Implements the Kostal Smart Energy Meter (KSEM)")
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "meter0";
 
@@ -33,4 +34,5 @@ import io.openems.common.types.MeterType;
 	MeterType type() default MeterType.GRID;
 
 	String webconsole_configurationFactory_nameHint() default "KOSTAL Smart Energy Meter (KSEM) [{id}]";
+
 }

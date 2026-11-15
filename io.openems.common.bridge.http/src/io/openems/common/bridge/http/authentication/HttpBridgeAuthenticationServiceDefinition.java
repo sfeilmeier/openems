@@ -66,4 +66,5 @@ public record HttpBridgeAuthenticationServiceDefinition<T>(//
 	) {
 		return new HttpBridgeAuthenticationService<>(bridgeHttp, this.config());
 	}
+
 }

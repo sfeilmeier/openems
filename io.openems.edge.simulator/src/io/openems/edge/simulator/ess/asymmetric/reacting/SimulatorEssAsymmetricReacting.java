@@ -27,4 +27,5 @@ public interface SimulatorEssAsymmetricReacting extends ManagedAsymmetricEss, As
 			return this.doc;
 		}
 	}
+
 }

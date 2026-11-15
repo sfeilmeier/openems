@@ -334,4 +334,5 @@ public class BlueEPlusImpl extends AbstractOpenemsModbusComponent
 				) //
 		);
 	}
+
 }

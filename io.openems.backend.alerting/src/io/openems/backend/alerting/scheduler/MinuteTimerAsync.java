@@ -59,4 +59,5 @@ public class MinuteTimerAsync extends MinuteTimer {
 		this.scheduler.shutdownNow();
 		this.scheduler = null;
 	}
+
 }

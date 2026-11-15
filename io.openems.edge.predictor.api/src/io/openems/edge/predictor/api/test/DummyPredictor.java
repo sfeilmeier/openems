@@ -50,4 +50,5 @@ public class DummyPredictor extends AbstractPredictor implements Predictor {
 	protected Prediction createNewPrediction(ChannelAddress channelAddress) {
 		return Prediction.from(Instant.now(this.clockProvider.getClock()), this.prediction);
 	}
+
 }

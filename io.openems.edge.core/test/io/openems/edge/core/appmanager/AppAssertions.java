@@ -73,4 +73,5 @@ public final class AppAssertions<//
 	private PARAMETER getParameter(PROPERTY property) {
 		return property.getParamter().apply(new Type.GetParameterValues<>(this.app, Language.DEFAULT));
 	}
+
 }

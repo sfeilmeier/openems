@@ -10,4 +10,5 @@ public enum BatteryId {
 	 * F2B Battery2.
 	 */
 	F2B_BATTERY_2
+
 }

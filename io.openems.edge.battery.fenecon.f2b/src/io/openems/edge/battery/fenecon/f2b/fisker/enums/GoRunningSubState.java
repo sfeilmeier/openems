@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.fisker.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum GoRunningSubState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	REQUEST_STANDBY(0, "Request standby"), //
 	REQUEST_HV_ON(1, "Request HV On"), //
@@ -31,4 +32,5 @@ public enum GoRunningSubState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

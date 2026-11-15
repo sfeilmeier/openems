@@ -133,4 +133,5 @@ class ComponentChannelExtensionTest {
 		verify(component1).channels();
 		verify(component2).channels();
 	}
+
 }

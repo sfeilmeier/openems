@@ -36,4 +36,5 @@ public class Coefficient {
 	public Pwr getPwr() {
 		return this.pwr;
 	}
+
 }

@@ -237,4 +237,5 @@ public class WeatherForecastServiceTest {
 		assertTrue(url.contains("hourly=" + String.join("%2C", HourlyWeatherVariables.ALL)));
 		assertTrue(url.contains("daily=" + String.join("%2C", DailyWeatherVariables.ALL)));
 	}
+
 }

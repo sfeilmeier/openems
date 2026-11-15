@@ -369,4 +369,5 @@ public class BatteryProtection {
 		this.battery._setChargeMaxCurrent(chargeMaxCurrent);
 		this.battery._setDischargeMaxCurrent(dischargeMaxCurrent);
 	}
+
 }

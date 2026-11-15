@@ -29,4 +29,5 @@ public class DisabledRampFilter extends RampFilter {
 		}
 		return Math.round(value);
 	}
+
 }

@@ -153,4 +153,5 @@ public class GoodWeChargerTwoStringImpl extends AbstractOpenemsComponent impleme
 	public final String debugLog() {
 		return "L:" + this.getActualPower().asString();
 	}
+
 }

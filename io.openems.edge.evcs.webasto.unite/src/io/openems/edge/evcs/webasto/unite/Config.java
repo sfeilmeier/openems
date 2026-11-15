@@ -34,4 +34,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String Modbus_target() default "(enabled=true)";
 
 	String webconsole_configurationFactory_nameHint() default "EVCS Webasto Unite [{id}]";
+
 }

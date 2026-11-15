@@ -317,4 +317,5 @@ public final class ApplySetPoint {
 		public static record Watt(int value) implements ApplySetPoint.Action {
 		}
 	}
+
 }

@@ -19,4 +19,5 @@ public interface Edge2EdgeMeter extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

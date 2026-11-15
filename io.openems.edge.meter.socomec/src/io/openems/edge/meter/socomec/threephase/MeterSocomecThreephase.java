@@ -24,4 +24,5 @@ public interface MeterSocomecThreephase extends ElectricityMeter, OpenemsCompone
 			return this.doc;
 		}
 	}
+
 }

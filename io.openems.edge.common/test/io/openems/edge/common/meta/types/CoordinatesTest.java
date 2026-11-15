@@ -51,4 +51,5 @@ public class CoordinatesTest {
 		assertNotNull(Coordinates.of(-90.0, -180.0));
 		assertNotNull(Coordinates.of(90.0, 180.0));
 	}
+
 }

@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import io.openems.common.bridge.http.time.DelayTimeProvider;
 
 public class DummyPeriodicExecutor implements PeriodicExecutor {
+
 	public DummyPeriodicExecutor(String name, Supplier<DelayTimeProvider.Delay> action) {
 		// Start the action in a new thread to mock the behavior of the real
 		// PeriodicExecutor
@@ -39,4 +40,5 @@ public class DummyPeriodicExecutor implements PeriodicExecutor {
 	@Override
 	public void dispose() {
 	}
+
 }

@@ -48,4 +48,5 @@ public class LinearInterpolatorTest {
 		List<Double> values = Arrays.asList(null, null, null);
 		assertTrue(Double.isNaN(interp.interpolate(1, values)));
 	}
+
 }

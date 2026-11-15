@@ -288,4 +288,5 @@ public class WsData extends io.openems.common.websocket.WsData {
 	public int hashCode() {
 		return Objects.hash(this.id);
 	}
+
 }

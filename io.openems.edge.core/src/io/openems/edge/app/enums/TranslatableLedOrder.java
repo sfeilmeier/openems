@@ -33,4 +33,5 @@ public enum TranslatableLedOrder implements TranslatableEnum {
 	public static final OptionsFactory optionsFactory() {
 		return OptionsFactory.of(values());
 	}
+
 }

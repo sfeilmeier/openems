@@ -36,4 +36,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int minHwCurrent() default 6000;
 
 	String webconsole_configurationFactory_nameHint() default "EVCS OCPP ABL [{id}]";
+
 }

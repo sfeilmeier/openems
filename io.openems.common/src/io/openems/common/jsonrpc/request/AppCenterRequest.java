@@ -65,4 +65,5 @@ public class AppCenterRequest extends JsonrpcRequest {
 				.add("payload", this.payload.toJsonObject()) //
 				.build();
 	}
+
 }

@@ -14,6 +14,7 @@ import io.openems.edge.common.component.OpenemsComponent;
  * {@link ModbusProtocol} definitions into a single protocol instance.
  */
 public class ModbusProtocolBuilder {
+
 	private final AbstractOpenemsModbusComponent component;
 	private final List<Task> tasks = new ArrayList<>();
 
@@ -64,4 +65,5 @@ public class ModbusProtocolBuilder {
 		this.tasks.forEach(protocol::addTask);
 		return protocol;
 	}
+
 }

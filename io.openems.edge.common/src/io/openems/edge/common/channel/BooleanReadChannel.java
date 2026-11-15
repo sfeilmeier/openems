@@ -92,4 +92,5 @@ public class BooleanReadChannel extends AbstractReadChannel<OpenemsTypeDoc<Boole
 			super._setNextValue(true);
 		}
 	}
+
 }

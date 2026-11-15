@@ -27,4 +27,5 @@ public interface MeterJanitzaUmg96rme extends ElectricityMeter, ModbusComponent,
 			return this.doc;
 		}
 	}
+
 }

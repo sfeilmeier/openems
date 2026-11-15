@@ -52,4 +52,5 @@ public class RegisterUserRequest extends JsonrpcRequest {
 	public String getOem() {
 		return this.oem;
 	}
+
 }

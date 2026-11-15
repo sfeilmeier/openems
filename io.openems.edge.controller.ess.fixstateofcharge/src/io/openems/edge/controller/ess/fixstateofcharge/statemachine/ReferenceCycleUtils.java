@@ -76,4 +76,5 @@ public final class ReferenceCycleUtils {
 
 		return secondsToRef + pauseSeconds + secondsRefToTarget;
 	}
+
 }

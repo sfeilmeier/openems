@@ -273,4 +273,5 @@ public class AppKebaEvse extends AbstractOpenemsAppWithProps<AppKebaEvse, Proper
 	public AppManagerUtil getAppManagerUtil() {
 		return this.appManagerUtil;
 	}
+
 }

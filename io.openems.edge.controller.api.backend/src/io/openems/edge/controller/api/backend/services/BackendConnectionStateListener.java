@@ -4,6 +4,7 @@ import io.openems.common.utils.BehaviorSubject;
 import io.openems.edge.controller.api.backend.api.DataFetchType;
 
 public interface BackendConnectionStateListener {
+
 	/**
 	 * Returns a {@link BehaviorSubject} with the current backend connection state.
 	 * The value is updated every second.
@@ -20,4 +21,5 @@ public interface BackendConnectionStateListener {
 	 * @return {@link BehaviorSubject} with current data fetch type
 	 */
 	BehaviorSubject<DataFetchType> getDataFetchType();
+
 }

@@ -196,4 +196,5 @@ public class CycleTasksManager {
 	private void traceLog(Supplier<String> message) {
 		this.logHandler.get().trace(this.log, message);
 	}
+
 }

@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class TimeSpan {
+
 	/**
 	 * Creates a new timespan that is between the passed start and end date.
 	 *
@@ -144,4 +145,5 @@ public class TimeSpan {
 				.append("]") //
 				.toString();
 	}
+
 }

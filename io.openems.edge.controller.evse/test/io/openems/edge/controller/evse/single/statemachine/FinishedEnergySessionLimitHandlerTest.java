@@ -69,4 +69,5 @@ class FinishedEnergySessionLimitHandlerTest {
 
 		sut.test().deactivate();
 	}
+
 }

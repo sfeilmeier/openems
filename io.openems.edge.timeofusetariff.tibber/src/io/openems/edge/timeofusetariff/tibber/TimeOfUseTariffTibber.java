@@ -33,4 +33,5 @@ public interface TimeOfUseTariffTibber extends TimeOfUseTariff, OpenemsComponent
 			return this.doc;
 		}
 	}
+
 }

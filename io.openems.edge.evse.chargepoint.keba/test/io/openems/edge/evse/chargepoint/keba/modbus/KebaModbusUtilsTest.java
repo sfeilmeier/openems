@@ -69,4 +69,5 @@ public class KebaModbusUtilsTest {
 		assertEquals("1.2.2", string.get());
 		assertFalse(deviceSoftwareOutdated.getAsBoolean());
 	}
+
 }

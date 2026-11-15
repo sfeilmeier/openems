@@ -398,4 +398,5 @@ public interface BatteryInverterRefuStore88k
 	public default Value<Integer> getInverterTemperature() {
 		return this.getInverterTemperatureChannel().value();
 	}
+
 }

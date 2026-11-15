@@ -34,4 +34,5 @@ public interface PredictorManager extends OpenemsComponent {
 	 *         Predictor matches the Channel-Address
 	 */
 	public Prediction getPrediction(ChannelAddress channelAddress);
+
 }

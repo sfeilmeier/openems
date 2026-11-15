@@ -42,4 +42,5 @@ public class Check3rdPartyAccessAccepted extends AbstractCheckable implements Ch
 	public OpenemsNamedException getInvertedValidationError(Language language) {
 		throw new UnsupportedOperationException();
 	}
+
 }

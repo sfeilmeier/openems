@@ -72,4 +72,5 @@ public class OnRequestTest {
 
 		assertEquals(Set.of(), wsData.getSubscribedEdges());
 	}
+
 }

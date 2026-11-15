@@ -126,4 +126,5 @@ class ControllerHeatingElementImplTest6 {
 				.deactivate();
 
 	}
+
 }

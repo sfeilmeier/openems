@@ -84,4 +84,5 @@ public class TrainingOrchestratorTest {
 		verify(this.modelTrainingService).trainRegressor(eq(transformedFeatureTargetMatrix));
 		assertEquals(new ModelBundle(this.regressor, this.clock.instant()), result);
 	}
+
 }

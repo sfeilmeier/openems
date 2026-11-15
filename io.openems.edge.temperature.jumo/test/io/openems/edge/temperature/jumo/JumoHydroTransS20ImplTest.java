@@ -18,4 +18,5 @@ public class JumoHydroTransS20ImplTest {
 						.build()) //
 				.next(new TestCase());
 	}
+
 }

@@ -77,4 +77,5 @@ public class UtilsTest {
 		assertEquals("OneTask{start=2020-01-04T08:00Z, end=2020-01-05T00:00Z, duration=PT16H, payload=null}",
 				iterator.next().toString());
 	}
+
 }

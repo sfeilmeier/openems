@@ -82,4 +82,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public boolean invert() {
 		return this.builder.invert;
 	}
+
 }

@@ -99,4 +99,5 @@ public interface EvseChargePoint extends ElectricityMeter, OpenemsComponent {
 	public default boolean getIsReadyForCharging() {
 		return this.getIsReadyForChargingChannel().value().orElse(false);
 	}
+
 }

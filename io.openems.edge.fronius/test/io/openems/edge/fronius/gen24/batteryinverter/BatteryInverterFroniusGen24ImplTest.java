@@ -91,4 +91,5 @@ public class BatteryInverterFroniusGen24ImplTest {
 		charger2Test.deactivate();
 		inverterTest.deactivate();
 	}
+
 }

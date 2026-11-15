@@ -307,4 +307,5 @@ public class ModbusUtils {
 				.map(r -> intToHexString(fnct.apply(r))) //
 				.collect(Collectors.joining(" "));
 	}
+
 }

@@ -712,4 +712,5 @@ public interface ManagedSymmetricEss extends SymmetricEss {
 		return this.getPower()
 				.addConstraintAndValidate(this.createPowerConstraint(description, phase, pwr, relationship, value));
 	}
+
 }

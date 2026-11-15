@@ -225,4 +225,5 @@ public class EvseClusterTaskImpl implements EvseClusterTask {
 	public void reset() {
 		this.evseIdDeltas.clear();
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.protectionrelay.telehaase.na003m64.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ModbusProperties implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	EVEN_PARITY(0, "8E1; 8 data bits, even parity, 1 stop bit (default)"), //
 	ODD_PARITY(1, "8O1; 8 data bits, odd parity, 1 stop bit"), //
@@ -32,4 +33,5 @@ public enum ModbusProperties implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

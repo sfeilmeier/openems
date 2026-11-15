@@ -32,4 +32,5 @@ public enum EvseState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

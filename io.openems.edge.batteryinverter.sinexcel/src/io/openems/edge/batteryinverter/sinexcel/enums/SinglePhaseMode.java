@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SinglePhaseMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLE(0, "Disable"), //
 	SINGLE_PHASE_230V(1, "Single Phae 230V"), //
@@ -30,4 +31,5 @@ public enum SinglePhaseMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

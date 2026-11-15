@@ -53,4 +53,5 @@ public class OAuthClientComponent implements OAuthClient {
 	public String redirectUri() {
 		return this.configuration.redirectUri();
 	}
+
 }

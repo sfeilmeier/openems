@@ -22,4 +22,5 @@ public interface MeterVirtualAdd extends ElectricityMeter, OpenemsComponent, Mod
 			return this.doc;
 		}
 	}
+
 }

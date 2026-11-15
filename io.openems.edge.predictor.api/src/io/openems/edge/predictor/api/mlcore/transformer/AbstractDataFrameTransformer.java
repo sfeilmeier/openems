@@ -10,4 +10,5 @@ public abstract class AbstractDataFrameTransformer<I> implements DataFrameTransf
 	}
 
 	protected abstract DataFrame<I> safeTransform(DataFrame<I> dataframe);
+
 }

@@ -127,4 +127,5 @@ public class EssSmaSunnyIslandImplTest {
 						.setCapacity(10_000) //
 						.build());
 	}
+
 }

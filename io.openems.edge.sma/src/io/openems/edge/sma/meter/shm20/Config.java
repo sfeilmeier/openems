@@ -31,4 +31,5 @@ import io.openems.common.types.MeterType;
 	boolean invert() default false;
 
 	String webconsole_configurationFactory_nameHint() default "Meter SMA Sunny Home Manager 2.0 [{id}]";
+
 }

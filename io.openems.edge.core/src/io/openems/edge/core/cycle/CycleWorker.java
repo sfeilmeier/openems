@@ -210,4 +210,5 @@ public class CycleWorker extends AbstractWorker {
 
 		return hasDisabledController;
 	}
+
 }

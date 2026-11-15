@@ -34,4 +34,5 @@ public class LagValidationTransformer<I extends Temporal> extends AbstractDataFr
 
 		return dataframe;
 	}
+
 }

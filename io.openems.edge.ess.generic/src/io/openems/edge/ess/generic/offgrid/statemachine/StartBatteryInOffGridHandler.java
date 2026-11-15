@@ -50,4 +50,5 @@ public class StartBatteryInOffGridHandler extends StateHandler<OffGridState, Con
 			return OffGridState.START_BATTERY_IN_OFF_GRID;
 		}
 	}
+
 }

@@ -570,4 +570,5 @@ public class FeneconProEssImpl extends AbstractOpenemsModbusComponent
 	protected void logInfo(Logger log, String message) {
 		super.logInfo(log, message);
 	}
+
 }

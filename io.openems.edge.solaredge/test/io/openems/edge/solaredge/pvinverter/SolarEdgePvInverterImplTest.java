@@ -24,4 +24,5 @@ public class SolarEdgePvInverterImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

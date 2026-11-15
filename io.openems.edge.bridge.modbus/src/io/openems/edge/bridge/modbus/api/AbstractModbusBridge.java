@@ -237,4 +237,5 @@ public abstract class AbstractModbusBridge extends AbstractOpenemsComponent
 	public void setLastTransferInfo(ModbusTransferInfo.ModbusCommunicationType communicationType, int unitId) {
 		this.lastTransferInfo = new ModbusTransferInfo(this.getClock().instant(), communicationType, unitId);
 	}
+
 }

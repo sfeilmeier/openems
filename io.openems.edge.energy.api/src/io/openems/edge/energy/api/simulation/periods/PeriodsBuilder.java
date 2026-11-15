@@ -286,4 +286,5 @@ public class PeriodsBuilder {
 				gridSellPriceAvg);
 		return this.toPeriodData(rawPeriodData, gridBuyPriceFactory, gridSellPriceFactory);
 	}
+
 }

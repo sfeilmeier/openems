@@ -3,6 +3,7 @@ package io.openems.edge.fenecon.pro.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum SystemState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	STANDBY(0, "Standby"), //
 	START_OFF_GRID(1, "Start Off-Grid"), //
@@ -32,4 +33,5 @@ public enum SystemState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

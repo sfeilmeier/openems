@@ -234,4 +234,5 @@ public interface Keba extends OpenemsComponent, ElectricityMeter, TimedataProvid
 	 * @return true for read-only
 	 */
 	public boolean isReadOnly();
+
 }

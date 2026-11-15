@@ -1312,4 +1312,5 @@ public class JSCalendar<PAYLOAD> {
 			return from.with(NANO_OF_DAY, taskStart.toLocalTime().toNanoOfDay());
 		}
 	}
+
 }

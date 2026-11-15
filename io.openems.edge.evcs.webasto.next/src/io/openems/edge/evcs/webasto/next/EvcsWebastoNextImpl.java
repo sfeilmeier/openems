@@ -320,4 +320,5 @@ public class EvcsWebastoNextImpl extends AbstractOpenemsModbusComponent implemen
 			e.printStackTrace();
 		}
 	}
+
 }

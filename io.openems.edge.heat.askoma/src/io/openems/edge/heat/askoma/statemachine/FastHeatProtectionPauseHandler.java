@@ -6,6 +6,7 @@ import static io.openems.edge.heat.askoma.statemachine.AskomaConstants.OFF_ACTIV
 import java.time.Instant;
 
 public class FastHeatProtectionPauseHandler extends AbstractFastHeatHandler {
+
 	private Instant pauseStartedAt = null;
 
 	@Override
@@ -42,4 +43,5 @@ public class FastHeatProtectionPauseHandler extends AbstractFastHeatHandler {
 		}
 		return !context.clock.instant().isBefore(this.pauseStartedAt.plus(FAST_HEAT_PROTECTION_PAUSE_DURATION));
 	}
+
 }

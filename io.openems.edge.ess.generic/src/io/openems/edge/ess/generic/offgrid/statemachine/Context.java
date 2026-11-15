@@ -109,4 +109,5 @@ public class Context extends AbstractContext<GenericManagedEss> {
 	public void setFromOffToOnGrid(boolean isFromOffToOnGrid) {
 		this.fromOffToOnGrid.set(isFromOffToOnGrid);
 	}
+
 }

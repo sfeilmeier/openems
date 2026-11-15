@@ -135,4 +135,5 @@ public class SubscribeEdgesChannelsRequest extends JsonrpcRequest {
 				.add("channels", channels) //
 				.build();
 	}
+
 }

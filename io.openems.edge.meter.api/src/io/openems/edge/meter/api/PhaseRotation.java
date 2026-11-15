@@ -12,6 +12,7 @@ import io.openems.edge.common.type.Phase;
 import io.openems.edge.common.type.Phase.SinglePhase;
 
 public enum PhaseRotation {
+
 	/**
 	 * Device uses standard wiring.
 	 *
@@ -326,4 +327,5 @@ public enum PhaseRotation {
 			setPhaseRotatedActivePowerChannel(meter, phase, intValue);
 		};
 	}
+
 }

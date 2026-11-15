@@ -11,6 +11,7 @@ import io.openems.common.utils.JsonUtils;
  * Severity/visibility Level.
  */
 public enum Level implements OptionsEnum {
+
 	/**
 	 * "OK" indicates, that everything is OK and there are no messages.
 	 */
@@ -105,4 +106,5 @@ public enum Level implements OptionsEnum {
 		}
 		return Level.fromValue(valueOpt.get());
 	}
+
 }

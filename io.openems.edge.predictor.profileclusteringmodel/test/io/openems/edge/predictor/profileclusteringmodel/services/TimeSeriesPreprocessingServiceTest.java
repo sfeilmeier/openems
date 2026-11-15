@@ -154,4 +154,5 @@ public class TimeSeriesPreprocessingServiceTest {
 		});
 		assertEquals(PredictionError.INSUFFICIENT_PREDICTION_DATA, exception.getError());
 	}
+
 }

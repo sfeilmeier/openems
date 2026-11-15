@@ -25,4 +25,5 @@ public record Progress(int percentage, String title) {
 	public String toString() {
 		return String.format("%3d", this.percentage()) + "%" + (this.title() != null ? " " + this.title() : "");
 	}
+
 }

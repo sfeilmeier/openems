@@ -45,4 +45,5 @@ public abstract class StateHandler<STATE extends State<STATE>, CONTEXT> {
 	protected String debugLog() {
 		return null;
 	}
+
 }

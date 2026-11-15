@@ -167,4 +167,5 @@ public final class Utils {
 				.onResultOf(EnergySchedulable::id) //
 				.immutableSortedCopy(list);
 	}
+
 }

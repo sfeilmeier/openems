@@ -94,4 +94,5 @@ public class ControllerEssLimitActivePowerImpl extends AbstractOpenemsComponent
 			ess.addPowerConstraint("SymmetricLimitActivePower", ALL, ACTIVE, LESS_OR_EQUALS, this.maxDischargePower);
 		}
 	}
+
 }

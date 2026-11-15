@@ -29,4 +29,5 @@ public record Credentials(String url, int uid, String login, String password, St
 			String database) {
 		this(protocol.expression + "://" + host + ":" + port, uid, login, password, database);
 	}
+
 }

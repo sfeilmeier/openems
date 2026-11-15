@@ -85,4 +85,5 @@ public class KostalPikoChargerImpl extends AbstractOpenemsComponent
 				ModbusSlaveNatureTable.of(KostalPikoChargerImpl.class, accessMode, 100) //
 						.build());
 	}
+
 }

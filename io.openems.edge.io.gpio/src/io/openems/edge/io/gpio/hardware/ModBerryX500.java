@@ -42,4 +42,5 @@ public abstract class ModBerryX500 implements HardwarePlatform {
 	public void setGpio(WriteChannelId channelId, boolean value) throws OpenemsException {
 		((LinuxFsDigitalOut) this.ios.get(channelId.gpio)).setValue(value);
 	}
+
 }

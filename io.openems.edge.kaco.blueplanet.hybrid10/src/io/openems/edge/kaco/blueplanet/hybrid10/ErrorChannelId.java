@@ -4,6 +4,7 @@ import io.openems.common.channel.Level;
 import io.openems.edge.common.channel.Doc;
 
 public enum ErrorChannelId implements io.openems.edge.common.channel.ChannelId {
+
 	A001(Doc.of(Level.WARNING).text("Emergency Stop")), //
 	A002(Doc.of(Level.WARNING).text("Key Manual Stop")), //
 	A003(Doc.of(Level.WARNING).text("Transformer Phase B Temperature Sensor Invalidation")), //
@@ -64,4 +65,5 @@ public enum ErrorChannelId implements io.openems.edge.common.channel.ChannelId {
 	public String getErrorCode() {
 		return this.name();
 	}
+
 }

@@ -213,4 +213,5 @@ public class MeterCamillebauerAplusImpl extends AbstractOpenemsModbusComponent i
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

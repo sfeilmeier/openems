@@ -3,6 +3,7 @@ package io.openems.edge.solaredge.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum AcChargePolicy implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLED(0, "Disabled"), //
 

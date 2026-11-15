@@ -1,6 +1,7 @@
 package io.openems.common.bridge.http.api;
 
 public enum HttpMethod {
+
 	GET(false), //
 	POST(true), //
 	PUT(true), //

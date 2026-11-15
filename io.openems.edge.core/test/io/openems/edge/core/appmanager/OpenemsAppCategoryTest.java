@@ -29,4 +29,5 @@ public class OpenemsAppCategoryTest {
 				"Missing Translation Keys for Language " + l + " ["
 						+ String.join(", ", debugTranslator.getMissingKeys()) + "]");
 	}
+
 }

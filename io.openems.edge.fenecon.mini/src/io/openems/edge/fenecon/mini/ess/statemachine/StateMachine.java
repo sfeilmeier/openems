@@ -77,4 +77,5 @@ public class StateMachine extends AbstractStateMachine<StateMachine.State, Conte
 		case WRITE_MODE -> new WriteModeHandler();
 		};
 	}
+
 }

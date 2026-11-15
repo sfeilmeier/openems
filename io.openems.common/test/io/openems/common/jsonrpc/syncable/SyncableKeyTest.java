@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import io.openems.common.types.BiddingZone;
 
 class SyncableKeyTest {
+
 	@Test
 	void testKeySerializing() throws Exception {
 		var keyTypes = SyncableKey.class.getPermittedSubclasses();
@@ -53,4 +54,5 @@ class SyncableKeyTest {
 			throw new IllegalStateException("No dummy value available for type " + type.getSimpleName());
 		}
 	}
+
 }

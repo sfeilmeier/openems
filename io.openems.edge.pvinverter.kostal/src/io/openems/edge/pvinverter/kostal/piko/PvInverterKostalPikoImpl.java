@@ -485,4 +485,5 @@ public class PvInverterKostalPikoImpl extends AbstractOpenemsComponent
 	public MeterType getMeterType() {
 		return MeterType.PRODUCTION;
 	}
+
 }

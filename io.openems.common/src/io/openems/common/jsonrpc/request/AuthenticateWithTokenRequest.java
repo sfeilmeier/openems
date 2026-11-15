@@ -68,4 +68,5 @@ public class AuthenticateWithTokenRequest extends JsonrpcRequest {
 				.addProperty("token", this.token) //
 				.build();
 	}
+
 }

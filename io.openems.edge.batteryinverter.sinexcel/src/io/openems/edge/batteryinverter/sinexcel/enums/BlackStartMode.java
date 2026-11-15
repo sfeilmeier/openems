@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BlackStartMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NORMAL_STARTUP(0, "Normal Start Up"), //
 	BLACK_STARTUP(1, "Black Start Up");//
@@ -29,4 +30,5 @@ public enum BlackStartMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -25,4 +25,5 @@ public interface ControllerEssDelayedSellToGrid extends Controller, OpenemsCompo
 			return this.doc;
 		}
 	}
+
 }

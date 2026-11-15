@@ -3,6 +3,7 @@ package io.openems.edge.fenecon.dess.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum BsmuWorkState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	INIT(0, "Initialization"), //
 	OFF_GRID(1, "Off-Grid"), //
@@ -37,4 +38,5 @@ public enum BsmuWorkState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

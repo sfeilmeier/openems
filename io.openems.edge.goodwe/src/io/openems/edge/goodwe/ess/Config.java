@@ -11,6 +11,7 @@ import io.openems.edge.goodwe.common.enums.ControlMode;
 		description = "Implements the GoodWe ET Energy Storage System.")
 
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "ess0";
 
@@ -36,4 +37,5 @@ import io.openems.edge.goodwe.common.enums.ControlMode;
 	int maxBatteryPower() default 5_200;
 
 	String webconsole_configurationFactory_nameHint() default "GoodWe ESS [{id}]";
+
 }

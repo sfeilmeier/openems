@@ -13,6 +13,7 @@ import io.openems.common.types.HttpStatus;
 import io.openems.common.types.TariffData;
 
 public class TariffDelayTimeProvider implements DelayTimeProvider<TariffData> {
+
 	private final Clock clock;
 	private final LocalTime updateTime;
 

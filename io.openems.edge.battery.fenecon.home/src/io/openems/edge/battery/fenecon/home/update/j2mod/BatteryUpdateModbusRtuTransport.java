@@ -86,4 +86,5 @@ public class BatteryUpdateModbusRtuTransport extends ModbusRTUTransport {
 
 		return uid;
 	}
+
 }

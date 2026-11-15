@@ -188,4 +188,5 @@ public class IoShellyPlusPlugSImpl extends IoGen2ShellyBaseImpl
 	protected MDnsDiscovery getMDnsDiscovery() {
 		return this.mDnsDiscovery;
 	}
+
 }

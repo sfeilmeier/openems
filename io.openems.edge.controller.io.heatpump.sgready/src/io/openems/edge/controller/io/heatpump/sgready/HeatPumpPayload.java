@@ -19,4 +19,5 @@ public record HeatPumpPayload(BaseMode baseMode) {
 						.addProperty("baseMode", obj.baseMode()) //
 						.build());
 	}
+
 }

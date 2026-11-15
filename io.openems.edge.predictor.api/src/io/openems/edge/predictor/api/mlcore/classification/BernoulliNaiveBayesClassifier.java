@@ -210,4 +210,5 @@ public class BernoulliNaiveBayesClassifier implements Classifier {
 			}
 		}
 	}
+
 }

@@ -22,4 +22,5 @@ public class StoppedHandler extends StateMachine.BatteryStateHandler {
 	public boolean isDischargeAllowed(Context context) {
 		return false;
 	}
+
 }

@@ -160,4 +160,5 @@ public class MasterBox2v0 extends AbstractOpenemsAppWithProps<MasterBox2v0, Mast
 				.setCanDelete(Role.ADMIN) //
 				.build();
 	}
+
 }

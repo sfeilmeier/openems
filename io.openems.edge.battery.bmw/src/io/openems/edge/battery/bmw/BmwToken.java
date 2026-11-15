@@ -21,6 +21,7 @@ import io.openems.common.types.HttpStatus;
 
 @Component(scope = ServiceScope.SINGLETON, service = BmwToken.class)
 public class BmwToken {
+
 	private static final int FETCH_TOKEN_DELAY = 30;
 	private static final long DEFAULT_TOKEN_LIFETIME_HOURS = 24;
 
@@ -103,4 +104,5 @@ public class BmwToken {
 			return DelayTimeProviderChain.runNeverAgain().getDelay();
 		}
 	}
+
 }

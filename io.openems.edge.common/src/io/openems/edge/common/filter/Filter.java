@@ -56,4 +56,5 @@ public abstract sealed class Filter permits PidFilter, PT1Filter, DisabledFilter
 		var clamped = Math.clamp(rounded, Integer.MIN_VALUE, Integer.MAX_VALUE); // long → int (overflow-safe)
 		return this.applyLowHighLimits(clamped);
 	}
+
 }

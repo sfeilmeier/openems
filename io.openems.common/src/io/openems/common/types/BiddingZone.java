@@ -10,6 +10,7 @@ import java.util.Optional;
  * for full list.
  */
 public enum BiddingZone {
+
 	/**
 	 * BZN|DE-LU.
 	 */
@@ -82,4 +83,5 @@ public enum BiddingZone {
 	public static Optional<BiddingZone> byEicCode(String code) {
 		return Arrays.stream(values()).filter(x -> x.eicCode.equals(code)).findFirst();
 	}
+
 }

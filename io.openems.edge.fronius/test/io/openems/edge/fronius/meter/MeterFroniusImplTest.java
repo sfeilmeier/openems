@@ -223,4 +223,5 @@ public class MeterFroniusImplTest {
 						.output(ElectricityMeter.ChannelId.ACTIVE_CONSUMPTION_ENERGY_L3, 24L) //
 				);
 	}
+
 }

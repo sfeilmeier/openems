@@ -155,4 +155,5 @@ public class UserAlertingSettingsJsonRpcTest {
 
 		assertEquals(settArrJson, jsonObj);
 	}
+
 }

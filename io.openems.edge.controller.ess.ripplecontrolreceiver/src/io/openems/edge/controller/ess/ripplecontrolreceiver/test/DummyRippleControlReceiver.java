@@ -46,5 +46,6 @@ public class DummyRippleControlReceiver extends AbstractDummyOpenemsComponent<Du
 		this.restrictionLevel = restrictionLevel;
 		return this.self();
 	}
+
 }
 

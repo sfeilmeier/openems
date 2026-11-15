@@ -74,4 +74,5 @@ public class Fieldbus523RO1Ch extends FieldbusModule {
 	public BooleanReadChannel[] getChannels() {
 		return this.readChannels;
 	}
+
 }

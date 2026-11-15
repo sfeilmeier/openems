@@ -73,4 +73,5 @@ public class KostalPikoEssImpl extends AbstractOpenemsComponent
 		return "SoC:" + this.getSoc().asString() //
 				+ "|L:" + this.getActivePower().asString(); //
 	}
+
 }

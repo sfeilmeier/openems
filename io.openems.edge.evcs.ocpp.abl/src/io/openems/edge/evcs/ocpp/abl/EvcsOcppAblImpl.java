@@ -238,4 +238,5 @@ public class EvcsOcppAblImpl extends AbstractManagedOcppEvcsComponent
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

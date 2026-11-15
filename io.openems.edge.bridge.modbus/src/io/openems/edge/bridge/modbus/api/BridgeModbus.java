@@ -133,4 +133,5 @@ public interface BridgeModbus extends OpenemsComponent {
 	 * @return {@link ModbusTransferInfo} instance or null
 	 */
 	public ModbusTransferInfo getLastTransferInfo();
+
 }

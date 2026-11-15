@@ -109,4 +109,5 @@ public class ControllerEssFixStateOfChargeImpl extends AbstractFixStateOfCharge
 	public ConfigurationAdmin getConfigurationAdmin() {
 		return this.cm;
 	}
+
 }

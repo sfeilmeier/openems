@@ -185,4 +185,5 @@ public class PredictionPersistenceService {
 						parent::_setPrediction36hAhead, //
 						parent::_setPrediction36hRealized));
 	}
+
 }

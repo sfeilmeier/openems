@@ -3,6 +3,7 @@ package io.openems.edge.battery.bmw.statemachine;
 import io.openems.common.types.OptionsEnum;
 
 public enum GoRunningSubState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	CHECK_BCS_POWER_STATE(0, "Check BCS"), //
 	ACTIVATE_BCS_POWER_STATE(1, "Activate BCS power state"), //
@@ -34,4 +35,5 @@ public enum GoRunningSubState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -502,4 +502,5 @@ public class DataFrameTest {
 		var other = new DataFrame<>(this.index, this.columnNames, this.values);
 		assertEquals(this.dataframe.hashCode(), other.hashCode());
 	}
+
 }

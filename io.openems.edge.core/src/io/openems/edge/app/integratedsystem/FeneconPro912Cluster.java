@@ -235,4 +235,5 @@ public class FeneconPro912Cluster extends
 						e -> new ParentPropertyImpl(e.getKey(), //
 								AppDef.copyOfGeneric(e.getValue(), def -> def.setFieldFunction(null)))));
 	}
+
 }

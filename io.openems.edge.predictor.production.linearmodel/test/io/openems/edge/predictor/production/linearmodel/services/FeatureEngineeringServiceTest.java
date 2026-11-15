@@ -60,4 +60,5 @@ public class FeatureEngineeringServiceTest {
 				transformed.getColumnNames());
 		assertEquals(List.of(1.0, 2.0), transformed.getColumn("column1").getValues());
 	}
+
 }

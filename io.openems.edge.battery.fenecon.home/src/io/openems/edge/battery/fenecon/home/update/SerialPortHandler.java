@@ -159,4 +159,5 @@ public class SerialPortHandler implements AutoCloseable {
 			this.connection.close();
 		}
 	}
+
 }

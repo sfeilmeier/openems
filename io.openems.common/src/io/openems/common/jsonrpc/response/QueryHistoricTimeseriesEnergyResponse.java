@@ -51,4 +51,5 @@ public class QueryHistoricTimeseriesEnergyResponse extends JsonrpcResponseSucces
 
 		return result;
 	}
+
 }

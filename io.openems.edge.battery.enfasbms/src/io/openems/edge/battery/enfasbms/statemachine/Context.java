@@ -58,4 +58,5 @@ public class Context extends AbstractContext<EnfasBmsImpl> {
 		};
 		return state || this.getParent().hasFaults();
 	}
+
 }

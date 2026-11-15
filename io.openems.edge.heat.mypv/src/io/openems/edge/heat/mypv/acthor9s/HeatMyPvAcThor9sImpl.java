@@ -172,4 +172,5 @@ public class HeatMyPvAcThor9sImpl extends AbstractOpenemsModbusComponent impleme
 		}
 		}
 	}
+
 }

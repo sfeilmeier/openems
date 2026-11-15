@@ -52,4 +52,5 @@ public interface ManagedSinglePhaseEss extends ManagedSymmetricEss, SinglePhaseE
 			break;
 		}
 	}
+
 }

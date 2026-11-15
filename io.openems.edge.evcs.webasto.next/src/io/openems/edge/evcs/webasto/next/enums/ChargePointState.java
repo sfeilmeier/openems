@@ -3,6 +3,7 @@ package io.openems.edge.evcs.webasto.next.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ChargePointState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_VEHICLE_ATTACHED(0, "No vehicle attached"), //
 	NO_PERMISSION(1, "Vehicle attached, no permission (preparing)"), //

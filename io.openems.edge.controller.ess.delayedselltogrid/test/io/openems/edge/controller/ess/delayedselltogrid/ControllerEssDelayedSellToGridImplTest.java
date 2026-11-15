@@ -65,4 +65,5 @@ public class ControllerEssDelayedSellToGridImplTest {
 						.output("ess0", SET_ACTIVE_POWER_EQUALS, -3_500_000)) //
 				.deactivate();
 	}
+
 }

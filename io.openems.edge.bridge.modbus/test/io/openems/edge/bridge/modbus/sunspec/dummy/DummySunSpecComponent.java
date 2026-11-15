@@ -96,4 +96,5 @@ public class DummySunSpecComponent extends AbstractOpenemsSunSpecComponent
 				.max().orElse(0);
 
 	}
+
 }

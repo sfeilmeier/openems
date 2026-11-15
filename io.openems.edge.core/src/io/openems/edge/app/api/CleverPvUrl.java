@@ -36,4 +36,5 @@ final class CleverPvUrl {
 
 	private CleverPvUrl() {
 	}
+
 }

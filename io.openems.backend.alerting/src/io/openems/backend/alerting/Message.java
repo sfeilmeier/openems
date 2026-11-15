@@ -9,6 +9,7 @@ import io.openems.backend.common.mail.MailContext;
  * Properties for one notification.
  */
 public abstract class Message implements Comparable<Message> {
+
 	private final String id;
 
 	protected Message(String id) {
@@ -61,4 +62,5 @@ public abstract class Message implements Comparable<Message> {
 		}
 		return this.getNotifyStamp().compareTo(o.getNotifyStamp());
 	}
+
 }

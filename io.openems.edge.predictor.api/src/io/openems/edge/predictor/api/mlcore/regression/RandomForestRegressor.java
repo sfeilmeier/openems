@@ -120,4 +120,5 @@ public class RandomForestRegressor implements Regressor {
 			RegressorImpurity impurity, //
 			long seed) {
 	}
+
 }

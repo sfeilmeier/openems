@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum DredCmd implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DRED0(0x00FF, "Dred 0"), //
 	DRED1(0x0001, "Dred 1 or 0% PV"), //
@@ -36,4 +37,5 @@ public enum DredCmd implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

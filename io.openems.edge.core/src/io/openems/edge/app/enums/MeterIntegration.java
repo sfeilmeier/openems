@@ -5,6 +5,7 @@ import io.openems.edge.core.appmanager.AbstractOpenemsApp;
 import io.openems.edge.core.appmanager.TranslationUtil;
 
 public enum MeterIntegration implements TranslatableEnum {
+
 	INTERN("internal"), //
 	EXTERN("external");
 
@@ -19,4 +20,5 @@ public enum MeterIntegration implements TranslatableEnum {
 		final var bundle = AbstractOpenemsApp.getTranslationBundle(l);
 		return TranslationUtil.getTranslation(bundle, this.translationKey);
 	}
+
 }

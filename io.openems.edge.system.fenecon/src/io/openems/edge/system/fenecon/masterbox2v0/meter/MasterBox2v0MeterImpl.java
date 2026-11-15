@@ -167,4 +167,5 @@ public class MasterBox2v0MeterImpl extends AbstractOpenemsComponent implements M
 						.build() //
 		);
 	}
+
 }

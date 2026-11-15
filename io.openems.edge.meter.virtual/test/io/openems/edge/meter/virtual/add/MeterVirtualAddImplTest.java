@@ -54,4 +54,5 @@ public class MeterVirtualAddImplTest {
 						.output(VOLTAGE, 20) //
 						.output(FREQUENCY, 52));
 	}
+
 }

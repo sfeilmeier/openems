@@ -213,4 +213,5 @@ public interface HybridEss extends SymmetricEss {
 				.channel(5, ChannelId.DC_DISCHARGE_ENERGY, ModbusType.FLOAT64) //
 				.build();
 	}
+
 }

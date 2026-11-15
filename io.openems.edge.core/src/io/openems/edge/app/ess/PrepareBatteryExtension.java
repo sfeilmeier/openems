@@ -176,4 +176,5 @@ public class PrepareBatteryExtension
 	protected PrepareBatteryExtension getApp() {
 		return this;
 	}
+
 }

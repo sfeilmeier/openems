@@ -51,4 +51,5 @@ public class PathRequestHandlerTest {
 				() -> sut.addRoute("/{}/222/feed-limitation", (_, _, _) -> {
 				}));
 	}
+
 }

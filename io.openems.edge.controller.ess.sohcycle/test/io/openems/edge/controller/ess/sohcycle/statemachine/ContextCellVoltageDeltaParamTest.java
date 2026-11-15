@@ -88,5 +88,6 @@ public class ContextCellVoltageDeltaParamTest {
             assertEquals(this.expected, delta);
         }
     }
+
 }
 

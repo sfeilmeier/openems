@@ -74,4 +74,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public boolean referenceCycleEnabled() {
 		return this.builder.referenceCycleEnabled;
 	}
+
 }

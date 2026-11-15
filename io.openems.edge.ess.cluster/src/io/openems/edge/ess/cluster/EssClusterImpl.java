@@ -208,4 +208,5 @@ public class EssClusterImpl extends AbstractOpenemsComponent implements EssClust
 		case STOP -> StartStop.STOP;
 		};
 	}
+
 }

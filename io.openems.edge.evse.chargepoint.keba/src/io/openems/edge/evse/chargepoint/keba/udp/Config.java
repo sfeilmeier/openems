@@ -39,4 +39,5 @@ public @interface Config {
 	LogVerbosity logVerbosity() default LogVerbosity.DEBUG_LOG;
 
 	String webconsole_configurationFactory_nameHint() default "EVSE Charge-Point KEBA P30 (via UDP) [{id}]";
+
 }

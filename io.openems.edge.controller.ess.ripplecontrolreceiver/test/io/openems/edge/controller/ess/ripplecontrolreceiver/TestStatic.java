@@ -51,4 +51,5 @@ public class TestStatic {
 
 		assertEquals(SIXTY_PERCENT, getRestrictionLevelByPriority(false, false, true));
 	}
+
 }

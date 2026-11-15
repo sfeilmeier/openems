@@ -26,4 +26,5 @@ public class SeriesTransformerPipeline<I> {
 		}
 		return result;
 	}
+
 }

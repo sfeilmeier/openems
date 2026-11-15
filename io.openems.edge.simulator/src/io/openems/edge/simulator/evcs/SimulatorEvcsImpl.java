@@ -172,4 +172,5 @@ public class SimulatorEvcsImpl extends AbstractManagedEvcsComponent
 	public boolean applyDisplayText(String text) throws OpenemsException {
 		return false;
 	}
+
 }

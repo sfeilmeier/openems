@@ -36,4 +36,5 @@ public record DailyWeatherSnapshot(//
 					.addProperty("sunshineDuration", obj.sunshineDuration()).build();
 		});
 	}
+
 }

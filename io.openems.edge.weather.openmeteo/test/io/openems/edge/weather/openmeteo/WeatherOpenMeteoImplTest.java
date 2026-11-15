@@ -372,4 +372,5 @@ public class WeatherOpenMeteoImplTest {
 						10.2, //
 						10.3));
 	}
+
 }

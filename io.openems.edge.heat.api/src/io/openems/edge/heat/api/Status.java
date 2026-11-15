@@ -61,4 +61,5 @@ public enum Status implements OptionsEnum {
 	public String getName() {
 		return this.name;
 	}
+
 }

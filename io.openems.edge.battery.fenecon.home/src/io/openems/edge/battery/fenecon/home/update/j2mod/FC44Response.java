@@ -5,6 +5,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class FC44Response extends CustomResponse {
+
 	private int statusCode;
 	private int progressPercentage;
 
@@ -50,4 +51,5 @@ public class FC44Response extends CustomResponse {
 	public String toString() {
 		return "FC44Response{StatusCode=%d,Progress=%d}".formatted(this.statusCode, this.progressPercentage);
 	}
+
 }

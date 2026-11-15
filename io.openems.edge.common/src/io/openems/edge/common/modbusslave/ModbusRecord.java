@@ -73,4 +73,5 @@ public abstract class ModbusRecord {
 	 * @return the {@link AccessMode}
 	 */
 	public abstract AccessMode getAccessMode();
+
 }

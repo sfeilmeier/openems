@@ -72,4 +72,5 @@ public enum TargetDirection {
 		}
 		return new Constraint("Sum of P = 0", cos, relationship, value);
 	}
+
 }

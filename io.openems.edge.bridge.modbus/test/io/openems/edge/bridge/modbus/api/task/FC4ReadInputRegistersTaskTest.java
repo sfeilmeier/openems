@@ -80,4 +80,5 @@ public class FC4ReadInputRegistersTaskTest {
 		task.handleResponse(element22, 2, registers);
 		assertEquals(Long.valueOf(21037056), value.get());
 	}
+
 }

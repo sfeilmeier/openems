@@ -34,4 +34,5 @@ public class Pro912ClusterComponents {
 
 	private Pro912ClusterComponents() {
 	}
+
 }

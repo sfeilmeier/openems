@@ -115,4 +115,5 @@ public class EnergyUtils {
 				.map(EnergyScheduleHandler.WithDifferentModes.class::cast);
 		// TODO only ESHs with actually more than one Mode
 	}
+
 }

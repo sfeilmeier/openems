@@ -102,4 +102,5 @@ public class SmardTariffProvider implements SpotTariffProvider {
 			SmardTariffProvider.this.onTariffUnload(instance);
 		}
 	}
+
 }

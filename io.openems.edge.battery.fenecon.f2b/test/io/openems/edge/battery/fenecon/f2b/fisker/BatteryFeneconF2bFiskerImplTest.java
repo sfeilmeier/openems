@@ -81,4 +81,5 @@ public class BatteryFeneconF2bFiskerImplTest {
 						.input(DTC_1, 0))//
 		;
 	}
+
 }

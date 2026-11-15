@@ -81,4 +81,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public CsvFormat format() {
 		return this.builder.format;
 	}
+
 }

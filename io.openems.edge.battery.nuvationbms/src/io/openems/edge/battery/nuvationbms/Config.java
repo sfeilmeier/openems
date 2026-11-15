@@ -29,4 +29,5 @@ import io.openems.edge.common.startstop.StartStopConfig;
 	int modbusUnitId() default 1;
 
 	String webconsole_configurationFactory_nameHint() default "Battery Nuvation BMS [{id}]";
+
 }

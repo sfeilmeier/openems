@@ -28,4 +28,5 @@ public abstract class AbstractStatefulDualTransformer<I> extends AbstractDualTra
 	protected abstract void safeFit(Series<I> series);
 
 	protected abstract void safeFit(DataFrame<I> dataframe);
+
 }

@@ -45,4 +45,5 @@ public class ConversionTest {
 		var result2 = SUBTRACT(2).channelToElement(result);
 		assertEquals(value, result2);
 	}
+
 }

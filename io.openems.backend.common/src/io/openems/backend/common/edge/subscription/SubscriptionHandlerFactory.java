@@ -3,6 +3,7 @@ package io.openems.backend.common.edge.subscription;
 import io.openems.backend.common.edge.EdgeClient;
 
 public interface SubscriptionHandlerFactory {
+
 	/**
 	 * Must return true if the factory is responsible for the given
 	 * {@link SubscriptionKey}.
@@ -57,4 +58,5 @@ public interface SubscriptionHandlerFactory {
 		 */
 		SubscriptionHandler createClientSpecificHandler(EdgeClient client);
 	}
+
 }

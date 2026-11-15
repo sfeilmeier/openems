@@ -98,4 +98,5 @@ public class ControllerEssDelayedSellToGridImpl extends AbstractOpenemsComponent
 		this.ess.setActivePowerEqualsWithFilter(calculatedPower);
 		this.ess.setReactivePowerEqualsWithoutFilter(0);
 	}
+
 }

@@ -133,4 +133,5 @@ public class IoMasterBox2v0AoImpl extends AbstractOpenemsComponent implements Io
 		}
 		return this.writeValueMappings;
 	}
+
 }

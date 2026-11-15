@@ -45,4 +45,5 @@ public class CheckEvcsNotInstalled implements Checkable {
 	public OpenemsNamedException getInvertedValidationError(Language language) {
 		return OpenemsError.EDGE_APP_VALIDATION_CHECK_EVCS_NOT_INSTALLED_INVERTED.exception(language);
 	}
+
 }

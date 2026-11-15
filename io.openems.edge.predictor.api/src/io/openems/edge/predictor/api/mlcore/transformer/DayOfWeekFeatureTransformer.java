@@ -28,4 +28,5 @@ public class DayOfWeekFeatureTransformer<I> extends AbstractDataFrameTransformer
 		dataframe.setColumn(this.columnName, new Series<>(index, dayOfWeekValues));
 		return dataframe;
 	}
+
 }

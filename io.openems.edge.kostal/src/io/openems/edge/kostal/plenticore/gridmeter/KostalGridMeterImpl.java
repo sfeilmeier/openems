@@ -425,4 +425,5 @@ public class KostalGridMeterImpl extends AbstractOpenemsModbusComponent implemen
 			this.targetChannel.setNextValue(result);
 		}
 	}
+
 }

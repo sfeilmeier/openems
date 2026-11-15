@@ -39,4 +39,5 @@ public class OnNotification implements io.openems.common.websocket.OnNotificatio
 			this.app.sendNotificationToEdgeManager(edgeId, notification);
 		}
 	}
+
 }

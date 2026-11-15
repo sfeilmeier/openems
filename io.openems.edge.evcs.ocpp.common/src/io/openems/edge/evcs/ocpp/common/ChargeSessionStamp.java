@@ -91,4 +91,5 @@ public class ChargeSessionStamp {
 			this.resetChargeSessionStamp();
 		}
 	}
+
 }

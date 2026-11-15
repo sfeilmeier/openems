@@ -19,4 +19,5 @@ public abstract class AbstractStatefulSeriesTransformer<I> extends AbstractSerie
 	}
 
 	protected abstract void safeFit(Series<I> series);
+
 }

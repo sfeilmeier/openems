@@ -62,4 +62,5 @@ public class MasterBox2v0MeterImplTest {
 		assertEquals(5000, (int) ioc.getAnalogOutVoltageChannel().getNextWriteValue().get());
 		assertEquals(true, ioc.getAnalogOutControlChannel().getNextWriteValue().get());
 	}
+
 }

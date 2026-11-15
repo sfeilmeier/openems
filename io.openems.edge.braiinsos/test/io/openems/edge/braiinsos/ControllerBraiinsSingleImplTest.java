@@ -123,4 +123,5 @@ class ControllerBraiinsSingleImplTest {
 		verify(api, times(1)).callActionResume();
 		verify(api, never()).callActionPause();
 	}
+
 }

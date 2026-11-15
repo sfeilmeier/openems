@@ -554,4 +554,5 @@ public interface SymmetricBatteryInverter extends OpenemsComponent {
 		batteryInverter.getActivePowerChannel().onSetNextValue(calculateApparentPower);
 		batteryInverter.getReactivePowerChannel().onSetNextValue(calculateApparentPower);
 	}
+
 }

@@ -269,4 +269,5 @@ public class DummyMeta extends AbstractDummyOpenemsComponent<DummyMeta> implemen
 			return super.setEssDischargeToGridAllowed(isEssDischargeToGridAllowed);
 		}
 	}
+
 }

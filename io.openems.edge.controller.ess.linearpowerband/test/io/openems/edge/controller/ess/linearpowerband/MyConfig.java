@@ -91,4 +91,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public StartDirection startDirection() {
 		return this.builder.startDirection;
 	}
+
 }

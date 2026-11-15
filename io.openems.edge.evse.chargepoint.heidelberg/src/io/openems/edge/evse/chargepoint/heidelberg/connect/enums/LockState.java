@@ -4,6 +4,7 @@
 	import io.openems.common.types.OptionsEnum;
 
 	public enum LockState implements OptionsEnum {
+
 	    UNDEFINED(-1, "Undefined"),
 	    LOCKED(0,    "Locked"),
 		UNLOCKED(1, "Unlocked");
@@ -30,4 +31,5 @@
 	    public OptionsEnum getUndefined() {
 	        return UNDEFINED;
 	    }
+
 	}

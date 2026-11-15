@@ -111,4 +111,5 @@ public final class GocUtils {
 						Map.Entry::getKey, //
 						e -> preferenceRankToDenseRank.get(nullToMax.apply(e.getValue())) / (double) maxDenseRank));
 	}
+
 }

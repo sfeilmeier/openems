@@ -228,4 +228,5 @@ public record ScheduleUpdate(//
 							.build());
 		}
 	}
+
 }

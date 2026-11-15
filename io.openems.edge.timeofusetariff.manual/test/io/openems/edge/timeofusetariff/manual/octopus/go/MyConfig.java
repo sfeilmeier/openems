@@ -69,4 +69,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String ancillaryCosts() {
 		return this.builder.ancillaryCosts;
 	}
+
 }

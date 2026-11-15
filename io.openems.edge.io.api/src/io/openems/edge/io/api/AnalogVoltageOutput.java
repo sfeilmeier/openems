@@ -120,4 +120,5 @@ public interface AnalogVoltageOutput extends AnalogOutput {
 				.channel(0, ChannelId.SET_OUTPUT_VOLTAGE, ModbusType.UINT16) //
 				.build();
 	}
+
 }

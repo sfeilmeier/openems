@@ -75,4 +75,5 @@ public class DummyIoIndustrialL extends AbstractDummyOpenemsComponent<DummyIoInd
 	public BooleanReadChannel[] digitalInputChannels() {
 		return this.digitalOutputChannels;
 	}
+
 }

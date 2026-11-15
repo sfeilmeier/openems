@@ -139,4 +139,5 @@ public interface BatterySoltaroClusterVersionB
 			return this.doc;
 		}
 	}
+
 }

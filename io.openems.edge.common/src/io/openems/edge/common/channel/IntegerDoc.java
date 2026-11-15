@@ -25,4 +25,5 @@ public class IntegerDoc extends OpenemsTypeDoc<Integer> {
 			-> new IntegerWriteChannel(component, channelId, this);
 		};
 	}
+
 }

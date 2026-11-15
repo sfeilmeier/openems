@@ -9,6 +9,7 @@ import com.google.common.base.Strings;
 import io.openems.common.session.Language;
 
 public abstract class TextProvider {
+
 	/**
 	 * Returns the resulting text in the given language.
 	 * 
@@ -128,4 +129,5 @@ public abstract class TextProvider {
 			}
 		}
 	}
+
 }

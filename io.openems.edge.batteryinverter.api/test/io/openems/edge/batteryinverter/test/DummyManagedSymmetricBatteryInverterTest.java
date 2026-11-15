@@ -37,4 +37,5 @@ public class DummyManagedSymmetricBatteryInverterTest {
 		assertEquals("Negative Werte für Beladung; Positive für Entladung", activePowerDoc.getText(Language.DE));
 		assertEquals("Negative values for Charge; positive for Discharge", activePowerDoc.getText(Language.EN));
 	}
+
 }

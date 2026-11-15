@@ -103,4 +103,5 @@ public class ElementToChannelScaleFactorConverter extends ElementToChannelConver
 					"Type [" + value.getClass().getName() + "] not supported by SCALE_FACTOR converter");
 		};
 	}
+
 }

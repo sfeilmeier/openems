@@ -17,4 +17,5 @@ public class KacoBlueplanetHybrid10EssImplTest {
 						.build()) //
 		;
 	}
+
 }

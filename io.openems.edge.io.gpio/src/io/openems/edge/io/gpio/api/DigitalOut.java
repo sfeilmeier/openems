@@ -12,4 +12,5 @@ public interface DigitalOut extends DigitalIn {
 	 * @throws OpenemsException exception if setting the value is not successful.
 	 */
 	public void setValue(boolean value) throws OpenemsException;
+
 }

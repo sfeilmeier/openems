@@ -9,6 +9,7 @@ import io.openems.common.types.OptionsEnum;
  * see {@link Mode}.
  */
 public enum ChannelMode implements OptionsEnum {
+
 	UNDEFINED(-1, "UNDEFINED"), //
 	OFF(1, "OFF"), //
 	FAST_HEAT(2, "FAST_HEAT"), //
@@ -51,4 +52,5 @@ public enum ChannelMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -78,4 +78,5 @@ public class ConfigProperties {
 	public EndCondition getEndCondition() {
 		return this.endCondition;
 	}
+
 }

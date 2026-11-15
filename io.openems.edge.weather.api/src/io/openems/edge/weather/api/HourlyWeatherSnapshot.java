@@ -34,4 +34,5 @@ public record HourlyWeatherSnapshot(//
 					.build();
 		});
 	}
+
 }

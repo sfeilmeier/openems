@@ -25,4 +25,5 @@ public class ShortDoc extends OpenemsTypeDoc<Short> {
 			-> new ShortWriteChannel(component, channelId, this);
 		};
 	}
+
 }

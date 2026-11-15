@@ -27,4 +27,5 @@ public interface PvInverterCluster
 			return this.doc;
 		}
 	}
+
 }

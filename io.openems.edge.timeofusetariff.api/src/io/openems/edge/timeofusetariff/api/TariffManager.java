@@ -48,4 +48,5 @@ public interface TariffManager {
 	 * @param spotTariffTracker the tracker to release
 	 */
 	void ungetSpotTariff(SpotTariffTracker spotTariffTracker);
+
 }

@@ -316,4 +316,5 @@ public interface EssDcCharger extends OpenemsComponent {
 				.channel(8, ChannelId.CURRENT, ModbusType.FLOAT32) //
 				.build();
 	}
+
 }

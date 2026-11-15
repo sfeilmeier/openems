@@ -70,4 +70,5 @@ public class AbstractEdge2EdgeTest {
 			assertEquals(0L, converter.elementToChannel(0x0000000000000000));
 		}
 	}
+
 }

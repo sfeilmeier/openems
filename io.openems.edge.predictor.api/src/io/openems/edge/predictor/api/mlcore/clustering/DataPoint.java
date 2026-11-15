@@ -8,4 +8,5 @@ public record DataPoint(double[] point) implements Clusterable {
 	public double[] getPoint() {
 		return this.point;
 	}
+
 }

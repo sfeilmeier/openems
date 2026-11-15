@@ -93,4 +93,5 @@ public class UpdateTask<PAYLOAD> implements EndpointRequestType<Request<PAYLOAD>
 							.build());
 		}
 	}
+
 }

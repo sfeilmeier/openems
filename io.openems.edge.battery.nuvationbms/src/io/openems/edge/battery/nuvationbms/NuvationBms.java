@@ -184,4 +184,5 @@ public interface NuvationBms extends Battery, ModbusComponent, OpenemsComponent,
 	default void _setStateMachine(State value) {
 		this.getStateMachineChannel().setNextValue(value);
 	}
+
 }

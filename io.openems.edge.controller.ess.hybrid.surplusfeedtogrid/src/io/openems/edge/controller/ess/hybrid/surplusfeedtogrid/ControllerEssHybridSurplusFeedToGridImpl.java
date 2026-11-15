@@ -83,4 +83,5 @@ public class ControllerEssHybridSurplusFeedToGridImpl extends AbstractOpenemsCom
 		// Set surplus feed-in power set-point
 		managedEss.setActivePowerGreaterOrEquals(minDischargePower);
 	}
+
 }

@@ -199,4 +199,5 @@ public class BitsWordElementTest {
 			Function<Boolean[], Boolean[]> converter) {
 		sut.element.convert(converter);
 	}
+
 }

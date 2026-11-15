@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ProtocolSelection implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	MODBUS(0, "Modbus"), //
 	SUNSPEC(1, "Sunspec"); //
@@ -29,4 +30,5 @@ public enum ProtocolSelection implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.fenecon.mini.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum DebugRunState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	FORBID(0, "Forbid"), //
 	CHARGE(1, "Charge"), //
@@ -30,4 +31,5 @@ public enum DebugRunState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

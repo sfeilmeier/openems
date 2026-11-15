@@ -295,4 +295,5 @@ public class WeatherOpenMeteoImpl extends AbstractOpenemsComponent
 	void setWeatherForecastService(WeatherForecastService weatherForecastService) {
 		this.weatherForecastService = weatherForecastService;
 	}
+
 }

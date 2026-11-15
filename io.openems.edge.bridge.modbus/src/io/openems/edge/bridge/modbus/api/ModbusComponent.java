@@ -83,4 +83,5 @@ public interface ModbusComponent extends OpenemsComponent {
 	 * available again 'now', e.g. because it was turned on manually.
 	 */
 	public void retryModbusCommunication();
+
 }

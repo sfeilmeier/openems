@@ -241,4 +241,5 @@ public class Ecb1Handler {
 		// Energy (Wh)
 		setValue(hb, ElectricityMeter.ChannelId.ACTIVE_PRODUCTION_ENERGY, getAsDoubleOrNull(data, OBIS_ENERGY_TOTAL));
 	}
+
 }

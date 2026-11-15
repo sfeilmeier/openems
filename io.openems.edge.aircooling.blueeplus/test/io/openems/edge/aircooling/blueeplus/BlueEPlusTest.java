@@ -48,4 +48,5 @@ public class BlueEPlusTest {
 						.output(BlueEPlus.ChannelId.MONITORING_COOLING_STATUS, StatusValues.ERROR)) //
 				.deactivate();
 	}
+
 }

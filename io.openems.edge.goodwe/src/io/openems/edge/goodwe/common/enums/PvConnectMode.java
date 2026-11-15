@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PvConnectMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	EACH_MPPT(0, "For each MPPT"), //
 	TWO_MPPT(1, "For 12, 34 MPPT"), //
@@ -31,4 +32,5 @@ public enum PvConnectMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

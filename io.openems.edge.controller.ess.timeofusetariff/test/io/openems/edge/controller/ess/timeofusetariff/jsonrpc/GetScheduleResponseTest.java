@@ -262,4 +262,5 @@ public class GetScheduleResponseTest {
 		var response = GetScheduleResponse.empty(CLOCK, StateMachine.BALANCING).toList().get(0);
 		assertEquals(StateMachine.BALANCING.getValue(), JsonUtils.getAsInt(response, "state"));
 	}
+
 }

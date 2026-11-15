@@ -3,6 +3,7 @@ package io.openems.edge.sma.ess.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PowerSupplyStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OFF(303, "Off"), //
 	UTILITY_GRID_CONNECTED(1461, "Utility Grid Connected"), //
@@ -31,4 +32,5 @@ public enum PowerSupplyStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

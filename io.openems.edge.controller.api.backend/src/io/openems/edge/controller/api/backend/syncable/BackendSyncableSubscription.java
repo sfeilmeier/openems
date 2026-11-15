@@ -8,6 +8,7 @@ import io.openems.common.utils.BehaviorSubject;
 import io.openems.edge.common.services.syncable.SyncableSubscription;
 
 public class BackendSyncableSubscription<T> implements SyncableSubscription<T> {
+
 	private final SubscriptionHandler<T> handler;
 	private final Consumer<BackendSyncableSubscription<T>> onDispose;
 
@@ -30,4 +31,5 @@ public class BackendSyncableSubscription<T> implements SyncableSubscription<T> {
 	public void dispose() {
 		this.onDispose.accept(this);
 	}
+
 }

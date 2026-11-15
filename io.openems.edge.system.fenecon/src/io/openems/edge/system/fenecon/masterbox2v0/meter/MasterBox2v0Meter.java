@@ -31,4 +31,5 @@ public interface MasterBox2v0Meter extends OpenemsComponent, ElectricityMeter {
 			return this.doc;
 		}
 	}
+
 }

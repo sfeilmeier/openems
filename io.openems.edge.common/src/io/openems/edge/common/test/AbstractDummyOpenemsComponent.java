@@ -28,4 +28,5 @@ public abstract class AbstractDummyOpenemsComponent<SELF extends AbstractDummyOp
 	}
 
 	protected abstract SELF self();
+
 }

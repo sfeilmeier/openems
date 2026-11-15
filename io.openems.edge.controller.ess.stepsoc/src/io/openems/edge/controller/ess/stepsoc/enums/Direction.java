@@ -3,6 +3,7 @@ package io.openems.edge.controller.ess.stepsoc.enums;
 import io.openems.edge.ess.api.ManagedSymmetricEss;
 
 public enum Direction {
+
 	CHARGE, //
 	DISCHARGE, //
 	;
@@ -28,4 +29,5 @@ public enum Direction {
 		};
 		return allowedPower.isDefined() && allowedPower.get() == 0;
 	}
+
 }

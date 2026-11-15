@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.refu.store88k.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum Event1 implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	GROUND_FAULT(0, "Ground fault"), //
 	DC_OVER_VOLTAGE(1, "Dc over voltage"), //

@@ -89,4 +89,5 @@ public class ForceCharge extends AbstractForceChargeDischarge {
 			return State.UNDEFINED;
 		}
 	}
+
 }

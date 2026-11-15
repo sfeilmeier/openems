@@ -160,4 +160,5 @@ class CalculateActiveTimeTest {
 
 		verify(this.channel).setNextValue(11L);
 	}
+
 }

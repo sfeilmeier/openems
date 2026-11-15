@@ -71,4 +71,5 @@ public class SubscribeScheduleRequestHandler implements JsonApi {
 			this.unsubscribe(wsData);
 		}
 	}
+
 }

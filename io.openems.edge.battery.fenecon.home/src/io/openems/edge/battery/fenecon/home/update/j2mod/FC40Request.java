@@ -9,6 +9,7 @@ import java.io.IOException;
 import com.ghgande.j2mod.modbus.msg.ModbusResponse;
 
 public class FC40Request extends CustomRequest {
+
 	private long fileSize;
 
 	public FC40Request() {
@@ -55,4 +56,5 @@ public class FC40Request extends CustomRequest {
 	public String toString() {
 		return "FC41Request{fileSize=%d}".formatted(this.fileSize);
 	}
+
 }

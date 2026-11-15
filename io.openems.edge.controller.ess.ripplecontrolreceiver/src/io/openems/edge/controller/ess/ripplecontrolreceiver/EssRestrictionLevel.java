@@ -66,4 +66,5 @@ public enum EssRestrictionLevel implements OptionsEnum {
 		}
 		return NO_RESTRICTION;
 	}
+
 }

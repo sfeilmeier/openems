@@ -24,4 +24,5 @@ public class AbstractReadDigitalInputsTaskTest {
 		assertEquals(true, bools[3]);
 		assertEquals(false, bools[4]);
 	}
+
 }

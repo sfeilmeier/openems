@@ -1065,4 +1065,5 @@ public class BatteryFeneconHomeImplTest {
 	private static void assertUnit(Unit expected, BatteryFeneconHomeImpl component, String channelId) {
 		assertEquals(expected, component.channel(channelId).channelDoc().getUnit());
 	}
+
 }

@@ -415,4 +415,5 @@ public class MeterSocomecThreephaseImpl extends AbstractSocomecMeter implements 
 				ElectricityMeter.getModbusSlaveNatureTable(accessMode) //
 		);
 	}
+
 }

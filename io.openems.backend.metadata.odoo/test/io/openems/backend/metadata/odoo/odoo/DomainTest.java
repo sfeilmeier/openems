@@ -61,4 +61,5 @@ public class DomainTest {
 		assertEquals(domain3.hashCode(), domain2.hashCode());
 		assertNotEquals(domain1.hashCode(), domain2.hashCode());
 	}
+
 }

@@ -20,6 +20,7 @@ public interface ControllerGenericJsonLogic extends Controller, OpenemsComponent
 			return this.doc;
 		}
 	}
+
 }
 
 // TODO: once gson version 2.8.6 or higher is compatible with OSGi on Java 8: use json-logic library

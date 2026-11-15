@@ -17,4 +17,5 @@ public class AverageCalculatorTest {
 
 		assertEquals(150, pvProductionAverageCalculator.getAverage());
 	}
+
 }

@@ -291,4 +291,5 @@ public record Fitness(//
 					this.softConstraintViolations);
 		}
 	}
+
 }

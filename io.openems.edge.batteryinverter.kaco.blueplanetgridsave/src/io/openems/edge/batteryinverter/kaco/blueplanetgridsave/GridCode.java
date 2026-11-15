@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.kaco.blueplanetgridsave;
 import io.openems.common.types.OptionsEnum;
 
 public enum GridCode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	VDE_4105(1, "VDE-AR-N 4105"), //
 	VDE_4110(2, "VDE-AR-N 4110"), //
@@ -30,4 +31,5 @@ public enum GridCode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

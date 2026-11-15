@@ -10,4 +10,5 @@ public class SurplusHandler extends StateHandler<State, Context> {
 		context.setTargetActivePowerForHeatElement(context.getGridActivePower());
 		return State.SURPLUS;
 	}
+
 }

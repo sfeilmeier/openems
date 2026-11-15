@@ -3,6 +3,7 @@ package io.openems.edge.controller.evse.single;
 import io.openems.edge.common.type.Phase;
 
 public enum PhaseSwitching {
+
 	/**
 	 * Phase-Switching is disabled.
 	 */
@@ -40,4 +41,5 @@ public enum PhaseSwitching {
 		case AUTOMATIC -> null;
 		};
 	}
+
 }

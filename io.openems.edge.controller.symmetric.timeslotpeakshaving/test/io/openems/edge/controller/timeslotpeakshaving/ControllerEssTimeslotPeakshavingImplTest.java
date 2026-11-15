@@ -86,4 +86,5 @@ public class ControllerEssTimeslotPeakshavingImplTest {
 						.input("meter0", ElectricityMeter.ChannelId.ACTIVE_POWER, 120000)) //
 				.deactivate();
 	}
+
 }

@@ -17,4 +17,5 @@ public class StoppedHandler extends StateHandler<State, Context> {
 		inverter._setStartStop(StartStop.STOP);
 		return State.STOPPED;
 	}
+
 }

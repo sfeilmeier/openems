@@ -17,4 +17,5 @@ public class EvcsKebaTest {
 				.output(EvcsKeba.ChannelId.PLUG, CableState.PLUGGED_AND_LOCKED) //
 		;
 	}
+
 }

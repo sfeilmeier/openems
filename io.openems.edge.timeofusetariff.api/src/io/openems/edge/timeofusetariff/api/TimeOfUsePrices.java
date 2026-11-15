@@ -114,4 +114,5 @@ public class TimeOfUsePrices extends TimeRangeValues<Double> {
 	public Double[] asArray() {
 		return super.asList(false).toArray(Double[]::new);
 	}
+
 }

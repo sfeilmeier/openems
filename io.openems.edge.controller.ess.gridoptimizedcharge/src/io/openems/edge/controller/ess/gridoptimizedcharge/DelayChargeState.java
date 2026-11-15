@@ -3,6 +3,7 @@ package io.openems.edge.controller.ess.gridoptimizedcharge;
 import io.openems.common.types.OptionsEnum;
 
 public enum DelayChargeState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ACTIVE_LIMIT(0, "Active limit"), //
 	NO_REMAINING_TIME(1, "No remaining time"), //

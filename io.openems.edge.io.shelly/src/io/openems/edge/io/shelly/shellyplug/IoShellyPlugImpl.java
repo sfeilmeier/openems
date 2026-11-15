@@ -199,4 +199,5 @@ public class IoShellyPlugImpl extends AbstractOpenemsComponent
 	public SinglePhase getPhase() {
 		return this.phase;
 	}
+
 }

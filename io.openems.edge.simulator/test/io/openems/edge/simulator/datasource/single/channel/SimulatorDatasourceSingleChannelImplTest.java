@@ -200,4 +200,5 @@ public class SimulatorDatasourceSingleChannelImplTest {
 		assertEquals(readChannel.channelId(), writeChannel.channelId());
 		assertEquals("Data", readChannel.channelId().id());
 	}
+
 }

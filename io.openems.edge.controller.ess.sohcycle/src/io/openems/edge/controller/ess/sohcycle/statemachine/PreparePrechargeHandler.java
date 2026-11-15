@@ -28,6 +28,7 @@ import io.openems.edge.controller.ess.sohcycle.EssSohCycleConstants;
  * minutes, the SoH cycle is aborted.
  */
 public class PreparePrechargeHandler extends StateHandler<StateMachine.State, Context> {
+
 	private static final Logger log = LoggerFactory.getLogger(PreparePrechargeHandler.class);
 
 	private Instant enteredAt;
@@ -88,4 +89,5 @@ public class PreparePrechargeHandler extends StateHandler<StateMachine.State, Co
 				ChronoUnit.MINUTES);
 		return !timeoutAt.isAfter(context.getClock().instant());
 	}
+
 }

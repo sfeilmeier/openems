@@ -69,4 +69,5 @@ public enum DelayChargeRiskLevel {
 	public float getEneryBuffer() {
 		return this.eneryBuffer;
 	}
+
 }

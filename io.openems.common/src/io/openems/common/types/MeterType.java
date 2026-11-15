@@ -7,6 +7,7 @@ package io.openems.common.types;
  * See "io.openems.edge.meter.api" for details.
  */
 public enum MeterType {
+
 	/**
 	 * Defines a Grid-Meter, i.e. a meter that is measuring at the grid connection
 	 * point (German: "Netzanschlusspunkt")
@@ -60,4 +61,5 @@ public enum MeterType {
 	 * expected to be NOT already measured by the Grid-Meter.
 	 */
 	CONSUMPTION_NOT_METERED;
+
 }

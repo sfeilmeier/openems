@@ -92,4 +92,5 @@ public class SyncableRepositoryImpl implements SyncableRepository {
 	public EventEmitter<SyncableRepository.ChangeEvent> getChangeEvent() {
 		return this.changeEvent;
 	}
+
 }

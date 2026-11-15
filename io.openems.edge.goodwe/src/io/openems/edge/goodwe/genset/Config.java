@@ -10,6 +10,7 @@ import io.openems.edge.goodwe.GoodWeConstants;
 		description = "GoodWe Genset via STS-Box")
 
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "meter0";
 

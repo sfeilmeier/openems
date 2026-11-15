@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PhaseAngleAbrupt implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLED(0, "Disabled"), //
 	ANGLE_ABRUPT_LIMIT_12_DEGREE(1, "Angle abrupt limit 12 deg"), //
@@ -30,4 +31,5 @@ public enum PhaseAngleAbrupt implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

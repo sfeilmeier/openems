@@ -8,6 +8,7 @@ import io.openems.common.jsonrpc.base.JsonrpcRequest;
 import io.openems.common.jsonrpc.base.JsonrpcResponse;
 
 public class JsonApiEndpoint {
+
 	private final String method;
 	private final BiConsumer<JsonApiBuilder, Call<JsonrpcRequest, JsonrpcResponse>> handler;
 	private final EndpointDefinitionBuilder<?, ?> def;

@@ -3,6 +3,7 @@ package io.openems.backend.timedata.influx;
 import com.google.common.collect.ImmutableSet;
 
 public class ChannelFilter {
+
 	/**
 	 * Creates a new {@link ChannelFilter} from the provided arguments.
 	 * 

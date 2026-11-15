@@ -83,4 +83,5 @@ public class SchedulerAllAlphabeticallyImplTest {
 		return scheduler.getControllers().stream() //
 				.toList();
 	}
+
 }

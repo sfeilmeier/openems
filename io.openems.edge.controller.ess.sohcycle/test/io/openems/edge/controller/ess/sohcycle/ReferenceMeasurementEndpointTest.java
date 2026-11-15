@@ -224,4 +224,5 @@ class ReferenceMeasurementEndpointTest {
 				.addReference("sum", new DummySum()) //
 				.activate(MyConfig.create().setId("ctrl0").setEssId("ess0").setRunning(true).build());
 	}
+
 }

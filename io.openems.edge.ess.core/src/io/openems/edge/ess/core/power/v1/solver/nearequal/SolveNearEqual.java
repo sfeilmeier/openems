@@ -118,4 +118,5 @@ public class SolveNearEqual {
 	public void setpowerSetValue(double val) {
 		this.powerSetValue = val;
 	}
+
 }

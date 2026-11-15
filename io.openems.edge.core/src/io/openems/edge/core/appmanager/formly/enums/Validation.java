@@ -3,6 +3,7 @@ package io.openems.edge.core.appmanager.formly.enums;
 import io.openems.edge.core.host.NetworkConfiguration;
 
 public enum Validation {
+
 	// TODO translation
 	IP(NetworkConfiguration.PATTERN_INET4ADDRESS, "Input is not a valid IP Address!"), //
 	;

@@ -71,4 +71,5 @@ public class PowerDistributionEntry {
 		NOT_AVAILABLE, ACTIVE, CANNOT_ACCEPT_ENERGY,
 		/* READ_ONLY */
 	}
+
 }

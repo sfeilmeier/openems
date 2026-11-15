@@ -32,4 +32,5 @@ public enum CableState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

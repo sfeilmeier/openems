@@ -121,4 +121,5 @@ public interface ManagedSymmetricBatteryInverter extends SymmetricBatteryInverte
 	public default boolean isOffGridPossible() {
 		return false;
 	}
+
 }

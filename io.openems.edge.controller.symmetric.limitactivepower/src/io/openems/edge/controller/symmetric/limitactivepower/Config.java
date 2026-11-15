@@ -31,4 +31,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	boolean validatePowerConstraints() default true;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Limit Active Power Symmetric [{id}]";
+
 }

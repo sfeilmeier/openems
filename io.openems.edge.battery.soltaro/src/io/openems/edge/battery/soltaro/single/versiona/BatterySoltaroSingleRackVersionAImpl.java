@@ -1140,4 +1140,5 @@ public class BatterySoltaroSingleRackVersionAImpl extends AbstractOpenemsModbusC
 		// TODO start stop is not implemented
 		throw new NotImplementedException("Start Stop is not implemented for Soltaro Version A");
 	}
+
 }

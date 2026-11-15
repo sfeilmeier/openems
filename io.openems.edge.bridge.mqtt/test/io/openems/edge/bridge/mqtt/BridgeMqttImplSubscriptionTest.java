@@ -133,4 +133,5 @@ public class BridgeMqttImplSubscriptionTest {
 		assertEquals(List.of("device/ack"), wildcard);
 		assertEquals(List.of("device/ack"), exact);
 	}
+
 }

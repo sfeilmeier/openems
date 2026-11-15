@@ -179,4 +179,5 @@ public class MasterBox2v0Impl extends AbstractOpenemsModbusComponent
 	public List<TaskHook> getModbusTaskHooks() {
 		return this.modbusTaskHooks;
 	}
+
 }

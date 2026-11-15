@@ -6,6 +6,7 @@ import java.util.function.Consumer;
  * Contains methods to subscribe and unsubscribe to events of type {@code T}.
  */
 public interface Subscribable<T> {
+
 	/**
 	 * Subscribes a listener that is called for each emitted event.
 	 *
@@ -21,4 +22,5 @@ public interface Subscribable<T> {
 	 * @return {@code true} if the listener was removed, otherwise {@code false}
 	 */
 	boolean unsubscribe(Consumer<? super T> func);
+
 }

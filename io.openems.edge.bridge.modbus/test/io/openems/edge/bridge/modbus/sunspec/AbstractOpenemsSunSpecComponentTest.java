@@ -245,4 +245,5 @@ public class AbstractOpenemsSunSpecComponentTest {
 
 		assertEquals(130, cmp.channels().size());
 	}
+
 }

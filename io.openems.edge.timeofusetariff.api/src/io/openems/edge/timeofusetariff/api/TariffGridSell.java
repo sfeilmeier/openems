@@ -19,4 +19,5 @@ public interface TariffGridSell {
 	 *         prices are known
 	 */
 	public TimeOfUsePrices getGridSellPrices();
+
 }

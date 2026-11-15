@@ -21,4 +21,5 @@ public interface VirtualSubtractMeter extends ElectricityMeter, OpenemsComponent
 			return this.doc;
 		}
 	}
+
 }

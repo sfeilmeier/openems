@@ -20,4 +20,5 @@ public interface KostalPikoCharger extends EssDcCharger, OpenemsComponent, Modbu
 			return this.doc;
 		}
 	}
+
 }

@@ -812,4 +812,5 @@ public interface Evcs extends ElectricityMeter, OpenemsComponent {
 	public default boolean isReadOnly() {
 		return false;
 	}
+
 }

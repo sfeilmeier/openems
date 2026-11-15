@@ -152,4 +152,5 @@ public interface PredictorConfig {
 	 * @return the forecast horizon in days
 	 */
 	public int forecastDays();
+
 }

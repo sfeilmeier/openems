@@ -24,6 +24,7 @@ import io.openems.edge.timeofusetariff.api.GermanDSO;
 import io.openems.edge.timeofusetariff.api.TouManualHelper;
 
 class ScheduleTest {
+
 	private static final long FULL_DAY_MINUTES = 1440;
 	private static final ZoneId GERMAN_ZONE_ID = ZoneId.of("Europe/Berlin");
 	private static final ZoneId ZONE_ID = ZoneId.systemDefault();
@@ -284,4 +285,5 @@ class ScheduleTest {
 		var testTime6 = ZonedDateTime.of(LocalDate.of(2026, 11, 1), LocalTime.of(23, 0), ZoneId.systemDefault());
 		assertEquals(0.3, helper.getPrices().getAt(testTime6), 0.01);
 	}
+
 }

@@ -88,4 +88,5 @@ public class MeterJanitzaUmg806ImplTest {
 				.next(InvertTest.testEnergyInvert(true)) //
 				.deactivate();
 	}
+
 }

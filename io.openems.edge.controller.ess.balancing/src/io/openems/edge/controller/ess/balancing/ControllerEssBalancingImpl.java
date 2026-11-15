@@ -115,4 +115,5 @@ public class ControllerEssBalancingImpl extends AbstractOpenemsComponent
 						.channel(0, ControllerEssBalancing.ChannelId.SET_GRID_ACTIVE_POWER, ModbusType.FLOAT32) //
 						.build());
 	}
+
 }

@@ -11,4 +11,5 @@ public interface SeriesTransformer<I> extends Transformer<I> {
 	 * @return the transformed Series
 	 */
 	public Series<I> transform(Series<I> series);
+
 }

@@ -43,4 +43,5 @@ import io.openems.edge.common.type.Phase.SinglePhase;
 	DebugMode debugMode() default DebugMode.OFF;
 
 	String webconsole_configurationFactory_nameHint() default "IO Shelly Plus Plug S [{id}]";
+
 }

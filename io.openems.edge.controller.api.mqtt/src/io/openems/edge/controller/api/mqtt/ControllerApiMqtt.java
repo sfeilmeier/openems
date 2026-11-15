@@ -26,4 +26,5 @@ public interface ControllerApiMqtt extends Controller, OpenemsComponent, EventHa
 			return this.doc;
 		}
 	}
+
 }

@@ -406,4 +406,5 @@ public class SumImpl extends AbstractOpenemsComponent implements Sum, OpenemsCom
 
 		return String.join(" ", result);
 	}
+
 }

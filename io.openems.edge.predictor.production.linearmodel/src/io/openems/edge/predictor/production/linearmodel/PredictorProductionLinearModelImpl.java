@@ -508,4 +508,5 @@ public class PredictorProductionLinearModelImpl extends AbstractPredictor
 	void setSnowStateMachine(SnowStateMachine snowStateMachine) {
 		this.snowStateMachine = snowStateMachine;
 	}
+
 }

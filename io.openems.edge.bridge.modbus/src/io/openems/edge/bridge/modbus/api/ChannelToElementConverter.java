@@ -23,4 +23,5 @@ public class ChannelToElementConverter implements Function<Object, Object> {
 	public Object apply(Object t) {
 		return this.function.apply(t);
 	}
+
 }

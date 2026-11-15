@@ -25,4 +25,5 @@ public final class QuarterlyWeatherVariables {
 	private QuarterlyWeatherVariables() {
 		throw new AssertionError("Cannot instantiate utility class");
 	}
+
 }

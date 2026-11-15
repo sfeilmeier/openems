@@ -284,4 +284,5 @@ public class PredictorPersistenceModelImpl extends AbstractPredictor
 	protected ClockProvider getClockProvider() {
 		return this.componentManager;
 	}
+
 }

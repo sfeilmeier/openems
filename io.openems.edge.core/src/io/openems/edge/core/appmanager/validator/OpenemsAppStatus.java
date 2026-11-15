@@ -1,6 +1,7 @@
 package io.openems.edge.core.appmanager.validator;
 
 public enum OpenemsAppStatus {
+
 	/**
 	 * Apps which are not compatible with the system. e. g. not a Home
 	 */

@@ -37,4 +37,5 @@ class PriceCalculatorXYTest {
 		assertEquals(8, reusedPriceCalculator.calculate(10, 2));
 		assertEquals(1, reusedPriceCalculator.calculate(3, 2));
 	}
+
 }

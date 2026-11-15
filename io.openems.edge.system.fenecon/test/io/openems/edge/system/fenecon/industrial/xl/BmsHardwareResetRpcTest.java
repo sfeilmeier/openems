@@ -30,6 +30,7 @@ import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.St
 import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 public class BmsHardwareResetRpcTest {
+
 	private static final String METHOD = "bmsHardwareReset";
 	private static final ChannelAddress STATE_MACHINE = new ChannelAddress("system0", "StateMachine");
 	private static final ChannelAddress STATUS_SYS_OFF = new ChannelAddress("system0", "StatusSysOff");
@@ -122,4 +123,5 @@ public class BmsHardwareResetRpcTest {
 						.output(DISABLE_24V_F2B, false))//
 		;
 	}
+
 }

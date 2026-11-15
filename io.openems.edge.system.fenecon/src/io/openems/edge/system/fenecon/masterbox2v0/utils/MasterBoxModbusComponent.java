@@ -50,4 +50,5 @@ public interface MasterBoxModbusComponent extends OpenemsComponent {
 	 * @return true if it has one
 	 */
 	boolean hasIoc();
+
 }

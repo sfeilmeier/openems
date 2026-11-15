@@ -3,6 +3,7 @@ package io.openems.edge.common.oauth;
 import io.openems.common.types.OptionsEnum;
 
 public enum ConnectionState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NOT_CONNECTED(0, "Not connected"), //
 	EXPIRED(1, "Expired"), //
@@ -32,4 +33,5 @@ public enum ConnectionState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return ConnectionState.UNDEFINED;
 	}
+
 }

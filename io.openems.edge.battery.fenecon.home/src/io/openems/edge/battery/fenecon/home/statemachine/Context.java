@@ -32,4 +32,5 @@ public class Context extends AbstractContext<BatteryFeneconHome> {
 		this.modbusCommunicationFailed = modbusCommunicationFailed;
 		this.retryModbusCommunication = retryModbusCommunication;
 	}
+
 }

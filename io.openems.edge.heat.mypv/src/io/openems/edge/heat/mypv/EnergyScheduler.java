@@ -166,4 +166,5 @@ public class EnergyScheduler {
 		}
 		return channel.value().get();
 	}
+
 }

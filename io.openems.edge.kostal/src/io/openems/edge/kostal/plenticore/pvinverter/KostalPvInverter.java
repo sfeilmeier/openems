@@ -21,4 +21,5 @@ public interface KostalPvInverter extends ElectricityMeter, OpenemsComponent, Mo
 			return this.doc;
 		}
 	}
+
 }

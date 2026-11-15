@@ -33,4 +33,5 @@ public class MyEdge extends Edge {
 	public void setSettings(JsonObject settings) {
 		this.settings = settings;
 	}
+
 }

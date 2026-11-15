@@ -130,4 +130,5 @@ public class ControllerAsymmetricPeakShavingImplTest {
 						.output("ess0", SET_ACTIVE_POWER_EQUALS, 19651)) //
 				.deactivate();
 	}
+
 }

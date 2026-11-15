@@ -18,4 +18,5 @@ public class SimulatorThermometerImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

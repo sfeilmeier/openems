@@ -107,4 +107,5 @@ public class OfflineEdgeMessage extends Message {
 					.toList());
 		}
 	}
+
 }

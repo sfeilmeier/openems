@@ -366,4 +366,5 @@ public class RestHandler extends Handler.Abstract {
 			sendErrorResponse(response, requestId, new OpenemsException("Unable to get Response: " + e.getMessage()));
 		}
 	}
+
 }

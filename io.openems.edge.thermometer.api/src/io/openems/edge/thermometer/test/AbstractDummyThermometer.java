@@ -23,4 +23,5 @@ public abstract class AbstractDummyThermometer<SELF extends AbstractDummyThermom
 		withValue(this, Thermometer.ChannelId.TEMPERATURE, value);
 		return this.self();
 	}
+
 }

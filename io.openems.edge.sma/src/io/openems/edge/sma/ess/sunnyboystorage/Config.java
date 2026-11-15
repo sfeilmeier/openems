@@ -30,4 +30,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int capacity() default 2000;
 
 	String webconsole_configurationFactory_nameHint() default "ESS SMA Sunny Boy Storage [{id}]";
+
 }

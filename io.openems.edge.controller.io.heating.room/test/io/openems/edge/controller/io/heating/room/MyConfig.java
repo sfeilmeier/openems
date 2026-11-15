@@ -201,4 +201,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String infraredRelayComponents_target() {
 		return generateReferenceTargetFilter(this.id(), this.infraredRelays());
 	}
+
 }

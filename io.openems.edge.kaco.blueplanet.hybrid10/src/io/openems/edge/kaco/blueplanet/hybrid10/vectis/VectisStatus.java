@@ -3,6 +3,7 @@ package io.openems.edge.kaco.blueplanet.hybrid10.vectis;
 import io.openems.common.types.OptionsEnum;
 
 public enum VectisStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NOT_CONNECTED(0, "Unknown (VECTIS not connected)"), //
 	ON_GRID(1, "On-Grid mode"), //
@@ -45,4 +46,5 @@ public enum VectisStatus implements OptionsEnum {
 		}
 		return VectisStatus.UNDEFINED;
 	}
+
 }

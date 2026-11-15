@@ -45,4 +45,5 @@ public interface ControllerCleverPv extends Controller, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

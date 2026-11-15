@@ -29,6 +29,7 @@ import io.openems.edge.battery.fenecon.home.update.j2mod.ResponseStatusCode;
 import io.openems.edge.bridge.modbus.test.ModbusSerialListenerMock;
 
 public class BatterySerialListenerMock extends ModbusSerialListenerMock {
+
 	private static final Duration SLAVE_UPDATE_DURATION = Duration.ofSeconds(5);
 	public static final TwoPartVersion INITIAL_FIRMWARE_VERSION = TwoPartVersion.fromString("1.0");
 	public static final TwoPartVersion AFTER_UPDATE_FIRMWARE_VERSION = TwoPartVersion.fromString("1.1");
@@ -185,4 +186,5 @@ public class BatterySerialListenerMock extends ModbusSerialListenerMock {
 		}
 
 	}
+
 }

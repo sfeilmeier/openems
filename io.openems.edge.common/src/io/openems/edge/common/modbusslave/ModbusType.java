@@ -1,6 +1,7 @@
 package io.openems.edge.common.modbusslave;
 
 public enum ModbusType {
+
 	ENUM16(1, "enum16"), //
 	INT16(1, "int16"), //
 	UINT16(1, "uint16"), //
@@ -26,4 +27,5 @@ public enum ModbusType {
 	public String toString() {
 		return this.name;
 	}
+
 }

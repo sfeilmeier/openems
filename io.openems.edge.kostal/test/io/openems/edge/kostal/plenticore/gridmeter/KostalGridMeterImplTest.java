@@ -22,4 +22,5 @@ public class KostalGridMeterImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

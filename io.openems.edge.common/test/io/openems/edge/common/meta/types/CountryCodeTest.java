@@ -43,4 +43,5 @@ public class CountryCodeTest {
 		assertEquals(CountryCode.UNDEFINED, CountryCode.fromCode(""));
 		assertEquals(CountryCode.UNDEFINED, CountryCode.fromCode(null));
 	}
+
 }

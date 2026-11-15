@@ -233,4 +233,5 @@ public class IoShelly3EmImplTest {
 						.output(IoShelly3Em.ChannelId.EMETER3_EXCEPTION, true) //
 						.output(IoShelly3Em.ChannelId.SLAVE_COMMUNICATION_FAILED, false));
 	}
+
 }

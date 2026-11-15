@@ -3,6 +3,7 @@ package io.openems.edge.controller.ess.delaycharge;
 import io.openems.common.types.OptionsEnum;
 
 public enum State implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ACTIVE_LIMIT(0, "Active Limit"), //
 	PASSED_TARGET_HOUR(1, "Passed target Hour"), //
@@ -30,4 +31,5 @@ public enum State implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

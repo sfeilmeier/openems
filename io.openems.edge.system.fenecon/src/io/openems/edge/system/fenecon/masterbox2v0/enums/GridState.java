@@ -30,4 +30,5 @@ public enum GridState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -39,4 +39,5 @@ public class BelowTargetSocHandler extends StateHandler<State, Context> {
 		context.setTargetPower(targetPower * -1);
 		return State.BELOW_TARGET_SOC;
 	}
+
 }

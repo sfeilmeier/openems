@@ -26,6 +26,7 @@ import io.openems.edge.core.appmanager.jsonrpc.AddAppInstance;
 import io.openems.edge.core.appmanager.jsonrpc.UpdateAppInstance;
 
 public class TestFeneconHome15 {
+
 	private AppManagerTestBundle appManagerTestBundle;
 
 	private SocomecMeter meterApp;
@@ -141,4 +142,5 @@ public class TestFeneconHome15 {
 				.addProperty("SHADOW_MANAGEMENT_DISABLED", false) //
 				.build();
 	}
+
 }

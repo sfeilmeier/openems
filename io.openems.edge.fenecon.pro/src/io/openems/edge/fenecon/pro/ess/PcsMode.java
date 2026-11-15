@@ -3,6 +3,7 @@ package io.openems.edge.fenecon.pro.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum PcsMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	EMERGENCY(0, "Emergency"), //
 	CONSUMERS_PEAK_PATTERN(1, "Consumers Peak Pattern"), //
@@ -34,4 +35,5 @@ public enum PcsMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

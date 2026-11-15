@@ -3,6 +3,7 @@ package io.openems.edge.sma.ess.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SystemState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ERROR(35, "Error"), //
 	OFF(303, "Off"), //
@@ -31,4 +32,5 @@ public enum SystemState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

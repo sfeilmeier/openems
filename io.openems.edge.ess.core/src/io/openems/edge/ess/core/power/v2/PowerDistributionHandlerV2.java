@@ -147,4 +147,5 @@ public class PowerDistributionHandlerV2 implements PowerDistributionHandler {
 		}
 		return this.pd.getReactivePowerExtrema(ess.id(), goal);
 	}
+
 }

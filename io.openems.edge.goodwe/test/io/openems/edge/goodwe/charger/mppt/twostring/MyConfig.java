@@ -63,4 +63,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public MpptPort mpptPort() {
 		return this.builder.mpptPort;
 	}
+
 }

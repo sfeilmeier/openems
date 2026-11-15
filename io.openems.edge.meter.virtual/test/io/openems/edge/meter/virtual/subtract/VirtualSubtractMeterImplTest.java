@@ -45,4 +45,5 @@ public class VirtualSubtractMeterImplTest {
 						.input("ess0", SymmetricEss.ChannelId.ACTIVE_POWER, 4_000) //
 						.output("meter0", ElectricityMeter.ChannelId.ACTIVE_POWER, 1000));
 	}
+
 }

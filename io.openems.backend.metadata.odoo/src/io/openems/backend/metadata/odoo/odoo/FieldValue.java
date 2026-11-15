@@ -7,6 +7,7 @@ import com.google.gson.JsonElement;
 import io.openems.backend.metadata.odoo.Field;
 
 public class FieldValue<T> {
+
 	private final Field field;
 	private final T value;
 
@@ -36,4 +37,5 @@ public class FieldValue<T> {
 		string = string.replace("\n", "");
 		return this.field.id() + ":" + string;
 	}
+
 }

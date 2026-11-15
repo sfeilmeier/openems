@@ -3,6 +3,7 @@ package io.openems.edge.controller.ess.limittotaldischarge;
 import io.openems.common.types.OptionsEnum;
 
 public enum State implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NORMAL(0, "Normal"), //
 	MIN_SOC(1, "Min-SoC"), //
@@ -30,4 +31,5 @@ public enum State implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

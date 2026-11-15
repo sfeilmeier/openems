@@ -25,4 +25,5 @@ public class DoubleDoc extends OpenemsTypeDoc<Double> {
 			-> new DoubleWriteChannel(component, channelId, this);
 		};
 	}
+
 }

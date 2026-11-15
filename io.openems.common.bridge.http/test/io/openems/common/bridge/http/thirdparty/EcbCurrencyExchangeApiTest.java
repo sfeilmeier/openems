@@ -12,6 +12,7 @@ import io.openems.common.bridge.http.time.DelayTimeProvider;
 import io.openems.common.services.currency.ExchangeRate;
 
 class EcbCurrencyExchangeApiTest {
+
 	private static final String TEST_ECB_RESPONSE = """
 			<?xml version="1.0" encoding="UTF-8"?>
 						<gesmes:Envelope xmlns:gesmes="http://www.gesmes.org/xml/2002-08-01" xmlns="http://www.ecb.int/vocabulary/2002-08-01/eurofxref">
@@ -76,4 +77,5 @@ class EcbCurrencyExchangeApiTest {
 		final var eurToUsdRate = rates.stream().filter(x -> x.getKey().equals(eurToUsd)).findFirst().orElseThrow();
 		assertEquals(1.1408D, eurToUsdRate.getConversionRate(), 0.0001);
 	}
+
 }

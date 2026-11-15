@@ -17,4 +17,5 @@ public interface StatefulSeriesTransformer<I> extends SeriesTransformer<I> {
 	 * @return true if fitted, false otherwise
 	 */
 	public boolean isFitted();
+
 }

@@ -20,6 +20,7 @@ import io.openems.common.utils.EnumUtils;
  * period, subtract first cumulated value from last cumulated value.
  */
 public enum Unit {
+
 	// ##########
 	// Generic
 	// ##########
@@ -610,4 +611,5 @@ public enum Unit {
 			throw new IllegalArgumentException("Symbols in Unit must be unique!");
 		}
 	}
+
 }

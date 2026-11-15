@@ -7,6 +7,7 @@ import java.util.Arrays;
 import com.google.common.collect.ImmutableList;
 
 public enum ControlMode {
+
 	/**
 	 * Delays discharge during low-price hours.
 	 */
@@ -41,4 +42,5 @@ public enum ControlMode {
 		this.modes = Arrays.stream(modes) //
 				.collect(toImmutableList());
 	}
+
 }

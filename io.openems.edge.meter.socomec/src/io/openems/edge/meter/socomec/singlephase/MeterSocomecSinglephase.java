@@ -25,4 +25,5 @@ public interface MeterSocomecSinglephase extends ElectricityMeter, SinglePhaseMe
 			return this.doc;
 		}
 	}
+
 }

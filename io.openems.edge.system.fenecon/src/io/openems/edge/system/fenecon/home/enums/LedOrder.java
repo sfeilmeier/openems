@@ -3,6 +3,7 @@ package io.openems.edge.system.fenecon.home.enums;
 import io.openems.common.types.ChannelAddress;
 
 public enum LedOrder {
+
 	DEFAULT_RED_BLUE_GREEN("DigitalOutput1", "DigitalOutput2", "DigitalOutput3"), //
 	RED_GREEN_BLUE("DigitalOutput1", "DigitalOutput3", "DigitalOutput2"), //
 	BLUE_RED_GREEN("DigitalOutput3", "DigitalOutput1", "DigitalOutput2"), //
@@ -72,4 +73,5 @@ public enum LedOrder {
 			};
 		}
 	}
+
 }

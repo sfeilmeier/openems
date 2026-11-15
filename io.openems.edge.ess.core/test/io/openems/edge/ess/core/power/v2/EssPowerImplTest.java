@@ -411,4 +411,5 @@ public class EssPowerImplTest {
 		assertEquals(2000, p3.get());
 		assertEquals(-10000, p4.get());
 	}
+
 }

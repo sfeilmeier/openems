@@ -5,6 +5,7 @@ import io.openems.edge.core.appmanager.AbstractOpenemsApp;
 import io.openems.edge.core.appmanager.TranslationUtil;
 
 public enum ModbusType implements TranslatableEnum {
+
 	TCP("communication.modbusIntegrationType.tcp"), //
 	RTU("communication.modbusIntegrationType.rtu"), //
 	;

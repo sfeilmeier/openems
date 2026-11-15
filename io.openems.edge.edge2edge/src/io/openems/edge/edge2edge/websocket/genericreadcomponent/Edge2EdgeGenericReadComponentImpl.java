@@ -183,4 +183,5 @@ public class Edge2EdgeGenericReadComponentImpl extends AbstractOpenemsComponent
 				.accessMode(AccessMode.READ_ONLY) //
 				.text(channel.text())));
 	}
+
 }

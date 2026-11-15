@@ -80,4 +80,5 @@ public class KostalPikoGridMeterImpl extends AbstractOpenemsComponent
 	public String debugLog() {
 		return "L:" + this.getActivePower().asString();
 	}
+
 }

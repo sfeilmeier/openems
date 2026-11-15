@@ -1,6 +1,7 @@
 package io.openems.edge.battery.fenecon.f2b.bmw;
 
 public class Constants {
+
 	// Offset for cell voltages read register
 	public static final int CELL_VOLTAGE_REGISTER_OFFSET = 201;
 	// Offset for cell temperatures read register
@@ -18,4 +19,5 @@ public class Constants {
 	public static final double MIN_ALLOWED_SOC = 4d;
 	public static final double MAX_ALLOWED_SOC = 96d;
 	public static final int REQUIRED_BATTERY_POWER_FOR_HEATING = 1000;
+
 }

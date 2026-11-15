@@ -101,4 +101,5 @@ public interface GoodWeGridMeter extends ElectricityMeter, OpenemsComponent {
 	public default IntegerWriteChannel getExternalMeterRatioChannel() {
 		return this.channel(ChannelId.EXTERNAL_METER_RATIO);
 	}
+
 }

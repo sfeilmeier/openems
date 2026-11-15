@@ -15,4 +15,5 @@ public class KacoBlueplanetHybrid10PvInverterImplTest {
 						.build()) //
 		;
 	}
+
 }

@@ -250,4 +250,5 @@ public class FroniusGen24DcChargerImpl extends AbstractOpenemsSunSpecComponent i
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

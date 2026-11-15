@@ -23,4 +23,5 @@ public interface TariffManualEeg2025GridSell extends OpenemsComponent, TariffGri
 			return this.doc;
 		}
 	}
+
 }

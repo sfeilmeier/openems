@@ -130,4 +130,5 @@ public enum ChargingState implements OptionsEnum {
 				.findFirst() //
 				.orElse(UNDEFINED);
 	}
+
 }

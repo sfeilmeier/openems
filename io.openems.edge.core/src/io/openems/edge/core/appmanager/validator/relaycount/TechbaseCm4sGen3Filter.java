@@ -36,4 +36,5 @@ public class TechbaseCm4sGen3Filter implements CheckRelayCountFilter {
 	public RelayProps.RelayContactFilter apply() {
 		return techbaseCm4Gen3Filter(Language.DEFAULT, this.onlyHighVoltageRelays, this.deviceHardware);
 	}
+
 }

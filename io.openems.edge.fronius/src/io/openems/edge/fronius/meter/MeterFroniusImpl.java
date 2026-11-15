@@ -98,4 +98,5 @@ public class MeterFroniusImpl extends AbstractSunSpecMeter
 				ModbusSlaveNatureTable.of(MeterFronius.class, accessMode, 100) //
 						.build());
 	}
+
 }

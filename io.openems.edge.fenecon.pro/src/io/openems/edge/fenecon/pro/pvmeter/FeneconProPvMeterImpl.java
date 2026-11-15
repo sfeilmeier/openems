@@ -127,4 +127,5 @@ public class FeneconProPvMeterImpl extends AbstractOpenemsModbusComponent
 	public String debugLog() {
 		return "L:" + this.getActivePower().asString();
 	}
+
 }

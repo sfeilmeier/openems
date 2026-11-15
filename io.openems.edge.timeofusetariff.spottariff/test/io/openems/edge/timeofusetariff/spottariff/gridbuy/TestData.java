@@ -1,6 +1,7 @@
 package io.openems.edge.timeofusetariff.spottariff.gridbuy;
 
 class TestData {
+
 	protected static final String SCHEDULE = """
 			[
 			  {
@@ -39,4 +40,5 @@ class TestData {
 			  }
 			]
 			""";
+
 }

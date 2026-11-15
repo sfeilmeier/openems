@@ -85,4 +85,5 @@ public class CalculateAverage {
 		}
 		throw new IllegalArgumentException("Cannot convert. Double [" + value + "] is not fitting in Integer range.");
 	}
+
 }

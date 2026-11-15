@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.single.versionb.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PreContactorState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	START(0x1, "Start"), //
 	STOP(0x2, "Stop");
@@ -29,4 +30,5 @@ public enum PreContactorState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

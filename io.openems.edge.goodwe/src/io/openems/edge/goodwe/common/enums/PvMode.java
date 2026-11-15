@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PvMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_PV(0, "Inverter disconnects to PV"), //
 	STANDBY(1, "PV does not output power"), //
@@ -30,4 +31,5 @@ public enum PvMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

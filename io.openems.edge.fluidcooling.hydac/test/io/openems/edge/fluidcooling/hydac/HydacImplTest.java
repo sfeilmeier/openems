@@ -42,4 +42,5 @@ public class HydacImplTest {
 		assertEquals("Running|CoolingUnit|Temp: 25 °C|CoolingRequired: false|Pump: false|Compressor: false",
 				hydac.debugLog());
 	}
+
 }

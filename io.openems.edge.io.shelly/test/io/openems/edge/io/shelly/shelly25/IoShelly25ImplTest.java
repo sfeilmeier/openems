@@ -77,4 +77,5 @@ public class IoShelly25ImplTest {
 
 				.deactivate();//
 	}
+
 }

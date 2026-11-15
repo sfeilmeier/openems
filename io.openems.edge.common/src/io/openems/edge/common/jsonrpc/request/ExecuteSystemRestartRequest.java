@@ -75,4 +75,5 @@ public class ExecuteSystemRestartRequest extends JsonrpcRequest {
 				.addProperty("type", this.type.name()) //
 				.build();
 	}
+
 }

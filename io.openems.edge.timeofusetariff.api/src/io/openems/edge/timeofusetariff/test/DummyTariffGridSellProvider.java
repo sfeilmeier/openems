@@ -63,4 +63,5 @@ public class DummyTariffGridSellProvider implements TariffGridSell {
 	public TimeOfUsePrices getGridSellPrices() {
 		return TimeOfUsePrices.from(Instant.now(this.clock), this.gridSellPrices);
 	}
+
 }

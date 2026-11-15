@@ -15,4 +15,5 @@ public final class StringEnumDoc extends StringDoc implements OptionsDoc<String>
 	public String[] getOptions() {
 		return this.options;
 	}
+
 }

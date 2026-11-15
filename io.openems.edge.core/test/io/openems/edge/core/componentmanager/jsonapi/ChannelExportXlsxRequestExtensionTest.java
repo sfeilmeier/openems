@@ -81,4 +81,5 @@ class ChannelExportXlsxRequestExtensionTest {
 		assertNotNull(exception);
 		verify(this.componentManager).getComponent("unknownComponent");
 	}
+
 }

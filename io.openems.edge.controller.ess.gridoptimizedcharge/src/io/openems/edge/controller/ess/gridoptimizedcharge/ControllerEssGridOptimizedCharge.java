@@ -875,4 +875,5 @@ public interface ControllerEssGridOptimizedCharge extends Controller, OpenemsCom
 	public default void _setNoLimitationTime(int value) {
 		this.getNoLimitationTimeChannel().setNextValue(value);
 	}
+
 }

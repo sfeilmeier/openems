@@ -89,4 +89,5 @@ class ChargeResumingHandlerTest {
 		ctrl.apply(Mode.FORCE, chargingActions);
 		assertEquals(EvseSingleState.FINISHED_EV_STOP, ctrl.getParams().state());
 	}
+
 }

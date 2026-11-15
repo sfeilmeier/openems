@@ -6,6 +6,7 @@ import io.openems.edge.core.appmanager.AbstractOpenemsApp;
 import io.openems.edge.core.appmanager.TranslationUtil;
 
 public enum GridFeedInLimitationType implements TranslatableEnum {
+
 	DYNAMIC_LIMITATION("App.IntegratedSystem.feedInType.dynamicLimitation"), //
 	NO_LIMITATION("App.IntegratedSystem.feedInType.noLimitation"), //
 	;

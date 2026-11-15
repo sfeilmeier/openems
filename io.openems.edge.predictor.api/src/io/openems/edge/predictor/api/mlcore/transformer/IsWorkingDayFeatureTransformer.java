@@ -46,4 +46,5 @@ public class IsWorkingDayFeatureTransformer<I> extends AbstractDataFrameTransfor
 		dataframe.setColumn(this.columnName, new Series<>(dataframe.getIndex(), values));
 		return dataframe;
 	}
+
 }

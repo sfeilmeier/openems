@@ -21,6 +21,7 @@ import io.openems.common.services.currency.ExchangeRate;
 
 @Component(immediate = true, service = CurrencyExchangeSyncManager.class)
 public class CurrencyExchangeSyncManager {
+
 	@Reference(cardinality = MANDATORY, policy = STATIC, policyOption = GREEDY)
 	private CurrencyExchange currencyExchange;
 
@@ -46,4 +47,5 @@ public class CurrencyExchangeSyncManager {
 		this.syncableRepository.setStaticEntry(
 				new SyncableEntry<>(new SyncableKey.CurrencyExchangeRates(), syncableData, Instant.now()));
 	}
+
 }

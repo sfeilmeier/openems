@@ -10,6 +10,7 @@ import java.time.Instant;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 
 public class FastHeatHandler extends AbstractFastHeatHandler {
+
 	private static final Duration POWER_NOT_APPLIED_DELAY = Duration.ofMinutes(5);
 	private Instant fastHeatPowerNotAppliedSince = null;
 	private Instant fastHeatStartedAt;
@@ -77,4 +78,5 @@ public class FastHeatHandler extends AbstractFastHeatHandler {
 		}
 		return !clock.instant().isBefore(startedAt.plus(FAST_HEAT_DURATION));
 	}
+
 }

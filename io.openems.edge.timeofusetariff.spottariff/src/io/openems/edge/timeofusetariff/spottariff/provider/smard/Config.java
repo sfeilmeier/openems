@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int service_ranking() default 90;
 
 	String webconsole_configurationFactory_nameHint() default "Spot Tariff SMARD [{id}]";
+
 }

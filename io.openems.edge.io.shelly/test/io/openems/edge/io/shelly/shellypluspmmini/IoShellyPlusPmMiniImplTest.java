@@ -156,4 +156,5 @@ public class IoShellyPlusPmMiniImplTest {
 						.output(ElectricityMeter.ChannelId.CURRENT_L1, -106) //
 						.output(IoShellyPlusPmMini.ChannelId.SLAVE_COMMUNICATION_FAILED, false));
 	}
+
 }

@@ -16,6 +16,7 @@ import io.openems.edge.core.appmanager.jsonrpc.AddAppInstance.Request;
 import io.openems.edge.core.appmanager.jsonrpc.UpdateAppConfig;
 
 public class ComponentDefConfigTest {
+
 	private OpenemsApp app;
 
 	@Test

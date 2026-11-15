@@ -108,4 +108,5 @@ public class ControllerEssMinimumDischargePowerImpl extends AbstractOpenemsCompo
 			this.logInfo(this.log, "Make sure that the controller is running before balancing or peakshaving.");
 		}
 	}
+
 }

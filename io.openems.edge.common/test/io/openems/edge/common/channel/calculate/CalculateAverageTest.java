@@ -131,4 +131,5 @@ public class CalculateAverageTest {
 	private static <T extends Number> Channel<T> createChannel(TestChannelId channelId) {
 		return channelId.doc().createChannelInstance(null, channelId);
 	}
+
 }

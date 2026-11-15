@@ -263,4 +263,5 @@ public class LuoxApiTest {
 				sut.getAt(ZonedDateTime.parse("2025-08-28T23:45+02:00")).doubleValue(), 0.001);
 		assertNull(sut.getAt(ZonedDateTime.parse("2025-08-29T00:00+02:00")));
 	}
+
 }

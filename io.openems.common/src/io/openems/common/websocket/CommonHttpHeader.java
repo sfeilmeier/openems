@@ -5,6 +5,7 @@ package io.openems.common.websocket;
  * OpenEMS codebase.
  */
 public enum CommonHttpHeader {
+
 	APIKEY("Apikey"), //
 	INSTANCE_ID("Instance-Id");
 
@@ -22,4 +23,5 @@ public enum CommonHttpHeader {
 	public String asString() {
 		return this.header;
 	}
+
 }

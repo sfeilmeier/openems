@@ -27,4 +27,5 @@ public interface EvseElectricVehicle extends OpenemsComponent {
 	 * @return {@link ElectricVehicleAbilities}
 	 */
 	public ElectricVehicleAbilities getElectricVehicleAbilities();
+
 }

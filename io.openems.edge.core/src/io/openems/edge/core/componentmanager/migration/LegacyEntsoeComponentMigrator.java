@@ -44,6 +44,7 @@ import io.openems.edge.core.appmanager.AppManagerUtil;
 
 @Component(immediate = true, scope = SINGLETON)
 public class LegacyEntsoeComponentMigrator {
+
 	private static final String TARIFF_PROVIDER_COMPONENT_ID = "spotTariffProvider0";
 	private final Logger log = new ContextLogger(LegacyEntsoeComponentMigrator.class, "LegacyMigration");
 

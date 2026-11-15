@@ -103,4 +103,5 @@ public class PhoenixContactMeterImplTest {
 				.next(InvertTest.testInvert(true))//
 				.next(InvertTest.testEnergyInvert(true));
 	}
+
 }

@@ -1012,4 +1012,5 @@ public interface BydBatteryBoxCommercialC130 extends Battery, OpenemsComponent, 
 			return this.doc;
 		}
 	}
+
 }

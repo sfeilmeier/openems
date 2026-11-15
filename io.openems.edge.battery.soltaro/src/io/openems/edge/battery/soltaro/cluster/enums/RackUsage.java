@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.cluster.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum RackUsage implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	USED(1, "Rack is used"), //
 	UNUSED(2, "Rack is not used");
@@ -29,4 +30,5 @@ public enum RackUsage implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

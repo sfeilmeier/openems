@@ -164,4 +164,5 @@ public interface Power {
 	 * @return true if Filter is enabled, otherwise false
 	 */
 	public boolean isFilterEnabled();
+
 }

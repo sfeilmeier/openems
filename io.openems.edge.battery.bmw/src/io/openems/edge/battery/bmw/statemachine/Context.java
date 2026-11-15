@@ -89,4 +89,5 @@ public class Context extends AbstractContext<BatteryBmwImpl> {
 				map);
 		return endPoint;
 	}
+
 }

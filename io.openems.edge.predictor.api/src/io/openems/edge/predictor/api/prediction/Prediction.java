@@ -212,4 +212,5 @@ public class Prediction extends QuarterlyValues<Integer> {
 	public Integer[] asArray() {
 		return super.asArray(Integer[]::new);
 	}
+
 }

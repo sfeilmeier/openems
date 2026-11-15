@@ -196,4 +196,5 @@ public class PeriodsBuilderTest {
 	private static RawPeriod.RawPeriodData dataWithTwoMissingValues() {
 		return new RawPeriod.RawPeriodData(1000, null, null, 25.0);
 	}
+
 }

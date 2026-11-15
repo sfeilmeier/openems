@@ -286,4 +286,5 @@ public class MyProcessImage implements ProcessImage {
 	private void logWarn(String message) {
 		this.parent.logWarn(this.log, message);
 	}
+
 }

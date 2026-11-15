@@ -27,4 +27,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int modbusUnitId() default 1;
 
 	String webconsole_configurationFactory_nameHint() default "PV-Inverter KACO blueplanet [{id}]";
+
 }

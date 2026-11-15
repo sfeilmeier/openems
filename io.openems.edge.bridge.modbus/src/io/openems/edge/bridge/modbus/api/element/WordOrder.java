@@ -9,5 +9,7 @@ package io.openems.edge.bridge.modbus.api.element;
  * </ul>
  */
 public enum WordOrder {
+
 	LSWMSW, MSWLSW
+
 }

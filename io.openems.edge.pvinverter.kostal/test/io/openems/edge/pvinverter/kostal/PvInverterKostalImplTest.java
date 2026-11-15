@@ -23,4 +23,5 @@ public class PvInverterKostalImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

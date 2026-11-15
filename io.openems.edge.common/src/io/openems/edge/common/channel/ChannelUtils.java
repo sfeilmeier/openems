@@ -479,4 +479,5 @@ public final class ChannelUtils {
 		}
 		channel.setNextWriteValue(value);
 	}
+
 }

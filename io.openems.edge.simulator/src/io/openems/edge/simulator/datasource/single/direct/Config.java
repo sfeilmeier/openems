@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int[] values();
 
 	String webconsole_configurationFactory_nameHint() default "Simulator DataSource: Single Direct [{id}]";
+
 }

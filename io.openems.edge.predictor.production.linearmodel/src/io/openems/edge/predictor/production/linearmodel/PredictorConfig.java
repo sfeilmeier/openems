@@ -94,4 +94,5 @@ public interface PredictorConfig {
 	 * @return the orchestrator factory
 	 */
 	public PredictionOrchestratorFactory predictionOrchestratorFactory();
+
 }

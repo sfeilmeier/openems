@@ -1,6 +1,7 @@
 package io.openems.edge.core.appmanager.formly.enums;
 
 public enum Operator {
+
 	// Equals
 	EQ("=="), //
 	// Not-Equals
@@ -24,4 +25,5 @@ public enum Operator {
 	public String getOperation() {
 		return this.operation;
 	}
+
 }

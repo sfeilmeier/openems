@@ -110,4 +110,5 @@ public abstract class AbstractWriteTask<//
 		 */
 		protected abstract REQUEST createModbusRequest() throws OpenemsException;
 	}
+
 }

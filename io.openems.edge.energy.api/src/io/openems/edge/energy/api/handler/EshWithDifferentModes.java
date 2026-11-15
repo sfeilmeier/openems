@@ -171,4 +171,5 @@ public final class EshWithDifferentModes<MODE, OPTIMIZATION_CONTEXT, SCHEDULE_CO
 			toStringHelper.add("modes", modes.toString());
 		}
 	}
+
 }

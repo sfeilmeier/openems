@@ -3,6 +3,7 @@ package io.openems.edge.fronius.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SetControlMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLED(0, "Disabled"), //
 	CHARGE_LIMIT(1, "Charge limit"), //
@@ -31,4 +32,5 @@ public enum SetControlMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

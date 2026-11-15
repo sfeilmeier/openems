@@ -136,4 +136,5 @@ public interface EvcsHeidelbergEnergy extends Evcs, ElectricityMeter, OpenemsCom
 	public default void setFailsafeCurrent(int value) throws OpenemsError.OpenemsNamedException {
 		this.getFailsafeCurrentChannel().setNextWriteValue(value);
 	}
+
 }

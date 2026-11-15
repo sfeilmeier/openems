@@ -28,4 +28,5 @@ public class EnergySchedulerTest {
 		// ESS discharge is limited to 600
 		assertEquals(600, t.simulatePeriod().ef().commitEss(4000));
 	}
+
 }

@@ -5,6 +5,7 @@ import java.time.Instant;
 import io.openems.common.types.HttpStatus;
 
 public sealed interface TariffUpdateStatus {
+
 	/**
 	 * Gets the point in time when this update status was created.
 	 *
@@ -23,4 +24,5 @@ public sealed interface TariffUpdateStatus {
 
 	record NotFetchedYet(Instant time) implements TariffUpdateStatus {
 	}
+
 }

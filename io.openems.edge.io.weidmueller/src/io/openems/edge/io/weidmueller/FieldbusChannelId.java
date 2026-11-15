@@ -57,4 +57,5 @@ public class FieldbusChannelId implements io.openems.edge.common.channel.Channel
 	public OpenemsTypeDoc<?> doc() {
 		return this.doc;
 	}
+
 }

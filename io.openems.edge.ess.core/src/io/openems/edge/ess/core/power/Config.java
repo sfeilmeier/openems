@@ -43,4 +43,5 @@ import io.openems.edge.ess.power.api.SolverStrategy;
 	int pt1TimeConstant() default PT1Filter.DEFAULT_TIME_CONSTANT;
 
 	String webconsole_configurationFactory_nameHint() default "ESS Power";
+
 }

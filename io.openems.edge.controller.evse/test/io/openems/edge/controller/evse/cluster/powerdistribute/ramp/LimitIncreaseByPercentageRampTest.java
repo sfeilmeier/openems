@@ -65,4 +65,5 @@ class LimitIncreaseByPercentageRampTest {
 		ramp.clearLastSetPoints();
 		assertNull(ramp.getLastSetPointInWatt(testKey));
 	}
+
 }

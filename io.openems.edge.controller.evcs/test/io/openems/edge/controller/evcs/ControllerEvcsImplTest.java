@@ -374,4 +374,5 @@ public class ControllerEvcsImplTest {
 						.output("evcs0", SET_CHARGE_POWER_LIMIT, 6000)) //
 				.deactivate();
 	}
+
 }

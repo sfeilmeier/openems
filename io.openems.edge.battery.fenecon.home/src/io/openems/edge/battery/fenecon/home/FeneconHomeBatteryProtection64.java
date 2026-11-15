@@ -88,4 +88,5 @@ public class FeneconHomeBatteryProtection64 extends FeneconHomeBatteryProtection
 	public Double getMaxIncreaseAmperePerSecond() {
 		return 0.1; // [A] per second
 	}
+
 }

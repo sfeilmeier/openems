@@ -215,4 +215,5 @@ public interface KostalGridMeter extends ElectricityMeter, ModbusComponent, Open
 	public default void _setScaleFactorFrequency(Integer value) {
 		this.getScaleFactorFrequencyChannel().setNextValue(value);
 	}
+
 }

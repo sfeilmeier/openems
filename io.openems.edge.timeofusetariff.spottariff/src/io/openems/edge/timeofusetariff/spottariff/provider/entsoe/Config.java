@@ -25,4 +25,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int service_ranking() default 80;
 
 	String webconsole_configurationFactory_nameHint() default "Spot Tariff ENTSO-E [{id}]";
+
 }

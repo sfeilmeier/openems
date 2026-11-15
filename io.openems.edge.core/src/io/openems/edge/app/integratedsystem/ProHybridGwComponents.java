@@ -114,4 +114,5 @@ public class ProHybridGwComponents {
 						.build()), //
 				ComponentDef.Configuration.defaultConfig());
 	}
+
 }

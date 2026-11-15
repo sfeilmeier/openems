@@ -149,4 +149,5 @@ public class ControllerEvseClusterImpl extends AbstractOpenemsComponent
 			return GetSchedule.Response.create(call.getRequest(), this.energyScheduleHandler);
 		});
 	}
+
 }

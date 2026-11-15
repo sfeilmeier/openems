@@ -23,6 +23,7 @@ import io.openems.edge.meter.api.ElectricityMeter;
 import io.openems.edge.timedata.api.utils.CalculateEnergyFromPower;
 
 public class ShellyEnergyMeterHandler {
+
 	private final Logger log = LoggerFactory.getLogger(ShellyEnergyMeterHandler.class);
 
 	private final ShellyEnergyMeter component;
@@ -188,4 +189,5 @@ public class ShellyEnergyMeterHandler {
 	public String generateDebugLog() {
 		return "L:" + this.component.getActivePower().asString();
 	}
+
 }

@@ -261,4 +261,5 @@ public class ModberryCM4Test {
 		var comp = componentTest.getSut();
 		assertTrue(((DigitalInput) comp).digitalInputChannels().length == 4);
 	}
+
 }

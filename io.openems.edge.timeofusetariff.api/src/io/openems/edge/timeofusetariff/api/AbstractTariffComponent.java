@@ -242,4 +242,5 @@ public abstract class AbstractTariffComponent extends AbstractOpenemsComponent
 			return this.prefix + "_" + name;
 		}
 	}
+
 }

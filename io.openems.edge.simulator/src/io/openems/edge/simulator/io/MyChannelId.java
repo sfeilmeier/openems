@@ -22,4 +22,5 @@ public class MyChannelId implements io.openems.edge.common.channel.ChannelId {
 	public Doc doc() {
 		return this.doc;
 	}
+
 }

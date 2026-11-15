@@ -216,4 +216,5 @@ public class EssSmaSunnyBoyStorageImplTest {
 		assertNotNull(ess.getModbusSlaveTable(AccessMode.READ_ONLY));
 		assertNotNull(ess.getModbusSlaveTable(AccessMode.WRITE_ONLY));
 	}
+
 }

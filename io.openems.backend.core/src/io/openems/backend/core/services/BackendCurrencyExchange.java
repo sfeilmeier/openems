@@ -33,4 +33,5 @@ public class BackendCurrencyExchange extends AbstractCurrencyExchange {
 	protected void onNewExchangeRates(List<ExchangeRate> exchangeRates) {
 		this.setExchangeRates(exchangeRates);
 	}
+
 }

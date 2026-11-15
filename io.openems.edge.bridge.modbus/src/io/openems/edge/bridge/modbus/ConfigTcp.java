@@ -34,4 +34,5 @@ import io.openems.edge.bridge.modbus.api.LogVerbosity;
 	int invalidateElementsAfterReadErrors() default 1;
 
 	String webconsole_configurationFactory_nameHint() default "Bridge Modbus/TCP [{id}]";
+
 }

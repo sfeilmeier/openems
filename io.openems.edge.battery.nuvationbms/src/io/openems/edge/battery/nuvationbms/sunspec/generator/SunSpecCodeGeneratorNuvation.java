@@ -261,4 +261,5 @@ public class SunSpecCodeGeneratorNuvation extends AbstractSunSpecCodeGenerator {
 
 		generator.writeSunSpecModelJavaFile(models);
 	}
+
 }

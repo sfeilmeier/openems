@@ -1,6 +1,7 @@
 package io.openems.edge.evse.chargepoint.hardybarth.common;
 
 public enum LogVerbosity {
+
 	/**
 	 * No Logging.
 	 */
@@ -17,4 +18,5 @@ public enum LogVerbosity {
 	 * Show detailed logs for reads.
 	 */
 	READS;
+
 }

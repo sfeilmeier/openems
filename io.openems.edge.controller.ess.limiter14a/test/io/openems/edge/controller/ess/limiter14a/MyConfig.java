@@ -58,4 +58,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String ess_id() {
 		return this.builder.essId;
 	}
+
 }

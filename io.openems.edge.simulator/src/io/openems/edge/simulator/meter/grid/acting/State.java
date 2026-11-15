@@ -3,6 +3,7 @@ package io.openems.edge.simulator.meter.grid.acting;
 import io.openems.common.types.OptionsEnum;
 
 public enum State implements OptionsEnum {
+
 	UNDEFINED(-1), //
 	INITIAL_FREQ(1), //
 	FIRST_STEPDOWN_FREQUENCY(2), //

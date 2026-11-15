@@ -16,6 +16,7 @@ import io.openems.edge.core.appmanager.TranslationUtil;
  * String into the components configuration.
  */
 public enum NumberOfHeatingElements implements TranslatableEnum {
+
 	/**
 	 * One heating element with 3 relays (Levels 0-3).
 	 */

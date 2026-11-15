@@ -213,4 +213,5 @@ public class ExtremeEverValues {
 	public static enum Range {
 		NEGATIVE, POSTIVE;
 	}
+
 }

@@ -218,4 +218,5 @@ public record ModeCombinations(ImmutableList<ModeCombination> combinations) {
 		}
 		return this.getDefault(); // not found
 	}
+
 }

@@ -49,4 +49,5 @@ public class GetLatestSetupProtocolCoreInfoResponse extends JsonrpcResponseSucce
 				}) //
 				.build();
 	}
+
 }

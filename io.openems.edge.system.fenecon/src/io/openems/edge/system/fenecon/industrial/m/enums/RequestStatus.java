@@ -3,6 +3,7 @@ package io.openems.edge.system.fenecon.industrial.m.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum RequestStatus implements OptionsEnum {
+
 	UNDEFINED("Undefined", -1), //
 	OFF("Switched off", 0), //
 	ON("Switched on", 1), //
@@ -30,4 +31,5 @@ public enum RequestStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

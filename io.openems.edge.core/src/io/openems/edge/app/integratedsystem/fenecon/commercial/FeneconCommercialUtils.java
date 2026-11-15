@@ -19,4 +19,5 @@ public class FeneconCommercialUtils {
 		}
 		return false;
 	}
+
 }

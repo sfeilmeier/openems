@@ -11,6 +11,7 @@ import io.openems.common.utils.BehaviorSubject;
 import io.openems.common.utils.ThrottledLoopExecutor;
 
 public abstract class DynamicSyncableSubscriptionHandler<VALUE> implements SubscriptionHandler {
+
 	protected final SyncableKey<VALUE> key;
 	protected final BehaviorSubject<SyncableEntry<VALUE>> value = new BehaviorSubject<>(null);
 	private final List<EdgeClient> clients;
@@ -41,4 +42,5 @@ public abstract class DynamicSyncableSubscriptionHandler<VALUE> implements Subsc
 	protected final List<EdgeClient> getClients() {
 		return this.clients;
 	}
+
 }

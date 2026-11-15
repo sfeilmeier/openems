@@ -292,4 +292,5 @@ public class TimeOfUseTariffSwisspowerImpl extends AbstractOpenemsComponent
 	public String debugLog() {
 		return generateDebugLog(this, this.meta.getCurrency());
 	}
+
 }

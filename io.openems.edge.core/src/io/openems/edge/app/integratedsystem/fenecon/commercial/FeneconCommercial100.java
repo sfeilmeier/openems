@@ -517,4 +517,5 @@ public class FeneconCommercial100
 			super(name, def, Parameter.functionOf(AbstractOpenemsApp::getTranslationBundle));
 		}
 	}
+
 }

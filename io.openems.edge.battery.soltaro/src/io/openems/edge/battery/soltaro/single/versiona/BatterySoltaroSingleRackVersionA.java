@@ -720,4 +720,5 @@ public interface BatterySoltaroSingleRackVersionA
 			return this.doc;
 		}
 	}
+
 }

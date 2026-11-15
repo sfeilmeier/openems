@@ -21,4 +21,5 @@ public interface MeterSiemensPac2200 extends ElectricityMeter, ModbusComponent, 
 			return this.doc;
 		}
 	}
+
 }

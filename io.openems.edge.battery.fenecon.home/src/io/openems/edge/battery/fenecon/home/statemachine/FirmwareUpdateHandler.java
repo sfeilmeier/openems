@@ -4,6 +4,7 @@ import io.openems.common.exceptions.OpenemsError;
 import io.openems.edge.battery.fenecon.home.statemachine.StateMachine.State;
 
 public class FirmwareUpdateHandler extends StateMachine.BatteryStateHandler {
+
 	@Override
 	protected State runAndGetNextState(Context context) throws OpenemsError.OpenemsNamedException {
 		var battery = context.getParent();
@@ -24,4 +25,5 @@ public class FirmwareUpdateHandler extends StateMachine.BatteryStateHandler {
 	public boolean isDischargeAllowed(Context context) {
 		return false;
 	}
+
 }

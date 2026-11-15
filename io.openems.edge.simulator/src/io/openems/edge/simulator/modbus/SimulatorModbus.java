@@ -20,4 +20,5 @@ public interface SimulatorModbus extends BridgeModbus, BridgeModbusTcp, OpenemsC
 			return this.doc;
 		}
 	}
+
 }

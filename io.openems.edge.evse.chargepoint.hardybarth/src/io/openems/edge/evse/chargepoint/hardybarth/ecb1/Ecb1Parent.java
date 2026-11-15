@@ -20,4 +20,5 @@ public interface Ecb1Parent extends OpenemsComponent, ElectricityMeter {
 	 * @param failed true if communication is currently failing
 	 */
 	void onCommunicationFailed(boolean failed);
+
 }

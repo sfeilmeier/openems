@@ -170,4 +170,5 @@ public class AirconditioningImpl extends AbstractOpenemsComponent
 				.mapToInt(bi -> bi.getInverterTemperature().get())//
 				.max();
 	}
+
 }

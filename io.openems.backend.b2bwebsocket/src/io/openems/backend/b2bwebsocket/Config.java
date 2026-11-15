@@ -15,4 +15,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int poolSize() default 10;
 
 	String webconsole_configurationFactory_nameHint() default "Backend2Backend Websocket";
+
 }

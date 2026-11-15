@@ -87,4 +87,5 @@ public class SubscribeScheduleRequest extends JsonrpcRequest {
 				.addProperty("subscribe", this.subscribe) //
 				.build();
 	}
+
 }

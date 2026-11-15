@@ -85,4 +85,5 @@ public interface EvseChargePointHardyBarthEcb1 extends OpenemsComponent, EvseCha
 			return this.doc;
 		}
 	}
+
 }

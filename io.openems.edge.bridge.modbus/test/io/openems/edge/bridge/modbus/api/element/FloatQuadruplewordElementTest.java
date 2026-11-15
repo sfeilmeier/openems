@@ -85,4 +85,5 @@ public class FloatQuadruplewordElementTest {
 		assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 }, registers[2].toBytes());
 		assertArrayEquals(new byte[] { (byte) 0x00, (byte) 0x00 }, registers[3].toBytes());
 	}
+
 }

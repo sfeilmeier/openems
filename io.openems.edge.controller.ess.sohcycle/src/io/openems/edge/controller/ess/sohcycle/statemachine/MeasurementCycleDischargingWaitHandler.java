@@ -19,4 +19,5 @@ public class MeasurementCycleDischargingWaitHandler extends AbstractWaitHandler 
         context.refreshMeasurementChargingVoltageRange();
         return super.runAndGetNextState(context);
     }
+
 }

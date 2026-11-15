@@ -8,6 +8,7 @@ import java.time.Instant;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 
 public class FastHeatProtectionPauseHandler extends AbstractFastHeatHandler {
+
 	private Instant pauseStartedAt = null;
 
 	@Override
@@ -44,4 +45,5 @@ public class FastHeatProtectionPauseHandler extends AbstractFastHeatHandler {
 		}
 		return !context.clock.instant().isBefore(this.pauseStartedAt.plus(FAST_HEAT_PROTECTION_PAUSE_DURATION));
 	}
+
 }

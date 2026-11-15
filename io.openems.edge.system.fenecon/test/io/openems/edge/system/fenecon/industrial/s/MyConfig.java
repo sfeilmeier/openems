@@ -159,4 +159,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String Battery_target() {
 		return ConfigUtils.generateReferenceTargetFilter(this.id(), this.battery_ids());
 	}
+
 }

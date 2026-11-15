@@ -36,4 +36,5 @@ public class StartedInOffGridHandler extends StateHandler<OffGridState, Context>
 		setValue(ess, SymmetricEss.ChannelId.GRID_MODE, GridMode.OFF_GRID);
 		return OffGridState.STARTED_IN_OFF_GRID;
 	}
+
 }

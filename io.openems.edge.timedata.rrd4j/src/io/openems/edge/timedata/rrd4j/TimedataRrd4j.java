@@ -80,4 +80,5 @@ public interface TimedataRrd4j extends Timedata, OpenemsComponent {
 	public default void _setUnableToInsertSample(Boolean value) {
 		this.getUnableToInsertSampleChannel().setNextValue(value);
 	}
+
 }

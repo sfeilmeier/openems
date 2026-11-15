@@ -166,4 +166,5 @@ public class IntUtils {
 		}
 		return valueOpt.getAsInt();
 	}
+
 }

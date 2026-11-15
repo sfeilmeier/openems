@@ -21,4 +21,5 @@ public record TrainingRunnable(TrainingContext trainingContext) implements Runna
 					.onTrainingError(TrainingError.UNKNOWN, e.getMessage());
 		}
 	}
+
 }

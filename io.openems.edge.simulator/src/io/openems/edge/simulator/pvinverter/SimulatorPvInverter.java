@@ -28,4 +28,5 @@ public interface SimulatorPvInverter
 			return this.doc;
 		}
 	}
+
 }

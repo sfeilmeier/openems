@@ -1346,4 +1346,5 @@ public class BatteryFeneconHomeImpl extends AbstractOpenemsModbusComponent imple
 		// Bit 15 -> off-grid = true
 		return ((value >> 15) & 1) == 1;
 	}
+
 }

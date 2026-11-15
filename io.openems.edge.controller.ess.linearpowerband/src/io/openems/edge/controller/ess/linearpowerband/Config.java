@@ -33,4 +33,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	StartDirection startDirection() default StartDirection.CHARGE;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Ess Linear Power Band [{id}]";
+
 }

@@ -71,4 +71,5 @@ public class EnumWriteChannel extends EnumReadChannel implements WriteChannel<In
 	public void onSetNextWrite(ThrowingConsumer<Integer, OpenemsNamedException> callback) {
 		this.getOnSetNextWrites().add(callback);
 	}
+
 }

@@ -10,6 +10,7 @@ package io.openems.backend.common.edge.subscription;
  * case of a client specific handler every client has it's own instance.
  */
 public interface SubscriptionHandler {
+
 	/**
 	 * In case of a client specific handler, this method is called when the client
 	 * subscribes. In case of global handler, this method is called the very first
@@ -23,4 +24,5 @@ public interface SubscriptionHandler {
 	 * client unsubscribes.
 	 */
 	void unsubscribe();
+
 }

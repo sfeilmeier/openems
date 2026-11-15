@@ -122,4 +122,5 @@ public class IoGpioImpl extends AbstractOpenemsComponent
 				.map((t -> this.channel(t))) //
 				.toArray(BooleanReadChannel[]::new);
 	}
+
 }

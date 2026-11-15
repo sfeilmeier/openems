@@ -178,4 +178,5 @@ public class BatteryFeneconF2bClusterSerialImpl extends AbstractBatteryFeneconF2
 	public List<BatteryFeneconF2b> getBatteries() {
 		return this.batteries;
 	}
+
 }

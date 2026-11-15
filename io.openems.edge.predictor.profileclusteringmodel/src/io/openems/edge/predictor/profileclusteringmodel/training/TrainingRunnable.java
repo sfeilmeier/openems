@@ -25,4 +25,5 @@ public class TrainingRunnable implements Runnable {
 					.onTrainingError(TrainingError.UNKNOWN, e.getMessage());
 		}
 	}
+
 }

@@ -44,4 +44,5 @@ public class WaitDelayHandlerTest {
 		possibleDelays = Lists.newArrayList();
 		assertEquals(0, WaitDelayHandler.generateWaitDelayTask(possibleDelays, NO_OP).initialDelay);
 	}
+
 }

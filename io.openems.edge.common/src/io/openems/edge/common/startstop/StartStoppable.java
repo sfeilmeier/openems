@@ -165,4 +165,5 @@ public interface StartStoppable extends OpenemsComponent {
 	public default void stop() throws OpenemsNamedException {
 		this.setStartStop(StartStop.STOP);
 	}
+
 }

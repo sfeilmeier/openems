@@ -81,4 +81,5 @@ public class AtTargetSocHandler extends StateHandler<State, Context> {
 				.getLastValidValue(parent.getAtTargetEpochSecondsChannel()) //
 				.orElse(0L);
 	}
+
 }

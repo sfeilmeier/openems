@@ -12,6 +12,7 @@ import io.openems.edge.common.component.OpenemsComponent;
  * example, this can be a different text depending on channel states.
  */
 public class DynamicStateChannelDoc extends StateChannelDoc implements DynamicChannelDoc<Boolean> {
+
 	private final Consumer<DynamicStateChannelDoc> factory;
 
 	private DynamicStateChannelDoc(Level level, Consumer<DynamicStateChannelDoc> factory) {
@@ -46,4 +47,5 @@ public class DynamicStateChannelDoc extends StateChannelDoc implements DynamicCh
 	public static DynamicChannelDocBuilder<DynamicStateChannelDoc> builder(Level level) {
 		return new DynamicChannelDocBuilder<>(x -> new DynamicStateChannelDoc(level, x));
 	}
+
 }

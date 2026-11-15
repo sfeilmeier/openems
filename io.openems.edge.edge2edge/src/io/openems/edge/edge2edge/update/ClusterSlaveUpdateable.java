@@ -230,4 +230,5 @@ public class ClusterSlaveUpdateable implements Updateable {
 				? this.bridge.id() //
 				: bridgeAlias;
 	}
+
 }

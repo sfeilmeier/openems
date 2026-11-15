@@ -239,4 +239,5 @@ public class EnergySchedulerTestUtils {
 						.buildEnergyScheduleHandler(cmp, () -> CLOCK, () -> new io.openems.edge.controller.evse.cluster. //
 								EnergyScheduler.ClusterEshConfig(distributionStrategy, singleParams)));
 	}
+
 }

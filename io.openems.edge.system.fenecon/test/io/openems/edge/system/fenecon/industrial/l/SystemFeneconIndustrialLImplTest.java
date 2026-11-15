@@ -108,4 +108,5 @@ public class SystemFeneconIndustrialLImplTest {
 						.output("StateMachine", StateMachine.State.BMS_RESET)) //
 				.deactivate();
 	}
+
 }

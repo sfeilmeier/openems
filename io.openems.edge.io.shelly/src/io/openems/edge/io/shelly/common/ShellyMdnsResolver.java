@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import io.openems.edge.common.mdns.MDnsDiscovery;
 
 public class ShellyMdnsResolver {
+
 	private final Logger log = LoggerFactory.getLogger(ShellyMdnsResolver.class);
 
 	private final String mdnsName;
@@ -61,4 +62,5 @@ public class ShellyMdnsResolver {
 			this.mdnsUnsubscribe = null;
 		}
 	}
+
 }

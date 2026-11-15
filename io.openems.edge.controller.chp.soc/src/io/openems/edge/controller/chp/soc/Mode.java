@@ -3,6 +3,7 @@ package io.openems.edge.controller.chp.soc;
 import io.openems.common.types.OptionsEnum;
 
 public enum Mode implements OptionsEnum {
+
 	MANUAL_ON(0, "Manual control for the ON signal"), //
 	MANUAL_OFF(1, "Manual control for the OFF signal"), //
 	AUTOMATIC(2, "Automatic control"); //
@@ -29,4 +30,5 @@ public enum Mode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return AUTOMATIC;
 	}
+
 }

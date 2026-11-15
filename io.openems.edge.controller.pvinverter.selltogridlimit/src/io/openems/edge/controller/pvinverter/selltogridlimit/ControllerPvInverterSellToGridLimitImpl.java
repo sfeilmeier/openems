@@ -113,4 +113,5 @@ public class ControllerPvInverterSellToGridLimitImpl extends AbstractOpenemsComp
 		// set result
 		pvInverter.setActivePowerLimit(calculatedPower);
 	}
+
 }

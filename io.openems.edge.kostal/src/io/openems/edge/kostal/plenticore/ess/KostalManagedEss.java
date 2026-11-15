@@ -311,4 +311,5 @@ public interface KostalManagedEss extends ManagedSymmetricEss, SymmetricEss, Mod
 	public default IntegerWriteChannel getSetMaxDischargePowerChannel() {
 		return this.channel(ChannelId.SET_MAX_DISCHARGE_POWER);
 	}
+
 }

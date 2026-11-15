@@ -70,4 +70,5 @@ public class ControllerEssLinearPowerBandImplTest {
 						.output("ess0", SET_ACTIVE_POWER_EQUALS, -200)) //
 				.deactivate();
 	}
+
 }

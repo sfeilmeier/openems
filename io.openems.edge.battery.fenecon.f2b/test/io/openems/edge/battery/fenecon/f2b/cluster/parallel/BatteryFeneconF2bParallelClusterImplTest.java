@@ -401,4 +401,5 @@ public class BatteryFeneconF2bParallelClusterImplTest {
 				}) //
 				.output(Battery.ChannelId.CHARGE_MAX_CURRENT, -12));
 	}
+
 }

@@ -98,4 +98,5 @@ public class UnsignedQuadruplewordElementTest {
 		assertArrayEquals(new byte[] { (byte) 0x89, (byte) 0xAB }, registers[2].toBytes());
 		assertArrayEquals(new byte[] { (byte) 0xCD, (byte) 0xEF }, registers[3].toBytes());
 	}
+
 }

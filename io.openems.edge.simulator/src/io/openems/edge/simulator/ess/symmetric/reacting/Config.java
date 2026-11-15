@@ -38,4 +38,5 @@ import io.openems.edge.common.sum.GridMode;
 	GridMode gridMode() default GridMode.ON_GRID;
 
 	String webconsole_configurationFactory_nameHint() default "Simulator EssSymmetric Reacting [{id}]";
+
 }

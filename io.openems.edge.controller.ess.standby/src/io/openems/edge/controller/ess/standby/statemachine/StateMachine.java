@@ -57,4 +57,5 @@ public class StateMachine extends AbstractStateMachine<StateMachine.State, Conte
 		case FINISHED -> new FinishedHandler();
 		};
 	}
+
 }

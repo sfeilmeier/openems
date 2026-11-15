@@ -31,6 +31,7 @@ import io.openems.edge.common.update.Updateable;
 import io.openems.edge.common.update.jsonrpc.GetUpdateState;
 
 public class BatteryFeneconHomeUpdateable implements Updateable {
+
 	private static final long MILLIS_BETWEEN_UPDATE_PROGRESS_CHECK = 500L;
 	private static final long SLEEP_TIME = 200L;
 	private static final int AVG_UPDATE_DURATION_IN_MINUTES = 25;
@@ -333,4 +334,5 @@ public class BatteryFeneconHomeUpdateable implements Updateable {
 		record UpdateFailed(Exception exception) implements FeneconBatteryUpdateEvent {
 		}
 	}
+
 }

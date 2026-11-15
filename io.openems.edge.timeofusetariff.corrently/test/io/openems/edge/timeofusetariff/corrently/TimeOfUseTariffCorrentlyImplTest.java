@@ -200,4 +200,5 @@ public class TimeOfUseTariffCorrentlyImplTest {
 
 		fail("Expected Exception");
 	}
+
 }

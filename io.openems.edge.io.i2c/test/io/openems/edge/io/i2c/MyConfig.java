@@ -47,4 +47,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public AnalogOutput outputChannel() {
 		return this.builder.outputChannel;
 	}
+
 }

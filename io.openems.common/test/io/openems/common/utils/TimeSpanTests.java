@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Test;
 
 public class TimeSpanTests {
+
 	@Test
 	public void testTimeSpan() {
 		final var span1 = TimeSpan.between(Instant.parse("2026-02-03T12:00:00Z"),
@@ -42,4 +43,5 @@ public class TimeSpanTests {
 		assertEquals(span1.getStartInclusive(), ranged.getStartInclusive());
 		assertEquals(span5.getEndExclusive(), ranged.getEndExclusive());
 	}
+
 }

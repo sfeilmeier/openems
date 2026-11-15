@@ -47,4 +47,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public boolean initOutputFromHardware() {
 		return this.builder.initOutputFromHardware;
 	}
+
 }

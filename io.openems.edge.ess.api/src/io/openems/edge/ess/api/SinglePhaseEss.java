@@ -56,4 +56,5 @@ public interface SinglePhaseEss extends AsymmetricEss {
 			break;
 		}
 	}
+
 }

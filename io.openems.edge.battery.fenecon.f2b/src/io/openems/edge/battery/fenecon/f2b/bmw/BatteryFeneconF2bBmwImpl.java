@@ -671,4 +671,5 @@ public class BatteryFeneconF2bBmwImpl extends AbstractOpenemsModbusComponent
 	public BmwOnSetNextValueHandler getDeviceSpecificOnSetNextValueHandler() {
 		return BmwOnSetNextValueHandler.INSTANCE;
 	}
+
 }

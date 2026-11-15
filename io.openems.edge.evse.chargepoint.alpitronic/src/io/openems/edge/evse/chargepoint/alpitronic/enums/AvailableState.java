@@ -6,6 +6,7 @@ import io.openems.common.types.OptionsEnum;
  * Shows the status of the Hypercharger.
  */
 public enum AvailableState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	AVAILABLE(0, "Available"), //
 	PREPARING_TAG_ID_READY(1, "Ready to prepare the tag ID"), //
@@ -42,4 +43,5 @@ public enum AvailableState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

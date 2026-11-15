@@ -94,4 +94,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int waitForHysteresis() {
 		return this.builder.waitForHysteresis;
 	}
+
 }

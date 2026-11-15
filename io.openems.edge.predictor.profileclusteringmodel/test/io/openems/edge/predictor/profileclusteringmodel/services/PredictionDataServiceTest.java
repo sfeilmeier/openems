@@ -88,4 +88,5 @@ public class PredictionDataServiceTest {
 			assertEquals(15, ChronoUnit.MINUTES.between(timestamps.get(i - 1), timestamps.get(i)));
 		}
 	}
+
 }

@@ -119,4 +119,5 @@ public record CombinedAbilities(//
 					.build();
 		});
 	}
+
 }

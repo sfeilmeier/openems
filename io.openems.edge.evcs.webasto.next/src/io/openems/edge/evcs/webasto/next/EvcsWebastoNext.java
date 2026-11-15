@@ -140,4 +140,5 @@ public interface EvcsWebastoNext extends OpenemsComponent {
 	public default void setEvSetChargePowerLimit(Integer value) throws OpenemsNamedException {
 		this.getEvSetChargePowerLimitChannel().setNextWriteValue(value);
 	}
+
 }

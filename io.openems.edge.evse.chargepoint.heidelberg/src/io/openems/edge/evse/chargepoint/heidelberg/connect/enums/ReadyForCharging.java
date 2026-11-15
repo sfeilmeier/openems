@@ -33,4 +33,5 @@ public enum ReadyForCharging implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

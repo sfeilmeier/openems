@@ -86,4 +86,5 @@ public class IoWagoImplTest {
 		assertTrue(tasks.stream() //
 				.anyMatch(t -> t instanceof FC5WriteCoilTask && t.getStartAddress() == 515 && t.getLength() == 1));
 	}
+
 }

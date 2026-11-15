@@ -73,4 +73,5 @@ public class WebsocketServer extends AbstractWebsocketServer<WsData> {
 	protected void execute(Runnable command) throws RejectedExecutionException {
 		super.execute(command);
 	}
+
 }

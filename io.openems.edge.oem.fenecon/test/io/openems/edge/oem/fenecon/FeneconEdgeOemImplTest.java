@@ -34,4 +34,5 @@ public class FeneconEdgeOemImplTest {
 	public void testReadManufacturerEmsSerialNumber() {
 		assertFalse(FeneconEdgeOemImpl.readManufacturerEmsSerialNumber().isBlank());
 	}
+
 }

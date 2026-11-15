@@ -45,4 +45,5 @@ public sealed interface OptimizationState {
 			Instant startedAt, //
 			String reason) implements OptimizationState {
 	}
+
 }

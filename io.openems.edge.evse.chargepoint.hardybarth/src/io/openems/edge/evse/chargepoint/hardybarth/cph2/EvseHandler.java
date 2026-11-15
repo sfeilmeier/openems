@@ -81,4 +81,5 @@ public class EvseHandler extends AbstractHardyBarthHandler<EvseChargePointHardyB
 		};
 		setValue(hb, EvseChargePoint.ChannelId.IS_READY_FOR_CHARGING, isReadyForCharging);
 	}
+
 }

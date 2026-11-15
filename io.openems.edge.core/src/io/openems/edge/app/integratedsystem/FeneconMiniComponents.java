@@ -96,4 +96,5 @@ public class FeneconMiniComponents {
 						.build()), //
 				ComponentDef.Configuration.defaultConfig());
 	}
+
 }

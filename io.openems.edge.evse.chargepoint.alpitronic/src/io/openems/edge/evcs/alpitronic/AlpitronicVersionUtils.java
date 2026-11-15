@@ -110,4 +110,5 @@ public class AlpitronicVersionUtils {
 	public static boolean supportsExtendedConnectorTypes(SemanticVersion version) {
 		return isVersion25OrLater(version);
 	}
+
 }

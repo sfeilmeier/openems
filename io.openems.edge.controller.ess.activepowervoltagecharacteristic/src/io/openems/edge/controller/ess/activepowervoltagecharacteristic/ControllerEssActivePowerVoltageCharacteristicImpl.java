@@ -129,4 +129,5 @@ public class ControllerEssActivePowerVoltageCharacteristicImpl extends AbstractO
 		// Apply Power
 		this.ess.setActivePowerEqualsWithoutFilter(power);
 	}
+
 }

@@ -614,4 +614,5 @@ public interface BatteryBmw extends Battery, ModbusComponent, OpenemsComponent, 
 	 * @return {@link StartStop}
 	 */
 	public StartStop getStartStopTarget();
+
 }

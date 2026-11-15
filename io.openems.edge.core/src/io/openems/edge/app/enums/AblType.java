@@ -17,6 +17,7 @@ import io.openems.edge.core.appmanager.formly.JsonFormlyUtil;
  * Plug2)
  */
 public enum AblType implements TranslatableEnum {
+
 	EM_4_CONTROLLER_SINGLE("App.Evcs.Abl.ReadOnly.em4.controller.single"), //
 	EM_4_EXTENDER_SINGLE("App.Evcs.Abl.ReadOnly.em4.extender.single"), //
 	EM_4_CONTROLLER_TWIN("App.Evcs.Abl.ReadOnly.em4.controller.twin"), //

@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String backendOAuthClientIdentifier() default "rabot_prod";
 
 	String webconsole_configurationFactory_nameHint() default "Time-Of-Use Tariff rabot.energy [{id}]";
+
 }

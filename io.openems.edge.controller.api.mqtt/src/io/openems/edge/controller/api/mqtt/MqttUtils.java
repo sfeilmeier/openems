@@ -29,6 +29,7 @@ import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
  * This Utility class provides methods for handling MQTT-related operations.
  */
 public class MqttUtils {
+
 	/**
 	 * Creates and returns an SSLSocketFactory for establishing secure connections
 	 * in MQTT.
@@ -126,4 +127,5 @@ public class MqttUtils {
 			};
 		}
 	}
+
 }

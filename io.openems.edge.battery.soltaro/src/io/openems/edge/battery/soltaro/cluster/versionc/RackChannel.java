@@ -18,6 +18,7 @@ import io.openems.edge.common.channel.Doc;
  * and ids are created dynamically depending on system configuration.
  */
 public enum RackChannel {
+
 	/*
 	 * EnumWriteChannels
 	 */

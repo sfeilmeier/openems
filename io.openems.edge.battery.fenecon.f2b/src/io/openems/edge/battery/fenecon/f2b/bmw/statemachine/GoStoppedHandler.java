@@ -138,4 +138,5 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 	protected String debugLog() {
 		return State.GO_STOPPED.asCamelCase() + "-" + EnumUtils.nameAsCamelCase(this.goStoppedState.subState);
 	}
+
 }

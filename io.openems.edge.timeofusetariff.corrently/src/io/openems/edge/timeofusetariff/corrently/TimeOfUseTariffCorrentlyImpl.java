@@ -161,4 +161,5 @@ public class TimeOfUseTariffCorrentlyImpl extends AbstractOpenemsComponent
 	public String debugLog() {
 		return generateDebugLog(this, this.meta.getCurrency());
 	}
+
 }

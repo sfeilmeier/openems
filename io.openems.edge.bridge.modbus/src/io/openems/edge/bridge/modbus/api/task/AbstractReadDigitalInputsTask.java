@@ -60,4 +60,5 @@ public abstract class AbstractReadDigitalInputsTask<//
 				.map(b -> b == null ? "-" : (b ? "1" : "0")) //
 				.collect(Collectors.joining());
 	}
+
 }

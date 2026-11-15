@@ -181,4 +181,5 @@ public class MeterEastronSdm120Impl extends AbstractOpenemsModbusComponent
 	public SinglePhase getPhase() {
 		return this.config.phase();
 	}
+
 }

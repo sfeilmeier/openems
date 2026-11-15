@@ -5,6 +5,7 @@ import io.openems.edge.battery.protection.force.ForceDischarge;
 import io.openems.edge.common.linecharacteristic.PolyLine;
 
 public class BatteryProtectionDefinition implements io.openems.edge.battery.protection.BatteryProtectionDefinition {
+
 	@Override
 	public int getInitialBmsMaxEverChargeCurrent() {
 		return 135; // [A]
@@ -101,4 +102,5 @@ public class BatteryProtectionDefinition implements io.openems.edge.battery.prot
 	public boolean isDischargeAllowed() {
 		return true;
 	}
+
 }

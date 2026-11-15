@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.bmw.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum CoolingValveErrorState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OK(0, "Ok"), //
 	SHORT_TO_GROUND(0x1, "Short to ground"), //
@@ -35,4 +36,5 @@ public enum CoolingValveErrorState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

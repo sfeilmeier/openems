@@ -61,4 +61,5 @@ public class CalculateLongSum {
 		}
 		return sum;
 	}
+
 }

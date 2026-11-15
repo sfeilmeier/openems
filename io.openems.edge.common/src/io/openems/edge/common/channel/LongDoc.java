@@ -25,4 +25,5 @@ public class LongDoc extends OpenemsTypeDoc<Long> {
 			-> new LongWriteChannel(component, channelId, this);
 		};
 	}
+
 }

@@ -78,4 +78,5 @@ public class Coefficients {
 	public int getNoOfCoefficients() {
 		return this.noOfCoefficients;
 	}
+
 }

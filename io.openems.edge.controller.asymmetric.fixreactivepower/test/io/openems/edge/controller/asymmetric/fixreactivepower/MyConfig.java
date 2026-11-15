@@ -80,4 +80,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int powerL3() {
 		return this.builder.powerL3;
 	}
+
 }

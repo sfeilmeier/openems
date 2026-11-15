@@ -87,4 +87,5 @@ public final class LatestWinsFutureExecutor {
 		}
 		nextTask.run();
 	}
+
 }

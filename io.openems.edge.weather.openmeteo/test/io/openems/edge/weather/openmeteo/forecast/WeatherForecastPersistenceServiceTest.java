@@ -183,4 +183,5 @@ public class WeatherForecastPersistenceServiceTest {
 
 		assertEquals(23, delayMinutes);
 	}
+
 }

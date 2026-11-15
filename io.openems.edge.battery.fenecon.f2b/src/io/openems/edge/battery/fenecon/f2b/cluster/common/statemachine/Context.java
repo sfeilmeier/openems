@@ -17,4 +17,5 @@ public class Context extends AbstractContext<BatteryFeneconF2bCluster> {
 		this.clock = clock;
 		this.batteries = batteries;
 	}
+
 }

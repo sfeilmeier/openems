@@ -173,4 +173,5 @@ public class QueryHistoricTimeseriesEnergyPerPeriodRequest extends JsonrpcReques
 	public Resolution getResolution() {
 		return this.resolution;
 	}
+
 }

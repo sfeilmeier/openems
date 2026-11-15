@@ -120,4 +120,5 @@ public interface IoKmtronicRelay4Port extends DigitalOutput, OpenemsComponent, M
 			return this.doc;
 		}
 	}
+
 }

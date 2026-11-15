@@ -36,4 +36,5 @@ public class DummyEventAdmin implements EventAdmin {
 			this.onEvent.accept(event);
 		}
 	}
+
 }

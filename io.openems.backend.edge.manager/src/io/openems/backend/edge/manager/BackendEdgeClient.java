@@ -11,6 +11,7 @@ import io.openems.common.jsonrpc.notification.EdgeRpcNotification;
 import io.openems.common.jsonrpc.request.EdgeRpcRequest;
 
 public class BackendEdgeClient implements EdgeClient {
+
 	private final String edgeId;
 	private final WsData edgeServerConnection;
 	private final EdgeCache cache = new EdgeCache();
@@ -38,4 +39,5 @@ public class BackendEdgeClient implements EdgeClient {
 	public boolean send(JsonrpcNotification notification) {
 		return this.edgeServerConnection.send(new EdgeRpcNotification(this.edgeId, notification));
 	}
+
 }

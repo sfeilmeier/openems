@@ -1,6 +1,7 @@
 package io.openems.common.channel;
 
 public enum Debounce {
+
 	/**
 	 * Debounce-Setting: If the StateChannel value is continuously set to 'true' for
 	 * configured times in a row, the value of the StateChannel is set to true;
@@ -19,4 +20,5 @@ public enum Debounce {
 	 * that value; otherwise stays at the old value.
 	 */
 	SAME_VALUES_IN_A_ROW_TO_CHANGE
+
 }

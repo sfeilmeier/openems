@@ -7,6 +7,7 @@ import io.openems.common.function.ThrowingConsumer;
 import io.openems.edge.common.channel.WriteChannel;
 
 public class IocWriteValueMapping<T> {
+
 	private final ThrowingConsumer<T, OpenemsError.OpenemsNamedException> listener;
 	private final Supplier<WriteChannel<T>> channelGetter;
 
@@ -23,4 +24,5 @@ public class IocWriteValueMapping<T> {
 	protected void removeListener() {
 		this.channelGetter.get().removeOnSetNextWriteCallback(this.listener);
 	}
+
 }

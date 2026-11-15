@@ -12,6 +12,7 @@ import io.openems.common.exceptions.OpenemsError;
 import io.openems.edge.common.statemachine.StateHandler;
 
 public abstract class AbstractWaitHandler extends StateHandler<StateMachine.State, Context> {
+
 	private static final Logger log = LoggerFactory.getLogger(AbstractWaitHandler.class);
 
 	protected abstract StateMachine.State getNextStateAfterWait();
@@ -49,4 +50,5 @@ public abstract class AbstractWaitHandler extends StateHandler<StateMachine.Stat
 		super.onExit(context);
 		this.stateEnteredAt = null;
 	}
+
 }

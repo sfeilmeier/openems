@@ -23,6 +23,7 @@ import io.openems.edge.bridge.modbus.sunspec.SunSpecPoint;
  * </ul>
  */
 public enum RefuSunSpecModel implements SunSpecModel {
+
 	S_123("Immediate Controls", //
 			"Immediate Inverter Controls (REFU: signed W_MAX_LIM_PCT / VAR_W_MAX_PCT)", //
 			24/* length */, RefuSunSpecModel.S123.values(), SunSpecModelType.INVERTER), //
@@ -329,4 +330,5 @@ public enum RefuSunSpecModel implements SunSpecModel {
 			super(channelId, "Reserved", "", ValuePoint.Type.PAD, false, AccessMode.READ_ONLY, Unit.NONE);
 		}
 	}
+
 }

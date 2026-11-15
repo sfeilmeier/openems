@@ -37,4 +37,5 @@ public class RunOptimizerFromLogApp {
 	public static void main(String[] args) throws Exception {
 		simulateFromLog(LOG, EXECUTION_LIMIT_SECONDS, PLOT_SETTINGS);
 	}
+
 }

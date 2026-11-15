@@ -34,4 +34,5 @@ public class PhasesTest {
 		assertEquals(6_667, Phases.TWO_PHASE.getFromThreePhase(limit));
 		assertEquals(3_333, Phases.ONE_PHASE.getFromThreePhase(limit));
 	}
+
 }

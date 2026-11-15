@@ -59,4 +59,5 @@ public final class Version1 extends AbstractVersion implements Version {
 		// First version no migration needed.
 		return oldDb;
 	}
+
 }

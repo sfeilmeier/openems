@@ -21,4 +21,5 @@ public class ContextLogger extends PrefixedLogger {
 		super(name);
 		this.context = "[" + context + "] ";
 	}
+
 }

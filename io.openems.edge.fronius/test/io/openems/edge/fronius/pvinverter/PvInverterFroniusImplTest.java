@@ -21,4 +21,5 @@ public class PvInverterFroniusImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

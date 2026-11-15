@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum CpldWarningCode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	PV1_OVER_CURRENT_HW(1, "PV 2 over current hw"), //
 	PV2_OVER_CURRENT_HW(2, "PV 1 over current hw"), //
@@ -35,4 +36,5 @@ public enum CpldWarningCode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

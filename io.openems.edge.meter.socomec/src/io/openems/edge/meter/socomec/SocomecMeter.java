@@ -26,4 +26,5 @@ public interface SocomecMeter extends ElectricityMeter, OpenemsComponent, Modbus
 			return this.doc;
 		}
 	}
+
 }

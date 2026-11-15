@@ -99,4 +99,5 @@ public class DummyControllerApiBackend extends AbstractDummyOpenemsComponent<Dum
 			Function<JsonrpcRequest, CompletableFuture<? extends JsonrpcResponseSuccess>> requestHandler) {
 		this.requestHandler = requestHandler;
 	}
+
 }

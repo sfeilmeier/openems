@@ -86,4 +86,5 @@ class LatestWinsFutureExecutorTest {
 		assertEquals(List.of("active"), started);
 		assertTrue(completed.isEmpty());
 	}
+
 }

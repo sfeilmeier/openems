@@ -20,4 +20,5 @@ public class DummyElectricVehicle extends AbstractDummyElectricVehicle<DummyElec
 	protected final DummyElectricVehicle self() {
 		return this;
 	}
+
 }

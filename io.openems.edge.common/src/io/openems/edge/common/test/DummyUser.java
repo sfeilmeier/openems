@@ -27,4 +27,5 @@ public class DummyUser extends User {
 		super(id, id, language, role);
 		this.password = password;
 	}
+
 }

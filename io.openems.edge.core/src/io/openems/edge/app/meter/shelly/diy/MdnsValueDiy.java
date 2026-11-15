@@ -5,6 +5,7 @@ import io.openems.common.jsonrpc.serialization.JsonSerializerUtil;
 import io.openems.common.utils.JsonUtils;
 
 public record MdnsValueDiy(String name, ShellyTypeDiy type) {
+
 	/**
 	 * Returns a {@link JsonSerializer} for a {@link MdnsValueDiy}.
 	 *
@@ -23,4 +24,5 @@ public record MdnsValueDiy(String name, ShellyTypeDiy type) {
 					.build();
 		});
 	}
+
 }

@@ -36,4 +36,5 @@ import io.openems.edge.solaredge.enums.ControlMode;
 	SingleOrAllPhase phase() default SingleOrAllPhase.ALL;
 
 	String webconsole_configurationFactory_nameHint() default "SolarEdge ESS [{id}]";
+
 }

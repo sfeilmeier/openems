@@ -49,4 +49,5 @@ public class FC4ReadInputRegistersTask
 	protected String payloadToString(ReadInputRegistersResponse response) {
 		return ModbusUtils.registersToHexString(response.getRegisters());
 	}
+
 }

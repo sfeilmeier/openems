@@ -13,4 +13,5 @@ public final class HistoricalQueryParams {
 	private HistoricalQueryParams() {
 		throw new AssertionError("Cannot instantiate utility class");
 	}
+
 }

@@ -509,4 +509,5 @@ class LegacyEntsoeComponentMigratorTest {
 			}
 		}
 	}
+
 }

@@ -35,4 +35,5 @@ public enum ChargePointState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -19,4 +19,5 @@ public class ProductTypeAndFeaturesTest {
 			assertEquals(ProductTypeAndFeatures.Button.WITH_BUTTON, ptaf.button());
 		}
 	}
+
 }

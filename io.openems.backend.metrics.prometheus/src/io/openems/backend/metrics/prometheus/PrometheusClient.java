@@ -138,4 +138,5 @@ public class PrometheusClient extends AbstractOpenemsBackendComponent implements
 			}
 		}
 	}
+
 }

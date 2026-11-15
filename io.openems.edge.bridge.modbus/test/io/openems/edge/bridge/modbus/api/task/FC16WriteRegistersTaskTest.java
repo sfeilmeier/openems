@@ -68,4 +68,5 @@ public class FC16WriteRegistersTaskTest {
 		assertEquals("FC16WriteRegisters [device0;unitid=1;ref=30/0x1e;length=2;request=007b 01c8]",
 				task.toLogMessage(LogVerbosity.READS_AND_WRITES_VERBOSE, request, response));
 	}
+
 }

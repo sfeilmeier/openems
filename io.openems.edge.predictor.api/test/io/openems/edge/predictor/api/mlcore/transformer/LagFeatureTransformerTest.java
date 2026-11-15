@@ -32,4 +32,5 @@ public class LagFeatureTransformerTest {
 		assertEquals(10.0, lagColumn.getValues().get(2), 1e-6);
 		assertEquals(20.0, lagColumn.getValues().get(3), 1e-6);
 	}
+
 }

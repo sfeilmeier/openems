@@ -32,6 +32,7 @@ import io.openems.common.xml.serialization.XmlObject;
 import io.openems.common.xml.serialization.XmlParser;
 
 public class EntsoeApi {
+
 	public static final EntsoeApi INSTANCE = new EntsoeApi();
 	public static final DateTimeFormatter URL_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
 	public static final DateTimeFormatter XML_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm[:ss]X");

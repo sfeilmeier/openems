@@ -105,4 +105,5 @@ public class SetChannelValueRequest extends JsonrpcRequest {
 	public JsonElement getValue() {
 		return this.value;
 	}
+
 }

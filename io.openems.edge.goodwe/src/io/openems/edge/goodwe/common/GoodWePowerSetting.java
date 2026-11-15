@@ -1288,4 +1288,5 @@ public interface GoodWePowerSetting {
 			return this.doc;
 		}
 	}
+
 }

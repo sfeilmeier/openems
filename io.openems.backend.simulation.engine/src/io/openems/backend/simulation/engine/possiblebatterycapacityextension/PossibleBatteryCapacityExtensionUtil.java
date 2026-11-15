@@ -201,4 +201,5 @@ public final class PossibleBatteryCapacityExtensionUtil {
 
 	public record ProductData(int kWPeak, int capacity) {
 	}
+
 }

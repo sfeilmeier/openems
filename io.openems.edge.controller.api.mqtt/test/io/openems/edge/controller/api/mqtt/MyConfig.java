@@ -158,4 +158,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String[] topicFilters() {
 		return this.builder.topicFilters;
 	}
+
 }

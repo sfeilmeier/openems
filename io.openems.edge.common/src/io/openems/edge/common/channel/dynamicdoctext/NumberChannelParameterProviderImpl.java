@@ -10,6 +10,7 @@ import io.openems.edge.common.channel.ChannelId;
 
 class NumberChannelParameterProviderImpl<V extends Number> extends ChannelParameterProvider<V>
 		implements NumberChannelParameterProvider<V> {
+
 	private final List<NumberPredicate<V>> predicates;
 	private TextProvider defaultText;
 
@@ -149,4 +150,5 @@ class NumberChannelParameterProviderImpl<V extends Number> extends ChannelParame
 
 	record NumberPredicate<N extends Number>(Predicate<N> predicate, TextProvider text) {
 	}
+
 }

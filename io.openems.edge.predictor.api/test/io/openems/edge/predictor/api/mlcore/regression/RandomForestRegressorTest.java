@@ -42,4 +42,5 @@ public class RandomForestRegressorTest {
 
 		assertEquals(targets.size(), preds.size());
 	}
+
 }

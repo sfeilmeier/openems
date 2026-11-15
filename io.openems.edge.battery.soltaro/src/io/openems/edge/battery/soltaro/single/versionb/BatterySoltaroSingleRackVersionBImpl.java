@@ -965,4 +965,5 @@ public class BatterySoltaroSingleRackVersionBImpl extends AbstractOpenemsModbusC
 							ameTemp));
 		}
 	}
+
 }

@@ -10,4 +10,5 @@ public enum FirmwareVersion {
 	 * Wuerth version 1.0.20(2024-01-24).
 	 */
 	WUERTH_VERSION_1_0_20
+
 }

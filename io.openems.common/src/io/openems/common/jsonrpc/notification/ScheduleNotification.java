@@ -63,4 +63,5 @@ public class ScheduleNotification extends JsonrpcNotification {
 				.serialize(this.scheduleUpdate)//
 				.getAsJsonObject();
 	}
+
 }

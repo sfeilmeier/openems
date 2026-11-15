@@ -486,4 +486,5 @@ public class HeatingElement extends AbstractOpenemsAppWithProps<HeatingElement, 
 	public AppManagerUtil getAppManagerUtil() {
 		return this.appManagerUtil;
 	}
+
 }

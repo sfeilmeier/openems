@@ -80,4 +80,5 @@ public interface Controller extends OpenemsComponent {
 				.channel(0, ChannelId.RUN_FAILED, ModbusType.UINT16) //
 				.build();
 	}
+
 }

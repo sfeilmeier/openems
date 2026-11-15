@@ -113,4 +113,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public double effectiveStorageVolume() {
 		return this.builder.effectiveStorageVolume;
 	}
+
 }

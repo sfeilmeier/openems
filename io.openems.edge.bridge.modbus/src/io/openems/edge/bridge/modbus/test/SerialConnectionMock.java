@@ -17,6 +17,7 @@ import com.ghgande.j2mod.modbus.util.SerialParameters;
 import io.openems.common.function.Disposable;
 
 public class SerialConnectionMock extends AbstractSerialConnection {
+
 	/**
 	 * Creates a serial connection for slave and master.
 	 *
@@ -240,4 +241,5 @@ public class SerialConnectionMock extends AbstractSerialConnection {
 			}
 		}
 	}
+
 }

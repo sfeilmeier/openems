@@ -22,4 +22,5 @@ public interface SystemFeneconHome extends OpenemsComponent, EventHandler {
 			return this.doc;
 		}
 	}
+
 }

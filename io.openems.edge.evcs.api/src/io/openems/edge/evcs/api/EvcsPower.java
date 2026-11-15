@@ -17,4 +17,5 @@ public interface EvcsPower {
 	 * @return increase rate
 	 */
 	public float getIncreaseRate();
+
 }

@@ -583,4 +583,5 @@ public class FeneconEdgeOemImpl implements OpenemsEdgeOem {
 	public String getHardyBarthApiToken() {
 		return "hjkerwrq4tdgSdtze4e4Vhffgjfurz664g_dwfjsd_fjfadhisaguzy8dgtuawftzfghJad1hvxy gaghDSJdfghjkerswhjk_ewrhjsdfg5hjkdfghuqwfgaeghjdHfhjvcxjkaqj_klhasklysAjkladsjlsa";
 	}
+
 }

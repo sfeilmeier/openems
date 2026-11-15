@@ -61,4 +61,5 @@ public class SupportDurationTimeHandler extends StateHandler<State, Context> {
 				LocalDateTime.now(context.clock))//
 				.getSeconds();
 	}
+
 }

@@ -124,4 +124,5 @@ public class EvseChargePointKebaModbusImplTest {
 				.next(new TestCase()//
 						.output(KebaModbus.ChannelId.DEVICE_SOFTWARE_OUTDATED, false)); //
 	}
+
 }

@@ -86,4 +86,5 @@ public class GeocodeJsonRpcEndpoint implements EndpointRequestType<Request, Resp
 							.build());
 		}
 	}
+
 }

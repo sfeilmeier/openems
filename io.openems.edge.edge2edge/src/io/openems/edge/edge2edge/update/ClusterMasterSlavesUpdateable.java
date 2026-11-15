@@ -328,4 +328,5 @@ public class ClusterMasterSlavesUpdateable implements Updateable {
 		final var semanticVersion = SemanticVersion.fromStringOrZero(version);
 		return !(semanticVersion == SemanticVersion.ZERO || !semanticVersion.additional().isEmpty());
 	}
+
 }

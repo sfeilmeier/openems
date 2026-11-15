@@ -91,4 +91,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String outputGroundingContactor() {
 		return this.builder.outputGroundingContactor;
 	}
+
 }

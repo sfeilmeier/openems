@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import java.util.Arrays;
 
 public enum BatteryPort {
+
 	PORT_1(1), //
 	PORT_2(2), //
 	;
@@ -27,4 +28,5 @@ public enum BatteryPort {
 				.findFirst() //
 				.orElseThrow(() -> new IllegalArgumentException("Invalid index: " + index));
 	}
+
 }

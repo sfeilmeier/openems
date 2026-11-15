@@ -3,6 +3,7 @@ package io.openems.edge.controller.api.common;
 import io.openems.common.types.OptionsEnum;
 
 public enum Status implements OptionsEnum {
+
 	ACTIVE(0, "Active"), //
 	INACTIVE(1, "Inactive"), //
 	ERROR(2, "Error"); //
@@ -29,4 +30,5 @@ public enum Status implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return INACTIVE;
 	}
+
 }

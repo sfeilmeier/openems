@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.fisker.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BduStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	INITIALIZING(2, "Bms initializing"), //
 	STANDBY(3, "Balancing standby"), //
@@ -34,4 +35,5 @@ public enum BduStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -156,4 +156,5 @@ public class GoodWeChargerMpptTwoStringImplTest {
 						.output("charger2", EssDcCharger.ChannelId.VOLTAGE, 299) //
 				);
 	}
+
 }

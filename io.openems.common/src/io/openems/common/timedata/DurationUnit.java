@@ -134,4 +134,5 @@ public final class DurationUnit implements TemporalUnit, Comparable<DurationUnit
 	public boolean equals(Object obj) {
 		return (obj instanceof DurationUnit other) && this.duration.equals(other.duration);
 	}
+
 }

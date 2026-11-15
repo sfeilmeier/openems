@@ -20,4 +20,5 @@ public interface TariffManualFixedGridSell extends OpenemsComponent, TariffGridS
 			return this.doc;
 		}
 	}
+
 }

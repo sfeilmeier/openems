@@ -17,6 +17,7 @@ import io.openems.edge.bridge.modbus.sunspec.SunSpecModelType;
 import io.openems.edge.bridge.modbus.sunspec.SunSpecPoint;
 
 public enum KacoSunSpecModel implements SunSpecModel {
+
 	S_64201("Bidirectional inverter control", //
 			"Bidirectional inverter control backend", //
 			52/* length */, KacoSunSpecModel.S64201.values(), SunSpecModelType.VENDOR_SPECIFIC), //

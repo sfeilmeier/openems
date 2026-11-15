@@ -27,4 +27,5 @@ public class HardwareFactory {
 	public LinuxFsDigitalOut fabricateOut(int gpio) {
 		return new LinuxFsDigitalOut(gpio, this.basePath);
 	}
+
 }

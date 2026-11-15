@@ -14,4 +14,5 @@ public class ReadHandlerTest {
 		assertEquals(Status.READY_FOR_CHARGING, //
 				ReadHandler.getStatus(ChargingState.READY_FOR_CHARGING, 0, 0));
 	}
+
 }

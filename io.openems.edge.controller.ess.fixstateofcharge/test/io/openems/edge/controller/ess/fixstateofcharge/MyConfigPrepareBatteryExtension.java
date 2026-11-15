@@ -153,4 +153,5 @@ public class MyConfigPrepareBatteryExtension extends AbstractComponentConfig imp
 	public String ess_target() {
 		return ConfigUtils.generateReferenceTargetFilter(this.id(), this.ess_id());
 	}
+
 }

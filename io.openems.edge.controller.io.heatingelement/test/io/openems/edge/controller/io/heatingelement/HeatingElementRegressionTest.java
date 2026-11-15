@@ -304,4 +304,5 @@ class HeatingElementRegressionTest {
 				.next(new TestCase().timeleap(this.clock, 1, HOURS) //
 						.output(LEVEL, Level.LEVEL_0).output(STATUS, Status.INACTIVE));
 	}
+
 }

@@ -193,4 +193,5 @@ public class WebsocketClient extends AbstractWebsocketClient<WsData> {
 	protected void execute(Runnable command) {
 		this.executor.execute(command);
 	}
+
 }

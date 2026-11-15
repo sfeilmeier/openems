@@ -61,4 +61,5 @@ public class DeleteTask implements EndpointRequestType<Request, EmptyObject> {
 							.build());
 		}
 	}
+
 }

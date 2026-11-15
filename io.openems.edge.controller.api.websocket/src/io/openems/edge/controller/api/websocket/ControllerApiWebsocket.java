@@ -28,4 +28,5 @@ public interface ControllerApiWebsocket extends Controller, OpenemsComponent, Ev
 			return this.doc;
 		}
 	}
+
 }

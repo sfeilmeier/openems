@@ -1124,4 +1124,5 @@ public class ControllerIoHeatingElementImpl extends AbstractOpenemsComponent
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

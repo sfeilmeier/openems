@@ -29,4 +29,5 @@ import io.openems.common.types.BiddingZone;
 	int service_ranking() default 10;
 
 	String webconsole_configurationFactory_nameHint() default "Tariff Spot Grid-Sell [{id}]";
+
 }

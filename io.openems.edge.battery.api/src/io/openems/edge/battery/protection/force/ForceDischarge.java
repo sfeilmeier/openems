@@ -90,4 +90,5 @@ public class ForceDischarge extends AbstractForceChargeDischarge {
 			return State.UNDEFINED;
 		}
 	}
+
 }

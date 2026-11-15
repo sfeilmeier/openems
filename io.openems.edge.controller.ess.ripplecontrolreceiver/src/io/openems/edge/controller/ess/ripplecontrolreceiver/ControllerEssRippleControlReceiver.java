@@ -86,4 +86,5 @@ public interface ControllerEssRippleControlReceiver extends Controller, OpenemsC
 	default int getDynamicGridFeedInLimit(int maxApparentPower) {
 		return (int) (maxApparentPower * this.essRestrictionLevel().getLimitationFactor());
 	}
+
 }

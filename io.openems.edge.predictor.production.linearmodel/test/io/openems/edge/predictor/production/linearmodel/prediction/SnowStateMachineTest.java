@@ -254,4 +254,5 @@ public class SnowStateMachineTest {
 
 		return result;
 	}
+
 }

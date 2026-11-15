@@ -45,4 +45,5 @@ public class StoppedHandler extends StateHandler<State, Context> {
 		cluster._setStartStop(StartStop.STOP);
 		return State.STOPPED;
 	}
+
 }

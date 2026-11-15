@@ -476,4 +476,5 @@ public class BatteryInverterRefuImpl extends AbstractSunSpecBatteryInverter
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

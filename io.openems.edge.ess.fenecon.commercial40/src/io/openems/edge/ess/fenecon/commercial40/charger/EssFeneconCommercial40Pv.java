@@ -94,4 +94,5 @@ public interface EssFeneconCommercial40Pv extends EssDcCharger, OpenemsComponent
 			return this.doc;
 		}
 	}
+
 }

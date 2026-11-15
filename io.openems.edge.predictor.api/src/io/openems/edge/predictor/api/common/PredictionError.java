@@ -16,4 +16,5 @@ public interface PredictionError {
 	 * @return the {@link LogSeverity} for this prediction error
 	 */
 	public LogSeverity getSeverity();
+
 }

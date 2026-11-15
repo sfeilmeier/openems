@@ -589,4 +589,5 @@ public interface PredictorProfileClusteringModel extends Predictor, OpenemsCompo
 	public default void _setPrediction36hRealized(Integer value) {
 		this.getPrediction36hRealizedChannel().setNextValue(value);
 	}
+
 }

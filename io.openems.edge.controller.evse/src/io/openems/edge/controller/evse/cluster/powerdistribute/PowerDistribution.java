@@ -13,6 +13,7 @@ import io.openems.edge.evse.api.chargepoint.EvseChargePoint;
 import io.openems.edge.evse.api.common.ApplySetPoint;
 
 public class PowerDistribution {
+
 	protected final PowerDistributionEntries entries;
 	protected final DistributionStrategy distributionStrategy;
 
@@ -229,4 +230,5 @@ public class PowerDistribution {
 		return toStringHelper(this.getClass()) //
 				.add("entries", "\n" + this.entries.toString()).toString();
 	}
+
 }

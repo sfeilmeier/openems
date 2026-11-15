@@ -69,4 +69,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String inputChannelAddress3() {
 		return this.builder.inputChannelAddress3;
 	}
+
 }

@@ -10,4 +10,5 @@ public final class BackendEventConstants {
 	 * Base for all backend events.
 	 */
 	public static final String TOPIC_BASE = "io/openems/backend/";
+
 }

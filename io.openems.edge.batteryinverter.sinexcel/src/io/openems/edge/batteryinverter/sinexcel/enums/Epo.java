@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum Epo implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	INVALID(0, "Modbus"), //
 	EPO(1, "Sunspec"), //
@@ -30,4 +31,5 @@ public enum Epo implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

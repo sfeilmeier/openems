@@ -232,4 +232,5 @@ public abstract class AbstractBatteryFeneconF2bCluster extends AbstractOpenemsCo
 		this._setAllBatteriesAreInFault(false);
 		this.batteries.forEach(BatteryErrorAcknowledge::executeBatteryErrorAcknowledge);
 	}
+
 }

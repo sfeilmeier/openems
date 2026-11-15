@@ -42,4 +42,5 @@ public class SimulatorGridMeterActingImplTest {
 						.build()) //
 				.deactivate();
 	}
+
 }

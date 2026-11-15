@@ -78,4 +78,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String Modbus_target() {
 		return generateReferenceTargetFilter(this.id(), this.modbus_id());
 	}
+
 }

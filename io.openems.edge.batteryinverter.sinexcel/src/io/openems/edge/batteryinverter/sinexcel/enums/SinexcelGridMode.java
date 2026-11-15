@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SinexcelGridMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ON_GRID(0, "On Grid"), //
 	OFF_GRID(1, "Off Grid"); //
@@ -29,4 +30,5 @@ public enum SinexcelGridMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

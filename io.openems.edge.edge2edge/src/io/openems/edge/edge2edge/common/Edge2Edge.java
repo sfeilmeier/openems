@@ -82,4 +82,5 @@ public interface Edge2Edge extends OpenemsComponent {
 	public default void _setMappingRemoteProtocolFault(Boolean value) {
 		this.getMappingRemoteProtocolFaultChannel().setNextValue(value);
 	}
+
 }

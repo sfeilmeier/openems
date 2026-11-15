@@ -132,4 +132,5 @@ public class EnergyValuesHandler {
 		this.lastEnergyValues.put(channelId, value);
 		return value;
 	}
+
 }

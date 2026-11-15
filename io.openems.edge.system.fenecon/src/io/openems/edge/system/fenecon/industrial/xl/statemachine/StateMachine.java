@@ -69,4 +69,5 @@ public class StateMachine extends AbstractStateMachine<StateMachine.State, Conte
 		case MANUAL_BATTERY_START -> new ManualBatteryStartHandler();
 		};
 	}
+
 }

@@ -57,4 +57,5 @@ public class ChargeResumingHandler extends StateHandler<EvseSingleState, Context
 	private boolean hasReachedTimeout(Context context) {
 		return Duration.between(this.entryTime, context.clock.instant()).compareTo(CHARGE_RESUMING_TIMEOUT) > 0;
 	}
+
 }

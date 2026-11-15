@@ -183,4 +183,5 @@ public class QueryAppInstancesByFilter implements EndpointRequestType<Request, R
 			});
 		}
 	}
+
 }

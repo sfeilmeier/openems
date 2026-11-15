@@ -49,4 +49,5 @@ public class StopBatteryInverterHandler extends StateHandler<OffGridState, Conte
 		this.attemptCounter++;
 		return OffGridState.STOP_BATTERY_INVERTER;
 	}
+
 }

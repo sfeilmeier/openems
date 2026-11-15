@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.single.versionc.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum AutoSetFunction implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	INIT_MODE(0x0, "Init mode"), //
 	START_AUTO_SETTING(0x1, "Start auto setting"), //
@@ -31,4 +32,5 @@ public enum AutoSetFunction implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -201,4 +201,5 @@ public class AblEvcsReadOnly extends AbstractOpenemsAppWithProps<AblEvcsReadOnly
 	public Host getHost() {
 		return this.host;
 	}
+
 }

@@ -4,6 +4,7 @@ import io.openems.common.types.OptionsEnum;
 
 // 0xCA 202 PSSB fuse state 5 - Float 2 RO 0x03
 public enum FuseState implements OptionsEnum {
+
 	FUSE_FAIL(0x00, "Fuse fail"), //
 	FUSE_OK(0x01, "Fuse ok"), //
 	UNCHECKED(0xFF, "Unchecked"), //
@@ -31,4 +32,5 @@ public enum FuseState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

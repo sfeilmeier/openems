@@ -35,4 +35,5 @@ import io.openems.common.types.MeterType;
 	boolean invert() default false;
 
 	String webconsole_configurationFactory_nameHint() default "Meter Schneider Acti9 Smartlink [{id}]";
+
 }

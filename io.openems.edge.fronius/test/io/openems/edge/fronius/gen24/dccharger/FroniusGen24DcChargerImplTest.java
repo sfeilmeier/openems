@@ -27,4 +27,5 @@ public class FroniusGen24DcChargerImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

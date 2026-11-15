@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.fisker.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BalancingStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DEACTIVATED(0, "Balancing deactivated"), //
 	IDLE(1, "Balancing idle"), //
@@ -34,4 +35,5 @@ public enum BalancingStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -27,4 +27,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int maxPower();
 
 	String webconsole_configurationFactory_nameHint() default "Controller Random Power Symmetric [{id}]";
+
 }

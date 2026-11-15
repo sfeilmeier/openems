@@ -6,6 +6,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 @ObjectClassDefinition(name = "KOSTAL Plenticore PV-Inverter", //
 		description = "Implements the Kostal Plenticore hybrid inverter (PV)")
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "pvInverter0";
 
@@ -25,4 +26,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int modbusUnitId() default 71;
 
 	String webconsole_configurationFactory_nameHint() default "KOSTAL Plenticore PV-Inverter [{id}]";
+
 }

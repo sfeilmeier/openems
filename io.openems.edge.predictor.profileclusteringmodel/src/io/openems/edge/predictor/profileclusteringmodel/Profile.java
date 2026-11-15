@@ -38,4 +38,5 @@ public record Profile(int clusterIndex, Series<Integer> values, Series<Integer> 
 					"Profile must contain exactly " + LENGTH + " values (15-min resolution), but got " + actualLength);
 		}
 	}
+
 }

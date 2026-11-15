@@ -23,6 +23,7 @@ import io.openems.edge.system.fenecon.industrial.enums.FluidCoolingMode;
 import io.openems.edge.system.fenecon.industrial.jsonrpc.EmergencyStopAcknowledgeRpcExtension;
 
 public class EmergencyStopAcknowledgeRpcTest {
+
 	private static final String METHOD = "emergencyStopAcknowledge";
 
 	@Test
@@ -76,4 +77,5 @@ public class EmergencyStopAcknowledgeRpcTest {
 						}))//
 		;
 	}
+
 }

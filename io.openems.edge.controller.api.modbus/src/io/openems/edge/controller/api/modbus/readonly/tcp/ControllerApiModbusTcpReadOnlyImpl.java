@@ -109,4 +109,5 @@ public class ControllerApiModbusTcpReadOnlyImpl extends AbstractModbusApi
 				ModbusSlaveNatureTable.of(ControllerApiModbusTcpReadOnly.class, accessMode, 100) //
 						.build());
 	}
+
 }

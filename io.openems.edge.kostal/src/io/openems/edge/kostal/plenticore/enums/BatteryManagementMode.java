@@ -3,6 +3,7 @@ package io.openems.edge.kostal.plenticore.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryManagementMode implements OptionsEnum {
+
 	NO_EXTERNAL_BATTERY_MANAGEMENT(0x00, "No external battery management"), //
 	EXTERNAL_BATTERY_MANAGEMENT_DIGITAL_IO(0x01, "External battery management via digital I/O"), //
 	EXTERNAL_BATTERY_MANAGEMENT_MODBUS(0x02, "External battery management via MODBUS protocol"), //
@@ -30,4 +31,5 @@ public enum BatteryManagementMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

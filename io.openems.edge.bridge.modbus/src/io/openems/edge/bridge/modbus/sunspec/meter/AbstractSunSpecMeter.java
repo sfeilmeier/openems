@@ -253,4 +253,5 @@ public abstract class AbstractSunSpecMeter extends AbstractOpenemsSunSpecCompone
 	protected <T extends Channel<?>> T getSunSpecChannelOrError(SunSpecPoint point) throws OpenemsException {
 		return super.getSunSpecChannelOrError(point);
 	}
+
 }

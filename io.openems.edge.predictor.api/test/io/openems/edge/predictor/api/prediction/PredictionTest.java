@@ -61,4 +61,5 @@ public class PredictionTest {
 			assertEquals(100, vr.fitWithin(150).intValue());
 		}
 	}
+
 }

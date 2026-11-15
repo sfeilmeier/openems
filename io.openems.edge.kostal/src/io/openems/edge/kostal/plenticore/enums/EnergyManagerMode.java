@@ -4,6 +4,7 @@ import io.openems.common.types.OptionsEnum;
 
 // 0x68 104 State of energy manager - U32 2 RO 0x03
 public enum EnergyManagerMode implements OptionsEnum {
+
 	IDLE(0x00, "Idle"), //
 	NOT_AVAILABLE_1(0x01, "n/a"), //
 	EMERGENCY_BATTERY_CHARGE(0x02, "Emergency Battery Charge"), //
@@ -34,4 +35,5 @@ public enum EnergyManagerMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

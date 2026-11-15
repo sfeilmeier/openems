@@ -26,4 +26,5 @@ public interface ControllerIoFixDigitalOutput extends Controller, OpenemsCompone
 			return this.doc;
 		}
 	}
+
 }

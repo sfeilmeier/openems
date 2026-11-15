@@ -113,4 +113,5 @@ public class IoFilipowskiMrAo1Impl extends AbstractOpenemsModbusComponent implem
 				ModbusSlaveNatureTable.of(IoFilipowskiMrAo1.class, accessMode, 100)//
 						.build());
 	}
+
 }

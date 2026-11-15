@@ -27,4 +27,5 @@ public interface ControllerIoAnalog extends Controller, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

@@ -72,4 +72,5 @@ public final class GetTokens {
 
 	private GetTokens() {
 	}
+
 }

@@ -149,4 +149,5 @@ public final class CommonProps {
 								.map(PhaseRotation::name) //
 								.toList())));
 	}
+
 }

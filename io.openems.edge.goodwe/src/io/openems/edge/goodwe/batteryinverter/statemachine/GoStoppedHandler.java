@@ -10,4 +10,5 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 	public State runAndGetNextState(Context context) throws OpenemsException {
 		return State.STOPPED;
 	}
+
 }

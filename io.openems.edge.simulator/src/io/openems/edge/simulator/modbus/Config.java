@@ -18,4 +18,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	boolean enabled() default true;
 
 	String webconsole_configurationFactory_nameHint() default "Simulator Modbus Bridge [{id}]";
+
 }

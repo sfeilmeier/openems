@@ -126,4 +126,5 @@ public class KMeansUtilsTest {
 				IllegalArgumentException.class, //
 				() -> KMeansUtils.detectKnee(List.of(1.0, 2.0, 3.0), -1));
 	}
+
 }

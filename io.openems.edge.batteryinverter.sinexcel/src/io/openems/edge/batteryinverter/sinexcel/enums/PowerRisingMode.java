@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PowerRisingMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	STEP(0, "Step Function"), //
 	RAMP(1, "Ramp Function");//
@@ -29,4 +30,5 @@ public enum PowerRisingMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

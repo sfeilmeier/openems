@@ -1,6 +1,7 @@
 package io.openems.edge.core.appmanager.formly.enums;
 
 public enum HintIcon {
+
 	INFO("Info"), //
 	WARNING("Warning"), //
 	ERROR("Error");
@@ -14,4 +15,5 @@ public enum HintIcon {
 	public String getIconName() {
 		return this.iconName;
 	}
+
 }

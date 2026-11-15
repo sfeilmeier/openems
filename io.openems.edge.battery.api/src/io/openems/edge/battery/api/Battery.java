@@ -814,4 +814,5 @@ public interface Battery extends StartStoppable, OpenemsComponent {
 				.append(";").append(battery.getDischargeMaxCurrent()) //
 				.toString();
 	}
+
 }

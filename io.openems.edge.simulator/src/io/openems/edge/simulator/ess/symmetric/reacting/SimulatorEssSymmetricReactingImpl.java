@@ -271,4 +271,5 @@ public class SimulatorEssSymmetricReactingImpl extends AbstractOpenemsComponent
 		}
 		return maxDischargePower;
 	}
+
 }

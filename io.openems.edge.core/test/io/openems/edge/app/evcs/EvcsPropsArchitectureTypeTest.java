@@ -104,4 +104,5 @@ public class EvcsPropsArchitectureTypeTest {
 						.getAsJsonObject().get("value").getAsString())
 				.toList();
 	}
+
 }

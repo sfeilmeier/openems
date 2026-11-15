@@ -94,4 +94,5 @@ public class EvcsPowerComponent extends AbstractOpenemsComponent implements Open
 	public float getIncreaseRate() {
 		return this.increaseRate;
 	}
+
 }

@@ -64,4 +64,5 @@ public class DummyBridgeHttp implements BridgeHttp {
 	public <T> void raiseEvent(BridgeHttpEventDefinition<T> eventDefinition, T eventData) {
 		// empty for dummy implementation
 	}
+
 }

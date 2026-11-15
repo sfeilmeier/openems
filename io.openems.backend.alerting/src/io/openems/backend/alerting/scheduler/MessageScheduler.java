@@ -21,6 +21,7 @@ import io.openems.backend.alerting.Message;
  * @param <T> type of Message
  */
 public class MessageScheduler<T extends Message> {
+
 	private final Map<String, T> messageForId;
 	private final PriorityQueue<T> queue;
 
@@ -147,4 +148,5 @@ public class MessageScheduler<T extends Message> {
 	public boolean isFor(Handler<?> handler) {
 		return this.handler == handler;
 	}
+
 }

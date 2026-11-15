@@ -161,4 +161,5 @@ class ControllerHeatingElementImplTwoHeatingElementsStepTest {
 	private static void assertNominalLevelPower(ControllerIoHeatingElementImpl sut, Level level, int expected) {
 		assertEquals(expected, sut.getNominalLevelPower(level));
 	}
+
 }

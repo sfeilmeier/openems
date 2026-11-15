@@ -215,4 +215,5 @@ public class AppHeatAskoma extends AbstractOpenemsAppWithProps<AppHeatAskoma, Ap
 	public Host getHost() {
 		return this.host;
 	}
+
 }

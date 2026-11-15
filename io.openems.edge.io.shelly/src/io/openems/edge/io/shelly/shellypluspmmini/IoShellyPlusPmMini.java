@@ -44,4 +44,5 @@ public interface IoShellyPlusPmMini extends SinglePhaseMeter, ElectricityMeter, 
 			return this.doc;
 		}
 	}
+
 }

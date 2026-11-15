@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum FrequencyVariationRate implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLED(0, "Disabled"), //
 	RATE_0125(1, "Rate limit 0.125 Hz/s"), //
@@ -30,4 +31,5 @@ public enum FrequencyVariationRate implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

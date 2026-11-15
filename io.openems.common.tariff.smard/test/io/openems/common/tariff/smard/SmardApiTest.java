@@ -64,4 +64,5 @@ class SmardApiTest {
 	private static long getSeconds(DelayTimeProvider.Delay delay) {
 		return ((DelayTimeProvider.Delay.DurationDelay) delay).getDuration().getSeconds();
 	}
+
 }

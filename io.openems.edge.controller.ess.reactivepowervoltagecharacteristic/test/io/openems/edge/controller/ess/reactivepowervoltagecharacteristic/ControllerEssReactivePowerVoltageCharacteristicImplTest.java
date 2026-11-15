@@ -92,4 +92,5 @@ public class ControllerEssReactivePowerVoltageCharacteristicImplTest {
 						.output("ess0", SET_REACTIVE_POWER_EQUALS, -6000)) //
 				.deactivate();
 	}
+
 }

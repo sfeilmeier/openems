@@ -803,4 +803,5 @@ public class OdooUtils {
 			return dateTime.format(DATETIME_FORMATTER);
 		}
 	}
+
 }

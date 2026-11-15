@@ -26,4 +26,5 @@ public class DataFrameTransformerPipeline<I> {
 		}
 		return result;
 	}
+
 }

@@ -9,6 +9,7 @@ import io.openems.common.utils.BehaviorSubject;
 import io.openems.common.utils.SingletonPool;
 
 public class DummySpotTariff implements SpotTariff, SingletonPool.SingletonPoolImplementation {
+
 	private final BiddingZone biddingZone;
 	private final BehaviorSubject<TariffData> tariffData;
 	private final BehaviorSubject<TariffUpdateStatus> tariffUpdateStatus;
@@ -55,4 +56,5 @@ public class DummySpotTariff implements SpotTariff, SingletonPool.SingletonPoolI
 	public void deactivate() {
 		this.onUpdate.run();
 	}
+
 }

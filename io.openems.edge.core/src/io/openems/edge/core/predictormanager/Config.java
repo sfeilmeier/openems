@@ -12,4 +12,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String[] predictor_ids() default {};
 
 	String webconsole_configurationFactory_nameHint() default "Core Predictor-Manager";
+
 }

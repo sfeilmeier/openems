@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.single.versionb.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ContactExport implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	HIGH(0x1, "High"), //
 	LOW(0x2, "Low");
@@ -29,4 +30,5 @@ public enum ContactExport implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

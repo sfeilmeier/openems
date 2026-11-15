@@ -1,6 +1,7 @@
 package io.openems.common.jsonrpc.syncable;
 
 public enum SyncableProviderType {
+
 	/**
 	 * With this provider, BackendEdge is receiving the syncable data from Backend
 	 * and is providing it to the Edge.
@@ -24,4 +25,5 @@ public enum SyncableProviderType {
 	 * Negative: Performance is worse because Backend is responsible for everything
 	 */
 	BACKEND
+
 }

@@ -169,4 +169,5 @@ public class TouAncillaryCostsTest {
 		var expectedPrice = (20.0 + 0) * 10;
 		assertEquals(expectedPrice, ac.getPrices().getFirst(), 0.01);
 	}
+
 }

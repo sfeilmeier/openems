@@ -104,4 +104,5 @@ public class ComponentManagerImplTest {
 		assertEquals("UNDEFINED",
 				getAsOptionalString(ess0InEdgeConfig.getPropertyOrError("_lastChangeBy")).orElse(null));
 	}
+
 }

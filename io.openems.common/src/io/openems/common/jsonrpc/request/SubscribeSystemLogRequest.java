@@ -88,4 +88,5 @@ public class SubscribeSystemLogRequest extends JsonrpcRequest {
 				.addProperty("subscribe", this.subscribe) //
 				.build();
 	}
+
 }

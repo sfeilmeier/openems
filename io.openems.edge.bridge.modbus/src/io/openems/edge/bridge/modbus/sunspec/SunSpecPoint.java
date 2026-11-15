@@ -37,4 +37,5 @@ public interface SunSpecPoint {
 		}
 		throw new IllegalAccessError("SunSpecPoint [" + this.name() + "] has no Channel-ID");
 	}
+
 }

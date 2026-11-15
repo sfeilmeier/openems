@@ -128,4 +128,5 @@ public sealed interface CommonConfig {
 		}
 
 	}
+
 }

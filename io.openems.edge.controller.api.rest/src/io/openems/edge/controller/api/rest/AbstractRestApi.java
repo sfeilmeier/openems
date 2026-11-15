@@ -161,4 +161,5 @@ public abstract class AbstractRestApi extends AbstractOpenemsComponent
 	 * @return the {@link AccessMode}
 	 */
 	protected abstract AccessMode getAccessMode();
+
 }

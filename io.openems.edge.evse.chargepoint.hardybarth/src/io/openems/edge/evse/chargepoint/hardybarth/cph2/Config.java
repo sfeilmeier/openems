@@ -32,4 +32,5 @@ import io.openems.edge.meter.api.PhaseRotation;
 	LogVerbosity logVerbosity() default LogVerbosity.NONE;
 
 	String webconsole_configurationFactory_nameHint() default "EVSE Charge-Point Hardy Barth cPH2 [{id}]";
+
 }

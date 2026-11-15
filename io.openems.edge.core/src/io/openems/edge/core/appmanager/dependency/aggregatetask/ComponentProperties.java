@@ -328,4 +328,5 @@ public record ComponentProperties(List<Property> values) {
 		boolean forcedToUpdate = Arrays.stream(propertyNames).anyMatch(name -> name.equals(entry.getKey()));
 		return new Property(entry.getKey(), entry.getValue(), Priority.required(), forcedToUpdate);
 	}
+
 }

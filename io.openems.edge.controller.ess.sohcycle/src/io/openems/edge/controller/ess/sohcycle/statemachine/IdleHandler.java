@@ -8,6 +8,7 @@ import io.openems.edge.common.statemachine.StateHandler;
 import io.openems.edge.controller.ess.sohcycle.statemachine.StateMachine.State;
 
 public class IdleHandler extends StateHandler<State, Context> {
+
 	private static final Logger log = LoggerFactory.getLogger(IdleHandler.class);
 
 	@Override
@@ -24,4 +25,5 @@ public class IdleHandler extends StateHandler<State, Context> {
 		super.onExit(context);
 		context.resetController();
 	}
+
 }

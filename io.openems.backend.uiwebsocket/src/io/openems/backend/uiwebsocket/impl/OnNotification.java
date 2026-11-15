@@ -71,4 +71,5 @@ public class OnNotification implements io.openems.common.websocket.OnNotificatio
 		this.log.info("User [{}:{}] {}-Message: {}", //
 				user.getId(), user.getName(), notification.level.getName(), notification.msg);
 	}
+
 }

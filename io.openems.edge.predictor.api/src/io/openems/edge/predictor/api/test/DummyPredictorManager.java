@@ -54,4 +54,5 @@ public class DummyPredictorManager extends AbstractDummyOpenemsComponent<DummyPr
 		// No matching Predictor found
 		return EMPTY_PREDICTION;
 	}
+
 }

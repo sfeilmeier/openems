@@ -1,6 +1,7 @@
 package io.openems.edge.common.taskmanager;
 
 public enum Priority {
+
 	/**
 	 * High-Priority.
 	 * 
@@ -15,4 +16,5 @@ public enum Priority {
 	 * Execute Task 'once in a while'.
 	 */
 	LOW;
+
 }

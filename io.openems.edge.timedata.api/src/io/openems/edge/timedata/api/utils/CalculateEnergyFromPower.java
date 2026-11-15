@@ -228,4 +228,5 @@ public class CalculateEnergyFromPower {
 		this.baseCumulatedEnergy = baseCumulatedEnergy;
 		this.state = State.CALCULATE_ENERGY_OPERATION;
 	}
+
 }

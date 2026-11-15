@@ -439,4 +439,5 @@ class EvseChargePointHardyBarthEcb1ImplTest {
 		assertTrue(sentUrls.stream().anyMatch(u -> u.contains("/stop")), "Expected a stop POST");
 		assertFalse(sentUrls.stream().anyMatch(u -> u.contains("/start")), "Should not send /start when stopping");
 	}
+
 }

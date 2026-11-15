@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.bmw.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum CoolingValveRequest implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_REQUEST(0, "No Request"), //
 	OPEN(1, "Request to open cooling valve"), //
@@ -31,4 +32,5 @@ public enum CoolingValveRequest implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

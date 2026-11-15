@@ -1502,4 +1502,5 @@ public class EdgeConfig {
 		default -> false;
 		};
 	}
+
 }

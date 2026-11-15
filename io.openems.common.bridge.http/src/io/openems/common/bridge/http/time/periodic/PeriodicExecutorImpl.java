@@ -15,6 +15,7 @@ import io.openems.common.bridge.http.time.DelayTimeProviderChain;
 import io.openems.common.utils.ThreadPoolUtils;
 
 public class PeriodicExecutorImpl implements PeriodicExecutor {
+
 	private final Logger log = LoggerFactory.getLogger(PeriodicExecutorImpl.class);
 	private final String name;
 	private final ScheduledThreadPoolExecutor pool;
@@ -74,4 +75,5 @@ public class PeriodicExecutorImpl implements PeriodicExecutor {
 
 		ThreadPoolUtils.shutdownAndAwaitTermination(this.pool, 0);
 	}
+
 }

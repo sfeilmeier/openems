@@ -88,4 +88,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public SinglePhase phase() {
 		return this.builder.phase;
 	}
+
 }

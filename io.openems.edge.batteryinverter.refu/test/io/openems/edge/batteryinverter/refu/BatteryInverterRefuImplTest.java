@@ -104,4 +104,5 @@ public class BatteryInverterRefuImplTest {
 				.next(new TestCase() //
 						.output(STATE_MACHINE, State.RUNNING));
 	}
+
 }

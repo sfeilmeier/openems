@@ -34,4 +34,5 @@ public class MyDummyComponent extends AbstractDummyOpenemsComponent<MyDummyCompo
 	public void setId(String id) {
 		this.id = id;
 	}
+
 }

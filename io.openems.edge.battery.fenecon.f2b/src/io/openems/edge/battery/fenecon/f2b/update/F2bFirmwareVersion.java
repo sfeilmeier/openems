@@ -52,4 +52,5 @@ public record F2bFirmwareVersion(//
 	public boolean isDefined() {
 		return this.versionMajor() != null && this.versionSub() != null;
 	}
+
 }

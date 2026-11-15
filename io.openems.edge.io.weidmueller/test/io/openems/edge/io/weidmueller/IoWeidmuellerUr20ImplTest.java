@@ -186,4 +186,5 @@ public class IoWeidmuellerUr20ImplTest {
 		assertEquals(true, sut.digitalInputChannels()[14].value().get());
 		assertEquals(true, sut.digitalInputChannels()[15].value().get());
 	}
+
 }

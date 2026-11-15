@@ -625,4 +625,5 @@ public interface PredictorProductionLinearModel extends Predictor, OpenemsCompon
 	public default void _setPrediction36hRealized(Integer value) {
 		this.getPrediction36hRealizedChannel().setNextValue(value);
 	}
+
 }

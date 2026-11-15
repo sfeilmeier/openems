@@ -118,4 +118,5 @@ public class CreateComponentConfigRequest extends JsonrpcRequest {
 	public List<UpdateComponentConfigRequest.Property> getProperties() {
 		return this.properties;
 	}
+
 }

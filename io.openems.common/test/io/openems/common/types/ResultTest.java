@@ -37,4 +37,5 @@ public class ResultTest {
 		assertTrue(result.get().isEmpty());
 		assertTrue(result.map(x -> "mapped").isError());
 	}
+
 }

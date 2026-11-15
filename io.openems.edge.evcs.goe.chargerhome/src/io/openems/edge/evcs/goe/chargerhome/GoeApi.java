@@ -13,6 +13,7 @@ import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.utils.JsonUtils;
 
 public class GoeApi {
+
 	private final String ipAddress;
 	private final int executeEveryCycle = 10;
 	private int cycle;

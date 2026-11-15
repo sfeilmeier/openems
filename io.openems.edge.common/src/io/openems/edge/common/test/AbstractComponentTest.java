@@ -1123,4 +1123,5 @@ public abstract class AbstractComponentTest<SELF extends AbstractComponentTest<S
 	 */
 	protected void onAfterWrite() throws OpenemsNamedException {
 	}
+
 }

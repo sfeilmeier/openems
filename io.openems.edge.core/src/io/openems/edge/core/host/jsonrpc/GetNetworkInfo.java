@@ -138,4 +138,5 @@ public class GetNetworkInfo implements EndpointRequestType<EmptyObject, GetNetwo
 	public JsonSerializer<Response> getResponseSerializer() {
 		return Response.serializer();
 	}
+
 }

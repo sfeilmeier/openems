@@ -54,4 +54,5 @@ public class BooleanDoc extends OpenemsTypeDoc<Boolean> {
 	public Debounce getDebounceMode() {
 		return this.debounceMode;
 	}
+
 }

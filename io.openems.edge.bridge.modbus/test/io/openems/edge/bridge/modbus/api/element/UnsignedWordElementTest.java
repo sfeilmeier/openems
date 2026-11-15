@@ -78,4 +78,5 @@ public class UnsignedWordElementTest {
 		var sut = new ModbusTest.FC6WriteRegister<>(new UnsignedWordElement(0), INTEGER);
 		assertNull(sut.element.getNextWriteValueAndReset());
 	}
+
 }

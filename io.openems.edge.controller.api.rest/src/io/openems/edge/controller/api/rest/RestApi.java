@@ -51,4 +51,5 @@ public interface RestApi extends OpenemsComponent {
 	public default void _setUnableToStart(boolean value) {
 		this.getUnableToStartChannel().setNextValue(value);
 	}
+
 }

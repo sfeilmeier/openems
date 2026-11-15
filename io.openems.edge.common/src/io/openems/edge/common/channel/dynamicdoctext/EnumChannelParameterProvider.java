@@ -4,6 +4,7 @@ import io.openems.common.types.OptionsEnum;
 import io.openems.common.utils.TextProvider;
 
 public interface EnumChannelParameterProvider<V extends Enum<V> & OptionsEnum> extends ParameterProvider {
+
 	/**
 	 * Maps specific enum value to a text.
 	 * 
@@ -30,4 +31,5 @@ public interface EnumChannelParameterProvider<V extends Enum<V> & OptionsEnum> e
 	 * @return myself
 	 */
 	public EnumChannelParameterProvider<V> defaultText(TextProvider text);
+
 }

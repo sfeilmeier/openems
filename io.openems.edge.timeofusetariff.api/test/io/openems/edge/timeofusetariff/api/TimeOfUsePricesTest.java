@@ -104,4 +104,5 @@ public class TimeOfUsePricesTest {
 		assertEquals(0.1, sut.getAt(base), 0.001);
 		assertEquals(0.1, sut.getAt(ZonedDateTime.ofInstant(base, ZoneId.of("Europe/Berlin")).toInstant()), 0.001);
 	}
+
 }

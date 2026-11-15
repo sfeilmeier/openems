@@ -236,4 +236,5 @@ public class ControllerIoRoomHeatingImplTest {
 	private static ThrowingRunnable<Exception> assertLog(ControllerIoRoomHeatingImpl sut, String message) {
 		return () -> assertEquals(message, sut.debugLog());
 	}
+
 }

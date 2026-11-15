@@ -282,4 +282,5 @@ public class EvcsGoeChargerHomeImpl extends AbstractManagedEvcsComponent
 	public EvcsPower getEvcsPower() {
 		return this.evcsPower;
 	}
+
 }

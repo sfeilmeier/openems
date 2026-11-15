@@ -9,4 +9,5 @@ public enum ThirdPartyUsageAcceptance {
 	/** The user has explicitly declined the usage. */
 	DECLINED, //
 	;
+
 }

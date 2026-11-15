@@ -279,4 +279,5 @@ public class ContextTest {
 	private void updateAllChannels() {
 		this.controller.channels().forEach(Channel::nextProcessImage);
 	}
+
 }

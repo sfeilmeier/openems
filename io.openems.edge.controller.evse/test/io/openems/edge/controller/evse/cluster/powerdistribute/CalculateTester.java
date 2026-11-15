@@ -145,4 +145,5 @@ class CalculateTester {
 					.toArray();
 		}
 	}
+
 }

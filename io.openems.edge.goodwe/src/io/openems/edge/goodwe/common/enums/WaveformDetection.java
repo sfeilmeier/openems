@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum WaveformDetection implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	HIGH_PRECISION(0, "Off-Grid operation is prioritized with high precision"), //
 	LOW_PRECISION(1, "Off-Grid operation is prioritized with low precision"), //
@@ -31,4 +32,5 @@ public enum WaveformDetection implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

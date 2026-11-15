@@ -3,6 +3,7 @@ package io.openems.edge.controller.chp.soc;
 import io.openems.common.types.OptionsEnum;
 
 public enum State implements OptionsEnum {
+
 	/**
 	 * Unknown state on first start or Value is larger than the low threshold and
 	 * smaller than the high threshold.
@@ -39,4 +40,5 @@ public enum State implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

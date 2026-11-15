@@ -12,6 +12,7 @@ import io.openems.edge.controller.api.Controller;
 import io.openems.edge.controller.ess.sohcycle.statemachine.StateMachine;
 
 public interface ControllerEssSohCycle extends Controller, OpenemsComponent {
+
 	enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 		STATE_MACHINE(Doc.of(StateMachine.State.values())
 				.persistencePriority(HIGH)
@@ -72,4 +73,5 @@ public interface ControllerEssSohCycle extends Controller, OpenemsComponent {
 	default Channel<Long> getMeasuredCapacityChannel() {
 		return this.channel(ChannelId.MEASURED_CAPACITY);
 	}
+
 }

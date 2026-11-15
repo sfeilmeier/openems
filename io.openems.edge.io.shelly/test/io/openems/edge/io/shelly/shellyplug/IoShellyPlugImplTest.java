@@ -171,4 +171,5 @@ public class IoShellyPlugImplTest {
 						.output(IoShellyPlug.ChannelId.RELAY, null) //
 						.output(IoShellyPlug.ChannelId.SLAVE_COMMUNICATION_FAILED, false));
 	}
+
 }

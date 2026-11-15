@@ -33,4 +33,5 @@ class HttpAuthorizationTest {
 		assertNull(HttpAuthorization.extractBearerToken("Basic abc123"));
 		assertNull(HttpAuthorization.extractBearerToken(null));
 	}
+
 }

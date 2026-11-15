@@ -337,4 +337,5 @@ public sealed interface GridLimit {
 			return JSCalendar.Tasks.serializer(clock, Power.serializer());
 		}
 	}
+
 }

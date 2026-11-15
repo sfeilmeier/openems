@@ -167,4 +167,5 @@ public class MeterDiscovergyImpl extends AbstractOpenemsComponent
 		}
 		return new GetFieldNamesResponse(request.getId(), fields);
 	}
+
 }

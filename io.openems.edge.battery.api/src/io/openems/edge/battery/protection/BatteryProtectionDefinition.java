@@ -139,4 +139,5 @@ public interface BatteryProtectionDefinition {
 	 * @return true if discharge is allowed, false if not.
 	 */
 	public boolean isDischargeAllowed();
+
 }

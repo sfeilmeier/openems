@@ -1,6 +1,7 @@
 package io.openems.edge.io.shelly.shellypro2pm;
 
 public enum TerminalEnum {
+
 	RELAY_1(0), //
 	RELAY_2(1);
 
@@ -13,4 +14,5 @@ public enum TerminalEnum {
 	public int getShellyIndex() {
 		return this.shellyIndex;
 	}
+
 }

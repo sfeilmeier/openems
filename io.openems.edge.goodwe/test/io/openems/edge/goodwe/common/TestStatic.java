@@ -325,4 +325,5 @@ class TestStatic {
 				AbstractGoodWe.calculateMaxAcPower(5_000, -2 /* Force Discharge */, 50, 500, 30_000, 30_000, 3000));
 
 	}
+
 }

@@ -174,4 +174,5 @@ public interface BatteryInverterSmaStpSe extends HybridManagedSymmetricBatteryIn
 	 * @return true, if the SunSpec initialization is completed
 	 */
 	public boolean isInitialized();
+
 }

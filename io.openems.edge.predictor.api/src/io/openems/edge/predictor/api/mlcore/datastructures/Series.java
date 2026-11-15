@@ -290,4 +290,5 @@ public class Series<I> implements DataStructure<I> {
 	public int hashCode() {
 		return Objects.hash(this.index, this.values);
 	}
+
 }

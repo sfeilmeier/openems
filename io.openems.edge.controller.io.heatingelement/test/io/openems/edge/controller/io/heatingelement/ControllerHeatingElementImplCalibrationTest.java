@@ -97,4 +97,5 @@ public class ControllerHeatingElementImplCalibrationTest {
 						.output(LEVEL, Level.LEVEL_2)) //
 				.deactivate();
 	}
+
 }

@@ -196,4 +196,5 @@ public class FeneconProHybrid910 extends
 	public OpenemsAppCardinality getCardinality() {
 		return OpenemsAppCardinality.SINGLE_IN_CATEGORY;
 	}
+
 }

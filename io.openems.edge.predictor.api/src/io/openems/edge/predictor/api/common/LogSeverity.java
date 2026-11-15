@@ -7,4 +7,5 @@ public enum LogSeverity {
 	WARNING, //
 	ERROR, //
 	;
+
 }

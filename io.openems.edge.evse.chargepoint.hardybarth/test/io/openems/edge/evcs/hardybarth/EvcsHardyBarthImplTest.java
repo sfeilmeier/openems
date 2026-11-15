@@ -367,4 +367,5 @@ class EvcsHardyBarthImplTest {
 		assertEquals(null, sut.getSaliaPhaseSwitchingStatus().get());
 		assertEquals(false, sut.channel(HardyBarth.ChannelId.PHASE_SWITCHING_NOT_SLAVE).value().get());
 	}
+
 }

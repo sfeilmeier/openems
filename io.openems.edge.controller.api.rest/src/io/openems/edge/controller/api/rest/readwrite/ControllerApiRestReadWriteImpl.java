@@ -81,4 +81,5 @@ public class ControllerApiRestReadWriteImpl extends AbstractRestApi
 	protected AccessMode getAccessMode() {
 		return AccessMode.READ_WRITE;
 	}
+
 }

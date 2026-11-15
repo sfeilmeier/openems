@@ -20,4 +20,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String core_id() default "kostalPiko0";
 
 	String webconsole_configurationFactory_nameHint() default "KOSTAL PIKO ESS [{id}]";
+
 }

@@ -379,4 +379,5 @@ public class EvseChargePointHeidelbergConnectImpl extends AbstractOpenemsModbusC
 	public boolean isReadOnly() {
 		return this.config.readOnly();
 	}
+
 }

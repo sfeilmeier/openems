@@ -228,4 +228,5 @@ public class SimulatorGridMeterReactingImpl extends AbstractOpenemsComponent
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

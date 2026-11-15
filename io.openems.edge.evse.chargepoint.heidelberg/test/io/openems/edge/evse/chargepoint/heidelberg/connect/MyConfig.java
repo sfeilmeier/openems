@@ -116,4 +116,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public PhaseRotation phaseRotation() {
 		return this.builder.phaseRotation;
 	}
+
 }

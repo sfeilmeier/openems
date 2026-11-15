@@ -105,4 +105,5 @@ public interface MeterWeidmueller525 extends ElectricityMeter, OpenemsComponent,
 			return this.doc;
 		}
 	}
+
 }

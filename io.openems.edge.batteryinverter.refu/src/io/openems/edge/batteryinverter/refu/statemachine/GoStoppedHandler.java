@@ -40,4 +40,5 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 		inverter.setPcsSetOperation(S64800PcsSetOperation.ENTER_STANDBY_MODE);
 		return State.GO_STOPPED;
 	}
+
 }

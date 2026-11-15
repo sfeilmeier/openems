@@ -12,4 +12,5 @@ public class Context extends AbstractContext<BatterySoltaroSingleRackVersionC> {
 		super(parent);
 		this.config = config;
 	}
+
 }

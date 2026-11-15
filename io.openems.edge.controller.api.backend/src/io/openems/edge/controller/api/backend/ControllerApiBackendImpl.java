@@ -315,4 +315,5 @@ public class ControllerApiBackendImpl extends AbstractOpenemsComponent
 		return this.config.useDefaultFeatures()
 				|| ArrayUtils.containsIgnoreNull(this.config.supportedFeatures(), BackendFeature.UPLOAD_CHANNEL_DATA);
 	}
+
 }

@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import io.openems.common.jsonrpc.serialization.JsonSerializer;
 
 public final class EndpointDefinitionBuilder<REQUEST, RESPONSE> {
+
 	private final EndpointRequestDefinitionBuilder<REQUEST> endpointRequestBuilder = new EndpointRequestDefinitionBuilder<>();
 	private final EndpointResponseDefinitionBuilder<RESPONSE> endpointResponseBuilder = new EndpointResponseDefinitionBuilder<>();
 	private final List<Tag> tags = new ArrayList<>();

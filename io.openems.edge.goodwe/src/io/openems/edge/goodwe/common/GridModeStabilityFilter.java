@@ -102,4 +102,5 @@ final class GridModeStabilityFilter {
 			readMeterCommunicateStatus.get().thenAccept(status -> this.meterCommunicateStatus = status);
 		}
 	}
+
 }

@@ -66,4 +66,5 @@ public abstract class OperatingSystemLinux implements OperatingSystem {
 
 		return result;
 	}
+
 }

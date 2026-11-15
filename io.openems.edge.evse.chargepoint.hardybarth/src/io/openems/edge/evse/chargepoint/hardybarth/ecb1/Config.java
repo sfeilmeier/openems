@@ -38,4 +38,5 @@ import io.openems.edge.meter.api.PhaseRotation;
 	boolean readOnly() default false;
 
 	String webconsole_configurationFactory_nameHint() default "EVSE Charge-Point Hardy Barth cPH1 [{id}]";
+
 }

@@ -39,4 +39,5 @@ public class ContinueWithChargeHandler extends StateHandler<State, Context> {
 
 		return State.CONTINUE_WITH_CHARGE;
 	}
+
 }

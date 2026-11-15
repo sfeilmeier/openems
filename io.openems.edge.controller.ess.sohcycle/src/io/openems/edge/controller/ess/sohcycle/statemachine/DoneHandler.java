@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import io.openems.edge.common.statemachine.StateHandler;
 
 public class DoneHandler extends StateHandler<StateMachine.State, Context> {
+
     private static final Logger log = LoggerFactory.getLogger(DoneHandler.class);
 
     @Override
@@ -17,4 +18,5 @@ public class DoneHandler extends StateHandler<StateMachine.State, Context> {
         controller.updateConfigToNotRunning();
         return StateMachine.State.IDLE;
     }
+
 }

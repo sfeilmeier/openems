@@ -52,4 +52,5 @@ public class SinglePhaseMeterTest {
 		assertEquals(null, sut.getActivePowerL2().get());
 		assertEquals(1000, sut.getActivePowerL3().get().intValue());
 	}
+
 }

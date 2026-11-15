@@ -103,4 +103,5 @@ class ControllerEvseSingleImplTest {
 
 		assertNull(sut.chargePoint().getLastChargePointActions());
 	}
+
 }

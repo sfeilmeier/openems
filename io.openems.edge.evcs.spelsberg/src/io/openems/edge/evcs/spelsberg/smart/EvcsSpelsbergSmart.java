@@ -173,4 +173,5 @@ public interface EvcsSpelsbergSmart extends OpenemsComponent {
 	public default void setLifeBit(Integer value) throws OpenemsNamedException {
 		this.getLifeBitChannel().setNextWriteValue(value);
 	}
+
 }

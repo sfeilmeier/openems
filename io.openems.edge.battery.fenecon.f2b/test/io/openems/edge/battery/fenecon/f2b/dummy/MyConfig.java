@@ -48,4 +48,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public StartStopConfig startStop() {
 		return this.builder.startStop;
 	}
+
 }

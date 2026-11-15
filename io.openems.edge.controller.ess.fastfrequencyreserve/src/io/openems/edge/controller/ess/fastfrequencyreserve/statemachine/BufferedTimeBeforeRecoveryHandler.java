@@ -100,4 +100,5 @@ public class BufferedTimeBeforeRecoveryHandler extends StateHandler<State, Conte
 		return State.BUFFERED_TIME_BEFORE_RECOVERY.asCamelCase() + "-"
 				+ EnumUtils.nameAsCamelCase(this.bufferedTimeBeforeRecoveryState.subState());
 	}
+
 }

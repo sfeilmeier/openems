@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.fisker.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BmsStateMachine implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	BMS_INIT(2, "Bms initializing"), //
 	BMS_STANDBY(3, "Bms standby"), //
@@ -34,4 +35,5 @@ public enum BmsStateMachine implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

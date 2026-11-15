@@ -10,6 +10,7 @@ import com.ghgande.j2mod.modbus.slave.ModbusSlaveFactory;
 import com.ghgande.j2mod.modbus.util.SerialParameters;
 
 public class ModbusSlaveMock {
+
 	private ModbusSlaveMock() {
 	}
 
@@ -43,4 +44,5 @@ public class ModbusSlaveMock {
 		slave.open();
 		return slave;
 	}
+
 }

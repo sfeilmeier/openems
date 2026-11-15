@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.single.versionb.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ClusterRunState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NORMAL(0, "Normal"), //
 	FULL(1, "Full"), //
@@ -32,4 +33,5 @@ public enum ClusterRunState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

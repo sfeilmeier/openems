@@ -3,6 +3,7 @@ package io.openems.edge.controller.ess.fastfrequencyreserve.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ActivationTime implements OptionsEnum {
+
 	SHORT_ACTIVATION_RUN(700, "Short activation time run, 700 in milliseconds"), //
 	MEDIUM_ACTIVATION_RUN(1000, "Medium activation time run, 1000 in milliseconds"), //
 	LONG_ACTIVATION_RUN(1300, "Long activation time run, 1300 in milliseconds");
@@ -27,4 +28,5 @@ public enum ActivationTime implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return LONG_ACTIVATION_RUN;
 	}
+
 }

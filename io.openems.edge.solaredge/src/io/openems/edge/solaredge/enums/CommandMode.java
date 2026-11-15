@@ -120,4 +120,5 @@ public enum CommandMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

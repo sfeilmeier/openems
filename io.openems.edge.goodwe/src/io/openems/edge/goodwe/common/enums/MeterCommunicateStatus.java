@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum MeterCommunicateStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NG(0, "NG"), //
 	OK(1, "OK"); //
@@ -29,4 +30,5 @@ public enum MeterCommunicateStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -76,4 +76,5 @@ public class OpenCageGeocodingService {
 				.withQueryParam("no_annotations", NO_ANNOTATIONS ? "1" : "0")//
 				.withQueryParam("no_record", NO_RECORD ? "1" : "0");
 	}
+
 }

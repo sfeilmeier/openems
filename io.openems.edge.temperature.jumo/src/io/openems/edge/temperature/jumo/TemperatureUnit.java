@@ -3,6 +3,7 @@ package io.openems.edge.temperature.jumo;
 import io.openems.common.types.OptionsEnum;
 
 public enum TemperatureUnit implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DEGREE_CELSIUS(0, "Degree Celsius"), //
 	DEGREE_FAHRENHEIT(1, "Degree Fahrenheit"), //
@@ -30,4 +31,5 @@ public enum TemperatureUnit implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -75,4 +75,5 @@ public class DataTableTest {
 
 		assertEquals(List.of(1L, 10L, 15L, 20L, 30L), new ArrayList<>(table.rowKeySet()));
 	}
+
 }

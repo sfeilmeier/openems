@@ -611,4 +611,5 @@ public class HardyBarthEvcs extends AbstractOpenemsAppWithProps<HardyBarthEvcs, 
 	public List<EMobilityArchitectureType> supportedArchitectureTypes() {
 		return List.of(EMobilityArchitectureType.EVCS, EMobilityArchitectureType.EVSE);
 	}
+
 }

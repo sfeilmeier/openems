@@ -105,4 +105,5 @@ public interface BatteryInverterErrorAcknowledge extends OpenemsComponent {
 	default void _setTimeoutStopBatteryInverter(boolean value) {
 		this.getTimeoutStopBatteryInverterChannel().setNextValue(value);
 	}
+
 }

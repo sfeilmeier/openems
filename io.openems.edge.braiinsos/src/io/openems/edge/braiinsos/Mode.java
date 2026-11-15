@@ -3,6 +3,7 @@ package io.openems.edge.braiinsos;
 import io.openems.common.types.OptionsEnum;
 
 public enum Mode implements OptionsEnum {
+
 	OFF(0, "Off"), //
 	ON(1, "On"), //
 	;
@@ -29,4 +30,5 @@ public enum Mode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return OFF;
 	}
+
 }

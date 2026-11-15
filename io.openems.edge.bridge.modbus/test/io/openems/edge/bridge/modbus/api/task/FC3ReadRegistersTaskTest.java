@@ -47,4 +47,5 @@ public class FC3ReadRegistersTaskTest {
 		task.handleResponse(element22, 2, registers);
 		assertEquals(Long.valueOf(19661200), value.get());
 	}
+
 }

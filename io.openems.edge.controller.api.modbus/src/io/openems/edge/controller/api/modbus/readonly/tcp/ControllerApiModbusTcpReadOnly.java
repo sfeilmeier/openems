@@ -19,4 +19,5 @@ public interface ControllerApiModbusTcpReadOnly extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

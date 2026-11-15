@@ -337,4 +337,5 @@ public class IoWagoImpl extends AbstractOpenemsModbusComponent
 	protected BooleanReadChannel addChannel(FieldbusChannelId channelId) {
 		return (BooleanReadChannel) super.addChannel(channelId);
 	}
+
 }

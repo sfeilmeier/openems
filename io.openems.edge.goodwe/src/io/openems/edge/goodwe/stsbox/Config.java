@@ -12,6 +12,7 @@ import io.openems.edge.goodwe.common.enums.MultiplexingMode;
 		description = "GoodWe STS Box")
 
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "sts0";
 
@@ -67,4 +68,5 @@ import io.openems.edge.goodwe.common.enums.MultiplexingMode;
 	int frequencyLowerLimit() default 45;
 
 	String webconsole_configurationFactory_nameHint() default "GoodWe STS Box [{id}]";
+
 }

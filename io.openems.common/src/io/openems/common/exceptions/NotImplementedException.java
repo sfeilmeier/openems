@@ -7,4 +7,5 @@ public class NotImplementedException extends OpenemsException {
 	public NotImplementedException(String message) {
 		super(message);
 	}
+
 }

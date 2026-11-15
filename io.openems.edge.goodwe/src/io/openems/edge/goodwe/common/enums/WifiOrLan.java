@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum WifiOrLan implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	WIFI(4, "Led On"), //
 	LAN(5, "Led flash")//
@@ -30,4 +31,5 @@ public enum WifiOrLan implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

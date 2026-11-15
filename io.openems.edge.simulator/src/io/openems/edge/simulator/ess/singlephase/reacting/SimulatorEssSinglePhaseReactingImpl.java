@@ -279,4 +279,5 @@ public class SimulatorEssSinglePhaseReactingImpl extends AbstractOpenemsComponen
 		}
 		return maxDischargePower;
 	}
+
 }

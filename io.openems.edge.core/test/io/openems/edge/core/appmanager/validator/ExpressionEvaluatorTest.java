@@ -40,4 +40,5 @@ class ExpressionEvaluatorTest {
 				.addProperty("INTEGRATION_TYPE", integrationType) //
 				.build();
 	}
+
 }

@@ -92,4 +92,5 @@ public class DataTable extends ForwardingTable<Long, String, JsonElement> {
 	public int hashCode() {
 		return super.hashCode();
 	}
+
 }

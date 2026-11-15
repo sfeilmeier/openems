@@ -242,4 +242,5 @@ public abstract class AbstractEssFeneconCommercial40Pv extends AbstractOpenemsMo
 				ModbusSlaveNatureTable.of(EssFeneconCommercial40Pv.class, accessMode, 100) //
 						.build());
 	}
+
 }

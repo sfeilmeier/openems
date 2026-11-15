@@ -122,4 +122,5 @@ public abstract class AbstractPredictor extends AbstractOpenemsComponent impleme
 		}
 		return result;
 	}
+
 }

@@ -145,4 +145,5 @@ public class ControllerEvseClusterImplTest {
 
 		sut.test().deactivate();
 	}
+
 }

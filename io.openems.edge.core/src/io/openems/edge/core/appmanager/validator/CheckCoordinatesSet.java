@@ -41,4 +41,5 @@ public class CheckCoordinatesSet extends AbstractCheckable implements Checkable 
 	public OpenemsNamedException getInvertedValidationError(Language language) {
 		throw new UnsupportedOperationException();
 	}
+
 }

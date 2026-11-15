@@ -141,4 +141,5 @@ public class BatteryFeneconCommercialImplTest {
 						.input(CHARGE_MAX_CURRENT, 0) //
 						.output(SOC, 100));
 	}
+
 }

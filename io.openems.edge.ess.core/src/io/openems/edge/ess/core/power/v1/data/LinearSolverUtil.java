@@ -70,4 +70,5 @@ public class LinearSolverUtil {
 		Arrays.fill(cos, 1);
 		return new LinearObjectiveFunction(cos, 0);
 	}
+
 }

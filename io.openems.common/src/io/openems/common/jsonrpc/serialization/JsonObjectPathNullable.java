@@ -29,4 +29,5 @@ public interface JsonObjectPathNullable extends JsonPath {
 	 * @return the value; or null if not present
 	 */
 	public JsonObject getOrNull();
+
 }

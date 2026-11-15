@@ -112,4 +112,5 @@ public class ProHybrid910Components {
 						.build()), //
 				ComponentDef.Configuration.defaultConfig());
 	}
+
 }

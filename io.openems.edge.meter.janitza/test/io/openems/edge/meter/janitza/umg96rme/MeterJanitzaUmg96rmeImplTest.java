@@ -96,4 +96,5 @@ public class MeterJanitzaUmg96rmeImplTest {
 				.next(InvertTest.testInvert(true))//
 				.next(InvertTest.testEnergyInvert(true));
 	}
+
 }

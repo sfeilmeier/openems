@@ -123,4 +123,5 @@ public class EpRampHandler implements EssProtectionHandler {
 		case ACTIVE_LIMIT -> TypeUtils.min(lastLimit, ramp.getValue(distance));
 		};
 	}
+
 }

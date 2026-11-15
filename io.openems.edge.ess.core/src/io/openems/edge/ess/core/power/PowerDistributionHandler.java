@@ -91,4 +91,5 @@ public interface PowerDistributionHandler {
 	 * @return the value
 	 */
 	public int getPowerExtrema(ManagedSymmetricEss ess, SingleOrAllPhase phase, Pwr pwr, GoalType goal);
+
 }

@@ -145,4 +145,5 @@ public class BridgeModbusTcpImpl extends AbstractModbusBridge
 	public void setIpAddress(InetAddress ipAddress) {
 		this.ipAddress = ipAddress;
 	}
+
 }

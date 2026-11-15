@@ -3,6 +3,7 @@ package io.openems.edge.evse.chargepoint.keba.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SetUnlock implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	UNLOCK(0, "Set Unlock");
 
@@ -28,4 +29,5 @@ public enum SetUnlock implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

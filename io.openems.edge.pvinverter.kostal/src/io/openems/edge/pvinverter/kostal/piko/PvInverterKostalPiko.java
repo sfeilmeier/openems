@@ -115,4 +115,5 @@ public interface PvInverterKostalPiko extends ManagedSymmetricPvInverter, Openem
 	public default void _setSlaveCommunicationFailed(boolean value) {
 		this.getSlaveCommunicationFailedChannel().setNextValue(value);
 	}
+
 }

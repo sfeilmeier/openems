@@ -1063,4 +1063,5 @@ public class BatterySoltaroClusterVersionCImpl extends AbstractOpenemsModbusComp
 		case STOP -> StartStop.STOP; // force STOP
 		};
 	}
+
 }

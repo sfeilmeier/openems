@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String ioc_id() default "ioc0";
 
 	String webconsole_configurationFactory_nameHint() default "Fenecon MasterBox2V0 Meter [{id}]";
+
 }

@@ -66,4 +66,5 @@ public class SimulatorDatasourceCsvPredefinedImpl extends AbstractDatasource
 		return CsvUtils.readCsvFileFromResource(SimulatorDatasourceCsvPredefinedImpl.class,
 				this.config.source().filename, this.config.format(), this.config.factor());
 	}
+
 }

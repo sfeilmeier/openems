@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ActivePowerControlMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	CONTANT_ACTIVE_POWER(0, "Constant Active Power"), //
 	VOLT_WATT_ENABLED(1, "Volt watt enabled"), //
@@ -31,4 +32,5 @@ public enum ActivePowerControlMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

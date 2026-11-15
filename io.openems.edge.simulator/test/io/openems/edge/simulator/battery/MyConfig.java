@@ -157,4 +157,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int minCellVoltage_mV() {
 		return this.builder.minCellVoltage;
 	}
+
 }

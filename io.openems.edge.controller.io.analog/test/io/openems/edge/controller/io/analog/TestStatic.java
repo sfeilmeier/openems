@@ -58,4 +58,5 @@ public class TestStatic {
 							PowerBehavior.NON_LINEAR.calculateFactorFromPower.apply(10000, i)));
 		}
 	}
+
 }

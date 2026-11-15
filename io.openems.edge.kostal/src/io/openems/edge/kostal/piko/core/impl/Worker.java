@@ -49,4 +49,5 @@ public class Worker extends AbstractCycleWorker {
 
 		return Collections.unmodifiableList(result);
 	}
+
 }

@@ -10,6 +10,7 @@ import io.openems.edge.goodwe.GoodWeConstants;
 		description = "GoodWe Emergency Power Meter.")
 
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "meter2";
 
@@ -26,4 +27,5 @@ import io.openems.edge.goodwe.GoodWeConstants;
 	int modbusUnitId() default GoodWeConstants.DEFAULT_UNIT_ID;
 
 	String webconsole_configurationFactory_nameHint() default "GoodWe EmergencyPowerMeter [{id}]";
+
 }

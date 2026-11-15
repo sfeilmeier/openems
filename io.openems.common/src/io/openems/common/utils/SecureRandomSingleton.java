@@ -26,4 +26,5 @@ public class SecureRandomSingleton {
 
 	private SecureRandomSingleton() {
 	}
+
 }

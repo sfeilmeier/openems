@@ -257,4 +257,5 @@ public record ProductTypeAndFeatures(ProductFamily productFamily, DeviceCurrent 
 			return UNDEFINED;
 		}
 	}
+
 }

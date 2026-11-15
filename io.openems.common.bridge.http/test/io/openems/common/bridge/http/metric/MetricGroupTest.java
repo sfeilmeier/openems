@@ -104,4 +104,5 @@ public class MetricGroupTest {
 
 		assertEquals(Duration.ofSeconds(1), averageDuration);
 	}
+
 }

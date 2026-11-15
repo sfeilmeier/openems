@@ -7,6 +7,7 @@ import io.openems.edge.app.enums.TranslatableEnum;
 import io.openems.edge.core.appmanager.AbstractOpenemsApp;
 
 public enum DiscoveryType implements TranslatableEnum {
+
 	STATIC("communication.discoveryType.static"), //
 	MDNS("communication.discoveryType.mdns"), //
 	;
@@ -22,4 +23,5 @@ public enum DiscoveryType implements TranslatableEnum {
 		final var bundle = AbstractOpenemsApp.getTranslationBundle(language);
 		return translate(bundle, this.value);
 	}
+
 }

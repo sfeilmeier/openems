@@ -234,4 +234,5 @@ public class OldTariffEntsoeGridSellImpl extends AbstractTariffComponent
 	public int getRanking() {
 		return 5;
 	}
+
 }

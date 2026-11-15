@@ -37,4 +37,5 @@ public class ProfileClusteringPredictionService {
 
 		return clusteringResult;
 	}
+
 }

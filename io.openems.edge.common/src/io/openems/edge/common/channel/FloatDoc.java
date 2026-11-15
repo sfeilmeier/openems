@@ -25,4 +25,5 @@ public class FloatDoc extends OpenemsTypeDoc<Float> {
 			-> new FloatWriteChannel(component, channelId, this);
 		};
 	}
+
 }

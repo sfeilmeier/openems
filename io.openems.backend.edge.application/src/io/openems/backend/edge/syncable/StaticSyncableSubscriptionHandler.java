@@ -14,6 +14,7 @@ import io.openems.common.jsonrpc.syncable.SyncableKey;
 import io.openems.common.utils.ThrottledLoopExecutor;
 
 public class StaticSyncableSubscriptionHandler implements SubscriptionHandler {
+
 	private final SyncableRepository repository;
 	private final SyncableKey<?> key;
 

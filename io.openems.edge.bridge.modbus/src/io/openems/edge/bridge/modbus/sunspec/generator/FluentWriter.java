@@ -128,4 +128,5 @@ public class FluentWriter implements AutoCloseable {
 	public void close() throws IOException {
 		this.w.close();
 	}
+
 }

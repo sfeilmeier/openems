@@ -1,6 +1,7 @@
 package io.openems.edge.system.fenecon.industrial.m.enums;
 
 public enum CoolingType {
+
 	CHILLER(33, 32), //
 	FAN(26, 25), //
 	;
@@ -12,4 +13,5 @@ public enum CoolingType {
 		this.upperThreshold = upperThreshold;
 		this.lowerThreshold = lowerThreshold;
 	}
+
 }

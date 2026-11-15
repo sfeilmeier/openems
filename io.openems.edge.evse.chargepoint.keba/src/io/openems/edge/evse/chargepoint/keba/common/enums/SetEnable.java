@@ -3,6 +3,7 @@ package io.openems.edge.evse.chargepoint.keba.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SetEnable implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLE(0, "Disable charging station (Suspended mode)"), //
 	ENABLE(1, "Enable charging station (Charging)");
@@ -29,4 +30,5 @@ public enum SetEnable implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

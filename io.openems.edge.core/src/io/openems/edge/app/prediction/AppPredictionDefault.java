@@ -148,4 +148,5 @@ public class AppPredictionDefault extends
 	protected Property[] propertyValues() {
 		return Property.values();
 	}
+
 }

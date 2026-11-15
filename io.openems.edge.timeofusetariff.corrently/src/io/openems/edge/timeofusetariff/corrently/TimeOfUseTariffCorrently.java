@@ -23,4 +23,5 @@ public interface TimeOfUseTariffCorrently extends TimeOfUseTariff, OpenemsCompon
 			return this.doc;
 		}
 	}
+
 }

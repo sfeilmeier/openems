@@ -73,4 +73,5 @@ public class AbstractContext<PARENT extends OpenemsComponent> {
 	public void logError(Logger log, String message) {
 		OpenemsComponent.logError(this.parent, log, message);
 	}
+
 }

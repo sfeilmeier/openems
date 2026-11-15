@@ -151,4 +151,5 @@ public class SimulatorPvInverterImpl extends AbstractOpenemsComponent implements
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

@@ -7,6 +7,7 @@ import io.openems.common.types.OptionsEnum;
  * Equipment) during the lifecycle of a charging session.
  */
 public enum EvseSingleState implements io.openems.edge.common.statemachine.State<EvseSingleState>, OptionsEnum {
+
 	UNDEFINED(-1), //
 
 	/**
@@ -146,4 +147,5 @@ public enum EvseSingleState implements io.openems.edge.common.statemachine.State
 	public EvseSingleState[] getStates() {
 		return EvseSingleState.values();
 	}
+
 }

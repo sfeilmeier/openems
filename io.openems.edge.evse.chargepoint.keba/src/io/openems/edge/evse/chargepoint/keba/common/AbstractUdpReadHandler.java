@@ -438,4 +438,5 @@ public abstract class AbstractUdpReadHandler<T extends KebaUdp> implements BiCon
 	public boolean hasResultandReset(Report report) {
 		return Optional.ofNullable(this.receiveReport.put(report, false)).orElse(false);
 	}
+
 }

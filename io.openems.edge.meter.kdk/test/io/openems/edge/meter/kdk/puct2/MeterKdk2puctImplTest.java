@@ -102,4 +102,5 @@ public class MeterKdk2puctImplTest {
 				.next(InvertTest.testInvert(true))//
 				.next(InvertTest.testEnergyInvert(true));
 	}
+
 }

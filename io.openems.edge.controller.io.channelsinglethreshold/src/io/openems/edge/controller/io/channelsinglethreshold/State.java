@@ -3,6 +3,7 @@ package io.openems.edge.controller.io.channelsinglethreshold;
 import io.openems.common.types.OptionsEnum;
 
 public enum State implements OptionsEnum {
+
 	/**
 	 * Unknown state on first start.
 	 */
@@ -38,4 +39,5 @@ public enum State implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

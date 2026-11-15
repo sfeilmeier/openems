@@ -84,4 +84,5 @@ public class GoodWeChargerPv3 extends AbstractGoodWeEtCharger
 	protected GoodWe getEssOrBatteryInverter() {
 		return this.essOrBatteryInverter;
 	}
+
 }

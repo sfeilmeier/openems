@@ -258,4 +258,5 @@ public class IoShelly3EmImpl extends AbstractOpenemsComponent
 	public MeterType getMeterType() {
 		return this.meterType;
 	}
+
 }

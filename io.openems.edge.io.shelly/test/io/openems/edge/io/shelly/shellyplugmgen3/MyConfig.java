@@ -116,4 +116,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
     public DebugMode debugMode() {
         return this.builder.debugMode;
     }
+
 }

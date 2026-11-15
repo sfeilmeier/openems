@@ -5,6 +5,7 @@ import io.openems.edge.common.startstop.StartStopConfig;
 
 @SuppressWarnings("all")
 public class MyConfig extends AbstractComponentConfig implements Config {
+
 	protected static class Builder {
 		private String id;
 		private String[] essIds;
@@ -58,4 +59,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public StartStopConfig startStop() {
 		return this.builder.startStop;
 	}
+
 }

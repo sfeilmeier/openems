@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ReactivePowerControlMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	CONSTANT_REACTIVE_POWER(0, "Constant Reactive Power"), //
 	VOLT_VAR_ENABLED(1, "Volt Var Enabled"), //
@@ -31,4 +32,5 @@ public enum ReactivePowerControlMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

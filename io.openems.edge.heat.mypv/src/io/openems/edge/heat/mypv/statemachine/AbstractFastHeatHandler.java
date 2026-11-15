@@ -20,4 +20,5 @@ public abstract class AbstractFastHeatHandler extends StateHandler<State, Contex
 		final var maxPower = context.getMaxHeatPower();
 		context.setTargetActivePowerForHeatElement(maxPower);
 	}
+
 }

@@ -62,4 +62,5 @@ public class ExecuteSystemCommandResponse extends JsonrpcResponseSuccess {
 	public JsonObject getResult() {
 		return this.scr.toJsonObject();
 	}
+
 }

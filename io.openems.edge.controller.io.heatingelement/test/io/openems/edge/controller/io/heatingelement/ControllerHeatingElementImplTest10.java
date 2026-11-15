@@ -114,4 +114,5 @@ public class ControllerHeatingElementImplTest10 {
 						.output(STATUS, Status.INACTIVE)) //
 		;
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.bmw.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum GoStoppedSubState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	WAIT_FOR_CURRENT_REDUCTION(0, "Wait for current reduction"), //
 	OPEN_HV_CONTACTORS(1, "Open hv contactors"), //
@@ -34,4 +35,5 @@ public enum GoStoppedSubState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

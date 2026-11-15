@@ -6,6 +6,7 @@ import io.openems.common.jsonrpc.syncable.SyncableKey;
 import io.openems.common.utils.BehaviorSubject;
 
 public interface SyncableSubscription<T> extends Disposable {
+
 	/**
 	 * Gets the underlying {@link SyncableKey}.
 	 * 
@@ -22,4 +23,5 @@ public interface SyncableSubscription<T> extends Disposable {
 	 *         loaded yet or no data is available in backend)
 	 */
 	BehaviorSubject<SyncableEntry<T>> getEntry();
+
 }

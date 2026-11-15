@@ -2499,4 +2499,5 @@ public interface GoodWe extends OpenemsComponent {
 	public default BooleanReadChannel getGensetOperatingModeChannel() {
 		return this.channel(ChannelId.GENSET_OPERATING_MODE);
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.common.utils;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class CancellationToken {
+
 	private final AtomicBoolean cancelled = new AtomicBoolean(false);
 
 	/**
@@ -39,4 +40,5 @@ public final class CancellationToken {
 			super("Operation was cancelled.");
 		}
 	}
+
 }

@@ -30,4 +30,5 @@ public interface BackendTariffManager {
 	 * @return a list of all supported bidding zones
 	 */
 	List<BiddingZone> getAllSupportedBiddingZones();
+
 }

@@ -24,4 +24,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String address();
 
 	String webconsole_configurationFactory_nameHint() default "OneWire Thermometer [{id}]";
+
 }

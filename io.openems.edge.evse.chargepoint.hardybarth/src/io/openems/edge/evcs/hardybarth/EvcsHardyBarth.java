@@ -56,4 +56,5 @@ public interface EvcsHardyBarth extends OpenemsComponent, Evcs, ManagedEvcs, Dep
 			return this.path;
 		}
 	}
+
 }

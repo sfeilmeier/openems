@@ -69,4 +69,5 @@ public class GoStoppedHandler extends StateMachine.BatteryStateHandler {
 	public boolean isDischargeAllowed(Context context) {
 		return false;
 	}
+
 }

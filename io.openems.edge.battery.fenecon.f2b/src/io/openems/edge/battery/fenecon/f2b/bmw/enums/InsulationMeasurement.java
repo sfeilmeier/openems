@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.bmw.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum InsulationMeasurement implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DO_NOT_PERFORM_MEASUREMENT(0, "Do not perform"), //
 	PERFORM_MEASUREMENT(1, "Perform"), //
@@ -32,4 +33,5 @@ public enum InsulationMeasurement implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

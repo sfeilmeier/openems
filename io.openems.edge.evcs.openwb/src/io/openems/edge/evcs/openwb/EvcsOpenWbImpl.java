@@ -335,4 +335,5 @@ public class EvcsOpenWbImpl extends AbstractOpenemsComponent
 	public PhaseRotation getPhaseRotation() {
 		return this.config.phaseRotation();
 	}
+
 }

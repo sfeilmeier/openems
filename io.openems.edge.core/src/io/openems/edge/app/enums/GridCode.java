@@ -3,6 +3,7 @@ package io.openems.edge.app.enums;
 import io.openems.common.session.Language;
 
 public enum GridCode implements TranslatableEnum {
+
 	VDE_4105("VDE-AR-N 4105"), //
 	VDE_4110("VDE-AR-N 4110"),//
 	;

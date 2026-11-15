@@ -32,4 +32,5 @@ public final class ModberryX500M40804Max extends ModBerryX500 {
 	public List<ChannelId> getAllChannelIds() {
 		return this.channelIds;
 	}
+
 }

@@ -39,4 +39,5 @@ public class ReflectionUtilsTest {
 			invokeMethodWithoutArgumentsViaReflection(instance, "parentMethod");
 		});
 	}
+
 }

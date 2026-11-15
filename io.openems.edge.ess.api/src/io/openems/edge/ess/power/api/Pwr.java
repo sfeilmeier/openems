@@ -1,6 +1,7 @@
 package io.openems.edge.ess.power.api;
 
 public enum Pwr {
+
 	ACTIVE("P"), //
 	REACTIVE("Q");
 
@@ -9,4 +10,5 @@ public enum Pwr {
 	private Pwr(String symbol) {
 		this.symbol = symbol;
 	}
+
 }

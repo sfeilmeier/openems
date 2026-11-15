@@ -100,4 +100,5 @@ public class SmardSpotTariff implements SpotTariff, SingletonPool.SingletonPoolI
 	protected void triggerUpdate(TariffUpdateStatus status) {
 		this.lastUpdateStatus.setValue(status);
 	}
+
 }

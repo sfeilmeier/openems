@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import io.openems.edge.common.statemachine.StateHandler;
 
 public class ErrorAbortHandler extends StateHandler<StateMachine.State, Context> {
+
     private static final Logger log = LoggerFactory.getLogger(ErrorAbortHandler.class);
 
     @Override
@@ -21,4 +22,5 @@ public class ErrorAbortHandler extends StateHandler<StateMachine.State, Context>
         // TODO(alex.belke 19.01.2026): add error handling
         return StateMachine.State.ERROR_ABORT;
     }
+
 }

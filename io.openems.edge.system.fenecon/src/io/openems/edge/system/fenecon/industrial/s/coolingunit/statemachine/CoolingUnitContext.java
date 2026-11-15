@@ -27,4 +27,5 @@ public class CoolingUnitContext extends AbstractContext<SystemFeneconIndustrialS
 		this.inputCoolingUnitErrorChannel = inputCoolingUnitErrorChannel;
 		this.outputCoolingUnitEnableChannel = outputCoolinUnitEnableChannel;
 	}
+
 }

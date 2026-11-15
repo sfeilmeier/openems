@@ -43,4 +43,5 @@ public interface ErrorAcknowledgeRpc extends ComponentJsonApi {
 	 */
 	public default void forceStateMachineUndefined() {
 	}
+
 }

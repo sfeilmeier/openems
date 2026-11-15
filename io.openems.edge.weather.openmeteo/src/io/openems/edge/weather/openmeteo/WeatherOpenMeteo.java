@@ -611,4 +611,5 @@ public interface WeatherOpenMeteo extends Weather, OpenemsComponent {
 	public default void _setWeatherCodeIn24h(Integer value) {
 		this.getWeatherCodeIn24hChannel().setNextValue(value);
 	}
+
 }

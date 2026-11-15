@@ -19,4 +19,5 @@ public class TextProviderTest {
 		assertEquals("Testing", staticProvider.getText(Language.DE));
 		assertEquals("Testing", staticProvider.getText(null));
 	}
+
 }

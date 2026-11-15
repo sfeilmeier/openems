@@ -88,4 +88,5 @@ public interface IoShelly1 extends DigitalOutput, OpenemsComponent, EventHandler
 	public default void setRelay(boolean value) throws OpenemsNamedException {
 		this.getRelayChannel().setNextWriteValue(value);
 	}
+
 }

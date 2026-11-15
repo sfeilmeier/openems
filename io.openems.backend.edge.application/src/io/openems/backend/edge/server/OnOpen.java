@@ -47,4 +47,5 @@ public class OnOpen implements io.openems.common.websocket.OnOpen {
 
 		return null; // No error
 	}
+
 }

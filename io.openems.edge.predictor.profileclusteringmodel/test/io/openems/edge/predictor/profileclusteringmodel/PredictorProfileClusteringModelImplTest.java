@@ -185,4 +185,5 @@ public class PredictorProfileClusteringModelImplTest {
 			return this.predictionOrchestratorFactory;
 		}
 	}
+
 }

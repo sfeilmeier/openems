@@ -59,4 +59,5 @@ public class OneHotEncoder<I> extends AbstractStatefulDataFrameTransformer<I> {
 
 		return dataframe;
 	}
+
 }

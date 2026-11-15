@@ -27,4 +27,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	boolean debugMode() default false;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Api Websocket [{id}]";
+
 }

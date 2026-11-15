@@ -291,4 +291,5 @@ public class Inet4AddressWithSubnetmask {
 			return Objects.equals(this.toString(), other.toString());
 		}
 	}
+
 }

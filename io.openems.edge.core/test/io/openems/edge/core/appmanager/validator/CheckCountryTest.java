@@ -75,4 +75,5 @@ class CheckCountryTest {
 		assertNotNull(errorMessage);
 		assertFalse(errorMessage.getMessage().isBlank());
 	}
+
 }

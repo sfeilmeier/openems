@@ -3043,4 +3043,5 @@ public class GoodWeBatteryInverterImpl extends AbstractGoodWe implements GoodWeB
 				new FC16WriteRegistersTask(45776, m(GoodWePowerSetting.ChannelId.V2_APM_ENABLE_PF_UNDERFREQUENZY_CURVE,
 						new UnsignedWordElement(45776))));
 	}
+
 }

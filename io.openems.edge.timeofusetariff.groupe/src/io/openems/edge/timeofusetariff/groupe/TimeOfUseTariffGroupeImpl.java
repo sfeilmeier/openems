@@ -58,6 +58,7 @@ import io.openems.edge.timeofusetariff.api.TimeOfUseTariff;
 )
 public class TimeOfUseTariffGroupeImpl extends AbstractOpenemsComponent
 		implements TimeOfUseTariff, OpenemsComponent, TimeOfUseTariffGroupe {
+
 	private static final String URL = "https://api.tariffs.groupe-e.ch/v1/tariffs?start_timestamp=%s&end_timestamp=%s";
 	private static final DateTimeFormatter DATE_FORMATTER = ISO_OFFSET_DATE_TIME;
 	private static final int INTERNAL_ERROR = -1; // parsing, handle exception...
@@ -231,4 +232,5 @@ public class TimeOfUseTariffGroupeImpl extends AbstractOpenemsComponent
 	public String debugLog() {
 		return generateDebugLog(this, this.meta.getCurrency());
 	}
+
 }

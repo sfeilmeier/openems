@@ -33,4 +33,5 @@ import io.openems.edge.common.type.Phase.SinglePhase;
 	boolean invert() default false;
 
 	String webconsole_configurationFactory_nameHint() default "IO Shelly Plus 1PM [{id}]";
+
 }

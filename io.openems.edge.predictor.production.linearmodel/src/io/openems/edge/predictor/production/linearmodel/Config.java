@@ -30,4 +30,5 @@ import io.openems.edge.predictor.api.prediction.SourceChannel;
 	ModelComplexity modelComplexity() default ModelComplexity.HIGH;
 
 	String webconsole_configurationFactory_nameHint() default "Predictor Production Regression Model [{id}]";
+
 }

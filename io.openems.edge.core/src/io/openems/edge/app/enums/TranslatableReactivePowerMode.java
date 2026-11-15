@@ -33,4 +33,5 @@ public enum TranslatableReactivePowerMode implements TranslatableEnum {
 		final var bundle = AbstractOpenemsApp.getTranslationBundle(language);
 		return TranslationUtil.getTranslation(bundle, this.translationKey);
 	}
+
 }

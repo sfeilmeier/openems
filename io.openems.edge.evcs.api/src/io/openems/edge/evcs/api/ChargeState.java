@@ -3,6 +3,7 @@ package io.openems.edge.evcs.api;
 import io.openems.common.types.OptionsEnum;
 
 public enum ChargeState implements OptionsEnum {
+
 	/**
 	 * Undefined.
 	 */
@@ -55,4 +56,5 @@ public enum ChargeState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

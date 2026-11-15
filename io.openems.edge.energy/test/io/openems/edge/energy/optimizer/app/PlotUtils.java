@@ -405,4 +405,5 @@ public class PlotUtils {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
+
 }

@@ -44,4 +44,5 @@ public class InterpolationTransformerTest {
 		assertEquals(index, result.getIndex());
 		assertEquals(values, result.getValues());
 	}
+
 }

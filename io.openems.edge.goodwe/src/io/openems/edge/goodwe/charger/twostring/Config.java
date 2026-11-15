@@ -9,6 +9,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 @Deprecated
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "charger0";
 
@@ -25,4 +26,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String essOrBatteryInverter_id() default "batteryInverter0";
 
 	String webconsole_configurationFactory_nameHint() default "GoodWe Charger Two-String [{id}]";
+
 }

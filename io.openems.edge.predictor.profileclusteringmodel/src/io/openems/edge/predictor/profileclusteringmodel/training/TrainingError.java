@@ -27,4 +27,5 @@ public enum TrainingError implements io.openems.edge.predictor.api.common.Traini
 	public LogSeverity getSeverity() {
 		return this.severity;
 	}
+
 }

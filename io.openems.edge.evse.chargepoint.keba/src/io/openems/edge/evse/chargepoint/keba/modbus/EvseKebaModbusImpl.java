@@ -262,4 +262,5 @@ public class EvseKebaModbusImpl extends KebaModbus implements EvseKeba, EvseChar
 	public boolean isReadOnly() {
 		return this.config.readOnly();
 	}
+
 }

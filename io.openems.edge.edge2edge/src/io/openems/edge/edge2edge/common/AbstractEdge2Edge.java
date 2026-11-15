@@ -472,4 +472,5 @@ public abstract class AbstractEdge2Edge extends AbstractOpenemsModbusComponent
 							});
 				});
 	}
+
 }

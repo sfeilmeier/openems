@@ -170,4 +170,5 @@ public class PredictorManagerImplTest {
 		var prediction2 = sut.getPrediction(new ChannelAddress("_sum", "ConsumptionActivePower_L2"));
 		assertArrayEquals(new Integer[] { 1 }, prediction2.asArray());
 	}
+
 }

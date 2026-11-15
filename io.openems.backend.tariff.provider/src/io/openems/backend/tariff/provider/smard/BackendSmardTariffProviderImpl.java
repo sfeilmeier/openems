@@ -84,4 +84,5 @@ public class BackendSmardTariffProviderImpl extends AbstractMirroredSpotTariffPr
 		}
 		return this.config.biddingZones();
 	}
+
 }

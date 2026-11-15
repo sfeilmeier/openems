@@ -520,4 +520,5 @@ public class Context extends AbstractContext<ControllerEssSohCycleImpl> {
 
 	public record ReferencePowerResult(int soc, float limitedPower, float rampPower) {
 	}
+
 }

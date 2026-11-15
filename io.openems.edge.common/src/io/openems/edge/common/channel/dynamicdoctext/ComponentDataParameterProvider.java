@@ -6,6 +6,7 @@ import io.openems.common.session.Language;
 import io.openems.edge.common.component.OpenemsComponent;
 
 class ComponentDataParameterProvider<T extends OpenemsComponent> implements ParameterProvider {
+
 	private final Class<T> clazz;
 	private final Function<T, String> function;
 
@@ -35,4 +36,5 @@ class ComponentDataParameterProvider<T extends OpenemsComponent> implements Para
 	public ParameterProvider copy() {
 		return new ComponentDataParameterProvider<>(this.clazz, this.function);
 	}
+
 }

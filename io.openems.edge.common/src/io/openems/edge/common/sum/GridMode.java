@@ -3,6 +3,7 @@ package io.openems.edge.common.sum;
 import io.openems.common.types.OptionsEnum;
 
 public enum GridMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	/**
 	 * Grid connection is available.
@@ -40,4 +41,5 @@ public enum GridMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -193,4 +193,5 @@ public class IoShelly25Impl extends AbstractOpenemsComponent
 			}
 		});
 	}
+
 }

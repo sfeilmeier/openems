@@ -71,4 +71,5 @@ public class BatterySoltaroClusterVersionBImplTest {
 						.output(SUB_MASTER_5_COMMUNICATION_FAILURE, false) // 5 is not activated in Config
 				);
 	}
+
 }

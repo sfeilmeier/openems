@@ -34,6 +34,7 @@ import io.openems.common.xml.serialization.XmlParser;
 
 @Component(scope = PROTOTYPE)
 public class EcbCurrencyExchangeApi implements CurrencyExchangeApi {
+
 	private static final Currency BASE_CURRENCY = Currency.getInstance("EUR");
 	private static final String ECB_PRICES_FETCH_URL = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 

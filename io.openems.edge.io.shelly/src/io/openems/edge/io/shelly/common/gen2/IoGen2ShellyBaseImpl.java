@@ -26,6 +26,7 @@ import io.openems.edge.io.shelly.common.ShellyMdnsResolver;
 
 public abstract class IoGen2ShellyBaseImpl extends AbstractOpenemsComponent
 		implements IoGen2ShellyBase, OpenemsComponent {
+
 	private final Logger log = LoggerFactory.getLogger(IoGen2ShellyBaseImpl.class);
 	protected String baseUrl;
 	protected boolean enableDeviceValidation;

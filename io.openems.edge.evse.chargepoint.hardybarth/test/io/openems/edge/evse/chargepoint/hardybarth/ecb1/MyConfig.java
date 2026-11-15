@@ -103,4 +103,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public boolean readOnly() {
 		return this.builder.readOnly;
 	}
+
 }

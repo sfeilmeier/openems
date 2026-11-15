@@ -33,4 +33,5 @@ import io.openems.common.types.BiddingZone;
 	String calculateExpression() default "";
 
 	String webconsole_configurationFactory_nameHint() default "Time-Of-Use Tariff ENTSO-E (Deprecated) [{id}]";
+
 }

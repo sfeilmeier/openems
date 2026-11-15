@@ -37,4 +37,5 @@ public interface GoodWeBatteryInverter
 	 * @return {@link StartStop}
 	 */
 	public StartStop getStartStopTarget();
+
 }

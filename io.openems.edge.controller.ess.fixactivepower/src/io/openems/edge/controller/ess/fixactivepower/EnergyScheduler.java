@@ -159,4 +159,5 @@ public class EnergyScheduler {
 			return this.targetReached;
 		}
 	}
+
 }

@@ -14,6 +14,7 @@ import io.openems.common.types.BiddingZone;
 import io.openems.common.types.TariffData;
 
 public sealed interface SyncableKey<VALUE> {
+
 	/**
 	 * Gets the serializer for the value of this syncable key.
 	 *
@@ -143,4 +144,5 @@ public sealed interface SyncableKey<VALUE> {
 					return serialized;
 				});
 	}
+
 }

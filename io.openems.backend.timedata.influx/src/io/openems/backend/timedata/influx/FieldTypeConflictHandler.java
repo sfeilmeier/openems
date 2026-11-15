@@ -212,4 +212,5 @@ public class FieldTypeConflictHandler {
 	public BiConsumer<Point, JsonElement> getHandler(String field) {
 		return this.specialCaseFieldHandlers.get(field);
 	}
+
 }

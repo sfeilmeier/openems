@@ -17,4 +17,5 @@ public enum ModelComplexity {
 	public int getNumTrees() {
 		return this.numTrees;
 	}
+
 }

@@ -27,4 +27,5 @@ public class DummyControllerEvseSingle extends AbstractDummyControllerEvseSingle
 	public void apply(Mode mode, ChargePointActions actions) {
 		// do nothing
 	}
+
 }

@@ -22,4 +22,5 @@ public interface SimulatorBattery extends Battery, OpenemsComponent, EventHandle
 			return this.doc;
 		}
 	}
+
 }

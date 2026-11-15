@@ -77,4 +77,5 @@ public class GaussianSmoother implements Smoother {
 		final double factor = originalSum / smoothedSum;
 		return Arrays.stream(smoothed).map(v -> v * factor).toArray();
 	}
+
 }

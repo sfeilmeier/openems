@@ -26,6 +26,7 @@ import io.openems.edge.core.appmanager.jsonrpc.AddAppInstance;
 import io.openems.edge.core.appmanager.jsonrpc.UpdateAppInstance;
 
 public class TestFeneconHome10Gen2 {
+
 	private AppManagerTestBundle appManagerTestBundle;
 	private SocomecMeter meterApp;
 

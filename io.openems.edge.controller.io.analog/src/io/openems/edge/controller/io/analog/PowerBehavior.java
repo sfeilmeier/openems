@@ -3,6 +3,7 @@ package io.openems.edge.controller.io.analog;
 import java.util.function.BiFunction;
 
 public enum PowerBehavior {
+
 	LINEAR("Linear", new CalculateLinearFactor(), new CalculateLinearPower()), //
 	NON_LINEAR("Nonlinear", new CalculateNonLinearFactor(), new CalculateNonLinearPower());
 
@@ -66,4 +67,5 @@ public enum PowerBehavior {
 			return (int) Math.round(maximumPower * linearFactor);
 		}
 	}
+
 }

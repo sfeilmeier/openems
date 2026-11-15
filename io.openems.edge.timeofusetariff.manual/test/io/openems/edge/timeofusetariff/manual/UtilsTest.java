@@ -175,4 +175,5 @@ public class UtilsTest {
 				clock, //
 				schedule, 24.8); // Standard price
 	}
+
 }

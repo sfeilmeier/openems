@@ -1955,4 +1955,5 @@ public interface Sum extends OpenemsComponent {
 	public default StateChannel getHasIgnoredComponentStatesChannel() {
 		return this.channel(ChannelId.HAS_IGNORED_COMPONENT_STATES);
 	}
+
 }

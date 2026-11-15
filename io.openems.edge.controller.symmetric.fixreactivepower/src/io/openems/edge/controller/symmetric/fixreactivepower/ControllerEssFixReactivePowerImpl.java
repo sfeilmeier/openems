@@ -72,4 +72,5 @@ public class ControllerEssFixReactivePowerImpl extends AbstractOpenemsComponent
 		case MANUAL_OFF -> FunctionUtils.doNothing();
 		}
 	}
+
 }

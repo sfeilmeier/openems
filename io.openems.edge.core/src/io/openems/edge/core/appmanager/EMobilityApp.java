@@ -23,4 +23,5 @@ public interface EMobilityApp {
 	 * @return a non-null list of {@link EMobilityArchitectureType}
 	 */
 	List<EMobilityArchitectureType> supportedArchitectureTypes();
+
 }

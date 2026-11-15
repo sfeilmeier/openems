@@ -3,6 +3,7 @@ package io.openems.edge.common.meta;
 import io.openems.common.types.OptionsEnum;
 
 public enum GridFeedInLimitationType implements OptionsEnum {
+
 	UNDEFINED(-1, "UNDEFINED"), //
 	NO_LIMITATION(0, "No limitation"), //
 	DYNAMIC_LIMITATION(1, "Dynamic limitation"); //
@@ -29,4 +30,5 @@ public enum GridFeedInLimitationType implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

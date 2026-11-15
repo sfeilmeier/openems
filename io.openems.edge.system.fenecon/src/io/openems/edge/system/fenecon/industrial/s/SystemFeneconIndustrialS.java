@@ -97,4 +97,5 @@ public interface SystemFeneconIndustrialS extends OpenemsComponent, EventHandler
 	public default void _setCoolingUnitStateMachine(CoolingUnitState value) {
 		this.getCoolingUnitStateMachineChannel().setNextValue(value);
 	}
+
 }

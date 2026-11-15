@@ -24,4 +24,5 @@ public interface OneWireThermometer extends Thermometer, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

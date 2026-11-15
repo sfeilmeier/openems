@@ -69,4 +69,5 @@ public interface PvInverterSolarlog
 			return this.doc;
 		}
 	}
+
 }

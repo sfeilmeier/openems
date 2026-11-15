@@ -22,4 +22,5 @@ public class MeterWeidmueller525ImplTest {
 						.build()) //
 		;
 	}
+
 }

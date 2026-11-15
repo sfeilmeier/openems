@@ -311,4 +311,5 @@ public class EvcsSpelsbergSmartImpl extends AbstractOpenemsModbusComponent imple
 
 		this.getChargeEnergySessionChannel().onUpdate(setEnergyConsumptionCallback);
 	}
+
 }

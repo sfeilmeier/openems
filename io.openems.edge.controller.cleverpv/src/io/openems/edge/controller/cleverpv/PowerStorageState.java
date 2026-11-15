@@ -5,6 +5,7 @@ import java.util.Optional;
 import io.openems.common.types.OptionsEnum;
 
 public enum PowerStorageState implements OptionsEnum {
+
 	IDLE(0, "Idle"), //
 	DISCHARGING(1, "Discharging"), //
 	DISABLED(2, "Disabled"), //
@@ -64,4 +65,5 @@ public enum PowerStorageState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return IDLE;
 	}
+
 }

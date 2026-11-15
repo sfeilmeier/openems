@@ -31,4 +31,5 @@ public enum MultiplexingMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

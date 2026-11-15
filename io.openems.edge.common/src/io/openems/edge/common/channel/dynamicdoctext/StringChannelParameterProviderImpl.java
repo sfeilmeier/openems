@@ -12,6 +12,7 @@ import io.openems.edge.common.channel.ChannelId;
 
 class StringChannelParameterProviderImpl extends ChannelParameterProvider<String>
 		implements StringChannelParameterProvider {
+
 	private final List<StringPredicate> predicates;
 	private TextProvider defaultText;
 
@@ -80,4 +81,5 @@ class StringChannelParameterProviderImpl extends ChannelParameterProvider<String
 
 	record StringPredicate(Predicate<String> predicate, TextProvider text) {
 	}
+
 }

@@ -9,6 +9,7 @@ import io.openems.edge.common.statemachine.StateHandler;
 import io.openems.edge.heat.mypv.statemachine.StateMachine.State;
 
 public class SurplusHandler extends StateHandler<State, Context> {
+
 	private Integer stableTargetActivePower = null;
 	private Instant lastStableTargetUpdateAt = null;
 
@@ -36,4 +37,5 @@ public class SurplusHandler extends StateHandler<State, Context> {
 		this.stableTargetActivePower = null;
 		this.lastStableTargetUpdateAt = null;
 	}
+
 }

@@ -214,4 +214,5 @@ public class MeterSocomecSinglephaseImpl extends AbstractSocomecMeter implements
 				SinglePhaseMeter.getModbusSlaveNatureTable(accessMode) //
 		);
 	}
+
 }

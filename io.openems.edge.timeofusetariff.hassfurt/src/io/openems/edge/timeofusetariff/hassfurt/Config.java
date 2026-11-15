@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	TariffType tariffType() default TariffType.STROM_FLEX;
 
 	String webconsole_configurationFactory_nameHint() default "Time-Of-Use Tariff Stadwerk Haßfurt [{id}]";
+
 }

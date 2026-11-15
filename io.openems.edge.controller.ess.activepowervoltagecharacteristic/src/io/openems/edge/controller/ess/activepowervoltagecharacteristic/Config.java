@@ -33,4 +33,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int waitForHysteresis() default 20;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Ess Voltage Active Power Characteristic [{id}]";
+
 }

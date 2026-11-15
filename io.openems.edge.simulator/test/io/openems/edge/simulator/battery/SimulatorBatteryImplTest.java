@@ -23,4 +23,5 @@ public class SimulatorBatteryImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

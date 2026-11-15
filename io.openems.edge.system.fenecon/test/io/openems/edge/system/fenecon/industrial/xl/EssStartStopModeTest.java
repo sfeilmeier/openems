@@ -29,6 +29,7 @@ import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.St
 import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 public class EssStartStopModeTest {
+
 	private static final ChannelAddress STATE_MACHINE = new ChannelAddress("system0", "StateMachine");
 	private static final ChannelAddress STATUS_SYS_OFF = new ChannelAddress("system0", "StatusSysOff");
 	private static final ChannelAddress ENABLE_COUPLING_SWITCH = new ChannelAddress("system0", "EnableCouplingSwitch");
@@ -133,4 +134,5 @@ public class EssStartStopModeTest {
 		;
 
 	}
+
 }

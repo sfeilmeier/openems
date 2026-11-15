@@ -37,4 +37,5 @@ public class FC5WriteCoilTask extends AbstractWriteTask.Single<WriteCoilRequest,
 	protected String payloadToString(WriteCoilRequest request) {
 		return request.getCoil() ? "ON" : "OFF";
 	}
+
 }

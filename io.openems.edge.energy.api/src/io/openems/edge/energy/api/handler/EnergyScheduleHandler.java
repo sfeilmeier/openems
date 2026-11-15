@@ -244,4 +244,5 @@ public sealed interface EnergyScheduleHandler permits WithDifferentModes, WithOn
 		 */
 		public OPTIMIZATION_CONTEXT coc();
 	}
+
 }

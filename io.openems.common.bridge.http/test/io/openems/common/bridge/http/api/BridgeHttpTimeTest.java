@@ -69,4 +69,5 @@ public class BridgeHttpTimeTest {
 		this.pool.update();
 		assertEquals(2, counter.get());
 	}
+
 }

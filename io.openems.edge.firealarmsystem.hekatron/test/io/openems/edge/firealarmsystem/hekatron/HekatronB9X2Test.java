@@ -74,4 +74,5 @@ public class HekatronB9X2Test {
 						.output(HekatronB9X2.ChannelId.DETECTOR_2_ALARM_BIT9, true)) //
 				.deactivate();
 	}
+
 }

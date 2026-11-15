@@ -159,4 +159,5 @@ public class SumImplTest {
 				"State:Ok Ess SoC:50 %|L:1234 W Grid:5678 W Genset:555 W Production Total:7777 W,AC:3333 W,DC:4444 W Consumption:1111 W",
 				sut.debugLog());
 	}
+
 }

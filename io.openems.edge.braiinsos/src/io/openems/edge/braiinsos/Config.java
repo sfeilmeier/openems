@@ -49,4 +49,5 @@ import io.openems.edge.common.type.Phase.SingleOrAllPhase;
 	String jsCalendar() default "[]";
 
 	String webconsole_configurationFactory_nameHint() default "Braiins OS Controller Single [{id}]";
+
 }

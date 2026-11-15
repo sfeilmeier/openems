@@ -26,4 +26,5 @@ public interface PvInverterFronius extends SunSpecPvInverter, ManagedSymmetricPv
 			return this.doc;
 		}
 	}
+
 }

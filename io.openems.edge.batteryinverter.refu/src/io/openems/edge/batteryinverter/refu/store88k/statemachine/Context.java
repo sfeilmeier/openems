@@ -20,4 +20,5 @@ public class Context extends AbstractContext<BatteryInverterRefuStore88k> {
 		this.setActivePower = setActivePower;
 		this.setReactivePower = setReactivePower;
 	}
+
 }

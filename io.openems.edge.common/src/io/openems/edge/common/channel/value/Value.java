@@ -229,4 +229,5 @@ public class Value<T> {
 	public LocalDateTime getTimestamp() {
 		return this.timestamp;
 	}
+
 }

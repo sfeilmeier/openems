@@ -120,4 +120,5 @@ public final class EnergyScheduler {
 
 				.build();
 	}
+
 }

@@ -19,4 +19,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String secret();
 
 	String webconsole_configurationFactory_nameHint() default "Edge Manager";
+
 }

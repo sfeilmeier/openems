@@ -117,4 +117,5 @@ public abstract class ModbusRegisterElement<SELF extends AbstractModbusElement<S
 		buff.rewind();
 		return this.byteBufferToValue(buff);
 	}
+
 }

@@ -69,4 +69,5 @@ public class GocUtilsTest {
 		assertEquals(0.0, result.get(1), 0.);
 		assertEquals(1.0, result.get(2), 0.);
 	}
+
 }

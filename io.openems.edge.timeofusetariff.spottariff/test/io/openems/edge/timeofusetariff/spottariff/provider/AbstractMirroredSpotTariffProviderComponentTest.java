@@ -93,4 +93,5 @@ class AbstractMirroredSpotTariffProviderComponentTest {
 			return Clock.systemUTC();
 		}
 	}
+
 }

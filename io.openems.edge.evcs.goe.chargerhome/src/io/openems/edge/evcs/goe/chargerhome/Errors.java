@@ -3,6 +3,7 @@ package io.openems.edge.evcs.goe.chargerhome;
 import io.openems.common.types.OptionsEnum;
 
 public enum Errors implements OptionsEnum {
+
 	UNDEFINED(0, "Undefined"), //
 	RCCB(1, "Residual current operated device Error"), //
 	PHASE(3, "Phase Error"), //
@@ -31,4 +32,5 @@ public enum Errors implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

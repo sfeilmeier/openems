@@ -30,4 +30,5 @@ public class SimulatorEssSinglePhaseReactingImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

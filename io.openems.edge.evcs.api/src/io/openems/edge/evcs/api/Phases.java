@@ -5,6 +5,7 @@ import java.util.function.Function;
 import io.openems.common.types.OptionsEnum;
 
 public enum Phases implements OptionsEnum {
+
 	ONE_PHASE(1, "One Phase", max -> Math.round(max / 3F)), //
 	TWO_PHASE(2, "Two Phase", max -> Math.round(max / 3F * 2)), //
 	THREE_PHASE(3, "Three Phase", max -> max);
@@ -51,4 +52,5 @@ public enum Phases implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return THREE_PHASE;
 	}
+
 }

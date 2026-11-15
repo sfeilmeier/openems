@@ -36,4 +36,5 @@ public class StopBatteryInverterHandler extends StateHandler<State, Context> {
 		context.batteryInverter.stop();
 		return State.STOP_BATTERY_INVERTER;
 	}
+
 }

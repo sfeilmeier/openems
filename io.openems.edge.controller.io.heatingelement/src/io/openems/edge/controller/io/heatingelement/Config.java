@@ -13,6 +13,7 @@ import io.openems.edge.controller.io.heatingelement.enums.WorkMode;
 		name = "Controller IO Heating Element", //
 		description = "Controls a three-phase heating element via Relays, according to grid active power")
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "ctrlIoHeatingElement0";
 
@@ -83,4 +84,5 @@ import io.openems.edge.controller.io.heatingelement.enums.WorkMode;
 	String meter_id() default "";
 
 	String webconsole_configurationFactory_nameHint() default "Controller IO Heating Element [{id}]";
+
 }

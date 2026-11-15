@@ -49,4 +49,5 @@ public class PriceCalculatorX extends PriceCalculator {
 		this.vars.set("x", x);
 		return this.evaluate(this.vars);
 	}
+
 }

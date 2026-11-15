@@ -15,4 +15,5 @@ public class RunningHandler extends StateHandler<State, Context> {
 		battery._setStartStop(StartStop.START);
 		return State.RUNNING;
 	}
+
 }

@@ -269,4 +269,5 @@ public class IoShellyPlus1PmImplTest {
 						.output(IoShellyPlus1Pm.ChannelId.RELAY, null) //
 						.output(IoShellyPlus1Pm.ChannelId.SLAVE_COMMUNICATION_FAILED, false));
 	}
+
 }

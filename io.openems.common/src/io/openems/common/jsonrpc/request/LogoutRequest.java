@@ -47,4 +47,5 @@ public class LogoutRequest extends JsonrpcRequest {
 	public JsonObject getParams() {
 		return new JsonObject();
 	}
+
 }

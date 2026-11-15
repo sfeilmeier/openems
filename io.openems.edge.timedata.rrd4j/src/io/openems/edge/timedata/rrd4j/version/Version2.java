@@ -91,4 +91,5 @@ public final class Version2 extends AbstractVersion implements Version {
 		}
 		return newDb;
 	}
+
 }

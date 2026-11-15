@@ -11,6 +11,7 @@ import io.openems.common.types.OptionsEnum;
  * </ul>
  */
 public enum ClusterRunState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NORMAL(0, "Normal"), //
 	FULL(0x1, "Full"), //
@@ -40,4 +41,5 @@ public enum ClusterRunState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

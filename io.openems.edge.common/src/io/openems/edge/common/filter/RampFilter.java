@@ -109,4 +109,5 @@ public class RampFilter {
 	public void resetTo(Float value) {
 		this.lastValue = value;
 	}
+
 }

@@ -15,6 +15,7 @@ import io.openems.edge.common.meta.types.SubdivisionCode;
 		name = "Core Meta", //
 		description = "The global manager for Metadata.")
 @interface Config {
+
 	@AttributeDefinition(name = "Currency", description = "Every monetary value is inherently expressed in this Currency. Values obtained in a different currency (e.g. energy prices from a web service) are internally converted to this Currency using the current exchange rate.")
 	CurrencyConfig currency() default CurrencyConfig.EUR;
 
@@ -65,4 +66,5 @@ import io.openems.edge.common.meta.types.SubdivisionCode;
 	EnvironmentStatus environmentStatus() default EnvironmentStatus.STABLE;
 
 	String webconsole_configurationFactory_nameHint() default "Core Meta";
+
 }

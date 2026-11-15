@@ -54,4 +54,5 @@ public class AllowedChargeDischargeHandler extends AbstractAllowedChargeDischarg
 		setValue(this.parent, ManagedSymmetricEss.ChannelId.ALLOWED_DISCHARGE_POWER,
 				batteryAllowedDischargePower + pvProduction);
 	}
+
 }

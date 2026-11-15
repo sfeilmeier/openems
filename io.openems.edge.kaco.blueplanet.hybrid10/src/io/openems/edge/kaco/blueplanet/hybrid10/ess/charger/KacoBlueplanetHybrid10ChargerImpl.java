@@ -115,4 +115,5 @@ public class KacoBlueplanetHybrid10ChargerImpl extends AbstractOpenemsComponent 
 				ModbusSlaveNatureTable.of(KacoBlueplanetHybrid10Charger.class, accessMode, 100) //
 						.build());
 	}
+
 }

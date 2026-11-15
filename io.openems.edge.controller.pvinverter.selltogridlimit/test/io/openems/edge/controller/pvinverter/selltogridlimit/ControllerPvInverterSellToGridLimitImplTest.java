@@ -193,4 +193,5 @@ public class ControllerPvInverterSellToGridLimitImplTest {
 						.output("pvInverter0", ACTIVE_POWER_LIMIT, 1000)) //
 				.deactivate();
 	}
+
 }

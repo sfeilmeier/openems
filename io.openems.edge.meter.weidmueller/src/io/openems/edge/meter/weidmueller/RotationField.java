@@ -3,6 +3,7 @@ package io.openems.edge.meter.weidmueller;
 import io.openems.common.types.OptionsEnum;
 
 public enum RotationField implements OptionsEnum {
+
 	UNDEFINED(-2, "Undefined"), //
 	RIGHT(1, "right"), //
 	NONE(0, "none"), //
@@ -30,4 +31,5 @@ public enum RotationField implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

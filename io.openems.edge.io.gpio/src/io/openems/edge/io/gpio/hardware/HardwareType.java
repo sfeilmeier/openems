@@ -3,6 +3,7 @@ package io.openems.edge.io.gpio.hardware;
 import io.openems.edge.io.gpio.linuxfs.HardwareFactory;
 
 public enum HardwareType {
+
 	MODBERRY_X500_M40804_MAX, //
 	MODBERRY_X500_M40804_WB, //
 	MODBERRY_X500_M4S, //
@@ -24,4 +25,5 @@ public enum HardwareType {
 		case MODBERRY_X500_M4S, MODBERRY_X500_M4S_F, MODBERRY_X500_M3, MODBERRY_X500_M4S_GEN3 -> new ModberryX500M4S(factory);
 		};
 	}
+
 }

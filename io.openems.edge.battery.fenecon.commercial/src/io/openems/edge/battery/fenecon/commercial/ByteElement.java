@@ -43,4 +43,5 @@ public class ByteElement implements Consumer<Integer> {
 			break;
 		}
 	}
+
 }

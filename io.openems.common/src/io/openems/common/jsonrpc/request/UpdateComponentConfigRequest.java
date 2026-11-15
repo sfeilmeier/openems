@@ -156,4 +156,5 @@ public class UpdateComponentConfigRequest extends JsonrpcRequest {
 					.build();
 		}
 	}
+
 }

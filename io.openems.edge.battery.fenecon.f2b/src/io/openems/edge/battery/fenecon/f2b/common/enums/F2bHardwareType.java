@@ -8,6 +8,7 @@ import io.openems.common.types.OptionsEnum;
  * version 1.3 but no hardware type F2B_FM_29_1V3.
  */
 public enum F2bHardwareType implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_TYPE_DEFINED(0, "No type defined"), //
 	F2B_SE09_PCB_R8(1, "F2B SE09 PCB R8"), //
@@ -47,4 +48,5 @@ public enum F2bHardwareType implements OptionsEnum {
 		default -> null;
 		};
 	}
+
 }

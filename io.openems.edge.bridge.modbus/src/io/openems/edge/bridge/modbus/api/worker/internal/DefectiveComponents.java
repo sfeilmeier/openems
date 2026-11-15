@@ -96,4 +96,5 @@ public class DefectiveComponents {
 	private void traceLog(Supplier<String> message) {
 		this.logHandler.get().trace(this.log, message);
 	}
+
 }

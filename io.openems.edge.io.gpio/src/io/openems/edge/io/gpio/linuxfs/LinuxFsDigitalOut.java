@@ -23,4 +23,5 @@ public class LinuxFsDigitalOut extends Gpio implements DigitalOut {
 	public String toString() {
 		return this.getValue().map(t -> t ? "on" : "off").orElse("error");
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.evse.chargepoint.keba.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ChargingState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	STARTING(0, "Start-up of the charging station"), //
 	/**
@@ -52,4 +53,5 @@ public enum ChargingState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

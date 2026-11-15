@@ -84,4 +84,5 @@ public class ControllerEssSellToGridLimitImpl extends AbstractOpenemsComponent
 			this.ess.setActivePowerLessOrEquals(essPowerLimit);
 		}
 	}
+
 }

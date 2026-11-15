@@ -390,4 +390,5 @@ public final class MeterIntegrationUtil {
 		var meterList = componentUtil.getEnabledComponentsOfType(ElectricityMeter.class);
 		return meterList.stream().filter(m -> m.alias().equals(meterAlias)).findFirst();
 	}
+
 }

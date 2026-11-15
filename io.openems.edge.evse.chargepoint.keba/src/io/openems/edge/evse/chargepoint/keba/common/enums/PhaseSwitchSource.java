@@ -3,6 +3,7 @@ package io.openems.edge.evse.chargepoint.keba.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PhaseSwitchSource implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NONE(0, "No phase toggle source is available"), //
 	VIA_OCPP(1, "Toggle via OCPP"), //
@@ -32,4 +33,5 @@ public enum PhaseSwitchSource implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -59,4 +59,5 @@ public class Context extends AbstractContext<HeatAskomaImpl> {
 	public void setFastHeatPowerNotApplied(boolean active) {
 		this.getParent().setFastHeatPowerNotApplied(active);
 	}
+
 }

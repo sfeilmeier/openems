@@ -46,4 +46,5 @@ public class EnergyUtilsTest {
 	public void testFindValleyIndexes() {
 		assertArrayEquals(new int[] { 1, 6 }, findValleyIndexes(new double[] { 0, 0, 1, 2, 1, 0, 0, 2, 0 }));
 	}
+
 }

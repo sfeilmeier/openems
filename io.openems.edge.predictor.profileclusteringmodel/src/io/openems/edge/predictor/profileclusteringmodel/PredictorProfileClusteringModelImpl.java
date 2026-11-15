@@ -323,4 +323,5 @@ public class PredictorProfileClusteringModelImpl extends AbstractPredictor
 	void setPredictionPersistenceService(PredictionPersistenceService predictionPersistenceService) {
 		this.predictionPersistenceService = predictionPersistenceService;
 	}
+
 }

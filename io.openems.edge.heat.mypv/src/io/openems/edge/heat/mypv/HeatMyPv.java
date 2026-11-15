@@ -32,4 +32,5 @@ public interface HeatMyPv extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.fisker.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ControlRequest implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_REQUEST(0, "No request"), //
 	REQUEST_OFF(1, "Off request"), //
@@ -32,4 +33,5 @@ public enum ControlRequest implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

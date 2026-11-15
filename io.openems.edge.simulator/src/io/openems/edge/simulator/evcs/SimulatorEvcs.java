@@ -26,4 +26,5 @@ public interface SimulatorEvcs extends ManagedEvcs, Evcs, ElectricityMeter, Open
 			return this.doc;
 		}
 	}
+
 }

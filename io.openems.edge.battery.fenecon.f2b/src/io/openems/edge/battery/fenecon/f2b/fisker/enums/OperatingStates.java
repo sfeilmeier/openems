@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.fisker.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum OperatingStates implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	BOOT(1, "Bms boot"), //
 	PRE_OPERATIONAL(2, "Bms preoperational"), //
@@ -33,4 +34,5 @@ public enum OperatingStates implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

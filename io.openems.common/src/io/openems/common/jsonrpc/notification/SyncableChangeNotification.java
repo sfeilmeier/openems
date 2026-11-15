@@ -43,4 +43,5 @@ public class SyncableChangeNotification extends JsonrpcNotification {
 				.add("entry", this.entry, SyncableEntry.serializer()) //
 				.build();
 	}
+
 }

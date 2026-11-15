@@ -736,4 +736,5 @@ public class PowerDistributionHandlerV2Test {
 		assertEquals("ess4", 0, p4.get());
 		assertEquals("Total", 2000, p1.get() + p2.get() + p3.get() + p4.get());
 	}
+
 }

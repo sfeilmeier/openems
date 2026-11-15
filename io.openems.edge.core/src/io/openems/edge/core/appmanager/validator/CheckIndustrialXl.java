@@ -49,4 +49,5 @@ public class CheckIndustrialXl extends AbstractCheckable implements Checkable {
 	public OpenemsNamedException getInvertedValidationError(Language language) {
 		return OpenemsError.EDGE_APP_VALIDATION_CHECK_INDUSTRIAL_XL_INVERTED.exception(language);
 	}
+
 }

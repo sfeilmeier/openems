@@ -127,4 +127,5 @@ public class ApparentPowerConstraintUtilTest {
 			assertTrue("Constraint value should be finite: " + value, Double.isFinite(value));
 		}
 	}
+
 }

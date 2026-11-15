@@ -262,4 +262,5 @@ public record DependencyProperties(List<DependencyProperty> values) {
 			return new DependencyProperty(this.name, this.value, this.priority, forceUpdate);
 		}
 	}
+
 }

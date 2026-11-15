@@ -48,4 +48,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int surplusFeedInPvLimitOnPowerDecreaseCausedByOvertemperature() default 5_000;
 
 	String webconsole_configurationFactory_nameHint() default "ESS FENECON Commercial 40 [{id}]";
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum EmsCheck implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	CHECKING(0, "Checking"), //
 	NORMAL(1, "Normal"), //
@@ -30,4 +31,5 @@ public enum EmsCheck implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

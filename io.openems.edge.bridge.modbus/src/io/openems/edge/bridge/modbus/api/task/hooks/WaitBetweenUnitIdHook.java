@@ -23,6 +23,7 @@ import io.openems.edge.bridge.modbus.api.task.WaitTask;
  * improve communication reliability.
  */
 public class WaitBetweenUnitIdHook extends TaskHook {
+
 	private final Duration duration;
 
 	public WaitBetweenUnitIdHook(Duration duration) {
@@ -53,4 +54,5 @@ public class WaitBetweenUnitIdHook extends TaskHook {
 			delayTask.execute(bridge);
 		}
 	}
+
 }

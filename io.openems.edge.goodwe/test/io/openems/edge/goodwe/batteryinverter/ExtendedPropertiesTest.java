@@ -616,4 +616,5 @@ public class ExtendedPropertiesTest {
 		assertEquals(5200, config.settingFrtOf3Frequency());
 		assertEquals(200, config.settingFrtOf3Time());
 	}
+
 }

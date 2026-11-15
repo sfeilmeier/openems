@@ -16,6 +16,7 @@ import io.openems.edge.common.services.syncable.SyncableRepository;
 import io.openems.edge.common.services.syncable.SyncableSubscription;
 
 public class BackendSpotTariff implements SpotTariff, SingletonPool.SingletonPoolImplementation {
+
 	private final BiddingZone biddingZone;
 	private final SyncableRepository syncableRepository;
 	private final Clock clock;
@@ -82,4 +83,5 @@ public class BackendSpotTariff implements SpotTariff, SingletonPool.SingletonPoo
 			this.lastUpdateStatus.setValue(new TariffUpdateStatus.Successful(this.clock.instant()));
 		}
 	}
+
 }

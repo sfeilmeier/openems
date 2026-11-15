@@ -303,4 +303,5 @@ public class OldTouEntsoeImpl extends AbstractTariffComponent implements OldTouE
 	public boolean isSpotTariffSupported(BiddingZone biddingZone) {
 		return this.provider.isSpotTariffSupported(biddingZone);
 	}
+
 }

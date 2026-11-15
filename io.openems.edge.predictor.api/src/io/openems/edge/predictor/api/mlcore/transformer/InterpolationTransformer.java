@@ -28,4 +28,5 @@ public class InterpolationTransformer<I> extends AbstractSeriesTransformer<I> {
 
 		return new Series<>(series.getIndex(), interpolatedValues);
 	}
+
 }

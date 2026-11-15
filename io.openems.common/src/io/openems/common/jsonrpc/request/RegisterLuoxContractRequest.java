@@ -70,4 +70,5 @@ public class RegisterLuoxContractRequest extends JsonrpcRequest {
 				.addProperty("contractId", this.contractId) //
 				.build();
 	}
+
 }

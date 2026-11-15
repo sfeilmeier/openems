@@ -151,4 +151,5 @@ public class PhaseDef {
 		case SinglePhase.L3 -> this.parent.channel(ControllerIoHeatingElement.ChannelId.PHASE3_AVG_POWER);
 		};
 	}
+
 }

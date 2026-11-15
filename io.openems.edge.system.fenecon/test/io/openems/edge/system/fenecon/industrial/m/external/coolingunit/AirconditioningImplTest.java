@@ -75,4 +75,5 @@ public class AirconditioningImplTest {
 						.output(MAX_TEMP, 45) //
 						.output(AIRCONDITONING_UNIT, true));
 	}
+
 }

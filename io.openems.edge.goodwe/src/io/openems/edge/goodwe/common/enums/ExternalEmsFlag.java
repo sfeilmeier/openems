@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ExternalEmsFlag implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NORMAL(0, "Normal"), //
 	ALPHA(10, "Alpha");
@@ -29,4 +30,5 @@ public enum ExternalEmsFlag implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -73,4 +73,5 @@ public enum DeviceRole implements OptionsEnum {
 
 		return result;
 	}
+
 }

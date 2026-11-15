@@ -11,4 +11,5 @@ public interface SpotTariff extends Tariff {
 	 * @return the bidding zone
 	 */
 	BiddingZone getBiddingZone();
+
 }

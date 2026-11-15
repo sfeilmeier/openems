@@ -157,4 +157,5 @@ public interface EssProtection extends OpenemsComponent {
 	public default void _setEpOverChargeProtection(boolean value) {
 		this.getEpOverChargeProtectionChannel().setNextValue(value);
 	}
+
 }

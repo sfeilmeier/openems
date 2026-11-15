@@ -26,4 +26,5 @@ public interface BackendTariffProvider extends OpenemsComponent, TariffComponent
 			return this.doc;
 		}
 	}
+
 }

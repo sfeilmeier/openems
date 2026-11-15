@@ -131,4 +131,5 @@ public record SemanticVersion(int major, int minor, int patch, String additional
 		}
 		return b.toString();
 	}
+
 }

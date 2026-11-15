@@ -350,4 +350,5 @@ class PowerDistributionTest {
 			assertNotEquals(0, execution.get(0).getApplySetPointInMilliAmpere());
 		}
 	}
+
 }

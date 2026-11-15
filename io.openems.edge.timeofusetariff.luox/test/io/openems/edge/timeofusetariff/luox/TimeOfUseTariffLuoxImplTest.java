@@ -31,4 +31,5 @@ public class TimeOfUseTariffLuoxImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

@@ -246,4 +246,5 @@ public class IoShellyPlus1PmImpl extends AbstractOpenemsComponent implements IoS
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

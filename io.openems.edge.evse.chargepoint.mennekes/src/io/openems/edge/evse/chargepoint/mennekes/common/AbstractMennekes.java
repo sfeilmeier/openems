@@ -140,4 +140,5 @@ public abstract class AbstractMennekes extends AbstractEvseChargePointBender imp
 	 * @return config readOnly value
 	 */
 	public abstract boolean isReadOnly();
+
 }

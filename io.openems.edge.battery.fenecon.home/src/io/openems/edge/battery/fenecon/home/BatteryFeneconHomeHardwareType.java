@@ -72,4 +72,5 @@ public enum BatteryFeneconHomeHardwareType implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return DEFAULT;
 	}
+
 }

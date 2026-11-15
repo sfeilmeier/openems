@@ -30,4 +30,5 @@ public class DummyEnergySchedulable<ESH extends EnergyScheduleHandler> extends
 	public ESH getEnergyScheduleHandler() {
 		return this.esh;
 	}
+
 }

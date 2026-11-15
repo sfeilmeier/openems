@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import io.openems.backend.metadata.odoo.Field;
 
 public class Domain {
+
 	public static enum Operator {
 		/**
 		 * Returns case sensitive (wildcards - '%open%'). <br/>
@@ -139,4 +140,5 @@ public class Domain {
 			return false;
 		}
 	}
+
 }

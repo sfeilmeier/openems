@@ -1,6 +1,7 @@
 package io.openems.edge.core.appmanager;
 
 public enum OpenemsAppCardinality {
+
 	/**
 	 * Only one instance per {@link OpenemsAppCategory}.
 	 */

@@ -153,4 +153,5 @@ public class Na003ComM64Impl extends AbstractOpenemsModbusComponent
 				this.channel(Na003ComM64.ChannelId.DIGITAL_INPUT_4),
 				this.channel(Na003ComM64.ChannelId.DIGITAL_INPUT_5));
 	}
+
 }

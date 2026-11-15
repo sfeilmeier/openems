@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 import io.openems.common.function.Disposable;
 
 public class EventEmitterTester<T> implements Disposable {
+
 	private final EventEmitter<T> emitter;
 	private final List<T> emittedValues = new CopyOnWriteArrayList<>();
 
@@ -75,4 +76,5 @@ public class EventEmitterTester<T> implements Disposable {
 	public void dispose() {
 		this.emitter.unsubscribe(this.listener);
 	}
+
 }

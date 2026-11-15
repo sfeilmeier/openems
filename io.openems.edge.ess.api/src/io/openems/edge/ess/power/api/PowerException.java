@@ -31,4 +31,5 @@ public class PowerException extends OpenemsException {
 	public String getMessage() {
 		return super.getMessage() + (this.reason != null ? " [" + this.reason.toString() + "]" : "");
 	}
+
 }

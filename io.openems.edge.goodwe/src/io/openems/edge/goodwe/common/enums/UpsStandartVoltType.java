@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum UpsStandartVoltType implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	VOLT_208(0, "208 V"), //
 	VOLT_220(1, "220 V "), //
@@ -32,4 +33,5 @@ public enum UpsStandartVoltType implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -39,4 +39,5 @@ public class ContinueWithDischargeHandler extends StateHandler<State, Context> {
 
 		return State.CONTINUE_WITH_DISCHARGE;
 	}
+
 }

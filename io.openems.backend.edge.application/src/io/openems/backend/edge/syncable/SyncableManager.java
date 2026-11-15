@@ -23,6 +23,7 @@ import io.openems.common.utils.ThrottledLoopExecutor;
 
 @Component(scope = SINGLETON, immediate = true, service = SyncableManager.class)
 public class SyncableManager {
+
 	private static final int MAX_UPDATE_NOTIFICATIONS_PER_SECOND = 300;
 
 	private ThrottledLoopExecutor sendExecutor;

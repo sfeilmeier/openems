@@ -80,4 +80,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int maximumSellToGridPower() {
 		return this.builder.maximumSellToGridPower;
 	}
+
 }

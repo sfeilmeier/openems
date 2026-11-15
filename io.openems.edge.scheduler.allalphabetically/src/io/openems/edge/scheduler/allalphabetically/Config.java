@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String[] controllers_ids() default {};
 
 	String webconsole_configurationFactory_nameHint() default "Scheduler All Alphabetically [{id}]";
+
 }

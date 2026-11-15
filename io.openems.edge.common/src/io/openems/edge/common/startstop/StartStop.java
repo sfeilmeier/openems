@@ -3,6 +3,7 @@ package io.openems.edge.common.startstop;
 import io.openems.common.types.OptionsEnum;
 
 public enum StartStop implements OptionsEnum {
+
 	/**
 	 * UNDEFINED.
 	 * 
@@ -53,4 +54,5 @@ public enum StartStop implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

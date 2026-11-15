@@ -140,4 +140,5 @@ public interface SoltaroBatteryVersionC extends Battery {
 			return this.doc;
 		}
 	}
+
 }

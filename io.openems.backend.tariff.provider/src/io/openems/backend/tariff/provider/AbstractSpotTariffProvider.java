@@ -28,4 +28,5 @@ public abstract class AbstractSpotTariffProvider extends AbstractOpenemsBackendC
 				.map(i -> i.tariff().getDebugLogOutput(now)) //
 				.collect(Collectors.joining("|"));
 	}
+
 }

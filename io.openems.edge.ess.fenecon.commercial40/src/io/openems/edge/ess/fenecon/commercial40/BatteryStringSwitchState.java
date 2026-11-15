@@ -3,6 +3,7 @@ package io.openems.edge.ess.fenecon.commercial40;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryStringSwitchState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	MAIN_CONTATCTOR(1, "Main contactor"), //
 	PRECHARGE_CONTACTOR(2, "Precharge contactor"), //
@@ -32,4 +33,5 @@ public enum BatteryStringSwitchState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

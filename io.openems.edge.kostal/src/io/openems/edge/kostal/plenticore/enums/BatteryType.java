@@ -4,6 +4,7 @@ import io.openems.common.types.OptionsEnum;
 
 // x24C 588 Battery Type 6 - U16 1 RO 0x03
 public enum BatteryType implements OptionsEnum {
+
 	NO_BATTERY(0x0000, "No battery (PV-Functionality)"), //
 	PIKO_BATTERY_LI(0x0002, "PIKO Battery Li"), //
 	BYD(0x0004, "BYD"), //
@@ -39,4 +40,5 @@ public enum BatteryType implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

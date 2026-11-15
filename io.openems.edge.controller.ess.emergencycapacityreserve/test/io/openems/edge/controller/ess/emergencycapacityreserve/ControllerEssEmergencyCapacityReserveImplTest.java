@@ -637,4 +637,5 @@ public class ControllerEssEmergencyCapacityReserveImplTest {
 						.output(STATE_MACHINE, State.FORCE_CHARGE_GRID) //
 				);
 	}
+
 }

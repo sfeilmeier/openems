@@ -7,6 +7,7 @@ import io.openems.edge.common.modbusslave.ModbusSlave;
 import io.openems.edge.meter.api.ElectricityMeter;
 
 public interface MeterSiemensSicamt7kg966 extends ElectricityMeter, ModbusComponent, OpenemsComponent, ModbusSlave {
+
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 		;
 

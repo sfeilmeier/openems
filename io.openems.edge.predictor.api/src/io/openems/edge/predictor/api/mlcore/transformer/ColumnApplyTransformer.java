@@ -26,4 +26,5 @@ public class ColumnApplyTransformer<I> extends AbstractDataFrameTransformer<I> {
 		}
 		return dataframe;
 	}
+
 }

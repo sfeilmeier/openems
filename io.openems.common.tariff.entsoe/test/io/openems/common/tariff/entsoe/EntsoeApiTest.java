@@ -21,6 +21,7 @@ import io.openems.common.types.BiddingZone;
 import io.openems.common.xml.serialization.XmlParser;
 
 class EntsoeApiTest {
+
 	private static final String XML = """
 			<?xml version="1.0" encoding="utf-8"?>
 			<Publication_MarketDocument xmlns="urn:iec62325.351:tc57wg16:451-3:publicationdocument:7:3">
@@ -4932,4 +4933,5 @@ class EntsoeApiTest {
 		duration = ((DelayTimeProvider.Delay.DurationDelay) delay).getDuration();
 		assertEquals(24, duration.toHours(), "Delay should be 24 hours");
 	}
+
 }

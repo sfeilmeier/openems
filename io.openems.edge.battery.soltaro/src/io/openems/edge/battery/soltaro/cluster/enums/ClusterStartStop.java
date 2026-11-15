@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.cluster.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ClusterStartStop implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	START(1, "Start"), //
 	STOP(2, "Stop");
@@ -29,4 +30,5 @@ public enum ClusterStartStop implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

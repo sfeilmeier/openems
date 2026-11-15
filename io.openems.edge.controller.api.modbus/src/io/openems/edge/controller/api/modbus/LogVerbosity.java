@@ -1,6 +1,7 @@
 package io.openems.edge.controller.api.modbus;
 
 public enum LogVerbosity {
+
 	/**
 	 * Show no logs.
 	 */
@@ -9,4 +10,5 @@ public enum LogVerbosity {
 	 * Show basic information in Controller.Debug.Log.
 	 */
 	DEBUG_LOG;
+
 }

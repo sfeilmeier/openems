@@ -20,4 +20,5 @@ public class FinishedEvStopHandler extends StateHandler<EvseSingleState, Context
 
 		return EvseSingleState.FINISHED_EV_STOP;
 	}
+
 }

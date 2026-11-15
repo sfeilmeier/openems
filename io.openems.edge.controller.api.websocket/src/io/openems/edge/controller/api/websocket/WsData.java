@@ -200,4 +200,5 @@ public class WsData extends io.openems.common.websocket.WsData {
 	public boolean isChannelChangesSubscribed() {
 		return this.channelChangesSubscribed;
 	}
+
 }

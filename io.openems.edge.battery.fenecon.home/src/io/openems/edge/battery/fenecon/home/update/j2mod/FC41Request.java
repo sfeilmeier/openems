@@ -9,6 +9,7 @@ import java.io.IOException;
 import com.ghgande.j2mod.modbus.msg.ModbusResponse;
 
 public class FC41Request extends CustomRequest {
+
 	public FC41Request() {
 		super();
 
@@ -35,4 +36,5 @@ public class FC41Request extends CustomRequest {
 	public void readData(DataInput din) throws IOException {
 		Utils.readStaticByte(din, (byte) 0, "Invalid data length value");
 	}
+
 }

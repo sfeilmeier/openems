@@ -35,4 +35,5 @@ class SyncableEntryTest {
 		final var differences = SyncableEntry.compareAndGetChanges(oldList, newList);
 		assertEquals(expectedDifference, differences);
 	}
+
 }

@@ -30,6 +30,7 @@ import io.openems.edge.meter.api.SinglePhaseMeter;
 import io.openems.edge.timedata.api.utils.CalculateEnergyFromPower;
 
 public class ShellyMeteredSwitchHandler {
+
 	private final Logger log = LoggerFactory.getLogger(ShellyMeteredSwitchHandler.class);
 
 	private final ShellyMeteredSwitch component;
@@ -210,4 +211,5 @@ public class ShellyMeteredSwitchHandler {
 
 		return this.shellyService.setSwitchStatus(this.index, writeValue.get()).thenAccept(FunctionUtils::doNothing);
 	}
+
 }

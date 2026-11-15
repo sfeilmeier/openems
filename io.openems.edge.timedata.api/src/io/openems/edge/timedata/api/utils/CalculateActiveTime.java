@@ -166,4 +166,5 @@ public class CalculateActiveTime {
 		// Update 'cumulated time'
 		this.timedataProvider.channel(this.channelId).setNextValue(this.lastStoredActiveTime);
 	}
+
 }

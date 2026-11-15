@@ -71,4 +71,5 @@ public class PredictionOrchestratorTest {
 		assertEquals(List.of(this.now, this.now.plusMinutes(15)), result.getIndex());
 		assertEquals(List.of(100.0, 200.0), result.getValues());
 	}
+
 }

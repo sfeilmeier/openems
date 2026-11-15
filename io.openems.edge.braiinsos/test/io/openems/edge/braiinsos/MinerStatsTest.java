@@ -104,4 +104,5 @@ public class MinerStatsTest {
 				  }
 				}""", prettyToString(j));
 	}
+
 }

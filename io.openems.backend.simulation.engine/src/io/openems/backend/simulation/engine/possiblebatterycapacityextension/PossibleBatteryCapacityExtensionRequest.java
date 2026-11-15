@@ -72,4 +72,5 @@ public class PossibleBatteryCapacityExtensionRequest extends JsonrpcRequest {
 	public double getElectricityPrice() {
 		return this.electricityPrice;
 	}
+
 }

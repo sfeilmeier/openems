@@ -176,4 +176,5 @@ public interface AnalogOutput extends OpenemsComponent {
 	public default Value<Float> getDebugSetOutputPercent() {
 		return this.getDebugSetOutputPercentChannel().value();
 	}
+
 }

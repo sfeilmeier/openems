@@ -8,6 +8,7 @@ import org.dhatim.fastexcel.StyleSetter;
 import org.dhatim.fastexcel.Worksheet;
 
 public class XlsxWorksheetWrapper {
+
 	public record XlsxCellWrapper(int c, int r, StyleSetter style) {
 	}
 

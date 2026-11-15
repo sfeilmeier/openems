@@ -3,6 +3,7 @@ package io.openems.edge.battery.bmw.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryStateCommand implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OPEN_CONTACTOR(0, "Open Contactor"), //
 	RESERVED_ENABLE_BATTERY(1, "Reserved Enable Battery"), //
@@ -45,4 +46,5 @@ public enum BatteryStateCommand implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

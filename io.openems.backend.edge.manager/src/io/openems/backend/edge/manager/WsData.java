@@ -166,4 +166,5 @@ public class WsData extends io.openems.common.websocket.WsData {
 	public String toLogString() {
 		return "EdgeManager.WsData [" + this.edges.size() + "]";
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.aircooling.blueeplus;
 import io.openems.common.types.OptionsEnum;
 
 public enum StatusValues implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NOT_AVAILABLE(1, "Not available"), //
 	CONFIG_CHANGED(2, "configChanged"), //
@@ -62,4 +63,5 @@ public enum StatusValues implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

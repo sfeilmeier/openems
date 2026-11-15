@@ -74,4 +74,5 @@ public class EnumReadChannel extends AbstractReadChannel<EnumDoc, Integer> {
 		this.lastValue = null;
 		this.debounceCounter = 0;
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.fenecon.mini.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum SetupMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OFF(0, "Off"), //
 	ON(1, "On");
@@ -29,4 +30,5 @@ public enum SetupMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

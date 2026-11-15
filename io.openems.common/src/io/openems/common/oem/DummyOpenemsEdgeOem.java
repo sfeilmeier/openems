@@ -632,4 +632,5 @@ public class DummyOpenemsEdgeOem implements OpenemsEdgeOem {
 	public String getOpenMeteoApiKey() {
 		return this.openMeteoApiKey;
 	}
+
 }

@@ -90,4 +90,5 @@ public class ModelTrainingServiceTest {
 		assertEquals(List.of(this.now.minusMinutes(15)), featuresCaptor.getValue().getIndex());
 		assertEquals(List.of(this.now.minusMinutes(15)), targetCaptor.getValue().getIndex());
 	}
+
 }

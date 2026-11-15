@@ -102,4 +102,5 @@ public class HistoricalWeatherService {
 				.withQueryParam(HistoricalQueryParams.TIMEZONE, zone.toString())//
 				.toEncodedString();
 	}
+
 }

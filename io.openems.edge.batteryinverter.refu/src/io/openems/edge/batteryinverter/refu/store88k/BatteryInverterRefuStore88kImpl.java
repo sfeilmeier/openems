@@ -522,4 +522,5 @@ public class BatteryInverterRefuStore88kImpl extends AbstractOpenemsModbusCompon
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

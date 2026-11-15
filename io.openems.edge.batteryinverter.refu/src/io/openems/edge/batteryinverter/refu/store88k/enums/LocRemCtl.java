@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.refu.store88k.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum LocRemCtl implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	REMOTE(0, "PCS Remote Control"), //
 	LOCAL(1, "PCS Local Control"),;

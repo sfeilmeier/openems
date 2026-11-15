@@ -162,4 +162,5 @@ public class IoShellyPro3EmImpl extends IoGen2ShellyBaseImpl implements IoShelly
 	protected MDnsDiscovery getMDnsDiscovery() {
 		return this.mDnsDiscovery;
 	}
+
 }

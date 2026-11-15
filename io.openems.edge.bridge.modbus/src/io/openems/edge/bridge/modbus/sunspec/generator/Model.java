@@ -123,4 +123,5 @@ public record Model(int id, int len, String name, String label, String descripti
 		return "Model [id=" + this.id + ", name=" + this.name + ", points=" + this.points + ", label=" + this.label
 				+ ", description=" + this.description + "]";
 	}
+
 }

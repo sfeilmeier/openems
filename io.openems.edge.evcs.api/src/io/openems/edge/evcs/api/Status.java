@@ -3,6 +3,7 @@ package io.openems.edge.evcs.api;
 import io.openems.common.types.OptionsEnum;
 
 public enum Status implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	STARTING(0, "Starting"), //
 	/**
@@ -40,4 +41,5 @@ public enum Status implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

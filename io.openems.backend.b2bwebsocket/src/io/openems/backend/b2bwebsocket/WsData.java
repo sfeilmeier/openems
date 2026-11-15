@@ -72,4 +72,5 @@ public class WsData extends io.openems.common.websocket.WsData {
 				: user.getId();
 		return "B2bWebsocket.WsData [user=" + userId + "]";
 	}
+
 }

@@ -80,4 +80,5 @@ public class ControllerSimpleTests {
 		currentDate = LocalDateTime.of(2018, 11, 11, 12, 0);
 		assertFalse(ControllerHighLoadTimeslotImpl.isActiveWeekday(weekdayFilter, currentDate)); // Sunday
 	}
+
 }

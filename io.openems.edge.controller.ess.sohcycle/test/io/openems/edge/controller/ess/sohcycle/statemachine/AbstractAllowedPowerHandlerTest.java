@@ -87,4 +87,5 @@ class AbstractAllowedPowerHandlerTest {
 			this.cleanupCalled = true;
 		}
 	}
+
 }

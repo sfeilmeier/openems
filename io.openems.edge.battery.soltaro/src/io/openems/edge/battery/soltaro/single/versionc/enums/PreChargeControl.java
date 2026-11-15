@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.single.versionc.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PreChargeControl implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	SWITCH_OFF(0x0, "Shut Down Main Power Contactor & Pre-charge"), //
 	SWITCH_ON(0x1, "Switch ON Pre-charge & Main Power Contactor"), //
@@ -31,4 +32,5 @@ public enum PreChargeControl implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

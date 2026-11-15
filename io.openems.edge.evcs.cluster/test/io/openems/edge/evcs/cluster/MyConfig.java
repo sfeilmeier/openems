@@ -114,4 +114,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int minimumGuaranteeChargePower() {
 		return this.builder.minimumGuaranteeChargePower;
 	}
+
 }

@@ -35,4 +35,5 @@ import io.openems.common.channel.PropertyChannel;
 	int rechargePower() default 6000;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Peak-Shaving Asymmetric [{id}]";
+
 }

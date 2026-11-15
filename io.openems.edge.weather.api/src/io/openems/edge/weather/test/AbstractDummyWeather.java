@@ -104,4 +104,5 @@ public abstract class AbstractDummyWeather<SELF extends AbstractDummyWeather<?>>
 		this.dailyWeatherForecast = value;
 		return this.self();
 	}
+
 }

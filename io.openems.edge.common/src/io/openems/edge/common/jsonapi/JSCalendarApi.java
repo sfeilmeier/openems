@@ -118,4 +118,5 @@ public class JSCalendarApi {
 			LOG.error(ur.servicePid + ": Unable to update JSCalendar Property. " + e.getMessage());
 		}
 	}
+
 }

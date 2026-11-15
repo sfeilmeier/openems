@@ -150,4 +150,5 @@ public class EshCodec implements InvertibleCodec<int[], IntegerGene> {
 	public Function<int[], Genotype<IntegerGene>> encoder() {
 		return this.encoder;
 	}
+
 }

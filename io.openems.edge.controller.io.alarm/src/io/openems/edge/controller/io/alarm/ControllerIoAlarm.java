@@ -19,4 +19,5 @@ public interface ControllerIoAlarm extends Controller, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

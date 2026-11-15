@@ -300,4 +300,5 @@ public class AbstractManagedEvcsTest {
 						.output(STATUS, Status.CHARGING_REJECTED) //
 						.output(CHARGE_STATE, ChargeState.NOT_CHARGING)); //
 	}
+
 }

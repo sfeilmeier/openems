@@ -293,4 +293,5 @@ public class BatteryFeneconF2bSerialClusterImplTest {
 		// .output(STATE, StateMachine.State.ERROR))//
 		;
 	}
+
 }

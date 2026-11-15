@@ -5,6 +5,7 @@ import java.util.List;
 import io.openems.common.utils.BehaviorSubject;
 
 public interface TariffProvider {
+
 	/**
 	 * Provides observable information about currently loaded tariffs.
 	 *
@@ -29,4 +30,5 @@ public interface TariffProvider {
 	 */
 	record LoadedTariffInfo(Tariff tariff, TariffUpdateStatus lastUpdateStatus) {
 	}
+
 }

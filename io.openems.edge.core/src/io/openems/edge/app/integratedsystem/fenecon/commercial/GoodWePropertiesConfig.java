@@ -3844,4 +3844,5 @@ public class GoodWePropertiesConfig {
 				.map(Nameable::of) //
 				.toList();
 	}
+
 }

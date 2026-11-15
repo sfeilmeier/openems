@@ -244,4 +244,5 @@ public class TouSpotTariffImpl extends AbstractTariffComponent implements TouSpo
 	public BehaviorSubject<TariffUpdateStatus> getLastUpdateStatus() {
 		return this.updateStatus;
 	}
+
 }

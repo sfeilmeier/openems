@@ -137,4 +137,5 @@ class DoubleUtilsTest {
 			assertEquals(15, result, 1e-9);
 		}
 	}
+
 }

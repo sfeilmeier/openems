@@ -203,4 +203,5 @@ public class ControllerIoAnalogImpl extends AbstractOpenemsComponent
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

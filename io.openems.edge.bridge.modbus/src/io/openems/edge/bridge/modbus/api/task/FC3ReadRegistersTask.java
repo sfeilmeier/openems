@@ -43,4 +43,5 @@ public class FC3ReadRegistersTask
 	protected String payloadToString(ReadMultipleRegistersResponse response) {
 		return ModbusUtils.registersToHexString(response.getRegisters());
 	}
+
 }

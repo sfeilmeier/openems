@@ -15,4 +15,5 @@ public class Utils {
     public static float round2(float value) {
         return Math.round(value * 100f) / 100f;
     }
+
 }

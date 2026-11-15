@@ -204,4 +204,5 @@ public abstract class AbstractGenericManagedEss<ESS extends SymmetricEss, BATTER
 		case STOP -> StartStop.STOP;
 		};
 	}
+
 }

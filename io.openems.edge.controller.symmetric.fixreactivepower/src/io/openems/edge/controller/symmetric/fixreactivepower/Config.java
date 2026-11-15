@@ -7,6 +7,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 		name = "Controller Fix Reactive Power Symmetric", //
 		description = "Defines a fixed reactive power to a symmetric energy storage system.")
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "ctrlFixReactivePower0";
 
@@ -26,4 +27,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	Mode mode() default Mode.MANUAL_OFF;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Fix Reactive Power Symmetric [{id}]";
+
 }

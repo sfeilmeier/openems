@@ -140,4 +140,5 @@ public interface KacoBlueplanetHybrid10Core extends OpenemsComponent {
 	public default void _setSerialnumber(String value) {
 		this.getSerialnumberChannel().setNextValue(value);
 	}
+
 }

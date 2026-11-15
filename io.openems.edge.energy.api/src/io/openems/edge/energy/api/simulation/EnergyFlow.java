@@ -498,4 +498,5 @@ public class EnergyFlow {
 			return (int) ((long) this.consumption - this.usableProduction() - this.getEss());
 		}
 	}
+
 }

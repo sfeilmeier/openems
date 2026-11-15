@@ -217,4 +217,5 @@ public class AppHeatMyPv extends AbstractOpenemsAppWithProps<AppHeatMyPv, AppHea
 	public Host getHost() {
 		return this.host;
 	}
+
 }

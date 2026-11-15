@@ -237,4 +237,5 @@ public class OsgiComponentTest<SUT> {
 
 		return true;
 	}
+
 }

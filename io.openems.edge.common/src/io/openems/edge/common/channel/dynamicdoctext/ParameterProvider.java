@@ -8,6 +8,7 @@ import io.openems.edge.common.channel.ChannelId;
 import io.openems.edge.common.component.OpenemsComponent;
 
 public interface ParameterProvider {
+
 	/**
 	 * Links this parameter to this component. Must only be called once. Create a
 	 * copy with clone() before calling this method.
@@ -97,4 +98,5 @@ public interface ParameterProvider {
 			Function<T, String> function) {
 		return new ComponentDataParameterProvider<>(componentClass, function);
 	}
+
 }

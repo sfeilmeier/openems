@@ -266,4 +266,5 @@ public class SimulatorEvseChargepointImpl extends AbstractOpenemsComponent imple
 	private Phase.SingleOrThreePhase getPhase() {
 		return this.currentPhases;
 	}
+
 }

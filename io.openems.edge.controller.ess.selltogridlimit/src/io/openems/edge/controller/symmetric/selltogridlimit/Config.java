@@ -31,4 +31,5 @@ import io.openems.common.channel.PropertyChannel;
 	int maximumSellToGridPower();
 
 	String webconsole_configurationFactory_nameHint() default "Controller Ess Sell-to-Grid Limit [{id}]";
+
 }

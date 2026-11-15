@@ -12,4 +12,5 @@ public class Context extends AbstractContext<BydBatteryBoxCommercialC130> {
 		super(parent);
 		this.config = config;
 	}
+
 }

@@ -83,4 +83,5 @@ public abstract class AbstractDummyEvseChargePoint<SELF extends AbstractDummyEvs
 	public MeterType getMeterType() {
 		return EvseChargePoint.super.getMeterType();
 	}
+
 }

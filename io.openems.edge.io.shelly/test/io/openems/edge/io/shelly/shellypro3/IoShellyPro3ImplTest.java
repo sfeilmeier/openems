@@ -76,4 +76,5 @@ public class IoShellyPro3ImplTest {
 
 				.deactivate(); //
 	}
+
 }

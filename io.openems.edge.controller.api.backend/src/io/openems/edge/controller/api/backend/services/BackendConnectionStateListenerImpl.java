@@ -33,6 +33,7 @@ import io.openems.edge.controller.api.backend.api.DataFetchType;
 		EdgeEventConstants.TOPIC_CYCLE_BEFORE_CONTROLLERS //
 })
 public class BackendConnectionStateListenerImpl implements BackendConnectionStateListener, EventHandler, DebugLoggable {
+
 	private final Logger log = LoggerFactory.getLogger(BackendConnectionStateListenerImpl.class);
 	private final BehaviorSubject<BackendConnectionState> connectionState = new BehaviorSubject<>(
 			new BackendConnectionState.StillInitializing());
@@ -141,4 +142,5 @@ public class BackendConnectionStateListenerImpl implements BackendConnectionStat
 
 		return new BackendConnectionState.Connected();
 	}
+
 }

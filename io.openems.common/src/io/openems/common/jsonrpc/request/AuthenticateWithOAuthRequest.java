@@ -64,4 +64,5 @@ public class AuthenticateWithOAuthRequest extends JsonrpcRequest {
 				.add("payload", this.payload.toJsonObject()) //
 				.build();
 	}
+
 }

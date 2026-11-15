@@ -18,4 +18,5 @@ public class MaxScaler<I> extends AbstractSeriesTransformer<I> {
 		series.apply(v -> v / this.max);
 		return series;
 	}
+
 }

@@ -5,6 +5,7 @@ import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.statemachine.StateHandler;
 
 public class StoppedHandler extends StateHandler<State, Context> {
+
 	@Override
 	public State runAndGetNextState(Context context) {
 		var battery = context.getParent();
@@ -14,4 +15,5 @@ public class StoppedHandler extends StateHandler<State, Context> {
 
 		return State.STOPPED;
 	}
+
 }

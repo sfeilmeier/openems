@@ -138,4 +138,5 @@ public class AppPredictionUnmanagedConsumption
 	protected Property[] propertyValues() {
 		return Property.values();
 	}
+
 }

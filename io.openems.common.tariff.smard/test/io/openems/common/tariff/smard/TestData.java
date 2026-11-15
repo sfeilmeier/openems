@@ -1,6 +1,7 @@
 package io.openems.common.tariff.smard;
 
 public class TestData {
+
 	public static final String TIMESTAMP_JSON = """
 			{
 			  "timestamps": [
@@ -3311,4 +3312,5 @@ public class TestData {
 			  ]
 			}
 			""";
+
 }

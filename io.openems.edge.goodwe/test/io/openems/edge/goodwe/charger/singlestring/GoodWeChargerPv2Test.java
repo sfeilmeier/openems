@@ -17,4 +17,5 @@ public class GoodWeChargerPv2Test {
 						.setModbusId("modbus0") //
 						.build());
 	}
+
 }

@@ -257,4 +257,5 @@ public class AppMennekesEvse extends AbstractOpenemsAppWithProps<AppMennekesEvse
 	public List<EMobilityArchitectureType> supportedArchitectureTypes() {
 		return List.of(EMobilityArchitectureType.EVSE);
 	}
+
 }

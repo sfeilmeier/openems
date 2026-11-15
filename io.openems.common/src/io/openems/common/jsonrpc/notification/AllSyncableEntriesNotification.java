@@ -12,6 +12,7 @@ import io.openems.common.jsonrpc.syncable.SyncableEntry;
 import io.openems.common.utils.JsonUtils;
 
 public class AllSyncableEntriesNotification extends JsonrpcNotification {
+
 	public static final String METHOD = "syncable/allentries";
 
 	/**
@@ -64,4 +65,5 @@ public class AllSyncableEntriesNotification extends JsonrpcNotification {
 	public int hashCode() {
 		return Objects.hash(this.entries);
 	}
+
 }

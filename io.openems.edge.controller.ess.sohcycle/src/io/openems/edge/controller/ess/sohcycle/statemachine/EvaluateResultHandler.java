@@ -10,6 +10,7 @@ import io.openems.edge.controller.ess.sohcycle.ControllerEssSohCycle;
 import io.openems.edge.controller.ess.sohcycle.Utils;
 
 public class EvaluateResultHandler extends StateHandler<StateMachine.State, Context> {
+
     private static final Logger log = LoggerFactory.getLogger(EvaluateResultHandler.class);
 
     @Override

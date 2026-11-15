@@ -539,4 +539,5 @@ public class TestConfig {
 				.add(period("23:45", null, 0.0, 307.7, 310.0, 90.0)) //
 				.build();
 	}
+
 }

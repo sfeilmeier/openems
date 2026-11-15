@@ -1,6 +1,7 @@
 package io.openems.edge.batteryinverter.sinexcel.enums;
 
 public enum VoltageLevel {
+
 	V_380("380 V", 0), //
 	V_400("400 V", 1), //
 	V_480("480 V", 2); //
@@ -20,4 +21,5 @@ public enum VoltageLevel {
 	public int getValue() {
 		return this.value;
 	}
+
 }

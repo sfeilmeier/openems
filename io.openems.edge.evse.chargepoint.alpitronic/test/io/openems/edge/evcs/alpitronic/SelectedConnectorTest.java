@@ -71,4 +71,5 @@ class SelectedConnectorTest {
 		assertEquals(SelectedConnector.UNDEFINED, SelectedConnector.fromRawValue(-1, true));
 		assertEquals(SelectedConnector.UNDEFINED, SelectedConnector.fromRawValue(100, true));
 	}
+
 }

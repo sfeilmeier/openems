@@ -12,6 +12,7 @@ import io.openems.edge.controller.ess.sohcycle.ControllerEssSohCycle;
 import io.openems.edge.controller.ess.sohcycle.EssSohCycleConstants;
 
 public class CheckBalancingHandler extends StateHandler<StateMachine.State, Context> {
+
 	private static final Logger log = LoggerFactory.getLogger(CheckBalancingHandler.class);
 
 	@Override
@@ -64,4 +65,5 @@ public class CheckBalancingHandler extends StateHandler<StateMachine.State, Cont
 			return StateMachine.State.MEASUREMENT_CYCLE_DISCHARGING;
 		}
 	}
+
 }

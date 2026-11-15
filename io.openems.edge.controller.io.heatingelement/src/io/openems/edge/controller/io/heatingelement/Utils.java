@@ -160,4 +160,5 @@ public class Utils {
 	public static int getTotalAvgPower(HeatingPhases phases) {
 		return phases.phase1.getAvgPower() + phases.phase2.getAvgPower() + phases.phase3.getAvgPower();
 	}
+
 }

@@ -104,4 +104,5 @@ public class Hysteresis {
 		var nextValue = Math.min(level.getValue() + 1, maxLevel);
 		return Level.fromValue(nextValue);
 	}
+
 }

@@ -240,4 +240,5 @@ public class MyJsonServer {
 	private void logDebug(String message) {
 		this.parent.logDebug(this.log, message);
 	}
+
 }

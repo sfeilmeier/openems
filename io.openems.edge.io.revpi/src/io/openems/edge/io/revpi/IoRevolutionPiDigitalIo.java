@@ -518,4 +518,5 @@ public interface IoRevolutionPiDigitalIo extends DigitalOutput, DigitalInput, Op
 			return this.doc;
 		}
 	}
+
 }

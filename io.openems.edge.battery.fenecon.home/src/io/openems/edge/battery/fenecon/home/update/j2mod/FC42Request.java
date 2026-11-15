@@ -7,6 +7,7 @@ import java.io.IOException;
 import com.ghgande.j2mod.modbus.msg.ModbusResponse;
 
 public class FC42Request extends CustomRequest {
+
 	public static final int MAX_DATA_LEN = 128;
 
 	/**
@@ -64,4 +65,5 @@ public class FC42Request extends CustomRequest {
 	public String toString() {
 		return "FC42Request{FrameIndex=%d}".formatted(this.frameIndex);
 	}
+
 }

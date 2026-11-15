@@ -9,6 +9,7 @@ import io.openems.backend.alerting.Message;
  *
  */
 public interface MessageSchedulerService {
+
 	/**
 	 * Register handler for message scheduling and return MessageScheduler, to do
 	 * so.

@@ -46,4 +46,5 @@ public enum PvPort {
 		this.relatedPvCurrent = relatedPvCurrent;
 		this.pvVoltageId = pvVoltageId;
 	}
+
 }

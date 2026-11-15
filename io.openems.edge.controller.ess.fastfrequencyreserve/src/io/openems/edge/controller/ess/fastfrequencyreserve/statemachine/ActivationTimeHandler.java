@@ -103,4 +103,5 @@ public class ActivationTimeHandler extends StateHandler<State, Context> {
 		return State.ACTIVATION_TIME.asCamelCase() + "-"
 				+ EnumUtils.nameAsCamelCase(this.activationTimeState.subState());
 	}
+
 }

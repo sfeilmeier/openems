@@ -110,4 +110,5 @@ public record ComponentDef(String id, String alias, String factoryId, ComponentP
 		return new ComponentDef(comp.getId(), comp.getAlias(), comp.getFactoryId(),
 				ComponentProperties.fromMap(comp.getProperties()), additionalConfig);
 	}
+
 }

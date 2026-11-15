@@ -3,6 +3,7 @@ package io.openems.edge.ess.fenecon.commercial40;
 import io.openems.common.types.OptionsEnum;
 
 public enum SystemManufacturer implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	BYD(1, "BYD");
 
@@ -28,4 +29,5 @@ public enum SystemManufacturer implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

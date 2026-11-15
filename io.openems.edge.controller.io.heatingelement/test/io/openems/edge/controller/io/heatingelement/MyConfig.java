@@ -262,4 +262,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public Distribution distribution() {
 		return this.builder.distribution;
 	}
+
 }

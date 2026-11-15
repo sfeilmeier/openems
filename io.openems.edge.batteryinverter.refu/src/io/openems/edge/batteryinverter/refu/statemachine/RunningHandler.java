@@ -74,4 +74,5 @@ public class RunningHandler extends StateHandler<State, Context> {
 		EnumWriteChannel varPctEnaChannel = inverter.getSunSpecChannelOrError(RefuSunSpecModel.S123.VAR_PCT_ENA);
 		varPctEnaChannel.setNextWriteValue(S123Ena.ENABLED);
 	}
+
 }

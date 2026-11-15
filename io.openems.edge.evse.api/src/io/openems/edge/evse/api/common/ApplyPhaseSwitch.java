@@ -129,4 +129,5 @@ public record ApplyPhaseSwitch(PhaseSwitchDirection direction, PhaseSwitchAbilit
 			};
 		}
 	}
+
 }

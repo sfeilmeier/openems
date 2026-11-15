@@ -109,4 +109,5 @@ public interface ControllerApiBackend extends Controller, OpenemsComponent, org.
 	 * @return Array with features this backend supports.
 	 */
 	public BackendFeature[] getSupportedFeatures();
+
 }

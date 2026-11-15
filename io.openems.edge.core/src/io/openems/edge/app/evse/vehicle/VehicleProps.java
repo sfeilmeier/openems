@@ -111,4 +111,5 @@ public class VehicleProps {
 			def.setField(JsonFormlyUtil::buildCheckboxFromNameable);
 		});
 	}
+
 }

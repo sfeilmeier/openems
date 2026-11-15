@@ -63,4 +63,5 @@ public abstract class AbstractMirroredSpotTariffProviderComponent extends Abstra
 		}
 		return provider.getRanking();
 	}
+
 }

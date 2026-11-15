@@ -161,4 +161,5 @@ public class BackendTariffProviderImpl extends AbstractTariffComponent
 			BackendTariffProviderImpl.this.updateLoadedTariffInfos();
 		}
 	}
+
 }

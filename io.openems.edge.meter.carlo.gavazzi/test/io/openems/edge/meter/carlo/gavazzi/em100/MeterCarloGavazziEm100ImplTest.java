@@ -27,4 +27,5 @@ public class MeterCarloGavazziEm100ImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

@@ -27,4 +27,5 @@ public @interface OAuthClientConfiguration {
 
 	@AttributeDefinition(name = "Redirect URI", description = "The Redirect URI registered with the OAuth provider.")
 	String redirectUri();
+
 }

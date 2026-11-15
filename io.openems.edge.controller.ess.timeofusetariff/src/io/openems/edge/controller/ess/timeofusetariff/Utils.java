@@ -337,4 +337,5 @@ public final class Utils {
 
 	public record ApplyMode(StateMachine actualMode, Integer setPoint) {
 	}
+
 }

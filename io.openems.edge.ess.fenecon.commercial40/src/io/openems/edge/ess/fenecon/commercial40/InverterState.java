@@ -3,6 +3,7 @@ package io.openems.edge.ess.fenecon.commercial40;
 import io.openems.common.types.OptionsEnum;
 
 public enum InverterState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	INIT(0, "Init"), //
 	FAULT(2, "Fault"), //
@@ -35,4 +36,5 @@ public enum InverterState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -7,6 +7,7 @@ package io.openems.edge.core.appmanager;
  * @see OpenemsAppStatus#BETA
  */
 public enum OpenemsAppStatus {
+
 	/**
 	 * Default value for {@link OpenemsApp OpenemsApps}. Usually indicates that the
 	 * {@link OpenemsApp} is in a stable state.
@@ -17,4 +18,5 @@ public enum OpenemsAppStatus {
 	 * testing state.
 	 */
 	BETA;
+
 }

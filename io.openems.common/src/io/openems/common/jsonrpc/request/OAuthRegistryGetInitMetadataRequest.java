@@ -65,4 +65,5 @@ public class OAuthRegistryGetInitMetadataRequest extends JsonrpcRequest {
 				.serialize(this.metadata) //
 				.getAsJsonObject();
 	}
+
 }

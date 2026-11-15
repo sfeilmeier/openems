@@ -83,4 +83,5 @@ final class OptimizationStates {
 		case OptimizationState.Optimized ignored -> true;
 		};
 	}
+
 }

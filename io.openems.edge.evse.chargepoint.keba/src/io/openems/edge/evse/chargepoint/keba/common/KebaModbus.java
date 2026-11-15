@@ -79,4 +79,5 @@ public abstract class KebaModbus extends AbstractOpenemsModbusComponent
 			io.openems.edge.common.channel.ChannelId[]... furtherInitialChannelIds) {
 		super(firstInitialChannelIds, furtherInitialChannelIds);
 	}
+
 }

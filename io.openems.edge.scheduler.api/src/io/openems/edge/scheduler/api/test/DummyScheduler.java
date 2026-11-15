@@ -43,4 +43,5 @@ public class DummyScheduler extends AbstractDummyScheduler<DummyScheduler> imple
 	public LinkedHashSet<String> getControllers() {
 		return this.controllers;
 	}
+
 }

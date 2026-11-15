@@ -31,4 +31,5 @@ public enum ChargingType implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

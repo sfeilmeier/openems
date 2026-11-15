@@ -18,4 +18,5 @@ public interface IoGpio extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

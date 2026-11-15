@@ -154,4 +154,5 @@ public class WeatherForecastPersistenceService {
 	private static int round(double value) {
 		return (int) Math.round(value);
 	}
+
 }

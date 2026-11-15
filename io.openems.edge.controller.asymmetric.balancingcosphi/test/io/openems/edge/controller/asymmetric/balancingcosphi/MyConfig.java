@@ -80,4 +80,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public CosPhiDirection direction() {
 		return this.builder.direction;
 	}
+
 }

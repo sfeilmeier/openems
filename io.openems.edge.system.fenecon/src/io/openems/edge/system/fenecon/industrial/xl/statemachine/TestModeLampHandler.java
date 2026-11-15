@@ -116,4 +116,5 @@ public class TestModeLampHandler extends StateHandler<State, Context> {
 	protected String debugLog() {
 		return State.TEST_MODE_LAMP.asCamelCase() + "-" + EnumUtils.nameAsCamelCase(this.testModeLampState.subState);
 	}
+
 }

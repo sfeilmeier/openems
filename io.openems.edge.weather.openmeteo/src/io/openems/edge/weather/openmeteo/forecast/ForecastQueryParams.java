@@ -13,4 +13,5 @@ public final class ForecastQueryParams {
 	private ForecastQueryParams() {
 		throw new AssertionError("Cannot instantiate utility class");
 	}
+
 }

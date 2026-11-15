@@ -80,4 +80,5 @@ public class Context extends AbstractContext<BatteryFeneconF2bBmw> {
 	public boolean isTerminal30cClosed() {
 		return this.getParent().getF2bTerminal30c().orElse(false);
 	}
+
 }

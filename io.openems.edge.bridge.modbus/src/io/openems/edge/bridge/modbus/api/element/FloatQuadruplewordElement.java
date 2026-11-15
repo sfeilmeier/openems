@@ -28,4 +28,5 @@ public class FloatQuadruplewordElement extends AbstractQuadrupleWordElement<Floa
 	protected void valueToByteBuffer(ByteBuffer buff, Double value) {
 		buff.putDouble(value.doubleValue());
 	}
+
 }

@@ -30,4 +30,5 @@ public enum GensetInstalledStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

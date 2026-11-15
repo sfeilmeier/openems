@@ -94,4 +94,5 @@ public class SimulatorPredictorImpl extends AbstractPredictor
 		var today = Instant.now(this.componentManager.getClock()).truncatedTo(ChronoUnit.DAYS);
 		return Prediction.from(today, values);
 	}
+
 }

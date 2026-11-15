@@ -46,4 +46,5 @@ public abstract class AbstractGpioChannel implements ChannelId {
 	public final Doc doc() {
 		return this.doc;
 	}
+
 }

@@ -26,6 +26,7 @@ import io.openems.edge.bridge.modbus.test.SerialConnectionMock;
 import io.openems.edge.common.update.ProgressPublisher;
 
 public class UpdateHandlerTests {
+
 	static final int BATTERY_UNIT_ID = 1;
 	static final BatteryFeneconHomeHardwareType BATTERY_TYPE = BatteryFeneconHomeHardwareType.BATTERY_52;
 
@@ -140,4 +141,5 @@ public class UpdateHandlerTests {
 			return true;
 		}
 	}
+
 }

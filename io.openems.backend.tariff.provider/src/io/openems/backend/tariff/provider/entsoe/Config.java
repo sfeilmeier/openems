@@ -25,4 +25,5 @@ import io.openems.common.types.BiddingZone;
 	int service_ranking() default 80;
 
 	String webconsole_configurationFactory_nameHint() default "Tariff ENTSO-E";
+
 }

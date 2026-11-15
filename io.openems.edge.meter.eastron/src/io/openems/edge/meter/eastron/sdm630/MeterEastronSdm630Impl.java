@@ -257,4 +257,5 @@ public class MeterEastronSdm630Impl extends AbstractOpenemsModbusComponent imple
 			this.calculateConsumptionEnergy.update(-activePower);
 		}
 	}
+
 }

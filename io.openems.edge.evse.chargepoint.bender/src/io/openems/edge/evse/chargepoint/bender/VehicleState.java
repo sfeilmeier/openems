@@ -3,6 +3,7 @@ package io.openems.edge.evse.chargepoint.bender;
 import io.openems.common.types.OptionsEnum;
 
 public enum VehicleState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined", false), //
 	STATE_A(1, "No EV connected to the EVSE", false), //
 	STATE_B(2, "EV connected to the EVSE, but not ready for charging", true), //

@@ -109,4 +109,5 @@ public class IgnoreMinPowerConverterTest {
 
 		componentTest.deactivate();
 	}
+
 }

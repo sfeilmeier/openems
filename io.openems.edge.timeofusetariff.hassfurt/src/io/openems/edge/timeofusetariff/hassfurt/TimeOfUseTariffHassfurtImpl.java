@@ -56,6 +56,7 @@ import io.openems.edge.timeofusetariff.api.TimeOfUseTariff;
 )
 public class TimeOfUseTariffHassfurtImpl extends AbstractOpenemsComponent
 		implements TimeOfUseTariff, OpenemsComponent, TimeOfUseTariffHassfurt {
+
 	private static final String FLEX_PRO_URL = "http://eex.stwhas.de/api/spotprices/flexpro";
 	private static final String FLEX_PRO_START_END_URL = FLEX_PRO_URL + "?start_date=%s&end_date=%s";
 	private static final String FLEX_URL = "http://eex.stwhas.de/api/spotprices";
@@ -252,4 +253,5 @@ public class TimeOfUseTariffHassfurtImpl extends AbstractOpenemsComponent
 	public String debugLog() {
 		return generateDebugLog(this, this.meta.getCurrency());
 	}
+
 }

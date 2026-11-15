@@ -3,6 +3,7 @@ package io.openems.edge.kostal.piko.core.api;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryCurrentDirection implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	CHARGE(0, "Charge"), //
 	DISCHARGE(1, "Discharge");
@@ -29,4 +30,5 @@ public enum BatteryCurrentDirection implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

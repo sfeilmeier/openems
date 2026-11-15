@@ -126,4 +126,5 @@ public interface IoShelly25 extends DigitalOutput, OpenemsComponent, EventHandle
 			return this.doc;
 		}
 	}
+
 }

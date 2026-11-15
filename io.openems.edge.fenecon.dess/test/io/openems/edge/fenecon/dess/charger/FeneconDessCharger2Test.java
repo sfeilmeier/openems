@@ -32,4 +32,5 @@ public class FeneconDessCharger2Test {
 						.build()) //
 		;
 	}
+
 }

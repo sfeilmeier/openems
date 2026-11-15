@@ -60,4 +60,5 @@ import io.openems.edge.controller.api.backend.api.BackendFeature;
 	BackendFeature[] supportedFeatures() default {};
 
 	String webconsole_configurationFactory_nameHint() default "Controller Api Backend [{id}]";
+
 }

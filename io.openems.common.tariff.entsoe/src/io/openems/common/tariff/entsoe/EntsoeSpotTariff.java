@@ -140,4 +140,5 @@ public class EntsoeSpotTariff implements SpotTariff, SingletonPool.SingletonPool
 	public BiddingZone getBiddingZone() {
 		return this.biddingZone;
 	}
+
 }

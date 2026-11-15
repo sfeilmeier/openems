@@ -32,4 +32,5 @@ import io.openems.edge.common.startstop.StartStopConfig;
 	String Modbus_target() default "(enabled=true)";
 
 	String webconsole_configurationFactory_nameHint() default "Battery FENECON F2B BMW [{id}]";
+
 }

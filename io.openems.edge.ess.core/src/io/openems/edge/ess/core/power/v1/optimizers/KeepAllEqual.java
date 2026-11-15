@@ -56,4 +56,5 @@ public class KeepAllEqual {
 			return null;
 		}
 	}
+
 }

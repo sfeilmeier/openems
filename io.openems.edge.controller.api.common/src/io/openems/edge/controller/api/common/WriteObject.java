@@ -132,4 +132,5 @@ public abstract class WriteObject {
 	 * @return true if no value is there; false if a value is available.
 	 */
 	public abstract boolean isNull();
+
 }

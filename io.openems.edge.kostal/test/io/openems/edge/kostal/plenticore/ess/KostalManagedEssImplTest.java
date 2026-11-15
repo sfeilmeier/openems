@@ -27,4 +27,5 @@ public class KostalManagedEssImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

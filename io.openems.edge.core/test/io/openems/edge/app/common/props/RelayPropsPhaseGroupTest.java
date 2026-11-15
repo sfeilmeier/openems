@@ -141,4 +141,5 @@ class RelayPropsPhaseGroupTest {
 			return t -> new BundleParameter(AbstractOpenemsApp.getTranslationBundle(t.language));
 		}
 	}
+
 }

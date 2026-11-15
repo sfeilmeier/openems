@@ -148,4 +148,5 @@ class EvseClusterTaskImplTest {
 		assertEquals(0, errors.size());
 		assertEquals(List.of(this.ctrlId1), this.getClusterIds());
 	}
+
 }

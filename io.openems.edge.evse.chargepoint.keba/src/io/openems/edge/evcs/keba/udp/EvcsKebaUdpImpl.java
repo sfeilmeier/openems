@@ -272,4 +272,5 @@ public class EvcsKebaUdpImpl extends AbstractManagedEvcsComponent implements Keb
 				ModbusSlaveNatureTable.of(EvcsKebaUdpImpl.class, accessMode, 100) //
 						.build());
 	}
+
 }

@@ -92,4 +92,5 @@ public class ControllerHeatingElementImplTest4 {
 						.output(LEVEL, Level.LEVEL_2)) //
 				.deactivate();
 	}
+
 }

@@ -13,4 +13,5 @@ public class ReadChannelId extends AbstractGpioChannel implements ChannelId {
 				.accessMode(AccessMode.READ_ONLY)//
 				.persistencePriority(PersistencePriority.HIGH));
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.sma.ess.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum OperatingModeForActivePowerLimitation implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OFF(303, "Off"), //
 	ACT_PWR_LIM_P_IN_W(1077, "Active Power Limitation P in W"), //
@@ -33,4 +34,5 @@ public enum OperatingModeForActivePowerLimitation implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

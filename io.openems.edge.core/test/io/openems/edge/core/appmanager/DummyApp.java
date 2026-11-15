@@ -250,4 +250,5 @@ public class DummyApp implements OpenemsApp {
 	public boolean assertCanEdit(String prop, User user) {
 		return true;
 	}
+
 }

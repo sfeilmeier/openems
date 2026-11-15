@@ -144,4 +144,5 @@ public class AppEnerixControl extends AbstractOpenemsAppWithProps<AppEnerixContr
 	protected OpenemsAppStatus getStatus() {
 		return OpenemsAppStatus.BETA;
 	}
+
 }

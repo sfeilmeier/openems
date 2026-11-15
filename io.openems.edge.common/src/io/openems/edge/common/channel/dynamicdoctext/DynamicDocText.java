@@ -11,6 +11,7 @@ import io.openems.common.utils.TextProvider;
 import io.openems.edge.common.channel.Channel;
 
 public class DynamicDocText {
+
 	private final Logger log = LoggerFactory.getLogger(DynamicDocText.class);
 
 	private final TextProvider textFormat;
@@ -56,4 +57,5 @@ public class DynamicDocText {
 			return textFormat;
 		}
 	}
+
 }

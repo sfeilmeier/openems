@@ -9,4 +9,5 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 	public State runAndGetNextState(Context context) {
 		return State.STOPPED;
 	}
+
 }

@@ -30,4 +30,5 @@ public enum StateEnergyMeter implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

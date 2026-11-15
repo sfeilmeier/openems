@@ -17,4 +17,5 @@ public class DummyEvseChargePointTest {
 		sut.withIsReadOnly(false);
 		assertEquals(MeterType.MANAGED_CONSUMPTION_METERED, sut.getMeterType());
 	}
+
 }

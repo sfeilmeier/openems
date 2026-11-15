@@ -81,4 +81,5 @@ public enum Unit {
 	 * Percentage.
 	 */
 	PERCENT;
+
 }

@@ -78,4 +78,5 @@ public class MaxApparentPowerHandler {
 			this.parent._setMaxApparentPower(newMaxApparentPower);
 		}
 	}
+
 }

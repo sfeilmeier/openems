@@ -115,4 +115,5 @@ public class DummyManagedSymmetricBatteryInverter
 		this._setActivePower(setActivePower);
 		this._setReactivePower(setReactivePower);
 	}
+
 }

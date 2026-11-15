@@ -96,4 +96,5 @@ public class DummyGlobalOptimizationContext {
 	private static ZonedDateTime time(int hours, int minutes) {
 		return TIME.plusHours(hours).plusMinutes(minutes);
 	}
+
 }

@@ -143,5 +143,6 @@ public class CheckBalancingHandlerTest {
 						.setRunning(true)
 						.build());
 	}
+
 }
 

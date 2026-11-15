@@ -64,4 +64,5 @@ public class ProfileClusteringTrainingServiceTest {
 		assertEquals(1.0, clusteringResult.rawClusterLabelMatrix().getValueAt(1, 0), 0.0);
 		assertEquals(0.0, clusteringResult.rawClusterLabelMatrix().getValueAt(2, 0), 0.0);
 	}
+
 }

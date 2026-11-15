@@ -23,4 +23,5 @@ public class ModbusSlaveTable {
 	public ModbusSlaveNatureTable[] getNatureTables() {
 		return this.natureTables;
 	}
+
 }

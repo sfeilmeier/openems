@@ -257,4 +257,5 @@ public record SimulationResult(//
 				.append(";fitness=").append(this.fitness);
 		return b.toString();
 	}
+
 }

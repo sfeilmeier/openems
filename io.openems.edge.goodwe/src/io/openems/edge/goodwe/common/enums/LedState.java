@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum LedState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OFF(1, "Led Off"), //
 	ON(2, "Led On"), //
@@ -33,4 +34,5 @@ public enum LedState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

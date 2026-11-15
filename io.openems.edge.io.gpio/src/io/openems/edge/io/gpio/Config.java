@@ -26,4 +26,5 @@ public @interface Config {
 	HardwareType hardwareType() default HardwareType.MODBERRY_X500_M40804_WB;
 
 	String webconsole_configurationFactory_nameHint() default "IO GPIO [{id}]";
+
 }

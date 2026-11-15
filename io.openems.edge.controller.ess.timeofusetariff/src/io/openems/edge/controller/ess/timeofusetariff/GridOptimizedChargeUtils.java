@@ -256,4 +256,5 @@ final class GridOptimizedChargeUtils {
 
 		return targetLimitChargeEnergy;
 	}
+
 }

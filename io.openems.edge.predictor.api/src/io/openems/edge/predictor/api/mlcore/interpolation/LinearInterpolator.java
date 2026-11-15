@@ -63,4 +63,5 @@ public class LinearInterpolator implements Interpolator {
 		double weight = (double) (index - floorIndex) / (ceilingIndex - floorIndex);
 		return floorValue + weight * (ceilingValue - floorValue);
 	}
+
 }

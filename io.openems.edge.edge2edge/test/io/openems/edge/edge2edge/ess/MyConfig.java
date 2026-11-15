@@ -87,4 +87,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public AccessMode remoteAccessMode() {
 		return this.builder.remoteAccessMode;
 	}
+
 }

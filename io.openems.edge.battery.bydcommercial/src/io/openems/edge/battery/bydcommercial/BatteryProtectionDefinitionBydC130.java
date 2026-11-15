@@ -100,4 +100,5 @@ public class BatteryProtectionDefinitionBydC130 implements BatteryProtectionDefi
 	public boolean isDischargeAllowed() {
 		return true;
 	}
+
 }

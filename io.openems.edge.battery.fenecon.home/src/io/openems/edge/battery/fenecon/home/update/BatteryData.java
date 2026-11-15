@@ -7,6 +7,7 @@ import io.openems.edge.common.channel.StringReadChannel;
 import io.openems.edge.common.startstop.StartStop;
 
 public interface BatteryData {
+
 	/**
 	 * Returns the tower 0 software version of the battery.
 	 * 
@@ -63,4 +64,5 @@ public interface BatteryData {
 			return this.battery.getStartStop() == StartStop.START;
 		}
 	}
+
 }

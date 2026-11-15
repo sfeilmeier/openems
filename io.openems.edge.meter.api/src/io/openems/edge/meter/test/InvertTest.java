@@ -48,4 +48,5 @@ public class InvertTest {
 				.output(ElectricityMeter.ChannelId.ACTIVE_PRODUCTION_ENERGY, invert ? 0L : 13000L)//
 				.output(ElectricityMeter.ChannelId.ACTIVE_CONSUMPTION_ENERGY, invert ? 13000L : 0L);//
 	}
+
 }

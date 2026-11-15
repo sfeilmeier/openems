@@ -751,4 +751,5 @@ public class ApplyPowerHandlerTest {
 
 		componentTest.deactivate();
 	}
+
 }

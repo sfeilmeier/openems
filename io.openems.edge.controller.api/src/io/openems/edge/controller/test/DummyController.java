@@ -45,4 +45,5 @@ public class DummyController extends AbstractDummyOpenemsComponent<DummyControll
 			this.runCallback.run();
 		}
 	}
+
 }

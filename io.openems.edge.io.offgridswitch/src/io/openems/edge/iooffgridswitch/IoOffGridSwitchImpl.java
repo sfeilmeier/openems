@@ -163,4 +163,5 @@ public class IoOffGridSwitchImpl extends AbstractOpenemsComponent
 			channel.setNextWriteValue(targetValue);
 		}
 	}
+
 }

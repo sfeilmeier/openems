@@ -10,4 +10,5 @@ public class GoRunningHandler extends StateHandler<State, Context> {
 	public State runAndGetNextState(Context context) throws OpenemsNamedException {
 		return State.RUNNING;
 	}
+
 }

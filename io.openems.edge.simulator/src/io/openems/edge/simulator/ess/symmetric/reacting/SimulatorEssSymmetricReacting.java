@@ -26,4 +26,5 @@ public interface SimulatorEssSymmetricReacting extends ManagedSymmetricEss, Symm
 			return this.doc;
 		}
 	}
+
 }

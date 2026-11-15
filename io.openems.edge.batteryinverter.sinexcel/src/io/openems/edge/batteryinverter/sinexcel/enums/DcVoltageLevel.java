@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum DcVoltageLevel implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	V_750(0, "750 V"), //
 	V_830(1, "830 V");//
@@ -29,4 +30,5 @@ public enum DcVoltageLevel implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

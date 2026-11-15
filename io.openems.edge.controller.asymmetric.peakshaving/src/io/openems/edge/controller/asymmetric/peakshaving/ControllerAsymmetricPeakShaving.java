@@ -19,4 +19,5 @@ public interface ControllerAsymmetricPeakShaving extends Controller, OpenemsComp
 			return this.doc;
 		}
 	}
+
 }

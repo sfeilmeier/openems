@@ -384,4 +384,5 @@ public class PredictionOrchestratorTest {
 		assertEquals(Arrays.stream(upperQuantileCentroids.get(2)).boxed().toList(),
 				predictedProfiles.get(2).upperQuantileValues().getValues());
 	}
+
 }

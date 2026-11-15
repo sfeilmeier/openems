@@ -13,4 +13,5 @@ public interface Interpolator {
 	 *         possible
 	 */
 	public Double interpolate(int index, List<Double> values);
+
 }

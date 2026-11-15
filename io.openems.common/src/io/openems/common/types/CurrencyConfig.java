@@ -9,6 +9,7 @@ import java.util.Currency;
  * being written through {@link Meta#_setCurrency(Currency)}.
  */
 public enum CurrencyConfig {
+
 	/**
 	 * Euro.
 	 */
@@ -43,4 +44,5 @@ public enum CurrencyConfig {
 	public float getRatio() {
 		return this.ratio;
 	}
+
 }

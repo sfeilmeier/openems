@@ -56,4 +56,5 @@ public class CoolingUnitStateMachine
 		case WAIT_FOR_STOP_REQUEST -> new WaitForStopRequestHandler();
 		};
 	}
+
 }

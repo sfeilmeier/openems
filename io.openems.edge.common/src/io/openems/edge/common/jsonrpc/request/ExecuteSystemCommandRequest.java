@@ -117,4 +117,5 @@ public class ExecuteSystemCommandRequest extends JsonrpcRequest {
 	public JsonObject getParams() {
 		return this.systemCommand.toJsonObject();
 	}
+
 }

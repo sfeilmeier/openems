@@ -252,4 +252,5 @@ public class GoodWeChargerMpptTwoStringImpl extends AbstractOpenemsComponent
 			this.mirrorChannel.setNextValue(t);
 		}
 	}
+
 }

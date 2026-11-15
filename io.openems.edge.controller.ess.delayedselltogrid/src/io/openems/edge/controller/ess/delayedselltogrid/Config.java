@@ -38,4 +38,5 @@ import io.openems.common.channel.PropertyChannel;
 	int continuousSellToGridPower();
 
 	String webconsole_configurationFactory_nameHint() default "Controller Ess Delayed Sell-To-Grid [{id}]";
+
 }

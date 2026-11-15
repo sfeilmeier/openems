@@ -52,4 +52,5 @@ public class FilteredSunSpecModel implements SunSpecModel {
 				.toArray(SunSpecPoint[]::new);
 		return new FilteredSunSpecModel(delegate, filtered);
 	}
+
 }

@@ -73,4 +73,5 @@ public abstract class PowerDistributionRamp {
 
 	public record StoredLastSetPoint(Instant time, int setPointInWatt) {
 	}
+
 }

@@ -12,6 +12,7 @@ import io.openems.common.types.OptionsEnum;
 import io.openems.edge.battery.fenecon.home.BatteryFeneconHomeHardwareType;
 
 public enum GoodWeType implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined", Series.UNDEFINED, 25), //
 	GOODWE_10K_BT(10, "GoodWe GW10K-BT", Series.BT, 25), //
 	GOODWE_8K_BT(11, "GoodWe GW8K-BT", Series.BT, 25), //
@@ -189,4 +190,5 @@ public enum GoodWeType implements OptionsEnum {
 			};
 		};
 	}
+
 }

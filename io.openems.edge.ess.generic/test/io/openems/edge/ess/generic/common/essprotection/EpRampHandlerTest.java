@@ -164,4 +164,5 @@ public class EpRampHandlerTest {
 			assertEquals(testCase.expectedDischargeMaxCurrent(), result.dischargeMaxCurrent().intValue());
 		}
 	}
+
 }

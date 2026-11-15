@@ -3,6 +3,7 @@ package io.openems.edge.evse.chargepoint.heidelberg.connect.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PhaseSwitchControl implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	SINGLE(0, "1 phase"), //
 	THREE(3, "3 phases");
@@ -29,4 +30,5 @@ public enum PhaseSwitchControl implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

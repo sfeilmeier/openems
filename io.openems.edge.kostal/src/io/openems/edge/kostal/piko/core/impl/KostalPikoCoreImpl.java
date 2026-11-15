@@ -361,4 +361,5 @@ public class KostalPikoCoreImpl extends AbstractOpenemsComponent
 		}
 
 	}
+
 }

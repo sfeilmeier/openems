@@ -113,4 +113,5 @@ public class GetSchedule implements EndpointRequestType<Request, Response> {
 							.build());
 		}
 	}
+
 }

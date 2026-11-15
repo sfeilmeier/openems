@@ -20,4 +20,5 @@ public interface PredictorPersistenceModel extends Predictor, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

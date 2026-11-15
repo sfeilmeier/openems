@@ -94,4 +94,5 @@ public class SpotTariffSyncManager {
 					new SyncableEntry<>(new SyncableKey.SpotTariff(this.biddingZone), tariffData, Instant.now()));
 		}
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.commercial;
 import io.openems.common.types.OptionsEnum;
 
 public enum TemperaturePosition implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	BALANCE_BOARD(0, "Balance Board"), //
 	TEMPERATURE_BOARD(1, "Temperature Board") //
@@ -30,4 +31,5 @@ public enum TemperaturePosition implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

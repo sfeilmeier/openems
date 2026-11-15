@@ -1,6 +1,7 @@
 package io.openems.edge.batteryinverter.sinexcel.enums;
 
 public enum FrequencyLevel {
+
 	HZ_50("50 Hz", 0), //
 	HZ_60("60 Hz", 1);//
 
@@ -19,4 +20,5 @@ public enum FrequencyLevel {
 	public int getValue() {
 		return this.value;
 	}
+
 }

@@ -33,4 +33,5 @@ import io.openems.edge.simulator.CsvFormat;
 	CsvFormat format() default CsvFormat.GERMAN_EXCEL;
 
 	String webconsole_configurationFactory_nameHint() default "Simulator DataSource: CSV Predefined [{id}]";
+
 }

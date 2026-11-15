@@ -77,4 +77,5 @@ public class ManagedSymmetricEssModbusTableTest {
 				.findFirst() //
 				.orElseThrow(() -> new AssertionError("No Modbus record found at offset " + offset));
 	}
+
 }

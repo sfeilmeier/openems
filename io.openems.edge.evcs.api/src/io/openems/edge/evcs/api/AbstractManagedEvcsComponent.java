@@ -114,4 +114,5 @@ public abstract class AbstractManagedEvcsComponent extends AbstractOpenemsCompon
 	public String debugLog() {
 		return "Limit:" + this.getSetChargePowerLimit().orElse(null) + "|" + this.getStatus().getName();
 	}
+
 }

@@ -12,6 +12,7 @@ import io.openems.common.event.EventEmitter;
 import io.openems.common.event.Subscribable;
 
 public abstract class AbstractCurrencyExchange implements CurrencyExchange {
+
 	// Volatile: updated by a background thread (e.g. ECB fetch); read by other
 	// threads
 	private volatile Map<ExchangeRate.ExchangeRateKey, ExchangeRate> exchangeRates = new HashMap<>();
@@ -79,4 +80,5 @@ public abstract class AbstractCurrencyExchange implements CurrencyExchange {
 	public Subscribable<Void> onExchangeRatesChanged() {
 		return this.exchangeRateChangeEvent;
 	}
+
 }

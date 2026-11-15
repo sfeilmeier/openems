@@ -92,4 +92,5 @@ public final class KMeansUtils {
 	private KMeansUtils() {
 		throw new AssertionError("Cannot instantiate utility class");
 	}
+
 }

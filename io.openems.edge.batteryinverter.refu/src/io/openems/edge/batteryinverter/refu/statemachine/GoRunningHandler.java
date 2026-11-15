@@ -35,4 +35,5 @@ public class GoRunningHandler extends StateHandler<State, Context> {
 		inverter.setPcsSetOperation(S64800PcsSetOperation.START_PCS);
 		return State.GO_RUNNING;
 	}
+
 }

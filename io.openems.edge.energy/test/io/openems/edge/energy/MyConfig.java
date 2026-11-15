@@ -71,4 +71,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public Environment environment() {
 		return this.builder.environment;
 	}
+
 }

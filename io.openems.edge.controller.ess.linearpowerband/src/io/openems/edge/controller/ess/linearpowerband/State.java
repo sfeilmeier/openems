@@ -3,6 +3,7 @@ package io.openems.edge.controller.ess.linearpowerband;
 import io.openems.common.types.OptionsEnum;
 
 public enum State implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DOWNWARDS(1, "Downwards"), //
 	UPWARDS(2, "Upwards"), //
@@ -30,4 +31,5 @@ public enum State implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

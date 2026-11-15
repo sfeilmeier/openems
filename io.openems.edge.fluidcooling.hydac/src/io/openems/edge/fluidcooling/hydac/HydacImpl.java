@@ -306,4 +306,5 @@ public class HydacImpl extends AbstractOpenemsModbusComponent
 				.append(this.getCompressor())//
 				.toString();
 	}
+
 }

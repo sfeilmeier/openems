@@ -34,4 +34,5 @@ public class FC1ReadCoilsTask extends AbstractReadDigitalInputsTask<ReadCoilsReq
 	protected BitVector parseBitResponse(ReadCoilsResponse response) {
 		return response.getCoils();
 	}
+
 }

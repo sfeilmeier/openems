@@ -3,6 +3,7 @@ package io.openems.edge.ess.fenecon.commercial40;
 import io.openems.common.types.OptionsEnum;
 
 public enum SystemType implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	CESS(1, "CESS"); //
 
@@ -28,4 +29,5 @@ public enum SystemType implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

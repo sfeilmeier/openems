@@ -157,4 +157,5 @@ public final class ConsumptionTestData {
 			// 23:00
 			null, null, null, null, //
 	};
+
 }

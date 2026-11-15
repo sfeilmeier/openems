@@ -22,4 +22,5 @@ public class MeterDiscovergyImplTest {
 						.build()) //
 		;
 	}
+
 }

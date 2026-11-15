@@ -6,6 +6,7 @@ import io.openems.common.exceptions.OpenemsError;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 
 public enum Role {
+
 	/*
 	 * The System Administrator
 	 */

@@ -35,4 +35,5 @@ class HeatMyPvModeDomainTypesTest {
 		assertEquals("{\"mode\":\"FAST_HEAT\"}", json.toString());
 		assertEquals(sut, serializer.deserialize(json));
 	}
+
 }

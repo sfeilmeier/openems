@@ -28,4 +28,5 @@ public interface OldTariffEntsoeGridSell
 			return this.doc;
 		}
 	}
+
 }

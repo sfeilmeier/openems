@@ -135,4 +135,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int hysteresisSoc() {
 		return this.builder.hysteresisSoc;
 	}
+
 }

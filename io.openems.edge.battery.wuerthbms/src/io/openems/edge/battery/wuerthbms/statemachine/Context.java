@@ -46,4 +46,5 @@ public class Context extends AbstractContext<WuerthBmsImpl> {
 		default -> false;
 		};
 	}
+
 }

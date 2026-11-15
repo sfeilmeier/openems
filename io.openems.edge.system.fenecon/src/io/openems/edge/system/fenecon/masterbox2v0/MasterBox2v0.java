@@ -16,6 +16,7 @@ import io.openems.edge.system.fenecon.masterbox2v0.enums.GridState;
 import io.openems.edge.system.fenecon.masterbox2v0.enums.StateEnergyMeter;
 
 public interface MasterBox2v0 extends OpenemsComponent {
+
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 
 		TEMPERATURE(Doc.of(OpenemsType.INTEGER)//
@@ -542,4 +543,5 @@ public interface MasterBox2v0 extends OpenemsComponent {
 	public default Value<Boolean> getAnalogOutControl() {
 		return this.getAnalogOutControlChannel().value();
 	}
+
 }

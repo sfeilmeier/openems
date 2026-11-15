@@ -38,4 +38,5 @@ public class RuntimeChannelsProvider {
 		this.calculateWarningStateTime.update(state == Level.WARNING);
 		this.calculateFaultStateTime.update(state == Level.FAULT);
 	}
+
 }

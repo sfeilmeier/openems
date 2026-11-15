@@ -33,4 +33,5 @@ public class LinearCoefficient {
 			return VALUE_FORMAT.format(this.value) + "*" + this.coefficient.toString();
 		}
 	}
+
 }

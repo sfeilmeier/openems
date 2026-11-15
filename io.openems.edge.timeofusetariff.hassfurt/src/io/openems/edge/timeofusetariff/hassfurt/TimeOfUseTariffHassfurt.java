@@ -23,4 +23,5 @@ public interface TimeOfUseTariffHassfurt extends TimeOfUseTariff, OpenemsCompone
 			return this.doc;
 		}
 	}
+
 }

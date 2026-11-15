@@ -3,6 +3,7 @@ package io.openems.backend.metadata.odoo.odoo;
 import java.io.Serial;
 
 public class AccessDeniedException extends RuntimeException {
+
 	@Serial
 	private static final long serialVersionUID = 1L;
 
@@ -25,4 +26,5 @@ public class AccessDeniedException extends RuntimeException {
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
+
 }

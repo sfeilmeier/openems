@@ -244,4 +244,5 @@ public interface IoShellyPro3 extends DigitalOutput, OpenemsComponent, EventHand
 	public default void _setSlaveCommunicationFailed(boolean value) {
 		this.getSlaveCommunicationFailedChannel().setNextValue(value);
 	}
+
 }

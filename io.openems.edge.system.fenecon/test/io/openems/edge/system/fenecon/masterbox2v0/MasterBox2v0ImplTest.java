@@ -108,4 +108,5 @@ public class MasterBox2v0ImplTest {
 						.output(MasterBox2v0.ChannelId.STATUS_ENERGYMETER, StateEnergyMeter.NO_ERROR) //
 				);
 	}
+
 }

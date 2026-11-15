@@ -83,4 +83,5 @@ public interface EvcsAlpitronic extends OpenemsComponent {
 	public default DoubleReadChannel getChargingVoltageChannel() {
 		return this.channel(ChannelId.CHARGING_VOLTAGE);
 	}
+
 }

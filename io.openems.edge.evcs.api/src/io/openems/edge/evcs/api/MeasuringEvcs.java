@@ -381,4 +381,5 @@ public interface MeasuringEvcs extends Evcs {
 			return this.doc;
 		}
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum State implements OptionsEnum {
+
 	UNDEFINED("Undefined", -1), //
 	PENDING("Pending", 0), //
 	OFF("Off", 1), //

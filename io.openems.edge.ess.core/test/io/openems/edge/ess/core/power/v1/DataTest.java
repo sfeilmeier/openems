@@ -144,4 +144,5 @@ public class DataTest {
 
 		d.getConstraintsForAllInverters();
 	}
+
 }

@@ -450,4 +450,5 @@ public final class FeneconCommercialProps {
 
 	private FeneconCommercialProps() {
 	}
+
 }

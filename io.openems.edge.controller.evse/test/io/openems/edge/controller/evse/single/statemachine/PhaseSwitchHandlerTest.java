@@ -521,4 +521,5 @@ class PhaseSwitchHandlerTest {
 		var actual = ctrl.debugLog();
 		assertEquals(string, actual);
 	}
+
 }

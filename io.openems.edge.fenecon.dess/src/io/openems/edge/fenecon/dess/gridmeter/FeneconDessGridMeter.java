@@ -28,4 +28,5 @@ public interface FeneconDessGridMeter extends ElectricityMeter, OpenemsComponent
 			return this.doc;
 		}
 	}
+
 }

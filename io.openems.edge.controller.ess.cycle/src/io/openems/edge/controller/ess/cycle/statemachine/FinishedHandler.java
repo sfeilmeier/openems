@@ -20,4 +20,5 @@ public class FinishedHandler extends StateHandler<State, Context> {
 
 		return State.FINISHED;
 	}
+
 }

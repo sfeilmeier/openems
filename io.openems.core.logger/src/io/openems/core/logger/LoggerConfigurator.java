@@ -105,4 +105,5 @@ public class LoggerConfigurator {
 
 		return Optional.of(log4j);
 	}
+
 }

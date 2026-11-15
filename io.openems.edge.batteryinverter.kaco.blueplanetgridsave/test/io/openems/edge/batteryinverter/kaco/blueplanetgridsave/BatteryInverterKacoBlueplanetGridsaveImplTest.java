@@ -127,4 +127,5 @@ public class BatteryInverterKacoBlueplanetGridsaveImplTest {
 						.output(WATCHDOG.getChannelId(), WATCHDOG_TIMEOUT_SECONDS)) //
 		;
 	}
+
 }

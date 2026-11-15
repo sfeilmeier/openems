@@ -227,4 +227,5 @@ public class TimeOfUseTariffHassfurtImplTest {
 			parsePrices("", TariffType.STROM_FLEX);
 		});
 	}
+
 }

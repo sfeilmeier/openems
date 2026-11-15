@@ -613,4 +613,5 @@ public class EvcsClusterPeakShavingImpl extends AbstractOpenemsComponent impleme
 			};
 		}
 	}
+
 }

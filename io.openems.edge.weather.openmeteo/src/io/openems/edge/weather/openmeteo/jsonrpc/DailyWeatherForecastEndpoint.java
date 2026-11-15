@@ -61,4 +61,5 @@ public class DailyWeatherForecastEndpoint implements EndpointRequestType<EmptyOb
 							.build());
 		}
 	}
+
 }

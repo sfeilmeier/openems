@@ -40,4 +40,5 @@ public class EshCodecTest {
 		assertEquals(3 /* as defined in previousResult */, encoded.get(0).gene().intValue());
 		assertEquals(gt.get(0).get(1).intValue(), encoded.get(0).get(1).intValue());
 	}
+
 }

@@ -9,6 +9,7 @@ import io.openems.edge.common.startstop.StartStopConfig;
 		name = "Battery-Inverter REFUstore88k", //
 		description = "Implements the REFUstore 88K Battery Inverter")
 public @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "batteryInverter0";
 
@@ -37,4 +38,5 @@ public @interface Config {
 	int watchdoginterval() default 0;
 
 	String webconsole_configurationFactory_nameHint() default "Battery-Inverter REFUstore88k [{id}]";
+
 }

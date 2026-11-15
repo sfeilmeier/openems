@@ -125,4 +125,5 @@ public class OneWireTaskWorker extends AbstractImmediateWorker {
 		}
 		return response;
 	}
+
 }

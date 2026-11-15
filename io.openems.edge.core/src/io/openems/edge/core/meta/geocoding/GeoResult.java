@@ -166,4 +166,5 @@ public record GeoResult(//
 				.addProperty("openStreetMapUrl", obj.openStreetMapUrl())//
 				.build());
 	}
+
 }

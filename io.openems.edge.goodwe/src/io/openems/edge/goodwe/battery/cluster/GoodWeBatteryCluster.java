@@ -31,4 +31,5 @@ public interface GoodWeBatteryCluster extends Battery, OpenemsComponent, StartSt
 	 * @return {@link StartStop}
 	 */
 	public StartStop getStartStopTarget();
+
 }

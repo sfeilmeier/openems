@@ -35,4 +35,5 @@ import io.openems.common.channel.PropertyChannel;
 	int rechargePower();
 
 	String webconsole_configurationFactory_nameHint() default "Controller Peak-Shaving Symmetric [{id}]";
+
 }

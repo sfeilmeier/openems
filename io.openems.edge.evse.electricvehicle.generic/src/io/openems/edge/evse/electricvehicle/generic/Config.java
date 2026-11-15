@@ -36,4 +36,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	boolean canInterrupt() default true;
 
 	String webconsole_configurationFactory_nameHint() default "EVSE Electric-Vehicle Generic [{id}]";
+
 }

@@ -149,4 +149,5 @@ public class IoShellyPro2PmDeviceImpl extends IoGen2ShellyBaseImpl
 	protected MDnsDiscovery getMDnsDiscovery() {
 		return this.mDnsDiscovery;
 	}
+
 }

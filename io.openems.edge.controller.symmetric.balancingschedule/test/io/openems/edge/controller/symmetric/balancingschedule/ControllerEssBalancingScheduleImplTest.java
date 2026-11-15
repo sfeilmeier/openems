@@ -75,4 +75,5 @@ public class ControllerEssBalancingScheduleImplTest {
 						.output("ess0", SET_ACTIVE_POWER_EQUALS, 2000)) //
 				.deactivate();
 	}
+
 }

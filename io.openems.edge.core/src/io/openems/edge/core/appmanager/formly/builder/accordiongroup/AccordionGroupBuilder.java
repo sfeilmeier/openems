@@ -91,4 +91,5 @@ public class AccordionGroupBuilder extends FormlyBuilder<AccordionGroupBuilder> 
 	protected String getType() {
 		return "accordion-group";
 	}
+
 }

@@ -179,4 +179,5 @@ public class ManagedSymmetricEssSetActivePowerTest {
 			return this.setLimitsCalled;
 		}
 	}
+
 }

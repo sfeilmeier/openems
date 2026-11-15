@@ -20,6 +20,7 @@ import org.mockito.Mockito;
 import io.openems.backend.common.edge.EdgeClient;
 
 class SubscriptionManagerTest {
+
 	private static final TestSubscriptionKey TEST_SUBSCRIPTION_KEY = new TestSubscriptionKey("KEY-1");
 	private static final TestSubscriptionKey TEST_SUBSCRIPTION_KEY_2 = new TestSubscriptionKey("KEY-2");
 	private static TestableSubscriptionManagerImpl manager;
@@ -178,4 +179,5 @@ class SubscriptionManagerTest {
 			}
 		}
 	}
+
 }

@@ -21,4 +21,5 @@ import io.openems.common.types.BiddingZone;
 	int service_ranking() default 85;
 
 	String webconsole_configurationFactory_nameHint() default "Tariff SMARD";
+
 }

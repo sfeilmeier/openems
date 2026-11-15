@@ -34,4 +34,5 @@ public interface TimeOfUseTariffSwisspower extends TimeOfUseTariff, OpenemsCompo
 			return this.doc;
 		}
 	}
+
 }

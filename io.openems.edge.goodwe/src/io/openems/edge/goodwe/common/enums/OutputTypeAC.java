@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum OutputTypeAC implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	SINGLE_PHASE(0, "single phase"), //
 	THREE_PHASE_FOUR_WIRE(1, "three phase four wire system"), //
@@ -30,4 +31,5 @@ public enum OutputTypeAC implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -106,4 +106,5 @@ class ReferenceCycleUtilsTest {
 		}
 		return sb.toString().trim();
 	}
+
 }

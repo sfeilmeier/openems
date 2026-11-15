@@ -104,4 +104,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public boolean validateDevice() {
 		return this.builder.validateDevice;
 	}
+
 }

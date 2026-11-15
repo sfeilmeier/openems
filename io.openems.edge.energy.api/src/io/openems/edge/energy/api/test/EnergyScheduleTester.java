@@ -148,4 +148,5 @@ public class EnergyScheduleTester {
 				.add("cscs", this.cscs) //
 				.toString();
 	}
+
 }

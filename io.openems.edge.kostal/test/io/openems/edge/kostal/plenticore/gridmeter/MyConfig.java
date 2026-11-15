@@ -94,4 +94,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public MeterType type() {
 		return this.builder.type;
 	}
+
 }

@@ -688,4 +688,5 @@ public abstract class AbstractOpenemsSunSpecComponent extends AbstractOpenemsMod
 			}
 		}
 	}
+
 }

@@ -1,6 +1,7 @@
 package io.openems.edge.controller.io.heatpump.sgready;
 
 public enum BaseMode {
+
 	AUTOMATIC, LOCK, REGULAR, RECOMMENDATION, FORCE_ON;
 
 	/**
@@ -29,4 +30,5 @@ public enum BaseMode {
 		case LOCK, REGULAR, RECOMMENDATION, FORCE_ON -> Mode.MANUAL;
 		};
 	}
+
 }

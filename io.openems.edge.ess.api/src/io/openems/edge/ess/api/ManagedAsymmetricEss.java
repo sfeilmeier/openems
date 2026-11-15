@@ -1058,4 +1058,5 @@ public interface ManagedAsymmetricEss extends ManagedSymmetricEss, AsymmetricEss
 	public default void _setDebugSetReactivePowerL3(int value) {
 		this.getDebugSetReactivePowerL3Channel().setNextValue(value);
 	}
+
 }

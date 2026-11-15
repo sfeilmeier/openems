@@ -19,4 +19,5 @@ public class ReadHandler extends AbstractUdpReadHandler<EvseKebaUdpImpl> {
 		PhaseRotation.setPhaseRotatedActivePowerChannels(keba, appp.activePowerL1(), appp.activePowerL2(),
 				appp.activePowerL3());
 	}
+
 }

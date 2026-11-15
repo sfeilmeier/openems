@@ -3,6 +3,7 @@ package io.openems.edge.ess.fenecon.commercial40;
 import io.openems.common.types.OptionsEnum;
 
 public enum SetWorkState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	STOP(4, "Stop"), //
 	STANDBY(32, "Standby"), //
@@ -30,4 +31,5 @@ public enum SetWorkState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

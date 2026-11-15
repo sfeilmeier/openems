@@ -6,6 +6,7 @@ import io.openems.edge.common.component.ComponentManager;
 import io.openems.edge.common.statemachine.AbstractContext;
 
 public class Context extends AbstractContext<BatteryFeneconF2bDummyImpl> {
+
 	public final ComponentManager componentManager;
 	public final Config config;
 
@@ -14,4 +15,5 @@ public class Context extends AbstractContext<BatteryFeneconF2bDummyImpl> {
 		this.componentManager = componentManager;
 		this.config = config;
 	}
+
 }

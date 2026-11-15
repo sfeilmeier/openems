@@ -43,4 +43,5 @@ public class FC6WriteRegisterTask extends
 	protected String payloadToString(WriteSingleRegisterRequest request) {
 		return ModbusUtils.registersToHexString(request.getRegister());
 	}
+
 }

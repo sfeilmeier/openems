@@ -21,4 +21,5 @@ public class WaitForStopRequestHandler extends StateHandler<CoolingUnitState, Co
 		}
 		return CoolingUnitState.WAIT_FOR_STOP_REQUEST;
 	}
+
 }

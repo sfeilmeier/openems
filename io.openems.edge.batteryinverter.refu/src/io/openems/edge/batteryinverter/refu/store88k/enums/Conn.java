@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.refu.store88k.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum Conn implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISCONNECT(0, "Disconnect"), //
 	CONNECT(1, "Connect");
@@ -29,4 +30,5 @@ public enum Conn implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

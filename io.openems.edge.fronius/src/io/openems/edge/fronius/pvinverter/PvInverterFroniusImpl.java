@@ -105,4 +105,5 @@ public class PvInverterFroniusImpl extends AbstractSunSpecPvInverter implements 
 				ElectricityMeter.getModbusSlaveNatureTable(accessMode), //
 				ManagedSymmetricPvInverter.getModbusSlaveNatureTable(accessMode));
 	}
+
 }

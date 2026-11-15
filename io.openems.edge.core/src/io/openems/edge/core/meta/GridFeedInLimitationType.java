@@ -1,6 +1,7 @@
 package io.openems.edge.core.meta;
 
 public enum GridFeedInLimitationType {
+
 	NO_LIMITATION(io.openems.edge.common.meta.GridFeedInLimitationType.NO_LIMITATION), //
 	DYNAMIC_LIMITATION(io.openems.edge.common.meta.GridFeedInLimitationType.DYNAMIC_LIMITATION), //
 	; //
@@ -14,4 +15,5 @@ public enum GridFeedInLimitationType {
 	public io.openems.edge.common.meta.GridFeedInLimitationType getGridFeedInLimitationType() {
 		return this.gridFeedInLimitationType;
 	}
+
 }

@@ -107,4 +107,5 @@ public class DynamicChannelsAndSerialNumbersTest {
 	private static String getCellChannelName(int tower, int module, int cell) {
 		return "Tower" + tower + "Module" + module + "Cell" + String.format("%03d", cell);
 	}
+
 }

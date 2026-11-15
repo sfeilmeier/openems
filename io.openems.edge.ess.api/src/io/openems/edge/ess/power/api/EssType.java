@@ -23,4 +23,5 @@ public enum EssType {
 		default -> SYMMETRIC;
 		};
 	}
+
 }

@@ -154,4 +154,5 @@ public class FeatureEngineeringServiceTest {
 		assertEquals(List.of(0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0), featureMatrix.getRow(LocalDate.of(2025, 7, 12)));
 		assertEquals(List.of(0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0), featureMatrix.getRow(LocalDate.of(2025, 7, 13)));
 	}
+
 }

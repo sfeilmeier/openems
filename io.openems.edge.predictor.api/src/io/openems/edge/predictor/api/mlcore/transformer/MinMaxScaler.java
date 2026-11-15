@@ -37,4 +37,5 @@ public class MinMaxScaler<I> extends AbstractSeriesTransformer<I> {
 		series.apply(v -> this.targetMin + ((v - dataMin) / safeDataRange) * targetRange);
 		return series;
 	}
+
 }

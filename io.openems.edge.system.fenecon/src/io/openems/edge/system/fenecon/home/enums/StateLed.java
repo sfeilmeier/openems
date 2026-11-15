@@ -5,6 +5,7 @@ import io.openems.edge.common.sum.Sum;
 import io.openems.edge.controller.api.backend.api.ControllerApiBackend;
 
 public enum StateLed {
+
 	BLUE(Color.BLUE, true), //
 	BLUE_DOTTED(Color.BLUE, false);
 
@@ -35,4 +36,5 @@ public enum StateLed {
 
 		return null;
 	}
+
 }

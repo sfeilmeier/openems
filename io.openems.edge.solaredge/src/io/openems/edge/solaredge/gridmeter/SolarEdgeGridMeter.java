@@ -20,4 +20,5 @@ public interface SolarEdgeGridMeter extends ElectricityMeter, ModbusComponent, O
 			return this.doc;
 		}
 	}
+
 }

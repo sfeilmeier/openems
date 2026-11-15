@@ -272,4 +272,5 @@ public class GoodWeStsBoxImpl extends AbstractOpenemsModbusComponent
 		setWriteValueIfNotRead(this.channel(GoodWeStsBox.ChannelId.GENSET_LOWER_FREQUENCY_LIMIT), //
 				this.config.frequencyLowerLimit());
 	}
+
 }

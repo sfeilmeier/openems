@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String[] component_ids() default {};
 
 	String webconsole_configurationFactory_nameHint() default "Controller Debug Detailed Log [{id}]";
+
 }

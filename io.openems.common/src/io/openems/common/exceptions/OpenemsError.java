@@ -17,6 +17,7 @@ import io.openems.common.utils.TextProvider;
  * Holds named OpenEMS Errors.
  */
 public enum OpenemsError {
+
 	/*
 	 * Generic error.
 	 */
@@ -370,4 +371,5 @@ public enum OpenemsError {
 				.collect(Collectors.joining(".")) //
 				.concat(".Message");
 	}
+
 }

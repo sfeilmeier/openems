@@ -3,6 +3,7 @@ package io.openems.edge.solaredge.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SeControlMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLED(0, "Disabled"), //
 
@@ -48,4 +49,5 @@ public enum SeControlMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

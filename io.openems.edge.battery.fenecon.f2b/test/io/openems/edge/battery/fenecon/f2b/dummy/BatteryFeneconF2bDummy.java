@@ -13,6 +13,7 @@ import io.openems.edge.common.startstop.StartStop;
 import io.openems.edge.common.startstop.StartStoppable;
 
 public interface BatteryFeneconF2bDummy extends BatteryFeneconF2b, Battery, StartStoppable, OpenemsComponent {
+
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 		STATE_MACHINE(Doc.of(State.values())//
 				.text("Current State of State-Machine")), //
@@ -145,4 +146,5 @@ public interface BatteryFeneconF2bDummy extends BatteryFeneconF2b, Battery, Star
 	 * @return State {@link State}
 	 */
 	public State getCurrentState();
+
 }

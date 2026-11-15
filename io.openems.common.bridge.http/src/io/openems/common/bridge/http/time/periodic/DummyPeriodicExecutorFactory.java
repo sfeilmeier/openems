@@ -9,9 +9,11 @@ import io.openems.common.bridge.http.time.DelayTimeProvider;
  * executor is directly executing the action without any delay mechanics.
  */
 public class DummyPeriodicExecutorFactory extends PeriodicExecutorFactory {
+
 	@Override
 	public PeriodicExecutor execute(String name, Supplier<DelayTimeProvider.Delay> action,
 			DelayTimeProvider.Delay firstExecutionDelay) {
 		return new DummyPeriodicExecutor(name, action);
 	}
+
 }

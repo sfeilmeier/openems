@@ -52,4 +52,5 @@ public class TestStatic {
 
 		assertEquals(12, GoodWeBatteryInverterImpl.preprocessAmpereValue47900(12, MAX_DC_CURRENT));
 	}
+
 }

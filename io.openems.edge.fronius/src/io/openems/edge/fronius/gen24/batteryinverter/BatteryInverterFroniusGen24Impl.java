@@ -521,4 +521,5 @@ public class BatteryInverterFroniusGen24Impl extends AbstractSunSpecBatteryInver
 		((EnumWriteChannel) this.getSunSpecChannelOrError(DefaultSunSpecModel.S123.W_MAX_LIM_ENA))
 				.setNextWriteValue(ena);
 	}
+
 }

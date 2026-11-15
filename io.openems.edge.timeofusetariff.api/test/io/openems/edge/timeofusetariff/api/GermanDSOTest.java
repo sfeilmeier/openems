@@ -54,4 +54,5 @@ public class GermanDSOTest {
 		assertFalse("Tariff [" + tariff.name() + "] value [" + value + "] is not used",
 				!Double.isNaN(value) && !anyMatch);
 	}
+
 }

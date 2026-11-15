@@ -27,4 +27,5 @@ public class RunningHandler extends StateHandler<State, Context> {
 		system._setAtLeastOneEssInfo(false);
 		system._setAtLeastOneEssWarning(false);
 	}
+
 }

@@ -117,4 +117,5 @@ public class TouOctopusGoImpl extends AbstractOpenemsComponent
 				this.config.ancillaryCosts(), //
 				msg -> this.logWarn(this.log, msg));
 	}
+
 }

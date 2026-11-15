@@ -146,4 +146,5 @@ public interface ModbusApi extends OpenemsComponent {
 	public default void _setComponentMissingFault(boolean value) {
 		this.getComponentMissingFaultChannel().setNextValue(value);
 	}
+
 }

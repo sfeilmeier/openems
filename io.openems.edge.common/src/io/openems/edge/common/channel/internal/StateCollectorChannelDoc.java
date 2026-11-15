@@ -25,4 +25,5 @@ public class StateCollectorChannelDoc extends EnumDoc {
 			io.openems.edge.common.channel.ChannelId channelId) {
 		return new StateCollectorChannel(component, channelId, this);
 	}
+
 }

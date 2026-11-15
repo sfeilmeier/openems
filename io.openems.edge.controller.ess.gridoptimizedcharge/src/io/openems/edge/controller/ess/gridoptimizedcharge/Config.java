@@ -47,4 +47,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int sellToGridLimitRampPercentage() default 2;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Ess Grid Optimized Charge [{id}]";
+
 }

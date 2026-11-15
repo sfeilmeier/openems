@@ -37,4 +37,5 @@ public class CalculateEnergySessionTest {
 		sut.update(true);
 		assertEquals(1L, energy.get().intValue());
 	}
+
 }

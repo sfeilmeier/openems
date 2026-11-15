@@ -101,4 +101,5 @@ public class SubscribeChannelsRequest extends JsonrpcRequest {
 				.add("channels", channels) //
 				.build();
 	}
+
 }

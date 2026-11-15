@@ -77,4 +77,5 @@ public final class EshWithOnlyOneMode<OPTIMIZATION_CONTEXT, SCHEDULE_CONTEXT> //
 			return ImmutableSortedMap.copyOfSorted(this.schedule);
 		}
 	}
+
 }

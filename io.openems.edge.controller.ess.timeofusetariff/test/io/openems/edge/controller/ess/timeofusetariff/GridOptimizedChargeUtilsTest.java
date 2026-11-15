@@ -245,4 +245,5 @@ class GridOptimizedChargeUtilsTest {
 			assertEquals(0, result);
 		}
 	}
+
 }

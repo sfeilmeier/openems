@@ -102,4 +102,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int minHwCurrent() {
 		return this.builder.minHwCurrent;
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.fenecon.pro.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum SetWorkState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	LOCAL_CONTROL(0, "Local Control"), //
 	START(1, "Start"), //
@@ -32,4 +33,5 @@ public enum SetWorkState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -27,4 +27,5 @@ public class EnergySchedulerTest {
 		var t = EnergyScheduleTester.from(esh);
 		assertEquals(600 /* discharge limited */, t.simulatePeriod().ef().commitEss(4000));
 	}
+
 }

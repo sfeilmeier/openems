@@ -305,4 +305,5 @@ public class BridgeModbusSerialImpl extends AbstractModbusBridge
 	public Stopbit getStopbits() {
 		return this.stopbits;
 	}
+
 }

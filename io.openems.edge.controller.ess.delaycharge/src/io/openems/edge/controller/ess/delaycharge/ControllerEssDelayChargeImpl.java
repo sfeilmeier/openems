@@ -105,4 +105,5 @@ public class ControllerEssDelayChargeImpl extends AbstractOpenemsComponent
 				.channel(ControllerEssDelayCharge.ChannelId.CHARGE_POWER_LIMIT);
 		chargePowerLimitChannel.setNextValue(limit);
 	}
+
 }

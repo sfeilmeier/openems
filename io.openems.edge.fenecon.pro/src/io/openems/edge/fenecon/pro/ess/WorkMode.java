@@ -3,6 +3,7 @@ package io.openems.edge.fenecon.pro.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum WorkMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ECONOMOY(2, "Economy"), //
 	REMOTE(6, "Remote"), //
@@ -30,4 +31,5 @@ public enum WorkMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

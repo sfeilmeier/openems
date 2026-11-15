@@ -13,4 +13,5 @@ public interface SpotTariffTracker {
 	 * @return BehaviorSubject with tariff data
 	 */
 	BehaviorSubject<TariffData> getTariffData();
+
 }

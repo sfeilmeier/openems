@@ -51,4 +51,5 @@ public class SimulatorEssSymmetricReactingImplTest {
 						.output(ESS_SOC, 25)) //
 				.deactivate();
 	}
+
 }

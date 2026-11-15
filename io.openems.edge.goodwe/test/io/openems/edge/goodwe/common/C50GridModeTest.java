@@ -98,4 +98,5 @@ class C50GridModeTest {
 		clock.leap(30, ChronoUnit.SECONDS);
 		assertEquals(GridMode.OFF_GRID, filter.applyC50(GridMode.OFF_GRID));
 	}
+
 }

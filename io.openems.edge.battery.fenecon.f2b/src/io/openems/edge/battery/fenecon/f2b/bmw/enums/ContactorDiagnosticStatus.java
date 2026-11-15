@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.bmw.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ContactorDiagnosticStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_CONTACTOR_STUCK(0, "No contactor stuck"), //
 	ONE_CONTACTOR_STUCK(1, "One contactor stuck"), //
@@ -31,4 +32,5 @@ public enum ContactorDiagnosticStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

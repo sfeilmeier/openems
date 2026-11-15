@@ -73,4 +73,5 @@ class GoodWeStsBoxImplTest {
 						.setFrequencyLowerLimit(45) //
 						.build());
 	}
+
 }

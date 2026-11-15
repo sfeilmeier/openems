@@ -26,4 +26,5 @@ public interface SolarEdgePvInverter extends SunSpecPvInverter, ManagedSymmetric
 			return this.doc;
 		}
 	}
+
 }

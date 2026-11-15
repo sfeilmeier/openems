@@ -367,4 +367,5 @@ public class DefaultWeatherDataParserTest {
 			  }
 			}
 			""".stripIndent();
+
 }

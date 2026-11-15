@@ -216,4 +216,5 @@ public interface IoKmtronicRelay8Port extends DigitalOutput, OpenemsComponent, M
 			return this.doc;
 		}
 	}
+
 }

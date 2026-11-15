@@ -8,6 +8,7 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 
 public class DummyCurrencyExchange extends AbstractCurrencyExchange {
+
 	private final Map<ExchangeRate.ExchangeRateKey, ExchangeRate> exchangeRates = new HashMap<>();
 
 	public DummyCurrencyExchange() {
@@ -68,4 +69,5 @@ public class DummyCurrencyExchange extends AbstractCurrencyExchange {
 
 		this.update();
 	}
+
 }

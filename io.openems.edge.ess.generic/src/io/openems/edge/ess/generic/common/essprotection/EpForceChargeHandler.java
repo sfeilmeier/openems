@@ -163,4 +163,5 @@ public class EpForceChargeHandler {
 					dcMinVoltage + params.blockDischargeVoltageOffset());
 		}
 	}
+
 }

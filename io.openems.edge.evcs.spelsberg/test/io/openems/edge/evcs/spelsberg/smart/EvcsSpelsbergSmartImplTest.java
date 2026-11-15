@@ -21,4 +21,5 @@ public class EvcsSpelsbergSmartImplTest {
 						.setMinHwCurrent(6000) //
 						.build()); //
 	}
+
 }

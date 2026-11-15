@@ -60,4 +60,5 @@ public class SyncableSubscribeRequest extends JsonrpcRequest {
 	public JsonObject getParams() {
 		return JsonUtils.buildJsonObject().add("key", this.key, SyncableKey.keySerializer()).build();
 	}
+
 }

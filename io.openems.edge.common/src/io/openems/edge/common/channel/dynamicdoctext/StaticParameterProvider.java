@@ -4,6 +4,7 @@ import io.openems.common.session.Language;
 import io.openems.edge.common.component.OpenemsComponent;
 
 class StaticParameterProvider implements ParameterProvider {
+
 	private final String value;
 
 	StaticParameterProvider(String value) {
@@ -23,4 +24,5 @@ class StaticParameterProvider implements ParameterProvider {
 	public ParameterProvider copy() {
 		return new StaticParameterProvider(this.value);
 	}
+
 }

@@ -183,4 +183,5 @@ public class FeneconDessGridMeterImpl extends AbstractOpenemsModbusComponent imp
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

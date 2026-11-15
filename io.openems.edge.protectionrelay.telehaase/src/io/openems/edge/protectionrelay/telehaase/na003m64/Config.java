@@ -24,4 +24,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int modbusUnitId() default 1;
 
 	String webconsole_configurationFactory_nameHint() default "Protection Relay Tele NA003.COM-M64 [{id}]";
+
 }

@@ -98,4 +98,5 @@ public class ControllerEssStepSocImpl extends AbstractOpenemsComponent
 	public void setPausedAtStep(int lastStandby) {
 		this.lastPausedAtStep = lastStandby;
 	}
+
 }

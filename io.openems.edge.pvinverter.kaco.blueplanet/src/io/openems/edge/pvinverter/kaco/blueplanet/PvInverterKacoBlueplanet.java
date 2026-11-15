@@ -26,4 +26,5 @@ public interface PvInverterKacoBlueplanet extends SunSpecPvInverter, ManagedSymm
 			return this.doc;
 		}
 	}
+
 }

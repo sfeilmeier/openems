@@ -30,4 +30,5 @@ public final class OdooCommonSerializer {
 
 	private OdooCommonSerializer() {
 	}
+
 }

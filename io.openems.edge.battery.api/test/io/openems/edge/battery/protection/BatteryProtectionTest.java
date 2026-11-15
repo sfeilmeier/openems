@@ -738,4 +738,5 @@ public class BatteryProtectionTest {
 						.output(DISCHARGE_MAX_CURRENT, 80)) //
 		;
 	}
+
 }

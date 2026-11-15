@@ -15,6 +15,7 @@ import io.openems.common.utils.XmlUtils;
  * children, an element does not.
  */
 public class XmlObject extends XmlElement {
+
 	XmlObject(Element node) {
 		super(node);
 	}
@@ -112,4 +113,5 @@ public class XmlObject extends XmlElement {
 		var nodeList = this.node.getElementsByTagName(name);
 		return XmlUtils.stream(nodeList);
 	}
+
 }

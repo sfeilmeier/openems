@@ -13,6 +13,7 @@ import io.openems.common.utils.JsonUtils;
 import io.openems.common.utils.TimeRangeValues;
 
 public class MarketPriceData {
+
 	private final TimeRangeValues<Double> values;
 	private final String currency;
 	private final Instant reportedDateByDataProvider;

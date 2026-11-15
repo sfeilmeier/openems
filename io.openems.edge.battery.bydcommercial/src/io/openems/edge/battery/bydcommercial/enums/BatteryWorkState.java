@@ -3,6 +3,7 @@ package io.openems.edge.battery.bydcommercial.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryWorkState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	STANDBY(0, "Standby"), //
 	DISCHARGE(1, "Discharge"), //
@@ -30,4 +31,5 @@ public enum BatteryWorkState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

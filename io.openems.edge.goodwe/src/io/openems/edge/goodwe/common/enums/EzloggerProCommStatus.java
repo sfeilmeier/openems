@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum EzloggerProCommStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NG(0x00, "Not good "), //
 	SUCCESS(0x01, " Success");
@@ -29,4 +30,5 @@ public enum EzloggerProCommStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

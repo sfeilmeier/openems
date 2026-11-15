@@ -221,4 +221,5 @@ public class MeterZiehlEfr4001IpImpl extends AbstractOpenemsModbusComponent
 				ModbusSlaveNatureTable.of(MeterZiehlEfr4001Ip.class, accessMode, 100) //
 						.build());
 	}
+
 }

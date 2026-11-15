@@ -185,4 +185,5 @@ public class ControllerEssBalancingScheduleImpl extends AbstractOpenemsComponent
 		// Still no -> no value available
 		return Optional.empty();
 	}
+
 }

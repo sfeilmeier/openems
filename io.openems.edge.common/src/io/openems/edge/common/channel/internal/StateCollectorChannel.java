@@ -138,4 +138,5 @@ public class StateCollectorChannel extends EnumReadChannel {
 		}
 		return result.toString();
 	}
+
 }

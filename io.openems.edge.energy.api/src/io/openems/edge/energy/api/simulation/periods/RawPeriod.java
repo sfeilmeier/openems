@@ -44,4 +44,5 @@ public record RawPeriod(//
 			return previous != null && current == null;
 		}
 	}
+
 }

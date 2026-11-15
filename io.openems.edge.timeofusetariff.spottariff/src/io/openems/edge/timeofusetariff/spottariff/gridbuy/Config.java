@@ -9,6 +9,7 @@ import io.openems.common.types.BiddingZone;
 		name = "Time-Of-Use Tariff Spot Tariff", //
 		description = "Time-Of-Use Tariff implementation that uses the Spot Tariff to calculate prices.")
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "timeOfUseTariff0";
 
@@ -31,4 +32,5 @@ import io.openems.common.types.BiddingZone;
 	int service_ranking() default 10;
 
 	String webconsole_configurationFactory_nameHint() default "Time-Of-Use Tariff Spot Tariff [{id}]";
+
 }

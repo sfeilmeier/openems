@@ -6,6 +6,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class OptimizerThreadFactory implements ThreadFactory {
+
 	private static final ConcurrentMap<String, AtomicInteger> poolCounters = new ConcurrentHashMap<>();
 	private static final ThreadGroup threadGroup = new ThreadGroup("Optimizer");
 
@@ -38,4 +39,5 @@ public class OptimizerThreadFactory implements ThreadFactory {
 		thread.setPriority(this.priority);
 		return thread;
 	}
+
 }

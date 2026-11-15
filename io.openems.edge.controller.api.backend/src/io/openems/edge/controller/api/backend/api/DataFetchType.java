@@ -5,6 +5,7 @@ package io.openems.edge.controller.api.backend.api;
  * be fetched.
  */
 public enum DataFetchType {
+
 	/**
 	 * Data should be fetched via backend.
 	 */
@@ -20,4 +21,5 @@ public enum DataFetchType {
 	 * until the status is known.
 	 */
 	WAITING
+
 }

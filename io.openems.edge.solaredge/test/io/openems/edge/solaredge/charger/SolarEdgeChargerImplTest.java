@@ -58,4 +58,5 @@ public class SolarEdgeChargerImplTest {
 			assertNotNull(channelId.doc());
 		}
 	}
+
 }

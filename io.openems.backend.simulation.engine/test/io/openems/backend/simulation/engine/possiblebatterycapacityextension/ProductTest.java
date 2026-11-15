@@ -97,4 +97,5 @@ public class ProductTest {
 		var capacityPerModule = sut.getCapacityPerModule();
 		assertEquals(2800, capacityPerModule);
 	}
+
 }

@@ -28,4 +28,5 @@ public final class ModberryX500M4S extends ModBerryX500 {
 	public List<ChannelId> getAllChannelIds() {
 		return this.channels;
 	}
+
 }

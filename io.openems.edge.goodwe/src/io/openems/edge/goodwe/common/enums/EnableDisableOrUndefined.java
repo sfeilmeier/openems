@@ -32,4 +32,5 @@ public enum EnableDisableOrUndefined implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

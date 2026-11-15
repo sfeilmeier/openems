@@ -45,4 +45,5 @@ public class BooleanWriteChannel extends BooleanReadChannel implements WriteChan
 	public void onSetNextWrite(ThrowingConsumer<Boolean, OpenemsNamedException> callback) {
 		this.getOnSetNextWrites().add(callback);
 	}
+
 }

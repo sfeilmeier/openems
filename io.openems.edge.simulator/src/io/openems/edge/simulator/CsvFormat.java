@@ -1,6 +1,7 @@
 package io.openems.edge.simulator;
 
 public enum CsvFormat {
+
 	GERMAN_EXCEL(";", ","), //
 	ENGLISH(",", ".");
 
@@ -11,4 +12,5 @@ public enum CsvFormat {
 		this.lineSeparator = lineSeparator;
 		this.decimalSeparator = decimalSeparator;
 	}
+
 }

@@ -45,4 +45,5 @@ import io.openems.edge.controller.ess.fastfrequencyreserve.enums.ControlMode;
 	int preActivationTime() default 0;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Ess Fast Frequency Reserve [{id}]";
+
 }

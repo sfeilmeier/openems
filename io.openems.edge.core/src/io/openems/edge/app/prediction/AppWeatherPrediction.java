@@ -164,4 +164,5 @@ public class AppWeatherPrediction extends
 		}
 		return LOW_MEMORY_HARDWARE_APP_IDS.contains(hardwareInstance.appId);
 	}
+
 }

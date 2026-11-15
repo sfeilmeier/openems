@@ -41,4 +41,5 @@ public class StateChannelDoc extends BooleanDoc {
 			io.openems.edge.common.channel.ChannelId channelId) {
 		return this.createChannelInstance(component, channelId, this);
 	}
+
 }

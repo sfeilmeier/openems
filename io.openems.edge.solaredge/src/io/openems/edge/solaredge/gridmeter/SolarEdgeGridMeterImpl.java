@@ -87,4 +87,5 @@ public class SolarEdgeGridMeterImpl extends AbstractSunSpecMeter
 	public MeterType getMeterType() {
 		return this.config.type();
 	}
+
 }

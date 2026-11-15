@@ -221,4 +221,5 @@ public class KacoBlueplanetHybrid10PvInverterImpl extends AbstractOpenemsCompone
 				ElectricityMeter.getModbusSlaveNatureTable(accessMode), //
 				ManagedSymmetricPvInverter.getModbusSlaveNatureTable(accessMode));
 	}
+
 }

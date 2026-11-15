@@ -30,4 +30,5 @@ public interface MeterCarloGavazziEm300 extends ElectricityMeter, OpenemsCompone
 			return this.doc;
 		}
 	}
+
 }

@@ -101,4 +101,5 @@ public class ProfileSwitcherTest {
 				.toList();
 		return new Series<>(index, values);
 	}
+
 }

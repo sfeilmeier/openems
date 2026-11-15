@@ -225,4 +225,5 @@ public class SetActivateFastFreqReserveRequest extends JsonrpcRequest {
 					.build();
 		}
 	}
+
 }

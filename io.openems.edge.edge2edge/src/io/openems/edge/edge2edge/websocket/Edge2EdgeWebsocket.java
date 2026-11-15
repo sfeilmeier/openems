@@ -82,4 +82,5 @@ public interface Edge2EdgeWebsocket extends OpenemsComponent {
 	public default void _setRemoteNoComponentFault(Boolean value) {
 		this.getRemoteNoComponentChannel().setNextValue(value);
 	}
+
 }

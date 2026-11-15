@@ -26,4 +26,5 @@ public interface SimulatorNrcMeterActing extends ElectricityMeter, OpenemsCompon
 			return this.doc;
 		}
 	}
+
 }

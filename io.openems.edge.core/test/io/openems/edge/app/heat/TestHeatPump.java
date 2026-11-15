@@ -196,4 +196,5 @@ public class TestHeatPump {
 				.filter(d -> d.instanceId.equals(meterInstance.instanceId)).findFirst();
 		assertNotNull(meterDependency);
 	}
+
 }

@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	Zone zone() default Zone.GERMANY;
 
 	String webconsole_configurationFactory_nameHint() default "Time-Of-Use Tariff Awattar [{id}]";
+
 }

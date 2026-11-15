@@ -280,4 +280,5 @@ public interface ControllerFastFrequencyReserve extends Controller, OpenemsCompo
 	public default void _setControlMode(ControlMode value) {
 		this.getControlModeChannel().setNextValue(value);
 	}
+
 }

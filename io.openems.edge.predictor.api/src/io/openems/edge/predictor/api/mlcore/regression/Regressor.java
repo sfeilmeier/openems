@@ -13,4 +13,5 @@ public interface Regressor {
 	 * @return a list of predicted values
 	 */
 	public List<Double> predict(DataFrame<?> features);
+
 }

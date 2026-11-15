@@ -96,4 +96,5 @@ public class CalculateSoc {
 
 		return (int) Math.round(soc.getAsDouble());
 	}
+
 }

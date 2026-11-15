@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.bmw.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum HeatingUsage implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OFF(0, "Off"), //
 	ON(1, "On"),//
@@ -30,4 +31,5 @@ public enum HeatingUsage implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -198,4 +198,5 @@ public class PvInverterKostalPikoImplTest {
 						.output(PvInverterKostalPiko.ChannelId.DC_STRING3_POWER, 0)) //
 				.deactivate();
 	}
+
 }

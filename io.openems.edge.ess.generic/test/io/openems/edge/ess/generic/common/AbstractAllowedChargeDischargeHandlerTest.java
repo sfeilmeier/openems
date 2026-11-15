@@ -71,4 +71,5 @@ public class AbstractAllowedChargeDischargeHandlerTest {
 		}
 		assertEquals(94, limits.get().chargeMaxCurrent().intValue());
 	}
+
 }

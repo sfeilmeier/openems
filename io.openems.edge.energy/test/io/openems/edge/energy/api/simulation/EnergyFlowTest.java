@@ -319,4 +319,5 @@ public class EnergyFlowTest {
 		assertEquals(2500, ef.getEss());
 		assertEquals(-4500, ef.getGrid());
 	}
+
 }

@@ -48,4 +48,5 @@ public class ChannelTranslationTest {
 	public void testNoTranslation() {
 		assertEquals("No Translation", ChannelTranslationTest.ChannelId.NO_TRANSLATION.doc().getText(Language.DE));
 	}
+
 }

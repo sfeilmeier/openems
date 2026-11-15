@@ -12,6 +12,7 @@ import io.openems.edge.common.channel.dynamicdoctext.ParameterProvider;
 import io.openems.edge.common.channel.internal.AbstractDoc;
 
 public interface DynamicChannelDoc<V> {
+
 	/**
 	 * Provides a callback on initialization of the actual Channel.
 	 *
@@ -76,4 +77,5 @@ public interface DynamicChannelDoc<V> {
 			return this;
 		}
 	}
+
 }

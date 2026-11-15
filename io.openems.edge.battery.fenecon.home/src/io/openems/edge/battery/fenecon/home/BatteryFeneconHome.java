@@ -884,4 +884,5 @@ public interface BatteryFeneconHome extends Battery, ModbusComponent, OpenemsCom
 	public default boolean isFirmwareUpdateRunning() {
 		return this.getRunningFirmwareUpdateChannel().value().orElse(false);
 	}
+
 }

@@ -22,4 +22,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int timeDelta() default -1;
 
 	String webconsole_configurationFactory_nameHint() default "Simulator DataSource: Single Channel [{id}]";
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.evcs.webasto.next.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum EvseErrorCode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_ERROR(0, "No error"), //
 	POWER_SWITCH_FAILURE(1, "Error internal board supply voltage, 5V Ref Voltage"), //

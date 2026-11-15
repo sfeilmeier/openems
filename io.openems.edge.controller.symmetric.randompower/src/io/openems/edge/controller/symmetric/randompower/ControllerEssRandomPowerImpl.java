@@ -67,4 +67,5 @@ public class ControllerEssRandomPowerImpl extends AbstractOpenemsComponent
 		// set result
 		ess.addPowerConstraintAndValidate("SymmetricRandomPower", ALL, ACTIVE, EQUALS, randomPower); //
 	}
+
 }

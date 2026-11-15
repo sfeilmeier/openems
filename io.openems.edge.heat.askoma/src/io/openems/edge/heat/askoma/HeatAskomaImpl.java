@@ -319,4 +319,5 @@ public class HeatAskomaImpl extends AbstractOpenemsModbusComponent
 	public EnergyScheduleHandler getEnergyScheduleHandler() {
 		return this.energyScheduleHandler;
 	}
+
 }

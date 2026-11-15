@@ -210,4 +210,5 @@ public class SurplusFeedInHandler {
 		var increasePower = (int) (pvPower * config.surplusFeedInIncreasePowerFactor());
 		return Math.min(increasePower, config.surplusFeedInMaxIncreasePowerFactor());
 	}
+
 }

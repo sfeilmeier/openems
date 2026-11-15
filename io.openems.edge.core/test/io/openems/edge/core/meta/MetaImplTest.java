@@ -384,4 +384,5 @@ class MetaImplTest {
 
 		assertEquals(0, sut.getGridLimit().essDischargeToGridLimit());
 	}
+
 }

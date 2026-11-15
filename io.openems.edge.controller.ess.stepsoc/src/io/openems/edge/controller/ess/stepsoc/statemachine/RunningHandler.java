@@ -44,4 +44,5 @@ public class RunningHandler extends StateHandler<State, Context> {
 		case DISCHARGE -> value < 100;
 		};
 	}
+
 }

@@ -279,4 +279,5 @@ public class ControllerBraiinsSingleImpl extends AbstractOpenemsComponent implem
 				() -> new JSCalendarApi.UpdateJsCalendarRecord(this.configurationAdmin, this.componentManager,
 						this.servicePid(), "jsCalendar"));
 	}
+
 }

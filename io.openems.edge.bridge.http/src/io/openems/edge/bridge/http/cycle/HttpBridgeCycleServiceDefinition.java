@@ -24,4 +24,5 @@ public class HttpBridgeCycleServiceDefinition implements HttpBridgeServiceDefini
 			EndpointFetcher endpointFetcher) {
 		return new HttpBridgeCycleServiceImpl(bridgeHttp, this.cycleSubscriber, endpointFetcher, executor);
 	}
+
 }

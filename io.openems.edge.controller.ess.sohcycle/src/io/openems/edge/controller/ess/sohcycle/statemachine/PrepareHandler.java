@@ -7,6 +7,7 @@ import io.openems.common.exceptions.OpenemsError;
 import io.openems.edge.controller.ess.sohcycle.EssSohCycleConstants;
 
 public class PrepareHandler extends AbstractAllowedPowerHandler {
+
 	private static final Logger log = LoggerFactory.getLogger(PrepareHandler.class);
 
 	@Override
@@ -43,4 +44,5 @@ public class PrepareHandler extends AbstractAllowedPowerHandler {
 		return context.getConfig().referenceCycleEnabled() ? StateMachine.State.REFERENCE_CYCLE_CHARGING
 				: StateMachine.State.MEASUREMENT_CYCLE_CHARGING;
 	}
+
 }

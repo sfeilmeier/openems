@@ -269,4 +269,5 @@ public class HeatMyPvImpl extends AbstractOpenemsModbusComponent implements Heat
 	public EnergyScheduleHandler getEnergyScheduleHandler() {
 		return this.energyScheduleHandler;
 	}
+
 }

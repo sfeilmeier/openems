@@ -260,4 +260,5 @@ public class SeriesTest {
 				this.values);
 		assertEquals(this.series.hashCode(), other.hashCode());
 	}
+
 }

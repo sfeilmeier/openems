@@ -260,4 +260,5 @@ public interface SinglePhaseMeter extends ElectricityMeter {
 		return ModbusSlaveNatureTable.of(SinglePhaseMeter.class, accessMode, 100) //
 				.build();
 	}
+
 }

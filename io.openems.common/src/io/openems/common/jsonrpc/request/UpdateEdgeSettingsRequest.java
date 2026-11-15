@@ -49,4 +49,5 @@ public class UpdateEdgeSettingsRequest extends JsonrpcRequest {
 	public String getEdgeId() {
 		return this.edgeId;
 	}
+
 }

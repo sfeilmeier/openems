@@ -9,6 +9,7 @@ import io.openems.common.jsonrpc.syncable.SyncableEntry;
 import io.openems.common.jsonrpc.syncable.SyncableKey;
 
 public interface SyncableRepository {
+
 	/**
 	 * Returns all currently stored static entries.
 	 *
@@ -64,4 +65,5 @@ public interface SyncableRepository {
 		record AllEntriesReplaced() implements ChangeEvent {
 		}
 	}
+
 }

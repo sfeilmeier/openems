@@ -267,4 +267,5 @@ public class BitsWordElement extends AbstractSingleWordElement<BitsWordElement, 
 		// It does not apply here.
 		throw new IllegalArgumentException("BitsWordElement.valueToByteBuffer() should never be called");
 	}
+
 }

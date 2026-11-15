@@ -22,4 +22,5 @@ public class MeterSmaShm20ImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

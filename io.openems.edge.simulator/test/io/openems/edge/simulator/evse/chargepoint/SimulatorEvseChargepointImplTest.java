@@ -160,4 +160,5 @@ class SimulatorEvseChargepointImplTest {
 				.output(ElectricityMeter.ChannelId.VOLTAGE_L2, 0) //
 				.output(ElectricityMeter.ChannelId.VOLTAGE_L3, 0));
 	}
+
 }

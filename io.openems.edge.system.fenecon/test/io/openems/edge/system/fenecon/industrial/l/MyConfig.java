@@ -163,4 +163,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String restartTasks() {
 		return this.builder.restartTask;
 	}
+
 }

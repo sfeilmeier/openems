@@ -62,4 +62,5 @@ public interface ControllerEssFixActivePower extends Controller, OpenemsComponen
 			return this.doc;
 		}
 	}
+
 }

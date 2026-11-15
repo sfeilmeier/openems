@@ -59,4 +59,5 @@ class ApplyPhaseSwitchTest {
 	void testSerializeNull() {
 		assertEquals(JsonNull.INSTANCE, ApplyPhaseSwitch.serializer().serialize(null));
 	}
+
 }

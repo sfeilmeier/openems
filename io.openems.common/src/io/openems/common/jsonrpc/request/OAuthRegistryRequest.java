@@ -65,4 +65,5 @@ public class OAuthRegistryRequest extends JsonrpcRequest {
 				.add("payload", this.payload.toJsonObject()) //
 				.build();
 	}
+
 }

@@ -117,4 +117,5 @@ public class EvseProps {
 		return AppDef.copyOfGeneric(modbusUnitId(), def -> def //
 				.setDefaultValue(255)); //
 	}
+
 }

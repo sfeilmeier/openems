@@ -19,4 +19,5 @@ public interface Edge2EdgeWebsocketEss extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

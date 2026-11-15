@@ -221,4 +221,5 @@ public class MeterSiemensPac1600Impl extends AbstractOpenemsModbusComponent
 				OpenemsComponent.getModbusSlaveNatureTable(accessMode), //
 				ElectricityMeter.getModbusSlaveNatureTable(accessMode));
 	}
+
 }

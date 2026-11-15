@@ -27,4 +27,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int port() default EvcsOcppServer.DEFAULT_PORT;
 
 	String webconsole_configurationFactory_nameHint() default "EVCS OCPP Server [{id}]";
+
 }

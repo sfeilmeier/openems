@@ -50,4 +50,5 @@ public class StopBatteryHandler extends StateHandler<OffGridState, Context> {
 			return OffGridState.STOP_BATTERY;
 		}
 	}
+
 }

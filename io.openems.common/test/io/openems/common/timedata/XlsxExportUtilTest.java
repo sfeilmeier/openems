@@ -181,4 +181,5 @@ class XlsxExportUtilTest {
 		assertEquals(HistoricTimedataSaveType.POWER, tou.type());
 
 	}
+
 }

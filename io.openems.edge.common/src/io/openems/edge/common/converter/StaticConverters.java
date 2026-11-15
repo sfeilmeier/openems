@@ -38,4 +38,5 @@ public class StaticConverters {
 		default -> throw new IllegalArgumentException("Converter INVERT does not accept the type of [" + value + "]");
 		};
 	};
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.energy.api.simulation.periods;
 import java.time.Duration;
 
 public enum PeriodDuration {
+
 	QUARTER(Duration.ofMinutes(15)), //
 	HOUR(Duration.ofHours(1)), //
 	;
@@ -38,4 +39,5 @@ public enum PeriodDuration {
 	PeriodDuration(Duration duration) {
 		this.duration = duration;
 	}
+
 }

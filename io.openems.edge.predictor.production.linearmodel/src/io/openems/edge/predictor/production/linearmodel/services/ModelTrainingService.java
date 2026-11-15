@@ -52,4 +52,5 @@ public class ModelTrainingService {
 
 		return this.regressorFitter.fit(features, target);
 	}
+
 }

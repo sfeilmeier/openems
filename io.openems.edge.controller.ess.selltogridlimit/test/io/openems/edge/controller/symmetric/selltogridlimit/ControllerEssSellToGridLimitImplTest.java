@@ -34,4 +34,5 @@ public class ControllerEssSellToGridLimitImplTest {
 						.output("ess0", SET_ACTIVE_POWER_LESS_OR_EQUALS, 2000)) //
 				.deactivate();
 	}
+
 }

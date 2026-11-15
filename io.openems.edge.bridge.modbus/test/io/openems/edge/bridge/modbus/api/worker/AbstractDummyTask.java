@@ -63,4 +63,5 @@ public abstract class AbstractDummyTask extends AbstractTask<ModbusRequest, Modb
 		}
 		return ExecuteState.OK;
 	}
+
 }

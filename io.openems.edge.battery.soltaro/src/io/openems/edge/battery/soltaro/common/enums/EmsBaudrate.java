@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum EmsBaudrate implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	BAUDRATE_9600(1, "Baudrate 9600"), //
 	BAUDRATE_19200(3, "Baudrate 19200"), //
@@ -30,4 +31,5 @@ public enum EmsBaudrate implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

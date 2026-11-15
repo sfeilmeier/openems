@@ -322,4 +322,5 @@ public class BridgeComponentStateHandler {
 			listener.accept(prev, current);
 		}
 	}
+
 }

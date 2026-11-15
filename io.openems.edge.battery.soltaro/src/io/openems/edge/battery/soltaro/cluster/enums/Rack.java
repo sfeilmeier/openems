@@ -7,6 +7,7 @@ import io.openems.edge.battery.soltaro.cluster.versionb.BatterySoltaroClusterVer
  * Helper enum to wrap information about racks.
  */
 public enum Rack {
+
 	RACK_1(1, 0x2000, SoltaroCluster.ChannelId.RACK_1_USAGE,
 			BatterySoltaroClusterVersionB.ChannelId.RACK_1_POSITIVE_CONTACTOR,
 			SoltaroCluster.ChannelId.SUB_MASTER_1_COMMUNICATION_FAILURE), //

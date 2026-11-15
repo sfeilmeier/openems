@@ -40,6 +40,7 @@ import io.openems.edge.common.test.ComponentTest;
 import io.openems.edge.common.test.DummyComponentManager;
 
 class TaskHookTest {
+
 	private static final String PORTNAME = "DUMMY";
 	private static final int BAUDRATE = 19200;
 	private static final int SLAVE_1_UNIT_ID = 10;
@@ -144,4 +145,5 @@ class TaskHookTest {
 			// slave2.close();
 		}
 	}
+
 }

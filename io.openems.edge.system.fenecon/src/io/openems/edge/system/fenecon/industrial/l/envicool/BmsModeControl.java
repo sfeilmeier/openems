@@ -34,4 +34,5 @@ public enum BmsModeControl implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -91,4 +91,5 @@ class UtilsGetRequiredLevelFromPowerTest {
 	void getRequiredLevelFromPowerAtSequentialThresholds(long excessPower, Level expected) throws Exception {
 		assertEquals(expected, getRequiredLevelFromPower(excessPower, sequentialSteps()));
 	}
+
 }

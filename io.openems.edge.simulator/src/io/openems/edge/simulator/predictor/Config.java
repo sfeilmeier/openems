@@ -32,4 +32,5 @@ import io.openems.edge.predictor.api.prediction.LogVerbosity;
 	LogVerbosity logVerbosity() default LogVerbosity.NONE;
 
 	String webconsole_configurationFactory_nameHint() default "Simulator Predictor [{id}]";
+
 }

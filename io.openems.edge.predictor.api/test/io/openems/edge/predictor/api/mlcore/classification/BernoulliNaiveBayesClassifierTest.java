@@ -162,4 +162,5 @@ public class BernoulliNaiveBayesClassifierTest {
 		var prediction = classifier.predict(testSample);
 		assertTrue(prediction == 0 || prediction == 1);
 	}
+
 }

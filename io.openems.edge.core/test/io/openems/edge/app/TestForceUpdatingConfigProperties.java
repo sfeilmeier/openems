@@ -127,4 +127,5 @@ public class TestForceUpdatingConfigProperties extends
 	public OpenemsAppCardinality getCardinality() {
 		return OpenemsAppCardinality.MULTIPLE;
 	}
+
 }

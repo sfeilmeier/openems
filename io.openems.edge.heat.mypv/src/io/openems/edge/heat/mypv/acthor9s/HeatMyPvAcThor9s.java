@@ -24,4 +24,5 @@ public interface HeatMyPvAcThor9s extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

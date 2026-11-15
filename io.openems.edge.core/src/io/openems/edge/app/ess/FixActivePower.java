@@ -162,4 +162,5 @@ public class FixActivePower extends AbstractOpenemsAppWithProps<FixActivePower, 
 	protected FixActivePower getApp() {
 		return this;
 	}
+
 }

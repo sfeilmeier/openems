@@ -10,6 +10,7 @@ import io.openems.edge.goodwe.GoodWeConstants;
 		description = "Implements the GoodWe-ET Charger 3.")
 
 @interface ConfigPV3 {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "charger2";
 
@@ -29,4 +30,5 @@ import io.openems.edge.goodwe.GoodWeConstants;
 	int modbusUnitId() default GoodWeConstants.DEFAULT_UNIT_ID;
 
 	String webconsole_configurationFactory_nameHint() default "GoodWe Charger PV3 [{id}]";
+
 }

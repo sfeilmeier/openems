@@ -155,4 +155,5 @@ public class BraiinsApi {
 
 		return cause instanceof HttpError.ResponseError re && re.status == HttpStatus.INTERNAL_SERVER_ERROR;
 	}
+
 }

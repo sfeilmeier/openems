@@ -178,4 +178,5 @@ class EnergySchedulerTest {
 			assertTrue(scheduleContext.isTargetReached());
 		}
 	}
+
 }

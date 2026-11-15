@@ -77,4 +77,5 @@ public class I2CAnalogImpl extends AbstractOpenemsComponent
 	public Range range() {
 		return new Range(OFFSET, PRECISION, MAXIMUM_VOLTAGE);
 	}
+
 }

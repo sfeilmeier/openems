@@ -106,4 +106,5 @@ public interface Version {
 	 * @throws IOException on I/O-Error
 	 */
 	public abstract RrdDb migrate(RrdDb oldDb, CreateDatabaseConfig config) throws IOException;
+
 }

@@ -60,4 +60,5 @@ public class EvseElectricVehicleGenericImpl extends AbstractOpenemsComponent
 	public ElectricVehicleAbilities getElectricVehicleAbilities() {
 		return this.electricVehicleAbilities;
 	}
+
 }

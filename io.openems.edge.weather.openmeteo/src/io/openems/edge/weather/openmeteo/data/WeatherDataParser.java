@@ -44,4 +44,5 @@ public interface WeatherDataParser {
 	 * @return a list of {@link DailyWeatherSnapshot} containing parsed weather data
 	 */
 	List<DailyWeatherSnapshot> parseDaily(JsonObject apiBlock);
+
 }

@@ -358,4 +358,5 @@ public class IoShellyPlugMGen3ImplTest {
 
 				.deactivate();
 	}
+
 }

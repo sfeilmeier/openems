@@ -123,4 +123,5 @@ public class AddTask<PAYLOAD> implements EndpointRequestType<Request<PAYLOAD>, R
 							.build());
 		}
 	}
+
 }

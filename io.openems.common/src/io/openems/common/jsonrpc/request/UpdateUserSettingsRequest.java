@@ -56,4 +56,5 @@ public class UpdateUserSettingsRequest extends JsonrpcRequest {
 	public JsonObject getSettings() {
 		return this.settings;
 	}
+
 }

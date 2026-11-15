@@ -28,4 +28,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	ControlMode controlMode() default ControlMode.SMART;
 
 	String webconsole_configurationFactory_nameHint() default "ESS SMA Sunny Tripower SE Hybrid Inverter [{id}]";
+
 }

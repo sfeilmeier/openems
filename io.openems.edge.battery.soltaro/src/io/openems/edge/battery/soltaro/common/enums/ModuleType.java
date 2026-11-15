@@ -22,4 +22,5 @@ public enum ModuleType {
 	public int getCapacity_Wh() {
 		return this.capacity;
 	}
+
 }

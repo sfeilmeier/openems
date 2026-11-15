@@ -97,4 +97,5 @@ public interface TimeOfUseTariffController extends Controller, EnergySchedulable
 	public default void _setStateMachine(StateMachine value) {
 		this.getStateMachineChannel().setNextValue(value);
 	}
+
 }

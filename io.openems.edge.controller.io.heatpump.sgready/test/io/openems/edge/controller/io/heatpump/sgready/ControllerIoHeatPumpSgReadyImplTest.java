@@ -642,4 +642,5 @@ public class ControllerIoHeatPumpSgReadyImplTest {
 				]
 				""".formatted(start.toString(), duration.toString(), baseMode);
 	}
+
 }

@@ -76,4 +76,5 @@ public class EshUtilsTest {
 		assertEquals(timestamp, entry.getKey().toString());
 		assertEquals(mode, entry.getValue().toString());
 	}
+
 }

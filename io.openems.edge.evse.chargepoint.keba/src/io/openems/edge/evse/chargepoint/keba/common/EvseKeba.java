@@ -41,4 +41,5 @@ public interface EvseKeba extends Keba, EvseChargePoint {
 	 * @return the {@link PhaseSwitchSource}
 	 */
 	public PhaseSwitchSource getRequiredPhaseSwitchSource();
+
 }

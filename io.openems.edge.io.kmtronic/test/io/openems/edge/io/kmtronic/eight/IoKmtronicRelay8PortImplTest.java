@@ -19,4 +19,5 @@ public class IoKmtronicRelay8PortImplTest {
 						.build()) //
 		;
 	}
+
 }

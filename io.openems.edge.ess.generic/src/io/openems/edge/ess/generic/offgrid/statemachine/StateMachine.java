@@ -77,4 +77,5 @@ public class StateMachine extends AbstractStateMachine<StateMachine.OffGridState
 		case GRID_SWITCH -> new GridSwitchHandler();
 		};
 	}
+
 }

@@ -725,4 +725,5 @@ class EnergyFlowModelTest {
 			assertEquals(1000, ef.getExcessProduction());
 		}
 	}
+
 }

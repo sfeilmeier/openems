@@ -26,4 +26,5 @@ public class FC5WriteCoilTaskTest {
 		assertEquals("FC5WriteCoil [device0;unitid=1;ref=20/0x14;length=1;request=ON]",
 				task.toLogMessage(LogVerbosity.READS_AND_WRITES_VERBOSE, request, response));
 	}
+
 }

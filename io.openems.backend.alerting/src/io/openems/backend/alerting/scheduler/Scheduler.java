@@ -97,4 +97,5 @@ public class Scheduler implements Consumer<ZonedDateTime>, MessageSchedulerServi
 	public void accept(ZonedDateTime now) {
 		this.msgScheduler.forEach(ms -> ms.handle(now));
 	}
+
 }

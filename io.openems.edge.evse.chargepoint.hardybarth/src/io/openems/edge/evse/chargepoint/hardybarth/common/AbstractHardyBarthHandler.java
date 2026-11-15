@@ -564,4 +564,5 @@ public abstract class AbstractHardyBarthHandler<T extends HardyBarth> {
 						: round(TypeUtils.<Integer>getAsType(INTEGER, value) * scaleFactor), //
 				jsonPaths);
 	}
+
 }

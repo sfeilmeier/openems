@@ -3,6 +3,7 @@ package io.openems.edge.fenecon.pro.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum PcsOperationState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	SELF_CHECKING(0, "Self-checking"), //
 	STANDBY(1, "Standby"), //
@@ -35,4 +36,5 @@ public enum PcsOperationState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

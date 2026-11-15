@@ -3,6 +3,7 @@ package io.openems.edge.ess.fenecon.commercial40;
 import io.openems.common.types.OptionsEnum;
 
 public enum BmsDcdcWorkMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	CONSTANT_CURRENT(128, "Constant Current"), //
 	CONSTANT_VOLTAGE(256, "Constant Voltage"), //
@@ -30,4 +31,5 @@ public enum BmsDcdcWorkMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

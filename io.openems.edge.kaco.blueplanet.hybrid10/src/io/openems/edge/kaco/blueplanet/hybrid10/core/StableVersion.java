@@ -61,4 +61,5 @@ public enum StableVersion implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return StableVersion.UNDEFINED;
 	}
+
 }

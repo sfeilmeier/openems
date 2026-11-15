@@ -84,4 +84,5 @@ public class GridSwitchHandler extends StateHandler<OffGridState, Context> {
 		}
 		setValue(ess, SymmetricEss.ChannelId.GRID_MODE, GridMode.UNDEFINED);
 	}
+
 }

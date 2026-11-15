@@ -104,4 +104,5 @@ public interface Alpitronic extends OpenemsComponent {
 	public default void setApplyChargePowerLimit(Integer value) throws OpenemsNamedException {
 		this.getApplyChargePowerLimitChannel().setNextWriteValue(value);
 	}
+
 }

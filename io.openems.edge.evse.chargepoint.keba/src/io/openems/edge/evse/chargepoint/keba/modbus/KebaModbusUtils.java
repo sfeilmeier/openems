@@ -171,4 +171,5 @@ public final class KebaModbusUtils {
 		}
 		this.lastSetPoint = setPoint;
 	}
+
 }

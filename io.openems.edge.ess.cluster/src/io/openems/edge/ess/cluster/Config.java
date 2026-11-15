@@ -26,4 +26,5 @@ import io.openems.edge.common.startstop.StartStopConfig;
 	String[] ess_ids();
 
 	String webconsole_configurationFactory_nameHint() default "ESS Cluster [{id}]";
+
 }

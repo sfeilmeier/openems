@@ -130,4 +130,5 @@ public interface ControllerEssBalancingSchedule extends Controller, OpenemsCompo
 	public default void setGridActivePowerSetPoint(Integer value) throws OpenemsNamedException {
 		this.getGridActivePowerSetPointChannel().setNextWriteValue(value);
 	}
+
 }

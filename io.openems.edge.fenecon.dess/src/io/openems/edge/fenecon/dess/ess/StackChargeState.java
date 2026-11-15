@@ -3,6 +3,7 @@ package io.openems.edge.fenecon.dess.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum StackChargeState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	STANDBY(0, "Standby"), //
 	CHARGING(1, "Charging"), //
@@ -30,4 +31,5 @@ public enum StackChargeState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

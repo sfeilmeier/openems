@@ -28,4 +28,5 @@ public interface TimeOfUseTariffEws extends TimeOfUseTariff, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

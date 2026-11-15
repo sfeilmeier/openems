@@ -100,4 +100,5 @@ public class AddChannelManager extends AbstractChannelListenerManager {
 			this.addOnChangeListener(meter, channelId, callback);
 		}
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.evse.chargepoint.mennekes.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PhaseSwitchMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	USE_ONE_PHASE(0, "Use 1 phase only"), //
 	USE_THREE_PHASE(1, "Use 3 phases only"), //

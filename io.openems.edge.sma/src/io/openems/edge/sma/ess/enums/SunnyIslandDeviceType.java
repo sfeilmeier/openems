@@ -69,4 +69,5 @@ public enum SunnyIslandDeviceType implements OptionsEnum {
 	public Integer getMaxApparentPower() {
 		return this.maxApparentPower;
 	}
+
 }

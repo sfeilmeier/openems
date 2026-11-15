@@ -229,4 +229,5 @@ public class DummyMasterBox2v0 extends AbstractDummyOpenemsComponent<DummyMaster
 		withValue(this, MasterBox2v0.ChannelId.STATUS_ENERGYMETER, value);
 		return this.self();
 	}
+
 }

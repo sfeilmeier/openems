@@ -72,4 +72,5 @@ public class ControllerApiModbusTcpReadWriteImplTest {
 		controller.getComponentNoModbusApiFaultChannel().nextProcessImage(); //
 		assertTrue(controller.getComponentNoModbusApiFault().get()); //
 	}
+
 }

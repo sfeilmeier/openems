@@ -40,4 +40,5 @@ public class DummyBatteryTest {
 						.output(STATE_MACHINE, StateMachine.State.RUNNING))//
 		;
 	}
+
 }

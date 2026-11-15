@@ -25,4 +25,5 @@ public record HeatAskomaPayload(Mode mode) {
 					.build();
 		});
 	}
+
 }

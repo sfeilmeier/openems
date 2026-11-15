@@ -119,4 +119,5 @@ public class ClassifierTrainingServiceTest {
 		assertEquals(classifier, result);
 		verify(classifierFitter).fit(eq(expectedFeatures), eq(expectedLabels));
 	}
+
 }

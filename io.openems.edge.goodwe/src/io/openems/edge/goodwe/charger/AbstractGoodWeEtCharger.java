@@ -112,4 +112,5 @@ public abstract class AbstractGoodWeEtCharger extends AbstractOpenemsModbusCompo
 				ModbusSlaveNatureTable.of(GoodWeCharger.class, accessMode, 100) //
 						.build());
 	}
+
 }

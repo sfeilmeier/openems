@@ -3,6 +3,7 @@ package io.openems.edge.evcs.webasto.next.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum CableState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_CABLE_ATTACHED(0, "No cable attached"), //
 	CABLE_ATTACHED_WITHOUT_CAR(1, "Cable attached, no car attached"), //

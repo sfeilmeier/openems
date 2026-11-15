@@ -39,4 +39,5 @@ public interface ManagedHeatElement extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

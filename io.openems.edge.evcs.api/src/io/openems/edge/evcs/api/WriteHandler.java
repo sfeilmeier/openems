@@ -253,4 +253,5 @@ public class WriteHandler implements Runnable {
 	 */
 	public void cancelChargePower() {
 	}
+
 }

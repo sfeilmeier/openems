@@ -3,6 +3,7 @@ package io.openems.edge.heat.askoma;
 import io.openems.common.types.OptionsEnum;
 
 public enum Mode implements OptionsEnum {
+
 	OFF(1, "OFF"), //
 	FAST_HEAT(2, "FAST_HEAT"), //
 	SURPLUS(3, "SURPLUS"); //
@@ -29,4 +30,5 @@ public enum Mode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return OFF;
 	}
+
 }

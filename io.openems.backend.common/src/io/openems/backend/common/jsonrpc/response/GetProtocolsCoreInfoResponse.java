@@ -52,4 +52,5 @@ public class GetProtocolsCoreInfoResponse extends JsonrpcResponseSuccess {
 						.collect(JsonUtils.toJsonArray()))
 				.build();
 	}
+
 }

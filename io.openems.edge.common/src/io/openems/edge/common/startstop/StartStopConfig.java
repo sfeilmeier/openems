@@ -20,6 +20,7 @@ package io.openems.edge.common.startstop;
  */
 
 public enum StartStopConfig {
+
 	/**
 	 * Force START the Component.
 	 */
@@ -33,4 +34,5 @@ public enum StartStopConfig {
 	 * {@link StartStoppable#setStartStop(StartStop)}.
 	 */
 	AUTO;
+
 }

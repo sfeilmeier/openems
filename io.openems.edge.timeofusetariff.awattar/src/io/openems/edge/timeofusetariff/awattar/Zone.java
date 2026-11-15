@@ -26,4 +26,5 @@ public enum Zone {
 		case AUSTRIA -> "https://api.awattar.at/v1/marketdata";
 		};
 	}
+
 }

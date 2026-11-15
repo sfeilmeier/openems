@@ -7,6 +7,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class FastHeatHandler extends AbstractFastHeatHandler {
+
 	private static final Duration POWER_NOT_APPLIED_DELAY = Duration.ofMinutes(5);
 	private Instant fastHeatPowerNotAppliedSince = null;
 	private Instant fastHeatStartedAt;

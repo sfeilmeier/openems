@@ -34,4 +34,5 @@ public abstract class AbstractReadRegistersTask<//
 	protected final int calculateNextPosition(ModbusElement modbusElement, int position) {
 		return position + modbusElement.length;
 	}
+
 }

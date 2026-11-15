@@ -483,4 +483,5 @@ public class SolarEdgeEssImplTest {
 		var ess = new SolarEdgeEssImpl();
 		assertNotNull(ess.debugLog());
 	}
+
 }

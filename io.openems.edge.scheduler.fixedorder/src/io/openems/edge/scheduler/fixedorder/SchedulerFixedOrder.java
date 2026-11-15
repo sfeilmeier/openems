@@ -18,4 +18,5 @@ public interface SchedulerFixedOrder extends Scheduler {
 			return this.doc;
 		}
 	}
+
 }

@@ -15,4 +15,5 @@ public abstract class PriceCalculator {
 	protected final double evaluate(StaticVariableSet<Double> vars) {
 		return this.evaluator.evaluate(this.expression, vars);
 	}
+
 }

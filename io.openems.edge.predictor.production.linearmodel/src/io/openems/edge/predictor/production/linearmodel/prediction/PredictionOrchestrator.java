@@ -54,4 +54,5 @@ public class PredictionOrchestrator {
 
 		return new Series<>(index, predictedValues);
 	}
+
 }

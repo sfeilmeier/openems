@@ -68,4 +68,5 @@ public sealed class Constraint {
 				.append(VALUE_FORMAT.format(this.value));
 		return b.toString();
 	}
+
 }

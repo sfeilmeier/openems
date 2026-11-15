@@ -242,4 +242,5 @@ public class NotStartedHandlerTest {
 		assertEquals(expectedStartTime.toEpochSecond(), actualStartEpochSeconds.longValue(),
 				"Start time must include full reference cycle duration");
 	}
+
 }

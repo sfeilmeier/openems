@@ -70,4 +70,5 @@ class AppWeatherPredictionTest {
 	private static JsonObject emptyProperties() {
 		return JsonUtils.buildJsonObject().build();
 	}
+
 }

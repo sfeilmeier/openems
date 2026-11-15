@@ -71,4 +71,5 @@ public class DocTest {
 		assertEquals("<> <>", docForCombined.getText());
 
 	}
+
 }

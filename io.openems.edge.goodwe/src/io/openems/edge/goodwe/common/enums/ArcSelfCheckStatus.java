@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ArcSelfCheckStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	FAILURE(0, "Failure"), //
 	ACTIVATED(1, "Activated");
@@ -29,4 +30,5 @@ public enum ArcSelfCheckStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

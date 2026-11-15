@@ -145,4 +145,5 @@ class ComponentRequestHandlerTest {
 
 		return (Map<String, ?>) field.get(this.sut);
 	}
+
 }

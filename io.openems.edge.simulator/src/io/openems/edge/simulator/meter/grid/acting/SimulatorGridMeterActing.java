@@ -62,4 +62,5 @@ public interface SimulatorGridMeterActing extends ElectricityMeter, OpenemsCompo
 	public default void _setStateMachine(State value) {
 		this.getStateMachineChannel().setNextValue(value);
 	}
+
 }

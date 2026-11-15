@@ -259,4 +259,5 @@ public final class GridSellPricesTestData {
 			// 23:00
 			null, null, null, null, //
 	};
+
 }

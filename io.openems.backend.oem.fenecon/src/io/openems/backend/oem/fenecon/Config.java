@@ -17,4 +17,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String appCenterMasterKey();
 
 	String webconsole_configurationFactory_nameHint() default "OEM FENECON";
+
 }

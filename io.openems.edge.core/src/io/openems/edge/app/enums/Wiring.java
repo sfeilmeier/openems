@@ -5,6 +5,7 @@ import io.openems.edge.core.appmanager.AbstractOpenemsApp;
 import io.openems.edge.core.appmanager.TranslationUtil;
 
 public enum Wiring implements TranslatableEnum {
+
 	SINGLE_PHASE("App.Evse.ChargePoint.Keba.Wiring.one"), //
 	THREE_PHASE("App.Evse.ChargePoint.Keba.Wiring.three") //
 	;
@@ -29,4 +30,5 @@ public enum Wiring implements TranslatableEnum {
 	public static final OptionsFactory optionsFactory() {
 		return OptionsFactory.of(values());
 	}
+
 }

@@ -686,4 +686,5 @@ public class SystemFeneconIndustrialLImpl extends AbstractOpenemsModbusComponent
 	public void forceStateMachineUndefined() {
 		this.stateMachine.forceNextState(UNDEFINED);
 	}
+
 }

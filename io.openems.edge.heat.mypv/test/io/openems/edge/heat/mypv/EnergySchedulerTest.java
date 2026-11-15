@@ -297,4 +297,5 @@ class EnergySchedulerTest {
 			return this.esh;
 		}
 	}
+
 }

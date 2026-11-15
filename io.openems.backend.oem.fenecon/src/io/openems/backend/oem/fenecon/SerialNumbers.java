@@ -71,4 +71,5 @@ public record SerialNumbers(Map<String, Map<String, String>> values) {
 
 		return new SerialNumbers(values);
 	}
+
 }

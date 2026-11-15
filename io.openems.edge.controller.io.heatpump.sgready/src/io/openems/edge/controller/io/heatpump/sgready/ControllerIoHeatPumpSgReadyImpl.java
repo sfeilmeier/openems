@@ -393,4 +393,5 @@ public class ControllerIoHeatPumpSgReadyImpl extends AbstractOpenemsComponent im
 				() -> new JSCalendarApi.UpdateJsCalendarRecord(this.configurationAdmin, this.componentManager,
 						this.servicePid(), "jsCalendar"));
 	}
+
 }

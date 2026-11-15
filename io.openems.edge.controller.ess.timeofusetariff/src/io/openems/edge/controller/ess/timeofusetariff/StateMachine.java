@@ -3,6 +3,7 @@ package io.openems.edge.controller.ess.timeofusetariff;
 import io.openems.common.types.OptionsEnum;
 
 public enum StateMachine implements OptionsEnum {
+
 	/*
 	 * BALANCING mode is first = default.
 	 */
@@ -42,4 +43,5 @@ public enum StateMachine implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return BALANCING;
 	}
+
 }

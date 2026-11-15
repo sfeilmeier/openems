@@ -27,4 +27,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int capacity() default 10_200;
 
 	String webconsole_configurationFactory_nameHint() default "KACO blueplanet hybrid 10.0 TL3 Ess [{id}]";
+
 }

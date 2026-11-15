@@ -8,7 +8,9 @@ whether to adopt it (and fix the listed violations) or reject it.
 Already adopted in `cnf/checkstyle.xml` (zero violations on current code):
 `LineEnding`, `MultilineCommentLeadingAsteriskPresence`, `ExpressionOverBlockLambda`,
 `UnnecessaryTypeArgumentsWithRecordPattern`, `MissingOverrideOnRecordAccessor`,
-`JavadocEndCommentDelimiter`, `WhitespaceBeforeEmptyBody`.
+`JavadocEndCommentDelimiter`, `WhitespaceBeforeEmptyBody`, `TypeBodyPadding`
+(adopted with a codebase-wide fix: blank line after the opening and before the closing
+brace of every outermost type body; verified formatter-stable with `cnf/formatter.properties`).
 
 Violation counts were measured with Checkstyle 14.1.0 (CLI, default configuration of each
 check) over all Java sources of the `io.openems.*` bundles (4,130 files, main + test,
@@ -18,7 +20,6 @@ configured to match the project style first.
 
 | Check | What it enforces (default) | Violations | Decision |
 |---|---|---:|---|
-| `TypeBodyPadding` | Blank line after opening and before closing brace of a type body | 2872 | pending |
 | `JavadocLinkFirstOccurrence` | Only the first mention of a class should be a `{@link}`; later ones plain text | 2875 | pending |
 | `GoogleMethodName` | Google-style method names (camelCase, no underscores) — conflicts with project `MethodName` pattern allowing `_` | 703 | pending |
 | `PreferCodeOrSnippetJavadocInlineTag` | Prefer `{@code}`/`{@snippet}` over `<code>` in Javadoc | 411 | pending |

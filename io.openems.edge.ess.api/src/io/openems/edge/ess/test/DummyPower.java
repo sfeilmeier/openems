@@ -140,4 +140,5 @@ public class DummyPower implements Power {
 	public boolean isFilterEnabled() {
 		return this.filter != null;
 	}
+
 }

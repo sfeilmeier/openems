@@ -28,4 +28,5 @@ public class DropColumnsTransformerTest {
 				IllegalArgumentException.class, //
 				() -> transformed.getColumn("column1"));
 	}
+
 }

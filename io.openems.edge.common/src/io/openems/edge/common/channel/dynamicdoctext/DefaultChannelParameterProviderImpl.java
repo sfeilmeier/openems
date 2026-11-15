@@ -4,6 +4,7 @@ import io.openems.common.session.Language;
 import io.openems.edge.common.channel.ChannelId;
 
 class DefaultChannelParameterProviderImpl<V> extends ChannelParameterProvider<V> {
+
 	protected DefaultChannelParameterProviderImpl(ChannelId channelId) {
 		super(channelId);
 	}
@@ -17,4 +18,5 @@ class DefaultChannelParameterProviderImpl<V> extends ChannelParameterProvider<V>
 	public ParameterProvider copy() {
 		return new DefaultChannelParameterProviderImpl<>(this.channelId);
 	}
+
 }

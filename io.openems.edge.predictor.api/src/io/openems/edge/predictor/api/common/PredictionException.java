@@ -19,4 +19,5 @@ public class PredictionException extends Exception {
 	public PredictionError getError() {
 		return this.error;
 	}
+
 }

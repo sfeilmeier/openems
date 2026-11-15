@@ -202,4 +202,5 @@ class ControllerIoHeatingElementHysteresisTest {
 				.next(new TestCase().output(LEVEL, Level.LEVEL_6)) //
 				.deactivate();
 	}
+
 }

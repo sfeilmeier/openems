@@ -181,4 +181,5 @@ public class TasksSupplierImpl implements TasksSupplier {
 	private void traceLog(Supplier<String> message) {
 		this.logHandler.get().trace(this.log, message);
 	}
+
 }

@@ -19,4 +19,5 @@ public final class DailyWeatherVariables {
 	private DailyWeatherVariables() {
 		throw new AssertionError("Cannot instantiate utility class");
 	}
+
 }

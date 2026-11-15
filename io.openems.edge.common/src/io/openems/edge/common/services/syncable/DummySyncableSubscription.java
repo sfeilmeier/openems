@@ -5,6 +5,7 @@ import io.openems.common.jsonrpc.syncable.SyncableKey;
 import io.openems.common.utils.BehaviorSubject;
 
 public class DummySyncableSubscription<T> implements SyncableSubscription<T> {
+
 	private final BehaviorSubject<SyncableEntry<T>> entrySubject;
 
 	public DummySyncableSubscription(SyncableEntry<T> entry) {
@@ -29,4 +30,5 @@ public class DummySyncableSubscription<T> implements SyncableSubscription<T> {
 	public void dispose() {
 		// Empty
 	}
+
 }

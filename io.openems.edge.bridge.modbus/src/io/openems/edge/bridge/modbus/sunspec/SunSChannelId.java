@@ -27,4 +27,5 @@ public class SunSChannelId<T> implements io.openems.edge.common.channel.ChannelI
 	public String toString() {
 		return this.name;
 	}
+
 }

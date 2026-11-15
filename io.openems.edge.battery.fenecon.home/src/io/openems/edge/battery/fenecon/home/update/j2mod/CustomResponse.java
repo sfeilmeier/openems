@@ -7,6 +7,7 @@ import java.io.IOException;
 import com.ghgande.j2mod.modbus.msg.ModbusResponse;
 
 public abstract class CustomResponse extends ModbusResponse {
+
 	@Override
 	public byte[] getMessage() {
 		var memoryStream = new ByteArrayOutputStream();
@@ -19,4 +20,5 @@ public abstract class CustomResponse extends ModbusResponse {
 			throw new RuntimeException("Error while writing data to byte array output stream", e);
 		}
 	}
+
 }

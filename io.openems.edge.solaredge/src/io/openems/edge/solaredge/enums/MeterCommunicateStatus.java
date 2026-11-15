@@ -3,6 +3,7 @@ package io.openems.edge.solaredge.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum MeterCommunicateStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_METER(65535, "NO_METER"), //
 	OK(1, "OK"); //
@@ -29,4 +30,5 @@ public enum MeterCommunicateStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

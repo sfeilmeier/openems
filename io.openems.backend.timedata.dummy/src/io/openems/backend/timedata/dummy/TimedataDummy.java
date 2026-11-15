@@ -119,4 +119,5 @@ public class TimedataDummy extends AbstractOpenemsBackendComponent implements Ti
 	public String id() {
 		return this.config.id();
 	}
+
 }

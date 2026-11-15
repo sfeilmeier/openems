@@ -192,4 +192,5 @@ class FeneconCommercial50Test {
 				.addProperty("SHADOW_MANAGEMENT_DISABLED", false) //
 				.build();
 	}
+
 }

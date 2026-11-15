@@ -13,6 +13,7 @@ import io.openems.common.exceptions.OpenemsError.OpenemsNamedRuntimeException;
  * value and does not have children.
  */
 public class XmlElement {
+
 	protected final Element node;
 
 	XmlElement(Element node) {
@@ -77,4 +78,5 @@ public class XmlElement {
 	public Element getNode() {
 		return this.node;
 	}
+
 }

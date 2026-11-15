@@ -182,4 +182,5 @@ public non-sealed class EnumDoc extends AbstractDoc<Integer> implements OptionsD
 	public int getDebounce() {
 		return this.debounce;
 	}
+
 }

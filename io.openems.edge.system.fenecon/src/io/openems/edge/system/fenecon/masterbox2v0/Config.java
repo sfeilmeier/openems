@@ -7,6 +7,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 		name = "IOC Fenecon MasterBox2V0", //
 		description = "Implements the MasterBox2V0.")
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "ioc0";
 
@@ -23,4 +24,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int modbusUnitId() default 10;
 
 	String webconsole_configurationFactory_nameHint() default "IOC Fenecon MasterBox2V0 [{id}]";
+
 }

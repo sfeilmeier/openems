@@ -8,6 +8,7 @@ import io.openems.edge.common.channel.ChannelId;
 import io.openems.edge.common.channel.value.Value;
 
 public class IocReadValueMapping<T> {
+
 	private final Supplier<Value<T>> source;
 	private final ChannelId target;
 
@@ -28,4 +29,5 @@ public class IocReadValueMapping<T> {
 			setValue(component, this.target, value.get());
 		}
 	}
+
 }

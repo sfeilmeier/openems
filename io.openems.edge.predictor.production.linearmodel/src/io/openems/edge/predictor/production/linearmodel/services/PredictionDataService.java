@@ -87,4 +87,5 @@ public class PredictionDataService {
 			expectedTimestamp = expectedTimestamp.plusMinutes(15);
 		}
 	}
+
 }

@@ -210,4 +210,5 @@ public class ControllerEssEmergencyCapacityReserveImpl extends AbstractOpenemsCo
 	public EnergyScheduleHandler getEnergyScheduleHandler() {
 		return this.energyScheduleHandler;
 	}
+
 }

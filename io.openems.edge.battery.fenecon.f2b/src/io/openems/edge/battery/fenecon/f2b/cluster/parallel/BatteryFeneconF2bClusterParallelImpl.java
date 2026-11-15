@@ -338,4 +338,5 @@ public class BatteryFeneconF2bClusterParallelImpl extends AbstractBatteryFenecon
 	public List<BatteryFeneconF2b> getBatteries() {
 		return this.batteries;
 	}
+
 }

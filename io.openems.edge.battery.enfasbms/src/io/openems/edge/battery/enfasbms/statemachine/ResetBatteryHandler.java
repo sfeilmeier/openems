@@ -109,4 +109,5 @@ public class ResetBatteryHandler extends StateHandler<State, Context> {
 	protected String debugLog() {
 		return State.RESET_BATTERY.asCamelCase() + "-" + EnumUtils.nameAsCamelCase(this.rBs.subState);
 	}
+
 }

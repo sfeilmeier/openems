@@ -43,4 +43,5 @@ public class UndefinedHandler extends StateHandler<State, Context> {
 
 		return State.ALIGNING;
 	}
+
 }

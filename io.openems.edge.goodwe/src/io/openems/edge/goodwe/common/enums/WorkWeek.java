@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum WorkWeek implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ECO_MODE_ENABLE(0xFF, "Eco mode enable"), //
 	ECO_MODE_DISABLE(0x00, "Eco mode disable"), //
@@ -38,4 +39,5 @@ public enum WorkWeek implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

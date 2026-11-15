@@ -30,4 +30,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int powerL3();
 
 	String webconsole_configurationFactory_nameHint() default "Controller Fix Reactive Power Asymmetric [{id}]";
+
 }

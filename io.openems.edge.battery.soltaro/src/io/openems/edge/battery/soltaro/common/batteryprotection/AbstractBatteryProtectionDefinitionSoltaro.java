@@ -88,4 +88,5 @@ public abstract class AbstractBatteryProtectionDefinitionSoltaro implements Batt
 	public boolean isDischargeAllowed() {
 		return true;
 	}
+
 }

@@ -151,4 +151,5 @@ public record TariffData(TariffType tariffType, TimeRangeValues<Double> prices, 
 							.build();
 				});
 	}
+
 }

@@ -105,4 +105,5 @@ public interface EssSmaSunnyIsland extends ManagedSinglePhaseEss, SinglePhaseEss
 	 */
 	public void applyPower(int activePowerL1, int reactivePowerL1, int activePowerL2, int reactivePowerL2,
 			int activePowerL3, int reactivePowerL3) throws OpenemsNamedException;
+
 }

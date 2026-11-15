@@ -24,4 +24,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String meter_id();
 
 	String webconsole_configurationFactory_nameHint() default "Controller Phase-Rectification [{id}]";
+
 }

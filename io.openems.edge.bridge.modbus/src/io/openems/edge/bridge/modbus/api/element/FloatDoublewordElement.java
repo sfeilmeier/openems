@@ -28,4 +28,5 @@ public class FloatDoublewordElement extends AbstractDoubleWordElement<FloatDoubl
 	protected void valueToByteBuffer(ByteBuffer buff, Float value) {
 		buff.putFloat(value.floatValue());
 	}
+
 }

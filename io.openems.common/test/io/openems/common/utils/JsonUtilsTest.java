@@ -817,4 +817,5 @@ public class JsonUtilsTest {
 		assertEquals("foo", r.get(0).getAsString());
 		assertEquals("bar", r.get(1).getAsString());
 	}
+
 }

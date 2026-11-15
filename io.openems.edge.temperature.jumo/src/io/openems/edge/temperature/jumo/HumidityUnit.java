@@ -3,6 +3,7 @@ package io.openems.edge.temperature.jumo;
 import io.openems.common.types.OptionsEnum;
 
 public enum HumidityUnit implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	GRAM_PER_CUBIC_METER(0, "Gram per cubic meter g/m³"), //
 	GRAMS_PER_CUBIC_FOOT(1, "Gram per cubic foot g/ft³"), //
@@ -30,4 +31,5 @@ public enum HumidityUnit implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

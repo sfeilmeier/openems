@@ -60,4 +60,5 @@ public class StateMachine extends AbstractStateMachine<StateMachine.State, Conte
 		case ERROR -> new ErrorHandler();
 		};
 	}
+
 }

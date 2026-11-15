@@ -77,4 +77,5 @@ public class ControllerAsymmetricFixReactivePowerImpl extends AbstractOpenemsCom
 		ess.addPowerConstraintAndValidate("AymmetricFixReactivePower " + phase, phase.toSingleOrAllPhase, Pwr.REACTIVE,
 				Relationship.EQUALS, calculatedPower);
 	}
+
 }

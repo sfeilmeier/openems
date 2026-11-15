@@ -3,6 +3,7 @@ package io.openems.edge.controller.evse.single;
 import io.openems.common.types.OptionsEnum;
 
 public enum Mode implements OptionsEnum {
+
 	ZERO(0, "Zero"), //
 	MINIMUM(1, "Minimum"), //
 	SURPLUS(2, "Surplus"), //
@@ -38,4 +39,5 @@ public enum Mode implements OptionsEnum {
 		case ZERO, FORCE -> false;
 		};
 	}
+
 }

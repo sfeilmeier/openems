@@ -82,4 +82,5 @@ public class RawPeriodDataTest {
 	private static RawPeriod.RawPeriodData missingOneOptionalValue() {
 		return new RawPeriod.RawPeriodData(1200, null, 125.0, 30.0);
 	}
+
 }

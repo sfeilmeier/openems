@@ -81,4 +81,5 @@ public class IoMasterBox2v0RelayImplTest {
 		assertEquals(true, ioc.getRelay5Channel().getNextWriteValue().get());
 		assertEquals(true, ioc.getRelay6Channel().getNextWriteValue().get());
 	}
+
 }

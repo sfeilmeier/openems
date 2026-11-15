@@ -55,4 +55,5 @@ public class StatusConverter {
 	public boolean isVehicleConnected() {
 		return this.vehicleConnected;
 	}
+
 }

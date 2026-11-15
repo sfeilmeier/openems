@@ -693,4 +693,5 @@ public interface SymmetricEss extends OpenemsComponent {
 	public default void _setMaxCellTemperature(int value) {
 		this.getMaxCellTemperatureChannel().setNextValue(value);
 	}
+
 }

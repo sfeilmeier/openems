@@ -290,4 +290,5 @@ public enum EmsPowerMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -187,4 +187,5 @@ public class TrainingDataServiceTest {
 		assertEquals(TrainingError.NO_PRODUCTION_DATA, exception2.getError());
 		assertEquals("Production data is null or empty", exception2.getMessage());
 	}
+
 }

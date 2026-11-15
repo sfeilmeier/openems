@@ -61,4 +61,5 @@ public class Fieldbus5xxDO extends FieldbusModule {
 	public BooleanReadChannel[] getChannels() {
 		return this.readChannels;
 	}
+
 }

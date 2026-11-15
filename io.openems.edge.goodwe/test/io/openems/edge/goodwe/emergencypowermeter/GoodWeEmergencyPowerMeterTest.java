@@ -16,4 +16,5 @@ public class GoodWeEmergencyPowerMeterTest {
 						.setModbusId("modbus0") //
 						.build());
 	}
+
 }

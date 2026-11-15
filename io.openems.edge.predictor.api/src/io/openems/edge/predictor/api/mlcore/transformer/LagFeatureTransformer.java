@@ -34,4 +34,5 @@ public class LagFeatureTransformer<I> extends AbstractDataFrameTransformer<I> {
 		dataframe.setColumn(this.newFeatureName, new Series<>(dataframe.getIndex(), laggedValues));
 		return dataframe;
 	}
+
 }

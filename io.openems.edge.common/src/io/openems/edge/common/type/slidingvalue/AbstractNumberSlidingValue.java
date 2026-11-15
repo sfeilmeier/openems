@@ -32,4 +32,5 @@ public abstract class AbstractNumberSlidingValue<T> extends SlidingValue<T> {
 				.map(Object::toString) //
 				.collect(Collectors.joining(","));
 	}
+
 }

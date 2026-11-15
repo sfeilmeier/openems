@@ -27,4 +27,5 @@ public class LagValidationTransformerTest {
 		assertEquals(20.0, result.getValueAt(1, 0), 1e-6);
 		assertTrue(Double.isNaN(result.getValueAt(2, 0)));
 	}
+
 }

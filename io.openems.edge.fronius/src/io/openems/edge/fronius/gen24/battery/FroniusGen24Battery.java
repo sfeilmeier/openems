@@ -159,4 +159,5 @@ public interface FroniusGen24Battery extends OpenemsComponent, ModbusSlave {
 				ModbusSlaveNatureTable.of(FroniusGen24Battery.class, accessMode, 100) //
 						.build());
 	}
+
 }

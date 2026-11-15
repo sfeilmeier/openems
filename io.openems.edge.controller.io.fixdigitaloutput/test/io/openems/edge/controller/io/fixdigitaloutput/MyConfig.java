@@ -58,4 +58,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public boolean isOn() {
 		return this.builder.isOn;
 	}
+
 }

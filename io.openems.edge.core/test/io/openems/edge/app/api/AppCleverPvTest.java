@@ -103,4 +103,5 @@ class AppCleverPvTest {
 								.addProperty("readOnly", true) //
 								.build()));
 	}
+
 }

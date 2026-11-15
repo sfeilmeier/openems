@@ -42,4 +42,5 @@ public @interface Config {
 	String Modbus_target() default "(enabled=true)";
 
 	String webconsole_configurationFactory_nameHint() default "EVSE Charge-Point MENNEKES [{id}]";
+
 }

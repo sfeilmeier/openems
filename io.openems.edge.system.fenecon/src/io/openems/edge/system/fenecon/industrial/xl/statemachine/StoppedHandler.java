@@ -20,4 +20,5 @@ public class StoppedHandler extends StateHandler<State, Context> {
 		system._setStartStop(StartStop.STOP);
 		return State.STOPPED;
 	}
+
 }

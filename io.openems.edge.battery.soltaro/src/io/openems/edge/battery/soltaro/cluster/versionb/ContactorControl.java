@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.cluster.versionb;
 import io.openems.common.types.OptionsEnum;
 
 public enum ContactorControl implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	CUT_OFF(0, "Cut off"), //
 	CONNECTION_INITIATING(1, "Connection initiating"), //
@@ -30,4 +31,5 @@ public enum ContactorControl implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

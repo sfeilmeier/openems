@@ -172,4 +172,5 @@ public interface KostalPikoCore {
 			return this.doc;
 		}
 	}
+
 }

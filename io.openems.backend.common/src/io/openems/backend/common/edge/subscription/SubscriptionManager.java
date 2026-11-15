@@ -5,6 +5,7 @@ import java.util.List;
 import io.openems.backend.common.edge.EdgeClient;
 
 public interface SubscriptionManager {
+
 	/**
 	 * Registers a factory that creates handlers for subscription events.
 	 *
@@ -73,4 +74,5 @@ public interface SubscriptionManager {
 	record ActiveClientSubscription(SubscriptionData subscriptionData, SubscriptionHandler globalHandler,
 			SubscriptionHandler clientHandler) {
 	}
+
 }

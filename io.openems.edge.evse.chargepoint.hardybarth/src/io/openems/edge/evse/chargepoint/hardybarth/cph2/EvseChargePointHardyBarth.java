@@ -42,4 +42,5 @@ public interface EvseChargePointHardyBarth extends OpenemsComponent, HardyBarth,
 	public default ChargePointStatus getChargePointStatus() {
 		return this.getChargePointStatusChannel().value().asEnum();
 	}
+
 }

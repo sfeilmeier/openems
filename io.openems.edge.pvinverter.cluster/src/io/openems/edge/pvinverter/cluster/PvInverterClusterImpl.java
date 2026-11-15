@@ -234,4 +234,5 @@ public class PvInverterClusterImpl extends AbstractOpenemsComponent implements P
 	public MeterType getMeterType() {
 		return this.config.meterType();
 	}
+
 }

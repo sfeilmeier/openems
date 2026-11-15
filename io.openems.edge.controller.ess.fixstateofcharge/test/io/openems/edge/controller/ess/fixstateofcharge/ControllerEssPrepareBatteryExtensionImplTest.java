@@ -1086,4 +1086,5 @@ class ControllerEssPrepareBatteryExtensionImplTest {
 						.output(CTRL_IS_IN_REFERENCE_CYCLE, false)) //
 				.deactivate();
 	}
+
 }

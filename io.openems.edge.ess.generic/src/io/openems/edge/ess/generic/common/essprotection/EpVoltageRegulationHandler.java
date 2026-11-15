@@ -109,4 +109,5 @@ public class EpVoltageRegulationHandler implements EssProtectionHandler {
 					innerResistance, bvpChargeBms, bvpDischargeBms, inverterDcMinVoltage, inverterDcMaxVoltage);
 		}
 	}
+
 }

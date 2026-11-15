@@ -94,4 +94,5 @@ public class DummyEndpointFetcher implements EndpointFetcher {
 	public void setOnTaskFinished(Runnable onTaskFinished) {
 		this.onTaskFinished = onTaskFinished == null ? FunctionUtils::doNothing : onTaskFinished;
 	}
+
 }

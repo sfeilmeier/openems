@@ -7,6 +7,7 @@ import java.util.Optional;
  * all FC40 - FC44 requests. The ordinal is identical to the byte status code.
  */
 public enum ResponseStatusCode {
+
 	WAIT, //
 	OK, //
 	FLASH_ERROR, //
@@ -34,4 +35,5 @@ public enum ResponseStatusCode {
 
 		return Optional.of(values()[statusCode]);
 	}
+
 }

@@ -30,6 +30,7 @@ import io.openems.edge.system.fenecon.industrial.xl.statemachine.StateMachine.St
 import io.openems.edge.temperature.jumo.DummyJumoHydroTransS20Impl;
 
 public class EssTestFailedTest {
+
 	private static final ChannelAddress STATE_MACHINE = new ChannelAddress("system0", "StateMachine");
 	private static final ChannelAddress ESS_TEST_FAILED = new ChannelAddress("system0", "EssTestFailed");
 	private static final ChannelAddress STATUS_SYS_OFF = new ChannelAddress("system0", "StatusSysOff");
@@ -140,4 +141,5 @@ public class EssTestFailedTest {
 						.output(ESS_TEST_FAILED, essHasFaults))//
 		;
 	}
+
 }

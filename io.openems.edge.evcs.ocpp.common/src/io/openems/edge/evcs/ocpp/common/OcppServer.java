@@ -34,4 +34,5 @@ public interface OcppServer {
 	 */
 	public CompletionStage<Confirmation> send(UUID session, Request request)
 			throws OccurenceConstraintException, UnsupportedFeatureException, NotConnectedException;
+
 }

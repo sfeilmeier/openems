@@ -58,4 +58,5 @@ public class SyncableSubscribeResponse extends JsonrpcResponseSuccess {
 				.add("entry", this.entry, SyncableEntry.serializer()) //
 				.build();
 	}
+
 }

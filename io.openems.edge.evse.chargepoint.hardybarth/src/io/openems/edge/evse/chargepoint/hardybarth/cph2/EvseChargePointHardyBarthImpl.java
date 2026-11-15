@@ -308,4 +308,5 @@ public class EvseChargePointHardyBarthImpl extends AbstractOpenemsComponent impl
 	public String debugLog() {
 		return this.handler.debugLog();
 	}
+
 }

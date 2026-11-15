@@ -38,4 +38,5 @@ public class AboveTargetSocHandler extends StateHandler<State, Context> {
 		context.setTargetPower(targetPower);
 		return State.ABOVE_TARGET_SOC;
 	}
+
 }

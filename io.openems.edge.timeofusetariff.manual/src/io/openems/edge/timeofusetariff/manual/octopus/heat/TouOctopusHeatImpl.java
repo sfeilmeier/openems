@@ -126,4 +126,5 @@ public class TouOctopusHeatImpl extends AbstractOpenemsComponent
 				this.config.ancillaryCosts(), //
 				msg -> this.logWarn(this.log, msg));
 	}
+
 }

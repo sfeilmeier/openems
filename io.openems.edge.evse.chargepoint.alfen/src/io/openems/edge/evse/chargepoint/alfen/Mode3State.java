@@ -14,6 +14,7 @@ import io.openems.common.types.OptionsEnum;
  * still be considered ready for charging i.g. (to be tested).
  */
 public enum Mode3State implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined", false, false), //
 	A(0, "A: No EV connected", false, false), //
 	B1(1, "B1: EV connected, charging not allowed", true, true), //
@@ -77,4 +78,5 @@ public enum Mode3State implements OptionsEnum {
 		default -> UNDEFINED;
 		};
 	}
+
 }

@@ -6,6 +6,7 @@ import java.time.Duration;
 import io.openems.edge.controller.evse.cluster.powerdistribute.PowerDistributionEntry;
 
 public class LimitIncreaseByPercentageRamp extends PowerDistributionRamp {
+
 	/**
 	 * Max allowed change for increasing power/current. A value of 0.03 requires
 	 * about 1 minute from 6 A to 32 A.
@@ -33,4 +34,5 @@ public class LimitIncreaseByPercentageRamp extends PowerDistributionRamp {
 				.ceil(lastSetPoint.setPointInWatt() * this.maxPercentageChangePerSecond * (elapsedMillis / 1000f));
 		return Math.max(entry.applySetPoint.min(), lastSetPoint.setPointInWatt() + allowedIncrease);
 	}
+
 }

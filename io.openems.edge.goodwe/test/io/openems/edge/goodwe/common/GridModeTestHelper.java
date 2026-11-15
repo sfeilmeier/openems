@@ -39,4 +39,5 @@ public final class GridModeTestHelper {
 				.findFirst().orElseThrow().getElements()[0];
 		element.setInputValue(value == null ? null : new Register[] { new SimpleRegister(value) });
 	}
+
 }

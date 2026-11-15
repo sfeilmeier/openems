@@ -70,4 +70,5 @@ public interface HardwarePlatform {
 	 *                          failure.
 	 */
 	public void setGpio(WriteChannelId channelId, boolean value) throws OpenemsException;
+
 }

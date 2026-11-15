@@ -77,4 +77,5 @@ import io.openems.common.channel.PropertyChannel;
 	int hysteresisSoc();
 
 	String webconsole_configurationFactory_nameHint() default "Controller Peak-Shaving Symmetric Timeslot [{id}]";
+
 }

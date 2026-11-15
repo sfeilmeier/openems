@@ -537,4 +537,5 @@ public abstract sealed class Point {
 			this(bit, name, label, Doc.of(level));
 		}
 	}
+
 }

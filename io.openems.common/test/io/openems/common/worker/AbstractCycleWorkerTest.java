@@ -39,4 +39,5 @@ public class AbstractCycleWorkerTest {
 
 		worker.deactivate();
 	}
+
 }

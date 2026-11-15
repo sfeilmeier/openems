@@ -99,4 +99,5 @@ public class MeterCarloGavazziEm300ImplTest {
 		this.test.next(InvertTest.testInvert(false));
 		this.test.next(InvertTest.testEnergyInvert(false));
 	}
+
 }

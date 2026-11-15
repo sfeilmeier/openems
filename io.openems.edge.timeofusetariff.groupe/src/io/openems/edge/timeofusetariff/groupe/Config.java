@@ -18,4 +18,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	boolean enabled() default true;
 
 	String webconsole_configurationFactory_nameHint() default "Time-Of-Use Tariff GroupeE [{id}]";
+
 }

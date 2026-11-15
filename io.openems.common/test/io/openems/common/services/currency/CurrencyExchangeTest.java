@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import io.openems.common.utils.DoubleUtils;
 
 class CurrencyExchangeTest {
+
 	private static DummyCurrencyExchange exchange;
 
 	@BeforeAll
@@ -44,4 +45,5 @@ class CurrencyExchangeTest {
 		exchange.setExchangeRate(eur, rub, 10.0);
 		assertTrue(hasCalledChange.get());
 	}
+
 }

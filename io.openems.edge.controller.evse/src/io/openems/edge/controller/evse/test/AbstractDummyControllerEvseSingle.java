@@ -39,4 +39,5 @@ public abstract class AbstractDummyControllerEvseSingle<SELF extends AbstractDum
 				.add("id", this.id()) //
 				.toString();
 	}
+
 }

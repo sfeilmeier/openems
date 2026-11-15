@@ -252,4 +252,5 @@ public abstract class AbstractAllowedChargeDischargeHandler<ESS extends Symmetri
 		return min(thisValue, //
 				lastValue + thisValue * millis * MAX_INCREASE_PERCENTAGE / 1000.F /* convert [mW] to [W] */);
 	}
+
 }

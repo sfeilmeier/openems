@@ -17,4 +17,5 @@ public final class ColumnNames {
 
 	private ColumnNames() {
 	}
+
 }

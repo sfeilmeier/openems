@@ -196,4 +196,5 @@ public class EnergySchedulerImplTest {
 	public static DummyTimedata getTimedata(EnergySchedulerImpl energyScheduler) throws Exception {
 		return getValueViaReflection(energyScheduler, "timedata");
 	}
+
 }

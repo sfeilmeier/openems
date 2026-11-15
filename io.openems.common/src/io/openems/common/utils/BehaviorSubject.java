@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * value whenever it is subscribed to.
  */
 public class BehaviorSubject<T> {
+
 	private final Logger log = LoggerFactory.getLogger(BehaviorSubject.class);
 
 	private volatile T value;
@@ -151,4 +152,5 @@ public class BehaviorSubject<T> {
 				+ ", consumers=" + this.consumers.size()//
 				+ '}';
 	}
+
 }

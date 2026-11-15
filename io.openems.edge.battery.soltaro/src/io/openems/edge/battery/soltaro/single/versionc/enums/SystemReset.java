@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.single.versionc.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SystemReset implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ACTIVATE(0x1, "Activates the Reset");
 
@@ -28,4 +29,5 @@ public enum SystemReset implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

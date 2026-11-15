@@ -452,4 +452,5 @@ class TestHeatingElement {
 			return this.limitedOutputChannels;
 		}
 	}
+
 }

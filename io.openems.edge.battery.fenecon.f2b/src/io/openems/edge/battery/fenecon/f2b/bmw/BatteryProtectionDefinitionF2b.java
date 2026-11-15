@@ -115,4 +115,5 @@ public class BatteryProtectionDefinitionF2b implements BatteryProtectionDefiniti
 	public boolean isDischargeAllowed() {
 		return true;
 	}
+
 }

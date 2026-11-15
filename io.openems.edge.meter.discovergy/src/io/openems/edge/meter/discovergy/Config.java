@@ -39,4 +39,5 @@ import io.openems.common.types.MeterType;
 	String fullSerialNumber() default "";
 
 	String webconsole_configurationFactory_nameHint() default "Meter Discovergy [{id}]";
+
 }

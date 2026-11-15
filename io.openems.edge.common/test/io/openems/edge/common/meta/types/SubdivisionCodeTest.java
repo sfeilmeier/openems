@@ -66,4 +66,5 @@ public class SubdivisionCodeTest {
 	public void testGetSubdivisionName_ShouldReturnCorrectName() {
 		assertEquals("Bavaria", SubdivisionCode.DE_BY.getSubdivisionName());
 	}
+
 }

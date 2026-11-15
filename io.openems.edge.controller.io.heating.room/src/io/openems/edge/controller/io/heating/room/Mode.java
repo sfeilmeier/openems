@@ -3,6 +3,7 @@ package io.openems.edge.controller.io.heating.room;
 import io.openems.common.types.OptionsEnum;
 
 public enum Mode implements OptionsEnum {
+
 	OFF(0, "Off"), //
 	MANUAL_LOW(1, "Manual Low"), //
 	MANUAL_HIGH(2, "Manual High"), //
@@ -30,4 +31,5 @@ public enum Mode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return OFF;
 	}
+
 }

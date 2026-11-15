@@ -57,4 +57,5 @@ public interface OptionsFactory {
 	 * @return the options where the key is the label and the value the value
 	 */
 	public List<Entry<String, String>> options(Language l);
+
 }

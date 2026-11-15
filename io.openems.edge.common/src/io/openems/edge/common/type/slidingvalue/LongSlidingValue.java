@@ -21,4 +21,5 @@ public class LongSlidingValue extends AbstractNumberSlidingValue<Long> {
 		}
 		return Optional.empty();
 	}
+
 }

@@ -81,4 +81,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int dischargeMinVoltage() {
 		return this.builder.dischargeMinVoltage;
 	}
+
 }

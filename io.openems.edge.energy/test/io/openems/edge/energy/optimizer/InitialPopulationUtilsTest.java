@@ -40,4 +40,5 @@ public class InitialPopulationUtilsTest {
 	protected static Transition mode(int mode) {
 		return new Transition(QUARTER, mode, 0., 0., null, 0);
 	}
+
 }

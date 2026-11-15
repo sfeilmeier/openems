@@ -243,4 +243,5 @@ public class PredictorManagerImpl extends AbstractOpenemsComponent implements Pr
 			);
 		};
 	}
+
 }

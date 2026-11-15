@@ -113,4 +113,5 @@ public interface SystemFeneconIndustrialM extends OpenemsComponent, EventHandler
 	public default void _setRequestStatus(RequestStatus value) {
 		this.getRequestStatusChannel().setNextValue(value);
 	}
+
 }

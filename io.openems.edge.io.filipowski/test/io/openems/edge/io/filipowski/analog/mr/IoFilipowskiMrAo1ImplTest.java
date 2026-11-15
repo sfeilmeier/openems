@@ -21,4 +21,5 @@ public class IoFilipowskiMrAo1ImplTest {
 						.build())
 				.next(new TestCase());
 	}
+
 }

@@ -137,4 +137,5 @@ public class PvInverterSmaSunnyTripowerImpl extends AbstractSunSpecPvInverter
 				ElectricityMeter.getModbusSlaveNatureTable(accessMode), //
 				ManagedSymmetricPvInverter.getModbusSlaveNatureTable(accessMode));
 	}
+
 }

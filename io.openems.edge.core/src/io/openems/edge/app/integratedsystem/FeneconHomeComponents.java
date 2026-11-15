@@ -32,6 +32,7 @@ import io.openems.edge.core.appmanager.dependency.DependencyDeclaration;
 import io.openems.edge.core.appmanager.dependency.aggregatetask.SchedulerByCentralOrderConfiguration;
 
 public final class FeneconHomeComponents {
+
 	/**
 	 * Creates a default battery component for a FENECON Home.
 	 *
@@ -1034,4 +1035,5 @@ public final class FeneconHomeComponents {
 		return deviceHardware.appId.equals(TechbaseCm4sGen2.APPID)
 				|| deviceHardware.appId.equals(TechbaseCm4sGen3.APPID);
 	}
+
 }

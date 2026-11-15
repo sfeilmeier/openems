@@ -118,4 +118,5 @@ class AlertingTest {
 			super.handleEvent(event);
 		}
 	}
+
 }

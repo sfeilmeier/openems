@@ -212,4 +212,5 @@ public class SchedulerJSCalendarImplTest {
 		assertArrayEquals(controllerIds, scheduler.getControllers().stream() //
 				.toArray(String[]::new));
 	}
+
 }

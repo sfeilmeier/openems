@@ -65,4 +65,5 @@ public class SimulationRequest extends JsonrpcRequest {
 				.add("payload", this.payload.toJsonObject()) //
 				.build();
 	}
+
 }

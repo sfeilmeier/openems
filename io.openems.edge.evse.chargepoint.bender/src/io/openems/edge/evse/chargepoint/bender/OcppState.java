@@ -3,6 +3,7 @@ package io.openems.edge.evse.chargepoint.bender;
 import io.openems.common.types.OptionsEnum;
 
 public enum OcppState implements OptionsEnum {
+
 	UNDEFINED(0, "Undefined", false), //
 	AVAILABLE(1, "Available", true), //
 	PREPARING(2, "Preparing", true), //

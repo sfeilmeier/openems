@@ -23,6 +23,7 @@ import io.openems.edge.ess.api.ManagedSymmetricEss;
 import io.openems.edge.ess.api.SymmetricEss;
 
 public class ChannelManager extends AbstractChannelListenerManager {
+
 	private final EssClusterImpl parent;
 
 	public ChannelManager(EssClusterImpl parent) {
@@ -229,4 +230,5 @@ public class ChannelManager extends AbstractChannelListenerManager {
 			}
 		}
 	}
+
 }

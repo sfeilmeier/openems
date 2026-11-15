@@ -79,4 +79,5 @@ public class AddAppInstanceRequest extends JsonrpcRequest {
 				.add("properties", this.properties) //
 				.build();
 	}
+
 }

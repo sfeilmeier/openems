@@ -35,4 +35,5 @@ import io.openems.edge.common.type.Phase.SinglePhase;
 	SinglePhase phase() default SinglePhase.L1;
 
 	String webconsole_configurationFactory_nameHint() default "Meter Eastron SDM 120 [{id}]";
+
 }

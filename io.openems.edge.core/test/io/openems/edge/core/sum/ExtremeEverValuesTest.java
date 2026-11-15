@@ -88,4 +88,5 @@ public class ExtremeEverValuesTest {
 	private static int getProperty(DummyConfigurationAdmin cm, String property) throws IOException {
 		return (int) (cm.getConfiguration("Core.Sum").getProperties().get(property));
 	}
+
 }

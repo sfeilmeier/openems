@@ -34,6 +34,7 @@ import io.openems.edge.controller.api.backend.api.NoBackendAvailableException;
 
 @Component(immediate = true)
 public class BackendSyncableRepository implements SyncableRepository {
+
 	private static final int DELAYS_IN_SECONDS_BEFORE_UNSUBSCRIBE = 30;
 
 	private final Logger log = LoggerFactory.getLogger(BackendSyncableRepository.class);
@@ -169,4 +170,5 @@ public class BackendSyncableRepository implements SyncableRepository {
 			handler.unsubscribe();
 		}
 	}
+
 }

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 class PriceCalculatorXTest {
+
 	@Test
 	void test() {
 		// Division by zero
@@ -25,4 +26,5 @@ class PriceCalculatorXTest {
 		assertEquals(1, new PriceCalculatorX("x").calculate(1));
 		assertEquals(-4, new PriceCalculatorX("x * 2").calculate(-2));
 	}
+
 }

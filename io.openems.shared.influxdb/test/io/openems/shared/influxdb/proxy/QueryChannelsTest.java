@@ -105,4 +105,5 @@ public class QueryChannelsTest {
 		assertEquals(1, result.stream().count());
 		assertTrue(result.stream().toList().contains(fromString));
 	}
+
 }

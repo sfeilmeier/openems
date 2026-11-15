@@ -3,6 +3,7 @@ package io.openems.edge.ess.fenecon.commercial40;
 import io.openems.common.types.OptionsEnum;
 
 public enum BmsDcdcWorkState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	INITIAL(2, "Initial"), //
 	STOP(4, "Stop"), //
@@ -34,4 +35,5 @@ public enum BmsDcdcWorkState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

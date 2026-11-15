@@ -3,6 +3,7 @@ package io.openems.edge.fronius.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OFF(1, "Off"), //
 	EMPTY(2, "Empty"), //
@@ -34,4 +35,5 @@ public enum BatteryState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

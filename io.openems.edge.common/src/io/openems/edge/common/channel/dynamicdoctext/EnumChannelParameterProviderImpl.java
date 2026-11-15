@@ -10,6 +10,7 @@ import io.openems.edge.common.channel.ChannelId;
 
 class EnumChannelParameterProviderImpl<V extends Enum<V> & OptionsEnum> extends ChannelParameterProvider<Integer>
 		implements EnumChannelParameterProvider<V> {
+
 	private final Class<V> enumClass;
 	private final Map<V, TextProvider> specificMappings;
 	private TextProvider defaultText;
@@ -70,4 +71,5 @@ class EnumChannelParameterProviderImpl<V extends Enum<V> & OptionsEnum> extends 
 		return new EnumChannelParameterProviderImpl<>(this.enumClass, this.channelId, this.specificMappings,
 				this.defaultText);
 	}
+
 }

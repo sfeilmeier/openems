@@ -47,4 +47,5 @@ public class RunningHandler extends StateHandler<State, Context> {
 		var varSetPct = context.setReactivePower * 100F / maxApparentPower;
 		varSetPctChannel.setNextWriteValue(varSetPct);
 	}
+
 }

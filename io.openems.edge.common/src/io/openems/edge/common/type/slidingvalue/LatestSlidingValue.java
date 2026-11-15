@@ -31,4 +31,5 @@ public class LatestSlidingValue extends SlidingValue<Object> {
 	public String toString() {
 		return String.valueOf(this.value);
 	}
+
 }

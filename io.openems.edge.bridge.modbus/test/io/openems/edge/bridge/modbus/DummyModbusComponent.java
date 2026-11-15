@@ -75,4 +75,5 @@ public class DummyModbusComponent extends AbstractOpenemsModbusComponent impleme
 	public void addModbusTaskHook(TaskHook hook) {
 		this.taskHooks.add(hook);
 	}
+
 }

@@ -10,4 +10,5 @@ public abstract class AbstractSeriesTransformer<I> implements SeriesTransformer<
 	}
 
 	protected abstract Series<I> safeTransform(Series<I> series);
+
 }

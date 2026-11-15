@@ -29,4 +29,5 @@ import io.openems.common.types.MeterType;
 	String[] pvInverter_ids();
 
 	String webconsole_configurationFactory_nameHint() default "PV-Inverter Cluster [{id}]";
+
 }

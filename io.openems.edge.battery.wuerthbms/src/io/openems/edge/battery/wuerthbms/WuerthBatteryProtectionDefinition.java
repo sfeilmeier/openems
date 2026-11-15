@@ -83,4 +83,5 @@ public class WuerthBatteryProtectionDefinition implements BatteryProtectionDefin
 	public boolean isDischargeAllowed() {
 		return true;
 	}
+
 }

@@ -69,4 +69,5 @@ public class TouManualHelper {
 		this.prices = TimeOfUsePrices.from(prices);
 		return this.prices;
 	}
+
 }

@@ -166,4 +166,5 @@ public class FeneconMiniEssImplTest {
 						.output(STATE_MACHINE, State.READONLY_MODE)) //
 		;
 	}
+
 }

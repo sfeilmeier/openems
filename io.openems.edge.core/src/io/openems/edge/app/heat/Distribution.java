@@ -16,6 +16,7 @@ import io.openems.edge.core.appmanager.TranslationUtil;
  * into the components configuration.
  */
 public enum Distribution implements TranslatableEnum {
+
 	/**
 	 * Heating Element A is fully activated before Heating Element B is activated:
 	 * A-L1 -&gt; A-L2 -&gt; A-L3 -&gt; B-L1 -&gt; B-L2 -&gt; B-L3.

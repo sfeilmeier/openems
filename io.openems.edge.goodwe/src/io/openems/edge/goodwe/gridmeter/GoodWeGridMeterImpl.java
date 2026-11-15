@@ -533,4 +533,5 @@ public class GoodWeGridMeterImpl extends AbstractOpenemsModbusComponent implemen
 				m(ElectricityMeter.ChannelId.ACTIVE_POWER_L3, new SignedDoublewordElement(36023),
 						this.ignoreZeroAndInvert)));
 	}
+
 }

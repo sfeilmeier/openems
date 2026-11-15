@@ -10,6 +10,7 @@ import io.openems.edge.goodwe.GoodWeConstants;
 		description = "GoodWe Smart Meter.")
 
 @interface Config {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "meter0";
 

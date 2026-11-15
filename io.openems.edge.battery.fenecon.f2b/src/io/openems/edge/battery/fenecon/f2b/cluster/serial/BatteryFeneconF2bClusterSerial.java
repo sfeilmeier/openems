@@ -14,6 +14,7 @@ import io.openems.edge.common.startstop.StartStoppable;
 
 public interface BatteryFeneconF2bClusterSerial
 		extends BatteryFeneconF2bCluster, BatteryFeneconF2b, Battery, OpenemsComponent, StartStoppable {
+
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 		STATE_MACHINE(Doc.of(State.values())//
 				.text("Current State of State-Machine")), //
@@ -88,4 +89,5 @@ public interface BatteryFeneconF2bClusterSerial
 	public default void _setRunFailed(boolean value) {
 		this.getRunFailedChannel().setNextValue(value);
 	}
+
 }

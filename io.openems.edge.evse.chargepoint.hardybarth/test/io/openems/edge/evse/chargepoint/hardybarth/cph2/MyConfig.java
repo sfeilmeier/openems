@@ -82,4 +82,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public LogVerbosity logVerbosity() {
 		return this.builder.logVerbosity;
 	}
+
 }

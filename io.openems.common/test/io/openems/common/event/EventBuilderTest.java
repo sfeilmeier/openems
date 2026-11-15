@@ -49,4 +49,5 @@ public class EventBuilderTest {
 	private static class TestClass {
 
 	}
+
 }

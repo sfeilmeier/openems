@@ -30,4 +30,5 @@ public class CompletedCycleHandler extends StateHandler<State, Context> {
 		}
 		};
 	}
+
 }

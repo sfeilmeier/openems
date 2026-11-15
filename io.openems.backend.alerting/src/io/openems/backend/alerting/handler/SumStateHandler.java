@@ -27,6 +27,7 @@ import io.openems.common.event.EventReader;
 import io.openems.common.exceptions.OpenemsException;
 
 public class SumStateHandler implements Handler<SumStateMessage> {
+
 	private final Map<String, ZonedDateTime> faultSince = new ConcurrentHashMap<>();
 
 	private final Logger log = LoggerFactory.getLogger(SumStateHandler.class);
@@ -228,4 +229,5 @@ public class SumStateHandler implements Handler<SumStateMessage> {
 		return "SumStateHandler{MessagesSent: %d, MessagesQueue: %d}" //
 				.formatted(this.messagesSent.get(), this.msgScheduler.size());
 	}
+
 }

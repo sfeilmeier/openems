@@ -143,4 +143,5 @@ public class PhoenixContactMeterImpl extends AbstractOpenemsModbusComponent
 				ModbusSlaveNatureTable.of(PhoenixContactMeter.class, accessMode, 100) //
 						.build());
 	}
+
 }

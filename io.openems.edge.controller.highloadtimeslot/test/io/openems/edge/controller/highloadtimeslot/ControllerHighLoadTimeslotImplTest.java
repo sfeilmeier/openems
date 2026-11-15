@@ -27,4 +27,5 @@ public class ControllerHighLoadTimeslotImplTest {
 						.build()) //
 				.deactivate();
 	}
+
 }

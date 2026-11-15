@@ -23,4 +23,5 @@ public class EdgeUser {
 	public String getUserId() {
 		return this.userId;
 	}
+
 }

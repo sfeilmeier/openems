@@ -154,4 +154,5 @@ public interface EvcsWebastoUnite extends ElectricityMeter, Evcs, OpenemsCompone
 		WriteChannel<Integer> channel = this.getCurrentLimitChannel();
 		channel.setNextWriteValue(value);
 	}
+
 }

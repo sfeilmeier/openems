@@ -16,4 +16,5 @@ public class Context extends AbstractContext<FeneconMiniEss> {
 		this.setActivePower = setActivePower;
 		this.setReactivePower = setReactivePower;
 	}
+
 }

@@ -20,4 +20,5 @@ public interface MeterSchneiderActi9Smartlink extends ElectricityMeter, ModbusCo
 			return this.doc;
 		}
 	}
+
 }

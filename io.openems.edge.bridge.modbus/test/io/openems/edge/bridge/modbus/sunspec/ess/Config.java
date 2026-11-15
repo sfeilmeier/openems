@@ -1,6 +1,7 @@
 package io.openems.edge.bridge.modbus.sunspec.ess;
 
 @interface Config {
+
 	String id();
 
 	String alias();
@@ -14,4 +15,5 @@ package io.openems.edge.bridge.modbus.sunspec.ess;
 	int modbusUnitId();
 
 	int readFromModbusBlock();
+
 }

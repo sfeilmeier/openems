@@ -293,4 +293,5 @@ class AlpitronicModbusTest {
 						.setMinHwPower(5_000) //
 						.build());
 	}
+
 }

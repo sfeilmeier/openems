@@ -393,4 +393,5 @@ public class KeepAllNearEqual {
 		}
 		return -1; // Fallback if null, invalid, or not available
 	}
+
 }

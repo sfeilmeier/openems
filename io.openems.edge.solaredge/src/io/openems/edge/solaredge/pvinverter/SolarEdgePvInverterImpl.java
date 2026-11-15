@@ -124,4 +124,5 @@ public class SolarEdgePvInverterImpl extends AbstractSunSpecPvInverter
 				ModbusSlaveNatureTable.of(SolarEdgePvInverterImpl.class, accessMode, 100) //
 						.build());
 	}
+
 }

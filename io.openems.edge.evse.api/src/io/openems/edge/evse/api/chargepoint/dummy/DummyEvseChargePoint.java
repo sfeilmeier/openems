@@ -39,4 +39,5 @@ public class DummyEvseChargePoint extends AbstractDummyEvseChargePoint<DummyEvse
 	public ChargePointActions getLastChargePointActions() {
 		return this.lastChargePointActions;
 	}
+
 }

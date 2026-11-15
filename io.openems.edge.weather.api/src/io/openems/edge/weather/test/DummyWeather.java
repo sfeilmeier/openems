@@ -15,4 +15,5 @@ public class DummyWeather extends AbstractDummyWeather<DummyWeather> implements 
 	protected DummyWeather self() {
 		return this;
 	}
+
 }

@@ -39,4 +39,5 @@ public class WeatherForecastDelayTimeProvider implements DelayTimeProvider<HttpR
 				.plusRandomDelay(300, ChronoUnit.SECONDS)//
 				.getDelay();
 	}
+
 }

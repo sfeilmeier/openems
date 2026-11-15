@@ -84,4 +84,5 @@ public class EnfasBatteryProtectionDefinition implements BatteryProtectionDefini
 	public boolean isDischargeAllowed() {
 		return true;
 	}
+
 }

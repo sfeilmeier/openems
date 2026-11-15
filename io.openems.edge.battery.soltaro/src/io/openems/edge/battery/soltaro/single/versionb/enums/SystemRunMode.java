@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.single.versionb.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SystemRunMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NORMAL(0x1, "Normal"), //
 	DEBUG(0x2, "Debug");
@@ -29,4 +30,5 @@ public enum SystemRunMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

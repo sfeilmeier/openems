@@ -3,6 +3,7 @@ package io.openems.edge.sma.ess.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SetControlMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	START(802, "START"), //
 	STOP(803, "STOP");
@@ -29,4 +30,5 @@ public enum SetControlMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

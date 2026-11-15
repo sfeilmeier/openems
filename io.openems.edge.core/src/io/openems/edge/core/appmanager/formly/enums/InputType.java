@@ -1,6 +1,7 @@
 package io.openems.edge.core.appmanager.formly.enums;
 
 public enum InputType {
+
 	TEXT("text"), //
 	PASSWORD("password"), //
 	NUMBER("number"), //
@@ -15,4 +16,5 @@ public enum InputType {
 	public String getFormlyTypeName() {
 		return this.formlyTypeName;
 	}
+
 }

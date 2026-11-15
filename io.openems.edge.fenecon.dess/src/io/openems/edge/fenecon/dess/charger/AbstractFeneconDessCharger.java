@@ -90,4 +90,5 @@ public abstract class AbstractFeneconDessCharger extends AbstractOpenemsModbusCo
 				ModbusSlaveNatureTable.of(FeneconDessCharger.class, accessMode, 100) //
 						.build());
 	}
+
 }

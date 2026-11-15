@@ -30,4 +30,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	CosPhiDirection direction() default CosPhiDirection.CAPACITIVE;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Balancing Cos-Phi Asymmetric [{id}]";
+
 }

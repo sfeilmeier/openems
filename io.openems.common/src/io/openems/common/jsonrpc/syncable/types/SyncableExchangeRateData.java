@@ -9,6 +9,7 @@ import io.openems.common.services.currency.ExchangeRate;
 import io.openems.common.utils.JsonUtils;
 
 public record SyncableExchangeRateData(ExchangeRate[] exchangeRates) {
+
 	/**
 	 * Returns JSON Serializer for {@link SyncableExchangeRateData}.
 	 * 
@@ -43,4 +44,5 @@ public record SyncableExchangeRateData(ExchangeRate[] exchangeRates) {
 	public String toString() {
 		return Arrays.toString(this.exchangeRates);
 	}
+
 }

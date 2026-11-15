@@ -346,4 +346,5 @@ public interface SystemFeneconIndustrialL extends ModbusComponent, OpenemsCompon
 	public default Value<Boolean> getCompressor2RunningState() {
 		return this.getCompressor2RunningStateChannel().value();
 	}
+
 }

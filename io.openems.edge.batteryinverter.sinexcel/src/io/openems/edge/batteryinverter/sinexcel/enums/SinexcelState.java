@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SinexcelState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OFF(1, "Off"), //
 	SLEEPING(2, "Sleeping"), //

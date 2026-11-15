@@ -7,6 +7,7 @@ package io.openems.edge.common.meta.types;
  * Includes a special {@code UNDEFINED} constant for unknown or undefined codes.
  */
 public enum CountryCode {
+
 	UNDEFINED("Undefined"), //
 
 	DE("Germany"), //
@@ -65,4 +66,5 @@ public enum CountryCode {
 			return UNDEFINED;
 		}
 	}
+
 }

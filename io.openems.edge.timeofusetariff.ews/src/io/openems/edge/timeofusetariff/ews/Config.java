@@ -25,4 +25,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	LogVerbosity logVerbosity() default LogVerbosity.NONE;
 
 	String webconsole_configurationFactory_nameHint() default "Time-Of-Use Tariff Ews [{id}]";
+
 }

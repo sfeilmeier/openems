@@ -63,4 +63,5 @@ public class Context extends AbstractContext<GenericManagedEss> {
 	public boolean isEssStopped() {
 		return this.battery.isStopped();
 	}
+
 }

@@ -28,4 +28,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int service_ranking() default 20;
 
 	String webconsole_configurationFactory_nameHint() default "Tariff Manual EEG 2025 Grid-Sell [{id}]";
+
 }

@@ -174,4 +174,5 @@ public class PredictionDataServiceTest {
 		assertEquals(PredictionError.INVALID_WEATHER_DATA, exception2.getError());
 		assertEquals("Weather data has gaps or missing intervals", exception2.getMessage());
 	}
+
 }

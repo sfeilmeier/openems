@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.jupiter.api.Test;
 
 class EventEmitterTest {
+
 	@Test
 	void testEventEmitter() {
 		final var emitter = new EventEmitter<String>();
@@ -44,4 +45,5 @@ class EventEmitterTest {
 		assertDoesNotThrow(() -> emitter.emit("Test"));
 		assertTrue(calledSubscription.get());
 	}
+
 }

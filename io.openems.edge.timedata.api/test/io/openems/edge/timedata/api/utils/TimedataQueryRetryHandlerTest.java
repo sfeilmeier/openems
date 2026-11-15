@@ -173,4 +173,5 @@ class TimedataQueryRetryHandlerTest {
 
 		assertEquals(RETRY, decision);
 	}
+
 }

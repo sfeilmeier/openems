@@ -11,4 +11,5 @@ public interface EnergySchedulable extends OpenemsComponent {
 	 * @return {@link EnergyScheduleHandler}
 	 */
 	public EnergyScheduleHandler getEnergyScheduleHandler();
+
 }

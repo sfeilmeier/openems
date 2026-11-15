@@ -3,6 +3,7 @@ package io.openems.edge.battery.soltaro.single.versionb.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum FanStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OPEN(0x1, "Open"), //
 	CLOSE(0x2, "Close");
@@ -29,4 +30,5 @@ public enum FanStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

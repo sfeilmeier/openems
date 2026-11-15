@@ -42,4 +42,5 @@ import io.openems.edge.meter.api.PhaseRotation;
 	int modbusUnitId() default 1;
 
 	String webconsole_configurationFactory_nameHint() default "EVSE Charge-Point Heidelberg Connect [{id}]";
+
 }

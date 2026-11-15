@@ -59,4 +59,5 @@ public class Resolution {
 	public String toString() {
 		return this.value + " " + this.unit;
 	}
+
 }

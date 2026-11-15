@@ -39,4 +39,5 @@ public class IsWorkingDayFeatureTransformerTest {
 		assertEquals(0.0, isWorkingDayCol.get(1), 0.0);
 		assertEquals(0.0, isWorkingDayCol.get(2), 0.0);
 	}
+
 }

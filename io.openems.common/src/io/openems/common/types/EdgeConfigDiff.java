@@ -385,4 +385,5 @@ public class EdgeConfigDiff {
 	public String toString() {
 		return this.getAsText().replace("\n", "; ");
 	}
+
 }

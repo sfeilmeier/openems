@@ -22,4 +22,5 @@ public class MeterBControlEM300ImplTest {
 						.build()) //
 		;
 	}
+
 }

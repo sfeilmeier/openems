@@ -86,4 +86,5 @@ class VersionCompatibilityTest {
 		var v25 = new SemanticVersion(2, 5, 0);
 		assertTrue(AlpitronicVersionUtils.supportsExtendedConnectorTypes(v25));
 	}
+
 }

@@ -67,6 +67,7 @@ import java.util.function.Supplier;
  * @param <T> type of successful result value
  */
 public sealed interface Result<T> {
+
 	/**
 	 * Creates a successful result with the given value.
 	 *
@@ -291,4 +292,5 @@ public sealed interface Result<T> {
 			super(cause.getMessage(), cause);
 		}
 	}
+
 }

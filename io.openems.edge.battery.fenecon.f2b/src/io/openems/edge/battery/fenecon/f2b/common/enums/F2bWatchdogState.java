@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum F2bWatchdogState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLED(0, "Disabled"), //
 	OK(1, "Ok"), //
@@ -31,4 +32,5 @@ public enum F2bWatchdogState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

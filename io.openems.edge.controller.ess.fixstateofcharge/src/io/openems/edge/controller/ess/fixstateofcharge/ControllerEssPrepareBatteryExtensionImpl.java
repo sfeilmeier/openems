@@ -114,4 +114,5 @@ public class ControllerEssPrepareBatteryExtensionImpl extends AbstractFixStateOf
 	public boolean isReferenceCycleEnabled() {
 		return true;
 	}
+
 }

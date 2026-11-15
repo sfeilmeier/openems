@@ -389,4 +389,5 @@ public abstract class AbstractDoc<T> implements Doc {
 	@Override
 	public abstract <C extends Channel<?>> C createChannelInstance(OpenemsComponent component,
 			io.openems.edge.common.channel.ChannelId channelId);
+
 }

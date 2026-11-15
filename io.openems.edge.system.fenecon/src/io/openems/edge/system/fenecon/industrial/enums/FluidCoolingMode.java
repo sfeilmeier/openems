@@ -3,6 +3,7 @@ package io.openems.edge.system.fenecon.industrial.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum FluidCoolingMode implements OptionsEnum {
+
 	DISABLED(0, "Manual OFF"), //
 	ENABLED(1, "Manual ON"), //
 	AUTO(2, "AUTO"), //
@@ -30,4 +31,5 @@ public enum FluidCoolingMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return DISABLED; // no undefined, because there should no "undefined" selection in the config
 	}
+
 }

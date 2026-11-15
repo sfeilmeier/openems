@@ -189,4 +189,5 @@ class GlobalOptimizationContextTest {
 		assertEquals(24 + 1, calculatePeriodDurationHourFromIndex(ZonedDateTime.parse("2020-03-04T14:45:00.00Z")));
 		assertEquals(24, calculatePeriodDurationHourFromIndex(ZonedDateTime.parse("2020-03-04T15:00:00.00Z")));
 	}
+
 }

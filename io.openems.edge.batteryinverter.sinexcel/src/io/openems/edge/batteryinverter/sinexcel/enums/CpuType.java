@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum CpuType implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	SINGLE_CPU(0, "Single Cpu"), //
 	DOUBLE_CPU(1, "Double Cpu");//
@@ -29,4 +30,5 @@ public enum CpuType implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

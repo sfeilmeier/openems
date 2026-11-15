@@ -156,4 +156,5 @@ public class DummyWebsocket implements WebSocket {
 	public IProtocol getProtocol() {
 		return null;
 	}
+
 }

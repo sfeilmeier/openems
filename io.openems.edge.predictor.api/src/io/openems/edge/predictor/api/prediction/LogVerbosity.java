@@ -1,6 +1,7 @@
 package io.openems.edge.predictor.api.prediction;
 
 public enum LogVerbosity {
+
 	/**
 	 * Show no logs.
 	 */
@@ -9,4 +10,5 @@ public enum LogVerbosity {
 	 * Logs all requested predictions.
 	 */
 	REQUESTED_PREDICTIONS;
+
 }

@@ -45,4 +45,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int hysteresisSoc();
 
 	String webconsole_configurationFactory_nameHint() default "Controller High-Load Timeslot [{id}]";
+
 }

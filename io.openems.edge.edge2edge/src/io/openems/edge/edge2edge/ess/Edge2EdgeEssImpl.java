@@ -192,4 +192,5 @@ public class Edge2EdgeEssImpl extends AbstractEdge2Edge implements ManagedSymmet
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

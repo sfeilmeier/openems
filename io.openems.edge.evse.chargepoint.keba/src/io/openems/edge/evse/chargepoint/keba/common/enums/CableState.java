@@ -3,6 +3,7 @@ package io.openems.edge.evse.chargepoint.keba.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum CableState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	UNPLUGGED(0, "Unplugged"), //
 	/**
@@ -47,4 +48,5 @@ public enum CableState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

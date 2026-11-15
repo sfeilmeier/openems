@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.refu.store88k.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum WMaxLimEna implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLED(0, "Disabled"), //
 	ENABLED(1, "Enabled");

@@ -43,4 +43,5 @@ public class ShortWriteChannel extends ShortReadChannel implements WriteChannel<
 	public void onSetNextWrite(ThrowingConsumer<Short, OpenemsNamedException> callback) {
 		this.getOnSetNextWrites().add(callback);
 	}
+
 }

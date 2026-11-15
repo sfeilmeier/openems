@@ -3,6 +3,7 @@ package io.openems.edge.fenecon.mini.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryGroupState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	INITIAL(0, "Initial"), //
 	STOP(1, "Stop"), //
@@ -33,4 +34,5 @@ public enum BatteryGroupState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

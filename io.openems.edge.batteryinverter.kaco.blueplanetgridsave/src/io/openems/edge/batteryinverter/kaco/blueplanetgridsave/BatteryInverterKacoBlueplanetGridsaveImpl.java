@@ -537,4 +537,5 @@ public class BatteryInverterKacoBlueplanetGridsaveImpl extends AbstractSunSpecBa
 	public boolean hasFailure() {
 		return this.hasFaults() || this.getCurrentState() == S64201CurrentState.FAULT;
 	}
+
 }

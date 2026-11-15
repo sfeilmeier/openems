@@ -324,4 +324,5 @@ public final class EvcsProps {
 		}
 		return EMobilityArchitectureType.EVCS;
 	}
+
 }

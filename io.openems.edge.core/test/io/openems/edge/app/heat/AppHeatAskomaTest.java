@@ -103,4 +103,5 @@ class AppHeatAskomaTest {
 				.addProperty("HEATED_SHARE", HEATED_SHARE) //
 				.build();
 	}
+
 }

@@ -1234,4 +1234,5 @@ public class BatteryInverterSinexcelImpl extends AbstractOpenemsModbusComponent
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

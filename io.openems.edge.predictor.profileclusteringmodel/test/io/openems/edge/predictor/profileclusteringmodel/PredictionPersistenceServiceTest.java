@@ -89,4 +89,5 @@ public class PredictionPersistenceServiceTest {
 		verify(this.parent)._setPrediction1hAhead(eq(40));
 		verify(this.parent)._setPrediction6hAhead(eq(240));
 	}
+
 }

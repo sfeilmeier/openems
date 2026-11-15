@@ -82,4 +82,5 @@ public enum TranslatableFixPfSetting implements TranslatableEnum {
 	private enum Type {
 		LAGGING, LEADING, NONE
 	}
+
 }

@@ -41,4 +41,5 @@ public class RunningHandler extends StateHandler<State, Context> {
 		IntegerWriteChannel setReactivePower = inverter.channel(BatteryInverterSinexcel.ChannelId.SET_REACTIVE_POWER);
 		setReactivePower.setNextWriteValue(context.setReactivePower);
 	}
+
 }

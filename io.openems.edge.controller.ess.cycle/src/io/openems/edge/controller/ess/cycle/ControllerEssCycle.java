@@ -87,4 +87,5 @@ public interface ControllerEssCycle extends Controller, OpenemsComponent {
 	public default void _setCompletedCycles(int value) {
 		this.getCompletedCyclesChannel().setNextValue(value);
 	}
+
 }

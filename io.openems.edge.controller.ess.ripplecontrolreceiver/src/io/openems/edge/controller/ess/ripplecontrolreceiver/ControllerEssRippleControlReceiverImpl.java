@@ -158,4 +158,5 @@ public class ControllerEssRippleControlReceiverImpl extends AbstractOpenemsCompo
 		case UNDEFINED -> OptionalInt.empty();
 		};
 	}
+
 }

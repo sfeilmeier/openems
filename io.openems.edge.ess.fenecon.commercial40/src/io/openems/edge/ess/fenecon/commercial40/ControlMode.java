@@ -3,6 +3,7 @@ package io.openems.edge.ess.fenecon.commercial40;
 import io.openems.common.types.OptionsEnum;
 
 public enum ControlMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	REMOTE(1, "Remote"), //
 	LOCAL(2, "Local"); //
@@ -29,4 +30,5 @@ public enum ControlMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -51,4 +51,5 @@ public class EnfasBmsImplSocCalculationTest {
 						.input(BATTERY_SOC, -2) //
 						.output(SOC, 0));
 	}
+
 }

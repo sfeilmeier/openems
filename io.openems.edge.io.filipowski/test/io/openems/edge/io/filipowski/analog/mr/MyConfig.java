@@ -75,4 +75,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public AnalogOutput analogOutput() {
 		return this.builder.relayContact;
 	}
+
 }

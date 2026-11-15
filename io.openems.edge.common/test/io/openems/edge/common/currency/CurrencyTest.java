@@ -25,4 +25,5 @@ class CurrencyTest {
 			assertNotNull(currency, "Currency mapping not available for: " + currencyConfig.name());
 		}
 	}
+
 }

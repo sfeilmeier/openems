@@ -24,4 +24,5 @@ public record AuthLogin(String token, int timeout /* [s] */) {
 					.build();
 		});
 	}
+
 }

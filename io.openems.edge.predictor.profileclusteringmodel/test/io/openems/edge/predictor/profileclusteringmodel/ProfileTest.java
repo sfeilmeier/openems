@@ -88,4 +88,5 @@ public class ProfileTest {
 			Profile.fromArray(2, valuesLong, valuesShort);
 		});
 	}
+
 }

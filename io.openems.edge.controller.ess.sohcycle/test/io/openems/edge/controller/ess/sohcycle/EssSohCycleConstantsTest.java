@@ -12,5 +12,6 @@ public class EssSohCycleConstantsTest {
 		assertEquals(0, EssSohCycleConstants.MIN_SOC);
 		assertEquals(100, EssSohCycleConstants.MAX_CELL_VOLTAGE_DIFFERENCE_MV);
 	}
+
 }
 

@@ -20,4 +20,5 @@ public class DummyThermometer extends AbstractDummyThermometer<DummyThermometer>
 	protected final DummyThermometer self() {
 		return this;
 	}
+
 }

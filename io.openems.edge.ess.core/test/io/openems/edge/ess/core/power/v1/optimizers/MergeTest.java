@@ -61,4 +61,5 @@ public class MergeTest {
 		var expected = new double[] { 100.0, 0.0, 100.0, 0.0, 0.0, 0.0 };
 		assertArrayEquals(expected, result, 0);
 	}
+
 }

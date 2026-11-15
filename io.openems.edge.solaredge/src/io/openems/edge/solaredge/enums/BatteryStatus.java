@@ -3,6 +3,7 @@ package io.openems.edge.solaredge.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	SE_BATT_STATUS_OFF(0, "Off"), //
 	SE_BATT_STATUS_STBY(1, "Standby"), //
@@ -35,4 +36,5 @@ public enum BatteryStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

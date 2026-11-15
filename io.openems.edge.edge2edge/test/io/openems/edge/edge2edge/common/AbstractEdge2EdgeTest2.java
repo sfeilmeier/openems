@@ -27,4 +27,5 @@ public class AbstractEdge2EdgeTest2 {
 		assertEquals(modbusType.getWords(), element.length);
 		assertEquals(openemsType, ((AbstractModbusElement<?, ?, ?>) element).type);
 	}
+
 }

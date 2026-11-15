@@ -3,6 +3,7 @@ package io.openems.common.test;
 import io.openems.common.types.OptionsEnum;
 
 public enum DummyOptionsEnum implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	VALUE_1(1, "One"), //
 	;
@@ -29,4 +30,5 @@ public enum DummyOptionsEnum implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

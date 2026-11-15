@@ -240,4 +240,5 @@ public class FixStateOfCharge extends AbstractOpenemsAppWithProps<FixStateOfChar
 	protected FixStateOfCharge getApp() {
 		return this;
 	}
+
 }

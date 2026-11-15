@@ -32,4 +32,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int serverPoolSize() default 10;
 
 	String webconsole_configurationFactory_nameHint() default "Backend Edge Application";
+
 }

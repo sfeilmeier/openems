@@ -77,4 +77,5 @@ public class OneHotEncoderTest {
 				IllegalArgumentException.class, //
 				() -> encoder.transform(this.testDataFrame));
 	}
+
 }

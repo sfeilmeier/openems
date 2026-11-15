@@ -23,4 +23,5 @@ public class DummyBackendConnectionStateListener implements BackendConnectionSta
 	public BehaviorSubject<DataFetchType> getDataFetchType() {
 		return this.dataFetchType;
 	}
+
 }

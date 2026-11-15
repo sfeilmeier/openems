@@ -175,4 +175,5 @@ class GaussianSmootherTest {
 
 		assertThrows(IllegalArgumentException.class, () -> smoother.smooth(new double[] { 1 }, null));
 	}
+
 }

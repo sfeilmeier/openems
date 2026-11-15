@@ -38,4 +38,5 @@ public class SimulatorMailer extends AbstractOpenemsBackendComponent implements 
 		this.log.info("[{}]: Mail(sendAt: {}, templateId: {}, params: {})", this.id, sendAt, templateId, params);
 		return CompletableFuture.completedFuture(params.size());
 	}
+
 }

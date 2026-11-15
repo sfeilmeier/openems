@@ -44,4 +44,5 @@ public class ChargingProperty {
 	public void setTimestamp(ZonedDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
+
 }

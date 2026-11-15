@@ -179,4 +179,5 @@ class AbstractTariffComponentTest {
 			super(EmptyConfig.class, id);
 		}
 	}
+
 }

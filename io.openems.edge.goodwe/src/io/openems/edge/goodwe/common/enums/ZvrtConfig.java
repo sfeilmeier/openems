@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ZvrtConfig implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLE(0, "Disable"), //
 	ONLY_LVRT_ENABLE(1, "Only LVRT enable"), //
@@ -31,4 +32,5 @@ public enum ZvrtConfig implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

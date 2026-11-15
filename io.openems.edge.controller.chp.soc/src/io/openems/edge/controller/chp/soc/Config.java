@@ -41,4 +41,5 @@ import io.openems.common.channel.PropertyChannel;
 	boolean invert() default false;
 
 	String webconsole_configurationFactory_nameHint() default "Controller CHP SOC [{id}]";
+
 }

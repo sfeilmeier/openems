@@ -58,4 +58,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int powerLimit() {
 		return this.builder.powerLimit;
 	}
+
 }

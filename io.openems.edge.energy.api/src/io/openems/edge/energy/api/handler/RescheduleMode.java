@@ -32,4 +32,5 @@ public enum RescheduleMode {
 	public boolean optimizeCurrentPeriod() {
 		return this.optimizeCurrentPeriod;
 	}
+
 }

@@ -399,4 +399,5 @@ public abstract class AbstractManagedOcppEvcsComponent extends AbstractManagedEv
 		}
 		return false;
 	}
+
 }

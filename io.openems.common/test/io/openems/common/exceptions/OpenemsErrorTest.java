@@ -22,4 +22,5 @@ class OpenemsErrorTest {
 				"This App requires access to third-party systems. Please confirm <a class=\"open-modal-thirdpartyaccess\">here</a>, that you agree.",
 				thirdPartyException.getMessage());
 	}
+
 }

@@ -19,4 +19,5 @@ public interface SchedulerAllAlphabetically extends Scheduler, OpenemsComponent 
 			return this.doc;
 		}
 	}
+
 }

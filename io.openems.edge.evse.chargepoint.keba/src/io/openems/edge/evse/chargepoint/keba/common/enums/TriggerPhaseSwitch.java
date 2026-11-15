@@ -4,6 +4,7 @@ import io.openems.common.types.OptionsEnum;
 import io.openems.edge.common.type.Phase.SingleOrThreePhase;
 
 public enum TriggerPhaseSwitch implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined", null), //
 	SINGLE(0, "1 phase", SingleOrThreePhase.SINGLE_PHASE), //
 	THREE(1, "3 phases", SingleOrThreePhase.THREE_PHASE);
@@ -33,4 +34,5 @@ public enum TriggerPhaseSwitch implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

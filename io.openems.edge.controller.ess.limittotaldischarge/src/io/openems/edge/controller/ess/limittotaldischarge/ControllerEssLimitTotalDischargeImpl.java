@@ -253,4 +253,5 @@ public class ControllerEssLimitTotalDischargeImpl extends AbstractOpenemsCompone
 	public EnergyScheduleHandler getEnergyScheduleHandler() {
 		return this.energyScheduleHandler;
 	}
+
 }

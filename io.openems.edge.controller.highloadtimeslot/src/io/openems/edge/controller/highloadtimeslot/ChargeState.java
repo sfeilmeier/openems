@@ -1,6 +1,7 @@
 package io.openems.edge.controller.highloadtimeslot;
 
 enum ChargeState {
+
 	/**
 	 * Normal charge state: charge till the battery is full.
 	 */
@@ -15,4 +16,5 @@ enum ChargeState {
 	 * starts.
 	 */
 	FORCE_CHARGE;
+
 }

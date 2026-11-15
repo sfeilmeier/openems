@@ -265,4 +265,5 @@ public class TimeOfUseTariffControllerImpl extends AbstractOpenemsComponent impl
 		}
 		return List.copyOf(activeModes);
 	}
+
 }

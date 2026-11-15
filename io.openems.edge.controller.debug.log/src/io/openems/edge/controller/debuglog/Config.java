@@ -30,4 +30,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String[] ignoreComponents() default {};
 
 	String webconsole_configurationFactory_nameHint() default "Controller Debug Log [{id}]";
+
 }

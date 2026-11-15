@@ -6,6 +6,7 @@ import java.util.Arrays;
  * This is taken from the first sheet inside the SunSpec excel file.
  */
 public enum SunSpecModelType {
+
 	COMMON(1, 1), //
 	AGGREGATOR(2, 2), //
 	NETWORK_CONFIGURATION(10, 19), //
@@ -40,4 +41,5 @@ public enum SunSpecModelType {
 				.findFirst() //
 				.orElseThrow(() -> new IllegalArgumentException("There is no SunSpec Model-Type for ID " + id));
 	}
+
 }

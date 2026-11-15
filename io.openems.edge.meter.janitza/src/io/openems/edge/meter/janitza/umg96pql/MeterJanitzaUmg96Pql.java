@@ -27,4 +27,5 @@ public interface MeterJanitzaUmg96Pql extends ElectricityMeter, ModbusComponent,
 			return this.doc;
 		}
 	}
+
 }

@@ -1,6 +1,7 @@
 package io.openems.edge.solaredge.ess;
 
 public class AverageCalculator {
+
 	private int[] values;
 	private int currentIndex;
 	private int valuesCount;
@@ -38,4 +39,5 @@ public class AverageCalculator {
 		}
 		return count > 0 ? sum / count : 0;
 	}
+
 }

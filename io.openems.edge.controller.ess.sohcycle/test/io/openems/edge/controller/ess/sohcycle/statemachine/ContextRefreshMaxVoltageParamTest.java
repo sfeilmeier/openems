@@ -83,4 +83,5 @@ public class ContextRefreshMaxVoltageParamTest {
         context.refreshMeasurementChargingVoltageRange();
 		assertEquals(expected, context.getMeasurementChargingMaxVoltage());
     }
+
 }

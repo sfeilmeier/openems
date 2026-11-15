@@ -19,4 +19,5 @@ public class ShellyFilter implements CheckRelayCountFilter {
 	public RelayProps.RelayContactFilter apply() {
 		return shellyFilter();
 	}
+
 }

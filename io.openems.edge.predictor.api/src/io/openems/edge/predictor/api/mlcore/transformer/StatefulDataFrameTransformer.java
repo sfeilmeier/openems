@@ -17,4 +17,5 @@ public interface StatefulDataFrameTransformer<I> extends DataFrameTransformer<I>
 	 * @return true if fitted, false otherwise
 	 */
 	public boolean isFitted();
+
 }

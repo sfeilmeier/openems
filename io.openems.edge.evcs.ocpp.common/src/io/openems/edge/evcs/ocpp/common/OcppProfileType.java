@@ -8,4 +8,5 @@ public enum OcppProfileType {
 	REMOTE_TRIGGER, //
 	RESERVATION, //
 	SMART_CHARGING; //
+
 }

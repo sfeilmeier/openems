@@ -26,4 +26,5 @@ public enum MpptPort {
 		this.mpptCurrentChannelId = mpptCurrentChannelId;
 		this.mpptVoltageChannelId = mpptVoltageChannelId;
 	}
+
 }

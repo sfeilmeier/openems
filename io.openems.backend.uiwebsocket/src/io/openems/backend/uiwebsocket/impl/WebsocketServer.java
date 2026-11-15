@@ -69,4 +69,5 @@ public class WebsocketServer extends AbstractWebsocketServer<WsData> {
 	protected void logError(Logger log, String message) {
 		this.parent.logError(log, message);
 	}
+
 }

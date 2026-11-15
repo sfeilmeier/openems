@@ -46,4 +46,5 @@ public class FC2ReadInputsTaskTest {
 		task.handleResponse(element11, 1, values);
 		assertEquals(Boolean.valueOf(false), value.get());
 	}
+
 }

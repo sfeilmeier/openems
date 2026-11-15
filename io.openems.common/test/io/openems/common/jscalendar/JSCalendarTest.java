@@ -1069,4 +1069,5 @@ public class JSCalendarTest {
 			});
 		}
 	}
+
 }

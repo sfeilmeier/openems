@@ -7,6 +7,7 @@ import io.openems.common.tariff.api.spottariff.SpotTariffProvider;
 import io.openems.edge.common.test.DummyMeta;
 
 public class TariffManagerTestableImpl extends TariffManagerImpl {
+
 	public TariffManagerTestableImpl() {
 		this.spotTariffProviders = new ArrayList<>();
 		this.meta = new DummyMeta() //
@@ -35,4 +36,5 @@ public class TariffManagerTestableImpl extends TariffManagerImpl {
 			this.unbindSpotTariffProvider(provider);
 		}
 	}
+
 }

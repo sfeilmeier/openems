@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ComMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	WIFI(1, "Wifi"), //
 	GPRS(2, "gprs"), //
@@ -32,4 +33,5 @@ public enum ComMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

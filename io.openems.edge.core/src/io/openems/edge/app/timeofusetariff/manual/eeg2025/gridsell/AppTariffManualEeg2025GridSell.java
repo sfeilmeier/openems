@@ -124,4 +124,5 @@ public class AppTariffManualEeg2025GridSell
 	protected AppTariffManualEeg2025GridSell getApp() {
 		return this;
 	}
+
 }

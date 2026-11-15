@@ -33,4 +33,5 @@ import io.openems.common.types.DebugMode;
 	DebugMode debugMode() default DebugMode.OFF;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Clever-PV [{id}]";
+
 }

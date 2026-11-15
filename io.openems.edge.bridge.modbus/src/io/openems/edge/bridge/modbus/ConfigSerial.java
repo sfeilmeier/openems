@@ -43,4 +43,5 @@ import io.openems.edge.bridge.modbus.api.Stopbit;
 	int invalidateElementsAfterReadErrors() default 1;
 
 	String webconsole_configurationFactory_nameHint() default "Bridge Modbus/RTU Serial [{id}]";
+
 }

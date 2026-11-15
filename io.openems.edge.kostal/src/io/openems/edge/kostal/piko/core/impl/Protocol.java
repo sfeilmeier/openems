@@ -186,4 +186,5 @@ public class Protocol {
 		}
 		return checksum == 0x00;
 	}
+
 }

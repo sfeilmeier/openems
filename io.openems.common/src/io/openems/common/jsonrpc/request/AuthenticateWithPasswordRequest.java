@@ -80,4 +80,5 @@ public class AuthenticateWithPasswordRequest extends JsonrpcRequest {
 		}
 		return result.build();
 	}
+
 }

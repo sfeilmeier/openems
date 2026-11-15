@@ -1,6 +1,7 @@
 package io.openems.edge.system.fenecon.home.enums;
 
 public enum Color {
+
 	RED("red"), //
 	GREEN("green"), //
 	BLUE("blue");
@@ -14,4 +15,5 @@ public enum Color {
 	public String getName() {
 		return this.name;
 	}
+
 }

@@ -92,4 +92,5 @@ public abstract class ModbusRecordConstant extends ModbusRecord {
 	protected <T> String generateToString(String name, T value) {
 		return this.generateToString(name, null, value, null);
 	}
+
 }

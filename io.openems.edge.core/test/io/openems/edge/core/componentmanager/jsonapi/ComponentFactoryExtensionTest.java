@@ -109,4 +109,5 @@ class ComponentFactoryExtensionTest {
 		// Assert
 		assertEquals("Factory with id unknownFactory could not be found.", exception.getMessage());
 	}
+
 }

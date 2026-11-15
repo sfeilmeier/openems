@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.refu.store88k.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PcsSetOperation implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_COMMAND(0, "No Command"), //
 	START_PCS(1, "Connect to grid"), //

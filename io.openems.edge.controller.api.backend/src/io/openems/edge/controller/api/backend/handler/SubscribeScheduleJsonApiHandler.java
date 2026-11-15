@@ -79,4 +79,5 @@ public class SubscribeScheduleJsonApiHandler implements JsonApi {
 			this.unsubscribe(webSocket);
 		}
 	}
+
 }

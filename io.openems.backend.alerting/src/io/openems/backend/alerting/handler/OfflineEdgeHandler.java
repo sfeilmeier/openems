@@ -307,4 +307,5 @@ public class OfflineEdgeHandler implements Handler<OfflineEdgeMessage> {
 		return "OfflineEdgeHandler{MessagesSent: %d, MessagesQueue: %d}" //
 				.formatted(this.messagesSent.get(), this.msgScheduler.size());
 	}
+
 }

@@ -21,4 +21,5 @@ public class Context extends AbstractContext<BatteryInverterRefuImpl> {
 		this.setReactivePower = setReactivePower;
 		this.clock = clock;
 	}
+
 }

@@ -48,4 +48,5 @@ public class SimulatorPredictorImplTest {
 		assertEquals(Integer.valueOf(27), p.asArray()[2]);
 		assertEquals(ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC")).toInstant(), p.getFirstTime());
 	}
+
 }

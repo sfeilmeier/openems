@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.kaco.blueplanetgridsave;
 import io.openems.common.types.OptionsEnum;
 
 public enum ErrorCode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	WAITING_FOR_FEED_IN(1, "Self-test: Grid parameters and generator voltage are being checked"), //
 	BATTERY_VOLTAGE_TOO_LOW(2, "Battery Voltage too low! Transition from or to 'Standby'"), //
@@ -146,4 +147,5 @@ public enum ErrorCode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

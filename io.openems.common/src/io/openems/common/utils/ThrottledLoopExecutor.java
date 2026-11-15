@@ -13,6 +13,7 @@ import io.openems.common.function.Disposable;
 import io.openems.common.logger.ContextLogger;
 
 public class ThrottledLoopExecutor implements Disposable {
+
 	private final Throttler throttler;
 	private final Logger log;
 	private final Thread executorThread;

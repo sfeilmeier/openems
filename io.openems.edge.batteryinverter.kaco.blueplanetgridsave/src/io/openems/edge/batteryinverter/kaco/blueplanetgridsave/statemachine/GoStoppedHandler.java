@@ -40,4 +40,5 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 		inverter.setRequestedState(S64201RequestedState.OFF);
 		return State.GO_STOPPED;
 	}
+
 }

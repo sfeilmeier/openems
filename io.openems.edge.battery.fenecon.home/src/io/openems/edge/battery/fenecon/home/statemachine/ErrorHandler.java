@@ -27,4 +27,5 @@ public class ErrorHandler extends StateMachine.BatteryStateHandler {
 	public boolean isDischargeAllowed(Context context) {
 		return false;
 	}
+
 }

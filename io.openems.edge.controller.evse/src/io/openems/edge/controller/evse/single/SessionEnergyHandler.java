@@ -24,4 +24,5 @@ public class SessionEnergyHandler {
 			this.sessionStartEnergy = chargePoint.getActiveProductionEnergy().get();
 		}
 	}
+
 }

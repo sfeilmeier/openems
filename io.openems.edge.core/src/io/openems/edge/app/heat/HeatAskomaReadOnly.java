@@ -168,4 +168,5 @@ public class HeatAskomaReadOnly
 	public Host getHost() {
 		return this.host;
 	}
+
 }

@@ -148,4 +148,5 @@ public class MeterPlexlogDataloggerImpl extends AbstractOpenemsModbusComponent
 	protected void setModbus(BridgeModbus modbus) {
 		super.setModbus(modbus);
 	}
+
 }

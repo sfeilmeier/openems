@@ -96,4 +96,5 @@ public class AllowedChargeDischargeHandler extends AbstractAllowedChargeDischarg
 				acAllowedChargePower * -1 /* invert charge power */);
 		setValue(this.parent, ManagedSymmetricEss.ChannelId.ALLOWED_DISCHARGE_POWER, acAllowedDischargePower);
 	}
+
 }

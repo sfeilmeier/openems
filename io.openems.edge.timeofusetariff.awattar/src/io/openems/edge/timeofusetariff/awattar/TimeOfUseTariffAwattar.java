@@ -23,4 +23,5 @@ public interface TimeOfUseTariffAwattar extends TimeOfUseTariff, OpenemsComponen
 			return this.doc;
 		}
 	}
+
 }

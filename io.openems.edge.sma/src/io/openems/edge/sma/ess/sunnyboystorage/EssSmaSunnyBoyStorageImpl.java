@@ -240,4 +240,5 @@ public class EssSmaSunnyBoyStorageImpl extends AbstractOpenemsModbusComponent im
 				ModbusSlaveNatureTable.of(EssSmaSunnyBoyStorage.class, accessMode, 300) //
 						.build());
 	}
+
 }

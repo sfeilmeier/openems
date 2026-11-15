@@ -160,4 +160,5 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 		}
 		this.activeEndpoints.clear();
 	}
+
 }

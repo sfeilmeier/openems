@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import io.openems.common.exceptions.OpenemsException;
 
 public enum Language {
+
 	EN(Locale.ENGLISH), //
 	DE(Locale.GERMAN), //
 	CS(Locale.forLanguageTag("cs")), //

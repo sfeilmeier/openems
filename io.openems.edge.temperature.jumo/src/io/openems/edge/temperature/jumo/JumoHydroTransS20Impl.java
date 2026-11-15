@@ -115,4 +115,5 @@ public class JumoHydroTransS20Impl extends AbstractOpenemsModbusComponent
 					}
 				});
 	}
+
 }

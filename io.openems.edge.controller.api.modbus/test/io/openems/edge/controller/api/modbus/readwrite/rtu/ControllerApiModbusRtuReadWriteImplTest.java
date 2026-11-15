@@ -14,6 +14,7 @@ import io.openems.edge.controller.api.modbus.MyRtuConfig;
 import io.openems.edge.controller.test.ControllerTest;
 
 public class ControllerApiModbusRtuReadWriteImplTest {
+
 	@Test
 	public void test() throws Exception {
 		final var clock = TestUtils.createDummyClock();
@@ -35,4 +36,5 @@ public class ControllerApiModbusRtuReadWriteImplTest {
 				.deactivate();
 		;
 	}
+
 }

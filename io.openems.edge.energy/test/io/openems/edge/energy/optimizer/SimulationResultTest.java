@@ -40,4 +40,5 @@ public class SimulationResultTest {
 
 		assertEquals(1289006.4, result.fitness().gridBuyCostScore(), 0.1);
 	}
+
 }

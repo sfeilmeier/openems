@@ -429,4 +429,5 @@ public class Solver {
 		// Fill Debug-Channels for MetaEss
 		fillMetaEssDebugChannels(this.esssSupplier.get());
 	}
+
 }

@@ -13,4 +13,5 @@ public class OffHandler extends StateHandler<State, Context> {
 		context.setTargetActivePowerForHeatElement(OFF_ACTIVE_POWER);
 		return State.OFF;
 	}
+
 }

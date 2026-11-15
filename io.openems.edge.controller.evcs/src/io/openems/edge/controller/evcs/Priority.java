@@ -31,4 +31,5 @@ public enum Priority implements io.openems.common.types.OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return CAR;
 	}
+
 }

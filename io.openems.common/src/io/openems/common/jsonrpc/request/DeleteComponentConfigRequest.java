@@ -65,4 +65,5 @@ public class DeleteComponentConfigRequest extends JsonrpcRequest {
 	public String getComponentId() {
 		return this.componentId;
 	}
+
 }

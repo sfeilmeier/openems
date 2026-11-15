@@ -184,4 +184,5 @@ public final class OnMessageHandler implements Runnable {
 			this.handleInternalError.accept(t, generateWsDataString(this.ws));
 		}
 	}
+
 }

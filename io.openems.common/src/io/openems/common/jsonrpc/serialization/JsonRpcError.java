@@ -9,6 +9,7 @@ public record JsonRpcError(//
 		String message, //
 		Object[] data //
 ) {
+
 	/**
 	 * Returns a {@link JsonSerializer} for a {@link JsonRpcError}.
 	 *
@@ -26,4 +27,5 @@ public record JsonRpcError(//
 						.build() //
 		);
 	}
+
 }

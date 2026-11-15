@@ -26,4 +26,5 @@ public interface PvInverterSmaSunnyTripower extends SunSpecPvInverter, ManagedSy
 			return this.doc;
 		}
 	}
+
 }

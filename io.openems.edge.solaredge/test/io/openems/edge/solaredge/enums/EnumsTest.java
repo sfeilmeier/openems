@@ -14,4 +14,5 @@ public class EnumsTest {
 		assertEquals("Undefined", MeterCommunicateStatus.UNDEFINED.getName());
 		assertEquals("Undefined", SeControlMode.UNDEFINED.getName());
 	}
+
 }

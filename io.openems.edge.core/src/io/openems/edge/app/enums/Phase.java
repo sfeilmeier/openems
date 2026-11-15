@@ -8,6 +8,7 @@ import io.openems.edge.core.appmanager.TranslationUtil;
  * Copy of {@link io.openems.edge.bridge.modbus.api.Parity}.
  */
 public enum Phase implements TranslatableEnum {
+
 	ALL("all"), //
 	L1("l1"), //
 	L2("l2"), //
@@ -25,4 +26,5 @@ public enum Phase implements TranslatableEnum {
 		final var bundle = AbstractOpenemsApp.getTranslationBundle(l);
 		return TranslationUtil.getTranslation(bundle, this.translationKey);
 	}
+
 }

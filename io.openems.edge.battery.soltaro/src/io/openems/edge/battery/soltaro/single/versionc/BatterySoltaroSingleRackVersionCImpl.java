@@ -755,4 +755,5 @@ public class BatterySoltaroSingleRackVersionCImpl extends AbstractOpenemsModbusC
 		case STOP -> StartStop.STOP; // force STOP
 		};
 	}
+
 }

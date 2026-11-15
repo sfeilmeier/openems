@@ -9,6 +9,7 @@ import io.openems.common.types.MeterType;
 		name = "IO Shelly Pro 2PM Terminal", //
 		description = "Implements a terminal of a Shelly Pro 2PM")
 @interface TerminalConfig {
+
 	@AttributeDefinition(name = "Component-ID", description = "Unique ID of this Component")
 	String id() default "io0";
 
@@ -31,4 +32,5 @@ import io.openems.common.types.MeterType;
 	String device_id() default "io0";
 
 	String webconsole_configurationFactory_nameHint() default "IO Shelly Pro 2PM Terminal [{id}]";
+
 }

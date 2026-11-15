@@ -268,4 +268,5 @@ public class DateUtilsTest {
 		assertFalse(DateUtils.isBeforeOrEquals(Instant.parse("2025-02-03T03:00:00Z"),
 				Instant.parse("2025-02-03T02:00:00Z")));
 	}
+
 }

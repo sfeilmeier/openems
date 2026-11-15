@@ -430,4 +430,5 @@ class UtilsTest {
 								.build()), //
 				/* maxEnergyInChargeGrid */ 11490));
 	}
+
 }

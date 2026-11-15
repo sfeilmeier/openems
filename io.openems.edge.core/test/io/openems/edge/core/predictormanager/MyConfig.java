@@ -42,4 +42,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String[] predictor_ids() {
 		return this.builder.predictorIds;
 	}
+
 }

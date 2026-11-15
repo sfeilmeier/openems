@@ -3,6 +3,7 @@ package io.openems.edge.evcs.webasto.next.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum EvseState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	STARTING(0, "Starting"), //
 	RUNNING(1, "Running"), //

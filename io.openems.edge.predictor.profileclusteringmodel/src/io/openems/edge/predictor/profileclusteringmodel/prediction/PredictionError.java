@@ -26,4 +26,5 @@ public enum PredictionError implements io.openems.edge.predictor.api.common.Pred
 	public LogSeverity getSeverity() {
 		return this.severity;
 	}
+
 }

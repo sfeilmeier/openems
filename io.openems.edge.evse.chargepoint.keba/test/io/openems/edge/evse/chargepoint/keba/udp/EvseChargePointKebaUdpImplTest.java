@@ -45,4 +45,5 @@ public class EvseChargePointKebaUdpImplTest {
 
 		assertEquals("L:5678 W|SetCurrent:UNDEFINED|SetEnable:-1:Undefined", sut.debugLog());
 	}
+
 }

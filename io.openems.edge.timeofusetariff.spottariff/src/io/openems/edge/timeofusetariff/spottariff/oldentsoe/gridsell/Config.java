@@ -30,4 +30,5 @@ import io.openems.common.types.BiddingZone;
 	String calculateExpression() default "";
 
 	String webconsole_configurationFactory_nameHint() default "Tariff ENTSO-E Grid-Sell (Deprecated) [{id}]";
+
 }

@@ -119,4 +119,5 @@ public class TestClient extends AbstractWebsocketClient<WsData> {
 	protected void execute(Runnable command) {
 		command.run();
 	}
+
 }

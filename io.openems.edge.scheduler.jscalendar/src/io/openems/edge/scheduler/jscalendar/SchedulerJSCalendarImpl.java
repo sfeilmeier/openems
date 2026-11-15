@@ -117,4 +117,5 @@ public class SchedulerJSCalendarImpl extends AbstractOpenemsComponent
 				() -> this.tasks, //
 				() -> new UpdateJsCalendarRecord(this.cm, this.componentManager, this.servicePid(), "jsCalendar"));
 	}
+
 }

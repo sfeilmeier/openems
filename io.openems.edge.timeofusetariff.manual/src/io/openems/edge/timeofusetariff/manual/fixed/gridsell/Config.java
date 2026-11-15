@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	double fixedGridSellPrice() default 0.0;
 
 	String webconsole_configurationFactory_nameHint() default "Tariff Manual Fixed Grid-Sell [{id}]";
+
 }

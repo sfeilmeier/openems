@@ -31,4 +31,5 @@ public enum RemoteControlMode implements OptionsEnum {
 	public String getName() {
 		return this.name;
 	}
+
 }

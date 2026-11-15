@@ -78,4 +78,5 @@ public enum Status implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return Status.UNDEFINED;
 	}
+
 }

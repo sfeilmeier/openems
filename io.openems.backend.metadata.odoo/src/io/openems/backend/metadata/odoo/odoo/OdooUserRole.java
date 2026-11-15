@@ -7,6 +7,7 @@ import io.openems.common.exceptions.OpenemsException;
 import io.openems.common.session.Role;
 
 public enum OdooUserRole {
+
 	ADMIN("admin"), //
 	INSTALLER("installer", OdooUserGroup.PORTAL), //
 	OWNER("owner", OdooUserGroup.PORTAL), //

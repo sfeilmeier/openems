@@ -21,4 +21,5 @@ public class PvInverterKacoBlueplanetImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

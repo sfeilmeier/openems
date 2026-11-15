@@ -147,4 +147,5 @@ public class FC16WriteRegistersTask
 		return this.toLogMessage(logVerbosity, request.getReference(), request.getWordCount(), request, response,
 				exception);
 	}
+
 }

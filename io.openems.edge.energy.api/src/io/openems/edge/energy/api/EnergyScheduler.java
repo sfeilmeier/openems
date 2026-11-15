@@ -53,4 +53,5 @@ public interface EnergyScheduler extends OpenemsComponent {
 	 * @param consumer the previously subscribed consumer
 	 */
 	void unsubscribeSchedule(Consumer<ScheduleUpdate> consumer);
+
 }

@@ -8,6 +8,7 @@ import io.openems.common.utils.BehaviorSubject;
 import io.openems.common.utils.StringUtils;
 
 public interface Tariff {
+
 	/**
 	 * Gets the unique identifier of this tariff provider. Used for logging
 	 * purposes.
@@ -74,4 +75,5 @@ public interface Tariff {
 				.append(",").append(tariffData.currency().getCurrencyCode()) //
 				.append("}").toString();
 	}
+
 }

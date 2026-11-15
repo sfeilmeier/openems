@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum FeedInPowerSettings {
+
 	UNDEFINED(null), //
 	QU_ENABLE_CURVE(null), //
 	PU_ENABLE_CURVE(null), //
@@ -124,4 +125,5 @@ public enum FeedInPowerSettings {
 	private FeedInPowerSettings(FixedPowerFactor fixedPowerFactor) {
 		this.fixedPowerFactor = fixedPowerFactor;
 	}
+
 }

@@ -107,4 +107,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int modbusUnitId() {
 		return this.builder.modbusUnitId;
 	}
+
 }

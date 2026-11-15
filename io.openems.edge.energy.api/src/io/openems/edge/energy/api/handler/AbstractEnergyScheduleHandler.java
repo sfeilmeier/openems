@@ -266,4 +266,5 @@ public abstract sealed class AbstractEnergyScheduleHandler<OPTIMIZATION_CONTEXT,
 			return this.self();
 		}
 	}
+
 }

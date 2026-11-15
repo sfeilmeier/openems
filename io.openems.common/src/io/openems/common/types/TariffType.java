@@ -80,4 +80,5 @@ public sealed interface TariffType {
 				obj -> buildJsonObject() //
 						.build());
 	}
+
 }

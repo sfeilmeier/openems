@@ -191,4 +191,5 @@ public interface Doc {
 	 */
 	public <C extends Channel<?>> C createChannelInstance(OpenemsComponent component,
 			io.openems.edge.common.channel.ChannelId channelId);
+
 }

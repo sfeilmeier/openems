@@ -14,6 +14,7 @@ import io.openems.common.types.OptionsEnum;
  * </ul>
  */
 public enum SelectedConnector implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	CHARGE_POINT(0, "ChargePoint"), //
 	CCS_DC(10, "CCS_DC Connector (v1.8-v2.4)"), //
@@ -94,4 +95,5 @@ public enum SelectedConnector implements OptionsEnum {
 			};
 		}
 	}
+
 }

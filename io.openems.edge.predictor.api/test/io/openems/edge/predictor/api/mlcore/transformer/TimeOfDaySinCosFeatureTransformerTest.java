@@ -50,4 +50,5 @@ public class TimeOfDaySinCosFeatureTransformerTest {
 		assertEquals(index, cosColumn.getIndex());
 		assertEquals(expectedCos, cosColumn.getValues());
 	}
+
 }

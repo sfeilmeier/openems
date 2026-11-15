@@ -68,4 +68,5 @@ public class SubscribeEdgesRequest extends JsonrpcRequest {
 						.collect(JsonUtils.toJsonArray())) //
 				.build();
 	}
+
 }

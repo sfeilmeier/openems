@@ -165,4 +165,5 @@ public class ParseScheduleTest {
 		final var ex = assertThrows(OpenemsNamedException.class, () -> parseSchedule(clock, schedule));
 		assertEquals(OpenemsError.JSON_NO_ENUM_MEMBER, ex.getError());
 	}
+
 }

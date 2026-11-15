@@ -23,4 +23,5 @@ public record Credentials(String host, int port, String user, String password, S
 		return new Credentials(//
 				config.pgHost(), config.pgPort(), config.pgUser(), config.pgPassword(), config.database());
 	}
+
 }

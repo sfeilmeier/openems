@@ -1924,4 +1924,5 @@ public class ControllerEssGridOptimizedChargeImplTest {
 						.output(NO_VALID_PRODUCTION_PREDICTION, false)) //
 				.deactivate();
 	}
+
 }

@@ -127,4 +127,5 @@ public class UtilsTest {
 		// To check if a value is present in map.
 		assertEquals(0.2688 * 1000, prices.getFirst(), 0.001);
 	}
+
 }

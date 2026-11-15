@@ -188,4 +188,5 @@ public final class PropertyAssertions<//
 			throw new IllegalArgumentException("Unsupported assertion value type: " + value.getClass().getName());
 		};
 	}
+
 }

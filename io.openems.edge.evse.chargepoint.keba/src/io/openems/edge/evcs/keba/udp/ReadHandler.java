@@ -115,4 +115,5 @@ public class ReadHandler extends AbstractUdpReadHandler<EvcsKebaUdpImpl> {
 		this.parent.channel(EvcsKeba.ChannelId.PLUG).setNextValue(cableState);
 		return cableState;
 	}
+
 }

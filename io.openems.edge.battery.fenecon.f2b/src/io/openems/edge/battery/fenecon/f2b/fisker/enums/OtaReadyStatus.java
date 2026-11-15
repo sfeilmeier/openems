@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.fisker.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum OtaReadyStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	INITAL(0, "Ota inital"), //
 	READY(1, "Ota ready"), //
@@ -32,4 +33,5 @@ public enum OtaReadyStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

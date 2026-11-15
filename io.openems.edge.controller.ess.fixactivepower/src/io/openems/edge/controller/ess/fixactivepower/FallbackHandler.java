@@ -50,4 +50,5 @@ public class FallbackHandler {
 	public void clear() {
 		this.isStarted = false;
 	}
+
 }

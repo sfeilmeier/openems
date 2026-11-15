@@ -49,4 +49,5 @@ public class IpAddressTest {
 	public void testRoute() throws OpenemsNamedException {
 		assertEquals(6, OperatingSystemDebianSystemd.parseRouteJson(this.routeInput).size());
 	}
+
 }

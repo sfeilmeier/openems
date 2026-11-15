@@ -158,4 +158,5 @@ class CalculateEnergyFromPowerTest {
 		verify(this.channel).setNextValue(100L);
 		verify(this.timedata, never()).getLatestValue(any());
 	}
+
 }

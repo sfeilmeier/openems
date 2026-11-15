@@ -84,4 +84,5 @@ public class PeriodDataTest {
 				.withGridSellPrice(new PeriodData.Price(20.0, 0.0, 20.0))//
 				.build();
 	}
+
 }

@@ -27,4 +27,5 @@ public interface Clusterer {
 	 * @return a list of centroids, each represented as an array of doubles
 	 */
 	List<double[]> getUpperQuantileCentroids();
+
 }

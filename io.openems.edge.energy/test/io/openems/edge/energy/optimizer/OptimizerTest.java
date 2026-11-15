@@ -511,4 +511,5 @@ class OptimizerTest {
 						eq(Optimizer.BUFFER_ON_ERROR), //
 						eq(true));
 	}
+
 }

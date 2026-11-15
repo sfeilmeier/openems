@@ -66,4 +66,5 @@ public record GoodWeVersion(//
 		return String.format("dsp %d.%d arm %d.%d", this.dspFirmwareVersion(), this.dspFirmwareVersionBeta(),
 				this.armFirmwareVersion(), this.armFirmwareVersionBeta());
 	}
+
 }

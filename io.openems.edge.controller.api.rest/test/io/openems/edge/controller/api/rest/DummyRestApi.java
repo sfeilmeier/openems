@@ -40,4 +40,5 @@ public class DummyRestApi extends AbstractRestApi {
 	protected boolean isDebugModeEnabled() {
 		return false;
 	}
+
 }

@@ -172,4 +172,5 @@ public class EssClusterImplTest {
 		)));
 		assertEquals(1, EssClusterImpl.calculateMinPowerPrecision(List.of()));
 	}
+
 }

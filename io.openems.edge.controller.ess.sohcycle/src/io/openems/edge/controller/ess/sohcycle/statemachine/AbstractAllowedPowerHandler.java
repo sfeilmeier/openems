@@ -48,4 +48,5 @@ public abstract class AbstractAllowedPowerHandler extends StateHandler<StateMach
 		this.blockedSince = null;
 		super.onExit(context);
 	}
+
 }

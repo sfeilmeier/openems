@@ -30,4 +30,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String Modbus_target() default "(enabled=true)";
 
 	String webconsole_configurationFactory_nameHint() default "IO WAGO Fieldbus Coupler 750-352 [{id}]";
+
 }

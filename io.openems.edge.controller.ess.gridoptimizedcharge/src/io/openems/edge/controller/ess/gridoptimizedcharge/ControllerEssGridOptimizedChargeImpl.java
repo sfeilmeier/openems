@@ -566,4 +566,5 @@ public class ControllerEssGridOptimizedChargeImpl extends AbstractOpenemsCompone
 	public LocalTime getManualTargetTime() {
 		return parseTime(this.config.manualTargetTime());
 	}
+
 }

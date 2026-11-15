@@ -26,4 +26,5 @@ public class ErrorHandler extends StateHandler<State, Context> {
 		battery._setTimeoutStartBattery(false);
 		battery._setTimeoutStopBattery(false);
 	}
+
 }

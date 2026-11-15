@@ -1015,4 +1015,5 @@ public interface BatterySoltaroSingleRackVersionB extends Battery, OpenemsCompon
 			return this.doc;
 		}
 	}
+
 }

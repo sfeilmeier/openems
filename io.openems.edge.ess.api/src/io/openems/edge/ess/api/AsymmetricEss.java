@@ -402,4 +402,5 @@ public interface AsymmetricEss extends SymmetricEss {
 		ess.getReactivePowerL2Channel().onSetNextValue(reactivePowerSum);
 		ess.getReactivePowerL3Channel().onSetNextValue(reactivePowerSum);
 	}
+
 }

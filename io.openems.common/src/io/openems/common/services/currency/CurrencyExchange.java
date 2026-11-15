@@ -7,6 +7,7 @@ import java.util.OptionalDouble;
 import io.openems.common.event.Subscribable;
 
 public interface CurrencyExchange {
+
 	/**
 	 * Get all stored exchange rates.
 	 * 
@@ -41,4 +42,5 @@ public interface CurrencyExchange {
 	 * @return Event emitter that triggers when exchange rates are updated.
 	 */
 	Subscribable<Void> onExchangeRatesChanged();
+
 }

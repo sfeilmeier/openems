@@ -236,4 +236,5 @@ public class IoShellyPlusPlugSImplTest {
 						.output(ShellySwitch.ChannelId.RELAY, null) //
 						.output(IoGen2ShellyBase.ChannelId.SLAVE_COMMUNICATION_FAILED, false));
 	}
+
 }

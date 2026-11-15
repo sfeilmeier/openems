@@ -37,4 +37,5 @@ public class MaxScalerTest {
 		var expected = List.of(1.0, 2.0, 3.0);
 		assertEquals(expected, result.getValues());
 	}
+
 }

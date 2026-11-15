@@ -29,4 +29,5 @@ public abstract class AbstractDummyElectricVehicle<SELF extends AbstractDummyEle
 	public ElectricVehicleAbilities getElectricVehicleAbilities() {
 		return this.electricVehicleAbilities;
 	}
+
 }

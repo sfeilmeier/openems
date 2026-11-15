@@ -142,4 +142,5 @@ public class DischargeMaxCurrentHandler extends AbstractMaxCurrentHandler {
 	protected ChannelId getBpForceCurrentChannelId() {
 		return BatteryProtection.ChannelId.BP_FORCE_CHARGE;
 	}
+
 }

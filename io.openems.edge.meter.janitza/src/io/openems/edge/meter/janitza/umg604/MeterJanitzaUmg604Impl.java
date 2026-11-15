@@ -155,4 +155,5 @@ public class MeterJanitzaUmg604Impl extends AbstractOpenemsModbusComponent
 				ElectricityMeter.getModbusSlaveNatureTable(accessMode) //
 		);
 	}
+
 }

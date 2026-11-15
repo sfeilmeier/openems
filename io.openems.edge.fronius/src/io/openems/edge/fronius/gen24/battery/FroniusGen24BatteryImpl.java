@@ -435,4 +435,5 @@ public class FroniusGen24BatteryImpl extends AbstractOpenemsSunSpecComponent
 	private interface FloatChannelSupplier {
 		Channel<Float> get() throws OpenemsException;
 	}
+
 }

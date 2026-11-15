@@ -81,4 +81,5 @@ public class MyTerminalConfig extends AbstractComponentConfig implements Termina
 	public String device_id() {
 		return this.builder.deviceId;
 	}
+
 }

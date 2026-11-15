@@ -71,4 +71,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String[] alwaysRunAfterController_ids() {
 		return this.builder.alwaysRunAfterControllerIds;
 	}
+
 }

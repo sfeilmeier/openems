@@ -60,4 +60,5 @@ public class StartBatteryInverterInOffGridHandler extends StateHandler<OffGridSt
 			return OffGridState.START_BATTERY_INVERTER_IN_OFF_GRID;
 		}
 	}
+
 }

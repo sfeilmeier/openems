@@ -14,4 +14,5 @@ public enum EnableDisable {
 	public String getValue() {
 		return this.value;
 	}
+
 }

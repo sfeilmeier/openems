@@ -22,6 +22,7 @@ import io.openems.edge.common.test.DummySerialNumberStorage;
 import io.openems.edge.io.test.DummyInputOutput;
 
 public class FeneconHomeBatteryProtectionTests {
+
 	@Test
 	public void testRunningAndFirmwareUpdate() throws Exception {
 		final var clock = createDummyClock();
@@ -93,4 +94,5 @@ public class FeneconHomeBatteryProtectionTests {
 		;
 
 	}
+
 }

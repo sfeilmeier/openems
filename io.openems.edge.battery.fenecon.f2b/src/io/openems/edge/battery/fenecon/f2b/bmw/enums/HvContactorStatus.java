@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.bmw.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum HvContactorStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	CONTACTORS_OPENED(0, "Contactors opened"), //
 	PRECONDITIONING(1, "Preconditioning"), //
@@ -31,4 +32,5 @@ public enum HvContactorStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

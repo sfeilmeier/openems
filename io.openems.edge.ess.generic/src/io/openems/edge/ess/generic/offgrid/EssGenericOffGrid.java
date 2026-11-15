@@ -51,4 +51,5 @@ public interface EssGenericOffGrid extends GenericManagedEss, OffGridEss, Manage
 						.channel(0, EssGenericOffGrid.ChannelId.STATE_MACHINE, ModbusType.UINT16) //
 						.build());
 	}
+
 }

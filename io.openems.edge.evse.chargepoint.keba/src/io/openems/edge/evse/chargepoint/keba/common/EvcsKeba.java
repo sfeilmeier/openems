@@ -34,4 +34,5 @@ public interface EvcsKeba extends OpenemsComponent, ElectricityMeter {
 			return this.doc;
 		}
 	}
+
 }

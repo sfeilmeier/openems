@@ -27,4 +27,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String schedule() default "";
 
 	String webconsole_configurationFactory_nameHint() default "Controller Balancing Schedule Symmetric [{id}]";
+
 }

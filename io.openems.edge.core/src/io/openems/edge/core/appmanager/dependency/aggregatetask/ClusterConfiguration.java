@@ -7,4 +7,5 @@ public record ClusterConfiguration(List<String> evseIds) {
 	public ClusterConfiguration(String... evseIds) {
 		this(List.of(evseIds));
 	}
+
 }

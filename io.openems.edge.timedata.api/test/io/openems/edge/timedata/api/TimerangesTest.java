@@ -133,4 +133,5 @@ public class TimerangesTest {
 		assertEquals(1, Timeranges.TIMERANGE_COMPARATOR.compare(timerange1, timerange3));
 		assertEquals(-1, Timeranges.TIMERANGE_COMPARATOR.compare(timerange3, timerange1));
 	}
+
 }

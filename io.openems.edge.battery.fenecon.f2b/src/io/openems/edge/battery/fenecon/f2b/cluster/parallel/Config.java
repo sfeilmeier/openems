@@ -27,4 +27,5 @@ public @interface Config {
 	String[] battery_ids();
 
 	String webconsole_configurationFactory_nameHint() default "Battery FENECON F2B Parallel Cluster [{id}]";
+
 }

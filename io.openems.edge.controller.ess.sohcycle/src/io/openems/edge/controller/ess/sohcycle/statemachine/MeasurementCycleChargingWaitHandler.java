@@ -11,4 +11,5 @@ public class MeasurementCycleChargingWaitHandler extends AbstractWaitHandler {
     protected StateMachine.State getCurrentState() {
         return StateMachine.State.MEASUREMENT_CYCLE_CHARGING_WAIT;
     }
+
 }

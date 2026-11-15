@@ -27,6 +27,7 @@ import io.openems.edge.core.appmanager.AbstractOpenemsApp;
 import io.openems.edge.core.appmanager.OpenemsAppInstance;
 
 public abstract class ShellyDiscovery<T> implements ComponentJsonApi {
+
 	private static final String SERVICE_TYPE = "_shelly._tcp.local.";
 
 	private final Logger log = LoggerFactory.getLogger(ShellyDiscovery.class);

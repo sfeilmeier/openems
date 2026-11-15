@@ -29,4 +29,5 @@ public interface ControllerChannelThreshold extends Controller, OpenemsComponent
 			return this.doc;
 		}
 	}
+
 }

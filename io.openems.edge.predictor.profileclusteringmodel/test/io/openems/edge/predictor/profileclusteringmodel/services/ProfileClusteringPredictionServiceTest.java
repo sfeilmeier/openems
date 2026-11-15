@@ -52,4 +52,5 @@ public class ProfileClusteringPredictionServiceTest {
 		assertEquals(2.0, result.getValueAt(0, 0), 0.0);
 		assertEquals(3.0, result.getValueAt(1, 0), 0.0);
 	}
+
 }

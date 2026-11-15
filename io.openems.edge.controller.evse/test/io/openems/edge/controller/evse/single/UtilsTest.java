@@ -91,4 +91,5 @@ public class UtilsTest {
 		assertEquals(3680, sp.max());
 		assertEquals(230, sp.step());
 	}
+
 }

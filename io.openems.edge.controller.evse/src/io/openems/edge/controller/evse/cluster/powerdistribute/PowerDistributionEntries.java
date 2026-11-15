@@ -12,6 +12,7 @@ import io.openems.edge.controller.evse.single.ControllerEvseSingle;
  * {@link ControllerEvseSingle}s.
  */
 public class PowerDistributionEntries {
+
 	private final ImmutableList<PowerDistributionEntry> allEntries;
 	private final ImmutableList<PowerDistributionEntry> activeEntries;
 
@@ -76,4 +77,5 @@ public class PowerDistributionEntries {
 						.collect(joining("\n"))) //
 				.toString();
 	}
+
 }

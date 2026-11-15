@@ -415,4 +415,5 @@ public class EvcsKebaModbusImpl extends KebaModbus implements EvcsKeba, ManagedE
 				ModbusSlaveNatureTable.of(EvcsKebaModbusImpl.class, accessMode, 100) //
 						.build());
 	}
+
 }

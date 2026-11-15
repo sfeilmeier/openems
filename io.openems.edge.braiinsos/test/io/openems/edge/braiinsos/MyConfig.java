@@ -148,4 +148,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String jsCalendar() {
 		return this.builder.jsCalendar;
 	}
+
 }

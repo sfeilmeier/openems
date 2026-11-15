@@ -24,6 +24,7 @@ import io.openems.edge.common.meta.Meta;
 import io.openems.edge.timeofusetariff.api.SpotTariffTracker;
 
 public class SpotTariffTrackerImpl implements SpotTariffTracker, SingletonPool.SingletonPoolImplementation {
+
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private final BiddingZone biddingZone;
@@ -172,4 +173,5 @@ public class SpotTariffTrackerImpl implements SpotTariffTracker, SingletonPool.S
 			this.provider.ungetSpotTariff(this.tariff);
 		}
 	}
+
 }

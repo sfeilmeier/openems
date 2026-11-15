@@ -150,4 +150,5 @@ public class TreeSolverTest {
 		assertEquals(0, activePower(pd, "ess1"));
 		assertEquals(0, activePower(pd, "ess2"));
 	}
+
 }

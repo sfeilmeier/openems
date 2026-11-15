@@ -148,4 +148,5 @@ public class MeterArtemesAM2Impl extends AbstractOpenemsModbusComponent
 				ElectricityMeter.getModbusSlaveNatureTable(accessMode) //
 		);
 	}
+
 }

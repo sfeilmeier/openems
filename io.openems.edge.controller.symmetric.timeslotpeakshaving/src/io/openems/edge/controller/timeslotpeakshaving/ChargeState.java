@@ -3,6 +3,7 @@ package io.openems.edge.controller.timeslotpeakshaving;
 import io.openems.common.types.OptionsEnum;
 
 public enum ChargeState implements OptionsEnum {
+
 	/**
 	 * Normal charge state: does not charge the battery, it is waiting to go to slow
 	 * charge state.
@@ -47,4 +48,5 @@ public enum ChargeState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return NORMAL;
 	}
+
 }

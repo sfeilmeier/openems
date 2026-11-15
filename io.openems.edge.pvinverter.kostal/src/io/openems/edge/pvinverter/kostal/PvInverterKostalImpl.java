@@ -114,4 +114,5 @@ public class PvInverterKostalImpl extends AbstractSunSpecPvInverter implements P
 				ElectricityMeter.getModbusSlaveNatureTable(accessMode), //
 				ManagedSymmetricPvInverter.getModbusSlaveNatureTable(accessMode));
 	}
+
 }

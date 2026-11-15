@@ -214,4 +214,5 @@ class PredictorPersistenceModelImplTest {
 			return null;
 		}
 	}
+
 }

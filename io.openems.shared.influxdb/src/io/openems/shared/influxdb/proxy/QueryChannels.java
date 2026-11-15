@@ -105,4 +105,5 @@ public final class QueryChannels implements Iterable<ChannelAddress> {
 	public Set<ChannelAddress> toSet() {
 		return this.channels;
 	}
+
 }

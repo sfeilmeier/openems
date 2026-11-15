@@ -3,6 +3,7 @@ package io.openems.edge.common.offgrid;
 import io.openems.common.types.OptionsEnum;
 
 public enum OperationMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ONLY_ON_GRID(0, "Operate only in On Grid"), //
 	ON_AND_OFF_GRID(1, "Operate as off-gridable");
@@ -29,4 +30,5 @@ public enum OperationMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

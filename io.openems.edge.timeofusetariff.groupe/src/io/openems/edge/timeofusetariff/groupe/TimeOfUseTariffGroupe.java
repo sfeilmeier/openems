@@ -23,4 +23,5 @@ public interface TimeOfUseTariffGroupe extends TimeOfUseTariff, OpenemsComponent
 			return this.doc;
 		}
 	}
+
 }

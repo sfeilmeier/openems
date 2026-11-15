@@ -193,4 +193,5 @@ public class IoMasterBox2v0RelayImpl extends AbstractOpenemsComponent implements
 						.build() //
 		);
 	}
+
 }

@@ -25,6 +25,7 @@ import io.openems.edge.battery.fenecon.home.update.j2mod.ResponseStatusCode;
 import io.openems.edge.common.update.ProgressPublisher;
 
 public class UpdateHandler implements AutoCloseable {
+
 	protected final SerialPortHandler connectionHandler;
 
 	private static final long ERASE_FLASH_WAIT_MILLIS = 2_000L;
@@ -164,4 +165,5 @@ public class UpdateHandler implements AutoCloseable {
 		record Error(String statusCodeName) implements SlaveUpdateStatus {
 		}
 	}
+
 }

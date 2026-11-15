@@ -610,4 +610,5 @@ public class DifferentModes {
 
 	private DifferentModes() {
 	}
+
 }

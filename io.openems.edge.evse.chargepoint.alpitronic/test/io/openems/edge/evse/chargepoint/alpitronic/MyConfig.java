@@ -122,4 +122,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public Connector connector() {
 		return this.builder.connector;
 	}
+
 }

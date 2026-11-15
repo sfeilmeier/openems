@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NO_BATTERY(0, "NO Battery,inverter disconnects to Battery"), //
 	STANDBY(1, "Standby,no discharging and no charging"), //
@@ -31,4 +32,5 @@ public enum BatteryMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

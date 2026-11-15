@@ -74,4 +74,5 @@ public interface ShellySwitch extends DigitalOutput {
 	public default void setRelay(boolean value) throws OpenemsError.OpenemsNamedException {
 		this.getRelayChannel().setNextWriteValue(value);
 	}
+
 }

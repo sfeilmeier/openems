@@ -115,4 +115,5 @@ public class GetTask<PAYLOAD> implements EndpointRequestType<Request, Response<P
 							.build());
 		}
 	}
+
 }

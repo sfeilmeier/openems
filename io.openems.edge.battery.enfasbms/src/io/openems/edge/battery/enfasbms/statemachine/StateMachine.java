@@ -61,4 +61,5 @@ public class StateMachine extends AbstractStateMachine<StateMachine.State, Conte
 		case RESET_BATTERY -> new ResetBatteryHandler();
 		};
 	}
+
 }

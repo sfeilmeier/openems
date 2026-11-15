@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import io.openems.edge.controller.ess.sohcycle.EssSohCycleConstants;
 
 public class MeasurementCycleDischargingHandler extends AbstractAllowedPowerHandler {
+
     private static final Logger log = LoggerFactory.getLogger(MeasurementCycleDischargingHandler.class);
 
     @Override
@@ -27,4 +28,5 @@ public class MeasurementCycleDischargingHandler extends AbstractAllowedPowerHand
 
         return StateMachine.State.MEASUREMENT_CYCLE_DISCHARGING_WAIT;
     }
+
 }

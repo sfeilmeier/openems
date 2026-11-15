@@ -182,4 +182,5 @@ public abstract class AbstractStateMachine<STATE extends State<STATE>, CONTEXT e
 
 	protected void applyStateData(CONTEXT context) {
 	}
+
 }

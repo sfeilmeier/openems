@@ -431,4 +431,5 @@ public interface BatteryFeneconCommercial extends Battery, StartStoppable, Opene
 			return this.doc;
 		}
 	}
+
 }

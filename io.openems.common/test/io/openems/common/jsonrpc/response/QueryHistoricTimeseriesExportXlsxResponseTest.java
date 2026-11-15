@@ -114,4 +114,5 @@ public class QueryHistoricTimeseriesExportXlsxResponseTest {
 			outputStream.write(content);
 		}
 	}
+
 }

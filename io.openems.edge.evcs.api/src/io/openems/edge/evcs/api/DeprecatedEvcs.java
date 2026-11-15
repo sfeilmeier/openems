@@ -55,4 +55,5 @@ public interface DeprecatedEvcs extends ElectricityMeter, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

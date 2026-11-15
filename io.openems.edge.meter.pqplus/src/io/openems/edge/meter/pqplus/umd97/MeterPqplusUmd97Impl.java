@@ -186,4 +186,5 @@ public class MeterPqplusUmd97Impl extends AbstractOpenemsModbusComponent impleme
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

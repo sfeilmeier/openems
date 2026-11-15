@@ -169,4 +169,5 @@ public class TimedataRrd4jImplTest {
 		assertEquals(6.5, result[4], 0.1);
 		assertEquals(18.5, result[5], 0.1);
 	}
+
 }

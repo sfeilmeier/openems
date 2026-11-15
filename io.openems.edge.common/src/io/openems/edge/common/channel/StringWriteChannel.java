@@ -43,4 +43,5 @@ public class StringWriteChannel extends StringReadChannel implements WriteChanne
 	public void onSetNextWrite(ThrowingConsumer<String, OpenemsNamedException> callback) {
 		this.getOnSetNextWrites().add(callback);
 	}
+
 }

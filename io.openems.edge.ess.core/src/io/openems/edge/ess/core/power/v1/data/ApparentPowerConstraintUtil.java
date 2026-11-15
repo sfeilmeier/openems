@@ -113,4 +113,5 @@ public class ApparentPowerConstraintUtil {
 				new LinearCoefficient(coefficients.of(essId, phase, Pwr.REACTIVE), coefficient2) //
 		}, relationship, constraintValue);
 	}
+
 }

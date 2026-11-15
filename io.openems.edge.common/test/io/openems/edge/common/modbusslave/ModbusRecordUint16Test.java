@@ -65,4 +65,5 @@ public class ModbusRecordUint16Test {
 		assertEquals("ModbusRecordUint16Hash [text=hash, value=49422/0xc10e, type=uint16]", sut.toString());
 		assertEquals("\"0xc10e\"", sut.getValueDescription());
 	}
+
 }

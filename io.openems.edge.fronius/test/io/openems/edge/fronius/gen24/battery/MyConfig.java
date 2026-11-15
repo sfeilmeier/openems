@@ -103,4 +103,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int numberOfModules() {
 		return this.builder.numberOfModules;
 	}
+
 }

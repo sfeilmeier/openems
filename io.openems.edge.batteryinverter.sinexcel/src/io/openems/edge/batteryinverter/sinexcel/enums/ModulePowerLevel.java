@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ModulePowerLevel implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	TEN_KW(0, " 10 kW"), //
 	TWENTY_KW(1, "20 kW"), //
@@ -31,4 +32,5 @@ public enum ModulePowerLevel implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

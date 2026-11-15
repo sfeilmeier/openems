@@ -25,4 +25,5 @@ public class EssFeneconCommercial40ImplTest {
 						.build()) //
 		;
 	}
+
 }

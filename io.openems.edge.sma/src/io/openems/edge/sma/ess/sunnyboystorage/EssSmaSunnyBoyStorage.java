@@ -112,4 +112,5 @@ public interface EssSmaSunnyBoyStorage {
 			return this.doc;
 		}
 	}
+
 }

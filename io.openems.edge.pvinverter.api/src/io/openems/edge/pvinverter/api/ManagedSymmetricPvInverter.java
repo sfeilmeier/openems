@@ -291,4 +291,5 @@ public interface ManagedSymmetricPvInverter extends ElectricityMeter, OpenemsCom
 		return ModbusSlaveNatureTable.of(ManagedSymmetricPvInverter.class, accessMode, 100) //
 				.build();
 	}
+
 }

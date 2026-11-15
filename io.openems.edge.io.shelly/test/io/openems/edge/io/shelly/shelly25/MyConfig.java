@@ -47,4 +47,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String ip() {
 		return this.builder.ip;
 	}
+
 }

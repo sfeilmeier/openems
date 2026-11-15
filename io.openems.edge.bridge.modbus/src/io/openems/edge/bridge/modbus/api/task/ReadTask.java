@@ -10,5 +10,7 @@ import io.openems.edge.common.taskmanager.Priority;
  * inherits from ReadTask.
  */
 public non-sealed interface ReadTask extends Task {
+
 	void setPriority(Priority priority);
+
 }

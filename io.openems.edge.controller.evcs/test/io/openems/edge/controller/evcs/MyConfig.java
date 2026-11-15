@@ -158,4 +158,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int excessChargePauseHysteresis() {
 		return this.builder.excessChargePauseHysteresis;
 	}
+
 }

@@ -339,4 +339,5 @@ public final class ModbusSlaveNatureTable {
 	public ModbusRecord[] getModbusRecords() {
 		return this.modbusRecords;
 	}
+
 }

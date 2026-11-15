@@ -68,4 +68,5 @@ public abstract sealed class AbstractJsonrpcRequest extends JsonrpcMessage permi
 				.add("params", this.getParams()) //
 				.build();
 	}
+
 }

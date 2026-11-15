@@ -84,4 +84,5 @@ public class BackendEntsoeTariffProviderImpl extends AbstractMirroredSpotTariffP
 		}
 		return this.config.biddingZones();
 	}
+
 }

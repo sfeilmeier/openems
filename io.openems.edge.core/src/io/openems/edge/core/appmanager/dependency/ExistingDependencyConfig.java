@@ -19,4 +19,5 @@ public class ExistingDependencyConfig extends DependencyConfig {
 		this.parentInstance = parent;
 		this.instance = instance;
 	}
+
 }

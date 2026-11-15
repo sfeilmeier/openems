@@ -154,4 +154,5 @@ public interface EvseChargePointHeidelbergConnect extends OpenemsComponent {
 	public default EnumReadChannel getReadyForChargingChannel() {
 		return this.channel(ChannelId.READY_FOR_CHARGING);
 	}
+
 }

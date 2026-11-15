@@ -29,4 +29,5 @@ import io.openems.common.channel.PersistencePriority;
 	boolean debugMode() default false;
 
 	String webconsole_configurationFactory_nameHint() default "Timedata RRD4J [{id}]";
+
 }

@@ -167,4 +167,5 @@ public class IoShellyPro2PmTerminalImpl extends AbstractOpenemsComponent
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

@@ -11,4 +11,5 @@ public class ReferenceCycleChargingWaitHandler extends AbstractWaitHandler {
     protected StateMachine.State getCurrentState() {
         return StateMachine.State.REFERENCE_CYCLE_CHARGING_WAIT;
     }
+
 }

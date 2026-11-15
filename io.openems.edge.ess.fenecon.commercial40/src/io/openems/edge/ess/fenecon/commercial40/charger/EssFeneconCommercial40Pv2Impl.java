@@ -93,4 +93,5 @@ public class EssFeneconCommercial40Pv2Impl extends AbstractEssFeneconCommercial4
 	protected boolean isPV1() {
 		return false;
 	}
+
 }

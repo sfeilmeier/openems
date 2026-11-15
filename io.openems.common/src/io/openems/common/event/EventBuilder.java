@@ -7,6 +7,7 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
 public final class EventBuilder {
+
 	private final String eventTopic;
 	private final Map<String, Object> eventArgs;
 	private final EventAdmin eventAdmin;

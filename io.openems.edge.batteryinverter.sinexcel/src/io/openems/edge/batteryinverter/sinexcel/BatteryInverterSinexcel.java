@@ -922,4 +922,5 @@ public interface BatteryInverterSinexcel extends OffGridBatteryInverter, Managed
 	public default void setClearFailure() throws OpenemsNamedException {
 		this.getClearFailureChannel().setNextWriteValue(true);
 	}
+
 }

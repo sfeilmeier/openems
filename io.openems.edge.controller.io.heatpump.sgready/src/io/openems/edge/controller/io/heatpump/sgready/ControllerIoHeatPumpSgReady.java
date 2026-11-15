@@ -190,4 +190,5 @@ public interface ControllerIoHeatPumpSgReady extends OpenemsComponent {
 	public default void _setEssDischargePowerNotPresent(boolean value) {
 		this.getEssDischargePowerNotPresentChannel().setNextValue(value);
 	}
+
 }

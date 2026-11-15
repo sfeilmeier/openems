@@ -39,4 +39,5 @@ public class StateMachineTest {
 		assertEquals(EvseSingleState.EV_NOT_CONNECTED, sm.getCurrentState());
 		assertEquals("EvNotConnected", sm.debugLog());
 	}
+
 }

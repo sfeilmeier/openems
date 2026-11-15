@@ -3,6 +3,7 @@ package io.openems.edge.common.channel.dynamicdoctext;
 import io.openems.common.utils.TextProvider;
 
 public interface StringChannelParameterProvider extends ParameterProvider {
+
 	/**
 	 * Maps the specific string value to a text.
 	 *
@@ -40,4 +41,5 @@ public interface StringChannelParameterProvider extends ParameterProvider {
 	 * @return myself
 	 */
 	public StringChannelParameterProvider defaultText(TextProvider text);
+
 }

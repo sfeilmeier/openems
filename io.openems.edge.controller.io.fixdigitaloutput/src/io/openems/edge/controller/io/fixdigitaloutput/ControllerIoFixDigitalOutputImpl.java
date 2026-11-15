@@ -129,4 +129,5 @@ public class ControllerIoFixDigitalOutputImpl extends AbstractOpenemsComponent
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

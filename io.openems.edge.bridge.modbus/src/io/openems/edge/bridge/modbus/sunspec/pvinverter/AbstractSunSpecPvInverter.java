@@ -342,4 +342,5 @@ public abstract class AbstractSunSpecPvInverter extends AbstractOpenemsSunSpecCo
 	protected <T extends Channel<?>> T getSunSpecChannelOrError(SunSpecPoint point) throws OpenemsException {
 		return super.getSunSpecChannelOrError(point);
 	}
+
 }

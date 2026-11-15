@@ -5,6 +5,7 @@ import java.time.Duration;
 import io.openems.edge.controller.api.backend.api.DataFetchType;
 
 public sealed interface BackendConnectionState {
+
 	/**
 	 * Returns how data should be fetched.
 	 *
@@ -45,4 +46,5 @@ public sealed interface BackendConnectionState {
 			return DataFetchType.FETCH_VIA_BACKEND;
 		}
 	}
+
 }

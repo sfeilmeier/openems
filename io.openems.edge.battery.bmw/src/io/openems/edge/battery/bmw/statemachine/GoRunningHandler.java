@@ -161,4 +161,5 @@ public class GoRunningHandler extends StateHandler<State, Context> {
 		}
 		this.activeEndpoints.clear();
 	}
+
 }

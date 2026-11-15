@@ -1,6 +1,7 @@
 package io.openems.edge.battery.fenecon.commercial;
 
 public enum Baudrate {
+
 	BAUDRATE_9600("9600", 0), //
 	BAUDRATE_19200("19200", 100), //
 	BAUDRATE_38400("38400", 200),//
@@ -21,4 +22,5 @@ public enum Baudrate {
 	public int getValue() {
 		return this.value;
 	}
+
 }

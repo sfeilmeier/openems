@@ -102,4 +102,5 @@ public class ControllerEssLinearPowerBandImpl extends AbstractOpenemsComponent
 		// Apply Power Set-Point
 		this.ess.setActivePowerEqualsWithoutFilter(this.currentPower);
 	}
+
 }

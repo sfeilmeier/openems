@@ -93,4 +93,5 @@ public abstract class AbstractDatasource extends AbstractOpenemsComponent implem
 	public int getTimeDelta() {
 		return this.timeDelta;
 	}
+
 }

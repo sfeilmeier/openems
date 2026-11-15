@@ -56,4 +56,5 @@ public class EdgeCacheTest {
 		table.put(timestamp, channel, new JsonPrimitive(value));
 		return new TimestampedDataNotification(table);
 	}
+
 }

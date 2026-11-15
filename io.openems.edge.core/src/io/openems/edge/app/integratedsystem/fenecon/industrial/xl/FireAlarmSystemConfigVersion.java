@@ -6,6 +6,7 @@ import io.openems.edge.core.appmanager.AbstractOpenemsApp;
 import io.openems.edge.core.appmanager.TranslationUtil;
 
 public enum FireAlarmSystemConfigVersion implements TranslatableEnum {
+
 	INDUSTRIAL_XL_V1("App.FENECON.Industrial.Xl.IXL010.fireAlarmSystemConfigVersion.industrialXlV1"), //
 	INDUSTRIAL_XL_V2("App.FENECON.Industrial.Xl.IXL010.fireAlarmSystemConfigVersion.industrialXlV2"), //
 	;

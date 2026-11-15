@@ -13,6 +13,7 @@ import com.ghgande.j2mod.modbus.procimg.SimpleRegister;
 import io.openems.edge.bridge.modbus.test.ModbusSerialListenerMock;
 
 public class DummySerialListener extends ModbusSerialListenerMock {
+
 	public DummySerialListener(AbstractSerialConnection serialCon) {
 		super(serialCon);
 	}
@@ -34,4 +35,5 @@ public class DummySerialListener extends ModbusSerialListenerMock {
 		response.setRegisters(registers);
 		return response;
 	}
+
 }

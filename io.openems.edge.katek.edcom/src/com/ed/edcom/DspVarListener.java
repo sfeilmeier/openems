@@ -28,4 +28,5 @@ public interface DspVarListener {
 	 * Callback function.
 	 */
 	public void onChange();
+
 }

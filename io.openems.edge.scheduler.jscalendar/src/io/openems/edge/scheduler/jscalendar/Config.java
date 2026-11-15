@@ -27,4 +27,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String[] alwaysRunAfterController_ids() default { "ctrlDebugLog0" };
 
 	String webconsole_configurationFactory_nameHint() default "Scheduler JSCalendar [{id}]";
+
 }

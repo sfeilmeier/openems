@@ -139,4 +139,5 @@ public class ControllerApiModbusRtuReadWriteImpl extends AbstractModbusReadWrite
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

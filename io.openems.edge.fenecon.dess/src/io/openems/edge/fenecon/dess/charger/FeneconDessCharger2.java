@@ -86,4 +86,5 @@ public class FeneconDessCharger2 extends AbstractFeneconDessCharger
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

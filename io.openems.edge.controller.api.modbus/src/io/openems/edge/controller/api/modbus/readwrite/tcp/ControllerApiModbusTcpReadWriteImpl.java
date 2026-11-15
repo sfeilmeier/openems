@@ -137,4 +137,5 @@ public class ControllerApiModbusTcpReadWriteImpl extends AbstractModbusReadWrite
 				/* useRtuOverTcp */ false, //
 				/* maxIdleSeconds */ MAX_IDLE_SECONDS);
 	}
+
 }

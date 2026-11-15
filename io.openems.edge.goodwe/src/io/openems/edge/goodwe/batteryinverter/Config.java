@@ -870,4 +870,5 @@ import io.openems.edge.goodwe.common.enums.SafetyParameterEnums;
 	int settingFrtOf3Time() default Integer.MIN_VALUE;
 
 	String webconsole_configurationFactory_nameHint() default "GoodWe Battery Inverter [{id}]";
+
 }

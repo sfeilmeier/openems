@@ -51,4 +51,5 @@ public class ModbusRecordString16Test {
 		assertEquals("[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
 				Arrays.toString(ModbusRecordString16.toByteArray((Object) null)));
 	}
+
 }

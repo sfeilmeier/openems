@@ -94,4 +94,5 @@ class BackendTariffProviderTest {
 		return new TariffData(new TariffType.DayAheadEpexSpot(BiddingZone.GERMANY), testPrices,
 				Currency.getInstance("EUR"), clock.instant(), clock.instant(), "");
 	}
+
 }

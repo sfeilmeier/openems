@@ -189,4 +189,5 @@ public class FeneconProHybrid10
 	public OpenemsAppCardinality getCardinality() {
 		return OpenemsAppCardinality.SINGLE_IN_CATEGORY;
 	}
+
 }

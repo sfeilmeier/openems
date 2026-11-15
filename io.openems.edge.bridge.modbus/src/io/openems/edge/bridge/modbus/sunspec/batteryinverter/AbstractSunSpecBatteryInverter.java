@@ -57,4 +57,5 @@ public abstract class AbstractSunSpecBatteryInverter extends AbstractOpenemsSunS
 	protected void onSunSpecInitializationCompleted() {
 		this.logInfo(this.log, "SunSpec initialization finished. " + this.channels().size() + " Channels available.");
 	}
+
 }

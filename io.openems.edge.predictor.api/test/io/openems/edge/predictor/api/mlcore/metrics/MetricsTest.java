@@ -86,4 +86,5 @@ public class MetricsTest {
 				.toList();
 		return new Series<>(index, values);
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.fisker.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum ActualSubStateHvStartUp implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NOT_INITIALISED(0, "Not initialised"), //
 	DECISION_ERROR_RESET(1, "Decision error reset"), //
@@ -34,4 +35,5 @@ public enum ActualSubStateHvStartUp implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

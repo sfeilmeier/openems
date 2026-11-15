@@ -286,4 +286,5 @@ public class BmwBatteryImplTest {
 		test.next(new TestCase("15")//
 				.output(STATEMACHINE, StateMachine.State.STOPPED));
 	}
+
 }

@@ -30,4 +30,5 @@ public interface TariffComponent {
 			return this.doc;
 		}
 	}
+
 }

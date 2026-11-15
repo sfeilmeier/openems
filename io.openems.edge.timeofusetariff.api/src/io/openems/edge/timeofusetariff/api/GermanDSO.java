@@ -750,4 +750,5 @@ public enum GermanDSO {
 		case STANDARD -> dateRange.standardTariff();
 		};
 	}
+
 }

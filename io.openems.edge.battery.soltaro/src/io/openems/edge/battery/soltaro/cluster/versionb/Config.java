@@ -60,4 +60,5 @@ import io.openems.edge.battery.soltaro.common.enums.ModuleType;
 	String Modbus_target() default "(enabled=true)";
 
 	String webconsole_configurationFactory_nameHint() default "BMS Soltaro Cluster Version B [{id}]";
+
 }

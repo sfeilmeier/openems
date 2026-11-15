@@ -33,4 +33,5 @@ public enum ConfigurationTarget {
 	public boolean isAddOrUpdate() {
 		return this == ADD || this == UPDATE;
 	}
+
 }

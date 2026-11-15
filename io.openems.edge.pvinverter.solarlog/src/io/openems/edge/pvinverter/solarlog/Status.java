@@ -3,6 +3,7 @@ package io.openems.edge.pvinverter.solarlog;
 import io.openems.common.types.OptionsEnum;
 
 public enum Status implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OK(0, "Ok"), //
 	LICENSE_NOT_SUFFICIENT(1, "License not sufficient for size of installation"); //
@@ -29,4 +30,5 @@ public enum Status implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

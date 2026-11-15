@@ -83,4 +83,5 @@ public class ModbusTest<TASK extends Task, ELEMENT extends ModbusElement, CHANNE
 					AccessMode.READ_WRITE, openemsType);
 		}
 	}
+
 }

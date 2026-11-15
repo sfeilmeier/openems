@@ -31,4 +31,5 @@ public class ColumnApplyTransformerTest {
 
 		assertEquals(expected, transformed);
 	}
+
 }

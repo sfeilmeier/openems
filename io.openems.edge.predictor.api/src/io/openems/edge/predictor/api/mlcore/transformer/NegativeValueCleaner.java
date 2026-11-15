@@ -20,4 +20,5 @@ public class NegativeValueCleaner<I> extends AbstractSeriesTransformer<I> {
 
 		return new Series<>(series.getIndex(), cleanedValues);
 	}
+
 }

@@ -24,4 +24,5 @@ public interface ControllerEssMinimumDischargePower extends Controller, OpenemsC
 			return this.doc;
 		}
 	}
+
 }

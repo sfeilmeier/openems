@@ -407,4 +407,5 @@ public class EvseAlpitronicImpl extends EvseAlpitronic implements EvseChargePoin
 	public int getMaxChargePower() {
 		return this.config.maxHwPower();
 	}
+
 }

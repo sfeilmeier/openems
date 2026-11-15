@@ -1049,4 +1049,5 @@ class EssPowerImplTest {
 		componentTest.next(new TestCase("#3") //
 		);
 	}
+
 }

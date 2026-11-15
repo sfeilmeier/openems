@@ -28,4 +28,5 @@ public class DummyServiceRegistration<S> implements ServiceRegistration<S> {
 	@Override
 	public void unregister() {
 	}
+
 }

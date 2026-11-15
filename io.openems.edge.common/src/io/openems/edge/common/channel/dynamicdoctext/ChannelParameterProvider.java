@@ -9,6 +9,7 @@ import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.component.OpenemsComponent;
 
 abstract class ChannelParameterProvider<V> implements ParameterProvider {
+
 	protected final ChannelId channelId;
 	private final AtomicReference<V> value;
 
@@ -51,4 +52,5 @@ abstract class ChannelParameterProvider<V> implements ParameterProvider {
 
 	@Override
 	public abstract ParameterProvider copy();
+
 }

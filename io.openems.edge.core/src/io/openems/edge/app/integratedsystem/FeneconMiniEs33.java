@@ -165,4 +165,5 @@ public class FeneconMiniEs33
 	public OpenemsAppCardinality getCardinality() {
 		return OpenemsAppCardinality.SINGLE_IN_CATEGORY;
 	}
+
 }

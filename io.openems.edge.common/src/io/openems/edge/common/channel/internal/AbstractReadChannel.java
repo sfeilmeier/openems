@@ -328,4 +328,5 @@ public abstract class AbstractReadChannel<D extends AbstractDoc<T>, T> implement
 	public <SOURCE> SOURCE getMetaInfo() {
 		return (SOURCE) this.source;
 	}
+
 }

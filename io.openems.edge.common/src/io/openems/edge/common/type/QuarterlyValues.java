@@ -284,4 +284,5 @@ public abstract class QuarterlyValues<T> {
 	public ImmutableSortedMap<Instant, T> toMap() {
 		return this.valuePerQuarter;
 	}
+
 }

@@ -12,4 +12,5 @@ public class LinuxFsDigitalIn extends Gpio implements DigitalIn {
 	public String toString() {
 		return super.toString() + ": " + this.getValue().map(t -> t ? "on" : "off").orElse("invalid");
 	}
+
 }

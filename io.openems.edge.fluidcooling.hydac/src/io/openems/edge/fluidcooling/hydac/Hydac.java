@@ -582,4 +582,5 @@ public interface Hydac extends OpenemsComponent, ModbusComponent, StartStoppable
 	 * @return {@link StartStop}
 	 */
 	StartStop getStartStopTarget();
+
 }

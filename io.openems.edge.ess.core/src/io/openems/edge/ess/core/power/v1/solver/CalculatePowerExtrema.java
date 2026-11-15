@@ -75,4 +75,5 @@ public class CalculatePowerExtrema {
 			return 0;
 		}
 	}
+
 }

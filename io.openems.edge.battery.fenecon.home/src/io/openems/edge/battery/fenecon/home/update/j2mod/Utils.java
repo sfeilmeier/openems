@@ -8,6 +8,7 @@ import com.ghgande.j2mod.modbus.msg.ModbusRequest;
 import com.ghgande.j2mod.modbus.msg.ModbusResponse;
 
 class Utils {
+
 	/**
 	 * Updates the response with the header information to match the request.
 	 *
@@ -43,4 +44,5 @@ class Utils {
 			throw new IOException("Expected %d, but got %d: %s".formatted(expected, data, message));
 		}
 	}
+
 }

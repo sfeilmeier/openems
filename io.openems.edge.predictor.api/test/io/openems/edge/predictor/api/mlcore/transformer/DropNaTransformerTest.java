@@ -47,4 +47,5 @@ public class DropNaTransformerTest {
 		assertEquals(Arrays.asList(1.0, 2.0), result.getValues().get(0));
 		assertEquals(Arrays.asList(4.0, 5.0), result.getValues().get(1));
 	}
+
 }

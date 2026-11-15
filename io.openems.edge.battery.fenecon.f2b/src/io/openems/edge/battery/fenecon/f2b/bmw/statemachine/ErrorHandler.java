@@ -17,4 +17,5 @@ public class ErrorHandler extends StateHandler<State, Context> {
 	public State runAndGetNextState(Context context) {
 		return State.ERROR;
 	}
+
 }

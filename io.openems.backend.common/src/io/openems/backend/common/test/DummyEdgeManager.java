@@ -82,4 +82,5 @@ public class DummyEdgeManager implements EdgeManager {
 	public EdgeClient getEdgeClientForEdgeId(String edgeId) {
 		throw new UnsupportedOperationException();
 	}
+
 }

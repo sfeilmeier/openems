@@ -38,6 +38,7 @@ import io.openems.edge.timedata.rrd4j.version.Version3Test;
 import io.openems.edge.timedata.rrd4j.version.VersionHandler;
 
 public class Rrd4jReadHandlerTest {
+
 	// starts at 1. January 2020 00:00:00
 	private static final Instant START = Instant.ofEpochSecond(1577836800L);
 

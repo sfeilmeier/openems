@@ -36,4 +36,5 @@ public class GoStoppedHandler extends StateHandler<State, Context> {
 
 		return State.GO_STOPPED;
 	}
+
 }

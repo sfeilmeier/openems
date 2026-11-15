@@ -75,4 +75,5 @@ public class DummyFixStateOfChargeController extends AbstractFixStateOfCharge {
 	public Long getExpectedStartEpochSecondsValue() {
 		return (Long) this.channel(FixStateOfCharge.ChannelId.EXPECTED_START_EPOCH_SECONDS).getNextValue().get();
 	}
+
 }

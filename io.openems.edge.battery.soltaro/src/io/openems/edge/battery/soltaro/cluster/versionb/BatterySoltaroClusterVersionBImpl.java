@@ -812,4 +812,5 @@ public class BatterySoltaroClusterVersionBImpl extends AbstractOpenemsModbusComp
 			throw new NotImplementedException("'STOP' is not implemented for Soltaro Cluster Version B");
 		}
 	}
+
 }

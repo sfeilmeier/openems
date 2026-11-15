@@ -8,6 +8,7 @@ import io.openems.edge.core.appmanager.TranslationUtil;
  * Copy of {@link io.openems.common.types.MeterType}.
  */
 public enum MeterType implements TranslatableEnum {
+
 	PRODUCTION("App.Meter.production"), //
 	GRID("App.Meter.gridMeter"), //
 	CONSUMPTION_METERED("App.Meter.consumptionMeter"), //

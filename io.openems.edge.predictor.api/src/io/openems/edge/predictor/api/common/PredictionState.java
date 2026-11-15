@@ -37,4 +37,5 @@ public enum PredictionState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -14,6 +14,7 @@ import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsException;
 
 public class XmlParser {
+
 	public static final XmlParser INSTANCE = new XmlParser();
 
 	private XmlParser() {
@@ -60,4 +61,5 @@ public class XmlParser {
 
 		return factory.newDocumentBuilder();
 	}
+
 }

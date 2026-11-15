@@ -171,4 +171,5 @@ public class Context extends AbstractContext<AbstractFixStateOfCharge> {
 	protected boolean considerTargetTime() {
 		return this.config.isTargetTimeSpecified() && this.targetDateTime != null;
 	}
+
 }

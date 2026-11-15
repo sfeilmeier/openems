@@ -78,4 +78,5 @@ public class OAuthRegistryGetTokenByCodeRequest extends JsonrpcRequest {
 				.serialize(this.metadata) //
 				.getAsJsonObject();
 	}
+
 }

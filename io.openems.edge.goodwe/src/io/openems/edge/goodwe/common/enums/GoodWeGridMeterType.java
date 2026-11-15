@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum GoodWeGridMeterType implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	SINGLE_PHASE(0, "Single phase grid meter"), //
 	THREE_PHASE_THREE_WIRE(1, "Three phase three wire grid meter"), //
@@ -32,4 +33,5 @@ public enum GoodWeGridMeterType implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

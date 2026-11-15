@@ -233,4 +233,5 @@ public interface KebaUdp extends Keba {
 				.channel(78, KebaUdp.ChannelId.INPUT, ModbusType.UINT16) //
 				.build();
 	}
+
 }

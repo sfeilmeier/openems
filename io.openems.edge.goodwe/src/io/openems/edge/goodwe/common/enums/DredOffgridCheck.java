@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum DredOffgridCheck implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OFF(0, "Dred off grid is off"), //
 	ON(1, "Dred off grid is on"); //
@@ -29,4 +30,5 @@ public enum DredOffgridCheck implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

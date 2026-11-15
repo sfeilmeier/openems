@@ -115,4 +115,5 @@ public class BatteryProtectionDefinitionRestricted implements BatteryProtectionD
 	public boolean isDischargeAllowed() {
 		return true;
 	}
+
 }

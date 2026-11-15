@@ -1,6 +1,7 @@
 package io.openems.edge.app.hardware;
 
 public enum GpioHardwareType {
+
 	/**
 	 * CM4 MAX.
 	 */
@@ -26,4 +27,5 @@ public enum GpioHardwareType {
 	 */
 	MODBERRY_X500_M3, //
 	;
+
 }

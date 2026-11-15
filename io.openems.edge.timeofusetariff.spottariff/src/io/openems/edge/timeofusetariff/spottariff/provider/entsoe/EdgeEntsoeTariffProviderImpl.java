@@ -101,4 +101,5 @@ public class EdgeEntsoeTariffProviderImpl extends AbstractMirroredSpotTariffProv
 	public Clock getClock() {
 		return this.componentManager.getClock();
 	}
+
 }

@@ -822,4 +822,5 @@ public class ControllerEssFixStateOfChargeImplTest {
 						.output("ess0", SET_ACTIVE_POWER_EQUALS, 0)) //
 				.deactivate();
 	}
+
 }

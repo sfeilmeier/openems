@@ -19,4 +19,5 @@ public interface ControllerApiModbusTcpReadWrite extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

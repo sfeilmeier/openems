@@ -128,4 +128,5 @@ public class KebaModbusTest {
 		assertNotNull(registers);
 		assertEquals(expectedRegister, registers[0].getValue());
 	}
+
 }

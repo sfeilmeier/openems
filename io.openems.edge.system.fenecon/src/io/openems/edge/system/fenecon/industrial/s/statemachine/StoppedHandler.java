@@ -21,4 +21,5 @@ public class StoppedHandler extends StateHandler<State, Context> {
 
 		return State.STOPPED;
 	}
+
 }

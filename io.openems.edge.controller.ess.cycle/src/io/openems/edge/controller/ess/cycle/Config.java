@@ -51,4 +51,5 @@ public @interface Config {
 	int finalSoc() default 50;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Ess Cycle [{id}]";
+
 }

@@ -56,4 +56,5 @@ public interface Handler<T extends Message> {
 	 * @return debug log
 	 */
 	String debugLog();
+
 }

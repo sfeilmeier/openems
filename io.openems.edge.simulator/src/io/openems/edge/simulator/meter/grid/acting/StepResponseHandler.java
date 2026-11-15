@@ -54,4 +54,5 @@ public class StepResponseHandler {
 		this.meter._setFrequency(frequency);
 		this.state = nextState;
 	}
+
 }

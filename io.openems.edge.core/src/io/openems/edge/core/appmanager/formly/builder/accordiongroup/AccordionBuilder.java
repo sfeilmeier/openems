@@ -36,4 +36,5 @@ public class AccordionBuilder extends FormlyBuilder<AccordionBuilder> {
 	protected String getType() {
 		return "accordion";
 	}
+
 }

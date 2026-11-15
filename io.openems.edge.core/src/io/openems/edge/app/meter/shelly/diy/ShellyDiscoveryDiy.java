@@ -17,6 +17,7 @@ import io.openems.edge.core.appmanager.OpenemsAppInstance;
 
 @Component
 public class ShellyDiscoveryDiy extends ShellyDiscovery<MdnsValueDiy> implements ComponentJsonApi {
+
 	public static final String ID = "shellyDiscoveryDiy";
 
 	private final AppManagerUtil appManagerUtil;
@@ -78,4 +79,5 @@ public class ShellyDiscoveryDiy extends ShellyDiscovery<MdnsValueDiy> implements
 		case null, default -> null;
 		};
 	}
+
 }

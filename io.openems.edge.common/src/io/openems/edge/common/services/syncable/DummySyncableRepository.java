@@ -10,6 +10,7 @@ import io.openems.common.jsonrpc.syncable.SyncableKey;
 import io.openems.common.utils.BehaviorSubject;
 
 public class DummySyncableRepository implements SyncableRepository {
+
 	private final Map<SyncableKey<?>, BehaviorSubject<SyncableEntry<?>>> storedValues = new HashMap<>();
 
 	public <T> void setEntry(SyncableKey<T> key, SyncableEntry<T> entry) {
@@ -29,4 +30,5 @@ public class DummySyncableRepository implements SyncableRepository {
 	public Set<SyncableKey<?>> getSubscribedSyncableKeys() {
 		return new HashSet<>(this.storedValues.keySet());
 	}
+
 }

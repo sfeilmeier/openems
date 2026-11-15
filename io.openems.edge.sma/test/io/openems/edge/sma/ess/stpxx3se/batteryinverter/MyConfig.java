@@ -70,4 +70,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public ControlMode controlMode() {
 		return this.builder.controlMode;
 	}
+
 }

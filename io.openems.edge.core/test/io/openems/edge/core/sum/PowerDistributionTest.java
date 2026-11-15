@@ -44,4 +44,5 @@ public class PowerDistributionTest {
 			assertEquals(0, sut.gridToEss().intValue());
 		}
 	}
+
 }

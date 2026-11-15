@@ -252,4 +252,5 @@ public class ModbusRecordChannel extends ModbusRecord {
 		throw new IllegalArgumentException(
 				"Mapper can only be applied to Number values, but got [" + value.getClass().getName() + "]");
 	}
+
 }

@@ -21,4 +21,5 @@ public interface SchedulerJSCalendar extends Scheduler, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

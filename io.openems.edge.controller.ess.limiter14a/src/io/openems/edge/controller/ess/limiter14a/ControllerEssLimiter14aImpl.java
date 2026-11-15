@@ -94,4 +94,5 @@ public class ControllerEssLimiter14aImpl extends AbstractOpenemsComponent implem
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

@@ -10,6 +10,7 @@ import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.types.ChannelAddress;
 
 public enum SystemInputChannels {
+
 	ENABLE_COUPLING_SWITCH("io0/DigitalInputM0C1", SystemInputChannels.class, "enableCouplingSwitch", null, true,
 			SystemFeneconIndustrialXlImpl::updateStatusSysOffChannels), //
 	STATUS_24V_PDU_F2B_1("io0/DigitalInputM0C2", SystemInputChannels.class, "status24vPduF2b1", Level.WARNING, true,

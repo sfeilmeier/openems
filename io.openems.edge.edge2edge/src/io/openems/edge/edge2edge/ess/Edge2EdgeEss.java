@@ -78,4 +78,5 @@ public interface Edge2EdgeEss extends OpenemsComponent {
 	public default void setRemoteReactivePowerEquals(Float value) throws OpenemsNamedException {
 		this.getRemoteSetReactivePowerEqualsChannel().setNextWriteValue(value);
 	}
+
 }

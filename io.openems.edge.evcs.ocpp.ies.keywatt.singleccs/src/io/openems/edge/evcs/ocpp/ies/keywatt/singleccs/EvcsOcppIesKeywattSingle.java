@@ -26,4 +26,5 @@ public interface EvcsOcppIesKeywattSingle
 			return this.doc;
 		}
 	}
+
 }

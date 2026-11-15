@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.refu.store88k.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum DerTyp implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	PV(4, "PV"), //
 	PV_STOR(82, "PVStor");

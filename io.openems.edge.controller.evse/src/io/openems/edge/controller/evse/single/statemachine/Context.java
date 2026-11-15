@@ -69,4 +69,5 @@ public class Context extends AbstractContext<ControllerEvseSingleImpl> {
 		this.applyAdjustedActions(b -> b //
 				.setApplyMinSetPoint());
 	}
+
 }

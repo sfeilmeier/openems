@@ -94,4 +94,5 @@ public class ContextCalculateSohParamTest {
 			assertEquals(this.expectedSohRaw, result.sohRaw(), 0.01f);
 		}
 	}
+
 }

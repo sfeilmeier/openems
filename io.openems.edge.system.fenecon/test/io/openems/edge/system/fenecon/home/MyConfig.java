@@ -59,4 +59,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public String relayId() {
 		return this.builder.relayId;
 	}
+
 }

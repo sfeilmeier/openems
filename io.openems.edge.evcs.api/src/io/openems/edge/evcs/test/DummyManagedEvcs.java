@@ -201,4 +201,5 @@ public class DummyManagedEvcs extends AbstractManagedEvcsComponent
 	public int getConfiguredMaximumHardwarePower() {
 		return this.maximumHardwarePower;
 	}
+
 }

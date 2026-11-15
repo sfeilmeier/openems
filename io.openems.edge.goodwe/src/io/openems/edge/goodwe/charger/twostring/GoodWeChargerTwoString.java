@@ -74,4 +74,5 @@ public interface GoodWeChargerTwoString extends OpenemsComponent, EssDcCharger, 
 		});
 		return Optional.ofNullable(result.get());
 	}
+
 }

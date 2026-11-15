@@ -126,4 +126,5 @@ class EnergySchedulerTest {
 			assertEquals(0, result.ef().getManagedConsumption(COMPONENT_ID));
 		}
 	}
+
 }

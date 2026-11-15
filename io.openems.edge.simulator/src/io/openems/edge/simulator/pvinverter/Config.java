@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String datasource_id();
 
 	String webconsole_configurationFactory_nameHint() default "Simulator PV-Inverter [{id}]";
+
 }

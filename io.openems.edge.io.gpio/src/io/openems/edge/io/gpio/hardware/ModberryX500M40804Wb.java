@@ -28,4 +28,5 @@ public final class ModberryX500M40804Wb extends ModBerryX500 {
 	public List<ChannelId> getAllChannelIds() {
 		return this.channels;
 	}
+
 }

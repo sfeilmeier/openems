@@ -112,4 +112,5 @@ public class ControllerAsymmetricBalancingCosPhiImpl extends AbstractOpenemsComp
 			this.logError(this.log, e.getMessage());
 		}
 	}
+
 }

@@ -244,4 +244,5 @@ public abstract class AbstractWorker {
 			this.thread.setPriority(newPriority);
 		}
 	}
+
 }

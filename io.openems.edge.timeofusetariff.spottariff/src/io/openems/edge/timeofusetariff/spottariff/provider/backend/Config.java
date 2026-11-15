@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int service_ranking() default 100;
 
 	String webconsole_configurationFactory_nameHint() default "Spot Tariff Backend [{id}]";
+
 }

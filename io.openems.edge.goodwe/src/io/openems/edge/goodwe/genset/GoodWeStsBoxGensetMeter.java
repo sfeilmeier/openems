@@ -10,6 +10,7 @@ import io.openems.edge.common.channel.value.Value;
 import io.openems.edge.common.component.OpenemsComponent;
 
 public interface GoodWeStsBoxGensetMeter extends OpenemsComponent {
+
 	public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 
 		BACKUP_POWER(Doc.of(OpenemsType.LONG)//
@@ -49,4 +50,5 @@ public interface GoodWeStsBoxGensetMeter extends OpenemsComponent {
 	public default Value<Boolean> getGensetOperatingMode() {
 		return this.getGensetOperatingModeChannel().value();
 	}
+
 }

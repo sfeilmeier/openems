@@ -187,4 +187,5 @@ public class TariffGridSellSpotTariffImpl extends AbstractTariffComponent implem
 	public BehaviorSubject<TariffUpdateStatus> getLastUpdateStatus() {
 		return this.updateStatus;
 	}
+
 }

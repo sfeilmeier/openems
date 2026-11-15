@@ -17,6 +17,7 @@ import io.openems.common.jsonrpc.serialization.JsonSerializerUtil;
 import io.openems.common.timedata.DurationUnit;
 
 public class TimeRangeValuesTest {
+
 	@Test
 	public void testTimeRangeValues() {
 		var start = instant("00:00:00");
@@ -119,4 +120,5 @@ public class TimeRangeValuesTest {
 			io.openems.common.utils.TimeRangeValues<T> dest, Instant sourceTime, Instant destTime) {
 		assertEquals(source.getAt(sourceTime), dest.getAt(destTime));
 	}
+
 }

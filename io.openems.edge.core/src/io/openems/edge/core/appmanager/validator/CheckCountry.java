@@ -60,4 +60,5 @@ public class CheckCountry extends AbstractCheckable implements Checkable {
 	public OpenemsNamedException getInvertedValidationError(Language language) {
 		return OpenemsError.EDGE_APP_VALIDATION_CHECK_COUNTRY.exception(language);
 	}
+
 }

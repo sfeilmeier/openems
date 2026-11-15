@@ -27,4 +27,5 @@ public class StateMachine extends AbstractStateMachine<EvseSingleState, Context>
 		case PHASE_SWITCH_TO_SINGLE_PHASE -> new PhaseSwitchHandler.ToSinglePhase();
 		};
 	}
+
 }

@@ -104,4 +104,5 @@ public class StateMachine extends AbstractStateMachine<StateMachine.State, Conte
 	public boolean isDischargeAllowed() {
 		return this.isDischargeAllowed;
 	}
+
 }

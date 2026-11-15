@@ -5,6 +5,7 @@ import io.openems.edge.core.appmanager.AbstractOpenemsApp;
 import io.openems.edge.core.appmanager.TranslationUtil;
 
 public enum ExternalLimitationType implements TranslatableEnum {
+
 	NO_LIMITATION("App.IntegratedSystem.externalLimitationType.noLimitation"), //
 	EXTERNAL_LIMITATION("App.IntegratedSystem.externalLimitationType.externalLimitation"), //
 	DYNAMIC_EXTERNAL_LIMITATION("App.IntegratedSystem.externalLimitationType.dynamicExternalLimitation"), //

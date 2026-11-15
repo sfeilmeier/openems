@@ -346,4 +346,5 @@ public class ControllerCleverPvImpl extends AbstractOpenemsComponent
 		}
 		return this.lastHttpResult + "|" + describePayload(this.lastSentData);
 	}
+
 }

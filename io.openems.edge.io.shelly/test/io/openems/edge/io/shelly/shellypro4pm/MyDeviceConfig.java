@@ -82,4 +82,5 @@ public class MyDeviceConfig extends AbstractComponentConfig implements DeviceCon
 	public DebugMode debugMode() {
 		return this.builder.debugMode;
 	}
+
 }

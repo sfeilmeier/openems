@@ -4,6 +4,7 @@ import io.openems.common.types.OptionsEnum;
 
 //default 0
 public enum Baudrate implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	B_19200(0, "19200"), //
 	B_9600(1, "9600"); //
@@ -30,4 +31,5 @@ public enum Baudrate implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

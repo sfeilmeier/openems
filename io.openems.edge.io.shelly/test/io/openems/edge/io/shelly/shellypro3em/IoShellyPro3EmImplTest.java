@@ -287,4 +287,5 @@ public class IoShellyPro3EmImplTest {
 						.output(ShellyEnergyMeter.ErrorChannelId.POWER_METER_FAILURE, false) //
 						.output(IoGen2ShellyBase.ChannelId.SLAVE_COMMUNICATION_FAILED, false));
 	}
+
 }

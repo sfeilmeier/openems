@@ -108,4 +108,5 @@ public class TouAncillaryCostsImpl extends AbstractOpenemsComponent implements T
 
 		return TimeOfUsePrices.from(finalPriceMap);
 	}
+
 }

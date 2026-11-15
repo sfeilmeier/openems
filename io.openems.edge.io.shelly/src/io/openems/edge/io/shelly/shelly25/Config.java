@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String ip();
 
 	String webconsole_configurationFactory_nameHint() default "IO Shelly 2.5 [{id}]";
+
 }

@@ -236,4 +236,5 @@ public class EssPowerImpl extends AbstractOpenemsComponent implements EssPower, 
 	public boolean isFilterEnabled() {
 		return this.config.enablePid() || this.config.enablePT1Filter();
 	}
+
 }

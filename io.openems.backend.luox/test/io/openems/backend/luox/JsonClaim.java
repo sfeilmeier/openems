@@ -94,4 +94,5 @@ public class JsonClaim implements Claim {
 			throw new RuntimeException(e);
 		}
 	}
+
 }

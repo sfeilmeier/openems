@@ -26,4 +26,5 @@ public class ShortSlidingValue extends AbstractNumberSlidingValue<Short> {
 			return Optional.of((short) value);
 		}
 	}
+
 }

@@ -29,6 +29,7 @@ import io.openems.edge.controller.api.backend.services.BackendConnectionStateLis
 
 @Component(service = CurrencyExchange.class)
 public class EdgeCurrencyExchange extends AbstractCurrencyExchange {
+
 	@Reference
 	protected BackendConnectionStateListener backendConnectionStateListener;
 

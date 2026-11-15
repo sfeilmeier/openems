@@ -218,6 +218,7 @@
     <module name="MissingOverrideOnRecordAccessor"/>
     <module name="JavadocEndCommentDelimiter"/>
     <module name="WhitespaceBeforeEmptyBody"/>
+    <module name="TypeBodyPadding"/>
   </module>
   <module name="LineLength">
     <property name="severity" value="ignore"/>

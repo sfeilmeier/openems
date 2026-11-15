@@ -90,4 +90,5 @@ public interface ControllerEvseSingle extends OpenemsComponent {
 	public default void _setSessionEnergy(int value) {
 		this.getSessionEnergyChannel().setNextValue(value);
 	}
+
 }

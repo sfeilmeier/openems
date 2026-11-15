@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum LoadMode implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ON(0, "ON,inverter connects to Load"), //
 	OFF(1, "OFF, inverter disconnects to Load"); //
@@ -29,4 +30,5 @@ public enum LoadMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

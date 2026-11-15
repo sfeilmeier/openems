@@ -311,4 +311,5 @@ public class ControllerIoChannelSingleThresholdImpl extends AbstractOpenemsCompo
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

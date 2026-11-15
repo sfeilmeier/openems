@@ -26,4 +26,5 @@ public class IntegerSlidingValue extends AbstractNumberSlidingValue<Integer> {
 			return Optional.of((int) value);
 		}
 	}
+
 }

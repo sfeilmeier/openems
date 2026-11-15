@@ -123,4 +123,5 @@ public class DiscovergyApiClient {
 					"Unable to read from Discovergy API. " + e.getClass().getSimpleName() + ": " + e.getMessage());
 		}
 	}
+
 }

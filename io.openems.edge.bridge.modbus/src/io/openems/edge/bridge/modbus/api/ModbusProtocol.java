@@ -87,4 +87,5 @@ public class ModbusProtocol {
 		this.taskManager.getTasks() //
 				.forEach(Task::deactivate);
 	}
+
 }

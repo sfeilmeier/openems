@@ -19,4 +19,5 @@ public class TrainingException extends Exception {
 	public TrainingError getError() {
 		return this.error;
 	}
+
 }

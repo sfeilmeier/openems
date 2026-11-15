@@ -61,4 +61,5 @@ public class BatteryProtectionDefinitionF2bTest {
 						.getForceChargeDischargeCurrent() //
 						.getAsInt());
 	}
+
 }

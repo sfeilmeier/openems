@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum FixPfSetting implements OptionsEnum {
+
 	UNDEFINED(100, "1 leading or none as there is no undefined value | Value could be set by AppCenter as default"), //
 	LAGGING_0_99(1, "0.99 lagging"), //
 	LAGGING_0_98(2, "0.98 lagging"), //
@@ -68,4 +69,5 @@ public enum FixPfSetting implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return LEADING_1_OR_NONE;
 	}
+
 }

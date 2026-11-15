@@ -3,6 +3,7 @@ package io.openems.edge.evse.chargepoint.hardybarth.cph2;
 import io.openems.common.types.OptionsEnum;
 
 public enum ChargePointStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	A(0, "No vehicle connected (A)"), //
 	B(1, "Vehicle connected, not charging (B)"), //
@@ -33,4 +34,5 @@ public enum ChargePointStatus implements OptionsEnum {
 	public ChargePointStatus getUndefined() {
 		return UNDEFINED;
 	}
+
 }

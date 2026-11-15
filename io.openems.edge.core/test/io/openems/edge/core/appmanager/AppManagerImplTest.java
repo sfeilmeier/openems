@@ -433,4 +433,5 @@ public class AppManagerImplTest {
 		assertFalse(checkable.check());
 		assertNotNull(checkable.getValidationError(Language.DEFAULT));
 	}
+
 }

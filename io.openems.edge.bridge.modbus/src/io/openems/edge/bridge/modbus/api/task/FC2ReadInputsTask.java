@@ -35,4 +35,5 @@ public class FC2ReadInputsTask
 	protected BitVector parseBitResponse(ReadInputDiscretesResponse response) {
 		return response.getDiscretes();
 	}
+
 }

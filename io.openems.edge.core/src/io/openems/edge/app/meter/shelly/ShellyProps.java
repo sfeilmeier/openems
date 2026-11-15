@@ -189,4 +189,5 @@ public class ShellyProps {
 
 		return BooleanExpression.or(expressions.toArray(BooleanExpression[]::new));
 	}
+
 }

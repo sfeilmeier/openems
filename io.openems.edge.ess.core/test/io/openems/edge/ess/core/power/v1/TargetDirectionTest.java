@@ -52,4 +52,5 @@ public class TargetDirectionTest {
 				TargetDirection.from(data.getInverters(), data.getCoefficients(),
 						data.getConstraintsForAllInverters()));
 	}
+
 }

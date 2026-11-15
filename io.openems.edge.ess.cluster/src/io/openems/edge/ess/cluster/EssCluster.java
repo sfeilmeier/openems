@@ -26,4 +26,5 @@ public interface EssCluster extends ManagedAsymmetricEss, AsymmetricEss, Managed
 			return this.doc;
 		}
 	}
+
 }

@@ -47,4 +47,5 @@ public class TimeOfDaySinCosFeatureTransformer<I> extends AbstractDataFrameTrans
 
 		return dataframe;
 	}
+
 }

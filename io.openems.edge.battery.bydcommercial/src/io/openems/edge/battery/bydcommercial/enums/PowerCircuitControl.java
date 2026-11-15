@@ -3,6 +3,7 @@ package io.openems.edge.battery.bydcommercial.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PowerCircuitControl implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	SWITCH_OFF(0x0, "Shut Down Main Power Contactor & Pre-charge"), //
 	PRE_CHARGING_1(0x1, "Intermediate State: Pre-charging"), //
@@ -32,4 +33,5 @@ public enum PowerCircuitControl implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

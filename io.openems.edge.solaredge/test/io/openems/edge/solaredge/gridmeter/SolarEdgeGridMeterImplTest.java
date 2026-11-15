@@ -24,4 +24,5 @@ public class SolarEdgeGridMeterImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

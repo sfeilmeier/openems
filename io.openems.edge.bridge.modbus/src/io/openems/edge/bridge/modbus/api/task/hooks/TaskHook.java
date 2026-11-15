@@ -8,6 +8,7 @@ import io.openems.edge.bridge.modbus.api.task.Task;
  * methods are executed in the modbus bridge thread and are blocking.
  */
 public abstract class TaskHook {
+
 	/**
 	 * Executed before the task is executed (e.g. before the modbus request is
 	 * sent).
@@ -38,4 +39,5 @@ public abstract class TaskHook {
 	 */
 	public void postExecute(AbstractModbusBridge bridge, Task task) {
 	}
+
 }

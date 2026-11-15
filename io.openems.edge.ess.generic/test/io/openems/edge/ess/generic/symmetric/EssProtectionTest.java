@@ -204,4 +204,5 @@ public class EssProtectionTest {
 		;//
 		assertEquals("Started|SoC:100 %|L:1608 W|Allowed:1608;92000", ess.debugLog());
 	}
+
 }

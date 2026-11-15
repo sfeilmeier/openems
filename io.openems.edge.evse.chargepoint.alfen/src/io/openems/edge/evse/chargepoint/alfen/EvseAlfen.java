@@ -244,4 +244,5 @@ public interface EvseAlfen extends EvseChargePoint, ElectricityMeter, OpenemsCom
 	public default void setSetPhases(int value) throws OpenemsNamedException {
 		this.getSetPhasesChannel().setNextWriteValue(value);
 	}
+
 }

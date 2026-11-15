@@ -142,4 +142,5 @@ public class HistoricalWeatherServiceTest {
 		assertTrue(url.contains("end_date=" + dateTo.toString()));
 		assertTrue(url.contains("minutely_15=" + String.join("%2C", QuarterlyWeatherVariables.ALL)));
 	}
+
 }

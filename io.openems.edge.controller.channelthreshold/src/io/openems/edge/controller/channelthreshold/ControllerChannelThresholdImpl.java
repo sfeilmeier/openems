@@ -280,4 +280,5 @@ public class ControllerChannelThresholdImpl extends AbstractOpenemsComponent
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

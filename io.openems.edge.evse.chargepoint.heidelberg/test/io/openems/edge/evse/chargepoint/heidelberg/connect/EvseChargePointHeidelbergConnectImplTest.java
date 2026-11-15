@@ -31,4 +31,5 @@ public class EvseChargePointHeidelbergConnectImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

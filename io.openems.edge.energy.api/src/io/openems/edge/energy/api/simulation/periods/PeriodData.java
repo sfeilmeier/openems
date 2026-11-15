@@ -5,6 +5,7 @@ import java.util.Optional;
 import io.openems.edge.energy.api.simulation.GlobalOptimizationContext;
 
 public class PeriodData {
+
 	private final int production;
 	private final Prediction consumption;
 	private final Price gridBuyPrice;
@@ -177,4 +178,5 @@ public class PeriodData {
 			double normalized, //
 			double positiveShifted) {
 	}
+
 }

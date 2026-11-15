@@ -170,4 +170,5 @@ public class AppSohCycle extends AbstractOpenemsAppWithProps<AppSohCycle, Proper
 	protected AppSohCycle getApp() {
 		return this;
 	}
+
 }

@@ -23,4 +23,5 @@ public class DummyManagedSymmetricPvInverter extends AbstractDummyOpenemsCompone
 	protected DummyManagedSymmetricPvInverter self() {
 		return this;
 	}
+
 }

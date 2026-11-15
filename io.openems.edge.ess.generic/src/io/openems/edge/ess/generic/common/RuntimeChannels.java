@@ -117,4 +117,5 @@ public interface RuntimeChannels extends OpenemsComponent {
 	default Value<Boolean> getCumulatedTimeFaultStateValue() {
 		return this.getCumulatedTimeFaultStateChannel().value();
 	}
+
 }

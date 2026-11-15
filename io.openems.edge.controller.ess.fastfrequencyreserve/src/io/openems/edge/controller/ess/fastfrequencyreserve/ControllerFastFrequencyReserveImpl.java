@@ -306,4 +306,5 @@ public class ControllerFastFrequencyReserveImpl extends AbstractOpenemsComponent
 		}
 		this.updateConfig(request);
 	}
+
 }

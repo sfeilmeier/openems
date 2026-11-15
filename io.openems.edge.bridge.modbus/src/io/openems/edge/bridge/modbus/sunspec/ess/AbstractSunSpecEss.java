@@ -80,4 +80,5 @@ public abstract class AbstractSunSpecEss extends AbstractOpenemsSunSpecComponent
 	protected <T extends Channel<?>> T getSunSpecChannelOrError(SunSpecPoint point) throws OpenemsException {
 		return super.getSunSpecChannelOrError(point);
 	}
+
 }

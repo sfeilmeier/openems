@@ -215,4 +215,5 @@ public class EvcsOcppIesKeywattSingleImpl extends AbstractManagedOcppEvcsCompone
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

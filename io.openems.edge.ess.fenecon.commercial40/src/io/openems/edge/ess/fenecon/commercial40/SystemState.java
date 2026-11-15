@@ -3,6 +3,7 @@ package io.openems.edge.ess.fenecon.commercial40;
 import io.openems.common.types.OptionsEnum;
 
 public enum SystemState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	STARTING(2, "Stop"), //
 	PV_CHARGE(4, "PV-Charge"), //
@@ -33,4 +34,5 @@ public enum SystemState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -173,4 +173,5 @@ public class KacoBlueplanetHybrid10GridMeterImpl extends AbstractOpenemsComponen
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

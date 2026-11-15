@@ -61,4 +61,5 @@ public class Context extends AbstractContext<ControllerFastFrequencyReserveImpl>
 		this.parentController.setLastTriggeredTime(formattedDateTime);
 		_cycleStart = cycleStart;
 	}
+
 }

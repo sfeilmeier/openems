@@ -40,4 +40,5 @@ public class KebaTest {
 				.output(Keba.ChannelId.SET_TRIGGER_PHASE_SWITCH, TriggerPhaseSwitch.UNDEFINED) //
 		;
 	}
+
 }

@@ -36,4 +36,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 		super(Config.class, builder.id);
 		this.builder = builder;
 	}
+
 }

@@ -1,6 +1,7 @@
 package io.openems.edge.bridge.modbus.api;
 
 public enum LogVerbosity {
+
 	/**
 	 * Show no logs.
 	 */
@@ -28,4 +29,5 @@ public enum LogVerbosity {
 	 * request & trace the internal Event-based State-Machine.
 	 */
 	READS_AND_WRITES_DURATION_TRACE_EVENTS;
+
 }

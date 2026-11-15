@@ -121,4 +121,5 @@ class EvseAlpitronicModbusTest {
 						.setMinHwPower(5_000) //
 						.build());
 	}
+
 }

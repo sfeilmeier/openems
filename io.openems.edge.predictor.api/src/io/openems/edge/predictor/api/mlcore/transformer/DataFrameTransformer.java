@@ -11,4 +11,5 @@ public interface DataFrameTransformer<I> extends Transformer<I> {
 	 * @return the transformed DataFrame
 	 */
 	public DataFrame<I> transform(DataFrame<I> dataframe);
+
 }

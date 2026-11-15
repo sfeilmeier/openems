@@ -141,4 +141,5 @@ public class GetOneTasks<PAYLOAD> implements EndpointRequestType<Request, Respon
 							.build());
 		}
 	}
+
 }

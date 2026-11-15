@@ -18,4 +18,5 @@ public class WithinUpperTargetSocBoundariesHandler extends StateHandler<State, C
 
 		return Context.getSocState(context.soc, context.targetSoc);
 	}
+
 }

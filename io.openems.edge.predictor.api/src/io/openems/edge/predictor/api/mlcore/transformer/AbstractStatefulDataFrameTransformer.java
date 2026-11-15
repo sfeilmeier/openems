@@ -19,4 +19,5 @@ public abstract class AbstractStatefulDataFrameTransformer<I> extends AbstractDa
 	}
 
 	protected abstract void safeFit(DataFrame<I> dataframe);
+
 }

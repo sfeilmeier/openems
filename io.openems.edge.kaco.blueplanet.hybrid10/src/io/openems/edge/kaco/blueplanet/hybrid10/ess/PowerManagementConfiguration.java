@@ -3,6 +3,7 @@ package io.openems.edge.kaco.blueplanet.hybrid10.ess;
 import io.openems.common.types.OptionsEnum;
 
 public enum PowerManagementConfiguration implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	EXTERNAL_EMS(0, "External EMS"), //
 	BATTERY_CHARGING(1, "Battery Charging"), //
@@ -31,4 +32,5 @@ public enum PowerManagementConfiguration implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

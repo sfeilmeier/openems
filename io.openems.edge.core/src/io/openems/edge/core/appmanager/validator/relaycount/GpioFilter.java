@@ -19,4 +19,5 @@ public class GpioFilter implements CheckRelayCountFilter {
 	public RelayProps.RelayContactFilter apply() {
 		return gpioFilter();
 	}
+
 }

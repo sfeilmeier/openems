@@ -44,4 +44,5 @@ public class SignedWordElementTest {
 		var registers = sut.element.getNextWriteValueAndReset();
 		assertArrayEquals(new byte[] { (byte) 0x34, (byte) 0x12 }, registers[0].toBytes());
 	}
+
 }

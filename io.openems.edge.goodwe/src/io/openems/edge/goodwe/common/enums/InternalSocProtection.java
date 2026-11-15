@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum InternalSocProtection implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ENABLE(0, "Enable"), //
 	DISABLE(1, "Disable");
@@ -29,4 +30,5 @@ public enum InternalSocProtection implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

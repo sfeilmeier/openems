@@ -6,6 +6,7 @@ import io.openems.common.jsonrpc.syncable.SyncableEntry;
 import io.openems.common.utils.BehaviorSubject;
 
 public class SyncableUtils {
+
 	private SyncableUtils() {
 	}
 
@@ -40,4 +41,5 @@ public class SyncableUtils {
 
 		return null;
 	}
+
 }

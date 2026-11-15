@@ -159,4 +159,5 @@ public interface OffGridBatteryInverter
 	 * @param targetGridMode the {@link TargetGridMode}
 	 */
 	public void setTargetGridMode(TargetGridMode targetGridMode);
+
 }

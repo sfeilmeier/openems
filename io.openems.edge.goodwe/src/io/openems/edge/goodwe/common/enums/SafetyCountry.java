@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum SafetyCountry implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ITALY(0, "Italy"), //
 	CZECH(1, "CZECH"), //
@@ -116,4 +117,5 @@ public enum SafetyCountry implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

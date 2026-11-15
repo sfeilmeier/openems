@@ -110,4 +110,5 @@ public class EntsoeTariffProvider implements SpotTariffProvider {
 			EntsoeTariffProvider.this.onTariffUnload(instance);
 		}
 	}
+
 }

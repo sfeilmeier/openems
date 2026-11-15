@@ -54,4 +54,5 @@ public interface GoodWeCharger extends EssDcCharger, OpenemsComponent {
 	public default void _setHasNoDcPv(Boolean value) {
 		this.getHasNoDcPvChannel().setNextValue(value);
 	}
+
 }

@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String port() default "USB1";
 
 	String webconsole_configurationFactory_nameHint() default "Bridge OneWire [{id}]";
+
 }

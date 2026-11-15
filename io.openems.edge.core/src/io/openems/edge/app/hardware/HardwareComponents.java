@@ -98,4 +98,5 @@ public final class HardwareComponents {
 						.build()),
 				ComponentDef.Configuration.defaultConfig());
 	}
+
 }

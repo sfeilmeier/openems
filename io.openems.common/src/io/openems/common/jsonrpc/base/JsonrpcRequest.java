@@ -139,4 +139,5 @@ public abstract non-sealed class JsonrpcRequest extends AbstractJsonrpcRequest {
 		}
 		return builder.build();
 	}
+
 }

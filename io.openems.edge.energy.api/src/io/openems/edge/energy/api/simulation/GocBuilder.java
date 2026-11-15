@@ -41,6 +41,7 @@ import io.openems.edge.timeofusetariff.api.TariffManager;
 import io.openems.edge.timeofusetariff.api.TimeOfUsePrices;
 
 public class GocBuilder {
+
 	private final Logger log = LoggerFactory.getLogger(GocBuilder.class);
 	private final LogVerbosity logVerbosity;
 
@@ -288,4 +289,5 @@ public class GocBuilder {
 		case TRACE -> this.log.info("OPTIMIZER {}", message);
 		}
 	}
+
 }

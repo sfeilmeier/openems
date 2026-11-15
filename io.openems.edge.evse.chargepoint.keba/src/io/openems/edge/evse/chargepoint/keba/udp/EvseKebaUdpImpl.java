@@ -232,4 +232,5 @@ public class EvseKebaUdpImpl extends AbstractOpenemsComponent implements KebaUdp
 	public boolean isReadOnly() {
 		return this.config.readOnly();
 	}
+
 }

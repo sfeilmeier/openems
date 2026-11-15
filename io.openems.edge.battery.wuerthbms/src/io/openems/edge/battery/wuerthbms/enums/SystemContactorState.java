@@ -37,4 +37,5 @@ public enum SystemContactorState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

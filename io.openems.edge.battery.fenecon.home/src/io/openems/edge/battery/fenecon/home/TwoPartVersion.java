@@ -110,4 +110,5 @@ public record TwoPartVersion(int major, int minor) {
 	public String toString() {
 		return this.major + "." + this.minor;
 	}
+
 }

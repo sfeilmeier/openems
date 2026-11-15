@@ -76,4 +76,5 @@ public interface FeneconDessEss extends AsymmetricEss, SymmetricEss, OpenemsComp
 			return this.doc;
 		}
 	}
+
 }

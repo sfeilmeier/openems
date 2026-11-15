@@ -102,4 +102,5 @@ public class PostgresHandler {
 	protected void logError(Logger log, String message) {
 		this.parent.logError(log, message);
 	}
+
 }

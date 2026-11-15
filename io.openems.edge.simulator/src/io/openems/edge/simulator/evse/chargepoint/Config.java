@@ -44,4 +44,5 @@ import io.openems.edge.meter.api.PhaseRotation;
 	PhaseRotation phaseRotation() default PhaseRotation.L1_L2_L3;
 
 	String webconsole_configurationFactory_nameHint() default "Simulator EVSE Charge-Point [{id}]";
+
 }

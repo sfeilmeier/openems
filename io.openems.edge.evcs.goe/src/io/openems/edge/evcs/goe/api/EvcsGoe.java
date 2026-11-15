@@ -14,6 +14,7 @@ import io.openems.edge.evcs.api.Evcs;
 import io.openems.edge.meter.api.ElectricityMeter;
 
 public interface EvcsGoe extends Evcs, ElectricityMeter, OpenemsComponent {
+
     public enum ChannelId implements io.openems.edge.common.channel.ChannelId {
 
         ERROR(Doc.of(Level.FAULT) //

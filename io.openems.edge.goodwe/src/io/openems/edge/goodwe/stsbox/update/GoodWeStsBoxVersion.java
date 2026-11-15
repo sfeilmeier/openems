@@ -38,4 +38,5 @@ public record GoodWeStsBoxVersion(//
 	public String toString() {
 		return String.format("%d.%d", this.firmwareVersion(), this.firmwareSubVersion());
 	}
+
 }

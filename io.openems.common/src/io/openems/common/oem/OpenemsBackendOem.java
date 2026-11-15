@@ -36,4 +36,5 @@ public interface OpenemsBackendOem {
 	public default String anonymizeEdgeComment(AbstractUser user, String comment, String edgeId) {
 		return comment;
 	}
+
 }

@@ -1174,4 +1174,5 @@ public interface BatteryFeneconF2bBmw
 	public default void setHvContactor(boolean value) throws OpenemsNamedException {
 		this.getHvContactorChannel().setNextWriteValue(value);
 	}
+
 }

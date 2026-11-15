@@ -443,4 +443,5 @@ public class ControllerEssFixActivePowerImpl extends AbstractOpenemsComponent
 	public EnergyScheduleHandler getEnergyScheduleHandler() {
 		return this.energyScheduleHandler;
 	}
+
 }

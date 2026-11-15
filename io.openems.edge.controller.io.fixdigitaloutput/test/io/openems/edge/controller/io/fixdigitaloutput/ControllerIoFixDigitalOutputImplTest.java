@@ -34,4 +34,5 @@ public class ControllerIoFixDigitalOutputImplTest {
 						.output("io0", INPUT_OUTPUT0, on)) //
 				.deactivate();
 	}
+
 }

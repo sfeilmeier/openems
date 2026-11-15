@@ -5,6 +5,7 @@ package io.openems.edge.app.enums;
  *
  */
 public enum Parity {
+
 	NONE, //
 	ODD, //
 	EVEN, //

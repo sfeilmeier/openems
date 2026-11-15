@@ -146,4 +146,5 @@ public class TestClient extends AbstractWebsocketClient<WsData> implements AutoC
 	protected void execute(Runnable command) {
 		command.run();
 	}
+
 }

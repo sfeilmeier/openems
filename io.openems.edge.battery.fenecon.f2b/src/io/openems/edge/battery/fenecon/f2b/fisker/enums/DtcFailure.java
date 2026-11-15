@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum DtcFailure {
+
 	// No Error
 	NO_ERROR(0, "System", "No Error", ""), //
 
@@ -471,4 +472,5 @@ public enum DtcFailure {
 		return Arrays.stream(DtcFailure.values())
 				.collect(Collectors.toUnmodifiableMap(DtcFailure::getCode, DtcFailure::getFormattedMessage));
 	}
+
 }

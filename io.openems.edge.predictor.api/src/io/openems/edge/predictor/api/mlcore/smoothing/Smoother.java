@@ -9,4 +9,5 @@ public interface Smoother {
 	 * @return the smoothed values
 	 */
 	double[] smooth(double[] values);
+
 }

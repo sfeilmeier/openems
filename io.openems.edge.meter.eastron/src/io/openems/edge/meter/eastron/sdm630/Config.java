@@ -35,4 +35,5 @@ import io.openems.edge.meter.api.PhaseRotation;
 	PhaseRotation phaseRotation() default PhaseRotation.L1_L2_L3;
 
 	String webconsole_configurationFactory_nameHint() default "Meter Eastron SDM 630 / SDM72D-M-2 [{id}]";
+
 }

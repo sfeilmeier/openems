@@ -132,4 +132,5 @@ class ControllerHeatingElementImplStepTest {
 		assertEquals(2 * POWER_PER_PHASE, sut.getNominalLevelPower(Level.LEVEL_2));
 		assertEquals(3 * POWER_PER_PHASE, sut.getNominalLevelPower(Level.LEVEL_3));
 	}
+
 }

@@ -438,4 +438,5 @@ public class TimeOfUseTariffGroupeImplTest {
 			parsePrices("", GROUPE_E_EXCHANGE_RATE);
 		});
 	}
+
 }

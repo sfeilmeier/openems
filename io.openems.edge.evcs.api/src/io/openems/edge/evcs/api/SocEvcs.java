@@ -95,4 +95,5 @@ public interface SocEvcs extends Evcs {
 				.channel(0, ChannelId.SOC, ModbusType.UINT16) //
 				.build();
 	}
+
 }

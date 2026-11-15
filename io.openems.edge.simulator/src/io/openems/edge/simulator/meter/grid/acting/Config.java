@@ -28,4 +28,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String startTime() default "2024-01-29 20:12:00";
 
 	String webconsole_configurationFactory_nameHint() default "Simulator GridMeter Acting [{id}]";
+
 }

@@ -125,6 +125,7 @@ public class ControllerGenericJsonLogicImpl extends AbstractOpenemsComponent
 			channel.setNextWriteValueFromObject(value);
 		}
 	}
+
 }
 
 // TODO: once gson version 2.8.6 or higher is compatible with OSGi on Java 8: use json-logic library

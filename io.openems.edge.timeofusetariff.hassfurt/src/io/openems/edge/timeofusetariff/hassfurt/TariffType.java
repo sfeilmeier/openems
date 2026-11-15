@@ -1,6 +1,7 @@
 package io.openems.edge.timeofusetariff.hassfurt;
 
 public enum TariffType {
+
 	/**
 	 * haStrom Flex.
 	 */
@@ -10,4 +11,5 @@ public enum TariffType {
 	 * haStrom Flex Pro.
 	 */
 	STROM_FLEX_PRO
+
 }

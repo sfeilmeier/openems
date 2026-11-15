@@ -31,4 +31,5 @@ class RemainingHeatEnergyCalculatorTest {
 	void returnsZeroWhenActualTemperatureExceedsTargetTemperature() {
 		assertEquals(0, RemainingHeatEnergyCalculator.calculate(400, 710, 700));
 	}
+
 }

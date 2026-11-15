@@ -28,4 +28,5 @@ public class FroniusGen24BatteryImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

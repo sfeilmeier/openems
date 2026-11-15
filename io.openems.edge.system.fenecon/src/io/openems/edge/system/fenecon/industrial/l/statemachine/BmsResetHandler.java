@@ -11,6 +11,7 @@ import io.openems.edge.common.statemachine.StateHandler;
 import io.openems.edge.system.fenecon.industrial.l.statemachine.StateMachine.State;
 
 public class BmsResetHandler extends StateHandler<State, Context> {
+
 	protected ErrorState errorState;
 	private final Timeout timeout = Timeout.ofSeconds(15);
 	private final Logger log = LoggerFactory.getLogger(BmsResetHandler.class);
@@ -84,4 +85,5 @@ public class BmsResetHandler extends StateHandler<State, Context> {
 	protected String debugLog() {
 		return State.BMS_RESET.asCamelCase() + "-" + EnumUtils.nameAsCamelCase(this.errorState.subState);
 	}
+
 }

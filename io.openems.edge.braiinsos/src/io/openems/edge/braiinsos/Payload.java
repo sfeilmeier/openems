@@ -45,4 +45,5 @@ public sealed interface Payload {
 			return polymorphicSerializer.serialize(obj);
 		});
 	}
+
 }

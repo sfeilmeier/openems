@@ -38,4 +38,5 @@ import io.openems.edge.meter.api.PhaseRotation;
 	LogVerbosity logVerbosity() default LogVerbosity.DEBUG_LOG;
 
 	String webconsole_configurationFactory_nameHint() default "EVCS KEBA KeContact [{id}]";
+
 }

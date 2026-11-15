@@ -110,4 +110,5 @@ public class ContextCalculateCellVoltageDeltaParamTest {
         assertEquals("Error should match for min=" + this.minVoltage + ", max=" + this.maxVoltage,
                 this.expectedError, result.error());
     }
+
 }

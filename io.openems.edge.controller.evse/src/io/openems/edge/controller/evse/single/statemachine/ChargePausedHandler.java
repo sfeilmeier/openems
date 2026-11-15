@@ -35,4 +35,5 @@ public class ChargePausedHandler extends StateHandler<EvseSingleState, Context> 
 		context.applyAdjustedActions(a -> a.setCorrectApplySetPointByWatt(0));
 		return EvseSingleState.CHARGE_PAUSED;
 	}
+
 }

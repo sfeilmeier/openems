@@ -3,6 +3,7 @@ package io.openems.edge.ess.generic.symmetric.essfaultbehaviour;
 import io.openems.edge.ess.generic.symmetric.statemachine.Context;
 
 public enum EssFaultBehaviourConfig {
+
 	CHECK_ALL(new CheckAllEssFaultBehaviour()), //
 	IGNORE_BATTERY_INVERTER_ERRORS(new IgnoreBatteryInverterEssFaultBehaviour()), //
 	;

@@ -3,6 +3,7 @@ package io.openems.edge.common.channel.dynamicdoctext;
 import io.openems.common.utils.TextProvider;
 
 public interface NumberChannelParameterProvider<V extends Number> extends ParameterProvider {
+
 	/**
 	 * Maps numbers that are between the specified min and max ranges (min <= value
 	 * <= max) to a text.
@@ -58,4 +59,5 @@ public interface NumberChannelParameterProvider<V extends Number> extends Parame
 	 * @return myself
 	 */
 	public NumberChannelParameterProvider<V> defaultText(TextProvider text);
+
 }

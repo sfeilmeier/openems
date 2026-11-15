@@ -39,4 +39,5 @@ import io.openems.edge.common.type.Phase.SinglePhase;
 	GridMode gridMode() default GridMode.ON_GRID;
 
 	String webconsole_configurationFactory_nameHint() default "Simulator EssSinglePhase Reacting [{id}]";
+
 }

@@ -28,6 +28,7 @@ import io.openems.edge.controller.api.backend.api.DataFetchType;
 import io.openems.edge.controller.api.backend.services.BackendConnectionStateListener;
 
 class EdgeCurrencyExchangeTest {
+
 	private final BehaviorSubject<DataFetchType> dataFetchType = new BehaviorSubject<>(DataFetchType.WAITING);
 	private CurrencyExchangeApi currencyExchangeApi;
 	private SyncableRepository syncableRepository;
@@ -113,4 +114,5 @@ class EdgeCurrencyExchangeTest {
 		verify(this.currencyExchangeApi, only()).getExchangeRates();
 		assertFalse(this.currencyExchange.getAllExchangeRates().isEmpty());
 	}
+
 }

@@ -152,4 +152,5 @@ public class MeterSiemensPac2200Impl extends AbstractOpenemsModbusComponent
 				ElectricityMeter.getModbusSlaveNatureTable(accessMode) //
 		);
 	}
+
 }

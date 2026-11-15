@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum F2bState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	INIT(0, "Init"), //
 	WAIT_FOR_VALID_TIMESTAMP(1, "Wait for valid timestamp"), //
@@ -33,4 +34,5 @@ public enum F2bState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

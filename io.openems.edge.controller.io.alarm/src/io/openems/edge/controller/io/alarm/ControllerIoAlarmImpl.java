@@ -80,4 +80,5 @@ public class ControllerIoAlarmImpl extends AbstractOpenemsComponent
 			outputChannel.setNextWriteValue(setOutput);
 		}
 	}
+
 }

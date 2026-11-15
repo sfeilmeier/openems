@@ -19,4 +19,5 @@ public class SimulatorPvInverterImplTest {
 				// .next(new TestCase()); // TODO requires DummyDatasource
 				.deactivate();
 	}
+
 }

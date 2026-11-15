@@ -150,4 +150,5 @@ public class TimeOfUseTariffEwsImpl extends AbstractOpenemsComponent
 
 		this.logWarn(this.log, "Unable to Update Entsoe Time-Of-Use Price: " + error.getMessage());
 	}
+
 }

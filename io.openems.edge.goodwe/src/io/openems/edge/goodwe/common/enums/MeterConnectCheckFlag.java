@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum MeterConnectCheckFlag implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	STOP(0, "Stop Checking"), //
 	CHECKING(1, "Checking"), //
@@ -30,4 +31,5 @@ public enum MeterConnectCheckFlag implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

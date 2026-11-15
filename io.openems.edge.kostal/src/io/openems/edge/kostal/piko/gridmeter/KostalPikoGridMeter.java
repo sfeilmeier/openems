@@ -19,4 +19,5 @@ public interface KostalPikoGridMeter extends ElectricityMeter, OpenemsComponent 
 			return this.doc;
 		}
 	}
+
 }

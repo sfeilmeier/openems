@@ -585,4 +585,5 @@ public class EvcsAlpitronicImpl extends AbstractOpenemsModbusComponent
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

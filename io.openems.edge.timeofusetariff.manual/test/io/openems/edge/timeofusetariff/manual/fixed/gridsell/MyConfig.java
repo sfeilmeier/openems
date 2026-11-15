@@ -47,4 +47,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public double fixedGridSellPrice() {
 		return this.builder.fixedGridSellPrice;
 	}
+
 }

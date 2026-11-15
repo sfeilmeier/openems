@@ -74,4 +74,5 @@ public class SchedulerAllAlphabeticallyImpl extends AbstractOpenemsComponent
 
 		return result;
 	}
+
 }

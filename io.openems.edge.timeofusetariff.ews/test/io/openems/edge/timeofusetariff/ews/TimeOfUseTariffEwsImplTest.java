@@ -44,4 +44,5 @@ public class TimeOfUseTariffEwsImplTest {
 						.output(TimeOfUseTariffEws.ChannelId.STATUS_SERVER_ERROR, false)) //
 				.deactivate();
 	}
+
 }

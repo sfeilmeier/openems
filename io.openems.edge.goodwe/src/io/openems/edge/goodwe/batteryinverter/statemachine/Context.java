@@ -13,4 +13,5 @@ public class Context extends AbstractContext<GoodWeBatteryInverterImpl> {
 		super(parent);
 		this.clock = clock;
 	}
+
 }

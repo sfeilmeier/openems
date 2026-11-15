@@ -32,4 +32,5 @@ public enum RuntimeControlMode implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

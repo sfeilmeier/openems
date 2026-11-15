@@ -426,4 +426,5 @@ final class SchedulePeriodsFactory {
 			}
 		}
 	}
+
 }

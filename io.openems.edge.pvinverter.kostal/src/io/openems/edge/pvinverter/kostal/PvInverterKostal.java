@@ -26,4 +26,5 @@ public interface PvInverterKostal extends SunSpecPvInverter, ManagedSymmetricPvI
 			return this.doc;
 		}
 	}
+
 }

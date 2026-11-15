@@ -30,4 +30,5 @@ public class LazyContextLogger extends PrefixedLogger {
 		}
 		return "[" + contextValue + "] " + format;
 	}
+
 }

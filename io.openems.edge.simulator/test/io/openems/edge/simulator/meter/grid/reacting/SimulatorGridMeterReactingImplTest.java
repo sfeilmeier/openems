@@ -19,4 +19,5 @@ public class SimulatorGridMeterReactingImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

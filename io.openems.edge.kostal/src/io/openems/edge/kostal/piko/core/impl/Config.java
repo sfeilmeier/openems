@@ -27,4 +27,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int port() default 81;
 
 	String webconsole_configurationFactory_nameHint() default "KOSTAL PIKO CORE[{id}]";
+
 }

@@ -97,4 +97,5 @@ public class GetAllTasks<PAYLOAD> implements EndpointRequestType<EmptyObject, Re
 							.build());
 		}
 	}
+
 }

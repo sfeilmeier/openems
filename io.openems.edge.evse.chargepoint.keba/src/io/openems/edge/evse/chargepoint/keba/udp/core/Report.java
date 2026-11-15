@@ -1,6 +1,7 @@
 package io.openems.edge.evse.chargepoint.keba.udp.core;
 
 public enum Report {
+
 	REPORT1(200), REPORT2(50), REPORT3(10);
 
 	private int requestSeconds;
@@ -16,4 +17,5 @@ public enum Report {
 	public void setRequestSeconds(int requestSeconds) {
 		this.requestSeconds = requestSeconds;
 	}
+
 }

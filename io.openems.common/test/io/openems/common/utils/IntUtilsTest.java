@@ -104,4 +104,5 @@ public class IntUtilsTest {
 			assertEquals(42, result);
 		}
 	}
+
 }

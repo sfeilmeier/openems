@@ -34,6 +34,7 @@ import io.openems.edge.evse.api.chargepoint.Profile;
 import io.openems.edge.evse.api.common.ApplyPhaseSwitch;
 
 public class EvsePowerDistributionManager {
+
 	private final Logger log = LoggerFactory.getLogger(EvsePowerDistributionManager.class);
 
 	private final List<Params> allParams;
@@ -397,4 +398,5 @@ public class EvsePowerDistributionManager {
 		Duration getCheckDuration();
 
 	}
+
 }

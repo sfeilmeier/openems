@@ -43,4 +43,5 @@ public abstract class ModbusSerialListenerMock extends ModbusSerialListener {
 	}
 
 	protected abstract ModbusResponse handle(ModbusRequest request) throws Exception;
+
 }

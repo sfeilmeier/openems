@@ -55,4 +55,5 @@ public class CalculateEvcsClusterStatus {
 		}
 		return result;
 	}
+
 }

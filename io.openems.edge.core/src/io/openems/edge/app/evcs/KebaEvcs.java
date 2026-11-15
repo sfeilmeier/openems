@@ -424,4 +424,5 @@ public class KebaEvcs extends AbstractOpenemsAppWithProps<KebaEvcs, Property, Pa
 	public List<EMobilityArchitectureType> supportedArchitectureTypes() {
 		return List.of(EMobilityArchitectureType.EVCS, EMobilityArchitectureType.EVSE);
 	}
+
 }

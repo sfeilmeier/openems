@@ -71,4 +71,5 @@ public class ReadWorkerTest {
 		int result = ReadWorker.getCycleTimeLogic(lastReport1, lastReport2, lastReport3, reference);
 		assertEquals(1000, result);
 	}
+
 }

@@ -69,4 +69,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int targetGridSetpoint() {
 		return this.builder.targetGridSetpoint;
 	}
+
 }

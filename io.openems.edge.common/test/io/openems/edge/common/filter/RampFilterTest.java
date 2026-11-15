@@ -29,4 +29,5 @@ class RampFilterTest {
 
 		assertEquals(1000, sut.getFilteredValueAsInteger(1000f, 10f));
 	}
+
 }

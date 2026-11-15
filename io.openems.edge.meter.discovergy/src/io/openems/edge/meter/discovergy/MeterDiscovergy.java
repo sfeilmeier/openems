@@ -45,4 +45,5 @@ public interface MeterDiscovergy extends ElectricityMeter, OpenemsComponent, Eve
 			return this.doc;
 		}
 	}
+
 }

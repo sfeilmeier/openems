@@ -18,4 +18,5 @@ public interface IoFilipowskiMrAo1 extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

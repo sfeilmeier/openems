@@ -19,6 +19,7 @@ import io.openems.common.jsonrpc.syncable.SyncableKey;
 import io.openems.common.utils.BehaviorSubject;
 
 public class SubscriptionHandler<T> {
+
 	private final Logger log = LoggerFactory.getLogger(SubscriptionHandler.class);
 
 	private static final int SECONDS_TO_WAIT_BEFORE_RETRY_AFTER_SUBSCRIBE_ERROR = 30;
@@ -188,4 +189,5 @@ public class SubscriptionHandler<T> {
 			return this.attachedSubscriptions.size();
 		}
 	}
+
 }

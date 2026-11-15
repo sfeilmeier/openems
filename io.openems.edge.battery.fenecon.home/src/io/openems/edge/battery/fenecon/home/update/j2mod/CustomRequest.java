@@ -9,6 +9,7 @@ import com.ghgande.j2mod.modbus.msg.ModbusResponse;
 import com.ghgande.j2mod.modbus.net.AbstractModbusListener;
 
 public abstract class CustomRequest extends ModbusRequest {
+
 	@Override
 	public ModbusResponse createResponse(AbstractModbusListener listener) {
 		throw new UnsupportedOperationException();
@@ -31,4 +32,5 @@ public abstract class CustomRequest extends ModbusRequest {
 	public String toString() {
 		return this.getClass().getSimpleName();
 	}
+
 }

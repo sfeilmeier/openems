@@ -22,4 +22,5 @@ public interface Classifier {
 	 * @return the predicted label as an integer
 	 */
 	public int predict(List<Double> features);
+
 }

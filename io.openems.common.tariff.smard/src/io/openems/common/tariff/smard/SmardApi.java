@@ -39,6 +39,7 @@ import io.openems.common.utils.DateUtils;
 import io.openems.common.utils.TimeRangeValues;
 
 public class SmardApi implements HttpBridgeService {
+
 	/**
 	 * SMARD is providing new values after this hour of the day. This hour is not
 	 * guaranteed. It's not in any documentation, it's just observed behavior.
@@ -240,4 +241,5 @@ public class SmardApi implements HttpBridgeService {
 			this.currentSubscriptionFuture = null;
 		}
 	}
+
 }

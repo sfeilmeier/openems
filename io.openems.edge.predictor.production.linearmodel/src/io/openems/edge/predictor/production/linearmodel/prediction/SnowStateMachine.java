@@ -199,4 +199,5 @@ public class SnowStateMachine {
 	void setSnowStart(ZonedDateTime snowStart) {
 		this.snowStart = snowStart;
 	}
+
 }

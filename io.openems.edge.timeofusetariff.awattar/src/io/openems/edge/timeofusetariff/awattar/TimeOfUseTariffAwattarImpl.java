@@ -163,4 +163,5 @@ public class TimeOfUseTariffAwattarImpl extends AbstractOpenemsComponent
 	public String debugLog() {
 		return generateDebugLog(this, this.meta.getCurrency());
 	}
+
 }

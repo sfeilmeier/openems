@@ -61,4 +61,5 @@ public class TestStatic {
 		// Null input
 		assertNull(BatteryFeneconHomeImpl.parseEmsOffGrid(null));
 	}
+
 }

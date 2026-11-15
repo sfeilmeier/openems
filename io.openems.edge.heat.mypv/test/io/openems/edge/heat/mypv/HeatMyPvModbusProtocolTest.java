@@ -121,4 +121,5 @@ class HeatMyPvModbusProtocolTest {
 				writableSut.channel(ManagedHeatElement.ChannelId.TARGET_ACTIVE_POWER).getMetaInfo());
 		writableSut.deactivate();
 	}
+
 }

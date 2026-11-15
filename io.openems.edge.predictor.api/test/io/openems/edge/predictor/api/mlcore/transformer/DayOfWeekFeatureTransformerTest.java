@@ -33,4 +33,5 @@ public class DayOfWeekFeatureTransformerTest {
 		assertEquals(index, dowColumn.getIndex());
 		assertEquals(Arrays.asList(1.0, 2.0, 3.0), dowColumn.getValues());
 	}
+
 }

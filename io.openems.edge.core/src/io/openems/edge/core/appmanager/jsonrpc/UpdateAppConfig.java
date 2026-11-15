@@ -106,4 +106,5 @@ public class UpdateAppConfig implements EndpointRequestType<Request, Response> {
 					});
 		}
 	}
+
 }

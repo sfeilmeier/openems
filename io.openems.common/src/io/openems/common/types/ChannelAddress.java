@@ -119,4 +119,5 @@ public class ChannelAddress implements Comparable<ChannelAddress> {
 			return componentIdMatch + channelIdMatch;
 		}
 	}
+
 }

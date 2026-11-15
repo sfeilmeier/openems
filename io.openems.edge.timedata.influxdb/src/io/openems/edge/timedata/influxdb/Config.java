@@ -51,4 +51,5 @@ import io.openems.shared.influxdb.QueryLanguageConfig;
 	PersistencePriority persistencePriority() default PersistencePriority.MEDIUM;
 
 	String webconsole_configurationFactory_nameHint() default "Timedata InfluxDB [{id}]";
+
 }

@@ -13,4 +13,5 @@ public class WriteChannelId extends AbstractGpioChannel implements ChannelId {
 				.accessMode(AccessMode.READ_WRITE)//
 				.persistencePriority(PersistencePriority.HIGH));
 	}
+
 }

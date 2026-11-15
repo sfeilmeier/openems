@@ -21,6 +21,7 @@ import io.openems.edge.meter.api.ElectricityMeter;
 import io.openems.edge.timedata.test.DummyTimedata;
 
 public class IoShellyPro4PmTest {
+
 	@Test
 	public void test() throws Exception {
 		final var device = new IoShellyPro4PmDeviceImpl();
@@ -381,4 +382,5 @@ public class IoShellyPro4PmTest {
 				.output(ElectricityMeter.ChannelId.CURRENT_L2, null) //
 				.output(ElectricityMeter.ChannelId.CURRENT_L3, null));
 	}
+
 }

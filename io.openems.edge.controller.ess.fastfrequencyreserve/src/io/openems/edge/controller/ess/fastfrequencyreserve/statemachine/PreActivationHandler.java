@@ -51,4 +51,5 @@ public class PreActivationHandler extends StateHandler<State, Context> {
 		return currentEpochSecond >= context.startTimestamp
 				&& currentEpochSecond <= context.startTimestamp + context.duration;
 	}
+
 }

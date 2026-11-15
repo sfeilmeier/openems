@@ -37,4 +37,5 @@ public class CalculateEnergySession {
 		}
 		this.isPluggedOld = isPlugged;
 	}
+
 }

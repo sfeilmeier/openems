@@ -1,6 +1,7 @@
 package io.openems.edge.evse.chargepoint.keba.common.enums;
 
 public enum LogVerbosity {
+
 	/**
 	 * Show basic information in Controller.Debug.Log.
 	 */
@@ -13,4 +14,5 @@ public enum LogVerbosity {
 	 * Show detailed logs for UDP Reports.
 	 */
 	UDP_REPORTS;
+
 }

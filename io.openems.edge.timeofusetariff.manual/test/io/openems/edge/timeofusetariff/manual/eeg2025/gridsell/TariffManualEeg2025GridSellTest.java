@@ -109,4 +109,5 @@ class TariffManualEeg2025GridSellTest {
 		assertEquals(4, touTariffDataChangeCalls.get(),
 				"Expected 4 tariff data change calls (1x empty, 1x first set, 1x second set, 1x deactivate)");
 	}
+
 }

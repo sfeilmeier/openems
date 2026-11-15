@@ -70,4 +70,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public boolean addToSum() {
 		return this.builder.addToSum;
 	}
+
 }

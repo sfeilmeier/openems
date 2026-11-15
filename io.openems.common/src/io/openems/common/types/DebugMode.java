@@ -13,4 +13,5 @@ public enum DebugMode {
 	public boolean isAtLeast(DebugMode other) {
 		return this.ordinal() >= other.ordinal();
 	}
+
 }

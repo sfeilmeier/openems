@@ -25,4 +25,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String filter() default "";
 
 	String webconsole_configurationFactory_nameHint() default "Time-Of-Use Tariff Tibber [{id}]";
+
 }

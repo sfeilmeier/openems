@@ -82,4 +82,5 @@ public class DoubleUtils {
 		 */
 		double apply(double value);
 	}
+
 }

@@ -29,4 +29,5 @@ import io.openems.common.types.MeterType;
 	boolean addToSum() default false;
 
 	String webconsole_configurationFactory_nameHint() default "Meter Virtual Add [{id}]";
+
 }

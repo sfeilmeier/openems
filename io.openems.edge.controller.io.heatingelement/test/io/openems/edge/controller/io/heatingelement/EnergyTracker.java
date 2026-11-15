@@ -4,6 +4,7 @@ package io.openems.edge.controller.io.heatingelement;
  * A class for the tests to simulate the channel ACTIVE_CONSUMPTION_POWER from the meter.
  */
 public class EnergyTracker {
+
 	private float currentWh = 0;
 	
 	/**
@@ -33,4 +34,5 @@ public class EnergyTracker {
 		this.currentWh = 0;
 		return 0;
 	}
+
 }

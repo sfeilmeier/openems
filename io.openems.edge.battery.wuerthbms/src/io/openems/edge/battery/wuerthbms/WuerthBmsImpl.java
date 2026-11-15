@@ -836,4 +836,5 @@ public class WuerthBmsImpl extends AbstractOpenemsModbusComponent
 		var currentVersion = new SemanticVersion(maj, min, pat);
 		return currentVersion.isAtLeast(WuerthBmsImpl.VOLTAGE_MAPPING_VERSION);
 	}
+
 }

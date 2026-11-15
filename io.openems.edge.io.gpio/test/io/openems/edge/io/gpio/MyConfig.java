@@ -86,4 +86,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public HardwareType hardwareType() {
 		return this.builder.hardwareType;
 	}
+
 }

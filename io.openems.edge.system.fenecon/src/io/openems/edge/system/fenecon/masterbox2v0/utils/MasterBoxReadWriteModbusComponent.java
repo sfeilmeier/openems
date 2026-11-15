@@ -36,4 +36,5 @@ public interface MasterBoxReadWriteModbusComponent extends MasterBoxModbusCompon
 	 * @return a {@link List} of {@link IocWriteValueMapping}.
 	 */
 	List<IocWriteValueMapping<?>> getWriteValueMappings();
+
 }

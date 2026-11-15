@@ -39,4 +39,5 @@ public @interface Config {
 	String modbus_id() default "modbus0";
 
 	String webconsole_configurationFactory_nameHint() default "Battery-Inverter KACO blueplanet gridsave [{id}]";
+
 }

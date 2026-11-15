@@ -110,4 +110,5 @@ public class DummyHydacImpl extends AbstractDummyOpenemsComponent<DummyHydacImpl
 	public void setStartStop(StartStop value) {
 		this.startStopTarget = value;
 	}
+
 }

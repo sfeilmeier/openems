@@ -139,4 +139,5 @@ public interface IoGen2ShellyBase extends OpenemsComponent {
 	public default Value<Boolean> getWrongDeviceType() {
 		return this.getWrongDeviceTypeChannel().value();
 	}
+
 }

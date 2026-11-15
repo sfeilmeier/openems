@@ -145,4 +145,5 @@ public class PvInverterKacoBlueplanetImpl extends AbstractSunSpecPvInverter
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

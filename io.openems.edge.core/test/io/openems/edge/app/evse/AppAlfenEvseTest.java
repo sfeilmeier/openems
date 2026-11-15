@@ -99,4 +99,5 @@ class AppAlfenEvseTest {
 				.addProperty("READ_ONLY", true) //
 				.build();
 	}
+
 }

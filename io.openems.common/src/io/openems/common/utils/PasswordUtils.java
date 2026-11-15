@@ -19,4 +19,5 @@ public class PasswordUtils {
 				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append) //
 				.toString();
 	}
+
 }

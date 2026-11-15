@@ -284,4 +284,5 @@ public class EshUtils {
 		// 4th Priority: fallback to configured mode
 		return p.mode();
 	}
+
 }

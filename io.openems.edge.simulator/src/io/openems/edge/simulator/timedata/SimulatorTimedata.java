@@ -20,4 +20,5 @@ public interface SimulatorTimedata extends Timedata, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

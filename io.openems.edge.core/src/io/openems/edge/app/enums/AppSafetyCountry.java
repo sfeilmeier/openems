@@ -6,6 +6,7 @@ import io.openems.edge.core.appmanager.TranslationUtil;
 import io.openems.edge.goodwe.common.enums.SafetyCountry;
 
 public enum AppSafetyCountry implements TranslatableEnum {
+
 	GERMANY("germany", SafetyCountry.GERMANY), //
 	AUSTRIA("austria", SafetyCountry.AUSTRIA), //
 	SWITZERLAND("switzerland", SafetyCountry.SWITZERLAND), //

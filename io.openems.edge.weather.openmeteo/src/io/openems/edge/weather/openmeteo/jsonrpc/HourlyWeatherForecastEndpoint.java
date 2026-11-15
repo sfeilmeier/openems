@@ -83,4 +83,5 @@ public class HourlyWeatherForecastEndpoint implements EndpointRequestType<Reques
 							.build());
 		}
 	}
+
 }

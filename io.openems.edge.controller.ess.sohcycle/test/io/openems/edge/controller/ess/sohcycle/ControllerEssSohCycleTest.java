@@ -741,4 +741,5 @@ class ControllerEssSohCycleTest {
 						.setReferenceCycleEnabled(referenceCycleEnabled)//
 						.build());
 	}
+
 }

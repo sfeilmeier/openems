@@ -49,4 +49,5 @@ public final class OnOpenHandler implements Runnable {
 			this.handleInternalError.accept(t, generateWsDataString(this.ws));
 		}
 	}
+
 }

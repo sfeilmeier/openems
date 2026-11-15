@@ -20,6 +20,7 @@ import io.openems.common.utils.TimeRangeValues;
 import io.openems.common.utils.TimeSpan;
 
 public class DummySpotTariffProvider implements SpotTariffProvider {
+
 	private final Clock clock;
 	private final ConcurrentMap<BiddingZone, StoredSpotTariff> store = new ConcurrentHashMap<>();
 	private final DummySpotTariffPool pool = new DummySpotTariffPool();
@@ -137,4 +138,5 @@ public class DummySpotTariffProvider implements SpotTariffProvider {
 			// Not required
 		}
 	}
+
 }

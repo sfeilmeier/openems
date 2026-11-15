@@ -74,4 +74,5 @@ public class DummyTimedataManager implements TimedataManager {
 			throws OpenemsError.OpenemsNamedException {
 		return null;
 	}
+
 }

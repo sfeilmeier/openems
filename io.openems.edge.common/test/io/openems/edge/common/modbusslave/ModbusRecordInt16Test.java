@@ -54,4 +54,5 @@ public class ModbusRecordInt16Test {
 		assertEquals("ModbusRecordInt16Reserved [type=int16]", sut.toString());
 		assertEquals("", sut.getValueDescription());
 	}
+
 }

@@ -219,4 +219,5 @@ class ClusterMasterSlavesUpdateableTest {
 			return this.responses.removeFirst();
 		}
 	}
+
 }

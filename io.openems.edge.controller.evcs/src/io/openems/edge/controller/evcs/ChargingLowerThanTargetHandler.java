@@ -99,4 +99,5 @@ public class ChargingLowerThanTargetHandler {
 	protected Integer getMaximumChargePower() {
 		return this.maximumChargePower;
 	}
+
 }

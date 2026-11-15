@@ -32,4 +32,5 @@ public @interface Config {
 	String Modbus_target() default "(enabled=true)";
 
 	String webconsole_configurationFactory_nameHint() default "BMS Soltaro Single Rack Version C [{id}]";
+
 }

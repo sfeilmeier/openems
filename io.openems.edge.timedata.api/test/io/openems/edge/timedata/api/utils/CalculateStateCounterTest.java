@@ -149,4 +149,5 @@ class CalculateStateCounterTest {
 		verify(this.channel).setNextValue(0);
 		verify(this.timedata, never()).getLatestValue(any());
 	}
+
 }

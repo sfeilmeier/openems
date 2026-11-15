@@ -481,4 +481,5 @@ public class FeneconHome30 extends AbstractOpenemsAppWithProps<FeneconHome30, Pr
 		}
 
 	}
+
 }

@@ -59,4 +59,5 @@ public interface DataStructure<I> {
 	 * @return an independent copy
 	 */
 	public DataStructure<I> copy();
+
 }

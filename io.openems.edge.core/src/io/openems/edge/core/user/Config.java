@@ -24,6 +24,7 @@ import io.openems.common.session.Language;
 		name = "Core User", //
 		description = "This component handles User authentication.")
 @interface Config {
+
 	@AttributeDefinition(name = "Admin: password", description = "hashed password for User 'admin'", type = AttributeType.PASSWORD)
 	String adminPassword() default "txASlUVQkEI9Bxa/IZOJe8l3+R4lMzFTShz27vK44go=";
 
@@ -56,4 +57,5 @@ import io.openems.common.session.Language;
 	Language language();
 
 	String webconsole_configurationFactory_nameHint() default "Core User";
+
 }

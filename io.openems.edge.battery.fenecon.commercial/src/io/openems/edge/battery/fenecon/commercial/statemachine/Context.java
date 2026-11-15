@@ -76,4 +76,5 @@ public class Context extends AbstractContext<BatteryFeneconCommercial> {
 		}
 		return false;
 	}
+
 }

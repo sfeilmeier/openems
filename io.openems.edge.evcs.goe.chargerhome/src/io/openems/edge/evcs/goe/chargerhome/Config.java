@@ -30,4 +30,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int maxHwCurrent() default 32000;
 
 	String webconsole_configurationFactory_nameHint() default "EVCS go-e Charger Home [{id}]";
+
 }

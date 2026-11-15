@@ -10,6 +10,7 @@ import io.openems.common.utils.DoubleUtils;
 import io.openems.common.utils.JsonUtils;
 
 public class ExchangeRate {
+
 	private final ExchangeRateKey key;
 	private final double rate;
 
@@ -93,4 +94,5 @@ public class ExchangeRate {
 
 	public record ExchangeRateKey(Currency sourceCurrency, Currency targetCurrency) {
 	}
+
 }

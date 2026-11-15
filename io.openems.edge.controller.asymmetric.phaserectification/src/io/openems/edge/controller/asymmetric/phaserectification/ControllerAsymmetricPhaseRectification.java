@@ -19,4 +19,5 @@ public interface ControllerAsymmetricPhaseRectification extends Controller, Open
 			return this.doc;
 		}
 	}
+
 }

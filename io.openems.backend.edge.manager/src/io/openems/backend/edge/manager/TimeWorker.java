@@ -16,6 +16,7 @@ import io.openems.common.worker.AbstractWorker;
 
 @Component(service = TimeWorker.class, immediate = true)
 public class TimeWorker extends AbstractWorker {
+
 	private final Logger log = LoggerFactory.getLogger(TimeWorker.class);
 
 	@Reference
@@ -44,4 +45,5 @@ public class TimeWorker extends AbstractWorker {
 	protected int getCycleTime() {
 		return 60_000;
 	}
+
 }

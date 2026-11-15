@@ -20,4 +20,5 @@ public interface SimulatorPredictor extends Predictor, OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

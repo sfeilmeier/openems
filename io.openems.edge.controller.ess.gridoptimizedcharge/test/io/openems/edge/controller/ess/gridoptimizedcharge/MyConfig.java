@@ -137,4 +137,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public DelayChargeRiskLevel delayChargeRiskLevel() {
 		return this.builder.delayChargeRiskLevel;
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.sma.ess.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PvString implements OptionsEnum {
+
 	ONE(1, "String 1"), //
 	TWO(2, "String 2");
 
@@ -28,4 +29,5 @@ public enum PvString implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return ONE;
 	}
+
 }

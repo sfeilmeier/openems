@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.fisker.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum PowerReduction implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NOT_ALLOWED(0, "Power reduction not allowed"), //
 	ALLOWED(1, "Power reduction allowed"), //
@@ -30,4 +31,5 @@ public enum PowerReduction implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

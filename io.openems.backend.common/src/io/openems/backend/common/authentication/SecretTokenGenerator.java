@@ -36,4 +36,5 @@ public class SecretTokenGenerator {
 
 	private SecretTokenGenerator() {
 	}
+
 }

@@ -99,4 +99,5 @@ public record PowerDistribution(//
 			sum.calculateEssToGridEnergy.update(-this.gridToEss);
 		}
 	}
+
 }

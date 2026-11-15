@@ -114,4 +114,5 @@ public final class EdgeEventConstants {
 	 * synchronously.
 	 */
 	public static final String TOPIC_CHANNEL_UPDATE = TOPIC_CHANNEL + "UPDATE";
+
 }

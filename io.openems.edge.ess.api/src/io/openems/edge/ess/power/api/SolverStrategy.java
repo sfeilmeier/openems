@@ -3,6 +3,7 @@ package io.openems.edge.ess.power.api;
 import io.openems.common.types.OptionsEnum;
 
 public enum SolverStrategy implements OptionsEnum {
+
 	UNDEFINED(-2, "Undefined"), //
 
 	// Solvers for PowerDistributionHandlerV1
@@ -39,4 +40,5 @@ public enum SolverStrategy implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

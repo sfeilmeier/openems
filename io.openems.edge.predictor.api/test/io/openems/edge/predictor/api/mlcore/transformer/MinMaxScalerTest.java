@@ -63,4 +63,5 @@ public class MinMaxScalerTest {
 
 		assertEquals(0.0, scaled.get(0), 1e-6);
 	}
+
 }

@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum LoadRegulationIndex implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DISABLE(0, " Disable"), //
 	SWITCHING_MODE(1, "Switching mode"), //
@@ -31,4 +32,5 @@ public enum LoadRegulationIndex implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -15,4 +15,5 @@ public class FinishedHandler extends StateHandler<State, Context> {
 		context.logInfo(this.log, "Step SoC finished. Target SoC reached, no further action required");
 		return State.FINISHED;
 	}
+
 }

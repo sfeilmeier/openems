@@ -108,4 +108,5 @@ public class CommonNaturesTest {
 				.output(ElectricityMeter.ChannelId.ACTIVE_CONSUMPTION_ENERGY, 774784L) //
 		;
 	}
+
 }

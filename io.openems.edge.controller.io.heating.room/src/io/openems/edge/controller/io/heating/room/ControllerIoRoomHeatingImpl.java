@@ -450,4 +450,5 @@ public class ControllerIoRoomHeatingImpl extends AbstractOpenemsComponent implem
 				() -> this.schedule, //
 				() -> new UpdateJsCalendarRecord(this.cm, this.componentManager, this.servicePid(), "schedule"));
 	}
+
 }

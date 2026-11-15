@@ -122,4 +122,5 @@ public class TestValuesGenerationUtil {
 	public record ValueDecimalAndHex(Float value, String[] words) {
 
 	}
+
 }

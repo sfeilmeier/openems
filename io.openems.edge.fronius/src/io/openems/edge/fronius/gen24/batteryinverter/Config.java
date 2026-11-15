@@ -29,4 +29,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	ControlMode controlMode() default ControlMode.INTERNAL;
 
 	String webconsole_configurationFactory_nameHint() default "ESS Fronius Gen24 Hybrid [{id}]";
+
 }

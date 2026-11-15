@@ -3,6 +3,7 @@ package io.openems.edge.battery.fenecon.f2b.cluster.common.statemachine;
 import io.openems.common.types.OptionsEnum;
 
 public enum F2bUpdateSubState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	RESET_F2B(1, "Resetting every f2b"), //
 	UPDATE_F2B(2, "Updating all f2b"), //
@@ -33,4 +34,5 @@ public enum F2bUpdateSubState implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

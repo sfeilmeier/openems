@@ -146,4 +146,5 @@ public class SpotTariffTrackerImpl implements SpotTariffTracker {
 			this.provider.ungetSpotTariff(this.tariff);
 		}
 	}
+
 }

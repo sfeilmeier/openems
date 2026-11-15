@@ -11,4 +11,5 @@ public record BatteryInverterConstraint(String description, SingleOrAllPhase pha
 		int value) {
 
 	public static final BatteryInverterConstraint[] NO_CONSTRAINTS = {};
+
 }

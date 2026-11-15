@@ -26,4 +26,5 @@ public class RecoveryTimeHandler extends StateHandler<State, Context> {
 				.toSeconds();
 		return expiration > RECOVERY_DURATION_SECONDS || now >= context.startTimestamp + context.duration;
 	}
+
 }

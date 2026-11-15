@@ -108,4 +108,5 @@ public class ChannelExportXlsxResponseTest {
 				new ChannelRow("Foo4", "1:One", "", "1:One", "", "RO", "Enum", ""), //
 				ChannelRow.fromChannel(c));
 	}
+
 }

@@ -39,4 +39,5 @@ public class FeneconMiniProps {
 				.setDefaultValue(true) //
 				.setField(JsonFormlyUtil::buildCheckboxFromNameable));
 	}
+
 }

@@ -37,4 +37,5 @@ public class StopBatteryHandler extends StateHandler<State, Context> {
 		battery.stop();
 		return State.STOP_BATTERY;
 	}
+
 }

@@ -13,4 +13,5 @@ public record UserAlertingSettings(String deviceId, String userLogin, //
 	public UserAlertingSettings(String deviceId, String userLogin) {
 		this(deviceId, userLogin, 0, 0, 0, null, null);
 	}
+
 }

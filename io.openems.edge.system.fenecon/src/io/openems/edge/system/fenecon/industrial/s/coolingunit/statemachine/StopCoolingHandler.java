@@ -11,4 +11,5 @@ public class StopCoolingHandler extends StateHandler<CoolingUnitState, CoolingUn
 		context.outputCoolingUnitEnableChannel.setNextWriteValue(false);
 		return CoolingUnitState.WAIT_FOR_START_REQUEST;
 	}
+
 }

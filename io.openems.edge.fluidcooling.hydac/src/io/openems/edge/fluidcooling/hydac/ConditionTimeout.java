@@ -35,4 +35,5 @@ public class ConditionTimeout {
 
 		return this.timeout.elapsed(clock);
 	}
+
 }

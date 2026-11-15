@@ -191,4 +191,5 @@ public class IoShellyPro1PmImpl extends IoGen2ShellyBaseImpl
 	protected MDnsDiscovery getMDnsDiscovery() {
 		return this.mDnsDiscovery;
 	}
+
 }

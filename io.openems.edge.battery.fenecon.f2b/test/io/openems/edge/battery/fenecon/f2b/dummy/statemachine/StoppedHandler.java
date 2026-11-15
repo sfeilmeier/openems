@@ -20,4 +20,5 @@ public class StoppedHandler extends StateHandler<State, Context> {
 		battery._setStartStop(StartStop.STOP);
 		return State.STOPPED;
 	}
+
 }

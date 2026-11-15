@@ -219,4 +219,5 @@ public class ElementToChannelConverter {
 					"Type [" + value.getClass().getName() + "] not supported by OFFSET converter");
 		};
 	}
+
 }

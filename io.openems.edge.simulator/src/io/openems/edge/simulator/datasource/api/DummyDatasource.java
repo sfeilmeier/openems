@@ -35,4 +35,5 @@ public class DummyDatasource implements SimulatorDatasource {
 	public <T> T getValue(OpenemsType type, ChannelAddress channelAddress) {
 		return (T) this.value;
 	}
+
 }

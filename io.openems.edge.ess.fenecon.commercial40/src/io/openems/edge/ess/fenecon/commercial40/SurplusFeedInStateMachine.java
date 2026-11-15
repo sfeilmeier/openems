@@ -3,6 +3,7 @@ package io.openems.edge.ess.fenecon.commercial40;
 import io.openems.common.types.OptionsEnum;
 
 public enum SurplusFeedInStateMachine implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	DEACTIVATED(0, "Deactivated"), //
 	ACTIVATED(1, "Activated"), //
@@ -31,4 +32,5 @@ public enum SurplusFeedInStateMachine implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

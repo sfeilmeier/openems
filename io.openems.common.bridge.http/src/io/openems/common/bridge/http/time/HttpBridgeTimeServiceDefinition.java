@@ -6,6 +6,7 @@ import io.openems.common.bridge.http.api.EndpointFetcher;
 import io.openems.common.bridge.http.api.HttpBridgeServiceDefinition;
 
 public enum HttpBridgeTimeServiceDefinition implements HttpBridgeServiceDefinition<HttpBridgeTimeService> {
+
 	INSTANCE;
 
 	@Override

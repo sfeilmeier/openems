@@ -3,6 +3,7 @@ package io.openems.edge.goodwe.common.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryProtocol implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	GOODWE(0x122, "SECU-S / LX S-H / LX F-H"), //
 	PYLONTECH(0x101, "Powercube H1 / Force H1 / Force H2"), //
@@ -35,4 +36,5 @@ public enum BatteryProtocol implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

@@ -17,4 +17,5 @@ public @interface Config {
 	String usbConfiguration();
 
 	String webconsole_configurationFactory_nameHint() default "Core Host";
+
 }

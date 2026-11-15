@@ -98,4 +98,5 @@ public interface FroniusGen24DcCharger extends EssDcCharger, OpenemsComponent, M
 				ModbusSlaveNatureTable.of(FroniusGen24DcCharger.class, accessMode, 100) //
 						.build());
 	}
+
 }

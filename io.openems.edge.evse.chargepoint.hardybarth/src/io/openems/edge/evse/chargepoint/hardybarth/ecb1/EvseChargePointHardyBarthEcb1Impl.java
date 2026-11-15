@@ -126,4 +126,5 @@ public class EvseChargePointHardyBarthEcb1Impl extends AbstractOpenemsComponent
 	public boolean isReadOnly() {
 		return this.config.readOnly();
 	}
+
 }

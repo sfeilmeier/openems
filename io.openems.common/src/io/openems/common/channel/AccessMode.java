@@ -24,4 +24,5 @@ public enum AccessMode {
 	public String getAbbreviation() {
 		return this.abbreviation;
 	}
+
 }

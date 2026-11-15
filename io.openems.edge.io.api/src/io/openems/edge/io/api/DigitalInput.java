@@ -29,4 +29,5 @@ public interface DigitalInput extends OpenemsComponent {
 	 * @return array of {@link BooleanReadChannel}
 	 */
 	public BooleanReadChannel[] digitalInputChannels();
+
 }

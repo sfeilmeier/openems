@@ -344,4 +344,5 @@ public class MeterKdk2puctImpl extends AbstractOpenemsModbusComponent
 	public MeterType getMeterType() {
 		return this.config.type();
 	}
+
 }

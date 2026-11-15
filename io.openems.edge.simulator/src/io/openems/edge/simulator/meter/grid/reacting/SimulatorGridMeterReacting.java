@@ -23,4 +23,5 @@ public interface SimulatorGridMeterReacting extends ElectricityMeter, OpenemsCom
 			return this.doc;
 		}
 	}
+
 }

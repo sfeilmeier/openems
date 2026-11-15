@@ -21,4 +21,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String core_id() default "kacoCore0";
 
 	String webconsole_configurationFactory_nameHint() default "KACO blueplanet hybrid 10.0 TL3 PV-Inverter [{id}]";
+
 }

@@ -2329,4 +2329,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int settingFrtOf3Time() {
 		return this.builder.settingFrtOf3Time;
 	}
+
 }

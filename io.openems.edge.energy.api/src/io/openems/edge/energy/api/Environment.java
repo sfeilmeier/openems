@@ -32,4 +32,5 @@ public enum Environment {
 	private Environment(DoubleToDoubleFunction consumptionFunction) {
 		this.consumptionFunction = consumptionFunction;
 	}
+
 }

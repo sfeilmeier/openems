@@ -32,6 +32,7 @@ import io.openems.edge.evcs.test.DummyManagedEvcs;
 import io.openems.edge.meter.test.DummyElectricityMeter;
 
 public class EvcsClusterPeakShavingImplTest {
+
 	// TODO: Add eventually something like DummyEvcsController
 
 	private static final DummyManagedSymmetricEss ESS = new DummyManagedSymmetricEss("ess0") //
@@ -682,4 +683,5 @@ public class EvcsClusterPeakShavingImplTest {
 						.output("evcsCluster0", EVCS_CLUSTER_STATUS, EvcsClusterStatus.REGULAR)) //
 		;
 	}
+
 }

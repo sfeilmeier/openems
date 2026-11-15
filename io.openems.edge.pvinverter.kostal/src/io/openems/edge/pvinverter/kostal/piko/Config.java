@@ -26,4 +26,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String password() default "pvwr";
 
 	String webconsole_configurationFactory_nameHint() default "PV-Inverter KOSTAL PIKO [{id}]";
+
 }

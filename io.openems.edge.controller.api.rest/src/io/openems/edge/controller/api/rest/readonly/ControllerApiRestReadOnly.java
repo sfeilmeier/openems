@@ -19,4 +19,5 @@ public interface ControllerApiRestReadOnly extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

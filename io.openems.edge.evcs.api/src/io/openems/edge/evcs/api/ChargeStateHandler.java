@@ -101,4 +101,5 @@ public class ChargeStateHandler {
 		this.chargeState = chargeState;
 		this.parent.channel(ManagedEvcs.ChannelId.CHARGE_STATE).setNextValue(chargeState);
 	}
+
 }

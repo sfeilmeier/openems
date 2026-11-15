@@ -235,4 +235,5 @@ public class ForceUpdateComponentConfig implements Runnable {
 			LOG.error("Failed to update the app {}", alias);
 		}
 	}
+
 }

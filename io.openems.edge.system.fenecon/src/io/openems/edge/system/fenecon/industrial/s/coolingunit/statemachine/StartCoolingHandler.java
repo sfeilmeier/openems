@@ -25,4 +25,5 @@ public class StartCoolingHandler extends StateHandler<CoolingUnitState, CoolingU
 		}
 		return CoolingUnitState.START_COOLING;
 	}
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public record HttpStatus(int code, String description) {
+
 	// 1xx Informational
 	public static final HttpStatus CONTINUE = new HttpStatus(100, "Continue");
 	public static final HttpStatus SWITCHING_PROTOCOLS = new HttpStatus(101, "Switching Protocols");

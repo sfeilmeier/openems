@@ -48,4 +48,5 @@ public abstract class AbstractSunSpecBattery extends AbstractOpenemsSunSpecCompo
 	protected void onSunSpecInitializationCompleted() {
 		this.logInfo(this.log, "SunSpec initialization finished. " + this.channels().size() + " Channels available.");
 	}
+
 }

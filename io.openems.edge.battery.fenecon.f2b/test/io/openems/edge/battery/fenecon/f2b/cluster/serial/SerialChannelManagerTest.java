@@ -41,4 +41,5 @@ public class SerialChannelManagerTest {
 	public void testCalculateSerialSocSingleBattery() {
 		assertEquals(Integer.valueOf(40), SerialChannelManager.calculateSerialSoc(List.of(40)));
 	}
+
 }

@@ -33,4 +33,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	boolean debugMode() default false;
 
 	String webconsole_configurationFactory_nameHint() default "EVCS OCPP Ies KeyWatt [{id}]";
+
 }

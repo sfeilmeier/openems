@@ -85,4 +85,5 @@ public class SystemFeneconHomeImplTest {
 						.output("io1", io.digitalOutputChannels()[1].address().getChannelId(), false)) //
 				.deactivate(); //
 	}
+
 }

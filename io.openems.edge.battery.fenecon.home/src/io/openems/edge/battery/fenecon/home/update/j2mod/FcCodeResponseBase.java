@@ -5,6 +5,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 abstract class FcCodeResponseBase extends CustomResponse {
+
 	private int statusCode;
 
 	public static final int STATUS_CODE_NOT_READ_YET = -1;
@@ -46,4 +47,5 @@ abstract class FcCodeResponseBase extends CustomResponse {
 	public String toString() {
 		return this.getClass().getSimpleName() + "{StatusCode=%s}".formatted(this.getStatusCodeName());
 	}
+
 }

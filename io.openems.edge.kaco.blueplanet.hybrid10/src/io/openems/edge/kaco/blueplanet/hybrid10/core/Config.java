@@ -31,4 +31,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	String userkey();
 
 	String webconsole_configurationFactory_nameHint() default "KACO blueplanet hybrid 10.0 TL3 Core [{id}]";
+
 }

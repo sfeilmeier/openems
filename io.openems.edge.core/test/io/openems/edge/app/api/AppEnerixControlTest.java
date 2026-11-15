@@ -103,4 +103,5 @@ class AppEnerixControlTest {
 								.addProperty("readOnly", false) //
 								.build()));
 	}
+
 }

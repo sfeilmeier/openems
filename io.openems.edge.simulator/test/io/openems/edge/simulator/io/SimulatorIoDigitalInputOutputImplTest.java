@@ -18,4 +18,5 @@ public class SimulatorIoDigitalInputOutputImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

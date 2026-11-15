@@ -83,4 +83,5 @@ public class Utils {
 			result.put(startTimeStamp, marketPrice);
 		}
 	}
+
 }

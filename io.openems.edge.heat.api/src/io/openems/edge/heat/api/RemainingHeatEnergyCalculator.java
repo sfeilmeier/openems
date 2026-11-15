@@ -27,4 +27,5 @@ public final class RemainingHeatEnergyCalculator {
 		return (int) Math
 				.round(effectiveStorageVolume * WATER_HEAT_CAPACITY_WH_PER_LITER_KELVIN * deltaTemperatureKelvin);
 	}
+
 }

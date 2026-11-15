@@ -1,6 +1,7 @@
 package io.openems.edge.core.appmanager.formly.enums;
 
 public enum DisplayType {
+
 	STRING("string"), //
 	BOOLEAN("boolean"), //
 	NUMBER("number"), //

@@ -43,4 +43,5 @@ public class InfluxQlProxyTest {
 		assertEquals(JsonNull.INSTANCE, parseToJsonElement(null));
 		assertEquals(JsonNull.INSTANCE, parseToJsonElement(""));
 	}
+
 }

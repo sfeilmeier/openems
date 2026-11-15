@@ -285,4 +285,5 @@ public class ApplyPowerHandler {
 			this.log.debug("S123 not available – battery control continues", e);
 		}
 	}
+
 }

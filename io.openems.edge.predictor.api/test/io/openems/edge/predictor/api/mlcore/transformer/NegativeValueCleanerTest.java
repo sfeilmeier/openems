@@ -38,4 +38,5 @@ public class NegativeValueCleanerTest {
 		assertEquals(index, result.getIndex());
 		assertEquals(Arrays.asList(1.0, null, 0.0), result.getValues());
 	}
+
 }

@@ -85,4 +85,5 @@ public interface EvcsClusterPeakShaving extends MetaEvcs, OpenemsComponent {
 	public default Value<Integer> getEvcsBlockedChargePower() {
 		return this.getEvcsBlockedChargePowerChannel().value();
 	}
+
 }

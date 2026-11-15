@@ -8,6 +8,7 @@ import io.openems.common.types.OptionsEnum;
  * delta cannot be calculated or threshold is exceeded.
  */
 public enum BatteryBalanceError implements OptionsEnum {
+
 	NONE(0, "No diagnostic reason (check succeeded or in progress)"),
 	BASELINE_MIN_MISSING(1, "Baseline minimum voltage not captured"),
 	MAX_VOLTAGE_UNDEFINED(2, "Maximum cell voltage not available from ESS"),
@@ -43,4 +44,5 @@ public enum BatteryBalanceError implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return NONE;
 	}
+
 }

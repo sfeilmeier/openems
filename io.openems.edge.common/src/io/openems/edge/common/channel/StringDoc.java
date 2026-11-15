@@ -25,4 +25,5 @@ public class StringDoc extends OpenemsTypeDoc<String> {
 			-> new StringWriteChannel(component, channelId, this);
 		};
 	}
+
 }

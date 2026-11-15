@@ -1,6 +1,7 @@
 package io.openems.edge.controller.evse.cluster;
 
 public enum LogVerbosity {
+
 	/**
 	 * Show no logs.
 	 */
@@ -9,4 +10,5 @@ public enum LogVerbosity {
 	 * Show detailed logs on every Cycle.
 	 */
 	TRACE;
+
 }

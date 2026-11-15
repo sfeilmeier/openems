@@ -38,4 +38,5 @@ public record Coordinates(double latitude, double longitude) {
 	private static boolean isLongitudeValid(double longitude) {
 		return longitude >= -180 && longitude <= 180;
 	}
+
 }

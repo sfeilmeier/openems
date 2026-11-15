@@ -390,4 +390,5 @@ public class KostalManagedEssImpl extends AbstractOpenemsModbusComponent impleme
 			}
 		}
 	}
+
 }

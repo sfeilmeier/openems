@@ -51,4 +51,5 @@ public class ControllerEssDelayChargeImplTest {
 						.output(CHARGE_POWER_LIMIT, 0)) //
 				.deactivate();
 	}
+
 }

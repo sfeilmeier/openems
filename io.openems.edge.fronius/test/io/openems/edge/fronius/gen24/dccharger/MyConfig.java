@@ -70,4 +70,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public PvString pvString() {
 		return this.builder.pvString;
 	}
+
 }

@@ -171,4 +171,5 @@ class EnergySchedulerTest {
 			verify(this.model).commitEss(1000);
 		}
 	}
+
 }

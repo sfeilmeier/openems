@@ -3,6 +3,7 @@ package io.openems.edge.edge2edge.websocket.bridge;
 import io.openems.common.types.OptionsEnum;
 
 public enum ConnectionStateOption implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	NOT_CONNECTED(0, "Not Connected"), //
 	CONNECTING(1, "Connecting"), //

@@ -23,6 +23,7 @@ import io.openems.common.jsonrpc.syncable.SyncableKey;
 import io.openems.edge.controller.api.backend.dummy.DummyControllerApiBackend;
 
 class BackendSyncableRepositoryTest {
+
 	private static DummyControllerApiBackend backend;
 	private static MockBackendSyncableRepository syncableRepository;
 	private static boolean receivedUnsubscribe = false;
@@ -84,4 +85,5 @@ class BackendSyncableRepositoryTest {
 		}
 
 	}
+
 }

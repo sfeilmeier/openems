@@ -15,6 +15,7 @@ import io.openems.edge.core.appmanager.TranslationUtil;
 import io.openems.edge.core.appmanager.dependency.DependencyDeclaration;
 
 public enum AcMeterType implements TranslatableEnum {
+
 	SOCOMEC("App.Meter.Socomec.Name", Parity.NONE, AcMeterType::socomecMeter), //
 	KDK("App.Meter.Kdk.Name", Parity.EVEN, AcMeterType::kdkMeter), //
 	;

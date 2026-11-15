@@ -23,4 +23,5 @@ public class MyIllegalAddressException extends IllegalAddressException {
 	private MyIllegalAddressException(String message) {
 		super(message);
 	}
+
 }

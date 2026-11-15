@@ -1,6 +1,7 @@
 package io.openems.edge.goodwe.common.enums;
 
 public enum ReactivePowerMode {
+
 	UNSELECTED("Unselected"), //
 	FIX_PF("Fix Pf"), //
 	FIX_Q("Fix Q"), //
@@ -17,4 +18,5 @@ public enum ReactivePowerMode {
 	public String getName() {
 		return this.name;
 	}
+
 }

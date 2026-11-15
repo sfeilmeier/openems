@@ -182,4 +182,5 @@ public class ControllerEssCycleImplTest {
 				.setTotalCycleNumber(3) //
 				.setFinalSoc(50);
 	}
+
 }

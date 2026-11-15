@@ -308,4 +308,5 @@ public class GoodWeStateDefinitions {
 					new GwState(2, "Internal Warning 3"), //
 					new GwState(3, "Internal Warning 4"), //
 					new GwState(4, "Warning 1"))));
+
 }

@@ -24,4 +24,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	int powerLimit();
 
 	String webconsole_configurationFactory_nameHint() default "Controller PV-Inverter Fix Power Limit [{id}]";
+
 }

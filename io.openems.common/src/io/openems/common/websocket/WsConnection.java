@@ -7,6 +7,7 @@ import io.openems.common.jsonrpc.base.JsonrpcRequest;
 import io.openems.common.jsonrpc.base.JsonrpcResponseSuccess;
 
 public interface WsConnection {
+
 	/**
 	 * Sends a JSON-RPC request to a Websocket and registers a callback.
 	 *
@@ -22,4 +23,5 @@ public interface WsConnection {
 	 * @return true if sending was successful; false otherwise
 	 */
 	boolean send(JsonrpcNotification notification);
+
 }

@@ -136,4 +136,5 @@ public class MeterSchneiderActi9SmartlinkImpl extends AbstractOpenemsModbusCompo
 	public String debugLog() {
 		return "L:" + this.getActivePower().asString();
 	}
+
 }

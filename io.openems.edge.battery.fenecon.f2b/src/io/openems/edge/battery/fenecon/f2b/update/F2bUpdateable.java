@@ -325,4 +325,5 @@ public class F2bUpdateable implements Updateable {
 	private BatteryFeneconF2b getFirstBattery(BatteryFeneconF2bCluster cluster) {
 		return cluster.getBatteries().stream().min(Comparator.comparing(OpenemsComponent::id)).orElse(null);
 	}
+
 }

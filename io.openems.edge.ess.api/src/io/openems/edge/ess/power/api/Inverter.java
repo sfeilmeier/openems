@@ -109,4 +109,5 @@ public abstract class Inverter {
 	public String toString() {
 		return this.essId + this.phase.symbol;
 	}
+
 }

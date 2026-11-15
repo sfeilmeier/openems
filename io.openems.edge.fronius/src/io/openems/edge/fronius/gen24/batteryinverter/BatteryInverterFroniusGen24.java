@@ -287,4 +287,5 @@ public interface BatteryInverterFroniusGen24
 	public default void _setDebugWMaxLimEna(int value) {
 		this.channel(ChannelId.DEBUG_W_MAX_LIM_ENA).setNextValue(value);
 	}
+
 }

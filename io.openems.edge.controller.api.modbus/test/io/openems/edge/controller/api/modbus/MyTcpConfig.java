@@ -139,4 +139,5 @@ public class MyTcpConfig extends AbstractComponentConfig
 	public LogVerbosity logVerbosity() {
 		return this.builder.logVerbosity;
 	}
+
 }

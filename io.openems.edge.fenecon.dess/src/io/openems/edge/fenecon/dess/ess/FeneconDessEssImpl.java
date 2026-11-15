@@ -242,4 +242,5 @@ public class FeneconDessEssImpl extends AbstractOpenemsModbusComponent implement
 		// This HybridEss is not managed
 		return null;
 	}
+
 }

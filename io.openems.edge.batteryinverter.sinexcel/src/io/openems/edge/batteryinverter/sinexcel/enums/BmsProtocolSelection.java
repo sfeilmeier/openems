@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.sinexcel.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BmsProtocolSelection implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ENERGY_PORT(0, "EP"), //
 	ALPHA(1, "Alpha-Ess"), //
@@ -31,4 +32,5 @@ public enum BmsProtocolSelection implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

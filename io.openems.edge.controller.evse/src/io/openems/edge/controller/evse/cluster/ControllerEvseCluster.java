@@ -18,4 +18,5 @@ public interface ControllerEvseCluster extends OpenemsComponent {
 			return this.doc;
 		}
 	}
+
 }

@@ -130,4 +130,5 @@ public class MyConfig extends AbstractComponentConfig implements Config {
 	public int pt1TimeConstant() {
 		return this.builder.pt1TimeConstant;
 	}
+
 }

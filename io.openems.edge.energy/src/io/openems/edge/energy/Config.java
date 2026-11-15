@@ -21,4 +21,5 @@ import io.openems.edge.energy.api.LogVerbosity;
 	Environment environment() default Environment.PRODUCTION;
 
 	String webconsole_configurationFactory_nameHint() default "Core Energy Scheduler";
+
 }

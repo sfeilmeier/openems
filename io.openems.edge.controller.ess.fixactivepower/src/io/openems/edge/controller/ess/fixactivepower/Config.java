@@ -71,4 +71,5 @@ import io.openems.edge.ess.power.api.Relationship;
 	boolean considerSystemLimits() default false;
 
 	String webconsole_configurationFactory_nameHint() default "Controller Ess Fix Active Power [{id}]";
+
 }

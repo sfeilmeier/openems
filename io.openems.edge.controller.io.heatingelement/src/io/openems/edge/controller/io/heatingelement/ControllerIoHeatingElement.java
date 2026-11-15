@@ -166,4 +166,5 @@ public interface ControllerIoHeatingElement extends Controller, OpenemsComponent
 	public default Value<Level> getLevel() {
 		return this.getLevelChannel().value();
 	}
+
 }

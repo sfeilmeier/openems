@@ -100,4 +100,5 @@ public class AllowedChargeDischargeHandlerTest {
 
 		componentTest.deactivate();
 	}
+
 }

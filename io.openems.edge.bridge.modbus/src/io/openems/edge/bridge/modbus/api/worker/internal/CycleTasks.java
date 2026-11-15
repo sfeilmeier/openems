@@ -69,4 +69,5 @@ public record CycleTasks(LinkedList<ReadTask> reads, LinkedList<WriteTask> write
 				.map(p -> p.id()) //
 				.anyMatch(c -> defectiveComponents.isKnown(c));
 	}
+
 }

@@ -45,4 +45,5 @@ public abstract class FeneconHomeBatteryProtection implements BatteryProtectionD
 	public boolean isDischargeAllowed() {
 		return this.stateMachine.isDischargeAllowed();
 	}
+
 }

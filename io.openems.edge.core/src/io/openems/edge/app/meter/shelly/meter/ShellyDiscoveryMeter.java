@@ -17,6 +17,7 @@ import io.openems.edge.core.appmanager.OpenemsAppInstance;
 
 @Component
 public class ShellyDiscoveryMeter extends ShellyDiscovery<MdnsValueMeter> implements ComponentJsonApi {
+
 	public static final String ID = "shellyDiscoveryMeter";
 
 	private final AppManagerUtil appManagerUtil;
@@ -79,4 +80,5 @@ public class ShellyDiscoveryMeter extends ShellyDiscovery<MdnsValueMeter> implem
 		case null, default -> null;
 		};
 	}
+
 }

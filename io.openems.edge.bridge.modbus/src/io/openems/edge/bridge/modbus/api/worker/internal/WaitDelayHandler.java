@@ -206,4 +206,5 @@ public class WaitDelayHandler {
 	private static WaitTask.Delay generateZeroWaitDelayTask(Runnable onWaitDelayTaskFinished) {
 		return new WaitTask.Delay(0, onWaitDelayTaskFinished);
 	}
+
 }

@@ -152,4 +152,5 @@ public class UrlBuilderTest {
 		assertEquals(1, values.size());
 		assertEquals("va lu+e", values.get("key"));
 	}
+
 }

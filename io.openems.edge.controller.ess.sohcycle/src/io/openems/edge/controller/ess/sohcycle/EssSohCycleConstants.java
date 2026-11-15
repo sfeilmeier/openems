@@ -30,4 +30,5 @@ public final class EssSohCycleConstants {
 
     private EssSohCycleConstants() {
     }
+
 }

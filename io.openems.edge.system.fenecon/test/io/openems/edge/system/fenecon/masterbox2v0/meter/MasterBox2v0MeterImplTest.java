@@ -68,4 +68,5 @@ public class MasterBox2v0MeterImplTest {
 						.output(ElectricityMeter.ChannelId.ACTIVE_CONSUMPTION_ENERGY_L3, null) //
 				);
 	}
+
 }

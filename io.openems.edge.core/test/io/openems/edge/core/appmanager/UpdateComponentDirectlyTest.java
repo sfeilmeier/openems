@@ -18,6 +18,7 @@ import io.openems.edge.core.appmanager.AppManagerTestBundle.PseudoComponentManag
 import io.openems.edge.core.appmanager.jsonrpc.UpdateAppConfig;
 
 public class UpdateComponentDirectlyTest {
+
 	private AppManagerTestBundle appManagerTestBundle;
 
 	@BeforeEach
@@ -45,4 +46,5 @@ public class UpdateComponentDirectlyTest {
 				.assertComponentExist(new EdgeConfig.Component("evcs1", "", "Evcs.Keba.KeContact", properties));
 
 	}
+
 }

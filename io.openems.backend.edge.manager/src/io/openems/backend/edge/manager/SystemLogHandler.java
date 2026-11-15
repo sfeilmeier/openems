@@ -154,4 +154,5 @@ public class SystemLogHandler {
 	protected Set<UUID> getSubscribedWebsocketIds(String edgeId) {
 		return this.subscriptions.get(edgeId);
 	}
+
 }

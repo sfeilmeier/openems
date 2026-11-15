@@ -154,4 +154,5 @@ public class GoodWeStsBoxGensetMeterImpl extends AbstractOpenemsModbusComponent
 		var genPower = Math.max(0, backup - ess - production);
 		return (int) genPower;
 	}
+
 }

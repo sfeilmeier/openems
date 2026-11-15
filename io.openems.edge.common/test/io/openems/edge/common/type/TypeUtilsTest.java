@@ -363,4 +363,5 @@ public class TypeUtilsTest {
 	private static enum MyEnum {
 		E123;
 	}
+
 }

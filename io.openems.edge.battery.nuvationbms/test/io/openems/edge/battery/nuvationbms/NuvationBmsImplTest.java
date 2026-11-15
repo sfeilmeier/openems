@@ -51,4 +51,5 @@ public class NuvationBmsImplTest {
 						.output("battery0", SOC, 0))
 				.deactivate();
 	}
+
 }

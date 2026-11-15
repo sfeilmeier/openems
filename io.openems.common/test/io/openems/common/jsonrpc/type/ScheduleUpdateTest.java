@@ -228,4 +228,5 @@ class ScheduleUpdateTest {
 		assertFalse(jsonObject.has("mode"));
 		assertFalse(jsonObject.has("managedConsumption"));
 	}
+
 }

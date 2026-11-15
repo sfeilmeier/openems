@@ -75,4 +75,5 @@ public interface Weather {
 	 * @return a sorted list of daily weather snapshots from today onwards
 	 */
 	public List<DailyWeatherSnapshot> getDailyWeatherForecast() throws OpenemsException;
+
 }

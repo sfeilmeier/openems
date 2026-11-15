@@ -24,4 +24,5 @@ public class PvInverterSmaSunnyTripowerImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

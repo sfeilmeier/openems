@@ -3,6 +3,7 @@ package io.openems.edge.batteryinverter.refu.store88k.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum VendorOperatingState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefinded");
 
 	private final int value;

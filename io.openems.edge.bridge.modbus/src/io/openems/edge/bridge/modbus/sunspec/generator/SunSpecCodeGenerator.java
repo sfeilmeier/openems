@@ -114,4 +114,5 @@ public class SunSpecCodeGenerator extends AbstractSunSpecCodeGenerator {
 		var models = generator.parseSunSpecFiles();
 		generator.writeSunSpecModelJavaFile(models);
 	}
+
 }

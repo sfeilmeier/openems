@@ -63,4 +63,5 @@ public class RunOptimizerApp {
 	public static void main(String[] args) throws Exception {
 		AppUtils.simulateFromJson(JSON, EXECUTION_LIMIT_SECONDS, PLOT_SETTINGS);
 	}
+
 }

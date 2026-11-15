@@ -11,6 +11,7 @@ import io.openems.common.exceptions.OpenemsError.OpenemsNamedException;
 import io.openems.common.exceptions.OpenemsError.OpenemsNamedRuntimeException;
 
 public class XmlParserTests {
+
 	private static final String XML_1 = """
 			<?xml version="1.0" encoding="UTF-8"?>
 			<root>
@@ -55,4 +56,5 @@ public class XmlParserTests {
 		assertEquals(433.5, ratings.get(1).getChild("power").getValueAsDouble(), 0.001);
 		assertEquals(230, ratings.get(1).getChild("voltage").getValueAsInt());
 	}
+
 }

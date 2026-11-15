@@ -35,4 +35,5 @@ import io.openems.common.types.MeterType;
 	String Modbus_target() default "(enabled=true)";
 
 	String webconsole_configurationFactory_nameHint() default "Meter Siemens PAC2200/PAC3200/PAC4200 [{id}]";
+
 }

@@ -142,4 +142,5 @@ public abstract class AbstractDummyManagedSymmetricEss<SELF extends AbstractDumm
 	public final void setStartStop(StartStop value) throws OpenemsNamedException {
 		this._setStartStop(value);
 	}
+
 }

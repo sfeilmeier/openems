@@ -3,6 +3,7 @@ package io.openems.edge.battery.wuerthbms.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum CvcmFaultCause implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OVERCURRENT_COMPARATOR_OFF(0, "Overcurrent comparator off"), //
 	TEMPDEP_CURRENT_MONITOR_OFF(1, "Tempdep current monitor off"), //

@@ -66,4 +66,5 @@ public interface ControllerEssLimiter14a extends Controller, OpenemsComponent {
 	public default void _setRestrictionMode(boolean value) {
 		this.getRestrictionModeChannel().setNextValue(value);
 	}
+
 }

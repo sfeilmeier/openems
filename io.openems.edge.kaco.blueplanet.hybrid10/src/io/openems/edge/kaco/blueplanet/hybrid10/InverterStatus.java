@@ -3,6 +3,7 @@ package io.openems.edge.kaco.blueplanet.hybrid10;
 import io.openems.common.types.OptionsEnum;
 
 public enum InverterStatus implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	ERROR(0, "Error"), //
 	OFF_STANDBY(1, "Off/Standby"), //
@@ -42,4 +43,5 @@ public enum InverterStatus implements OptionsEnum {
 	public OptionsEnum getUndefined() {
 		return UNDEFINED;
 	}
+
 }

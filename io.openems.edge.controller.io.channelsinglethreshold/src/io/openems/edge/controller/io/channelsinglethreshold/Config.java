@@ -42,4 +42,5 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 	boolean fallbackOutput() default false;
 
 	String webconsole_configurationFactory_nameHint() default "Controller IO Channel Single Threshold [{id}]";
+
 }

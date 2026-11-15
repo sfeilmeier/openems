@@ -154,4 +154,5 @@ public class GoRunningHandler extends StateHandler<State, Context> {
 	protected String debugLog() {
 		return State.GO_RUNNING.asCamelCase() + "-" + EnumUtils.nameAsCamelCase(this.goRunningState.subState);
 	}
+
 }

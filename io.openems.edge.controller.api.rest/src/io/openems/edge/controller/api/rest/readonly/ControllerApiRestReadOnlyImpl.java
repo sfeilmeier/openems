@@ -80,4 +80,5 @@ public class ControllerApiRestReadOnlyImpl extends AbstractRestApi
 	protected AccessMode getAccessMode() {
 		return AccessMode.READ_ONLY;
 	}
+
 }

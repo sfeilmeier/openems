@@ -34,4 +34,5 @@ public class StartedInOnGridHandler extends StateHandler<OffGridState, Context> 
 		return OffGridState.STARTED_IN_ON_GRID;
 
 	}
+
 }

@@ -200,4 +200,5 @@ public class EvcsHardyBarthImpl extends AbstractManagedEvcsComponent
 	public int getWriteInterval() {
 		return HEART_BEAT_TIME;
 	}
+
 }

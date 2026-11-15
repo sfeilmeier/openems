@@ -40,6 +40,7 @@ import io.openems.edge.common.taskmanager.Priority;
  *
  */
 public class SingleRack {
+
 	private static final String KEY_VOLTAGE = "VOLTAGE";
 	private static final String KEY_CURRENT = "CURRENT";
 	private static final String KEY_CHARGE_INDICATION = "CHARGE_INDICATION";
@@ -568,4 +569,5 @@ public class SingleRack {
 	private SignedWordElement getSignedWordElement(int addressWithoutOffset) {
 		return new SignedWordElement(this.addressOffset + addressWithoutOffset);
 	}
+
 }

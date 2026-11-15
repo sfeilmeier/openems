@@ -199,4 +199,5 @@ public class EssGenericManagedSymmetricImplTest {
 						.output(CUMULATED_TIME_OK_STATE, 0) //
 						.output(CUMULATED_TIME_INFO_STATE, 0));
 	}
+
 }

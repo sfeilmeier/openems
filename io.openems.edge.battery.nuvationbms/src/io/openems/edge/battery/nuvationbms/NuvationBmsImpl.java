@@ -375,4 +375,5 @@ public class NuvationBmsImpl extends AbstractSunSpecBattery implements NuvationB
 				maximumCellVoltageOperationLimit, minimumCellVoltageOperationLimit, maximumChargeVoltage,
 				minimumDischargeVoltage);
 	}
+
 }

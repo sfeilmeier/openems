@@ -145,4 +145,5 @@ public class MeterCarloGavazziEm100Impl extends AbstractOpenemsModbusComponent
 	public String debugLog() {
 		return this.getPhase() + ":" + this.getActivePower().asString();
 	}
+
 }

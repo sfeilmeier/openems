@@ -43,4 +43,5 @@ public class ErrorHandler extends StateHandler<State, Context> {
 				.channel(BatteryInverterSinexcel.ChannelId.CLEAR_FAILURE);
 		setClearFailureCmd.setNextWriteValue(true); // 1: true, other: illegal
 	}
+
 }

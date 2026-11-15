@@ -6,4 +6,5 @@ public enum Mode {
 	MANUAL_OFF, // switches all relays off
 	AUTOMATIC, // uses surplus power and configured guarantees
 	FAST_HEAT;// immediately activates all configured relays
+
 }

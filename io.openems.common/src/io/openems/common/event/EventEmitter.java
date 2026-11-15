@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import io.openems.common.logger.ContextLogger;
 
 public class EventEmitter<T> implements Subscribable<T> {
+
 	private final Logger log;
 	private final List<Consumer<? super T>> subscribers = new CopyOnWriteArrayList<>();
 

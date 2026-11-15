@@ -210,4 +210,5 @@ class TestStatic {
 
 		assertEquals(11500, acMax);
 	}
+
 }

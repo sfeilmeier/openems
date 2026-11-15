@@ -225,4 +225,5 @@ public class ControllerChpSocImpl extends AbstractOpenemsComponent
 	public Timedata getTimedata() {
 		return this.timedata;
 	}
+
 }

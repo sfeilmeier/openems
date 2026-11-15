@@ -19,4 +19,5 @@ public class DummySumTest {
 		testWithValue(sut, DummySum::withEssMinDischargePower, Sum::getEssMinDischargePower);
 		testWithValue(sut, DummySum::withEssMaxDischargePower, Sum::getEssMaxDischargePower);
 	}
+
 }

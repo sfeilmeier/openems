@@ -3,6 +3,7 @@ package io.openems.edge.sma.ess.enums;
 import io.openems.common.types.OptionsEnum;
 
 public enum BatteryState implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined"), //
 	OFF(303, "Off"), //
 	STANDBY(2291, "Standby"), //

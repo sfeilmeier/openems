@@ -55,4 +55,5 @@ public class DummyManagedHeatElement extends AbstractOpenemsComponent implements
 	public String alias() {
 		return null;
 	}
+
 }

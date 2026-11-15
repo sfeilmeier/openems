@@ -20,4 +20,5 @@ public class SmaBatteryImplTest {
 				.next(new TestCase()) //
 				.deactivate();
 	}
+
 }

@@ -153,4 +153,5 @@ public class MyConfigFixStateOfCharge extends AbstractComponentConfig implements
 	public String ess_target() {
 		return ConfigUtils.generateReferenceTargetFilter(this.id(), this.ess_id());
 	}
+
 }

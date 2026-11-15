@@ -18,4 +18,5 @@ public class GoodWeChargerTwoStringImplTest {
 						.setPvPort(PvPort.PV_1) //
 						.build());
 	}
+
 }

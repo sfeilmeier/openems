@@ -46,4 +46,5 @@ public class GetProtocolsCoreInfoRequest extends JsonrpcRequest {
 				.addProperty("edgeId", this.edgeId) //
 				.build();
 	}
+
 }

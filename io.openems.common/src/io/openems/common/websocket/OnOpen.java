@@ -22,4 +22,5 @@ public interface OnOpen extends BiFunction<WebSocket, Handshakedata, OpenemsErro
 	 * @return {@link OpenemsError} or null
 	 */
 	public OpenemsError apply(WebSocket ws, Handshakedata handshakedata);
+
 }

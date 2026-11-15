@@ -34,4 +34,5 @@ public class ProgressTest {
 		assertEquals(" 13%", new Progress(13).toString());
 		assertEquals("100%", new Progress(100).toString());
 	}
+
 }

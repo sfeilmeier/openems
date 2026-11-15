@@ -46,4 +46,5 @@ public @interface Config {
 	String Battery_target() default "(enabled=true)";
 
 	String webconsole_configurationFactory_nameHint() default "System FENECON Industrial M [{id}]";
+
 }

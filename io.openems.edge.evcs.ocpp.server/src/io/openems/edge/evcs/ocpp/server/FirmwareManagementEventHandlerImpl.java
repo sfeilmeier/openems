@@ -35,4 +35,5 @@ public class FirmwareManagementEventHandlerImpl implements ServerFirmwareManagem
 
 		return new FirmwareStatusNotificationConfirmation();
 	}
+
 }

@@ -4,6 +4,7 @@ import io.openems.common.types.OptionsEnum;
 import io.openems.common.types.SemanticVersion;
 
 public enum DeviceID implements OptionsEnum {
+
 	UNDEFINED(-1, "Undefined", null), //
 	PROFESSIONAL(0xEBEE, "Professional Serie", SemanticVersion.fromString("5.22.0")), //
 	FOUR_YOU(0x414D, "4You/4Business Serie", SemanticVersion.fromString("1.5.0"));

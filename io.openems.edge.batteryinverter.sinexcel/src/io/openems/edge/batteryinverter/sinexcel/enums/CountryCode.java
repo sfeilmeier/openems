@@ -15,4 +15,5 @@ public enum CountryCode {
 	public String getValue() {
 		return this.value;
 	}
+
 }

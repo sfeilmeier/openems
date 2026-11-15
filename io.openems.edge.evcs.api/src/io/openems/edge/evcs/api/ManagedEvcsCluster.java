@@ -84,4 +84,5 @@ public interface ManagedEvcsCluster extends Evcs {
 	public default Value<Integer> getEvcsCount() {
 		return this.getEvcsCountChannel().value();
 	}
+
 }

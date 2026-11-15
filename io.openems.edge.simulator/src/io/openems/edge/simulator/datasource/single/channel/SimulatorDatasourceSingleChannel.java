@@ -45,4 +45,5 @@ public interface SimulatorDatasourceSingleChannel extends SimulatorDatasource, O
 	public default IntegerWriteChannel getDataWriteChannel() {
 		return this.channel(ChannelId.DATA);
 	}
+
 }

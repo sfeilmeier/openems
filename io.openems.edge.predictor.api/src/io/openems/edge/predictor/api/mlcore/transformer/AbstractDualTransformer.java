@@ -18,4 +18,5 @@ public abstract class AbstractDualTransformer<I> implements SeriesTransformer<I>
 	protected abstract Series<I> safeTransform(Series<I> series);
 
 	protected abstract DataFrame<I> safeTransform(DataFrame<I> dataframe);
+
 }

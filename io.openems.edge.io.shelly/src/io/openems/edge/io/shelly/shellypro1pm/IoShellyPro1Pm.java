@@ -19,4 +19,5 @@ public interface IoShellyPro1Pm extends IoGen2ShellyBase {
 			return this.doc;
 		}
 	}
+
 }

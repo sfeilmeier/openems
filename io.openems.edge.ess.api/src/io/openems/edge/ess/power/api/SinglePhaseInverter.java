@@ -11,4 +11,5 @@ public class SinglePhaseInverter extends Inverter {
 	public SinglePhaseInverter(String essId, SinglePhase singlePhase) {
 		super(essId, singlePhase.toSingleOrAllPhase);
 	}
+
 }
